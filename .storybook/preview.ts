@@ -35,6 +35,13 @@ const preview: Preview = {
       },
     },
   },
+  globals: {
+    vueMdx: {
+      beforeVueAppMount(app): void {
+        app.use(vuetify)
+      }
+    }
+  }
 };
 
 export default preview;

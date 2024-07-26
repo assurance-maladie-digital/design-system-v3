@@ -64,6 +64,7 @@
     "pnpm": ">=8.0.0"
   },
   "dependencies": {
-    "@storybook/addon-viewport": "^8.2.6"
+    "@storybook/addon-viewport": "^8.2.6",
+    "storybook-addon-vue-mdx": "^1.0.1"
   }
 }
