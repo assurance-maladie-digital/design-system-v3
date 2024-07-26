@@ -7,20 +7,20 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    dts({
-      rollupTypes: true,
-    }),
+    // dts({
+    //   rollupTypes: true,
+    // }),
     vue(),
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': fileURLToPath(new URL('./lib', import.meta.url)),
       '@tests': fileURLToPath(new URL('./tests', import.meta.url)),
     },
   },
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/main.ts'),
+      entry: resolve(__dirname, 'lib/main.ts'),
       name: 'DesignSystemV3',
       fileName: 'design-system-v3',
     },

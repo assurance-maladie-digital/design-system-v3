@@ -11,7 +11,7 @@
       "require": "./dist/design-system-v3.umd.cjs"
     },
     "./style.css": "./dist/style.css",
-    "./*": "./src/*"
+    "./*": "./lib/*"
   },
   "scripts": {
     "dev": "vite",
