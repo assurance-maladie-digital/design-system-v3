@@ -34,6 +34,59 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    backgrounds: {
+      default: 'main',
+      values: [
+        {
+          name:  "main",
+          value: "#e7ecf5" // Colors.Blue.lighten-90
+        },
+        {
+          name: "surface",
+          value: "#fff" // Neutral.white
+        },
+        {
+          name: "raised",
+          value: "#f8f9fc" // Colors.Blue.lighten-97
+        },
+        {
+          name: "accent",
+          value: "#0c419a" // Primary.base
+        },
+        {
+          name:  "accent-contrasted",
+          value: "#0a347b" // Primary.darker-2
+        },
+        {
+          name: "accent-alt",
+          value: "#545859" // Neutral.black-lighter
+        },
+        {
+          name: "info",
+          value: "#ced9eb" // Info.info-lighter
+        },
+        {
+          name: "info-subdued",
+          value: "#e7ecf5" // Info.info-lightest
+        },
+        {
+          name: "info-contrasted",
+          value: "#0c419a" // Info.default
+        },
+        {
+          name: "success",
+          value: "#cceee8" // Success.lighter
+        },
+        {
+          name: "success-subdued",
+          value: "#e5f7f4" // Success.lightest
+        },
+        {
+          name: "success-contrasted",
+          value: "#56c271" // Success.default
+        },
+      ],
+    },
   },
   globals: {
     vueMdx: {
