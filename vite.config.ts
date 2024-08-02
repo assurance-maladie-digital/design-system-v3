@@ -18,6 +18,18 @@ export default defineConfig({
       '@tests': fileURLToPath(new URL('./tests', import.meta.url)),
     },
   },
+  optimizeDeps: {
+    exclude: [
+      'chunk-7HTN7W7T',
+      'chunk-A4TUXS66',
+      'chunk-U4SDCYVJ',
+      'chunk-7W4IJRM3',
+      'chunk-GWMN3X5B',
+      'chunk-DMRY4WN5',
+      'chunk-7S2PD2GP',
+      'chunk-S3XGDKMA'
+    ]
+  },
   build: {
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
