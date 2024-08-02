@@ -5,9 +5,13 @@
   "type": "module",
   "main": "./dist/design-system-v3.umd.cjs",
   "module": "./dist/design-system-v3.js",
+  "types": "./types",
   "exports": {
     ".": {
-      "import": "./dist/design-system-v3.js",
+      "import": {
+        "types": "./types/main.d.ts",
+        "default": "./dist/design-system-v3.js"
+      },
       "require": "./dist/design-system-v3.umd.cjs"
     },
     "./style.css": "./dist/style.css",
@@ -15,9 +19,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "run-s build:vite type-gen",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "type-gen": "vue-tsc -p tsconfig.app.json --declaration --emitDeclarationOnly",
+    "build:vite": "vite build"
   },
   "keywords": [
     "cnam",
@@ -46,6 +52,7 @@
     "@types/node": "^20.14.12",
     "@vitejs/plugin-vue": "^5.1.0",
     "@vue/tsconfig": "^0.5.1",
+    "npm-run-all": "^4.1.5",
     "sass": "^1.77.8",
     "storybook": "^8.2.6",
     "typescript": "^5.5.4",

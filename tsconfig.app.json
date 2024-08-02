@@ -1,15 +1,18 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "dev/**/*.ts", "dev/**/*.vue", "lib/**/*", "lib/**/*.vue"],
-  "exclude": ["lib/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
     "baseUrl": ".",
+    "rootDir": "./lib",
     "paths": {
-			"@/*": ["lib/*"],
+      "@/*": ["lib/*"],
 			"@tests/*": ["./tests/*"]
 		},
-  }
+    "declaration": true,
+    "declarationDir": "./types",
+    "noEmit": false,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+  },
+  "include": ["env.d.ts", "lib/**/*", "lib/**/*.vue"],
+  "exclude": ["lib/**/__tests__/*", "lib/**/*.stories.ts", "lib/stories/*"]
 }
