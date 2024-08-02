@@ -1,0 +1,120 @@
+{
+  "semantic": {
+    "primary": {
+      "darker-2": {
+        "value": "{Colors.Blue.darken-40}"
+      },
+      "darker": {
+        "value": "{Colors.Blue.darken-20}"
+      },
+      "base": {
+        "value": "{Colors.Blue.base}"
+      },
+      "light": {
+        "value": "{Colors.Blue.lighten-20}"
+      },
+      "lighter-2": {
+        "value": "{Colors.Blue.lighten-60}"
+      },
+      "lighter-3": {
+        "value": "{Colors.Blue.lighten-80}"
+      },
+      "lighter-4": {
+        "value": "{Colors.Blue.lighten-90}"
+      },
+      "lighter-5": {
+        "value": "{Colors.Blue.lighten-97}"
+      }
+    },
+    "neutral": {
+      "black": {
+        "value": "{Colors.Grey.darken-60}"
+      },
+      "black-lighter": {
+        "value": "{Colors.Grey.base}"
+      },
+      "black-lighter-2": {
+        "value": "{Colors.Grey.lighten-40}"
+      },
+      "grey": {
+        "value": "{Colors.Grey.lighten-80}"
+      },
+      "white": {
+        "value": "{Colors.White.base}"
+      },
+      "white-alpha": {
+        "value": "{Colors.White.70%}"
+      },
+      "white-alpha-lighter": {
+        "value": "{Colors.White.40%}"
+      },
+      "white-alpha-lighter-2": {
+        "value": "{Colors.White.20%}"
+      },
+      "white-alpha-lighter-3": {
+        "value": "{Colors.White.08%}"
+      }
+    },
+    "info": {
+      "info-lightest": {
+        "value": "{Colors.Blue.lighten-90}"
+      },
+      "info-lighter": {
+        "value": "{Colors.Blue.lighten-80}"
+      },
+      "default": {
+        "value": "{Colors.Blue.base}"
+      }
+    },
+    "success": {
+      "lightest": {
+        "value": "{Colors.Turquoise.lighten-90}"
+      },
+      "lighter": {
+        "value": "{Colors.Turquoise.lighten-80}"
+      },
+      "default": {
+        "value": "{Colors.Green.base}"
+      },
+      "darker": {
+        "value": "{Colors.Turquoise.darken-60}"
+      }
+    },
+    "warning": {
+      "lightest": {
+        "value": "{Colors.Yellow.lighten-90}"
+      },
+      "lighter": {
+        "value": "{Colors.Yellow.lighten-80}"
+      },
+      "default": {
+        "value": "{Colors.Yellow.base}"
+      },
+      "darker": {
+        "value": "{Colors.Yellow.darken-60}"
+      }
+    },
+    "danger": {
+      "lightest": {
+        "value": "{Colors.Orange.lighten-90}"
+      },
+      "lighter": {
+        "value": "{Colors.Orange.lighten-80}"
+      },
+      "default": {
+        "value": "{Colors.Orange.darken-20}"
+      }
+    },
+    "user": {
+      "professionnel": {
+        "value": "{Colors.Cyan.lighten-40}"
+      },
+      "assure": {
+        "value": "{Colors.Pink.lighten-40}"
+      },
+      "entreprise": {
+        "value": "{Colors.Yellow.base}"
+      }
+    }
+  }
+}
