@@ -2,6 +2,7 @@
   <div>
     <h1>Test Heading</h1>
     <VBtn class="btn">Test Button</VBtn>
+    <VBtn color="warning">Test Button</VBtn>
   </div>
 </template>
 
