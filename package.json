@@ -1,6 +1,7 @@
 {
   "name": "@cnamts/design-system-v3",
   "version": "1.0.0",
+  "private": false,
   "description": "CNAM DS v3",
   "type": "module",
   "main": "./dist/design-system-v3.umd.cjs",
@@ -60,7 +61,9 @@
     "vite-plugin-dts": "~3.6.4",
     "vue": "^3.4.33",
     "vue-tsc": "^2.0.28",
-    "vuetify": "^3.6.13"
+    "vuetify": "^3.6.13",
+    "@storybook/addon-viewport": "^8.2.6",
+    "storybook-addon-vue-mdx": "^1.0.1"
   },
   "peerDependencies": {
     "vue": "^3.4.33",
@@ -69,9 +72,5 @@
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
-  },
-  "dependencies": {
-    "@storybook/addon-viewport": "^8.2.6",
-    "storybook-addon-vue-mdx": "^1.0.1"
   }
 }

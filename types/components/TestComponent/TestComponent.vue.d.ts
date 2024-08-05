@@ -14,8 +14,8 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
 }, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<__VLS_PublicProps>, {
     prop1: string;
 }>>> & {
-    onClick?: ((...args: any[]) => any) | undefined;
     "onUpdate:modelValue"?: ((modelValue: any) => any) | undefined;
+    onClick?: ((...args: any[]) => any) | undefined;
 }, {
     prop1: string;
 }, {}>;

@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@storybook/addon-viewport':
-        specifier: ^8.2.6
-        version: 8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9)))
-      storybook-addon-vue-mdx:
-        specifier: ^1.0.1
-        version: 1.0.1(@storybook/blocks@8.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/builder-vite@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9)))(typescript@5.5.4)(vite@5.3.4(@types/node@20.14.12)(sass@1.77.8)))(@storybook/components@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/core-events@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/manager-api@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/mdx2-csf@1.1.0)(@storybook/preview-api@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/theming@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/types@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vue@3.4.33(typescript@5.5.4))
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^1.6.1
@@ -33,6 +26,9 @@ importers:
       '@storybook/addon-onboarding':
         specifier: ^8.2.6
         version: 8.2.6(react@18.3.1)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9)))
+      '@storybook/addon-viewport':
+        specifier: ^8.2.6
+        version: 8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9)))
       '@storybook/blocks':
         specifier: ^8.2.6
         version: 8.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9)))
@@ -72,6 +68,9 @@ importers:
       storybook:
         specifier: ^8.2.6
         version: 8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))
+      storybook-addon-vue-mdx:
+        specifier: ^1.0.1
+        version: 1.0.1(@storybook/blocks@8.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/builder-vite@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9)))(typescript@5.5.4)(vite@5.3.4(@types/node@20.14.12)(sass@1.77.8)))(@storybook/components@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/core-events@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/manager-api@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/mdx2-csf@1.1.0)(@storybook/preview-api@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/theming@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(@storybook/types@8.2.6(storybook@8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vue@3.4.33(typescript@5.5.4))
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
