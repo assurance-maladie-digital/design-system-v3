@@ -4,17 +4,17 @@ declare let __VLS_typeProps: {
     number2: number;
 };
 type __VLS_PublicProps = {
-    modelValue?: any;
+    modelValue?: string;
 } & typeof __VLS_typeProps;
 declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_TypePropsToOption<__VLS_PublicProps>, {
     prop1: string;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    "update:modelValue": (modelValue: any) => void;
+    "update:modelValue": (modelValue: string) => void;
     click: (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToOption<__VLS_PublicProps>, {
     prop1: string;
 }>>> & {
-    "onUpdate:modelValue"?: ((modelValue: any) => any) | undefined;
+    "onUpdate:modelValue"?: ((modelValue: string) => any) | undefined;
     onClick?: ((...args: any[]) => any) | undefined;
 }, {
     prop1: string;

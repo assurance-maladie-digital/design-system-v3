@@ -1,1 +1,1 @@
-export { default as TestComponent } from "./TestComponent/TestComponent.vue";
+export { default as TestComponent } from './TestComponent/TestComponent.vue';
