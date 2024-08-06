@@ -15,7 +15,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/main.scss';
+@import '../../assets/tokens.scss';
 
 h1 {
   color: $orange-base;
@@ -26,4 +26,6 @@ button {
   color: $white-base;
   border-radius: $radius-rounded;
 }
+
+
 </style>
