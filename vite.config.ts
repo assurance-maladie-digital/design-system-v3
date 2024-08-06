@@ -10,13 +10,13 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./lib', import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@tests': fileURLToPath(new URL('./tests', import.meta.url)),
     },
   },
   build: {
-    lib: {
-      entry: resolve(__dirname, 'lib/main.ts'),
+    src: {
+      entry: resolve(__dirname, 'src/main.ts'),
       name: 'DesignSystemV3',
       fileName: 'design-system-v3',
     },

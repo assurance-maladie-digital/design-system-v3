@@ -16,7 +16,7 @@
       "require": "./dist/design-system-v3.umd.cjs"
     },
     "./style.css": "./dist/style.css",
-    "./*": "./lib/*"
+    "./*": "./src/*"
   },
   "scripts": {
     "dev": "vite",
@@ -25,8 +25,8 @@
     "build-storybook": "storybook build",
     "type-gen": "vue-tsc -p tsconfig.app.json --declaration --emitDeclarationOnly",
     "build:vite": "vite build",
-    "lint": "eslint 'lib/**/*.{ts,js,vue}'",
-    "lint:fix": "eslint 'lib/**/*.{ts,js,vue}' --fix"
+    "lint": "eslint 'src/**/*.{ts,js,vue}'",
+    "lint:fix": "eslint 'src/**/*.{ts,js,vue}' --fix"
   },
   "keywords": [
     "cnam",
