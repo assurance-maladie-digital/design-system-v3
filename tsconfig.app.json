@@ -9,6 +9,9 @@
 			"@tests/*": ["./tests/*"]
 		},
     "declaration": true,
+    "emitDeclarationOnly": true,
+    "sourceMap": true,
+    "declarationMap": true,
     "declarationDir": "./types",
     "noEmit": false,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",

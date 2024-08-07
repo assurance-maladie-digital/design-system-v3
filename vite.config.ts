@@ -15,7 +15,7 @@ export default defineConfig({
     },
   },
   build: {
-    src: {
+    lib: {
       entry: resolve(__dirname, 'src/main.ts'),
       name: 'DesignSystemV3',
       fileName: 'design-system-v3',
@@ -27,6 +27,7 @@ export default defineConfig({
           vue: 'Vue',
         },
       },
+      
     },
   },
 })
