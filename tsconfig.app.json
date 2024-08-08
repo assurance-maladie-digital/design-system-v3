@@ -5,17 +5,21 @@
     "baseUrl": ".",
     "rootDir": "./src",
     "paths": {
-      "@/*": ["src/*"],
-			"@tests/*": ["./tests/*"]
-		},
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "sourceMap": true,
-    "declarationMap": true,
-    "declarationDir": "./types",
-    "noEmit": false,
+      "@/*": [
+        "src/*"
+      ],
+      "@tests/*": [
+        "./tests/*"
+      ]
+    },
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
   },
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
-  "exclude": ["src/**/__tests__/*", "./**/*.stories.ts"]
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "src/**/__tests__/*"
+  ]
 }
