@@ -1,8 +1,16 @@
 <template>
-  <div>
+  <div class="d-flex flex-wrap ga-3">
     <h1>Test Heading</h1>
     <VBtn class="btn">Test Button</VBtn>
-    <VBtn color="warning">Test Button</VBtn>
+    <VBtn color="primary">Primary Button</VBtn>
+    <VBtn color="secondary">Secondary Button</VBtn>
+    <VBtn color="accent">Accent Button</VBtn>
+    <VBtn color="warning">Warning Button</VBtn>
+    <VBtn color="success">Success Button</VBtn>
+    <VBtn color="error">Error Button</VBtn>
+    <VBtn color="info">Info Button</VBtn>
+    <VBtn color="risquePro">RisquePro Button</VBtn>
+
   </div>
 </template>
 
@@ -26,6 +34,4 @@ button {
   color: $white-base;
   border-radius: $radius-rounded;
 }
-
-
 </style>

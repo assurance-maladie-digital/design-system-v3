@@ -1,4 +1,5 @@
 export const cnamColorsTokens = {
+    warning: '#2d100b',
     orange: {
         darken80: '#2d100b',
         darken60: '#5a2017',
