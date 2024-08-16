@@ -26,7 +26,10 @@
 <!-- Vérifiez chaque point de la checklist et cochez-le s'il est appliqué. -->
 
 - [ ] Ma Pull Request pointe vers la bonne branche
-- [ ] Mon code suit le style de code du projet
+- [ ] Le composant est conforme aux maquettes (tokens)
+- [ ] Le composant est fonctionnel
+- [ ] Le composant est responsive (mobile, tablet et desktop)
+- [ ] Le composant répond aux critères d'accessibilité (test Tanaguru + A11y linter)
 - [ ] J'ai effectué une review de mon propre code
 - [ ] J'ai commenté mon code, en particulier dans les parties difficiles à comprendre
 - [ ] J'ai mis en place une stories pour ma fonctionnalité / fix /...
