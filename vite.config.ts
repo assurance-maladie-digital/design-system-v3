@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
+import { coverageConfigDefaults } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 
@@ -32,6 +33,35 @@ export default defineConfig({
 				globals: {
 					vue: 'Vue',
 				},
+			},
+		},
+	},
+	test: {
+		environment: 'happy-dom',
+		server: {
+			deps: {
+				inline: ['vuetify'],
+			},
+		},
+		coverage: {
+			enabled: true,
+			provider: 'v8',
+			reportsDirectory: './tests/unit/coverage',
+			include: [
+				'src/**/*.{js,vue,ts}',
+			],
+			exclude: [
+				'src/**/*.spec.{js,vue,ts}',
+				'src/**/*.stories.*',
+				'src/main.ts',
+				'src/components/index.ts',
+				...coverageConfigDefaults.exclude,
+			],
+			thresholds: {
+				branches: 80,
+				functions: 80,
+				lines: 80,
+				statements: 80,
 			},
 		},
 	},

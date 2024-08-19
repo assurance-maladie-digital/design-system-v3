@@ -3,7 +3,6 @@
   "compilerOptions": {
     "composite": true,
     "baseUrl": ".",
-    "rootDir": "./src",
     "paths": {
       "@/*": [
         "src/*"
@@ -17,9 +16,8 @@
   "include": [
     "env.d.ts",
     "src/**/*",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "tests/**/*",
+    "dev/**/*"
   ],
-  "exclude": [
-    "src/**/__tests__/*"
-  ]
 }
