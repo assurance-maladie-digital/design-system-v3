@@ -2,6 +2,7 @@ import js from '@eslint/js'
 import eslintPluginVue from 'eslint-plugin-vue'
 import ts from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
+import pluginVueA11y from 'eslint-plugin-vuejs-accessibility'
 
 export default ts.config(
 	// Parser
@@ -19,13 +20,13 @@ export default ts.config(
 	js.configs.recommended,
 	...ts.configs.recommended,
 	...eslintPluginVue.configs['flat/recommended'],
+	...pluginVueA11y.configs['flat/recommended'],
 	stylistic.configs.customize({
 		indent: 'tab',
 		quotes: 'single',
 		semi: false,
 		jsx: false,
 	}),
-
 	// Overrides
 	{
 		// Vue Overrides
