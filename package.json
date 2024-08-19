@@ -69,6 +69,7 @@
     "eslint-plugin-storybook": "^0.8.0",
     "eslint-plugin-vue": "^9.27.0",
     "happy-dom": "^14.12.3",
+    "eslint-plugin-vuejs-accessibility": "^2.4.1",
     "sass": "^1.77.8",
     "storybook": "^8.2.6",
     "storybook-addon-vue-mdx": "^1.0.1",
