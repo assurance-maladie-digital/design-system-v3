@@ -103,7 +103,7 @@ importers:
         version: 3.4.33(typescript@5.5.4)
       vue-tsc:
         specifier: ^2.0.28
-        version: 2.0.28(typescript@5.5.4)
+        version: 2.0.29(typescript@5.5.4)
       vuetify:
         specifier: ^3.6.13
         version: 3.7.0(typescript@5.5.4)(vue@3.4.33(typescript@5.5.4))
@@ -3643,12 +3643,6 @@ packages:
 
   vue-template-compiler@2.7.16:
     resolution: {integrity: sha512-AYbUWAJHLGGQM7+cNTELw+KsOG9nl2CnSv467WobS5Cv9uk3wFcnr1Etsz2sEIHEZvw1U+o9mRlEO6QbZvUPGQ==}
-
-  vue-tsc@2.0.28:
-    resolution: {integrity: sha512-PQ/OFDM3NtQVMThaVlQf8plyL0j7UGdak4lb1KkUOSL0uyx/F9Liu6aOclgHiMMBKNGIjJWoiFh3HjIdV6DS/Q==}
-    hasBin: true
-    peerDependencies:
-      typescript: '>=5.0.0'
 
   vue-tsc@2.0.29:
     resolution: {integrity: sha512-MHhsfyxO3mYShZCGYNziSbc63x7cQ5g9kvijV7dRe1TTXBRLxXyL0FnXWpUF1xII2mJ86mwYpYsUmMwkmerq7Q==}
@@ -7730,13 +7724,6 @@ snapshots:
     dependencies:
       de-indent: 1.0.2
       he: 1.2.0
-
-  vue-tsc@2.0.28(typescript@5.5.4):
-    dependencies:
-      '@volar/typescript': 2.4.0-alpha.18
-      '@vue/language-core': 2.0.28(typescript@5.5.4)
-      semver: 7.6.3
-      typescript: 5.5.4
 
   vue-tsc@2.0.29(typescript@5.5.4):
     dependencies:
