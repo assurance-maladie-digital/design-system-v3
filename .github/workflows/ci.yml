@@ -22,11 +22,8 @@ jobs:
         run: npm install -g pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-#      - name: Lint (show only errors)
-#        run: pnpm lint --quiet
-#        working-directory: ./
-#      - name: Unit tests without Snapshots
-#        run: pnpm test:unit -- -u
+      - name: Lint (show only errors)
+        run: pnpm lint --quiet
       - name: Build
         run: pnpm build
         working-directory: ./
