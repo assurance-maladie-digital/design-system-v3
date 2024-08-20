@@ -49,6 +49,7 @@ export default ts.config(
 			'vue/html-indent': ['error', 'tab'],
 			'vue/html-comment-indent': ['error', 'tab'],
 			'@stylistic/indent': 0,
+			'no-console': ['error', { allow: ['warn', 'error'] }],
 		},
 	},
 )
