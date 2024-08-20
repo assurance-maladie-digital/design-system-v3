@@ -4,115 +4,114 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-importers:
+dependencies:
+  deepmerge:
+    specifier: ^4.3.1
+    version: 4.3.1
 
-  .:
-    devDependencies:
-      '@chromatic-com/storybook':
-        specifier: ^1.6.1
-        version: 1.7.0(react@18.3.1)
-      '@storybook/addon-a11y':
-        specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/addon-essentials':
-        specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/addon-interactions':
-        specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/addon-links':
-        specifier: ^8.2.6
-        version: 8.2.9(react@18.3.1)(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/addon-onboarding':
-        specifier: ^8.2.6
-        version: 8.2.9(react@18.3.1)(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/addon-viewport':
-        specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/blocks':
-        specifier: ^8.2.6
-        version: 8.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/manager-api':
-        specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/test':
-        specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/theming':
-        specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
-      '@storybook/vue3':
-        specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))(vue@3.4.38(typescript@5.5.4))
-      '@storybook/vue3-vite':
-        specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))(vite@5.4.2(@types/node@20.16.1)(sass@1.77.8))(vue@3.4.38(typescript@5.5.4))
-      '@stylistic/eslint-plugin':
-        specifier: ^2.6.1
-        version: 2.6.4(eslint@9.9.0)(typescript@5.5.4)
-      '@stylistic/eslint-plugin-ts':
-        specifier: ^2.6.1
-        version: 2.6.4(eslint@9.9.0)(typescript@5.5.4)
-      '@tsconfig/node20':
-        specifier: ^20.1.4
-        version: 20.1.4
-      '@types/node':
-        specifier: ^20.14.12
-        version: 20.16.1
-      '@typescript-eslint/parser':
-        specifier: ^8.0.0
-        version: 8.2.0(eslint@9.9.0)(typescript@5.5.4)
-      '@vitejs/plugin-vue':
-        specifier: ^5.1.0
-        version: 5.1.2(vite@5.4.2(@types/node@20.16.1)(sass@1.77.8))(vue@3.4.38(typescript@5.5.4))
-      '@vue/tsconfig':
-        specifier: ^0.5.1
-        version: 0.5.1
-      eslint:
-        specifier: ^9.8.0
-        version: 9.9.0
-      eslint-plugin-storybook:
-        specifier: ^0.8.0
-        version: 0.8.0(eslint@9.9.0)(typescript@5.5.4)
-      eslint-plugin-vue:
-        specifier: ^9.27.0
-        version: 9.27.0(eslint@9.9.0)
-      eslint-plugin-vuejs-accessibility:
-        specifier: ^2.4.1
-        version: 2.4.1(eslint@9.9.0)
-      husky:
-        specifier: ^9.1.4
-        version: 9.1.4
-      sass:
-        specifier: ^1.77.8
-        version: 1.77.8
-      storybook:
-        specifier: ^8.2.6
-        version: 8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2))
-      storybook-addon-vue-mdx:
-        specifier: ^1.0.1
-        version: 1.0.1(@storybook/blocks@8.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2))))(@storybook/builder-vite@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2)))(typescript@5.5.4)(vite@5.4.2(@types/node@20.16.1)(sass@1.77.8)))(@storybook/components@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2))))(@storybook/core-events@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2))))(@storybook/manager-api@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2))))(@storybook/mdx2-csf@1.1.0)(@storybook/preview-api@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2))))(@storybook/theming@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2))))(@storybook/types@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.3(@babel/core@7.25.2))))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vue@3.4.38(typescript@5.5.4))
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
-      typescript-eslint:
-        specifier: ^8.0.0
-        version: 8.2.0(eslint@9.9.0)(typescript@5.5.4)
-      vite:
-        specifier: ^5.3.4
-        version: 5.4.2(@types/node@20.16.1)(sass@1.77.8)
-      vite-plugin-dts:
-        specifier: ^4.0.1
-        version: 4.0.3(@types/node@20.16.1)(rollup@4.21.0)(typescript@5.5.4)(vite@5.4.2(@types/node@20.16.1)(sass@1.77.8))
-      vue:
-        specifier: ^3.4.33
-        version: 3.4.38(typescript@5.5.4)
-      vue-tsc:
-        specifier: ^2.0.28
-        version: 2.0.29(typescript@5.5.4)
-      vuetify:
-        specifier: ^3.6.13
-        version: 3.7.0(typescript@5.5.4)(vue@3.4.38(typescript@5.5.4))
+devDependencies:
+  '@chromatic-com/storybook':
+    specifier: ^1.6.1
+    version: 1.6.1(react@18.3.1)
+  '@storybook/addon-a11y':
+    specifier: ^8.2.6
+    version: 8.2.9(storybook@8.2.9)
+  '@storybook/addon-essentials':
+    specifier: ^8.2.6
+    version: 8.2.9(storybook@8.2.9)
+  '@storybook/addon-interactions':
+    specifier: ^8.2.6
+    version: 8.2.9(storybook@8.2.9)
+  '@storybook/addon-links':
+    specifier: ^8.2.6
+    version: 8.2.9(react@18.3.1)(storybook@8.2.9)
+  '@storybook/addon-onboarding':
+    specifier: ^8.2.6
+    version: 8.2.9(react@18.3.1)(storybook@8.2.9)
+  '@storybook/addon-viewport':
+    specifier: ^8.2.6
+    version: 8.2.9(storybook@8.2.9)
+  '@storybook/blocks':
+    specifier: ^8.2.6
+    version: 8.2.9(react-dom@18.3.1)(react@18.3.1)(storybook@8.2.9)
+  '@storybook/manager-api':
+    specifier: ^8.2.6
+    version: 8.2.9(storybook@8.2.9)
+  '@storybook/test':
+    specifier: ^8.2.6
+    version: 8.2.9(storybook@8.2.9)
+  '@storybook/theming':
+    specifier: ^8.2.6
+    version: 8.2.9(storybook@8.2.9)
+  '@storybook/vue3':
+    specifier: ^8.2.6
+    version: 8.2.9(storybook@8.2.9)(vue@3.4.38)
+  '@storybook/vue3-vite':
+    specifier: ^8.2.6
+    version: 8.2.9(storybook@8.2.9)(vite@5.4.1)(vue@3.4.38)
+  '@stylistic/eslint-plugin':
+    specifier: ^2.6.1
+    version: 2.6.4(eslint@9.9.0)(typescript@5.5.4)
+  '@stylistic/eslint-plugin-ts':
+    specifier: ^2.6.1
+    version: 2.6.4(eslint@9.9.0)(typescript@5.5.4)
+  '@tsconfig/node20':
+    specifier: ^20.1.4
+    version: 20.1.4
+  '@types/node':
+    specifier: ^20.14.12
+    version: 20.16.1
+  '@typescript-eslint/parser':
+    specifier: ^8.0.0
+    version: 8.1.0(eslint@9.9.0)(typescript@5.5.4)
+  '@vitejs/plugin-vue':
+    specifier: ^5.1.0
+    version: 5.1.2(vite@5.4.1)(vue@3.4.38)
+  '@vue/tsconfig':
+    specifier: ^0.5.1
+    version: 0.5.1
+  eslint:
+    specifier: ^9.8.0
+    version: 9.9.0
+  eslint-plugin-storybook:
+    specifier: ^0.8.0
+    version: 0.8.0(eslint@9.9.0)(typescript@5.5.4)
+  eslint-plugin-vue:
+    specifier: ^9.27.0
+    version: 9.27.0(eslint@9.9.0)
+  eslint-plugin-vuejs-accessibility:
+    specifier: ^2.4.1
+    version: 2.4.1(eslint@9.9.0)
+  sass:
+    specifier: ^1.77.8
+    version: 1.77.8
+  storybook:
+    specifier: ^8.2.6
+    version: 8.2.9
+  storybook-addon-vue-mdx:
+    specifier: ^1.0.1
+    version: 1.0.1(@storybook/blocks@8.2.9)(@storybook/builder-vite@8.2.9)(@storybook/components@8.2.9)(@storybook/core-events@8.2.9)(@storybook/manager-api@8.2.9)(@storybook/mdx2-csf@1.1.0)(@storybook/preview-api@8.2.9)(@storybook/theming@8.2.9)(@storybook/types@8.2.9)(react-dom@18.3.1)(react@18.3.1)(vue@3.4.38)
+  typescript:
+    specifier: ^5.5.4
+    version: 5.5.4
+  typescript-eslint:
+    specifier: ^8.0.0
+    version: 8.1.0(eslint@9.9.0)(typescript@5.5.4)
+  vite:
+    specifier: ^5.3.4
+    version: 5.4.1(@types/node@20.16.1)(sass@1.77.8)
+  vite-plugin-dts:
+    specifier: ^4.0.1
+    version: 4.0.3(@types/node@20.16.1)(typescript@5.5.4)(vite@5.4.1)
+  vue:
+    specifier: ^3.4.33
+    version: 3.4.38(typescript@5.5.4)
+  vue-tsc:
+    specifier: ^2.0.28
+    version: 2.0.29(typescript@5.5.4)
+  vuetify:
+    specifier: ^3.6.13
+    version: 3.7.0(typescript@5.5.4)(vue@3.4.38)
 
 packages:
 
@@ -5924,7 +5923,13 @@ snapshots:
 
   deep-is@0.1.4: {}
 
-  defaults@1.0.4:
+  /deepmerge@4.3.1:
+    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
+  /defaults@1.0.4:
+    resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
     dependencies:
       clone: 1.0.4
 

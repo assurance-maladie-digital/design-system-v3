@@ -82,5 +82,8 @@
   "peerDependencies": {
     "vue": "^3.4.33",
     "vuetify": "^3.6.13"
+  },
+  "dependencies": {
+    "deepmerge": "^4.3.1"
   }
 }
