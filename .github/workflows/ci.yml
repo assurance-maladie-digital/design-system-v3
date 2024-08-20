@@ -12,28 +12,18 @@ jobs:
         node-version: [18.x, 20.x]
 
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@v1
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-
-      # Installation explicite de pnpm
       - name: Install pnpm
         run: npm install -g pnpm
-
-      # Vérification de l'installation de pnpm
-      - name: Check pnpm version
-        run: pnpm -v
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
       - name: Lint (show only errors)
         run: pnpm lint --quiet
-
       - name: Build
         run: pnpm build
         working-directory: ./
