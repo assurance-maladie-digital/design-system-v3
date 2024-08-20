@@ -25,24 +25,24 @@ const targetElement = ref<HTMLElement | null>(null)
 useResizeObserver(targetElement, (entries) => {
     const entry = entries[0]
     const width = entry.contentRect.width
-    calculateColumns(width)
+    // calculateColumns(width)
 })
 
 onMounted(() => {
     targetElement.value = document.body
-    calculateColumns(targetElement.value.clientWidth)
+    // calculateColumns(targetElement.value.clientWidth)
 })
 </script>
 
 <template>
 <v-container>
 <v-col>
-<div class="bg-blue-accent-4 top-0">Menu</div>
+<div class="bg-blue-accent-4 top-0 text-center">Menu</div>
     <div class="page-container">
     <v-col v-for="n in 12" :key="n" class="bg-amber-darken-4" :style="{ width: '100%', height:'496px' }">
     </v-col>
     </div>
-    <div class="bg-blue-accent-4 top-0">Footer</div>
+    <div class="bg-blue-accent-4 top-0 text-center">Footer</div>
     </v-col>
     </v-container>
     </template>
