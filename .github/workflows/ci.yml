@@ -20,9 +20,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
+      # Installation explicite de pnpm
       - name: Install pnpm
         run: npm install -g pnpm
 
+      # Vérification de l'installation de pnpm
       - name: Check pnpm version
         run: pnpm -v
 
