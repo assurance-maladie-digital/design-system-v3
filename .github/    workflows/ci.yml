@@ -1,0 +1,32 @@
+name: Node.js CI
+
+on:
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint (show only errors)
+        run: pnpm lint --quiet
+        working-directory: ./
+      - name: Unit tests
+        run: pnpm test:unit
+      - name: Build
+        run: pnpm build
+        working-directory: ./
