@@ -57,12 +57,12 @@ export default defineConfig({
 				'src/components/index.ts',
 				...coverageConfigDefaults.exclude,
 			],
-			/*thresholds: {
+			/* thresholds: {
 				branches: 80,
 				functions: 80,
 				lines: 80,
 				statements: 80,
-			},*/
+			}, */
 		},
 	},
 })

@@ -1,0 +1,502 @@
+@import 'vuetify/_styles.scss';
+
+// Primitives
+$orange-darken-80: #2d100b;
+$orange-darken-60: #5a2017;
+$orange-darken-40: #862f22;
+$orange-darken-20: #b33f2e;
+$orange-base: #e04f39;
+$orange-lighten-20: #e67261;
+$orange-lighten-40: #ec9588;
+$orange-lighten-60: #f3b9b0;
+$orange-lighten-80: #f9dcd7;
+$orange-lighten-90: #fcedeb;
+$orange-lighten-97: #fefaf9;
+$yellow-darken-80: #302407;
+$yellow-darken-60: #60480e;
+$yellow-darken-40: #906b15;
+$yellow-darken-20: #c08f1c;
+$yellow-base: #f0b323;
+$yellow-lighten-20: #f3c24f;
+$yellow-lighten-40: #f6d17b;
+$yellow-lighten-60: #f9e1a7;
+$yellow-lighten-80: #fcf0d3;
+$yellow-lighten-90: #fdf7e9;
+$yellow-lighten-97: #fffdf8;
+$green-darken-80: #112717;
+$green-darken-60: #224e2d;
+$green-darken-40: #347444;
+$green-darken-20: #459b5a;
+$green-base: #56c271;
+$green-lighten-20: #78ce8d;
+$green-lighten-40: #9adaaa;
+$green-lighten-60: #bbe7c6;
+$green-lighten-80: #ddf3e3;
+$green-lighten-90: #eef9f1;
+$green-lighten-97: #fafdfb;
+$turquoise-darken-80: #00221c;
+$turquoise-darken-60: #004439;
+$turquoise-darken-40: #006755;
+$turquoise-darken-20: #008972;
+$turquoise-base: #00ab8e;
+$turquoise-lighten-20: #33bca5;
+$turquoise-lighten-40: #66cdbb;
+$turquoise-lighten-60: #99ddd2;
+$turquoise-lighten-80: #cceee8;
+$turquoise-lighten-90: #e5f7f4;
+$turquoise-lighten-97: #f7fcfc;
+$blue-darken-80: #020d1f;
+$blue-darken-60: #051a3e;
+$blue-darken-40: #07275c;
+$blue-darken-20: #0a347b;
+$blue-base: #0c419a;
+$blue-lighten-20: #3d67ae;
+$blue-lighten-40: #6d8dc2;
+$blue-lighten-60: #9eb3d7;
+$blue-lighten-80: #ced9eb;
+$blue-lighten-90: #e7ecf5;
+$blue-lighten-97: #f8f9fc;
+$cyan-darken-80: #00212d;
+$cyan-darken-60: #004259;
+$cyan-darken-40: #006386;
+$cyan-darken-20: #0084b2;
+$cyan-base: #00a5df;
+$cyan-lighten-20: #33b7e5;
+$cyan-lighten-40: #66c9ec;
+$cyan-lighten-60: #99dbf2;
+$cyan-lighten-80: #ccedf9;
+$cyan-lighten-90: #e5f6fc;
+$cyan-lighten-97: #f7fcfe;
+$frosted-blue-darken-80: #142327;
+$frosted-blue-darken-60: #28464d;
+$frosted-blue-darken-40: #3d6874;
+$frosted-blue-darken-20: #518b9a;
+$frosted-blue-base: #65aec1;
+$frosted-blue-lighten-20: #84becd;
+$frosted-blue-lighten-40: #a3ceda;
+$frosted-blue-lighten-60: #c1dfe6;
+$frosted-blue-lighten-80: #e0eff3;
+$frosted-blue-lighten-90: #f0f7f9;
+$frosted-blue-lighten-97: #fafdfd;
+$parma-darken-80: #171c26;
+$parma-darken-60: #2f384d;
+$parma-darken-40: #465473;
+$parma-darken-20: #5e709a;
+$parma-base: #758cc0;
+$parma-lighten-20: #91a3cd;
+$parma-lighten-40: #acbad9;
+$parma-lighten-60: #c8d1e6;
+$parma-lighten-80: #e3e8f2;
+$parma-lighten-90: #f1f3f9;
+$parma-lighten-97: #fbfcfd;
+$mauve-darken-80: #201224;
+$mauve-darken-60: #402449;
+$mauve-darken-40: #60376d;
+$mauve-darken-20: #804992;
+$mauve-base: #a05bb6;
+$mauve-lighten-20: #b37cc5;
+$mauve-lighten-40: #c69dd3;
+$mauve-lighten-60: #d9bde2;
+$mauve-lighten-80: #ecdef0;
+$mauve-lighten-90: #f5eff8;
+$mauve-lighten-97: #fcfafd;
+$pink-darken-80: #2d051a;
+$pink-darken-60: #5a0a34;
+$pink-darken-40: #87104d;
+$pink-darken-20: #b41567;
+$pink-base: #e11a81;
+$pink-lighten-20: #e7489a;
+$pink-lighten-40: #ed76b3;
+$pink-lighten-60: #f3a3cd;
+$pink-lighten-80: #f9d1e6;
+$pink-lighten-90: #fce8f2;
+$pink-lighten-97: #fef8fb;
+$brick-darken-80: #291112;
+$brick-darken-60: #522224;
+$brick-darken-40: #7b3237;
+$brick-darken-20: #a44349;
+$brick-base: #cd545b;
+$brick-lighten-20: #d7767c;
+$brick-lighten-40: #e1989d;
+$brick-lighten-60: #ebbbbd;
+$brick-lighten-80: #f5ddde;
+$brick-lighten-90: #faeeef;
+$brick-lighten-97: #fdfafa;
+$grey-darken-80: #111212;
+$grey-darken-60: #222324;
+$grey-darken-40: #323535;
+$grey-darken-20: #434647;
+$grey-base: #545859;
+$grey-lighten-20: #76797a;
+$grey-lighten-40: #989b9b;
+$grey-lighten-60: #bbbcbd;
+$grey-lighten-80: #dddede;
+$grey-lighten-90: #eeeeee;
+$grey-lighten-97: #fafafa;
+$white-20: rgba(255, 255, 255, 0.2000);
+$white-38: rgba(255, 255, 255, 0.3800);
+$white-40: rgba(255, 255, 255, 0.4000);
+$white-70: rgba(255, 255, 255, 0.7000);
+$white-base: #ffffff;
+$white-08: rgba(255, 255, 255, 0.0800);
+$white-00: rgba(255, 255, 255, 0.0000);
+$none-value: undefined;
+$transparent-blue-18: rgba(12, 65, 154, 0.1800);
+$transparent-blue-08: rgba(12, 65, 154, 0.0800);
+$transparent-blue-00: rgba(12, 65, 154, 0.0000);
+
+// Semantic Tokens
+$primary-darker-2: #07275c;
+$primary-darker: #0a347b;
+$primary-base: #0c419a;
+$primary-light: #3d67ae;
+$primary-lighter-2: #9eb3d7;
+$primary-lighter-3: #ced9eb;
+$primary-lighter-4: #e7ecf5;
+$primary-lighter-5: #f8f9fc;
+$neutral-black: #222324;
+$neutral-black-lighter: #545859;
+$neutral-black-lighter-2: #989b9b;
+$neutral-grey: #dddede;
+$neutral-white: #ffffff;
+$neutral-white-alpha: rgba(255, 255, 255, 0.7);
+$neutral-white-alpha-lighter: rgba(255, 255, 255, 0.4);
+$neutral-white-alpha-lighter-2: rgba(255, 255, 255, 0.2);
+$neutral-white-alpha-lighter-3: rgba(255, 255, 255, 0.08);
+$info-info-lightest: #e7ecf5;
+$info-info-lighter: #ced9eb;
+$info-default: #0c419a;
+$success-lightest: #e5f7f4;
+$success-lighter: #cceee8;
+$success-default: #56c271;
+$success-darker: #224e2d;
+$warning-lightest: #fdf7e9;
+$warning-lighter: #fcf0d3;
+$warning-default: #f0b323;
+$warning-darker: #60480e;
+$danger-lightest: #fcedeb;
+$danger-lighter: #f9dcd7;
+$danger-default: #b33f2e;
+$user-professionnel: #66c9ec;
+$user-assure: #ed76b3;
+$user-entreprise: #f0b323;
+
+// Contextual Tokens
+$colors-background: #ffffff;
+$colors-border: #dddddd;
+$colors-text: #333333;
+$colors-icon: #666666;
+$colors-overlay: rgba(0, 0, 0, 0.5);
+$colors-interactive: #007bff;
+$gap-0: 0;
+$gap-1: 4px;
+$gap-2: 8px;
+$gap-3: 12px;
+$gap-4: 16px;
+$gap-5: 20px;
+$gap-6: 24px;
+$gap-7: 28px;
+$gap-8: 32px;
+$gap-9: 36px;
+$gap-10: 40px;
+$gap-11: 44px;
+$gap-12: 48px;
+$gap-13: 52px;
+$gap-14: 56px;
+$gap-15: 60px;
+$gap-16: 64px;
+$icon-size-xsmall: 8px;
+$icon-size-small: 16px;
+$icon-size-default: 24px;
+$icon-size-large: 32px;
+$radius-rounded-0: 0;
+$radius-rounded: 4px;
+$radius-rounded-lg: 8px;
+$radius-rounded-pill: 64px;
+$padding-0: 0;
+$padding-2: 8px;
+$padding-3: 12px;
+$padding-4: 16px;
+$padding-6: 24px;
+$padding-8: 32px;
+$padding-10: 40px;
+$padding-14: 56px;
+$padding-16: 64px;
+$font-size-title: 24px;
+$font-size-alt-title: 20px;
+$font-size-body-text: 16px;
+$font-size-link-label: 14px;
+
+// Additional Contextual Tokens
+$colors-background-main: #e7ecf5;
+$colors-background-surface: #ffffff;
+$colors-background-main-alt: #ffffff;
+$colors-background-surface-alt: #e7ecf5;
+$colors-background-raised: #f8f9fc;
+$colors-background-accent: #0c419a;
+$colors-background-accent-contrasted: #07275c;
+$colors-background-accent-alt: #111212;
+$colors-background-info: #ced9eb;
+$colors-background-info-subdued: #e7ecf5;
+$colors-background-info-contrasted: #0c419a;
+$colors-background-success: #cceee8;
+$colors-background-success-subdued: #e5f7f4;
+$colors-background-success-contrasted: #56c271;
+$colors-background-warning: #fcf0d3;
+$colors-background-warning-subdued: #fdf7e9;
+$colors-background-warning-contrasted: #f0b323;
+$colors-background-error: #f9dcd7;
+$colors-background-error-subdued: #fcedeb;
+$colors-background-error-contrasted: #b33f2e;
+$colors-background-disabled: #dddede;
+$colors-background-disabled-ondark: rgba(255, 255, 255, 0.0800);
+$colors-background-assure: #ed76b3;
+$colors-background-professionnel: #66c9ec;
+$colors-background-entreprise: #f0b323;
+
+$colors-border-darker: #222324;
+$colors-border-base: #989b9b;
+$colors-border-subdued: #dddede;
+$colors-border-accent: #0c419a;
+$colors-border-accent-contrasted: #07275c;
+$colors-border-accent-ondark: #ffffff;
+$colors-border-info: #0c419a;
+$colors-border-success: #224e2d;
+$colors-border-warning: #60480e;
+$colors-border-error: #b33f2e;
+$colors-border-ondark: rgba(255, 255, 255, 0.7);
+$colors-border-disabled: #dddede;
+$colors-border-disabled-ondark: rgba(255, 255, 255, 0.4);
+
+$colors-text-base: #222324;
+$colors-text-accent: #0c419a;
+$colors-text-accent-contrasted: #07275c;
+$colors-text-subdued: #545859;
+$colors-text-info: #0c419a;
+$colors-text-success: #224e2d;
+$colors-text-warning: #60480e;
+$colors-text-error: #b33f2e;
+$colors-text-disabled: #989b9b;
+$colors-text-ondark: #ffffff;
+$colors-text-subdued-ondark: rgba(255, 255, 255, 0.7);
+$colors-text-disabled-ondark: rgba(255, 255, 255, 0.4);
+
+$colors-icon-base: #222324;
+$colors-icon-subdued: #545859;
+$colors-icon-subdued-ondark: rgba(255, 255, 255, 0.7);
+$colors-icon-accent: #0c419a;
+$colors-icon-accent-contrasted: #07275c;
+$colors-icon-info: #0c419a;
+$colors-icon-success: #224e2d;
+$colors-icon-warning: #60480e;
+$colors-icon-error: #b33f2e;
+$colors-icon-ondark: #ffffff;
+$colors-icon-disabled: #989b9b;
+$colors-icon-disabled-ondark: rgba(255, 255, 255, 0.4);
+
+$colors-overlay-fullpage: #989b9b;
+$colors-overlay-ondark: #ffffff;
+$colors-overlay-onlight: #0c419a;
+
+$colors-interactive-default: rgba(255, 255, 255, 0.0000);
+$colors-interactive-hover: #e7ecf5;
+$colors-interactive-pressed: #ced9eb;
+$colors-interactive-focus: #e7ecf5;
+$colors-interactive-disabled: rgba(255, 255, 255, 0.0000);
+$colors-interactive-hover-on-selected: #ced9eb;
+
+$padding-0: 0;
+$padding-2: 8px;
+$padding-3: 12px;
+$padding-4: 16px;
+$padding-6: 24px;
+$padding-8: 32px;
+$padding-10: 40px;
+$padding-14: 56px;
+$padding-16: 64px;
+
+$heading-1-font-size: 24px;
+$heading-2-font-size: 20px;
+$heading-3-font-size: 16px;
+$heading-4-font-size: 14px;
+
+
+.title {
+  font-size: $font-size-title !important;
+}
+
+.alt-title {
+  font-size: $font-size-alt-title !important;
+}
+
+.body-text {
+  font-size: $font-size-body-text !important;
+}
+
+.link-label {
+  font-size: $font-size-link-label !important;
+}
+
+h1 {
+  font-size: 32px !important;
+  line-height: 130% !important;
+}
+
+.h1-bold {
+    font-size: 32px !important;
+    font-weight: bold !important;
+    line-height: 130% !important;
+}
+
+h2 {
+  font-size: 28px !important;
+  line-height: 130% !important;
+}
+
+.h2-bold {
+    font-size: 28px !important;
+    font-weight: bold !important;
+    line-height: 130% !important;
+}
+
+h3 {
+  font-size: 24px !important;
+  line-height: 130% !important;
+}
+
+.h3-bold {
+    font-size: 24px !important;
+    font-weight: bold !important;
+    line-height: 130% !important;
+}
+
+h4 {
+  font-size: 20px !important;
+  line-height: 130% !important;
+}
+
+.h4-bold {
+    font-size: 20px !important;
+    font-weight: bold !important;
+    line-height: 130% !important;
+}
+
+.display-1 {
+    font-size: 40px !important;
+    line-height: 130% !important;
+}
+
+.display-1-bold {
+  font-size: 40px !important;
+  font-weight: bold !important;
+  line-height: 130% !important;
+}
+
+.display-2 {
+    font-size: 30px !important;
+    line-height: 130% !important;
+}
+
+.display-2-bold {
+  font-size: 30px !important;
+  font-weight: bold !important;
+  line-height: 130% !important;
+}
+
+// espacement verticaux des elements
+
+$spacing-none: 0;
+$spacing-xx-small: 4px;
+$spacing-x-small: 8px;
+$spacing-small: 16px;
+$spacing-medium: 24px;
+$spacing-large: 32px;
+$spacing-x-large: 40px;
+$spacing-xx-large: 56px;
+$spacing-xxx-large: 64px;
+$spacing-huge: 80px;
+
+// espacement horizontaux des elements
+
+$spacing-horizontal-none: 0;
+$spacing-horizontal-xx-small: 4px;
+$spacing-horizontal-x-small: 8px;
+$spacing-horizontal-small: 16px;
+$spacing-horizontal-medium: 24px;
+$spacing-horizontal-large: 32px;
+$spacing-horizontal-x-large: 40px;
+$spacing-horizontal-xx-large: 56px;
+$spacing-horizontal-xxx-large: 64px;
+$spacing-horizontal-huge: 80px;
+
+
+// Surcharger toutes les élévations pour utiliser uniquement l'élévation 02
+.elevation-0,
+.elevation-1,
+.elevation-2,
+.elevation-3,
+.elevation-4,
+.elevation-5,
+.elevation-6,
+.elevation-7,
+.elevation-8,
+.elevation-9,
+.elevation-10,
+.elevation-11,
+.elevation-12,
+.elevation-13,
+.elevation-14,
+.elevation-15,
+.elevation-16,
+.elevation-17,
+.elevation-18,
+.elevation-19,
+.elevation-20,
+.elevation-21,
+.elevation-22,
+.elevation-23,
+.elevation-24 {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
+// global.scss
+
+// Variables pour les largeurs des conteneurs
+$container-mobile-max-width: 600px;
+$container-tablet-max-width: 960px;
+$container-desktop-max-width: 960px;
+
+// Conteneur général
+.page-container {
+  text-align: center;
+  margin: 0 auto; // Centrer les conteneurs
+  padding: 40px 40px 56px 56px;
+  width: 1160px;
+  // Mobile Styles
+  @media (max-width: 600px) {
+    max-width: $container-mobile-max-width;
+    padding: 40px 24px 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 24px;
+    width: 80%;
+  }
+
+  // Tablet Styles
+  @media (min-width: 601px) and (max-width: 960px) {
+    max-width: $container-tablet-max-width;
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 24px;
+  }
+
+  // Desktop Styles
+  @media (min-width: 960px) {
+    max-width: $container-desktop-max-width;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 24px;
+  }
+}
