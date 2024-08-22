@@ -1,19 +1,10 @@
-// src/components/customizableOptions.vue
-<script setup>
-	import useCustomizableOptions from '../composables/useCustomizableOptions'
+<script lang="ts" setup>
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import defaultOptions from './options.json'
 
-	const defaultOptions = {
-		btn: {
-			color: 'primary',
-		},
-	}
-
-	const props = defineProps({
-		vuetifyOptions: {
-			type: Object,
-			default: () => ({}),
-		},
-	})
+	const props = defineProps<CustomizableOptions & {
+		title: string
+	}>()
 
 	const options = useCustomizableOptions(defaultOptions, props)
 </script>
@@ -21,7 +12,7 @@
 <template>
 	<div>
 		<VBtn v-bind="options.btn">
-			Button
+			{{ title }}
 		</VBtn>
 	</div>
 </template>
