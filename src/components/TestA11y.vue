@@ -3,7 +3,10 @@
 
 <template>
 	<div>
-		<img src="image.jpg">
+		<img
+			src="image.jpg"
+			alt="img"
+		>
 		<button>Click me</button>
 	</div>
 </template>
