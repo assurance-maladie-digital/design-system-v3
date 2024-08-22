@@ -24,6 +24,9 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Lint (show only errors)
         run: pnpm lint --quiet
+        working-directory: ./
+      - name: Unit tests without Snapshots
+        run: pnpm test:unit
       - name: Build
         run: pnpm build
         working-directory: ./
