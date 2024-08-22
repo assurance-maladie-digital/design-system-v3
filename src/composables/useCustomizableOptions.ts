@@ -1,7 +1,7 @@
 import { computed, type ComputedRef } from 'vue'
 import deepmerge from 'deepmerge'
 
-type PropsList = Record<string, any>
+type PropsList = Record<string, unknown>
 type ComponentsProps = Record<string, PropsList>
 export interface CustomizableOptions {
 	vuetifyOptions?: ComponentsProps
