@@ -7,7 +7,6 @@ const meta = {
 	title: 'Components/TestComponent',
 	component: TestComponent,
 	tags: ['autodocs'],
-	args: { onClick: fn() },
 	parameters: {
 		layout: 'fullscreen',
 	},
@@ -21,6 +20,7 @@ export const Default: Story = {
 	args: {
 		number1: 1,
 		number2: 2,
+		onClick: fn(),
 	},
 }
 
@@ -28,5 +28,6 @@ export const WithDifferentNumbers: Story = {
 	args: {
 		number1: 3,
 		number2: 4,
+		onClick: fn(),
 	},
 }

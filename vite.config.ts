@@ -48,13 +48,17 @@ export default defineConfig({
 			provider: 'v8',
 			reportsDirectory: './tests/unit/coverage',
 			include: [
-				'src/**/*.{js,vue,ts}',
+				'src/components/**/*.{js,vue,ts}',
 			],
 			exclude: [
 				'src/**/*.spec.{js,vue,ts}',
 				'src/**/*.stories.*',
 				'src/main.ts',
 				'src/components/index.ts',
+				'src/components/TestA11y.vue',
+				'src/components/customizableOptions.vue',
+				'src/components/gridsTests.vue',
+				'src/components/TestDesignTokensComponent/*',
 				...coverageConfigDefaults.exclude,
 			],
 			/* thresholds: {
