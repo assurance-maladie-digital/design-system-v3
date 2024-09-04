@@ -23,7 +23,7 @@ importers:
         version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       '@storybook/addon-interactions':
         specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8))
+        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8))
       '@storybook/addon-links':
         specifier: ^8.2.6
         version: 8.2.9(react@18.3.1)(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
@@ -41,7 +41,7 @@ importers:
         version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       '@storybook/test':
         specifier: ^8.2.6
-        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8))
+        version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8))
       '@storybook/theming':
         specifier: ^8.2.6
         version: 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
@@ -71,7 +71,7 @@ importers:
         version: 5.1.2(vite@5.4.2(@types/node@20.16.2)(sass@1.77.8))(vue@3.4.38(typescript@5.5.4))
       '@vitest/coverage-v8':
         specifier: ^2.0.5
-        version: 2.0.5(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8))
+        version: 2.0.5(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8))
       '@vue/test-utils':
         specifier: ^2.4.6
         version: 2.4.6
@@ -92,7 +92,7 @@ importers:
         version: 2.4.1(eslint@9.9.1)
       happy-dom:
         specifier: ^15.0.0
-        version: 15.3.1
+        version: 15.7.3
       husky:
         specifier: ^9.1.4
         version: 9.1.5
@@ -119,7 +119,7 @@ importers:
         version: 4.1.0(@types/node@20.16.2)(rollup@4.21.0)(typescript@5.5.4)(vite@5.4.2(@types/node@20.16.2)(sass@1.77.8))
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8)
+        version: 2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8)
       vue:
         specifier: ^3.4.33
         version: 3.4.38(typescript@5.5.4)
@@ -2481,8 +2481,8 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
-  happy-dom@15.3.1:
-    resolution: {integrity: sha512-3nwi8abkBUHzdq/6UhseErN6b6J1obWZFl5XKKMUEp+OL4Vq7AIiLSVDmXQp83qykJHjhdrBxsae3CTA5nB36A==}
+  happy-dom@15.7.3:
+    resolution: {integrity: sha512-w3RUaYNXFJX5LiNVhOJLK4GqCB1bFj1FvELtpon3HrN8gUpS09V0Vvm4/BBRRj7mLUE1+ch8PKv1JxEp/0IHjA==}
     engines: {node: '>=18.0.0'}
 
   has-flag@3.0.0:
@@ -5233,11 +5233,11 @@ snapshots:
       '@storybook/global': 5.0.0
       storybook: 8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2))
 
-  '@storybook/addon-interactions@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8))':
+  '@storybook/addon-interactions@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8))':
     dependencies:
       '@storybook/global': 5.0.0
       '@storybook/instrumenter': 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
-      '@storybook/test': 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8))
+      '@storybook/test': 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8))
       polished: 4.3.1
       storybook: 8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2))
       ts-dedent: 2.2.0
@@ -5413,12 +5413,12 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       storybook: 8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2))
 
-  '@storybook/test@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8))':
+  '@storybook/test@8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8))':
     dependencies:
       '@storybook/csf': 0.1.11
       '@storybook/instrumenter': 8.2.9(storybook@8.2.9(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       '@testing-library/dom': 10.1.0
-      '@testing-library/jest-dom': 6.4.5(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8))
+      '@testing-library/jest-dom': 6.4.5(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8))
       '@testing-library/user-event': 14.5.2(@testing-library/dom@10.1.0)
       '@vitest/expect': 1.6.0
       '@vitest/spy': 1.6.0
@@ -5527,7 +5527,7 @@ snapshots:
       lz-string: 1.5.0
       pretty-format: 27.5.1
 
-  '@testing-library/jest-dom@6.4.5(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8))':
+  '@testing-library/jest-dom@6.4.5(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8))':
     dependencies:
       '@adobe/css-tools': 4.4.0
       '@babel/runtime': 7.25.4
@@ -5538,7 +5538,7 @@ snapshots:
       lodash: 4.17.21
       redent: 3.0.0
     optionalDependencies:
-      vitest: 2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8)
+      vitest: 2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8)
 
   '@testing-library/user-event@14.5.2(@testing-library/dom@10.1.0)':
     dependencies:
@@ -5767,7 +5767,7 @@ snapshots:
       vite: 5.4.2(@types/node@20.16.2)(sass@1.77.8)
       vue: 3.4.38(typescript@5.5.4)
 
-  '@vitest/coverage-v8@2.0.5(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8))':
+  '@vitest/coverage-v8@2.0.5(vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -5781,7 +5781,7 @@ snapshots:
       std-env: 3.7.0
       test-exclude: 7.0.1
       tinyrainbow: 1.2.0
-      vitest: 2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8)
+      vitest: 2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8)
     transitivePeerDependencies:
       - supports-color
 
@@ -6851,7 +6851,7 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  happy-dom@15.3.1:
+  happy-dom@15.7.3:
     dependencies:
       entities: 4.5.0
       webidl-conversions: 7.0.0
@@ -8188,7 +8188,7 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.77.8
 
-  vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.3.1)(sass@1.77.8):
+  vitest@2.0.5(@types/node@20.16.2)(happy-dom@15.7.3)(sass@1.77.8):
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@vitest/expect': 2.0.5
@@ -8211,7 +8211,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 20.16.2
-      happy-dom: 15.3.1
+      happy-dom: 15.7.3
     transitivePeerDependencies:
       - less
       - lightningcss
