@@ -1,0 +1,35 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as NotificationBarStories from './NotificationBar.stories';
+
+<Meta of={NotificationBarStories} />
+
+# NotificationBar
+
+Le composant `NotificationBar` est utilisé pour afficher des notifications à l’utilisateur.
+
+<Canvas of={NotificationBarStories.Success}  />
+
+# API
+<Controls of={NotificationBarStories.Success} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<template>
+  <div class="d-flex flex-wrap align-center justify-center">
+    <NotificationBar v-model="showNotification" type="success" :closeBtnText="Fermer">
+      <template #default>This is a success notification</template>
+    </NotificationBar>
+
+    <VBtn v-if="!showNotification" color="primary" @click="showNotification = true" class="ma-6">Réinitialiser</VBtn>
+  </div>
+</template>
+
+<script setup lang="ts">
+import NotificationBar from '@/components/NotificationBar/NotificationBar.vue'
+import { ref } from 'vue'
+
+const showNotification = ref(true);
+</script>
+`} />

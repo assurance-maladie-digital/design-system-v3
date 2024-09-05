@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NotificationBar.vue > should render notification bar 1`] = `
+"<div data-v-867cdd3c="" notification="[object Object]">
+  <v-snackbar-stub data-v-867cdd3c="" color="info" width="960px" class="" multiline="false" timer="false" timeout="-1" vertical="false" location="top" rounded="0" tile="false" variant="elevated" absolute="false" attach="false" closeonback="true" contained="false" disabled="false" modelvalue="true" zindex="2000" activatorprops="[object Object]" openonhover="false" closeoncontentclick="false" eager="false" locationstrategy="static" origin="auto" transition="v-snackbar-transition" role="status"></v-snackbar-stub>
+</div>"
+`;

@@ -1,4 +1,9 @@
+<<<<<<<< HEAD:src/temp/TestDTComponent.vue
 <script lang="ts">
+========
+<script setup lang="ts">
+	import { VBtn } from 'vuetify/components'
+>>>>>>>> 82f4bcd (chore(deps): update dependency vue to v3.5.2 (#66)):src/components/Temp/TestDesignTokensComponent/TestDTComponent.vue
 </script>
 
 <template>
@@ -77,7 +82,11 @@
 </template>
 
 <style lang="scss" scoped>
+<<<<<<<< HEAD:src/temp/TestDTComponent.vue
 @import '../assets/tokens';
+========
+@import '../../../assets/tokens';
+>>>>>>>> 82f4bcd (chore(deps): update dependency vue to v3.5.2 (#66)):src/components/Temp/TestDesignTokensComponent/TestDTComponent.vue
 
 h1 {
   color: $orange-base;

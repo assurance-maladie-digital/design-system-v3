@@ -8,6 +8,9 @@ dist-ssr
 .local
 types/
 
+# Playground
+**/dev/Playground.vue
+
 # Logs
 logs
 *.log
