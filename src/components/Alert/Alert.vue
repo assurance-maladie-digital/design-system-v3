@@ -33,17 +33,14 @@
 		}[props.type]
 	})
 
-	const emit = defineEmits(['update:modelValue'])
-
 	function dismissAlert() {
 		show.value = false
-		emit('update:modelValue', false)
 	}
 </script>
 
 <template>
 	<VAlert
-		:model-value="show"
+		v-model="show"
 		:type
 		:closable
 		:variant
