@@ -33,8 +33,11 @@
 		}[props.type]
 	})
 
+	const emit = defineEmits(['update:modelValue'])
+
 	function dismissAlert() {
 		show.value = false
+		emit('update:modelValue', false)
 	}
 </script>
 

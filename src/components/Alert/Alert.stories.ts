@@ -31,6 +31,7 @@ type Story = StoryObj<typeof meta>
 
 export const Tonal: Story = {
 	args: {
+		modelValue: true,
 		type: 'success',
 		closable: true,
 		variant: 'tonal',
