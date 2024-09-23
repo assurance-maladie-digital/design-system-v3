@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import PageContainer from './PageContainer.vue'
+import { VCard } from 'vuetify/components'
 
 const meta = {
 	title: 'Components/PageContainer',
@@ -32,9 +33,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		size: 'xl',
-		spacing: undefined,
-		color: 'transparent',
+		default: 'Contenu de la page',
 	},
 	render: (args) => {
 		return {
@@ -44,9 +43,52 @@ export const Default: Story = {
 			},
 			template: `
                 <PageContainer :size="args.size" :spacing="args.spacing" :color="args.color">
-                  Contenu de la page
+					{{ args.default }}
                 </PageContainer>
             `,
+		}
+	},
+}
+
+export const Card: Story = {
+	args: {
+		default: 'Contenu de la page',
+	},
+	render: (args) => {
+		return {
+			components: { PageContainer, VCard },
+			setup() {
+				return { args }
+			},
+			template: `
+				<PageContainer :size="args.size" :spacing="args.spacing" :color="args.color">
+					<VCard class="pa-8">
+						{{ args.default }}
+					</VCard>
+				</PageContainer>
+			`,
+		}
+	},
+}
+
+export const Size: Story = {
+	args: {
+		default: 'Contenu de la page',
+		size: 's',
+	},
+	render: (args) => {
+		return {
+			components: { PageContainer, VCard },
+			setup() {
+				return { args }
+			},
+			template: `
+				<PageContainer :size="args.size" :spacing="args.spacing" :color="args.color">
+					<VCard class="pa-8">
+						{{ args.default }}
+					</VCard>
+				</PageContainer>
+			`,
 		}
 	},
 }

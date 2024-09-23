@@ -29,7 +29,7 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Tonal: Story = {
+export const Default: Story = {
 	args: {
 		modelValue: true,
 		type: 'success',

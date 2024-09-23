@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import PageContainer from '@/components/PageContainer/PageContainer.vue'
-import { VApp } from "vuetify/components";
 </script>
 
 <template>
