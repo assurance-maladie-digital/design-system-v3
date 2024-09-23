@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, defineExpose } from 'vue'
 	import { VSheet } from 'vuetify/components'
 	import { useDisplay } from 'vuetify'
 
@@ -43,6 +43,11 @@
 
 		return sizeMapping[props.size]
 	})
+
+  defineExpose({
+    spacingClass,
+    containerSize,
+  })
 </script>
 
 <template>

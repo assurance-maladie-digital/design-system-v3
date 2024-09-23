@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
+import {computed, defineExpose} from 'vue'
 	import { VAlert, VIcon, VBtn } from 'vuetify/components'
 	import { locales } from './locales'
 	import {
@@ -36,6 +36,11 @@
 	function dismissAlert() {
 		show.value = false
 	}
+
+  defineExpose({
+    prependIcon,
+    dismissAlert,
+  })
 </script>
 
 <template>
