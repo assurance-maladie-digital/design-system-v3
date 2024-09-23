@@ -44,10 +44,10 @@
 		return sizeMapping[props.size]
 	})
 
-  defineExpose({
-    spacingClass,
-    containerSize,
-  })
+	defineExpose({
+		spacingClass,
+		containerSize,
+	})
 </script>
 
 <template>
