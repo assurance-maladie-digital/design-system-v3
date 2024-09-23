@@ -13,11 +13,9 @@
 		color: 'transparent',
 	})
 
-	const spacingClass = computed(() => {
-		if (props.spacing) {
-			return props.spacing
-		}
+  const display = useDisplay()
 
+	const spacingClass = computed(() => {
 		const spacingMapping: Record<string, string> = {
 			xs: 'px-0',
 			sm: 'px-4',
@@ -26,8 +24,11 @@
 			xl: 'px-8',
 		}
 
-		const display = useDisplay()
-		const spacing = spacingMapping[display.name]
+		const spacing = spacingMapping[display.name.value]
+
+    if (props.spacing) {
+      return `py-10 ${spacingMapping[props.spacing]}`
+    }
 
 		return `py-10 ${spacing}`
 	})
@@ -45,10 +46,7 @@
 </script>
 
 <template>
-	<div
-		:class="spacingClass"
-		class="vd-page-container d-flex justify-center"
-	>
+	<div :class="[spacingClass, 'vd-page-container d-flex justify-center']">
 		<VSheet
 			:width="containerSize"
 			:color="color"

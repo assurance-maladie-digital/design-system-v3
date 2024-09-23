@@ -31,14 +31,14 @@ describe('PageContainer', () => {
 	it('render correctly with spacing class', async () => {
 		const wrapper = mount(PageContainer, {
 			props: {
-				spacing: 'ma-4',
+				spacing: 'sm',
 			},
 			global: {
 				plugins: [vuetify],
 			},
 		})
 
-		expect(wrapper.vm.spacingClass).toBe('ma-4')
+		expect(wrapper.vm.spacingClass).toBe('py-10 px-4')
 	})
 
 	it('containerSize computed property', async () => {

@@ -1,0 +1,31 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as PageContainerStories from './PageContainer.stories';
+
+<Meta of={PageContainerStories} />
+
+# PageContainer
+
+Le composant `PageContainer` est un conteneur transparent utilisé pour afficher une page.
+
+<Canvas of={PageContainerStories.Default}  />
+
+# API
+
+<Controls of={PageContainerStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+import PageContainer from '@/components/PageContainer/PageContainer.vue'
+</script>
+
+<template>
+  <main>
+    <PageContainer size="l" color="orange">
+      <h1>Playground</h1>
+    </PageContainer>
+  </main>
+</template>
+`} />
