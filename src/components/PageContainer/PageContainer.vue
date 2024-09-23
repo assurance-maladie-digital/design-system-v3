@@ -13,7 +13,7 @@
 		color: 'transparent',
 	})
 
-  const display = useDisplay()
+	const display = useDisplay()
 
 	const spacingClass = computed(() => {
 		const spacingMapping: Record<string, string> = {
@@ -26,9 +26,9 @@
 
 		const spacing = spacingMapping[display.name.value]
 
-    if (props.spacing) {
-      return `py-10 ${spacingMapping[props.spacing]}`
-    }
+		if (props.spacing) {
+			return `py-10 ${spacingMapping[props.spacing]}`
+		}
 
 		return `py-10 ${spacing}`
 	})
