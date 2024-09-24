@@ -12,6 +12,9 @@ types/
 logs
 *.log
 
+# Dev
+dev/Playground.vue
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

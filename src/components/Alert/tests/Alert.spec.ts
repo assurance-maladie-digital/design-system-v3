@@ -82,4 +82,24 @@ describe('Alert', () => {
 		expect(wrapper.html()).toBeFalsy()
 		expect(wrapper.emitted('update:modelValue')![0]![0]).toBe(false)
 	})
+
+	it('prependIcon computed property', async () => {
+		const wrapper = mount(Alert, {
+			props: {
+				title: 'title',
+				message: 'message',
+				type: 'warning',
+				variant: 'outlined',
+				closable: true,
+			},
+			slots: {
+				default: 'slot content',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		expect(wrapper.vm.prependIcon).toBe('M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16')
+	})
 })

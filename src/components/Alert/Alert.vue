@@ -36,6 +36,11 @@
 	function dismissAlert() {
 		show.value = false
 	}
+
+	defineExpose({
+		prependIcon,
+		dismissAlert,
+	})
 </script>
 
 <template>
