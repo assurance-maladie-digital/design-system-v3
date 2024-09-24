@@ -7,6 +7,7 @@ const meta = {
 	component: PageContainer,
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: ['spacingClass', 'containerSize'] },
 	},
 	argTypes: {
 		size: {

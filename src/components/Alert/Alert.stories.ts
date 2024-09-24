@@ -7,6 +7,7 @@ const meta = {
 	component: Alert,
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: ['prependIcon', 'dismissAlert'] },
 	},
 	args: {
 		modelValue: true,
