@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
-  import { VMenu, VIcon, VBtn } from 'vuetify/components'
+	import { VMenu, VIcon, VBtn } from 'vuetify/components'
 	import { mdiContentCopy } from '@mdi/js'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
@@ -42,9 +42,9 @@
 	}
 
 	defineExpose({
-    copy,
-    tooltip,
-  })
+		copy,
+		tooltip,
+	})
 </script>
 
 <template>
