@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LangBtn.vue > render correctly 1`] = `
+"<button data-v-42678988="" type="button" class="v-btn v-theme--light text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined vd-lang-btn" aria-label="Choix de la langue. Actuellement" aria-haspopup="menu" aria-expanded="false" aria-owns="v-menu-0"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+  <!----><span class="v-btn__content" data-no-activator="">Français <i data-v-42678988="" class="M7,10L12,15L17,10H7Z mdi v-icon notranslate v-theme--light v-icon--size-default ml-1" aria-hidden="true"></i></span>
+  <!---->
+  <!---->
+</button>"
+`;
+
+exports[`LangBtn.vue > renders correctly 1`] = `
+"<button data-v-42678988="" type="button" class="v-btn v-theme--light text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined vd-lang-btn" aria-label="Choix de la langue. Actuellement" aria-haspopup="menu" aria-expanded="false" aria-owns="v-menu-0"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+  <!----><span class="v-btn__content" data-no-activator="">Français <i data-v-42678988="" class="M7,10L12,15L17,10H7Z mdi v-icon notranslate v-theme--light v-icon--size-default ml-1" aria-hidden="true"></i></span>
+  <!---->
+  <!---->
+</button>"
+`;
