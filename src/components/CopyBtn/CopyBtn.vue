@@ -1,76 +1,76 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { mdiContentCopy } from '@mdi/js'
+	import { ref } from 'vue'
+	import { mdiContentCopy } from '@mdi/js'
 
-import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
-import { copyToClipboard } from '@/utils/functions/copyToClipboard'
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { copyToClipboard } from '@/utils/functions/copyToClipboard'
 
-import { locales } from './locales'
-import { config } from './config'
+	import { locales } from './locales'
+	import { config } from './config'
 
-const props = withDefaults(defineProps<CustomizableOptions & {
-  label: string
-  textToCopy: (() => string) | string
-  hideTooltip?: boolean
-  tooltipDuration?: number
-}>(), {
-  hideTooltip: false,
-  tooltipDuration: 2500,
-})
+	const props = withDefaults(defineProps<CustomizableOptions & {
+		label: string
+		textToCopy: (() => string) | string
+		hideTooltip?: boolean
+		tooltipDuration?: number
+	}>(), {
+		hideTooltip: false,
+		tooltipDuration: 2500,
+	})
 
-const options = useCustomizableOptions(config, props)
+	const options = useCustomizableOptions(config, props)
 
-const tooltip = ref(false)
-const copyIcon = mdiContentCopy
+	const tooltip = ref(false)
+	const copyIcon = mdiContentCopy
 
-function copy(): void {
-  const contentToCopy =
-      typeof props.textToCopy === 'function'
-          ? props.textToCopy()
-          : props.textToCopy
+	function copy(): void {
+		const contentToCopy
+			= typeof props.textToCopy === 'function'
+				? props.textToCopy()
+				: props.textToCopy
 
-  copyToClipboard(contentToCopy)
+		copyToClipboard(contentToCopy)
 
-  if (props.hideTooltip) {
-    return
-  }
+		if (props.hideTooltip) {
+			return
+		}
 
-  setTimeout(() => {
-    tooltip.value = false
-  }, props.tooltipDuration)
-}
+		setTimeout(() => {
+			tooltip.value = false
+		}, props.tooltipDuration)
+	}
 
-defineExpose({ copy })
+	defineExpose({ copy })
 </script>
 
 <template>
-  <div class="vd-copy-btn">
-    <VMenu
-        v-model="tooltip"
-        v-bind="options.menu"
-        :disabled="props.hideTooltip"
-        transition="fade-transition"
-    >
-      <template #activator="{ props: menuProps }">
-        <VBtn
-            v-bind="{ ...menuProps, ...options.btn }"
-            :aria-label="props.label"
-            data-test-id="copy-btn"
-            @click="copy"
-        >
-          <slot name="icon">
-            <VIcon v-bind="options.icon">
-              {{ copyIcon }}
-            </VIcon>
-          </slot>
-        </VBtn>
-      </template>
+	<div class="vd-copy-btn">
+		<VMenu
+			v-model="tooltip"
+			v-bind="options.menu"
+			:disabled="props.hideTooltip"
+			transition="fade-transition"
+		>
+			<template #activator="{ props: menuProps }">
+				<VBtn
+					v-bind="{ ...menuProps, ...options.btn }"
+					:aria-label="props.label"
+					data-test-id="copy-btn"
+					@click="copy"
+				>
+					<slot name="icon">
+						<VIcon v-bind="options.icon">
+							{{ copyIcon }}
+						</VIcon>
+					</slot>
+				</VBtn>
+			</template>
 
-      <slot name="tooltip">
-        {{ locales.tooltip }}
-      </slot>
-    </VMenu>
-  </div>
+			<slot name="tooltip">
+				{{ locales.tooltip }}
+			</slot>
+		</VMenu>
+	</div>
 </template>
 
 <style lang="scss">

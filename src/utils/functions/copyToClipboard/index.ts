@@ -23,7 +23,8 @@ export function copyToClipboard(textToCopy: string): void {
 
 	if (navigator.clipboard) {
 		navigator.clipboard.writeText(textToCopy)
-	} else {
+	}
+	else {
 		document.execCommand('copy')
 	}
 

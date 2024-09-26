@@ -5,95 +5,95 @@ import { vuetify } from '@tests/unit/setup'
 import CopyBtn from '../CopyBtn.vue'
 
 describe('CopyBtn', () => {
-    const copy = vi.fn()
+	const copy = vi.fn()
 
-    beforeEach(() => {
-        const navigator = {
-            clipboard: {
-                writeText: copy,
-            },
-        } as unknown as Navigator
+	beforeEach(() => {
+		const navigator = {
+			clipboard: {
+				writeText: copy,
+			},
+		} as unknown as Navigator
 
-        vi.spyOn(window, 'navigator', 'get').mockReturnValue(navigator)
+		vi.spyOn(window, 'navigator', 'get').mockReturnValue(navigator)
 
-        vi.useFakeTimers()
-    })
+		vi.useFakeTimers()
+	})
 
-    afterEach(() => {
-        vi.restoreAllMocks()
-    })
+	afterEach(() => {
+		vi.restoreAllMocks()
+	})
 
-    it('renders correctly', () => {
-        const wrapper = shallowMount(CopyBtn, {
-            propsData: {
-                label: 'test',
-                textToCopy: 'test',
-            },
-            global: {
-                plugins: [vuetify],
-            },
-        })
+	it('renders correctly', () => {
+		const wrapper = shallowMount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: 'test',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
 
-        expect(wrapper.html()).toMatchSnapshot()
-    })
+		expect(wrapper.html()).toMatchSnapshot()
+	})
 
-    it('copies the text to the clipboard', async () => {
-        const wrapper = mount(CopyBtn, {
-            propsData: {
-                label: 'test',
-                textToCopy: 'test',
-            },
-            global: {
-                plugins: [vuetify],
-            },
-        })
+	it('copies the text to the clipboard', async () => {
+		const wrapper = mount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: 'test',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
 
-        await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
 
-        expect(copy).toHaveBeenCalledWith('test')
+		expect(copy).toHaveBeenCalledWith('test')
 
-        await wrapper.setProps({
-            textToCopy: () => 'function test',
-        })
+		await wrapper.setProps({
+			textToCopy: () => 'function test',
+		})
 
-        await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
 
-        expect(copy).toHaveBeenCalledWith('function test')
-    })
+		expect(copy).toHaveBeenCalledWith('function test')
+	})
 
-    it('shows a tooltip when the text is copied', async () => {
-        const wrapper = mount(CopyBtn, {
-            propsData: {
-                label: 'test',
-                textToCopy: 'test',
-            },
-            global: {
-                plugins: [vuetify],
-            },
-        })
+	it('shows a tooltip when the text is copied', async () => {
+		const wrapper = mount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: 'test',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
 
-        await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
 
-        expect(wrapper.vm.tooltip).toBeTruthy()
+		expect(wrapper.vm.tooltip).toBeTruthy()
 
-        vi.runAllTimers()
-        expect(wrapper.vm.tooltip).toBeFalsy()
-    })
+		vi.runAllTimers()
+		expect(wrapper.vm.tooltip).toBeFalsy()
+	})
 
-    it('does not show a tooltip when the text is copied but hide-tooltip is true', async () => {
-        const wrapper = mount(CopyBtn, {
-            propsData: {
-                label: 'test',
-                textToCopy: 'test',
-                hideTooltip: true,
-            },
-            global: {
-                plugins: [vuetify],
-            },
-        })
+	it('does not show a tooltip when the text is copied but hide-tooltip is true', async () => {
+		const wrapper = mount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: 'test',
+				hideTooltip: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
 
-        await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
 
-        expect(wrapper.vm.tooltip).toBeFalsy()
-    })
+		expect(wrapper.vm.tooltip).toBeFalsy()
+	})
 })
