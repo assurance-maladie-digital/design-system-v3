@@ -74,12 +74,17 @@ defineExpose({ copy })
 </template>
 
 <style lang="scss">
-// Make the tooltip menu look like a tooltip
+@use '@/assets/tokens.scss';
+
 .vd-copy-tooltip-menu {
   padding: 6px 16px;
   box-shadow: none;
   margin-top: 2px;
   background: rgba(97, 97, 97, 0.9);
   color: white;
+}
+
+.v-btn--icon .v-icon {
+  color: tokens.$grey-lighten-20;
 }
 </style>

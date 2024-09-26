@@ -11,6 +11,6 @@ export const config = {
 		density: 'comfortable',
 	},
 	icon: {
-		color: 'grey-darken-2',
+		color: 'grey-darken-20',
 	},
 }
