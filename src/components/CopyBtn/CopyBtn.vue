@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
+  import { VMenu, VIcon, VBtn } from 'vuetify/components'
 	import { mdiContentCopy } from '@mdi/js'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
@@ -40,7 +41,10 @@
 		}, props.tooltipDuration)
 	}
 
-	defineExpose({ copy })
+	defineExpose({
+    copy,
+    tooltip,
+  })
 </script>
 
 <template>
