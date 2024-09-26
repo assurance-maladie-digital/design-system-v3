@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SkipLink > renders correctly 1`] = `"<div data-v-bf1925a1="" class="vd-skip-link-container"><span data-v-bf1925a1="" tabindex="-1"></span><a data-v-bf1925a1="" href="#main" class="vd-skip-link text-primary d-block d-sr-only-focusable px-2">Aller au contenu principal</a></div>"`;
