@@ -84,9 +84,10 @@
 
 <template>
 	<div :id="menuId">
+    {{ isMenuOpen }}
 		<VMenu
 			v-bind="options.menu"
-			:id="menuId"
+			:id="isMenuOpen ? menuId : 'lang-menu-btn'"
 			v-model:opened="menu"
 			location="bottom"
 			@update:opened="menu = $event"
