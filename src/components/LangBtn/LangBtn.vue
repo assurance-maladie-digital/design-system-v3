@@ -83,58 +83,58 @@
 </script>
 
 <template>
-  <div :id="menuId">
-    <VMenu
-      v-bind="options.menu"
-      v-model:opened="menu"
-      location="bottom"
-      :id="menuId"
-      @update:opened="menu = $event"
-    >
-      <template #activator="{ props: activatorProps }">
-        <VBtn
-          :aria-label="activatorProps.ariaLabel"
-          aria-haspopup="menu"
-          :aria-controls="menuId"
-          :aria-owns="menuId"
-          id="lang-menu-btn"
-          :aria-expanded="isMenuOpen"
-          v-bind="{
-            ...activatorProps,
-            ...options.btn,
-          }"
-          class="vd-lang-btn"
-        >
-          {{ currentLangData.name }}
-          <VIcon
-            v-if="!hideDownArrow"
-            v-bind="options.icon"
-            class="ml-1"
-          >
-            {{ mdiMenuDown }}
-          </VIcon>
-        </VBtn>
-      </template>
-      <VList
-        v-bind="options.list"
-        aria-labelledby="lang-menu-btn"
-      >
-        <VListItem
-          v-for="(langData, code) in languagesData"
-          v-bind="options.listTile"
-          :key="code"
-          role="option"
-          :aria-label="langData.nativeName"
-          :aria-labelledby="menuId"
-          @click="updateLang(code)"
-        >
-          <VListItemTitle v-bind="options.listTileTitle">
-            {{ langData.nativeName }}
-          </VListItemTitle>
-        </VListItem>
-      </VList>
-    </VMenu>
-  </div>
+	<div :id="menuId">
+		<VMenu
+			v-bind="options.menu"
+			:id="menuId"
+			v-model:opened="menu"
+			location="bottom"
+			@update:opened="menu = $event"
+		>
+			<template #activator="{ props: activatorProps }">
+				<VBtn
+					id="lang-menu-btn"
+					:aria-label="activatorProps.ariaLabel"
+					aria-haspopup="menu"
+					:aria-controls="menuId"
+					:aria-owns="menuId"
+					:aria-expanded="isMenuOpen"
+					v-bind="{
+						...activatorProps,
+						...options.btn,
+					}"
+					class="vd-lang-btn"
+				>
+					{{ currentLangData.name }}
+					<VIcon
+						v-if="!hideDownArrow"
+						v-bind="options.icon"
+						class="ml-1"
+					>
+						{{ mdiMenuDown }}
+					</VIcon>
+				</VBtn>
+			</template>
+			<VList
+				v-bind="options.list"
+				aria-labelledby="lang-menu-btn"
+			>
+				<VListItem
+					v-for="(langData, code) in languagesData"
+					v-bind="options.listTile"
+					:key="code"
+					role="option"
+					:aria-label="langData.nativeName"
+					:aria-labelledby="menuId"
+					@click="updateLang(code)"
+				>
+					<VListItemTitle v-bind="options.listTileTitle">
+						{{ langData.nativeName }}
+					</VListItemTitle>
+				</VListItem>
+			</VList>
+		</VMenu>
+	</div>
 </template>
 <style lang="scss" scoped>
 @import '../../assets/tokens';
