@@ -32,8 +32,19 @@ const meta = {
 		vuetifyOptions: {
 			control: { type: 'object' },
 			default: () => ({
+				menu: {
+					location: 'end center',
+					offset: 16,
+					zIndex: 8,
+					contentClass: 'vd-copy-tooltip-menu text-white text-body-2 ml-2',
+				},
 				btn: {
 					icon: true,
+					variant: 'text',
+					density: 'comfortable',
+				},
+				icon: {
+					color: 'grey-darken-20',
 				},
 			}),
 		},
@@ -51,8 +62,19 @@ export const Default: Story = {
 		hideTooltip: false,
 		tooltipDuration: 2000,
 		vuetifyOptions: {
+			menu: {
+				location: 'end center',
+				offset: 16,
+				zIndex: 8,
+				contentClass: 'vd-copy-tooltip-menu text-white text-body-2 ml-2',
+			},
 			btn: {
 				icon: true,
+				variant: 'text',
+				density: 'comfortable',
+			},
+			icon: {
+				color: 'grey-darken-20',
 			},
 		},
 	},
@@ -71,6 +93,8 @@ export const Default: Story = {
 					<CopyBtn
 						label="Copier le numéro de patient"
 						text-to-copy="1970756541"
+						:hide-tooltip="args.hideTooltip"
+						:vuetify-options="args.vuetifyOptions"
 					/>
               	</div>
 			`,
@@ -100,6 +124,7 @@ export const NoTooltip: Story = {
 					<CopyBtn
 						label="Copier le numéro de patient"
 						text-to-copy="1970756541"
+						:hide-tooltip="args.hideTooltip"
 						
 					/>
               	</div>
@@ -131,6 +156,7 @@ export const SlotIcon: Story = {
 					<CopyBtn
 						label="Copier le numéro de patient"
 						text-to-copy="1970756541"
+						:hide-tooltip="args.hideTooltip"
 					>
 						<template #icon>
 							<VIcon :icon="args.icon" />
@@ -165,6 +191,7 @@ export const SlotTooltip: Story = {
 					<CopyBtn
 						label="Copier le numéro de patient"
 						text-to-copy="1970756541"
+						:hide-tooltip="args.hideTooltip"
 					>
 						<template #tooltip>
 							{{ args.tooltip }}
