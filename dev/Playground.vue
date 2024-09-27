@@ -27,7 +27,7 @@ const vuetifyOptions = {
       </p>
 
       <CopyBtn
-          label="Copier le numéro de patient"
+          ariaLabel="Copier le numéro de patient"
           text-to-copy="1970756541"
       />
     </div>
@@ -40,9 +40,10 @@ const vuetifyOptions = {
       </p>
 
       <CopyBtn
-          label="Copier le numéro de patient"
+          ariaLabel="Copier le numéro de patient"
           text-to-copy="1970756541"
           hide-tooltip
+          aria-owns="copy-btn-2"
       />
     </div>
 
@@ -54,8 +55,9 @@ const vuetifyOptions = {
       </p>
 
       <CopyBtn
-          label="Copier le numéro de ticket"
+          ariaLabel="Copier le numéro de ticket"
           text-to-copy="7079114565"
+          aria-owns="copy-btn-3"
       >
         <template #icon>
           <VIcon>
@@ -78,8 +80,9 @@ const vuetifyOptions = {
 
       <CopyBtn
           :vuetify-options="vuetifyOptions"
-          label="Copier le numéro d'utilisateur"
+          ariaLabel="Copier le numéro d'utilisateur"
           text-to-copy="5654119707"
+          aria-owns="copy-btn-4"
       />
     </div>
   </main>

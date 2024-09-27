@@ -13,9 +13,13 @@ const meta = {
 		controls: { exclude: ['copy'] },
 	},
 	argTypes: {
-		label: {
+		ariaLabel: {
 			control: { type: 'text' },
-			default: 'Label',
+			default: 'copy-btn',
+		},
+		ariaOwns: {
+			control: { type: 'text' },
+			default: 'copy-btn',
 		},
 		textToCopy: {
 			control: { type: 'text' },
@@ -57,7 +61,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		label: 'Copier le numéro de patient',
+		ariaLabel: 'Copier le numéro de patient',
+		ariaOwns: 'copy-btn-1',
 		textToCopy: '1970756541',
 		hideTooltip: false,
 		tooltipDuration: 2000,
@@ -104,7 +109,7 @@ export const Default: Story = {
 
 export const NoTooltip: Story = {
 	args: {
-		label: 'Copier le numéro de patient',
+		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
 		hideTooltip: true,
 		tooltipDuration: 2000,
@@ -135,7 +140,7 @@ export const NoTooltip: Story = {
 
 export const SlotIcon: Story = {
 	args: {
-		label: 'Copier le numéro de patient',
+		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
 		hideTooltip: false,
 		tooltipDuration: 2000,
@@ -170,7 +175,7 @@ export const SlotIcon: Story = {
 
 export const SlotTooltip: Story = {
 	args: {
-		label: 'Copier le numéro de patient',
+		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
 		hideTooltip: false,
 		tooltipDuration: 2000,

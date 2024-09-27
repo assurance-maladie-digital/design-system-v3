@@ -10,12 +10,14 @@
 	import { config } from './config'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
-		label: string
+		ariaLabel?: string
+		ariaOwns?: string
 		textToCopy: (() => string) | string
 		hideTooltip?: boolean
 		tooltipDuration?: number
 	}>(), {
-		label: '',
+		ariaLabel: 'copy-btn',
+		ariaOwns: 'copy-btn',
 		textToCopy: '',
 		hideTooltip: false,
 		tooltipDuration: 2500,
@@ -50,18 +52,23 @@
 </script>
 
 <template>
-	<div class="vd-copy-btn">
+	<div
+		:id="props.ariaOwns"
+		class="vd-copy-btn"
+	>
 		<VMenu
-			v-model="tooltip"
 			v-bind="options.menu"
+			:id="props.ariaOwns"
+			v-model="tooltip"
 			:disabled="props.hideTooltip"
 			transition="fade-transition"
 		>
 			<template #activator="{ props: menuProps }">
 				<VBtn
 					v-bind="{ ...menuProps, ...options.btn }"
-					:aria-label="props.label"
-					data-test-id="copy-btn"
+					:aria-label="props.ariaLabel"
+					:aria-owns="props.ariaOwns"
+					:data-test-id="props.ariaOwns"
 					@click="copy"
 				>
 					<slot name="icon">
