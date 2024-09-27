@@ -8,10 +8,10 @@
 	import defaultOptions from './config'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
-		modelValue: string
-		hideDownArrow: boolean
-		ariaLabel: string
-		availableLanguages: string[] | AllLanguagesChar
+		modelValue?: string
+		hideDownArrow?: boolean
+		ariaLabel?: string
+		availableLanguages?: string[] | AllLanguagesChar
 	}>(), {
 		modelValue: 'fr',
 		hideDownArrow: false,
