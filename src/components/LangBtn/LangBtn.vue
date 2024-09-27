@@ -84,7 +84,7 @@
 
 <template>
 	<div :id="menuId">
-    {{ isMenuOpen }}
+		{{ isMenuOpen }}
 		<VMenu
 			v-bind="options.menu"
 			:id="isMenuOpen ? menuId : 'lang-menu-btn'"
