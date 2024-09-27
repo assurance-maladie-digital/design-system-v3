@@ -1,0 +1,38 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as CopyBtnStories from './CopyBtn.stories';
+
+<Meta of={CopyBtnStories} />
+
+# CopyBtn
+
+Le composant `CopyBtn` est utilisé pour afficher un bouton permettant à l’utilisateur de copier du texte.
+
+<Canvas of={CopyBtnStories.Default}  />
+
+# API
+
+<Controls of={CopyBtnStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+import CopyBtn from '@/components/CopyBtn/CopyBtn.vue'
+</script>
+
+<template>
+  <main>
+    <div class="d-flex flex-wrap align-center pa-4">
+      <p class="mb-0 mr-1">
+        Patient n°<b>1970756541</b>
+      </p>
+
+      <CopyBtn
+          label="Copier le numéro de patient"
+          text-to-copy="1970756541"
+      />
+    </div>
+  </main>
+</template>
+`} />

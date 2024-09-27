@@ -49,6 +49,8 @@ export default defineConfig({
 			reportsDirectory: './tests/unit/coverage',
 			include: [
 				'src/components/**/*.{js,vue,ts}',
+				'src/composables/**',
+				'src/utils/**',
 			],
 			exclude: [
 				'src/**/*.spec.{js,vue,ts}',

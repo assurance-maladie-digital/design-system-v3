@@ -1,25 +1,86 @@
 <script setup lang="ts">
-import PageContainer from '@/components/PageContainer/PageContainer.vue'
+import CopyBtn from '@/components/CopyBtn/CopyBtn.vue'
+import { mdiContentDuplicate  } from '@mdi/js'
+
+const duplicateIcon = mdiContentDuplicate
+
+const vuetifyOptions = {
+  menu: {
+    offsetX: false,
+    offsetY: true,
+    nudgeLeft: 100
+  },
+  btn: {
+    large: true
+  },
+  icon: {
+    color: 'secondary'
+  }
+}
 </script>
 
 <template>
-  <VApp>
-    <main>
-      <PageContainer size="s" color="blue">
-        <h1>Playground</h1>
-      </PageContainer>
-      <PageContainer size="m" color="red">
-        <h1>Playground</h1>
-      </PageContainer>
-      <PageContainer size="l" color="orange">
-        <h1>Playground</h1>
-      </PageContainer>
-      <PageContainer size="xl" color="pink">
-        <h1>Playground</h1>
-      </PageContainer>
-      <PageContainer color="yellow" spacing="sm">
-        <h1>Playground</h1>
-      </PageContainer>
-    </main>
-  </VApp>
+  <main>
+    <div class="d-flex align-center">
+      <p class="mb-0 mr-1">
+        Patient n°<b>1970756541</b>
+      </p>
+
+      <CopyBtn
+          label="Copier le numéro de patient"
+          text-to-copy="1970756541"
+      />
+    </div>
+
+    <hr>
+
+    <div class="d-flex align-center">
+      <p class="mb-0 mr-1">
+        Patient n°<b>1970756541</b>
+      </p>
+
+      <CopyBtn
+          label="Copier le numéro de patient"
+          text-to-copy="1970756541"
+          hide-tooltip
+      />
+    </div>
+
+    <hr>
+
+    <div class="d-flex align-center">
+      <p class="mb-0 mr-1">
+        Ticket n°<b>7079114565</b>
+      </p>
+
+      <CopyBtn
+          label="Copier le numéro de ticket"
+          text-to-copy="7079114565"
+      >
+        <template #icon>
+          <VIcon>
+            {{ duplicateIcon }}
+          </VIcon>
+        </template>
+
+        <template #tooltip>
+          Le texte a bien été copié
+        </template>
+      </CopyBtn>
+    </div>
+
+    <hr>
+
+    <div class="d-flex align-center">
+      <p class="mb-0 mr-1">
+        Utilisateur n°<b>5654119707</b>
+      </p>
+
+      <CopyBtn
+          :vuetify-options="vuetifyOptions"
+          label="Copier le numéro d'utilisateur"
+          text-to-copy="5654119707"
+      />
+    </div>
+  </main>
 </template>
