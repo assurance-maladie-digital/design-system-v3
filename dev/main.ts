@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import Playground from './Playground.template.vue'
+import Playground from './Playground.vue'
 
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
