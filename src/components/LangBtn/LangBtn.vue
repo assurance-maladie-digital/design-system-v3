@@ -11,11 +11,13 @@
 		modelValue?: string
 		hideDownArrow?: boolean
 		ariaLabel?: string
+		ariaOwns?: string
 		availableLanguages?: string[] | AllLanguagesChar
 	}>(), {
 		modelValue: 'fr',
 		hideDownArrow: false,
 		ariaLabel: locales.label,
+		ariaOwns: 'lang-btn',
 		availableLanguages: () => ['fr', 'en'],
 	})
 
@@ -45,6 +47,9 @@
 	}
 
 	type LanguagesData = Record<string, LanguageInfo>
+
+	const isMenuOpen = computed(() => menu.value)
+	const menuId = computed(() => `lang-menu-${Math.random().toString(36).substr(2, 9)}`)
 
 	const languagesData = computed<LanguagesData>(() => {
 		const data: LanguagesData = {}
@@ -86,7 +91,11 @@
 	>
 		<template #activator="{ props: activatorProps }">
 			<VBtn
-				:aria-label="ariaLabel"
+				:aria-label="activatorProps.ariaLabel"
+				aria-haspopup="menu"
+				:aria-controls="menuId"
+				:aria-owns="menuId"
+				:aria-expanded="isMenuOpen"
 				v-bind="{
 					...activatorProps,
 					...options.btn,
@@ -113,6 +122,7 @@
 				:key="code"
 				role="option"
 				:aria-label="langData.nativeName"
+				:aria-labelledby="menuId"
 				@click="updateLang(code)"
 			>
 				<VListItemTitle v-bind="options.listTileTitle">
