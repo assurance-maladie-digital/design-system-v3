@@ -2,27 +2,24 @@
 	import { computed, ref, watch } from 'vue'
 	import type { AllLanguagesChar } from '@/components/LangBtn/types'
 	import { mdiMenuDown } from '@mdi/js'
-	import type { PropType } from 'vue'
 	import { locales } from './locales'
 	import ISO6391 from 'iso-639-1'
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import defaultOptions from './config'
 
-	const props = defineProps({
-		modelValue: { type: String, default: 'fr' },
-		hideDownArrow: { type: Boolean, default: false },
-		ariaLabel: { type: String, default: locales.label },
-		availableLanguages: {
-			type: [Array, String] as PropType<string[] | AllLanguagesChar>,
-			default: () => ['fr', 'en'],
-			validator: (value: string[] | AllLanguagesChar): boolean => {
-				if (Array.isArray(value)) {
-					return value.length > 0
-				}
-				else {
-					return value === '*'
-				}
-			},
-		},
+	const props = withDefaults(defineProps<CustomizableOptions & {
+		modelValue: string
+		hideDownArrow: boolean
+		ariaLabel: string
+		availableLanguages: string[] | AllLanguagesChar
+	}>(), {
+		modelValue: 'fr',
+		hideDownArrow: false,
+		ariaLabel: locales.label,
+		availableLanguages: () => ['fr', 'en'],
 	})
+
+	const options = useCustomizableOptions(defaultOptions, props)
 
 	const emit = defineEmits(['update:modelValue'])
 	const menu = ref(false)
@@ -82,6 +79,7 @@
 
 <template>
 	<VMenu
+		v-bind="options.menu"
 		v-model:opened="menu"
 		location="bottom"
 		@update:opened="menu = $event"
@@ -89,27 +87,37 @@
 		<template #activator="{ props: activatorProps }">
 			<VBtn
 				:aria-label="ariaLabel"
-				v-bind="activatorProps"
-				variant="outlined"
-				color="primary"
+				v-bind="{
+					...activatorProps,
+					...options.btn,
+				}"
 				class="vd-lang-btn"
 			>
 				{{ currentLangData.name }}
 				<VIcon
 					v-if="!hideDownArrow"
+					v-bind="options.icon"
 					class="ml-1"
 				>
 					{{ mdiMenuDown }}
 				</VIcon>
 			</VBtn>
 		</template>
-		<VList>
+		<VList
+			v-bind="options.list"
+			aria-labelledby="lang-menu-btn"
+		>
 			<VListItem
 				v-for="(langData, code) in languagesData"
+				v-bind="options.listTile"
 				:key="code"
+				role="option"
+				:aria-label="langData.nativeName"
 				@click="updateLang(code)"
 			>
-				<VListItemTitle>{{ langData.nativeName }}</VListItemTitle>
+				<VListItemTitle v-bind="options.listTileTitle">
+					{{ langData.nativeName }}
+				</VListItemTitle>
 			</VListItem>
 		</VList>
 	</VMenu>

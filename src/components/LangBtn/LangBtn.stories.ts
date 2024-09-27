@@ -11,6 +11,22 @@ const meta: Meta<typeof LangBtn> = {
 		ariaLabel: { control: 'text' },
 		// @ts-expect-error Type '"array"' is not assignable to type 'Control | undefined'.
 		availableLanguages: { control: { type: 'array' } },
+		vuetifyOptions: {
+			constrol: { type: 'object' },
+			default: () => ({
+				menu: {
+					offsetY: true,
+				},
+				btn: {
+					color: 'primary',
+					variant: 'outlined',
+					ripple: true,
+				},
+				icon: {
+					class: 'ml-1',
+				},
+			}),
+		},
 	},
 }
 
@@ -24,6 +40,19 @@ export const Default: Story = {
 		hideDownArrow: false,
 		ariaLabel: 'Select a language',
 		availableLanguages: ['fr', 'co', 'es'],
+		vuetifyOptions: {
+			menu: {
+				offsetY: true,
+			},
+			btn: {
+				color: 'primary',
+				variant: 'outlined',
+				ripple: true,
+			},
+			icon: {
+				class: 'ml-1',
+			},
+		},
 	},
 	render: (args) => {
 		return {
@@ -33,7 +62,7 @@ export const Default: Story = {
 			},
 			template: `
 				<div>
-					<LangBtn v-bind="args" @update:modelValue="args['update:modelValue']" />
+					<LangBtn :vuetify-options="args.vuetifyOptions" v-bind="args" @update:modelValue="args['update:modelValue']" />
 				</div>
 			`,
 		}
