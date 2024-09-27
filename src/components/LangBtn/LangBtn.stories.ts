@@ -2,32 +2,17 @@ import LangBtn from './LangBtn.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
-const meta = {
+const meta: Meta<typeof LangBtn> = {
 	title: 'Components/LangBtn',
 	component: LangBtn,
 	argTypes: {
-		'modelValue': {
-			control: { type: 'select', options: ['fr', 'en', 'es', 'de', '*'] },
-			description: 'La langue sélectionnée actuellement',
-		},
-		'hideDownArrow': {
-			control: { type: 'boolean' },
-			description: 'Masquer ou afficher la flèche du bouton',
-		},
-		'ariaLabel': {
-			control: { type: 'text' },
-			description: 'L\'étiquette ARIA pour l\'accessibilité',
-		},
-		'availableLanguages': {
-			control: { type: 'array' },
-			description: 'Les langues disponibles à choisir',
-		},
-		'update:modelValue': {
-			action: 'update:modelValue',
-			description: 'Événement émis lors de la sélection de langue',
-		},
+		modelValue: { control: 'text' },
+		hideDownArrow: { control: 'boolean' },
+		ariaLabel: { control: 'text' },
+		// @ts-expect-error Type '"array"' is not assignable to type 'Control | undefined'.
+		availableLanguages: { control: { type: 'array' } },
 	},
-} as Meta<typeof LangBtn>
+}
 
 export default meta
 

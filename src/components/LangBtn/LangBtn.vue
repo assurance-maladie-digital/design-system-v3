@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, ref, watch } from 'vue'
-	import { AllLanguagesChar } from '@/components/LangBtn/types'
+	import type { AllLanguagesChar } from '@/components/LangBtn/types'
 	import { mdiMenuDown } from '@mdi/js'
 	import type { PropType } from 'vue'
 	import { locales } from './locales'
@@ -107,7 +107,6 @@
 			<VListItem
 				v-for="(langData, code) in languagesData"
 				:key="code"
-				:class="{ 'selected-language': code === selectedLanguage.value }"
 				@click="updateLang(code)"
 			>
 				<VListItemTitle>{{ langData.nativeName }}</VListItemTitle>

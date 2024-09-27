@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { mount, VueWrapper } from '@vue/test-utils'
 import LangBtn from '../LangBtn.vue'
 import { describe, it, expect, afterEach, vi } from 'vitest'
 import { createVuetify } from 'vuetify'
@@ -12,7 +12,7 @@ const vuetify = createVuetify({
 })
 
 describe('LangBtn.vue', () => {
-	let wrapper
+	let wrapper: VueWrapper
 
 	afterEach(() => {
 		if (wrapper) {
@@ -179,7 +179,7 @@ describe('LangBtn.vue', () => {
 
 		// Vérifier que les langues rendues sont correctes
 		const renderedLanguages = Array.from(listItems).map(item =>
-			item.textContent.trim(),
+			item?.textContent?.trim(),
 		)
 		const expectedLanguages = languages.map(
 			code => ISO6391.getNativeName(code) || code,
@@ -252,10 +252,10 @@ describe('LangBtn.vue', () => {
 
 	it('falls back to language code when name and nativeName are unavailable', () => {
 		// Mock des méthodes ISO6391 pour qu'elles renvoient undefined
-		const getNameMock = vi.spyOn(ISO6391, 'getName').mockReturnValue(undefined)
+		const getNameMock = vi.spyOn(ISO6391, 'getName').mockReturnValue(undefined as unknown as string)
 		const getNativeNameMock = vi
 			.spyOn(ISO6391, 'getNativeName')
-			.mockReturnValue(undefined)
+			.mockReturnValue(undefined as unknown as string)
 
 		wrapper = mount(LangBtn, {
 			props: {
