@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import CopyBtn from './CopyBtn.vue'
 import { VIcon } from 'vuetify/components'
-import { mdiContentDuplicate  } from '@mdi/js'
+import { mdiContentDuplicate } from '@mdi/js'
 
 const duplicateIcon = mdiContentDuplicate
 
@@ -29,6 +29,14 @@ const meta = {
 			control: { type: 'number' },
 			default: 2000,
 		},
+		vuetifyOptions: {
+			control: { type: 'object' },
+			default: () => ({
+				btn: {
+					icon: true,
+				},
+			}),
+		},
 	},
 } as Meta<typeof CopyBtn>
 
@@ -42,6 +50,11 @@ export const Default: Story = {
 		textToCopy: '1970756541',
 		hideTooltip: false,
 		tooltipDuration: 2000,
+		vuetifyOptions: {
+			btn: {
+				icon: true,
+			},
+		},
 	},
 	render: (args) => {
 		return {

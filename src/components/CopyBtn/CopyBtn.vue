@@ -15,6 +15,8 @@
 		hideTooltip?: boolean
 		tooltipDuration?: number
 	}>(), {
+		label: '',
+		textToCopy: '',
 		hideTooltip: false,
 		tooltipDuration: 2500,
 	})
