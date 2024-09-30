@@ -69,14 +69,11 @@ describe('LangBtn.vue', () => {
 			},
 		})
 
-		// Vérifier la langue initiale
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('Français')
 
-		// Modifier la prop modelValue
 		await wrapper.setProps({ modelValue: 'es' })
 		await wrapper.vm.$nextTick()
 
-		// Vérifier que la langue affichée a été mise à jour
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('Español')
 	})
 
@@ -94,17 +91,13 @@ describe('LangBtn.vue', () => {
 			attachTo: document.body,
 		})
 
-		// Vérifier que le menu n'est pas ouvert au départ
 		expect(document.body.querySelector('.v-list')).toBeNull()
 
-		// Trouver le bouton activator
 		const activatorButton = wrapper.find('.vd-lang-btn')
 
-		// Simuler un clic sur le bouton
 		await activatorButton.trigger('click')
 		await wrapper.vm.$nextTick()
 
-		// Vérifier que le menu est maintenant ouvert
 		expect(document.body.querySelector('.v-list')).not.toBeNull()
 	})
 
@@ -139,18 +132,14 @@ describe('LangBtn.vue', () => {
 			attachTo: document.body,
 		})
 
-		// Ouvrir le menu
 		const activatorButton = wrapper.find('.vd-lang-btn')
 		await activatorButton.trigger('click')
 		await wrapper.vm.$nextTick()
 
-		// Récupérer toutes les langues disponibles via ISO6391
 		const allLanguageCodes = ISO6391.getAllCodes()
 
-		// Trouver tous les éléments de la liste
 		const listItems = document.body.querySelectorAll('.v-list-item')
 
-		// Vérifier que le nombre d'éléments correspond au nombre de langues
 		expect(listItems.length).toBe(allLanguageCodes.length)
 	})
 
@@ -166,18 +155,14 @@ describe('LangBtn.vue', () => {
 			attachTo: document.body,
 		})
 
-		// Ouvrir le menu
 		const activatorButton = wrapper.find('.vd-lang-btn')
 		await activatorButton.trigger('click')
 		await wrapper.vm.$nextTick()
 
-		// Trouver tous les éléments de la liste
 		const listItems = document.body.querySelectorAll('.v-list-item')
 
-		// Vérifier que le nombre d'éléments correspond au nombre de langues spécifiées
 		expect(listItems.length).toBe(languages.length)
 
-		// Vérifier que les langues rendues sont correctes
 		const renderedLanguages = Array.from(listItems).map(item =>
 			item?.textContent?.trim(),
 		)
@@ -198,11 +183,11 @@ describe('LangBtn.vue', () => {
 		})
 
 		const button = wrapper.find('.vd-lang-btn')
-		expect(button.attributes('aria-label')).toBe('Choix de la langue.')
+		expect(button.attributes('aria-label')).toBe('Choix de la langue. Français')
 	})
 
 	it('uses ariaLabel prop correctly', () => {
-		const customAriaLabel = 'Sélectionnez la langue'
+		const customAriaLabel = 'Choix de la langue.'
 		wrapper = mount(LangBtn, {
 			props: {
 				ariaLabel: customAriaLabel,
@@ -214,7 +199,7 @@ describe('LangBtn.vue', () => {
 		})
 
 		const button = wrapper.find('.vd-lang-btn')
-		expect(button.attributes('aria-label')).toBe(customAriaLabel)
+		expect(button.attributes('aria-label')).toBe(customAriaLabel + ' Français')
 	})
 
 	it('handles modelValue not in availableLanguages', () => {
@@ -228,12 +213,10 @@ describe('LangBtn.vue', () => {
 			},
 		})
 
-		// La langue affichée doit être 'unknown'
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('unknown')
 	})
 
 	it('falls back to language code when name and nativeName are unavailable', () => {
-		// Mock des méthodes ISO6391 pour qu'elles renvoient undefined
 		const getNameMock = vi.spyOn(ISO6391, 'getName').mockReturnValue(undefined as unknown as string)
 		const getNativeNameMock = vi
 			.spyOn(ISO6391, 'getNativeName')
@@ -241,7 +224,7 @@ describe('LangBtn.vue', () => {
 
 		wrapper = mount(LangBtn, {
 			props: {
-				modelValue: 'xx', // Code de langue invalide
+				modelValue: 'xx',
 				availableLanguages: ['xx'],
 			},
 			global: {
@@ -286,17 +269,14 @@ describe('LangBtn.vue', () => {
 			attachTo: document.body,
 		})
 
-		// Open the menu
 		const activatorButton = wrapper.find('.vd-lang-btn')
 		await activatorButton.trigger('click')
 		await wrapper.vm.$nextTick()
 
-		// Find the language item and simulate a click
-		const languageItem = document.body.querySelectorAll('.v-list-item')[1] // Select the second language item (e.g., 'co')
-		await languageItem.dispatchEvent(new Event('click'))
+		const languageItem = document.body.querySelectorAll('.v-list-item')[1]
+		languageItem.dispatchEvent(new Event('click'))
 		await wrapper.vm.$nextTick()
 
-		// Verify that the language is updated
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('corsu')
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['co'])

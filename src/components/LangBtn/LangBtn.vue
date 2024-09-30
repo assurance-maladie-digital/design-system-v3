@@ -139,8 +139,8 @@
 					v-bind="options.listTile"
 					:key="code"
 					role="menuitem"
-					:tabindex="index"
-					:aria-label="langData.nativeName"
+					:tabindex="index + 1"
+					:aria-label="`${props.ariaLabel} ${langData.nativeName}`"
 					:aria-labelledby="`${menuId} ${langData.nativeName}`"
 					@click="updateLang(code)"
 				>
