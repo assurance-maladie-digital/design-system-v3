@@ -1,0 +1,58 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import SkipLink from './SkipLink.vue';
+
+import * as SkipLinkStories from './SkipLink.stories';
+
+<Meta of={SkipLinkStories} />
+
+# SkipLink
+
+Le composant `SkipLink` est utilisé pour permettre à l'utilisateur utilisant la navigation au clavier de passer directement à une section de contenu.
+
+Il est généralement placé en haut de la page et est caché visuellement. Lorsqu'il est activé, il devient visible et permet à l'utilisateur de sauter directement à une section de contenu.
+
+Quand l'utilisateur change de page ou de vue, le focus est automatiquement placé sur l'élément de saut pour lui permettre de naviguer rapidement dans la page.
+
+<Canvas of={SkipLinkStories.Default}  />
+
+## API
+
+<Controls of={SkipLinkStories.Default} />
+
+## Exemple d'utilisation avec Nuxt
+
+<Source dark code={`
+// layouts/default.vue
+<template>
+  <div>
+    <SkipLink label="Aller au contenu" target="#main-content"/>
+    <div id="main-content">
+      <slot />
+    </div>
+  </div>
+</template>
+`} />
+
+## Exemple d'utilisation avec Vue
+
+<Source dark code={`
+// main.vue
+<template>
+  <v-app>
+    <SkipLink target="#main-content"/>
+    <nav>
+      <ul>
+        <li>
+          <router-link to="/">index</router-link>
+        </li>
+        <li>
+          <router-link to="/other">other</router-link>
+        </li>
+      </ul>
+    </nav>
+    <div id="main-content">
+      <router-view />
+    </div>
+  </v-app>
+</template>
+`} />
