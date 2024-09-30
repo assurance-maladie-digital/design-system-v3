@@ -1,13 +1,14 @@
 import { createVuetify } from 'vuetify'
+import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import 'vuetify/styles'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
+
+import './storybook.css'
 import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
 import { cnamLightTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
 import { createFlattenTheme } from '../src/designTokens/utils'
-import './storybook.css'
 
 const vuetify = createVuetify({
 	components,
@@ -18,6 +19,7 @@ const vuetify = createVuetify({
 				dark: false,
 				colors: {
 					...cnamLightTheme,
+					// ...bootstrapLightTheme,
 				},
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,

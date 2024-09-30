@@ -1,0 +1,45 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as BackToTopBtnStories from './BackToTopBtn.stories';
+
+<Meta of={BackToTopBtnStories} />
+
+# BackToTopBtn
+
+Le composant `BackToTopBtn` est utilisé pour afficher un bouton permettant à l’utilisateur de remonter en haut de la page.
+
+
+Le boutton apparaît lorsque l'utilisateur scroll en dessous d'une certaine hauteur de la page. Cette hauteur est définie par la prop `threshold`, elle est de 120px par defaut.
+
+
+<Canvas of={BackToTopBtnStories.Default}  />
+
+## API
+
+<Controls of={BackToTopBtnStories.Default} />
+
+## Context d'utilisation
+
+Ce composant peut être utilisé à la racine de la page ou bien dans un composant avant son propre context de scroll. Dans ce dernier cas, il conviens de passer la prop `target` un id unique de l'élément scrollable.
+
+### Exemple d'utilisation
+
+<Source dark code={`
+<div
+    id="test-container"
+    style="height: 600px; overflow: scroll; position: relative; border: 1px solid black; scroll-behavior: smooth;"
+>
+    <p>lorem ipsum</p>
+    <div style="height: 3000px" />
+    <BackToTopBtn target='test-container'>
+        Retour en haut de la page
+    </BackToTopBtn>
+</div>
+`} />
+
+## Customisation
+
+Ce composant utilise en interne les composants `VBtn` et `VIcon` de Vuetify. 
+Il est possible de passer des props à ces composants pour les customiser en utilisant la props `vuetifyOptions`.
+
+<Canvas of={BackToTopBtnStories.Customization}  />

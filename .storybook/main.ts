@@ -10,6 +10,7 @@ const config: StorybookConfig = {
 		'@storybook/addon-viewport',
 		'@storybook/addon-a11y',
 		'@storybook/addon-docs',
+		'@storybook/addon-interactions',
 	],
 	framework: {
 		name: '@storybook/vue3-vite',
