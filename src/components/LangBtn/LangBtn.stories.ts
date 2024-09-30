@@ -5,6 +5,10 @@ import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/component
 const meta: Meta<typeof LangBtn> = {
 	title: 'Components/LangBtn',
 	component: LangBtn,
+	parameters: {
+		layout: 'fullscreen',
+		controls: { exclude: ['currentLangData', 'updateLang', 'selectedLanguage'] },
+	},
 	argTypes: {
 		modelValue: { control: 'text' },
 		hideDownArrow: { control: 'boolean' },
@@ -61,7 +65,7 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-				<div>
+				<div class="pa-4">
 					<LangBtn :vuetify-options="args.vuetifyOptions" v-bind="args" @update:modelValue="args['update:modelValue']" />
 				</div>
 			`,
@@ -83,7 +87,7 @@ export const AllLanguages: Story = {
 				return { args }
 			},
 			template: `
-				<div>
+				<div class="pa-4">
 					<LangBtn v-bind="args" @update:modelValue="args['update:modelValue']" />
 				</div>
 			`,
@@ -105,7 +109,7 @@ export const NoDownArrow: Story = {
 				return { args }
 			},
 			template: `
-				<div>
+				<div class="pa-4">
 					<LangBtn v-bind="args" @update:modelValue="args['update:modelValue']" />
 				</div>
 			`,
