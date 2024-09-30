@@ -135,10 +135,11 @@
 				aria-labelledby="lang-menu-btn"
 			>
 				<VListItem
-					v-for="(langData, code) in languagesData"
+					v-for="(langData, code, index) in languagesData"
 					v-bind="options.listTile"
 					:key="code"
 					role="menuitem"
+					:tabindex="index"
 					:aria-label="langData.nativeName"
 					:aria-labelledby="`${menuId} ${langData.nativeName}`"
 					@click="updateLang(code)"
