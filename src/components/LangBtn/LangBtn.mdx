@@ -1,0 +1,37 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';import * as LangBtnStories from './LangBtn.stories';
+
+<Meta of={LangBtnStories} />
+
+# LangBtn
+
+Le composant `LangBtn` est utilisé pour afficher une alerte à l’utilisateur.
+
+<Canvas of={LangBtnStories.Default} />
+
+# API
+
+<Controls of={LangBtnStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+ import LangBtn from '@/components/LangBtn/LangBtn.vue'
+ import { ref } from 'vue'
+
+ const value = ref('fr')
+ const items = ['fr', 'en', 'co']
+ const ariaLabel = 'Choix de la langue'
+</script>
+
+<template>
+ <div class="mt-12 ml-12">
+  <LangBtn
+   v-model="value"
+   :available-languages="items"
+   :aria-label="ariaLabel"
+   hide-down-arrow
+  />
+ </div>
+</template>
+`} />
