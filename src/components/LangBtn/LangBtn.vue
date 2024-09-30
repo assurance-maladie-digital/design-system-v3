@@ -19,11 +19,19 @@
 		ariaLabel: locales.label,
 		ariaOwns: 'lang-btn',
 		availableLanguages: () => ['fr', 'en'],
+		validator: (value: string[] | AllLanguagesChar): boolean => {
+			if (Array.isArray(value)) {
+				return value.length > 0
+			}
+			else {
+				return value === '*'
+			}
+		},
 	})
 
 	const options = useCustomizableOptions(defaultOptions, props)
 
-	const emit = defineEmits(['update:modelValue'])
+	const emit = defineEmits(['update:modelValue', 'change'])
 	const menu = ref(false)
 	const selectedLanguage = ref(props.modelValue)
 
@@ -37,6 +45,7 @@
 	function updateLang(lang: string) {
 		selectedLanguage.value = lang
 		emit('update:modelValue', lang)
+		emit('change', lang)
 		menu.value = false
 	}
 
@@ -49,7 +58,7 @@
 	type LanguagesData = Record<string, LanguageInfo>
 
 	const isMenuOpen = computed(() => menu.value)
-	const menuId = computed(() => `lang-menu-${Math.random().toString(36).substr(2, 9)}`)
+	const menuId = computed(() => `lang-menu-id`)
 
 	const languagesData = computed<LanguagesData>(() => {
 		const data: LanguagesData = {}
@@ -80,29 +89,34 @@
 			label: `${props.ariaLabel} ${langInfo?.nativeName || selectedLanguage.value}`,
 		}
 	})
+
+	defineExpose({
+		currentLangData,
+		updateLang,
+		selectedLanguage,
+	})
 </script>
 
 <template>
 	<div :id="menuId">
-		{{ isMenuOpen }}
 		<VMenu
 			v-bind="options.menu"
-			:id="isMenuOpen ? menuId : 'lang-menu-btn'"
-			v-model:opened="menu"
+			:id="isMenuOpen ? 'lang-menu' : menuId "
+			v-model="menu"
+			role="menu"
 			location="bottom"
-			@update:opened="menu = $event"
 		>
 			<template #activator="{ props: activatorProps }">
 				<VBtn
 					id="lang-menu-btn"
-					:aria-label="activatorProps.ariaLabel"
+					:aria-label="ariaLabel"
 					aria-haspopup="menu"
 					:aria-controls="menuId"
 					:aria-owns="menuId"
 					:aria-expanded="isMenuOpen"
 					v-bind="{
-						...activatorProps,
 						...options.btn,
+						...activatorProps,
 					}"
 					class="vd-lang-btn"
 				>
@@ -124,7 +138,7 @@
 					v-for="(langData, code) in languagesData"
 					v-bind="options.listTile"
 					:key="code"
-					role="option"
+					role="menuitem"
 					:aria-label="langData.nativeName"
 					:aria-labelledby="menuId"
 					@click="updateLang(code)"

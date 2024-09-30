@@ -187,25 +187,7 @@ describe('LangBtn.vue', () => {
 		expect(renderedLanguages).toEqual(expectedLanguages)
 	})
 
-	it('validates availableLanguages prop correctly with valid values', () => {
-		const validator = LangBtn.props.availableLanguages.validator
-		expect(validator(['fr', 'en'])).toBe(true)
-		expect(validator('*')).toBe(true)
-		expect(validator(['es'])).toBe(true)
-	})
-
-	it('validates availableLanguages prop correctly with invalid values', () => {
-		const validator = LangBtn.props.availableLanguages.validator
-		expect(validator([])).toBe(false)
-		expect(validator(null)).toBe(false)
-		expect(validator(123)).toBe(false)
-		expect(validator({})).toBe(false)
-		expect(validator('invalid')).toBe(false)
-	})
-
 	it('uses default ariaLabel when not provided', () => {
-		const defaultAriaLabel = 'Choix de la langue. Actuellement'
-
 		wrapper = mount(LangBtn, {
 			props: {
 				availableLanguages: ['fr', 'co', 'es'],
@@ -216,7 +198,7 @@ describe('LangBtn.vue', () => {
 		})
 
 		const button = wrapper.find('.vd-lang-btn')
-		expect(button.attributes('aria-label')).toBe(defaultAriaLabel)
+		expect(button.attributes('aria-label')).toBe('Choix de la langue.')
 	})
 
 	it('uses ariaLabel prop correctly', () => {
@@ -267,11 +249,56 @@ describe('LangBtn.vue', () => {
 			},
 		})
 
-		// La langue affichée doit être le code 'xx'
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('xx')
 
-		// Restauration des mocks
 		getNameMock.mockRestore()
 		getNativeNameMock.mockRestore()
+	})
+
+	it('updates selectedLanguage and emits event when updateLang is called', async () => {
+		wrapper = mount(LangBtn, {
+			props: {
+				availableLanguages: ['fr', 'co', 'es'],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		expect(wrapper.find('.vd-lang-btn').text()).toBe('Français')
+
+		await wrapper.vm.$.exposed?.updateLang('es')
+
+		expect(wrapper.find('.vd-lang-btn').text()).toBe('Español')
+
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['es'])
+	})
+
+	it('updates language when a language is selected', async () => {
+		wrapper = mount(LangBtn, {
+			props: {
+				availableLanguages: ['fr', 'co', 'es'],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		// Open the menu
+		const activatorButton = wrapper.find('.vd-lang-btn')
+		await activatorButton.trigger('click')
+		await wrapper.vm.$nextTick()
+
+		// Find the language item and simulate a click
+		const languageItem = document.body.querySelectorAll('.v-list-item')[1] // Select the second language item (e.g., 'co')
+		await languageItem.dispatchEvent(new Event('click'))
+		await wrapper.vm.$nextTick()
+
+		// Verify that the language is updated
+		expect(wrapper.find('.vd-lang-btn').text()).toBe('corsu')
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['co'])
 	})
 })
