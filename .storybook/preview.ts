@@ -43,7 +43,7 @@ const preview: Preview = {
 	parameters: {
 		options: {
 			storySort: {
-				order: ['Synapse', 'Components', 'Templates'],
+				order: ['Components', 'DesignTokens', ['Introduction', 'Couleurs']],
 			},
 		},
 		controls: {

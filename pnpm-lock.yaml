@@ -22,6 +22,9 @@ devDependencies:
   '@storybook/addon-a11y':
     specifier: ^8.2.6
     version: 8.3.4(storybook@8.3.4)
+  '@storybook/addon-docs':
+    specifier: ^8.3.4
+    version: 8.3.4(storybook@8.3.4)
   '@storybook/addon-essentials':
     specifier: ^8.2.6
     version: 8.3.4(storybook@8.3.4)
