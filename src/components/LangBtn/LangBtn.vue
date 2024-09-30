@@ -155,12 +155,12 @@
 @import '../../assets/tokens';
 
 .v-list-item:hover {
-  background-color: rgba($colors-overlay-onlight, 0.2)
+  background-color: rgba($colors-overlay, 0.005)
 }
 
 .vd-lang-btn {
   font-weight: 700;
-  --hoverColor: rgba($colors-overlay-onlight, 0.9);
+  --hoverColor: rgba($colors-overlay, 0.5);
   text-transform: capitalize;
 }
 </style>
