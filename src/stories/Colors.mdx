@@ -1,0 +1,140 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs';
+import { cnamLightTheme } from "@/designTokens/tokens/cnam/cnamLightTheme.ts";
+import { cnamColorsTokens } from '@/designTokens/tokens/cnam/cnamColors.ts'
+
+<Meta title="Design Tokens/Theme DS Light" />
+
+## Couleurs de base
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Primary" colors={{ primary: cnamColorsTokens.blue.base }} />
+    <ColorItem title="Secondary" colors={{ secondary: cnamColorsTokens.cyan.darken40 }} />
+    <ColorItem title="Accent" colors={{ accent: cnamColorsTokens.cyan.base }} />
+    <ColorItem title="Error" colors={{ error: cnamColorsTokens.orange.darken20 }} />
+    <ColorItem title="Info" colors={{ info: cnamColorsTokens.blue.base }} />
+    <ColorItem title="Success" colors={{ success: cnamColorsTokens.green.base }} />
+    <ColorItem title="Warning" colors={{ warning: cnamColorsTokens.yellow.base }} />
+    <ColorItem title="Risque Pro" colors={{ risquePro: cnamColorsTokens.brick.base }} />
+</ColorPalette>
+
+## Interactive Colors
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Default" colors={{ interactiveDefault: cnamLightTheme.interactiveDefault }} />
+    <ColorItem title="Hover" colors={{ interactiveHover: cnamLightTheme.interactiveHover }} />
+    <ColorItem title="Pressed" colors={{ interactivePressed: cnamLightTheme.interactivePressed }} />
+    <ColorItem title="Focus" colors={{ interactiveFocus: cnamLightTheme.interactiveFocus }} />
+    <ColorItem title="Disabled" colors={{ interactiveDisabled: cnamLightTheme.interactiveDisabled }} />
+    <ColorItem title="Hover On Selected" colors={{ interactiveHoverOnSelected: cnamLightTheme.interactiveHoverOnSelected }} />
+</ColorPalette>
+
+## Border Colors
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Darker" colors={{ borderDarker: cnamLightTheme.borderDarker }} />
+    <ColorItem title="Base" colors={{ borderBase: cnamLightTheme.borderBase }} />
+    <ColorItem title="Subdued" colors={{ borderSubdued: cnamLightTheme.borderSubdued }} />
+    <ColorItem title="Accent" colors={{ borderAccent: cnamLightTheme.borderAccent }} />
+    <ColorItem title="Accent Contrasted" colors={{ borderAccentContrasted: cnamLightTheme.borderAccentContrasted }} />
+    <ColorItem title="Accent On Dark" colors={{ borderAccentOnDark: cnamLightTheme.borderAccentOnDark }} />
+    <ColorItem title="Info" colors={{ borderInfo: cnamLightTheme.borderInfo }} />
+    <ColorItem title="Success" colors={{ borderSuccess: cnamLightTheme.borderSuccess }} />
+    <ColorItem title="Warning" colors={{ borderWarning: cnamLightTheme.borderWarning }} />
+    <ColorItem title="Error" colors={{ borderError: cnamLightTheme.borderError }} />
+    <ColorItem title="On Dark" colors={{ borderOnDark: cnamLightTheme.borderOnDark }} />
+    <ColorItem title="Disabled" colors={{ borderDisabled: cnamLightTheme.borderDisabled }} />
+    <ColorItem title="Disabled On Dark" colors={{ borderDisabledOnDark: cnamLightTheme.borderDisabledOnDark }} />
+</ColorPalette>
+
+## Text Colors
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Base" colors={{ textBase: cnamLightTheme.textBase }} />
+    <ColorItem title="Accent" colors={{ textAccent: cnamLightTheme.textAccent }} />
+    <ColorItem title="Accent Contrasted" colors={{ textAccentContrasted: cnamLightTheme.textAccentContrasted }} />
+    <ColorItem title="Subdued" colors={{ textSubdued: cnamLightTheme.textSubdued }} />
+    <ColorItem title="Info" colors={{ textInfo: cnamLightTheme.textInfo }} />
+    <ColorItem title="Success" colors={{ textSuccess: cnamLightTheme.textSuccess }} />
+    <ColorItem title="Warning" colors={{ textWarning: cnamLightTheme.textWarning }} />
+    <ColorItem title="Error" colors={{ textError: cnamLightTheme.textError }} />
+    <ColorItem title="Disabled" colors={{ textDisabled: cnamLightTheme.textDisabled }} />
+    <ColorItem title="On Dark" colors={{ textOnDark: cnamLightTheme.textOnDark }} />
+    <ColorItem title="Subdued On Dark" colors={{ textSubduedOnDark: cnamLightTheme.textSubduedOnDark }} />
+    <ColorItem title="Disabled On Dark" colors={{ textDisabledOnDark: cnamLightTheme.textDisabledOnDark }} />
+</ColorPalette>
+
+## Icons
+<ColorPalette>
+    <ColorItem title="Base" colors={{ textBase: cnamLightTheme.iconBase }} />
+    <ColorItem title="Subdued" colors={{ textSubdued: cnamLightTheme.iconSubdued }} />
+    <ColorItem title="Subdued On Dark" colors={{ textSubduedOnDark: cnamLightTheme.iconSubduedOnDark }} />
+    <ColorItem title="Accent" colors={{ textAccent: cnamLightTheme.iconAccent }} />
+    <ColorItem title="Accent Contrasted" colors={{ textAccentContrasted: cnamLightTheme.iconAccentContrasted }} />
+    <ColorItem title="Info" colors={{ textInfo: cnamLightTheme.iconInfo }} />
+    <ColorItem title="Success" colors={{ textSuccess: cnamLightTheme.iconSuccess }} />
+    <ColorItem title="Warning" colors={{ textWarning: cnamLightTheme.iconWarning }} />
+    <ColorItem title="Error" colors={{ textError: cnamLightTheme.iconError }} />
+    <ColorItem title="On Dark" colors={{ textOnDark: cnamLightTheme.iconOnDark }} />
+    <ColorItem title="Disabled" colors={{ textDisabled: cnamLightTheme.iconDisabled }} />
+    <ColorItem title="Disabled On Dark" colors={{ textDisabledOnDark: cnamLightTheme.iconDisabledOnDark }} />
+</ColorPalette>
+
+## Background Colors
+
+### Main Backgrounds
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Main" colors={{ backgroundMain: cnamLightTheme.backgroundMain }} />
+    <ColorItem title="Surface" colors={{ backgroundSurface: cnamLightTheme.backgroundSurface }} />
+    <ColorItem title="Surface Alt" colors={{ backgroundSurfaceAlt: cnamLightTheme.backgroundSurfaceAlt }} />
+</ColorPalette>
+
+### Alternative Backgrounds
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Main Alt" colors={{ backgroungMainAlt: cnamLightTheme.backgroungMainAlt }} />
+    <ColorItem title="Raised" colors={{ backgroungRaised: cnamLightTheme.backgroungRaised }} />
+    <ColorItem title="Accent" colors={{ backgroundAccent: cnamLightTheme.backgroundAccent }} />
+    <ColorItem title="Accent Contrasted" colors={{ backgroungAccentContrasted: cnamLightTheme.backgroungAccentContrasted }} />
+    <ColorItem title="Accent Alt" colors={{ backgroundAccentAlt: cnamLightTheme.backgroundAccentAlt }} />
+</ColorPalette>
+
+### Informational Backgrounds
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Info" colors={{ backgroundInfo: cnamLightTheme.backgroundInfo }} />
+    <ColorItem title="Info Subdued" colors={{ backgroundInfoSubdued: cnamLightTheme.backgroundInfoSubdued }} />
+    <ColorItem title="Info Contrasted" colors={{ backgroundInfoContrasted: cnamLightTheme.backgroundInfoContrasted }} />
+</ColorPalette>
+
+### Success Backgrounds
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Success" colors={{ backgroundSuccess: cnamLightTheme.backgroundSuccess }} />
+    <ColorItem title="Success Subdued" colors={{ backgroundSuccessSubdued: cnamLightTheme.backgroundSuccessSubdued }} />
+    <ColorItem title="Success Contrasted" colors={{ backgroundSuccessContrasted: cnamLightTheme.backgroundSuccessContrasted }} />
+</ColorPalette>
+
+### Warning Backgrounds
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Warning" colors={{ backgroundWarning: cnamLightTheme.backgroundWarning }} />
+    <ColorItem title="Warning Subdued" colors={{ backgroundWarningSubdued: cnamLightTheme.backgroundWarningSubdued }} />
+    <ColorItem title="Warning Contrasted" colors={{ backgroundWarningContrasted: cnamLightTheme.backgroundWarningContrasted }} />
+</ColorPalette>
+
+### Error Backgrounds
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Error" colors={{ backgroundError: cnamLightTheme.backgroundError }} />
+    <ColorItem title="Error Subdued" colors={{ backgroundErrorSubdued: cnamLightTheme.backgroundErrorSubdued }} />
+    <ColorItem title="Error Contrasted" colors={{ backgroundErrorContrasted: cnamLightTheme.backgroundErrorContrasted }} />
+</ColorPalette>
+
+### Other Backgrounds
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Disabled" colors={{ backgroundDisabled: cnamLightTheme.backgroundDisabled }} />
+    <ColorItem title="Disabled On Dark" colors={{ backgroundDisabledOnDark: cnamLightTheme.backgroundDisabledOnDark }} />
+    <ColorItem title="Assure" colors={{ backgroundAssure: cnamLightTheme.backgroundAssure }} />
+    <ColorItem title="Professionnel" colors={{ backgroundProfessionnel: cnamLightTheme.backgroundProfessionnel }} />
+    <ColorItem title="Entreprise" colors={{ backgroundEntreprise: cnamLightTheme.backgroundEntreprise }} />
+</ColorPalette>
+
+
+## Transparent Background Colors
+
+### Transparent Blues
+<ColorPalette className="vertical-palette">
+    <ColorItem title="Transparent Blue 18" colors={{ transparentBlue18: cnamLightTheme.transparentBlue18 }} />
+    <ColorItem title="Transparent Blue 8" colors={{ transparentBlue8: cnamLightTheme.transparentBlue8 }} />
+</ColorPalette>
