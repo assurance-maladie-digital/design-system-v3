@@ -1,3 +1,3 @@
 export const locales = {
-	label: 'Choix de la langue.',
+	label: 'Choix de la langue. Actuellement',
 }

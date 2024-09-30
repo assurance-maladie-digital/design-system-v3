@@ -183,14 +183,13 @@ describe('LangBtn.vue', () => {
 		})
 
 		const button = wrapper.find('.vd-lang-btn')
-		expect(button.attributes('aria-label')).toBe('Choix de la langue. Français')
+		expect(button.attributes('aria-label')).toBe('Choix de la langue. Actuellement Français')
 	})
 
 	it('uses ariaLabel prop correctly', () => {
-		const customAriaLabel = 'Choix de la langue.'
 		wrapper = mount(LangBtn, {
 			props: {
-				ariaLabel: customAriaLabel,
+				ariaLabel: 'Language selection',
 				availableLanguages: ['fr', 'co', 'es'],
 			},
 			global: {
@@ -199,7 +198,7 @@ describe('LangBtn.vue', () => {
 		})
 
 		const button = wrapper.find('.vd-lang-btn')
-		expect(button.attributes('aria-label')).toBe(customAriaLabel + ' Français')
+		expect(button.attributes('aria-label')).toBe('Language selection Français')
 	})
 
 	it('handles modelValue not in availableLanguages', () => {
