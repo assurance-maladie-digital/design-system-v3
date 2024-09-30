@@ -116,3 +116,32 @@ export const NoDownArrow: Story = {
 		}
 	},
 }
+
+export const FlatBtn: Story = {
+	args: {
+		modelValue: 'fr',
+		hideDownArrow: false,
+		ariaLabel: 'Select a language',
+		availableLanguages: ['fr', 'en', 'de'],
+		vuetifyOptions: {
+			btn: {
+				color: 'primary',
+				variant: 'flat',
+				ripple: true,
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { LangBtn, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<LangBtn :vuetify-options="args.vuetifyOptions" v-bind="args" @update:modelValue="args['update:modelValue']" />
+				</div>
+			`,
+		}
+	},
+}
