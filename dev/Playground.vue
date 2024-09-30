@@ -23,7 +23,6 @@
 				:available-languages="items"
 				:aria-label="ariaLabel"
 				:hide-down-arrow="false"
-				:vuetify-options="options"
 			/>
 		</div>
 	</main>

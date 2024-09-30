@@ -109,7 +109,7 @@
 			<template #activator="{ props: activatorProps }">
 				<VBtn
 					id="lang-menu-btn"
-					:aria-label="ariaLabel"
+					:aria-label="`${props.ariaLabel} ${currentLangData.name}`"
 					aria-haspopup="menu"
 					:aria-controls="menuId"
 					:aria-owns="menuId"
@@ -140,7 +140,7 @@
 					:key="code"
 					role="menuitem"
 					:aria-label="langData.nativeName"
-					:aria-labelledby="menuId"
+					:aria-labelledby="`${menuId} ${langData.nativeName}`"
 					@click="updateLang(code)"
 				>
 					<VListItemTitle v-bind="options.listTileTitle">
