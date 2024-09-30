@@ -20,6 +20,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	args: {
+		target: 'http://localhost:6007/?path=/docs/components-skiplink--docs#main',
+	},
 	render: (args) => {
 		return {
 			components: { SkipLink },
@@ -43,6 +46,7 @@ export const Default: Story = {
 
 export const WithSlot: Story = {
 	args: {
+		target: 'http://localhost:6007/?path=/docs/components-skiplink--docs#main',
 		default: '<b>lorem ipsum</b>',
 	},
 	render: (args) => {
