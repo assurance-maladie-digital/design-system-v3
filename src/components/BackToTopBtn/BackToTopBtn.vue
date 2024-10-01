@@ -1,13 +1,13 @@
 <script setup lang="ts">
-  import { mdiArrowUp } from '@mdi/js'
-  import { computed, onMounted, onUnmounted, ref } from 'vue'
+	import { mdiArrowUp } from '@mdi/js'
+	import { computed, onMounted, onUnmounted, ref } from 'vue'
 
-  import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { convertToUnit } from '@/utils/convertToUnit'
 	import { useDisplay } from 'vuetify'
 
 	import { locales } from './locales'
-  import { config } from './config'
+	import { config } from './config'
 
 	import { type VBtn } from 'vuetify/components'
 
