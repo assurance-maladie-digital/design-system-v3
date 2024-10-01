@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import BackToTopBtn from './BackToTopBtn.vue'
+import { VCard, VSheet } from 'vuetify/components'
 
 const meta = {
 	title: 'Components/BackToTopBtn',
@@ -23,13 +24,6 @@ const meta = {
 		target: {
 			control: { type: 'text' },
 		},
-		vuetifyOptions: {
-			control: { type: 'object' },
-			description: 'Customisez les options des composants internes de Vuetify',
-			table: {
-				category: 'props',
-			},
-		},
 		default: {
 			control: { type: 'text' },
 		},
@@ -41,7 +35,7 @@ const meta = {
 		threshold: 120,
 		nudgeRight: 16,
 		nudgeBottom: 16,
-		target: 'testcontainer',
+		target: 'target',
 		default: 'Retour en haut',
 	},
 } satisfies Meta<typeof BackToTopBtn>
@@ -51,33 +45,57 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	args: {
+		target: 'target',
+		vuetifyOptions: {
+			btn: {
+				variant: 'outlined',
+				color: 'primary',
+				class: 'text-wrap px-0 px-md-4',
+			},
+			icon: {
+				color: 'primary',
+				size: 'small',
+				class: 'ml-0 ml-md-1',
+			},
+		},
+	},
 	render: (args) => {
 		return {
 			components: {
 				BackToTopBtn,
+				VCard,
+				VSheet
 			},
 			setup() {
 				return { args }
 			},
 			template: `
-				<div
-					id="testcontainer"
-					style="height: 60vh; overflow: scroll; position: relative; border: 1px solid black; scroll-behavior: smooth; background: #fff"
+				<VCard
+					id="target"
+					width="100%"
+					max-height="200px"
+					class="overflow-y-auto"
+					style="scroll-behavior: smooth"
 				>
-					<p>Scroll down</p>
-					<div style="height: 360vh" />
-					<BackToTopBtn
-						v-bind="args"
+					<VSheet
+						height="600px"
+						class="d-flex flex-column align-center"
 					>
+						<p class="pa-2">
+							Haut de la section.
+						</p>
+					</VSheet>
+					<BackToTopBtn v-bind="args" :vuetify-options="args.vuetifyOptions">
 						{{args.default}}
 					</BackToTopBtn>
-				</div>
+				</VCard>
 			`,
 		}
 	},
 	play: async ({ canvasElement }) => {
-		await new Promise((resolve: (v: unknown) => void) => setTimeout(resolve, 2000))
-		const container = canvasElement.querySelector('#testcontainer')
+		await new Promise((resolve: (v: unknown) => void) => setTimeout(resolve, 1000))
+		const container = canvasElement.querySelector('#target')
 		container?.scrollTo(0, 1000)
 	},
 }
@@ -87,12 +105,12 @@ export const Customization: Story = {
 		target: 'btn-customization',
 		vuetifyOptions: {
 			btn: {
-				variant: 'tonal',
-				color: 'red',
-				rounded: false,
+				variant: 'elevated',
+				color: 'primary',
+				rounded: true,
 			},
 			icon: {
-				color: 'red',
+				color: 'white',
 			},
 		},
 	},
@@ -105,23 +123,30 @@ export const Customization: Story = {
 				return { args }
 			},
 			template: `
-				<div
+				<VCard
 					id="btn-customization"
-					style="height: 60vh; overflow: scroll; position: relative; border: 1px solid black; scroll-behavior: smooth; background: #fff"
+					width="100%"
+					max-height="200px"
+					class="overflow-y-auto"
+					style="scroll-behavior: smooth"
 				>
-					<p>Scroll down</p>
-					<div style="height: 360vh" />
-					<BackToTopBtn
-						v-bind="args"
+					<VSheet
+						height="600px"
+						class="d-flex flex-column align-center"
 					>
+						<p class="pa-2">
+							Haut de la section.
+						</p>
+					</VSheet>
+					<BackToTopBtn v-bind="args" :vuetify-options="args.vuetifyOptions">
 						{{args.default}}
 					</BackToTopBtn>
-				</div>
+				</VCard>
 			`,
 		}
 	},
 	play: async ({ canvasElement }) => {
-		await new Promise((resolve: (v: unknown) => void) => setTimeout(resolve, 2000))
+		await new Promise((resolve: (v: unknown) => void) => setTimeout(resolve, 1000))
 		const container = canvasElement.querySelector('#btn-customization')
 		container?.scrollTo(0, 1000)
 	},
