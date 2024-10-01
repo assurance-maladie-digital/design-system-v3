@@ -65,7 +65,7 @@ export const Default: Story = {
 			components: {
 				BackToTopBtn,
 				VCard,
-				VSheet
+				VSheet,
 			},
 			setup() {
 				return { args }
