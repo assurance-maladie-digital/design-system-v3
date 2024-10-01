@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiArrowUp } from '@mdi/js'
-	import { computed, onMounted, onUnmounted, ref } from 'vue'
+	import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { convertToUnit } from '@/utils/convertToUnit'
@@ -30,12 +30,11 @@
 	const options = useCustomizableOptions(config, props)
 
 	const showBtn = ref(false)
+  const isMobile = ref(false)
 
 	const targetSelector = computed(() => {
 		return props.target ? `#${props.target}` : null
 	})
-
-	const isMobile = computed(() => useDisplay().smAndDown.value)
 
 	const btnStyle = computed(() => {
 		const right = convertToUnit(props.nudgeRight) || '0'
@@ -52,6 +51,16 @@
 	const labelClasses = computed(() => ({
 		'd-sr-only': isMobile.value,
 	}))
+
+  // Watch for changes in display
+  const display = useDisplay()
+  watch(
+      () => display.smAndDown.value,
+      (newVal) => {
+        isMobile.value = newVal
+      },
+      { immediate: true }
+  )
 
 	// Methods
 	const onScroll = (e: Event) => {

@@ -1,29 +1,37 @@
 <script setup lang="ts">
-	import LangBtn from '@/components/LangBtn/LangBtn.vue'
-	import { ref } from 'vue'
+import BackToTopBtn from '@/components/BackToTopBtn/BackToTopBtn.vue'
+import { VCard, VSheet } from 'vuetify/components'
 
-	const value = ref('fr')
-	const value2 = ref('')
-	const items = ['fr', 'en', 'co']
-	const ariaLabel = 'Choix de la langue'
-	const options = {
-		btn: {
-			color: 'green',
-			variant: 'text',
-			ripple: true,
-		},
-	}
+const vuetifyOptions = {
+  btn: {
+    variant: 'flat',
+    color: 'primary',
+    rounded: false
+  },
+  icon: {
+    color: 'white'
+  }
+}
 </script>
 
 <template>
-	<main>
-		<div class="mt-12 ml-12">
-			<LangBtn
-				v-model="value"
-				:available-languages="items"
-				:aria-label="ariaLabel"
-				:hide-down-arrow="false"
-			/>
-		</div>
-	</main>
+  <VCard
+      id="target"
+      width="100%"
+      max-height="200px"
+      class="overflow-y-auto"
+      style="scroll-behavior: smooth"
+  >
+    <VSheet
+        height="600px"
+        class="d-flex flex-column align-center"
+    >
+      <p class="pa-2">
+        Haut de la section.
+      </p>
+    </VSheet>
+    <BackToTopBtn target="target" :vuetify-options="vuetifyOptions">
+      Retour en haut de la page
+    </BackToTopBtn>
+  </VCard>
 </template>
