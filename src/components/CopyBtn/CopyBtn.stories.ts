@@ -53,7 +53,7 @@ const meta = {
 			}),
 		},
 	},
-} as Meta<typeof CopyBtn>
+} satisfies Meta<typeof CopyBtn>
 
 export default meta
 
