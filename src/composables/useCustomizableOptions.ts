@@ -1,4 +1,4 @@
-import { computed, type ComputedRef } from 'vue'
+import { computed, toRaw, type ComputedRef } from 'vue'
 import deepmerge from 'deepmerge'
 
 type PropsList = Record<string, unknown>
@@ -19,5 +19,5 @@ export default function useCustomizableOptions(
 	defaultOptions: ComponentsProps,
 	props: CustomizableOptions,
 ) {
-	return computed(() => deepmerge(defaultOptions, props.vuetifyOptions ?? {}))
+	return computed(() => deepmerge(defaultOptions, toRaw(props.vuetifyOptions) ?? {}))
 }

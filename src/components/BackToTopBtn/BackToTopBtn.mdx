@@ -1,0 +1,52 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as BackToTopBtnStories from './BackToTopBtn.stories';
+
+<Meta of={BackToTopBtnStories} />
+
+# BackToTopBtn
+
+Le composant `BackToTopBtn` est utilisé pour afficher un bouton permettant à l’utilisateur de remonter en haut de la page.
+
+Le boutton apparaît lorsque l'utilisateur scroll en dessous d'une certaine hauteur de la page. Cette hauteur est définie par la prop `threshold`, elle est de 120px par defaut.
+
+<Canvas of={BackToTopBtnStories.Default}  />
+
+## API
+
+<Controls of={BackToTopBtnStories.Default} />
+
+## Context d'utilisation
+
+Ce composant peut être utilisé à la racine de la page ou bien dans un composant avant son propre context de scroll. Dans ce dernier cas, il conviens de passer la prop `target` un id unique de l'élément scrollable.
+
+### Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+import BackToTopBtn from '@/components/BackToTopBtn/BackToTopBtn.vue'
+import { VCard, VSheet } from 'vuetify/components'
+</script>
+
+<template>
+  <VCard
+      id="target"
+      width="100%"
+      max-height="200px"
+      class="overflow-y-auto"
+      style="scroll-behavior: smooth"
+  >
+    <VSheet
+        height="600px"
+        class="d-flex flex-column align-center"
+    >
+      <p class="pa-2">
+        Haut de la section.
+      </p>
+    </VSheet>
+    <BackToTopBtn target="target">
+      Retour en haut de la page
+    </BackToTopBtn>
+  </VCard>
+</template>
+`} />
