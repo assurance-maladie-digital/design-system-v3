@@ -31,7 +31,6 @@
 
 	const showBtn = ref(false)
 
-	// Computed properties
 	const targetSelector = computed(() => {
 		return props.target ? `#${props.target}` : null
 	})
