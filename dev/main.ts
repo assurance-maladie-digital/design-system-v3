@@ -7,7 +7,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import { cnamLightTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
-import { createFlattenTheme } from '../src/designTokens/utils'
+import { createFlattenTheme } from '@/designTokens/utils'
 // import { bootstrapLightTheme } from '../designTokens/tokens/bootstrap/bootstrapLightTheme'
 
 const vuetify = createVuetify({

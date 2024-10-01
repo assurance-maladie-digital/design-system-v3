@@ -1,0 +1,28 @@
+import {Controls, Canvas, Meta, Source, Story} from '@storybook/blocks';
+import * as BackBtnStories from './BackBtn.stories';
+
+<Meta of={BackBtnStories} />
+
+# BackBtn
+
+L’élément BackBtn est utilisé pour permettre à l’utilisateur de revenir à la page précédente.
+
+
+<Story of={BackBtnStories.AlertTest} />
+
+
+<Canvas of={BackBtnStories.Default}  />
+
+# API
+
+<Controls of={BackBtnStories.Default} />
+
+<Source dark code={`
+<script setup lang="ts">
+import BackBtn from '@/components/BackBtn/BackBtn.vue'
+</script>
+
+<template>
+    <BackBtn/>
+</template>
+`} />
