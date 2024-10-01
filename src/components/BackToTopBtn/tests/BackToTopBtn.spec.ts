@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 
-import BackToTopBtn from '../'
+import BackToTopBtn from '../BackToTopBtn.vue'
 import { vuetify } from '@tests/unit/setup'
 
 describe('BackToTopBtn', () => {
