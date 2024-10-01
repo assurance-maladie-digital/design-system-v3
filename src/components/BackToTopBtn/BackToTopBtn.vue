@@ -1,11 +1,14 @@
 <script setup lang="ts">
-	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+  import { mdiArrowUp } from '@mdi/js'
+  import { computed, onMounted, onUnmounted, ref } from 'vue'
+
+  import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { convertToUnit } from '@/utils/convertToUnit'
-	import { mdiArrowUp } from '@mdi/js'
-	import { computed, onMounted, onUnmounted, ref } from 'vue'
 	import { useDisplay } from 'vuetify'
+
 	import { locales } from './locales'
-	import defaultOptions from './options.json'
+  import { config } from './config'
+
 	import { type VBtn } from 'vuetify/components'
 
 	type VBtnProps = InstanceType<typeof VBtn>['$props']
@@ -24,7 +27,7 @@
 		target: undefined,
 	})
 
-	const options = useCustomizableOptions(defaultOptions, props)
+	const options = useCustomizableOptions(config, props)
 
 	const showBtn = ref(false)
 
