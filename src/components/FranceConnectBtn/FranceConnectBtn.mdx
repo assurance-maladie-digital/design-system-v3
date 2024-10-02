@@ -1,4 +1,4 @@
-import {Controls, Canvas, Meta} from '@storybook/blocks';
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
 
 import * as FranceConnectBtnStories from './FranceConnectBtn.stories';
 
@@ -13,3 +13,22 @@ Le composant `FranceConnectBtn` est utilisé pour afficher un bouton permettant 
 ## API
 
 <Controls of={FranceConnectBtnStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+	import FranceConnectBtn from '@/components/FranceConnectBtn/FranceConnectBtn.vue'
+</script>
+
+<template>
+	<FranceConnectBtn href="/" />
+
+	<br>
+
+	<FranceConnectBtn
+		href="/"
+		is-connect-plus
+	/>
+</template>
+`} />
