@@ -1,5 +1,5 @@
 {
-  "name": "v3-test",
+  "name": "@cnamts/v3-test",
   "version": "0.0.0-alpha.0",
   "private": false,
   "description": "CNAM DS v3",
