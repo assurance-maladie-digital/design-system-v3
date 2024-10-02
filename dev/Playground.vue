@@ -1,37 +1,47 @@
 <script setup lang="ts">
-import BackToTopBtn from '@/components/BackToTopBtn/BackToTopBtn.vue'
-import { VCard, VSheet } from 'vuetify/components'
-
-const vuetifyOptions = {
-  btn: {
-    variant: 'flat',
-    color: 'primary',
-    rounded: false
-  },
-  icon: {
-    color: 'white'
-  }
-}
+	import FranceConnectBtn from '@/components/FranceConnectBtn/FranceConnectBtn.vue'
 </script>
 
 <template>
-  <VCard
-      id="target"
-      width="100%"
-      max-height="200px"
-      class="overflow-y-auto"
-      style="scroll-behavior: smooth"
-  >
-    <VSheet
-        height="600px"
-        class="d-flex flex-column align-center"
-    >
-      <p class="pa-2">
-        Haut de la section.
-      </p>
-    </VSheet>
-    <BackToTopBtn target="target" :vuetify-options="vuetifyOptions">
-      Retour en haut de la page
-    </BackToTopBtn>
-  </VCard>
+	<VApp>
+		<main>
+			<div class="pa-10">
+				<v-row>
+					<v-col>
+						<FranceConnectBtn href="/" />
+					</v-col>
+					<v-col>
+						<FranceConnectBtn
+							href="/"
+							is-connect-plus
+						/>
+					</v-col>
+				</v-row>
+			</div>
+
+			<br>
+
+			<v-theme-provider
+				class="pa-10"
+				theme="dark"
+				with-background
+			>
+				<v-row>
+					<v-col>
+						<FranceConnectBtn
+							href="/"
+							disabled
+						/>
+					</v-col>
+					<v-col>
+						<FranceConnectBtn
+							href="/"
+							is-connect-plus
+							disabled
+						/>
+					</v-col>
+				</v-row>
+			</v-theme-provider>
+		</main>
+	</VApp>
 </template>
