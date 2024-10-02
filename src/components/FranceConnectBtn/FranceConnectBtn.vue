@@ -93,6 +93,10 @@
 <style lang="scss" scoped>
 .vd-france-connect-btn a {
 	color: #000091;
+
+  &:focus {
+    outline-offset: 3px;
+  }
 }
 
 .vd-france-connect-link {
@@ -106,10 +110,9 @@
 		background: #2323ff;
 	}
 
-    &:focus {
-        outline: 0;
-        box-shadow:  0px 0px 0px 2px #FFFFFF, 0px 0px 0px 4px #0A76F6;
-    }
+  &:focus {
+    outline-offset: 3px;
+  }
 }
 
 .vd-france-connect-btn--dark {
@@ -123,11 +126,6 @@
 
 		&:active {
 			background-color: #C6C6FB;
-		}
-
-		&:focus {
-			outline: 0;
-			box-shadow:  0px 0px 0px 2px #161616, 0px 0px 0px 4px #0A76F6;
 		}
 	}
 
@@ -145,5 +143,9 @@
 	&:hover {
 		background-size: 100% 2px;
 	}
+}
+
+:deep(&:focus) {
+  border-radius: 0 !important;
 }
 </style>
