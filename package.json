@@ -1,6 +1,6 @@
 {
-  "name": "@cnamts/design-system-v3",
-  "version": "1.0.0",
+  "name": "v3-test",
+  "version": "0.0.0-alpha.0",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
