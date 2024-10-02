@@ -14,11 +14,12 @@
 	const theme = useTheme()
 	const isDark = computed(() => theme.current.value.dark)
 
-	const franceConnectInfoUrl = 'https://franceconnect.gouv.fr/'
-	const franceConnectPlusInfoUrl = 'https://franceconnect.gouv.fr/france-connect-plus'
+	const franceConnectInfoUrl = props.isConnectPlus
+		? 'https://franceconnect.gouv.fr/france-connect-plus'
+		: 'https://franceconnect.gouv.fr/'
 
 	const btnWidth = computed(() => props.isConnectPlus ? '245px' : '209px')
-	const infoUrl = computed(() => props.isConnectPlus ? franceConnectPlusInfoUrl : franceConnectInfoUrl)
+	const infoUrl = computed(() => franceConnectInfoUrl)
 </script>
 
 <template>

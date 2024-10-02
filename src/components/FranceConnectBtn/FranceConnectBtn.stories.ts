@@ -16,6 +16,23 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	args: {
 		href: 'https://app.franceconnect.gouv.fr/',
+		isConnectPlus: false,
+	},
+	render: (args) => {
+		return {
+			components: { FranceConnectBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<FranceConnectBtn
+						:href="args.href"
+						:is-connect-plus="args.isConnectPlus"
+					/>
+              	</div>
+			`,
+		}
 	},
 }
 
@@ -23,6 +40,22 @@ export const FranceConnectPlus: Story = {
 	args: {
 		href: 'https://app.franceconnect.gouv.fr/',
 		isConnectPlus: true,
+	},
+	render: (args) => {
+		return {
+			components: { FranceConnectBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<FranceConnectBtn
+						:href="args.href"
+						:is-connect-plus="args.isConnectPlus"
+					/>
+              	</div>
+			`,
+		}
 	},
 }
 
@@ -43,7 +76,10 @@ export const DarkTheme: Story = {
                     with-background
                     class="pa-4"
                 >
-                    <FranceConnectBtn v-bind="args" />
+                    <FranceConnectBtn
+						:href="args.href"
+						:is-connect-plus="args.isConnectPlus"
+					/>
                 </VThemeProvider>`,
 		}
 	},
