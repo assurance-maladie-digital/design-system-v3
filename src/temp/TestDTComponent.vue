@@ -77,7 +77,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/tokens';
+@import '../assets/tokens';
 
 h1 {
   color: $orange-base;
