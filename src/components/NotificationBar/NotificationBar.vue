@@ -230,6 +230,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/tokens.scss';
+
 .vd-notification-content {
   display: flex;
   align-items: center;
@@ -239,6 +241,13 @@
   padding: 16px;
   min-width: 0;
   max-width: none;
+}
+
+:deep(.v-snackbar__content) {
+  padding: tokens.$padding-4 !important;
+}
+:deep(.v-snackbar__actions) {
+  margin-inline-end: 10px;
 }
 
 .vd-notification-bar.v-snackbar--vertical :deep() {
