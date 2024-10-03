@@ -1,4 +1,4 @@
-type VariantType = 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
+import type { VariantType } from '@/types/vuetifyTypes'
 
 const defaultOptions = {
 	menu: {
