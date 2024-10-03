@@ -7,12 +7,14 @@
 	const props = withDefaults(defineProps<{
 		href: string
 		isConnectPlus?: boolean
+		dark?: boolean
 	}>(), {
 		isConnectPlus: false,
+		dark: false,
 	})
 
 	const theme = useTheme()
-	const isDark = computed(() => theme.current.value.dark)
+	const isDark = computed(() => theme.current.value.dark || props.dark)
 
 	const franceConnectInfoUrl = props.isConnectPlus
 		? 'https://franceconnect.gouv.fr/france-connect-plus'

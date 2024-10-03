@@ -17,6 +17,7 @@ export const Default: Story = {
 	args: {
 		href: 'https://app.franceconnect.gouv.fr/',
 		isConnectPlus: false,
+		dark: false,
 	},
 	render: (args) => {
 		return {
@@ -29,6 +30,7 @@ export const Default: Story = {
 					<FranceConnectBtn
 						:href="args.href"
 						:is-connect-plus="args.isConnectPlus"
+						:dark="args.dark"
 					/>
               	</div>
 			`,
@@ -40,6 +42,7 @@ export const FranceConnectPlus: Story = {
 	args: {
 		href: 'https://app.franceconnect.gouv.fr/',
 		isConnectPlus: true,
+		dark: false,
 	},
 	render: (args) => {
 		return {
@@ -52,6 +55,7 @@ export const FranceConnectPlus: Story = {
 					<FranceConnectBtn
 						:href="args.href"
 						:is-connect-plus="args.isConnectPlus"
+						:dark="args.dark"
 					/>
               	</div>
 			`,
@@ -63,6 +67,7 @@ export const DarkTheme: Story = {
 	args: {
 		href: 'https://app.franceconnect.gouv.fr/',
 		isConnectPlus: true,
+		dark: true,
 	},
 	render: (args) => {
 		return {
@@ -79,6 +84,7 @@ export const DarkTheme: Story = {
                     <FranceConnectBtn
 						:href="args.href"
 						:is-connect-plus="args.isConnectPlus"
+						:dark="args.dark"
 					/>
                 </VThemeProvider>`,
 		}
