@@ -1,5 +1,4 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
-import SkipLink from './SkipLink.vue';
 
 import * as SkipLinkStories from './SkipLink.stories';
 
@@ -22,7 +21,6 @@ Quand l'utilisateur change de page ou de vue, le focus est automatiquement plac√
 ## Exemple d'utilisation avec Nuxt
 
 <Source dark code={`
-// layouts/default.vue
 <template>
   <div>
     <SkipLink label="Aller au contenu" target="#main-content"/>
@@ -36,7 +34,6 @@ Quand l'utilisateur change de page ou de vue, le focus est automatiquement plac√
 ## Exemple d'utilisation avec Vue
 
 <Source dark code={`
-// main.vue
 <template>
   <v-app>
     <SkipLink target="#main-content"/>
