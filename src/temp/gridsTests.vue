@@ -50,5 +50,5 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/tokens.scss';
+@import '@/assets/tokens';
 </style>
