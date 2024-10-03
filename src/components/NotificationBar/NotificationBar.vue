@@ -11,11 +11,11 @@
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		closeBtnText?: string
-		rounded?: 0 | 'xs' | 'sm' | true | 'lg' | 'xl' | 'pill' | 'circle' | 'shaped'
+		rounded?: 0 | 1 | 2 | 3 | 4 | 'xs' | 'sm' | true | 'lg' | 'xl' | 'pill' | 'circle' | 'shaped'
 		bottom?: true | false
 	}>(), {
 		closeBtnText: 'Fermer',
-		rounded: 0,
+		rounded: 4,
 		bottom: false,
 	})
 
