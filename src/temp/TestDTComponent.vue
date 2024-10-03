@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
 <template>
 	<v-col
 		cols="2"
@@ -77,7 +74,11 @@
 </template>
 
 <style lang="scss" scoped>
+<<<<<<<< HEAD:src/temp/TestDTComponent.vue
 @import '../assets/tokens';
+========
+@import '../../../assets/tokens';
+>>>>>>>> 82f4bcd (chore(deps): update dependency vue to v3.5.2 (#66)):src/components/Temp/TestDesignTokensComponent/TestDTComponent.vue
 
 h1 {
   color: $orange-base;
