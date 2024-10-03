@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import BackBtn from '@/components/BackBtn/BackBtn.vue'
+import BackBtn from '../BackBtn.vue'
 import { mdiArrowLeft } from '@mdi/js'
 import { vuetify } from '@tests/unit/setup'
 
-describe('BackBtn.vue', () => {
+describe('BackBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(BackBtn, {
 			global: {
