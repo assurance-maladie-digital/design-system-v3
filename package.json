@@ -77,7 +77,6 @@
     "storybook": "^8.2.6",
     "typescript": "5.4.2",
     "storybook-addon-vue-mdx": "^1.0.1",
-    "typescript": "^5.5.4",
     "typescript-eslint": "^8.0.0",
     "vite": "^5.3.4",
     "vite-plugin-dts": "^4.0.1",
