@@ -1,6 +1,4 @@
-type VariantType = 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
-type DensityType = 'comfortable' | 'compact'
-type locationType = 'start' | 'end' | 'top' | 'bottom' | 'start center' | 'end center' | 'top center' | 'bottom center'
+import type { VariantType, DensityType, locationType } from '@/types/vuetifyTypes'
 export const config = {
 	menu: {
 		location: 'end center' as locationType,
