@@ -31,6 +31,6 @@ export default create({
 	inputTextColor: '#000091',
 	inputBorderRadius: 4,
 
-
-
+	// Links colors
+	textMutedColor: '#000091',
 })

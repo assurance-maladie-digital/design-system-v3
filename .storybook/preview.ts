@@ -45,7 +45,7 @@ const preview: Preview = {
 	parameters: {
 		options: {
 			storySort: {
-				order: ['Home', ['Accueil'], 'Components', 'DesignTokens', ['Introduction', 'Couleurs']],
+				order: ['Home', ['Accueil'], 'Components', 'Guidelines', ['Introduction', 'Couleurs'], 'Fondamentaux', ['Accessibilite'], 'PolitiqueDeConfidentialité'],
 			},
 		},
 		controls: {
