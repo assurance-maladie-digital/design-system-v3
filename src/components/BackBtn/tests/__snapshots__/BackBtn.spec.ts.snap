@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`BackBtn.vue > render correctly 1`] = `
+exports[`BackBtn > render correctly 1`] = `
 "<button data-v-efb74141="" type="button" class="v-btn v-theme--light text-primary v-btn--density-default v-btn--size-default v-btn--variant-text vd-back-btn text-none px-0 pr-1" outlined="false"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
   <!----><span class="v-btn__content" data-no-activator=""><i data-v-efb74141="" class="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z mdi v-icon notranslate v-theme--light v-icon--size-default text-primary mr-1" aria-hidden="true"></i>Retour</span>
   <!---->
