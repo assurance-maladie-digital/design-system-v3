@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { DOMWrapper, mount, type VueWrapper } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
+import { DOMWrapper, mount } from '@vue/test-utils'
 
 import {
 	filePromise,
@@ -8,16 +7,13 @@ import {
 	filePromiseNoHeaders,
 } from './data/filePromise'
 import DownloadBtn from '../DownloadBtn.vue'
+import { vuetify } from '@tests/unit/setup'
 
 describe('DownloadBtn', () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	let wrapper: VueWrapper<any>
+	let wrapper: any
 	let element: DOMWrapper<Element>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	let spyGetFileInfo: any
 	beforeEach(() => {
-		spyGetFileInfo = vi.spyOn(DownloadBtn.vm, 'getFileInfo')
-		vi.spyOn(DownloadBtn.vm, 'download')
 		wrapper = mount(DownloadBtn, {
 			props: {
 				filePromise,
@@ -26,12 +22,16 @@ describe('DownloadBtn', () => {
 				plugins: [vuetify],
 			},
 		})
+
+		vi.spyOn(wrapper.vm, 'getFileInfo')
+		vi.spyOn(wrapper.vm, 'download')
+
 		element = wrapper.find('[data-testid="download-btn"]')
 		global.URL.createObjectURL = vi.fn()
 		global.URL.revokeObjectURL = vi.fn()
 	})
 	afterEach(() => {
-		wrapper?.unmount()
+		wrapper.unmount()
 		vi.restoreAllMocks()
 	})
 
@@ -48,11 +48,9 @@ describe('DownloadBtn', () => {
 		expect(wrapper.vm.download).toBeTruthy()
 
 		expect(wrapper.vm.state).toBe('idle')
-		element.trigger('click')
-		expect(wrapper.vm.state).toBe('loading')
-		await wrapper.vm.$nextTick()
-
-		expect(spyGetFileInfo).toHaveBeenCalledTimes(1)
+		await element.trigger('click')
+		expect(wrapper.vm.state).toBe('success')
+		expect(wrapper.vm.getFileInfo).toHaveBeenCalledTimes(1)
 	})
 
 	it('emit error event', async () => {
@@ -82,6 +80,13 @@ describe('DownloadBtn', () => {
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
+	})
+
+	it('with notification', async () => {
+		await wrapper.setProps({ notification: true })
+
+		await element.trigger('click')
+		expect(wrapper.vm.notifyUser).toHaveBeenCalledTimes(1)
 	})
 
 	it('with fallbackFilename', async () => {
