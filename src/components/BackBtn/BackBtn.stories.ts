@@ -1,10 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+
 import BackBtn from './BackBtn.vue'
 import Alert from '../Alert/Alert.vue'
+
+import { VSheet } from 'vuetify/components'
 
 const meta = {
 	title: 'Components/BackBtn',
 	component: BackBtn,
+	parameters: {
+		layout: 'fullscreen',
+	},
 	argTypes: {
 		dark: {
 			control: 'boolean',
@@ -25,7 +31,7 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { BackBtn },
+			components: { BackBtn, VSheet },
 			setup() {
 				return { args }
 			},
@@ -54,7 +60,7 @@ export const Dark: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { BackBtn },
+			components: { BackBtn, VSheet },
 			setup() {
 				return { args }
 			},
@@ -81,7 +87,9 @@ export const HideBackIcon: Story = {
 				return { args }
 			},
 			template: `
-				<BackBtn v-bind="args" />
+				<VSheet class="pa-4">
+					<BackBtn v-bind="args" />
+				</VSheet>
 			`,
 		}
 	},
@@ -110,7 +118,7 @@ export const DarkAndHideBackIcon: Story = {
 	},
 }
 
-export const AlertTest: Story = {
+export const Info: Story = {
 	render: (args) => {
 		return {
 			components: { Alert },
