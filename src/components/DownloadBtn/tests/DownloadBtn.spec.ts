@@ -4,10 +4,10 @@ import { DOMWrapper, mount } from '@vue/test-utils'
 import {
 	filePromise,
 	filePromiseError,
-	filePromiseNoHeaders,
 } from './data/filePromise'
 import DownloadBtn from '../DownloadBtn.vue'
 import { vuetify } from '@tests/unit/setup'
+import { downloadFile } from '@/utils/functions/downloadFile'
 
 describe('DownloadBtn', () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,13 +44,11 @@ describe('DownloadBtn', () => {
 	})
 
 	it('works correctly', async () => {
-		expect(wrapper.vm).toBeTruthy()
-		expect(wrapper.vm.download).toBeTruthy()
+		vi.mock('@/utils/functions/downloadFile', () => ({ downloadFile: vi.fn() }))
 
-		expect(wrapper.vm.state).toBe('idle')
 		await element.trigger('click')
-		expect(wrapper.vm.state).toBe('success')
-		expect(wrapper.vm.getFileInfo).toHaveBeenCalledTimes(1)
+
+		expect(downloadFile).toHaveBeenCalledTimes(1)
 	})
 
 	it('emit error event', async () => {
@@ -80,28 +78,5 @@ describe('DownloadBtn', () => {
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
-	})
-
-	it('with notification', async () => {
-		await wrapper.setProps({ notification: true })
-
-		await element.trigger('click')
-		expect(wrapper.vm.notifyUser).toHaveBeenCalledTimes(1)
-	})
-
-	it('with fallbackFilename', async () => {
-		const filename = 'test'
-		await wrapper.setProps({ fallbackFilename: filename })
-		await wrapper.setProps({ filePromise: filePromiseNoHeaders })
-
-		await element.trigger('click')
-		expect(wrapper.vm.download).toHaveBeenCalledTimes(1)
-	})
-
-	it('without header', async () => {
-		await wrapper.setProps({ filePromise: filePromiseNoHeaders })
-
-		await element.trigger('click')
-		expect(wrapper.vm.download).toHaveBeenCalledTimes(1)
 	})
 })

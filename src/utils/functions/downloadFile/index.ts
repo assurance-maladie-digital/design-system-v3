@@ -28,10 +28,10 @@ export function downloadFile(
 		link.style.display = 'none'
 		link.rel = 'noopener noreferrer'
 		link.href = window.URL.createObjectURL(blob)
+		console.log('link.href', link.href)
 		link.download = filename
 		document.body.appendChild(link)
 		link.click()
-
 		document.body.removeChild(link)
 		window.URL.revokeObjectURL(link.href)
 	}

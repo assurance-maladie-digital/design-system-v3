@@ -39,7 +39,6 @@
 		const contentType = header['content-type']
 		const contentDispositionHeader = header['content-disposition']
 		let fileName: string | undefined
-		contentDispositionHeader?.includes('filename=')
 
 		fileName = contentDispositionHeader
 			?.split(';')
