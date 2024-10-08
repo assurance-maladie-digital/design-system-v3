@@ -5,11 +5,11 @@ export default {
 	component: Alert,
 }
 export const Info = {
-	render: (args) => {
+	render: () => {
 		return {
 			components: { Alert },
 			setup() {
-				return { args }
+				return { }
 			},
 			template: `
 				<Alert type="info" variant="tonal" :closable="false">
