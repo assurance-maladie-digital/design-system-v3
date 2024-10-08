@@ -151,3 +151,38 @@ export const Customization: Story = {
 		container?.scrollTo(0, 1000)
 	},
 }
+
+export const PillBtn: Story = {
+	args: {
+		target: 'pill-btn',
+		vuetifyOptions: {
+			btn: {
+				variant: 'outlined',
+				color: 'medium-emphasis',
+				minWidth: 92,
+				rounded: true,
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: {
+				BackToTopBtn,
+			},
+			setup() {
+				return { args }
+			},
+			template: `
+				<v-btn
+					color="primary"
+					variant="outlined"
+					size="small"
+					rounded
+					@click="() => { window.location.href = '' }"
+				>
+					VuetifyOptions
+				</v-btn>
+			`,
+		}
+	},
+}
