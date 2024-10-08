@@ -1,5 +1,9 @@
 import Alert from '../../components/Alert/Alert.vue'
 
+export default {
+	title: 'Guide Du Dev/Rapport de bug',
+	component: Alert,
+}
 export const Info = {
 	render: (args) => {
 		return {
