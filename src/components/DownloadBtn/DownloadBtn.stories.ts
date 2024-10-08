@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import axios from 'axios'
 import { VThemeProvider } from 'vuetify/components'
 import DownloadBtn from './DownloadBtn.vue'
+import NotificationBar from '../NotificationBar/NotificationBar.vue'
+import { useNotificationService } from '@/services/NotificationService'
 
 const meta = {
 	title: 'Components/DownloadBtn',
@@ -128,6 +130,48 @@ export const Dark: Story = {
 		onError: fn(),
 		onSuccess: fn(),
 	},
+}
+
+export const Notify: Story = {
+	args: {
+		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
+		default: 'Télécharger',
+		onError: fn(),
+		onSuccess: fn(),
+	},
+	name: 'Notification',
+	render: args => ({
+		components: { NotificationBar, DownloadBtn },
+		setup() {
+			const { addNotification } = useNotificationService()
+
+			const notify = (message: string, type: 'error' | 'success') => {
+				const notification = {
+					id: Date.now().toString(),
+					message,
+					type,
+					timeout: -1,
+				}
+				addNotification(notification)
+			}
+			return { args, notify }
+		},
+		template: `
+			<div>
+				<NotificationBar />
+				<div class="d-flex">
+					<DownloadBtn
+						:file-promise="args.filePromise"
+						:btn="{ color: 'primary'}"
+						@error="notify('Une error est survenue', 'error')"
+						@success="notify('Votre attestation a été téléchargée', 'success')"
+					>
+						{{ args.default }}
+					</DownloadBtn>
+				</div>
+			</div>
+		`,
+	}),
 }
 
 export const Customization: Story = {
