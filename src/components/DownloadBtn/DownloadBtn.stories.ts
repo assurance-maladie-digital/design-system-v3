@@ -101,7 +101,7 @@ export const Default: Story = {
 }
 
 export const Error: Story = {
-	name: 'Erreur',
+	name: 'Error',
 	args: {
 		filePromise: () => axios.get('https://'),
 		default: 'Télécharger',
@@ -111,7 +111,7 @@ export const Error: Story = {
 }
 
 export const Loading: Story = {
-	name: 'Etat de chargement',
+	name: 'Loading',
 	args: {
 		filePromise: () => new Promise(() => { setTimeout(() => {}, 100000) }),
 		default: 'Télécharger',
@@ -126,7 +126,7 @@ export const Loading: Story = {
 }
 
 export const Dark: Story = {
-	name: 'Thème sombre',
+	name: 'Dark theme',
 	render: args => ({
 		components: { VThemeProvider, DownloadBtn },
 		setup() {
@@ -200,11 +200,11 @@ export const Customization: Story = {
 			btn: {
 				variant: 'plain',
 				ripple: true,
-				color: 'red',
+				color: 'secondary',
 			},
 			icon: {
 				class: 'ml-2 mr-2',
-				color: 'red',
+				color: 'secondary',
 			},
 		},
 	},
