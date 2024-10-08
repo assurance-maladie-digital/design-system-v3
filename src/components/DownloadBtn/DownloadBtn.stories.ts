@@ -12,7 +12,7 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: {
-			exclude: ['getFileInfo', 'download', 'onError', 'onSuccess'],
+			exclude: ['getFileInfo', 'download', 'state', 'onError', 'onSuccess'],
 		},
 	},
 	argTypes: {
@@ -69,6 +69,22 @@ const meta = {
 			},
 		},
 	},
+	args: {
+		vuetifyOptions: {
+			btn: {
+				variant: 'outlined',
+				color: 'primary',
+				class: 'text-wrap',
+				minHeight: '36px',
+				height: 'auto',
+			},
+			icon: {
+				color: 'primary',
+				class: 'mr-3',
+			},
+		},
+	},
+	decorators: [() => ({ template: '<div class="pa-4"><story/></div>' })],
 } satisfies Meta<typeof DownloadBtn>
 
 export default meta
@@ -76,7 +92,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-	name: 'Défaut',
 	args: {
 		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
 		default: 'Télécharger',
