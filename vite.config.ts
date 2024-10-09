@@ -39,7 +39,7 @@ export default defineConfig({
 	css: {
 		preprocessorOptions: {
 			scss: {
-				silenceDeprecations: ["legacy-js-api"],
+				silenceDeprecations: ['legacy-js-api'],
 			},
 		},
 	},
@@ -62,6 +62,7 @@ export default defineConfig({
 			exclude: [
 				'src/**/*.spec.{js,vue,ts}',
 				'src/**/*.stories.*',
+				'src/**/types.*',
 				'src/main.ts',
 				'src/components/index.ts',
 				'src/components/TestA11y.vue',
