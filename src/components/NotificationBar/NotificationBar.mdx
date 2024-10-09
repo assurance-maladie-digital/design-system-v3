@@ -28,20 +28,67 @@ import * as NotificationBarStories from './NotificationBar.stories';
 # Exemple d'utilisation
 
 <Source dark code={`
-<template>
-  <div class="d-flex flex-wrap align-center justify-center">
-    <NotificationBar v-model="showNotification" type="success" :closeBtnText="Fermer">
-      <template #default>This is a success notification</template>
-    </NotificationBar>
+<script setup lang="ts">
+	import { VBtn } from 'vuetify/components'
+	import NotificationBar from '@/components/NotificationBar/NotificationBar.vue'
+	import { useNotificationService } from '@/services/NotificationService'
+	import type { Notification } from '@/components/NotificationBar/types'
 
-    <VBtn v-if="!showNotification" color="primary" @click="showNotification = true" class="ma-6">Réinitialiser</VBtn>
-  </div>
+	const { addNotification } = useNotificationService()
+
+	const envoyerNotification = (message: string, type: Notification['type']) => {
+		const notification: Notification = {
+			id: Date.now().toString(),
+			message,
+			type,
+			timeout: -1,
+		}
+		addNotification(notification)
+	}
+</script>
+
+<template>
+	<div>
+		<NotificationBar
+			bottom
+			rounded="lg"
+		>
+			<template #action>
+				<VBtn variant="outlined">
+					Valider
+				</VBtn>
+			</template>
+		</NotificationBar>
+
+		<div class="button-group">
+			<VBtn
+				color="info"
+				@click="envoyerNotification('Première notification', 'info')"
+			>
+				Envoyer Notification 1
+			</VBtn>
+			<VBtn
+				color="success"
+				@click="envoyerNotification('Deuxième notification', 'success')"
+			>
+				Envoyer Notification 2
+			</VBtn>
+			<VBtn
+				color="error"
+				@click="envoyerNotification('Troisième notification', 'error')"
+			>
+				Envoyer Notification 3
+			</VBtn>
+		</div>
+	</div>
 </template>
 
-<script setup lang="ts">
-import NotificationBar from '@/components/NotificationBar/NotificationBar.vue'
-import { ref } from 'vue'
-
-const showNotification = ref(true);
-</script>
-`} />
+    <style scoped>
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    </style>
+    `} />
