@@ -7,14 +7,7 @@
   }
 </script>
 <template>
-	<div class="ma-12">
-    {{ value }}
-		<PhoneField
-			v-model="value"
-      required
-      @change="handleChange"
-    />
-		<PhoneField v-model="value" required withCountryCode />
+	<main class="ma-12">
 		<PhoneField v-model="value" required withCountryCode countryCodeRequired />
-	</div>
+	</main>
 </template>

@@ -23,12 +23,17 @@
 
 	const emit = defineEmits(['update:modelValue', 'change'])
 
+	// Computed property to find the selected country
+	const selectedCountry = computed(() => {
+		return countryCodeList.value.find(ind => ind.code === selectedCountryCode.value) || null
+	})
+
+	// Formatage du numéro de téléphone
 	const formatPhone = (phone: string): string => {
 		phone = phone.replace(/\D/g, '')
-		const country = countryCodeList.value.find(ind => ind.code === selectedCountryCode.value)
-		if (country?.mask) {
-			const regex = new RegExp(country.mask.replace(/#/g, '\\d'))
-			return phone.replace(regex, country.mask).trim()
+		if (selectedCountry.value?.mask) {
+			const regex = new RegExp(selectedCountry.value.mask.replace(/#/g, '\\d'))
+			return phone.replace(regex, selectedCountry.value.mask).trim()
 		}
 		return phone.replace(/(.{2})/g, '$1 ').trim()
 	}
@@ -41,12 +46,9 @@
 		let input = (event.target as HTMLInputElement).value
 		input = input.replace(/\s/g, '').replace(/\D/g, '')
 		if (props.withCountryCode && selectedCountryCode.value) {
-			const country = countryCodeList.value.find(ind => ind.code === selectedCountryCode.value)
-			if (country) {
-				const countryCode = selectedCountryCode.value.replace(/\D/g, '')
-				if (input.startsWith(countryCode)) {
-					input = input.substring(countryCode.length)
-				}
+			const countryCode = selectedCountryCode.value.replace(/\D/g, '')
+			if (input.startsWith(countryCode)) {
+				input = input.substring(countryCode.length)
 			}
 		}
 		internalValue.value = input
@@ -74,48 +76,56 @@
 	})
 
 	const mask = computed(() => {
-		if (props.withCountryCode && selectedCountryCode.value) {
-			const country = countryCodeList.value.find(ind => ind.code === selectedCountryCode.value)
-			return country?.mask || '## ## ## ## ##'
+		if (props.withCountryCode && selectedCountry.value) {
+			return selectedCountry.value.mask || '## ## ## ## ##'
 		}
 		return '## ## ## ## ##'
 	})
 
 	const counter = computed(() => {
-		const country = countryCodeList.value.find(ind => ind.code === selectedCountryCode.value)
-		return country?.phoneLength || 10
+		return selectedCountry.value?.phoneLength || 10
 	})
 
 	const hasError = ref(false)
 	const hasSelectError = ref(false)
 
-	const rules = computed(() => {
-		const country = countryCodeList.value.find(ind => ind.code === selectedCountryCode.value)
-		const phoneLength = country?.phoneLength || 10
-		return props.required ? [RequiredRule, exactLength(phoneLength, true)] : [exactLength(phoneLength, true)]
-	})
-
+	// Unified validation function
 	const validateOnBlur = () => {
 		hasError.value = false
-		const requiredValidation = RequiredRule(internalValue.value)
+		hasSelectError.value = false
+
+		// Validation du numéro de téléphone
+		const requiredValidation = props.required ? RequiredRule(internalValue.value) : true
 		const lengthValidation = exactLength(counter.value, true)(internalValue.value)
 		if (requiredValidation !== true || lengthValidation !== true) {
 			hasError.value = true
 		}
-	}
 
-	const validateSelectOnBlur = () => {
-		hasSelectError.value = false
-		if (selectedCountryCode.value === null && props.countryCodeRequired) {
-			hasSelectError.value = true
+		// Validation de l'indicatif si nécessaire
+		if (props.countryCodeRequired && props.withCountryCode) {
+			const countryCodeValidation = RequiredRule(selectedCountryCode.value)
+			if (countryCodeValidation !== true) {
+				hasSelectError.value = true
+			}
 		}
 	}
+
+	const rules = computed(() => {
+		const phoneLength = counter.value
+		const validationRules = []
+		if (props.required) {
+			validationRules.push(RequiredRule)
+		}
+		validationRules.push(exactLength(phoneLength, true))
+		return validationRules
+	})
+
 </script>
 
 <template>
 	<div
 		class="d-flex align-center"
-		style="align-items: stretch;"
+		style="align-items: stretch"
 	>
 		<VSelect
 			v-if="withCountryCode"
@@ -132,7 +142,10 @@
 			label="Indicatif"
 			outlined
 			:allow-null="true"
-			@blur="validateSelectOnBlur"
+			aria-label="Indicatif"
+			:aria-invalid="hasSelectError"
+			tabindex="0"
+			@blur="validateOnBlur"
 		>
 			<template #append-inner>
 				<VIcon v-if="hasSelectError">
@@ -151,12 +164,19 @@
 			:variant="outlined ? 'outlined' : 'underlined'"
 			color="primary"
 			max-width="700"
+			:error="hasError"
+			:aria-label="locales.label"
+			:aria-invalid="hasError"
+			aria-describedby="phone-error"
+			tabindex="0"
 			@input="setInternalValue"
 			@change="emitChangeEvent"
 			@blur="validateOnBlur"
 		>
 			<template #append-inner>
-				<VIcon v-if="hasError">
+				<VIcon
+					v-if="hasError"
+				>
 					{{ infoIcon }}
 				</VIcon>
 				<VIcon>
