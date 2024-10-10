@@ -15,5 +15,6 @@
       @change="handleChange"
     />
 		<PhoneField v-model="value" required withCountryCode />
+		<PhoneField v-model="value" required withCountryCode countryCodeRequired />
 	</div>
 </template>

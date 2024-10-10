@@ -12,6 +12,7 @@
 		required: { type: Boolean, default: false },
 		outlined: { type: Boolean, default: false },
 		withCountryCode: { type: Boolean, default: false },
+		countryCodeRequired: { type: Boolean, default: false },
 	})
 
 	const phoneIcon = mdiPhone
@@ -86,6 +87,7 @@
 	})
 
 	const hasError = ref(false)
+	const hasSelectError = ref(false)
 
 	const rules = computed(() => {
 		const country = countryCodeList.value.find(ind => ind.code === selectedCountryCode.value)
@@ -101,6 +103,13 @@
 			hasError.value = true
 		}
 	}
+
+	const validateSelectOnBlur = () => {
+		hasSelectError.value = false
+		if (selectedCountryCode.value === null && props.countryCodeRequired) {
+			hasSelectError.value = true
+		}
+	}
 </script>
 
 <template>
@@ -112,8 +121,8 @@
 			v-if="withCountryCode"
 			v-model="selectedCountryCode"
 			:items="countryCodeList"
-			:error="hasError"
-			:rules="props.required ? [RequiredRule] : []"
+			:error="hasSelectError"
+			:rules="props.countryCodeRequired ? [RequiredRule] : []"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			item-text="country"
 			item-title="code"
@@ -123,7 +132,15 @@
 			label="Indicatif"
 			outlined
 			:allow-null="true"
-		/>
+			@blur="validateSelectOnBlur"
+		>
+			<template #append-inner>
+				<VIcon v-if="hasSelectError">
+					{{ infoIcon }}
+				</VIcon>
+			</template>
+		</VSelect>
+
 		<VTextField
 			v-maska="mask"
 			:model-value="computedValue"
