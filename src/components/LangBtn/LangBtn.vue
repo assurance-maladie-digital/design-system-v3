@@ -6,7 +6,7 @@
 	import ISO6391 from 'iso-639-1'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import defaultOptions from './config'
-  import GenericMenu from '@/components/Generics/GenericMenu.vue';
+	import GenericMenu from '@/components/Generics/GenericMenu.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: string
@@ -100,47 +100,47 @@
 
 <template>
 	<div :id="menuId">
-    <GenericMenu
-        v-bind="options.menu"
-        :id="isMenuOpen ? 'lang-menu' : menuId"
-        v-model="menu"
-        role="menu"
-        location="bottom"
-        :items="languagesData"
-        item-key="code"
-        item-label="nativeName"
-        :aria-label="`${props.ariaLabel} ${currentLangData.name}`"
-        :aria-controls="menuId"
-        :aria-owns="menuId"
-        :aria-expanded="isMenuOpen"
-        @change="updateLang"
-    >
-      <template #activator="{ props: activatorProps }">
-        <VBtn
-            id="lang-menu-btn"
-            :aria-label="`${props.ariaLabel} ${currentLangData.name}`"
-            aria-haspopup="menu"
-            :aria-controls="menuId"
-            :aria-owns="menuId"
-            :aria-expanded="isMenuOpen"
-            v-bind="{
-				...options.btn,
-				...activatorProps,
-			}"
-            class="vd-lang-btn"
-        >
-          {{ currentLangData.name }}
-          <VIcon
-              v-if="!hideDownArrow"
-              v-bind="options.icon"
-              class="ml-1"
-          >
-            {{ mdiMenuDown }}
-          </VIcon>
-        </VBtn>
-      </template>
-    </GenericMenu>
-  </div>
+		<GenericMenu
+			v-bind="options.menu"
+			:id="isMenuOpen ? 'lang-menu' : menuId"
+			v-model="menu"
+			role="menu"
+			location="bottom"
+			:items="languagesData"
+			item-key="code"
+			item-label="nativeName"
+			:aria-label="`${props.ariaLabel} ${currentLangData.name}`"
+			:aria-controls="menuId"
+			:aria-owns="menuId"
+			:aria-expanded="isMenuOpen"
+			@change="updateLang"
+		>
+			<template #activator="{ props: activatorProps }">
+				<VBtn
+					id="lang-menu-btn"
+					:aria-label="`${props.ariaLabel} ${currentLangData.name}`"
+					aria-haspopup="menu"
+					:aria-controls="menuId"
+					:aria-owns="menuId"
+					:aria-expanded="isMenuOpen"
+					v-bind="{
+						...options.btn,
+						...activatorProps,
+					}"
+					class="vd-lang-btn"
+				>
+					{{ currentLangData.name }}
+					<VIcon
+						v-if="!hideDownArrow"
+						v-bind="options.icon"
+						class="ml-1"
+					>
+						{{ mdiMenuDown }}
+					</VIcon>
+				</VBtn>
+			</template>
+		</GenericMenu>
+	</div>
 </template>
 <style lang="scss" scoped>
 @import '../../assets/tokens';

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref, computed } from 'vue'
-  import type { VariantType } from '@/types/vuetifyTypes'
+	import type { VariantType } from '@/types/vuetifyTypes'
 
 	const props = defineProps({
 		modelValue: {
