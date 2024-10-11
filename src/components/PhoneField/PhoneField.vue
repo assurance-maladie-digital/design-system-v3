@@ -131,6 +131,7 @@
 		:error="hasError"
 		:aria-label="locales.label"
 		:aria-invalid="hasError"
+    :aria-required="props.required"
 		tabindex="0"
 		@input="setInternalValue"
 		@change="emitChangeEvent"

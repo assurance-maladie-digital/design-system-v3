@@ -47,10 +47,10 @@
 			type: String as () => VariantType,
 			default: 'text',
 		},
-    btnClass: {
-      type: String,
-      default: '',
-    }
+		btnClass: {
+			type: String,
+			default: '',
+		},
 	})
 
 	const emits = defineEmits(['update:modelValue', 'item-selected', 'blur'])
@@ -99,13 +99,13 @@
 	>
 		<template #activator="{ props: activatorProps }">
 			<VBtn
-				:aria-label="label"
+				:aria-label="selectedLabel || placeholder"
 				aria-haspopup="menu"
 				:aria-controls="menuId"
 				:aria-expanded="menu"
 				v-bind="activatorProps"
 				:variant="variant"
-        :class="btnClass"
+				:class="btnClass"
 				tabindex="0"
 				@blur="onBlur"
 			>
@@ -133,5 +133,5 @@
 </template>
 
 <style scoped>
-/* Ajoutez ici vos styles personnalisés si nécessaire */
+
 </style>
