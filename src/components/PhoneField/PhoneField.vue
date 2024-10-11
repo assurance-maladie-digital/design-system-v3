@@ -119,6 +119,7 @@
 
 <template>
 	<VTextField
+		id="phone-field"
 		v-maska="mask"
 		:model-value="computedValue"
 		:counter="counter"
@@ -131,7 +132,7 @@
 		:error="hasError"
 		:aria-label="locales.label"
 		:aria-invalid="hasError"
-    :aria-required="props.required"
+		:aria-required="props.required"
 		tabindex="0"
 		@input="setInternalValue"
 		@change="emitChangeEvent"
@@ -147,7 +148,7 @@
 				label="Indicatif"
 				placeholder="Indicatif"
 				:has-select-error="hasSelectError"
-				:btn-class="outlined ? 'mr-n2 text-body-1' : 'text-body-1 mr-n4 h-0 mt-1'"
+				:btn-class="outlined ? 'mr-n2 text-body-1' : 'text-body-1 mr-n4 h-0 pt-1'"
 			/>
 		</template>
 		<template #append-inner>

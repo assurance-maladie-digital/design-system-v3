@@ -99,10 +99,6 @@
 	>
 		<template #activator="{ props: activatorProps }">
 			<VBtn
-				:aria-label="selectedLabel || placeholder"
-				aria-haspopup="menu"
-				:aria-controls="menuId"
-				:aria-expanded="menu"
 				v-bind="activatorProps"
 				:variant="variant"
 				:class="btnClass"
@@ -119,9 +115,7 @@
 			<VListItem
 				v-for="(item, index) in items"
 				:key="getItemKey(item, index)"
-				role="menuitem"
 				:tabindex="index + 1"
-				:aria-label="getItemLabel(item)"
 				@click="onItemSelected(item)"
 			>
 				<VListItemTitle>

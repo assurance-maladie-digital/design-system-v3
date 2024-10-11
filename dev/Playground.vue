@@ -12,7 +12,6 @@
 		<PhoneField
 			v-model="value"
 			required
-      outlined
 			with-country-code
 			country-code-required
 			@change="handleChange"
