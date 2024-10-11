@@ -47,6 +47,10 @@
 			type: String as () => VariantType,
 			default: 'text',
 		},
+    btnClass: {
+      type: String,
+      default: '',
+    }
 	})
 
 	const emits = defineEmits(['update:modelValue', 'item-selected', 'blur'])
@@ -101,6 +105,7 @@
 				:aria-expanded="menu"
 				v-bind="activatorProps"
 				:variant="variant"
+        :class="btnClass"
 				tabindex="0"
 				@blur="onBlur"
 			>

@@ -24,7 +24,6 @@
 
 	const emit = defineEmits(['update:modelValue', 'change'])
 
-	// Computed property to find the selected country
 	const selectedCountry = computed(() => {
 		return countryCodeList.value.find(ind => ind.code === selectedCountryCode.value) || null
 	})
@@ -58,7 +57,7 @@
 	const emitChangeEvent = () => {
 		let rawPhone = internalValue.value
 		if (selectedCountryCode.value === '+33' && !rawPhone.startsWith('0')) {
-			rawPhone = '0' + rawPhone // Rétablir le zéro initial pour la France
+			rawPhone = '0' + rawPhone
 		}
 		emit('update:modelValue', rawPhone)
 		emit('change', rawPhone)
@@ -116,54 +115,47 @@
 		validationRules.push(exactLength(phoneLength, true))
 		return validationRules
 	})
-
 </script>
 
 <template>
-	<div
-		class="d-flex align-center"
-		style="align-items: stretch"
+	<VTextField
+		v-maska="mask"
+		:model-value="computedValue"
+		:counter="counter"
+		:counter-value="noSpacesCounter"
+		:rules="rules"
+		:label="locales.label"
+		:variant="outlined ? 'outlined' : 'underlined'"
+		color="primary"
+		max-width="700"
+		:error="hasError"
+		:aria-label="locales.label"
+		:aria-invalid="hasError"
+		tabindex="0"
+		@input="setInternalValue"
+		@change="emitChangeEvent"
+		@blur="validateOnBlur"
 	>
-		<GenericMenu
-			v-if="withCountryCode"
-			v-model="selectedCountryCode"
-			:items="countryCodeList"
-			item-key="code"
-			item-label="code"
-			label="Indicatif"
-			placeholder="Indicatif"
-			:has-select-error="hasSelectError"
-			@blur="validateOnBlur"
-		/>
-
-		<VTextField
-			v-maska="mask"
-			:model-value="computedValue"
-			:counter="counter"
-			:counter-value="noSpacesCounter"
-			:rules="rules"
-			:label="locales.label"
-			:variant="outlined ? 'outlined' : 'underlined'"
-			color="primary"
-			max-width="700"
-			:error="hasError"
-			:aria-label="locales.label"
-			:aria-invalid="hasError"
-			tabindex="0"
-			@input="setInternalValue"
-			@change="emitChangeEvent"
-			@blur="validateOnBlur"
-		>
-			<template #append-inner>
-				<VIcon
-					v-if="hasError"
-				>
-					{{ infoIcon }}
-				</VIcon>
-				<VIcon>
-					{{ phoneIcon }}
-				</VIcon>
-			</template>
-		</VTextField>
-	</div>
+		<template #prepend-inner>
+			<GenericMenu
+				v-if="withCountryCode"
+				v-model="selectedCountryCode"
+				:items="countryCodeList"
+				item-key="code"
+				item-label="code"
+				label="Indicatif"
+				placeholder="Indicatif"
+				:has-select-error="hasSelectError"
+				:btn-class="outlined ? 'mr-n2 text-body-1' : 'text-body-1 mr-n4 h-0 mt-1'"
+			/>
+		</template>
+		<template #append-inner>
+			<VIcon v-if="hasError">
+				{{ infoIcon }}
+			</VIcon>
+			<VIcon>
+				{{ phoneIcon }}
+			</VIcon>
+		</template>
+	</VTextField>
 </template>
