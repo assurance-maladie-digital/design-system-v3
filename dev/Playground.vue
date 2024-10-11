@@ -8,6 +8,6 @@
 </script>
 <template>
 	<main class="ma-12">
-		<PhoneField v-model="value" required withCountryCode countryCodeRequired />
+		<PhoneField v-model="value"required withCountryCode countryCodeRequired />
 	</main>
 </template>

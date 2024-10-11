@@ -1,11 +1,12 @@
 <script setup lang="ts">
-	import { computed, ref, defineEmits } from 'vue'
+	import { computed, ref } from 'vue'
 	import { required as RequiredRule } from '@/utils/rules/required'
 	import { exactLength } from '@/utils/rules/exactLength'
 	import { mdiPhone, mdiInformation } from '@mdi/js'
 	import { indicatifs } from './indicatifs'
 	import { locales } from './locales'
 	import { vMaska } from 'maska/vue'
+	import GenericMenu from '@/components/Generics/GenericMenu.vue'
 
 	const props = defineProps({
 		modelValue: { type: String, default: '' },
@@ -28,7 +29,6 @@
 		return countryCodeList.value.find(ind => ind.code === selectedCountryCode.value) || null
 	})
 
-	// Formatage du numéro de téléphone
 	const formatPhone = (phone: string): string => {
 		phone = phone.replace(/\D/g, '')
 		if (selectedCountry.value?.mask) {
@@ -89,19 +89,16 @@
 	const hasError = ref(false)
 	const hasSelectError = ref(false)
 
-	// Unified validation function
 	const validateOnBlur = () => {
 		hasError.value = false
 		hasSelectError.value = false
 
-		// Validation du numéro de téléphone
 		const requiredValidation = props.required ? RequiredRule(internalValue.value) : true
 		const lengthValidation = exactLength(counter.value, true)(internalValue.value)
 		if (requiredValidation !== true || lengthValidation !== true) {
 			hasError.value = true
 		}
 
-		// Validation de l'indicatif si nécessaire
 		if (props.countryCodeRequired && props.withCountryCode) {
 			const countryCodeValidation = RequiredRule(selectedCountryCode.value)
 			if (countryCodeValidation !== true) {
@@ -127,32 +124,17 @@
 		class="d-flex align-center"
 		style="align-items: stretch"
 	>
-		<VSelect
+		<GenericMenu
 			v-if="withCountryCode"
 			v-model="selectedCountryCode"
 			:items="countryCodeList"
-			:error="hasSelectError"
-			:rules="props.countryCodeRequired ? [RequiredRule] : []"
-			:variant="outlined ? 'outlined' : 'underlined'"
-			item-text="country"
-			item-title="code"
-			max-width="120"
-			color="primary"
-			class="mr-3"
+			item-key="code"
+			item-label="code"
 			label="Indicatif"
-			outlined
-			:allow-null="true"
-			aria-label="Indicatif"
-			:aria-invalid="hasSelectError"
-			tabindex="0"
+			placeholder="Indicatif"
+			:has-select-error="hasSelectError"
 			@blur="validateOnBlur"
-		>
-			<template #append-inner>
-				<VIcon v-if="hasSelectError">
-					{{ infoIcon }}
-				</VIcon>
-			</template>
-		</VSelect>
+		/>
 
 		<VTextField
 			v-maska="mask"
@@ -167,7 +149,6 @@
 			:error="hasError"
 			:aria-label="locales.label"
 			:aria-invalid="hasError"
-			aria-describedby="phone-error"
 			tabindex="0"
 			@input="setInternalValue"
 			@change="emitChangeEvent"
