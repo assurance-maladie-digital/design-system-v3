@@ -8,7 +8,7 @@
 		<div>random div</div>
 		<HeaderWrapper>
 			<template #header-side>
-				<div class="d-flex justify-center h-100 ga-4">
+				<div class="d-flex justify-center h-100 ga-4 pr-4">
 					<VBtn
 						variant="text"
 						:prepend-icon="mdiMagnify"

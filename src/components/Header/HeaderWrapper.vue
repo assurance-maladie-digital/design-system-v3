@@ -1,8 +1,9 @@
 <script setup lang="ts">
 	import { mdiClose, mdiMenu } from '@mdi/js'
 	import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-	import { useTheme } from 'vuetify'
+	import { useTheme, useDisplay } from 'vuetify'
 	import CNAMLogo from './CNAMLogo.vue'
+	import HeaderMenu from './HeaderMenu.vue'
 
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const menuLeft = ref(0)
@@ -26,6 +27,7 @@
 	})
 
 	const theme = useTheme()
+	const display = useDisplay()
 
 	const menuOpen = ref(false)
 
@@ -64,7 +66,7 @@
 
 <template>
 	<header class="header position-sticky">
-		<div class="inner-header d-flex ga-4">
+		<div class="inner-header d-flex">
 			<!---->
 			<div ref="menuBtnWrapper">
 				<button
@@ -75,7 +77,7 @@
 					<VIcon size="48">
 						{{ menuOpen ? mdiClose : mdiMenu }}
 					</VIcon>
-					<span>Menu</span>
+					<span v-if="display.mdAndUp.value">Menu</span>
 				</button>
 			</div>
 			<div
@@ -99,89 +101,13 @@
 						<VIcon size="48">
 							{{ menuOpen ? mdiClose : mdiMenu }}
 						</VIcon>
-						<span>Menu</span>
+						<span v-if="display.mdAndUp.value">Menu</span>
 					</button>
 					<div
 						id="header-menu-wrapper"
 						class="header-menu-wrapper"
 					>
-						<v-list
-							border="0"
-							elevation="0"
-							rounded="0"
-						>
-							<v-list-item
-								v-for="i in 5"
-								:key="i"
-								link
-							>
-								<v-list-item-title>Item {{ i }}</v-list-item-title>
-								<template #append>
-									<v-icon
-										icon="mdi-menu-right"
-										size="x-small"
-									/>
-								</template>
-
-								<v-menu
-									activator="parent"
-									open-on-click
-									border="0"
-									rounded="0"
-									elevation="0"
-									location="top end"
-									origin="top start"
-									location-strategy="static"
-									:target="[menuLeft+150, menuTop+90]"
-								>
-									<v-list
-										border="0"
-										elevation="0"
-										rounded="0"
-									>
-										<v-list-item
-											v-for="j in 5"
-											:key="j"
-											link
-										>
-											<v-list-item-title>Item {{ i }} - {{ j }}</v-list-item-title>
-											<template #append>
-												<v-icon
-													icon="mdi-menu-right"
-													size="x-small"
-												/>
-											</template>
-
-											<v-menu
-												activator="parent"
-												open-on-click
-												border="0"
-												rounded="0"
-												elevation="0"
-												location-strategy="static"
-												location="top end"
-												origin="top start"
-												:target="[menuLeft+300, menuTop+90]"
-											>
-												<v-list
-													border="0"
-													elevation="0"
-													rounded="0"
-												>
-													<v-list-item
-														v-for="k in 5"
-														:key="k"
-														link
-													>
-														<v-list-item-title>Item {{ i }} - {{ j }} - {{ k }}</v-list-item-title>
-													</v-list-item>
-												</v-list>
-											</v-menu>
-										</v-list-item>
-									</v-list>
-								</v-menu>
-							</v-list-item>
-						</v-list>
+						<HeaderMenu />
 					</div>
 				</div>
 			</div>
@@ -235,8 +161,8 @@
 .header-menu-btn {
 	text-transform: Capitalize;
 	position: static;
-	height: 95px;
-	width: 95px;
+	height: 82px;
+	width: 77px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -249,6 +175,11 @@
 }
 
 @media screen and (min-width: 900px) {
+	.header-menu-btn {
+		height: 95px;
+		width: 95px;
+	}
+
 	.menu-wrapper {
 		position: fixed;
 		background-color: transparent;
