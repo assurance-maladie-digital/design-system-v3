@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import HeaderSubMenu from '@/components/Header/HeaderSubMenu.vue'
 	import HeaderWrapper from '@/components/Header/HeaderWrapper.vue'
 	import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
 </script>
@@ -7,6 +8,49 @@
 	<VApp class="toto">
 		<div>random div</div>
 		<HeaderWrapper>
+			<template #menu>
+				<ul>
+					<li>
+						<a>home</a>
+					</li>
+					<li>
+						<a>profile</a>
+					</li>
+					<li>
+						<HeaderSubMenu>
+							<template #title>
+								<a>sub menu</a>
+							</template>
+							<ul>
+								<li>
+									<a>sub menu item 1</a>
+								</li>
+								<li>
+									<a>sub menu item 2</a>
+								</li>
+								<li>
+									<HeaderSubMenu>
+										<template #title>
+											<a>+sub menu</a>
+										</template>
+										<ul>
+											<li>
+												<a>+sub menu item 1</a>
+											</li>
+											<li>
+												<a>+sub menu item 2</a>
+											</li>
+											<li>
+												<a>+sub menu item 3</a>
+											</li>
+										</ul>
+									</HeaderSubMenu>
+								</li>
+							</ul>
+						</HeaderSubMenu>
+					</li>
+				</ul>
+			</template>
 			<template #header-side>
 				<div class="d-flex justify-center h-100 ga-4 pr-4">
 					<VBtn

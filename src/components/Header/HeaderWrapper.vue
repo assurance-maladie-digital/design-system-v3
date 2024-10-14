@@ -1,9 +1,8 @@
 <script setup lang="ts">
 	import { mdiClose, mdiMenu } from '@mdi/js'
-	import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+	import { computed, onMounted, onUnmounted, provide, readonly, ref, watch } from 'vue'
 	import { useTheme, useDisplay } from 'vuetify'
 	import CNAMLogo from './CNAMLogo.vue'
-	import HeaderMenu from './HeaderMenu.vue'
 
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const menuLeft = ref(0)
@@ -62,6 +61,8 @@
 
 		menuOpen.value = false
 	}
+
+	provide('parentMenuOpen', readonly(menuOpen))
 </script>
 
 <template>
@@ -107,7 +108,7 @@
 						id="header-menu-wrapper"
 						class="header-menu-wrapper"
 					>
-						<HeaderMenu />
+						<slot name="menu" />
 					</div>
 				</div>
 			</div>
@@ -174,6 +175,14 @@
 	background-color: #fff;
 }
 
+.header-menu-wrapper {
+	height: 100%;
+	display: grid;
+	position: relative;
+	background-color: #fff;
+	width: 350px;
+}
+
 @media screen and (min-width: 900px) {
 	.header-menu-btn {
 		height: 95px;
@@ -183,6 +192,10 @@
 	.menu-wrapper {
 		position: fixed;
 		background-color: transparent;
+	}
+
+	.header-menu-wrapper {
+		height: 70vh;
 	}
 }
 
