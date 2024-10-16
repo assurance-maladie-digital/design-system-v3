@@ -6,22 +6,18 @@
 		{
 			text: 'Remboursement',
 			href: '/remboursement',
-			ariaLabel: 'Remboursement',
 		},
 		{
 			text: 'Remboursement',
 			href: '/remboursement',
-			ariaLabel: 'Remboursement',
 		},
 		{
 			text: 'Remboursement',
 			href: '/remboursement',
-			ariaLabel: 'Remboursement',
 		},
 		{
 			text: 'Remboursement',
 			href: '/remboursement',
-			ariaLabel: 'Remboursement',
 		},
 	] as ListItem[]
 </script>

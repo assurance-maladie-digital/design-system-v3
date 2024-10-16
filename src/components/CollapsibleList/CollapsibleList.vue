@@ -1,19 +1,12 @@
 <script lang="ts" setup>
 	import { computed } from 'vue'
 	import { useDisplay } from 'vuetify'
-	import type { PropType } from 'vue'
 	import type { ListItem } from './types'
 
-	const props = defineProps({
-		listTitle: {
-			type: String,
-			default: null,
-		},
-		items: {
-			type: Array as PropType<ListItem[]>,
-			default: () => [],
-		},
-	})
+	const props = defineProps<{
+		listTitle: string | null
+		items: ListItem[]
+	}>()
 
 	const { smAndDown } = useDisplay()
 
@@ -47,7 +40,7 @@
 					>
 						<a
 							:href="item.href"
-							:aria-label="item.ariaLabel"
+							:aria-label="item.text"
 							class="text-body-2 text-decoration-none"
 						>
 							{{ item.text }}
