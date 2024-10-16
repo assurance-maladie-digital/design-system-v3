@@ -2,7 +2,7 @@
 	import { computed } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import type { PropType } from 'vue'
-	import { ListItem } from './types'
+	import type { ListItem } from './types'
 
 	const props = defineProps({
 		listTitle: {

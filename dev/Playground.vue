@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
-	import { ListItem } from '@/components/CollapsibleList/types'
+	import type { ListItem } from '@/components/CollapsibleList/types'
 
 	const remboursementItems = [
 		{
