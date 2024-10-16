@@ -1,0 +1,23 @@
+import { Canvas, Meta, Controls } from '@storybook/blocks';
+import * as CustomSelectStories from "./CustomSelect.stories";
+
+<Meta of={CustomSelectStories} />
+
+# CustomSelect
+
+Le composant `CustomSelect` est utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les regles RGAA.
+
+# CustomSelect
+
+<Canvas of={CustomSelectStories.Default} />
+
+>Format des items :
+>
+> - Si les items passes en props sont des objets, il est possible de personnaliser les champs `text` et `value`  via les props `textKey` et `valueKey` (cf ci-dessous).
+> - Si les items sont un tableau de string, le composant les utilisera directement.
+
+
+
+# API
+
+<Controls of={CustomSelectStories.Default} />
