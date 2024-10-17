@@ -111,11 +111,13 @@ export const withCustomKey: Story = {
 				return { args }
 			},
 			template: `
-				<CustomSelect
-					v-bind="args"
-					outlined
-					text-key="customKey"
-				/>
+				<div>
+					<CustomSelect
+						v-bind="args"
+						outlined
+						text-key="customKey"
+					/>
+				</div>
 			`,
 		}
 	},
