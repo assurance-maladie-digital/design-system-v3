@@ -14,7 +14,7 @@
 		},
 		label: {
 			type: String,
-			default: '',
+			default: 'Sélectionnez une option',
 		},
 		errorMessages: {
 			type: [String, Array] as PropType<string | readonly string[]>,
@@ -67,7 +67,7 @@
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			return (selectedItem.value as Record<string, any>)[props.textKey]
 		}
-		return 'Sélectionnez une option'
+		return props.label
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -75,7 +75,7 @@
 	})
 
 	const buttonClass = computed(() => {
-		return props.outlined ? 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined' : ''
+		return props.outlined ? 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined' : 'text-color'
 	})
 
 	const formattedItems = computed(() => {
@@ -91,7 +91,7 @@
 <template>
 	<v-input
 		v-model="selectedItem"
-		:label="label"
+		:label="props.label"
 		role="menu"
 		:error-messages="errorMessages"
 		:required="required"
@@ -113,7 +113,7 @@
 			<VList
 				v-if="isOpen"
 				class="v-list"
-				:style="`position: relative; left: -${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
+				:style="`position: relative; left: -${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px; max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
 				@keydown.esc.prevent="isOpen = false"
 			>
 				<VListItem
@@ -135,11 +135,11 @@
 	</v-input>
 </template>
 <style scoped lang="scss">
-@import '../../../assets/tokens';
+@import '../../../assets/tokens.scss';
 
 .v-list {
   position: absolute;
-  top: 26px;
+  top: 36px;
   width: 100%;
   z-index: 1;
   background-color: white;
@@ -162,4 +162,9 @@
 .v-btn {
   color: $blue-base;
 }
+
+.text-color {
+  color: $blue-base;
+}
+
 </style>
