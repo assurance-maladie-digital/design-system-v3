@@ -113,7 +113,6 @@
 		v-if="
 			isOpen"
 		class="v-list"
-		:style="`left: -${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px; max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
 		@keydown.esc.prevent="isOpen = false"
 	>
 		<VListItem
