@@ -11,7 +11,7 @@ describe('customSelect.vue', () => {
 			},
 		})
 		expect(wrapper.exists()).toBe(true)
-		expect(wrapper.find('.custom-select').text()).toBe('Sélectionnez une option')
+		expect(wrapper.find('.custom-select').text()).toBe('')
 	})
 
 	it('toggles the menu when clicked', async () => {
@@ -66,7 +66,12 @@ describe('customSelect.vue', () => {
 				plugins: [vuetify],
 			},
 		})
-		expect(wrapper.find('.custom-select').text()).toContain('Option 1')
+		await wrapper.find('.custom-select').trigger('click')
+		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		if (firstItem) {
+			await firstItem.trigger('click')
+		}
+		expect(wrapper.find('input').element.value).toBe('Option 1')
 	})
 
 	it('closes the menu on escape key press', async () => {
@@ -108,7 +113,7 @@ describe('customSelect.vue', () => {
 				plugins: [vuetify],
 			},
 		})
-		expect(wrapper.find('label').exists()).toBe(false)
+		expect(wrapper.find('.v-label').text()).toBe('')
 	})
 
 	it('returns the correct item text using getItemText', () => {
@@ -171,7 +176,7 @@ describe('customSelect.vue', () => {
 				plugins: [vuetify],
 			},
 		})
-		expect(wrapper.find('.custom-select').classes()).toContain('v-btn--variant-outlined')
+		expect(wrapper.find('.v-field--variant-outlined').exists()).toBe(true)
 	})
 
 	it('does not apply the outlined button class when outlined is false', () => {

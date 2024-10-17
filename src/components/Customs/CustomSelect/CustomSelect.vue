@@ -99,10 +99,10 @@
 		tabindex="0"
 		:label="selectedItem ? label : ''"
 		:aria-label="selectedItem ? label : 'Sélectionnez une option'"
-		:clearable
 		:error-messages="errorMessages"
 		:required="required"
 		:variant="outlined ? 'outlined' : 'underlined'"
+		class="custom-select"
 		@click="toggleMenu"
 		@keydown.enter.prevent="toggleMenu"
 		@keydown.space.prevent="toggleMenu"
