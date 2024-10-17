@@ -14,7 +14,7 @@ describe('SocialMediaLinks.vue', () => {
 	it('renders correctly with default props', () => {
 		wrapper = mount(SocialMediaLinks, {
 			props: {
-				links: null,
+				links: undefined,
 			},
 		})
 		expect(wrapper.html()).toMatchSnapshot()
@@ -58,7 +58,7 @@ describe('SocialMediaLinks.vue', () => {
 	it('renders no links when links prop is null', () => {
 		wrapper = mount(SocialMediaLinks, {
 			props: {
-				links: null,
+				links: undefined,
 			},
 		})
 		expect(wrapper.findAll('li').length).toBe(0)
