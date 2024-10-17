@@ -218,4 +218,18 @@ describe('customSelect.vue', () => {
 		await wrapper.vm.$nextTick()
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([{ text: 'Option 1', value: '1' }])
 	})
+
+	it('closes the menu when called', async () => {
+		const wrapper = mount(CustomSelect, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		await wrapper.find('.custom-select').trigger('click')
+		expect(wrapper.find('.v-list').exists()).toBe(true)
+		await wrapper.vm.closeMenu()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.find('.v-list').exists()).toBe(false)
+	})
 })
