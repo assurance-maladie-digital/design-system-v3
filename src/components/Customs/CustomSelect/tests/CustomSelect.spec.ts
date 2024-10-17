@@ -219,7 +219,7 @@ describe('customSelect.vue', () => {
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([{ text: 'Option 1', value: '1' }])
 	})
 
-	it('closes the menu when called', async () => {
+	it('closes the menu when v-click-outside directive is called', async () => {
 		const wrapper = mount(CustomSelect, {
 			global: {
 				plugins: [vuetify],
@@ -227,7 +227,8 @@ describe('customSelect.vue', () => {
 		})
 		await wrapper.find('.custom-select').trigger('click')
 		expect(wrapper.find('.v-list').exists()).toBe(true)
-		await wrapper.vm.closeMenu()
+		await wrapper.find('.custom-select').trigger('mouseleave')
+		await wrapper.find('.custom-select').trigger('click')
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.find('.v-list').exists()).toBe(false)
