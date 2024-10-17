@@ -36,6 +36,7 @@
 
 	watch(menuOpen, (newVal) => {
 		document.documentElement.style.overflow = newVal ? 'hidden' : 'auto'
+		document.body.style.overflow = newVal ? 'hidden' : 'auto'
 	})
 
 	const btnStyle = computed(() => ({
@@ -62,7 +63,12 @@
 		menuOpen.value = false
 	}
 
+	const childMenuOpen = ref(false)
+	function defineChildMenuOpen(value: boolean) {
+		childMenuOpen.value = value
+	}
 	provide('parentMenuOpen', readonly(menuOpen))
+	provide('defineChildMenuOpen', defineChildMenuOpen)
 </script>
 
 <template>
@@ -104,12 +110,17 @@
 						</VIcon>
 						<span v-if="display.mdAndUp.value">Menu</span>
 					</button>
-					<div
+					<nav
 						id="header-menu-wrapper"
 						class="header-menu-wrapper"
+						:class="{
+							'header-menu-wrapper--submenu-open': childMenuOpen,
+						}"
 					>
-						<slot name="menu" />
-					</div>
+						<div class="header-menu">
+							<slot name="menu" />
+						</div>
+					</nav>
 				</div>
 			</div>
 
@@ -134,6 +145,8 @@
 </template>
 
 <style lang="scss" scoped>
+$header-height: 82px;
+
 .header {
 	top: 0;
 	width: 100%;
@@ -161,7 +174,6 @@
 
 .header-menu-btn {
 	text-transform: Capitalize;
-	position: static;
 	height: 82px;
 	width: 77px;
 	display: flex;
@@ -173,28 +185,42 @@
 .menu-wrapper {
 	height: 100dvh;
 	background-color: #fff;
+	display: flex;
+	flex-direction: column;
 }
 
 .header-menu-wrapper {
-	height: 100%;
+	height: calc(100% - $header-height);
 	display: grid;
 	position: relative;
-	background-color: #fff;
-	width: 350px;
+	overflow: auto;
+}
+
+.header-menu-wrapper--submenu-open {
+	overflow: clip;
 }
 
 @media screen and (min-width: 900px) {
 	.header-menu-btn {
-		height: 95px;
+		height: 95;
 		width: 95px;
 	}
 
 	.menu-wrapper {
-		position: fixed;
+		position: absolute;
 		background-color: transparent;
 	}
 
 	.header-menu-wrapper {
+		height: 70vh;
+		width: 350px;
+		overflow: visible;
+	}
+
+	.header-menu {
+		background-color: #fff;
+		overflow-y : auto;
+		overflow-x: hidden;
 		height: 70vh;
 	}
 }

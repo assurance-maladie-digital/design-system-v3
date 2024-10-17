@@ -1,56 +1,132 @@
 <script setup lang="ts">
-	import HeaderSubMenu from '@/components/Header/HeaderSubMenu.vue'
-	import HeaderWrapper from '@/components/Header/HeaderWrapper.vue'
+
+	import HeaderComplexBar from '@/components/HeaderComplexBar/HeaderComplexBar.vue'
+	import HeaderMenuItem from '@/components/HeaderComplexBar/HeaderMenuItem.vue'
+	import HeaderMenuSection from '@/components/HeaderComplexBar/HeaderMenuSection.vue'
+	import HeaderSubMenu from '@/components/HeaderComplexBar/HeaderSubMenu.vue'
 	import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
 </script>
 
 <template>
 	<VApp class="toto">
 		<div>random div</div>
-		<HeaderWrapper>
+		<HeaderComplexBar>
 			<template #menu>
-				<ul>
-					<li>
-						<a>home</a>
-					</li>
-					<li>
-						<a>profile</a>
-					</li>
-					<li>
-						<HeaderSubMenu>
-							<template #title>
-								<a>sub menu</a>
-							</template>
-							<ul>
-								<li>
-									<a>sub menu item 1</a>
-								</li>
-								<li>
-									<a>sub menu item 2</a>
-								</li>
-								<li>
-									<HeaderSubMenu>
-										<template #title>
-											<a>+sub menu</a>
-										</template>
-										<ul>
-											<li>
-												<a>+sub menu item 1</a>
-											</li>
-											<li>
-												<a>+sub menu item 2</a>
-											</li>
-											<li>
-												<a>+sub menu item 3</a>
-											</li>
-										</ul>
-									</HeaderSubMenu>
-								</li>
-							</ul>
-						</HeaderSubMenu>
-					</li>
-				</ul>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a href="#">home</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<a>profile</a>
+				</HeaderMenuItem>
+				<HeaderMenuItem>
+					<HeaderSubMenu>
+						<template #title>
+							sub menu
+						</template>
+						<HeaderMenuItem>
+							<a>sub menu item 1</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 2</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 1</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 2</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 1</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 2</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 1</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 2</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 1</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 2</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 1</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a>sub menu item 2</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<HeaderSubMenu>
+								<template #title>
+									+sub menu
+								</template>
+								<HeaderMenuItem>
+									<a>+sub menu item 1</a>
+								</HeaderMenuItem>
+								<HeaderMenuItem>
+									<a>+sub menu item 2</a>
+								</HeaderMenuItem>
+								<HeaderMenuItem>
+									<a>+sub menu item 3</a>
+								</HeaderMenuItem>
+								<HeaderMenuItem>
+									<a>+sub menu item 4</a>
+								</HeaderMenuItem>
+								<HeaderMenuItem>
+									<a>+sub menu item 5</a>
+								</HeaderMenuItem>
+								<HeaderMenuItem>
+									<a>+sub menu item 6</a>
+								</HeaderMenuItem>
+								<HeaderMenuItem>
+									<a>+sub menu item 7</a>
+								</HeaderMenuItem>
+								<HeaderMenuItem>
+									<a>+sub menu item 8</a>
+								</HeaderMenuItem>
+								<HeaderMenuItem>
+									<a>+sub menu item 9</a>
+								</HeaderMenuItem>
+							</HeaderSubMenu>
+						</HeaderMenuItem>
+					</HeaderSubMenu>
+				</HeaderMenuItem>
 			</template>
+
 			<template #header-side>
 				<div class="d-flex justify-center h-100 ga-4 pr-4">
 					<VBtn
@@ -68,7 +144,7 @@
 					</VBtn>
 				</div>
 			</template>
-		</HeaderWrapper>
+		</HeaderComplexBar>
 		<section>
 			Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem eos quidem, inventore sit magni sequi explicabo obcaecati ut voluptate, cumque eveniet maxime, in architecto itaque unde minima vel aliquid minus.
 			Ex minima nam doloribus magni! Beatae labore dolor aliquid cupiditate quasi blanditiis ducimus deserunt excepturi aliquam, nihil reiciendis, magnam quo consectetur a atque nobis tempore amet laudantium non dignissimos? Ut?
@@ -129,4 +205,8 @@
         max-width: 850px;
         margin: 0 auto;
     }
+
+	* {
+		font-family: 'arial';
+	}
 </style>

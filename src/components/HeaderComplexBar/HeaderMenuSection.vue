@@ -1,0 +1,39 @@
+<script setup lang="ts">
+	defineProps<{
+		title?: string
+	}>()
+</script>
+
+<template>
+	<div class="header-menu-section">
+		<div
+			v-if="title"
+			class="header-menu-section-title"
+		>
+			{{ title }}
+		</div>
+		<ul class="header-menu-section-list">
+			<slot />
+		</ul>
+	</div>
+</template>
+
+<style lang="scss" scoped>
+@use "@/assets/tokens.scss" as *;
+
+.header-menu-section {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.header-menu-section-title {
+	padding: 40px 16px 8px 20px;
+	border-bottom: 1px solid #e0e0e0;
+	font-size: 1.1rem;
+	margin-bottom: 8px;
+	color: #212529;
+	text-transform: capitalize;
+	font-weight: 700;
+}
+</style>
