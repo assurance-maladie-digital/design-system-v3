@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import CustomSelect from '@/components/Customs/CustomSelect/customSelect.vue'
+import CustomSelect from '@/components/Customs/CustomSelect/CustomSelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
 

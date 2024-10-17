@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { mdiMenuDown } from '@mdi/js'
 	import { ref, watch, computed, type PropType } from 'vue'
-	import { VIcon, VList, VListItem, VListItemTitle } from 'vuetify/components'
+	import { VIcon, VTextField, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
 	const props = defineProps({
 		modelValue: {
@@ -50,6 +50,11 @@
 	const toggleMenu = () => {
 		isOpen.value = !isOpen.value
 	}
+	const closeMenu = () => {
+		isOpen.value = false
+	}
+	const inputId = ref(`custom-select-${Math.random().toString(36).substring(7)}`)
+
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
 		selectedItem.value = item
@@ -74,10 +79,6 @@
 		selectedItem.value = newValue
 	})
 
-	const buttonClass = computed(() => {
-		return props.outlined ? 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined' : 'text-color'
-	})
-
 	const formattedItems = computed(() => {
 		return props.items.map((item) => {
 			if (typeof item === 'string') {
@@ -89,66 +90,73 @@
 </script>
 
 <template>
-	<v-input
-		v-model="selectedItem"
-		:label="props.label"
-		role="menu"
+	<VTextField
+		:id="inputId"
+		v-model="selectedItemText"
+		v-click-outside="closeMenu"
+		title="Sélectionnez une option"
+		color="primary"
+		tabindex="0"
+		:label="selectedItem ? label : ''"
+		:aria-label="selectedItem ? label : 'Sélectionnez une option'"
+		:clearable
 		:error-messages="errorMessages"
 		:required="required"
+		:variant="outlined ? 'outlined' : 'underlined'"
+		@click="toggleMenu"
+		@keydown.enter.prevent="toggleMenu"
+		@keydown.space.prevent="toggleMenu"
 	>
-		<template #default>
-			<div
-				ref="menu"
-				:class="['custom-select', buttonClass, 'primary']"
-				role="menu"
-				tabindex="0"
-				style="position: relative;"
-				@click="toggleMenu"
-				@keydown.enter.prevent="toggleMenu"
-				@keydown.space.prevent="toggleMenu"
-			>
-				<span>{{ selectedItemText }}</span>
-				<VIcon> {{ mdiMenuDown }}</VIcon>
-			</div>
-			<VList
-				v-if="isOpen"
-				class="v-list"
-				:style="`position: relative; left: -${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px; max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
-				@keydown.esc.prevent="isOpen = false"
-			>
-				<VListItem
-					v-for="(item, index) in formattedItems"
-					:key="index"
-					:ref="'options-' + index"
-					role="option"
-					class="v-list-item"
-					:aria-selected="selectedItem === item"
-					:tabindex="index + 1"
-					@click="selectItem(item)"
-				>
-					<VListItemTitle>
-						{{ getItemText(item) }}
-					</VListItemTitle>
-				</VListItem>
-			</VList>
-		</template>
-	</v-input>
+		<VIcon>{{ mdiMenuDown }}</VIcon>
+	</VTextField>
+	<VList
+		v-if="
+			isOpen"
+		class="v-list"
+		:style="`left: -${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px; max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
+		@keydown.esc.prevent="isOpen = false"
+	>
+		<VListItem
+			v-for="(item, index) in formattedItems"
+			:key="index"
+			:ref="'options-' + index"
+			role="option"
+			class="v-list-item"
+			:aria-selected="selectedItem === item"
+			:tabindex="index + 1"
+			@click="selectItem(item)"
+		>
+			<VListItemTitle>
+				{{ getItemText(item) }}
+			</VListItemTitle>
+		</VListItem>
+	</VList>
 </template>
+
 <style scoped lang="scss">
 @import '../../../assets/tokens.scss';
 
+.v-field {
+  position: relative;
+}
+.v-field--focused {
+  .v-icon {
+    transform: rotateX(180deg) translateY(50%);
+  }
+}
+
 .v-list {
   position: absolute;
-  top: 36px;
-  width: 100%;
-  z-index: 1;
+  left: inherit !important;
+  margin-top: -22px;
   background-color: white;
-  max-width: 150px;
-  padding: 8px 0;
+  min-width: calc(100% - 96px);
+  max-height: 300px;
+  padding: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
   overflow-y: auto;
-  max-height: 300px;
+  z-index: 2;
 }
 
 .v-list-item:hover {
@@ -159,12 +167,11 @@
   background-color: rgba(0, 0, 0, 0.08);
 }
 
-.v-btn {
-  color: $blue-base;
+.v-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $grey-darken-20;
 }
-
-.text-color {
-  color: $blue-base;
-}
-
 </style>

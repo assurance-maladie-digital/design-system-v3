@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import CustomSelect from '../customSelect.vue'
+import CustomSelect from '../CustomSelect.vue'
 import { vuetify } from '@tests/unit/setup'
 
 describe('customSelect.vue', () => {
