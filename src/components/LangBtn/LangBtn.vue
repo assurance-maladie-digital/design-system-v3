@@ -6,6 +6,7 @@
 	import ISO6391 from 'iso-639-1'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import defaultOptions from './config'
+	import GenericMenu from '@/components/Generics/GenericMenu.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: string
@@ -99,12 +100,20 @@
 
 <template>
 	<div :id="menuId">
-		<VMenu
+		<GenericMenu
 			v-bind="options.menu"
-			:id="isMenuOpen ? 'lang-menu' : menuId "
+			:id="isMenuOpen ? 'lang-menu' : menuId"
 			v-model="menu"
 			role="menu"
 			location="bottom"
+			:items="languagesData"
+			item-key="code"
+			item-label="nativeName"
+			:aria-label="`${props.ariaLabel} ${currentLangData.name}`"
+			:aria-controls="menuId"
+			:aria-owns="menuId"
+			:aria-expanded="isMenuOpen"
+			@change="updateLang"
 		>
 			<template #activator="{ props: activatorProps }">
 				<VBtn
@@ -130,26 +139,7 @@
 					</VIcon>
 				</VBtn>
 			</template>
-			<VList
-				v-bind="options.list"
-				aria-labelledby="lang-menu-btn"
-			>
-				<VListItem
-					v-for="(langData, code, index) in languagesData"
-					v-bind="options.listTile"
-					:key="code"
-					role="menuitem"
-					:tabindex="index + 1"
-					:aria-label="`${props.ariaLabel} ${langData.nativeName}`"
-					:aria-labelledby="`${menuId} ${langData.nativeName}`"
-					@click="updateLang(code)"
-				>
-					<VListItemTitle v-bind="options.listTileTitle">
-						{{ langData.nativeName }}
-					</VListItemTitle>
-				</VListItem>
-			</VList>
-		</VMenu>
+		</GenericMenu>
 	</div>
 </template>
 <style lang="scss" scoped>

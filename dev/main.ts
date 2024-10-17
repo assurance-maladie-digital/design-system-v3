@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+// @ts-expect-error playground
 import Playground from './Playground.vue'
 
 import 'vuetify/styles'
