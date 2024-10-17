@@ -37,7 +37,7 @@ type Story = StoryObj<typeof meta>
 
 export const Desktop: Story = {
 	args: {
-		socialMediaLinks: [
+		links: [
 			{
 				icon: mdiLinkedin,
 				href: 'https://www.linkedin.com/company/assurance-maladie/',
@@ -59,7 +59,7 @@ export const Desktop: Story = {
 				return { args }
 			},
 			template: `
-                <SocialMediaLinks :links="args.socialMediaLinks" />
+                <SocialMediaLinks :links="args.links" />
             `,
 		}
 	},
@@ -72,7 +72,7 @@ export const Mobile: Story = {
 		},
 	},
 	args: {
-		socialMediaLinks: [
+		links: [
 			{
 				icon: mdiLinkedin,
 				href: 'https://www.linkedin.com/company/assurance-maladie/',
@@ -94,7 +94,7 @@ export const Mobile: Story = {
 				return { args }
 			},
 			template: `
-				<SocialMediaLinks :links="args.socialMediaLinks" />
+				<SocialMediaLinks :links="args.links" />
 			`,
 		}
 	},
