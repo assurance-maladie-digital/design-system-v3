@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import LangBtn from '@/components/LangBtn/LangBtn.vue'
-	import CustomSelect from '@/components/Customs/CustomSelect/customSelect.vue'
+	import CustomInputSelect from '@/components/Customs/CustomInputSelect/CustomInputSelect.vue'
 	import { ref } from 'vue'
 
 	const value = ref('fr')
@@ -13,7 +13,7 @@
 <template>
 	<main>
 		<div class="mt-12 ml-12">
-     <CustomSelect
+     <CustomInputSelect
        v-model="value"
        :items="items"
        label="Choix de la langue"

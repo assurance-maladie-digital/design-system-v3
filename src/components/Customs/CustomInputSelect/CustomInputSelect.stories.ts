@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import CustomSelect from '@/components/Customs/CustomSelect/customSelect.vue'
+import CustomInputSelect from './CustomInputSelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
 
 const meta = {
-	title: 'Components/CustomSelect',
-	component: CustomSelect,
+	title: 'Components/CustomInputSelect',
+	component: CustomInputSelect,
 	parameters: {
 		layout: 'fullscreen',
 	},
@@ -14,7 +14,7 @@ const meta = {
 		items: { control: 'object' },
 		errorMessages: { control: 'object' },
 	},
-} as Meta<typeof CustomSelect>
+} as Meta<typeof CustomInputSelect>
 
 export default meta
 
@@ -28,12 +28,12 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
-				<CustomSelect
+				<CustomInputSelect
 					v-bind="args"
 				/>
 			`,
@@ -50,12 +50,12 @@ export const Outlined: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
-				<CustomSelect
+				<CustomInputSelect
 					v-bind="args"
 					outlined
 				/>
@@ -73,7 +73,7 @@ export const withError: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				const errorMessages = ref([])
 				const triggerError = () => {
@@ -84,7 +84,7 @@ export const withError: Story = {
 			},
 			template: `
 				<div>
-					<CustomSelect
+					<CustomInputSelect
 						v-bind="args"
 						:error-messages="errorMessages"
 					/>
@@ -106,13 +106,13 @@ export const withCustomKey: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div>
-					<CustomSelect
+					<CustomInputSelect
 						v-bind="args"
 						outlined
 						text-key="customKey"

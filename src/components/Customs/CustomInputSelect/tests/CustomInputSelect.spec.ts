@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import CustomSelect from '../customSelect.vue'
+import CustomSelect from '../CustomInputSelect.vue'
 import { vuetify } from '@tests/unit/setup'
 
-describe('customSelect.vue', () => {
+describe('CustomInputSelect.vue', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(CustomSelect, {
 			global: {
