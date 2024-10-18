@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import CNAMLogo from './CNAMLogo.vue'
+	import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 	defineSlots<{
 		'default': () => void
@@ -10,10 +11,45 @@
 		'header-side': () => void
 	}>()
 
+	const props = withDefaults(defineProps<{
+			sticky: boolean
+		}>(),
+		{
+			sticky: true,
+		})
+
+	const header = ref<HTMLElement | null>(null)
+
+	const scrollIsOnTop = ref(true)
+
+	const headerStyle = computed<{
+		position: 'fixed' | 'relative'
+	}>(() => {
+		return {
+			position: !scrollIsOnTop.value && props.sticky ? 'fixed' : 'relative',
+		}
+	})
+
+	onMounted(() => {
+		window.addEventListener('scroll', handleScroll)
+	})
+
+	onUnmounted(() => {
+		window.removeEventListener('scroll', handleScroll)
+	})
+
+	function handleScroll() {
+		scrollIsOnTop.value = window.scrollY < 10
+	}
+
 </script>
 
 <template>
-	<header class="header position-sticky">
+	<header
+		ref="header"
+		class="header"
+		:style="headerStyle"
+	>
 		<div
 			v-if="$slots.prepend"
 			class="header-prepend"
@@ -55,7 +91,6 @@
 <style lang="scss" scoped>
 
 .header {
-	position: sticky;
 	top: 0;
 	width: 100%;
 	background-color: #fff;
