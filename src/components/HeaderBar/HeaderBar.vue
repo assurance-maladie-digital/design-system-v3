@@ -12,16 +12,13 @@
 	}>()
 
 	const props = withDefaults(defineProps<{
-			sticky: boolean
+			sticky?: boolean
 		}>(),
 		{
 			sticky: true,
 		})
 
 	const header = ref<HTMLElement | null>(null)
-
-	const scrollIsOnTop = ref(true)
-
 	const headerStyle = computed<{
 		position: 'fixed' | 'relative'
 	}>(() => {
@@ -30,17 +27,25 @@
 		}
 	})
 
+	const scrollIsOnTop = ref(true)
+	function handleScroll() {
+		scrollIsOnTop.value = window.scrollY < headerOffset.value
+	}
+
+	const headerOffset = ref(1)
+	function setHeaderOffset() {
+		headerOffset.value = header.value!.getBoundingClientRect().top
+	}
 	onMounted(() => {
+		setHeaderOffset()
 		window.addEventListener('scroll', handleScroll)
+		window.addEventListener('resize', setHeaderOffset)
 	})
 
 	onUnmounted(() => {
 		window.removeEventListener('scroll', handleScroll)
+		window.removeEventListener('resize', setHeaderOffset)
 	})
-
-	function handleScroll() {
-		scrollIsOnTop.value = window.scrollY < 10
-	}
 
 </script>
 
