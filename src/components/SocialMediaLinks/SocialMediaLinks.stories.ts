@@ -6,7 +6,8 @@ const meta = {
 	title: 'Components/SocialMediaLinks',
 	component: SocialMediaLinks,
 	parameters: {
-		layout: 'centered',
+		layout: 'fullscreen',
+		controls: { exclude: ['socialMediaLinks'] },
 	},
 	args: {
 		socialMediaLinks: [
@@ -35,7 +36,7 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Desktop: Story = {
+export const Default: Story = {
 	args: {
 		links: [
 			{
@@ -59,43 +60,10 @@ export const Desktop: Story = {
 				return { args }
 			},
 			template: `
-                <SocialMediaLinks :links="args.links" />
+				<div class="d-flex flex-wrap align-center pa-4">
+                	<SocialMediaLinks :links="args.links" />
+				</div>
             `,
-		}
-	},
-}
-
-export const Mobile: Story = {
-	parameters: {
-		viewport: {
-			defaultViewport: 'mobile1',
-		},
-	},
-	args: {
-		links: [
-			{
-				icon: mdiLinkedin,
-				href: 'https://www.linkedin.com/company/assurance-maladie/',
-			},
-			{
-				icon: mdiFacebook,
-				href: 'https://twitter.com/Assur_Maladie',
-			},
-			{
-				icon: mdiTwitter,
-				href: 'https://twitter.com/Assur_Maladie',
-			},
-		],
-	},
-	render: (args) => {
-		return {
-			components: { SocialMediaLinks },
-			setup() {
-				return { args }
-			},
-			template: `
-				<SocialMediaLinks :links="args.links" />
-			`,
 		}
 	},
 }
