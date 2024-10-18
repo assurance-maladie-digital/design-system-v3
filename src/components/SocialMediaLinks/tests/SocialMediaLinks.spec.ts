@@ -1,6 +1,14 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import SocialMediaLinks from '../SocialMediaLinks.vue'
 import { describe, it, expect, afterEach } from 'vitest'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+const vuetify = createVuetify({
+	components,
+	directives,
+})
 
 describe('SocialMediaLinks.vue', () => {
 	let wrapper: VueWrapper
@@ -13,6 +21,9 @@ describe('SocialMediaLinks.vue', () => {
 
 	it('renders correctly with default props', () => {
 		wrapper = mount(SocialMediaLinks, {
+			global: {
+				plugins: [vuetify],
+			},
 			props: {
 				links: undefined,
 			},
@@ -26,6 +37,9 @@ describe('SocialMediaLinks.vue', () => {
 			{ href: 'https://facebook.com', icon: 'mdi-facebook' },
 		]
 		wrapper = mount(SocialMediaLinks, {
+			global: {
+				plugins: [vuetify],
+			},
 			props: {
 				links,
 			},
@@ -39,6 +53,9 @@ describe('SocialMediaLinks.vue', () => {
 			{ href: 'https://facebook.com', icon: 'mdi-facebook' },
 		]
 		wrapper = mount(SocialMediaLinks, {
+			global: {
+				plugins: [vuetify],
+			},
 			props: {
 				links,
 			},
@@ -48,6 +65,9 @@ describe('SocialMediaLinks.vue', () => {
 
 	it('renders no links when links prop is empty array', () => {
 		wrapper = mount(SocialMediaLinks, {
+			global: {
+				plugins: [vuetify],
+			},
 			props: {
 				links: [],
 			},
@@ -57,6 +77,9 @@ describe('SocialMediaLinks.vue', () => {
 
 	it('renders no links when links prop is null', () => {
 		wrapper = mount(SocialMediaLinks, {
+			global: {
+				plugins: [vuetify],
+			},
 			props: {
 				links: undefined,
 			},
