@@ -1,130 +1,16 @@
 <script setup lang="ts">
 
-	import HeaderComplexBar from '@/components/HeaderComplexBar/HeaderComplexBar.vue'
-	import HeaderMenuItem from '@/components/HeaderComplexBar/HeaderMenuItem.vue'
-	import HeaderMenuSection from '@/components/HeaderComplexBar/HeaderMenuSection.vue'
-	import HeaderSubMenu from '@/components/HeaderComplexBar/HeaderSubMenu.vue'
+	import HeaderBar from '@/components/HeaderBar/HeaderBar.vue'
 	import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
+	import ProjectMenu from './ProjectMenu.vue'
 </script>
 
 <template>
 	<VApp class="toto">
 		<div>random div</div>
-		<HeaderComplexBar>
+		<HeaderBar>
 			<template #menu>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a href="#">home</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<a>profile</a>
-				</HeaderMenuItem>
-				<HeaderMenuItem>
-					<HeaderSubMenu>
-						<template #title>
-							sub menu
-						</template>
-						<HeaderMenuItem>
-							<a>sub menu item 1</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 2</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 1</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 2</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 1</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 2</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 1</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 2</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 1</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 2</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 1</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<a>sub menu item 2</a>
-						</HeaderMenuItem>
-						<HeaderMenuItem>
-							<HeaderSubMenu>
-								<template #title>
-									+sub menu
-								</template>
-								<HeaderMenuItem>
-									<a>+sub menu item 1</a>
-								</HeaderMenuItem>
-								<HeaderMenuItem>
-									<a>+sub menu item 2</a>
-								</HeaderMenuItem>
-								<HeaderMenuItem>
-									<a>+sub menu item 3</a>
-								</HeaderMenuItem>
-								<HeaderMenuItem>
-									<a>+sub menu item 4</a>
-								</HeaderMenuItem>
-								<HeaderMenuItem>
-									<a>+sub menu item 5</a>
-								</HeaderMenuItem>
-								<HeaderMenuItem>
-									<a>+sub menu item 6</a>
-								</HeaderMenuItem>
-								<HeaderMenuItem>
-									<a>+sub menu item 7</a>
-								</HeaderMenuItem>
-								<HeaderMenuItem>
-									<a>+sub menu item 8</a>
-								</HeaderMenuItem>
-								<HeaderMenuItem>
-									<a>+sub menu item 9</a>
-								</HeaderMenuItem>
-							</HeaderSubMenu>
-						</HeaderMenuItem>
-					</HeaderSubMenu>
-				</HeaderMenuItem>
+				<ProjectMenu />
 			</template>
 
 			<template #header-side>
@@ -144,7 +30,7 @@
 					</VBtn>
 				</div>
 			</template>
-		</HeaderComplexBar>
+		</HeaderBar>
 		<section>
 			Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem eos quidem, inventore sit magni sequi explicabo obcaecati ut voluptate, cumque eveniet maxime, in architecto itaque unde minima vel aliquid minus.
 			Ex minima nam doloribus magni! Beatae labore dolor aliquid cupiditate quasi blanditiis ducimus deserunt excepturi aliquam, nihil reiciendis, magnam quo consectetur a atque nobis tempore amet laudantium non dignissimos? Ut?

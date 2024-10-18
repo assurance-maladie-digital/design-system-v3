@@ -2,7 +2,9 @@
 	import { mdiClose, mdiMenu } from '@mdi/js'
 	import { computed, onMounted, onUnmounted, provide, readonly, ref, watch } from 'vue'
 	import { useTheme, useDisplay } from 'vuetify'
-	import CNAMLogo from './CNAMLogo.vue'
+
+	const theme = useTheme()
+	const display = useDisplay()
 
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const menuLeft = ref(0)
@@ -24,9 +26,6 @@
 		window.removeEventListener('scroll', positionMenu)
 		window.removeEventListener('resize', positionMenu)
 	})
-
-	const theme = useTheme()
-	const display = useDisplay()
 
 	const menuOpen = ref(false)
 
@@ -72,10 +71,32 @@
 </script>
 
 <template>
-	<header class="header position-sticky">
-		<div class="inner-header d-flex">
-			<!---->
-			<div ref="menuBtnWrapper">
+	<div>
+		<div ref="menuBtnWrapper">
+			<button
+				class="header-menu-btn mr-4"
+				:style="btnStyle"
+				@click="toggleMenu"
+			>
+				<VIcon size="48">
+					{{ menuOpen ? mdiClose : mdiMenu }}
+				</VIcon>
+				<span v-if="display.mdAndUp.value">Menu</span>
+			</button>
+		</div>
+		<div
+			v-show="menuOpen"
+			class="menu overlay"
+			role="menu"
+			tabindex="0"
+			@click="handleClickOutside"
+			@keydown.enter="handleClickOutside"
+			@keydown.esc="handleClickOutside"
+		>
+			<div
+				class="menu-wrapper"
+				:style="menuStyle"
+			>
 				<button
 					class="header-menu-btn mr-4"
 					:style="btnStyle"
@@ -86,84 +107,24 @@
 					</VIcon>
 					<span v-if="display.mdAndUp.value">Menu</span>
 				</button>
-			</div>
-			<div
-				v-show="menuOpen"
-				class="menu overlay"
-				role="menu"
-				tabindex="0"
-				@click="handleClickOutside"
-				@keydown.enter="handleClickOutside"
-				@keydown.esc="handleClickOutside"
-			>
-				<div
-					class="menu-wrapper"
-					:style="menuStyle"
+				<nav
+					id="header-menu-wrapper"
+					class="header-menu-wrapper"
+					:class="{
+						'header-menu-wrapper--submenu-open': childMenuOpen,
+					}"
 				>
-					<button
-						class="header-menu-btn mr-4"
-						:style="btnStyle"
-						@click="toggleMenu"
-					>
-						<VIcon size="48">
-							{{ menuOpen ? mdiClose : mdiMenu }}
-						</VIcon>
-						<span v-if="display.mdAndUp.value">Menu</span>
-					</button>
-					<nav
-						id="header-menu-wrapper"
-						class="header-menu-wrapper"
-						:class="{
-							'header-menu-wrapper--submenu-open': childMenuOpen,
-						}"
-					>
-						<div class="header-menu">
-							<slot name="menu" />
-						</div>
-					</nav>
-				</div>
-			</div>
-
-			<!---->
-
-			<div class="header-logo">
-				<slot
-					name="logo"
-					:open="menuOpen"
-				>
-					<CNAMLogo />
-				</slot>
-			</div>
-
-			<div
-				class="header-side"
-			>
-				<slot name="header-side" />
+					<div class="header-menu">
+						<slot />
+					</div>
+				</nav>
 			</div>
 		</div>
-	</header>
+	</div>
 </template>
 
 <style lang="scss" scoped>
 $header-height: 82px;
-
-.header {
-	top: 0;
-	width: 100%;
-	background-color: #fff;
-	border-bottom: solid 1px #ced9eb;
-}
-
-.inner-header {
-	display: flex;
-	align-items: center;
-}
-
-.header-side {
-	display: flex;
-	align-items: center;
-	margin-left: auto;
-}
 
 .overlay {
 	inset: 0;
@@ -202,7 +163,7 @@ $header-height: 82px;
 
 @media screen and (min-width: 900px) {
 	.header-menu-btn {
-		height: 95;
+		height: 95px;
 		width: 95px;
 	}
 
@@ -223,15 +184,5 @@ $header-height: 82px;
 		overflow-x: hidden;
 		height: 70vh;
 	}
-}
-
-:deep(.v-menu__content) {
-	position: relative;
-}
-
-:deep(.v-list-item-group) {
-	position: absolute !important;
-	top: 0 !important;
-	left: 50% !important;
 }
 </style>
