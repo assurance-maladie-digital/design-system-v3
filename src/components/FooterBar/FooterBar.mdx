@@ -1,4 +1,22 @@
-<script setup lang="ts">
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import * as FooterBarStories from './FooterBar.stories.ts';
+
+<Meta of={FooterBarStories} />
+
+# FooterBar
+
+Le composant `FooterBar` est utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.
+
+<Canvas of={FooterBarStories.Default} />
+
+# Api
+
+<Controls of={FooterBarStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+    <script setup lang="ts">
 	import FooterBar from '@/components/FooterBar/FooterBar.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
 	import { getCurrentInstance, computed } from 'vue'
@@ -50,14 +68,6 @@
 		return proxy?.$vuetify.display.name === 'xs'
 	})
 
-	const footerOptions = {
-		footer: {
-			elevation: 3,
-			color: 'red',
-			minHeight: '999990px',
-		},
-	}
-
 </script>
 
 <template>
@@ -67,32 +77,9 @@
 				Scroll to see footer and test scroll to top
 			</h2>
 		</div>
-		<FooterBar v-bind="docProps" :vuetify-options="footerOptions" />
-
-		<br><br>
-
-		<FooterBar v-bind="docProps">
-			<p class="text--secondary mb-0">
-				Contenu supplémentaire.
-			</p>
-		</FooterBar>
-
-		<br><br>
-
 		<FooterBar
 			v-bind="docProps"
-			hide-sitemap-link
-		>
-			<p class="text--secondary mb-0">
-				Contenu supplémentaire.
-			</p>
-		</FooterBar>
-
-		<br><br>
-
-		<FooterBar
-			v-bind="docProps"
-			class="theme--dark"
+			version="v0.1.1"
 		>
 			<VRow
 				:no-gutters="isXs"
@@ -129,3 +116,4 @@
   min-height: 1000px;
 }
 </style>
+    `} />

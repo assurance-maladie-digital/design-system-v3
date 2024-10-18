@@ -106,6 +106,10 @@ a {
   }
 }
 
+.v-theme--dark a :deep() {
+  color: white;
+}
+
 .vd-collapse-list a {
   color: black;
 }
@@ -142,6 +146,12 @@ a {
 .vd-collapse-list-mobile.theme--dark :deep() {
   button {
     color: white !important;
+  }
+}
+
+.vd-collapse-list-mobile :deep() {
+  button {
+    color: red !important;
   }
 }
 </style>

@@ -1,0 +1,290 @@
+<script setup lang="ts">
+	import { computed, useSlots } from 'vue'
+	import { type RouteLocationRaw } from 'vue-router'
+	import Logo from '@/components/Logo/Logo.vue'
+	import { LogoSize } from '@/components/Logo/LogoSize'
+	import SocialMediaLinks from '@/components/SocialMediaLinks/SocialMediaLinks.vue'
+	import type { SocialMediaLink } from '@/components/SocialMediaLinks/types'
+	import { A11yComplianceEnum } from './A11yCompliance'
+	import { defaultSocialMediaLinks } from './defaultSocialMediaLinks'
+	import { locales } from './locales'
+	import type { LinkItem } from './types'
+	import { mdiArrowUp } from '@mdi/js'
+	import { useDisplay } from 'vuetify'
+	import { config } from './config'
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+
+	export interface Props {
+		a11yCompliance?: string
+		linkItems?: LinkItem[] | null
+		sitemapRoute?: RouteLocationRaw
+		cguRoute?: RouteLocationRaw
+		cookiesRoute?: RouteLocationRaw
+		legalNoticeRoute?: RouteLocationRaw
+		a11yStatementRoute?: RouteLocationRaw
+		hideSitemapLink?: boolean
+		hideCguLink?: boolean
+		hideCookiesLink?: boolean
+		hideLegalNoticeLink?: boolean
+		hideA11yLink?: boolean
+		version?: string | undefined
+		hideLogo?: boolean
+		hideSocialMediaLinks?: boolean
+		socialMediaLinks?: SocialMediaLink[]
+	}
+
+	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
+		a11yCompliance: 'non-compliant',
+		linkItems: null,
+		sitemapRoute: () => ({ name: 'sitemap' }),
+		cguRoute: () => ({ name: 'cgu' }),
+		cookiesRoute: () => ({ name: 'cookies' }),
+		legalNoticeRoute: () => ({ name: 'legalNotice' }),
+		a11yStatementRoute: () => ({ name: 'a11yStatement' }),
+		hideSitemapLink: false,
+		hideCguLink: false,
+		hideCookiesLink: false,
+		hideLegalNoticeLink: false,
+		hideA11yLink: false,
+		version: undefined,
+		hideLogo: false,
+		hideSocialMediaLinks: false,
+		socialMediaLinks: () => defaultSocialMediaLinks,
+	})
+
+	const arrowTopIcon = mdiArrowUp
+	const logoSizeEnum = LogoSize
+	const slots = useSlots()
+	const display = useDisplay()
+	const options = useCustomizableOptions(config, props)
+
+	const getLinkComponent = (item: LinkItem): string => {
+		return item.href ? 'a' : 'RouterLink'
+	}
+
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		})
+	}
+
+	const A11yComplianceLabel = computed(() => {
+		const complianceLabel = locales[props.a11yCompliance as keyof typeof A11yComplianceEnum]
+		return typeof complianceLabel === 'string' ? locales.a11yLabel(complianceLabel) : ''
+	})
+
+	const extendedMode = computed(() => {
+		return Boolean(slots.default)
+	})
+
+	const logoSize = computed(() => {
+		return display.smAndDown.value
+			? logoSizeEnum.SMALL
+			: logoSizeEnum.NORMAL
+	})
+
+	const footerLinksMapping = computed(() => {
+		if (props.linkItems) {
+			return props.linkItems as LinkItem[]
+		}
+
+		const linksMapping: LinkItem[] = [
+			{
+				text: locales.sitemapLabel,
+				to: props.sitemapRoute,
+				hidden: props.hideSitemapLink,
+			},
+			{
+				text: locales.cguLabel,
+				to: props.cguRoute,
+				hidden: props.hideCguLink,
+			},
+			{
+				text: locales.cookiesLabel,
+				to: props.cookiesRoute,
+				hidden: props.hideCookiesLink,
+			},
+			{
+				text: locales.legalNoticeLabel,
+				to: props.legalNoticeRoute,
+				hidden: props.hideLegalNoticeLink,
+			},
+			{
+				text: A11yComplianceLabel.value,
+				to: props.a11yStatementRoute,
+				hidden: props.hideA11yLink,
+			},
+		] as LinkItem[]
+
+		return linksMapping.filter(item => !item.hidden)
+	})
+
+	defineExpose({
+		logoSize,
+	})
+</script>
+
+<template>
+	<VFooter
+		v-bind="{
+			...options.footer,
+			...$attrs,
+		}"
+		:class="{
+			'py-4 py-sm-7 px-4 px-md-14': extendedMode,
+		}"
+		role="contentinfo"
+		class="vd-footer-bar flex-column align-stretch pa-3 w-100 v-theme--dark"
+	>
+		<div
+			v-if="extendedMode"
+			class="d-flex align-start align-sm-center mb-6"
+		>
+			<div class="d-flex flex-grow-1 flex-column flex-sm-row">
+				<slot name="logo">
+					<Logo
+						v-if="!props.hideLogo"
+						:size="logoSize"
+						:class="{ 'mb-2 mb-sm-0': !props.hideSocialMediaLinks }"
+					/>
+				</slot>
+
+				<VSpacer v-bind="options.spacer" />
+
+				<slot name="social-media-links">
+					<SocialMediaLinks
+						v-if="!props.hideSocialMediaLinks"
+						:links="props.socialMediaLinks"
+						class="mr-8"
+					/>
+				</slot>
+			</div>
+
+			<VBtn
+				id="scroll-btn"
+				v-bind="options.goTopBtn"
+				:aria-label="locales.goTopBtnLabel"
+				@click="scrollToTop"
+			>
+				<VIcon>
+					{{ arrowTopIcon }}
+				</VIcon>
+			</VBtn>
+		</div>
+
+		<VDivider
+			v-if="extendedMode"
+			v-bind="options.divider"
+			class="mb-3"
+		/>
+
+		<slot />
+
+		<VDivider
+			v-if="extendedMode"
+			v-bind="options.divider"
+			class="mt-3 mb-6"
+		/>
+
+		<ul
+			:class="{ 'py-2 py-sm-0': !extendedMode }"
+			class="vd-footer-bar-links text-sm-center d-flex flex-column flex-sm-row flex-wrap align-start justify-center max-width-none mx-n3 my-n3"
+		>
+			<slot name="prepend" />
+
+			<li
+				v-for="(item, index) in footerLinksMapping"
+				:key="index"
+			>
+				<component
+					:is="getLinkComponent(item)"
+					:href="item.href"
+					:to="item.to"
+					:aria-label="item.ariaLabel"
+					:target="item.openInNewTab ? '_blank' : undefined"
+					:tabindex="index"
+					:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
+					class="my-3 mx-4"
+				>
+					{{ item.text }}
+				</component>
+			</li>
+
+			<li
+				v-if="props.version"
+				class="text-primary my-3 mx-4"
+			>
+				{{ locales.versionLabel }} {{ props.version }}
+			</li>
+
+			<slot name="append" />
+		</ul>
+	</VFooter>
+</template>
+
+<style lang="scss" scoped>
+@import '@/assets/tokens.scss';
+$white: #fff;
+a {
+  cursor: pointer;
+}
+:deep() .text-primary {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+:deep() .text-secondary {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+.v-btn--icon {
+  border: 0;
+}
+// Fix footer bar height in SK
+.v-footer {
+  flex-grow: 0 !important;
+}
+// Use deep selector to style user content as well
+.vd-footer-bar.v-theme--dark :deep() {
+  background-color: $parma-darken-60 !important;
+  .vd-footer-bar-links a {
+    color: $white !important;
+  }
+  p,
+  .text-primary {
+    color: rgba($white, 0.6) !important;
+  }
+  a.text-primary {
+    color: $white !important;
+  }
+  .v-divider {
+    border-color: rgba($white, 1) !important;
+  }
+  svg {
+    fill: $white !important;
+  }
+}
+.vd-footer-bar-links :deep() {
+  li {
+    list-style: none;
+    display: flex;
+  }
+  a {
+    transition: 0.15s;
+    text-decoration: none;
+    padding-top: 1px; // Add top padding to account for bottom border
+    border-bottom: 1px solid transparent;
+    &:hover,
+    &:focus {
+      border-color: currentColor;
+    }
+  }
+  p {
+    padding: 1px 0;
+  }
+}
+.v-theme--dark button.v-btn:hover :deep() {
+  background: rgba(white, 0.1);
+}
+.v-theme--dark button :deep() {
+  background: $parma-darken-60;
+}
+</style>
