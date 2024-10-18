@@ -2,17 +2,20 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import CustomSelect from '@/components/Customs/CustomSelect/CustomSelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
+import Alert from '../../Alert/Alert.vue'
 
 const meta = {
 	title: 'Components/CustomSelect',
 	component: CustomSelect,
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: ['selectedValue'] },
 	},
 	argTypes: {
 		selectedValue: { control: 'text' },
 		items: { control: 'object' },
 		errorMessages: { control: 'object' },
+		required: { control: 'boolean' },
 	},
 } as Meta<typeof CustomSelect>
 
@@ -38,6 +41,7 @@ export const Default: Story = {
 						v-bind="args"
 					/>
 				</div>
+				<br/><br/><br/><br/>
 			`,
 		}
 	},
@@ -57,7 +61,7 @@ export const Outlined: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center pa-4" style="z-index: 99999">
 					<CustomSelect
 						v-bind="args"
 						outlined
@@ -68,7 +72,32 @@ export const Outlined: Story = {
 	},
 }
 
-export const withError: Story = {
+export const Required: Story = {
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+	},
+	render: (args) => {
+		return {
+			components: { CustomSelect },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomSelect
+						v-bind="args"
+						required
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const withCustomError: Story = {
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -93,7 +122,7 @@ export const withError: Story = {
 						:error-messages="errorMessages"
 					/>
 				</div>
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center px-4">
 					<VBtn @click="triggerError">
 						Trigger Error
 					</VBtn>
@@ -127,4 +156,27 @@ export const withCustomKey: Story = {
 			`,
 		}
 	},
+}
+
+export const Info: Story = {
+	render: (args) => {
+		return {
+			components: { Alert },
+			setup() {
+				return { args }
+			},
+			template: `
+				<Alert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
+					<template #default>
+						<b>Format des items :</b>
+						<ul>
+							<li>- Si les items passés en props sont des objets, le composant les utilisera directement.</li>
+							<li>- Si les items sont un tableau de string, le composant les utilisera directement.</li>
+						</ul>
+					</template>
+				</Alert>
+			`,
+		}
+	},
+	tags: ['!dev'],
 }

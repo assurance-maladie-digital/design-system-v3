@@ -28,6 +28,7 @@
 				:error-messages="errorMessages"
 				text-key="textoto"
 				outlined
+				required
 			/>
 		</div>
 		<custom-select

@@ -75,10 +75,6 @@
 		return props.label
 	})
 
-	watch(() => props.modelValue, (newValue) => {
-		selectedItem.value = newValue
-	})
-
 	const formattedItems = computed(() => {
 		return props.items.map((item) => {
 			if (typeof item === 'string') {
@@ -86,6 +82,14 @@
 			}
 			return item
 		})
+	})
+
+	const isRequired = computed(() => {
+		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
+	})
+
+	watch(() => props.modelValue, (newValue) => {
+		selectedItem.value = newValue
 	})
 </script>
 
@@ -103,8 +107,8 @@
 			:label="selectedItem ? label : ''"
 			:aria-label="selectedItem ? label : 'Sélectionnez une option'"
 			:error-messages="errorMessages"
-			:required="required"
 			:variant="outlined ? 'outlined' : 'underlined'"
+			:rules="isRequired ? ['Le champ est requis.'] : []"
 			class="custom-select"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
