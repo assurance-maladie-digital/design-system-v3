@@ -93,13 +93,13 @@
 	<div class="d-block w-100">
 		<VTextField
 			:id="inputId"
+			ref="input"
 			v-model="selectedItemText"
 			v-click-outside="closeMenu"
 			title="Sélectionnez une option"
 			color="primary"
 			tabindex="0"
 			readonly
-			role="combobox"
 			:label="selectedItem ? label : ''"
 			:aria-label="selectedItem ? label : 'Sélectionnez une option'"
 			:error-messages="errorMessages"
@@ -113,9 +113,9 @@
 			<VIcon>{{ mdiMenuDown }}</VIcon>
 		</VTextField>
 		<VList
-			v-if="
-				isOpen"
+			v-if="isOpen"
 			class="v-list"
+			:style="`min-width: ${$refs.input?.$el.offsetWidth}px`"
 			@keydown.esc.prevent="isOpen = false"
 		>
 			<VListItem
@@ -158,7 +158,6 @@
   left: inherit !important;
   margin-top: -22px;
   background-color: white;
-  min-width: calc(100% - 96px);
   max-height: 300px;
   padding: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08);
