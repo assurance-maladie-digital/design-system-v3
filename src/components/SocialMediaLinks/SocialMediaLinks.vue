@@ -23,11 +23,12 @@
 				:key="index"
 			>
 				<VBtn
-					id="social-btn"
+					:id="`social-btn-${index}`"
 					:href="social.href"
 					target="_blank"
 					rel="noopener noreferrer"
 					:icon="true"
+					:aria-label="`Lien vers ${social.icon}`"
 					variant="text"
 				>
 					<VIcon
@@ -56,6 +57,7 @@ li {
 
 .vd-social-media-links-label.text--primary {
   color: $blue-base;
+  font-weight: 600;
 }
 
 .v-theme--dark .vd-social-media-links-label.text--primary {

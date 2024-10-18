@@ -1,3 +1,3 @@
 export const locales = {
-	followUs: 'Suivez-nous',
+	followUs: 'Suivez-nous :',
 }
