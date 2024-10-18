@@ -21,13 +21,15 @@
 <template>
 	<main class="ma-12">
 		SelectedValue: {{ selectedValue }}
-		<custom-select
-			v-model="selectedValue"
-			:items="items"
-			:error-messages="errorMessages"
-			text-key="textoto"
-			outlined
-		/>
+		<div class="d-flex flex-wrap align-center pa-4">
+			<custom-select
+				v-model="selectedValue"
+				:items="items"
+				:error-messages="errorMessages"
+				text-key="textoto"
+				outlined
+			/>
+		</div>
 		<custom-select
 			v-model="selectedValue2"
 			:items="items2"

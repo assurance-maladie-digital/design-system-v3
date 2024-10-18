@@ -33,9 +33,11 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-				<CustomSelect
-					v-bind="args"
-				/>
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomSelect
+						v-bind="args"
+					/>
+				</div>
 			`,
 		}
 	},
@@ -55,10 +57,12 @@ export const Outlined: Story = {
 				return { args }
 			},
 			template: `
-				<CustomSelect
-					v-bind="args"
-					outlined
-				/>
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomSelect
+						v-bind="args"
+						outlined
+					/>
+				</div>
 			`,
 		}
 	},
@@ -83,11 +87,13 @@ export const withError: Story = {
 				return { args, errorMessages, triggerError }
 			},
 			template: `
-				<div>
+				<div class="d-flex flex-wrap align-center pa-4">
 					<CustomSelect
 						v-bind="args"
 						:error-messages="errorMessages"
 					/>
+				</div>
+				<div class="d-flex flex-wrap align-center pa-4">
 					<VBtn @click="triggerError">
 						Trigger Error
 					</VBtn>
@@ -100,8 +106,8 @@ export const withError: Story = {
 export const withCustomKey: Story = {
 	args: {
 		items: [
-			{ customKey: 'Option 1', value: '1' },
-			{ customKey: 'Option 2', value: '2' },
+			{ customKey: 'Choix 1', value: '1' },
+			{ customKey: 'Choix 2', value: '2' },
 		],
 	},
 	render: (args) => {
@@ -111,7 +117,7 @@ export const withCustomKey: Story = {
 				return { args }
 			},
 			template: `
-				<div>
+				<div class="d-flex flex-wrap align-center pa-4">
 					<CustomSelect
 						v-bind="args"
 						outlined

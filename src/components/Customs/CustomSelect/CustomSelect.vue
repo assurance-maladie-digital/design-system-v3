@@ -90,50 +90,59 @@
 </script>
 
 <template>
-	<VTextField
-		:id="inputId"
-		v-model="selectedItemText"
-		v-click-outside="closeMenu"
-		title="Sélectionnez une option"
-		color="primary"
-		tabindex="0"
-		:label="selectedItem ? label : ''"
-		:aria-label="selectedItem ? label : 'Sélectionnez une option'"
-		:error-messages="errorMessages"
-		:required="required"
-		:variant="outlined ? 'outlined' : 'underlined'"
-		class="custom-select"
-		@click="toggleMenu"
-		@keydown.enter.prevent="toggleMenu"
-		@keydown.space.prevent="toggleMenu"
-	>
-		<VIcon>{{ mdiMenuDown }}</VIcon>
-	</VTextField>
-	<VList
-		v-if="
-			isOpen"
-		class="v-list"
-		@keydown.esc.prevent="isOpen = false"
-	>
-		<VListItem
-			v-for="(item, index) in formattedItems"
-			:key="index"
-			:ref="'options-' + index"
-			role="option"
-			class="v-list-item"
-			:aria-selected="selectedItem === item"
-			:tabindex="index + 1"
-			@click="selectItem(item)"
+	<div class="d-block w-100">
+		<VTextField
+			:id="inputId"
+			v-model="selectedItemText"
+			v-click-outside="closeMenu"
+			title="Sélectionnez une option"
+			color="primary"
+			tabindex="0"
+			readonly
+			role="combobox"
+			:label="selectedItem ? label : ''"
+			:aria-label="selectedItem ? label : 'Sélectionnez une option'"
+			:error-messages="errorMessages"
+			:required="required"
+			:variant="outlined ? 'outlined' : 'underlined'"
+			class="custom-select"
+			@click="toggleMenu"
+			@keydown.enter.prevent="toggleMenu"
+			@keydown.space.prevent="toggleMenu"
 		>
-			<VListItemTitle>
-				{{ getItemText(item) }}
-			</VListItemTitle>
-		</VListItem>
-	</VList>
+			<VIcon>{{ mdiMenuDown }}</VIcon>
+		</VTextField>
+		<VList
+			v-if="
+				isOpen"
+			class="v-list"
+			@keydown.esc.prevent="isOpen = false"
+		>
+			<VListItem
+				v-for="(item, index) in formattedItems"
+				:key="index"
+				:ref="'options-' + index"
+				role="option"
+				class="v-list-item"
+				:aria-selected="selectedItem === item"
+				:tabindex="index + 1"
+				@click="selectItem(item)"
+			>
+				<VListItemTitle>
+					{{ getItemText(item) }}
+				</VListItemTitle>
+			</VListItem>
+		</VList>
+	</div>
 </template>
 
 <style scoped lang="scss">
 @import '../../../assets/tokens.scss';
+
+.custom-select {
+  display: flex;
+  flex-direction: column;
+}
 
 .v-field {
   position: relative;
