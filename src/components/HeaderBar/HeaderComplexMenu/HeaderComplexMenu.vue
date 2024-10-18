@@ -1,10 +1,6 @@
 <script setup lang="ts">
-	import { mdiClose, mdiMenu } from '@mdi/js'
 	import { computed, onMounted, onUnmounted, provide, readonly, ref, watch } from 'vue'
-	import { useTheme, useDisplay } from 'vuetify'
-
-	const theme = useTheme()
-	const display = useDisplay()
+import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue';
 
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const menuLeft = ref(0)
@@ -29,19 +25,10 @@
 
 	const menuOpen = ref(false)
 
-	function toggleMenu() {
-		menuOpen.value = !menuOpen.value
-	}
-
 	watch(menuOpen, (newVal) => {
 		document.documentElement.style.overflow = newVal ? 'hidden' : 'auto'
 		document.body.style.overflow = newVal ? 'hidden' : 'auto'
 	})
-
-	const btnStyle = computed(() => ({
-		backgroundColor: menuOpen.value ? '#fff' : theme.current.value.colors.primary,
-		color: menuOpen.value ? theme.current.value.colors.primary : '#fff',
-	}))
 
 	const menuStyle = computed(() => ({
 		left: `${menuLeft.value}px`,
@@ -73,16 +60,7 @@
 <template>
 	<div>
 		<div ref="menuBtnWrapper">
-			<button
-				class="header-menu-btn mr-4"
-				:style="btnStyle"
-				@click="toggleMenu"
-			>
-				<VIcon size="48">
-					{{ menuOpen ? mdiClose : mdiMenu }}
-				</VIcon>
-				<span v-if="display.mdAndUp.value">Menu</span>
-			</button>
+			<HeaderMenuBtn v-model="menuOpen" />
 		</div>
 		<div
 			v-show="menuOpen"
@@ -97,16 +75,7 @@
 				class="menu-wrapper"
 				:style="menuStyle"
 			>
-				<button
-					class="header-menu-btn mr-4"
-					:style="btnStyle"
-					@click="toggleMenu"
-				>
-					<VIcon size="48">
-						{{ menuOpen ? mdiClose : mdiMenu }}
-					</VIcon>
-					<span v-if="display.mdAndUp.value">Menu</span>
-				</button>
+				<HeaderMenuBtn v-model="menuOpen" />
 				<nav
 					id="header-menu-wrapper"
 					class="header-menu-wrapper"

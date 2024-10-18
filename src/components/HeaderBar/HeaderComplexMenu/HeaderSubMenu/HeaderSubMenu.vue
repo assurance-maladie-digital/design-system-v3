@@ -3,6 +3,10 @@
 	import { inject, provide, readonly, ref, watch, type Ref } from 'vue'
 	// import { useTheme, useDisplay } from 'vuetify'
 
+	/**
+	 * ! TODO: close the submenu of same level when another submenu is opened
+	 */
+
 	const menuOpen = ref(false)
 	// const theme = useTheme()
 	// const display = useDisplay()
@@ -83,6 +87,12 @@
 		padding: 16px 50px 16px 20px;
 		text-align: left;
 		text-transform: capitalize;
+		color: $primary-base;
+
+		&:hover {
+			background-color: $primary-base;
+			color: $neutral-white;
+		}
 	}
 
 	.sub-menu-btn__icon {

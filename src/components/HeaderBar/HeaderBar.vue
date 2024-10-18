@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import CNAMLogo from './CNAMLogo.vue'
 	import { ref, computed, onMounted, onUnmounted } from 'vue'
+import HeaderLogo from './HeaderLogo/HeaderLogo.vue';
 
 	defineSlots<{
 		'default': () => void
@@ -73,7 +73,7 @@
 				<slot
 					name="logo"
 				>
-					<CNAMLogo />
+					<HeaderLogo />
 				</slot>
 			</div>
 
