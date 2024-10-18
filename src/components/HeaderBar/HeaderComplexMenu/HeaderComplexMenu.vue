@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, onMounted, onUnmounted, provide, readonly, ref, watch } from 'vue'
-import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue';
+	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
 
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const menuLeft = ref(0)

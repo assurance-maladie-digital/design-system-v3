@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref, computed, onMounted, onUnmounted } from 'vue'
-import HeaderLogo from './HeaderLogo/HeaderLogo.vue';
+	import HeaderLogo from './HeaderLogo/HeaderLogo.vue'
 
 	defineSlots<{
 		'default': () => void
