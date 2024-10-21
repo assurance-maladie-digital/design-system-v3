@@ -4,10 +4,13 @@
 
 <template>
 	<main class="ma-12">
-    <Logo />
-    <Logo hide-signature />
-    <Logo risque-pro />
-    <Logo avatar />
-    <Logo avatar size="small" />
+		<Logo />
+		<Logo hide-signature />
+		<Logo risque-pro />
+		<Logo avatar />
+		<Logo
+			avatar
+			size="small"
+		/>
 	</main>
 </template>
