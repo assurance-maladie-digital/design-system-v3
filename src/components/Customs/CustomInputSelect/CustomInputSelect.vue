@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { mdiMenuDown } from '@mdi/js'
 	import { ref, watch, computed, type PropType } from 'vue'
-	import { VIcon, VTextField, VList, VListItem, VListItemTitle } from 'vuetify/components'
+	import { VIcon, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
 	const props = defineProps({
 		modelValue: {
@@ -50,10 +50,12 @@
 	const toggleMenu = () => {
 		isOpen.value = !isOpen.value
 	}
+
 	const closeList = () => {
 		isOpen.value = false
 	}
-	const inputId = ref(`custom-select-${Math.random().toString(36).substring(7)}`)
+
+	const inputId = ref(`custom-input-select-${Math.random().toString(36).substring(7)}`)
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
@@ -75,6 +77,14 @@
 		return props.label
 	})
 
+	watch(() => props.modelValue, (newValue) => {
+		selectedItem.value = newValue
+	})
+
+	const buttonClass = computed(() => {
+		return props.outlined ? 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined' : 'text-color'
+	})
+
 	const formattedItems = computed(() => {
 		return props.items.map((item) => {
 			if (typeof item === 'string') {
@@ -83,43 +93,37 @@
 			return item
 		})
 	})
-
-	const isRequired = computed(() => {
-		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
-	})
-
-	watch(() => props.modelValue, (newValue) => {
-		selectedItem.value = newValue
-	})
 </script>
 
 <template>
-	<div class="d-block w-100">
-		<VTextField
-			:id="inputId"
-			ref="input"
-			v-model="selectedItemText"
+	<v-input
+		:id="inputId"
+		v-model="selectedItem"
+		:label="props.label"
+		:title="props.label"
+		role="menu"
+		:error-messages="errorMessages"
+		:required="required"
+	>
+		<div
+			ref="menu"
 			v-click-outside="closeList"
-			title="Sélectionnez une option"
-			color="primary"
+			:class="['custom-select', buttonClass, 'primary']"
+			role="menu"
 			tabindex="0"
-			readonly
-			:label="selectedItem ? label : ''"
-			:aria-label="selectedItem ? label : 'Sélectionnez une option'"
-			:error-messages="errorMessages"
-			:variant="outlined ? 'outlined' : 'underlined'"
-			:rules="isRequired ? ['Le champ est requis.'] : []"
-			class="custom-select"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
 		>
-			<VIcon>{{ mdiMenuDown }}</VIcon>
-		</VTextField>
+			<span>{{ selectedItemText }}</span>
+			<VIcon> {{ mdiMenuDown }}</VIcon>
+		</div>
 		<VList
 			v-if="isOpen"
 			class="v-list"
-			:style="`min-width: ${$refs.input?.$el.offsetWidth}px`"
+			:style="`max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
+			:aria-label="props.label"
+			:title="props.label"
 			@keydown.esc.prevent="isOpen = false"
 		>
 			<VListItem
@@ -137,37 +141,30 @@
 				</VListItemTitle>
 			</VListItem>
 		</VList>
-	</div>
+	</v-input>
 </template>
 
 <style scoped lang="scss">
 @import '../../../assets/tokens.scss';
 
-.custom-select {
-  display: flex;
-  flex-direction: column;
-}
-
-.v-field {
+.v-input {
+  cursor: pointer;
   position: relative;
-}
-.v-field--focused {
-  .v-icon {
-    transform: rotateX(180deg) translateY(50%);
-  }
 }
 
 .v-list {
   position: absolute;
-  left: inherit !important;
-  margin-top: -22px;
+  top: 36px;
+  width: 100%;
+  z-index: 1;
   background-color: white;
-  max-height: 300px;
+  min-width: fit-content;
+  max-width: 150px;
   padding: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
   overflow-y: auto;
-  z-index: 2;
+  max-height: 300px;
 }
 
 .v-list-item:hover {
@@ -178,11 +175,11 @@
   background-color: rgba(0, 0, 0, 0.08);
 }
 
-.v-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: $grey-darken-20;
+.v-btn {
+  color: $blue-base;
+}
+
+.text-color {
+  color: $blue-base;
 }
 </style>
