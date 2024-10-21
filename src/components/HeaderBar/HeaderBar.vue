@@ -19,32 +19,45 @@
 		})
 
 	const header = ref<HTMLElement | null>(null)
-	const headerStyle = computed<{
+	const headerSticky = ref<HTMLElement | null>(null)
+	const headerMinHeight = ref('auto')
+
+	const headerStyle = computed(() => {
+		return {
+			minHeight: headerMinHeight.value,
+		}
+	})
+
+	const headerStickyStyle = computed<{
 		position: 'fixed' | 'relative'
+		top: string
 	}>(() => {
 		return {
 			position: !scrollIsOnTop.value && props.sticky ? 'fixed' : 'relative',
+			top: !scrollIsOnTop.value && props.sticky ? '0' : 'auto',
 		}
 	})
 
 	const scrollIsOnTop = ref(true)
 	function handleScroll() {
 		scrollIsOnTop.value = window.scrollY < headerOffset.value
+		headerMinHeight.value = scrollIsOnTop.value ? 'auto' : `${header.value!.offsetHeight}px`
 	}
 
 	const headerOffset = ref(1)
-	function setHeaderOffset() {
-		headerOffset.value = header.value!.getBoundingClientRect().top
+	function handleResize() {
+		headerOffset.value = header.value!.getBoundingClientRect().top + window.scrollY
+		headerMinHeight.value = scrollIsOnTop.value ? 'auto' : `${header.value!.offsetHeight}px`
 	}
 	onMounted(() => {
-		setHeaderOffset()
+		handleResize()
 		window.addEventListener('scroll', handleScroll)
-		window.addEventListener('resize', setHeaderOffset)
+		window.addEventListener('resize', handleResize)
 	})
 
 	onUnmounted(() => {
 		window.removeEventListener('scroll', handleScroll)
-		window.removeEventListener('resize', setHeaderOffset)
+		window.removeEventListener('resize', handleResize)
 	})
 
 </script>
@@ -56,39 +69,45 @@
 		:style="headerStyle"
 	>
 		<div
-			v-if="$slots.prepend"
-			class="header-prepend"
+			ref="headerSticky"
+			class="sticky-header"
+			:style="headerStickyStyle"
 		>
-			<slot name="prepend" />
-		</div>
-		<div class="inner-header d-flex">
-			<!---->
-			<slot
-				name="menu"
-			/>
-
-			<!---->
-
-			<div class="header-logo">
-				<slot
-					name="logo"
-				>
-					<HeaderLogo />
-				</slot>
-			</div>
-
 			<div
-				v-if="$slots.headerSide"
-				class="header-side"
+				v-if="$slots.prepend"
+				class="header-prepend"
 			>
-				<slot name="header-side" />
+				<slot name="prepend" />
 			</div>
-		</div>
-		<div
-			v-if="$slots.append"
-			class="header-append"
-		>
-			<slot name="append" />
+			<div class="inner-header d-flex">
+				<!---->
+				<slot
+					name="menu"
+				/>
+
+				<!---->
+
+				<div class="header-logo">
+					<slot
+						name="logo"
+					>
+						<HeaderLogo />
+					</slot>
+				</div>
+
+				<div
+					v-if="$slots.headerSide"
+					class="header-side"
+				>
+					<slot name="header-side" />
+				</div>
+			</div>
+			<div
+				v-if="$slots.append"
+				class="header-append"
+			>
+				<slot name="append" />
+			</div>
 		</div>
 	</header>
 </template>
@@ -98,8 +117,14 @@
 .header {
 	top: 0;
 	width: 100%;
+}
+
+.sticky-header {
 	background-color: #fff;
 	border-bottom: solid 1px #ced9eb;
+	transition: top 0.3s;
+	width: 100%;
+	z-index: 1000;
 }
 
 .inner-header {

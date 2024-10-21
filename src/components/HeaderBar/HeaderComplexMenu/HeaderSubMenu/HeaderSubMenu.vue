@@ -1,45 +1,20 @@
 <script setup lang="ts">
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
-	import { inject, provide, readonly, ref, watch, type Ref } from 'vue'
+	import { inject, readonly, ref, type DeepReadonly, type Ref } from 'vue'
+	import useHandleSubMenus from '../useHandleSubMenus'
 	// import { useTheme, useDisplay } from 'vuetify'
-
-	/**
-	 * ! TODO: close the submenu of same level when another submenu is opened
-	 */
 
 	const menuOpen = ref(false)
 	// const theme = useTheme()
 	// const display = useDisplay()
 
-	const parentMenuOpen = inject<Readonly<Ref<boolean>> | undefined>('parentMenuOpen', undefined)
+	const registerSubMenu = inject<((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined>('registerSubMenu', undefined)
+	if (!registerSubMenu) throw new Error('The HeaderSubMenu component must be used inside a HeaderComplexMenu component')
+	registerSubMenu(menuOpen, () => {
+		menuOpen.value = false
+	})
 
-	if (parentMenuOpen === undefined) {
-		console.warn('The HeaderSubMenu component must be used inside a HeaderWrapper component')
-	}
-	else {
-		watch(parentMenuOpen, (newVal) => {
-			if (!newVal) {
-				menuOpen.value = false
-			}
-		})
-	}
-
-	const parentDefineChildMenuOpen = inject<((value: boolean) => void) | undefined>('defineChildMenuOpen', undefined)
-	if (parentDefineChildMenuOpen === undefined) {
-		console.warn('The HeaderSubMenu component must be used inside a HeaderWrapper component')
-	}
-	else {
-		watch(menuOpen, (newVal) => {
-			parentDefineChildMenuOpen(newVal)
-		})
-	}
-
-	const childMenuOpen = ref(false)
-	function defineChildMenuOpen(value: boolean) {
-		childMenuOpen.value = value
-	}
-	provide('parentMenuOpen', readonly(menuOpen))
-	provide('defineChildMenuOpen', defineChildMenuOpen)
+	const { haveOpenSubMenu } = useHandleSubMenus(readonly(menuOpen))
 </script>
 
 <template>
@@ -47,7 +22,7 @@
 		class="sub-menu"
 		:class="{
 			'sub-menu--open': menuOpen,
-			'sub-menu--child-open': childMenuOpen,
+			'sub-menu--child-open': haveOpenSubMenu,
 		}"
 	>
 		<button
@@ -111,6 +86,7 @@
 			background-color: white;
 		}
 
+		// If a submenu is open, the parent menu should not scroll, the child menu should
 		.sub-menu--child-open {
 			overflow-y: clip;
 		}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { computed, onMounted, onUnmounted, provide, readonly, ref, watch } from 'vue'
+	import { computed, onMounted, onUnmounted, readonly, ref, watch } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
+	import useHandleSubMenus from './useHandleSubMenus'
 
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const menuLeft = ref(0)
@@ -49,12 +50,7 @@
 		menuOpen.value = false
 	}
 
-	const childMenuOpen = ref(false)
-	function defineChildMenuOpen(value: boolean) {
-		childMenuOpen.value = value
-	}
-	provide('parentMenuOpen', readonly(menuOpen))
-	provide('defineChildMenuOpen', defineChildMenuOpen)
+	const { haveOpenSubMenu } = useHandleSubMenus(readonly(menuOpen))
 </script>
 
 <template>
@@ -80,7 +76,7 @@
 					id="header-menu-wrapper"
 					class="header-menu-wrapper"
 					:class="{
-						'header-menu-wrapper--submenu-open': childMenuOpen,
+						'header-menu-wrapper--submenu-open': haveOpenSubMenu,
 					}"
 				>
 					<div class="header-menu">
