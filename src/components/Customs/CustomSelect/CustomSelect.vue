@@ -50,7 +50,7 @@
 	const toggleMenu = () => {
 		isOpen.value = !isOpen.value
 	}
-	const closeMenu = () => {
+	const closeList = () => {
 		isOpen.value = false
 	}
 	const inputId = ref(`custom-select-${Math.random().toString(36).substring(7)}`)
@@ -99,7 +99,7 @@
 			:id="inputId"
 			ref="input"
 			v-model="selectedItemText"
-			v-click-outside="closeMenu"
+			v-click-outside="closeList"
 			title="Sélectionnez une option"
 			color="primary"
 			tabindex="0"

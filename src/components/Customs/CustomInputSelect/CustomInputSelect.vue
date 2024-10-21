@@ -50,6 +50,11 @@
 	const toggleMenu = () => {
 		isOpen.value = !isOpen.value
 	}
+
+	const closeList = () => {
+		isOpen.value = false
+	}
+
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
 		selectedItem.value = item
@@ -96,46 +101,50 @@
 		:error-messages="errorMessages"
 		:required="required"
 	>
-		<template #default>
-			<div
-				ref="menu"
-				:class="['custom-select', buttonClass, 'primary']"
-				role="menu"
-				tabindex="0"
-				style="position: relative;"
-				@click="toggleMenu"
-				@keydown.enter.prevent="toggleMenu"
-				@keydown.space.prevent="toggleMenu"
+		<div
+			ref="menu"
+			v-click-outside="closeList"
+			:class="['custom-select', buttonClass, 'primary']"
+			role="menu"
+			tabindex="0"
+			@click="toggleMenu"
+			@keydown.enter.prevent="toggleMenu"
+			@keydown.space.prevent="toggleMenu"
+		>
+			<span>{{ selectedItemText }}</span>
+			<VIcon> {{ mdiMenuDown }}</VIcon>
+		</div>
+		<VList
+			v-if="isOpen"
+			class="v-list"
+			:style="`max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
+			@keydown.esc.prevent="isOpen = false"
+		>
+			<VListItem
+				v-for="(item, index) in formattedItems"
+				:key="index"
+				:ref="'options-' + index"
+				role="option"
+				class="v-list-item"
+				:aria-selected="selectedItem === item"
+				:tabindex="index + 1"
+				@click="selectItem(item)"
 			>
-				<span>{{ selectedItemText }}</span>
-				<VIcon> {{ mdiMenuDown }}</VIcon>
-			</div>
-			<VList
-				v-if="isOpen"
-				class="v-list"
-				:style="`position: relative; left: -${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px; max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
-				@keydown.esc.prevent="isOpen = false"
-			>
-				<VListItem
-					v-for="(item, index) in formattedItems"
-					:key="index"
-					:ref="'options-' + index"
-					role="option"
-					class="v-list-item"
-					:aria-selected="selectedItem === item"
-					:tabindex="index + 1"
-					@click="selectItem(item)"
-				>
-					<VListItemTitle>
-						{{ getItemText(item) }}
-					</VListItemTitle>
-				</VListItem>
-			</VList>
-		</template>
+				<VListItemTitle>
+					{{ getItemText(item) }}
+				</VListItemTitle>
+			</VListItem>
+		</VList>
 	</v-input>
 </template>
+
 <style scoped lang="scss">
 @import '../../../assets/tokens.scss';
+
+.v-input {
+  cursor: pointer;
+  position: relative;
+}
 
 .v-list {
   position: absolute;
@@ -145,7 +154,7 @@
   background-color: white;
   min-width: fit-content;
   max-width: 150px;
-  padding: 8px 0;
+  padding: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
   overflow-y: auto;

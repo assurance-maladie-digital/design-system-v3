@@ -2,12 +2,14 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import CustomInputSelect from './CustomInputSelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
+import Alert from '../../Alert/Alert.vue'
 
 const meta = {
 	title: 'Components/CustomInputSelect',
 	component: CustomInputSelect,
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: ['selectedValue'] },
 	},
 	argTypes: {
 		selectedValue: { control: 'text' },
@@ -33,9 +35,12 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-				<CustomInputSelect
-					v-bind="args"
-				/>
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomInputSelect
+						v-bind="args"
+					/>
+				</div>
+				<br/><br/><br/><br/>
 			`,
 		}
 	},
@@ -55,10 +60,12 @@ export const Outlined: Story = {
 				return { args }
 			},
 			template: `
-				<CustomInputSelect
-					v-bind="args"
-					outlined
-				/>
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomInputSelect
+						v-bind="args"
+						outlined
+					/>
+				</div>
 			`,
 		}
 	},
@@ -83,7 +90,7 @@ export const withError: Story = {
 				return { args, errorMessages, triggerError }
 			},
 			template: `
-				<div>
+				<div class="d-flex flex-wrap align-center pa-4">
 					<CustomInputSelect
 						v-bind="args"
 						:error-messages="errorMessages"
@@ -111,7 +118,7 @@ export const withCustomKey: Story = {
 				return { args }
 			},
 			template: `
-				<div>
+				<div class="d-flex flex-wrap align-center pa-4">
 					<CustomInputSelect
 						v-bind="args"
 						outlined
@@ -121,4 +128,27 @@ export const withCustomKey: Story = {
 			`,
 		}
 	},
+}
+
+export const Info: Story = {
+	render: (args) => {
+		return {
+			components: { Alert },
+			setup() {
+				return { args }
+			},
+			template: `
+				<Alert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
+					<template #default>
+						<b>Format des items :</b>
+						<ul>
+							<li>- Si les items passés en props sont des objets, le composant les utilisera directement.</li>
+							<li>- Si les items sont un tableau de string, le composant les utilisera directement.</li>
+						</ul>
+					</template>
+				</Alert>
+			`,
+		}
+	},
+	tags: ['!dev'],
 }
