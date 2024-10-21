@@ -35,6 +35,7 @@
 		return {
 			position: !scrollIsOnTop.value && props.sticky ? 'fixed' : 'relative',
 			top: !scrollIsOnTop.value && props.sticky ? '0' : 'auto',
+			maxWidth: header.value ? `${header.value!.offsetWidth}px` : '100%',
 		}
 	})
 

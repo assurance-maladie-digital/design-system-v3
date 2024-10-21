@@ -84,6 +84,8 @@
 			height: 100%;
 			overflow-y: auto;
 			background-color: white;
+			padding-top: 40px;
+			z-index: 10;
 		}
 
 		// If a submenu is open, the parent menu should not scroll, the child menu should
@@ -91,14 +93,16 @@
 			overflow-y: clip;
 		}
 
+		.sub-menu--open > .sub-menu-btn {
+			padding: 0 16px 8px 40px;
+			border-bottom: 1px solid #e0e0e0;
+			color: #000;
+			background-color: transparent;
+		}
+
 		.sub-menu--open > .sub-menu-btn > :deep(.sub-menu-btn__icon) {
 			left: 10px;
 			right: auto;
-		}
-
-		.sub-menu--open > .sub-menu-btn {
-			padding: 0 16px 8px 40px;
-			color: #000;
 		}
 	}
 
