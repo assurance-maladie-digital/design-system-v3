@@ -1,0 +1,47 @@
+import {Controls, Canvas, Meta, Source, Story} from '@storybook/blocks';
+import * as CollapsibleListStories from './CollapsibleList.stories';
+
+<Meta of={CollapsibleListStories} />
+
+# CollapsibleList
+
+L’élément `CollapsibleList` est utilisé pour afficher des listes de liens. Cette liste affiche tout le contenu sur les grands écrans et une liste accordéon sur mobile.
+
+<Canvas of={CollapsibleListStories.Default}  />
+
+# API
+
+<Controls of={CollapsibleListStories.Default} />
+
+<Source dark code={`
+<script setup lang="ts">
+	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
+	import type { ListItem } from '@/components/CollapsibleList/types'
+
+	const remboursementItems = [
+		{
+			text: 'Remboursement',
+			href: '/remboursement',
+		},
+		{
+			text: 'Remboursement',
+			href: '/remboursement',
+		},
+		{
+			text: 'Remboursement',
+			href: '/remboursement',
+		},
+		{
+			text: 'Remboursement',
+			href: '/remboursement',
+		},
+	] as ListItem[]
+</script>
+
+<template>
+	<CollapsibleList
+		:items="remboursementItems"
+		list-title="Remboursement"
+	/>
+</template>
+`} />
