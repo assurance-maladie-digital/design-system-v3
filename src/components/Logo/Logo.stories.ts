@@ -1,6 +1,5 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import Logo from './Logo.vue'
-import { LogoSize } from '@/components/Logo/LogoSize'
 import { VSheet } from 'vuetify/components'
 
 const meta = {
@@ -16,7 +15,11 @@ const meta = {
 		ariaLabel: { control: 'text' },
 		avatar: { control: 'boolean' },
 		dark: { control: 'boolean' },
-		size: { control: 'text' },
+		size: {
+			options: ['normal', 'small', 'x-small'],
+			control: { type: 'select' },
+			default: 'normal',
+		},
 	},
 } satisfies Meta<typeof Logo>
 
@@ -32,7 +35,7 @@ export const Default: Story = {
 		ariaLabel: '',
 		avatar: false,
 		dark: false,
-		size: LogoSize['NORMAL'],
+		size: 'normal',
 	},
 	render: args => ({
 		components: { Logo, VSheet },
@@ -50,7 +53,7 @@ export const Default: Story = {
 	}),
 }
 
-export const X_SMALL: Story = {
+export const small: Story = {
 	args: {
 		hideSignature: false,
 		hideOrganism: false,
@@ -58,7 +61,7 @@ export const X_SMALL: Story = {
 		ariaLabel: '',
 		avatar: false,
 		dark: false,
-		size: LogoSize['X_SMALL'],
+		size: 'small',
 	},
 	render: args => ({
 		components: { Logo },
@@ -73,7 +76,7 @@ export const X_SMALL: Story = {
 	}),
 }
 
-export const SMALL: Story = {
+export const xSmall: Story = {
 	args: {
 		hideSignature: false,
 		hideOrganism: false,
@@ -81,7 +84,7 @@ export const SMALL: Story = {
 		ariaLabel: '',
 		avatar: false,
 		dark: false,
-		size: LogoSize['SMALL'],
+		size: 'x-small',
 	},
 	render: args => ({
 		components: { Logo },
@@ -104,7 +107,7 @@ export const hideSignature: Story = {
 		ariaLabel: '',
 		avatar: false,
 		dark: false,
-		size: LogoSize['NORMAL'],
+		size: 'normal',
 	},
 	render: args => ({
 		components: { Logo },
@@ -127,7 +130,7 @@ export const hideOrganism: Story = {
 		ariaLabel: '',
 		avatar: false,
 		dark: false,
-		size: LogoSize['NORMAL'],
+		size: 'normal',
 	},
 	render: args => ({
 		components: { Logo },
@@ -150,7 +153,7 @@ export const risquePro: Story = {
 		ariaLabel: '',
 		avatar: false,
 		dark: false,
-		size: LogoSize['NORMAL'],
+		size: 'normal',
 	},
 	render: args => ({
 		components: { Logo },
@@ -173,7 +176,7 @@ export const avatar: Story = {
 		ariaLabel: '',
 		avatar: true,
 		dark: false,
-		size: LogoSize['NORMAL'],
+		size: 'normal',
 	},
 	render: args => ({
 		components: { Logo },
@@ -196,7 +199,7 @@ export const dark: Story = {
 		ariaLabel: '',
 		avatar: false,
 		dark: true,
-		size: LogoSize['NORMAL'],
+		size: 'normal',
 	},
 	render: args => ({
 		components: { Logo, VSheet },

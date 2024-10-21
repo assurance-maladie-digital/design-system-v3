@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import Logo from '@/components/Logo/Logo.vue'
-	import { LogoSize } from '@/components/Logo/LogoSize'
 </script>
 
 <template>
@@ -12,7 +11,7 @@
 		<Logo avatar />
 		<Logo
 			avatar
-			:size="LogoSize['SMALL']"
+			size="small"
 		/>
 	</main>
 </template>
