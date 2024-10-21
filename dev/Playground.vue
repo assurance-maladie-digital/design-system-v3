@@ -7,6 +7,7 @@
 	<main class="ma-12">
 		<Logo />
 		<Logo hide-signature />
+		<Logo hide-organism />
 		<Logo risque-pro />
 		<Logo avatar />
 		<Logo

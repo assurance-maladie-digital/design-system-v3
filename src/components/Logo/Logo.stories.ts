@@ -1,10 +1,14 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import Logo from './Logo.vue'
 import { LogoSize } from '@/components/Logo/LogoSize'
+import { VSheet } from 'vuetify/components'
 
 const meta = {
 	title: 'Components/Logo',
 	component: Logo,
+	parameters: {
+		layout: 'fullscreen',
+	},
 	argTypes: {
 		hideSignature: { control: 'boolean' },
 		hideOrganism: { control: 'boolean' },
@@ -31,11 +35,18 @@ export const Default: Story = {
 		size: LogoSize['NORMAL'],
 	},
 	render: args => ({
-		components: { Logo },
+		components: { Logo, VSheet },
 		setup() {
 			return { args }
 		},
-		template: '<Logo v-bind="args" />',
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<VSheet v-if="args.dark" color="primary" class="pa-0">
+					<Logo v-bind="args" />
+				</VSheet>
+				<Logo v-else v-bind="args" />
+			</div>
+		`,
 	}),
 }
 
@@ -54,7 +65,11 @@ export const X_SMALL: Story = {
 		setup() {
 			return { args }
 		},
-		template: '<Logo v-bind="args" />',
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<Logo v-bind="args" />
+			</div>
+		`,
 	}),
 }
 
@@ -73,7 +88,11 @@ export const SMALL: Story = {
 		setup() {
 			return { args }
 		},
-		template: '<Logo v-bind="args" />',
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<Logo v-bind="args" />
+			</div>
+		`,
 	}),
 }
 
@@ -92,7 +111,34 @@ export const hideSignature: Story = {
 		setup() {
 			return { args }
 		},
-		template: '<Logo v-bind="args" />',
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<Logo v-bind="args" />
+			</div>
+		`,
+	}),
+}
+
+export const hideOrganism: Story = {
+	args: {
+		hideSignature: false,
+		hideOrganism: true,
+		risquePro: false,
+		ariaLabel: '',
+		avatar: false,
+		dark: false,
+		size: LogoSize['NORMAL'],
+	},
+	render: args => ({
+		components: { Logo },
+		setup() {
+			return { args }
+		},
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<Logo v-bind="args" />
+			</div>
+		`,
 	}),
 }
 
@@ -111,7 +157,11 @@ export const risquePro: Story = {
 		setup() {
 			return { args }
 		},
-		template: '<Logo v-bind="args" />',
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<Logo v-bind="args" />
+			</div>
+		`,
 	}),
 }
 
@@ -130,7 +180,11 @@ export const avatar: Story = {
 		setup() {
 			return { args }
 		},
-		template: '<Logo v-bind="args" />',
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<Logo v-bind="args" />
+			</div>
+		`,
 	}),
 }
 
@@ -145,10 +199,16 @@ export const dark: Story = {
 		size: LogoSize['NORMAL'],
 	},
 	render: args => ({
-		components: { Logo },
+		components: { Logo, VSheet },
 		setup() {
 			return { args }
 		},
-		template: ' <VSheet v-if="args.dark" color="primary" class="pa-4"><Logo v-bind="args" /></VSheet>',
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<VSheet v-if="args.dark" color="primary" class="pa-4">
+					<Logo v-bind="args" />
+				</VSheet>
+			</div>
+		`,
 	}),
 }

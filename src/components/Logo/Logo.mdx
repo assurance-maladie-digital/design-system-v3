@@ -1,17 +1,14 @@
-import { Meta } from '@storybook/addon-docs';
-import { Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, Controls, Source } from '@storybook/blocks';
 import * as LogoStories from './Logo.stories.ts';
 import Logo from './Logo.vue';
 
 <Meta title="Components/Logo" component={Logo} />
 
-# Logo Component
+# Logo
 
 Le composant `Logo` est utilisé pour afficher le logo de l'application avec différentes options de personnalisation.
 
-
 <Canvas of={LogoStories.Default} />
-
 
 # API
 
@@ -19,7 +16,7 @@ Le composant `Logo` est utilisé pour afficher le logo de l'application avec dif
 
 ## Utilisation
 
-```vue
+<Source dark code={`
 <script setup lang='ts'>
     import Logo from '@/components/Logo/Logo.vue'
 	import { LogoSize } from '@/components/Logo/LogoSize'
@@ -27,3 +24,4 @@ Le composant `Logo` est utilisé pour afficher le logo de l'application avec dif
 <template>
   <Logo :hideSignature="false" :hideOrganism="false" :risquePro="false" ariaLabel="" :avatar="false" :dark="false" :size="LogoSize['NORMAL']" />
 </template>
+`} />
