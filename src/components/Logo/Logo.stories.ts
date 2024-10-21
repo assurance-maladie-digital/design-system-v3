@@ -1,8 +1,8 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import Logo from './Logo.vue'
-import meta from '@/components/DownloadBtn/DownloadBtn.stories'
 import { LogoSize } from '@/components/Logo/LogoSize'
-export default {
+
+const meta = {
 	title: 'Components/Logo',
 	component: Logo,
 	argTypes: {
@@ -14,7 +14,10 @@ export default {
 		dark: { control: 'boolean' },
 		size: { control: 'text' },
 	},
-} as Meta
+} satisfies Meta<typeof Logo>
+
+export default meta
+
 
 type Story = StoryObj<typeof meta>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { PropType, ref, computed } from 'vue'
+	import { type PropType, ref, computed } from 'vue'
 
 	import { locales } from './locales'
 

@@ -5,7 +5,7 @@ import { describe, it, expect } from 'vitest'
 import { cnamLightTheme } from '@/designTokens/tokens/cnam/cnamLightTheme'
 import { locales } from '@/components/Logo/locales'
 import { LogoSize } from '@/components/Logo/LogoSize'
-import { logoDimensionsMapping } from '@/components/Logo/LogoDimensionsMapping'
+import { logoDimensionsMapping } from '@/components/Logo/logoDimensionsMapping'
 
 describe('Logo.vue', () => {
 	it('renders correctly with default props', () => {
