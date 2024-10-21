@@ -55,6 +55,8 @@
 		isOpen.value = false
 	}
 
+	const inputId = ref(`custom-input-select-${Math.random().toString(36).substring(7)}`)
+
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
 		selectedItem.value = item
@@ -95,8 +97,10 @@
 
 <template>
 	<v-input
+		:id="inputId"
 		v-model="selectedItem"
 		:label="props.label"
+		:title="props.label"
 		role="menu"
 		:error-messages="errorMessages"
 		:required="required"
@@ -118,6 +122,8 @@
 			v-if="isOpen"
 			class="v-list"
 			:style="`max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
+			:aria-label="props.label"
+			:title="props.label"
 			@keydown.esc.prevent="isOpen = false"
 		>
 			<VListItem
@@ -176,5 +182,4 @@
 .text-color {
   color: $blue-base;
 }
-
 </style>
