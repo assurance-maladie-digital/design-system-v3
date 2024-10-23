@@ -33,12 +33,6 @@
 			hideWhenDown: false,
 		})
 
-	const header = ref<HTMLElement | null>(null)
-	const headerSticky = ref<HTMLElement | null>(null)
-	const headerMinHeight = ref('auto')
-	const { scrollDirection } = useScrollDirection()
-	const { isDesktop } = useHeaderResponsiveMode()
-
 	function registerHeaderMenu(childMenuStatus: Ref<boolean>) {
 		watch(childMenuStatus, (newVal) => {
 			menuOpen.value = newVal
@@ -46,52 +40,80 @@
 	}
 	provide('registerHeaderMenu', registerHeaderMenu)
 
+	const header = ref<HTMLElement | null>(null)
+	const headerSticky = ref<HTMLElement | null>(null)
+
+	/** The height of the header to reserve */
+	const headerMinHeight = ref('auto')
+	/** The position of the header when static from the top of the page */
+	const headerOffset = ref(0)
+	/** Is the top of the header visible in the viewport when static */
+	const isTopOfHeaderVisible = ref(true)
+	/** Is the header out of the viewport */
+	const isScrollBelowHeader = ref(false)
+	/** Activate the hide animation */
+	const shouldAnimateHideHeader = ref(false)
+
+	function handleScroll() {
+		headerOffset.value = header.value!.getBoundingClientRect().top + window.scrollY
+		headerMinHeight.value = isTopOfHeaderVisible.value ? 'auto' : `${header.value!.offsetHeight}px`
+		isTopOfHeaderVisible.value = window.scrollY <= headerOffset.value
+		isScrollBelowHeader.value = window.scrollY > headerOffset.value + (header.value!.getBoundingClientRect().height)
+
+		// activate the header animation with a delay to avoid a flicker effect when the user scroll down
+		shouldAnimateHideHeader.value = window.scrollY > headerOffset.value + (header.value!.getBoundingClientRect().height * 2)
+	}
+
+	onMounted(() => {
+		handleScroll()
+		window.addEventListener('scroll', handleScroll)
+		window.addEventListener('resize', handleScroll)
+	})
+
+	onUnmounted(() => {
+		window.removeEventListener('scroll', handleScroll)
+		window.removeEventListener('resize', handleScroll)
+	})
+
 	const headerStyle = computed(() => {
 		return {
 			minHeight: headerMinHeight.value,
 		}
 	})
 
-	const headerStickyStyle = computed<{
-		position: 'fixed' | 'relative'
-		top: '0' | 'auto'
-		transform: 'none' | 'translateY(-100%)'
-	}>(() => {
-		const isHeaderHided = (
+	const { scrollDirection } = useScrollDirection()
+	const { isDesktop } = useHeaderResponsiveMode()
+
+	const headerStickyStyle = computed<Record<string, string | undefined>>(() => {
+		if (
 			props.hideWhenDown
 			&& !isDesktop.value
-			&& scrollDirection.value === 'bottom'
-			&& !scrollIsOnTop.value
 			&& !menuOpen.value
-		)
+		) {
+			const staticHeader = (
+				(scrollDirection.value === '' && isTopOfHeaderVisible.value)
+				|| (scrollDirection.value === 'bottom' && !isScrollBelowHeader.value)
+				|| (scrollDirection.value === 'top' && isTopOfHeaderVisible.value)
+			)
+			const hide = (
+				scrollDirection.value === 'bottom'
+				&& isScrollBelowHeader.value
+			)
+			return {
+				position: staticHeader ? 'relative' : 'fixed',
+				top: staticHeader ? 'auto' : '0',
+				transform: hide ? 'translateY(-100%)' : 'none',
+				transition: shouldAnimateHideHeader.value ? 'transform 0.3s ease' : 'none',
+			}
+		}
 
 		return {
-			position: !scrollIsOnTop.value && props.sticky ? 'fixed' : 'relative',
-			top: !scrollIsOnTop.value && props.sticky ? '0' : 'auto',
-			transform: isHeaderHided ? 'translateY(-100%)' : 'none',
+			position: !isTopOfHeaderVisible.value && props.sticky ? 'fixed' : 'relative',
+			top: !isTopOfHeaderVisible.value && props.sticky ? '0' : 'auto',
+			transform: 'none',
+			transition: 'none',
+			backgroundColor: 'red',
 		}
-	})
-
-	const scrollIsOnTop = ref(true)
-	function handleScroll() {
-		scrollIsOnTop.value = window.scrollY < headerOffset.value
-		headerMinHeight.value = scrollIsOnTop.value ? 'auto' : `${header.value!.offsetHeight}px`
-	}
-
-	const headerOffset = ref(1)
-	function handleResize() {
-		headerOffset.value = header.value!.getBoundingClientRect().top + window.scrollY
-		headerMinHeight.value = scrollIsOnTop.value ? 'auto' : `${header.value!.offsetHeight}px`
-	}
-	onMounted(() => {
-		handleResize()
-		window.addEventListener('scroll', handleScroll)
-		window.addEventListener('resize', handleResize)
-	})
-
-	onUnmounted(() => {
-		window.removeEventListener('scroll', handleScroll)
-		window.removeEventListener('resize', handleResize)
 	})
 </script>
 
@@ -116,13 +138,10 @@
 				/>
 			</div>
 			<div class="inner-header d-flex">
-				<!---->
 				<slot
 					name="menu"
 					:menu-open
 				/>
-
-				<!---->
 
 				<div class="header-logo">
 					<slot
@@ -170,11 +189,9 @@
 .sticky-header {
 	background-color: #fff;
 	border-bottom: solid 1px #ced9eb;
-	transition: top 0.3s;
 	width: 100%;
 	max-width: $header-max-width;
 	z-index: 1000;
-	transition: transform 0.2s ease;
 }
 
 .inner-header {
