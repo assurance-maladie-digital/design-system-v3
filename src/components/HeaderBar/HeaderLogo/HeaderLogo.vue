@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-	import { useDisplay, useTheme } from 'vuetify'
+	import { useTheme } from 'vuetify'
 	import Logo from './logos/Logo.vue'
 	import LogoMobile from './logos/Logo-mobile.vue'
+	import useHeaderResponsiveMode from '../useHeaderResponsiveMode'
 
 	withDefaults(defineProps<{
 		ariaLabel?: string
@@ -19,13 +20,13 @@
 
 	const theme = useTheme()
 	const primary = theme.current.value.colors.primary
-	const display = useDisplay()
+	const { isDesktop } = useHeaderResponsiveMode()
 </script>
 
 <template>
 	<div class="logo">
 		<Logo
-			v-if="display.mdAndUp.value"
+			v-if="isDesktop"
 			:aria-label
 		/>
 		<LogoMobile
@@ -66,7 +67,9 @@
 	</div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@use '../consts' as *;
+
 .logo {
 	display: flex;
 	height: 52px;
@@ -90,7 +93,7 @@
 	font-weight: 400;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: $header-breakpoint) {
 	.service-title {
 		font-size: 1.125rem;
 	}

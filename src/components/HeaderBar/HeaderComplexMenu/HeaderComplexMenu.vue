@@ -1,8 +1,9 @@
 <script setup lang="ts">
-	import { computed, onMounted, onUnmounted, readonly, ref, watch } from 'vue'
+	import { computed, inject, onMounted, onUnmounted, readonly, ref, watch, type Ref } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
 	import useHandleSubMenus from './useHandleSubMenus'
 
+	const headerMenuWrapper = ref<HTMLElement | null>(null)
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const menuLeft = ref(0)
 	const menuTop = ref(0)
@@ -40,10 +41,9 @@
 		if (!menuOpen.value) return
 
 		// do not close menu if click is inside the menu
-		const menu = document.getElementById('header-menu-wrapper')
 		let walkElement = event.target as HTMLElement | null
 		while (walkElement && walkElement !== document.body) {
-			if (walkElement === menu) return
+			if (walkElement === headerMenuWrapper.value) return
 			walkElement = walkElement.parentElement
 		}
 
@@ -51,6 +51,9 @@
 	}
 
 	const { haveOpenSubMenu } = useHandleSubMenus(readonly(menuOpen))
+
+	const registerHeaderMenu = inject<(menuOpen: Ref<boolean>) => void>('registerHeaderMenu')
+	if (registerHeaderMenu) registerHeaderMenu(menuOpen)
 </script>
 
 <template>
@@ -74,6 +77,7 @@
 				<HeaderMenuBtn v-model="menuOpen" />
 				<nav
 					id="header-menu-wrapper"
+					ref="headerMenuWrapper"
 					class="header-menu-wrapper"
 					:class="{
 						'header-menu-wrapper--submenu-open': haveOpenSubMenu,
@@ -89,7 +93,8 @@
 </template>
 
 <style lang="scss" scoped>
-$header-height: 82px;
+@use '@/assets/tokens.scss' as *;
+@use '../consts' as *;
 
 .overlay {
 	inset: 0;
@@ -98,19 +103,9 @@ $header-height: 82px;
 	background-color: rgba(3, 16, 37, .5);
 }
 
-.header-menu-btn {
-	text-transform: Capitalize;
-	height: 82px;
-	width: 77px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-}
-
 .menu-wrapper {
 	height: 100dvh;
-	background-color: #fff;
+	background-color: $neutral-white;
 	display: flex;
 	flex-direction: column;
 }
@@ -126,28 +121,23 @@ $header-height: 82px;
 	overflow: clip;
 }
 
-@media screen and (min-width: 900px) {
-	.header-menu-btn {
-		height: 95px;
-		width: 95px;
-	}
-
+@media screen and (min-width: $header-breakpoint) {
 	.menu-wrapper {
 		position: absolute;
 		background-color: transparent;
 	}
 
 	.header-menu-wrapper {
-		height: 70vh;
-		width: 350px;
+		height: $menu-height;
+		width: $menu-width;
 		overflow: visible;
 	}
 
 	.header-menu {
-		background-color: #fff;
+		background-color: $neutral-white;
 		overflow-y : auto;
 		overflow-x: hidden;
-		height: 70vh;
+		height: $menu-height;
 	}
 }
 </style>

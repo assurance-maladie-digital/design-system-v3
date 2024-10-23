@@ -2,11 +2,8 @@
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 	import { inject, readonly, ref, type DeepReadonly, type Ref } from 'vue'
 	import useHandleSubMenus from '../useHandleSubMenus'
-	// import { useTheme, useDisplay } from 'vuetify'
 
 	const menuOpen = ref(false)
-	// const theme = useTheme()
-	// const display = useDisplay()
 
 	const registerSubMenu = inject<((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined>('registerSubMenu', undefined)
 	if (!registerSubMenu) throw new Error('The HeaderSubMenu component must be used inside a HeaderComplexMenu component')
@@ -51,9 +48,7 @@
 
 <style lang="scss" scoped>
 	@use "@/assets/tokens.scss" as *;
-
-	$menu-width: 350px;
-	$menu-mobile-breakpoint: 900px;
+	@use '../../consts' as *;
 
 	.sub-menu-btn {
 		display: flex;
@@ -75,7 +70,7 @@
 		right: 20px;
 	}
 
-	@media screen and (max-width: ($menu-mobile-breakpoint - 1)) {
+	@media screen and (max-width: ($header-breakpoint - 1)) {
 		.sub-menu--open {
 			position: absolute;
 			left: 0;
@@ -83,7 +78,7 @@
 			width: 100%;
 			height: 100%;
 			overflow-y: auto;
-			background-color: white;
+			background-color: $neutral-white;
 			padding-top: 40px;
 			z-index: 10;
 		}
@@ -95,7 +90,7 @@
 
 		.sub-menu--open > .sub-menu-btn {
 			padding: 0 16px 8px 40px;
-			border-bottom: 1px solid #e0e0e0;
+			border-bottom: 1px solid $menu-border-color;
 			color: #000;
 			background-color: transparent;
 		}
@@ -106,7 +101,7 @@
 		}
 	}
 
-	@media screen and (min-width: $menu-mobile-breakpoint) {
+	@media screen and (min-width: $header-breakpoint) {
 		.sub-menu-btn {
 			position: relative;
 		}
@@ -124,10 +119,10 @@
 
 		.sub-menu--open .sub-menu-content {
 			width: $menu-width + 1px;
-			height: 70vh;
+			height: $menu-height;
 			background: #f9f9f9;
-			border-left: 1px solid #e0e0e0;
-			overflow-y : auto;
+			border-left: 1px solid $menu-border-color;
+			overflow-y: auto;
 			overflow-x: hidden;
 
 			> .sub-menu--open .sub-menu-content {

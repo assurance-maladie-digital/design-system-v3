@@ -20,6 +20,7 @@
 
 <style lang="scss" scoped>
 @use "@/assets/tokens.scss" as *;
+@use "../../consts.scss" as menu;
 
 .header-menu-section {
 	list-style-type: none;
@@ -29,7 +30,7 @@
 
 .header-menu-section-title {
 	padding: 40px 16px 8px 20px;
-	border-bottom: 1px solid #e0e0e0;
+	border-bottom: 1px solid menu.$menu-border-color;
 	font-size: 1.1rem;
 	margin-bottom: 8px;
 	color: #212529;
