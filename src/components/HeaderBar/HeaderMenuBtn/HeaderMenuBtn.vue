@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, type CSSProperties } from 'vue'
 	import { useTheme } from 'vuetify'
 	import { mdiClose, mdiMenu } from '@mdi/js'
 
@@ -7,7 +7,7 @@
 
 	const model = defineModel<boolean>()
 
-	const btnStyle = computed(() => ({
+	const btnStyle = computed<CSSProperties>(() => ({
 		backgroundColor: model.value ? '#fff' : theme.current.value.colors.primary,
 		color: model.value ? theme.current.value.colors.primary : '#fff',
 	}))

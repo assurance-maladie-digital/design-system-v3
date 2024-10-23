@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	import { ref, computed, onMounted, onUnmounted, provide, watch, type Ref } from 'vue'
+	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type Ref } from 'vue'
 	import HeaderLogo from './HeaderLogo/HeaderLogo.vue'
-	import useScrollDirection from './useScrollDirection'
 	import useHeaderResponsiveMode from './useHeaderResponsiveMode'
+	import useScrollDirection from './useScrollDirection'
 
 	const menuOpen = ref<boolean>()
 
@@ -75,7 +75,7 @@
 		window.removeEventListener('resize', handleScroll)
 	})
 
-	const headerStyle = computed(() => {
+	const headerStyle = computed<CSSProperties>(() => {
 		return {
 			minHeight: headerMinHeight.value,
 		}
@@ -84,7 +84,7 @@
 	const { scrollDirection } = useScrollDirection()
 	const { isDesktop } = useHeaderResponsiveMode()
 
-	const headerStickyStyle = computed<Record<string, string | undefined>>(() => {
+	const headerStickyStyle = computed<CSSProperties>(() => {
 		if (
 			props.hideWhenDown
 			&& !isDesktop.value
@@ -112,7 +112,6 @@
 			top: !isTopOfHeaderVisible.value && props.sticky ? '0' : 'auto',
 			transform: 'none',
 			transition: 'none',
-			backgroundColor: 'red',
 		}
 	})
 </script>
@@ -151,9 +150,8 @@
 						<HeaderLogo />
 					</slot>
 				</div>
-
 				<div
-					v-if="$slots.headerSide"
+					v-if="$slots['header-side']"
 					class="header-side"
 				>
 					<slot
@@ -176,6 +174,7 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/tokens.scss' as *;
 @use './consts' as *;
 
 .header {
@@ -187,8 +186,8 @@
 }
 
 .sticky-header {
-	background-color: #fff;
-	border-bottom: solid 1px #ced9eb;
+	background-color: $neutral-white;
+	border-bottom: solid 1px $blue-lighten-80;
 	width: 100%;
 	max-width: $header-max-width;
 	z-index: 1000;
