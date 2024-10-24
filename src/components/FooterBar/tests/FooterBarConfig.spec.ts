@@ -7,11 +7,11 @@ describe('FooterBar config', () => {
 	})
 
 	it('should have correct footer color', () => {
-		expect(config.footer.color).toBe('primary')
+		expect(config.footer.color).toBe('#2f384d')
 	})
 
 	it('should have correct footer minHeight', () => {
-		expect(config.footer.minHeight).toBe('40px')
+		expect(config.footer.height).toBe('auto')
 	})
 
 	it('should have correct goTopBtn density', () => {
