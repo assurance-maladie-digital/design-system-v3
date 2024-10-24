@@ -5,7 +5,6 @@ export const config = {
 	footer: {
 		elevation: 3,
 		color: cnamColorsTokens.parma.darken60,
-		colorLight: cnamColorsTokens.white,
 		height: 'auto',
 	},
 	goTopBtn: {

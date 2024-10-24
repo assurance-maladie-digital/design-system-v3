@@ -131,7 +131,7 @@
 			...options.footer,
 			...$attrs,
 		}"
-		:color="props.light ? options.footer.colorLight : options.footer.color"
+		:color="props.light ? 'white' : options.footer.color"
 		class="vd-footer-bar flex-column align-stretch pa-3 w-100"
 		:class="{
 			'py-4 py-sm-7 px-4 px-md-14': extendedMode,
