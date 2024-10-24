@@ -10,6 +10,8 @@ import { cnamLightTheme, cnamContextualTokens, cnamColorsTokens } from '../src/d
 import { createFlattenTheme } from '@/designTokens/utils'
 // import { bootstrapLightTheme } from '../designTokens/tokens/bootstrap/bootstrapLightTheme'
 
+import { router } from './router'
+
 const vuetify = createVuetify({
 	components,
 	directives,
@@ -39,4 +41,5 @@ const vuetify = createVuetify({
 
 createApp(Playground)
 	.use(vuetify)
+	.use(router)
 	.mount('#app')
