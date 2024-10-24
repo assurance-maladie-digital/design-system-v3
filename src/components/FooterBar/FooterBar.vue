@@ -131,9 +131,11 @@
 			...options.footer,
 			...$attrs,
 		}"
+		:color="props.light ? options.footer.colorLight : options.footer.color"
 		class="vd-footer-bar flex-column align-stretch pa-3 w-100"
 		:class="{
 			'py-4 py-sm-7 px-4 px-md-14': extendedMode,
+			'v-theme--light': props.light,
 			'v-theme--dark': !props.light,
 		}"
 		role="contentinfo"
@@ -237,10 +239,10 @@ a {
 // Fix footer bar height in SK
 .v-footer {
   flex-grow: 0 !important;
+  justify-content: center;
 }
 .vd-footer-bar :deep() {
-  background-color: white !important;
-  .vd-footer-bar-links {
+  .vd-footer-bar-links a {
     color: rgba(0, 0, 0, .87);
   }
   p,
@@ -276,8 +278,7 @@ a {
 }
 // Use deep selector to style user content as well
 .vd-footer-bar.v-theme--dark :deep() {
-  background-color: $parma-darken-60 !important;
-  .vd-footer-bar-links {
+  .vd-footer-bar-links a {
     color: $white;
   }
   p,

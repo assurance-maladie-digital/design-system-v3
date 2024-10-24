@@ -3,6 +3,7 @@
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
 	import { computed } from 'vue'
 	import { useDisplay } from 'vuetify'
+	import { cnamColorsTokens } from '@/designTokens'
 
 	const docProps = {
 		sitemapRoute: '/',
@@ -50,8 +51,8 @@
 	const vuetifyOptions = {
 		footer: {
 			elevation: 6,
-			color: 'secondary',
-			minHeight: '60px',
+			color: cnamColorsTokens.grey.darken40,
+			height: 70,
 		},
 		goTopBtn: {
 			class: 'd-none',
@@ -68,6 +69,8 @@
 		</div>
 		<FooterBar
 			v-bind="docProps"
+			hide-sitemap-link
+			a11y-compliance="partially-compliant"
 			:vuetify-options="vuetifyOptions"
 		/>
 
