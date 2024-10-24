@@ -1,9 +1,25 @@
-<script setup lang="ts">
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import * as FooterBarStories from './FooterBar.stories.ts';
+
+<Meta of={FooterBarStories} />
+
+# FooterBar
+
+Le composant `FooterBar` est utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.
+
+<Canvas of={FooterBarStories.Default} />
+
+# Api
+
+<Controls of={FooterBarStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+    <script setup lang="ts">
 	import FooterBar from '@/components/FooterBar/FooterBar.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
-	import { computed } from 'vue'
-	import { useDisplay } from 'vuetify'
-	import { cnamColorsTokens } from '@/designTokens'
+	import { getCurrentInstance, computed } from 'vue'
 
 	const docProps = {
 		sitemapRoute: '/',
@@ -27,6 +43,7 @@
 			href: 'https://www.ameli.fr/assure/remboursements/etre-bien-rembourse',
 		},
 	]
+
 	const healthItems = [
 		{
 			text: 'Mon espace santé',
@@ -45,19 +62,12 @@
 			href: 'https://www.ameli.fr/assure/sante/telesante',
 		},
 	]
-	const { smAndDown } = useDisplay()
-	const isMobile = computed(() => smAndDown.value)
 
-	const vuetifyOptions = {
-		footer: {
-			elevation: 6,
-			color: cnamColorsTokens.grey.darken40,
-			height: 70,
-		},
-		goTopBtn: {
-			class: 'd-none',
-		},
-	}
+	const isXs = computed(() => {
+		const { proxy } = getCurrentInstance()!
+		return proxy?.$vuetify.display.name === 'xs'
+	})
+
 </script>
 
 <template>
@@ -69,37 +79,10 @@
 		</div>
 		<FooterBar
 			v-bind="docProps"
-			hide-sitemap-link
-			a11y-compliance="partially-compliant"
-			:vuetify-options="vuetifyOptions"
-		/>
-
-		<br><br>
-
-		<FooterBar v-bind="docProps">
-			<p class="text--secondary mb-0">
-				Contenu supplémentaire.
-			</p>
-		</FooterBar>
-
-		<br><br>
-
-		<FooterBar
-			v-bind="docProps"
-			hide-sitemap-link
-		>
-			<p class="text--secondary mb-0">
-				Contenu supplémentaire.
-			</p>
-		</FooterBar>
-
-		<br><br>
-
-		<FooterBar
-			v-bind="docProps"
+			version="v0.1.1"
 		>
 			<VRow
-				:no-gutters="isMobile"
+				:no-gutters="isXs"
 				class="max-width-none"
 			>
 				<VCol
@@ -125,17 +108,6 @@
 				</VCol>
 			</VRow>
 		</FooterBar>
-
-		<br><br>
-
-		<FooterBar
-			v-bind="docProps"
-			light
-		>
-			<p class="text--secondary mb-0">
-				Contenu supplémentaire.
-			</p>
-		</FooterBar>
 	</main>
 </template>
 
@@ -144,3 +116,4 @@
   min-height: 1000px;
 }
 </style>
+    `} />
