@@ -50,11 +50,10 @@
 		return proxy?.$vuetify.display.name === 'xs'
 	})
 
-	const footerOptions = {
+	const vuetifyOptions = {
 		footer: {
-			elevation: 3,
-			color: 'red',
-			minHeight: '999990px',
+      elevation:4,
+			minHeight: '90px',
 		},
 	}
 
@@ -67,7 +66,10 @@
 				Scroll to see footer and test scroll to top
 			</h2>
 		</div>
-		<FooterBar v-bind="docProps" :vuetify-options="footerOptions" />
+		<FooterBar
+			v-bind="docProps"
+			:vuetify-options="vuetifyOptions"
+		/>
 
 		<br><br>
 

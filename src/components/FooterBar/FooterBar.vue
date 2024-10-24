@@ -14,7 +14,7 @@
 	import { config } from './config'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 
-	export interface Props {
+	const props = withDefaults(defineProps<CustomizableOptions & {
 		a11yCompliance?: string
 		linkItems?: LinkItem[] | null
 		sitemapRoute?: RouteLocationRaw
@@ -31,9 +31,7 @@
 		hideLogo?: boolean
 		hideSocialMediaLinks?: boolean
 		socialMediaLinks?: SocialMediaLink[]
-	}
-
-	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
+	}>(), {
 		a11yCompliance: 'non-compliant',
 		linkItems: null,
 		sitemapRoute: () => ({ name: 'sitemap' }),
@@ -163,7 +161,7 @@
 
 			<VBtn
 				id="scroll-btn"
-				v-bind="options.goTopBtn"
+				v-bind="{...options.goTopBtn}"
 				:aria-label="locales.goTopBtnLabel"
 				@click="scrollToTop"
 			>
