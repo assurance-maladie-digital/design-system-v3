@@ -31,6 +31,7 @@
 		hideLogo?: boolean
 		hideSocialMediaLinks?: boolean
 		socialMediaLinks?: SocialMediaLink[]
+		light?: boolean
 	}>(), {
 		a11yCompliance: 'non-compliant',
 		linkItems: null,
@@ -48,6 +49,7 @@
 		hideLogo: false,
 		hideSocialMediaLinks: false,
 		socialMediaLinks: () => defaultSocialMediaLinks,
+		light: false,
 	})
 
 	const arrowTopIcon = mdiArrowUp
@@ -129,11 +131,12 @@
 			...options.footer,
 			...$attrs,
 		}"
+		class="vd-footer-bar flex-column align-stretch pa-3 w-100"
 		:class="{
 			'py-4 py-sm-7 px-4 px-md-14': extendedMode,
+			'v-theme--dark': !props.light,
 		}"
 		role="contentinfo"
-		class="vd-footer-bar flex-column align-stretch pa-3 w-100 v-theme--dark"
 	>
 		<div
 			v-if="extendedMode"
@@ -145,6 +148,7 @@
 						v-if="!props.hideLogo"
 						:size="logoSize"
 						:class="{ 'mb-2 mb-sm-0': !props.hideSocialMediaLinks }"
+						class="logo"
 					/>
 				</slot>
 
@@ -154,7 +158,7 @@
 					<SocialMediaLinks
 						v-if="!props.hideSocialMediaLinks"
 						:links="props.socialMediaLinks"
-						class="mr-8"
+						class="mr-8 social"
 					/>
 				</slot>
 			</div>
@@ -165,7 +169,7 @@
 				:aria-label="locales.goTopBtnLabel"
 				@click="scrollToTop"
 			>
-				<VIcon>
+				<VIcon class="scroll">
 					{{ arrowTopIcon }}
 				</VIcon>
 			</VBtn>
@@ -227,12 +231,6 @@ $white: #fff;
 a {
   cursor: pointer;
 }
-:deep() .text-primary {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-:deep() .text-secondary {
-  color: rgba(0, 0, 0, 0.6) !important;
-}
 .v-btn--icon {
   border: 0;
 }
@@ -240,24 +238,63 @@ a {
 .v-footer {
   flex-grow: 0 !important;
 }
+.vd-footer-bar :deep() {
+  background-color: white !important;
+  .vd-footer-bar-links {
+    color: rgba(0, 0, 0, .87);
+  }
+  p,
+  .text--primary {
+    color: rgba(0, 0, 0, .87);
+  }
+  .text--secondary {
+    color: rgba(0, 0, 0, .6);
+  }
+  .social {
+    .text--primary {
+      color: $primary-base;
+    }
+    a.v-btn:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+  button.v-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  a.text--primary {
+    color: $primary-base;
+  }
+  .v-divider {
+    border-color: rgba($parma-darken-60, 1);
+  }
+  svg.logo {
+    fill: $primary-base;
+  }
+  .scroll {
+    color: $primary-base;
+  }
+}
 // Use deep selector to style user content as well
 .vd-footer-bar.v-theme--dark :deep() {
   background-color: $parma-darken-60 !important;
-  .vd-footer-bar-links a {
-    color: $white !important;
+  .vd-footer-bar-links {
+    color: $white;
   }
   p,
-  .text-primary {
-    color: rgba($white, 0.6) !important;
+  .text--primary {
+    color: rgba($white, 0.87);
   }
-  a.text-primary {
-    color: $white !important;
+  .text--secondary {
+    color: rgba($white, 0.6);
+  }
+  a.text--primary {
+    color: $white;
   }
   .v-divider {
-    border-color: rgba($white, 1) !important;
+    border-color: rgba($white, 1);
   }
   svg {
-    fill: $white !important;
+    fill: $white;
   }
 }
 .vd-footer-bar-links :deep() {

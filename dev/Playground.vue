@@ -1,7 +1,8 @@
 <script setup lang="ts">
 	import FooterBar from '@/components/FooterBar/FooterBar.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
-	import { getCurrentInstance, computed } from 'vue'
+	import { computed } from 'vue'
+	import { useDisplay } from 'vuetify'
 
 	const docProps = {
 		sitemapRoute: '/',
@@ -25,7 +26,6 @@
 			href: 'https://www.ameli.fr/assure/remboursements/etre-bien-rembourse',
 		},
 	]
-
 	const healthItems = [
 		{
 			text: 'Mon espace santé',
@@ -44,19 +44,19 @@
 			href: 'https://www.ameli.fr/assure/sante/telesante',
 		},
 	]
-
-	const isXs = computed(() => {
-		const { proxy } = getCurrentInstance()!
-		return proxy?.$vuetify.display.name === 'xs'
-	})
+	const { smAndDown } = useDisplay()
+	const isMobile = computed(() => smAndDown.value)
 
 	const vuetifyOptions = {
 		footer: {
-      elevation:4,
-			minHeight: '90px',
+			elevation: 6,
+			color: 'secondary',
+			minHeight: '60px',
+		},
+		goTopBtn: {
+			class: 'd-none',
 		},
 	}
-
 </script>
 
 <template>
@@ -94,10 +94,9 @@
 
 		<FooterBar
 			v-bind="docProps"
-			class="theme--dark"
 		>
 			<VRow
-				:no-gutters="isXs"
+				:no-gutters="isMobile"
 				class="max-width-none"
 			>
 				<VCol
@@ -122,6 +121,17 @@
 					/>
 				</VCol>
 			</VRow>
+		</FooterBar>
+
+		<br><br>
+
+		<FooterBar
+			v-bind="docProps"
+			light
+		>
+			<p class="text--secondary mb-0">
+				Contenu supplémentaire.
+			</p>
 		</FooterBar>
 	</main>
 </template>
