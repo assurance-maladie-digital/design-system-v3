@@ -2,6 +2,7 @@
 	import { computed, inject, onMounted, onUnmounted, readonly, ref, watch, type Ref } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
 	import useHandleSubMenus from './useHandleSubMenus'
+	import locals from './locals'
 
 	const headerMenuWrapper = ref<HTMLElement | null>(null)
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
@@ -57,7 +58,11 @@
 </script>
 
 <template>
-	<div>
+	<div
+		role="dialog"
+		aria-modal="true"
+		:aria-label="locals.mainMenu"
+	>
 		<div ref="menuBtnWrapper">
 			<HeaderMenuBtn v-model="menuOpen" />
 		</div>
@@ -82,6 +87,8 @@
 					:class="{
 						'header-menu-wrapper--submenu-open': haveOpenSubMenu,
 					}"
+					role="navigation"
+					:aria-label="locals.publicMenu"
 				>
 					<div class="header-menu">
 						<slot />

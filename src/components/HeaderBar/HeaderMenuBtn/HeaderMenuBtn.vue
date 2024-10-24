@@ -2,6 +2,7 @@
 	import { computed, type CSSProperties } from 'vue'
 	import { useTheme } from 'vuetify'
 	import { mdiClose, mdiMenu } from '@mdi/js'
+	import locals from './locals'
 
 	const theme = useTheme()
 
@@ -17,6 +18,9 @@
 	<button
 		class="header-menu-btn mr-4"
 		:style="btnStyle"
+		type="button"
+		:aria-label="model ? locals.closeMenu : locals.openMenu"
+		:title="model ? locals.closeMenu : locals.openMenu"
 		@click="() => (model = !model)"
 	>
 		<VIcon size="48">

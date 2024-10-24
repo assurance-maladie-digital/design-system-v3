@@ -2,8 +2,11 @@
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 	import { inject, readonly, ref, type DeepReadonly, type Ref } from 'vue'
 	import useHandleSubMenus from '../useHandleSubMenus'
+	import { useId } from 'vue'
 
 	const menuOpen = ref(false)
+	const submenuId = useId()
+	const btnId = `${submenuId}-btn`
 
 	const registerSubMenu = inject<((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined>('registerSubMenu', undefined)
 	if (!registerSubMenu) throw new Error('The HeaderSubMenu component must be used inside a HeaderComplexMenu component')
@@ -23,7 +26,12 @@
 		}"
 	>
 		<button
+			:id="btnId"
 			class="sub-menu-btn"
+			type="button"
+			:aria-expanded="menuOpen ? 'true' : 'false'"
+			:aria-controls="submenuId"
+			:title="menuOpen ? 'Close submenu' : 'Open submenu'"
 			@click="menuOpen = !menuOpen"
 		>
 			<slot name="title" />
@@ -35,14 +43,18 @@
 				{{ menuOpen ? mdiChevronLeft : mdiChevronRight }}
 			</VIcon>
 		</button>
-		<div
-			v-show="menuOpen"
-			class="sub-menu-content-wrapper"
-		>
-			<div class="sub-menu-content">
-				<slot />
+		<transition name="slide-fade">
+			<div
+				v-show="menuOpen"
+				:id="submenuId"
+				class="sub-menu-content-wrapper"
+				:aria-labelledby="btnId"
+			>
+				<div class="sub-menu-content">
+					<slot />
+				</div>
 			</div>
-		</div>
+		</transition>
 	</div>
 </template>
 
@@ -117,7 +129,7 @@
 			left: $menu-width;
 		}
 
-		.sub-menu--open .sub-menu-content {
+		.sub-menu-content {
 			width: $menu-width + 1px;
 			height: $menu-height;
 			background: #f9f9f9;
@@ -131,6 +143,25 @@
 				> .sub-menu--open .sub-menu-content {
 					left: $menu-width * 3;
 				}
+			}
+		}
+
+		.slide-fade-enter-active {
+			transition: opacity 0.17s ease-out, transform 0.17s ease-out;
+		}
+
+		.slide-fade-leave-active {
+			transition: opacity 0.08s ease-in, transform 0.08s ease-in;
+		}
+
+		.slide-fade-enter-from, .slide-fade-leave-to {
+			opacity: 0;
+			transform: translateX(-10px);
+		}
+
+		@media (prefers-reduced-motion) {
+			.slide-fade-enter-active, .slide-fade-leave-active {
+				transition: none;
 			}
 		}
 	}

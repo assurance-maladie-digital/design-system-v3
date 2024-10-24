@@ -1,18 +1,29 @@
 <script setup lang="ts">
+	import { useId } from 'vue'
+
 	defineProps<{
 		title?: string
 	}>()
+
+	const id = useId()
+	const groupId = `${id}-group`
+	const titleId = `${id}-group-title`
 </script>
 
 <template>
 	<div class="header-menu-section">
 		<div
 			v-if="title"
+			:id="titleId"
 			class="header-menu-section-title"
 		>
 			{{ title }}
 		</div>
-		<ul class="header-menu-section-list">
+		<ul
+			:id="groupId"
+			role="group"
+			class="header-menu-section-list"
+		>
 			<slot />
 		</ul>
 	</div>
