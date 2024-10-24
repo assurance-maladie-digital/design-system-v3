@@ -1,3 +1,5 @@
+import type { VariantType, DensityType } from '@/types/vuetifyTypes'
+
 export const config = {
 	footer: {
 		elevation: 3,
@@ -5,9 +7,9 @@ export const config = {
 		minHeight: '40px',
 	},
 	goTopBtn: {
-		density: 'compact',
+		density: 'compact' as DensityType,
 		icon: 'true',
-		variant: 'text',
+		variant: 'text' as VariantType,
 		elevation: 0,
 	},
 	goTopBtnIcon: {
