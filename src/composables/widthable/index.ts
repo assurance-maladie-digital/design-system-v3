@@ -1,0 +1,37 @@
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+
+import type { IndexedObject } from '@/types'
+import { convertToUnit } from '@/utils/convertToUnit'
+
+export type NumberOrNumberString = PropType<string | number | undefined>
+
+export const Widthable = defineComponent({
+	props: {
+		maxWidth: {
+			type: [Number, String] as NumberOrNumberString,
+			default: undefined,
+		},
+		minWidth: {
+			type: [Number, String] as NumberOrNumberString,
+			default: undefined,
+		},
+		width: {
+			type: [Number, String] as NumberOrNumberString,
+			default: '100%',
+		},
+	},
+	computed: {
+		widthStyles(): IndexedObject<string | undefined> {
+			const minWidth = convertToUnit(this.minWidth)
+			const maxWidth = convertToUnit(this.maxWidth)
+			const width = convertToUnit(this.width)
+
+			return {
+				minWidth,
+				maxWidth,
+				width,
+			}
+		},
+	},
+})
