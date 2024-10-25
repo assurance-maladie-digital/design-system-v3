@@ -11,7 +11,6 @@
 	}
 
 	defineSlots<{
-		'default': (props: SlotProps) => unknown
 		'prepend': (props: SlotProps) => unknown
 		'append': (props: SlotProps) => unknown
 		'menu': (props: SlotProps) => unknown
@@ -55,13 +54,14 @@
 	const shouldAnimateHideHeader = ref(false)
 
 	function handleScroll() {
-		headerOffset.value = header.value!.getBoundingClientRect().top + window.scrollY
+		const headerRec = header.value!.getBoundingClientRect()
+		headerOffset.value = headerRec.top + window.scrollY
 		headerMinHeight.value = isTopOfHeaderVisible.value ? 'auto' : `${header.value!.offsetHeight}px`
 		isTopOfHeaderVisible.value = window.scrollY <= headerOffset.value
-		isScrollBelowHeader.value = window.scrollY > headerOffset.value + (header.value!.getBoundingClientRect().height)
+		isScrollBelowHeader.value = window.scrollY > headerOffset.value + headerRec.height
 
 		// activate the header animation with a delay to avoid a flicker effect when the user scroll down
-		shouldAnimateHideHeader.value = window.scrollY > headerOffset.value + (header.value!.getBoundingClientRect().height * 2)
+		shouldAnimateHideHeader.value = window.scrollY > headerOffset.value + (headerRec.height * 2)
 	}
 
 	onMounted(() => {
@@ -95,10 +95,12 @@
 				|| (scrollDirection.value === 'bottom' && !isScrollBelowHeader.value)
 				|| (scrollDirection.value === 'top' && isTopOfHeaderVisible.value)
 			)
+
 			const hide = (
 				scrollDirection.value === 'bottom'
 				&& isScrollBelowHeader.value
 			)
+
 			return {
 				position: staticHeader ? 'relative' : 'fixed',
 				top: staticHeader ? 'auto' : '0',
@@ -182,7 +184,7 @@
 	width: 100%;
 	height: $header-height;
 	max-width: $header-max-width;
-	margin: 0 auto;
+	margin: auto 0;
 }
 
 .sticky-header {
