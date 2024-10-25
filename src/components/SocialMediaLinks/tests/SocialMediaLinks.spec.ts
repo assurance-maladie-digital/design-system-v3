@@ -33,8 +33,8 @@ describe('SocialMediaLinks.vue', () => {
 
 	it('renders correctly with provided links', () => {
 		const links = [
-			{ href: 'https://twitter.com', icon: 'mdi-twitter' },
-			{ href: 'https://facebook.com', icon: 'mdi-facebook' },
+			{ href: 'https://twitter.com', name: 'Twitter', icon: 'mdi-twitter' },
+			{ href: 'https://facebook.com', name: 'Facebook', icon: 'mdi-facebook' },
 		]
 		wrapper = mount(SocialMediaLinks, {
 			global: {
@@ -49,8 +49,8 @@ describe('SocialMediaLinks.vue', () => {
 
 	it('renders the correct number of social media links', () => {
 		const links = [
-			{ href: 'https://twitter.com', icon: 'mdi-twitter' },
-			{ href: 'https://facebook.com', icon: 'mdi-facebook' },
+			{ href: 'https://twitter.com', name: 'Twitter', icon: 'mdi-twitter' },
+			{ href: 'https://facebook.com', name: 'Facebook', icon: 'mdi-facebook' },
 		]
 		wrapper = mount(SocialMediaLinks, {
 			global: {

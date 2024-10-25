@@ -20,6 +20,7 @@
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		a11yCompliance?: string
 		linkItems?: LinkItem[] | null
+		items?: LinkItem[] | null
 		sitemapRoute?: RouteLocationRaw
 		cguRoute?: RouteLocationRaw
 		cookiesRoute?: RouteLocationRaw
@@ -38,6 +39,7 @@
 	}>(), {
 		a11yCompliance: 'non-compliant',
 		linkItems: null,
+		items: null,
 		sitemapRoute: () => ({ name: 'sitemap' }),
 		cguRoute: () => ({ name: 'cgu' }),
 		cookiesRoute: () => ({ name: 'cookies' }),
@@ -159,13 +161,11 @@
 
 				<VSpacer v-bind="options.spacer" />
 
-				<slot name="social-media-links">
-					<SocialMediaLinks
-						v-if="!props.hideSocialMediaLinks"
-						:links="props.socialMediaLinks"
-						class="mr-8 social"
-					/>
-				</slot>
+				<SocialMediaLinks
+					v-if="!props.hideSocialMediaLinks"
+					:links="props.socialMediaLinks"
+					class="mr-8 social"
+				/>
 			</div>
 
 			<VBtn

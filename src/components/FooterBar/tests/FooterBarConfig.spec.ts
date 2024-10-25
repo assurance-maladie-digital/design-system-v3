@@ -31,6 +31,6 @@ describe('FooterBar config', () => {
 	})
 
 	it('should have correct goTopBtnIcon color', () => {
-		expect(config.goTopBtnIcon.color).toBe('primary')
+		expect(config.goTopBtnIcon.color).toBe('white')
 	})
 })

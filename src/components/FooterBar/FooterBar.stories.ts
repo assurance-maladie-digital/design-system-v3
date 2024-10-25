@@ -4,14 +4,6 @@ import CollapsibleList from '../CollapsibleList/CollapsibleList.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { mdiTwitter, mdiLinkedin, mdiFacebook, mdiYoutube } from '@mdi/js'
 
-const docProps = {
-	sitemapRoute: '/',
-	cguRoute: '/',
-	cookiesRoute: '/',
-	legalNoticeRoute: '/',
-	a11yStatementRoute: '/',
-}
-
 const items = [
 	{
 		text: 'Plan du site',
@@ -72,80 +64,74 @@ const meta = {
 	component: FooterBar,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['logoSize', 'social-media-links'] },
+		controls: { exclude: ['logoSize'] },
 	},
 	argTypes: {
 		a11yCompliance: {
 			options: ['non-compliant', 'partially-compliant', 'fully-compliant'],
 			control: { type: 'select' },
 			default: 'fully-compliant',
-			description: 'Accessibility compliance level of the footer.',
-		},
-		items: {
-			control: {
-				type: 'object',
-			},
-			description: 'List of links to display in the footer.',
+			description: 'Le niveau de conformité aux règles d’accessibilité de l’application.\n Cette mention est obligatoire, voir la <a target="_blank" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/obligations/#d%C3%A9claration-daccessibilit%C3%A9">documentation du RGAA</a>.',
 		},
 		linkItems: {
 			control: {
 				type: 'object',
 			},
-			description: 'List of additional links to display in the footer.',
+			description: 'Les liens de navigation à afficher dans le pied de page.',
 		},
 		hideSitemapLink: {
 			control: {
 				type: 'boolean',
 			},
-			description: 'Hide the sitemap link.',
+			description: 'Masque le lien vers le Plan du site.',
 		},
 		hideCguLink: {
 			control: {
 				type: 'boolean',
 			},
-			description: 'Hide the terms and conditions link.',
+			description: 'Masque le lien vers les Conditions générales d’utilisation.',
 		},
 		hideCookiesLink: {
 			control: {
 				type: 'boolean',
 			},
-			description: 'Hide the cookies link.',
+			description: 'Masque le lien vers la Gestion des cookies.',
 		},
 		hideLegalNoticeLink: {
 			control: {
 				type: 'boolean',
 			},
-			description: 'Hide the legal notice link.',
+			description: 'Masque le lien vers les Mentions légales.',
 		},
 		hideA11yLink: {
 			control: {
 				type: 'boolean',
 			},
-			description: 'Hide the accessibility statement link.',
+			description: 'Masque le lien vers la Déclaration d’accessibilité.',
 		},
 		hideLogo: {
 			control: {
 				type: 'boolean',
 			},
-			description: 'Hide the logo if slot present.',
+			description: 'Masque le logo.',
 		},
 		hideSocialMediaLinks: {
 			control: {
 				type: 'boolean',
 			},
-			description: 'Hide the social media links if slot present.',
+			description: 'Masque la liste des réseaux sociaux.',
 		},
 		version: {
 			control: {
 				type: 'text',
 			},
-			description: 'Version number to display in the footer.',
+			description: 'Le numéro de version de l’application.',
 		},
 		socialMediaLinks: {
 			control: {
 				type: 'object',
 			},
-			description: 'List of social media links to display in the footer.',
+			description: 'Personnalisation de la liste des réseaux sociaux.',
 		},
 		light: {
 			control: {
@@ -157,43 +143,55 @@ const meta = {
 			control: {
 				type: 'text',
 			},
-			description: 'Route to the sitemap page.',
+			description: 'La valeur de la prop `to` du lien vers le Plan du site.',
 		},
 		cguRoute: {
 			control: {
 				type: 'text',
 			},
-			description: 'Route to the terms and conditions page.',
+			description: 'La valeur de la prop `to` du lien vers les Conditions générales d’utilisation.',
 		},
 		cookiesRoute: {
 			control: {
 				type: 'text',
 			},
-			description: 'Route to the cookies page.',
+			description: 'La valeur de la prop `to` du lien vers la Gestion des cookies..',
 		},
 		legalNoticeRoute: {
 			control: {
 				type: 'text',
 			},
-			description: 'Route to the legal notice page.',
+			description: 'La valeur de la prop `to` du lien vers les Mentions légales.',
 		},
 		a11yStatementRoute: {
 			control: {
 				type: 'text',
 			},
-			description: 'Route to the accessibility statement page.',
+			description: 'La valeur de la prop `to` du lien vers la Déclaration d’accessibilité.',
 		},
 		default: {
-			description: 'Default slot content.',
+			control: {
+				type: 'text',
+			},
+			description: 'Slot pour ajouter du contenu dans la partie centrale du pied de page.',
 		},
 		prepend: {
-			description: 'Prepend slot content.',
+			control: {
+				type: 'text',
+			},
+			description: 'Slot pour ajouter du contenu avant les liens du pied de page.',
 		},
 		append: {
-			description: 'Append slot content.',
+			control: {
+				type: 'text',
+			},
+			description: 'Slot pour ajouter du contenu après les liens du pied de page.',
 		},
 		logo: {
-			description: 'Logo slot content',
+			control: {
+				type: 'text',
+			},
+			description: 'Slot pour remplacer le logo.',
 		},
 	},
 } satisfies Meta<typeof FooterBar>
@@ -203,11 +201,12 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		controls: { exclude: ['logoSize', 'items'] },
+	},
 	args: {
-		docProps: docProps,
 		a11yCompliance: 'non-compliant',
 		items: items,
-		linkItems: [],
 		hideSitemapLink: false,
 		hideCguLink: false,
 		hideCookiesLink: false,
@@ -291,10 +290,10 @@ export const Default: Story = {
 
 export const changeLinks: Story = {
 	parameters: {
-		controls: { include: ['items'] },
+		controls: { include: ['linkItems'] },
 	},
 	args: {
-		items: [
+		linkItems: [
 			{
 				text: 'Accueil',
 				href: '/',
@@ -322,7 +321,7 @@ export const changeLinks: Story = {
 				return { args }
 			},
 			template: `
-				<FooterBar :link-items="args.items" />
+				<FooterBar :link-items="args.linkItems" />
 			`,
 		}
 	},
@@ -382,6 +381,29 @@ export const slotAppend: Story = {
 	},
 }
 
+export const extendedMode: Story = {
+	parameters: {
+		controls: { include: ['default'] },
+	},
+	args: {
+		items: items,
+		default: '<p class="text--secondary mb-0"> Contenu supplémentaire.</p>',
+	},
+	render: (args) => {
+		return {
+			components: { FooterBar },
+			setup() {
+				return { args }
+			},
+			template: `
+				<FooterBar :link-items="args.items">
+					<p class="text--secondary mb-0"> Contenu supplémentaire.</p>
+				</FooterBar>
+			`,
+		}
+	},
+}
+
 export const slotLogo: Story = {
 	parameters: {
 		controls: { include: ['logo'] },
@@ -405,29 +427,6 @@ export const slotLogo: Story = {
 							aria-label="Risque Pro"
 						/>
 					</template>
-				</FooterBar>
-			`,
-		}
-	},
-}
-
-export const extendedMode: Story = {
-	parameters: {
-		controls: { include: ['default'] },
-	},
-	args: {
-		items: items,
-		default: '<p class="text--secondary mb-0"> Contenu supplémentaire.</p>',
-	},
-	render: (args) => {
-		return {
-			components: { FooterBar },
-			setup() {
-				return { args }
-			},
-			template: `
-				<FooterBar :link-items="args.items">
-					<p class="text--secondary mb-0"> Contenu supplémentaire.</p>
 				</FooterBar>
 			`,
 		}
@@ -558,7 +557,7 @@ export const customSocialMediaLinks: Story = {
 			{
 				icon: mdiYoutube,
 				name: 'YouTube',
-				link: 'https://youtube.com/',
+				href: 'https://youtube.com',
 			},
 		],
 	},

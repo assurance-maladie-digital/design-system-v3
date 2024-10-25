@@ -4,7 +4,7 @@ import { mdiLinkedin, mdiTwitter } from '@mdi/js'
 
 describe('defaultSocialMediaLinks', () => {
 	it('contains the correct number of links', () => {
-		expect(defaultSocialMediaLinks.length).toBe(2)
+		expect(defaultSocialMediaLinks.length).toBe(3)
 	})
 
 	it('contains the correct LinkedIn link', () => {

@@ -41,14 +41,17 @@ export const Default: Story = {
 		links: [
 			{
 				icon: mdiLinkedin,
+				name: 'LinkedIn',
 				href: 'https://www.linkedin.com/company/assurance-maladie/',
 			},
 			{
 				icon: mdiFacebook,
+				name: 'Facebook',
 				href: 'https://twitter.com/Assur_Maladie',
 			},
 			{
 				icon: mdiTwitter,
+				name: 'Twitter',
 				href: 'https://twitter.com/Assur_Maladie',
 			},
 		],
