@@ -1,17 +1,20 @@
 <script setup lang="ts">
 	import { computed, useSlots } from 'vue'
 	import { type RouteLocationRaw } from 'vue-router'
+
 	import Logo from '@/components/Logo/Logo.vue'
 	import { LogoSize } from '@/components/Logo/LogoSize'
 	import SocialMediaLinks from '@/components/SocialMediaLinks/SocialMediaLinks.vue'
 	import type { SocialMediaLink } from '@/components/SocialMediaLinks/types'
 	import { A11yComplianceEnum } from './A11yCompliance'
 	import { defaultSocialMediaLinks } from './defaultSocialMediaLinks'
-	import { locales } from './locales'
 	import type { LinkItem } from './types'
+
 	import { mdiArrowUp } from '@mdi/js'
 	import { useDisplay } from 'vuetify'
 	import { config } from './config'
+	import { locales } from './locales'
+
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
@@ -48,7 +51,7 @@
 		version: undefined,
 		hideLogo: false,
 		hideSocialMediaLinks: false,
-		socialMediaLinks: () => defaultSocialMediaLinks,
+		socialMediaLinks: () => defaultSocialMediaLinks as SocialMediaLink[],
 		light: false,
 	})
 
@@ -167,11 +170,14 @@
 
 			<VBtn
 				id="scroll-btn"
-				v-bind="{...options.goTopBtn}"
+				v-bind="options.goTopBtn"
 				:aria-label="locales.goTopBtnLabel"
 				@click="scrollToTop"
 			>
-				<VIcon class="scroll">
+				<VIcon
+					v-bind="options.goTopBtnIcon"
+					class="scroll"
+				>
 					{{ arrowTopIcon }}
 				</VIcon>
 			</VBtn>
@@ -228,8 +234,9 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/tokens.scss';
+@use '@/assets/tokens.scss';
 $white: #fff;
+
 a {
   cursor: pointer;
 }
@@ -254,7 +261,7 @@ a {
   }
   .social {
     .text--primary {
-      color: $primary-base;
+      color: tokens.$primary-base;
     }
     a.v-btn:hover {
       background: rgba(0, 0, 0, 0.05);
@@ -264,16 +271,16 @@ a {
     background: rgba(0, 0, 0, 0.05);
   }
   a.text--primary {
-    color: $primary-base;
+    color: tokens.$primary-base;
   }
   .v-divider {
-    border-color: rgba($parma-darken-60, 1);
+    border-color: rgba(tokens.$parma-darken-60, 1);
   }
   svg.logo {
-    fill: $primary-base;
+    fill: tokens.$primary-base;
   }
   .scroll {
-    color: $primary-base;
+    color: tokens.$primary-base !important;
   }
 }
 // Use deep selector to style user content as well
@@ -319,8 +326,5 @@ a {
 }
 .v-theme--dark button.v-btn:hover :deep() {
   background: rgba(white, 0.1);
-}
-.v-theme--dark button :deep() {
-  background: $parma-darken-60;
 }
 </style>

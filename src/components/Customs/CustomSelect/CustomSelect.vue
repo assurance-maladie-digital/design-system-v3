@@ -141,7 +141,7 @@
 </template>
 
 <style scoped lang="scss">
-@import '../../../assets/tokens.scss';
+@use '@/assets/tokens.scss';
 
 .custom-select {
   display: flex;
@@ -183,6 +183,6 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: $grey-darken-20;
+  color: tokens.$grey-darken-20;
 }
 </style>

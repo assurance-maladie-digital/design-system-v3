@@ -145,7 +145,7 @@
 </template>
 
 <style scoped lang="scss">
-@import '../../../assets/tokens.scss';
+@use '@/assets/tokens.scss';
 
 .v-input {
   cursor: pointer;
@@ -176,10 +176,10 @@
 }
 
 .v-btn {
-  color: $blue-base;
+  color: tokens.$blue-base;
 }
 
 .text-color {
-  color: $blue-base;
+  color: tokens.$blue-base;
 }
 </style>

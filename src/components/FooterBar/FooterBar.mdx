@@ -19,7 +19,8 @@ Le composant `FooterBar` est utilisé pour afficher une barre de pied de page av
     <script setup lang="ts">
 	import FooterBar from '@/components/FooterBar/FooterBar.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
-	import { getCurrentInstance, computed } from 'vue'
+	import { computed } from 'vue'
+	import { useDisplay } from 'vuetify'
 
 	const docProps = {
 		sitemapRoute: '/',
@@ -43,7 +44,6 @@ Le composant `FooterBar` est utilisé pour afficher une barre de pied de page av
 			href: 'https://www.ameli.fr/assure/remboursements/etre-bien-rembourse',
 		},
 	]
-
 	const healthItems = [
 		{
 			text: 'Mon espace santé',
@@ -62,12 +62,8 @@ Le composant `FooterBar` est utilisé pour afficher une barre de pied de page av
 			href: 'https://www.ameli.fr/assure/sante/telesante',
 		},
 	]
-
-	const isXs = computed(() => {
-		const { proxy } = getCurrentInstance()!
-		return proxy?.$vuetify.display.name === 'xs'
-	})
-
+	const { smAndDown } = useDisplay()
+	const isMobile = computed(() => smAndDown.value)
 </script>
 
 <template>
@@ -77,12 +73,12 @@ Le composant `FooterBar` est utilisé pour afficher une barre de pied de page av
 				Scroll to see footer and test scroll to top
 			</h2>
 		</div>
+
 		<FooterBar
 			v-bind="docProps"
-			version="v0.1.1"
 		>
 			<VRow
-				:no-gutters="isXs"
+				:no-gutters="isMobile"
 				class="max-width-none"
 			>
 				<VCol

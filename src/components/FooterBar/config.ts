@@ -8,12 +8,13 @@ export const config = {
 		height: 'auto',
 	},
 	goTopBtn: {
+		elevation: 0,
 		density: 'compact' as DensityType,
 		icon: 'true',
 		variant: 'text' as VariantType,
-		elevation: 0,
+		color: cnamColorsTokens.parma.darken60,
 	},
 	goTopBtnIcon: {
-		color: 'primary',
+		color: 'white',
 	},
 }
