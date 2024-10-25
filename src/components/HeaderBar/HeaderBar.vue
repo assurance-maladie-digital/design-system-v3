@@ -184,7 +184,7 @@
 	width: 100%;
 	height: $header-height;
 	max-width: $header-max-width;
-	margin: auto 0;
+	margin: 0 auto;
 }
 
 .sticky-header {

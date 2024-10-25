@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`HeaderComplexMenu > should render the component 1`] = `
+"<div data-v-10d9bc74="" role="dialog" aria-modal="true" aria-label="Menu principal">
+  <div data-v-10d9bc74=""><button data-v-70557900="" data-v-10d9bc74="" class="header-menu-btn mr-4" style="background-color: #1867C0; color: #fff;" type="button" aria-label="Ouvrir le menu" title="Ouvrir le menu"><i data-v-70557900="" class="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z mdi v-icon notranslate v-theme--light" style="font-size: 48px; height: 48px; width: 48px;" aria-hidden="true"></i><span data-v-70557900="" class="header-menu-btn__label">Menu</span></button></div>
+  <div data-v-10d9bc74="" class="menu overlay" role="menu" tabindex="0" style="display: none;">
+    <div data-v-10d9bc74="" class="menu-wrapper" style="left: 0px; top: 0px;"><button data-v-70557900="" data-v-10d9bc74="" class="header-menu-btn mr-4" style="background-color: #1867C0; color: #fff;" type="button" aria-label="Ouvrir le menu" title="Ouvrir le menu"><i data-v-70557900="" class="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z mdi v-icon notranslate v-theme--light" style="font-size: 48px; height: 48px; width: 48px;" aria-hidden="true"></i><span data-v-70557900="" class="header-menu-btn__label">Menu</span></button>
+      <nav data-v-10d9bc74="" id="header-menu-wrapper" class="header-menu-wrapper" role="navigation" aria-label="Menu public">
+        <div data-v-10d9bc74="" class="header-menu">
+          <div>Default slot</div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>"
+`;

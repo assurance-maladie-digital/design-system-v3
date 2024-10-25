@@ -104,7 +104,6 @@ describe('HeaderBar', () => {
 	it('should only show the header when the user scrolls up', async () => {
 		// @ts-expect-error  - Property 'happyDOM' does not exist on type 'Window & typeof globalThis'.
 		window.happyDOM.setInnerWidth(600)
-		console.log('should only show the header when the user scrolls up')
 		const wrapper = mount(HeaderBar, {
 			props: {
 				hideWhenDown: true,
@@ -123,7 +122,7 @@ describe('HeaderBar', () => {
 
 		vi.spyOn(header.element, 'getBoundingClientRect').mockReturnValue({
 			top: -2000,
-			height: 70,
+			height: 77,
 		} as DOMRect)
 		vi.spyOn(document.documentElement, 'scrollTop', 'get').mockReturnValue(2000)
 		window.dispatchEvent(new CustomEvent('scroll', { detail: 2000 }))
@@ -141,7 +140,7 @@ describe('HeaderBar', () => {
 		vi.spyOn(window, 'scrollY', 'get').mockReturnValue(800)
 		vi.spyOn(header.element, 'getBoundingClientRect').mockReturnValue({
 			top: -800,
-			height: 70,
+			height: 77,
 		} as DOMRect)
 		vi.spyOn(document.documentElement, 'scrollTop', 'get').mockReturnValue(800)
 		window.dispatchEvent(new CustomEvent('scroll', { detail: 800 }))
