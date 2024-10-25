@@ -28,7 +28,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 					:icon="true"
-					:aria-label="`Lien vers ${social.icon}`"
+					:aria-label="`Lien vers ${social.name}`"
 					variant="text"
 				>
 					<VIcon
@@ -44,7 +44,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/tokens.scss';
+@use '@/assets/tokens.scss';
 
 .vd-social-media-links {
   display: flex;
@@ -56,7 +56,7 @@ li {
 }
 
 .vd-social-media-links-label.text--primary {
-  color: $blue-base;
+  color: tokens.$blue-base;
   font-weight: 600;
 }
 
@@ -65,7 +65,7 @@ li {
 }
 
 .vd-social-media-links-icon {
-  color: $grey-base;
+  color: tokens.$grey-base;
 }
 
 .v-btn--icon {

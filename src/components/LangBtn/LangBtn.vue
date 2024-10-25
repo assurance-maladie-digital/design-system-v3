@@ -153,15 +153,15 @@
 	</div>
 </template>
 <style lang="scss" scoped>
-@import '../../assets/tokens';
+@use '@/assets/tokens.scss';
 
 .v-list-item:hover {
-  background-color: rgba($colors-overlay, 0.005)
+  background-color: rgba(tokens.$colors-overlay, 0.005)
 }
 
 .vd-lang-btn {
   font-weight: 700;
-  --hoverColor: rgba($colors-overlay, 0.5);
+  --hoverColor: rgba(tokens.$colors-overlay, 0.5);
   text-transform: capitalize;
 }
 </style>

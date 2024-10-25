@@ -48,7 +48,3 @@
 		</v-col>
 	</v-container>
 </template>
-
-<style lang="scss" scoped>
-@import '@/assets/tokens';
-</style>

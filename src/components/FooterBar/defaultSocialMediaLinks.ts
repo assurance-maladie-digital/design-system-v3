@@ -1,6 +1,6 @@
-import { mdiTwitter, mdiFacebook, mdiLinkedin } from '@mdi/js'
+import { mdiTwitter, mdiLinkedin, mdiFacebook } from '@mdi/js'
 
-import type { SocialMediaLink } from './types'
+import type { SocialMediaLink } from '@/components/SocialMediaLinks/types'
 
 export const defaultSocialMediaLinks: SocialMediaLink[] = [
 	{
