@@ -1,7 +1,6 @@
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
-import { afterEach } from 'node:test'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi, afterEach } from 'vitest'
 import { defineComponent, inject, onMounted, ref, type Ref } from 'vue'
 import HeaderBar from '../HeaderBar.vue'
 
