@@ -1,4 +1,4 @@
-import { useCustomizableOptions } from '@/composables/customizable'
+import { useCustomizableOptions } from '@/composables/useCustomizableOptions'
 import { IndexedObject } from '@/types'
 
 export interface DataListItem {

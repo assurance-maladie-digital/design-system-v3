@@ -1,4 +1,4 @@
-import { Options } from '@/mixins/customizable'
+import { useCustomizableOptions } from '@/composables/useCustomizableOptions'
 import { IndexedObject } from '@/types'
 
 export interface DataListItem {
@@ -7,7 +7,7 @@ export interface DataListItem {
 	action?: string
 	chip?: boolean
 	icon?: string
-	options?: Options
+	options?: useCustomizableOptions
 	class?: string
 }
 

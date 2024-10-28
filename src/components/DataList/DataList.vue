@@ -111,7 +111,7 @@
 						:vuetify-options="item.options"
 						:class="getItemClass(index, item.class)"
 						class="vd-data-list-item text-body-1"
-						@click:item-action="emit('click:item-action', index)"
+						@click:action="emit('click:item-action', index)"
 					/>
 				</ul>
 			</div>
