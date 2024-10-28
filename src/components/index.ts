@@ -14,6 +14,4 @@ export { default as SocialMediaLinks } from './SocialMediaLinks/SocialMediaLinks
 export { default as FooterBar } from './FooterBar/FooterBar.vue'
 export { default as HeaderLoading } from './HeaderLoading/HeaderLoading.vue'
 export { default as DataList } from './DataList/DataList.vue'
-export { default as DataListLoading } from './DataList/DataListLoading.vue'
-export { default as DataListItem } from './DataListItem/DataListItem.vue'
-export { default as DataListGroup } from './DataList/DataListGroup.vue'
+// export { default as DataListGroup } from './DataList/DataListGroup.vue'

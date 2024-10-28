@@ -3,7 +3,7 @@ import { type DOMWrapper, mount } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
 
 import DataList from '../DataList.vue'
-import { getDataList } from './fixtures.ts'
+import { getDataList } from './fixtures'
 
 const items = getDataList()
 

@@ -1,3 +1,5 @@
+import type { VariantType } from '@/types/vuetifyTypes'
+
 export const config = {
 	icon: {
 		size: 24,
@@ -7,7 +9,7 @@ export const config = {
 		class: 'mt-1',
 	},
 	actionBtn: {
-		variant: 'text',
+		variant: 'text' as VariantType,
 		size: 'small',
 		color: 'accent',
 		class: 'text-body-1 pa-0',
