@@ -99,7 +99,7 @@ devDependencies:
     version: 0.8.0(eslint@9.13.0)(typescript@5.4.2)
   eslint-plugin-vue:
     specifier: ^9.27.0
-    version: 9.29.1(eslint@9.13.0)
+    version: 9.30.0(eslint@9.13.0)
   eslint-plugin-vuejs-accessibility:
     specifier: ^2.4.1
     version: 2.4.1(eslint@9.13.0)
@@ -3383,8 +3383,8 @@ packages:
       - typescript
     dev: true
 
-  /eslint-plugin-vue@9.29.1(eslint@9.13.0):
-    resolution: {integrity: sha512-MH/MbVae4HV/tM8gKAVWMPJbYgW04CK7SuzYRrlNERpxbO0P3+Zdsa2oAcFBW6xNu7W6lIkGOsFAMCRTYmrlWQ==}
+  /eslint-plugin-vue@9.30.0(eslint@9.13.0):
+    resolution: {integrity: sha512-CyqlRgShvljFkOeYK8wN5frh/OGTvkj1S7wlr2Q2pUvwq+X5VYiLd6ZjujpgSgLnys2W8qrBLkXQ41SUYaoPIQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
