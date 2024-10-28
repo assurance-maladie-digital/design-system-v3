@@ -28,7 +28,7 @@ describe('DataList', () => {
 		const titleExists = wrapper.find('h4').exists()
 		expect(titleExists).toBe(false)
 
-		expect(wrapper).toMatchSnapshot()
+		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders correctly with a title', () => {
@@ -45,7 +45,7 @@ describe('DataList', () => {
 		const elExists = wrapper.find('h4').exists()
 		expect(elExists).toBe(true)
 
-		expect(wrapper).toMatchSnapshot()
+		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders correctly with an empty list', () => {
@@ -62,7 +62,7 @@ describe('DataList', () => {
 		const itemsExists = wrapper.find('.vd-data-list-item').exists()
 		expect(itemsExists).toBe(false)
 
-		expect(wrapper).toMatchSnapshot()
+		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders correctly with an icon', () => {
@@ -87,7 +87,7 @@ describe('DataList', () => {
 		const itemsExists = wrapper.find('.vd-data-list-item .v-icon').exists()
 		expect(itemsExists).toBe(true)
 
-		expect(wrapper).toMatchSnapshot()
+		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders correctly with a class', async () => {
@@ -112,7 +112,7 @@ describe('DataList', () => {
 
 		expect(itemsExists).toBe(true)
 
-		expect(wrapper).toMatchSnapshot()
+		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders loading state correctly', async () => {
@@ -132,7 +132,7 @@ describe('DataList', () => {
 		let itemsExists = wrapper.find('.vd-data-list-item').exists()
 		expect(itemsExists).toBe(false)
 
-		expect(wrapper).toMatchSnapshot()
+		expect(wrapper.html()).toMatchSnapshot()
 
 		await wrapper.setProps({
 			loading: false,
@@ -142,7 +142,7 @@ describe('DataList', () => {
 		itemsExists = wrapper.find('.vd-data-list-item').exists()
 		expect(itemsExists).toBe(true)
 
-		expect(wrapper).toMatchSnapshot()
+		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders correctly with an action', async () => {
@@ -160,7 +160,7 @@ describe('DataList', () => {
 			},
 		})
 
-		expect(wrapper).toMatchSnapshot()
+		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('emits action event', async () => {
