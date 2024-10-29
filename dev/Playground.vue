@@ -4,7 +4,6 @@
 	import DataListGroup from '@/components/DataListGroup/DataListGroup.vue'
 
 	import { mdiCalendar, mdiAccount, mdiInformationOutline, mdiDoctor, mdiCardAccountDetails, mdiPencil } from '@mdi/js'
-	import { it } from 'vitest'
 
 	const items = [
 		{
