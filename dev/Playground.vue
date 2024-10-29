@@ -1,8 +1,10 @@
 <script setup lang="ts">
+	import { ref } from 'vue'
 	import DataList from '@/components/DataList/DataList.vue'
-	// import DataListGroup from '@/components/DataListGroup/DataListGroup.vue'
+	import DataListGroup from '@/components/DataListGroup/DataListGroup.vue'
 
 	import { mdiCalendar, mdiAccount, mdiInformationOutline, mdiDoctor, mdiCardAccountDetails, mdiPencil } from '@mdi/js'
+	import { it } from 'vitest'
 
 	const items = [
 		{
@@ -19,7 +21,7 @@
 		},
 	]
 
-	const itemsWithIcons = [
+	const itemsWithIcons = ref([
 		{
 			key: 'Nom',
 			value: 'Dupont',
@@ -35,7 +37,7 @@
 			value: '24/09/1970',
 			icon: 'calendarIcon',
 		},
-	]
+	])
 
 	const icons = {
 		calendarIcon: mdiCalendar,
@@ -117,7 +119,7 @@
 		},
 	]
 
-	const itemsWithActions = [
+	const itemsWithActions = ref([
 		{
 			key: 'Nom',
 			value: 'Dupont',
@@ -131,9 +133,9 @@
 			value: '24/09/1970',
 			action: 'Modifier',
 		},
-	]
+	])
 
-	const itemsList = [
+	const itemsList = ref([
 		{
 			title: 'Informations patient',
 			items: [
@@ -182,7 +184,7 @@
 				},
 			],
 		},
-	]
+	])
 
 	const iconsList = {
 		calendarIcon: mdiCalendar,
@@ -193,8 +195,11 @@
 	}
 
 	function updateBirthdate(index: number) {
-		console.log(itemsWithActions[index].value)
-		itemsWithActions[index].value = '25/09/1970'
+		itemsWithActions.value[index].value = '25/09/1970'
+	}
+
+	function updateBirthdate2(eventValue: object) {
+		itemsList.value[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
 	}
 </script>
 
@@ -278,22 +283,23 @@
 			</template>
 		</DataList>
 	</div>
-	<!--<div>
+	<div>
 		<h2> DataList group</h2>
 		<DataListGroup
-		:items="itemsList"
-		:icons="iconsList"
-		@click:list-item="updateBirthdate"
+			:items="itemsList"
+			:icons="iconsList"
+			@click:list-item="updateBirthdate2"
 		/>
-		<br /><br />
+		<br><br>
 		<DataListGroup
-		:items="itemsList"
-		item-width="300px"
+			:items="itemsList"
+			item-width="300px"
+			@click:list-item="updateBirthdate2"
 		/>
-		<br /><br />
+		<br><br>
 		<DataListGroup
-		:items="itemsList"
-		loading
+			:items="itemsList"
+			loading
 		/>
-		</div>-->
+	</div>
 </template>
