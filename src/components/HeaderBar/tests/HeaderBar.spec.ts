@@ -70,7 +70,6 @@ describe('HeaderBar', () => {
 		wrapper.unmount()
 	})
 
-
 	const TestMenu = defineComponent({
 		setup() {
 			const menu = ref(false)
