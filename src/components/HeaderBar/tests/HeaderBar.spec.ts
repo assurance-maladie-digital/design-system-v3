@@ -1,8 +1,9 @@
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
-import { describe, expect, it, vi, afterEach } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { defineComponent, inject, onMounted, ref, type Ref } from 'vue'
 import HeaderBar from '../HeaderBar.vue'
+import { registerHeaderMenuKey } from '../consts'
 
 describe('HeaderBar', () => {
 	afterEach(() => {
@@ -73,7 +74,7 @@ describe('HeaderBar', () => {
 	const TestMenu = defineComponent({
 		setup() {
 			const menu = ref(false)
-			const registerHeaderMenu = inject<(r: Ref<boolean>) => void>('registerHeaderMenu')
+			const registerHeaderMenu = inject<(r: Ref<boolean>) => void>(registerHeaderMenuKey)
 
 			onMounted(() => {
 				if (registerHeaderMenu) {

@@ -1,4 +1,5 @@
 import { computed, provide, ref, watch, type DeepReadonly, type Ref } from 'vue'
+import { registerSubMenuKey } from './conts'
 
 export default function useHandleSubMenus(openStatus: DeepReadonly<Ref<boolean>>) {
 	type SubMenu = { id: string, status: Ref<boolean>, close: () => void }
@@ -40,7 +41,7 @@ export default function useHandleSubMenus(openStatus: DeepReadonly<Ref<boolean>>
 
 	const haveOpenSubMenu = computed(() => subMenus.value.some(subMenu => subMenu.status))
 
-	provide('registerSubMenu', registerSubMenu)
+	provide(registerSubMenuKey, registerSubMenu)
 
 	return {
 		haveOpenSubMenu,

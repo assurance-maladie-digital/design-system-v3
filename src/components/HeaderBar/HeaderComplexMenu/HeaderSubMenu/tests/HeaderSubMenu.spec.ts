@@ -1,8 +1,9 @@
-import { vi, describe, it, expect, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import HeaderSubMenu from '../HeaderSubMenu.vue'
 import { vuetify } from '@tests/unit/setup'
+import { registerSubMenuKey } from '../../conts'
+import HeaderSubMenu from '../HeaderSubMenu.vue'
 
 const registerSubMenu = vi.fn()
 describe('HeaderSubMenu', () => {
@@ -19,7 +20,7 @@ describe('HeaderSubMenu', () => {
 			global: {
 				plugins: [vuetify],
 				provide: {
-					registerSubMenu: registerSubMenu,
+					[registerSubMenuKey]: registerSubMenu,
 				},
 			},
 		})

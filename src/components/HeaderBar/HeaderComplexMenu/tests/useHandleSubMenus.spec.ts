@@ -2,8 +2,9 @@
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import useHandleSubMenus from '../useHandleSubMenus'
 import { computed, defineComponent, inject, readonly, ref, type DeepReadonly, type Ref } from 'vue'
+import { registerSubMenuKey } from '../conts'
+import useHandleSubMenus from '../useHandleSubMenus'
 
 describe('useHandleSubMenus', () => {
 	const TestParentComponent = defineComponent({
@@ -26,7 +27,7 @@ describe('useHandleSubMenus', () => {
 	const TestChildrenComponent = defineComponent({
 		setup() {
 			const openStatus = ref(false)
-			const registerSubMenu = inject<((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined>('registerSubMenu')!
+			const registerSubMenu = inject<((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined>(registerSubMenuKey)!
 
 			registerSubMenu(readonly(openStatus), () => {
 				openStatus.value = false

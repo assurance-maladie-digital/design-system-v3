@@ -1,14 +1,14 @@
 <script setup lang="ts">
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
-	import { inject, readonly, ref, type DeepReadonly, type Ref } from 'vue'
+	import { inject, readonly, ref, useId, type DeepReadonly, type Ref } from 'vue'
+	import { registerSubMenuKey } from '../conts'
 	import useHandleSubMenus from '../useHandleSubMenus'
-	import { useId } from 'vue'
 
 	const menuOpen = ref(false)
 	const submenuId = useId()
 	const btnId = `${submenuId}-btn`
 
-	const registerSubMenu = inject<((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined>('registerSubMenu', undefined)
+	const registerSubMenu = inject<((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined>(registerSubMenuKey, undefined)
 	if (!registerSubMenu) throw new Error('The HeaderSubMenu component must be used inside a HeaderComplexMenu component')
 	registerSubMenu(menuOpen, () => {
 		menuOpen.value = false

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type Ref } from 'vue'
 	import HeaderLogo from './HeaderLogo/HeaderLogo.vue'
+	import { registerHeaderMenuKey } from './consts'
 	import useHeaderResponsiveMode from './useHeaderResponsiveMode'
 	import useScrollDirection from './useScrollDirection'
 
@@ -37,14 +38,14 @@
 			menuOpen.value = newVal
 		})
 	}
-	provide('registerHeaderMenu', registerHeaderMenu)
+	provide(registerHeaderMenuKey, registerHeaderMenu)
 
 	const header = ref<HTMLElement | null>(null)
 	const headerSticky = ref<HTMLElement | null>(null)
 
 	/** The height of the header to reserve */
 	const headerMinHeight = ref('auto')
-	/** The position of the header when static from the top of the page */
+	/** The position of the header (when static) from the top of the page */
 	const headerOffset = ref(0)
 	/** Is the top of the header visible in the viewport when static */
 	const isTopOfHeaderVisible = ref(true)

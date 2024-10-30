@@ -1,8 +1,9 @@
 <script setup lang="ts">
-	import { computed, inject, nextTick, onMounted, onUnmounted, readonly, ref, watch, type Ref } from 'vue'
+	import { computed, inject, nextTick, onMounted, onUnmounted, readonly, ref, watch, type CSSProperties, type Ref } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
-	import useHandleSubMenus from './useHandleSubMenus'
+	import { registerHeaderMenuKey } from '../consts'
 	import locals from './locals'
+	import useHandleSubMenus from './useHandleSubMenus'
 
 	const menuWrapper = ref<HTMLElement | null>(null)
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
@@ -45,7 +46,7 @@
 		}
 	})
 
-	const menuStyle = computed(() => ({
+	const menuStyle = computed<CSSProperties>(() => ({
 		left: `${menuLeft.value}px`,
 		top: `${menuTop.value}px`,
 	}))
@@ -65,7 +66,7 @@
 
 	const { haveOpenSubMenu } = useHandleSubMenus(readonly(menuOpen))
 
-	const registerHeaderMenu = inject<(menuOpen: Ref<boolean>) => void>('registerHeaderMenu')
+	const registerHeaderMenu = inject<(menuOpen: Ref<boolean>) => void>(registerHeaderMenuKey)
 	if (registerHeaderMenu) registerHeaderMenu(menuOpen)
 </script>
 <template>
