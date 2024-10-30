@@ -64,16 +64,25 @@
 
 	.sub-menu-btn {
 		display: flex;
-		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 		width: 100%;
 		padding: 16px 50px 16px 20px;
 		text-align: left;
-		text-transform: capitalize;
 		color: $primary-base;
 
 		&:hover {
 			background-color: $primary-base;
 			color: $neutral-white;
+			text-decoration: underline;
+
+			> :deep(*) {
+				color: $neutral-white !important;
+			}
+		}
+
+		&::first-letter {
+			text-transform: uppercase;
 		}
 	}
 
@@ -145,6 +154,8 @@
 				}
 			}
 		}
+
+		/* Transitions */
 
 		.slide-fade-enter-active {
 			transition: opacity 0.17s ease-out, transform 0.17s ease-out;

@@ -18,19 +18,24 @@
 		padding: 0;
 		min-height: 44px; // accessibility requirement
 		font-weight: 700;
-		text-transform: capitalize;
 
 		> :deep(a) {
-			display: block;
+			display: flex;
+			flex-direction: column;
 			padding: 16px 50px 16px 20px;
 			text-decoration: none;
+			color: currentColor;
 
 			&:hover {
 				text-decoration: underline;
 			}
 
-			&:focus, &:active, &:visited {
+			&:visited {
 				color: currentColor;
+			}
+
+			&::first-letter {
+				text-transform: uppercase;
 			}
 		}
 	}
@@ -38,5 +43,9 @@
 	.header-menu-item:hover {
 		background-color: $primary-base;
 		color: $neutral-white;
+
+		> :deep(a > *) {
+			color: $neutral-white !important;
+		}
 	}
 </style>
