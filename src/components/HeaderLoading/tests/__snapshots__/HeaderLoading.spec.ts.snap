@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`HeaderLoading > renders correctly 1`] = `
+"<div data-v-947c5508="" class="v-skeleton-loader v-theme--light vd-header-loading" style="height: 1rem; width: 100px;" arialive="polite" arialabel="Loading..." role="alert" aria-hidden="true">
+  <div class="v-skeleton-loader__bone v-skeleton-loader__heading"></div>
+</div>"
+`;
