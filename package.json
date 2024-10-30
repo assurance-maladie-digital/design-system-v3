@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "0.0.0-alpha.0",
+  "version": "0.0.2-alpha",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
@@ -27,7 +27,8 @@
     "lint": "eslint 'src/**/*.{ts,js,vue}'",
     "lint:fix": "eslint 'src/**/*.{ts,js,vue}' --fix",
     "test:unit": "vitest run",
-    "prepare": "husky"
+    "prepare": "husky",
+    "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10"
   },
   "keywords": [
     "cnam",
@@ -66,6 +67,7 @@
     "@vitest/coverage-v8": "^2.0.5",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
+    "auto-changelog": "^2.4.0",
     "axios": "^1.7.7",
     "eslint": "^9.8.0",
     "eslint-plugin-storybook": "^0.8.0",
