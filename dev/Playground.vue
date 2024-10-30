@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import DataList from '@/components/DataList/DataList.vue'
-	import DataListGroup from '@/components/DataListGroup/DataListGroup.vue'
 
 	import { mdiCalendar, mdiAccount, mdiInformationOutline, mdiDoctor, mdiCardAccountDetails, mdiPencil } from '@mdi/js'
 

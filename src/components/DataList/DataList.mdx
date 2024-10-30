@@ -1,0 +1,43 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as DataList from './DataList.stories';
+
+<Meta of={DataList} />
+
+# DataList
+
+L’élément `DataList` est utilisé pour afficher une liste d’informations.
+
+<Canvas of={DataList.Default} />
+
+# API
+
+<Controls of={DataList.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+	import DataList from '@/components/DataList/DataList.vue'
+
+	const items = [
+		{
+			key: 'Nom',
+			value: 'Dupont',
+		},
+		{
+			key: 'Prénom',
+			value: 'Paul',
+		},
+		{
+			key: 'Date de naissance',
+			value: '24/09/1970',
+		},
+	]
+</script>
+
+<template>
+	<div class="pa-4">
+		<DataList :items="items" />
+	</div>
+</template>
+`} />
