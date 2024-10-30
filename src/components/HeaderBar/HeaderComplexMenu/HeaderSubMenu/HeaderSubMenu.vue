@@ -130,6 +130,7 @@
 		.sub-menu--open > .sub-menu-btn {
 			background-color: $primary-base;
 			color: $neutral-white;
+			transition: color 0.15s linear, background-color 0.15s linear;
 		}
 
 		.sub-menu-content-wrapper {
