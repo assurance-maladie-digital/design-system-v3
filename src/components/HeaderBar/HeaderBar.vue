@@ -2,6 +2,7 @@
 	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type Ref } from 'vue'
 	import HeaderLogo from './HeaderLogo/HeaderLogo.vue'
 	import { registerHeaderMenuKey } from './consts'
+	import { locales } from './locales'
 	import useHeaderResponsiveMode from './useHeaderResponsiveMode'
 	import useScrollDirection from './useScrollDirection'
 
@@ -11,11 +12,17 @@
 		menuOpen: boolean | undefined
 	}
 
+	type LogoProps = {
+		homeAriaLabel?: string
+		serviceTitle?: string
+		serviceSubtitle?: string
+	}
+
 	defineSlots<{
 		'prepend': (props: SlotProps) => unknown
 		'append': (props: SlotProps) => unknown
 		'menu': (props: SlotProps) => unknown
-		'logo': (props: SlotProps) => unknown
+		'logo': (props: SlotProps & LogoProps) => unknown
 		'header-side': (props: SlotProps) => unknown
 	}>()
 
@@ -27,10 +34,13 @@
 			 * Need 'sticky' at true,
 			 */
 			hideWhenDown?: boolean
-		}>(),
+		} & LogoProps>(),
 		{
 			sticky: true,
 			hideWhenDown: false,
+			homeAriaLabel: locales.homeAriaLabel,
+			serviceTitle: undefined,
+			serviceSubtitle: undefined,
 		})
 
 	function registerHeaderMenu(childMenuStatus: Ref<boolean>) {
@@ -149,8 +159,15 @@
 					<slot
 						name="logo"
 						:menu-open
+						:home-aria-label
+						:service-title
+						:service-subtitle
 					>
-						<HeaderLogo />
+						<HeaderLogo
+							:aria-label="homeAriaLabel"
+							:service-title="serviceTitle"
+							:service-subtitle="serviceSubtitle"
+						/>
 					</slot>
 				</div>
 				<div
@@ -192,6 +209,7 @@
 	background-color: $neutral-white;
 	border-bottom: solid 1px $blue-lighten-80;
 	width: 100%;
+	height: $header-height;
 	max-width: $header-max-width;
 	z-index: 1000;
 }
@@ -199,6 +217,11 @@
 .inner-header {
 	display: flex;
 	align-items: center;
+	height: 100%;
+}
+
+.header-logo {
+	margin-left: 2rem;
 }
 
 .header-side {
@@ -208,7 +231,7 @@
 }
 
 @media screen and (min-width: $header-breakpoint) {
-	.header {
+	.header, .sticky-header {
 		height: $header-height-desktop;
 	}
 }

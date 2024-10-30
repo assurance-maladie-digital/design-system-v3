@@ -29,7 +29,7 @@
 <template>
 	<button
 		ref="btn"
-		class="header-menu-btn mr-4"
+		class="header-menu-btn"
 		:style="btnStyle"
 		type="button"
 		:aria-label="model ? locals.closeMenu : locals.openMenu"
@@ -51,11 +51,12 @@
 
 .header-menu-btn {
 	text-transform: Capitalize;
-	height: $header-height;
+	height: $header-height - 1;
 	width: 82px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	flex-shrink: 0;
 	justify-content: center;
 	font-weight: 700;
 	transition: color 0.15s 0.1s, background-color 0.15s 0.1s;
@@ -80,7 +81,7 @@
 
 @media screen and (min-width: $header-breakpoint) {
 	.header-menu-btn {
-		height: $header-height-desktop;
+		height: $header-height-desktop - 1;
 		width: $header-height-desktop;
 	}
 }

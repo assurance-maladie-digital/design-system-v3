@@ -1,17 +1,18 @@
 <script lang="ts" setup>
 	import { useTheme } from 'vuetify'
-	import Logo from './logos/Logo.vue'
-	import LogoMobile from './logos/Logo-mobile.vue'
 	import useHeaderResponsiveMode from '../useHeaderResponsiveMode'
+	import { locales } from './locales'
+	import LogoMobile from './logos/Logo-mobile.vue'
+	import Logo from './logos/Logo.vue'
 
 	withDefaults(defineProps<{
 		ariaLabel?: string
 		serviceTitle?: string
 		serviceSubtitle?: string
 	}>(), {
-		ariaLabel: 'Logo de l\'Assurance Maladie, cliquez pour revenir à l\'accueil',
-		serviceTitle: 'Synapse',
-		serviceSubtitle: 'design system',
+		ariaLabel: locales.ariaLabel,
+		serviceTitle: undefined,
+		serviceSubtitle: undefined,
 	})
 
 	const slot = defineSlots<{
