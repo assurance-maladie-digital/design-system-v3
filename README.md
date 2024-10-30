@@ -4,7 +4,7 @@
 
 ## Changelog
 
-Pour consulter les changements récents, veuillez consulter le [CHANGELOG](https://github.com/assurance-maladie-digital/design-system-v3/CHANGELOG.md).
+Pour consulter les changements récents, veuillez consulter le [CHANGELOG](https://github.com/assurance-maladie-digital/design-system-v3/blob/dev/CHANGELOG.md).
 
 ## Prérequis
 
