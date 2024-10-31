@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
-	import { locales } from './locales'
 	import { mdiOpenInNew } from '@mdi/js'
+	import { computed } from 'vue'
 	import { useTheme } from 'vuetify'
+	import { locales } from './locales'
 
 	const props = withDefaults(defineProps<{
 		href: string

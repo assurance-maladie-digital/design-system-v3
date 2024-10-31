@@ -1,13 +1,11 @@
 <script setup lang="ts">
-	import { ref, computed, getCurrentInstance, watch } from 'vue'
-	import { mdiClose, mdiInformationOutline, mdiCheckCircleOutline, mdiAlertCircleOutline, mdiAlertOctagonOutline } from '@mdi/js'
-	import { useDisplay } from 'vuetify'
-	import { useNotificationService } from '@/services/NotificationService'
-	import { type Notification } from './types'
-	import { VSnackbar, VIcon, VBtn } from 'vuetify/components'
-
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { useNotificationService } from '@/services/NotificationService'
+	import { mdiAlertCircleOutline, mdiAlertOctagonOutline, mdiCheckCircleOutline, mdiClose, mdiInformationOutline } from '@mdi/js'
+	import { computed, getCurrentInstance, ref, watch } from 'vue'
+	import { useDisplay } from 'vuetify'
 	import defaultOptions from './options'
+	import { type Notification } from './types'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		closeBtnText?: string
