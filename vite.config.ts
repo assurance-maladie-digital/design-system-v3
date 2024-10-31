@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import { coverageConfigDefaults } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +14,13 @@ export default defineConfig({
 			insertTypesEntry: true,
 			tsconfigPath: './tsconfig.app.json',
 		}),
-		vue(),
+		vue({
+			template: { transformAssetUrls },
+		}),
+		vuetify({
+			autoImport: true,
+			styles: 'sass',
+		}),
 	],
 	resolve: {
 		alias: {
@@ -28,10 +35,11 @@ export default defineConfig({
 			fileName: 'design-system-v3',
 		},
 		rollupOptions: {
-			external: ['vue'],
+			external: ['vue', /vuetify/],
 			output: {
 				globals: {
 					vue: 'Vue',
+					vuetify: 'Vuetify',
 				},
 			},
 		},

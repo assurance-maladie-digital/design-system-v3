@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
-	import { VSheet } from 'vuetify/components'
 	import { useDisplay } from 'vuetify'
 
 	const props = withDefaults(defineProps<{
