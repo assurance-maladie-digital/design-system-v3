@@ -1,0 +1,137 @@
+import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import * as HeaderBarStories from "./HeaderBar.stories";
+
+Work in progress
+===
+
+Pour voir l'utilisation du menu, veuillez consulter le composant `HeaderComplexMenu` dans le menu de gauche.
+
+# HeaderBar
+
+<Canvas of={HeaderBarStories.Default} />
+
+## API
+
+<Controls of={HeaderBarStories.Default} />
+
+## Les slots
+
+Le composant `HeaderBar` possède les slots suivants :
+
+### Prepend
+
+Le slot `prepend` permet d'ajouter du contenu en haut du header, il suivra le comportement du header au scroll.
+Il est possible de récuperer le status du Menu de header en utilisant la prop `isMenuOpen` du slot `prepend`. (Fonctionne uniquement pour les menu s'enregistrant via la fonction injectée `registerHeaderMenu`, ce qui est le cas pour le composant `HeaderComplexMenu`)
+
+<Source
+  dark
+  code={`
+<template>
+  <HeaderBar>
+	<template #menu>
+	  <HeaderComplexMenu>
+		...
+	  </HeaderComplexMenu>
+	</template>
+	<template #prepend="{ isMenuOpen }">
+	  <div v-if="isMenuOpen">Menu ouvert</div>
+	  <div v-else>Menu fermé</div>
+	</template>
+  </HeaderBar>
+</template>
+`}
+/>
+
+### Append
+
+Le slot `append` permet d'ajouter du contenu en bas du header, il suivra le comportement du header au scroll.
+Il est également possible de récuperer le status du Menu de header en utilisant la prop `isMenuOpen` du slot `append`.
+
+<Source
+  dark
+  code={`
+<template>
+  <HeaderBar>
+	<template #menu>
+	  <HeaderComplexMenu>
+		...
+	  </HeaderComplexMenu>
+	</template>
+	<template #append="{ isMenuOpen }">
+	  <div v-if="isMenuOpen">Menu ouvert</div>
+	  <div v-else>Menu fermé</div>
+	</template>
+  </HeaderBar>
+</template>
+`}
+/>
+
+### Menu
+
+Le slot `menu` permet d'ajouter un menu au header. Il est recommandé d'utiliser le composant `HeaderComplexMenu` du design system Pour tout menu contenant plus de 5 éléments.
+
+<Source
+  dark
+  code={`
+<template>
+  <HeaderBar>
+	<template #menu>
+	  <HeaderComplexMenu>
+		...
+	  </HeaderComplexMenu>
+	</template>
+  </HeaderBar>
+</template>
+`}
+/>
+
+### Logo
+
+Le slot `logo` permet d'ecraser le logo par défaut du header. Il est déconseillé de l'utiliser. Si cela n'est pas possible l'intégration d'un nouveau logo doit se faire en respectant les guidelines de la charte graphique.
+
+<Source
+  dark
+  code={`
+<template>
+  <HeaderBar>
+	<template #logo>
+	  <img src="https://via.placeholder.com/150" alt="Logo" />
+	</template>
+  </HeaderBar>
+</template>
+`}
+/>
+
+### HeaderSide
+
+Le slot `header-side` permet d'ajouter du contenu à droite du header. Il est possible d'ajouter plusieurs éléments dans ce slot.
+Il sera principalement utilisé pour ajouter un boutton de connexion, d'accès à un compte ou de recherche.
+Il est necessaire de faire attention à la place que prendront les éléments en mode mobile et de prévoir un mode réduit ou bien de les déporter dans le menu burger.
+
+<Source dark code={`
+<script setup lang="ts">
+	import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
+</script>
+
+<template>
+  <HeaderBar>
+	<template #header-side>
+	  <div class="d-flex justify-center h-100 ga-4 pr-4">
+		<VBtn
+			variant="text"
+			:prepend-icon="mdiMagnify"
+			color="primary"
+		>
+			Rechercher
+		</VBtn>
+		<VBtn
+			color="primary"
+			:prepend-icon="mdiAccountCircleOutline"
+		>
+			Login
+		</VBtn>
+	</div>
+	</template>
+  </HeaderBar>
+</template>
+`} />

@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`HeaderMenuItem > should render the component 1`] = `"<li data-v-8ba695ac="" class="header-menu-item"><a>Test</a></li>"`;
