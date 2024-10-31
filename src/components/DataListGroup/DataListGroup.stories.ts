@@ -130,9 +130,6 @@ export const Default: Story = {
 		itemWidth: '200px',
 		loading: false,
 		renderHtmlValue: false,
-		width: '100%',
-		minWidth: undefined,
-		maxWidth: undefined,
 	},
 	render: (args) => {
 		return {
