@@ -108,6 +108,8 @@ Le slot `header-side` permet d'ajouter du contenu à droite du header. Il est po
 Il sera principalement utilisé pour ajouter un boutton de connexion, d'accès à un compte ou de recherche.
 Il est necessaire de faire attention à la place que prendront les éléments en mode mobile et de prévoir un mode réduit ou bien de les déporter dans le menu burger.
 
+<Canvas of={HeaderBarStories.WithRightMenu} />
+
 <Source dark code={`
 <script setup lang="ts">
 	import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'

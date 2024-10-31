@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import HeaderBar from './HeaderBar.vue'
+import { VBtn } from 'vuetify/components'
+import { mdiMagnify } from '@mdi/js'
 
 const meta = {
 	title: 'Components/HeaderBar',
@@ -119,6 +121,43 @@ export const Default: Story = {
 			template: `<div class="position: relative"><story/></div>`,
 		}),
 	],
+}
+
+export const WithRightMenu: Story = {
+	args: {
+		serviceTitle: 'Synapse',
+		serviceSubtitle: 'Design System',
+	},
+	render: (args) => {
+		return {
+			components: { HeaderBar, VBtn },
+			setup() {
+				const searchIcon = mdiMagnify
+				return { args, searchIcon }
+			},
+			template: `<div class="position: relative">
+				<HeaderBar v-bind="args">
+					<template #header-side="{ menuOpen }">
+						<div class="d-flex justify-center h-100 ga-4 pr-4">
+							<VBtn
+								variant="text"
+								:prepend-icon="searchIcon"
+								color="primary"
+							>
+								Rechercher
+							</VBtn>
+							<VBtn
+								color="primary"
+								:prepend-icon="mdiAccountCircleOutline"
+							>
+								Login
+							</VBtn>
+						</div>
+					</template>
+				</HeaderBar>
+			</div>`,
+		}
+	},
 }
 
 export const Sticky: Story = {
