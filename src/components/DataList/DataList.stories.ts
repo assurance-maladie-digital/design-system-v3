@@ -8,6 +8,39 @@ const meta: Meta<typeof DataList> = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['renderHtmlValue'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DataList :items="items" />
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import DataList from '@cnamts/synapse'
+										
+					const items = [
+						{
+							key: 'Nom',
+							value: 'Dupont',
+						},
+						{
+							key: 'Prénom',
+							value: 'Paul',
+						},
+						{
+							key: 'Date de naissance',
+							value: '24/09/1970',
+						},
+					]
+				</script>
+				`,
+			},
+		],
 	},
 	argTypes: {
 		items: { control: 'object' },
@@ -76,9 +109,10 @@ export const Default: Story = {
 			`,
 		}
 	},
+
 }
 
-export const WithIcons: Story = {
+export const Icons: Story = {
 	parameters: {
 		controls: { exclude: ['listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action'] },
 	},
@@ -118,6 +152,52 @@ export const WithIcons: Story = {
 						v-bind="args" 
 						:items="args.items"
 						:icons="args.icons"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const ActionBtn: Story = {
+	parameters: {
+		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action'] },
+	},
+	args: {
+		items: [
+			{
+				key: 'Nom',
+				value: 'Dupont',
+				icon: 'accountIcon',
+			},
+			{
+				key: 'Prénom',
+				value: 'Paul',
+				icon: 'accountIcon',
+			},
+			{
+				key: 'Date de naissance',
+				value: '24/09/1970',
+				icon: 'calendarIcon',
+				action: 'Modifier',
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { DataList },
+			setup() {
+				const updateBirthdate = (index: number) => {
+					args.items[index].value = '25/09/1970'
+				}
+				return { args, updateBirthdate }
+			},
+			template: `
+				<div class="pa-4">
+                    <DataList 
+						v-bind="args" 
+						:items="args.items"
+						@click:item-action="updateBirthdate"
 					/>
 				</div>
 			`,
