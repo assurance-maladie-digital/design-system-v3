@@ -32,13 +32,15 @@ const meta = {
 					summary: 'string',
 				},
 				defaultValue: {
-					summary: 'Logo de l\'Assurance Maladie, cliquez pour revenir à l\'accueil',
+					summary:
+						'Logo de l\'Assurance Maladie, cliquez pour revenir à l\'accueil',
 				},
 			},
 		},
 		'sticky': {
 			control: { type: 'boolean' },
-			description: 'Si le header doit rester collé en haut de la page lors du scroll.',
+			description:
+				'Si le header doit rester collé en haut de la page lors du scroll.',
 			table: {
 				type: {
 					summary: 'boolean',
@@ -47,7 +49,8 @@ const meta = {
 		},
 		'hideWhenDown': {
 			control: { type: 'boolean' },
-			description: 'Si le header doit se cacher lors du scroll vers le bas en mode mobile. \n Cette propriété est ignorée en mode desktop. \n Présuppose que le header est en mode sticky.',
+			description:
+				'Si le header doit se cacher lors du scroll vers le bas en mode mobile. \n Cette propriété est ignorée en mode desktop. \n Présuppose que le header est en mode sticky.',
 			table: {
 				type: {
 					summary: 'boolean',
@@ -111,4 +114,34 @@ export const Default: Story = {
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},
+	decorators: [
+		() => ({
+			template: `<div class="position: relative">
+			<story/>
+			<div
+				style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
+			>Contenu de la page</div>
+	</div>`,
+		}),
+	],
+}
+
+export const WithExternalTopMenu: Story = {
+	args: {
+		serviceTitle: 'Synapse',
+		serviceSubtitle: 'Design System',
+	},
+	decorators: [
+		() => ({
+			template: `<div class="position: relative">
+			<div style="background-color: orange; margin:auto; max-width: 1712px; padding: 1rem 4rem">
+				Menu supèrieur externe au composant
+			</div>
+			<story/>
+			<div
+				style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
+			>Contenu de la page</div>
+	</div>`,
+		}),
+	],
 }
