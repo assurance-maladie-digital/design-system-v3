@@ -1,8 +1,9 @@
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
-import { describe, expect, it, vi } from 'vitest'
-import HeaderComplexMenu from '../HeaderComplexMenu.vue'
 import { afterEach } from 'node:test'
+import { describe, expect, it, vi } from 'vitest'
+import { registerHeaderMenuKey } from '../../consts'
+import HeaderComplexMenu from '../HeaderComplexMenu.vue'
 
 describe('HeaderComplexMenu', () => {
 	const BtnTestComponent = {
@@ -23,7 +24,7 @@ describe('HeaderComplexMenu', () => {
 			global: {
 				plugins: [vuetify],
 				provide: {
-					registerHeaderMenu: () => {},
+					[registerHeaderMenuKey]: () => {},
 				},
 			},
 			slots: {
@@ -49,7 +50,7 @@ describe('HeaderComplexMenu', () => {
 			global: {
 				plugins: [vuetify],
 				provide: {
-					registerHeaderMenu: () => {},
+					[registerHeaderMenuKey]: () => {},
 				},
 			},
 			stubs: {
@@ -78,7 +79,7 @@ describe('HeaderComplexMenu', () => {
 			global: {
 				plugins: [vuetify],
 				provide: {
-					registerHeaderMenu: () => {},
+					[registerHeaderMenuKey]: () => {},
 				},
 			},
 			stubs: {
@@ -106,7 +107,7 @@ describe('HeaderComplexMenu', () => {
 			global: {
 				plugins: [vuetify],
 				provide: {
-					registerHeaderMenu: () => {},
+					[registerHeaderMenuKey]: () => {},
 				},
 			},
 			stubs: {
