@@ -96,6 +96,20 @@ const meta = {
 				},
 			},
 		},
+		'logo-brand-content': {
+			control: { type: 'text' },
+			description: 'Le contenu a droite du logo de l\'assurance maladie. Peut être utilisé pour accoler un autre logo par exemple.',
+			table: {
+				type: {
+					summary: `{ 
+						menu-open: boolean,
+						home-aria-label: string,
+						service-title: string,
+						service-subtitle: string,
+					}`,
+				},
+			},
+		},
 		'header-side': {
 			control: { type: 'text' },
 			table: {

@@ -23,6 +23,7 @@
 		'append': (props: SlotProps) => unknown
 		'menu': (props: SlotProps) => unknown
 		'logo': (props: SlotProps & LogoProps) => unknown
+		'logo-brand-content': (props: SlotProps & LogoProps) => unknown
 		'header-side': (props: SlotProps) => unknown
 	}>()
 
@@ -167,7 +168,19 @@
 							:aria-label="homeAriaLabel"
 							:service-title="serviceTitle"
 							:service-subtitle="serviceSubtitle"
-						/>
+						>
+							<template
+								#brand-content
+							>
+								<slot
+									name="logo-brand-content"
+									:menu-open
+									:home-aria-label
+									:service-title
+									:service-subtitle
+								/>
+							</template>
+						</HeaderLogo>
 					</slot>
 				</div>
 				<div

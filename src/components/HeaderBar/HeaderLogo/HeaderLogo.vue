@@ -16,7 +16,7 @@
 	})
 
 	const slot = defineSlots<{
-		serviceTitle?(): void
+		brandContent?(): void
 	}>()
 
 	const theme = useTheme()
@@ -51,7 +51,7 @@
 		</svg>
 
 		<slot
-			name="serviceTitle"
+			name="brandContent"
 		>
 			<div if="serviceTitle">
 				<div class="service-title">
