@@ -116,6 +116,18 @@ export const Default: Story = {
 	},
 	decorators: [
 		() => ({
+			template: `<div class="position: relative"><story/></div>`,
+		}),
+	],
+}
+
+export const Sticky: Story = {
+	args: {
+		serviceTitle: 'Synapse',
+		serviceSubtitle: 'Design System',
+	},
+	decorators: [
+		() => ({
 			template: `<div class="position: relative">
 			<story/>
 			<div
