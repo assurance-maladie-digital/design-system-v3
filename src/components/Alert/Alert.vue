@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
-	import { VAlert, VIcon, VBtn } from 'vuetify/components'
 	import { locales } from './locales'
 	import {
 		mdiAlertOutline,

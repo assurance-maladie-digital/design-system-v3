@@ -4,6 +4,59 @@ import { defineConfig } from 'vite'
 import { coverageConfigDefaults } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+
+function generateVuetifyGlobals() {
+	const components = [
+		'VForm',
+		'VBtn',
+		'VIcon',
+		'VChip',
+		'VMenu',
+		'VRadioGroup',
+		'VRadio',
+		'VTable',
+		'VDataTable',
+		'VBtnToggle',
+		'VCheckbox',
+		'VSelect',
+		'VRating',
+		'VRangeSlider',
+		'VSnackbar',
+		'VTooltip',
+		'VTextField',
+		'VInput',
+		'VToolbar',
+		'VNavigationDrawer',
+		'VTabs',
+		'VLayout',
+		'VFooter',
+		'VAlert',
+		'VDivider',
+		'VSheet',
+		'VList',
+		'VGrid',
+		'VDialog',
+		'VCard',
+		'VSkeletonLoader',
+		'VBadge',
+		'VExpansionPanel',
+		'VAutocomplete',
+		'VSlider',
+		'VTextarea',
+		'transitions',
+	]
+
+	const globals = {}
+
+	for (const component of components) {
+		globals[`vuetify/lib/components/${component}/index.mjs`] = component
+	}
+	globals['vuetify/components/VSkeletonLoader'] = 'VSkeletonLoader'
+	globals['vuetify/lib/directives/index.mjs'] = 'vuetifyDirectives'
+
+	return globals
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +66,13 @@ export default defineConfig({
 			insertTypesEntry: true,
 			tsconfigPath: './tsconfig.app.json',
 		}),
-		vue(),
+		vue({
+			template: { transformAssetUrls },
+		}),
+		vuetify({
+			autoImport: true,
+			styles: 'sass',
+		}),
 	],
 	resolve: {
 		alias: {
@@ -28,10 +87,14 @@ export default defineConfig({
 			fileName: 'design-system-v3',
 		},
 		rollupOptions: {
-			external: ['vue'],
+			external: ['vue', /vuetify/],
 			output: {
 				globals: {
-					vue: 'Vue',
+					'vue': 'Vue',
+					'vuetify': 'Vuetify',
+					'vuetify/directives': 'vuetifyDirectives',
+					'vuetify/lib/directives': 'vuetifyDirectives',
+					...generateVuetifyGlobals(),
 				},
 			},
 		},
