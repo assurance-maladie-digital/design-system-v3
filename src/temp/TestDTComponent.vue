@@ -74,20 +74,16 @@
 </template>
 
 <style lang="scss" scoped>
-<<<<<<<< HEAD:src/temp/TestDTComponent.vue
-@import '../assets/tokens';
-========
-@import '../../../assets/tokens';
->>>>>>>> 82f4bcd (chore(deps): update dependency vue to v3.5.2 (#66)):src/components/Temp/TestDesignTokensComponent/TestDTComponent.vue
+@use '@/assets/tokens.scss';
 
 h1 {
-  color: $orange-base;
+  color: tokens.$orange-base;
 }
 
 button {
-  background-color: $blue-base;
-  color: $white-base;
-  border-radius: $radius-rounded;
-  //padding: $padding-10 $padding-4;
+  background-color: tokens.$blue-base;
+  color: tokens.$white-base;
+  border-radius: tokens.$radius-rounded;
+  //padding: tokens.$padding-10 tokens.$padding-4;
 }
 </style>

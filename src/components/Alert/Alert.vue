@@ -97,6 +97,7 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens.scss';
+@use 'sass:map';
 
 .alert {
 	padding: tokens.$padding-4;
@@ -166,10 +167,10 @@
 
 @mixin redesign($type, $map) {
 	&.alert--#{$type}.v-alert--variant-tonal {
-		background: map-get($map, 'background') !important;
+		background: map.get($map, 'background') !important;
 		color: tokens.$colors-text-base !important;
 		:deep(.v-alert__border) {
-			border-color: map-get($map, 'border') !important;
+			border-color: map.get($map, 'border') !important;
 			opacity: 1 !important;
 			border-inline-start-width: 4px;
 		}
@@ -178,7 +179,7 @@
 	&.alert--#{$type}.v-alert--variant-outlined {
 		background: transparent !important;
 		:deep(.v-alert__border) {
-			border-color: map-get($map, 'border') !important;
+			border-color: map.get($map, 'border') !important;
 			opacity: 1 !important;
 		}
 	}
@@ -186,16 +187,16 @@
 	&.alert--#{$type},
 	&.text-#{$type} {
 		.v-alert__prepend > .v-icon {
-			background: map-get($map, 'icon-bg');
+			background: map.get($map, 'icon-bg');
 			:deep(svg) {
-				fill: map-get($map, 'accent');
+				fill: map.get($map, 'accent');
 			}
 		}
 	}
 
 	&.text-#{$type} {
-		color: map-get($map, 'accent') !important;
-		border-color: map-get($map, 'accent') !important;
+		color: map.get($map, 'accent') !important;
+		border-color: map.get($map, 'accent') !important;
 	}
 }
 

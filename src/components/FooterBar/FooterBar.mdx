@@ -1,0 +1,115 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import * as FooterBarStories from './FooterBar.stories.ts';
+
+<Meta of={FooterBarStories} />
+
+# FooterBar
+
+Le composant `FooterBar` est utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.
+
+<Canvas of={FooterBarStories.Default} />
+
+# Api
+
+<Controls of={FooterBarStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+    <script setup lang="ts">
+	import FooterBar from '@/components/FooterBar/FooterBar.vue'
+	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
+	import { computed } from 'vue'
+	import { useDisplay } from 'vuetify'
+
+	const docProps = {
+		sitemapRoute: '/',
+		cguRoute: '/',
+		cookiesRoute: '/',
+		legalNoticeRoute: '/',
+		a11yStatementRoute: '/',
+	}
+
+	const remboursementItems = [
+		{
+			text: 'Ce qui est remboursé',
+			href: 'https://www.ameli.fr/assure/remboursements/rembourse',
+		},
+		{
+			text: 'Ce qui reste à votre charge',
+			href: 'https://www.ameli.fr/assure/remboursements/reste-charge',
+		},
+		{
+			text: 'Être bien remboursé',
+			href: 'https://www.ameli.fr/assure/remboursements/etre-bien-rembourse',
+		},
+	]
+	const healthItems = [
+		{
+			text: 'Mon espace santé',
+			href: 'https://www.ameli.fr/assure/sante/mon-espace-sante',
+		},
+		{
+			text: 'Accomplir les bons gestes',
+			href: 'https://www.ameli.fr/assure/sante/bons-gestes',
+		},
+		{
+			text: 'Réagir en cas d’urgence',
+			href: 'https://www.ameli.fr/assure/sante/urgence',
+		},
+		{
+			text: 'Télésanté',
+			href: 'https://www.ameli.fr/assure/sante/telesante',
+		},
+	]
+	const { smAndDown } = useDisplay()
+	const isMobile = computed(() => smAndDown.value)
+</script>
+
+<template>
+	<main>
+		<div class="div-height">
+			<h2 class="text-center">
+				Scroll to see footer and test scroll to top
+			</h2>
+		</div>
+
+		<FooterBar
+			v-bind="docProps"
+		>
+			<VRow
+				:no-gutters="isMobile"
+				class="max-width-none"
+			>
+				<VCol
+					cols="12"
+					sm="6"
+				>
+					<CollapsibleList
+						:items="remboursementItems"
+						list-title="Remboursement"
+						class="theme--dark"
+					/>
+				</VCol>
+
+				<VCol
+					cols="12"
+					sm="6"
+				>
+					<CollapsibleList
+						:items="healthItems"
+						list-title="Santé"
+						class="theme--dark"
+					/>
+				</VCol>
+			</VRow>
+		</FooterBar>
+	</main>
+</template>
+
+<style scoped>
+.div-height {
+  min-height: 1000px;
+}
+</style>
+    `} />

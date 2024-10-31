@@ -1,0 +1,47 @@
+import { Canvas, Meta, Controls, Story, Source } from '@storybook/blocks';
+import * as CustomSelectStories from "./CustomSelect.stories";
+
+<Meta of={CustomSelectStories} />
+
+# CustomSelect
+
+Le composant `CustomSelect` est utilisé pour proposer une alternative au `v-select` de Vuetify qui ne respecte pas les règles d'accessibilité RGAA.
+
+<Canvas of={CustomSelectStories.Default} />
+
+<Story of={CustomSelectStories.Info} />
+
+# API
+
+<Controls of={CustomSelectStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import CustomSelect from '@/components/Customs/CustomSelect/CustomSelect.vue'
+
+	const selectedValue = ref(undefined)
+
+	const items = ref([
+		{ text: 'Option 1', value: '1' },
+		{ text: 'Option 2', value: '2' },
+	])
+</script>
+
+<template>
+	<main class="ma-12">
+		SelectedValue: {{ selectedValue }}
+		<div class="d-flex flex-wrap align-center">
+			<custom-select
+				v-model="selectedValue"
+				:items="items"
+				text-key="text"
+				outlined
+				required
+			/>
+		</div>
+	</main>
+</template>
+`} />

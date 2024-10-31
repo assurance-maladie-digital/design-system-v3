@@ -33,3 +33,6 @@ dev/Playground.vue
 **/tests/**/coverage
 
 *storybook.log
+
+# Change log
+CHANGELOG-TEMP.md
