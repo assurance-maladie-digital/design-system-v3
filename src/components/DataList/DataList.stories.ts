@@ -7,7 +7,7 @@ const meta: Meta<typeof DataList> = {
 	component: DataList,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['renderHtmlValue'] },
+		controls: { exclude: ['width', 'minWidth', 'maxWidth'] },
 	},
 	argTypes: {
 		items: { control: 'object' },
@@ -85,6 +85,9 @@ export const Default: Story = {
 		loading: false,
 		itemsNumberLoading: 1,
 		headingLoading: false,
+		width: '100%',
+		minWidth: undefined,
+		maxWidth: undefined,
 	},
 	render: (args) => {
 		return {
@@ -115,7 +118,7 @@ export const Default: Story = {
 
 export const Row: Story = {
 	parameters: {
-		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action'] },
+		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -206,7 +209,7 @@ export const Row: Story = {
 
 export const Title: Story = {
 	parameters: {
-		controls: { exclude: ['icons', 'title', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'click:item-action'] },
+		controls: { exclude: ['icons', 'title', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -297,7 +300,7 @@ export const Title: Story = {
 
 export const Icons: Story = {
 	parameters: {
-		controls: { exclude: ['listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action'] },
+		controls: { exclude: ['listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -390,7 +393,7 @@ export const Icons: Story = {
 
 export const ActionBtn: Story = {
 	parameters: {
-		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action'] },
+		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -474,7 +477,7 @@ export const ActionBtn: Story = {
 
 export const Chips: Story = {
 	parameters: {
-		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action'] },
+		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'title', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -571,7 +574,7 @@ export const Chips: Story = {
 
 export const ValeurHtml: Story = {
 	parameters: {
-		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'title', 'click:item-action'] },
+		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'title', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -648,7 +651,7 @@ export const ValeurHtml: Story = {
 
 export const Loading: Story = {
 	parameters: {
-		controls: { exclude: ['icons', 'titleClass', 'row', 'placeholder', 'renderHtmlValue', 'listTitle', 'title', 'click:item-action'] },
+		controls: { exclude: ['icons', 'titleClass', 'row', 'placeholder', 'renderHtmlValue', 'listTitle', 'title', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -733,7 +736,7 @@ export const Loading: Story = {
 
 export const SlotTitle: Story = {
 	parameters: {
-		controls: { exclude: ['icons', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'listTitle', 'click:item-action'] },
+		controls: { exclude: ['icons', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'listTitle', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -826,7 +829,7 @@ export const SlotTitle: Story = {
 
 export const Customisation: Story = {
 	parameters: {
-		controls: { exclude: ['icons', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'listTitle', 'click:item-action'] },
+		controls: { exclude: ['icons', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'renderHtmlValue', 'listTitle', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',

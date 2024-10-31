@@ -1,23 +1,23 @@
 import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
-import * as DataList from './DataList.stories';
+import * as DataListGroup from './DataListGroup.stories';
 
-<Meta of={DataList} />
+<Meta of={DataListGroup} />
 
 # DataList
 
-L’élément `DataList` est utilisé pour afficher une liste d’informations.
+L’élément `DataListGroup` est utilisé pour afficher une liste de DataList.
 
-<Canvas of={DataList.Default} />
+<Canvas of={DataListGroup.Default} />
 
 # API
 
-<Controls of={DataList.Default} />
+<Controls of={DataListGroup.Default} />
 
 # Exemple d'utilisation
 
 <Source dark code={`
 <script setup lang="ts">
-	import DataList from '@cnamts/synapse'
+	import DataListGroup from '@cnamts/synapse'
 
 	const items = [
 		{
@@ -72,6 +72,6 @@ L’élément `DataList` est utilisé pour afficher une liste d’informations.
 </script>
 
 <template>
-	<DataList :items="items" />
+	<DataListGroup :items="items" />
 </template>
 `} />
