@@ -6,6 +6,58 @@ import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
+function generateVuetifyGlobals() {
+	const components = [
+		'VForm',
+		'VBtn',
+		'VIcon',
+		'VChip',
+		'VMenu',
+		'VRadioGroup',
+		'VRadio',
+		'VTable',
+		'VDataTable',
+		'VBtnToggle',
+		'VCheckbox',
+		'VSelect',
+		'VRating',
+		'VRangeSlider',
+		'VSnackbar',
+		'VTooltip',
+		'VTextField',
+		'VInput',
+		'VToolbar',
+		'VNavigationDrawer',
+		'VTabs',
+		'VLayout',
+		'VFooter',
+		'VAlert',
+		'VDivider',
+		'VSheet',
+		'VList',
+		'VGrid',
+		'VDialog',
+		'VCard',
+		'VSkeletonLoader',
+		'VBadge',
+		'VExpansionPanel',
+		'VAutocomplete',
+		'VSlider',
+		'VTextarea',
+		'transitions',
+	]
+
+	const globals = {}
+
+	for (const component of components) {
+		globals[`vuetify/lib/components/${component}/index.mjs`] = component
+	}
+	globals['vuetify/components/VSkeletonLoader'] = 'VSkeletonLoader'
+	globals['vuetify/lib/directives/index.mjs'] = 'vuetifyDirectives'
+
+	return globals
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
@@ -38,8 +90,11 @@ export default defineConfig({
 			external: ['vue', /vuetify/],
 			output: {
 				globals: {
-					vue: 'Vue',
-					vuetify: 'Vuetify',
+					'vue': 'Vue',
+					'vuetify': 'Vuetify',
+					'vuetify/directives': 'vuetifyDirectives',
+					'vuetify/lib/directives': 'vuetifyDirectives',
+					...generateVuetifyGlobals(),
 				},
 			},
 		},
