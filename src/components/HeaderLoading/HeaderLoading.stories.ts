@@ -19,6 +19,29 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<HeaderLoading :width="width" :height="height" />
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import HeaderLoading from '@cnamts/synapse'
+					
+					const width = '100px'
+					const height = '1rem'
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		width: '100px',
 		height: '1rem',
