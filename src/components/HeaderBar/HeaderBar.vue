@@ -115,15 +115,18 @@
 
 			return {
 				position: staticHeader ? 'relative' : 'fixed',
+				width: staticHeader ? '100%' : header.value!.offsetWidth + 'px',
 				top: staticHeader ? 'auto' : '0',
 				transform: hide ? 'translateY(-100%)' : 'none',
 				transition: shouldAnimateHideHeader.value ? 'transform 0.3s ease' : 'none',
 			}
 		}
 
+		const fixedHeader = !isTopOfHeaderVisible.value && props.sticky
 		return {
-			position: !isTopOfHeaderVisible.value && props.sticky ? 'fixed' : 'relative',
-			top: !isTopOfHeaderVisible.value && props.sticky ? '0' : 'auto',
+			position: fixedHeader ? 'fixed' : 'relative',
+			width: fixedHeader ? header.value!.offsetWidth + 'px' : '100%',
+			top: fixedHeader ? '0' : 'auto',
 			transform: 'none',
 			transition: 'none',
 		}

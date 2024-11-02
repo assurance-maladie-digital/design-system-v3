@@ -39,7 +39,7 @@ export const Default: Story = {
 									<a>Item</a>
 								</HeaderMenuItem>
 								<headerMenuItem>
-									<HeaderSubMenu>
+									<HeaderSubMenu v-bind="args">
 										<template #title>
 											{{ args.title }}
 										</template>
@@ -99,9 +99,9 @@ export const Deep: Story = {
 											<a>Item 2.2</a>
 										</HeaderMenuItem>
 										<HeaderMenuItem>
-											<HeaderSubMenu>
+											<HeaderSubMenu v-bind="args">
 												<template #title>
-													Menu de deuxième niveau
+													{{ args.title }}
 												</template>
 												<HeaderMenuItem>
 													<a>Item 3.1</a>
@@ -128,10 +128,10 @@ export const Deep: Story = {
 		await new Promise(resolve => setTimeout(resolve, 1000))
 		await menuBtn!.click()
 		await new Promise(resolve => setTimeout(resolve, 500))
-		const subMenuBtn = canvasElement.querySelector<HTMLElement>('.sub-menu-btn')
+		const subMenuBtn = document.querySelector<HTMLElement>('.sub-menu-btn')
 		await subMenuBtn!.click()
 		await new Promise(resolve => setTimeout(resolve, 500))
-		const subMenuBtn2 = canvasElement.querySelector<HTMLElement>('.sub-menu .sub-menu .sub-menu-btn')
+		const subMenuBtn2 = document.querySelector<HTMLElement>('.sub-menu .sub-menu .sub-menu-btn')
 		await subMenuBtn2!.click()
 	},
 }

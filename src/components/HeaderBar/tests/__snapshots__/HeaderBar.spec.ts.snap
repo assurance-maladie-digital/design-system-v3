@@ -2,7 +2,7 @@
 
 exports[`HeaderBar > should render the component 1`] = `
 "<header data-v-efdbe191="" class="header" style="min-height: auto;">
-  <div data-v-efdbe191="" class="sticky-header" style="position: relative; top: auto; transform: none; transition: none;">
+  <div data-v-efdbe191="" class="sticky-header" style="position: relative; width: 100%; top: auto; transform: none; transition: none;">
     <!--v-if-->
     <div data-v-efdbe191="" class="inner-header d-flex">
       <div data-v-efdbe191="" class="header-logo">

@@ -30,7 +30,7 @@ export const Default: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu>
+						<HeaderMenu v-bind="args">
 							<p>lorem ipsum</p>
 						</HeaderMenu>
 					</template>
@@ -44,14 +44,21 @@ export const Populated: Story = {
 	args: {},
 	render: (args) => {
 		return {
-			components: { HeaderMenuItem, HeaderMenu, HeaderBar, HeaderSubMenu, HeaderMenuSection, VBtn },
+			components: {
+				HeaderMenuItem,
+				HeaderMenu,
+				HeaderBar,
+				HeaderSubMenu,
+				HeaderMenuSection,
+				VBtn,
+			},
 			setup() {
 				return { args }
 			},
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu>
+						<HeaderMenu v-bind="args">
 							<HeaderMenuSection title="section 1">
 								<HeaderMenuItem>
 									<a>Item 1</a>
@@ -129,18 +136,67 @@ export const Populated: Story = {
 	},
 }
 
-export const Generated: Story = {
-	args: {
-	},
+export const WithScroll: Story = {
+	args: {},
 	render: (args) => {
 		return {
 			components: { HeaderMenu, HeaderBar, HeaderMenuSection, HeaderSubMenu, HeaderMenuItem },
+			setup() {
+				return { args }
+			},
+			template: `
+			<div class="position: relative">
+				<div style="background-color: orange; margin:auto; max-width: 1712px; padding: 1rem 4rem">
+					Menu supérieur externe au composant
+				</div>
+				<HeaderBar>
+					<template #menu>
+						<HeaderMenu v-bind="args">
+							<HeaderMenuSection>
+								<HeaderMenuItem>
+									<HeaderSubMenu>
+										<template #title>
+											Sous menu
+										</template>
+										<HeaderMenuSection>
+											<HeaderMenuItem>
+												<a>Item 1</a>
+											</HeaderMenuItem>
+										</HeaderMenuSection>
+									</HeaderSubMenu>
+								</HeaderMenuItem>
+							</HeaderMenuSection>
+						</HeaderMenu>
+					</template>
+				</HeaderBar>
+				<div
+					style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
+				>Contenu de la page</div>
+			</div>`,
+		}
+	},
+}
+
+export const Generated: Story = {
+	args: {},
+	render: (args) => {
+		return {
+			components: {
+				HeaderMenu,
+				HeaderBar,
+				HeaderMenuSection,
+				HeaderSubMenu,
+				HeaderMenuItem,
+			},
 			setup() {
 				const menu = [
 					{
 						title: 'Vous informer',
 						items: [
-							{ title: 'Actualités', href: 'https://www.ameli.fr/assure/actualites' },
+							{
+								title: 'Actualités',
+								href: 'https://www.ameli.fr/assure/actualites',
+							},
 							{
 								subMenuTitle: 'Droits et démarches',
 								subMenuSubtitle: 'selon votre situation',
@@ -148,17 +204,50 @@ export const Generated: Story = {
 									{
 										title: undefined,
 										items: [
-											{ title: 'Les essentiels de l’assuré', href: 'https://www.ameli.fr/assure/droits-demarches/principes' },
-											{ title: 'Parentalité, couple', href: 'https://www.ameli.fr/assure/droits-demarches/famille' },
-											{ title: 'Fin de vie, deuil', href: 'https://www.ameli.fr/assure/droits-demarches/fin-de-vie-deuil' },
-											{ title: 'Etudes et stages', href: 'https://www.ameli.fr/assure/droits-demarches/etudes-stages' },
-											{ title: 'Vie professionnelle, retraite', href: 'https://www.ameli.fr/assure/droits-demarches/vie-professionnelle-retraite' },
-											{ title: 'Difficultés d\'accès aux droits et aux soins', href: 'https://www.ameli.fr/assure/droits-demarches/difficultes-acces-droits-soins' },
-											{ title: 'Maladie, accident, hospitalisation', href: 'https://www.ameli.fr/assure/droits-demarches/maladie-accident-hospitalisation' },
-											{ title: 'invalidité, handicap', href: 'https://www.ameli.fr/assure/droits-demarches/invalidite-handicap' },
-											{ title: 'situations particumlières', href: 'https://www.ameli.fr/assure/droits-demarches/situations-particulieres' },
-											{ title: 'réclamation, médiation, recours', href: 'https://www.ameli.fr/assure/droits-demarches/reclamation-mediation-voies-de-recours' },
-											{ title: 'Europe, international', href: 'https://www.ameli.fr/assure/droits-demarches/europe-international' },
+											{
+												title: 'Les essentiels de l’assuré',
+												href: 'https://www.ameli.fr/assure/droits-demarches/principes',
+											},
+											{
+												title: 'Parentalité, couple',
+												href: 'https://www.ameli.fr/assure/droits-demarches/famille',
+											},
+											{
+												title: 'Fin de vie, deuil',
+												href: 'https://www.ameli.fr/assure/droits-demarches/fin-de-vie-deuil',
+											},
+											{
+												title: 'Etudes et stages',
+												href: 'https://www.ameli.fr/assure/droits-demarches/etudes-stages',
+											},
+											{
+												title: 'Vie professionnelle, retraite',
+												href: 'https://www.ameli.fr/assure/droits-demarches/vie-professionnelle-retraite',
+											},
+											{
+												title: 'Difficultés d\'accès aux droits et aux soins',
+												href: 'https://www.ameli.fr/assure/droits-demarches/difficultes-acces-droits-soins',
+											},
+											{
+												title: 'Maladie, accident, hospitalisation',
+												href: 'https://www.ameli.fr/assure/droits-demarches/maladie-accident-hospitalisation',
+											},
+											{
+												title: 'invalidité, handicap',
+												href: 'https://www.ameli.fr/assure/droits-demarches/invalidite-handicap',
+											},
+											{
+												title: 'situations particumlières',
+												href: 'https://www.ameli.fr/assure/droits-demarches/situations-particulieres',
+											},
+											{
+												title: 'réclamation, médiation, recours',
+												href: 'https://www.ameli.fr/assure/droits-demarches/reclamation-mediation-voies-de-recours',
+											},
+											{
+												title: 'Europe, international',
+												href: 'https://www.ameli.fr/assure/droits-demarches/europe-international',
+											},
 										],
 									},
 								],
@@ -170,17 +259,54 @@ export const Generated: Story = {
 									{
 										title: undefined,
 										items: [
-											{ title: 'Ce qui est remboursé', href: 'https://www.ameli.fr/assure/remboursements/rembourse' },
-											{ title: 'ce qui reste à votre charge', href: 'https://www.ameli.fr/assure/remboursements/reste-charge' },
-											{ title: 'Être bien remboursé', href: 'https://www.ameli.fr/assure/remboursements/etre-bien-rembourse' },
-											{ title: 'Indemnités journalières maladie, maternité, paternité', href: 'https://www.ameli.fr/assure/remboursements/indemnites-journalieres-maladie-maternite-paternite' },
-											{ title: 'Accident du travail : prise en charge et indemnités journalières', href: 'https://www.ameli.fr/assure/remboursements/accident-travail' },
-											{ title: 'Maladie professionnelle : prise en charge et indemnités journalières', href: 'https://www.ameli.fr/assure/remboursements/maladie-professionnelle' },
-											{ title: 'Pensions, allocations et rentes', href: 'https://www.ameli.fr/assure/remboursements/pensions-allocations-rentes' },
-											{ title: 'Incapacité permanente', href: 'https://www.ameli.fr/assure/remboursements/incapacite-permanente' },
-											{ title: 'Complémentaire santé solidaire : vous n\'avez rien à payer dans la plupart des cas ', href: 'https://www.ameli.fr/assure/remboursements/cmu-aides-financieres/complementaire-sante-solidaire' },
-											{ title: 'Aide médicale de l\'État et soins urgents', href: 'https://www.ameli.fr/assure/remboursements/aide-medicale-etat-soins-urgents' },
-											{ title: 'Compte ameli, mode d\'emploi', href: 'https://www.ameli.fr/assure/remboursements/suivre-remboursements' },
+											{
+												title: 'Ce qui est remboursé',
+												href: 'https://www.ameli.fr/assure/remboursements/rembourse',
+											},
+											{
+												title: 'ce qui reste à votre charge',
+												href: 'https://www.ameli.fr/assure/remboursements/reste-charge',
+											},
+											{
+												title: 'Être bien remboursé',
+												href: 'https://www.ameli.fr/assure/remboursements/etre-bien-rembourse',
+											},
+											{
+												title:
+                          'Indemnités journalières maladie, maternité, paternité',
+												href: 'https://www.ameli.fr/assure/remboursements/indemnites-journalieres-maladie-maternite-paternite',
+											},
+											{
+												title:
+                          'Accident du travail : prise en charge et indemnités journalières',
+												href: 'https://www.ameli.fr/assure/remboursements/accident-travail',
+											},
+											{
+												title:
+                          'Maladie professionnelle : prise en charge et indemnités journalières',
+												href: 'https://www.ameli.fr/assure/remboursements/maladie-professionnelle',
+											},
+											{
+												title: 'Pensions, allocations et rentes',
+												href: 'https://www.ameli.fr/assure/remboursements/pensions-allocations-rentes',
+											},
+											{
+												title: 'Incapacité permanente',
+												href: 'https://www.ameli.fr/assure/remboursements/incapacite-permanente',
+											},
+											{
+												title:
+                          'Complémentaire santé solidaire : vous n\'avez rien à payer dans la plupart des cas ',
+												href: 'https://www.ameli.fr/assure/remboursements/cmu-aides-financieres/complementaire-sante-solidaire',
+											},
+											{
+												title: 'Aide médicale de l\'État et soins urgents',
+												href: 'https://www.ameli.fr/assure/remboursements/aide-medicale-etat-soins-urgents',
+											},
+											{
+												title: 'Compte ameli, mode d\'emploi',
+												href: 'https://www.ameli.fr/assure/remboursements/suivre-remboursements',
+											},
 										],
 									},
 								],
@@ -191,20 +317,63 @@ export const Generated: Story = {
 									{
 										title: undefined,
 										items: [
-											{ title: 'Tous les thèmes de santé', href: 'https://www.ameli.fr/assure/sante/themes' },
-											{ title: 'L\'Assurance Maladie vous accompagne', href: 'https://www.ameli.fr/assure/remboursements/reste-charge' },
-											{ title: 'Mon espace santé', href: 'https://www.ameli.fr/assure/sante/mon-espace-sante' },
-											{ title: 'Mon bilan prévention', href: 'https://www.ameli.fr/assure/sante/mon-bilan-prevention' },
-											{ title: 'Réagir en cas \'urgence ', href: 'https://www.ameli.fr/assure/sante/urgence' },
-											{ title: 'Accomplir les bons gestes ', href: 'https://www.ameli.fr/assure/sante/bons-gestes' },
-											{ title: 'Médicaments et vaccins', href: 'https://www.ameli.fr/assure/sante/medicaments' },
-											{ title: 'Déroulement d\'un examen', href: 'https://www.ameli.fr/assure/sante/examen' },
-											{ title: 'Certificat médical : dans quels cas et pour qui est-il obligatoire ?', href: 'https://www.ameli.fr/assure/sante/certificat-medical-quand-et-pour-qui' },
-											{ title: 'Devenir parent', href: 'https://www.ameli.fr/assure/sante/devenir-parent' },
-											{ title: 'Enfants', href: 'https://www.ameli.fr/assure/sante/enfants' },
-											{ title: 'Jeunes 16-25 ans', href: 'https://www.ameli.fr/assure/sante/jeunes-16-25-ans' },
-											{ title: 'Seniors', href: 'https://www.ameli.fr/assure/sante/seniors' },
-											{ title: 'Télésanté, la santé à distance', href: 'https://www.ameli.fr/assure/sante/telesante' },
+											{
+												title: 'Tous les thèmes de santé',
+												href: 'https://www.ameli.fr/assure/sante/themes',
+											},
+											{
+												title: 'L\'Assurance Maladie vous accompagne',
+												href: 'https://www.ameli.fr/assure/remboursements/reste-charge',
+											},
+											{
+												title: 'Mon espace santé',
+												href: 'https://www.ameli.fr/assure/sante/mon-espace-sante',
+											},
+											{
+												title: 'Mon bilan prévention',
+												href: 'https://www.ameli.fr/assure/sante/mon-bilan-prevention',
+											},
+											{
+												title: 'Réagir en cas \'urgence ',
+												href: 'https://www.ameli.fr/assure/sante/urgence',
+											},
+											{
+												title: 'Accomplir les bons gestes ',
+												href: 'https://www.ameli.fr/assure/sante/bons-gestes',
+											},
+											{
+												title: 'Médicaments et vaccins',
+												href: 'https://www.ameli.fr/assure/sante/medicaments',
+											},
+											{
+												title: 'Déroulement d\'un examen',
+												href: 'https://www.ameli.fr/assure/sante/examen',
+											},
+											{
+												title:
+                          'Certificat médical : dans quels cas et pour qui est-il obligatoire ?',
+												href: 'https://www.ameli.fr/assure/sante/certificat-medical-quand-et-pour-qui',
+											},
+											{
+												title: 'Devenir parent',
+												href: 'https://www.ameli.fr/assure/sante/devenir-parent',
+											},
+											{
+												title: 'Enfants',
+												href: 'https://www.ameli.fr/assure/sante/enfants',
+											},
+											{
+												title: 'Jeunes 16-25 ans',
+												href: 'https://www.ameli.fr/assure/sante/jeunes-16-25-ans',
+											},
+											{
+												title: 'Seniors',
+												href: 'https://www.ameli.fr/assure/sante/seniors',
+											},
+											{
+												title: 'Télésanté, la santé à distance',
+												href: 'https://www.ameli.fr/assure/sante/telesante',
+											},
 										],
 									},
 								],
@@ -216,16 +385,27 @@ export const Generated: Story = {
 						items: [
 							{
 								title: 'Contacter l\'Assurance Maladie',
-								subtitle: 'obtenir une attestation, envoyer une feuille de soins, contacter sa caisse, etc.',
+								subtitle:
+                  'obtenir une attestation, envoyer une feuille de soins, contacter sa caisse, etc.',
 								href: 'https://www.ameli.fr/assure/adresses-contacts',
 							},
 							{
 								title: 'Trouver un professionnel de santé',
 								subtitle: 'médecins, infirmiers...',
-								href: 'https://www.ameli.fr/assure/adresses-contacts' },
-							{ title: 'Télécharger un formulaire (ex: cerfa)', href: 'https://www.ameli.fr/assure/droits-demarches/formulaires' },
-							{ title: 'Consulter le forum', href: 'https://forum-assures.ameli.fr/' },
-							{ title: 'Sourds et malentendants', href: 'https://elioz.fr/elioz-connect/annuaire/assurance-maladie-annuaire/' },
+								href: 'https://www.ameli.fr/assure/adresses-contacts',
+							},
+							{
+								title: 'Télécharger un formulaire (ex: cerfa)',
+								href: 'https://www.ameli.fr/assure/droits-demarches/formulaires',
+							},
+							{
+								title: 'Consulter le forum',
+								href: 'https://forum-assures.ameli.fr/',
+							},
+							{
+								title: 'Sourds et malentendants',
+								href: 'https://elioz.fr/elioz-connect/annuaire/assurance-maladie-annuaire/',
+							},
 						],
 					},
 				]
@@ -234,7 +414,7 @@ export const Generated: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu>
+						<HeaderMenu  v-bind="args">
 							<HeaderMenuSection v-for="section in menu" :key="section.title" :title="section.title">
 								<HeaderMenuItem v-for="item in section.items" :key="item.title">
 									<HeaderSubMenu v-if="item.subMenuTitle">

@@ -81,37 +81,39 @@
 				v-model="menuOpen"
 			/>
 		</div>
-		<Transition name="menu">
-			<div
-				v-show="menuOpen"
-				class="overlay"
-			>
+		<Teleport to="body">
+			<Transition name="menu">
 				<div
-					ref="menuWrapper"
-					role="menu"
-					class="menu-wrapper"
-					:style="menuStyle"
+					v-if="menuOpen"
+					class="overlay"
 				>
-					<HeaderMenuBtn
-						ref="innerBtn"
-						v-model="menuOpen"
-					/>
-					<nav
-						id="header-menu-wrapper"
-						class="header-menu-wrapper"
-						:class="{
-							'header-menu-wrapper--submenu-open': haveOpenSubMenu,
-						}"
-						role="navigation"
-						:aria-label="locals.publicMenu"
+					<div
+						ref="menuWrapper"
+						role="menu"
+						class="menu-wrapper"
+						:style="menuStyle"
 					>
-						<div class="header-menu">
-							<slot />
-						</div>
-					</nav>
+						<HeaderMenuBtn
+							ref="innerBtn"
+							v-model="menuOpen"
+						/>
+						<nav
+							id="header-menu-wrapper"
+							class="header-menu-wrapper"
+							:class="{
+								'header-menu-wrapper--submenu-open': haveOpenSubMenu,
+							}"
+							role="navigation"
+							:aria-label="locals.publicMenu"
+						>
+							<div class="header-menu">
+								<slot />
+							</div>
+						</nav>
+					</div>
 				</div>
-			</div>
-		</Transition>
+			</Transition>
+		</Teleport>
 	</div>
 </template>
 

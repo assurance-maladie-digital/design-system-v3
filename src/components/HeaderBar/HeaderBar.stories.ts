@@ -198,15 +198,16 @@ export const WithExternalTopMenu: Story = {
 	},
 	decorators: [
 		() => ({
-			template: `<div class="position: relative">
-			<div style="background-color: orange; margin:auto; max-width: 1712px; padding: 1rem 4rem">
-				Menu supèrieur externe au composant
-			</div>
-			<story/>
-			<div
-				style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
-			>Contenu de la page</div>
-	</div>`,
+			template: `
+			<div class="position: relative">
+				<div style="background-color: orange; margin:auto; max-width: 1712px; padding: 1rem 4rem">
+					Menu supérieur externe au composant
+				</div>
+				<story/>
+				<div
+					style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
+				>Contenu de la page</div>
+			</div>`,
 		}),
 	],
 }
