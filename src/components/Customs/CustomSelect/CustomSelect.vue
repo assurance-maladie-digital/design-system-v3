@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { mdiMenuDown } from '@mdi/js'
+	import { mdiInformation, mdiMenuDown } from '@mdi/js'
 	import { ref, watch, computed, type PropType } from 'vue'
 	import { VIcon, VTextField, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
@@ -46,6 +46,7 @@
 
 	const isOpen = ref(false)
 	const selectedItem = ref<Record<string, unknown > | string | null>(props.modelValue)
+	const hasError = ref(false)
 
 	const toggleMenu = () => {
 		isOpen.value = !isOpen.value
@@ -91,10 +92,15 @@
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
 	})
+
+	watch(isOpen, (newValue) => {
+		hasError.value = !newValue && !selectedItem.value && isRequired.value
+	})
+
 </script>
 
 <template>
-	<div class="d-block w-100">
+	<div>
 		<VTextField
 			:id="inputId"
 			ref="input"
@@ -114,7 +120,17 @@
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
 		>
-			<VIcon>{{ mdiMenuDown }}</VIcon>
+			<template #append-inner>
+				<VIcon
+					v-if="hasError"
+					class="mr-6"
+				>
+					{{ mdiInformation }}
+				</VIcon>
+				<VIcon>
+					{{ mdiMenuDown }}
+				</VIcon>
+			</template>
 		</VTextField>
 		<VList
 			v-if="isOpen"
@@ -146,6 +162,7 @@
 .custom-select {
   display: flex;
   flex-direction: column;
+  min-width: 225px;
 }
 
 .v-field {
