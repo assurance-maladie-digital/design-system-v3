@@ -1,5 +1,8 @@
 import { useCustomizableOptions } from '@/composables/useCustomizableOptions'
-import { IndexedObject } from '@/types'
+
+export interface IndexedObject<Type = string> {
+	[key: string]: Type
+}
 
 export interface DataListItem {
 	key: string
