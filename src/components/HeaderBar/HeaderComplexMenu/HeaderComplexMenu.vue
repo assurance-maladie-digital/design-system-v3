@@ -2,6 +2,7 @@
 	import { computed, inject, nextTick, onMounted, onUnmounted, readonly, ref, watch, type CSSProperties, type Ref } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
 	import { registerHeaderMenuKey } from '../consts'
+	import useHeaderResponsiveMode from '../useHeaderResponsiveMode'
 	import locals from './locals'
 	import useHandleSubMenus from './useHandleSubMenus'
 
@@ -11,11 +12,14 @@
 	const innerBtn = ref<HTMLElement | null>(null)
 	const menuLeft = ref(0)
 	const menuTop = ref(0)
+	const menuHeight = ref('70vh')
 
 	function positionMenu() {
 		// todo debounce
-		menuLeft.value = menuBtnWrapper.value!.getBoundingClientRect().left
-		menuTop.value = menuBtnWrapper.value!.getBoundingClientRect().top
+		const rect = menuBtnWrapper.value!.getBoundingClientRect()
+		menuLeft.value = rect.left
+		menuTop.value = rect.top
+		menuHeight.value = `calc(100vh - ${rect.top}px - 77px)`
 	}
 
 	onMounted(() => {
@@ -46,9 +50,11 @@
 		}
 	})
 
+	const { isDesktop } = useHeaderResponsiveMode()
 	const menuStyle = computed<CSSProperties>(() => ({
 		left: `${menuLeft.value}px`,
 		top: `${menuTop.value}px`,
+		height: isDesktop.value ? menuHeight.value : undefined,
 	}))
 
 	function handleClickOutside(event: MouseEvent | KeyboardEvent) {
@@ -153,7 +159,6 @@
 	}
 
 	.header-menu-wrapper {
-		height: $menu-height;
 		width: $menu-width;
 		overflow: visible;
 	}
@@ -162,7 +167,7 @@
 		background-color: $neutral-white;
 		overflow-y : auto;
 		overflow-x: hidden;
-		height: $menu-height;
+		height: 100%;
 	}
 }
 

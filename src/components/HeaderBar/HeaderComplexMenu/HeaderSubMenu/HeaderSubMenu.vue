@@ -114,6 +114,13 @@
 			border-bottom: 1px solid $menu-border-color;
 			color: #000;
 			background-color: transparent;
+
+			&:hover {
+				color: #000;
+				> :deep(*) {
+					color: #000 !important;
+				}
+			}
 		}
 
 		.sub-menu--open > .sub-menu-btn > :deep(.sub-menu-btn__icon) {
@@ -136,12 +143,13 @@
 		.sub-menu-content-wrapper {
 			position: absolute;
 			top: 0;
+			bottom: 0;
 			left: $menu-width;
 		}
 
 		.sub-menu-content {
 			width: $menu-width + 1px;
-			height: $menu-height;
+			height: 100%;
 			background: #f9f9f9;
 			border-left: 1px solid $menu-border-color;
 			overflow-y: auto;
