@@ -3,17 +3,13 @@ import { convertToUnit } from '@/utils/convertToUnit'
 
 export type NumberOrNumberString = string | number | undefined
 
-export interface IndexedObject<Type = string> {
-	[key: string]: Type
-}
-
 export function useWidthable(props: {
 	maxWidth?: NumberOrNumberString
 	minWidth?: NumberOrNumberString
 	width?: NumberOrNumberString
 }) {
 	// Computed style properties
-	const widthStyles = computed((): IndexedObject<string | undefined> => {
+	const widthStyles = computed<Record<string, string | undefined>>(() => {
 		return {
 			maxWidth: convertToUnit(props.maxWidth),
 			minWidth: convertToUnit(props.minWidth),
