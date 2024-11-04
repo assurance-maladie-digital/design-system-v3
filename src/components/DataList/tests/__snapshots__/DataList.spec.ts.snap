@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`DataList > renders correctly 1`] = `
-"<div data-v-8dca5113="" class="vd-data-list">
+"<div data-v-8dca5113="" style="width: 100%;" class="vd-data-list">
   <transition-stub data-v-8dca5113="" name="fade-transition" mode="out-in" appear="false" persisted="false" css="true">
     <div data-v-8dca5113="">
       <!--v-if-->
@@ -43,7 +43,7 @@ exports[`DataList > renders correctly 1`] = `
 `;
 
 exports[`DataList > renders correctly with a class 1`] = `
-"<div data-v-8dca5113="" class="vd-data-list">
+"<div data-v-8dca5113="" style="width: 100%;" class="vd-data-list">
   <transition-stub data-v-8dca5113="" name="fade-transition" mode="out-in" appear="false" persisted="false" css="true">
     <div data-v-8dca5113="">
       <!--v-if-->
@@ -85,7 +85,7 @@ exports[`DataList > renders correctly with a class 1`] = `
 `;
 
 exports[`DataList > renders correctly with a title 1`] = `
-"<div data-v-8dca5113="" class="vd-data-list">
+"<div data-v-8dca5113="" style="width: 100%;" class="vd-data-list">
   <transition-stub data-v-8dca5113="" name="fade-transition" mode="out-in" appear="false" persisted="false" css="true">
     <div data-v-8dca5113="">
       <h4 data-v-8dca5113="" class="text-subtitle-1 font-weight-bold mb-3">Informations</h4>
@@ -127,7 +127,7 @@ exports[`DataList > renders correctly with a title 1`] = `
 `;
 
 exports[`DataList > renders correctly with an action 1`] = `
-"<div data-v-8dca5113="" class="vd-data-list">
+"<div data-v-8dca5113="" style="width: 100%;" class="vd-data-list">
   <transition-stub data-v-8dca5113="" name="fade-transition" mode="out-in" appear="false" persisted="false" css="true">
     <div data-v-8dca5113="">
       <!--v-if-->
@@ -172,7 +172,7 @@ exports[`DataList > renders correctly with an action 1`] = `
 `;
 
 exports[`DataList > renders correctly with an empty list 1`] = `
-"<div data-v-8dca5113="" class="vd-data-list">
+"<div data-v-8dca5113="" style="width: 100%;" class="vd-data-list">
   <transition-stub data-v-8dca5113="" name="fade-transition" mode="out-in" appear="false" persisted="false" css="true">
     <div data-v-8dca5113="">
       <!--v-if-->
@@ -183,7 +183,7 @@ exports[`DataList > renders correctly with an empty list 1`] = `
 `;
 
 exports[`DataList > renders correctly with an icon 1`] = `
-"<div data-v-8dca5113="" class="vd-data-list">
+"<div data-v-8dca5113="" style="width: 100%;" class="vd-data-list">
   <transition-stub data-v-8dca5113="" name="fade-transition" mode="out-in" appear="false" persisted="false" css="true">
     <div data-v-8dca5113="">
       <!--v-if-->
@@ -224,7 +224,7 @@ exports[`DataList > renders correctly with an icon 1`] = `
 `;
 
 exports[`DataList > renders loading state correctly 1`] = `
-"<div data-v-8dca5113="" aria-label="Le contenu est en cours de chargement." class="vd-data-list">
+"<div data-v-8dca5113="" aria-label="Le contenu est en cours de chargement." style="width: 100%;" class="vd-data-list">
   <transition-stub data-v-8dca5113="" name="fade-transition" mode="out-in" appear="false" persisted="false" css="true">
     <div data-v-8dca5113="" aria-hidden="true" class="vd-data-list-loading" title-class="text-subtitle-1 font-weight-bold mb-3">
       <div data-v-947c5508="" class="v-skeleton-loader v-theme--light mb-4 vd-header-loading mb-4" style="height: 1.5rem; width: 100px;" arialive="polite" arialabel="Loading..." role="alert" aria-hidden="true">
@@ -262,7 +262,7 @@ exports[`DataList > renders loading state correctly 1`] = `
 `;
 
 exports[`DataList > renders loading state correctly 2`] = `
-"<div data-v-8dca5113="" class="vd-data-list">
+"<div data-v-8dca5113="" style="width: 100%;" class="vd-data-list">
   <transition-stub data-v-8dca5113="" name="fade-transition" mode="out-in" appear="false" persisted="false" css="true">
     <div data-v-8dca5113="">
       <!--v-if-->

@@ -1,43 +1,52 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { defineComponent } from 'vue'
+import { useWidthable } from '../'
 
-import { Widthable } from '../'
+describe('useWidthable', () => {
+	it('returns correct styles for default props', () => {
+		const props = {
+			maxWidth: undefined,
+			minWidth: undefined,
+			width: undefined,
+		}
 
-function createTestComponent() {
-	return defineComponent({
-		mixins: [Widthable],
-		template: '<div />',
-	})
-}
+		const { widthStyles } = useWidthable(props)
 
-describe('Widthable', () => {
-	it('computes the default styles', () => {
-		const testComponent = createTestComponent()
-		const wrapper = mount(testComponent)
-
-		expect(wrapper.vm.widthStyles).toBe('width: 100%;')
-	})
-
-	it('computes the styles when min-width is defined', () => {
-		const testComponent = createTestComponent()
-		const wrapper = mount(testComponent, {
-			propsData: {
-				minWidth: '512px',
-			},
+		expect(widthStyles.value).toEqual({
+			maxWidth: undefined,
+			minWidth: undefined,
+			width: '100%',
 		})
-
-		expect(wrapper.vm.widthStyles).toBe('min-width: 512px; width: 100%;')
 	})
 
-	it('computes the styles when max-width is defined', () => {
-		const testComponent = createTestComponent()
-		const wrapper = mount(testComponent, {
-			propsData: {
-				maxWidth: '512px',
-			},
-		})
+	it('returns correct styles for specific width values', () => {
+		const props = {
+			maxWidth: '500px',
+			minWidth: '200px',
+			width: 300,
+		}
 
-		expect(wrapper.vm.widthStyles).toBe('max-width: 512px; width: 100%;')
+		const { widthStyles } = useWidthable(props)
+
+		expect(widthStyles.value).toEqual({
+			maxWidth: '500px',
+			minWidth: '200px',
+			width: '300px',
+		})
+	})
+
+	it('handles numeric and string values correctly', () => {
+		const props = {
+			maxWidth: 600,
+			minWidth: '50%',
+			width: '75%',
+		}
+
+		const { widthStyles } = useWidthable(props)
+
+		expect(widthStyles.value).toEqual({
+			maxWidth: '600px',
+			minWidth: '50%',
+			width: '75%',
+		})
 	})
 })

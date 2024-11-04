@@ -7,7 +7,7 @@
 	import DataListLoading from './DataListLoading/DataListLoading.vue'
 
 	import type { DataListIcons, DataListItem as DataListItemInterface, ItemClass } from './types'
-	import { Widthable } from '@/composables/widthable'
+	import { useWidthable } from '@/composables/widthable'
 
 	const props = defineProps({
 		items: {
@@ -50,7 +50,21 @@
 			type: Boolean,
 			default: false,
 		},
+		maxWidth: {
+			type: String,
+			default: undefined,
+		},
+		minWidth: {
+			type: String,
+			default: undefined,
+		},
+		width: {
+			type: String,
+			default: undefined,
+		},
 	})
+
+	const { widthStyles } = useWidthable(props)
 
 	const emit = defineEmits(['click:item-action'])
 
@@ -74,7 +88,7 @@
 <template>
 	<div
 		:aria-label="label"
-		:style="Widthable.widthStyles"
+		:style="widthStyles"
 		class="vd-data-list"
 	>
 		<VFadeTransition mode="out-in">
