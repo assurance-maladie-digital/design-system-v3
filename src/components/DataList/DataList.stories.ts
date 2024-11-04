@@ -749,7 +749,7 @@ export const SlotTitle: Story = {
 								Liste de données
 							</h3>
 							<p class="text-subtitle-2 mb-3">
-								Informations complémentair
+								Informations complémentaires
 							</p>
 						</template>
 					</DataList>

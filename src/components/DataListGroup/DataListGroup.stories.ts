@@ -437,7 +437,7 @@ export const ActionBtn: Story = {
 		return {
 			components: { DataListGroup },
 			setup() {
-				const updateBirthdate = (eventValue: object) => {
+				const updateBirthdate = (eventValue: { dataListIndex: number, itemIndex: number }) => {
 					args.items[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
 				}
 				return { args, updateBirthdate }
@@ -705,7 +705,6 @@ export const Chips: Story = {
 				],
 			},
 		],
-		itemWidth: '300px',
 	},
 	render: (args) => {
 		return {
