@@ -10,7 +10,7 @@ describe('DataListLoading', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				heading: true,
 				itemsNumber: 3,
 				row: true,

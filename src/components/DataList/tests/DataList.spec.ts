@@ -13,7 +13,7 @@ describe('DataList', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: items,
 			},
 		})
@@ -36,7 +36,7 @@ describe('DataList', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: items,
 				listTitle: 'Informations',
 			},
@@ -53,7 +53,7 @@ describe('DataList', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [],
 			},
 		})
@@ -75,7 +75,7 @@ describe('DataList', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: listWithIcon,
 				icons: {
 					mdiTest: 'test',
@@ -100,7 +100,7 @@ describe('DataList', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: listWithClass,
 			},
 		})
@@ -120,7 +120,7 @@ describe('DataList', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: items,
 				loading: true,
 				itemsNumberLoading: 3,
@@ -155,7 +155,7 @@ describe('DataList', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: listWithAction,
 			},
 		})
@@ -173,7 +173,7 @@ describe('DataList', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: listWithAction,
 			},
 		})

@@ -10,7 +10,7 @@ describe('HeaderLoading', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				width: '100px',
 				height: '1rem',
 			},

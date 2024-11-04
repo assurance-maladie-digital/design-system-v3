@@ -9,7 +9,7 @@ import { vuetify } from '@tests/unit/setup'
 describe('DataListGroup', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(DataListGroup, {
-			propsData: {
+			props: {
 				items: dataListGroupItems,
 			},
 			global: {
@@ -22,7 +22,7 @@ describe('DataListGroup', () => {
 
 	it('renders loading state correctly', async () => {
 		const wrapper = mount(DataListGroup, {
-			propsData: {
+			props: {
 				loading: true,
 				items: dataListGroupItems,
 			},
@@ -36,7 +36,7 @@ describe('DataListGroup', () => {
 
 	it('emit the right event when clicking on a item button', async () => {
 		const wrapper = mount(DataListGroup, {
-			propsData: {
+			props: {
 				items: dataListGroupItems,
 			},
 			global: {
