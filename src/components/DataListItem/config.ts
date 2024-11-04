@@ -11,7 +11,7 @@ export const config = {
 	actionBtn: {
 		variant: 'text' as VariantType,
 		size: 'small',
-		color: 'primary',
+		color: 'secondary',
 		class: 'text-body-1 pa-0',
 	},
 }

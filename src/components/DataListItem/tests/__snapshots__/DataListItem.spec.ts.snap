@@ -48,7 +48,7 @@ exports[`DataListItem > renders correctly in row mode 1`] = `
     <div data-v-e715a895="" class="vd-row">
       <div data-v-e715a895="" class="vd-data-list-item-label text-caption" style="color: rgba(0, 0, 0, .6);">Test</div>
       <div data-v-e715a895="" class="vd-data-list-item-value"><span data-v-e715a895="" class="text-body-1">Sample Value</span></div>
-    </div><button data-v-e715a895="" type="button" class="v-btn v-theme--light text-accent v-btn--density-default v-btn--size-small v-btn--variant-text text-body-1 pa-0 vd-data-list-item-action-btn"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+    </div><button data-v-e715a895="" type="button" class="v-btn v-theme--light text-secondary v-btn--density-default v-btn--size-small v-btn--variant-text text-body-1 pa-0 vd-data-list-item-action-btn"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
       <!----><span class="v-btn__content" data-no-activator="">Click Me</span>
       <!---->
       <!---->
@@ -109,7 +109,7 @@ exports[`DataListItem > renders correctly with an action 1`] = `
     <div data-v-e715a895="" class="">
       <div data-v-e715a895="" class="vd-data-list-item-label text-caption" style="color: rgba(0, 0, 0, .6);">Test</div>
       <div data-v-e715a895="" class="vd-data-list-item-value"><span data-v-e715a895="" class="text-body-1">…</span></div>
-    </div><button data-v-e715a895="" type="button" class="v-btn v-theme--light text-accent v-btn--density-default v-btn--size-small v-btn--variant-text text-body-1 pa-0 vd-data-list-item-action-btn"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+    </div><button data-v-e715a895="" type="button" class="v-btn v-theme--light text-secondary v-btn--density-default v-btn--size-small v-btn--variant-text text-body-1 pa-0 vd-data-list-item-action-btn"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
       <!----><span class="v-btn__content" data-no-activator="">Click Me</span>
       <!---->
       <!---->
