@@ -572,7 +572,7 @@ export const Chips: Story = {
 	},
 }
 
-export const ValeurHtml: Story = {
+export const HtmlValue: Story = {
 	parameters: {
 		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'row', 'placeholder', 'loading', 'itemsNumberLoading', 'headingLoading', 'title', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
