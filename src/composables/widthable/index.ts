@@ -1,8 +1,11 @@
 import { computed } from 'vue'
-import type { IndexedObject } from '@/types'
 import { convertToUnit } from '@/utils/convertToUnit'
 
 export type NumberOrNumberString = string | number | undefined
+
+export interface IndexedObject<Type = string> {
+	[key: string]: Type
+}
 
 export function useWidthable(props: {
 	maxWidth?: NumberOrNumberString
