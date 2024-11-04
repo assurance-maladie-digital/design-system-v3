@@ -1,3 +1,13 @@
+## v0.0.3-alpha (04-11-2024)
+
+### Composants
+
+- Fix vuetify import [`#181`](https://github.com/assurance-maladie-digital/design-system-v3/pull/181)
+- Ajout de la version beta du complexMenu [`#180`](https://github.com/assurance-maladie-digital/design-system-v3/pull/180)
+- Fix components export [`#179`](https://github.com/assurance-maladie-digital/design-system-v3/pull/179)
+- Fix the Sass deprecated warning on build [`#177`](https://github.com/assurance-maladie-digital/design-system-v3/pull/177)
+- Fix changelog link [`#175`](https://github.com/assurance-maladie-digital/design-system-v3/pull/175)
+
 ## v0.0.2-alpha (30-10-2024)
 
 ### Composants
