@@ -14,7 +14,7 @@ describe('DataListItem', () => {
 				label: 'Test',
 				value: 'Sample Value',
 				action: 'Click Me',
-				chip: false, // Set props based on your needs
+				chip: false,
 				row: true,
 			},
 			slots: {
