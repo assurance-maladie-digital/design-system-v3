@@ -3,9 +3,22 @@ import { type DOMWrapper, mount } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
 
 import DataList from '../DataList.vue'
-import { getDataList } from './fixtures'
+import type { DataListItem } from '../types'
 
-const items = getDataList()
+const items = [
+	{
+		key: 'Civility',
+		value: '',
+	},
+	{
+		key: 'Name',
+		value: 'Dupont',
+	},
+	{
+		key: 'First name',
+		value: 'Paul',
+	},
+] as DataListItem[]
 
 describe('DataList', () => {
 	it('renders correctly', () => {
