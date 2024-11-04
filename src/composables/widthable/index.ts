@@ -1,6 +1,5 @@
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import type { PropType } from 'vue'
-
 import type { IndexedObject } from '@/types'
 import { convertToUnit } from '@/utils/convertToUnit'
 
@@ -21,17 +20,21 @@ export const Widthable = defineComponent({
 			default: '100%',
 		},
 	},
-	computed: {
-		widthStyles(): IndexedObject<string | undefined> {
-			const minWidth = convertToUnit(this.minWidth)
-			const maxWidth = convertToUnit(this.maxWidth)
-			const width = convertToUnit(this.width)
+	setup(props) {
+		const widthStyles = computed((): IndexedObject<string | undefined> => {
+			const minWidth = convertToUnit(props.minWidth)
+			const maxWidth = convertToUnit(props.maxWidth)
+			const width = convertToUnit(props.width)
 
 			return {
 				minWidth,
 				maxWidth,
 				width,
 			}
-		},
+		})
+
+		return {
+			widthStyles,
+		}
 	},
 })

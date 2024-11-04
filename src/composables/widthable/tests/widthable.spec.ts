@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import { defineComponent } from 'vue'
 
 import { Widthable } from '../'
@@ -14,14 +14,14 @@ function createTestComponent() {
 describe('Widthable', () => {
 	it('computes the default styles', () => {
 		const testComponent = createTestComponent()
-		const wrapper = shallowMount(testComponent)
+		const wrapper = mount(testComponent)
 
 		expect(wrapper.vm.widthStyles).toMatchSnapshot()
 	})
 
 	it('computes the styles when min-width is defined', () => {
 		const testComponent = createTestComponent()
-		const wrapper = shallowMount(testComponent, {
+		const wrapper = mount(testComponent, {
 			propsData: {
 				minWidth: '512px',
 			},
@@ -32,7 +32,7 @@ describe('Widthable', () => {
 
 	it('computes the styles when max-width is defined', () => {
 		const testComponent = createTestComponent()
-		const wrapper = shallowMount(testComponent, {
+		const wrapper = mount(testComponent, {
 			propsData: {
 				maxWidth: '512px',
 			},
