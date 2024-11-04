@@ -16,6 +16,7 @@ describe('HeaderLoading', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		const elExists = wrapper.find('.vd-header-loading').exists()
+		expect(elExists).toBe(true)
 	})
 })

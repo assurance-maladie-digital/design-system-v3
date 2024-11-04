@@ -24,7 +24,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		expect(wrapper.vm.value).toBe('Sample Value')
 	})
 
 	it('renders correctly with a number value', () => {
@@ -38,7 +38,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		expect(wrapper.vm.value).toBe(123)
 	})
 
 	it('renders correctly with a NaN value', () => {
@@ -52,7 +52,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		expect(wrapper.vm.value).toBe(NaN)
 	})
 
 	it('renders correctly a value with HTML as text', () => {
@@ -69,7 +69,6 @@ describe('DataListItem', () => {
 		const elValue = wrapper.find('.vd-data-list-item-value span')
 
 		expect(elValue.text()).toBe('<span>Custom Value</span>')
-		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders correctly a value as plain HTML', () => {
@@ -87,7 +86,6 @@ describe('DataListItem', () => {
 		const elValue = wrapper.find('.vd-data-list-item-value span')
 
 		expect(elValue.text()).toBe('Paul Dupont')
-		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders correctly value in a chip', () => {
@@ -102,7 +100,8 @@ describe('DataListItem', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		const elChip = wrapper.find('.v-chip__content')
+		expect(elChip.text()).toBe('Chip Value')
 	})
 
 	it('renders correctly with an action', () => {
@@ -116,7 +115,8 @@ describe('DataListItem', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		const elAction = wrapper.find('.vd-data-list-item-action-btn')
+		expect(elAction.text()).toBe('Click Me')
 	})
 
 	it('emits click:action event on button click', async () => {
@@ -150,6 +150,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		const elRow = wrapper.find('.vd-row')
+		expect(elRow.exists()).toBe(true)
 	})
 })

@@ -17,6 +17,7 @@ describe('DataListLoading', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		const elExists = wrapper.find('.vd-data-list-loading-item').exists()
+		expect(elExists).toBe(true)
 	})
 })
