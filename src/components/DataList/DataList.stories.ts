@@ -14,6 +14,7 @@ const meta: Meta<typeof DataList> = {
 		icons: { control: 'object' },
 		listTitle: { control: 'text' },
 		titleClass: { control: 'text' },
+		title: { control: 'text' },
 		placeholder: { control: 'text' },
 		row: { control: 'boolean' },
 		loading: { control: 'boolean' },
@@ -80,6 +81,14 @@ export const Default: Story = {
 		icons: undefined,
 		listTitle: undefined,
 		titleClass: 'text-subtitle-1 font-weight-bold mb-3',
+		title: `<template #title>
+	<h3 class="text-subtitle-1 text-primary font-weight-bold">
+		Liste de données
+	</h3>
+	<p class="text-subtitle-2 mb-3">
+		Informations complémentaires
+	</p>
+</template>`,
 		row: false,
 		placeholder: undefined,
 		loading: false,
@@ -103,6 +112,7 @@ export const Default: Story = {
 						:icons="args.icons"
 						:list-title="args.listTitle"
 						:title-class="args.titleClass"
+						:title="args.title"
 						:row="args.row"
 						:placeholder="args.placeholder"
 						:loading="args.loading"
@@ -761,7 +771,6 @@ export const SlotTitle: Story = {
 				code: `
 				<script setup lang="ts">
 					import DataList from '@cnamts/synapse'
-					import { mdiInformationOutline } from '@mdi/js'
 										
 					const items = [
 						{
@@ -777,8 +786,6 @@ export const SlotTitle: Story = {
 							value: '24/09/1970',
 						}
 					]
-					
-					const informationIcon = mdiInformationOutline
 				</script>
 				`,
 			},
@@ -799,9 +806,14 @@ export const SlotTitle: Story = {
 				value: '24/09/1970',
 			},
 		],
-		icons: {
-			informationIcon: mdiInformationOutline,
-		},
+		title: `<template #title>
+	<h3 class="text-subtitle-1 text-primary font-weight-bold">
+		Liste de données
+	</h3>
+	<p class="text-subtitle-2 mb-3">
+		Informations complémentaires
+	</p>
+</template>`,
 	},
 	render: (args) => {
 		return {
