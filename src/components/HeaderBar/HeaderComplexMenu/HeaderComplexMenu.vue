@@ -19,7 +19,7 @@
 		const rect = menuBtnWrapper.value!.getBoundingClientRect()
 		menuLeft.value = rect.left
 		menuTop.value = rect.top
-		menuHeight.value = `calc(100vh - ${rect.top}px - 77px)`
+		menuHeight.value = `calc(100vh - ${rect.top}px - 48px)`
 	}
 
 	onMounted(() => {
