@@ -16,7 +16,7 @@ describe('Widthable', () => {
 		const testComponent = createTestComponent()
 		const wrapper = mount(testComponent)
 
-		expect(wrapper.vm.widthStyles).toMatchSnapshot()
+		expect(wrapper.vm.widthStyles).toBe('width: 100%;')
 	})
 
 	it('computes the styles when min-width is defined', () => {
@@ -27,7 +27,7 @@ describe('Widthable', () => {
 			},
 		})
 
-		expect(wrapper.vm.widthStyles).toMatchSnapshot()
+		expect(wrapper.vm.widthStyles).toBe('min-width: 512px; width: 100%;')
 	})
 
 	it('computes the styles when max-width is defined', () => {
@@ -38,6 +38,6 @@ describe('Widthable', () => {
 			},
 		})
 
-		expect(wrapper.vm.widthStyles).toMatchSnapshot()
+		expect(wrapper.vm.widthStyles).toBe('max-width: 512px; width: 100%;')
 	})
 })
