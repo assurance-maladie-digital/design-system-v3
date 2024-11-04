@@ -2,7 +2,6 @@
 	import { defineProps } from 'vue'
 	import { VSkeletonLoader } from 'vuetify/components/VSkeletonLoader'
 
-	// Define props
 	const props = defineProps({
 		width: {
 			type: String,
