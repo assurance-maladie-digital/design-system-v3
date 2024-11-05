@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-	import { ref, computed, defineProps } from 'vue'
+	import { ref, defineProps } from 'vue'
 	import { mdiKeyboardBackspace } from '@mdi/js'
 
 	import { config } from './config'
 	import { locales } from './locales'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
-	import { useWidthable } from '@/composables/widthable'
+	import { useWidthable, type Widthable } from '@/composables/widthable'
 
 	import DataListGroup from '../DataListGroup/DataListGroup.vue'
 	import HeaderLoading from '../HeaderLoading/HeaderLoading.vue'
 	import { VSkeletonLoader } from 'vuetify/components/VSkeletonLoader'
-	import { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
+	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
 
-	const props = withDefaults(defineProps<CustomizableOptions & {
+	const props = withDefaults(defineProps<CustomizableOptions & Widthable & {
 		hideBackBtn: boolean
 		backBtnText?: string
 		titleText?: string
@@ -35,11 +35,10 @@
 	const { widthStyles } = useWidthable(props)
 
 	const backArrowIcon = ref(mdiKeyboardBackspace)
-	const fadeWhite = computed(() => 'rgba(255, 255, 255, .7)')
 
 	const emit = defineEmits(['click:list-item', 'back'])
 
-	const emitItemAction = (eventValue: DataListActionEvent) => {
+	function emitItemAction(eventValue: DataListActionEvent) {
 		emit('click:list-item', eventValue)
 	}
 </script>
@@ -112,7 +111,7 @@
 						<p
 							v-else
 							class="text-h6 font-weight-bold mt-1 mb-0"
-							:style="{ color: fadeWhite }"
+							:style="{ color: 'rgba(255, 255, 255, .7)' }"
 						>
 							{{ subTitleText }}
 						</p>

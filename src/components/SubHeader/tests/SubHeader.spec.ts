@@ -55,9 +55,9 @@ describe('SubHeader', () => {
 			props: {
 				hideBackBtn: false,
 				backBtnText: 'Retour',
-				dataListGroupItems: dataListGroupItems,
 				loading: false,
 				renderHtmlValue: false,
+				dataListGroupItems,
 			},
 		})
 
@@ -82,7 +82,7 @@ describe('SubHeader', () => {
 		expect(elExists).toBe(true)
 	})
 
-	it('returns true when the header is not fixed', () => {
+	it('emits itemAction event when called', async () => {
 		const wrapper = mount(SubHeader, {
 			global: {
 				plugins: [vuetify],
@@ -90,27 +90,14 @@ describe('SubHeader', () => {
 			props: {
 				hideBackBtn: false,
 				titleText: 'Test',
+				dataListGroupItems,
 			},
 		})
 
-		expect(wrapper.vm.fadeWhite).toBe('rgba(255, 255, 255, .7)')
-	})
+		const btn = wrapper.find('.vd-data-list-item-action-btn')
+		await btn.trigger('click')
 
-	it('emits itemAction event when called', () => {
-		const wrapper = mount(SubHeader, {
-			global: {
-				plugins: [vuetify],
-			},
-			props: {
-				hideBackBtn: false,
-				titleText: 'Test',
-			},
-		})
-
-		wrapper.vm.emitItemAction({
-			dataListIndex: 0,
-			itemIndex: 0,
-		})
+		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('click:list-item')).toBeTruthy()
 	})

@@ -21,3 +21,9 @@ export function useWidthable(props: {
 		widthStyles,
 	}
 }
+
+export interface Widthable {
+	maxWidth?: NumberOrNumberString
+	minWidth?: NumberOrNumberString
+	width?: NumberOrNumberString
+}
