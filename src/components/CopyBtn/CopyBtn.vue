@@ -93,7 +93,7 @@
   padding: 6px 16px;
   box-shadow: none;
   margin-top: 2px;
-  background: rgba(97, 97, 97, 0.9);
+  background: rgba(#545859, 0.95);
   color: white;
 }
 
