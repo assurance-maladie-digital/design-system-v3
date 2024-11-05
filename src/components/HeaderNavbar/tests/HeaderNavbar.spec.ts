@@ -1,9 +1,9 @@
+import HeaderComplexMenu from '@/components/HeaderBar/HeaderComplexMenu/HeaderComplexMenu.vue'
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import HeaderComplexMenu from '../HeaderBar/HeaderComplexMenu/HeaderComplexMenu.vue'
-import HeaderNavbar from './HeaderNavbar.vue'
-import HorizontalNavbar from './HorizontalNavbar/HorizontalNavbar.vue'
+import HeaderNavbar from '../HeaderNavbar.vue'
+import HorizontalNavbar from '../HorizontalNavbar/HorizontalNavbar.vue'
 
 describe('HeaderNavbar', () => {
 	afterEach(() => {
