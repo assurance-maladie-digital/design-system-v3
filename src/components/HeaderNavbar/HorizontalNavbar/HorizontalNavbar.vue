@@ -21,6 +21,7 @@
 	>
 		<VTabs
 			height="53"
+			class="px-12"
 		>
 			<VTab
 				v-for="(item, index) in items"
@@ -30,8 +31,10 @@
 				slider-color="#fff"
 				:base-color="textBaseColor"
 				:ripple="false"
+				tabindex="0"
+				class="horizontal-menu__item"
 			>
-				<span class="horizontal-menu__item">
+				<span class="horizontal-menu__item-link">
 					{{ item.label }}
 				</span>
 			</VTab>
@@ -41,7 +44,11 @@
 
 <style lang="scss" scoped>
 .horizontal-menu__item {
-	font-size: 0,875rem;
+	cursor: pointer;
+}
+
+.horizontal-menu__item-link {
+	font-size: 0.875rem;
 	font-weight: 700;
 }
 
