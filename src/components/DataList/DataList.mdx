@@ -1,0 +1,77 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as DataList from './DataList.stories';
+
+<Meta of={DataList} />
+
+# DataList
+
+L’élément `DataList` est utilisé pour afficher une liste d’informations.
+
+<Canvas of={DataList.Default} />
+
+# API
+
+<Controls of={DataList.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+	import DataList from '@cnamts/synapse'
+
+	const items = [
+		{
+			title: 'Informations patient',
+			items: [
+				{
+					key: 'Nom',
+					value: 'Dupont',
+					icon: 'accountIcon',
+					chip: true,
+				},
+				{
+					key: 'Prénom',
+					value: 'Paul',
+					icon: 'accountIcon',
+				},
+				{
+					key: 'Date de naissance',
+					value: '24/09/1970',
+					icon: 'calendarIcon',
+					action: 'Modifier',
+				},
+			],
+		},
+		{
+			title: 'Médecin traitant',
+			items: [
+				{
+					key: 'Nom du praticien',
+					value: 'Gérard Leblanc',
+					icon: 'doctorIcon',
+				},
+
+				{
+					key: 'N° RPPS',
+					value: 'XXXXX',
+					icon: 'cardAccountIcon',
+				},
+			],
+		},
+		{
+			title: 'Autres informations',
+			items: [
+				{
+					key: 'Dernière modification',
+					value: '04/06/2020',
+					icon: 'editIcon',
+				},
+			],
+		},
+	]
+</script>
+
+<template>
+	<DataList :items="items" />
+</template>
+`} />

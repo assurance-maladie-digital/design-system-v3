@@ -43,6 +43,9 @@ setup((app) => {
 
 const preview: Preview = {
 	parameters: {
+		interactions: {
+			disable: true,
+		},
 		options: {
 			storySort: {
 				order: ['Home', ['Accueil', 'PolitiqueDeConfidentialité'], 'Components', 'Guidelines', ['Introduction', 'Couleurs', 'Customisation et themes', 'Typographie'], 'Fondamentaux', ['Accessibilite', 'EcoConception']],
