@@ -36,7 +36,7 @@
 		/>
 
 		<svg
-			v-if="slot?.serviceTitle || serviceTitle"
+			v-if="slot?.brandContent || serviceTitle"
 			:width="22"
 			:height="64"
 			:fill="primary"

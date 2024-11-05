@@ -56,6 +56,7 @@ describe('HeaderBar', () => {
 				'menu': '<div>Menu slot</div>',
 				'logo': '<div>Logo slot</div>',
 				'header-side': '<div>Header side slot</div>',
+				'logo-brand-content': '<div>Logo brand content slot</div>',
 			},
 		})
 
@@ -67,6 +68,7 @@ describe('HeaderBar', () => {
 		expect(text).toContain('Menu slot')
 		expect(text).toContain('Logo slot')
 		expect(text).toContain('Header side slot')
+		expect(text).not.toContain('Logo brand content slot')
 
 		wrapper.unmount()
 	})
