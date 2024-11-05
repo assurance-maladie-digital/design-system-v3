@@ -1,0 +1,46 @@
+import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import * as HeaderNavbarStories from "./HeaderNavbar.stories";
+
+# HeaderNavbar
+
+Le composant `HeaderNavbar` est un composant de navigation qui permet de naviguer entre les différentes pages de l'application.
+
+Il est basé sur les composants `HeaderBar` et `HeaderComplexMenu` du design system.
+
+Ce composant propose un navigation à l'aide d'un menu horizontal en mode desktop ce qui peut être util pour les produits ayant peut de page a destination des agents.
+Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 liens. Vous pouvez configurer le nombre de lien affiché dans le menu horizontal en utilisant la prop `maxHorizontalMenuItems`. Au dela de ce chiffre, le menu passera en mode burger. Par defaut, le menu horizontal affiche au maximum six items.
+
+<Canvas of={HeaderNavbar.Default} />
+
+## API
+
+<Controls of={HeaderNavbarStories.Default} />
+
+
+## Exemple d'utilisation
+
+<Source
+  dark
+  code={`
+<HeaderNavbar
+	home-aria-label="Home"
+	service-title="Synapse"
+	service-subtitle="design system de la CNAM"
+	:sticky="true"
+	:hide-when-down="false"
+	:max-horizontal-menu-items="20"
+	:items="[
+		{ label: 'Home', to: '/' },
+		{ label: 'About', to: '/about' },
+		{ label: 'Services', to: '/services' },
+		{ label: 'Contact', to: '/contact' },
+		{ label: 'Blog', to: '/blog' },
+		{ label: 'Careers', to: '/careers' },
+		{ label: 'FAQ', to: '/faq' },
+		{ label: 'Support', to: '/support' },
+		{ label: 'Privacy', to: '/privacy' },
+		{ label: 'Terms', to: '/terms' },
+	]"
+/>
+`}
+/>

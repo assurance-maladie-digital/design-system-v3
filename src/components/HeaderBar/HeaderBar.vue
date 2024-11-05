@@ -68,7 +68,7 @@
 	function handleScroll() {
 		const headerRec = header.value!.getBoundingClientRect()
 		headerOffset.value = headerRec.top + window.scrollY
-		headerMinHeight.value = isTopOfHeaderVisible.value ? 'auto' : `${header.value!.offsetHeight}px`
+		headerMinHeight.value = `${headerSticky.value!.offsetHeight}px`
 		isTopOfHeaderVisible.value = window.scrollY <= headerOffset.value
 		isScrollBelowHeader.value = window.scrollY > headerOffset.value + headerRec.height
 
@@ -153,7 +153,7 @@
 					:menu-open
 				/>
 			</div>
-			<div class="inner-header d-flex">
+			<div class="inner-header">
 				<slot
 					name="menu"
 					:menu-open
@@ -216,7 +216,6 @@
 .header {
 	top: 0;
 	width: 100%;
-	height: $header-height;
 	max-width: $header-max-width;
 	margin: 0 auto;
 }
@@ -225,7 +224,6 @@
 	background-color: $neutral-white;
 	border-bottom: solid 1px $blue-lighten-80;
 	width: 100%;
-	height: $header-height;
 	max-width: $header-max-width;
 	z-index: 1000;
 }
@@ -233,11 +231,11 @@
 .inner-header {
 	display: flex;
 	align-items: center;
-	height: 100%;
+	height: $header-height;
 }
 
 .header-logo {
-	margin-left: 2rem;
+	margin-left: 1rem;
 }
 
 .header-side {
@@ -247,7 +245,11 @@
 }
 
 @media screen and (min-width: $header-breakpoint) {
-	.header, .sticky-header {
+	.header-logo {
+		margin-left: 2rem;
+	}
+
+	.inner-header {
 		height: $header-height-desktop;
 	}
 }

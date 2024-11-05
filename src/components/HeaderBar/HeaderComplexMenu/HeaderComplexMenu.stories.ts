@@ -334,7 +334,7 @@ export const Generated: Story = {
 												href: 'https://www.ameli.fr/assure/sante/mon-bilan-prevention',
 											},
 											{
-												title: 'Réagir en cas \'urgence ',
+												title: 'Réagir en cas d\'urgence ',
 												href: 'https://www.ameli.fr/assure/sante/urgence',
 											},
 											{
