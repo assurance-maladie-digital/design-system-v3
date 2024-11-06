@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
 
@@ -117,5 +117,28 @@ describe('SubHeader', () => {
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('click:list-item')).toBeTruthy()
+	})
+
+	it('emits back event when called in slot', async () => {
+		const wrapper = mount(SubHeader, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				hideBackBtn: false,
+				titleText: 'Test',
+				dataListGroupItems,
+			},
+			slots: {
+				backBtn: '<div class="vd-back-btn">Back</div>',
+			},
+		})
+
+		const btn = wrapper.find('.vd-sub-header-back-btn')
+		await btn.trigger('click')
+
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('back')).toBeTruthy()
 	})
 })
