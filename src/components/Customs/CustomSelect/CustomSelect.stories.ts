@@ -78,6 +78,7 @@ export const Required: Story = {
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
+		required: true,
 	},
 	render: (args) => {
 		return {
@@ -89,7 +90,7 @@ export const Required: Story = {
 				<div class="d-flex flex-wrap align-center pa-4">
 					<CustomSelect
 						v-bind="args"
-						required
+						:required="args.required"
 					/>
 				</div>
 			`,

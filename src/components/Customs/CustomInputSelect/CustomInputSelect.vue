@@ -104,6 +104,7 @@
 		role="menu"
 		:error-messages="errorMessages"
 		:required="required"
+		:rules="[() => !!selectedItem && required]"
 	>
 		<div
 			ref="menu"
