@@ -94,8 +94,7 @@
 		})
 	})
 
-	const localErrorMessages = ref<string | string[]>(props.errorMessages)
-
+	const localErrorMessages = ref<string | string[]>(props.errorMessages as string | string[])
 	const checkForErrors = () => {
 		if (props.required && !selectedItem.value) {
 			localErrorMessages.value = ['Le champ est requis.']
