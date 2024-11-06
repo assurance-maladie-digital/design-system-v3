@@ -93,6 +93,17 @@
 			return item
 		})
 	})
+
+	const localErrorMessages = ref<string | string[]>(props.errorMessages)
+
+	const checkForErrors = () => {
+		if (props.required && !selectedItem.value) {
+			localErrorMessages.value = ['Le champ est requis.']
+			return false
+		}
+		localErrorMessages.value = []
+		return true
+	}
 </script>
 
 <template>
@@ -102,8 +113,8 @@
 		:label="props.label"
 		:title="props.label"
 		role="menu"
-		:error-messages="errorMessages"
-		:required="required"
+		:error-messages="localErrorMessages"
+		@click="checkForErrors"
 	>
 		<div
 			ref="menu"
@@ -154,7 +165,7 @@
 
 .v-list {
   position: absolute;
-  top: 36px;
+  top: 30px;
   width: 100%;
   z-index: 1;
   background-color: white;
