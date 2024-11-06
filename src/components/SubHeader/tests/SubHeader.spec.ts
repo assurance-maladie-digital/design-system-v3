@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
 
@@ -80,6 +80,23 @@ describe('SubHeader', () => {
 
 		const elExists = wrapper.find('.vd-subheader-loading').exists()
 		expect(elExists).toBe(true)
+	})
+
+	it('get subTitleText is defined', async () => {
+		const wrapper = mount(SubHeader, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				hideBackBtn: false,
+				titleText: 'Test',
+				subTitleText: 'SubTitle',
+				dataListGroupItems,
+			},
+		})
+
+		const subTitleText = wrapper.vm.subTitleText
+		expect(subTitleText).toBe('SubTitle')
 	})
 
 	it('emits itemAction event when called', async () => {
