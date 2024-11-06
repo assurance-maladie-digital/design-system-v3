@@ -53,6 +53,12 @@
 		'logo': (props: SlotProps & LogoProps) => unknown
 		'logo-brand-content': (props: SlotProps & LogoProps) => unknown
 		'header-side': (props: SlotProps) => unknown
+		'navigation-bar-prepend': () => unknown
+		'navigation-bar-append': () => unknown
+		'navigation-bar-content': () => unknown
+		'navigation-menu-prepend': (props: SlotProps) => unknown
+		'navigation-menu-append': (props: SlotProps) => unknown
+		'navigation-menu-content': (props: SlotProps) => unknown
 	}>()
 
 	const { isDesktop } = useHeaderResponsiveMode()
@@ -79,25 +85,40 @@
 	>
 		<template #menu>
 			<HeaderComplexMenu v-if="verticalMenu">
-				<HeaderMenuSection>
-					<HeaderMenuItem
-						v-for="item in items"
-						:key="item.label"
+				<div class="inner-vertical-menu">
+					<slot
+						name="navigation-menu-prepend"
+						:menu-open="menuOpen"
+					/>
+					<slot
+						name="navigation-menu-content"
+						:menu-open="menuOpen"
 					>
-						<a
-							v-if="item.href"
-							:href="item.href"
-						>
-							{{ item.label }}
-						</a>
-						<RouterLink
-							v-else-if="item.to"
-							:to="item.to"
-						>
-							{{ item.label }}
-						</RouterLink>
-					</HeaderMenuItem>
-				</HeaderMenuSection>
+						<HeaderMenuSection>
+							<HeaderMenuItem
+								v-for="item in items"
+								:key="item.label"
+							>
+								<a
+									v-if="item.href"
+									:href="item.href"
+								>
+									{{ item.label }}
+								</a>
+								<RouterLink
+									v-else-if="item.to"
+									:to="item.to"
+								>
+									{{ item.label }}
+								</RouterLink>
+							</HeaderMenuItem>
+						</HeaderMenuSection>
+					</slot>
+					<slot
+						name="navigation-menu-append"
+						:menu-open="menuOpen"
+					/>
+				</div>
 			</HeaderComplexMenu>
 		</template>
 		<template
@@ -130,9 +151,22 @@
 			<HorizontalNavbar
 				v-if="props.items && !verticalMenu"
 				:items="items"
-			/>
+			>
+				<template #navigation-bar-prepend>
+					<slot name="navigation-bar-prepend" />
+				</template>
+				<slot name="navigation-bar-content" />
+				<template #navigation-bar-append>
+					<slot name="navigation-bar-append" />
+				</template>
+			</HorizontalNavbar>
 		</template>
 	</HeaderBar>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.inner-vertical-menu {
+	display: flex;
+	flex-direction: column;
+}
+</style>

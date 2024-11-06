@@ -10,39 +10,60 @@
 		items: NavigationItem[]
 	}>()
 
+	defineSlots<{
+		'navigation-bar-prepend': () => unknown
+		'navigation-bar-append': () => unknown
+		'default': () => unknown
+	}>()
+
 </script>
 
 <template>
 	<VSheet
-		class="horizontal-menu"
+		class="horizontal-menu px-12"
 		dense
 		theme="dark"
 		:color="backgroundColor"
 	>
-		<VTabs
-			height="53"
-			class="px-12"
-		>
-			<VTab
-				v-for="(item, index) in items"
-				:key="index"
-				:href="item.href"
-				:to="item.to"
-				slider-color="#fff"
-				:base-color="textBaseColor"
-				:ripple="false"
-				tabindex="0"
-				class="horizontal-menu__item"
+		<slot name="navigation-bar-prepend" />
+		<slot>
+			<VTabs
+				height="53"
+				class="horizontal-menu__tabs"
+				show-arrows
 			>
-				<span class="horizontal-menu__item-link">
-					{{ item.label }}
-				</span>
-			</VTab>
-		</VTabs>
+				<VTab
+					v-for="(item, index) in items"
+					:key="index"
+					:href="item.href"
+					:to="item.to"
+					slider-color="#fff"
+					:base-color="textBaseColor"
+					:ripple="false"
+					tabindex="0"
+					class="horizontal-menu__item"
+				>
+					<span class="horizontal-menu__item-link">
+						{{ item.label }}
+					</span>
+				</VTab>
+			</VTabs>
+		</slot>
+		<slot name="navigation-bar-append" />
 	</VSheet>
 </template>
 
 <style lang="scss" scoped>
+
+.horizontal-menu {
+	display: flex;
+	align-items: center;
+}
+
+.horizontal-menu__tabs {
+	flex: 1 1 0;
+}
+
 .horizontal-menu__item {
 	cursor: pointer;
 }
