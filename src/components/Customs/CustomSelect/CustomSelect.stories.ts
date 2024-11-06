@@ -23,6 +23,34 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomSelect
+						v-model="value"
+						:items="items"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomSelect from '@cnamts/CustomSelect'
+					
+					const items =  [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -48,6 +76,35 @@ export const Default: Story = {
 }
 
 export const Outlined: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomSelect
+						v-model="value"
+						:items="items"
+						outlined
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomSelect from '@cnamts/CustomSelect'
+					
+					const items =  [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -73,6 +130,35 @@ export const Outlined: Story = {
 }
 
 export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomSelect
+						v-model="value"
+						:items="items"
+						required
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomSelect from '@cnamts/CustomSelect'
+					
+					const items =  [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -99,6 +185,45 @@ export const Required: Story = {
 }
 
 export const withCustomError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomSelect
+						v-model="value"
+						:items="items"
+						:error-messages="errorMessages"
+					/>
+					<VBtn @click="triggerError">
+						Trigger Error
+					</VBtn>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomSelect from '@cnamts/CustomSelect'
+					import { ref } from 'vue'
+					
+					const items =  [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					
+					const errorMessages = ref([])
+					
+					const triggerError = () => {
+						errorMessages.value = ['This is a test error message']
+					}
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -134,6 +259,36 @@ export const withCustomError: Story = {
 }
 
 export const withCustomKey: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+					<template>
+						<CustomSelect
+							v-model="value"
+							:items="items"
+							text-key="customKey"
+							outlined
+						/>
+					</template>
+					`,
+			},
+			{
+				name: 'Script',
+				code: `
+					<script setup lang="ts">
+						import CustomSelect from '@cnamts/CustomSelect'
+						
+						const items =  [
+							{ customKey: 'Choix 1', value: '1' },
+							{ customKey: 'Choix 2', value: '2' },
+						],
+					</script>
+					`,
+			},
+		],
+	},
 	args: {
 		items: [
 			{ customKey: 'Choix 1', value: '1' },

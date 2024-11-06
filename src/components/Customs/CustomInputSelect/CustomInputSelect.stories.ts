@@ -279,8 +279,8 @@ export const withCustomKey: Story = {
 					import CustomInputSelect from '@cnamts/CustomInputSelect'
 					
 					const items =  [
-						{ customKey: 'Option 1', value: '1' },
-						{ customKey: 'Option 2', value: '2' }
+						{ customKey: 'Choix 1', value: '1' },
+						{ customKey: 'Choix 2', value: '2' }
 					]
 				</script>
 				`,
@@ -289,8 +289,8 @@ export const withCustomKey: Story = {
 	},
 	args: {
 		items: [
-			{ customKey: 'Option 1', value: '1' },
-			{ customKey: 'Option 2', value: '2' },
+			{ customKey: 'Choix 1', value: '1' },
+			{ customKey: 'Choix 2', value: '2' },
 		],
 	},
 	render: (args) => {
