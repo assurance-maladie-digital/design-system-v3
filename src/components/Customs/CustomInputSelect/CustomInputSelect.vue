@@ -93,14 +93,6 @@
 			return item
 		})
 	})
-
-	const requiredRules = computed(() => {
-		if (props.required && !selectedItem.value) {
-			return ['Ce champ est requis.']
-		}
-
-		return []
-	})
 </script>
 
 <template>
@@ -112,7 +104,6 @@
 		role="menu"
 		:error-messages="errorMessages"
 		:required="required"
-		:rules="[requiredRules]"
 	>
 		<div
 			ref="menu"
