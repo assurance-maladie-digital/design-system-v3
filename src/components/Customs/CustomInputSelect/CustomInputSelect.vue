@@ -95,7 +95,11 @@
 	})
 
 	const requiredRules = computed(() => {
-		return props.required ? [(v: string | null) => !!v || 'Le champ est requis.'] : []
+		if (props.required && !selectedItem.value) {
+			return ['Ce champ est requis.']
+		}
+
+		return []
 	})
 </script>
 
