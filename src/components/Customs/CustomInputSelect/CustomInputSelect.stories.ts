@@ -15,6 +15,7 @@ const meta = {
 		selectedValue: { control: 'text' },
 		items: { control: 'object' },
 		errorMessages: { control: 'object' },
+		required: { control: 'boolean' },
 	},
 } as Meta<typeof CustomInputSelect>
 
@@ -22,6 +23,34 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomInputSelect
+						v-model="value"
+						:items="items"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					
+					const items =  [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -47,6 +76,35 @@ export const Default: Story = {
 }
 
 export const Outlined: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomInputSelect
+						v-model="value"
+						:items="items"
+						outlined
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					
+					const items =  [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -71,7 +129,101 @@ export const Outlined: Story = {
 	},
 }
 
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomInputSelect
+						v-model="value"
+						:items="items"
+						required
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					
+					const items =  [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		required: true,
+	},
+	render: (args) => {
+		return {
+			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomInputSelect
+						v-bind="args"
+						:required="args.required"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const withError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomInputSelect
+						v-model="value"
+						:items="items"
+						:error-messages="errorMessages"
+					/>
+					<VBtn @click="triggerError">
+						Trigger Error
+					</VBtn>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					import { ref } from 'vue'
+					
+					const items =  [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					]
+					
+					const errorMessages = ref([])
+					
+					const triggerError = () => {
+						errorMessages.value = ['This is a test error message']
+					}
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -105,10 +257,40 @@ export const withError: Story = {
 }
 
 export const withCustomKey: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomInputSelect
+						v-model="value"
+						:items="items"
+						text-key="customKey"
+						outlined
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					
+					const items =  [
+						{ customKey: 'Choix 1', value: '1' },
+						{ customKey: 'Choix 2', value: '2' }
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: [
-			{ customKey: 'Option 1', value: '1' },
-			{ customKey: 'Option 2', value: '2' },
+			{ customKey: 'Choix 1', value: '1' },
+			{ customKey: 'Choix 2', value: '2' },
 		],
 	},
 	render: (args) => {
