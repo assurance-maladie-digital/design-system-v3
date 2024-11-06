@@ -37,6 +37,48 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:outlined="outlined"
+						:outlinedIndicatif="outlinedIndicatif"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import PhoneField from '@cnamts/PhoneField'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const outlined = ref(true)
+					const outlinedIndicatif = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('code')
+					const customIndicatifs = ref([])
+					const useCustomIndicatifsOnly = ref(false)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: '',
 		required: true,
@@ -76,6 +118,48 @@ export const Default: Story = {
 }
 
 export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:outlined="outlined"
+						:outlinedIndicatif="outlinedIndicatif"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import PhoneField from '@cnamts/PhoneField'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const outlined = ref(true)
+					const outlinedIndicatif = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('code')
+					const customIndicatifs = ref([])
+					const useCustomIndicatifsOnly = ref(false)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: '',
 		required: true,
@@ -115,6 +199,51 @@ export const Required: Story = {
 }
 
 export const CustomIndicatifs: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:outlined="outlined"
+						:outlinedIndicatif="outlinedIndicatif"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import PhoneField from '@cnamts/PhoneField'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const outlined = ref(true)
+					const outlinedIndicatif = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('code')
+					const customIndicatifs = [
+						{ code: '+99', country: 'Utopia', abbreviation: 'UT', mask: '## ## ## ##', phoneLength: 8 },
+						{ code: '+98', country: 'Paradise', abbreviation: 'PA', mask: '## ## ## ##', phoneLength: 18 },
+					]
+					const useCustomIndicatifsOnly = ref(false)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: '',
 		required: false,
@@ -157,6 +286,48 @@ export const CustomIndicatifs: Story = {
 }
 
 export const ValidatedOnBlur: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:outlined="outlined"
+						:outlinedIndicatif="outlinedIndicatif"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import PhoneField from '@cnamts/PhoneField'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const outlined = ref(true)
+					const outlinedIndicatif = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('code')
+					const customIndicatifs = ref([])
+					const useCustomIndicatifsOnly = ref(false)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: '',
 		required: false,
@@ -196,6 +367,48 @@ export const ValidatedOnBlur: Story = {
 }
 
 export const DisplayFormatCode: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:outlined="outlined"
+						:outlinedIndicatif="outlinedIndicatif"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import PhoneField from '@cnamts/PhoneField'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const outlined = ref(true)
+					const outlinedIndicatif = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('code')
+					const customIndicatifs = ref([])
+					const useCustomIndicatifsOnly = ref(false)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: '',
 		required: false,
@@ -235,6 +448,48 @@ export const DisplayFormatCode: Story = {
 }
 
 export const DisplayFormatCodeAbbreviation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:outlined="outlined"
+						:outlinedIndicatif="outlinedIndicatif"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import PhoneField from '@cnamts/PhoneField'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const outlined = ref(true)
+					const outlinedIndicatif = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('code-abbreviation')
+					const customIndicatifs = ref([])
+					const useCustomIndicatifsOnly = ref(false)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: '',
 		required: false,
@@ -274,6 +529,48 @@ export const DisplayFormatCodeAbbreviation: Story = {
 }
 
 export const DisplayFormatCodeCountry: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:outlined="outlined"
+						:outlinedIndicatif="outlinedIndicatif"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import PhoneField from '@cnamts/PhoneField'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const outlined = ref(true)
+					const outlinedIndicatif = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('code-country')
+					const customIndicatifs = ref([])
+					const useCustomIndicatifsOnly = ref(false)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: '',
 		required: false,
@@ -313,6 +610,48 @@ export const DisplayFormatCodeCountry: Story = {
 }
 
 export const DisplayFormatCountry: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:outlined="outlined"
+						:outlinedIndicatif="outlinedIndicatif"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import PhoneField from '@cnamts/PhoneField'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const outlined = ref(true)
+					const outlinedIndicatif = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('country')
+					const customIndicatifs = ref([])
+					const useCustomIndicatifsOnly = ref(false)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: '',
 		required: false,
@@ -352,6 +691,48 @@ export const DisplayFormatCountry: Story = {
 }
 
 export const DisplayFormatAbbreviation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:outlined="outlined"
+						:outlinedIndicatif="outlinedIndicatif"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import PhoneField from '@cnamts/PhoneField'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const outlined = ref(true)
+					const outlinedIndicatif = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('abbreviation')
+					const customIndicatifs = ref([])
+					const useCustomIndicatifsOnly = ref(false)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: '',
 		required: false,

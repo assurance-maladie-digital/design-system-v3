@@ -202,4 +202,8 @@
   transform: translateY(-50%);
   color: tokens.$grey-darken-20;
 }
+
+:deep(.v-field__input) {
+ color: tokens.$grey-darken-20
+}
 </style>
