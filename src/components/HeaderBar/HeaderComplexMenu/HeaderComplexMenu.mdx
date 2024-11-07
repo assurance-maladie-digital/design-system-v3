@@ -48,6 +48,40 @@ Le menu peut être utilisé avec un seul niveau de profondeur.
 
 <Canvas of={HeaderComplexMenuStories.Default} />
 
+<Source
+  dark
+  code={`
+      <script setup lang="ts">
+      import { HeaderBar, HeaderComplexMenu, HeaderMenuSection, HeaderMenuItem } from '@cnamts/synapse'
+      </script>
+
+      <template>
+      <HeaderBar>
+      <template #menu>
+      <HeaderComplexMenu>
+      <HeaderMenuSection>
+      <HeaderMenuItem>
+      <a href="/">Home</a>
+      </HeaderMenuItem>
+      <HeaderMenuItem>
+      <a href="/about">About</a>
+      </HeaderMenuItem>
+      <HeaderMenuItem>
+      <RouterLink to="/services">Services</RouterLink>
+      </HeaderMenuItem>
+      <HeaderMenuItem>
+      <NuxtLink to="/contact">Contact</NuxtLink>
+      </HeaderMenuItem>
+      </HeaderMenuSection>
+      </HeaderComplexMenu>
+      </template>
+      </HeaderBar>
+      </template>
+            `}
+      />
+
+
+
 ## Menu à plusieurs niveaux
 
 Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeur. Dans ce cas là, il convient d'utiliser le composant `HeaderSubMenu` pour définir les sous-menus.
