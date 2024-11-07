@@ -112,21 +112,7 @@ export const Default: Story = {
 					:isValidatedOnBlur="args.isValidatedOnBlur"
 				/>
 				</div>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>				
-				<br>
-				<br>
-				<br>
-
+				<br><br><br><br><br>
 			`,
 		}
 	},
