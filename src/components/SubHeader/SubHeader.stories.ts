@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SubHeader from './SubHeader.vue'
+import { ref } from 'vue'
+import { mdiStepBackward, mdiClose, mdiContentCopy } from '@mdi/js'
 
 const meta = {
 	title: 'Components/SubHeader',
@@ -38,6 +40,26 @@ const meta = {
 			default: false,
 		},
 		'additional-informations': {
+			control: { type: 'text' },
+			default: undefined,
+		},
+		'back-btn': {
+			control: { type: 'text' },
+			default: undefined,
+		},
+		'back-btn-icon': {
+			control: { type: 'text' },
+			default: undefined,
+		},
+		'title': {
+			control: { type: 'text' },
+			default: undefined,
+		},
+		'sub-title': {
+			control: { type: 'text' },
+			default: undefined,
+		},
+		'right-content': {
 			control: { type: 'text' },
 			default: undefined,
 		},
@@ -111,6 +133,52 @@ export const Default: Story = {
 		background-color="#fff"
 		background-opacity=".24"
 	/>
+</template>`,
+		'back-btn': `<template #back-btn>
+	<VBtn
+		color="white"
+	variant="tonal"
+	class="mb-4"
+	>
+	Retour
+	</VBtn>
+</template>`,
+		'back-btn-icon': `<template #back-btn-icon>
+	<VIcon class="mr-2">
+		{{ backArrowIcon }}
+	</VIcon>
+</template>`,
+		'title': `<template #title>
+	<h3 class="headline font-weight-bold mt-2">
+		Dossier n°42
+	</h3>
+</template>`,
+		'sub-title': `<template #sub-title>
+	<h4 class="title mt-1">
+		Traité par Jean Lunel
+	</h4>
+</template>`,
+		'right-content': `<template #right-content>
+	<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
+		<VBtn
+			variant="text"
+			color="white"
+		>
+			<VIcon class="mr-2">
+				{{ cancelIcon }}
+			</VIcon>
+			Clore le dossier
+		</VBtn>
+		<VBtn
+			variant="text"
+			color="white"
+		>
+			<VIcon class="mr-2">
+				{{ copyIcon }}
+			</VIcon>
+			Dupliquer le dossier
+		</VBtn>
+	</div>
 </template>`,
 		'vuetifyOptions': {
 			sheet: {
@@ -635,6 +703,382 @@ export const SlotAdditionalInformations: Story = {
 								background-color="#fff"
 								background-opacity=".24"
 							/>
+						</template>
+					</SubHeader>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const SlotBackBtn: Story = {
+	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SubHeader
+						title-text="Paul Dupont"
+						sub-title-text="1 69 08 75 125 456 75"
+					>
+						<template #back-btn>
+							<VBtn
+								color="white"
+								variant="tonal"
+								class="mb-4"
+							>
+								Retour
+							</VBtn>
+						</template>
+					</SubHeader>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SubHeader from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'backBtnText': 'Retour',
+		'hideBackBtn': false,
+		'titleText': 'Paul Dupont',
+		'subTitleText': '1 69 08 75 125 456 75',
+		'loading': false,
+		'renderHtmlValue': false,
+		'back-btn': `<template #back-btn>
+	<VBtn
+		color="white"
+		variant="tonal"
+		class="mb-4"
+	>
+		Retour
+	</VBtn>
+</template>`,
+	},
+	render: (args) => {
+		return {
+			components: { SubHeader },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+                    <SubHeader v-bind="args">
+						<template #back-btn>
+							<VBtn
+								color="white"
+								variant="tonal"
+								class="mb-4"
+							>
+								Retour
+							</VBtn>
+						</template>
+					</SubHeader>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const SlotBackBtnIcon: Story = {
+	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'title', 'sub-title', 'right-content'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SubHeader
+						title-text="Paul Dupont"
+						sub-title-text="1 69 08 75 125 456 75"
+					>
+						<template #back-btn-icon>
+							<VIcon class="mr-2">
+								{{ backArrowIcon }}
+							</VIcon>
+						</template>
+					</SubHeader>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SubHeader from '@cnamts/synapse'
+					import { mdiStepBackward } from '@mdi/js'
+					
+					const backArrowIcon = ref(mdiStepBackward)
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'backBtnText': 'Retour',
+		'hideBackBtn': false,
+		'titleText': 'Paul Dupont',
+		'subTitleText': '1 69 08 75 125 456 75',
+		'loading': false,
+		'renderHtmlValue': false,
+		'back-btn-icon': `<template #back-btn-icon>
+	<VIcon class="mr-2">
+		{{ backArrowIcon }}
+	</VIcon>
+</template>`,
+	},
+	render: (args) => {
+		return {
+			components: { SubHeader },
+			setup() {
+				const backArrowIcon = ref(mdiStepBackward)
+				return { args, backArrowIcon }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+                    <SubHeader v-bind="args">
+						<template #back-btn-icon>
+							<VIcon class="mr-2">
+								{{ backArrowIcon }}
+							</VIcon>
+						</template>
+					</SubHeader>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const SlotTitle: Story = {
+	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'sub-title', 'right-content'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SubHeader sub-title-text="1 69 08 75 125 456 75">
+						<template #title>
+							<h3 class="headline font-weight-bold mt-2">
+								Dossier n°42
+							</h3>
+						</template>
+					</SubHeader>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SubHeader from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		backBtnText: 'Retour',
+		hideBackBtn: false,
+		titleText: 'Paul Dupont',
+		subTitleText: '1 69 08 75 125 456 75',
+		loading: false,
+		renderHtmlValue: false,
+		title: `<template #title>
+	<h3 class="headline font-weight-bold mt-2">
+		Dossier n°42
+	</h3>
+</template>`,
+	},
+	render: (args) => {
+		return {
+			components: { SubHeader },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+                    <SubHeader v-bind="args">
+						<template #title>
+							<h3 class="headline font-weight-bold mt-2">
+								Dossier n°42
+							</h3>
+						</template>
+					</SubHeader>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const SlotSubTitle: Story = {
+	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'right-content'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SubHeader
+						title-text="Paul Dupont"
+					>
+						<template #sub-title>
+							<h4 class="title mt-1">
+								Traité par Paul Dupont
+							</h4>
+						</template>
+					</SubHeader>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SubHeader from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'backBtnText': 'Retour',
+		'hideBackBtn': false,
+		'titleText': 'Paul Dupont',
+		'subTitleText': '1 69 08 75 125 456 75',
+		'loading': false,
+		'renderHtmlValue': false,
+		'sub-title': `<template #sub-title>
+	<h4 class="title mt-1">
+		Traité par Jean Lunel
+	</h4>
+</template>`,
+	},
+	render: (args) => {
+		return {
+			components: { SubHeader },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+                    <SubHeader v-bind="args">
+						<template #sub-title>
+							<h4 class="title mt-1">
+								Traité par Jean Lunel
+							</h4>
+						</template>
+					</SubHeader>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const SlotRightContent: Story = {
+	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'sub-title'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SubHeader
+						title-text="Paul Dupont"
+						sub-title-text="1 69 08 75 125 456 75"
+					>
+						<template #sub-title>
+							<h4 class="title mt-1">
+								Traité par Paul Dupont
+							</h4>
+						</template>
+					</SubHeader>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SubHeader from '@cnamts/synapse'
+					
+					import { mdiClose, mdiContentCopy } from '@mdi/js'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'backBtnText': 'Retour',
+		'hideBackBtn': false,
+		'titleText': 'Paul Dupont',
+		'subTitleText': '1 69 08 75 125 456 75',
+		'loading': false,
+		'renderHtmlValue': false,
+		'right-content': `<template #right-content>
+	<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
+		<VBtn
+			variant="text"
+			color="white"
+		>
+			<VIcon class="mr-2">
+				{{ cancelIcon }}
+			</VIcon>
+			Clore le dossier
+		</VBtn>
+		<VBtn
+			variant="text"
+			color="white"
+		>
+			<VIcon class="mr-2">
+				{{ copyIcon }}
+			</VIcon>
+			Dupliquer le dossier
+		</VBtn>
+	</div>
+</template>`,
+	},
+	render: (args) => {
+		return {
+			components: { SubHeader },
+			setup() {
+				const cancelIcon = ref(mdiClose)
+				const copyIcon = ref(mdiContentCopy)
+
+				return { args, cancelIcon, copyIcon }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+                    <SubHeader v-bind="args">
+						<template #right-content>
+							<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
+								<VBtn
+									variant="text"
+									color="white"
+								>
+									<VIcon class="mr-2">
+										{{ cancelIcon }}
+									</VIcon>
+									Clore le dossier
+								</VBtn>
+								<VBtn
+									variant="text"
+									color="white"
+								>
+									<VIcon class="mr-2">
+										{{ copyIcon }}
+									</VIcon>
+									Dupliquer le dossier
+								</VBtn>
+							</div>
 						</template>
 					</SubHeader>
               	</div>
