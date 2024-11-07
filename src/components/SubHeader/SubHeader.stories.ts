@@ -403,7 +403,9 @@ export const ActionBtn: Story = {
 			components: { SubHeader },
 			setup() {
 				const updateInfo = (eventValue: { dataListIndex: number, itemIndex: number }) => {
-					args.dataListGroupItems[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
+					if (args.dataListGroupItems) {
+						args.dataListGroupItems[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
+					}
 				}
 				return { args, updateInfo }
 			},
