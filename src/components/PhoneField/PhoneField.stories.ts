@@ -9,7 +9,7 @@ const meta = {
 		controls: { exclude: ['computedValue', 'selectedDialCode', 'phoneMask', 'counter', 'hasError', 'phoneNumber', 'mergedDialCodes'] },
 	},
 	argTypes: {
-		modelValue: { control: 'none' },
+		modelValue: { control: false},
 		required: { control: 'boolean' },
 		outlined: { control: 'boolean' },
 		outlinedIndicatif: { control: 'boolean' },
