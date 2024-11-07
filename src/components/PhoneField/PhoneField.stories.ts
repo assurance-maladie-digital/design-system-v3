@@ -9,7 +9,7 @@ const meta = {
 		controls: { exclude: ['computedValue', 'selectedDialCode', 'phoneMask', 'counter', 'hasError', 'phoneNumber', 'mergedDialCodes'] },
 	},
 	argTypes: {
-		modelValue: { control: 'text' },
+		modelValue: { control: 'none' },
 		required: { control: 'boolean' },
 		outlined: { control: 'boolean' },
 		outlinedIndicatif: { control: 'boolean' },
@@ -112,6 +112,21 @@ export const Default: Story = {
 					:isValidatedOnBlur="args.isValidatedOnBlur"
 				/>
 				</div>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>				
+				<br>
+				<br>
+				<br>
+
 			`,
 		}
 	},
@@ -285,7 +300,7 @@ export const CustomIndicatifs: Story = {
 	},
 }
 
-export const ValidatedOnBlur: Story = {
+export const NotValidatedOnBlur: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -322,7 +337,7 @@ export const ValidatedOnBlur: Story = {
 					const displayFormat = ref('code')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(true)
+					const isValidatedOnBlur = ref(false)
 				</script>
 				`,
 			},
@@ -338,7 +353,7 @@ export const ValidatedOnBlur: Story = {
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidatedOnBlur: false,
 	},
 	render: (args) => {
 		return {
