@@ -9,35 +9,39 @@ const meta = {
 		controls: { exclude: ['copy'] },
 	},
 	argTypes: {
-		hideBackBtn: {
+		'hideBackBtn': {
 			control: { type: 'boolean' },
 			default: false,
 		},
-		backBtnText: {
+		'backBtnText': {
 			control: { type: 'text' },
 			default: 'Retour',
 		},
-		titleText: {
+		'titleText': {
 			control: { type: 'text' },
 			default: undefined,
 		},
-		subTitleText: {
+		'subTitleText': {
 			control: { type: 'text' },
 			default: undefined,
 		},
-		dataListGroupItems: {
+		'dataListGroupItems': {
 			control: { type: 'object' },
 			default: undefined,
 		},
-		loading: {
+		'loading': {
 			control: { type: 'boolean' },
 			default: false,
 		},
-		renderHtmlValue: {
+		'renderHtmlValue': {
 			control: { type: 'boolean' },
 			default: false,
 		},
-		vuetifyOptions: {
+		'additional-informations': {
+			control: { type: 'text' },
+			default: undefined,
+		},
+		'vuetifyOptions': {
 			control: { type: 'object' },
 			default: () => ({
 				menu: {
@@ -88,13 +92,27 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		backBtnText: 'Retour',
-		hideBackBtn: false,
-		titleText: 'Paul Dupont',
-		subTitleText: '1 69 08 75 125 456 75',
-		loading: false,
-		renderHtmlValue: false,
-		vuetifyOptions: {
+		'backBtnText': 'Retour',
+		'hideBackBtn': false,
+		'titleText': 'Paul Dupont',
+		'subTitleText': '1 69 08 75 125 456 75',
+		'loading': false,
+		'renderHtmlValue': false,
+		'additional-informations': `<template #additional-informations>
+	<VSpacer />
+	<p class="white--text mt-8 mb-0">
+		Profil complété à 50%
+	</p>
+	<VProgressLinear
+		:model-value="50"
+		color="#fff"
+		height="8px"
+		class="mt-2 mb-1"
+		background-color="#fff"
+		background-opacity=".24"
+	/>
+</template>`,
+		'vuetifyOptions': {
 			sheet: {
 				color: 'secondary',
 			},
@@ -328,6 +346,297 @@ export const ActionBtn: Story = {
 						:data-list-group-items="args.dataListGroupItems"
 						@click:list-item="updateInfo"
 					/>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const HtmlValue: Story = {
+	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SubHeader
+						title-text="Paul Dupont"
+						sub-title-text="1 69 08 75 125 456 75"
+						:data-list-group-items="items"
+						render-html-value
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SubHeader from '@cnamts/synapse'
+										
+					const items = [
+						{
+							title: 'Informations patient',
+							items: [
+								{ key: 'Date de naissance', value: '24/09/1970' },
+								{ key: 'Adresse', value: '<b>50 Avenue du Professeur André Lemierre</b><br/>75020 Paris' },
+							],
+						},
+						{
+							title: 'Médecin traitant',
+							items: [
+								{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
+								{ key: 'N° RPPS', value: 'XXXXX' },
+							],
+						},
+						{
+							title: 'Autres informations',
+							items: [
+								{ key: 'Dernière modification', value: '04/06/2020' },
+							],
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		backBtnText: 'Retour',
+		hideBackBtn: false,
+		titleText: 'Paul Dupont',
+		subTitleText: '1 69 08 75 125 456 75',
+		loading: false,
+		renderHtmlValue: true,
+		dataListGroupItems: [
+			{
+				title: 'Informations patient',
+				items: [
+					{ key: 'Date de naissance', value: '24/09/1970' },
+					{ key: 'Adresse', value: '<b>50 Avenue du Professeur André Lemierre</b><br/>75020 Paris' },
+				],
+			},
+			{
+				title: 'Médecin traitant',
+				items: [
+					{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
+					{ key: 'N° RPPS', value: 'XXXXX' },
+				],
+			},
+			{
+				title: 'Autres informations',
+				items: [
+					{ key: 'Dernière modification', value: '04/06/2020' },
+				],
+			},
+		],
+
+	},
+	render: (args) => {
+		return {
+			components: { SubHeader },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+                    <SubHeader 
+						v-bind="args"
+						:data-list-group-items="args.dataListGroupItems"
+						:render-html-value="args.renderHtmlValue"
+					/>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const Loading: Story = {
+	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'additional-informations', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SubHeader
+						title-text="Paul Dupont"
+						sub-title-text="1 69 08 75 125 456 75"
+						:data-list-group-items="items"
+						loading
+					>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SubHeader from '@cnamts/synapse'
+					
+					const items = [
+						{
+							title: 'Informations patient',
+							items: [
+								{ key: 'Date de naissance', value: '24/09/1970' },
+								{ key: 'Adresse', value: '50 Avenue du Professeur André Lemierre 75020 Paris' },
+							],
+						},
+						{
+							title: 'Médecin traitant',
+							items: [
+								{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
+								{ key: 'N° RPPS', value: 'XXXXX' },
+							],
+						},
+						{
+							title: 'Autres informations',
+							items: [
+								{ key: 'Dernière modification', value: '04/06/2020' },
+							],
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		backBtnText: 'Retour',
+		hideBackBtn: false,
+		titleText: 'Paul Dupont',
+		subTitleText: '1 69 08 75 125 456 75',
+		loading: true,
+		renderHtmlValue: false,
+		dataListGroupItems: [
+			{
+				title: 'Informations patient',
+				items: [
+					{ key: 'Date de naissance', value: '24/09/1970' },
+					{ key: 'Adresse', value: '50 Avenue du Professeur André Lemierre 75020 Paris' },
+				],
+			},
+			{
+				title: 'Médecin traitant',
+				items: [
+					{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
+					{ key: 'N° RPPS', value: 'XXXXX' },
+				],
+			},
+			{
+				title: 'Autres informations',
+				items: [
+					{ key: 'Dernière modification', value: '04/06/2020' },
+				],
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { SubHeader },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+                    <SubHeader 
+						v-bind="args"
+						:data-list-group-items="args.dataListGroupItems"
+						:loading="args.loading"
+					/>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const SlotAdditionalInformations: Story = {
+	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SubHeader
+						title-text="Paul Dupont"
+						sub-title-text="1 69 08 75 125 456 75"
+					>
+						<template #additional-informations>
+							<VSpacer />
+							<p class="white--text mt-8 mb-0">
+								Profil complété à 50%
+							</p>
+							<VProgressLinear
+								:model-value="50"
+								color="#fff"
+								height="8px"
+								class="mt-2 mb-1"
+								background-color="#fff"
+								background-opacity=".24"
+							/>
+						</template>
+					</SubHeader>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SubHeader from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'backBtnText': 'Retour',
+		'hideBackBtn': false,
+		'titleText': 'Paul Dupont',
+		'subTitleText': '1 69 08 75 125 456 75',
+		'loading': false,
+		'renderHtmlValue': false,
+		'additional-informations': `<template #additional-informations>
+	<VSpacer />
+	<p class="white--text mt-8 mb-0">
+		Profil complété à 50%
+	</p>
+	<VProgressLinear
+		:model-value="50"
+		color="#fff"
+		height="8px"
+		class="mt-2 mb-1"
+		background-color="#fff"
+		background-opacity=".24"
+	/>
+</template>`,
+	},
+	render: (args) => {
+		return {
+			components: { SubHeader },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+                    <SubHeader v-bind="args">
+						<template #additional-informations>
+							<VSpacer />
+							<p class="white--text mt-8 mb-0">
+								Profil complété à 50%
+							</p>
+							<VProgressLinear
+								:model-value="50"
+								color="#fff"
+								height="8px"
+								class="mt-2 mb-1"
+								background-color="#fff"
+								background-opacity=".24"
+							/>
+						</template>
+					</SubHeader>
               	</div>
 			`,
 		}
