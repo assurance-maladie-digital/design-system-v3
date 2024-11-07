@@ -112,6 +112,7 @@ const meta = {
 		},
 		'header-side': {
 			control: { type: 'text' },
+			description: 'Contenu a droite du header. Utile pour ajouter un menu secondaire par exemple.',
 			table: {
 				type: {
 					summary: '{ menu-open: boolean }',

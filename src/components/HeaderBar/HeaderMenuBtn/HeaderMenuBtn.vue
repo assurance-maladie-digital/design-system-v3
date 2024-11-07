@@ -51,7 +51,7 @@
 
 .header-menu-btn {
 	text-transform: Capitalize;
-	height: $header-height - 1;
+	height: $header-height;
 	width: 82px;
 	display: flex;
 	flex-direction: column;
@@ -81,7 +81,7 @@
 
 @media screen and (min-width: $header-breakpoint) {
 	.header-menu-btn {
-		height: $header-height-desktop - 1;
+		height: $header-height-desktop;
 		width: $header-height-desktop;
 	}
 }

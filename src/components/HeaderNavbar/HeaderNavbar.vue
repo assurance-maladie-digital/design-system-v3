@@ -90,30 +90,32 @@
 						name="navigation-menu-prepend"
 						:menu-open="menuOpen"
 					/>
-					<slot
-						name="navigation-menu-content"
-						:menu-open="menuOpen"
-					>
-						<HeaderMenuSection>
-							<HeaderMenuItem
-								v-for="item in items"
-								:key="item.label"
-							>
-								<a
-									v-if="item.href"
-									:href="item.href"
+					<div class="inner-vertical-menu__main-content">
+						<slot
+							name="navigation-menu-content"
+							:menu-open="menuOpen"
+						>
+							<HeaderMenuSection>
+								<HeaderMenuItem
+									v-for="item in items"
+									:key="item.label"
 								>
-									{{ item.label }}
-								</a>
-								<RouterLink
-									v-else-if="item.to"
-									:to="item.to"
-								>
-									{{ item.label }}
-								</RouterLink>
-							</HeaderMenuItem>
-						</HeaderMenuSection>
-					</slot>
+									<a
+										v-if="item.href"
+										:href="item.href"
+									>
+										{{ item.label }}
+									</a>
+									<RouterLink
+										v-else-if="item.to"
+										:to="item.to"
+									>
+										{{ item.label }}
+									</RouterLink>
+								</HeaderMenuItem>
+							</HeaderMenuSection>
+						</slot>
+					</div>
 					<slot
 						name="navigation-menu-append"
 						:menu-open="menuOpen"
@@ -122,7 +124,7 @@
 			</HeaderComplexMenu>
 		</template>
 		<template
-			#brand-content
+			#logo-brand-content
 		>
 			<slot
 				name="logo-brand-content"
@@ -168,5 +170,10 @@
 .inner-vertical-menu {
 	display: flex;
 	flex-direction: column;
+	height: 100%;
+}
+
+.inner-vertical-menu__main-content {
+	flex: 1;
 }
 </style>

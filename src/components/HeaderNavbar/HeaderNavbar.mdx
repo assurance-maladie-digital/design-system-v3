@@ -10,7 +10,7 @@ Il est basé sur les composants `HeaderBar` et `HeaderComplexMenu` du design sys
 Ce composant propose un navigation à l'aide d'un menu horizontal en mode desktop ce qui peut être util pour les produits ayant peut de page a destination des agents.
 Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 liens. Vous pouvez configurer le nombre de lien affiché dans le menu horizontal en utilisant la prop `maxHorizontalMenuItems`. Au dela de ce chiffre, le menu passera en mode burger. Par defaut, le menu horizontal affiche au maximum six items.
 
-<Canvas of={HeaderNavbar.Default} />
+<Canvas of={HeaderNavbarStories.Default} />
 
 ## API
 
@@ -27,20 +27,70 @@ Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 
 	service-title="Synapse"
 	service-subtitle="design system de la CNAM"
 	:sticky="true"
-	:hide-when-down="false"
-	:max-horizontal-menu-items="20"
 	:items="[
 		{ label: 'Home', to: '/' },
 		{ label: 'About', to: '/about' },
 		{ label: 'Services', to: '/services' },
 		{ label: 'Contact', to: '/contact' },
 		{ label: 'Blog', to: '/blog' },
-		{ label: 'Careers', to: '/careers' },
-		{ label: 'FAQ', to: '/faq' },
-		{ label: 'Support', to: '/support' },
-		{ label: 'Privacy', to: '/privacy' },
-		{ label: 'Terms', to: '/terms' },
 	]"
 />
 `}
 />
+
+## Les slots
+
+### HeaderSide
+
+Le slot `header-side` permet d'ajouter du contenu à droite du header. Il est possible d'ajouter plusieurs éléments dans ce slot.
+Il sera principalement utilisé pour ajouter un boutton de connexion, d'accès à un compte ou de recherche.
+Il est necessaire de faire attention à la place que prendront les éléments en mode mobile et de prévoir un mode réduit ou bien de les déporter dans le menu burger.
+
+<Source dark code={`
+<script setup lang="ts">
+	import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
+</script>
+
+<template>
+  <HeaderNavbar>
+	<template #header-side>
+	  <div class="d-flex justify-center h-100 ga-4 pr-4">
+		<VBtn
+			variant="text"
+			:prepend-icon="mdiMagnify"
+			color="primary"
+		>
+			Rechercher
+		</VBtn>
+		<VBtn
+			color="primary"
+			:prepend-icon="mdiAccountCircleOutline"
+		>
+			Login
+		</VBtn>
+	</div>
+	</template>
+  </HeaderNavbar>
+</template>
+`} />
+
+### Les slots concernant le menu
+
+
+<Canvas of={HeaderNavbarStories.WithSlots} />
+
+#### Le menu horizontal
+
+Quand le menu est en mode horizontal, les slots `navigation-bar-prepend` et `navigation-bar-append` permettent d'ajouter du contenu avant et après le menu.
+
+Le slot `navigation-bar-content` quand a lui, remplace les items du menu tel que généré avec la props `items`. Il n'écrase pas les slots `navigation-bar-prepend` et `navigation-bar-append`.
+
+#### Les slots concernant le menu burger
+
+Le menu burger est généré automatiquement à partir des items passés en props, il utilise en interne le composant `HeaderComplexMenu`.
+
+
+les slots `burger-menu-prepend` et `burger-menu-append` permettent d'ajouter du contenu en haut et en bas du menu burger.
+
+Le slot `burger-menu-content` permet de remplacer le contenu du menu burger. Il n'écrase pas les slots `burger-menu-prepend` et `burger-menu-append` et permet d'utiliser les composants `HeaderMenuItem` et `HeaderMenuGroup` pour construire le menu.
+Pour plus de d'information sur la manière de construire un menu avec le composant `HeaderComplexMenu`, vous pouvez consulter la documentation de ce composant.

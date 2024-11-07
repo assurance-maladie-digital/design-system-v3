@@ -59,7 +59,7 @@ describe('HeaderLogo', () => {
 				serviceTitle: 'Test service title',
 			},
 			slots: {
-				brandContent: '<h1>other title</h1>',
+				'brand-content': '<h1>other title</h1>',
 			},
 		})
 
