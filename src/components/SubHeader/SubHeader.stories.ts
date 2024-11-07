@@ -12,58 +12,72 @@ const meta = {
 	},
 	argTypes: {
 		'hideBackBtn': {
+			type: 'boolean',
 			control: { type: 'boolean' },
 			default: false,
 		},
 		'backBtnText': {
+			type: 'string',
 			control: { type: 'text' },
 			default: 'Retour',
 		},
 		'titleText': {
+			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
 		},
 		'subTitleText': {
+			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
 		},
 		'dataListGroupItems': {
+			type: 'object',
 			control: { type: 'object' },
 			default: undefined,
 		},
 		'loading': {
+			type: 'boolean',
 			control: { type: 'boolean' },
 			default: false,
 		},
 		'renderHtmlValue': {
+			type: 'boolean',
 			control: { type: 'boolean' },
 			default: false,
 		},
 		'additional-informations': {
+			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
 		},
 		'back-btn': {
+			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
 		},
 		'back-btn-icon': {
+			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
 		},
 		'title': {
+			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
 		},
 		'sub-title': {
+			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
 		},
 		'right-content': {
+			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
 		},
 		'vuetifyOptions': {
+			type: 'object',
 			control: { type: 'object' },
 			default: () => ({
 				menu: {
@@ -120,66 +134,12 @@ export const Default: Story = {
 		'subTitleText': '1 69 08 75 125 456 75',
 		'loading': false,
 		'renderHtmlValue': false,
-		'additional-informations': `<template #additional-informations>
-	<VSpacer />
-	<p class="white--text mt-8 mb-0">
-		Profil complété à 50%
-	</p>
-	<VProgressLinear
-		:model-value="50"
-		color="#fff"
-		height="8px"
-		class="mt-2 mb-1"
-		background-color="#fff"
-		background-opacity=".24"
-	/>
-</template>`,
-		'back-btn': `<template #back-btn>
-	<VBtn
-		color="white"
-	variant="tonal"
-	class="mb-4"
-	>
-	Retour
-	</VBtn>
-</template>`,
-		'back-btn-icon': `<template #back-btn-icon>
-	<VIcon class="mr-2">
-		{{ backArrowIcon }}
-	</VIcon>
-</template>`,
-		'title': `<template #title>
-	<h3 class="headline font-weight-bold mt-2">
-		Dossier n°42
-	</h3>
-</template>`,
-		'sub-title': `<template #sub-title>
-	<h4 class="title mt-1">
-		Traité par Jean Lunel
-	</h4>
-</template>`,
-		'right-content': `<template #right-content>
-	<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
-		<VBtn
-			variant="text"
-			color="white"
-		>
-			<VIcon class="mr-2">
-				{{ cancelIcon }}
-			</VIcon>
-			Clore le dossier
-		</VBtn>
-		<VBtn
-			variant="text"
-			color="white"
-		>
-			<VIcon class="mr-2">
-				{{ copyIcon }}
-			</VIcon>
-			Dupliquer le dossier
-		</VBtn>
-	</div>
-</template>`,
+		'additional-informations': undefined,
+		'back-btn': undefined,
+		'back-btn-icon': undefined,
+		'title': undefined,
+		'sub-title': undefined,
+		'right-content': undefined,
 		'vuetifyOptions': {
 			sheet: {
 				color: 'secondary',
@@ -207,6 +167,12 @@ export const Default: Story = {
 						:sub-title-text="args.subTitleText"
 						:loading="args.loading"
 						:render-html-value="args.renderHtmlValue"
+						:additional-informations="args.additionalInformations"
+						:back-btn="args.backBtn"
+						:back-btn-icon="args.backBtnIcon"
+						:title="args.title"
+						:sub-title="args.subTitle"
+						:right-content="args.rightContent"
 						:vuetify-options="args.vuetifyOptions"
 					/>
               	</div>
