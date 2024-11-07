@@ -216,7 +216,6 @@
 .header {
 	top: 0;
 	width: 100%;
-	max-width: $header-max-width;
 	margin: 0 auto;
 }
 
@@ -224,7 +223,6 @@
 	background-color: $neutral-white;
 	border-bottom: solid 1px $blue-lighten-80;
 	width: 100%;
-	max-width: $header-max-width;
 	z-index: 1000;
 }
 
@@ -232,6 +230,8 @@
 	display: flex;
 	align-items: center;
 	height: $header-height;
+	max-width: $header-max-width;
+	margin: 0 auto;
 }
 
 .header-logo {

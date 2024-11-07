@@ -6,6 +6,9 @@ import BackBtn from '../BackBtn/BackBtn.vue'
 
 const meta = {
 	component: HeaderNavbar,
+	parameters: {
+		layout: 'fullscreen',
+	},
 	argTypes: {
 		'items': {
 			control: { type: 'object' },

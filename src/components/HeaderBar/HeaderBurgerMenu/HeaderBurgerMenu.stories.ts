@@ -145,8 +145,13 @@ export const WithScroll: Story = {
 			},
 			template: `
 			<div class="position: relative">
-				<div style="background-color: orange; margin:auto; max-width: 1712px; padding: 1rem 4rem">
-					Menu supérieur externe au composant
+				<div style="margin: auto; max-width: 1712px; display: flex;">
+					<div
+						style="background-color: #ed76b3; padding: 0.7rem 0.8rem; width: fit-content;"
+					>Menu supérieur externe au composant</div>
+					<div
+						style="padding: 0.7rem 0.8rem; width: fit-content;"
+					>Autre lien</div>
 				</div>
 				<HeaderBar>
 					<template #menu>

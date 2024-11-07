@@ -6,6 +6,9 @@ import { mdiMagnify } from '@mdi/js'
 
 const meta = {
 	component: HeaderBar,
+	parameters: {
+		layout: 'fullscreen',
+	},
 	argTypes: {
 		'serviceTitle': {
 			control: { type: 'text' },
@@ -199,15 +202,19 @@ export const WithExternalTopMenu: Story = {
 	decorators: [
 		() => ({
 			template: `
-			<div class="position: relative">
-				<div style="background-color: orange; margin:auto; max-width: 1712px; padding: 1rem 4rem">
-					Menu supérieur externe au composant
+				<div style="margin: auto; max-width: 1712px; display: flex;">
+					<div
+						style="background-color: #ed76b3; padding: 0.7rem 0.8rem; width: fit-content;"
+					>Menu supérieur externe au composant</div>
+					<div
+						style="padding: 0.7rem 0.8rem; width: fit-content;"
+					>Autre lien</div>
 				</div>
 				<story/>
 				<div
 					style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
 				>Contenu de la page</div>
-			</div>`,
+			`,
 		}),
 	],
 }
