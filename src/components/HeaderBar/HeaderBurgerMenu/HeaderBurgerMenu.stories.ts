@@ -1,4 +1,4 @@
-import HeaderMenu from './HeaderComplexMenu.vue'
+import HeaderBurgerMenu from './HeaderBurgerMenu.vue'
 import HeaderBar from '../HeaderBar.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import HeaderMenuSection from './HeaderMenuSection/HeaderMenuSection.vue'
@@ -8,11 +8,11 @@ import { VBtn } from 'vuetify/components'
 import { mdiMapMarker } from '@mdi/js'
 
 const meta = {
-	component: HeaderMenu,
+	component: HeaderBurgerMenu,
 	parameters: {
 		layout: 'fullscreen',
 	},
-} satisfies Meta<typeof HeaderMenu>
+} satisfies Meta<typeof HeaderBurgerMenu>
 
 export default meta
 
@@ -22,16 +22,16 @@ export const Default: Story = {
 	args: {},
 	render: (args) => {
 		return {
-			components: { HeaderMenu, HeaderBar },
+			components: { HeaderBurgerMenu, HeaderBar },
 			setup() {
 				return { args }
 			},
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu v-bind="args">
+						<HeaderBurgerMenu v-bind="args">
 							<p>lorem ipsum</p>
-						</HeaderMenu>
+						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
 			`,
@@ -45,7 +45,7 @@ export const Populated: Story = {
 		return {
 			components: {
 				HeaderMenuItem,
-				HeaderMenu,
+				HeaderBurgerMenu,
 				HeaderBar,
 				HeaderSubMenu,
 				HeaderMenuSection,
@@ -57,7 +57,7 @@ export const Populated: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu v-bind="args">
+						<HeaderBurgerMenu v-bind="args">
 							<HeaderMenuSection title="section 1">
 								<HeaderMenuItem>
 									<a>Item 1</a>
@@ -127,7 +127,7 @@ export const Populated: Story = {
 								<p class="font-weight-bold">Veillez vous connecter</p>
 								<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
 							</div>
-						</HeaderMenu>
+						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
 			`,
@@ -139,7 +139,7 @@ export const WithScroll: Story = {
 	args: {},
 	render: (args) => {
 		return {
-			components: { HeaderMenu, HeaderBar, HeaderMenuSection, HeaderSubMenu, HeaderMenuItem },
+			components: { HeaderBurgerMenu, HeaderBar, HeaderMenuSection, HeaderSubMenu, HeaderMenuItem },
 			setup() {
 				return { args }
 			},
@@ -150,7 +150,7 @@ export const WithScroll: Story = {
 				</div>
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu v-bind="args">
+						<HeaderBurgerMenu v-bind="args">
 							<HeaderMenuSection>
 								<HeaderMenuItem>
 									<HeaderSubMenu>
@@ -165,7 +165,7 @@ export const WithScroll: Story = {
 									</HeaderSubMenu>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
-						</HeaderMenu>
+						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
 				<div
@@ -181,7 +181,7 @@ export const Generated: Story = {
 	render: (args) => {
 		return {
 			components: {
-				HeaderMenu,
+				HeaderBurgerMenu,
 				HeaderBar,
 				HeaderMenuSection,
 				HeaderSubMenu,
@@ -413,7 +413,7 @@ export const Generated: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu  v-bind="args">
+						<HeaderBurgerMenu v-bind="args">
 							<HeaderMenuSection v-for="section in menu" :key="section.title" :title="section.title">
 								<HeaderMenuItem v-for="item in section.items" :key="item.title">
 									<HeaderSubMenu v-if="item.subMenuTitle">
@@ -442,7 +442,7 @@ export const Generated: Story = {
 								<VBtn class="mt-3 mb-4 font-weight-bold text-capitalize" base-color="primary" density="comfortable" flat height="37">Sélectionner</VBtn>
 								<p class="mb-8">Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.) </p>
 							</div>
-						</HeaderMenu>
+						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
 			`,

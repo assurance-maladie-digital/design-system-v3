@@ -1,4 +1,4 @@
-import HeaderComplexMenu from '@/components/HeaderBar/HeaderComplexMenu/HeaderComplexMenu.vue'
+import HeaderBurgerMenu from '@/components/HeaderBar/HeaderBurgerMenu/HeaderBurgerMenu.vue'
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
@@ -40,14 +40,14 @@ describe('HeaderNavbar', () => {
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.html()).toContain('Home')
-		expect(wrapper.findComponent(HeaderComplexMenu).exists()).toBe(false)
+		expect(wrapper.findComponent(HeaderBurgerMenu).exists()).toBe(false)
 		expect(wrapper.findComponent(HorizontalNavbar).exists()).toBe(true)
 
 		await wrapper.setProps({
 			maxHorizontalMenuItems: 1,
 		})
 
-		expect(wrapper.findComponent(HeaderComplexMenu).exists()).toBe(true)
+		expect(wrapper.findComponent(HeaderBurgerMenu).exists()).toBe(true)
 		expect(wrapper.findComponent(HorizontalNavbar).exists()).toBe(false)
 
 		wrapper.unmount()
@@ -81,7 +81,7 @@ describe('HeaderNavbar', () => {
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.findComponent(HeaderComplexMenu).exists()).toBe(true)
+		expect(wrapper.findComponent(HeaderBurgerMenu).exists()).toBe(true)
 		expect(wrapper.findComponent(HorizontalNavbar).exists()).toBe(false)
 
 		wrapper.unmount()

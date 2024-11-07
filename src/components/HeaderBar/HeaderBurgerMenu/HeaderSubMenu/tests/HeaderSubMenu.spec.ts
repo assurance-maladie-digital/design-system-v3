@@ -58,6 +58,6 @@ describe('HeaderSubMenu', () => {
 			},
 		})
 
-		expect(mountWithoutInject).toThrowError('The HeaderSubMenu component must be used inside a HeaderComplexMenu component')
+		expect(mountWithoutInject).toThrowError('The HeaderSubMenu component must be used inside a HeaderBurgerMenu component')
 	})
 })

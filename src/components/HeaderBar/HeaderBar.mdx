@@ -6,7 +6,7 @@ import * as HeaderBarStories from "./HeaderBar.stories";
 Work in progress
 ===
 
-Pour voir l'utilisation du menu, veuillez consulter le composant `HeaderComplexMenu` dans le menu de gauche.
+Pour voir l'utilisation du menu, veuillez consulter le composant `HeaderBurgerMenu` dans le menu de gauche.
 
 # HeaderBar
 
@@ -23,7 +23,7 @@ Le composant `HeaderBar` possède les slots suivants :
 ### Prepend
 
 Le slot `prepend` permet d'ajouter du contenu en haut du header, il suivra le comportement du header au scroll.
-Il est possible de récuperer le status du Menu de header en utilisant la prop `isMenuOpen` du slot `prepend`. (Fonctionne uniquement pour les menu s'enregistrant via la fonction injectée `registerHeaderMenu`, ce qui est le cas pour le composant `HeaderComplexMenu`)
+Il est possible de récuperer le status du Menu de header en utilisant la prop `isMenuOpen` du slot `prepend`. (Fonctionne uniquement pour les menu s'enregistrant via la fonction injectée `registerHeaderMenu`, ce qui est le cas pour le composant `HeaderBurgerMenu`)
 
 <Source
   dark
@@ -31,9 +31,9 @@ Il est possible de récuperer le status du Menu de header en utilisant la prop `
 <template>
   <HeaderBar>
 	<template #menu>
-	  <HeaderComplexMenu>
+	  <HeaderBurgerMenu>
 		...
-	  </HeaderComplexMenu>
+	  </HeaderBurgerMenu>
 	</template>
 	<template #prepend="{ isMenuOpen }">
 	  <div v-if="isMenuOpen">Menu ouvert</div>
@@ -55,9 +55,9 @@ Il est également possible de récuperer le status du Menu de header en utilisan
 <template>
   <HeaderBar>
 	<template #menu>
-	  <HeaderComplexMenu>
+	  <HeaderBurgerMenu>
 		...
-	  </HeaderComplexMenu>
+	  </HeaderBurgerMenu>
 	</template>
 	<template #append="{ isMenuOpen }">
 	  <div v-if="isMenuOpen">Menu ouvert</div>
@@ -70,7 +70,7 @@ Il est également possible de récuperer le status du Menu de header en utilisan
 
 ### Menu
 
-Le slot `menu` permet d'ajouter un menu au header. Il est recommandé d'utiliser le composant `HeaderComplexMenu` du design system Pour tout menu contenant plus de 5 éléments.
+Le slot `menu` permet d'ajouter un menu au header. Il est recommandé d'utiliser le composant `HeaderBurgerMenu` du design system Pour tout menu contenant plus de 5 éléments.
 
 <Source
   dark
@@ -78,9 +78,9 @@ Le slot `menu` permet d'ajouter un menu au header. Il est recommandé d'utiliser
 <template>
   <HeaderBar>
 	<template #menu>
-	  <HeaderComplexMenu>
+	  <HeaderBurgerMenu>
 		...
-	  </HeaderComplexMenu>
+	  </HeaderBurgerMenu>
 	</template>
   </HeaderBar>
 </template>

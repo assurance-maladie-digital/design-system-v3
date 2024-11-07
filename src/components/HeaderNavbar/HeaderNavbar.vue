@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import HeaderBar from '@/components/HeaderBar/HeaderBar.vue'
-	import HeaderComplexMenu from '@/components/HeaderBar/HeaderComplexMenu/HeaderComplexMenu.vue'
-	import HeaderMenuItem from '@/components/HeaderBar/HeaderComplexMenu/HeaderMenuItem/HeaderMenuItem.vue'
-	import HeaderMenuSection from '@/components/HeaderBar/HeaderComplexMenu/HeaderMenuSection/HeaderMenuSection.vue'
+	import HeaderBurgerMenu from '@/components/HeaderBar/HeaderBurgerMenu/HeaderBurgerMenu.vue'
+	import HeaderMenuItem from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuItem/HeaderMenuItem.vue'
+	import HeaderMenuSection from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.vue'
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
 	import { computed, ref } from 'vue'
 	import { RouterLink } from 'vue-router'
@@ -22,7 +22,7 @@
 			hideWhenDown?: boolean
 			/**
 			 * The number of item to shown in the horizontal menu before using
-			 * the complex menu (default: 6)
+			 * the Burger menu (default: 6)
 			 */
 			maxHorizontalMenuItems?: number
 			/**
@@ -84,7 +84,7 @@
 		:service-subtitle="serviceSubtitle"
 	>
 		<template #menu>
-			<HeaderComplexMenu v-if="verticalMenu">
+			<HeaderBurgerMenu v-if="verticalMenu">
 				<div class="inner-vertical-menu">
 					<slot
 						name="navigation-menu-prepend"
@@ -121,7 +121,7 @@
 						:menu-open="menuOpen"
 					/>
 				</div>
-			</HeaderComplexMenu>
+			</HeaderBurgerMenu>
 		</template>
 		<template
 			#logo-brand-content

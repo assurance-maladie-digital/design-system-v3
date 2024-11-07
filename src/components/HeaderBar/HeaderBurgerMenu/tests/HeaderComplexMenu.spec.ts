@@ -2,10 +2,10 @@ import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi, afterEach } from 'vitest'
 import { registerHeaderMenuKey } from '../../consts'
-import HeaderComplexMenu from '../HeaderComplexMenu.vue'
+import HeaderBurgerMenu from '../HeaderBurgerMenu.vue'
 import { defineComponent, toRef } from 'vue'
 
-describe('HeaderComplexMenu', () => {
+describe('HeaderBurgerMenu', () => {
 	const BtnTestComponent = defineComponent({
 		props: {
 			modelValue: {
@@ -25,7 +25,7 @@ describe('HeaderComplexMenu', () => {
 	})
 
 	it('should render the component', async () => {
-		const wrapper = mount(HeaderComplexMenu, {
+		const wrapper = mount(HeaderBurgerMenu, {
 			global: {
 				plugins: [vuetify],
 				provide: {
@@ -52,7 +52,7 @@ describe('HeaderComplexMenu', () => {
 	})
 
 	it('should close the menu when clicking outside', async () => {
-		const wrapper = mount(HeaderComplexMenu, {
+		const wrapper = mount(HeaderBurgerMenu, {
 			global: {
 				plugins: [vuetify],
 				provide: {
@@ -81,7 +81,7 @@ describe('HeaderComplexMenu', () => {
 	})
 
 	it('should not close the menu when clicking inside', async () => {
-		const wrapper = mount(HeaderComplexMenu, {
+		const wrapper = mount(HeaderBurgerMenu, {
 			global: {
 				plugins: [vuetify],
 				provide: {
@@ -109,7 +109,7 @@ describe('HeaderComplexMenu', () => {
 	})
 
 	it('should listen to the button to open and close the menu', async () => {
-		const wrapper = mount(HeaderComplexMenu, {
+		const wrapper = mount(HeaderBurgerMenu, {
 			global: {
 				plugins: [vuetify],
 				provide: {

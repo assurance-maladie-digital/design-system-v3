@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import HeaderBar from '../../HeaderBar.vue'
-import HeaderMenu from '../HeaderComplexMenu.vue'
+import HeaderMenu from '../HeaderBurgerMenu.vue'
 import HeaderMenuItem from '../HeaderMenuItem/HeaderMenuItem.vue'
 import HeaderMenuSection from '../HeaderMenuSection/HeaderMenuSection.vue'
 import HeaderSubMenu from './HeaderSubMenu.vue'
 
 const meta = {
-	title: 'Components/HeaderBar/HeaderComplexMenu/HeaderSubMenu',
 	component: HeaderSubMenu,
 	parameters: {
 		layout: 'fullscreen',

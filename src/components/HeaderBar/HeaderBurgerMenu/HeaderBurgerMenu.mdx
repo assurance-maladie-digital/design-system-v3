@@ -1,12 +1,12 @@
 import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
-import * as HeaderComplexMenuStories from "./HeaderComplexMenu.stories";
+import * as HeaderBurgerMenuStories from "./HeaderBurgerMenu.stories";
 
-<Meta of={HeaderComplexMenuStories} />
+<Meta of={HeaderBurgerMenuStories} />
 
 Work in progress
 ===
 
-# HeaderComplexMenu
+# HeaderBurgerMenu
 
 L'utilisation de ce menu est à privilégier pour les application à destination du publique ou pour créer des menus contenant plus de six éléments.
 
@@ -20,62 +20,62 @@ Ce menu est prévu pour être utilisé dans le composant `HeaderBar` via le slot
 <template>
   <HeaderBar>
 	<template #menu>
-	  <HeaderComplexMenu>
+	  <HeaderBurgerMenu>
 		menu content
-	  </HeaderComplexMenu>
+	  </HeaderBurgerMenu>
 	</template>
   </HeaderBar>
 </template>
 `}
 />
 
-Ce menu s'utilise conjoitement avec les composants `headerMenuSection` et `headerMenuItem` pour structurer le menu.
+Ce menu s'utilise conjoitement avec les composants `HeaderMenuSection` et `HeaderMenuItem` pour structurer le menu.
 
-Un composant `headerMenuSection` peut contenir plusieurs `headerMenuItem`.
+Un composant `HeaderMenuSection` peut contenir plusieurs `HeaderMenuItem`.
 
-Un Composant `headerMenuItem` doit obligatoirement est contenu dans un `headerMenuSection`.
+Un Composant `HeaderMenuItem` doit obligatoirement est contenu dans un `HeaderMenuSection`.
 
 
-<Canvas of={HeaderComplexMenuStories.Default} />
+<Canvas of={HeaderBurgerMenuStories.Default} />
 
 ## API
 
-<Controls of={HeaderComplexMenuStories.Default} />
+<Controls of={HeaderBurgerMenuStories.Default} />
 
 ## Menu à un seul niveau
 
 Le menu peut être utilisé avec un seul niveau de profondeur.
 
-<Canvas of={HeaderComplexMenuStories.Default} />
+<Canvas of={HeaderBurgerMenuStories.Default} />
 
 <Source
   dark
   code={`
       <script setup lang="ts">
-      import { HeaderBar, HeaderComplexMenu, HeaderMenuSection, HeaderMenuItem } from '@cnamts/synapse'
+      import { HeaderBar, HeaderBurgerMenu, HeaderMenuSection, HeaderMenuItem } from '@cnamts/synapse'
       </script>
 
       <template>
-      <HeaderBar>
-      <template #menu>
-      <HeaderComplexMenu>
-      <HeaderMenuSection>
-      <HeaderMenuItem>
-      <a href="/">Home</a>
-      </HeaderMenuItem>
-      <HeaderMenuItem>
-      <a href="/about">About</a>
-      </HeaderMenuItem>
-      <HeaderMenuItem>
-      <RouterLink to="/services">Services</RouterLink>
-      </HeaderMenuItem>
-      <HeaderMenuItem>
-      <NuxtLink to="/contact">Contact</NuxtLink>
-      </HeaderMenuItem>
-      </HeaderMenuSection>
-      </HeaderComplexMenu>
-      </template>
-      </HeaderBar>
+		<HeaderBar>
+			<template #menu>
+				<HeaderBurgerMenu>
+					<HeaderMenuSection>
+						<HeaderMenuItem>
+							<a href="/">Home</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<a href="/about">About</a>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<RouterLink to="/services">Services</RouterLink>
+						</HeaderMenuItem>
+						<HeaderMenuItem>
+							<NuxtLink to="/contact">Contact</NuxtLink>
+						</HeaderMenuItem>
+					</HeaderMenuSection>
+				</HeaderBurgerMenu>
+			</template>
+		</HeaderBar>
       </template>
             `}
       />
@@ -86,7 +86,7 @@ Le menu peut être utilisé avec un seul niveau de profondeur.
 
 Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeur. Dans ce cas là, il convient d'utiliser le composant `HeaderSubMenu` pour définir les sous-menus.
 
-<Canvas of={HeaderComplexMenuStories.Populated} />
+<Canvas of={HeaderBurgerMenuStories.Populated} />
 
 <Source
   dark
@@ -174,7 +174,7 @@ Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeu
 
 Voici un exemple de menu construit de façon dynamique.
 
-<Canvas of={HeaderComplexMenuStories.Generated} />
+<Canvas of={HeaderBurgerMenuStories.Generated} />
 
 <Source
   dark
