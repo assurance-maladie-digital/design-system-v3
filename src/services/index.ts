@@ -1,1 +1,1 @@
-export * from './NotificationService'
+export * as NotificationService from './NotificationService'
