@@ -8,7 +8,6 @@ const meta = {
 	component: SubHeader,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['copy'] },
 	},
 	argTypes: {
 		'hideBackBtn': {
@@ -32,9 +31,7 @@ const meta = {
 			default: undefined,
 		},
 		'dataListGroupItems': {
-			type: 'object',
 			control: { type: 'object' },
-			default: undefined,
 		},
 		'loading': {
 			type: 'boolean',
@@ -77,7 +74,6 @@ const meta = {
 			default: undefined,
 		},
 		'vuetifyOptions': {
-			type: 'object',
 			control: { type: 'object' },
 			default: () => ({
 				menu: {
@@ -134,6 +130,7 @@ export const Default: Story = {
 		'subTitleText': '1 69 08 75 125 456 75',
 		'loading': false,
 		'renderHtmlValue': false,
+		'dataListGroupItems': [],
 		'additional-informations': undefined,
 		'back-btn': undefined,
 		'back-btn-icon': undefined,
@@ -167,6 +164,7 @@ export const Default: Story = {
 						:sub-title-text="args.subTitleText"
 						:loading="args.loading"
 						:render-html-value="args.renderHtmlValue"
+						:data-list-group-items="args.dataListGroupItems"
 						:additional-informations="args.additionalInformations"
 						:back-btn="args.backBtn"
 						:back-btn-icon="args.backBtnIcon"
