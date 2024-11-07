@@ -5,7 +5,6 @@ import { VBtn } from 'vuetify/components'
 import { mdiMagnify } from '@mdi/js'
 
 const meta = {
-	title: 'Components/HeaderBar',
 	component: HeaderBar,
 	argTypes: {
 		'serviceTitle': {

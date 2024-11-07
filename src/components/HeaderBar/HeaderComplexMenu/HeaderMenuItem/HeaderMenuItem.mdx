@@ -1,0 +1,38 @@
+import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import * as HeaderMenuItemStories from "./HeaderMenuItem.stories";
+
+
+# HeaderMenuItem
+
+Le composant `HeaderMenuItem` est un composant de menu qui permet de wrapper un lien de navigation. Cela peut être un lien `a`, `router-link` ou `nuxt-link`.
+Ce composant doit être utilisé dans un composant `HeaderMenuSection` afin de respecter la structure du menu et de garantir la bonne accessibilité du menu.
+
+<Source
+  dark
+  code={`
+<HeaderMenuSection>
+	<HeaderMenuItem>
+		<a href="/">Home</a>
+	</HeaderMenuItem>
+	<HeaderMenuItem>
+		<a href="/about">About</a>
+	</HeaderMenuItem>
+	<HeaderMenuItem>
+		<RouterLink to="/services">Services</RouterLink>
+	</HeaderMenuItem>
+	<HeaderMenuItem>
+		<NuxtLink to="/contact">Contact</NuxtLink>
+	</HeaderMenuItem>
+</HeaderMenuSection>
+`}
+/>
+
+Pour plus de détails sur le contexte d'utilisation de ce composant, veuillez consulter le composant `HeaderComplexMenu`.
+
+## Usage
+
+<Canvas of={HeaderMenuItemStories.Default} />
+
+### API
+
+<Controls of={HeaderMenuItemStories.Default} />

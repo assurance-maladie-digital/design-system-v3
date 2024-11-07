@@ -132,6 +132,7 @@
 	position: fixed;
 	z-index: 1000;
 	background-color: rgba(3, 16, 37, .5);
+	backdrop-filter: blur(2px);
 }
 
 .menu-wrapper {

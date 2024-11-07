@@ -138,6 +138,10 @@
 			background-color: $primary-base;
 			color: $neutral-white;
 			transition: color 0.15s linear, background-color 0.15s linear;
+
+			> :deep(*) {
+				color: $neutral-white !important;
+			}
 		}
 
 		.sub-menu-content-wrapper {

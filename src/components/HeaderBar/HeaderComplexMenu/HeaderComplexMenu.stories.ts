@@ -8,7 +8,6 @@ import { VBtn } from 'vuetify/components'
 import { mdiMapMarker } from '@mdi/js'
 
 const meta = {
-	title: 'Components/HeaderBar/HeaderComplexMenu',
 	component: HeaderMenu,
 	parameters: {
 		layout: 'fullscreen',
