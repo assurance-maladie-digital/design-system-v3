@@ -1,0 +1,39 @@
+import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import * as HeaderSubMenuStories from "./HeaderSubMenu.stories";
+
+<Meta of={HeaderSubMenuStories} />
+
+# HeaderSubMenu
+
+Le composant `HeaderSubMenu` est un sous-composant du composant `HeaderComplexMenu` qui permet de créer un sous-menu dans le menu principal.
+En mode mobile, les sous-menus s'affichent par dessus du menu parent, en mode desktop, les sous-menus s'affichent à droite du parent.
+Les sous-menus peuvent être imbriqués pour créer des sous-sous-menus.
+
+Le composant `HeaderSubMenu` doit être utilisé dans un composant `HeaderMenuItem` afin de respecter la structure du menu et de garantir la bonne accessibilité du menu.
+On aura donc une structure de composant comme suit :
+
+<Source
+  dark
+  code={`
+	<HeaderMenuSection>
+		<HeaderMenuItem>
+			<HeaderSubMenu>
+				<HeaderMenuSection>
+					<HeaderMenuItem>
+						<a>lien de deuxième niveau</a>
+					</HeaderMenuItem>
+				</HeaderMenuSection>
+			</HeaderSubMenu>
+		</HeaderMenuItem>
+	</HeaderMenuSection>
+`}
+/>
+
+
+## Usage
+
+<Canvas of={HeaderSubMenuStories.Default} />
+
+### API
+
+<Controls of={HeaderSubMenuStories.Default} />
