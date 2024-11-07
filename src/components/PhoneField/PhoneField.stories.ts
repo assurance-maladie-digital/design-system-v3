@@ -250,7 +250,7 @@ export const CustomIndicatifs: Story = {
 					const displayFormat = ref('code')
 					const customIndicatifs = [
 						{ code: '+99', country: 'Utopia', abbreviation: 'UT', mask: '## ## ## ##', phoneLength: 8 },
-						{ code: '+98', country: 'Paradise', abbreviation: 'PA', mask: '## ## ## ##', phoneLength: 18 },
+						{ code: '+98', country: 'Paradise', abbreviation: 'PA', mask: '## ## ## ##', phoneLength: 10 },
 					]
 					const useCustomIndicatifsOnly = ref(false)
 					const isValidatedOnBlur = ref(true)
