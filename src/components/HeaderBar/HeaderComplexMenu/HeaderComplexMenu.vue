@@ -17,6 +17,7 @@
 	function positionMenu() {
 		// todo debounce
 		const rect = menuBtnWrapper.value!.getBoundingClientRect()
+
 		menuLeft.value = rect.left
 		menuTop.value = rect.top
 		menuHeight.value = `calc(100vh - ${rect.top}px - 48px)`
@@ -42,6 +43,8 @@
 		document.body.style.overflow = newVal ? 'hidden' : 'auto'
 
 		if (newVal) {
+			positionMenu() // the menu position can have changed since the component was mounted
+
 			await nextTick()
 			innerBtn.value!.focus()
 		}
