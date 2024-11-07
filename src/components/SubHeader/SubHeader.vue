@@ -24,8 +24,8 @@
 	}>(), {
 		hideBackBtn: false,
 		backBtnText: locales.backBtnText,
-		titleText: '',
-		subTitleText: '',
+		titleText: undefined,
+		subTitleText: undefined,
 		dataListGroupItems: undefined,
 		loading: false,
 		renderHtmlValue: false,
