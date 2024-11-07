@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SubHeader from './SubHeader.vue'
-import type { VariantType } from '@/types/vuetifyTypes'
 
 const meta = {
 	title: 'Components/SubHeader',
