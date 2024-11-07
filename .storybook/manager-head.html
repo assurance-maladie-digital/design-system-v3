@@ -1,7 +1,43 @@
+<script>
+    // Add custom icon for some menu items in the sidebar
+    window.addEventListener('load', function () {
+        // customInputSelect
+        const customSelectMenu = document.querySelector('#components-customselect');
+        if (customSelectMenu) {
+            customSelectMenu.innerHTML += `
+                <svg width='10' height='10' style="margin-top: 4px">
+                   <circle cx='5' cy='5' r='5' fill='#66BF3C' />
+                </svg>
+            `;
+        }
+
+        // customInputSelect
+        const customInputSelectMenu = document.querySelector('#components-custominputselect');
+        if (customInputSelectMenu) {
+            customInputSelectMenu.innerHTML += `
+                <svg width='10' height='10' style="margin-top: 4px">
+                   <circle cx='5' cy='5' r='5' fill='#66BF3C' />
+                </svg>
+            `;
+        }
+
+        // phoneField
+        const phoneFieldMenu = document.querySelector('#components-phonefield');
+        if (phoneFieldMenu) {
+            phoneFieldMenu.innerHTML += `
+                <svg width='10' height='10' style="margin-top: 4px">
+                   <circle cx='5' cy='5' r='5' fill='#66BF3C' />
+                </svg>
+            `;
+        }
+    });
+</script>
+
 <style>
     #storybook-explorer-tree .sidebar-item svg {
         color: #000091;
     }
+
     #storybook-explorer-tree .sidebar-item[data-selected='true'] svg {
         color: white;
     }
