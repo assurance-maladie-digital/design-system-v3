@@ -170,7 +170,7 @@
 }
 .v-field--focused {
   .v-icon {
-    transform: rotateX(180deg) translateY(50%);
+    transform: rotateX(180deg);
   }
 }
 
@@ -198,8 +198,6 @@
 .v-icon {
   position: absolute;
   right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
   color: tokens.$grey-darken-20;
 }
 
