@@ -249,8 +249,10 @@ export const CustomIndicatifs: Story = {
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
 					const customIndicatifs = [
-						{ code: '+99', country: 'Utopia', abbreviation: 'UT', mask: '## ## ## ##', phoneLength: 8 },
-						{ code: '+98', country: 'Paradise', abbreviation: 'PA', mask: '## ## ## ##', phoneLength: 10 },
+                        { code: '+33', country: 'France', abbreviation: 'FR', phoneLength: 10, mask: '## ## ## ## ##' },
+                        { code: '+34', country: 'Spain', abbreviation: 'ES', phoneLength: 9, mask: '### ### ###' },
+						{ code: '+199', country: 'Utopia', abbreviation: 'UT', mask: '## ## ## ##', phoneLength: 8 },
+						{ code: '+198', country: 'Paradise', abbreviation: 'PA', mask: '## ## ## ##', phoneLength: 10 },
 					]
 					const useCustomIndicatifsOnly = ref(false)
 					const isValidatedOnBlur = ref(true)
@@ -268,6 +270,8 @@ export const CustomIndicatifs: Story = {
 		countryCodeRequired: false,
 		displayFormat: 'code',
 		customIndicatifs: [
+			{ code: '+33', country: 'France', abbreviation: 'FR', phoneLength: 10, mask: '## ## ## ## ##' },
+			{ code: '+34', country: 'Spain', abbreviation: 'ES', phoneLength: 9, mask: '### ### ###' },
 			{ code: '+99', country: 'Utopia', abbreviation: 'UT', mask: '## ## ## ##', phoneLength: 8 },
 			{ code: '+98', country: 'Paradise', abbreviation: 'PA', mask: '## ## ## ##', phoneLength: 18 },
 		],
