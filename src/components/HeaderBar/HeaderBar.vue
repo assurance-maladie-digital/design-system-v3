@@ -221,7 +221,6 @@
 
 .sticky-header {
 	background-color: $neutral-white;
-	border-bottom: solid 1px $blue-lighten-80;
 	width: 100%;
 	z-index: 1000;
 }
@@ -232,6 +231,7 @@
 	height: $header-height;
 	max-width: $header-max-width;
 	margin: 0 auto;
+	border-bottom: solid 1px $blue-lighten-80;
 }
 
 .header-logo {
