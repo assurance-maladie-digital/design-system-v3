@@ -3,7 +3,7 @@ import * as CustomInputSelectStories from "./CustomInputSelect.stories.ts";
 
 <Meta of={CustomInputSelectStories} />
 
-# CustomSelect
+# CustomInputSelect
 
 Le composant `CustomInputSelect` est utilisé pour proposer une alternative au `v-select` de Vuetify qui ne respecte pas les règles RGAA.
 
@@ -19,12 +19,12 @@ Le composant `CustomInputSelect` est utilisé pour proposer une alternative au `
 
 <Source dark code={`
 <script setup lang="ts">
-	import CustomInputSelect from '@/components/Customs/CustomInputSelect/CustomInputSelect.vue'
-	import { ref } from 'vue'
+	import CustomInputSelect from '@cnamts/CustomInputSelect'
 
-	const value = ref('fr')
-	const items = ['fr', 'en', 'co']
-	const ariaLabel = 'Choix de la langue'
+	const items = [
+        { text: 'Option 1', value: '1' },
+        { text: 'Option 2', value: '2' },
+    ],
 </script>
 
 <template>
@@ -33,8 +33,6 @@ Le composant `CustomInputSelect` est utilisé pour proposer une alternative au `
 			<CustomInputSelect
 				v-model="value"
 				:items="items"
-				:label="ariaLabel"
-				aria-label="Choix de la langue"
 			/>
 		</div>
 	</main>

@@ -1,0 +1,28 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as HeaderLoading from './HeaderLoading.stories';
+
+<Meta of={HeaderLoading} />
+
+# HeaderLoading
+
+L’élément `HeaderLoading` est une extension du composant `VSkeletonLoader` de Vuetify, il est utilisé pour afficher un élément de chargement avec des dimensions personnalisées.
+
+<Canvas of={HeaderLoading.Default} />
+
+# API
+
+<Controls of={HeaderLoading.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+	import HeaderLoading from '@cnamts/synapse'
+</script>
+
+<template>
+	<div class="pa-4">
+		<HeaderLoading width="200px" />
+	</div>
+</template>
+`} />

@@ -6,9 +6,8 @@ const config: StorybookConfig = {
 	addons: [
 		'@storybook/addon-links',
 		'@storybook/addon-essentials',
-		'@chromatic-com/storybook',
-		'@storybook/addon-interactions',
 		'@storybook/addon-viewport',
+		'@jls-digital/storybook-addon-code',
 	],
 	framework: {
 		name: '@storybook/vue3-vite',

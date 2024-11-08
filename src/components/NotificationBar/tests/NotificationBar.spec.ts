@@ -64,7 +64,7 @@ describe('NotificationBar.vue', () => {
 		wrapper.vm.openNotification(notification)
 
 		await nextTick()
-		expect(wrapper.vm.color).toBe('success')
+		expect(wrapper.vm.color).toBe('#56C271')
 	})
 
 	it('should close notification when handleClearNotification is called', async () => {

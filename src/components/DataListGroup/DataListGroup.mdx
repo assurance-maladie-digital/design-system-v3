@@ -1,0 +1,77 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as DataListGroup from './DataListGroup.stories';
+
+<Meta of={DataListGroup} />
+
+# DataListGroup
+
+L’élément `DataListGroup` est utilisé pour afficher une liste de DataList.
+
+<Canvas of={DataListGroup.Default} />
+
+# API
+
+<Controls of={DataListGroup.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+	import DataListGroup from '@cnamts/synapse'
+
+	const items = [
+		{
+			title: 'Informations patient',
+			items: [
+				{
+					key: 'Nom',
+					value: 'Dupont',
+					icon: 'accountIcon',
+					chip: true,
+				},
+				{
+					key: 'Prénom',
+					value: 'Paul',
+					icon: 'accountIcon',
+				},
+				{
+					key: 'Date de naissance',
+					value: '24/09/1970',
+					icon: 'calendarIcon',
+					action: 'Modifier',
+				},
+			],
+		},
+		{
+			title: 'Médecin traitant',
+			items: [
+				{
+					key: 'Nom du praticien',
+					value: 'Gérard Leblanc',
+					icon: 'doctorIcon',
+				},
+
+				{
+					key: 'N° RPPS',
+					value: 'XXXXX',
+					icon: 'cardAccountIcon',
+				},
+			],
+		},
+		{
+			title: 'Autres informations',
+			items: [
+				{
+					key: 'Dernière modification',
+					value: '04/06/2020',
+					icon: 'editIcon',
+				},
+			],
+		},
+	]
+</script>
+
+<template>
+	<DataListGroup :items="items" />
+</template>
+`} />

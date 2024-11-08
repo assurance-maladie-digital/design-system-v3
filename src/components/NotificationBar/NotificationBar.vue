@@ -50,8 +50,8 @@
 		if (currentNotification.value) {
 			const typeColor: Record<string, string> = {
 				info: 'info',
-				success: 'success',
-				warning: 'warning',
+				success: '#56C271',
+				warning: '#F0B323',
 				error: 'error',
 			}
 			return typeColor[currentNotification.value.type] || 'info'
