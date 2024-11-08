@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import HeaderMenuItem from './HeaderMenuItem.vue'
 import HeaderMenu from '../HeaderBurgerMenu.vue'
 import HeaderBar from '../../HeaderBar.vue'
+import HeaderMenuSection from '../HeaderMenuSection/HeaderMenuSection.vue'
 
 const meta = {
 	component: HeaderMenuItem,
@@ -20,7 +21,7 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderMenuItem, HeaderMenu, HeaderBar },
+			components: { HeaderMenuItem, HeaderMenu, HeaderBar, HeaderMenuSection },
 			setup() {
 				return { args }
 			},
