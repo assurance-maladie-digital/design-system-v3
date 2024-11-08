@@ -138,6 +138,29 @@ export const Default: Story = {
 			template: `<div class="position: relative"><story/></div>`,
 		}),
 	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<HeaderBar
+						service-title="Synapse"
+						service-subtitle="Design System"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderBar } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
 }
 
 export const WithRightMenu: Story = {
@@ -175,6 +198,49 @@ export const WithRightMenu: Story = {
 			</div>`,
 		}
 	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<HeaderBar
+						service-title="Synapse"
+						service-subtitle="Design System"
+					>
+						<template #header-side="{ menuOpen }">
+							<div class="d-flex justify-center h-100 ga-4 pr-4">
+								<VBtn
+									variant="text"
+									:prepend-icon="searchIcon"
+									color="primary"
+								>
+									Rechercher
+								</VBtn>
+								<VBtn
+									color="primary"
+									:prepend-icon="mdiAccountCircleOutline"
+								>
+									Login
+								</VBtn>
+							</div>
+						</template>
+					</HeaderBar>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderBar } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
+					import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
+				</script>
+				`,
+			},
+		],
+	},
 }
 
 export const Sticky: Story = {
@@ -192,6 +258,32 @@ export const Sticky: Story = {
 	</div>`,
 		}),
 	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<HeaderBar
+						service-title="Synapse"
+						service-subtitle="Design System"
+					/>
+					<div
+						style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
+					>Contenu de la page</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderBar } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
 }
 
 export const WithExternalTopMenu: Story = {
@@ -217,4 +309,38 @@ export const WithExternalTopMenu: Story = {
 			`,
 		}),
 	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div style="margin: auto; max-width: 1712px; display: flex;">
+						<div
+							style="background-color: #ed76b3; padding: 0.7rem 0.8rem; width: fit-content;"
+						>Menu supérieur externe au composant</div>
+						<div
+							style="padding: 0.7rem 0.8rem; width: fit-content;"
+						>Autre lien</div>
+					</div>
+					<HeaderBar
+						service-title="Synapse"
+						service-subtitle="Design System"
+					/>
+					<div
+						style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
+					>Contenu de la page</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderBar } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
 }

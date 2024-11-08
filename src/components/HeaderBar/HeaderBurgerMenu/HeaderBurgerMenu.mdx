@@ -46,7 +46,26 @@ Un Composant `HeaderMenuItem` doit obligatoirement est contenu dans un `HeaderMe
 
 Le menu peut être utilisé avec un seul niveau de profondeur.
 
-<Canvas of={HeaderBurgerMenuStories.Default} />
+<Canvas
+	of={HeaderBurgerMenuStories.WithAnItem}
+	source={{
+language: 'html',
+code:`
+<HeaderBar>
+	<template #menu>
+		<HeaderBurgerMenu>
+			<HeaderMenuSection>
+				<HeaderMenuItem>
+					<a href="/">Item 1</a>
+				</HeaderMenuItem>
+			</HeaderMenuSection>
+		</HeaderBurgerMenu>
+	</template>
+</HeaderBar>
+	`}}
+/>
+
+Il est possible d'utiliser des liens de navigation avec les composants `RouterLink` ou `NuxtLink`.
 
 <Source
   dark
@@ -86,11 +105,14 @@ Le menu peut être utilisé avec un seul niveau de profondeur.
 
 Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeur. Dans ce cas là, il convient d'utiliser le composant `HeaderSubMenu` pour définir les sous-menus.
 
-<Canvas of={HeaderBurgerMenuStories.Populated} />
+Pour conserver la logique sémantique du menu, le composant `HeaderSubMenu` doit être contenu dans un `HeaderMenuItem`.
 
-<Source
-  dark
-  code={`
+
+<Canvas
+	of={HeaderBurgerMenuStories.Populated}
+	source={{
+language: 'html',
+code:`
 <HeaderBar>
 	<template #menu>
 		<HeaderMenu>
@@ -166,7 +188,7 @@ Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeu
 		</HeaderMenu>
 	</template>
 </HeaderBar>
-`}
+	`}}
 />
 
 
@@ -174,11 +196,11 @@ Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeu
 
 Voici un exemple de menu construit de façon dynamique.
 
-<Canvas of={HeaderBurgerMenuStories.Generated} />
-
-<Source
-  dark
-  code={`
+<Canvas of={HeaderBurgerMenuStories.Generated}
+	source={{
+style: { height: '100vh' },
+language: 'html',
+code:`
 <script setup lang="ts">
 	import { HeaderBar, HeaderBurgerMenu, HeaderMenuSection, HeaderMenuItem, HeaderSubMenu } from '@cnamts/synapse'
 	import { mdiMapMarker } from '@mdi/js'
@@ -372,5 +394,5 @@ Voici un exemple de menu construit de façon dynamique.
 	</HeaderBar>
 </template>
 
-`}
+`}}
 />
