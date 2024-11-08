@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import HeaderMenuSection from './HeaderMenuSection.vue'
 import HeaderMenuItem from '../HeaderMenuItem/HeaderMenuItem.vue'
-import HeaderMenu from '../HeaderBurgerMenu.vue'
+import HeaderBurgerMenu from '../HeaderBurgerMenu.vue'
 import HeaderBar from '../../HeaderBar.vue'
 
 const meta = {
@@ -21,14 +21,14 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderMenuItem, HeaderMenu, HeaderBar, HeaderMenuSection },
+			components: { HeaderMenuItem, HeaderBurgerMenu, HeaderBar, HeaderMenuSection },
 			setup() {
 				return { args }
 			},
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu>
+						<HeaderBurgerMenu>
 							<HeaderMenuSection :title="args.title">
 								<HeaderMenuItem>
 									<a>lorem ipsum</a>
@@ -40,7 +40,7 @@ export const Default: Story = {
 									<a>lorem ipsum</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
-						</HeaderMenu>
+						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
 			`,
@@ -51,5 +51,41 @@ export const Default: Story = {
 		setTimeout(() => {
 			menuBtn!.click()
 		}, 1000)
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<Template>
+					<HeaderBar>
+						<template #menu>
+							<HeaderBurgerMenu>
+								<HeaderMenuSection :title="args.title">
+									<HeaderMenuItem>
+										<a>lorem ipsum</a>
+									</HeaderMenuItem>
+								</HeaderMenuSection>
+
+								<HeaderMenuSection title="section 2">
+									<HeaderMenuItem>
+										<a>lorem ipsum</a>
+									</HeaderMenuItem>
+								</HeaderMenuSection>
+							</HeaderBurgerMenu>
+						</template>
+					</HeaderBar>
+				</Template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup>
+					import { HeaderBurgerMenu, HeaderBar, HeaderMenuSection, HeaderMenuItem } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
 	},
 }
