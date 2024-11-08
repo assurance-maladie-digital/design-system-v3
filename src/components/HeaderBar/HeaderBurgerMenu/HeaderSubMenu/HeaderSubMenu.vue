@@ -9,7 +9,7 @@
 	const btnId = `${submenuId}-btn`
 
 	const registerSubMenu = inject<((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined>(registerSubMenuKey, undefined)
-	if (!registerSubMenu) throw new Error('The HeaderSubMenu component must be used inside a HeaderComplexMenu component')
+	if (!registerSubMenu) throw new Error('The HeaderSubMenu component must be used inside a HeaderBurgerMenu component')
 	registerSubMenu(menuOpen, () => {
 		menuOpen.value = false
 	})
@@ -114,6 +114,13 @@
 			border-bottom: 1px solid $menu-border-color;
 			color: #000;
 			background-color: transparent;
+
+			&:hover {
+				color: #000;
+				> :deep(*) {
+					color: #000 !important;
+				}
+			}
 		}
 
 		.sub-menu--open > .sub-menu-btn > :deep(.sub-menu-btn__icon) {
@@ -131,17 +138,22 @@
 			background-color: $primary-base;
 			color: $neutral-white;
 			transition: color 0.15s linear, background-color 0.15s linear;
+
+			> :deep(*) {
+				color: $neutral-white !important;
+			}
 		}
 
 		.sub-menu-content-wrapper {
 			position: absolute;
 			top: 0;
+			bottom: 0;
 			left: $menu-width;
 		}
 
 		.sub-menu-content {
 			width: $menu-width + 1px;
-			height: $menu-height;
+			height: 100%;
 			background: #f9f9f9;
 			border-left: 1px solid $menu-border-color;
 			overflow-y: auto;

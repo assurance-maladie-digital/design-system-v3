@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import HeaderBar from './HeaderBar.vue'
+import { VBtn } from 'vuetify/components'
+import { mdiMagnify } from '@mdi/js'
 
 const meta = {
-	title: 'Components/HeaderBar',
 	component: HeaderBar,
+	parameters: {
+		layout: 'fullscreen',
+	},
 	argTypes: {
 		'serviceTitle': {
 			control: { type: 'text' },
@@ -94,8 +98,23 @@ const meta = {
 				},
 			},
 		},
+		'logo-brand-content': {
+			control: { type: 'text' },
+			description: 'Le contenu a droite du logo de l\'assurance maladie. Peut être utilisé pour accoler un autre logo par exemple.',
+			table: {
+				type: {
+					summary: `{ 
+						menu-open: boolean,
+						home-aria-label: string,
+						service-title: string,
+						service-subtitle: string,
+					}`,
+				},
+			},
+		},
 		'header-side': {
 			control: { type: 'text' },
+			description: 'Contenu a droite du header. Utile pour ajouter un menu secondaire par exemple.',
 			table: {
 				type: {
 					summary: '{ menu-open: boolean }',
@@ -119,6 +138,43 @@ export const Default: Story = {
 			template: `<div class="position: relative"><story/></div>`,
 		}),
 	],
+}
+
+export const WithRightMenu: Story = {
+	args: {
+		serviceTitle: 'Synapse',
+		serviceSubtitle: 'Design System',
+	},
+	render: (args) => {
+		return {
+			components: { HeaderBar, VBtn },
+			setup() {
+				const searchIcon = mdiMagnify
+				return { args, searchIcon }
+			},
+			template: `<div class="position: relative">
+				<HeaderBar v-bind="args">
+					<template #header-side="{ menuOpen }">
+						<div class="d-flex justify-center h-100 ga-4 pr-4">
+							<VBtn
+								variant="text"
+								:prepend-icon="searchIcon"
+								color="primary"
+							>
+								Rechercher
+							</VBtn>
+							<VBtn
+								color="primary"
+								:prepend-icon="mdiAccountCircleOutline"
+							>
+								Login
+							</VBtn>
+						</div>
+					</template>
+				</HeaderBar>
+			</div>`,
+		}
+	},
 }
 
 export const Sticky: Story = {
@@ -145,15 +201,20 @@ export const WithExternalTopMenu: Story = {
 	},
 	decorators: [
 		() => ({
-			template: `<div class="position: relative">
-			<div style="background-color: orange; margin:auto; max-width: 1712px; padding: 1rem 4rem">
-				Menu supèrieur externe au composant
-			</div>
-			<story/>
-			<div
-				style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
-			>Contenu de la page</div>
-	</div>`,
+			template: `
+				<div style="margin: auto; max-width: 1712px; display: flex;">
+					<div
+						style="background-color: #ed76b3; padding: 0.7rem 0.8rem; width: fit-content;"
+					>Menu supérieur externe au composant</div>
+					<div
+						style="padding: 0.7rem 0.8rem; width: fit-content;"
+					>Autre lien</div>
+				</div>
+				<story/>
+				<div
+					style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
+				>Contenu de la page</div>
+			`,
 		}),
 	],
 }

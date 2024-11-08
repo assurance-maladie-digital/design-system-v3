@@ -1,16 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import HeaderMenuSection from './HeaderMenuSection.vue'
-import HeaderMenuItem from '../HeaderMenuItem/HeaderMenuItem.vue'
-import HeaderMenu from '../HeaderComplexMenu.vue'
+import HeaderMenuItem from './HeaderMenuItem.vue'
+import HeaderMenu from '../HeaderBurgerMenu.vue'
 import HeaderBar from '../../HeaderBar.vue'
 
 const meta = {
-	title: 'Components/HeaderBar/HeaderComplexMenu/HeaderMenuSection',
-	component: HeaderMenuSection,
+	component: HeaderMenuItem,
 	parameters: {
 		layout: 'fullscreen',
 	},
-} satisfies Meta<typeof HeaderMenuSection>
+} satisfies Meta<typeof HeaderMenuItem>
 
 export default meta
 
@@ -18,11 +16,11 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		title: 'section 1',
+		default: 'lorem ipsum',
 	},
 	render: (args) => {
 		return {
-			components: { HeaderMenuItem, HeaderMenu, HeaderBar, HeaderMenuSection },
+			components: { HeaderMenuItem, HeaderMenu, HeaderBar },
 			setup() {
 				return { args }
 			},
@@ -30,15 +28,9 @@ export const Default: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderMenu>
-							<HeaderMenuSection :title="args.title">
+							<HeaderMenuSection>
 								<HeaderMenuItem>
-									<a>lorem ipsum</a>
-								</HeaderMenuItem>
-							</HeaderMenuSection>
-
-							<HeaderMenuSection title="section 2">
-								<HeaderMenuItem>
-									<a>lorem ipsum</a>
+									<a>{{ args.default }}</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderMenu>

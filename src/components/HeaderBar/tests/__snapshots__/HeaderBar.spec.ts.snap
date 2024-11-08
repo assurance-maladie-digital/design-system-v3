@@ -2,9 +2,9 @@
 
 exports[`HeaderBar > should render the component 1`] = `
 "<header data-v-efdbe191="" class="header" style="min-height: auto;">
-  <div data-v-efdbe191="" class="sticky-header" style="position: relative; top: auto; transform: none; transition: none;">
+  <div data-v-efdbe191="" class="sticky-header" style="position: relative; width: 100%; top: auto; transform: none; transition: none;">
     <!--v-if-->
-    <div data-v-efdbe191="" class="inner-header d-flex">
+    <div data-v-efdbe191="" class="inner-header">
       <div data-v-efdbe191="" class="header-logo">
         <div data-v-a3ce97de="" data-v-efdbe191="" class="logo"><svg data-v-d1ac2910="" data-v-a3ce97de="" fill="#0c419a" width="141" height="42" viewBox="0 0 211 64" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-label="Logo de l'Assurance Maladie, cliquez pour revenir à l'accueil">
             <g data-v-d1ac2910="">

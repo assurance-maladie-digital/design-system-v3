@@ -23,6 +23,7 @@
 		'append': (props: SlotProps) => unknown
 		'menu': (props: SlotProps) => unknown
 		'logo': (props: SlotProps & LogoProps) => unknown
+		'logo-brand-content': (props: SlotProps & LogoProps) => unknown
 		'header-side': (props: SlotProps) => unknown
 	}>()
 
@@ -67,7 +68,7 @@
 	function handleScroll() {
 		const headerRec = header.value!.getBoundingClientRect()
 		headerOffset.value = headerRec.top + window.scrollY
-		headerMinHeight.value = isTopOfHeaderVisible.value ? 'auto' : `${header.value!.offsetHeight}px`
+		headerMinHeight.value = `${headerSticky.value!.offsetHeight}px`
 		isTopOfHeaderVisible.value = window.scrollY <= headerOffset.value
 		isScrollBelowHeader.value = window.scrollY > headerOffset.value + headerRec.height
 
@@ -114,15 +115,18 @@
 
 			return {
 				position: staticHeader ? 'relative' : 'fixed',
+				width: staticHeader ? '100%' : header.value!.offsetWidth + 'px',
 				top: staticHeader ? 'auto' : '0',
 				transform: hide ? 'translateY(-100%)' : 'none',
 				transition: shouldAnimateHideHeader.value ? 'transform 0.3s ease' : 'none',
 			}
 		}
 
+		const fixedHeader = !isTopOfHeaderVisible.value && props.sticky
 		return {
-			position: !isTopOfHeaderVisible.value && props.sticky ? 'fixed' : 'relative',
-			top: !isTopOfHeaderVisible.value && props.sticky ? '0' : 'auto',
+			position: fixedHeader ? 'fixed' : 'relative',
+			width: fixedHeader ? header.value!.offsetWidth + 'px' : '100%',
+			top: fixedHeader ? '0' : 'auto',
 			transform: 'none',
 			transition: 'none',
 		}
@@ -149,7 +153,7 @@
 					:menu-open
 				/>
 			</div>
-			<div class="inner-header d-flex">
+			<div class="inner-header">
 				<slot
 					name="menu"
 					:menu-open
@@ -167,7 +171,19 @@
 							:aria-label="homeAriaLabel"
 							:service-title="serviceTitle"
 							:service-subtitle="serviceSubtitle"
-						/>
+						>
+							<template
+								#brand-content
+							>
+								<slot
+									name="logo-brand-content"
+									:menu-open
+									:home-aria-label
+									:service-title
+									:service-subtitle
+								/>
+							</template>
+						</HeaderLogo>
 					</slot>
 				</div>
 				<div
@@ -200,8 +216,6 @@
 .header {
 	top: 0;
 	width: 100%;
-	height: $header-height;
-	max-width: $header-max-width;
 	margin: 0 auto;
 }
 
@@ -209,19 +223,19 @@
 	background-color: $neutral-white;
 	border-bottom: solid 1px $blue-lighten-80;
 	width: 100%;
-	height: $header-height;
-	max-width: $header-max-width;
 	z-index: 1000;
 }
 
 .inner-header {
 	display: flex;
 	align-items: center;
-	height: 100%;
+	height: $header-height;
+	max-width: $header-max-width;
+	margin: 0 auto;
 }
 
 .header-logo {
-	margin-left: 2rem;
+	margin-left: 1rem;
 }
 
 .header-side {
@@ -231,7 +245,11 @@
 }
 
 @media screen and (min-width: $header-breakpoint) {
-	.header, .sticky-header {
+	.header-logo {
+		margin-left: 2rem;
+	}
+
+	.inner-header {
 		height: $header-height-desktop;
 	}
 }

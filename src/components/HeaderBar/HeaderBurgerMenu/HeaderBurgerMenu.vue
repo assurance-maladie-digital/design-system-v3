@@ -2,6 +2,7 @@
 	import { computed, inject, nextTick, onMounted, onUnmounted, readonly, ref, watch, type CSSProperties, type Ref } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
 	import { registerHeaderMenuKey } from '../consts'
+	import useHeaderResponsiveMode from '../useHeaderResponsiveMode'
 	import locals from './locals'
 	import useHandleSubMenus from './useHandleSubMenus'
 
@@ -11,11 +12,15 @@
 	const innerBtn = ref<HTMLElement | null>(null)
 	const menuLeft = ref(0)
 	const menuTop = ref(0)
+	const menuHeight = ref('70vh')
 
 	function positionMenu() {
 		// todo debounce
-		menuLeft.value = menuBtnWrapper.value!.getBoundingClientRect().left
-		menuTop.value = menuBtnWrapper.value!.getBoundingClientRect().top
+		const rect = menuBtnWrapper.value!.getBoundingClientRect()
+
+		menuLeft.value = rect.left
+		menuTop.value = rect.top
+		menuHeight.value = `calc(100vh - ${rect.top}px - 48px)`
 	}
 
 	onMounted(() => {
@@ -38,6 +43,8 @@
 		document.body.style.overflow = newVal ? 'hidden' : 'auto'
 
 		if (newVal) {
+			positionMenu() // the menu position can have changed since the component was mounted
+
 			await nextTick()
 			innerBtn.value!.focus()
 		}
@@ -46,9 +53,11 @@
 		}
 	})
 
+	const { isDesktop } = useHeaderResponsiveMode()
 	const menuStyle = computed<CSSProperties>(() => ({
 		left: `${menuLeft.value}px`,
 		top: `${menuTop.value}px`,
+		height: isDesktop.value ? menuHeight.value : undefined,
 	}))
 
 	function handleClickOutside(event: MouseEvent | KeyboardEvent) {
@@ -81,37 +90,39 @@
 				v-model="menuOpen"
 			/>
 		</div>
-		<Transition name="menu">
-			<div
-				v-show="menuOpen"
-				class="overlay"
-			>
+		<Teleport to="body">
+			<Transition name="menu">
 				<div
-					ref="menuWrapper"
-					role="menu"
-					class="menu-wrapper"
-					:style="menuStyle"
+					v-if="menuOpen"
+					class="overlay"
 				>
-					<HeaderMenuBtn
-						ref="innerBtn"
-						v-model="menuOpen"
-					/>
-					<nav
-						id="header-menu-wrapper"
-						class="header-menu-wrapper"
-						:class="{
-							'header-menu-wrapper--submenu-open': haveOpenSubMenu,
-						}"
-						role="navigation"
-						:aria-label="locals.publicMenu"
+					<div
+						ref="menuWrapper"
+						role="menu"
+						class="menu-wrapper"
+						:style="menuStyle"
 					>
-						<div class="header-menu">
-							<slot />
-						</div>
-					</nav>
+						<HeaderMenuBtn
+							ref="innerBtn"
+							v-model="menuOpen"
+						/>
+						<nav
+							id="header-menu-wrapper"
+							class="header-menu-wrapper"
+							:class="{
+								'header-menu-wrapper--submenu-open': haveOpenSubMenu,
+							}"
+							role="navigation"
+							:aria-label="locals.publicMenu"
+						>
+							<div class="header-menu">
+								<slot />
+							</div>
+						</nav>
+					</div>
 				</div>
-			</div>
-		</Transition>
+			</Transition>
+		</Teleport>
 	</div>
 </template>
 
@@ -124,6 +135,7 @@
 	position: fixed;
 	z-index: 1000;
 	background-color: rgba(3, 16, 37, .5);
+	backdrop-filter: blur(2px);
 }
 
 .menu-wrapper {
@@ -151,7 +163,6 @@
 	}
 
 	.header-menu-wrapper {
-		height: $menu-height;
 		width: $menu-width;
 		overflow: visible;
 	}
@@ -160,7 +171,7 @@
 		background-color: $neutral-white;
 		overflow-y : auto;
 		overflow-x: hidden;
-		height: $menu-height;
+		height: 100%;
 	}
 }
 

@@ -15,8 +15,8 @@
 		serviceSubtitle: undefined,
 	})
 
-	const slot = defineSlots<{
-		serviceTitle?(): void
+	defineSlots<{
+		'brand-content'?(): void
 	}>()
 
 	const theme = useTheme()
@@ -35,24 +35,24 @@
 			:aria-label
 		/>
 
-		<svg
-			v-if="slot?.serviceTitle || serviceTitle"
-			:width="22"
-			:height="64"
-			:fill="primary"
-			role="img"
-			focusable="false"
-			aria-hidden="true"
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 22 64"
-			class="vd-divider"
-		>
-			<path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
-		</svg>
-
 		<slot
-			name="serviceTitle"
+			name="brand-content"
 		>
+			<svg
+				v-if="serviceTitle"
+				:width="22"
+				:height="64"
+				:fill="primary"
+				role="img"
+				focusable="false"
+				aria-hidden="true"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 22 64"
+				class="vd-divider"
+			>
+				<path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
+			</svg>
+
 			<div if="serviceTitle">
 				<div class="service-title">
 					{{ serviceTitle }}
