@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import HeaderBar from './HeaderBar.vue'
 import { VBtn } from 'vuetify/components'
 import { mdiMagnify } from '@mdi/js'
+import SubHeader from '../SubHeader/SubHeader.vue'
 
 const meta = {
 	component: HeaderBar,
@@ -338,6 +339,65 @@ export const WithExternalTopMenu: Story = {
 				code: `
 				<script setup lang="ts">
 					import { HeaderBar } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const WithSubHeader: Story = {
+	args: {
+		serviceTitle: 'Synapse',
+		serviceSubtitle: 'Design System',
+	},
+	render: (args) => {
+		return {
+			components: { HeaderBar, SubHeader },
+			setup() {
+				const searchIcon = mdiMagnify
+				return { args, searchIcon }
+			},
+			template: `
+				<HeaderBar v-bind="args">
+					<template #append="{ menuOpen }">
+						<SubHeader
+							title-text="Paul Dupont"
+							sub-title-text="1 69 08 75 125 456 75"
+						/>
+					</template>
+				</HeaderBar>
+				<div
+					style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
+				>Contenu de la page</div>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<HeaderBar v-bind="args">
+						<template #append="{ menuOpen }">
+							<SubHeader
+								title-text="Paul Dupont"
+								sub-title-text="1 69 08 75 125 456 75"
+							/>
+						</template>
+					</HeaderBar>
+					<div
+						style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
+					>Contenu de la page</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderBar, SubHeader } from '@cnamts/synapse'
 				</script>
 				`,
 			},
