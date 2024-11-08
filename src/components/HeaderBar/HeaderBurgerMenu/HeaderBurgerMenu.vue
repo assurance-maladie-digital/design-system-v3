@@ -6,7 +6,7 @@
 	import locals from './locals'
 	import useHandleSubMenus from './useHandleSubMenus'
 
-	const menuWrapper = ref<HTMLElement | null>(null)
+	const headerMenuWrapper = ref<HTMLElement | null>(null)
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const outerBtn = ref<HTMLElement | null>(null)
 	const innerBtn = ref<HTMLElement | null>(null)
@@ -66,7 +66,7 @@
 		// do not close menu if click is inside the menu
 		let walkElement = event.target as HTMLElement | null
 		while (walkElement && walkElement !== document.body) {
-			if (walkElement === menuWrapper.value) return
+			if (walkElement === headerMenuWrapper.value) return
 			walkElement = walkElement.parentElement
 		}
 
@@ -97,7 +97,6 @@
 					class="overlay"
 				>
 					<div
-						ref="menuWrapper"
 						role="menu"
 						class="menu-wrapper"
 						:style="menuStyle"
@@ -108,6 +107,7 @@
 						/>
 						<nav
 							id="header-menu-wrapper"
+							ref="headerMenuWrapper"
 							class="header-menu-wrapper"
 							:class="{
 								'header-menu-wrapper--submenu-open': haveOpenSubMenu,
