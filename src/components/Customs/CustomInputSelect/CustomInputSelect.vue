@@ -8,7 +8,7 @@
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: Record<string, unknown> | string | null
-		items: Record<string, unknown>[] | string[]
+		items?: Record<string, unknown>[] | string[]
 		textKey?: string
 		valueKey?: string
 		label?: string
@@ -20,7 +20,7 @@
 		items: () => [],
 		textKey: 'text',
 		valueKey: 'value',
-		label: 'Label',
+		label: 'Sélectionnez une option',
 		outlined: false,
 		required: false,
 		errorMessages: () => [],
