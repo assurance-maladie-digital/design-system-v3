@@ -40,6 +40,10 @@
 			type: String,
 			default: 'value',
 		},
+		inputStyles: {
+			type: String,
+			default: '',
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -81,6 +85,10 @@
 		selectedItem.value = newValue
 	})
 
+	watch (() => props.errorMessages, (newValue) => {
+		localErrorMessages.value = newValue
+	})
+
 	const buttonClass = computed(() => {
 		return props.outlined ? 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined' : 'text-color'
 	})
@@ -100,6 +108,10 @@
 			localErrorMessages.value = ['Le champ est requis.']
 			return false
 		}
+		if (props.errorMessages.length > 0) {
+			localErrorMessages.value = props.errorMessages
+			return false
+		}
 		localErrorMessages.value = []
 		return true
 	}
@@ -113,6 +125,7 @@
 		:title="props.label"
 		role="menu"
 		:error-messages="localErrorMessages"
+		:style="inputStyles"
 		@click="checkForErrors"
 	>
 		<div
