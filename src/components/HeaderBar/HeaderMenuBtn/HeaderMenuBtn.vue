@@ -1,23 +1,10 @@
 <script setup lang="ts">
-	import { computed, ref, type CSSProperties } from 'vue'
-	import { useTheme } from 'vuetify'
+	import { ref } from 'vue'
 	import { mdiClose, mdiMenu } from '@mdi/js'
 	import locals from './locals'
 
-	const theme = useTheme()
 	const btn = ref<HTMLElement | null>(null)
-	const btnFocused = ref(false)
-
 	const model = defineModel<boolean>()
-
-	const btnStyle = computed<CSSProperties>(() => {
-		const light = model.value || btnFocused.value
-
-		return ({
-			backgroundColor: light ? '#fff' : theme.current.value.colors.primary,
-			color: light ? theme.current.value.colors.primary : '#fff',
-		})
-	})
 
 	function focus() {
 		btn.value?.focus()
@@ -30,13 +17,13 @@
 	<button
 		ref="btn"
 		class="header-menu-btn"
-		:style="btnStyle"
+		:class="{
+			'header-menu-btn__open': model
+		}"
 		type="button"
 		:aria-label="model ? locals.closeMenu : locals.openMenu"
 		:title="model ? locals.closeMenu : locals.openMenu"
 		@click="() => (model = !model)"
-		@focus="btnFocused = true"
-		@blur="btnFocused = false"
 	>
 		<VIcon size="48">
 			{{ model ? mdiClose : mdiMenu }}
@@ -59,12 +46,21 @@
 	flex-shrink: 0;
 	justify-content: center;
 	font-weight: 700;
-	transition: color 0.15s 0.1s, background-color 0.15s 0.1s;
+	background-color: $primary-base;
+	color: $neutral-white;
+	border-bottom: solid 1px $blue-lighten-80;
+	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border-bottom 0.15s 0.1s;
 
 	&:focus-visible {
-		background-color: $primary-base;
-		color: $neutral-white;
+		background-color: $neutral-white;
+		color: $primary-base;
 	}
+}
+
+.header-menu-btn__open {
+	background-color: $neutral-white;
+	color: $primary-base;
+	border-color: $neutral-white;
 }
 
 @media screen and (max-width: ($header-breakpoint + 1)) {
