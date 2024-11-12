@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, defineProps } from 'vue'
+	import { ref } from 'vue'
 	import { mdiKeyboardBackspace } from '@mdi/js'
 
 	import { config } from './config'
