@@ -16,7 +16,7 @@ export { default as HeaderSubMenu } from './HeaderBar/HeaderBurgerMenu/HeaderSub
 export { default as HeaderLogo } from './HeaderBar/HeaderLogo/HeaderLogo.vue'
 export { default as HeaderMenuBtn } from './HeaderBar/HeaderMenuBtn/HeaderMenuBtn.vue'
 export { default as HeaderLoading } from './HeaderLoading/HeaderLoading.vue'
-export { default as HeaderNavbar } from './HeaderNavbar/HeaderNavbar.vue'
+export { default as HeaderNavigationBar } from './HeaderNavigationBar/HeaderNavigationBar.vue'
 export { default as LangBtn } from './LangBtn/LangBtn.vue'
 export { default as Logo } from './Logo/Logo.vue'
 export { default as NotificationBar } from './NotificationBar/NotificationBar.vue'

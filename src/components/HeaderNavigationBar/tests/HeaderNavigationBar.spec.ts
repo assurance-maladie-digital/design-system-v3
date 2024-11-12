@@ -2,7 +2,7 @@ import HeaderBurgerMenu from '@/components/HeaderBar/HeaderBurgerMenu/HeaderBurg
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import HeaderNavbar from '../HeaderNavbar.vue'
+import HeaderNavbar from '../HeaderNavigationBar.vue'
 import HorizontalNavbar from '../HorizontalNavbar/HorizontalNavbar.vue'
 
 describe('HeaderNavbar', () => {

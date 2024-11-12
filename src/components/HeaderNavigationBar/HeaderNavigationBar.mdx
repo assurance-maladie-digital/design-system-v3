@@ -1,11 +1,11 @@
 import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
-import * as HeaderNavbarStories from "./HeaderNavbar.stories";
+import * as HeaderNavigationBarStories from "./HeaderNavigationBar.stories";
 
-<Meta of={HeaderNavbarStories} />
+<Meta of={HeaderNavigationBarStories} />
 
-# HeaderNavbar
+# HeaderNavigationBar
 
-Le composant `HeaderNavbar` est un composant de navigation qui permet de naviguer entre les différentes pages de l'application.
+Le composant `HeaderNavigationBar` est un composant de navigation qui permet de naviguer entre les différentes pages de l'application.
 
 Il est basé sur les composants `HeaderBar` et `HeaderBurgerMenu` du design system.
 
@@ -16,11 +16,11 @@ Si vous n'avez pas besoin du menu horizontal, vous devriez utiliser le composant
 Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 liens. Vous pouvez configurer le nombre de lien affiché dans le menu horizontal en utilisant la prop `maxHorizontalMenuItems`. Au dela de ce chiffre, le menu passera en mode burger. Par defaut, le menu horizontal affiche au maximum six items.
 
 
-<Canvas of={HeaderNavbarStories.Default} />
+<Canvas of={HeaderNavigationBarStories.Default} />
 
 ## API
 
-<Controls of={HeaderNavbarStories.Default} />
+<Controls of={HeaderNavigationBarStories.Default} />
 
 
 ## Exemple d'utilisation
@@ -28,7 +28,7 @@ Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 
 <Source
   dark
   code={`
-<HeaderNavbar
+<HeaderNavigationBar
 	home-aria-label="Home"
 	service-title="Synapse"
 	service-subtitle="design system de la CNAM"
@@ -58,7 +58,7 @@ Il est necessaire de faire attention à la place que prendront les éléments en
 </script>
 
 <template>
-  <HeaderNavbar>
+  <HeaderNavigationBar>
 	<template #header-side>
 	  <div class="d-flex justify-center h-100 ga-4 pr-4">
 		<VBtn
@@ -76,14 +76,14 @@ Il est necessaire de faire attention à la place que prendront les éléments en
 		</VBtn>
 	</div>
 	</template>
-  </HeaderNavbar>
+  </HeaderNavigationBar>
 </template>
 `} />
 
 ### Les slots concernant le menu
 
 
-<Canvas of={HeaderNavbarStories.WithSlots} />
+<Canvas of={HeaderNavigationBarStories.WithSlots} />
 
 #### Le menu horizontal
 
@@ -99,4 +99,4 @@ Le menu burger est généré automatiquement à partir des items passés en prop
 les slots `burger-menu-prepend` et `burger-menu-append` permettent d'ajouter du contenu en haut et en bas du menu burger.
 
 Le slot `burger-menu-content` permet de remplacer le contenu du menu burger. Il n'écrase pas les slots `burger-menu-prepend` et `burger-menu-append` et permet d'utiliser les composants `HeaderMenuItem` et `HeaderMenuGroup` pour construire le menu.
-Pour plus de d'information sur la manière de construire un menu avec le composant `HeaderBurgerMenu`, vous pouvez consulter la documentation de ce composant.
+Pour plus de d'information sur la manière de construire un menu avec le composant `HeaderBurgerMenu`, vous pouvez consulter la documentation de ce composant../HeaderNavigationBar.stories

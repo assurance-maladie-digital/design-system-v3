@@ -34,6 +34,9 @@
 		window.removeEventListener('scroll', positionMenu)
 		window.removeEventListener('resize', positionMenu)
 		window.removeEventListener('click', handleClickOutside, { capture: true })
+
+		document.documentElement.style.overflow = 'auto'
+		document.body.style.overflow = 'auto'
 	})
 
 	const menuOpen = ref(false)

@@ -34,6 +34,7 @@
 			homeAriaLabel: undefined,
 			serviceTitle: undefined,
 			serviceSubtitle: undefined,
+			sticky: true,
 			hideWhenDown: false,
 			maxHorizontalMenuItems: 6,
 			items: undefined,

@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import HeaderNavbar from './HeaderNavbar.vue'
+import HeaderNavbar from './HeaderNavigationBar.vue'
 import { VBtn } from 'vuetify/components'
 import BackBtn from '../BackBtn/BackBtn.vue'
 
 const meta = {
+	title: 'components/HeaderBar/HeaderNavigationBar',
 	component: HeaderNavbar,
 	parameters: {
 		layout: 'fullscreen',
