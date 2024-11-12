@@ -184,7 +184,7 @@ export const Required: Story = {
 	},
 }
 
-export const withError: Story = {
+export const withCustomError: Story = {
 	parameters: {
 		sourceCode: [
 			{
