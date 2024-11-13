@@ -68,7 +68,7 @@
 						<li
 							v-for="(item, index) in props.leftMenu"
 							:key="index"
-							:class="{ 'active': index === 0, 'highlight': highlightMenu }"
+							:class="{ 'highlight': highlightMenu }"
 						>
 							<component
 								:is="getLinkComponent(item)"
@@ -177,6 +177,7 @@
     }
     li:first-child {
       min-width: 95px;
+      background: transparent;
       @media (max-width: 768px) {
         min-width: 77px;
       }
@@ -191,7 +192,7 @@
     li:nth-child(3) {
       background: transparent;
     }
-    li:first-child a {
+    li:first-child a:hover {
       background: tokens.$user-assure;
     }
     li:nth-child(2) a:hover, .highlight {

@@ -4,15 +4,15 @@
 
 	const leftMenu = ref([{
 			text: 'Assuré',
-			href: 'https://www.assurance-maladie.ameli.fr/assure',
+			href: '#',
 		},
 		{
 			text: 'Professionnel de santé',
-			href: '',
+			href: '#',
 		},
 		{
 			text: 'Entreprise',
-			href: 'https://www.assurance-maladie.ameli.fr/entreprise',
+			href: '#',
 		},
 	])
 
