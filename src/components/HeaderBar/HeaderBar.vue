@@ -1,10 +1,11 @@
 <script setup lang="ts">
-	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type Ref } from 'vue'
+	import { computed, onMounted, onUnmounted, provide, ref, resolveComponent, watch, type CSSProperties, type Ref } from 'vue'
 	import HeaderLogo from './HeaderLogo/HeaderLogo.vue'
 	import { registerHeaderMenuKey } from './consts'
 	import { locales } from './locales'
 	import useHeaderResponsiveMode from './useHeaderResponsiveMode'
 	import useScrollDirection from './useScrollDirection'
+	import type { RouteLocationRaw } from 'vue-router'
 
 	const menuOpen = ref<boolean>()
 
@@ -35,6 +36,11 @@
 			 * Need 'sticky' at true,
 			 */
 			hideWhenDown?: boolean
+			homeLink?: {
+				ariaLabel?: string
+				to?: RouteLocationRaw
+				href?: string
+			}
 		} & LogoProps>(),
 		{
 			sticky: true,
@@ -42,6 +48,9 @@
 			homeAriaLabel: locales.homeAriaLabel,
 			serviceTitle: undefined,
 			serviceSubtitle: undefined,
+			homeLink: () => ({
+				href: '/',
+			}),
 		})
 
 	function registerHeaderMenu(childMenuStatus: Ref<boolean>) {
@@ -131,6 +140,20 @@
 			transition: 'none',
 		}
 	})
+
+	const routeType = computed(() => {
+		if (props.homeLink?.to) {
+			const routerLink = resolveComponent('router-link')
+			if (routerLink !== 'router-link') { // the component is registered
+				return 'router-link'
+			}
+			return 'div'
+		}
+		if (props.homeLink?.href) {
+			return 'a'
+		}
+		return 'div'
+	})
 </script>
 
 <template>
@@ -167,23 +190,37 @@
 						:service-title
 						:service-subtitle
 					>
-						<HeaderLogo
-							:aria-label="homeAriaLabel"
-							:service-title="serviceTitle"
-							:service-subtitle="serviceSubtitle"
+						<component
+							:is="routeType"
+							variant="tonal"
+							flat
+							tile
+							:ripple="false"
+							v-bind="{
+								to: 'to' in homeLink ? homeLink?.to : undefined,
+								href: 'href' in homeLink ? homeLink?.href : undefined,
+								'aria-label': 'aria-label' in homeLink ? homeLink?.['aria-label'] : undefined,
+							}"
+							style="text-transform: none; height: 100%;"
 						>
-							<template
-								#brand-content
+							<HeaderLogo
+								:aria-label="homeAriaLabel"
+								:service-title="serviceTitle"
+								:service-subtitle="serviceSubtitle"
 							>
-								<slot
-									name="logo-brand-content"
-									:menu-open
-									:home-aria-label
-									:service-title
-									:service-subtitle
-								/>
-							</template>
-						</HeaderLogo>
+								<template
+									#brand-content
+								>
+									<slot
+										name="logo-brand-content"
+										:menu-open
+										:home-aria-label
+										:service-title
+										:service-subtitle
+									/>
+								</template>
+							</HeaderLogo>
+						</component>
 					</slot>
 				</div>
 				<div

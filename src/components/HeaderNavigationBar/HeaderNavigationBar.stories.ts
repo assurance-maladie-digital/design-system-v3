@@ -49,6 +49,22 @@ const meta = {
 				},
 			},
 		},
+		'homeLink': {
+			control: { type: 'object' },
+			description: 'Le lien de retour vers la home. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
+			table: {
+				type: {
+					summary: `{
+						href?: string,
+						to?: RouteLocationRaw,
+						ariaLabel?: string,
+					}`,
+				},
+				defaultValue: {
+					summary: `{ href: '/' }`,
+				},
+			},
+		},
 		'header-side': {
 			control: { type: 'text' },
 			description: 'Contenu a droite du header. Utile pour ajouter un menu secondaire par exemple.',
@@ -233,7 +249,7 @@ export const WithSlots: Story = {
 					</template>
 					<template #navigation-bar-prepend>
 						<BackBtn
-							dark="true"
+							:dark="true"
 							class="mr-4"
 						/>
 					</template>

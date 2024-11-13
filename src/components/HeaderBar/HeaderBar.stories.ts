@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 
 import HeaderBar from './HeaderBar.vue'
 import { VBtn } from 'vuetify/components'
-import { mdiMagnify } from '@mdi/js'
+import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
 import SubHeader from '../SubHeader/SubHeader.vue'
 
 const meta = {
@@ -39,6 +39,22 @@ const meta = {
 				defaultValue: {
 					summary:
 						'Logo de l\'Assurance Maladie, cliquez pour revenir à l\'accueil',
+				},
+			},
+		},
+		'homeLink': {
+			control: { type: 'object' },
+			description: 'Le lien de retour vers la home. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
+			table: {
+				type: {
+					summary: `{
+						href?: string,
+						to?: RouteLocationRaw,
+						ariaLabel?: string,
+					}`,
+				},
+				defaultValue: {
+					summary: `{ href: '/' }`,
 				},
 			},
 		},
@@ -174,7 +190,8 @@ export const WithRightMenu: Story = {
 			components: { HeaderBar, VBtn },
 			setup() {
 				const searchIcon = mdiMagnify
-				return { args, searchIcon }
+				const accountIcon = mdiAccountCircleOutline
+				return { args, searchIcon, accountIcon }
 			},
 			template: `<div class="position: relative">
 				<HeaderBar v-bind="args">
@@ -189,7 +206,7 @@ export const WithRightMenu: Story = {
 							</VBtn>
 							<VBtn
 								color="primary"
-								:prepend-icon="mdiAccountCircleOutline"
+								:prepend-icon="accountIcon"
 							>
 								Login
 							</VBtn>

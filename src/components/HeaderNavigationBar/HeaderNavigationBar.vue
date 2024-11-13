@@ -5,7 +5,7 @@
 	import HeaderMenuSection from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.vue'
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
 	import { computed, ref } from 'vue'
-	import { RouterLink } from 'vue-router'
+	import { RouterLink, type RouteLocationRaw } from 'vue-router'
 	import HorizontalNavbar from './HorizontalNavbar/HorizontalNavbar.vue'
 	import type { NavigationItem } from './types'
 
@@ -13,6 +13,11 @@
 			homeAriaLabel?: string
 			serviceTitle?: string
 			serviceSubtitle?: string
+			homeLink?: {
+				ariaLabel?: string
+				to?: RouteLocationRaw
+				href?: string
+			}
 			/** Keep the header visible */
 			sticky?: boolean
 			/**
@@ -34,6 +39,7 @@
 			homeAriaLabel: undefined,
 			serviceTitle: undefined,
 			serviceSubtitle: undefined,
+			homeLink: undefined,
 			sticky: true,
 			hideWhenDown: false,
 			maxHorizontalMenuItems: 6,
@@ -102,13 +108,13 @@
 									:key="item.label"
 								>
 									<a
-										v-if="item.href"
+										v-if="'href' in item"
 										:href="item.href"
 									>
 										{{ item.label }}
 									</a>
 									<RouterLink
-										v-else-if="item.to"
+										v-else-if="'to' in item"
 										:to="item.to"
 									>
 										{{ item.label }}
