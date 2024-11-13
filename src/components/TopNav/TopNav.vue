@@ -1,103 +1,73 @@
 <script setup lang="ts">
-	import { type PropType } from 'vue'
-	import type { LinkItem, TopNavHeader } from './types'
-	import CustomInputSelect from '../Customs/CustomInputSelect/CustomInputSelect.vue'
+import { type PropType } from 'vue'
+import type { LinkItem, TopNavHeader } from './types'
+import CustomInputSelect from '../Customs/CustomInputSelect/CustomInputSelect.vue'
 
-	const props = defineProps({
-		leftLinks: {
-			type: Array as PropType<TopNavHeader[]>,
-			default: () => [],
+const props = defineProps({
+    leftLinks: {
+        type: Array as PropType<TopNavHeader[]>,
+        default: () => [],
 
-		},
+    },
 
-		rightLinks: {
-			type: Array as PropType<TopNavHeader[]>,
-			default: () => [],
-		},
+    rightLinks: {
+        type: Array as PropType<TopNavHeader[]>,
+        default: () => [],
+    },
 
-		itemsSelectMenu: {
-			type: Array,
-			default: () => [],
-		},
+    itemsSelectMenu: {
+        type: Array,
+        default: () => [],
+    },
 
-	})
+})
 
-	const getLinkComponent = (item: LinkItem): string => {
-		return item.href ? 'a' : 'RouterLink'
-	}
+const getLinkComponent = (item: LinkItem): string => {
+    return item.href ? 'a' : 'RouterLink'
+}
 </script>
 
 <template>
-	<section class="topbar">
-		<div class="container-xl">
-			<div class="nav">
-				<div
-					id="block-ameli-espace-menu"
-					class="wrapper-dropdown-with-overlay"
-				>
-					<slot :right-links="props.rightLinks">
-						<nav class="dropdown-with-overlay">
-							<ul>
-								<li
-									v-for="(item, index) in props.rightLinks"
-									:key="index"
-									:class="{ 'active': index == 0 }"
-								>
-									<component
-										:is="getLinkComponent(item)"
-										:href="item.href"
-										:tabindex="index"
-										:title="item.title"
-										class="component"
-									>
-										<span v-if="index == 1">
-											<CustomInputSelect
-												id="dropdown-submenu"
-												class="customInputSelect"
-												:items="itemsSelectMenu"
-												:label="item.text"
-											/>
-										</span>
-										<span
-											v-else
-											class="link"
-										> {{ item.text }}</span>
-									</component>
-								</li>
-							</ul>
-						</nav>
-					</slot>
-				</div>
-				<slot :left-links="props.leftLinks">
-					<div class="d-none d-lg-block">
-						<nav
-							id="block-menuinstitutionnel"
-							role="navigation"
-							class="dropdown-with-overlay"
-							aria-label="menu institutionnel"
-						>
-							<ul>
-								<li
-									v-for="(item, index) in props.leftLinks"
-									:key="index"
-								>
-									<component
-										:is="getLinkComponent(item)"
-										:href="item.href"
-										:tabindex="index"
-										:title="item.title"
-										class="component"
-									>
-										<a> {{ item.text }}</a>
-									</component>
-								</li>
-							</ul>
-						</nav>
-					</div>
-				</slot>
-			</div>
-		</div>
-	</section>
+    <section class="topbar">
+        <div class="container-xl">
+            <div class="nav">
+                <div id="block-ameli-espace-menu" class="wrapper-dropdown-with-overlay">
+                    <slot :right-links="props.rightLinks">
+                        <nav class="dropdown-with-overlay">
+                            <ul>
+                                <li v-for="(item, index) in props.rightLinks" :key="index"
+                                    :class="{ 'active': index == 0 }">
+                                    <component :is="getLinkComponent(item)" :href="item.href" :tabindex="index"
+                                        :title="item.title" class="component">
+                                        <span v-if="index == 1">
+                                            <CustomInputSelect id="dropdown-submenu" class="customInputSelect"
+                                                :items="itemsSelectMenu" :label="item.text" />
+                                        </span>
+                                        <span v-else class="link"> {{ item.text }}</span>
+                                    </component>
+                                </li>
+                            </ul>
+                        </nav>
+                    </slot>
+                </div>
+                <slot :left-links="props.leftLinks">
+                    <div class="d-none d-lg-block">
+                        <nav id="block-menuinstitutionnel" role="navigation" class="dropdown-with-overlay"
+                            aria-label="menu institutionnel">
+                            <ul>
+                                <li v-for="(item, index) in props.leftLinks" :key="index">
+                                    <component :is="getLinkComponent(item)" :href="item.href" :tabindex="index"
+                                        :title="item.title" class="component">
+                                        <span> {{ item.text }}</span>
+                                    </component>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </slot>
+            </div>
+        </div>
+    </section>
 </template>
 
 <style lang="scss" scoped>
@@ -187,7 +157,7 @@
 
     max-height: calc(100vh - 48px);
     overflow-y: hidden;
-    top: 48px;
+    top: 49px;
     left: 221px;
     border-radius: 0px;
 }
@@ -199,6 +169,7 @@
 
 .topbar .wrapper-dropdown-with-overlay .dropdown-with-overlay>ul>li:first-child.active a {
     background: #ed76b3;
+    height: 49px;
 }
 
 .customInputSelect {
