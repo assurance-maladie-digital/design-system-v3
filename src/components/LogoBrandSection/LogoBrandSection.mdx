@@ -1,0 +1,16 @@
+import { Canvas, Meta, Controls, Source } from '@storybook/blocks';
+import * as LogoBrandSectionStories from './LogoBrandSection.stories.ts';
+
+<Meta title="Components/LogoBrandSection" component={LogoBrandSectionStories} />
+
+# LogoBrandSection
+
+Le composant `LogoBrandSection` est la migration du même composant de la librairie [VueDot](https://digital-design-system.netlify.app/fondamentaux/logo/#logobrandsection).
+
+Il permet d'afficher le logo de l'Assurance Maladie avec des logos ou un titre secondaire et contient des présets pour différentes marques de l'Assurance Maladie grace a la props `theme` (ex: `ameli`, `ameli-pro`, `compte-entreprise`...).
+
+<Canvas of={LogoBrandSectionStories.Default} />
+
+## API
+
+<Controls of={LogoBrandSectionStories.Default} />
