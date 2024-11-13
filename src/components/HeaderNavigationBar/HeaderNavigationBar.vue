@@ -114,7 +114,7 @@
 										{{ item.label }}
 									</a>
 									<RouterLink
-										v-else-if="'to' in item"
+										v-else-if="item.to"
 										:to="item.to"
 									>
 										{{ item.label }}
