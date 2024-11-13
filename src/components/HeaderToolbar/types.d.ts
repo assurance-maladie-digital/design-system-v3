@@ -1,9 +1,7 @@
-import { RawLocation } from 'vue-router'
-
 export interface HeaderToolbar {
 	title?: string
 	href?: string
-	to?: RawLocation
+	to?: string
 	ariaLabel?: string
 	text: string
 }
@@ -11,7 +9,7 @@ export interface HeaderToolbar {
 export interface LinkItem {
 	hidden?: unknown
 	text: string
-	to?: RawLocation
+	to?: string
 	href?: string
 	ariaLabel?: string
 	title?: string

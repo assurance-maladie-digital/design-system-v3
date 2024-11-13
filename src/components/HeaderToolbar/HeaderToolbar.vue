@@ -30,13 +30,32 @@
 		return item.href ? 'a' : 'RouterLink'
 	}
 
-	const activeLinkIndex = ref<number | null>(null)
+	const showOverlay = ref(false)
+	const highlightMenu = ref(false)
+
+	const hideOverlay = () => {
+		showOverlay.value = false
+		highlightMenu.value = false
+	}
+	const handleLink = (index: number) => {
+		if (index === 1) {
+			showOverlay.value = !showOverlay.value
+		}
+	}
 </script>
 
 <template>
 	<div class="toolbar">
 		<div class="container">
 			<slot :left-menu="props.leftMenu">
+				<button
+					v-if="showOverlay"
+					class="overlay"
+					aria-label="Close overlay"
+					@click="hideOverlay"
+					@keydown.enter="hideOverlay"
+					@keydown.esc="hideOverlay"
+				/>
 				<nav
 					id="left-menu"
 					role="navigation"
@@ -46,26 +65,24 @@
 						<li
 							v-for="(item, index) in props.leftMenu"
 							:key="index"
-							:class="{ 'active': index == 0 }"
+							:class="{ 'active': index === 0, 'highlight': highlightMenu }"
 						>
-							<span
-								v-if="index === 1 && activeLinkIndex === 1"
-								class="overlay"
-							/>
 							<component
 								:is="getLinkComponent(item)"
 								:href="item.href"
 								:to="item.to"
 								:tabindex="index"
 								:title="item.title"
-								class="component"
+								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
+								@focus="index === 1 ? highlightMenu = true : null"
 							>
-								<span v-if="index == 1">
+								<span v-if="index === 1">
 									<CustomInputSelect
 										id="dropdown-submenu"
 										class="customInputSelect"
 										:items="itemsSelectMenu"
 										:label="item.text"
+										@click="handleLink(index)"
 									/>
 								</span>
 								<span
@@ -81,7 +98,6 @@
 				<nav
 					id="right-menu"
 					role="navigation"
-					class="d-none d-lg-block"
 					:aria-labelledby="props.ariaRightMenu"
 				>
 					<ul>
@@ -94,7 +110,6 @@
 								:href="item.href"
 								:tabindex="index"
 								:title="item.title"
-								class="component"
 							>
 								<span> {{ item.text }}</span>
 							</component>
@@ -166,15 +181,18 @@
     }
     li:nth-child(2) {
       min-width: 260px;
-      z-index: 3;
+      z-index: 2;
       @media (max-width: 768px) {
         min-width: 182px;
       }
     }
+    li:nth-child(3) {
+      background: transparent;
+    }
     li:first-child a {
       background: tokens.$user-assure;
     }
-    li:nth-child(2) a:hover {
+    li:nth-child(2) a:hover, .highlight {
       background: tokens.$user-professionnel;
     }
     li:nth-child(3) a:hover {
@@ -186,6 +204,9 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+    @media (max-width: 1000px) {
+      display: none;
     }
   }
 
@@ -220,11 +241,12 @@
       }
     }
     .v-list {
-      top: 35px !important;
-      left: -15px !important;
+      top: 34px !important;
+      left: -16px !important;
       text-align: left;
       min-width: 260px;
       max-width: fit-content !important;
+      border-radius: 0;
       @media (max-width: 768px) {
         position: fixed;
         top: 38px !important;
@@ -246,7 +268,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 2;
+    z-index: 1;
     @media (max-width: 768px) {
       display: none;
     }
