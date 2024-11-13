@@ -4,6 +4,7 @@ import HeaderBar from './HeaderBar.vue'
 import { VBtn } from 'vuetify/components'
 import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
 import SubHeader from '../SubHeader/SubHeader.vue'
+import LogoBrandSection from '../LogoBrandSection/LogoBrandSection.vue'
 
 const meta = {
 	component: HeaderBar,
@@ -254,6 +255,143 @@ export const WithRightMenu: Story = {
 					import { HeaderBar } from '@cnamts/synapse'
 					import { VBtn } from 'vuetify/components'
 					import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const CustomLogo: Story = {
+	args: {
+		serviceTitle: 'Synapse',
+		serviceSubtitle: 'Design System',
+	},
+	render: (args) => {
+		return {
+			components: { HeaderBar, LogoBrandSection },
+			setup() {
+				const logo = {
+					menuOpen: false,
+					homeAriaLabel: 'Logo de l\'Assurance Maladie, cliquez pour revenir à l\'accueil',
+					serviceTitle: 'Synapse',
+					serviceSubtitle: 'Design System',
+				}
+				return { args, logo }
+			},
+			template: `
+				<HeaderBar v-bind="args">
+					<template #logo="{ menuOpen }">
+						<LogoBrandSection
+							theme="ameli"
+						>
+					</template>
+				</HeaderBar>
+				<br>
+				<HeaderBar v-bind="args">
+					<template #logo="{ menuOpen }">
+						<LogoBrandSection
+							theme="ameli-pro"
+						>
+					</template>
+				</HeaderBar>
+				<br>
+				<HeaderBar v-bind="args">
+					<template #logo="{ menuOpen }">
+						<LogoBrandSection
+							theme="cnam"
+						>
+					</template>
+				</HeaderBar>
+				<br>
+				<HeaderBar v-bind="args">
+					<template #logo="{ menuOpen }">
+						<LogoBrandSection
+							theme="compte-ameli"
+						>
+					</template>
+				</HeaderBar>
+				<br>
+				<HeaderBar v-bind="args">
+					<template #logo="{ menuOpen }">
+						<LogoBrandSection
+							theme="compte-entreprise"
+						>
+					</template>
+				</HeaderBar>
+				<br>
+				<HeaderBar v-bind="args">
+					<template #logo="{ menuOpen }">
+						<LogoBrandSection
+							theme="risque-pro"
+						>
+					</template>
+				</HeaderBar>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<HeaderBar>
+						<template #logo="{ menuOpen }">
+							<LogoBrandSection
+								theme="ameli"
+							>
+						</template>
+					</HeaderBar>
+					<br>
+					<HeaderBar>
+						<template #logo="{ menuOpen }">
+							<LogoBrandSection
+								theme="ameli-pro"
+							>
+						</template>
+					</HeaderBar>
+					<br>
+					<HeaderBar>
+						<template #logo="{ menuOpen }">
+							<LogoBrandSection
+								theme="cnam"
+							>
+						</template>
+					</HeaderBar>
+					<br>
+					<HeaderBar>
+						<template #logo="{ menuOpen }">
+							<LogoBrandSection
+								theme="compte-ameli"
+							>
+						</template>
+					</HeaderBar>
+					<br>
+					<HeaderBar>
+						<template #logo="{ menuOpen }">
+							<LogoBrandSection
+								theme="compte-entreprise"
+							>
+						</template>
+					</HeaderBar>
+					<br>
+					<HeaderBar>
+						<template #logo="{ menuOpen }">
+							<LogoBrandSection
+								theme="risque-pro"
+							>
+						</template>
+					</HeaderBar>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderBar, LogoBrandSection } from '@cnamts/synapse'
+
 				</script>
 				`,
 			},
