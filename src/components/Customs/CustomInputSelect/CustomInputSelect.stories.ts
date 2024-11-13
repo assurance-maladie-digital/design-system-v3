@@ -16,6 +16,9 @@ const meta = {
 		items: { control: 'object' },
 		errorMessages: { control: 'object' },
 		required: { control: 'boolean' },
+		textKey: { control: 'text' },
+		valueKey: { control: 'text' },
+		vuetifyOptions: { control: 'object' },
 	},
 } as Meta<typeof CustomInputSelect>
 
@@ -56,6 +59,14 @@ export const Default: Story = {
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
+		vuetifyOptions: {
+			input: {
+				color: 'primary',
+			},
+			option: {
+				color: 'primary',
+			},
+		},
 	},
 	render: (args) => {
 		return {
@@ -67,6 +78,7 @@ export const Default: Story = {
 				<div class="d-flex flex-wrap align-center pa-4">
 					<CustomInputSelect
 						v-bind="args"
+						:vuetify-options="args.vuetifyOptions"
 					/>
 				</div>
 				<br/><br/><br/><br/>
@@ -184,7 +196,7 @@ export const Required: Story = {
 	},
 }
 
-export const withError: Story = {
+export const withCustomError: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -305,6 +317,78 @@ export const withCustomKey: Story = {
 						v-bind="args"
 						outlined
 						text-key="customKey"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const withCustomStyles: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomInputSelect
+						v-model="value"
+						:items="items"
+						:vuetify-options="vuetifyOptions
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					
+					const items =  [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					]
+					
+					const vuetifyOptions = {
+						input: {
+							color: 'secondary',
+						},
+						option: {
+							color: 'secondary',
+						},
+					}
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		vuetifyOptions: {
+			input: {
+				color: 'secondary',
+			},
+			option: {
+				color: 'secondary',
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomInputSelect
+						v-bind="args"
+						:items="args.items"
+						:vuetify-options="args.vuetifyOptions"
 					/>
 				</div>
 			`,
