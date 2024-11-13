@@ -1,12 +1,10 @@
 <script setup lang="ts">
 	import { VTabs } from 'vuetify/components'
 	import type { NavigationItem } from '../types'
-	import { cnamSemanticTokens } from '@/designTokens'
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { config } from './config'
 
-	const backgroundColor = cnamSemanticTokens.colors.background.accentContrasted
-	const textBaseColor = cnamSemanticTokens.colors.text.subduedOnDark
-
-	defineProps<{
+	const props = defineProps<CustomizableOptions & {
 		items: NavigationItem[]
 	}>()
 
@@ -16,30 +14,27 @@
 		'default': () => unknown
 	}>()
 
+	const options = useCustomizableOptions(config, props)
+
 </script>
 
 <template>
 	<VSheet
 		class="horizontal-menu px-12"
-		dense
-		theme="dark"
-		:color="backgroundColor"
+		v-bind="options.sheet"
 	>
 		<slot name="navigation-bar-prepend" />
 		<slot>
 			<VTabs
-				height="53"
 				class="horizontal-menu__tabs"
-				show-arrows
+				v-bind="options.tabs"
 			>
 				<VTab
 					v-for="(item, index) in items"
 					:key="index"
 					:href="item.href"
 					:to="item.to"
-					slider-color="#fff"
-					:base-color="textBaseColor"
-					:ripple="false"
+					v-bind="options.tab"
 					tabindex="0"
 					class="horizontal-menu__item"
 				>

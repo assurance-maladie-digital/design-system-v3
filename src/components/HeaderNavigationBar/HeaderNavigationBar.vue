@@ -4,12 +4,13 @@
 	import HeaderMenuItem from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuItem/HeaderMenuItem.vue'
 	import HeaderMenuSection from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.vue'
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
+	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { computed, ref } from 'vue'
 	import { RouterLink, type RouteLocationRaw } from 'vue-router'
 	import HorizontalNavbar from './HorizontalNavbar/HorizontalNavbar.vue'
 	import type { NavigationItem } from './types'
 
-	const props = withDefaults(defineProps<{
+	const props = withDefaults(defineProps<CustomizableOptions & {
 			homeAriaLabel?: string
 			serviceTitle?: string
 			serviceSubtitle?: string
@@ -160,6 +161,7 @@
 			<HorizontalNavbar
 				v-if="props.items && !verticalMenu"
 				:items="items"
+				:vuetify-options
 			>
 				<template #navigation-bar-prepend>
 					<slot name="navigation-bar-prepend" />
