@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { mdiMenuDown } from '@mdi/js'
+	import { mdiChevronDown } from '@mdi/js'
 	import { ref, watch, computed } from 'vue'
 	import { VIcon, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
@@ -122,7 +122,7 @@
 			@keydown.space.prevent="toggleMenu"
 		>
 			<span>{{ selectedItemText }}</span>
-			<VIcon> {{ mdiMenuDown }}</VIcon>
+			<VIcon> {{ mdiChevronDown }}</VIcon>
 		</div>
 		<VList
 			v-if="isOpen"

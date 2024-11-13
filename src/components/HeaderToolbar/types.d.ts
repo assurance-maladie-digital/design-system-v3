@@ -1,11 +1,12 @@
-export interface TopNavHeader {
+import { RawLocation } from 'vue-router'
+
+export interface HeaderToolbar {
 	title?: string
-	href: string
+	href?: string
+	to?: RawLocation
 	ariaLabel?: string
 	text: string
 }
-
-import { RawLocation } from 'vue-router'
 
 export interface LinkItem {
 	hidden?: unknown
