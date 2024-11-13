@@ -34,8 +34,11 @@
 	const highlightMenu = ref(false)
 
 	const hideOverlay = () => {
+		const activeMenu = document.querySelector('.custom-select > span').textContent
+		if (activeMenu === 'Professionnel de santé') {
+			highlightMenu.value = false
+		}
 		showOverlay.value = false
-		highlightMenu.value = false
 	}
 	const handleLink = (index: number) => {
 		if (index === 1) {
@@ -74,11 +77,10 @@
 								:tabindex="index"
 								:title="item.title"
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
-								@focus="index === 1 ? highlightMenu = true : null"
+								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 							>
 								<span v-if="index === 1">
 									<CustomInputSelect
-										id="dropdown-submenu"
 										class="customInputSelect"
 										:items="itemsSelectMenu"
 										:label="item.text"
