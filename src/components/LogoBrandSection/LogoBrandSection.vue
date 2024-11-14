@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { LogoSize } from '@/components/Logo/LogoSize'
 	import { cnamLightTheme } from '@/designTokens/tokens/cnam/cnamLightTheme'
-	import { computed, resolveComponent } from 'vue'
+	import { computed, getCurrentInstance } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import Logo from '../Logo/Logo.vue'
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
@@ -107,8 +107,9 @@
 
 	const logoContainerComponent = computed(() => {
 		if (props.homeLink?.to) {
-			const routerLink = resolveComponent('router-link')
-			if (routerLink !== 'router-link') { // the component is registered
+			const componentsRegistered = getCurrentInstance()?.appContext?.components
+			const hasRouterLink = componentsRegistered && 'router-link' in componentsRegistered
+			if (hasRouterLink) {
 				return 'router-link'
 			}
 			return 'div'

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-	import { computed, onMounted, onUnmounted, provide, ref, resolveComponent, watch, type CSSProperties, type Ref } from 'vue'
+	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type Ref } from 'vue'
+	import type { RouteLocationRaw } from 'vue-router'
 	import HeaderLogo from './HeaderLogo/HeaderLogo.vue'
 	import { registerHeaderMenuKey } from './consts'
 	import { locales } from './locales'
 	import useHeaderResponsiveMode from './useHeaderResponsiveMode'
 	import useScrollDirection from './useScrollDirection'
-	import type { RouteLocationRaw } from 'vue-router'
 
 	const menuOpen = ref<boolean>()
 
@@ -48,9 +48,7 @@
 			homeAriaLabel: locales.homeAriaLabel,
 			serviceTitle: undefined,
 			serviceSubtitle: undefined,
-			homeLink: () => ({
-				href: '/',
-			}),
+			homeLink: undefined,
 		})
 
 	function registerHeaderMenu(childMenuStatus: Ref<boolean>) {
@@ -141,19 +139,6 @@
 		}
 	})
 
-	const routeType = computed(() => {
-		if (props.homeLink?.to) {
-			const routerLink = resolveComponent('router-link')
-			if (routerLink !== 'router-link') { // the component is registered
-				return 'router-link'
-			}
-			return 'div'
-		}
-		if (props.homeLink?.href) {
-			return 'a'
-		}
-		return 'div'
-	})
 </script>
 
 <template>
@@ -190,37 +175,24 @@
 						:service-title
 						:service-subtitle
 					>
-						<component
-							:is="routeType"
-							variant="tonal"
-							flat
-							tile
-							:ripple="false"
-							v-bind="{
-								to: 'to' in homeLink ? homeLink?.to : undefined,
-								href: 'href' in homeLink ? homeLink?.href : undefined,
-								'aria-label': 'aria-label' in homeLink ? homeLink?.['aria-label'] : undefined,
-							}"
-							style="text-transform: none; height: 100%;"
+						<HeaderLogo
+							:aria-label="homeAriaLabel"
+							:service-title="serviceTitle"
+							:service-subtitle="serviceSubtitle"
 						>
-							<HeaderLogo
-								:aria-label="homeAriaLabel"
-								:service-title="serviceTitle"
-								:service-subtitle="serviceSubtitle"
+							<template
+								#brand-content
 							>
-								<template
-									#brand-content
-								>
-									<slot
-										name="logo-brand-content"
-										:menu-open
-										:home-aria-label
-										:service-title
-										:service-subtitle
-									/>
-								</template>
-							</HeaderLogo>
-						</component>
+								<slot
+									name="logo-brand-content"
+									:menu-open
+									:home-aria-label
+									:service-title
+									:service-subtitle
+									:home-link
+								/>
+							</template>
+						</HeaderLogo>
 					</slot>
 				</div>
 				<div
