@@ -84,6 +84,8 @@
 								:to="item.to"
 								:tabindex="index"
 								:title="item.title"
+								:target="item.openInNewTab ? '_blank' : undefined"
+								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 								@click="checkActiveLink(index)"
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
@@ -121,6 +123,7 @@
 							<component
 								:is="getLinkComponent(item as MenuItem)"
 								:href="item.href"
+								:to="item.to"
 								:tabindex="index"
 								:title="item.title"
 							>
