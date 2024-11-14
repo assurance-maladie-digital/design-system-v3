@@ -24,7 +24,6 @@
 		{
 			title: 'Carrières',
 			href: 'https://www.assurance-maladie.ameli.fr/carrieres',
-
 		},
 		{
 			title: 'Études et données',

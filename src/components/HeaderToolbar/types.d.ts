@@ -10,6 +10,7 @@ export interface MenuItem {
 
 export interface SelectItem {
 	text: string
+	value: string
 	hidden?: unknown
 	to?: RouteLocationRaw
 	href?: string

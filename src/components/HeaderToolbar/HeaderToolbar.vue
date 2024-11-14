@@ -35,8 +35,8 @@
 	const activeIndex = ref<number | null>(null)
 
 	const hideOverlay = () => {
-		const activeSelected = document.querySelector('.custom-select > span').textContent
-		if (activeSelected === 'Professionnel de santé') {
+		const activeSelected = document.querySelector('.custom-select > span')?.textContent
+		if (activeSelected && activeSelected === 'Professionnel de santé') {
 			highlightMenu.value = false
 		}
 		showOverlay.value = false
@@ -82,7 +82,7 @@
 								:is="getLinkComponent(item as MenuItem)"
 								:href="item.href"
 								:to="item.to"
-								:tabindex="index"
+								tabindex="0"
 								:title="item.title"
 								:target="item.openInNewTab ? '_blank' : undefined"
 								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
@@ -90,10 +90,10 @@
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 							>
-								<span v-if="index === 1">
+								<span v-if="itemsSelectMenu && index === 1">
 									<CustomInputSelect
 										class="customInputSelect"
-										:items="itemsSelectMenu as SelectItem[]"
+										:items="itemsSelectMenu as unknown as string[]"
 										:label="item.title"
 										@click="handleLink(index)"
 									/>
@@ -124,8 +124,9 @@
 								:is="getLinkComponent(item as MenuItem)"
 								:href="item.href"
 								:to="item.to"
-								:tabindex="index"
+								tabindex="0"
 								:title="item.title"
+								@click="checkActiveLink(index)"
 							>
 								<span> {{ item.title }}</span>
 							</component>
