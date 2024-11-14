@@ -1,42 +1,39 @@
 <script setup lang="ts">
 	import HeaderToolbar from '@/components/HeaderToolbar/HeaderToolbar.vue'
 	import { ref } from 'vue'
+	import type { MenuItem, SelectItem } from '@/components/HeaderToolbar/types'
 
 	const leftMenu = ref([{
-			text: 'Assuré',
+			title: 'Assuré',
 			href: '#',
 		},
 		{
-			text: 'Professionnel de santé',
+			title: 'Professionnel de santé',
 			href: '#',
 		},
 		{
-			text: 'Entreprise',
+			title: 'Entreprise',
 			href: '#',
 		},
-	])
+	] as MenuItem[])
 
 	const rightMenu = ref([{
-			text: 'Qui sommes-nous ?',
-			to: '/',
 			title: 'Qui sommes-nous ?',
+			to: '/',
 		},
 		{
-			text: 'Carrières',
-			href: 'https://www.assurance-maladie.ameli.fr/carrieres',
 			title: 'Carrières',
+			href: 'https://www.assurance-maladie.ameli.fr/carrieres',
 
 		},
 		{
-			text: 'Études et données',
-			href: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees',
 			title: 'Études et données',
+			href: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees',
 		},
 		{
-			text: 'Presse',
-			href: 'https://www.assurance-maladie.ameli.fr/presse',
 			title: 'Presse',
-		}])
+			href: 'https://www.assurance-maladie.ameli.fr/presse',
+		}] as MenuItem[])
 
 	const itemsSelectMenu = ref([
 		{
@@ -69,7 +66,7 @@
 			value: 'Masseur',
 			href: 'https://www.ameli.fr/',
 		},
-	])
+	] as SelectItem[])
 
 </script>
 

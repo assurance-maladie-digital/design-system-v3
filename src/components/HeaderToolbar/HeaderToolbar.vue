@@ -1,19 +1,19 @@
 <script setup lang="ts">
 	import { ref, type PropType } from 'vue'
-	import type { LinkItem, HeaderToolbar } from './types'
+	import type { MenuItem, SelectItem } from './types'
 	import CustomInputSelect from '../Customs/CustomInputSelect/CustomInputSelect.vue'
 
 	const props = defineProps({
 		leftMenu: {
-			type: Array as PropType<HeaderToolbar[]>,
+			type: Array as PropType<MenuItem[]>,
 			default: () => [],
 		},
 		rightMenu: {
-			type: Array as PropType<HeaderToolbar[]>,
+			type: Array as PropType<MenuItem[]>,
 			default: () => [],
 		},
 		itemsSelectMenu: {
-			type: Array,
+			type: Array as PropType<SelectItem[]>,
 			default: () => [],
 		},
 		ariaLeftMenu: {
@@ -26,7 +26,7 @@
 		},
 	})
 
-	const getLinkComponent = (item: LinkItem): string => {
+	const getLinkComponent = (item: MenuItem): string => {
 		return item.href ? 'a' : 'RouterLink'
 	}
 
@@ -79,7 +79,7 @@
 							:class="{ 'active': activeIndex === index, 'highlight': highlightMenu }"
 						>
 							<component
-								:is="getLinkComponent(item)"
+								:is="getLinkComponent(item as MenuItem)"
 								:href="item.href"
 								:to="item.to"
 								:tabindex="index"
@@ -91,8 +91,8 @@
 								<span v-if="index === 1">
 									<CustomInputSelect
 										class="customInputSelect"
-										:items="itemsSelectMenu"
-										:label="item.text"
+										:items="itemsSelectMenu as SelectItem[]"
+										:label="item.title"
 										@click="handleLink(index)"
 									/>
 								</span>
@@ -100,7 +100,7 @@
 									v-else
 									class="link"
 								>
-									{{ item.text }}
+									{{ item.title }}
 								</span>
 							</component>
 						</li>
@@ -119,12 +119,12 @@
 							:key="index"
 						>
 							<component
-								:is="getLinkComponent(item)"
+								:is="getLinkComponent(item as MenuItem)"
 								:href="item.href"
 								:tabindex="index"
 								:title="item.title"
 							>
-								<span> {{ item.text }}</span>
+								<span> {{ item.title }}</span>
 							</component>
 						</li>
 					</ul>
@@ -173,6 +173,7 @@
       color: tokens.$primary-base;
       text-decoration: none;
       padding: 10px 16px;
+      cursor: pointer;
       @media (max-width: 768px) {
         font-size: 12px;
       }

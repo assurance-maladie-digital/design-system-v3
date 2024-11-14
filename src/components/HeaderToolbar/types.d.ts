@@ -1,14 +1,13 @@
-export interface HeaderToolbar {
-	title?: string
+export interface MenuItem {
+	title: string
 	href?: string
 	to?: string
 	ariaLabel?: string
-	text: string
 }
 
-export interface LinkItem {
-	hidden?: unknown
+export interface SelectItem {
 	text: string
+	hidden?: unknown
 	to?: string
 	href?: string
 	ariaLabel?: string
