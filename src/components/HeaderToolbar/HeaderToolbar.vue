@@ -32,10 +32,11 @@
 
 	const showOverlay = ref(false)
 	const highlightMenu = ref(false)
+	const activeIndex = ref<number | null>(null)
 
 	const hideOverlay = () => {
-		const activeMenu = document.querySelector('.custom-select > span').textContent
-		if (activeMenu === 'Professionnel de santé') {
+		const activeSelected = document.querySelector('.custom-select > span').textContent
+		if (activeSelected === 'Professionnel de santé') {
 			highlightMenu.value = false
 		}
 		showOverlay.value = false
@@ -43,6 +44,13 @@
 	const handleLink = (index: number) => {
 		if (index === 1) {
 			showOverlay.value = !showOverlay.value
+		}
+	}
+
+	const checkActiveLink = (index: number) => {
+		activeIndex.value = index
+		if (index !== 1) {
+			highlightMenu.value = false
 		}
 	}
 </script>
@@ -68,7 +76,7 @@
 						<li
 							v-for="(item, index) in props.leftMenu"
 							:key="index"
-							:class="{ 'highlight': highlightMenu }"
+							:class="{ 'active': activeIndex === index, 'highlight': highlightMenu }"
 						>
 							<component
 								:is="getLinkComponent(item)"
@@ -76,6 +84,7 @@
 								:to="item.to"
 								:tabindex="index"
 								:title="item.title"
+								@click="checkActiveLink(index)"
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 							>
@@ -90,7 +99,9 @@
 								<span
 									v-else
 									class="link"
-								> {{ item.text }}</span>
+								>
+									{{ item.text }}
+								</span>
 							</component>
 						</li>
 					</ul>
@@ -192,13 +203,13 @@
     li:nth-child(3) {
       background: transparent;
     }
-    li:first-child a:hover {
+    li:first-child a:hover, li:first-child.active {
       background: tokens.$user-assure;
     }
     li:nth-child(2) a:hover, .highlight {
       background: tokens.$user-professionnel;
     }
-    li:nth-child(3) a:hover {
+    li:nth-child(3) a:hover, li:nth-child(3).active {
       background: tokens.$user-entreprise;
     }
   }
