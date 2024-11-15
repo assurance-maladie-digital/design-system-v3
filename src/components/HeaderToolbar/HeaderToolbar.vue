@@ -159,7 +159,6 @@
 	})
 
 	const getLinkComponent = (item: MenuItem): string => {
-		console.log('toto')
 		if (item.href) {
 			return 'a'
 		}

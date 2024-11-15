@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it, vi } from 'vitest'
+import { expect, describe, it } from 'vitest'
 import HeaderToolbar from '../HeaderToolbar.vue'
 import { vuetify } from '@tests/unit/setup'
 
