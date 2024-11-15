@@ -271,7 +271,7 @@
 								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 								:title="item.title"
 								:aria-label="item.title"
-								:tabindex="1"
+								:tabindex="0"
 								@click="deleteActiveLink()"
 							>
 								<span>{{ item.title }}</span>
