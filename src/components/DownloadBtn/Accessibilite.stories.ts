@@ -1,10 +1,12 @@
 import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
 import { AccessibiliteItems } from './AccessibiliteItems'
-import { mdiCheckboxMarkedCircle, mdiHelpCircle } from '@mdi/js'
+import { mdiCheckboxMarkedCircle, mdiHelpCircle, mdiLink } from '@mdi/js'
 
 const checkIcon = mdiCheckboxMarkedCircle
 const helpICon = mdiHelpCircle
+const linkICon = mdiLink
+
 export default {
 	title: 'Components/DownloadBtn/Accessibilite',
 }
@@ -17,7 +19,7 @@ export const AccessibilitePanel: StoryObj = {
 			setup() {
 				const icon = checkIcon
 
-				return { AccessibiliteItems, icon, helpICon }
+				return { AccessibiliteItems, icon, helpICon, linkICon }
 			},
 			template: `
 				<v-expansion-panels value="opened" multiple >
@@ -38,7 +40,7 @@ export const AccessibilitePanel: StoryObj = {
 							<v-data-table
 								:items="item.items"
 								disable-pagination
-								hide-default-footer
+								      hide-default-footer
 								hide-default-header>
 										<template v-if="item?.items[index]?.expertise === 'design'" v-slot:item.expertise="{ item }">
 											<VIcon color="green" :icon="icon" />
@@ -46,15 +48,28 @@ export const AccessibilitePanel: StoryObj = {
 										<template v-else v-slot:item.expertise="{ item }">
 											<span></span>
 										</template>
-
-											<template v-if="item?.items[index]?.solution != ''" v-slot:item.solution="{ item }">
-											<VIcon :icon="helpICon" /><span style="font-style: italic;" >{{item.solution}} </span>
-										</template>
-										<template v-else v-slot:item.expertise="{ item }">
+										<template v-slot:item.link="{ item }">
 											<span></span>
 										</template>
+
+											
+									<template v-slot:item.solution="{ item }">
 										
+										</template>
+
+										   <template v-slot:bottom="{ items }" >
+										   <div v-for="element in items[0].solution" style="margin-top:15px;">
+										    <p style="font-weight: bold;">Méthodologie du test : <a href="items[0].link" target="blank" ><VIcon :icon="linkICon" /></a></p>
+							
+											<p>{{element.info1}}</p>
+											<p>{{element.info2}}</p>
+											<p>{{element.info3}}</p>
+
+											</div>
+    										</template>
 							</v-data-table>
+						
+							
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 
