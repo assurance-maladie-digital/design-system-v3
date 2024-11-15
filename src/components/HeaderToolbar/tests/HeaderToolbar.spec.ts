@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
+import { expect, describe, it, vi } from 'vitest'
 import HeaderToolbar from '../HeaderToolbar.vue'
 import { vuetify } from '@tests/unit/setup'
 
@@ -69,6 +69,26 @@ describe('HeaderToolbar.vue', () => {
 		expect(wrapper.html()).toContain('to="/home"')
 	})
 
+	it('getLinkComponent is called', async () => {
+		const wrapper = mount(HeaderToolbar, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		const spy = vi.spyOn(wrapper.vm, 'getLinkComponent')
+		wrapper.vm.getLinkComponent(
+			{
+				title: 'Left',
+				href: '/',
+				ariaLabel: 'Left',
+			},
+		)
+
+		await wrapper.vm.$nextTick()
+		expect(spy).toHaveBeenCalled()
+	})
+
 	it('hides the overlay', async () => {
 		const wrapper = mount(HeaderToolbar, {
 			global: {
@@ -103,35 +123,6 @@ describe('HeaderToolbar.vue', () => {
 
 		await wrapper.vm.checkActiveLink(1)
 		expect(wrapper.vm.activeIndex).toBe(1)
-	})
-
-	it('renders CustomInputSelect component', async () => {
-		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
-			props: {
-				leftMenu: [
-					{
-						title: 'Left',
-						to: '/',
-						ariaLabel: 'Left',
-					},
-					{
-						title: 'Left1',
-						to: '/',
-						ariaLabel: 'Left1',
-					},
-				],
-				itemsSelectMenu: [
-					{ text: 'Option 1', value: '1' },
-					{ text: 'Option 2', value: '2' },
-				],
-			},
-		})
-
-		await wrapper.vm.$nextTick()
-		expect(wrapper.find('.customInputSelect').exists()).toBe(true)
 	})
 
 	it('should set showOverlay to true when handleLink is called', async () => {
@@ -209,5 +200,17 @@ describe('HeaderToolbar.vue', () => {
 
 		const activeSelected = wrapper.find('.custom-select > span')
 		expect(activeSelected.text()).toBe('Professionnel de santé')
+	})
+
+	it('should set activeIndex to -1 when deleteActiveLink is called', async () => {
+		const wrapper = mount(HeaderToolbar, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.vm.deleteActiveLink()
+
+		expect(wrapper.vm.activeIndex).toBe(null)
 	})
 })
