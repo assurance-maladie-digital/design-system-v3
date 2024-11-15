@@ -1,0 +1,31 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as HeaderToolbar from './HeaderToolbar.stories';
+
+<Meta of={HeaderToolbar} />
+
+# HeaderToolbar
+
+L’élément `HeaderToolbar` est utilisé pour afficher une barre d'outils en haut de la page. Il est composé de deux zones customisables.
+
+<Canvas
+    of={HeaderToolbar.Default}
+    story={{
+        height: '500px',
+    }}
+/>
+
+# API
+
+<Controls of={HeaderToolbar.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+	import HeaderToolbar from '@cnamts/synapse'
+</script>
+
+<template>
+	<HeaderToolbar />
+</template>
+`} />

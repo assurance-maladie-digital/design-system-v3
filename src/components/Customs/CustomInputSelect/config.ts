@@ -1,5 +1,5 @@
 const defaultOptions = {
-	input: {
+	menu: {
 		color: 'primary',
 	},
 	option: {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { mdiMenuDown } from '@mdi/js'
+	import { mdiChevronDown } from '@mdi/js'
 	import { ref, watch, computed } from 'vue'
 	import { VIcon, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
@@ -102,7 +102,6 @@
 <template>
 	<v-input
 		:id="inputId"
-		v-bind="options.input"
 		v-model="selectedItem"
 		:label="props.label"
 		:title="props.label"
@@ -112,9 +111,8 @@
 	>
 		<div
 			ref="menu"
-			v-bind="options.menu"
 			v-click-outside="closeList"
-			:class="['custom-select', buttonClass, 'text-'+options.input.color]"
+			:class="['custom-select', buttonClass, 'text-'+options.menu.color]"
 			role="menu"
 			tabindex="0"
 			@click="toggleMenu"
@@ -122,7 +120,7 @@
 			@keydown.space.prevent="toggleMenu"
 		>
 			<span>{{ selectedItemText }}</span>
-			<VIcon> {{ mdiMenuDown }}</VIcon>
+			<VIcon> {{ mdiChevronDown }}</VIcon>
 		</div>
 		<VList
 			v-if="isOpen"
