@@ -206,10 +206,25 @@ export const CustomLinks: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<HeaderToolbar 
-						:left-menu="leftMenu" 
-						:right-menu="rightMenu" 
-					/>
+					<HeaderToolbar>
+					 <template #left-menu>
+					  <ul>
+						<li v-for="item in leftMenu">
+						  <a :href="item.href" target="_blank">
+							{{ item.title }}
+						  </a>
+						</li>
+					  </ul>
+					</template>
+					<template #right-menu>
+					  <ul>
+						<li v-for="item in rightMenu">
+						  <a :href="item.href" target="_blank">
+							{{ item.title }}
+						  </a>
+						</li>
+					  </ul>
+					</HeaderToolbar>
 				</template>
 				`,
 			},
@@ -302,11 +317,7 @@ export const CustomLinks: Story = {
 				return { args }
 			},
 			template: `
-              <HeaderToolbar
-                  v-bind="args"
-                  :left-menu="args.leftMenu"
-                  :right-menu="args.rightMenu"
-              >
+              <HeaderToolbar v-bind="args">
                 <template #left-menu>
                   <ul>
                     <li v-for="item in args.leftMenu">
