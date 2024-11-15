@@ -60,7 +60,7 @@ export const Default: Story = {
 			{ text: 'Option 2', value: '2' },
 		],
 		vuetifyOptions: {
-			input: {
+			menu: {
 				color: 'primary',
 			},
 			option: {
@@ -351,7 +351,7 @@ export const withCustomStyles: Story = {
 					]
 					
 					const vuetifyOptions = {
-						input: {
+						menu: {
 							color: 'secondary',
 						},
 						option: {
@@ -369,7 +369,7 @@ export const withCustomStyles: Story = {
 			{ text: 'Option 2', value: '2' },
 		],
 		vuetifyOptions: {
-			input: {
+			menu: {
 				color: 'secondary',
 			},
 			option: {

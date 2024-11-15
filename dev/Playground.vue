@@ -24,14 +24,17 @@
 		{
 			title: 'Carrières',
 			href: 'https://www.assurance-maladie.ameli.fr/carrieres',
+			openInNewTab: true,
 		},
 		{
 			title: 'Études et données',
 			href: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees',
+			openInNewTab: true,
 		},
 		{
 			title: 'Presse',
 			href: 'https://www.assurance-maladie.ameli.fr/presse',
+			openInNewTab: true,
 		}] as MenuItem[])
 
 	const itemsSelectMenu = ref([

@@ -6,28 +6,168 @@
 	const props = defineProps({
 		leftMenu: {
 			type: Array as PropType<MenuItem[]>,
-			default: () => [],
+			default: () => [
+				{
+					title: 'Assuré',
+					href: 'https://www.ameli.fr/assure',
+					openInNewTab: true,
+				},
+				{
+					title: 'Professionnel de santé',
+				},
+				{
+					title: 'Entreprise',
+					href: 'https://www.ameli.fr/entreprise',
+					openInNewTab: true,
+				},
+			],
 		},
 		rightMenu: {
 			type: Array as PropType<MenuItem[]>,
-			default: () => [],
+			default: () => [
+				{
+					title: 'Qui sommes-nous ?',
+					href: 'https://www.assurance-maladie.ameli.fr/qui-sommes-nous',
+					openInNewTab: true,
+				},
+				{
+					title: 'Carrières',
+					href: 'https://www.assurance-maladie.ameli.fr/carrieres',
+					openInNewTab: true,
+				},
+				{
+					title: 'Études et données',
+					href: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees',
+					openInNewTab: true,
+				},
+				{
+					title: 'Presse',
+					href: 'https://www.assurance-maladie.ameli.fr/presse',
+					openInNewTab: true,
+				},
+			],
 		},
 		itemsSelectMenu: {
 			type: Array as PropType<SelectItem[]>,
-			default: () => [],
+			default: () => [
+				{
+					text: 'Chirurgien-dentiste',
+					value: 'Chirurgien-dentiste',
+					href: 'https://www.ameli.fr/chirurgien-dentiste',
+					openInNewTab: true,
+				},
+				{
+					text: 'Établissement',
+					value: 'Établissement',
+					href: 'https://www.ameli.fr/etablissement',
+					openInNewTab: true,
+				},
+				{
+					text: 'Exercice coordonné',
+					value: 'Exercice coordonné',
+					href: 'https://www.ameli.fr/exercice-coordonne',
+					openInNewTab: true,
+				},
+				{
+					text: 'Infirmier',
+					value: 'Infirmier',
+					href: 'https://www.ameli.fr/infirmier',
+					openInNewTab: true,
+				},
+				{
+					text: 'Laboratoire d\'analyses médicales',
+					value: 'Laboratoire d\'analyses médicales',
+					href: 'https://www.ameli.fr/laboratoire-danalyses-medicales',
+					openInNewTab: true,
+				},
+				{
+					text: 'Masseur-kinésithérapeute',
+					value: 'Masseur-kinésithérapeute',
+					href: 'https://www.ameli.fr/masseur-kinesitherapeute',
+					openInNewTab: true,
+				},
+				{
+					text: 'Médecin',
+					value: 'Médecin',
+					href: 'https://www.ameli.fr/medecin',
+					openInNewTab: true,
+				},
+				{
+					text: 'Orthophoniste',
+					value: 'Orthophoniste',
+					href: 'https://www.ameli.fr/orthophoniste',
+					openInNewTab: true,
+				},
+				{
+					text: 'Orthoptiste',
+					value: 'Orthoptiste',
+					href: 'https://www.ameli.fr/orthoptiste',
+					openInNewTab: true,
+				},
+				{
+					text: 'Pédicure-podologue',
+					value: 'Pédicure-podologue',
+					href: 'https://www.ameli.fr/pedicure-podologue',
+					openInNewTab: true,
+				},
+				{
+					text: 'Pharmacien',
+					value: 'Pharmacien',
+					href: 'https://www.ameli.fr/pharmacien',
+					openInNewTab: true,
+				},
+				{
+					text: 'Professionnel de la LPP/LATM',
+					value: 'Professionnel de la LPP/LATM',
+					href: 'https://www.ameli.fr/professionnel-de-la-lpplatm',
+					openInNewTab: true,
+				},
+				{
+					text: 'Psychologue',
+					value: 'Psychologue',
+					href: 'https://www.ameli.fr/psychologue',
+					openInNewTab: true,
+				},
+				{
+					text: 'Sage-femme',
+					value: 'Sage-femme',
+					href: 'https://www.ameli.fr/sage-femme',
+					openInNewTab: true,
+				},
+				{
+					text: 'Taxi conventionné',
+					value: 'Taxi conventionné',
+					href: 'https://www.ameli.fr/taxi-conventionne',
+					openInNewTab: true,
+				},
+				{
+					text: 'Transporteur sanitaire',
+					value: 'Transporteur sanitaire',
+					href: 'https://www.ameli.fr/transporteur-sanitaire',
+					openInNewTab: true,
+				},
+			],
 		},
 		ariaLeftMenu: {
 			type: String,
-			default: 'toolbar-left-menu',
+			default: 'left-menu',
 		},
 		ariaRightMenu: {
 			type: String,
-			default: 'toolbar-right-menu',
+			default: 'right-menu',
 		},
 	})
 
 	const getLinkComponent = (item: MenuItem): string => {
-		return item.href ? 'a' : 'RouterLink'
+		if (item.href) {
+			return 'a'
+		}
+		else if (item.to) {
+			return 'RouterLink'
+		}
+		else {
+			return 'a'
+		}
 	}
 
 	const showOverlay = ref(false)
@@ -46,19 +186,22 @@
 			showOverlay.value = !showOverlay.value
 		}
 	}
-
 	const checkActiveLink = (index: number) => {
 		activeIndex.value = index
 		if (index !== 1) {
 			highlightMenu.value = false
 		}
 	}
+
+	const deleteActiveLink = () => {
+		activeIndex.value = null
+	}
 </script>
 
 <template>
 	<div class="toolbar">
 		<div class="container">
-			<slot :left-menu="props.leftMenu">
+			<slot name="left-menu">
 				<button
 					v-if="showOverlay"
 					class="overlay"
@@ -82,17 +225,17 @@
 								:is="getLinkComponent(item as MenuItem)"
 								:href="item.href"
 								:to="item.to"
-								tabindex="0"
 								:title="item.title"
+								:aria-label="item.title"
 								:target="item.openInNewTab ? '_blank' : undefined"
 								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
+								:tabindex="0"
 								@click="checkActiveLink(index)"
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 							>
 								<span v-if="itemsSelectMenu && index === 1">
 									<CustomInputSelect
-										class="customInputSelect"
 										:items="itemsSelectMenu as unknown as string[]"
 										:label="item.title"
 										@click="handleLink(index)"
@@ -109,7 +252,7 @@
 					</ul>
 				</nav>
 			</slot>
-			<slot :right-menu="props.rightMenu">
+			<slot name="right-menu">
 				<nav
 					id="right-menu"
 					role="navigation"
@@ -124,11 +267,14 @@
 								:is="getLinkComponent(item as MenuItem)"
 								:href="item.href"
 								:to="item.to"
-								tabindex="0"
+								:target="item.openInNewTab ? '_blank' : undefined"
+								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 								:title="item.title"
-								@click="checkActiveLink(index)"
+								:aria-label="item.title"
+								:tabindex="1"
+								@click="deleteActiveLink()"
 							>
-								<span> {{ item.title }}</span>
+								<span>{{ item.title }}</span>
 							</component>
 						</li>
 					</ul>
