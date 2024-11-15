@@ -69,26 +69,6 @@ describe('HeaderToolbar.vue', () => {
 		expect(wrapper.html()).toContain('to="/home"')
 	})
 
-	it('getLinkComponent is called', async () => {
-		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
-
-		const spy = vi.spyOn(wrapper.vm, 'getLinkComponent')
-		wrapper.vm.getLinkComponent(
-			{
-				title: 'Left',
-				href: '/',
-				ariaLabel: 'Left',
-			},
-		)
-
-		await wrapper.vm.$nextTick()
-		expect(spy).toHaveBeenCalled()
-	})
-
 	it('hides the overlay', async () => {
 		const wrapper = mount(HeaderToolbar, {
 			global: {

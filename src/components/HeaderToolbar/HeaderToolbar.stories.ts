@@ -6,6 +6,7 @@ const meta: Meta<typeof HeaderToolbar> = {
 	component: HeaderToolbar,
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: ['hideOverlay', 'handleLink', 'checkActiveLink', 'deleteActiveLink', 'activeIndex', 'highlightMenu', 'showOverlay', 'getLinkComponent'] },
 	},
 	argTypes: {
 		leftMenu: {
@@ -194,6 +195,138 @@ export const Default: Story = {
 			template: `
               <HeaderToolbar v-bind="args" />
 			`,
+		}
+	},
+}
+
+export const CustomLinks: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<HeaderToolbar 
+						:left-menu="leftMenu" 
+						:right-menu="rightMenu" 
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import HeaderToolbar from '@cnamts/synapse'
+					
+					const leftMenu = [
+						{
+							title: 'Titre 1',
+							href: 'https://www.ameli.fr',
+							openInNewTab: true,
+						},
+						{
+							title: 'Titre 2',
+							href: 'https://www.ameli.fr',
+							openInNewTab: true,
+						},
+						{
+							title: 'Titre 3',
+							href: 'https://www.ameli.fr',
+							openInNewTab: true,
+						},
+					]
+					
+					const rightMenu = [
+						{
+							title: 'Titre 4',
+							href: 'https://www.ameli.fr',
+							openInNewTab: true,
+						},
+						{
+							title: 'Titre 5',
+							href: 'https://www.ameli.fr',
+							openInNewTab: true,
+						},
+						{
+							title: 'Titre 6',
+							href: 'https://www.ameli.fr',
+							openInNewTab: true,
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		leftMenu: [
+			{
+				title: 'Titre 1',
+				href: 'https://www.ameli.fr',
+				openInNewTab: true,
+			},
+			{
+				title: 'Titre 2',
+				href: 'https://www.ameli.fr',
+				openInNewTab: true,
+			},
+			{
+				title: 'Titre 3',
+				href: 'https://www.ameli.fr',
+				openInNewTab: true,
+			},
+		],
+		rightMenu: [
+			{
+				title: 'Titre 4',
+				href: 'https://www.ameli.fr',
+				openInNewTab: true,
+			},
+			{
+				title: 'Titre 5',
+				href: 'https://www.ameli.fr',
+				openInNewTab: true,
+			},
+			{
+				title: 'Titre 6',
+				href: 'https://www.ameli.fr',
+				openInNewTab: true,
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { HeaderToolbar },
+			setup() {
+				return { args }
+			},
+			template: `
+              <HeaderToolbar
+                  v-bind="args"
+                  :left-menu="args.leftMenu"
+                  :right-menu="args.rightMenu"
+              >
+                <template #left-menu>
+                  <ul>
+                    <li v-for="item in args.leftMenu">
+                      <a :href="item.href" target="_blank">
+                        {{ item.title }}
+                      </a>
+                    </li>
+                  </ul>
+                </template>
+                <template #right-menu>
+                  <ul>
+                    <li v-for="item in args.rightMenu">
+                      <a :href="item.href" target="_blank">
+                        {{ item.title }}
+                      </a>
+                    </li>
+                  </ul>
+                </template>
+              </HeaderToolbar>
+            `,
 		}
 	},
 }

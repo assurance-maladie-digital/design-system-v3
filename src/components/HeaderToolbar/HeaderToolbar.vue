@@ -159,6 +159,7 @@
 	})
 
 	const getLinkComponent = (item: MenuItem): string => {
+		console.log('toto')
 		if (item.href) {
 			return 'a'
 		}
@@ -166,7 +167,7 @@
 			return 'RouterLink'
 		}
 		else {
-			return 'a'
+			return 'a' // fix doc
 		}
 	}
 
@@ -196,6 +197,17 @@
 	const deleteActiveLink = () => {
 		activeIndex.value = null
 	}
+
+	defineExpose({
+		hideOverlay,
+		handleLink,
+		checkActiveLink,
+		deleteActiveLink,
+		activeIndex,
+		highlightMenu,
+		showOverlay,
+		getLinkComponent,
+	})
 </script>
 
 <template>
@@ -305,10 +317,8 @@
     @media (max-width: 768px) {
       max-height: 41px;
     }
-  }
 
-  #left-menu, #right-menu {
-    ul {
+    :deep(ul) {
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -318,17 +328,21 @@
         text-align: center;
       }
     }
-    ul > li > a {
+    :deep(ul > li > a) {
       display: block;
       color: tokens.$primary-base;
       text-decoration: none;
       padding: 10px 16px;
       cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
       @media (max-width: 768px) {
         font-size: 12px;
       }
     }
   }
+
   #left-menu {
     ul > li > a {
       font-weight: 700;
@@ -365,11 +379,6 @@
     }
   }
   #right-menu {
-    ul > li > a {
-      &:hover {
-        text-decoration: underline;
-      }
-    }
     @media (max-width: 1000px) {
       display: none;
     }
