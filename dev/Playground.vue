@@ -22,11 +22,10 @@
 				variant-style="outlined"
 				color="warning"
 				is-clearable
-        title="champs de prenom"
-        aria-label="champs de nom"
-        label="Salut"
-
-      />
+				title="champs de prenom"
+				aria-label="champs de nom"
+				label="Salut"
+			/>
 		</div>
 		<div>
 			<h3> With Slot</h3>
@@ -38,9 +37,9 @@
 				variant-style="outlined"
 				is-clearable
 				show-divider
-        title="champs de nom"
-        aria-label="champs de nom"
-      >
+				title="champs de nom"
+				aria-label="champs de nom"
+			>
 				<template #prepend-inner>
 					☀️
 				</template>
