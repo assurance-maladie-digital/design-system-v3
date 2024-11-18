@@ -1,46 +1,32 @@
 <script setup lang="ts">
-	import { mdiMenuDown } from '@mdi/js'
-	import { ref, watch, computed, type PropType } from 'vue'
+	import { mdiChevronDown } from '@mdi/js'
+	import { ref, watch, computed } from 'vue'
 	import { VIcon, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
-	const props = defineProps({
-		modelValue: {
-			type: [Object, String],
-			default: null,
-		},
-		items: {
-			type: Array,
-			default: () => [],
-		},
-		label: {
-			type: String,
-			default: 'Sélectionnez une option',
-		},
-		errorMessages: {
-			type: [String, Array] as PropType<string | readonly string[]>,
-			default: () => [],
-		},
-		required: {
-			type: Boolean,
-			default: false,
-		},
-		menuId: {
-			type: String,
-			default: 'custom-select-menu',
-		},
-		outlined: {
-			type: Boolean,
-			default: false,
-		},
-		textKey: {
-			type: String,
-			default: 'text',
-		},
-		valueKey: {
-			type: String,
-			default: 'value',
-		},
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import defaultOptions from './config'
+
+	const props = withDefaults(defineProps<CustomizableOptions & {
+		modelValue?: Record<string, unknown> | string | null
+		items?: Record<string, unknown>[] | string[]
+		textKey?: string
+		valueKey?: string
+		label?: string
+		outlined?: boolean
+		required?: boolean
+		errorMessages?: string | string[]
+	}>(), {
+		modelValue: null,
+		items: () => [],
+		textKey: 'text',
+		valueKey: 'value',
+		label: 'Sélectionnez une option',
+		outlined: false,
+		required: false,
+		errorMessages: () => [],
 	})
+
+	const options = useCustomizableOptions(defaultOptions, props)
 
 	const emit = defineEmits(['update:modelValue'])
 
@@ -81,6 +67,10 @@
 		selectedItem.value = newValue
 	})
 
+	watch (() => props.errorMessages, (newValue) => {
+		localErrorMessages.value = newValue
+	})
+
 	const buttonClass = computed(() => {
 		return props.outlined ? 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined' : 'text-color'
 	})
@@ -98,6 +88,10 @@
 	const checkForErrors = () => {
 		if (props.required && !selectedItem.value) {
 			localErrorMessages.value = ['Le champ est requis.']
+			return false
+		}
+		if (props.errorMessages.length > 0) {
+			localErrorMessages.value = props.errorMessages
 			return false
 		}
 		localErrorMessages.value = []
@@ -118,7 +112,7 @@
 		<div
 			ref="menu"
 			v-click-outside="closeList"
-			:class="['custom-select', buttonClass, 'primary']"
+			:class="['custom-select', buttonClass, 'text-'+options.menu.color]"
 			role="menu"
 			tabindex="0"
 			@click="toggleMenu"
@@ -126,20 +120,23 @@
 			@keydown.space.prevent="toggleMenu"
 		>
 			<span>{{ selectedItemText }}</span>
-			<VIcon> {{ mdiMenuDown }}</VIcon>
+			<VIcon> {{ mdiChevronDown }}</VIcon>
 		</div>
 		<VList
 			v-if="isOpen"
+			v-bind="options.list"
 			class="v-list"
-			:style="`max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px;`"
+			:style="`max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px; ${props.outlined ? 'top: 36px;' : 'top: 30px;'}`"
 			:aria-label="props.label"
 			:title="props.label"
 			@keydown.esc.prevent="isOpen = false"
 		>
 			<VListItem
 				v-for="(item, index) in formattedItems"
+				v-bind="options.option"
 				:key="index"
 				:ref="'options-' + index"
+				:base-color="options.option.color"
 				role="option"
 				class="v-list-item"
 				:aria-selected="selectedItem === item"
@@ -164,7 +161,6 @@
 
 .v-list {
   position: absolute;
-  top: 30px;
   width: 100%;
   z-index: 1;
   background-color: white;

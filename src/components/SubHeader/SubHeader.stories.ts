@@ -155,26 +155,24 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader 
-						v-bind="args"
-						:back-btn-text="args.backBtnText"
-						:title-text="args.titleText"
-						:hide-back-btn="args.hideBackBtn"
-						:sub-title-text="args.subTitleText"
-						:loading="args.loading"
-						:render-html-value="args.renderHtmlValue"
-						:data-list-group-items="args.dataListGroupItems"
-						:additional-informations="args.additionalInformations"
-						:back-btn="args.backBtn"
-						:back-btn-icon="args.backBtnIcon"
-						:title="args.title"
-						:sub-title="args.subTitle"
-						:right-content="args.rightContent"
-						:vuetify-options="args.vuetifyOptions"
-					/>
-              	</div>
-			`,
+				<SubHeader 
+					v-bind="args"
+					:back-btn-text="args.backBtnText"
+					:title-text="args.titleText"
+					:hide-back-btn="args.hideBackBtn"
+					:sub-title-text="args.subTitleText"
+					:loading="args.loading"
+					:render-html-value="args.renderHtmlValue"
+					:data-list-group-items="args.dataListGroupItems"
+					:additional-informations="args.additionalInformations"
+					:back-btn="args.backBtn"
+					:back-btn-icon="args.backBtnIcon"
+					:title="args.title"
+					:sub-title="args.subTitle"
+					:right-content="args.rightContent"
+					:vuetify-options="args.vuetifyOptions"
+				/>
+		`,
 		}
 	},
 }
@@ -266,12 +264,10 @@ export const DataList: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader 
-						v-bind="args"
-						:data-list-group-items="args.dataListGroupItems"
-					/>
-              	</div>
+				<SubHeader 
+					v-bind="args"
+					:data-list-group-items="args.dataListGroupItems"
+				/>
 			`,
 		}
 	},
@@ -374,13 +370,11 @@ export const ActionBtn: Story = {
 				return { args, updateInfo }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader 
-						v-bind="args"
-						:data-list-group-items="args.dataListGroupItems"
-						@click:list-item="updateInfo"
-					/>
-              	</div>
+				<SubHeader 
+					v-bind="args"
+					:data-list-group-items="args.dataListGroupItems"
+					@click:list-item="updateInfo"
+				/>
 			`,
 		}
 	},
@@ -474,13 +468,11 @@ export const HtmlValue: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader 
-						v-bind="args"
-						:data-list-group-items="args.dataListGroupItems"
-						:render-html-value="args.renderHtmlValue"
-					/>
-              	</div>
+				<SubHeader 
+					v-bind="args"
+					:data-list-group-items="args.dataListGroupItems"
+					:render-html-value="args.renderHtmlValue"
+				/>
 			`,
 		}
 	},
@@ -573,13 +565,11 @@ export const Loading: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader 
-						v-bind="args"
-						:data-list-group-items="args.dataListGroupItems"
-						:loading="args.loading"
-					/>
-              	</div>
+				<SubHeader 
+					v-bind="args"
+					:data-list-group-items="args.dataListGroupItems"
+					:loading="args.loading"
+				/>
 			`,
 		}
 	},
@@ -654,24 +644,22 @@ export const SlotAdditionalInformations: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader v-bind="args">
-						<template #additional-informations>
-							<VSpacer />
-							<p class="white--text mt-8 mb-0">
-								Profil complété à 50%
-							</p>
-							<VProgressLinear
-								:model-value="50"
-								color="#fff"
-								height="8px"
-								class="mt-2 mb-1"
-								background-color="#fff"
-								background-opacity=".24"
-							/>
-						</template>
-					</SubHeader>
-              	</div>
+				<SubHeader v-bind="args">
+					<template #additional-informations>
+						<VSpacer />
+						<p class="white--text mt-8 mb-0">
+							Profil complété à 50%
+						</p>
+						<VProgressLinear
+							:model-value="50"
+							color="#fff"
+							height="8px"
+							class="mt-2 mb-1"
+							background-color="#fff"
+							background-opacity=".24"
+						/>
+					</template>
+				</SubHeader>
 			`,
 		}
 	},
@@ -736,19 +724,17 @@ export const SlotBackBtn: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader v-bind="args">
-						<template #back-btn>
-							<VBtn
-								color="white"
-								variant="tonal"
-								class="mb-4"
-							>
-								Retour
-							</VBtn>
-						</template>
-					</SubHeader>
-              	</div>
+				<SubHeader v-bind="args">
+					<template #back-btn>
+						<VBtn
+							color="white"
+							variant="tonal"
+							class="mb-4"
+						>
+							Retour
+						</VBtn>
+					</template>
+				</SubHeader>
 			`,
 		}
 	},
@@ -809,15 +795,13 @@ export const SlotBackBtnIcon: Story = {
 				return { args, backArrowIcon }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader v-bind="args">
-						<template #back-btn-icon>
-							<VIcon class="mr-2">
-								{{ backArrowIcon }}
-							</VIcon>
-						</template>
-					</SubHeader>
-              	</div>
+				<SubHeader v-bind="args">
+					<template #back-btn-icon>
+						<VIcon class="mr-2">
+							{{ backArrowIcon }}
+						</VIcon>
+					</template>
+				</SubHeader>
 			`,
 		}
 	},
@@ -871,15 +855,13 @@ export const SlotTitle: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader v-bind="args">
-						<template #title>
-							<h3 class="headline font-weight-bold mt-2">
-								Dossier n°42
-							</h3>
-						</template>
-					</SubHeader>
-              	</div>
+				<SubHeader v-bind="args">
+					<template #title>
+						<h3 class="headline font-weight-bold mt-2">
+							Dossier n°42
+						</h3>
+					</template>
+				</SubHeader>
 			`,
 		}
 	},
@@ -935,16 +917,14 @@ export const SlotSubTitle: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader v-bind="args">
-						<template #sub-title>
-							<h4 class="title mt-1">
-								Traité par Jean Lunel
-							</h4>
-						</template>
-					</SubHeader>
-              	</div>
-			`,
+				<SubHeader v-bind="args">
+					<template #sub-title>
+						<h4 class="title mt-1">
+							Traité par Jean Lunel
+						</h4>
+					</template>
+				</SubHeader>
+		`,
 		}
 	},
 }
@@ -1022,32 +1002,30 @@ export const SlotRightContent: Story = {
 				return { args, cancelIcon, copyIcon }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-                    <SubHeader v-bind="args">
-						<template #right-content>
-							<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
-								<VBtn
-									variant="text"
-									color="white"
-								>
-									<VIcon class="mr-2">
-										{{ cancelIcon }}
-									</VIcon>
-									Clore le dossier
-								</VBtn>
-								<VBtn
-									variant="text"
-									color="white"
-								>
-									<VIcon class="mr-2">
-										{{ copyIcon }}
-									</VIcon>
-									Dupliquer le dossier
-								</VBtn>
-							</div>
-						</template>
-					</SubHeader>
-              	</div>
+				<SubHeader v-bind="args">
+					<template #right-content>
+						<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
+							<VBtn
+								variant="text"
+								color="white"
+							>
+								<VIcon class="mr-2">
+									{{ cancelIcon }}
+								</VIcon>
+								Clore le dossier
+							</VBtn>
+							<VBtn
+								variant="text"
+								color="white"
+							>
+								<VIcon class="mr-2">
+									{{ copyIcon }}
+								</VIcon>
+								Dupliquer le dossier
+							</VBtn>
+						</div>
+					</template>
+				</SubHeader>
 			`,
 		}
 	},

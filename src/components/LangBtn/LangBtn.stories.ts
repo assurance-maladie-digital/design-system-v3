@@ -16,7 +16,7 @@ const meta: Meta<typeof LangBtn> = {
 		// @ts-expect-error Type '"array"' is not assignable to type 'Control | undefined'.
 		availableLanguages: { control: { type: 'array' } },
 		vuetifyOptions: {
-			constrol: { type: 'object' },
+			control: { type: 'object' },
 			default: () => ({
 				menu: {
 					offsetY: true,
