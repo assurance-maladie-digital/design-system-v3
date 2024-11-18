@@ -195,86 +195,84 @@
 		:height="height"
 		class="vd-logo-brand-section d-flex"
 	>
-		<div>
+		<component
+			:is="logoContainerComponent"
+			:to="logoContainerComponent === 'router-link' ? homeLink?.to : undefined"
+			:href="logoContainerComponent === 'a' ? homeLink?.href : undefined"
+			class="vd-home-link"
+		>
+			<Logo
+				:hide-signature="hideSignature"
+				:hide-organism="isCompteAmeliMobile"
+				:risque-pro="isRisquePro"
+				:aria-label="homeLink?.ariaLabel"
+				:avatar="avatar"
+				:size="logoSize"
+				:class="{ 'mr-2': avatar }"
+			/>
+		</component>
+
+		<slot>
+			<svg
+				v-if="showDivider"
+				:width="dividerDimensions.width"
+				:height="dividerDimensions.height"
+				:fill="dividerColor"
+				role="img"
+				focusable="false"
+				aria-hidden="true"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 22 64"
+				class="vd-divider"
+			>
+				<path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
+			</svg>
+
 			<component
-				:is="logoContainerComponent"
-				:to="logoContainerComponent === 'router-link' ? homeLink?.to : undefined"
-				:href="logoContainerComponent === 'a' ? homeLink?.href : undefined"
+				:is="secondaryLogoCtnComponent"
+				v-if="secondaryLogo"
+				:aria-label="secondaryLogoLabel"
+				:to="secondaryLogoCtnComponent === 'router-link' ? homeLink?.to : undefined"
+				:href="secondaryLogoCtnComponent === 'a' ? homeLink?.href : undefined"
 				class="vd-home-link"
 			>
-				<Logo
-					:hide-signature="hideSignature"
-					:hide-organism="isCompteAmeliMobile"
-					:risque-pro="isRisquePro"
-					:aria-label="homeLink?.ariaLabel"
-					:avatar="avatar"
-					:size="logoSize"
-					:class="{ 'mr-2': avatar }"
-				/>
+				<img
+					:src="secondaryLogo.src"
+					:alt="secondaryLogo.alt"
+				>
 			</component>
 
-			<slot>
-				<svg
-					v-if="showDivider"
-					:width="dividerDimensions.width"
-					:height="dividerDimensions.height"
-					:fill="dividerColor"
-					role="img"
-					focusable="false"
-					aria-hidden="true"
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 22 64"
-					class="vd-divider"
-				>
-					<path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
-				</svg>
-
-				<component
-					:is="secondaryLogoCtnComponent"
-					v-if="secondaryLogo"
-					:aria-label="secondaryLogoLabel"
-					:to="secondaryLogoCtnComponent === 'router-link' ? homeLink?.to : undefined"
-					:href="secondaryLogoCtnComponent === 'a' ? homeLink?.href : undefined"
-					class="vd-home-link"
-				>
-					<img
-						:src="secondaryLogo.src"
-						:alt="secondaryLogo.alt"
+			<div
+				v-else-if="showBrandContent"
+				class="vd-title-container d-flex justify-center flex-column text-primary"
+			>
+				<slot name="brand-content">
+					<h1
+						v-if="service.title"
+						:class="{
+							'vd-compte-entreprise-title': isCompteEntreprise,
+						}"
+						class="vd-title text-caption text-md-subtitle-1 font-weight-medium"
 					>
-				</component>
+						<template v-if="typeof service.title === 'string'">
+							{{ service.title }}
+						</template>
 
-				<div
-					v-else-if="showBrandContent"
-					class="vd-title-container d-flex justify-center flex-column text-primary"
-				>
-					<slot name="brand-content">
-						<h1
-							v-if="service.title"
-							:class="{
-								'vd-compte-entreprise-title': isCompteEntreprise,
-							}"
-							class="vd-title text-caption text-md-subtitle-1 font-weight-medium"
-						>
-							<template v-if="typeof service.title === 'string'">
-								{{ service.title }}
-							</template>
+						<template v-else>
+							{{ service.title.text }}
+							<span>{{ service.title.highlight }}</span>
+						</template>
+					</h1>
 
-							<template v-else>
-								{{ service.title.text }}
-								<span>{{ service.title.highlight }}</span>
-							</template>
-						</h1>
-
-						<h2
-							v-if="showServiceSubTitle"
-							class="vd-title text-caption"
-						>
-							{{ service.subTitle }}
-						</h2>
-					</slot>
-				</div>
-			</slot>
-		</div>
+					<h2
+						v-if="showServiceSubTitle"
+						class="vd-title text-caption"
+					>
+						{{ service.subTitle }}
+					</h2>
+				</slot>
+			</div>
+		</slot>
 	</div>
 </template>
 
