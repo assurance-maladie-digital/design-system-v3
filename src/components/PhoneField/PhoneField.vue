@@ -152,7 +152,7 @@
 			:rules="validationRules"
 			:required="props.required"
 			:counter="counter"
-			:counter-value="value => value.replace(/\s/g, '').length"
+			:counter-value="(value: string) => value.replace(/\s/g, '').length"
 			:label="locales.label"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			color="primary"

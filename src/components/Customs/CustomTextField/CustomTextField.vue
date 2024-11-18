@@ -42,6 +42,10 @@
 		color: 'primary',
 		opacity: '1',
 	}
+
+	defineExpose({
+		appendInnerIconColor,
+	})
 </script>
 
 <template>
