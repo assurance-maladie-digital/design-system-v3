@@ -7,6 +7,22 @@ import HeaderSubMenu from './HeaderSubMenu.vue'
 
 const meta = {
 	component: HeaderSubMenu,
+	argTypes: {
+		title: {
+			control: { type: 'text' },
+			description: 'Titre du sous-menu',
+			table: {
+				type: { summary: '{}' },
+			},
+		},
+		default: {
+			control: { type: 'text' },
+			description: 'Contenu du sous-menu, construit avec des composants `HeaderMenuSection`',
+			table: {
+				type: { summary: '{}' },
+			},
+		},
+	},
 	parameters: {
 		layout: 'fullscreen',
 	},

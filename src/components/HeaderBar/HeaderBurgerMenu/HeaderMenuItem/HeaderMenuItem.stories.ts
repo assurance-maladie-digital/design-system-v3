@@ -6,6 +6,15 @@ import HeaderMenuSection from '../HeaderMenuSection/HeaderMenuSection.vue'
 
 const meta = {
 	component: HeaderMenuItem,
+	argTypes: {
+		default: {
+			control: { type: 'text' },
+			description: 'Le lien (`a`; `router-link`, `nuxt-link`) et son contenu',
+			table: {
+				type: { summary: '{}' },
+			},
+		},
+	},
 	parameters: {
 		layout: 'fullscreen',
 	},

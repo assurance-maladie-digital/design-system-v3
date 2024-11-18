@@ -6,6 +6,18 @@ import HeaderBar from '../../HeaderBar.vue'
 
 const meta = {
 	component: HeaderMenuSection,
+	argTypes: {
+		title: {
+			description: 'Titre de la section',
+		},
+		default: {
+			control: { type: 'text' },
+			description: 'Contenu de la section, construit avec des composants `HeaderMenuItem`',
+			table: {
+				type: { summary: '{}' },
+			},
+		},
+	},
 	parameters: {
 		layout: 'fullscreen',
 	},

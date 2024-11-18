@@ -14,7 +14,7 @@ const meta = {
 	argTypes: {
 		'serviceTitle': {
 			control: { type: 'text' },
-			description: 'Le nom du service tel qu\'il sera affiché a coté du logo.',
+			description: 'Le nom du service tel qu\'il sera affiché à coté du logo.',
 			table: {
 				type: {
 					summary: 'string',
@@ -81,6 +81,7 @@ const meta = {
 		},
 		'prepend': {
 			control: { type: 'text' },
+			description: 'Contenu additionnel en haut du header, suit le header quand `sticky`.',
 			table: {
 				type: {
 					summary: '{ menu-open: boolean }',
@@ -89,6 +90,7 @@ const meta = {
 		},
 		'append': {
 			control: { type: 'text' },
+			description: 'Contenu additionnel en bas du header, suit le header quand `sticky`.',
 			table: {
 				type: {
 					summary: '{ menu-open: boolean }',
@@ -97,6 +99,7 @@ const meta = {
 		},
 		'menu': {
 			control: { type: 'text' },
+			description: 'Slot destiner à accueillir un menu flottant. Voir le composant `HeaderBurgerMenu`.',
 			table: {
 				type: {
 					summary: '{ menu-open: boolean }',
@@ -118,7 +121,7 @@ const meta = {
 		},
 		'logo-brand-content': {
 			control: { type: 'text' },
-			description: 'Le contenu a droite du logo de l\'assurance maladie. Peut être utilisé pour accoler un autre logo par exemple.',
+			description: 'Le contenu à droite du logo de l\'assurance maladie. Peut être utilisé pour accoler un autre logo par exemple.',
 			table: {
 				type: {
 					summary: `{ 
@@ -132,7 +135,7 @@ const meta = {
 		},
 		'header-side': {
 			control: { type: 'text' },
-			description: 'Contenu a droite du header. Utile pour ajouter un menu secondaire par exemple.',
+			description: 'Contenu à droite du header. Utile pour ajouter un menu secondaire par exemple.',
 			table: {
 				type: {
 					summary: '{ menu-open: boolean }',

@@ -21,6 +21,76 @@ const meta = {
 				},
 			},
 		},
+		'homeAriaLabel': {
+			control: { type: 'text' },
+			description: 'Aria label du logo.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		'serviceTitle': {
+			control: { type: 'text' },
+			description: 'Titre du service.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		'serviceSubtitle': {
+			control: { type: 'text' },
+			description: 'Sous-titre du service.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		'homeLink': {
+			control: { type: 'object' },
+			description: 'Le lien de retour vers la home. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
+			table: {
+				type: {
+					summary: `{
+						href?: string,
+						to?: RouteLocationRaw,
+						ariaLabel?: string,
+					}`,
+				},
+				defaultValue: {
+					summary: `{ href: '/' }`,
+				},
+			},
+		},
+		'sticky': {
+			control: { type: 'boolean' },
+			description: 'Activer le mode sticky.',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		'hideWhenDown': {
+			control: { type: 'text' },
+			description: 'Masquer le header quand on scroll vers le bas.',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		'maxHorizontalMenuItems': {
+			control: { type: 'number' },
+			description: 'Nombre maximum d\'items dans le menu horizontal avant de basculer sur le menu burger.',
+			table: {
+				type: {
+					summary: 'number',
+				},
+			},
+		},
 		'logo': {
 			control: { type: 'text' },
 			description: 'Remplacer le logo.',
@@ -46,22 +116,6 @@ const meta = {
 						service-title: string,
 						service-subtitle: string,
 					}`,
-				},
-			},
-		},
-		'homeLink': {
-			control: { type: 'object' },
-			description: 'Le lien de retour vers la home. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
-			table: {
-				type: {
-					summary: `{
-						href?: string,
-						to?: RouteLocationRaw,
-						ariaLabel?: string,
-					}`,
-				},
-				defaultValue: {
-					summary: `{ href: '/' }`,
 				},
 			},
 		},
