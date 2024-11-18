@@ -10,7 +10,7 @@ export const Default: StoryObj = {
 		return {
 			components: { VCard },
 			template: `
-               <VCard class="mt-4 p-4">
+               <VCard class="mt-4 pa-2">
                 <iframe src="https://assurancemaladiesec.github.io/abuse/reporting/" width="100%" height="800px" frameBorder="0"></iframe>
                </VCard>
             `,
