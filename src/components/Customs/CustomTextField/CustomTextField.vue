@@ -18,6 +18,9 @@
 		color?: ColorType
 		isClearable?: boolean
 		showDivider?: boolean
+		ariaLabel?: string
+    title?: string
+    label?: string
 	}>()
 
 	const ICONS: Record<IconType, string> = {
@@ -55,6 +58,9 @@
 		:color="props.color"
 		:clearable="props.isClearable"
 		:clear-icon="ICONS.close"
+		:aria-label="props.ariaLabel"
+    :title="props.title"
+    :label="props.label"
 	>
 		<template #prepend>
 			<slot name="prepend">

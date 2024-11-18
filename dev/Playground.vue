@@ -22,8 +22,11 @@
 				variant-style="outlined"
 				color="warning"
 				is-clearable
-				:error-message="'This is an error message'"
-			/>
+        title="champs de prenom"
+        aria-label="champs de nom"
+        label="Salut"
+
+      />
 		</div>
 		<div>
 			<h3> With Slot</h3>
@@ -35,7 +38,9 @@
 				variant-style="outlined"
 				is-clearable
 				show-divider
-			>
+        title="champs de nom"
+        aria-label="champs de nom"
+      >
 				<template #prepend-inner>
 					☀️
 				</template>
