@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { LogoSize } from '@/components/Logo/LogoSize'
 	import { cnamLightTheme } from '@/designTokens/tokens/cnam/cnamLightTheme'
-	import { computed, getCurrentInstance, defineSlots } from 'vue'
+	import { computed, getCurrentInstance } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import Logo from '../Logo/Logo.vue'
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
