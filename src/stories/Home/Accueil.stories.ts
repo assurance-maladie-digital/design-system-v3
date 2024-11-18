@@ -1,25 +1,25 @@
 import { VBtn, VIcon, VRow, VCol } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
 
-import { mdiGithub } from '@mdi/js';
+import { mdiGithub } from '@mdi/js'
 
 import { version } from '../../../package.json'
 
 export default {
-    title: 'Home/Accueil',
+	title: 'Home/Accueil',
 }
 
 export const Header: StoryObj = {
-    render: () => {
-        return {
-            components: { VBtn, VIcon },
-            setup() {
-                return {
-                    githubIcon: mdiGithub,
-                    version
-                }
-            },
-            template: `
+	render: () => {
+		return {
+			components: { VBtn, VIcon },
+			setup() {
+				return {
+					githubIcon: mdiGithub,
+					version,
+				}
+			},
+			template: `
               <div class="d-flex justify-space-between align-center">
                   <h1 class="title text-md-h3 text-h4 font-weight-medium">Un Design System<br/>pour l’Assurance Maladie</h1>
                   <VBtn
@@ -35,22 +35,22 @@ export const Header: StoryObj = {
                 <b>v{{ version }}</b>
               </p>
             `,
-        }
-    },
-    tags: ['!dev'],
+		}
+	},
+	tags: ['!dev'],
 }
 
 export const List: StoryObj = {
-    render: () => {
-        return {
-            components: { VRow, VCol },
-            setup() {
-                return {
-                    githubIcon: mdiGithub,
-                    version
-                }
-            },
-            template: `
+	render: () => {
+		return {
+			components: { VRow, VCol },
+			setup() {
+				return {
+					githubIcon: mdiGithub,
+					version,
+				}
+			},
+			template: `
               <VRow class="mt-8">
                 <VCol cols="12" sm="6" class="m-2 p-2 v-col-auto background-list">
                   <p class="font-weight-bold mb-2">Qui sont nos principaux utilisateurs ?</p>
@@ -70,7 +70,7 @@ export const List: StoryObj = {
                 </VCol>
               </VRow>
             `,
-        }
-    },
-    tags: ['!dev'],
+		}
+	},
+	tags: ['!dev'],
 }
