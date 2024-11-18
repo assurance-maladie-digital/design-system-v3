@@ -1,45 +1,47 @@
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
+	import type { IconType, VariantStyle, ColorType } from './types'
 	import {
 		mdiAlertOutline,
 		mdiCheck,
 		mdiInformationOutline,
-		mdiClose, mdiInformation,
+		mdiClose,
+		mdiInformation,
 	} from '@mdi/js'
 
 	const props = defineProps<{
-		prependIcon?: 'info' | 'success' | 'warning' | 'error' | 'close'
-		appendIcon?: 'info' | 'success' | 'warning' | 'error' | 'close'
-		preprendInnerIcon?: 'info' | 'success' | 'warning' | 'error' | 'close'
-		appendInnerIcon?: 'info' | 'success' | 'warning' | 'error' | 'close'
-		variantStyle?: 'outlined' | 'plain' | 'underlined' | 'filled' | 'solo' | 'solo-inverted' | 'solo-filled'
-		color?: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error'
+		prependIcon?: IconType
+		appendIcon?: IconType
+		prependInnerIcon?: IconType
+		appendInnerIcon?: IconType
+		variantStyle?: VariantStyle
+		color?: ColorType
 		isClearable?: boolean
 		showDivider?: boolean
 	}>()
 
-	const iconMap = computed(() => {
-		return {
-			info: mdiInformationOutline,
-			success: mdiCheck,
-			warning: mdiAlertOutline,
-			error: mdiInformation,
-			close: mdiClose,
-		}
-	})
+	const ICONS: Record<IconType, string> = {
+		info: mdiInformationOutline,
+		success: mdiCheck,
+		warning: mdiAlertOutline,
+		error: mdiInformation,
+		close: mdiClose,
+	}
 
 	const model = ref('')
 
 	const appendInnerIconColor = computed(() => {
-		switch (props.appendInnerIcon) {
-		case 'error':
-			return 'error'
-		case 'success':
-			return 'success'
-		default:
-			return 'black'
-		}
+		return props.appendInnerIcon === 'error' || props.appendInnerIcon === 'success'
+			? props.appendInnerIcon
+			: 'black'
 	})
+
+	const dividerProps = {
+		thickness: 2,
+		length: '25px',
+		color: 'primary',
+		opacity: '1',
+	}
 </script>
 
 <template>
@@ -48,39 +50,45 @@
 		:variant="props.variantStyle"
 		:color="props.color"
 		:clearable="props.isClearable"
-		:clear-icon="iconMap.close"
+		:clear-icon="ICONS.close"
 	>
 		<template #prepend>
 			<slot name="prepend">
-				<VIcon :icon="iconMap[props.prependIcon]" />
+				<VIcon
+					v-if="props.prependIcon"
+					:icon="ICONS[props.prependIcon]"
+				/>
 			</slot>
 		</template>
 		<template #append>
 			<slot name="append">
-				<VIcon :icon="iconMap[props.appendIcon]" />
+				<VIcon
+					v-if="props.appendIcon"
+					:icon="ICONS[props.appendIcon]"
+				/>
 			</slot>
 		</template>
 		<template #prepend-inner>
 			<slot name="prepend-inner">
-				<VIcon :icon="iconMap[props.preprendInnerIcon]" />
+				<VIcon
+					v-if="props.prependInnerIcon"
+					:icon="ICONS[props.prependInnerIcon]"
+				/>
 			</slot>
 			<VDivider
 				v-if="props.showDivider"
+				v-bind="dividerProps"
 				class="mt-4 pa-1"
 				vertical
-				:thickness="2"
-				length="25px"
-				color="primary"
-				opacity="1"
 			/>
 		</template>
 		<template #append-inner>
 			<slot name="append-inner">
 				<VIcon
-					:icon="iconMap[props.appendInnerIcon]"
+					v-if="props.appendInnerIcon"
+					:icon="ICONS[props.appendInnerIcon]"
 					:class="{ 'error-icon': props.appendInnerIcon === 'error' }"
 					:color="appendInnerIconColor"
-					style="opacity:1;"
 				/>
 			</slot>
 		</template>
