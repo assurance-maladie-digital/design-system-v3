@@ -179,6 +179,7 @@
 							:aria-label="homeAriaLabel"
 							:service-title="serviceTitle"
 							:service-subtitle="serviceSubtitle"
+							:home-link
 						>
 							<template
 								#brand-content

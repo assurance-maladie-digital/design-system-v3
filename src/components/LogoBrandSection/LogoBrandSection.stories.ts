@@ -4,7 +4,7 @@ import LogoBrandSection from './LogoBrandSection.vue'
 const meta = {
 	component: LogoBrandSection,
 	argTypes: {
-		theme: {
+		'theme': {
 			description: 'Applique un preset de style à la section.',
 			control: {
 				type: 'select',
@@ -19,25 +19,25 @@ const meta = {
 				'risque-pro',
 			],
 		},
-		serviceTitle: {
+		'serviceTitle': {
 			description: 'Le titre du service (titre de niveau 1).',
 		},
-		serviceSubTitle: {
+		'serviceSubTitle': {
 			description: 'Le sous-titre du service (titre de niveau 2).',
 		},
-		mobileVersion: {
+		'mobileVersion': {
 			control: {
 				type: 'boolean',
 			},
 			description: 'Affiche la version mobile.',
 		},
-		reduceLogo: {
+		'reduceLogo': {
 			control: {
 				type: 'boolean',
 			},
 			description: 'Affiche la version Avatar du logo de l’Assurance Maladie s’il y a une marque secondaire. Sinon, masque la signature.<br> Déprécié, la ronde seule ne devrait plus être utilisée.',
 		},
-		homeLink: {
+		'homeLink': {
 			description: 'Le lien vers la page d’accueil. <br>La valeur `false` permet de désactiver le lien..',
 			table: {
 				type: {
@@ -46,7 +46,7 @@ const meta = {
 				defaultValue: { summary: `{ href: '/'}` },
 			},
 		},
-		default: {
+		'default': {
 			control: {
 				type: 'text',
 			},
@@ -57,7 +57,7 @@ const meta = {
 				},
 			},
 		},
-		brandContent: {
+		'brand-content': {
 			control: {
 				type: 'text',
 			},

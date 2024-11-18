@@ -36,7 +36,7 @@
 	const routeType = computed(() => {
 		if (props.homeLink?.to) {
 			const componentsRegistered = getCurrentInstance()?.appContext?.components
-			const hasRouterLink = componentsRegistered && 'router-link' in componentsRegistered
+			const hasRouterLink = componentsRegistered && 'RouterLink' in componentsRegistered
 			if (hasRouterLink) {
 				return 'router-link'
 			}
@@ -52,10 +52,6 @@
 <template>
 	<component
 		:is="routeType"
-		variant="tonal"
-		flat
-		tile
-		:ripple="false"
 		v-bind="{
 			to: 'to' in homeLink ? homeLink?.to : undefined,
 			href: 'href' in homeLink ? homeLink?.href : undefined,
@@ -117,6 +113,7 @@
 	line-height: 1.45;
 	font-family: 'Cabin', 'Arial', 'Helvetica', sans-serif;
 	text-decoration: none;
+	cursor: pointer;
 }
 
 .logo :deep(svg) {
