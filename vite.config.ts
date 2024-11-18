@@ -47,7 +47,7 @@ function generateVuetifyGlobals() {
 		'transitions',
 	]
 
-	const globals = {}
+	const globals: Record<string, string> = {}
 
 	for (const component of components) {
 		globals[`vuetify/lib/components/${component}/index.mjs`] = component

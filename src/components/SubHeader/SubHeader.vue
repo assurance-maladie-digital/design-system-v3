@@ -10,7 +10,6 @@
 
 	import DataListGroup from '../DataListGroup/DataListGroup.vue'
 	import HeaderLoading from '../HeaderLoading/HeaderLoading.vue'
-	import { VSkeletonLoader } from 'vuetify/components/VSkeletonLoader'
 	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
 
 	const props = withDefaults(defineProps<CustomizableOptions & Widthable & {
