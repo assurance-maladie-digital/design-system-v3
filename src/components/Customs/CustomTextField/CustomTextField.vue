@@ -49,7 +49,6 @@
 		:color="props.color"
 		:clearable="props.isClearable"
 		:clear-icon="iconMap.close"
-		:error="hasError"
 	>
 		<template #prepend>
 			<slot name="prepend">

@@ -41,22 +41,5 @@
 				</template>
 			</CustomTextField>
 		</div>
-		<div>
-			<h3> Without Required</h3>
-			<h5 class="mx-10">
-				Text saisie:	{{ model }}
-			</h5>
-			<CustomTextField
-				v-model="model"
-				prepend-icon="success"
-				append-icon="close"
-				preprend-inner-icon="info"
-				show-divider
-				append-inner-icon="success"
-				variant-style="outlined"
-				color="warning"
-				is-clearable
-			/>
-		</div>
 	</main>
 </template>
