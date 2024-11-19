@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import CustomTextArea from '@/components/Customs/CustomTextField/CustomTextField.vue'
+import CustomTextField from '@/components/Customs/CustomTextField/CustomTextField.vue'
 import { VIcon } from 'vuetify/components'
+import { ref } from 'vue'
+import { mdiAccountBox } from '@mdi/js'
 
 const meta = {
 	title: 'Components/CustomTextField',
-	component: CustomTextArea,
+	component: CustomTextField,
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue', 'appendInnerIconColor'] },
@@ -37,7 +39,7 @@ const meta = {
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
 		},
 	},
-} as Meta<typeof CustomTextArea>
+} as Meta<typeof CustomTextField>
 
 export default meta
 
@@ -49,9 +51,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomTextArea
-						v-model="value"
-					/>
+					<CustomTextField v-model="value" />
 				</template>
 				`,
 			},
@@ -59,59 +59,46 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomTextArea from '@cnamts/CustomTextField'
+					import CustomTextField from '@cnamts/synapse'
 				</script>
 				`,
 			},
 		],
 	},
 	args: {
-		label: 'Label',
-		appendIcon: 'close',
-		prependInnerIcon: 'info',
-		showDivider: true,
-		appendInnerIcon: 'success',
+		showDivider: false,
 		variantStyle: 'outlined',
 		color: 'primary',
 		isClearable: true,
-		title: 'champs de test',
-		ariaLabel: 'champs de test',
+		label: 'Label',
+		ariaLabel: 'Label',
 	},
 	render: (args) => {
 		return {
-			components: { CustomTextArea, VIcon },
+			components: { CustomTextField, VIcon },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomTextArea
-						v-bind="args"
-					/>
+					<CustomTextField v-bind="args" />
 				</div>
-				<br/><br/><br/><br/>
 			`,
 		}
 	},
 }
 
-export const WithSlots: Story = {
+export const SlotPrepend: Story = {
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 				<template>
-					<CustomTextArea
-						v-model="value"
-					>
-						<template #prependInner>
-							<VIcon>info</VIcon>
-						</template>
-						<template #appendInner>
-							<VIcon>success</VIcon>
-						</template>
-					</CustomTextArea>
+					<CustomTextField 
+						v-model="value" 
+						prepend-icon="info"
+					/>
 				</template>
 				`,
 			},
@@ -119,8 +106,163 @@ export const WithSlots: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomTextArea from '@cnamts/CustomTextField'
-					import { VIcon } from 'vuetify/components'
+					import CustomTextField from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		variantStyle: 'outlined',
+		isClearable: true,
+		showDivider: false,
+		label: 'Label',
+		ariaLabel: 'Label',
+		color: 'primary',
+		prependIcon: 'info',
+	},
+	render: (args) => {
+		return {
+			components: { CustomTextField, VIcon },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomTextField
+						v-bind="args"
+						:label="args.label"
+						:aria-label="args.ariaLabel"
+						:prepend-icon="args.prependIcon"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const SlotAppend: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomTextField 
+						v-model="value" 
+						append-icon="success"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomTextField from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		variantStyle: 'outlined',
+		isClearable: true,
+		showDivider: false,
+		title: 'champs de text',
+		ariaLabel: 'champs de text',
+		color: 'primary',
+		appendIcon: 'success',
+	},
+	render: (args) => {
+		return {
+			components: { CustomTextField, VIcon },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomTextField
+						v-bind="args"
+						:append-icon="args.appendIcon"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const SlotPrependInner: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomTextField 
+						v-model="value" 
+						prepend-inner-icon="info"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomTextField from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		variantStyle: 'outlined',
+		isClearable: true,
+		showDivider: false,
+		label: 'Label',
+		ariaLabel: 'Label',
+		color: 'primary',
+		prependInnerIcon: 'info',
+	},
+	render: (args) => {
+		return {
+			components: { CustomTextField, VIcon },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomTextField
+						v-bind="args"
+						:prepend-inner-icon="args.prependInnerIcon"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const SlotPrependInnerDivider: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomTextField 
+						v-model="value" 
+						prepend-inner-icon="info"
+						show-divider
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomTextField from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -130,27 +272,139 @@ export const WithSlots: Story = {
 		variantStyle: 'outlined',
 		isClearable: true,
 		showDivider: true,
-		title: 'champs de nom',
-		ariaLabel: 'champs de nom',
+		label: 'Label',
+		ariaLabel: 'Label',
 		color: 'primary',
+		prependInnerIcon: 'info',
 	},
 	render: (args) => {
 		return {
-			components: { CustomTextArea, VIcon },
+			components: { CustomTextField, VIcon },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomTextArea
+					<CustomTextField
+						v-bind="args"
+						:prepend-inner-icon="args.prependInnerIcon"
+						:show-divider="args.showDivider"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const SlotAppendInner: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomTextField 
+						v-model="value" 
+						append-inner-icon="success"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomTextField from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		variantStyle: 'outlined',
+		isClearable: true,
+		showDivider: false,
+		label: 'Label',
+		ariaLabel: 'Label',
+		color: 'primary',
+		appendInnerIcon: 'success',
+	},
+	render: (args) => {
+		return {
+			components: { CustomTextField, VIcon },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomTextField
+						v-bind="args"
+						:append-inner-icon="args.appendInnerIcon"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const SlotCustomIcon: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<CustomTextField  v-model="value">
+						<template #append-inner>
+							<VIcon>
+								{{ iconName }}
+							</VIcon>
+						</template>
+					</CustomTextField>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import CustomTextField from '@cnamts/synapse'
+					import { mdiAccountBox } from '@mdi/js'
+					
+					const iconName = mdiAccountBox
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		variantStyle: 'outlined',
+		isClearable: true,
+		showDivider: false,
+		label: 'Label',
+		ariaLabel: 'Label',
+		color: 'primary',
+	},
+	render: (args) => {
+		return {
+			components: { CustomTextField, VIcon },
+			setup() {
+				const iconName = ref(mdiAccountBox)
+
+				return { args, iconName }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<CustomTextField
 						v-bind="args"
 					>
-						<template #prepend-inner>
-							☀️
+						<template #append-inner>
+							<VIcon>
+								{{ iconName }}
+							</VIcon>
 						</template>
-					</CustomTextArea>
+					</CustomTextField>
 				</div>
-				<br/><br/><br/><br/>
 			`,
 		}
 	},
