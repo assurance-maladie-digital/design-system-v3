@@ -1,0 +1,14 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CustomTextAreaStories from "./CustomTextArea.stories";
+
+<Meta of={CustomTextAreaStories} />
+
+# CustomTextArea
+
+Le composant `CustomTextArea` est utilisé pour proposer une alternative au `v-textArea` de Vuetify, conforme au style du design-system et qui  respecte les règles d'accessibilité RGAA.
+
+<Canvas of={CustomTextAreaStories.Default} />
+
+# API
+
+<Controls of={CustomTextAreaStories.Default} />

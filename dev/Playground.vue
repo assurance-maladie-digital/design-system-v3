@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import CustomTextField from '@/components/Customs/CustomTextField/CustomTextField.vue'
+	import CustomTextArea from '@/components/Customs/CustomTextArea/CustomTextArea.vue'
 	import { ref } from 'vue'
 	const model = ref('')
 	const model2 = ref('')
@@ -12,7 +12,7 @@
 			<h2 class="mx-10">
 				Text saisie:	{{ model }}
 			</h2>
-			<CustomTextField
+			<CustomTextArea
 				v-model="model"
 				prepend-icon="success"
 				append-icon="close"
@@ -24,7 +24,7 @@
 				is-clearable
 				title="champs de prenom"
 				aria-label="champs de nom"
-				label="Salut"
+				label="Label"
 			/>
 		</div>
 		<div>
@@ -32,7 +32,7 @@
 			<h4 class="mx-10">
 				Text saisie:	{{ model2 }}
 			</h4>
-			<CustomTextField
+			<CustomTextArea
 				v-model="model2"
 				variant-style="outlined"
 				is-clearable
@@ -43,7 +43,7 @@
 				<template #prepend-inner>
 					☀️
 				</template>
-			</CustomTextField>
+			</CustomTextArea>
 		</div>
 	</main>
 </template>
