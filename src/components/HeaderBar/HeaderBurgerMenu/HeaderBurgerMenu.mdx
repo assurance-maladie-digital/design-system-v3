@@ -401,3 +401,23 @@ code:`
 
 `}}
 />
+
+
+## Gérer la navigation avec un RouterLink
+
+Si vous positionnez le composant dans un layout ou à la racine de votre application et que vous utilisez un routeur pour gérer la navigation, le menu ne se fermera pas automatiquement lors de la navigation.
+
+Si vous souhaitez que le menu se ferme lors de la navigation, vous pouvez utiliser le `v-model` par défaut pour gérer l'état du menu.
+
+<Source
+	dark
+	language="typescript"
+	format="dedent"
+	code={`
+		const menuOpen = ref(false)
+		const curRoute = useRoute()
+		watch(curRoute, () => {
+			menuOpen.value = false
+		})
+		`}
+/>

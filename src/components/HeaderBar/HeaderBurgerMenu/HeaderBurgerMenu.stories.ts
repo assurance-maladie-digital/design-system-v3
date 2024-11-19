@@ -14,7 +14,28 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
-		default: {
+		'modelValue': {
+			table: {
+				category: 'props',
+				type: {
+					summary: 'boolean',
+				},
+			},
+			control: { type: 'boolean' },
+			default: false,
+			description: 'Avec `v-model` Permet de gérer l\'ouverture et la fermeture du menu.',
+		},
+		'onUpdate:modelValue': {
+			action: 'update:modelValue',
+			table: {
+				category: 'events',
+				type: {
+					summary: 'boolean',
+				},
+			},
+			description: 'Évènement émit lors de l\'ouverture ou la fermeture du menu.',
+		},
+		'default': {
 			control: { type: 'text' },
 			table: {
 				type: {
@@ -43,7 +64,7 @@ export const Default: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-bind="args">
+						<HeaderBurgerMenu v-model="args.modelValue">
 							{{ args.default }}
 						</HeaderBurgerMenu>
 					</template>
@@ -90,7 +111,7 @@ export const WithAnItem: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-bind="args">
+						<HeaderBurgerMenu v-model="args.modelValue">
 							<HeaderMenuSection>
 								<HeaderMenuItem>
 									<a href="#">Item 1</a>
@@ -152,7 +173,7 @@ export const Populated: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-bind="args">
+						<HeaderBurgerMenu v-model="args.modelValue">
 							<HeaderMenuSection title="section 1">
 								<HeaderMenuItem>
 									<a>Item 1</a>
@@ -345,7 +366,7 @@ export const WithScroll: Story = {
 				</div>
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-bind="args">
+						<HeaderBurgerMenu v-model="args.modelValue">
 							<HeaderMenuSection>
 								<HeaderMenuItem>
 									<HeaderSubMenu>
@@ -658,7 +679,7 @@ export const Generated: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-bind="args">
+						<HeaderBurgerMenu v-model="args.modelValue">
 							<HeaderMenuSection v-for="section in menu" :key="section.title" :title="section.title">
 								<HeaderMenuItem v-for="item in section.items" :key="item.title">
 									<HeaderSubMenu v-if="item.subMenuTitle">

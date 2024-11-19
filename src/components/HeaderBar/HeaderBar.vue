@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import throttleDisplayFn from '@/utils/functions/throttleDisplayFn/throttleDisplayFn'
-	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type Ref } from 'vue'
+	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type DeepReadonly, type Ref } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import HeaderLogo from './HeaderLogo/HeaderLogo.vue'
 	import { registerHeaderMenuKey } from './consts'
@@ -52,7 +52,7 @@
 			homeLink: undefined,
 		})
 
-	function registerHeaderMenu(childMenuStatus: Ref<boolean>) {
+	function registerHeaderMenu(childMenuStatus: DeepReadonly<Ref<boolean>>) {
 		watch(childMenuStatus, (newVal) => {
 			menuOpen.value = newVal
 		})
