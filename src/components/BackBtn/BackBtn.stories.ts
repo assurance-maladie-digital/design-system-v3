@@ -26,6 +26,26 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VSheet class="pa-4">
+		<BackBtn />
+	</VSheet>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import BackBtn from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		dark: false,
 	},
@@ -55,6 +75,26 @@ export const Default: Story = {
 }
 
 export const Dark: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VSheet color="primary" class="pa-4">
+		<BackBtn dark />
+	</VSheet>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import BackBtn from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		dark: true,
 	},
@@ -77,6 +117,26 @@ export const Dark: Story = {
 }
 
 export const HideBackIcon: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VSheet class="pa-4">
+		<BackBtn hide-back-icon />
+	</VSheet>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import BackBtn from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		hideBackIcon: true,
 	},
@@ -96,6 +156,29 @@ export const HideBackIcon: Story = {
 }
 
 export const DarkAndHideBackIcon: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VSheet class="pa-4">
+		<BackBtn
+			dark 
+			hide-back-icon 
+		/>
+	</VSheet>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import BackBtn from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		dark: true,
 		hideBackIcon: true,

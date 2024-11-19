@@ -28,6 +28,24 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<Logo />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Logo from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		hideSignature: false,
 		hideOrganism: false,
@@ -54,6 +72,24 @@ export const Default: Story = {
 }
 
 export const small: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<Logo size="small" />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Logo from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		hideSignature: false,
 		hideOrganism: false,
@@ -77,6 +113,24 @@ export const small: Story = {
 }
 
 export const xSmall: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<Logo size="x-small" />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Logo from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		hideSignature: false,
 		hideOrganism: false,
@@ -100,6 +154,24 @@ export const xSmall: Story = {
 }
 
 export const hideSignature: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<Logo hide-signature />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Logo from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		hideSignature: true,
 		hideOrganism: false,
@@ -123,6 +195,24 @@ export const hideSignature: Story = {
 }
 
 export const hideOrganism: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<Logo hide-organism />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Logo from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		hideSignature: false,
 		hideOrganism: true,
@@ -146,6 +236,24 @@ export const hideOrganism: Story = {
 }
 
 export const risquePro: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<Logo risque-pro />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Logo from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		hideSignature: false,
 		hideOrganism: false,
@@ -169,6 +277,24 @@ export const risquePro: Story = {
 }
 
 export const avatar: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<Logo avatar />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Logo from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		hideSignature: false,
 		hideOrganism: false,
@@ -192,6 +318,26 @@ export const avatar: Story = {
 }
 
 export const dark: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VSheet color="primary" class="pa-4">
+		<Logo dark />
+	</VSheet>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Logo from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		hideSignature: false,
 		hideOrganism: false,

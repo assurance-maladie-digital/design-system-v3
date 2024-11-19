@@ -33,6 +33,26 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<PageContainer>
+		Contenu de la page
+	</PageContainer>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import PageContainer from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		default: 'Contenu de la page',
 	},
@@ -52,6 +72,26 @@ export const Default: Story = {
 }
 
 export const Size: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<PageContainer size="s">
+		Contenu de la page
+	</PageContainer>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import PageContainer from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		default: 'Contenu de la page',
 		size: 's',
@@ -72,6 +112,28 @@ export const Size: Story = {
 }
 
 export const Color: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<PageContainer color="primary">
+		<div class="pa-8">
+			Contenu de la page
+		</div>
+	</PageContainer>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import PageContainer from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		default: 'Contenu de la page',
 		color: 'primary',
@@ -94,6 +156,29 @@ export const Color: Story = {
 }
 
 export const Card: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<PageContainer>
+		<VCard class="pa-8">
+			Contenu de la page
+		</VCard>
+	</PageContainer>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import PageContainer from '@cnamts/synapse'
+	import { VCard } from 'vuetify/components'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		default: 'Contenu de la page',
 	},

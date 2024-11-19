@@ -1,7 +1,10 @@
-import { Meta } from '@storybook/addon-docs';
-import synapse from './synapse.webp';
+import {Story, Meta} from '@storybook/blocks';
+import * as AccueilStories from './Accueil.stories';
 
-<Meta title="Home/Accueil" />
+<Meta of={AccueilStories} />
 
-<img src={synapse} alt="photo de presentation du design system" style={{ maxWidth: '100%' }} />
+<Story of={AccueilStories.Header}  />
 
+<p>Au service des équipes-produits de la Caisse Nationale de l’Assurance Maladie, cette boîte à outil met à disposition un ensemble de principes et de composants d’interfaces pour harmoniser et accélérer la fabrication des produits.</p>
+
+<Story of={AccueilStories.List}  />

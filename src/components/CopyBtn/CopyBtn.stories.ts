@@ -60,6 +60,33 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center pa-4">
+		<p class="mb-0 mr-1">
+		  Patient n°<b>1970756541</b>
+		</p>
+
+		<CopyBtn
+			label="Copier le numéro de patient"
+			text-to-copy="1970756541"
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import CopyBtn from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		ariaLabel: 'Copier le numéro de patient',
 		ariaOwns: 'copy-btn-1',
@@ -108,6 +135,34 @@ export const Default: Story = {
 }
 
 export const NoTooltip: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center pa-4">
+		<p class="mb-0 mr-1">
+		  Patient n°<b>1970756541</b>
+		</p>
+
+		<CopyBtn
+			label="Copier le numéro de patient"
+			text-to-copy="1970756541"
+			hide-tooltip
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import CopyBtn from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
@@ -139,6 +194,37 @@ export const NoTooltip: Story = {
 }
 
 export const SlotIcon: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center pa-4">
+		<p class="mb-0 mr-1">
+		  Patient n°<b>1970756541</b>
+		</p>
+
+		<CopyBtn
+			label="Copier le numéro de patient"
+			text-to-copy="1970756541"
+			:icon="duplicateIcon"
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import CopyBtn from '@cnamts/synapse'
+	import { mdiContentDuplicate } from '@mdi/js'
+	
+	const duplicateIcon = mdiContentDuplicate
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
@@ -174,6 +260,39 @@ export const SlotIcon: Story = {
 }
 
 export const SlotTooltip: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center pa-4">
+		<p class="mb-0 mr-1">
+		  Patient n°<b>1970756541</b>
+		</p>
+
+		<CopyBtn
+			label="Copier le numéro de patient"
+			text-to-copy="1970756541"
+		>
+			<template #tooltip>
+				{{ tooltip }}
+			</template>
+		</CopyBtn>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import CopyBtn from '@cnamts/synapse'
+	
+	const tooltip = 'Texte personalisé'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
