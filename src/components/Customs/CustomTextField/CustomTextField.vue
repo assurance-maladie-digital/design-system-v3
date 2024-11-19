@@ -66,6 +66,7 @@
 		:clear-icon="ICONS.close"
 		:aria-label="props.ariaLabel"
 		:label="props.label"
+		:title="props.label"
 	>
 		<template #prepend>
 			<slot name="prepend">
