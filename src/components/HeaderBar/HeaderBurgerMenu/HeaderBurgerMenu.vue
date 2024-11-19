@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import throttleDisplayFn from '@/utils/functions/throttleDisplayFn/throttleDisplayFn'
 	import { computed, inject, nextTick, onMounted, onUnmounted, readonly, ref, watch, type CSSProperties, type Ref } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
 	import { registerHeaderMenuKey } from '../consts'
@@ -15,24 +16,28 @@
 	const menuHeight = ref('70vh')
 
 	function positionMenu() {
-		// todo debounce
 		const rect = menuBtnWrapper.value!.getBoundingClientRect()
-
 		menuLeft.value = rect.left
 		menuTop.value = rect.top
 		menuHeight.value = `calc(100vh - ${rect.top}px - 48px)`
 	}
+	const throttledPositionMenu = throttleDisplayFn(positionMenu, 16)
+	const optimizedPositionMenu = () => {
+		if (menuOpen.value) {
+			throttledPositionMenu()
+		}
+	}
 
 	onMounted(() => {
 		positionMenu()
-		window.addEventListener('scroll', positionMenu)
-		window.addEventListener('resize', positionMenu)
+		window.addEventListener('scroll', optimizedPositionMenu)
+		window.addEventListener('resize', optimizedPositionMenu)
 		window.addEventListener('click', handleClickOutside, { capture: true })
 	})
 
 	onUnmounted(() => {
-		window.removeEventListener('scroll', positionMenu)
-		window.removeEventListener('resize', positionMenu)
+		window.removeEventListener('scroll', optimizedPositionMenu)
+		window.removeEventListener('resize', optimizedPositionMenu)
 		window.removeEventListener('click', handleClickOutside, { capture: true })
 
 		document.documentElement.style.overflow = 'auto'

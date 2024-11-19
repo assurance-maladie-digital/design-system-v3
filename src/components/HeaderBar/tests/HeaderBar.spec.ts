@@ -1,12 +1,16 @@
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterAll, describe, expect, it, vi } from 'vitest'
 import { defineComponent, inject, onMounted, ref, type Ref } from 'vue'
 import HeaderBar from '../HeaderBar.vue'
 import { registerHeaderMenuKey } from '../consts'
 
 describe('HeaderBar', () => {
-	afterEach(() => {
+	vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
+		default: (fn: (...args: unknown[]) => void) => fn,
+	}))
+
+	afterAll(() => {
 		vi.restoreAllMocks()
 		document.body.innerHTML = ''
 	})
