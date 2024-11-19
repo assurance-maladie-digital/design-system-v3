@@ -13,3 +13,30 @@ Le composant `SocialMediaLinks` est utilisé pour afficher des liens de reseaux 
 # API
 
 <Controls of={SocialMediaLinksStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+import SocialMediaLinks from '@cnamts/synapse'
+
+const links = [
+  {
+    name: 'Facebook',
+    url: 'https://www.facebook.com/cnamts',
+  },
+  {
+    name: 'Twitter',
+    url: 'https://twitter.com/cnamts',
+  },
+  {
+    name: 'Linkedin',
+    url: 'https://www.linkedin.com/company/cnamts',
+  }
+]
+</script>
+
+<template>
+    <SocialMediaLinks :links="links" />
+</template>
+`} />
