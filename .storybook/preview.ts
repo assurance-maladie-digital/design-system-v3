@@ -48,7 +48,7 @@ const preview: Preview = {
 		},
 		options: {
 			storySort: {
-				order: ['Home', ['Accueil', 'PolitiqueDeConfidentialité'], 'Components', 'Guidelines', ['Introduction', 'Couleurs', 'Customisation et themes', 'Typographie'], 'Fondamentaux', ['Accessibilite', 'EcoConception']],
+				order: ['Home', ['Accueil', 'Politique De Confidentialité'], 'Components', 'Guidelines', ['Introduction', 'Couleurs', 'Customisation et themes', 'Typographie'], 'Fondamentaux', ['Accessibilité', 'EcoConception']],
 			},
 		},
 		controls: {
