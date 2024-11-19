@@ -40,7 +40,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import CollapsibleList from '@cnamts/CollapsibleList'
+	import CollapsibleList from '@cnamts/synapse'
 	
 	const listTitle = 'Santé'
 	

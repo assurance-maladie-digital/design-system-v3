@@ -92,6 +92,35 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<DownloadBtn
+		:file-promise="download"
+		@error="onError"
+		@success="onSuccess"
+	>
+		Télécharger
+	</DownloadBtn>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import DownloadBtn from '@cnamts/synapse'
+	import axios from 'axios'
+	
+	const download = () => {
+        return axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124')
+	}
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
 		default: 'Télécharger',
@@ -102,6 +131,35 @@ export const Default: Story = {
 
 export const Error: Story = {
 	name: 'Error',
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<DownloadBtn
+		:file-promise="download"
+		@error="onError"
+		@success="onSuccess"
+	>
+		Télécharger
+	</DownloadBtn>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import DownloadBtn from '@cnamts/synapse'
+	import axios from 'axios'
+	
+	const download = () => {
+        return axios.get('https://')
+	}
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		filePromise: () => axios.get('https://'),
 		default: 'Télécharger',
@@ -112,6 +170,35 @@ export const Error: Story = {
 
 export const Loading: Story = {
 	name: 'Loading',
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<DownloadBtn
+		:file-promise="download"
+		@error="onError"
+		@success="onSuccess"
+	>
+		Télécharger
+	</DownloadBtn>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import DownloadBtn from '@cnamts/synapse'
+	import axios from 'axios'
+	
+	const download = () => {
+        return new Promise(() => { setTimeout(() => {}, 100000) })
+	}
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		filePromise: () => new Promise(() => { setTimeout(() => {}, 100000) }),
 		default: 'Télécharger',
@@ -127,6 +214,37 @@ export const Loading: Story = {
 
 export const Dark: Story = {
 	name: 'Dark theme',
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VThemeProvider theme="dark" with-background class="pa-4">
+		<DownloadBtn
+			:file-promise="download"
+			@error="onError"
+			@success="onSuccess"
+		>
+			Télécharger
+		</DownloadBtn>
+	</VThemeProvider>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import DownloadBtn from '@cnamts/synapse'
+	import axios from 'axios'
+	
+	const download = () => {
+        return new Promise(() => { setTimeout(() => {}, 100000) })
+	}
+</script>
+				`,
+			},
+		],
+	},
 	render: args => ({
 		components: { VThemeProvider, DownloadBtn },
 		setup() {
@@ -138,7 +256,6 @@ export const Dark: Story = {
 			</VThemeProvider>
 		`,
 	}),
-
 	args: {
 		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
 		default: 'Télécharger',
@@ -148,6 +265,52 @@ export const Dark: Story = {
 }
 
 export const Notify: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div>
+		<NotificationBar />
+		<DownloadBtn
+			:file-promise="download"
+			@error="onError"
+			@success="onSuccess"
+		>
+			Télécharger
+		</DownloadBtn>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import DownloadBtn from '@cnamts/synapse'
+	import NotificationBar from '@cnamts/synapse'
+	
+	import axios from 'axios'
+	
+	const download = () => {
+        return new Promise(() => { setTimeout(() => {}, 100000) })
+	}
+    
+    const { addNotification } = useNotificationService()
+    
+    const notify = (message: string, type: 'error' | 'success') => {
+		const notification = {
+			id: Date.now().toString(),
+			message,
+			type,
+			timeout: -1,
+		}
+		addNotification(notification)
+	}
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
 		default: 'Télécharger',
@@ -191,6 +354,48 @@ export const Notify: Story = {
 
 export const Customization: Story = {
 	name: 'Customisation',
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<DownloadBtn
+		:file-promise="download"
+		:vuetify-options="vuetifyOptions"
+		@error="onError"
+		@success="onSuccess"
+	>
+		Télécharger
+	</DownloadBtn>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import DownloadBtn from '@cnamts/synapse'
+	import axios from 'axios'
+	
+	const download = () => {
+        return axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124')
+	}
+    
+    const vuetifyOptions = {
+		btn: {
+			variant: 'plain',
+			ripple: true,
+			color: 'secondary',
+		},
+		icon: {
+			class: 'ml-2 mr-2',
+			color: 'secondary',
+		},
+	}
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
 		default: 'Télécharger',
