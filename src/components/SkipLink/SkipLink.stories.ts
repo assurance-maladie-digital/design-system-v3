@@ -20,6 +20,30 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="pa-8">
+		<p>Pour afficher le composant, cliquez ici et appuyer sur <kbd>Tab</kbd>.</p>
+		<SkipLink 
+			label="Aller au contenu principal"
+			target="https://cnam-design-system.netlify.app/?path=/docs/components-skiplink--docs#main" 
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import SkipLink from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		target: 'https://cnam-design-system.netlify.app/?path=/docs/components-skiplink--docs#main',
 	},
@@ -45,6 +69,31 @@ export const Default: Story = {
 }
 
 export const WithSlot: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="pa-8">
+		<p>Pour afficher le composant, cliquez ici et appuyer sur <kbd>Tab</kbd>.</p>
+		<SkipLink target="https://cnam-design-system.netlify.app/?path=/docs/components-skiplink--docs#main">
+			<template #default>
+				<b>lorem ipsum</b>
+			</template>
+		</SkipLink>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import SkipLink from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		target: 'https://cnam-design-system.netlify.app/?path=/docs/components-skiplink--docs#main',
 		default: '<b>lorem ipsum</b>',

@@ -14,6 +14,24 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FranceConnectBtn />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FranceConnectBtn from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		href: 'https://app.franceconnect.gouv.fr/',
 		isConnectPlus: false,
@@ -39,6 +57,24 @@ export const Default: Story = {
 }
 
 export const FranceConnectPlus: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FranceConnectBtn is-connect-plus />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FranceConnectBtn from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		href: 'https://app.franceconnect.gouv.fr/',
 		isConnectPlus: true,
@@ -64,6 +100,27 @@ export const FranceConnectPlus: Story = {
 }
 
 export const DarkTheme: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FranceConnectBtn 
+		is-connect-plus 
+		dark
+	/>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FranceConnectBtn from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		href: 'https://app.franceconnect.gouv.fr/',
 		isConnectPlus: true,
