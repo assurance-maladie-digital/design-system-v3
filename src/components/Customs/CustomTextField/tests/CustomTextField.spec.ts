@@ -4,7 +4,7 @@ import { expect, describe, it } from 'vitest'
 import { VIcon } from 'vuetify/components'
 import { vuetify } from '@tests/unit/setup'
 
-describe('CustomTextField.vue', () => {
+describe('CustomTextField', () => {
 	const factory = (props = {}, slots = {}) => {
 		return mount(CustomTextField, {
 			props,

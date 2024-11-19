@@ -9,19 +9,26 @@
 		mdiInformation,
 	} from '@mdi/js'
 
-	const props = defineProps<{
-		prependIcon?: IconType
-		appendIcon?: IconType
-		prependInnerIcon?: IconType
-		appendInnerIcon?: IconType
-		variantStyle?: VariantStyle
-		color?: ColorType
-		isClearable?: boolean
-		showDivider?: boolean
-		ariaLabel?: string
-		title?: string
-		label?: string
-	}>()
+	// only variantStyle need a default value
+	/* eslint-disable vue/require-default-prop */
+	const props = withDefaults(
+		defineProps<{
+			prependIcon?: IconType
+			appendIcon?: IconType
+			prependInnerIcon?: IconType
+			appendInnerIcon?: IconType
+			variantStyle?: VariantStyle
+			color?: ColorType
+			isClearable?: boolean
+			showDivider?: boolean
+			ariaLabel?: string
+			title?: string
+			label?: string
+		}>(),
+		{
+			variantStyle: 'outlined', // Remplacez par la valeur par défaut souhaitée
+		},
+	)
 
 	const ICONS: Record<IconType, string> = {
 		info: mdiInformationOutline,
