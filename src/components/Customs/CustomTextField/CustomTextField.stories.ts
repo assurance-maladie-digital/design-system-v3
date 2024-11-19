@@ -169,7 +169,7 @@ export const SlotAppend: Story = {
 		variantStyle: 'outlined',
 		isClearable: true,
 		showDivider: false,
-		title: 'champs de text',
+		label: 'champs de text',
 		ariaLabel: 'champs de text',
 		color: 'primary',
 		appendIcon: 'success',
