@@ -1,0 +1,187 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CustomTextField.vue > matches snapshot 1`] = `
+"<div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-text-field">
+  <div class="v-input__prepend"><i class="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i>
+    <!---->
+  </div>
+  <div class="v-input__control">
+    <div class="v-field v-field--appended v-field--center-affix v-field--prepended v-field--no-label v-field--variant-filled v-theme--light v-locale--is-ltr">
+      <div class="v-field__overlay"></div>
+      <div class="v-field__loader">
+        <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+          <!---->
+          <div class="v-progress-linear__background" style="opacity: NaN;"></div>
+          <div class="v-progress-linear__buffer" style="opacity: NaN; width: 0%;"></div>
+          <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+            <div class="v-progress-linear__indeterminate">
+              <div class="v-progress-linear__indeterminate long"></div>
+              <div class="v-progress-linear__indeterminate short"></div>
+            </div>
+          </transition-stub>
+          <!---->
+        </div>
+      </div>
+      <div class="v-field__prepend-inner">
+        <!----><i class="M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16 mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i>
+        <hr class="v-divider v-divider--vertical v-theme--light text-primary mt-4 pa-1" style="height: 25px; border-right-width: 2px; --v-border-opacity: 1;" aria-orientation="vertical" role="separator">
+      </div>
+      <div class="v-field__field" data-no-activator="">
+        <!----><label class="v-label v-field-label" for="input-0">
+          <!---->
+          <!---->
+        </label>
+        <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" class="v-field__input" value="">
+        <!---->
+      </div>
+      <transition-stub name="expand-x-transition" appear="false" persisted="false" css="true">
+        <div class="v-field__clearable" style="display: none;"><i class="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z mdi v-icon notranslate v-theme--light v-icon--size-default v-icon--clickable" role="button" aria-hidden="false" tabindex="0" aria-label="Clear "></i></div>
+      </transition-stub>
+      <div class="v-field__append-inner"><i class="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z mdi v-icon notranslate v-theme--light v-icon--size-default text-error error-icon" aria-hidden="true"></i>
+        <!---->
+      </div>
+      <div class="v-field__outline">
+        <!---->
+        <!---->
+      </div>
+    </div>
+  </div>
+  <div class="v-input__append">
+    <!----><i class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i>
+  </div>
+  <div class="v-input__details">
+    <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
+      <!---->
+    </transition-group-stub>
+    <!---->
+  </div>
+</div>"
+`;
+
+exports[`CustomTextField.vue > render correctly 1`] = `
+"<div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-text-field">
+  <div class="v-input__prepend"><i class="v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true">
+      <!---->
+    </i>
+    <!---->
+  </div>
+  <div class="v-input__control">
+    <div class="v-field v-field--appended v-field--center-affix v-field--prepended v-field--no-label v-field--variant-filled v-theme--light v-locale--is-ltr">
+      <div class="v-field__overlay"></div>
+      <div class="v-field__loader">
+        <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+          <!---->
+          <div class="v-progress-linear__background" style="opacity: NaN;"></div>
+          <div class="v-progress-linear__buffer" style="opacity: NaN; width: 0%;"></div>
+          <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+            <div class="v-progress-linear__indeterminate">
+              <div class="v-progress-linear__indeterminate long"></div>
+              <div class="v-progress-linear__indeterminate short"></div>
+            </div>
+          </transition-stub>
+          <!---->
+        </div>
+      </div>
+      <div class="v-field__prepend-inner">
+        <!----><i class="v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true">
+          <!---->
+        </i>
+        <!--v-if-->
+      </div>
+      <div class="v-field__field" data-no-activator="">
+        <!----><label class="v-label v-field-label" for="input-0">
+          <!---->
+          <!---->
+        </label>
+        <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" class="v-field__input" value="">
+        <!---->
+      </div>
+      <!---->
+      <div class="v-field__append-inner"><i class="v-icon notranslate v-theme--light v-icon--size-default text-black" style="opacity: 1;" aria-hidden="true">
+          <!---->
+        </i>
+        <!---->
+      </div>
+      <div class="v-field__outline">
+        <!---->
+        <!---->
+      </div>
+    </div>
+  </div>
+  <div class="v-input__append">
+    <!----><i class="v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true">
+      <!---->
+    </i>
+  </div>
+  <div class="v-input__details">
+    <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
+      <!---->
+    </transition-group-stub>
+    <!---->
+  </div>
+</div>"
+`;
+
+exports[`CustomTextField.vue > renders correctly 1`] = `
+"<div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-text-field">
+  <div class="v-input__prepend"><i class="v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true">
+      <!---->
+    </i>
+    <!---->
+  </div>
+  <div class="v-input__control">
+    <div class="v-field v-field--appended v-field--center-affix v-field--prepended v-field--no-label v-field--variant-filled v-theme--light v-locale--is-ltr">
+      <div class="v-field__overlay"></div>
+      <div class="v-field__loader">
+        <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+          <!---->
+          <div class="v-progress-linear__background" style="opacity: NaN;"></div>
+          <div class="v-progress-linear__buffer" style="opacity: NaN; width: 0%;"></div>
+          <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+            <div class="v-progress-linear__indeterminate">
+              <div class="v-progress-linear__indeterminate long"></div>
+              <div class="v-progress-linear__indeterminate short"></div>
+            </div>
+          </transition-stub>
+          <!---->
+        </div>
+      </div>
+      <div class="v-field__prepend-inner">
+        <!----><i class="v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true">
+          <!---->
+        </i>
+        <!--v-if-->
+      </div>
+      <div class="v-field__field" data-no-activator="">
+        <!----><label class="v-label v-field-label" for="input-0">
+          <!---->
+          <!---->
+        </label>
+        <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" class="v-field__input" value="">
+        <!---->
+      </div>
+      <!---->
+      <div class="v-field__append-inner"><i class="v-icon notranslate v-theme--light v-icon--size-default text-black" style="opacity: 1;" aria-hidden="true">
+          <!---->
+        </i>
+        <!---->
+      </div>
+      <div class="v-field__outline">
+        <!---->
+        <!---->
+      </div>
+    </div>
+  </div>
+  <div class="v-input__append">
+    <!----><i class="v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true">
+      <!---->
+    </i>
+  </div>
+  <div class="v-input__details">
+    <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
+      <!---->
+    </transition-group-stub>
+    <!---->
+  </div>
+</div>"
+`;

@@ -8,7 +8,7 @@
 	import { vMaska } from 'maska/vue'
 	import { locales } from './locales'
 	import CustomSelect from '@/components/Customs/CustomSelect/CustomSelect.vue'
-	import CustomTextField from '@/components/Customs/CustomTextArea/CustomTextArea.vue'
+	import CustomTextField from '@/components/Customs/CustomTextField/CustomTextField.vue'
 
 	type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
 	type Indicatif = {
