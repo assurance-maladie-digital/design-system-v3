@@ -21,7 +21,7 @@ export const Header: StoryObj = {
 			},
 			template: `
               <div class="d-flex justify-space-between align-center">
-                  <h1 class="title text-md-h3 text-h4 font-weight-medium">Un Design System<br/>pour l’Assurance Maladie</h1>
+                  <h1 class="title font-weight-medium">Un Design System<br/>pour l’Assurance Maladie</h1>
                   <VBtn
                       :icon="githubIcon"
                       aria-label="GitHub"

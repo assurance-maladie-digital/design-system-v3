@@ -1,5 +1,10 @@
 h1.title {
     color: #0C419A;
+    font-size: 3rem !important;
+    line-height: normal !important;
+    @media (max-width: 768px) {
+        font-size: 2rem !important;
+    }
 }
 
 .background-list {
