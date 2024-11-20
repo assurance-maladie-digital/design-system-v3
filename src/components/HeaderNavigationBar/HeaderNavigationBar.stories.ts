@@ -194,11 +194,11 @@ export const Default: Story = {
 		items: [
 			{
 				label: 'Home',
-				href: '#',
+				href: '',
 			},
 			{
 				label: 'About',
-				href: '#',
+				href: '',
 			},
 		],
 	},
@@ -209,11 +209,11 @@ export const WithScroll: Story = {
 		items: [
 			{
 				label: 'Home',
-				href: '#',
+				href: '',
 			},
 			{
 				label: 'About',
-				href: '#',
+				href: '',
 			},
 		],
 	},
@@ -235,35 +235,35 @@ export const WithManyItems: Story = {
 		items: [
 			{
 				label: 'Home',
-				href: '#',
+				href: '',
 			},
 			{
 				label: 'About',
-				href: '#',
+				href: '',
 			},
 			{
 				label: 'Services',
-				href: '#',
+				href: '',
 			},
 			{
 				label: 'Contact',
-				href: '#',
+				href: '',
 			},
 			{
 				label: 'Blog',
-				href: '#',
+				href: '',
 			},
 			{
 				label: 'Portfolio',
-				href: '#',
+				href: '',
 			},
 			{
 				label: 'Team',
-				href: '#',
+				href: '',
 			},
 			{
 				label: 'Careers',
-				href: '#',
+				href: '',
 			},
 		],
 	},
