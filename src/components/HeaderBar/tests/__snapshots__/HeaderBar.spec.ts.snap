@@ -35,10 +35,7 @@ exports[`HeaderBar > should render the component 1`] = `
             <path d="M50.3 17.3c-.1 0-.3 0-.3-.2A22 22 0 0 0 36.5 10c-.2 0-.4-.3-.3-.5 0-.3.2-.4.5-.4a23 23 0 0 1 14 7.5v.7h-.4Z" data-v-d1ac2910=""></path>
           </svg>
           <!--v-if-->
-          <div data-v-a3ce97de="" if="serviceTitle">
-            <div data-v-a3ce97de="" class="service-title"></div>
-            <!--v-if-->
-          </div>
+          <!--v-if-->
         </a></div>
       <!--v-if-->
     </div>
