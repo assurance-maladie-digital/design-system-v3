@@ -11,6 +11,29 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
+		'burgerMenu': {
+			table: {
+				category: 'props',
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+			control: { type: 'boolean' },
+			description: 'État du menu burger. Controllable avec `v-model:burger-menu`.',
+		},
+		'onUpdate:burgerMenu': {
+			action: 'update:burgerMenu',
+			table: {
+				category: 'events',
+				type: {
+					summary: 'boolean',
+				},
+			},
+			description: 'Emit lors de l\'ouverture ou la fermeture du menu.',
+		},
 		'items': {
 			control: { type: 'object' },
 			description: 'Liste des items de navigation.',

@@ -5,7 +5,7 @@
 	import HeaderMenuSection from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.vue'
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
 	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
-	import { computed, ref } from 'vue'
+	import { computed } from 'vue'
 	import { RouterLink, type RouteLocationRaw } from 'vue-router'
 	import HorizontalNavbar from './HorizontalNavbar/HorizontalNavbar.vue'
 	import type { NavigationItem } from './types'
@@ -69,6 +69,11 @@
 		'navigation-menu-content': (props: SlotProps) => unknown
 	}>()
 
+	const menuOpen = defineModel<boolean>(
+		'burgerMenu',
+		{ default: false },
+	)
+
 	const { isDesktop } = useHeaderResponsiveMode()
 
 	const verticalMenu = computed<boolean>(() => {
@@ -79,8 +84,6 @@
 				&& props.items.length > props.maxHorizontalMenuItems)
 		)
 	})
-
-	const menuOpen = ref<boolean>()
 </script>
 
 <template>
@@ -92,7 +95,10 @@
 		:service-subtitle="serviceSubtitle"
 	>
 		<template #menu>
-			<HeaderBurgerMenu v-if="verticalMenu">
+			<HeaderBurgerMenu
+				v-if="verticalMenu"
+				v-model="menuOpen"
+			>
 				<div class="inner-vertical-menu">
 					<slot
 						name="navigation-menu-prepend"

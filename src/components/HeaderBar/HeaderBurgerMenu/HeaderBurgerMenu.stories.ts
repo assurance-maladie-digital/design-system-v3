@@ -21,9 +21,11 @@ const meta = {
 				type: {
 					summary: 'boolean',
 				},
+				defaultValue: {
+					summary: 'false',
+				},
 			},
 			control: { type: 'boolean' },
-			default: false,
 			description: 'Avec `v-model` Permet de gérer l\'ouverture et la fermeture du menu.',
 		},
 		'onUpdate:modelValue': {
