@@ -86,7 +86,7 @@
 				<path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
 			</svg>
 
-			<div if="serviceTitle">
+			<div v-if="serviceTitle">
 				<div class="service-title">
 					{{ serviceTitle }}
 				</div>
