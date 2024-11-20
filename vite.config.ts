@@ -104,6 +104,9 @@ export default defineConfig({
 			scss: {
 				api: 'modern-compiler',
 			},
+			sass: {
+				api: 'modern-compiler',
+			},
 		},
 	},
 	test: {

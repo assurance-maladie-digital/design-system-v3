@@ -176,10 +176,10 @@ export const Populated: Story = {
 						<HeaderBurgerMenu v-model="args.modelValue">
 							<HeaderMenuSection title="section 1">
 								<HeaderMenuItem>
-									<a>Item 1</a>
+									<a href="#">Item 1</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
-									<a>Item 2</a>
+									<a href="#">Item 2</a>
 								</HeaderMenuItem>
 								<headerMenuItem>
 									<HeaderSubMenu>
@@ -188,14 +188,14 @@ export const Populated: Story = {
 										</template>
 										<HeaderMenuSection title="Section">
 											<HeaderMenuItem>
-												<a>Item</a>
+												<a href="#">Item</a>
 											</HeaderMenuItem>
 											<HeaderSubMenu>
 												<template #title>
 													Menu de deuxième niveau 1
 												</template>
 												<HeaderMenuItem>
-													<a>Item</a>
+													<a href="#">Item</a>
 												</HeaderMenuItem>
 											</HeaderSubMenu>
 										</HeaderMenuSection>
@@ -209,7 +209,7 @@ export const Populated: Story = {
 											Menu de premier niveau 2
 										</template>
 										<HeaderMenuItem>
-											<a>Item 1</a>
+											<a href="#">Item 1</a>
 										</HeaderMenuItem>
 										<HeaderMenuItem>
 											<HeaderSubMenu>
@@ -217,7 +217,7 @@ export const Populated: Story = {
 													Menu de deuxième niveau 2
 												</template>
 												<HeaderMenuItem>
-													<a>Item 1</a>
+													<a href="#">Item 1</a>
 												</HeaderMenuItem>
 											</HeaderSubMenu>
 										</HeaderMenuItem>
@@ -228,7 +228,7 @@ export const Populated: Story = {
 												</template>
 												<HeaderMenuSection title="section 1">
 													<HeaderMenuItem>
-														<a>Item 1</a>
+														<a href="#">Item 1</a>
 													</HeaderMenuItem>
 												</HeaderMenuSection>
 											</HeaderSubMenu>
@@ -236,7 +236,7 @@ export const Populated: Story = {
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
-									<a>Item 3</a>
+									<a href="#">Item 3</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 							<div class="pa-4">
@@ -260,10 +260,10 @@ export const Populated: Story = {
 						<HeaderBurgerMenu>
 							<HeaderMenuSection title="section 1">
 								<HeaderMenuItem>
-									<a>Item 1</a>
+									<a href="#">Item 1</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
-									<a>Item 2</a>
+									<a href="#">Item 2</a>
 								</HeaderMenuItem>
 								<headerMenuItem>
 									<HeaderSubMenu>
@@ -272,14 +272,14 @@ export const Populated: Story = {
 										</template>
 										<HeaderMenuSection title="Section">
 											<HeaderMenuItem>
-												<a>Item</a>
+												<a href="#">Item</a>
 											</HeaderMenuItem>
 											<HeaderSubMenu>
 												<template #title>
 													Menu de deuxième niveau 1
 												</template>
 												<HeaderMenuItem>
-													<a>Item</a>
+													<a href="#">Item</a>
 												</HeaderMenuItem>
 											</HeaderSubMenu>
 										</HeaderMenuSection>
@@ -293,7 +293,7 @@ export const Populated: Story = {
 											Menu de premier niveau 2
 										</template>
 										<HeaderMenuItem>
-											<a>Item 1</a>
+											<a href="#">Item 1</a>
 										</HeaderMenuItem>
 										<HeaderMenuItem>
 											<HeaderSubMenu>
@@ -301,7 +301,7 @@ export const Populated: Story = {
 													Menu de deuxième niveau 2
 												</template>
 												<HeaderMenuItem>
-													<a>Item 1</a>
+													<a href="#">Item 1</a>
 												</HeaderMenuItem>
 											</HeaderSubMenu>
 										</HeaderMenuItem>
@@ -312,7 +312,7 @@ export const Populated: Story = {
 												</template>
 												<HeaderMenuSection title="section 1">
 													<HeaderMenuItem>
-														<a>Item 1</a>
+														<a href="#">Item 1</a>
 													</HeaderMenuItem>
 												</HeaderMenuSection>
 											</HeaderSubMenu>
@@ -320,7 +320,7 @@ export const Populated: Story = {
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
-									<a>Item 3</a>
+									<a href="#">Item 3</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 							<div class="pa-4">
@@ -375,7 +375,7 @@ export const WithScroll: Story = {
 										</template>
 										<HeaderMenuSection>
 											<HeaderMenuItem>
-												<a>Item 1</a>
+												<a href="#">Item 1</a>
 											</HeaderMenuItem>
 										</HeaderMenuSection>
 									</HeaderSubMenu>
@@ -415,7 +415,7 @@ export const WithScroll: Story = {
 											</template>
 											<HeaderMenuSection>
 												<HeaderMenuItem>
-													<a>Item 1</a>
+													<a href="#">Item 1</a>
 												</HeaderMenuItem>
 											</HeaderMenuSection>
 										</HeaderSubMenu>
