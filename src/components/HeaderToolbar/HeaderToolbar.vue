@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, type PropType } from 'vue'
+	import { ref, watch, type PropType } from 'vue'
 	import type { MenuItem, SelectItem } from './types'
 	import CustomInputSelect from '../Customs/CustomInputSelect/CustomInputSelect.vue'
 
@@ -197,6 +197,13 @@
 		activeIndex.value = null
 	}
 
+	watch(showOverlay, (newValue) => {
+		if (typeof window !== 'undefined') {
+			document.documentElement.style.overflow = newValue ? 'hidden' : 'auto'
+			document.body.style.overflow = newValue ? 'hidden' : 'auto'
+		}
+	})
+
 	defineExpose({
 		hideOverlay,
 		handleLink,
@@ -330,7 +337,7 @@
     }
     :deep(ul > li > a) {
       display: block;
-      color: tokens.$primary-base;
+      color: tokens.$blue-darken-40;
       text-decoration: none;
       padding: 10px 16px;
       cursor: pointer;
@@ -346,7 +353,7 @@
   #left-menu {
     ul > li > a {
       font-weight: 700;
-      color: tokens.$blue-darken-60;
+      color: tokens.$blue-darken-40;
       &:hover {
         text-decoration: none;
       }
@@ -441,7 +448,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+	background-color: rgba(3, 16, 37, .5);
+	cursor: default;
+	backdrop-filter: blur(2px);
     z-index: 1;
     @media (max-width: 768px) {
       display: none;
