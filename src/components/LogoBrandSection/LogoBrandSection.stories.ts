@@ -81,7 +81,30 @@ type Story = StoryObj<typeof LogoBrandSection>
 export const Default: Story = {
 	args: {
 		serviceTitle: 'Synapse',
-		serviceSubTitle: ' Documentation du Design System',
+		serviceSubTitle: 'Documentation du Design System',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<LogoBrandSection
+						:service-title="Synapse"
+						:service-sub-title="Documentation du Design System"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { LogoBrandSection } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
 	},
 }
 
@@ -97,7 +120,7 @@ export const WithBrand: Story = {
 				return { args }
 			},
 			template: `
-				<LogoBrandSection>
+				<LogoBrandSection v-bind="args">
 					<img
 						src="/logo-msa.svg"
 						alt="Logo MSA"
@@ -108,5 +131,27 @@ export const WithBrand: Story = {
 				</LogoBrandSection>
 			`,
 		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<LogoBrandSection>
+						<img src="/logo-msa.svg" alt="Logo MSA" width="115px" height="52px" class="ml-8 my-auto">
+					</LogoBrandSection>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { LogoBrandSection } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
 	},
 }
