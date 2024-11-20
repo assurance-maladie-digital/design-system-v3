@@ -18,6 +18,11 @@
 		homeAriaLabel?: string
 		serviceTitle?: string
 		serviceSubtitle?: string
+		homeLink?: {
+			ariaLabel?: string
+			to?: RouteLocationRaw
+			href?: string
+		}
 	}
 
 	defineSlots<{

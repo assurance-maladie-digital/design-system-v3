@@ -61,11 +61,11 @@
 	>
 		<Logo
 			v-if="isDesktop"
-			:aria-label
+			:aria-label="props.ariaLabel"
 		/>
 		<LogoMobile
 			v-else
-			:aria-label
+			:aria-label="props.ariaLabel"
 		/>
 
 		<slot
