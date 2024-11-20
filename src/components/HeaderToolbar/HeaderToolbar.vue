@@ -361,8 +361,8 @@
     li:first-child {
       min-width: 95px;
       background: transparent;
-      @media (max-width: 768px) {
-        min-width: 77px;
+      @media (max-width: $header-breakpoint) {
+        min-width: 82px;
       }
     }
     li:nth-child(2) {
