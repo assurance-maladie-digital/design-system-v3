@@ -80,6 +80,7 @@
 			walkElement = walkElement.parentElement
 		}
 
+		event.stopPropagation()
 		menuOpen.value = false
 	}
 

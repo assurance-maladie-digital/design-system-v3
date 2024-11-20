@@ -23,7 +23,7 @@
 		type="button"
 		:aria-label="model ? locals.closeMenu : locals.openMenu"
 		:title="model ? locals.closeMenu : locals.openMenu"
-		@click="() => (model = !model)"
+		@click="() => { model = !model }"
 	>
 		<VIcon size="48">
 			{{ model ? mdiClose : mdiMenu }}

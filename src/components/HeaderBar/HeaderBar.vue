@@ -230,9 +230,8 @@
 @use './consts' as *;
 
 .header {
-	top: 0;
-	width: 100%;
-	margin: 0 auto;
+	position: relative;
+	z-index: 1;
 }
 
 .sticky-header {
