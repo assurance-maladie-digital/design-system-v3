@@ -1,11 +1,12 @@
-import HeaderBurgerMenu from './HeaderBurgerMenu.vue'
-import HeaderBar from '../HeaderBar.vue'
+import HeaderToolbar from '@/components/HeaderToolbar/HeaderToolbar.vue'
+import { mdiMapMarker } from '@mdi/js'
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { VBtn } from 'vuetify/components'
+import HeaderBar from '../HeaderBar.vue'
+import HeaderBurgerMenu from './HeaderBurgerMenu.vue'
+import HeaderMenuItem from './HeaderMenuItem/HeaderMenuItem.vue'
 import HeaderMenuSection from './HeaderMenuSection/HeaderMenuSection.vue'
 import HeaderSubMenu from './HeaderSubMenu/HeaderSubMenu.vue'
-import HeaderMenuItem from './HeaderMenuItem/HeaderMenuItem.vue'
-import { VBtn } from 'vuetify/components'
-import { mdiMapMarker } from '@mdi/js'
 
 const meta = {
 	component: HeaderBurgerMenu,
@@ -350,20 +351,13 @@ export const WithScroll: Story = {
 	args: {},
 	render: (args) => {
 		return {
-			components: { HeaderBurgerMenu, HeaderBar, HeaderMenuSection, HeaderSubMenu, HeaderMenuItem },
+			components: { HeaderBurgerMenu, HeaderBar, HeaderMenuSection, HeaderSubMenu, HeaderMenuItem, HeaderToolbar },
 			setup() {
 				return { args }
 			},
 			template: `
 			<div class="position: relative">
-				<div style="margin: auto; max-width: 1712px; display: flex;">
-					<div
-						style="background-color: #ed76b3; padding: 0.7rem 0.8rem; width: fit-content;"
-					>Menu supérieur externe au composant</div>
-					<div
-						style="padding: 0.7rem 0.8rem; width: fit-content;"
-					>Autre lien</div>
-				</div>
+				<HeaderToolbar />
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu v-model="args.modelValue">
@@ -396,14 +390,7 @@ export const WithScroll: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<div style="margin: auto; max-width: 1712px; display: flex;">
-						<div
-							style="background-color: #ed76b3; padding: 0.7rem 0.8rem; width: fit-content;"
-						>Menu supérieur externe au composant</div>
-						<div
-							style="padding: 0.7rem 0.8rem; width: fit-content;"
-						>Autre lien</div>
-					</div>
+					<HeaderToolbar />
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>

@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import HeaderBar from './HeaderBar.vue'
+import { mdiAccountCircleOutline, mdiMagnify } from '@mdi/js'
 import { VBtn } from 'vuetify/components'
-import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
-import SubHeader from '../SubHeader/SubHeader.vue'
+import HeaderToolbar from '../HeaderToolbar/HeaderToolbar.vue'
 import LogoBrandSection from '../LogoBrandSection/LogoBrandSection.vue'
+import SubHeader from '../SubHeader/SubHeader.vue'
+import HeaderBar from './HeaderBar.vue'
 
 const meta = {
 	component: HeaderBar,
@@ -449,38 +450,31 @@ export const WithExternalTopMenu: Story = {
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},
-	decorators: [
-		() => ({
+	render: (args) => {
+		return {
+			components: { HeaderBar, HeaderToolbar },
+			setup() {
+				return { args }
+			},
 			template: `
-				<div style="margin: auto; max-width: 1712px; display: flex;">
-					<div
-						style="background-color: #ed76b3; padding: 0.7rem 0.8rem; width: fit-content;"
-					>Menu supérieur externe au composant</div>
-					<div
-						style="padding: 0.7rem 0.8rem; width: fit-content;"
-					>Autre lien</div>
-				</div>
-				<story/>
+				<HeaderToolbar />
+				<HeaderBar
+					service-title="Synapse"
+					service-subtitle="Design System"
+				/>
 				<div
 					style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
 				>Contenu de la page</div>
 			`,
-		}),
-	],
+		}
+	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 				<template>
-					<div style="margin: auto; max-width: 1712px; display: flex;">
-						<div
-							style="background-color: #ed76b3; padding: 0.7rem 0.8rem; width: fit-content;"
-						>Menu supérieur externe au composant</div>
-						<div
-							style="padding: 0.7rem 0.8rem; width: fit-content;"
-						>Autre lien</div>
-					</div>
+					<HeaderToolbar />
 					<HeaderBar
 						service-title="Synapse"
 						service-subtitle="Design System"

@@ -297,19 +297,20 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens.scss';
+@use '../HeaderBar/consts' as *;
 
 .toolbar {
-  background: tokens.$grey-lighten-80;
+  background: tokens.$blue-lighten-90;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 100;
 
   .container {
     width: 100%;
     max-height: 45px;
-    max-width: 1280px;
+    max-width: $header-max-width;
     display: flex;
     align-items: center;
     justify-content: space-between;
