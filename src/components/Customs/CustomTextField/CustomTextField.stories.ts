@@ -71,7 +71,6 @@ export const Default: Story = {
 		color: 'primary',
 		isClearable: true,
 		label: 'Label',
-		ariaLabel: 'Label',
 	},
 	render: (args) => {
 		return {
@@ -117,7 +116,6 @@ export const SlotPrepend: Story = {
 		isClearable: true,
 		showDivider: false,
 		label: 'Label',
-		ariaLabel: 'Label',
 		color: 'primary',
 		prependIcon: 'info',
 	},
@@ -132,7 +130,6 @@ export const SlotPrepend: Story = {
 					<CustomTextField
 						v-bind="args"
 						:label="args.label"
-						:aria-label="args.ariaLabel"
 						:prepend-icon="args.prependIcon"
 					/>
 				</div>
@@ -170,7 +167,6 @@ export const SlotAppend: Story = {
 		isClearable: true,
 		showDivider: false,
 		label: 'champs de text',
-		ariaLabel: 'champs de text',
 		color: 'primary',
 		appendIcon: 'success',
 	},
@@ -221,7 +217,6 @@ export const SlotPrependInner: Story = {
 		isClearable: true,
 		showDivider: false,
 		label: 'Label',
-		ariaLabel: 'Label',
 		color: 'primary',
 		prependInnerIcon: 'info',
 	},
@@ -273,7 +268,6 @@ export const SlotPrependInnerDivider: Story = {
 		isClearable: true,
 		showDivider: true,
 		label: 'Label',
-		ariaLabel: 'Label',
 		color: 'primary',
 		prependInnerIcon: 'info',
 	},
@@ -325,7 +319,6 @@ export const SlotAppendInner: Story = {
 		isClearable: true,
 		showDivider: false,
 		label: 'Label',
-		ariaLabel: 'Label',
 		color: 'primary',
 		appendInnerIcon: 'success',
 	},
@@ -382,7 +375,6 @@ export const SlotCustomIcon: Story = {
 		isClearable: true,
 		showDivider: false,
 		label: 'Label',
-		ariaLabel: 'Label',
 		color: 'primary',
 	},
 	render: (args) => {

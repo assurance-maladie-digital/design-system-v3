@@ -21,7 +21,6 @@
 			color?: ColorType
 			isClearable?: boolean
 			showDivider?: boolean
-			ariaLabel?: string
 			label?: string
 		}>(),
 		{
@@ -64,9 +63,8 @@
 		:color="props.color"
 		:clearable="props.isClearable"
 		:clear-icon="ICONS.close"
-		:aria-label="props.ariaLabel"
+		:aria-label="props.label"
 		:label="props.label"
-		:title="props.label"
 	>
 		<template #prepend>
 			<slot name="prepend">
