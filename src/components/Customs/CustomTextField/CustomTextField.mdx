@@ -5,7 +5,7 @@ import * as CustomTextFieldStories from "./CustomTextField.stories";
 
 # CustomTextField
 
-Le composant `CustomTextField` est utilisé pour proposer une alternative au `v-textArea` de Vuetify, conforme au style du design-system et qui  respecte les règles d'accessibilité RGAA.
+Le composant `CustomTextField` est utilisé pour proposer une alternative au `TextField` de Vuetify, conforme au style du design-system et qui  respecte les règles d'accessibilité RGAA.
 
 <Canvas of={CustomTextFieldStories.Default} />
 
@@ -21,7 +21,7 @@ Le composant `CustomTextField` est utilisé pour proposer une alternative au `v-
     dark code={`
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import CustomSelect from '@cnamts/CustomTextField'
+	import CustomSelect from '@cnamts/synapse'
 
 	const model = ref('')
 
@@ -29,21 +29,13 @@ Le composant `CustomTextField` est utilisé pour proposer une alternative au `v-
 
 <template>
 	<main class="ma-12">
-		Text saisie:	{{ model }}
+		Text saisie: {{ model }}
 		<div class="d-flex flex-wrap align-center">
         <CustomTextField
 				v-model="model"
-				prepend-icon="success"
-				append-icon="close"
-				preprend-inner-icon="info"
-				show-divider
-				append-inner-icon="success"
-				variant-style="outlined"
-				color="warning"
-				is-clearable
-				title="champs de prenom"
-				aria-label="champs de nom"
 				label="Label"
+				color="primary"
+				is-clearable
 			/>
 		</div>
 	</main>
