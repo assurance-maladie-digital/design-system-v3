@@ -42,7 +42,7 @@ const meta = {
 					summary: '{}',
 				},
 			},
-			description: 'Le contenu du menu, a construire avec les composants `HeaderMenuSection` et `HeaderMenuItem`.',
+			description: 'Le contenu du menu, à construire avec les composants `HeaderMenuSection` et `HeaderMenuItem`.',
 		},
 	},
 } satisfies Meta<typeof HeaderBurgerMenu>
