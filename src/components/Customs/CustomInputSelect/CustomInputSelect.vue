@@ -177,8 +177,11 @@
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-.v-list-item[aria-selected='true'] {
+:deep(.v-list-item[aria-selected='true']) {
   background-color: rgba(0, 0, 0, 0.08);
+  .v-list-item-title {
+    font-weight: bold;
+  }
 }
 
 .v-btn {
