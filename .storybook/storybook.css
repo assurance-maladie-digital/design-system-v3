@@ -1,3 +1,18 @@
+h1.title {
+    color: #0C419A;
+    font-size: 3rem !important;
+    line-height: normal !important;
+    @media (max-width: 768px) {
+        font-size: 2rem !important;
+    }
+}
+
+.background-list {
+    background: rgba(12, 65, 154, 0.1);
+    border: 4px solid white;
+    border-radius: 10px;
+}
+
 .docblock-source {
     padding-bottom: 20px;
 }

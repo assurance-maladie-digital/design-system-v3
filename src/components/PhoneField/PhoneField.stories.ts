@@ -2,14 +2,15 @@ import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
 
 const meta = {
-	title: 'Components/PhoneField',
+	title: 'Composants/Formulaires/PhoneField',
 	component: PhoneField,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['computedValue', 'selectedDialCode', 'phoneMask', 'counter', 'hasError', 'phoneNumber', 'mergedDialCodes'] },
+		controls: { exclude: ['computedValue', 'phoneMask', 'counter', 'hasError', 'phoneNumber', 'mergedDialCodes'] },
 	},
 	argTypes: {
 		modelValue: { control: false },
+		dialCodeModel: { control: false },
 		required: { control: 'boolean' },
 		outlined: { control: 'boolean' },
 		outlinedIndicatif: { control: 'boolean' },
@@ -772,6 +773,97 @@ export const DisplayFormatAbbreviation: Story = {
     />
 							</div>
    `,
+		}
+	},
+}
+
+export const DisplayModels: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+        <template>
+        	<span>
+				{{ args.selectedDialCode }} - {{ args.modelValue }}
+			</span>
+          <PhoneField
+            v-model="modelValue"
+            v-model:selectedDialCode="selectedDialCode"
+            :required="required"
+            :outlined="outlined"
+            :outlinedIndicatif="outlinedIndicatif"
+            :withCountryCode="withCountryCode"
+            :countryCodeRequired="countryCodeRequired"
+            :displayFormat="displayFormat"
+            :customIndicatifs="customIndicatifs"
+            :useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+            :isValidatedOnBlur="isValidatedOnBlur"
+          />
+        </template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+        <script setup lang="ts">
+          import PhoneField from '@cnamts/PhoneField'
+
+          const modelValue = ref('')
+          const selectedDialCode = ref('')
+          const required = ref(true)
+          const outlined = ref(true)
+          const outlinedIndicatif = ref(true)
+          const withCountryCode = ref(true)
+          const countryCodeRequired = ref(true)
+          const displayFormat = ref('code-country')
+          const customIndicatifs = ref([])
+          const useCustomIndicatifsOnly = ref(false)
+          const isValidatedOnBlur = ref(true)
+        </script>
+        `,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		dialCodeModel: undefined,
+		required: false,
+		outlined: true,
+		outlinedIndicatif: true,
+		withCountryCode: true,
+		countryCodeRequired: false,
+		displayFormat: 'code-country',
+		customIndicatifs: [],
+		useCustomIndicatifsOnly: false,
+		isValidatedOnBlur: false,
+	},
+	render: (args) => {
+		return {
+			components: { PhoneField },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<div class="pa-4">
+						{{ args.dialCodeModel }} - {{ args.modelValue }}
+					</div>
+					<PhoneField
+						v-model="args.modelValue"
+						v-model:selected-dial-code="dialCodeModel"
+						:required="args.required"
+						:outlined="args.outlined"
+						:outlinedIndicatif="args.outlinedIndicatif"
+						:withCountryCode="args.withCountryCode"
+						:countryCodeRequired="args.countryCodeRequired"
+						:displayFormat="args.displayFormat"
+						:customIndicatifs="args.customIndicatifs"
+						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
+						:isValidatedOnBlur="args.isValidatedOnBlur"
+					/>
+				</div>
+			`,
 		}
 	},
 }

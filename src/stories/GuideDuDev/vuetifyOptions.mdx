@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, Source } from '@storybook/addon-docs/blocks';
 
 <Meta title="Guide Du Dev/VuetifyOptions" />
 
@@ -13,60 +13,63 @@ Utilisation de vuetifyOptions
 Certains composants du design system acceptent une prop vuetifyOptions qui vous permet de personnaliser le comportement et le style du composant basé sur Vuetify.
 Vous trouverez des exemples de configurations directement dans la documentation de chaque composant que nous proposons pour mieux comprendre comment les personnaliser.
 
-Exemple d'utilisation dans un composant vuetify:
+## Exemple d'utilisation dans un composant Vuetify:
 
 Prenons l'exemple d'un bouton (VBtn).
 
 Voici un exemple d'utilisation du composant :
 
-```vue
-
+<Source dark code={`
 <MyButton
-:title="'Cliquez ici'"
-:vuetifyOptions="{ btn: { color: 'secondary', icon: true } }"
-    />
-```
+    :title="'Cliquez ici'"
+    :vuetifyOptions="{ btn: { color: 'secondary', icon: true } }"
+/>
+`} />
+
 Dans cet exemple :
 
-    Le texte du bouton est défini via la prop title.
-    Vous pouvez passer un objet vuetifyOptions pour personnaliser les propriétés du composant Vuetify sous-jacent (ici, VBtn).
+> Le texte du bouton est défini via la prop title.
 
-Explication
+> Vous pouvez passer un objet vuetifyOptions pour personnaliser les propriétés du composant Vuetify sous-jacent (ici, VBtn).
 
-    Propriétés de Vuetify : Vous pouvez configurer n'importe quelle option reconnue par Vuetify. Par exemple, pour un bouton (VBtn), vous pourriez ajuster sa couleur, son icône, son style (outlined, elevation, etc.).
+<b>Explication</b>
 
-    Fusion des options : Le design system gère la fusion des options par défaut et celles que vous fournissez dans vuetifyOptions. Si vous ne définissez pas une option spécifique, la valeur par défaut sera utilisée.
+> Propriétés de Vuetify : Vous pouvez configurer n'importe quelle option reconnue par Vuetify. Par exemple, pour un bouton (VBtn), vous pourriez ajuster sa couleur, son icône, son style (outlined, elevation, etc.).
 
-Exemple détaillé
+> Fusion des options : Le design system gère la fusion des options par défaut et celles que vous fournissez dans vuetifyOptions. Si vous ne définissez pas une option spécifique, la valeur par défaut sera utilisée.
+
+<b>Exemple détaillé</b>
 
 Voici un exemple plus complet :
-```
-vue
 
+<Source dark code={`
 <MyButton
-:title="'Valider'"
-:vuetifyOptions="{ btn: { color: 'primary', outlined: false, icon: true } }"
-    />
-```
+    :title="'Valider'"
+    :vuetifyOptions="{ btn: { color: 'primary', outlined: false, icon: true } }"
+ />
+`} />
+
 Dans cet exemple :
 
-    Le bouton sera bleu (color: 'primary').
-    Il n'aura pas de contour (outlined: false).
-    Une icône sera affichée sur le bouton (icon: true).
+> Le bouton sera bleu (color: 'primary').
 
-Options par défaut
+> Il n'aura pas de contour (outlined: false).
+
+> Une icône sera affichée sur le bouton (icon: true).
+
+## Options par défaut
 
 Chaque composant du design system dispose d'options par défaut qui lui assurent un style et un comportement cohérents. Cependant, si vous souhaitez personnaliser ces options, vous pouvez utiliser la prop vuetifyOptions pour adapter ces composants à vos besoins spécifiques sans compromettre la structure de base du design system.
 Exemple de bouton par défaut
 
 Sans fournir de vuetifyOptions, le bouton pourrait ressembler à ceci :
 
-```vue
-
+<Source dark code={`
 <MyButton :title="'Par défaut'" />
-```
+`} />
+
 Ce bouton utilisera les options par défaut définies dans le design system, telles que la couleur, le style de bordure ou les icônes.
 
-Conclusion
+## Conclusion
 
 L'intégration des vuetifyOptions dans les composants de ce design system vous offre une grande flexibilité pour personnaliser les composants en fonction de vos besoins spécifiques. Grâce à ce mécanisme, vous pouvez ajuster des propriétés telles que la couleur, les icônes et d'autres configurations Vuetify tout en vous appuyant sur des valeurs par défaut bien définies. Vous n'avez pas à vous soucier de la gestion interne des options : il vous suffit de passer les options personnalisées via la prop vuetifyOptions, et le composant s'adaptera automatiquement.

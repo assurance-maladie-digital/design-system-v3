@@ -4,7 +4,7 @@ import BackToTopBtn from './BackToTopBtn.vue'
 import { VCard, VSheet } from 'vuetify/components'
 
 const meta = {
-	title: 'Components/BackToTopBtn',
+	title: 'Composants/Boutons/BackToTopBtn',
 	component: BackToTopBtn,
 	parameters: {
 		layout: 'fullscreen',
@@ -45,6 +45,43 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VCard
+		id="target"
+		width="100%"
+		max-height="200px"
+		class="overflow-y-auto"
+		style="scroll-behavior: smooth"
+	>
+		<VSheet
+			height="600px"
+			class="d-flex flex-column align-center"
+		>
+			<p class="pa-2">
+				Haut de la section.
+			</p>
+		</VSheet>
+		<BackToTopBtn :target="target">
+			Retour en haut
+		</BackToTopBtn>
+	</VCard>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import BackToTopBtn from '@cnamts/BackToTopBtn'
+	import { VCard, VSheet } from 'vuetify/components'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		target: 'target',
 		vuetifyOptions: {
@@ -101,6 +138,57 @@ export const Default: Story = {
 }
 
 export const Customization: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VCard
+		id="btn-customization"
+		width="100%"
+		max-height="200px"
+		class="overflow-y-auto"
+		style="scroll-behavior: smooth"
+	>
+		<VSheet
+			height="600px"
+			class="d-flex flex-column align-center"
+		>
+			<p class="pa-2">
+				Haut de la section.
+			</p>
+		</VSheet>
+		<BackToTopBtn 
+			:target="btn-customization" 
+			:vuetify-options="vuetifyOptions"
+		>
+			Retour en haut
+		</BackToTopBtn>
+	</VCard>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import BackToTopBtn from '@cnamts/BackToTopBtn'
+	import { VCard, VSheet } from 'vuetify/components'
+	
+	const vuetifyOptions = {
+		btn: {
+			variant: 'elevated',
+			color: 'primary',
+			rounded: true,
+		},
+		icon: {
+			color: 'white',
+		},
+	}
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		target: 'btn-customization',
 		vuetifyOptions: {
@@ -152,13 +240,66 @@ export const Customization: Story = {
 	},
 }
 
-export const PillBtn: Story = {
+export const CustomPosition: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VCard
+		id="pill-btn"
+		width="100%"
+		max-height="200px"
+		class="overflow-y-auto"
+		style="scroll-behavior: smooth"
+	>
+		<VSheet
+			height="600px"
+			class="d-flex flex-column align-center"
+		>
+			<p class="pa-2">
+				Haut de la section.
+			</p>
+		</VSheet>
+		<BackToTopBtn 
+			:target="pill-btn"
+			:nudge-right="30"
+			:nudge-bottom="30"
+			:vuetify-options="vuetifyOptions"
+		>
+			Retour en haut
+		</BackToTopBtn>
+	</VCard>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import BackToTopBtn from '@cnamts/BackToTopBtn'
+	import { VCard, VSheet } from 'vuetify/components'
+	
+	const vuetifyOptions = {
+		btn: {
+			variant: 'outlined',
+			color: 'primary',
+			minWidth: 92,
+			rounded: true,
+		}
+	}
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		target: 'pill-btn',
+		nudgeRight: 30,
+		nudgeBottom: 30,
 		vuetifyOptions: {
 			btn: {
 				variant: 'outlined',
-				color: 'medium-emphasis',
+				color: 'primary',
 				minWidth: 92,
 				rounded: true,
 			},
@@ -173,16 +314,36 @@ export const PillBtn: Story = {
 				return { args }
 			},
 			template: `
-				<v-btn
-					color="primary"
-					variant="outlined"
-					size="small"
-					rounded
-					@click="() => { window.location.href = '' }"
+				<VCard
+					id="pill-btn"
+					width="100%"
+					max-height="200px"
+					class="overflow-y-auto"
+					style="scroll-behavior: smooth"
 				>
-					VuetifyOptions
-				</v-btn>
+					<VSheet
+						height="600px"
+						class="d-flex flex-column align-center"
+					>
+						<p class="pa-2">
+							Haut de la section.
+						</p>
+					</VSheet>
+					<BackToTopBtn 
+						v-bind="args" 
+						:nudge-right="args.nudgeRight"
+						:nudge-bottom="args.nudgeBottom"
+						:vuetify-options="args.vuetifyOptions"
+					>
+						{{args.default}}
+					</BackToTopBtn>
+				</VCard>
 			`,
 		}
+	},
+	play: async ({ canvasElement }) => {
+		await new Promise((resolve: (v: unknown) => void) => setTimeout(resolve, 1000))
+		const container = canvasElement.querySelector('#pill-btn')
+		container?.scrollTo(0, 1000)
 	},
 }

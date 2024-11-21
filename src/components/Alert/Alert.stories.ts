@@ -3,7 +3,7 @@ import Alert from './Alert.vue'
 import { VBtn } from 'vuetify/components'
 
 const meta = {
-	title: 'Components/Alert',
+	title: 'Composants/Feedback/Alert',
 	component: Alert,
 	parameters: {
 		layout: 'fullscreen',
@@ -31,6 +31,35 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center justify-center">
+		<Alert v-model="showAlert" type="success" variant="tonal" :closable="true">
+			<template #default>This is a success alert</template>
+		</Alert>
+
+		<VBtn v-if="!showAlert" color="primary" @click="showAlert = true">
+			Réinitialiser
+		</VBtn>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Alert from '@cnamts/synapse'
+	import { ref } from 'vue'
+	
+	const showAlert = ref(true);
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: true,
 		type: 'success',
@@ -59,6 +88,35 @@ export const Default: Story = {
 }
 
 export const Outlined: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center justify-center">
+		<Alert v-model="showAlert" type="warning" variant="outlined" :closable="true">
+			<template #default>This is a warning alert</template>
+		</Alert>
+
+		<VBtn v-if="!showAlert" color="primary" @click="showAlert = true">
+			Réinitialiser
+		</VBtn>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Alert from '@cnamts/synapse'
+	import { ref } from 'vue'
+	
+	const showAlert = ref(true);
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		type: 'warning',
 		closable: true,
@@ -86,6 +144,38 @@ export const Outlined: Story = {
 }
 
 export const SlotIcon: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center justify-center">
+		<Alert v-model="showAlert" type="success" variant="tonal" :closable="true">
+			<template #default>This is a success alert</template>
+			<template #icon>{{ icon }}</template>
+		</Alert>
+
+		<VBtn v-if="!showAlert" color="primary" @click="showAlert = true">
+			Réinitialiser
+		</VBtn>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import Alert from '@cnamts/synapse'
+	import { ref } from 'vue'
+	import { mdiAccountCheck } from '@mdi/js'
+	
+	const showAlert = ref(true);
+    const icon = mdiAccountCheck;
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		type: 'success',
 		closable: true,

@@ -3,7 +3,7 @@ import type { StoryObj } from '@storybook/vue3'
 import { ecoDesignItems } from '@/stories/Fondamentaux/EcoConception/ecoDesignItems'
 
 export default {
-	title: 'Fondamentaux/EcoConception',
+	title: 'Fondamentaux/Éco-conception',
 }
 
 export const EcoPanel: StoryObj = {

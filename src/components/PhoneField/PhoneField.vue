@@ -8,7 +8,7 @@
 	import { vMaska } from 'maska/vue'
 	import { locales } from './locales'
 	import CustomSelect from '@/components/Customs/CustomSelect/CustomSelect.vue'
-	import { VTextField } from 'vuetify/components'
+	import CustomTextField from '@/components/Customs/CustomTextField/CustomTextField.vue'
 
 	type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
 	type Indicatif = {
@@ -21,6 +21,8 @@
 
 	const props = defineProps({
 		modelValue: { type: String, default: '' },
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+		dialCodeModel: { type: [String, Object] as PropType<string | Record<string, any>>, default: '' },
 		required: { type: Boolean, default: false },
 		outlined: { type: Boolean, default: false },
 		outlinedIndicatif: { type: Boolean, default: false },
@@ -32,10 +34,11 @@
 		isValidatedOnBlur: { type: Boolean, default: true },
 	})
 
-	const emit = defineEmits(['update:modelValue', 'change'])
+	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
+
 	const phoneNumber = ref(props.modelValue || '')
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	const selectedDialCode = ref<string | any | undefined>(undefined)
+	const dialCode = ref<string | Record<string, any>>(props.dialCodeModel || '')
 	const counter = ref(10)
 	const phoneMask = ref('## ## ## ## ##')
 	const hasError = ref(false)
@@ -64,8 +67,8 @@
 	}
 
 	const currentDialCode = computed(() => {
-		const rawDialCode = toRaw(selectedDialCode.value)
-		return dialCodeOptions.value.find(ind => ind.code === rawDialCode)
+		const rawDialCode = toRaw(dialCode.value)
+		return dialCodeOptions.value.find(ind => ind.code === String(rawDialCode))
 	})
 
 	function applyPhoneMask(phone: string): string {
@@ -79,8 +82,8 @@
 
 	function handlePhoneInput(event: Event) {
 		const input = (event.target as HTMLInputElement).value.replace(/\s|\D/g, '')
-		phoneNumber.value = input.startsWith(selectedDialCode.value || '')
-			? input.slice((selectedDialCode.value || '').length)
+		phoneNumber.value = input.startsWith(String(dialCode.value) || '')
+			? input.slice(String(dialCode.value || '').length)
 			: input
 		emit('update:modelValue', phoneNumber.value)
 		emit('change', phoneNumber.value)
@@ -113,8 +116,12 @@
 		phoneNumber.value = newVal || ''
 	})
 
+	watch(dialCode, (newVal) => {
+		emit('update:selectedDialCode', newVal)
+	})
+
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	watch(selectedDialCode, (selectedPhoneCode: any) => {
+	watch(dialCode, (selectedPhoneCode: any) => {
 		if (selectedPhoneCode) {
 			counter.value = selectedPhoneCode?.phoneLength || 10
 			phoneMask.value = selectedPhoneCode?.mask || '## ## ## ## ##'
@@ -123,7 +130,7 @@
 
 	defineExpose({
 		computedValue,
-		selectedDialCode,
+		dialCode,
 		phoneMask,
 		counter,
 		hasError,
@@ -137,7 +144,7 @@
 	<div class="phone-field-container">
 		<CustomSelect
 			v-if="props.withCountryCode"
-			v-model="selectedDialCode"
+			v-model="dialCode"
 			:items="dialCodeOptions"
 			text-key="displayText"
 			value-key="code"
@@ -146,13 +153,13 @@
 			class="custom-select"
 			:outlined="outlinedIndicatif"
 		/>
-		<VTextField
+		<CustomTextField
 			v-maska="phoneMask"
 			:model-value="computedValue"
 			:rules="validationRules"
 			:required="props.required"
 			:counter="counter"
-			:counter-value="value => value.replace(/\s/g, '').length"
+			:counter-value="(value: string) => value.replace(/\s/g, '').length"
 			:label="locales.label"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			color="primary"
@@ -171,9 +178,10 @@
 					{{ mdiInformation }}
 				</VIcon>
 			</template>
-		</VTextField>
+		</CustomTextField>
 	</div>
 </template>
+
 <style scoped>
 .phone-field-container {
   display: flex;

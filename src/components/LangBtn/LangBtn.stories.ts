@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
 const meta: Meta<typeof LangBtn> = {
-	title: 'Components/LangBtn',
+	title: 'Composants/Boutons/LangBtn',
 	component: LangBtn,
 	parameters: {
 		layout: 'fullscreen',
@@ -39,11 +39,38 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<LangBtn
+		v-model="value"
+		:items="items"
+		:aria-label="ariaLabel"
+	/>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import LangBtn from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const value = ref('fr')
+	const items = ['fr', 'en', 'es']
+	const ariaLabel = 'Choix de la langue'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
-		modelValue: 'en',
+		modelValue: 'fr',
 		hideDownArrow: false,
-		ariaLabel: 'Select a language',
-		availableLanguages: ['fr', 'co', 'es'],
+		ariaLabel: 'Choix de la langue',
+		availableLanguages: ['fr', 'en', 'es'],
 		vuetifyOptions: {
 			menu: {
 				offsetY: true,
@@ -74,10 +101,36 @@ export const Default: Story = {
 }
 
 export const AllLanguages: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<LangBtn
+		v-model="value"
+		:aria-label="ariaLabel"
+		available-languages="*"
+	/>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import LangBtn from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const value = ref('fr')
+	const ariaLabel = 'Choix de la langue'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: 'fr',
 		hideDownArrow: false,
-		ariaLabel: 'Select a language',
+		ariaLabel: 'Choix de la langue',
 		availableLanguages: '*',
 	},
 	render: (args) => {
@@ -96,10 +149,38 @@ export const AllLanguages: Story = {
 }
 
 export const NoDownArrow: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<LangBtn
+		v-model="value"
+		:items="items"
+		:aria-label="ariaLabel"
+		hide-down-arrow
+	/>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import LangBtn from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const value = ref('fr')
+	const items = ['fr', 'en', 'es']
+	const ariaLabel = 'Choix de la langue'
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: 'fr',
 		hideDownArrow: true,
-		ariaLabel: 'Select a language',
+		ariaLabel: 'Choix de la langue',
 		availableLanguages: ['fr', 'en', 'de'],
 	},
 	render: (args) => {
@@ -118,10 +199,46 @@ export const NoDownArrow: Story = {
 }
 
 export const FlatBtn: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<LangBtn
+		v-model="value"
+		:items="items"
+		:aria-label="ariaLabel"
+		:vuetify-options="vuetifyOptions"
+	/>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import LangBtn from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const value = ref('fr')
+	const items = ['fr', 'en', 'es']
+	const ariaLabel = 'Choix de la langue'
+	
+	const vuetifyOptions = {
+		btn: {
+			color: 'primary',
+			variant: 'flat',
+			ripple: true,
+		},
+	}
+</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: 'fr',
 		hideDownArrow: false,
-		ariaLabel: 'Select a language',
+		ariaLabel: 'Choix de la langue',
 		availableLanguages: ['fr', 'en', 'de'],
 		vuetifyOptions: {
 			btn: {

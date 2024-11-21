@@ -57,14 +57,14 @@ describe('PhoneField.vue', () => {
 	it('validates country code when countryCodeRequired is true', async () => {
 	})
 
-	it('updates phone mask and counter when selectedDialCode changes', async () => {
+	it('updates phone mask and counter when dialCode changes', async () => {
 		const wrapper = mount(PhoneField, {
 			global: {
 				plugins: [vuetify],
 			},
 			props: { withCountryCode: true },
 		})
-		wrapper.vm.selectedDialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
+		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
 		await wrapper.vm.$nextTick()
 		expect(wrapper.vm.phoneMask).toBe('###-###-####')
 		expect(wrapper.vm.counter).toBe(10)
@@ -85,7 +85,7 @@ describe('PhoneField.vue', () => {
 		})
 
 		// Simulate selecting a country code
-		wrapper.vm.selectedDialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
+		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
 		await wrapper.vm.$nextTick()
 
 		// Simulate blur event
@@ -140,7 +140,7 @@ describe('PhoneField.vue', () => {
 			},
 		})
 
-		wrapper.vm.selectedDialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
+		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
 		await wrapper.vm.$nextTick()
 
 		const input = wrapper.find('input')

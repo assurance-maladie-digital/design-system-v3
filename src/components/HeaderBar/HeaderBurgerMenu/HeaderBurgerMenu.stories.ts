@@ -9,6 +9,7 @@ import HeaderMenuSection from './HeaderMenuSection/HeaderMenuSection.vue'
 import HeaderSubMenu from './HeaderSubMenu/HeaderSubMenu.vue'
 
 const meta = {
+	title: 'Composants/Structure/HeaderBar/HeaderBurgerMenu',
 	component: HeaderBurgerMenu,
 	tags: ['dev'],
 	parameters: {

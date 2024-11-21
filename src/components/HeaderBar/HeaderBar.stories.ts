@@ -8,6 +8,7 @@ import SubHeader from '../SubHeader/SubHeader.vue'
 import HeaderBar from './HeaderBar.vue'
 
 const meta = {
+	title: 'Composants/Structure/HeaderBar',
 	component: HeaderBar,
 	parameters: {
 		layout: 'fullscreen',

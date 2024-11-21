@@ -5,6 +5,7 @@ import HeaderBar from '../../HeaderBar.vue'
 import HeaderMenuSection from '../HeaderMenuSection/HeaderMenuSection.vue'
 
 const meta = {
+	title: 'Composants/Structure/HeaderBar/HeaderBurgerMenu/HeaderMenuItem',
 	component: HeaderMenuItem,
 	argTypes: {
 		default: {

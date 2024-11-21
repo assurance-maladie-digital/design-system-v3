@@ -2,7 +2,7 @@ import HeaderToolbar from './HeaderToolbar.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 const meta: Meta<typeof HeaderToolbar> = {
-	title: 'Components/HeaderToolbar',
+	title: 'Composants/Structure/HeaderToolbar',
 	component: HeaderToolbar,
 	parameters: {
 		layout: 'fullscreen',
