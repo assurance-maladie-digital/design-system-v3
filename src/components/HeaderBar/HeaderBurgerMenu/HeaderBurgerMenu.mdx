@@ -3,14 +3,12 @@ import * as HeaderBurgerMenuStories from "./HeaderBurgerMenu.stories";
 
 <Meta of={HeaderBurgerMenuStories} />
 
-Work in progress
-===
 
 # HeaderBurgerMenu
 
 L'utilisation de ce menu est à privilégier pour les application à destination du publique ou pour créer des menus contenant plus de six éléments.
 
-## utilisation
+## Utilisation
 
 Ce menu est prévu pour être utilisé dans le composant `HeaderBar` via le slot `menu` de ce composant.
 
@@ -29,11 +27,11 @@ Ce menu est prévu pour être utilisé dans le composant `HeaderBar` via le slot
 `}
 />
 
-Ce menu s'utilise conjoitement avec les composants `HeaderMenuSection` et `HeaderMenuItem` pour structurer le menu.
+Ce menu s'utilise conjointement avec les composants `HeaderMenuSection` et `HeaderMenuItem` pour structurer le menu.
 
 Un composant `HeaderMenuSection` peut contenir plusieurs `HeaderMenuItem`.
 
-Un Composant `HeaderMenuItem` doit obligatoirement est contenu dans un `HeaderMenuSection`.
+Un Composant `HeaderMenuItem` doit obligatoirement être contenu dans un `HeaderMenuSection`.
 
 
 <Canvas of={HeaderBurgerMenuStories.Default} />
@@ -46,7 +44,27 @@ Un Composant `HeaderMenuItem` doit obligatoirement est contenu dans un `HeaderMe
 
 Le menu peut être utilisé avec un seul niveau de profondeur.
 
-<Canvas of={HeaderBurgerMenuStories.Default} />
+<Canvas
+	of={HeaderBurgerMenuStories.WithAnItem}
+	source={{
+language: 'html',
+format: 'dedent',
+code:`
+<HeaderBar>
+	<template #menu>
+		<HeaderBurgerMenu>
+			<HeaderMenuSection>
+				<HeaderMenuItem>
+					<a href="/">Item 1</a>
+				</HeaderMenuItem>
+			</HeaderMenuSection>
+		</HeaderBurgerMenu>
+	</template>
+</HeaderBar>
+	`}}
+/>
+
+Il est possible d'utiliser des liens de navigation avec les composants `RouterLink` ou `NuxtLink`.
 
 <Source
   dark
@@ -86,15 +104,21 @@ Le menu peut être utilisé avec un seul niveau de profondeur.
 
 Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeur. Dans ce cas là, il convient d'utiliser le composant `HeaderSubMenu` pour définir les sous-menus.
 
-<Canvas of={HeaderBurgerMenuStories.Populated} />
+Pour conserver la logique sémantique du menu, le composant `HeaderSubMenu` doit être contenu dans un `HeaderMenuItem`.
 
-<Source
-  dark
-  code={`
+
+<Canvas
+	of={HeaderBurgerMenuStories.Populated}
+	source={{
+language: 'html',
+code:`
 <HeaderBar>
 	<template #menu>
 		<HeaderMenu>
-			<HeaderMenuSection title="section 1">
+			<HeaderMenuSection >
+				<template #title>
+					Section 1
+				</template>
 				<HeaderMenuItem>
 					<a>Item 1</a>
 				</HeaderMenuItem>
@@ -106,7 +130,10 @@ Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeu
 						<template #title>
 							Menu de premier niveau 1
 						</template>
-						<HeaderMenuSection title="Section">
+						<HeaderMenuSection>
+							<template #title>
+								Section 1
+							</template>
 							<HeaderMenuItem>
 								<a>Item</a>
 							</HeaderMenuItem>
@@ -122,7 +149,10 @@ Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeu
 					</HeaderSubMenu>
 				</headerMenuItem>
 			</HeaderMenuSection>
-			<HeaderMenuSection title="section 2">
+			<HeaderMenuSection>
+				<template #title>
+					Section 2
+				</template>
 				<headerMenuItem>
 					<HeaderSubMenu>
 						<template #title>
@@ -146,7 +176,10 @@ Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeu
 								<template #title>
 									Menu de deuxième niveau 3
 								</template>
-								<HeaderMenuSection title="section 1">
+								<HeaderMenuSection>
+									<template #title>
+										Section 1
+									</template>
 									<HeaderMenuItem>
 										<a>Item 1</a>
 									</HeaderMenuItem>
@@ -166,7 +199,7 @@ Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeu
 		</HeaderMenu>
 	</template>
 </HeaderBar>
-`}
+	`}}
 />
 
 
@@ -174,11 +207,15 @@ Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeu
 
 Voici un exemple de menu construit de façon dynamique.
 
-<Canvas of={HeaderBurgerMenuStories.Generated} />
-
-<Source
-  dark
-  code={`
+<Canvas
+	of={HeaderBurgerMenuStories.Generated}
+	story={{
+		height: '500px',
+	}}
+	source={{
+language: 'html',
+format: 'dedent',
+code:`
 <script setup lang="ts">
 	import { HeaderBar, HeaderBurgerMenu, HeaderMenuSection, HeaderMenuItem, HeaderSubMenu } from '@cnamts/synapse'
 	import { mdiMapMarker } from '@mdi/js'
@@ -372,5 +409,25 @@ Voici un exemple de menu construit de façon dynamique.
 	</HeaderBar>
 </template>
 
-`}
+`}}
+/>
+
+
+## Gérer la navigation avec un RouterLink
+
+Si vous positionnez le composant dans un layout ou à la racine de votre application et que vous utilisez un routeur pour gérer la navigation, le menu ne se fermera pas automatiquement lors de la navigation.
+
+Si vous souhaitez que le menu se ferme lors de la navigation, vous pouvez utiliser le `v-model` par défaut pour gérer l'état du menu.
+
+<Source
+	dark
+	language="typescript"
+	format="dedent"
+	code={`
+		const menuOpen = ref(false)
+		const curRoute = useRoute()
+		watch(curRoute, () => {
+			menuOpen.value = false
+		})
+		`}
 />

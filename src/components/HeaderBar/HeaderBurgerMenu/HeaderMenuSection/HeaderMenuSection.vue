@@ -13,11 +13,11 @@
 <template>
 	<div class="header-menu-section">
 		<div
-			v-if="title"
+			v-if="$slots.title"
 			:id="titleId"
 			class="header-menu-section-title"
 		>
-			{{ title }}
+			<slot name="title" />
 		</div>
 		<ul
 			:id="groupId"

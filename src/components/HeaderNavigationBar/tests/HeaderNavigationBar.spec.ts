@@ -1,14 +1,18 @@
 import HeaderBurgerMenu from '@/components/HeaderBar/HeaderBurgerMenu/HeaderBurgerMenu.vue'
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
-import { afterEach, describe, expect, it, vi } from 'vitest'
-import HeaderNavbar from '../HeaderNavbar.vue'
+import { afterAll, describe, expect, it, vi } from 'vitest'
+import HeaderNavbar from '../HeaderNavigationBar.vue'
 import HorizontalNavbar from '../HorizontalNavbar/HorizontalNavbar.vue'
 
 describe('HeaderNavbar', () => {
-	afterEach(() => {
-		document.body.innerHTML = ''
+	vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
+		default: (fn: (...args: unknown[]) => void) => fn,
+	}))
+
+	afterAll(() => {
 		vi.restoreAllMocks()
+		document.body.innerHTML = ''
 	})
 
 	it('should render the component', async () => {

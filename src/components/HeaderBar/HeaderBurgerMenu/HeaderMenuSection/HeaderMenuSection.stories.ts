@@ -1,12 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import HeaderMenuSection from './HeaderMenuSection.vue'
 import HeaderMenuItem from '../HeaderMenuItem/HeaderMenuItem.vue'
-import HeaderMenu from '../HeaderBurgerMenu.vue'
+import HeaderBurgerMenu from '../HeaderBurgerMenu.vue'
 import HeaderBar from '../../HeaderBar.vue'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar/HeaderBurgerMenu/HeaderMenuSection',
 	component: HeaderMenuSection,
+	argTypes: {
+		title: {
+			description: 'Titre de la section',
+			control: { type: 'text' },
+			table: {
+				category: 'slots',
+			},
+		},
+		default: {
+			control: { type: 'text' },
+			description: 'Contenu de la section, construit avec des composants `HeaderMenuItem`',
+			table: {
+				type: { summary: '{}' },
+			},
+		},
+	},
 	parameters: {
 		layout: 'fullscreen',
 	},
@@ -22,26 +38,33 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderMenuItem, HeaderMenu, HeaderBar, HeaderMenuSection },
+			components: { HeaderMenuItem, HeaderBurgerMenu, HeaderBar, HeaderMenuSection },
 			setup() {
 				return { args }
 			},
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu>
-							<HeaderMenuSection :title="args.title">
+						<HeaderBurgerMenu>
+							<HeaderMenuSection>
+								<template #title>
+									{{ args.title }}
+								</template>
 								<HeaderMenuItem>
 									<a>lorem ipsum</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 
-							<HeaderMenuSection title="section 2">
+							<HeaderMenuSection>
+								<template #title>
+									section 2
+								</template>
+
 								<HeaderMenuItem>
 									<a>lorem ipsum</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
-						</HeaderMenu>
+						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
 			`,
@@ -52,5 +75,47 @@ export const Default: Story = {
 		setTimeout(() => {
 			menuBtn!.click()
 		}, 1000)
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<Template>
+					<HeaderBar>
+						<template #menu>
+							<HeaderBurgerMenu>
+								<HeaderMenuSection>
+									<template #title>
+										{{ args.title }}
+									</template>
+									<HeaderMenuItem>
+										<a>lorem ipsum</a>
+									</HeaderMenuItem>
+								</HeaderMenuSection>
+
+								<HeaderMenuSection>
+									<template #title>
+										section 2
+									</template>
+									<HeaderMenuItem>
+										<a>lorem ipsum</a>
+									</HeaderMenuItem>
+								</HeaderMenuSection>
+							</HeaderBurgerMenu>
+						</template>
+					</HeaderBar>
+				</Template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup>
+					import { HeaderBurgerMenu, HeaderBar, HeaderMenuSection, HeaderMenuItem } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
 	},
 }

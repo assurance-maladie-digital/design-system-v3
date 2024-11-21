@@ -68,4 +68,52 @@ describe('HeaderLogo', () => {
 		expect(render).toContain('other title')
 		expect(render).not.toContain('Test service title')
 	})
+
+	it('render a router-link when homeLink is set with `to`', async () => {
+		const wrapper = mount(HeaderLogo, {
+			global: {
+				plugins: [vuetify],
+				stubs: ['RouterLink'],
+			},
+			props: {
+				homeLink: {
+					to: '/',
+				},
+			},
+		})
+
+		expect(wrapper.find('router-link-stub').exists()).toBe(true)
+		expect(wrapper.find('router-link-stub').attributes('to')).toBe('/')
+	})
+
+	it('render a div when there there is no `RouterLink` component registered', async () => {
+		const wrapper = mount(HeaderLogo, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				homeLink: {
+					to: '/',
+				},
+			},
+		})
+
+		expect(wrapper.find('.logo').element.tagName).toBe('DIV')
+	})
+
+	it('render a div when the homeLink properties `to` and `href` are both set to `undefined`', async () => {
+		const wrapper = mount(HeaderLogo, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				homeLink: {
+					to: undefined,
+					href: undefined,
+				},
+			},
+		})
+
+		expect(wrapper.find('.logo').element.tagName).toBe('DIV')
+	})
 })

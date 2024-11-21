@@ -1,18 +1,28 @@
 <script lang="ts" setup>
+	import { computed, getCurrentInstance } from 'vue'
+	import type { RouteLocationRaw } from 'vue-router'
 	import { useTheme } from 'vuetify'
 	import useHeaderResponsiveMode from '../useHeaderResponsiveMode'
 	import { locales } from './locales'
 	import LogoMobile from './logos/Logo-mobile.vue'
 	import Logo from './logos/Logo.vue'
 
-	withDefaults(defineProps<{
+	const props = withDefaults(defineProps<{
 		ariaLabel?: string
 		serviceTitle?: string
 		serviceSubtitle?: string
+		homeLink?: {
+			ariaLabel?: string
+			to?: RouteLocationRaw
+			href?: string
+		}
 	}>(), {
 		ariaLabel: locales.ariaLabel,
 		serviceTitle: undefined,
 		serviceSubtitle: undefined,
+		homeLink: () => ({
+			href: '/',
+		}),
 	})
 
 	defineSlots<{
@@ -22,17 +32,40 @@
 	const theme = useTheme()
 	const primary = theme.current.value.colors.primary
 	const { isDesktop } = useHeaderResponsiveMode()
+
+	const routeType = computed(() => {
+		if (props.homeLink?.to) {
+			const componentsRegistered = getCurrentInstance()?.appContext?.components
+			const hasRouterLink = componentsRegistered && 'RouterLink' in componentsRegistered
+			if (hasRouterLink) {
+				return 'router-link'
+			}
+			return 'div'
+		}
+		if (props.homeLink?.href) {
+			return 'a'
+		}
+		return 'div'
+	})
 </script>
 
 <template>
-	<div class="logo">
+	<component
+		:is="routeType"
+		v-bind="{
+			to: 'to' in homeLink ? homeLink?.to : undefined,
+			href: 'href' in homeLink ? homeLink?.href : undefined,
+			'aria-label': 'aria-label' in homeLink ? homeLink?.['aria-label'] : undefined,
+		}"
+		class="logo"
+	>
 		<Logo
 			v-if="isDesktop"
-			:aria-label
+			:aria-label="props.ariaLabel"
 		/>
 		<LogoMobile
 			v-else
-			:aria-label
+			:aria-label="props.ariaLabel"
 		/>
 
 		<slot
@@ -53,7 +86,7 @@
 				<path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
 			</svg>
 
-			<div if="serviceTitle">
+			<div v-if="serviceTitle">
 				<div class="service-title">
 					{{ serviceTitle }}
 				</div>
@@ -65,18 +98,22 @@
 				</div>
 			</div>
 		</slot>
-	</div>
+	</component>
 </template>
 
 <style scoped lang="scss">
 @use '../consts' as *;
+@use '@/assets/tokens.scss' as *;
 
 .logo {
 	display: flex;
 	height: 52px;
 	align-items: center;
-	color: v-bind(primary);
+	color: $primary-base;
 	line-height: 1.45;
+	font-family: 'Cabin', 'Arial', 'Helvetica', sans-serif;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .logo :deep(svg) {

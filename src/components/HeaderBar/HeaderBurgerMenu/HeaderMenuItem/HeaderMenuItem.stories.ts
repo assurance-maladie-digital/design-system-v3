@@ -1,11 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import HeaderMenuItem from './HeaderMenuItem.vue'
-import HeaderMenu from '../HeaderBurgerMenu.vue'
+import HeaderBurgerMenu from '../HeaderBurgerMenu.vue'
 import HeaderBar from '../../HeaderBar.vue'
+import HeaderMenuSection from '../HeaderMenuSection/HeaderMenuSection.vue'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar/HeaderBurgerMenu/HeaderMenuItem',
 	component: HeaderMenuItem,
+	argTypes: {
+		default: {
+			control: { type: 'text' },
+			description: 'Le lien (`a`; `router-link`, `nuxt-link`) et son contenu',
+			table: {
+				type: { summary: '{}' },
+			},
+		},
+	},
 	parameters: {
 		layout: 'fullscreen',
 	},
@@ -21,20 +31,20 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderMenuItem, HeaderMenu, HeaderBar },
+			components: { HeaderMenuItem, HeaderBurgerMenu, HeaderBar, HeaderMenuSection },
 			setup() {
 				return { args }
 			},
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderMenu>
+						<HeaderBurgerMenu>
 							<HeaderMenuSection>
 								<HeaderMenuItem>
-									<a>{{ args.default }}</a>
+									<a href="">{{ args.default }}</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
-						</HeaderMenu>
+						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
 			`,
@@ -45,5 +55,35 @@ export const Default: Story = {
 		setTimeout(() => {
 			menuBtn!.click()
 		}, 1000)
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<Template>
+					<HeaderBar>
+						<template #menu>
+							<HeaderBurgerMenu>
+								<HeaderMenuSection>
+									<HeaderMenuItem>
+										<a href="">lorem ipsum</a>
+									</HeaderMenuItem>
+								</HeaderMenuSection>
+							</HeaderBurgerMenu>
+						</template>
+					</HeaderBar>
+				</Template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup>
+					import { HeaderBurgerMenu, HeaderBar, HeaderMenuSection, HeaderMenuItem } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
 	},
 }

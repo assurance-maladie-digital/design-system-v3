@@ -1,6 +1,6 @@
 import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
-import { describe, expect, it, vi, afterEach } from 'vitest'
+import { describe, expect, it, vi, afterAll } from 'vitest'
 import { registerHeaderMenuKey } from '../../consts'
 import HeaderBurgerMenu from '../HeaderBurgerMenu.vue'
 import { defineComponent, toRef } from 'vue'
@@ -19,8 +19,12 @@ describe('HeaderBurgerMenu', () => {
 		template: `<button @click="$emit('update:modelValue', !open)">Test</button>`,
 	})
 
-	afterEach(() => {
-		vi.resetAllMocks()
+	vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
+		default: (fn: (...args: unknown[]) => void) => fn,
+	}))
+
+	afterAll(() => {
+		vi.restoreAllMocks()
 		document.body.innerHTML = ''
 	})
 

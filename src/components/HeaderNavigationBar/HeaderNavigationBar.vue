@@ -4,15 +4,21 @@
 	import HeaderMenuItem from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuItem/HeaderMenuItem.vue'
 	import HeaderMenuSection from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.vue'
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
-	import { computed, ref } from 'vue'
-	import { RouterLink } from 'vue-router'
+	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { computed } from 'vue'
+	import { RouterLink, type RouteLocationRaw } from 'vue-router'
 	import HorizontalNavbar from './HorizontalNavbar/HorizontalNavbar.vue'
 	import type { NavigationItem } from './types'
 
-	const props = withDefaults(defineProps<{
+	const props = withDefaults(defineProps<CustomizableOptions & {
 			homeAriaLabel?: string
 			serviceTitle?: string
 			serviceSubtitle?: string
+			homeLink?: {
+				ariaLabel?: string
+				to?: RouteLocationRaw
+				href?: string
+			}
 			/** Keep the header visible */
 			sticky?: boolean
 			/**
@@ -34,6 +40,8 @@
 			homeAriaLabel: undefined,
 			serviceTitle: undefined,
 			serviceSubtitle: undefined,
+			homeLink: undefined,
+			sticky: true,
 			hideWhenDown: false,
 			maxHorizontalMenuItems: 6,
 			items: undefined,
@@ -61,6 +69,11 @@
 		'navigation-menu-content': (props: SlotProps) => unknown
 	}>()
 
+	const menuOpen = defineModel<boolean>(
+		'burgerMenu',
+		{ default: false },
+	)
+
 	const { isDesktop } = useHeaderResponsiveMode()
 
 	const verticalMenu = computed<boolean>(() => {
@@ -71,8 +84,6 @@
 				&& props.items.length > props.maxHorizontalMenuItems)
 		)
 	})
-
-	const menuOpen = ref<boolean>()
 </script>
 
 <template>
@@ -84,7 +95,10 @@
 		:service-subtitle="serviceSubtitle"
 	>
 		<template #menu>
-			<HeaderBurgerMenu v-if="verticalMenu">
+			<HeaderBurgerMenu
+				v-if="verticalMenu"
+				v-model="menuOpen"
+			>
 				<div class="inner-vertical-menu">
 					<slot
 						name="navigation-menu-prepend"
@@ -101,7 +115,7 @@
 									:key="item.label"
 								>
 									<a
-										v-if="item.href"
+										v-if="'href' in item"
 										:href="item.href"
 									>
 										{{ item.label }}
@@ -153,6 +167,7 @@
 			<HorizontalNavbar
 				v-if="props.items && !verticalMenu"
 				:items="items"
+				:vuetify-options
 			>
 				<template #navigation-bar-prepend>
 					<slot name="navigation-bar-prepend" />

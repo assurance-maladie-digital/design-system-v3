@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import throttleDisplayFn from '@/utils/functions/throttleDisplayFn/throttleDisplayFn'
 	import { computed, inject, nextTick, onMounted, onUnmounted, readonly, ref, watch, type CSSProperties, type Ref } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
 	import { registerHeaderMenuKey } from '../consts'
@@ -6,7 +7,7 @@
 	import locals from './locals'
 	import useHandleSubMenus from './useHandleSubMenus'
 
-	const menuWrapper = ref<HTMLElement | null>(null)
+	const headerMenuWrapper = ref<HTMLElement | null>(null)
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const outerBtn = ref<HTMLElement | null>(null)
 	const innerBtn = ref<HTMLElement | null>(null)
@@ -15,43 +16,52 @@
 	const menuHeight = ref('70vh')
 
 	function positionMenu() {
-		// todo debounce
 		const rect = menuBtnWrapper.value!.getBoundingClientRect()
-
 		menuLeft.value = rect.left
 		menuTop.value = rect.top
 		menuHeight.value = `calc(100vh - ${rect.top}px - 48px)`
 	}
+	const throttledPositionMenu = throttleDisplayFn(positionMenu, 16)
+	const optimizedPositionMenu = () => {
+		if (menuOpen.value) {
+			throttledPositionMenu()
+		}
+	}
 
 	onMounted(() => {
 		positionMenu()
-		window.addEventListener('scroll', positionMenu)
-		window.addEventListener('resize', positionMenu)
+		togglePageScroll()
+		window.addEventListener('scroll', optimizedPositionMenu)
+		window.addEventListener('resize', optimizedPositionMenu)
 		window.addEventListener('click', handleClickOutside, { capture: true })
 	})
 
 	onUnmounted(() => {
-		window.removeEventListener('scroll', positionMenu)
-		window.removeEventListener('resize', positionMenu)
+		window.removeEventListener('scroll', optimizedPositionMenu)
+		window.removeEventListener('resize', optimizedPositionMenu)
 		window.removeEventListener('click', handleClickOutside, { capture: true })
+
+		document.documentElement.style.overflow = 'auto'
+		document.body.style.overflow = 'auto'
 	})
 
-	const menuOpen = ref(false)
+	const menuOpen = defineModel<boolean>({
+		default: false,
+	})
 
 	watch(menuOpen, async (newVal) => {
-		document.documentElement.style.overflow = newVal ? 'hidden' : 'auto'
-		document.body.style.overflow = newVal ? 'hidden' : 'auto'
+		togglePageScroll()
 
 		if (newVal) {
 			positionMenu() // the menu position can have changed since the component was mounted
 
 			await nextTick()
-			innerBtn.value!.focus()
+			innerBtn.value?.focus()
 		}
 		else {
-			outerBtn.value!.focus()
+			outerBtn.value?.focus()
 		}
-	})
+	}, { immediate: true })
 
 	const { isDesktop } = useHeaderResponsiveMode()
 	const menuStyle = computed<CSSProperties>(() => ({
@@ -66,17 +76,25 @@
 		// do not close menu if click is inside the menu
 		let walkElement = event.target as HTMLElement | null
 		while (walkElement && walkElement !== document.body) {
-			if (walkElement === menuWrapper.value) return
+			if (walkElement === headerMenuWrapper.value) return
 			walkElement = walkElement.parentElement
 		}
 
+		event.stopPropagation()
 		menuOpen.value = false
+	}
+
+	function togglePageScroll() {
+		if (typeof window !== 'undefined') {
+			document.documentElement.style.overflow = menuOpen.value ? 'hidden' : 'auto'
+			document.body.style.overflow = menuOpen.value ? 'hidden' : 'auto'
+		}
 	}
 
 	const { haveOpenSubMenu } = useHandleSubMenus(readonly(menuOpen))
 
 	const registerHeaderMenu = inject<(menuOpen: Ref<boolean>) => void>(registerHeaderMenuKey)
-	if (registerHeaderMenu) registerHeaderMenu(menuOpen)
+	if (registerHeaderMenu) registerHeaderMenu(readonly(menuOpen))
 </script>
 <template>
 	<div
@@ -97,7 +115,6 @@
 					class="overlay"
 				>
 					<div
-						ref="menuWrapper"
 						role="menu"
 						class="menu-wrapper"
 						:style="menuStyle"
@@ -108,6 +125,7 @@
 						/>
 						<nav
 							id="header-menu-wrapper"
+							ref="headerMenuWrapper"
 							class="header-menu-wrapper"
 							:class="{
 								'header-menu-wrapper--submenu-open': haveOpenSubMenu,

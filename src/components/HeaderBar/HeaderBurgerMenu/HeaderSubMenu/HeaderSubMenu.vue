@@ -8,7 +8,9 @@
 	const submenuId = useId()
 	const btnId = `${submenuId}-btn`
 
-	const registerSubMenu = inject<((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined>(registerSubMenuKey, undefined)
+	const registerSubMenu = inject<
+		((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined
+	>(registerSubMenuKey, undefined)
 	if (!registerSubMenu) throw new Error('The HeaderSubMenu component must be used inside a HeaderBurgerMenu component')
 	registerSubMenu(menuOpen, () => {
 		menuOpen.value = false

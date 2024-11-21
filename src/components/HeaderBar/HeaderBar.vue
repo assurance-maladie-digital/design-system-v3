@@ -1,5 +1,7 @@
 <script setup lang="ts">
-	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type Ref } from 'vue'
+	import throttleDisplayFn from '@/utils/functions/throttleDisplayFn/throttleDisplayFn'
+	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type DeepReadonly, type Ref } from 'vue'
+	import type { RouteLocationRaw } from 'vue-router'
 	import HeaderLogo from './HeaderLogo/HeaderLogo.vue'
 	import { registerHeaderMenuKey } from './consts'
 	import { locales } from './locales'
@@ -16,6 +18,11 @@
 		homeAriaLabel?: string
 		serviceTitle?: string
 		serviceSubtitle?: string
+		homeLink?: {
+			ariaLabel?: string
+			to?: RouteLocationRaw
+			href?: string
+		}
 	}
 
 	defineSlots<{
@@ -35,6 +42,11 @@
 			 * Need 'sticky' at true,
 			 */
 			hideWhenDown?: boolean
+			homeLink?: {
+				ariaLabel?: string
+				to?: RouteLocationRaw
+				href?: string
+			}
 		} & LogoProps>(),
 		{
 			sticky: true,
@@ -42,9 +54,10 @@
 			homeAriaLabel: locales.homeAriaLabel,
 			serviceTitle: undefined,
 			serviceSubtitle: undefined,
+			homeLink: undefined,
 		})
 
-	function registerHeaderMenu(childMenuStatus: Ref<boolean>) {
+	function registerHeaderMenu(childMenuStatus: DeepReadonly<Ref<boolean>>) {
 		watch(childMenuStatus, (newVal) => {
 			menuOpen.value = newVal
 		})
@@ -58,6 +71,8 @@
 	const headerMinHeight = ref('auto')
 	/** The position of the header (when static) from the top of the page */
 	const headerOffset = ref(0)
+	/** The width of the header to have the same width when fixed and in a container */
+	const headerWidth = ref<string | number>('auto')
 	/** Is the top of the header visible in the viewport when static */
 	const isTopOfHeaderVisible = ref(true)
 	/** Is the header out of the viewport */
@@ -69,6 +84,7 @@
 		const headerRec = header.value!.getBoundingClientRect()
 		headerOffset.value = headerRec.top + window.scrollY
 		headerMinHeight.value = `${headerSticky.value!.offsetHeight}px`
+		headerWidth.value = `${header.value!.offsetWidth}px`
 		isTopOfHeaderVisible.value = window.scrollY <= headerOffset.value
 		isScrollBelowHeader.value = window.scrollY > headerOffset.value + headerRec.height
 
@@ -76,15 +92,17 @@
 		shouldAnimateHideHeader.value = window.scrollY > headerOffset.value + (headerRec.height * 2)
 	}
 
+	const throttledHandleScroll = throttleDisplayFn(handleScroll, 16)
+
 	onMounted(() => {
 		handleScroll()
-		window.addEventListener('scroll', handleScroll)
-		window.addEventListener('resize', handleScroll)
+		window.addEventListener('scroll', throttledHandleScroll)
+		window.addEventListener('resize', throttledHandleScroll)
 	})
 
 	onUnmounted(() => {
-		window.removeEventListener('scroll', handleScroll)
-		window.removeEventListener('resize', handleScroll)
+		window.removeEventListener('scroll', throttledHandleScroll)
+		window.removeEventListener('resize', throttledHandleScroll)
 	})
 
 	const headerStyle = computed<CSSProperties>(() => {
@@ -115,7 +133,7 @@
 
 			return {
 				position: staticHeader ? 'relative' : 'fixed',
-				width: staticHeader ? '100%' : header.value!.offsetWidth + 'px',
+				width: staticHeader ? '100%' : headerWidth.value,
 				top: staticHeader ? 'auto' : '0',
 				transform: hide ? 'translateY(-100%)' : 'none',
 				transition: shouldAnimateHideHeader.value ? 'transform 0.3s ease' : 'none',
@@ -125,12 +143,13 @@
 		const fixedHeader = !isTopOfHeaderVisible.value && props.sticky
 		return {
 			position: fixedHeader ? 'fixed' : 'relative',
-			width: fixedHeader ? header.value!.offsetWidth + 'px' : '100%',
+			width: fixedHeader ? headerWidth.value : '100%',
 			top: fixedHeader ? '0' : 'auto',
 			transform: 'none',
 			transition: 'none',
 		}
 	})
+
 </script>
 
 <template>
@@ -171,6 +190,7 @@
 							:aria-label="homeAriaLabel"
 							:service-title="serviceTitle"
 							:service-subtitle="serviceSubtitle"
+							:home-link
 						>
 							<template
 								#brand-content
@@ -181,6 +201,7 @@
 									:home-aria-label
 									:service-title
 									:service-subtitle
+									:home-link
 								/>
 							</template>
 						</HeaderLogo>
@@ -214,14 +235,12 @@
 @use './consts' as *;
 
 .header {
-	top: 0;
-	width: 100%;
-	margin: 0 auto;
+	position: relative;
+	z-index: 1;
 }
 
 .sticky-header {
 	background-color: $neutral-white;
-	border-bottom: solid 1px $blue-lighten-80;
 	width: 100%;
 	z-index: 1000;
 }
@@ -232,6 +251,7 @@
 	height: $header-height;
 	max-width: $header-max-width;
 	margin: 0 auto;
+	border-bottom: solid 1px $blue-lighten-80;
 }
 
 .header-logo {

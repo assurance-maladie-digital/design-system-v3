@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-	import { defineProps } from 'vue'
 	import type { PropType } from 'vue'
 	import type { DataListIcons } from '../DataList/types'
 	import type { DataListGroupItems, DataListActionEvent } from './types'

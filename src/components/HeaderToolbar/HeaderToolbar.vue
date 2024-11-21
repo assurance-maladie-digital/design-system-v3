@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, type PropType } from 'vue'
+	import { ref, watch, type PropType } from 'vue'
 	import type { MenuItem, SelectItem } from './types'
 	import CustomInputSelect from '../Customs/CustomInputSelect/CustomInputSelect.vue'
 
@@ -197,6 +197,13 @@
 		activeIndex.value = null
 	}
 
+	watch(showOverlay, (newValue) => {
+		if (typeof window !== 'undefined') {
+			document.documentElement.style.overflow = newValue ? 'hidden' : 'auto'
+			document.body.style.overflow = newValue ? 'hidden' : 'auto'
+		}
+	})
+
 	defineExpose({
 		hideOverlay,
 		handleLink,
@@ -297,19 +304,20 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens.scss';
+@use '../HeaderBar/consts' as *;
 
 .toolbar {
-  background: tokens.$grey-lighten-80;
+  background: tokens.$blue-lighten-90;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 100;
 
   .container {
     width: 100%;
     max-height: 45px;
-    max-width: 1280px;
+    max-width: $header-max-width;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -329,7 +337,7 @@
     }
     :deep(ul > li > a) {
       display: block;
-      color: tokens.$primary-base;
+      color: tokens.$blue-darken-40;
       text-decoration: none;
       padding: 10px 16px;
       cursor: pointer;
@@ -345,7 +353,7 @@
   #left-menu {
     ul > li > a {
       font-weight: 700;
-      color: tokens.$blue-darken-60;
+      color: tokens.$blue-darken-40;
       &:hover {
         text-decoration: none;
       }
@@ -353,8 +361,8 @@
     li:first-child {
       min-width: 95px;
       background: transparent;
-      @media (max-width: 768px) {
-        min-width: 77px;
+      @media (max-width: $header-breakpoint) {
+        min-width: 82px;
       }
     }
     li:nth-child(2) {
@@ -440,7 +448,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+	background-color: rgba(3, 16, 37, .5);
+	cursor: default;
+	backdrop-filter: blur(2px);
     z-index: 1;
     @media (max-width: 768px) {
       display: none;

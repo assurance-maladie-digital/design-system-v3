@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, defineProps } from 'vue'
+	import { ref } from 'vue'
 	import { mdiKeyboardBackspace } from '@mdi/js'
 
 	import { config } from './config'
@@ -10,7 +10,6 @@
 
 	import DataListGroup from '../DataListGroup/DataListGroup.vue'
 	import HeaderLoading from '../HeaderLoading/HeaderLoading.vue'
-	import { VSkeletonLoader } from 'vuetify/components/VSkeletonLoader'
 	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
 
 	const props = withDefaults(defineProps<CustomizableOptions & Widthable & {

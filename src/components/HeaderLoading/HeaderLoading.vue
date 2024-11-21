@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-	import { defineProps } from 'vue'
 	import { VSkeletonLoader } from 'vuetify/components/VSkeletonLoader'
 
 	const props = defineProps({
