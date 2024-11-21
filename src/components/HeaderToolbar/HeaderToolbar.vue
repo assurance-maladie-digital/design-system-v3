@@ -292,7 +292,7 @@
 								:tabindex="0"
 								@click="deleteActiveLink()"
 							>
-								<span>{{ item.title }}</span>
+								<span class="right-menu-item">{{ item.title }}</span>
 							</component>
 						</li>
 					</ul>
@@ -455,6 +455,13 @@
     @media (max-width: 768px) {
       display: none;
     }
+  }
+}
+
+.right-menu-item {
+  color: tokens.$blue-darken-60;
+  &:hover {
+    text-decoration: none;
   }
 }
 </style>
