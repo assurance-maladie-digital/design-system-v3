@@ -704,7 +704,7 @@ export const Generated: Story = {
 											<em v-if="item.subMenuSubtitle" style="font-style: normal; color: #757777;">{{ item.subMenuSubtitle }}</em>
 										</template>
 										<HeaderMenuSection v-for="subSection in item.sections" :key="subSection.title">
-											<template #title>
+											<template #title v-if="subSection.title">
 												{{ subSection.title }}
 											</template>
 											<HeaderMenuItem v-for="subItem in subSection.items" :key="subItem.title">
@@ -745,8 +745,10 @@ export const Generated: Story = {
 								<HeaderMenuSection
 									v-for="section in menu"
 									:key="section.title"
-									:title="section.title"
 								>
+									<template #title>
+										{{ section.title }}
+									</template>
 									<HeaderMenuItem
 										v-for="item in section.items"
 										:key="item.title"
@@ -762,8 +764,10 @@ export const Generated: Story = {
 											<HeaderMenuSection
 												v-for="subSection in item.sections"
 												:key="subSection.title"
-												:title="subSection.title"
 											>
+												<template #title>
+													{{ subSection.title }}
+												</template>
 												<HeaderMenuItem
 													v-for="subItem in subSection.items"
 													:key="subItem.title"

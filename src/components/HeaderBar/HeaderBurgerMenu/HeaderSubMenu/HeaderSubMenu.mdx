@@ -15,9 +15,13 @@ On aura donc une structure de composant comme suit :
 <Source
   dark
   code={`
+<HeaderMenuBurger>
 	<HeaderMenuSection>
 		<HeaderMenuItem>
 			<HeaderSubMenu>
+				<template #title>
+					title
+				</template>
 				<HeaderMenuSection>
 					<HeaderMenuItem>
 						<a>lien de deuxième niveau</a>
@@ -26,6 +30,7 @@ On aura donc une structure de composant comme suit :
 			</HeaderSubMenu>
 		</HeaderMenuItem>
 	</HeaderMenuSection>
+</HeaderMenuBurger>
 `}
 />
 
