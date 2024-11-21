@@ -3,7 +3,7 @@ import PageContainer from './PageContainer.vue'
 import { VCard } from 'vuetify/components'
 
 const meta = {
-	title: 'Components/PageContainer',
+	title: 'Composants/Layout/PageContainer',
 	component: PageContainer,
 	parameters: {
 		layout: 'fullscreen',

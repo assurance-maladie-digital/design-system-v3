@@ -2,7 +2,7 @@ import HeaderLoading from './HeaderLoading.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 const meta: Meta<typeof HeaderLoading> = {
-	title: 'Components/HeaderLoading',
+	title: 'Composants/Feedback/HeaderLoading',
 	component: HeaderLoading,
 	parameters: {
 		layout: 'fullscreen',

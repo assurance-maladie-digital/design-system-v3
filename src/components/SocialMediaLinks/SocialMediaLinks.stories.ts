@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { mdiFacebook, mdiLinkedin, mdiTwitter } from '@mdi/js'
 
 const meta = {
-	title: 'Components/SocialMediaLinks',
+	title: 'Composants/Navigation/SocialMediaLinks',
 	component: SocialMediaLinks,
 	parameters: {
 		layout: 'fullscreen',

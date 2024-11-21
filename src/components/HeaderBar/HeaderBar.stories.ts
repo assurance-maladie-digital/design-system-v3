@@ -5,6 +5,7 @@ import { VBtn } from 'vuetify/components'
 import { mdiMagnify } from '@mdi/js'
 
 const meta = {
+	title: 'Composants/Structure/HeaderBar',
 	component: HeaderBar,
 	parameters: {
 		layout: 'fullscreen',

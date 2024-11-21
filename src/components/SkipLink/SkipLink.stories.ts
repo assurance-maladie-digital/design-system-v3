@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SkipLink from './SkipLink.vue'
 
 const meta = {
-	title: 'Components/SkipLink',
+	title: 'Composants/Navigation/SkipLink',
 	component: SkipLink,
 	argTypes: {
 		default: {

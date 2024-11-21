@@ -3,7 +3,7 @@ import Logo from './Logo.vue'
 import { VSheet } from 'vuetify/components'
 
 const meta = {
-	title: 'Components/Logo',
+	title: 'Composants/Données/Logo',
 	component: Logo,
 	parameters: {
 		layout: 'fullscreen',

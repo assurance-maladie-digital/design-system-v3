@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import FranceConnectBtn from './FranceConnectBtn.vue'
 
 const meta = {
-	title: 'Components/FranceConnectBtn',
+	title: 'Composants/Boutons/FranceConnectBtn',
 	component: FranceConnectBtn,
 	parameters: {
 		layout: 'fullscreen',

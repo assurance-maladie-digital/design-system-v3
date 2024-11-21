@@ -7,7 +7,7 @@ import NotificationBar from '../NotificationBar/NotificationBar.vue'
 import { useNotificationService } from '@/services/NotificationService'
 
 const meta = {
-	title: 'Components/DownloadBtn',
+	title: 'Composants/Boutons/DownloadBtn',
 	component: DownloadBtn,
 	parameters: {
 		layout: 'fullscreen',

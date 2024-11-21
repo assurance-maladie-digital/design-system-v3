@@ -5,7 +5,7 @@ import { ref } from 'vue'
 import Alert from '../../Alert/Alert.vue'
 
 const meta = {
-	title: 'Components/CustomSelect',
+	title: 'Composants/Formulaires/CustomSelect',
 	component: CustomSelect,
 	parameters: {
 		layout: 'fullscreen',

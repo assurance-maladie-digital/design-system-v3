@@ -6,7 +6,7 @@ import { mdiContentDuplicate } from '@mdi/js'
 const duplicateIcon = mdiContentDuplicate
 
 const meta = {
-	title: 'Components/CopyBtn',
+	title: 'Composants/Boutons/CopyBtn',
 	component: CopyBtn,
 	parameters: {
 		layout: 'fullscreen',

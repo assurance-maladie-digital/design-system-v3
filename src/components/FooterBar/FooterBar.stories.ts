@@ -60,7 +60,7 @@ const healthItems = [
 const currentYear = new Date().getFullYear()
 
 const meta = {
-	title: 'Components/FooterBar',
+	title: 'Composants/Structure/FooterBar',
 	component: FooterBar,
 	parameters: {
 		layout: 'fullscreen',

@@ -48,7 +48,7 @@ const preview: Preview = {
 		},
 		options: {
 			storySort: {
-				order: ['Home', ['Accueil', 'Politique De Confidentialité'], 'Components', 'Guidelines', ['Introduction', 'Couleurs', 'Customisation et themes', 'Typographie'], 'Fondamentaux', ['Accessibilité', 'EcoConception']],
+				order: ['Démarrer', ['Accueil', 'Politique de confidentialité'], 'Composants', ['Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'], 'Layout', ['PageContainer'], 'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink'], 'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'], 'Formulaires', ['CustomTextField', 'CustomSelect', 'CustomInputSelect', 'DatePicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'SelectBtnField', 'UploadWorkflow'], 'Tableaux', ['PaginatedTable', 'TableToolbar'], 'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'], 'Données', ['Logo', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'], 'Feedback', ['Alert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'HeaderLoading', 'RatingPicker']], 'Templates', 'Guidelines', ['Introduction', 'Couleurs', 'Customisation et thèmes', 'Typographie'], 'Fondamentaux', ['Accessibilité', 'Eco-conception']],
 			},
 		},
 		controls: {
