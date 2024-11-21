@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 	import { mdiChevronDown } from '@mdi/js'
-	import { ref, watch, computed } from 'vue'
+	import { computed, onMounted, ref, watch } from 'vue'
 	import { VIcon, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
@@ -31,7 +31,7 @@
 	const emit = defineEmits(['update:modelValue'])
 
 	const isOpen = ref(false)
-	const selectedItem = ref<Record<string, unknown > | string | null>(props.modelValue)
+	const selectedItem = ref<Record<string, unknown> | string | null>(props.modelValue)
 
 	const toggleMenu = () => {
 		isOpen.value = !isOpen.value
@@ -67,8 +67,22 @@
 		selectedItem.value = newValue
 	})
 
-	watch (() => props.errorMessages, (newValue) => {
+	watch(() => props.errorMessages, (newValue) => {
 		localErrorMessages.value = newValue
+	})
+
+	const menu = ref<HTMLElement | null>(null)
+	const menuWidth = ref('')
+	onMounted(() => {
+		watch(
+			[() => isOpen.value, () => menu.value?.getBoundingClientRect().width],
+			([newValue, newWidth]) => {
+				if (newValue && newWidth) {
+					const totalWidth = newWidth + 32
+					menuWidth.value = `${totalWidth}`
+				}
+			},
+		)
 	})
 
 	const buttonClass = computed(() => {
@@ -103,10 +117,10 @@
 	<v-input
 		:id="inputId"
 		v-model="selectedItem"
+		:error-messages="localErrorMessages"
 		:label="props.label"
 		:title="props.label"
 		role="menu"
-		:error-messages="localErrorMessages"
 		@click="checkForErrors"
 	>
 		<div
@@ -124,23 +138,23 @@
 		</div>
 		<VList
 			v-if="isOpen"
-			v-bind="options.list"
-			class="v-list"
-			:style="`max-width: ${$refs.menu ? $refs.menu.getBoundingClientRect().width : 0}px; ${props.outlined ? 'top: 36px;' : 'top: 30px;'}`"
 			:aria-label="props.label"
+			:style="`min-width:${menuWidth}px; ${props.outlined ? 'top: 36px;' : 'top: 30px;'}`"
 			:title="props.label"
+			class="v-list"
+			v-bind="options.list"
 			@keydown.esc.prevent="isOpen = false"
 		>
 			<VListItem
 				v-for="(item, index) in formattedItems"
-				v-bind="options.option"
 				:key="index"
 				:ref="'options-' + index"
-				:base-color="options.option.color"
-				role="option"
-				class="v-list-item"
 				:aria-selected="selectedItem === item"
+				:base-color="options.option.color"
 				:tabindex="index + 1"
+				class="v-list-item"
+				role="option"
+				v-bind="options.option"
 				@click="selectItem(item)"
 			>
 				<VListItemTitle>
@@ -151,7 +165,7 @@
 	</v-input>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @use '@/assets/tokens.scss';
 
 .v-input {
@@ -179,6 +193,7 @@
 
 :deep(.v-list-item[aria-selected='true']) {
   background-color: rgba(0, 0, 0, 0.08);
+
   .v-list-item-title {
     font-weight: bold;
   }
