@@ -5,6 +5,7 @@ import { VBtn } from 'vuetify/components'
 import BackBtn from '../BackBtn/BackBtn.vue'
 
 const meta = {
+	title: 'Composants/Structure/HeaderBar/HeaderNavbar',
 	component: HeaderNavbar,
 	parameters: {
 		layout: 'fullscreen',

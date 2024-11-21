@@ -6,6 +6,7 @@ import HeaderMenuSection from '../HeaderMenuSection/HeaderMenuSection.vue'
 import HeaderSubMenu from './HeaderSubMenu.vue'
 
 const meta = {
+	title: 'Composants/Structure/HeaderBar/HeaderBurgerMenu/HeaderSubMenu',
 	component: HeaderSubMenu,
 	parameters: {
 		layout: 'fullscreen',

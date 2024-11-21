@@ -13,7 +13,7 @@ interface StoryArgs {
 }
 
 const meta: Meta<typeof NotificationBar> = {
-	title: 'Components/NotificationBar',
+	title: 'Composants/Feedback/NotificationBar',
 	parameters: {
 		layout: 'fullscreen',
 	},

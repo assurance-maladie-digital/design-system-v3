@@ -5,7 +5,7 @@ import { ref } from 'vue'
 import { mdiAccountBox } from '@mdi/js'
 
 const meta = {
-	title: 'Components/CustomTextField',
+	title: 'Composants/Formulaires/CustomTextField',
 	component: CustomTextField,
 	parameters: {
 		layout: 'fullscreen',

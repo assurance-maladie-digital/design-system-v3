@@ -4,7 +4,7 @@ import BackToTopBtn from './BackToTopBtn.vue'
 import { VCard, VSheet } from 'vuetify/components'
 
 const meta = {
-	title: 'Components/BackToTopBtn',
+	title: 'Composants/Boutons/BackToTopBtn',
 	component: BackToTopBtn,
 	parameters: {
 		layout: 'fullscreen',

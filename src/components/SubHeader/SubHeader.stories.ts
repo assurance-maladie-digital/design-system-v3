@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { mdiStepBackward, mdiClose, mdiContentCopy } from '@mdi/js'
 
 const meta = {
-	title: 'Components/SubHeader',
+	title: 'Composants/Structure/SubHeader',
 	component: SubHeader,
 	parameters: {
 		layout: 'fullscreen',

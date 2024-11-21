@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { mdiAccount, mdiCalendar, mdiInformationOutline } from '@mdi/js'
 
 const meta: Meta<typeof DataList> = {
-	title: 'Components/DataList',
+	title: 'Composants/Données/DataList',
 	component: DataList,
 	parameters: {
 		layout: 'fullscreen',

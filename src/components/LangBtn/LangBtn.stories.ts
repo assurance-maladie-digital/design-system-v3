@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
 const meta: Meta<typeof LangBtn> = {
-	title: 'Components/LangBtn',
+	title: 'Composants/Boutons/LangBtn',
 	component: LangBtn,
 	parameters: {
 		layout: 'fullscreen',

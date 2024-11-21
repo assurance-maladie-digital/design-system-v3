@@ -6,7 +6,7 @@ import Alert from '../Alert/Alert.vue'
 import { VSheet } from 'vuetify/components'
 
 const meta = {
-	title: 'Components/BackBtn',
+	title: 'Composants/Boutons/BackBtn',
 	component: BackBtn,
 	parameters: {
 		layout: 'fullscreen',

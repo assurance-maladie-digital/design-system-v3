@@ -3,7 +3,7 @@ import Alert from './Alert.vue'
 import { VBtn } from 'vuetify/components'
 
 const meta = {
-	title: 'Components/Alert',
+	title: 'Composants/Feedback/Alert',
 	component: Alert,
 	parameters: {
 		layout: 'fullscreen',

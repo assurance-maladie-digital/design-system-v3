@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import CollapsibleList from './CollapsibleList.vue'
 
 const meta = {
-	title: 'Components/CollapsibleList',
+	title: 'Composants/Données/CollapsibleList',
 	component: CollapsibleList,
 	parameters: {
 		layout: 'fullscreen',

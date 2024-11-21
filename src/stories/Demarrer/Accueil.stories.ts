@@ -6,7 +6,7 @@ import { mdiGithub } from '@mdi/js'
 import { version } from '../../../package.json'
 
 export default {
-	title: 'Home/Accueil',
+	title: 'Démarrer/Accueil',
 }
 
 export const Header: StoryObj = {

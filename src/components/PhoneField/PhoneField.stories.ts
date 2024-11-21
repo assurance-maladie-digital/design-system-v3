@@ -2,7 +2,7 @@ import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
 
 const meta = {
-	title: 'Components/PhoneField',
+	title: 'Composants/Formulaires/PhoneField',
 	component: PhoneField,
 	parameters: {
 		layout: 'fullscreen',
