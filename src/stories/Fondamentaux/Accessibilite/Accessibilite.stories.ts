@@ -3,7 +3,7 @@ import type { StoryObj } from '@storybook/vue3'
 import { AccessibiliteItems } from './AccessibiliteItems'
 
 export default {
-	title: 'Fondamentaux/Accessibilite',
+	title: 'Fondamentaux/Accessibilité',
 }
 
 export const AccessibilitePanel: StoryObj = {
