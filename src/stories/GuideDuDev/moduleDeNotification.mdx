@@ -8,7 +8,7 @@ import { Meta, Source } from '@storybook/addon-docs/blocks';
 ## Importation et utilisation
 
 <Source dark code={`
-import { useNotificationService } from '@/services/useNotificationService'
+import { useNotificationService } from '@cnamts/synapse/src/services/useNotificationService'
 
 const { notificationQueue, addNotification, removeNotification, clearQueue } = useNotificationService()
 `} />
@@ -121,11 +121,10 @@ Utilisation dans un composant Vue
 
 <Source dark code={`
 <script setup lang="ts">
-<script setup lang="ts">
 	import { VBtn } from 'vuetify/components'
-	import NotificationBar from '@/components/NotificationBar/NotificationBar.vue'
-	import { useNotificationService } from '@/services/NotificationService'
-	import type { Notification } from '@/components/NotificationBar/types'
+	import NotificationBar from '@cnamts/synapse'
+	import { useNotificationService } from '@cnamts/synapse/src/services/NotificationService'
+	import type { Notification } from '@cnamts/synapse/src/components/NotificationBar/types'
 
 	const { addNotification } = useNotificationService()
 
@@ -177,11 +176,11 @@ Utilisation dans un composant Vue
 </template>
 
 <style scoped>
-.button-group {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
-}
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 20px;
+    }
 </style>
 `} />
