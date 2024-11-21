@@ -712,33 +712,78 @@ export const Generated: Story = {
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>
-								<HeaderMenuSection v-for="section in menu" :key="section.title" :title="section.title">
-									<HeaderMenuItem v-for="item in section.items" :key="item.title">
-										<HeaderSubMenu v-if="item.subMenuTitle">
+								<HeaderMenuSection
+									v-for="section in menu"
+									:key="section.title"
+									:title="section.title"
+								>
+									<HeaderMenuItem
+										v-for="item in section.items"
+										:key="item.title"
+									>
+										<HeaderSubMenu v-if="'subMenuTitle' in item">
 											<template #title>
 												{{ item.subMenuTitle }}
-												<em v-if="item.subMenuSubtitle" style="font-style: normal; color: #757777;">{{ item.subMenuSubtitle }}</em>
+												<em
+													v-if="item.subMenuSubtitle"
+													style="font-style: normal; color: #757777;"
+												>{{ item.subMenuSubtitle }}</em>
 											</template>
-											<HeaderMenuSection v-for="subSection in item.sections" :key="subSection.title"  :title="subSection.title">
-												<HeaderMenuItem v-for="subItem in subSection.items" :key="subItem.title">
+											<HeaderMenuSection
+												v-for="subSection in item.sections"
+												:key="subSection.title"
+												:title="subSection.title"
+											>
+												<HeaderMenuItem
+													v-for="subItem in subSection.items"
+													:key="subItem.title"
+												>
 													<a :href="subItem.href">{{ subItem.title }}</a>
 												</HeaderMenuItem>
 											</HeaderMenuSection>
 										</HeaderSubMenu>
-										<a v-else :href="item.href">
+										<a
+											v-else
+											:href="item.href"
+										>
 											{{ item.title }}
-											<em v-if="item.subtitle" style="font-style: normal; color: #757777;">{{ item.subtitle }}</em>
+											<em
+												v-if="'subtitle' in item"
+												style="font-style: normal; color: #757777;"
+											>{{ item.subtitle }}</em>
 										</a>
 									</HeaderMenuItem>
 								</HeaderMenuSection>
-								<h2 class="border-b-sm mb-2" style="font-size: 1.1rem; padding: 40px 16px 8px 20px;">Votre caisse</h2>
+								<h2
+									class="border-b-sm mb-2"
+									style="font-size: 1.1rem; padding: 40px 16px 8px 20px;"
+								>
+									Votre caisse
+								</h2>
 								<div style="padding: 16px 50px 16px 20px;">
 									<div class="d-flex align-center ga-2 font-weight-bold">
-										<VIcon aria-label="Localisation" role="img" aria-hidden="false" color="primary">{{marker}}</VIcon>
+										<VIcon
+											aria-label="Localisation"
+											role="img"
+											aria-hidden="false"
+											color="primary"
+										>
+											{{ marker }}
+										</VIcon>
 										<p>Vous n'avez pas sélectionné votre caisse</p>
 									</div>
-									<VBtn class="mt-3 mb-4 font-weight-bold text-capitalize" base-color="primary" density="comfortable" flat height="37">Sélectionner</VBtn>
-									<p class="mb-8">Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.) </p>
+									<VBtn
+										class="mt-3 mb-4 font-weight-bold text-capitalize"
+										base-color="primary"
+										density="comfortable"
+										flat
+										height="37"
+									>
+										Sélectionner
+									</VBtn>
+									<p class="mb-8">
+										Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.)
+									</p>
 								</div>
 							</HeaderBurgerMenu>
 						</template>
