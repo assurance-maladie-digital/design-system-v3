@@ -119,3 +119,10 @@ Pour plus de d'information sur la manière de construire un menu avec le composa
 ##### Slot `burger-menu-append`
 
 <Canvas of={HeaderNavigationBarStories.WithNavigationMenuAppendSlot} />
+
+
+## Configuration des composants Vuetify internes.
+
+Le composant `HeaderNavigationBar` utilise les composants `VSheet`, `VTabs` et `VTab` de Vuetify pour construire le menu horizontal. Il est possible de configurer ces composants en utilisant la props `vuetifyOptions`.
+
+<Canvas of={HeaderNavigationBarStories.WithVuetifyOptions} />

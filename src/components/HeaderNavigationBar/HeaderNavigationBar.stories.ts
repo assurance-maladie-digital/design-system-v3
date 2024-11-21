@@ -742,3 +742,34 @@ export const WithNavigationMenuAppendSlot: Story = {
 		],
 	},
 }
+
+export const WithVuetifyOptions: Story = {
+	args: {
+		...Default.args,
+		vuetifyOptions: {
+			sheet: {
+				color: 'pink',
+			},
+		},
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<HeaderNavbar
+	:items="[
+		{ label: 'Home', href: '' },
+		{ label: 'About', href: '' },
+	]"
+	:vuetifyOptions="{
+		sheet: {
+			color: 'pink',
+		},
+	}"
+/>
+				`,
+			},
+		],
+	},
+}
