@@ -9,6 +9,10 @@ const meta = {
 	argTypes: {
 		title: {
 			description: 'Titre de la section',
+			control: { type: 'text' },
+			table: {
+				category: 'slots',
+			},
 		},
 		default: {
 			control: { type: 'text' },
@@ -41,13 +45,20 @@ export const Default: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu>
-							<HeaderMenuSection :title="args.title">
+							<HeaderMenuSection>
+								<template #title>
+									{{ args.title }}
+								</template>
 								<HeaderMenuItem>
 									<a>lorem ipsum</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 
-							<HeaderMenuSection title="section 2">
+							<HeaderMenuSection>
+								<template #title>
+									section 2
+								</template>
+
 								<HeaderMenuItem>
 									<a>lorem ipsum</a>
 								</HeaderMenuItem>
@@ -73,13 +84,19 @@ export const Default: Story = {
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>
-								<HeaderMenuSection :title="args.title">
+								<HeaderMenuSection>
+									<template #title>
+										{{ args.title }}
+									</template>
 									<HeaderMenuItem>
 										<a>lorem ipsum</a>
 									</HeaderMenuItem>
 								</HeaderMenuSection>
 
-								<HeaderMenuSection title="section 2">
+								<HeaderMenuSection>
+									<template #title>
+										section 2
+									</template>
 									<HeaderMenuItem>
 										<a>lorem ipsum</a>
 									</HeaderMenuItem>

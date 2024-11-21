@@ -5,10 +5,8 @@ import HeaderMenuSection from '../HeaderMenuSection.vue'
 describe('HeaderMenuSection', () => {
 	it('should render the component', async () => {
 		const wrapper = mount(HeaderMenuSection, {
-			props: {
-				title: 'Section title',
-			},
 			slots: {
+				title: 'Section title',
 				default: [
 					'<li><a>Test 1</a></li>',
 					'<li><a>Test 2</a></li>',

@@ -115,7 +115,10 @@ code:`
 <HeaderBar>
 	<template #menu>
 		<HeaderMenu>
-			<HeaderMenuSection title="section 1">
+			<HeaderMenuSection >
+				<template #title>
+					Section 1
+				</template>
 				<HeaderMenuItem>
 					<a>Item 1</a>
 				</HeaderMenuItem>
@@ -127,7 +130,10 @@ code:`
 						<template #title>
 							Menu de premier niveau 1
 						</template>
-						<HeaderMenuSection title="Section">
+						<HeaderMenuSection>
+							<template #title>
+								Section 1
+							</template>
 							<HeaderMenuItem>
 								<a>Item</a>
 							</HeaderMenuItem>
@@ -143,7 +149,10 @@ code:`
 					</HeaderSubMenu>
 				</headerMenuItem>
 			</HeaderMenuSection>
-			<HeaderMenuSection title="section 2">
+			<HeaderMenuSection>
+				<template #title>
+					Section 2
+				</template>
 				<headerMenuItem>
 					<HeaderSubMenu>
 						<template #title>
@@ -167,7 +176,10 @@ code:`
 								<template #title>
 									Menu de deuxième niveau 3
 								</template>
-								<HeaderMenuSection title="section 1">
+								<HeaderMenuSection>
+									<template #title>
+										Section 1
+									</template>
 									<HeaderMenuItem>
 										<a>Item 1</a>
 									</HeaderMenuItem>

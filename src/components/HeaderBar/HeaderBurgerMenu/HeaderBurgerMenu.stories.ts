@@ -177,7 +177,10 @@ export const Populated: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu v-model="args.modelValue">
-							<HeaderMenuSection title="section 1">
+							<HeaderMenuSection>
+								<template #title>
+									Section 1
+								</template>
 								<HeaderMenuItem>
 									<a href="">Item 1</a>
 								</HeaderMenuItem>
@@ -189,7 +192,10 @@ export const Populated: Story = {
 										<template #title>
 											Menu de premier niveau 1
 										</template>
-										<HeaderMenuSection title="Section">
+										<HeaderMenuSection>
+											<template #title>
+												Section
+											</template>
 											<HeaderMenuItem>
 												<a href="">Item</a>
 											</HeaderMenuItem>
@@ -205,7 +211,10 @@ export const Populated: Story = {
 									</HeaderSubMenu>
 								</headerMenuItem>
 							</HeaderMenuSection>
-							<HeaderMenuSection title="section 2">
+							<HeaderMenuSection>
+								<template #title>
+									Section 2
+								</template>
 								<headerMenuItem>
 									<HeaderSubMenu>
 										<template #title>
@@ -229,7 +238,10 @@ export const Populated: Story = {
 												<template #title>
 													Menu de deuxième niveau 3
 												</template>
-												<HeaderMenuSection title="section 1">
+												<HeaderMenuSection>
+													<template #title>
+														Section 1
+													</template>
 													<HeaderMenuItem>
 														<a href="">Item 1</a>
 													</HeaderMenuItem>
@@ -261,7 +273,10 @@ export const Populated: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu>
-							<HeaderMenuSection title="section 1">
+							<HeaderMenuSection>
+								<template #title>
+									Section 1
+								</template>
 								<HeaderMenuItem>
 									<a href="">Item 1</a>
 								</HeaderMenuItem>
@@ -273,7 +288,10 @@ export const Populated: Story = {
 										<template #title>
 											Menu de premier niveau 1
 										</template>
-										<HeaderMenuSection title="Section">
+										<HeaderMenuSection>
+											<template #title>
+												Section
+											</template>
 											<HeaderMenuItem>
 												<a href="">Item</a>
 											</HeaderMenuItem>
@@ -289,7 +307,10 @@ export const Populated: Story = {
 									</HeaderSubMenu>
 								</headerMenuItem>
 							</HeaderMenuSection>
-							<HeaderMenuSection title="section 2">
+							<HeaderMenuSection>
+								<template #title>
+									Section 2
+								</template>
 								<headerMenuItem>
 									<HeaderSubMenu>
 										<template #title>
@@ -313,7 +334,10 @@ export const Populated: Story = {
 												<template #title>
 													Menu de deuxième niveau 3
 												</template>
-												<HeaderMenuSection title="section 1">
+												<HeaderMenuSection>
+													<template #title>
+														Section 1
+													</template>
 													<HeaderMenuItem>
 														<a href="">Item 1</a>
 													</HeaderMenuItem>
@@ -669,14 +693,20 @@ export const Generated: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu v-model="args.modelValue">
-							<HeaderMenuSection v-for="section in menu" :key="section.title" :title="section.title">
+							<HeaderMenuSection v-for="section in menu" :key="section.title">
+								<template #title>
+									{{ section.title }}
+								</template>
 								<HeaderMenuItem v-for="item in section.items" :key="item.title">
 									<HeaderSubMenu v-if="item.subMenuTitle">
 										<template #title>
 											{{ item.subMenuTitle }}
 											<em v-if="item.subMenuSubtitle" style="font-style: normal; color: #757777;">{{ item.subMenuSubtitle }}</em>
 										</template>
-										<HeaderMenuSection v-for="subSection in item.sections" :key="subSection.title"  :title="subSection.title">
+										<HeaderMenuSection v-for="subSection in item.sections" :key="subSection.title">
+											<template #title>
+												{{ subSection.title }}
+											</template>
 											<HeaderMenuItem v-for="subItem in subSection.items" :key="subItem.title">
 												<a :href="subItem.href">{{ subItem.title }}</a>
 											</HeaderMenuItem>
