@@ -85,11 +85,24 @@ Il est necessaire de faire attention à la place que prendront les éléments en
 
 <Canvas of={HeaderNavigationBarStories.WithSlots} />
 
+#### le slot `logo-brand-section`
+
+<Canvas of={HeaderNavigationBarStories.WithLogoSlot} />
+
 #### Le menu horizontal
 
 Quand le menu est en mode horizontal, les slots `navigation-bar-prepend` et `navigation-bar-append` permettent d'ajouter du contenu avant et après le menu.
 
-Le slot `navigation-bar-content` quand a lui, remplace les items du menu tel que généré avec la props `items`. Il n'écrase pas les slots `navigation-bar-prepend` et `navigation-bar-append`.
+Le slot `navigation-bar-content` quant à lui, remplace les items du menu tel que généré avec la props `items`. Il n'écrase pas les slots `navigation-bar-prepend` et `navigation-bar-append`.
+
+##### Slot `Navigation-bar-prepend`
+
+<Canvas of={HeaderNavigationBarStories.WithNavigationBarPrependSlot} />
+
+
+##### Slot `Navigation-bar-append`
+
+<Canvas of={HeaderNavigationBarStories.WithNavigationBarAppendSlot} />
 
 
 #### Les slots concernant le menu burger
@@ -99,5 +112,10 @@ Le menu burger est généré automatiquement à partir des items passés en prop
 
 les slots `burger-menu-prepend` et `burger-menu-append` permettent d'ajouter du contenu en haut et en bas du menu burger.
 
+
 Le slot `burger-menu-content` permet de remplacer le contenu du menu burger. Il n'écrase pas les slots `burger-menu-prepend` et `burger-menu-append` et permet d'utiliser les composants `HeaderMenuItem` et `HeaderMenuGroup` pour construire le menu.
 Pour plus de d'information sur la manière de construire un menu avec le composant `HeaderBurgerMenu`, vous pouvez consulter la documentation de ce [composant](/docs/components-headerbar-headerburgermenu--docs).
+
+##### Slot `burger-menu-append`
+
+<Canvas of={HeaderNavigationBarStories.WithNavigationMenuAppendSlot} />
