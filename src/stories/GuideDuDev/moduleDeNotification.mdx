@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, Source } from '@storybook/addon-docs/blocks';
 
 <Meta title="Guide Du Dev/Services/useNotificationService" />
 # useNotificationService
@@ -7,78 +7,82 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 ## Importation et utilisation
 
-```
+<Source dark code={`
 import { useNotificationService } from '@/services/useNotificationService'
 
 const { notificationQueue, addNotification, removeNotification, clearQueue } = useNotificationService()
-```
+`} />
 
-Propriétés et Méthodes:
+## Propriétés et méthodes :
 
-```
+<Source dark code={`
 notificationQueue: Ref<Notification[]>
-```
+`} />
 
 Une référence réactive à la file d'attente des notifications. Elle contient un tableau d'objets de type Notification.
 
-``` addNotification(notification: Notification): void ```
+<Source dark code={`
+addNotification(notification: Notification): void
+`} />
 
 Ajoute une nouvelle notification à la file d'attente, à condition qu'une notification avec le même id ne soit pas déjà présente.
 
-```
+<Source dark code={`
 addNotification({
   id: 'notif-1',
   message: 'Notification 1',
   type: 'info',
   duration: 5000
 })
-```
+`} />
 
-```
+<Source dark code={`
 removeNotification(id: string): void
-```
+`} />
 Supprime une notification de la file d'attente en fonction de son id.
 
-```
+<Source dark code={`
 removeNotification('notif-1')
-```
+`} />
 
-```
+<Source dark code={`
 clearQueue(): void
-```
+`} />
 
 Efface toutes les notifications de la file d'attente.
 
 
-```
+<Source dark code={`
 clearQueue()
-```
+`} />
 
-Typage de Notification
+## Typage de Notification
 
 Le type Notification est défini comme suit :
 
-```
-
+<Source dark code={`
 type Notification = {
   id: string
   message: string
   type: 'success' | 'error' | 'info' | 'warning'
   duration?: number
 }
-```
+`} />
+
 Propriétés de Notification
-```
+
+<Source dark code={`
     id: string — Identifiant unique de la notification.
     message: string — Le texte à afficher dans la notification.
     type: 'success' | 'error' | 'info' | 'warning' — Le type de la notification, qui peut influencer son apparence.
     duration?: number — Durée pendant laquelle la notification sera visible (en millisecondes).
-```
-Exemples d'utilisation
+`} />
+
+## Exemples d'utilisation
+
 Ajouter une notification
 
-```
-
+<Source dark code={`
 const { addNotification } = useNotificationService()
 
 addNotification({
@@ -87,33 +91,35 @@ addNotification({
   type: 'success',
   duration: 3000
 })
-```
+`} />
+
 Supprimer une notification
 
-```
+<Source dark code={`
 const { removeNotification } = useNotificationService()
 
 removeNotification('notif-2')
-```
+`} />
+
 Effacer la file d'attente de notifications
 
-```
-
+<Source dark code={`
 const { clearQueue } = useNotificationService()
 
 clearQueue()
-```
+`} />
 
 Accéder à la file d'attente
 
-```
+<Source dark code={`
 const { notificationQueue } = useNotificationService()
 
 console.log(notificationQueue.value) // Affiche toutes les notifications présentes dans la file d'attente
-```
+`} />
+
 Utilisation dans un composant Vue
 
-```
+<Source dark code={`
 <script setup lang="ts">
 <script setup lang="ts">
 	import { VBtn } from 'vuetify/components'
@@ -178,5 +184,4 @@ Utilisation dans un composant Vue
   margin-top: 20px;
 }
 </style>
-
-```
+`} />

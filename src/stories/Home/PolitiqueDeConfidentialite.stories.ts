@@ -2,7 +2,7 @@ import type { StoryObj } from '@storybook/vue3'
 import { VCard } from 'vuetify/components'
 
 export default {
-	title: 'Home/PolitiqueDeConfidentialite',
+	title: 'Home/Politique de confidentialité',
 }
 
 export const Default: StoryObj = {
