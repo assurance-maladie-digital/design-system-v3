@@ -1,55 +1,31 @@
 <script>
-    // Add custom icon for some menu items in the sidebar
-    window.addEventListener('load', function () {
-        // customInputSelect
-        const customSelectMenu = document.querySelector('#components-customselect');
-        if (customSelectMenu) {
-            customSelectMenu.innerHTML += `
-                <svg width='10' height='10' style="margin-top: 4px">
-                   <circle cx='5' cy='5' r='5' fill='#66BF3C' />
-                </svg>
-            `;
+    document.addEventListener('DOMContentLoaded', () => {
+        // Function to add custom icon to menu items
+        function addCustomIcon(menuId) {
+            const menu = document.querySelector(menuId);
+            if (menu && !menu.querySelector('.circle')) {
+                console.log(`Adding icon to ${menuId}`);
+                menu.innerHTML += `
+                    <svg class="circle" width='10' height='10' style="margin-top: 4px">
+                       <circle cx='5' cy='5' r='5' fill='#66BF3C' />
+                    </svg>
+                `;
+            }
         }
 
-        // customInputSelect
-        const customInputSelectMenu = document.querySelector('#components-custominputselect');
-        if (customInputSelectMenu) {
-            customInputSelectMenu.innerHTML += `
-                <svg width='10' height='10' style="margin-top: 4px">
-                   <circle cx='5' cy='5' r='5' fill='#66BF3C' />
-                </svg>
-            `;
-        }
+        // List of menu items to observe
+        const menuItems = [
+            '#composants-formulaires-customselect',
+            '#composants-formulaires-custominputselect',
+            '#composants-formulaires-customtextfield',
+            '#composants-formulaires-phonefield',
+            '#composants-structure-headertoolbar'
+        ];
 
-        // customTextField
-        const customTextFieldMenu = document.querySelector('#components-customtextfield');
-        if (customTextFieldMenu) {
-            customTextFieldMenu.innerHTML += `
-                <svg width='10' height='10' style="margin-top: 4px">
-                   <circle cx='5' cy='5' r='5' fill='#66BF3C' />
-                </svg>
-            `;
-        }
-
-        // phoneField
-        const phoneFieldMenu = document.querySelector('#components-phonefield');
-        if (phoneFieldMenu) {
-            phoneFieldMenu.innerHTML += `
-                <svg width='10' height='10' style="margin-top: 4px">
-                   <circle cx='5' cy='5' r='5' fill='#66BF3C' />
-                </svg>
-            `;
-        }
-
-        // HeaderToolbar
-        const headerToolbarMenu = document.querySelector('#components-headertoolbar');
-        if (headerToolbarMenu) {
-            headerToolbarMenu.innerHTML += `
-                <svg width='10' height='10' style="margin-top: 4px">
-                   <circle cx='5' cy='5' r='5' fill='#66BF3C' />
-                </svg>
-            `;
-        }
+        // Initial check in case the elements are already present
+        window.addEventListener('click', () => {
+            menuItems.forEach(addCustomIcon);
+        });
     });
 </script>
 
