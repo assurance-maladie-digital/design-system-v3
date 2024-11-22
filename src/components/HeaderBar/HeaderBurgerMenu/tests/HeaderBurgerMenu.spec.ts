@@ -139,4 +139,42 @@ describe('HeaderBurgerMenu', () => {
 
 		wrapper.unmount()
 	})
+
+	it('reposition the menu when the size of the window changes', async () => {
+		const wrapper = mount(HeaderBurgerMenu, {
+			global: {
+				plugins: [vuetify],
+				provide: {
+					[registerHeaderMenuKey]: () => {},
+				},
+				stubs: {
+					Teleport: true,
+					HeaderMenuBtn: BtnTestComponent,
+				},
+			},
+			attachTo: document.body,
+		})
+
+		const btn = wrapper.find('button')
+		await btn.trigger('click')
+		const menuBtnWrapper = wrapper.find('[role="dialog"]>div')
+
+		vi.spyOn(menuBtnWrapper.element, 'getBoundingClientRect').mockReturnValue(new DOMRect(50, 50, 0, 0))
+
+		window.dispatchEvent(new Event('resize'))
+		await wrapper.vm.$nextTick()
+
+		let renderStyle = wrapper.find('.menu-wrapper').attributes('style')
+		expect(renderStyle).toContain('left: 50px; top: 50px;')
+
+		vi.spyOn(menuBtnWrapper.element, 'getBoundingClientRect').mockReturnValue(new DOMRect(40, 60, 0, 0))
+
+		window.dispatchEvent(new Event('resize'))
+		await wrapper.vm.$nextTick()
+
+		renderStyle = wrapper.find('.menu-wrapper').attributes('style')
+		expect(renderStyle).toContain('left: 40px; top: 60px;')
+
+		wrapper.unmount()
+	})
 })

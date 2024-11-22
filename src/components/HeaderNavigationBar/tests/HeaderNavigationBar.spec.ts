@@ -90,4 +90,38 @@ describe('HeaderNavbar', () => {
 
 		wrapper.unmount()
 	})
+
+	it('should toggle the burger menu', async () => {
+		// @ts-expect-error  - Property 'happyDOM' does not exist on type 'Window & typeof globalThis'.
+		window.window.happyDOM.setInnerWidth(600)
+
+		const wrapper = mount(HeaderNavbar, {
+			global: {
+				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+					RouterLink: true,
+				},
+			},
+			props: {
+				items: [
+					{
+						label: 'Home',
+						to: '/',
+					},
+					{
+						label: 'About',
+						to: '/about',
+					},
+				],
+			},
+			attachTo: document.body,
+		})
+
+		const btn = wrapper.find('.header-menu-btn')
+		await btn.trigger('click')
+		expect(wrapper.find('.header-menu').exists()).toBe(true)
+		await btn.trigger('click')
+		expect(wrapper.find('.header-menu').exists()).toBe(false)
+	})
 })
