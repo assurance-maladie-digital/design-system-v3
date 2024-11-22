@@ -474,9 +474,5 @@
 
 .right-menu-item {
   color: tokens.$blue-darken-60;
-
-  &:hover {
-    text-decoration: none;
-  }
 }
 </style>
