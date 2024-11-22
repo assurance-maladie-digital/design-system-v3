@@ -370,7 +370,7 @@
       min-width: 260px;
       z-index: 2;
       @media (max-width: 768px) {
-        min-width: 182px;
+        min-width: 152px;
       }
     }
 
@@ -395,6 +395,15 @@
     @media (max-width: 1000px) {
       display: none;
     }
+  }
+
+  #right-menu ul {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  #right-menu ul li {
+    display: inline-block;
   }
 
   :deep(.v-input) {
