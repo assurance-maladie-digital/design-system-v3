@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import LogoBrandSection from './LogoBrandSection.vue'
 
 const meta = {
+	title: 'Composants/Données/LogoBrandSection',
 	component: LogoBrandSection,
 	argTypes: {
 		'theme': {
