@@ -6,7 +6,6 @@
         function addCustomIcon(menuId) {
             const menu = document.querySelector(menuId);
             if (menu && !menu.querySelector('.circle')) {
-                console.log(`Adding icon to ${menuId}`);
                 menu.innerHTML += `
                     <svg class="circle" width='10' height='10' style="margin-top: 4px">
                        <circle cx='5' cy='5' r='5' fill='#66BF3C' />
