@@ -256,6 +256,7 @@
 									<CustomInputSelect
 										:items="itemsSelectMenu as unknown as string[]"
 										:label="item.title"
+                    is-header-toolbar
 										@click="handleLink(index)"
 									/>
 								</span>

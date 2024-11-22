@@ -15,6 +15,7 @@
 		outlined?: boolean
 		required?: boolean
 		errorMessages?: string | string[]
+    isHeaderToolbar?: boolean
 	}>(), {
 		modelValue: null,
 		items: () => [],
@@ -24,6 +25,7 @@
 		outlined: false,
 		required: false,
 		errorMessages: () => [],
+    isHeaderToolbar: false,
 	})
 
 	const options = useCustomizableOptions(defaultOptions, props)
@@ -78,7 +80,7 @@
 			[() => isOpen.value, () => menu.value?.getBoundingClientRect().width],
 			([newValue, newWidth]) => {
 				if (newValue && newWidth) {
-					const totalWidth = newWidth + 32
+					const totalWidth = newWidth + (props.isHeaderToolbar ? 32 : 0)
 					menuWidth.value = `${totalWidth}`
 				}
 			},
@@ -139,6 +141,7 @@
 		<VList
 			v-if="isOpen"
 			:aria-label="props.label"
+      :is-header-toolbar="props.isHeaderToolbar"
 			:style="`min-width:${menuWidth}px; ${props.outlined ? 'top: 36px;' : 'top: 30px;'}`"
 			:title="props.label"
 			class="v-list"
