@@ -81,11 +81,6 @@ export const Default: Story = {
 				href: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees',
 				openInNewTab: true,
 			},
-			{
-				title: 'Presse',
-				href: 'https://www.assurance-maladie.ameli.fr/presse',
-				openInNewTab: true,
-			},
 		],
 		itemsSelectMenu: [
 			{
@@ -193,8 +188,8 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-              <HeaderToolbar v-bind="args" />
-			`,
+              <HeaderToolbar v-bind="args"/>
+            `,
 		}
 	},
 }
