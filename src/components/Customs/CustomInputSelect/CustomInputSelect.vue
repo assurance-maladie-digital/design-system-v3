@@ -182,7 +182,7 @@
   z-index: 1;
   background-color: white;
   min-width: fit-content;
-  max-width: 150px;
+  max-width: 100px;
   padding: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
