@@ -1,5 +1,5 @@
-<script setup lang="ts">
-	import { ref, watch, type PropType } from 'vue'
+<script lang="ts" setup>
+	import { ref, type PropType } from 'vue'
 	import type { MenuItem, SelectItem } from './types'
 	import CustomInputSelect from '../Customs/CustomInputSelect/CustomInputSelect.vue'
 
@@ -197,13 +197,6 @@
 		activeIndex.value = null
 	}
 
-	watch(showOverlay, (newValue) => {
-		if (typeof window !== 'undefined') {
-			document.documentElement.style.overflow = newValue ? 'hidden' : 'auto'
-			document.body.style.overflow = newValue ? 'hidden' : 'auto'
-		}
-	})
-
 	defineExpose({
 		hideOverlay,
 		handleLink,
@@ -222,16 +215,16 @@
 			<slot name="left-menu">
 				<button
 					v-if="showOverlay"
-					class="overlay"
 					aria-label="Close overlay"
+					class="overlay"
 					@click="hideOverlay"
 					@keydown.enter="hideOverlay"
 					@keydown.esc="hideOverlay"
 				/>
 				<nav
 					id="left-menu"
-					role="navigation"
 					:aria-labelledby="props.ariaLeftMenu"
+					role="navigation"
 				>
 					<ul>
 						<li
@@ -241,21 +234,22 @@
 						>
 							<component
 								:is="getLinkComponent(item as MenuItem)"
-								:href="item.href"
-								:to="item.to"
-								:title="item.title"
 								:aria-label="item.title"
-								:target="item.openInNewTab ? '_blank' : undefined"
+								:href="item.href"
 								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 								:tabindex="0"
+								:target="item.openInNewTab ? '_blank' : undefined"
+								:title="item.title"
+								:to="item.to"
 								@click="checkActiveLink(index)"
-								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
+								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 							>
 								<span v-if="itemsSelectMenu && index === 1">
 									<CustomInputSelect
 										:items="itemsSelectMenu as unknown as string[]"
 										:label="item.title"
+										is-header-toolbar
 										@click="handleLink(index)"
 									/>
 								</span>
@@ -273,8 +267,8 @@
 			<slot name="right-menu">
 				<nav
 					id="right-menu"
-					role="navigation"
 					:aria-labelledby="props.ariaRightMenu"
+					role="navigation"
 				>
 					<ul>
 						<li
@@ -283,16 +277,16 @@
 						>
 							<component
 								:is="getLinkComponent(item as MenuItem)"
-								:href="item.href"
-								:to="item.to"
-								:target="item.openInNewTab ? '_blank' : undefined"
-								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
-								:title="item.title"
 								:aria-label="item.title"
+								:href="item.href"
+								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 								:tabindex="0"
+								:target="item.openInNewTab ? '_blank' : undefined"
+								:title="item.title"
+								:to="item.to"
 								@click="deleteActiveLink()"
 							>
-								<span>{{ item.title }}</span>
+								<span class="right-menu-item">{{ item.title }}</span>
 							</component>
 						</li>
 					</ul>
@@ -331,19 +325,23 @@
       justify-content: flex-start;
       list-style: none;
       text-decoration: none;
+
       li {
         text-align: center;
       }
     }
+
     :deep(ul > li > a) {
       display: block;
       color: tokens.$blue-darken-40;
       text-decoration: none;
       padding: 10px 16px;
       cursor: pointer;
+
       &:hover {
         text-decoration: underline;
       }
+
       @media (max-width: 768px) {
         font-size: 12px;
       }
@@ -354,10 +352,12 @@
     ul > li > a {
       font-weight: 700;
       color: tokens.$blue-darken-40;
+
       &:hover {
         text-decoration: none;
       }
     }
+
     li:first-child {
       min-width: 95px;
       background: transparent;
@@ -365,48 +365,68 @@
         min-width: 82px;
       }
     }
+
     li:nth-child(2) {
       min-width: 260px;
       z-index: 2;
       @media (max-width: 768px) {
-        min-width: 182px;
+        min-width: 152px;
       }
     }
+
     li:nth-child(3) {
       background: transparent;
     }
+
     li:first-child a:hover, li:first-child.active {
       background: tokens.$user-assure;
     }
+
     li:nth-child(2) a:hover, .highlight {
       background: tokens.$user-professionnel;
     }
+
     li:nth-child(3) a:hover, li:nth-child(3).active {
       background: tokens.$user-entreprise;
     }
   }
+
   #right-menu {
     @media (max-width: 1000px) {
       display: none;
     }
   }
 
+  #right-menu ul {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  #right-menu ul li {
+    display: inline-block;
+  }
+
   :deep(.v-input) {
     .v-input__details {
       display: none;
     }
+
     .v-input__control {
       font-weight: 700;
+
       .text-color {
         color: tokens.$blue-darken-60 !important;
       }
+
       .v-icon {
         margin-left: 10px;
       }
+
       .custom-select {
         display: flex;
         justify-content: space-between;
         width: 100%;
+
         span {
           max-width: 260px;
           white-space: nowrap;
@@ -417,10 +437,12 @@
           }
         }
       }
+
       @media (max-width: 768px) {
         font-size: 12px;
       }
     }
+
     .v-list {
       top: 34px !important;
       left: -16px !important;
@@ -435,6 +457,7 @@
         min-width: 100% !important;
         box-shadow: none !important;
       }
+
       .v-list-item--density-default.v-list-item--one-line {
         min-height: 40px;
       }
@@ -448,13 +471,17 @@
     left: 0;
     width: 100%;
     height: 100%;
-	background-color: rgba(3, 16, 37, .5);
-	cursor: default;
-	backdrop-filter: blur(2px);
+    background-color: rgba(3, 16, 37, .5);
+    cursor: default;
+    backdrop-filter: blur(2px);
     z-index: 1;
     @media (max-width: 768px) {
       display: none;
     }
   }
+}
+
+.right-menu-item {
+  color: tokens.$blue-darken-60;
 }
 </style>

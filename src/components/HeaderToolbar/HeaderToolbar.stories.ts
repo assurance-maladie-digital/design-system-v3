@@ -193,8 +193,8 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-              <HeaderToolbar v-bind="args" />
-			`,
+              <HeaderToolbar v-bind="args"/>
+            `,
 		}
 	},
 }
