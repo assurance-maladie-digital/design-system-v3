@@ -1,0 +1,35 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import * as UserMenuBtnStories from './UserMenuBtn.stories';
+
+<Meta of={UserMenuBtnStories}/>
+
+# UserMenuBtn
+
+The `UserMenuBtn` component is used to display a user menu button with a dropdown menu.
+
+<Canvas of={UserMenuBtnStories.Default}/>
+
+# API
+
+<Controls of={UserMenuBtnStories.Default}/>
+
+# Usage Example
+
+<Source dark code={`
+    <script setup lang="ts">
+    import UserMenuBtn from './UserMenuBtn.vue';
+
+    const menuItems = [
+                { text: 'Administration', value: 'Administration' },
+                { text: 'Profil', value: 'Profil' },
+                { text: 'Paramètres', value: 'Paramètres' },
+    ];
+    </script>
+
+    <template>
+      <UserMenuBtn
+        :items="menuItems"
+      />
+    </template>
+`}
+/>
