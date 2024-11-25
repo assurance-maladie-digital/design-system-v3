@@ -17,6 +17,18 @@ export const AccessibiliteItemsIndeterminate = [
 				expertise: ExpertiseLevelEnum.DEV,
 
 			},
+			{
+
+				precision: ' 1.4.6 Pour chaque image vectorielle (balise <svg>) utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative est-elle pertinente ?',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.4.6',
+				solution: [{
+					info1: '1. Retrouver dans le document les éléments <svg> pourvus d’une alternative textuelle et utilisés comme CAPTCHA ou comme image-test;',
+					info2: '2. Pour chaque élément <svg>, vérifier que l’alternative textuelle est pertinente',
+					info3: '3. Si c’est le cas pour chaque image, le test est validé',
+				}],
+				expertise: ExpertiseLevelEnum.DEV,
+
+			},
 
 		],
 	},

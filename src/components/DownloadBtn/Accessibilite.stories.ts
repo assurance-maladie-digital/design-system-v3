@@ -1,10 +1,10 @@
 import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
 import { AccessibiliteItemsIndeterminate, AccessibiliteItemsValidated } from './AccessibiliteItems'
-import { mdiCheckboxMarkedCircle, mdiHelpCircle, mdiLink } from '@mdi/js'
+import { mdiCheckboxMarkedCircle, mdiLink, mdiEye } from '@mdi/js'
 
 const checkIcon = mdiCheckboxMarkedCircle
-const helpICon = mdiHelpCircle
+const iconEye = mdiEye
 const linkICon = mdiLink
 
 export default {
@@ -16,17 +16,26 @@ export const AccessibilitePanel: StoryObj = {
 	render: () => {
 		return {
 			components: { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon },
+
 			setup() {
 				const icon = checkIcon
 
-				return { AccessibiliteItemsIndeterminate, icon, helpICon, linkICon }
+				return { AccessibiliteItemsIndeterminate, AccessibiliteItemsValidated, icon, linkICon, iconEye }
 			},
 			template: `
-				<div style="display:flex; margin-bottom: 10px; justify-content: end; align-items: center;">
-			<div>Sources : </div>
-			<div style="margin-left: 4px;">
-			<v-btn variant="tonal" color="grey" size="x-small" style="margin: 4px;" rounded>Audit </v-btn>
-			<v-btn variant="tonal" color="red" size="x-small" style="margin: 4px;" rounded>Tanaguru </v-btn>
+					
+			<div class="accessibiliteItems" style="display:flex; max-width: none !important;">
+				<v-col
+		cols="6"
+		
+	>
+				<div style="display:flex; margin-bottom: 10px; justify-content: space-between; align-items: center;">		
+				<h5>{{AccessibiliteItemsIndeterminate.length}} Critères à prendre en charge par le projet</h5>
+
+			
+			<div style="display: flex; align-items: center;">
+			<v-btn variant="tonal" color="grey" size="x-small" style="margin: 4px;font-size: 8px;" rounded>Audit </v-btn>
+			<v-btn variant="tonal" color="red" size="x-small" style="margin: 4px;font-size: 8px;" rounded>Tanaguru </v-btn>
 			</div>
 			</div> 
 
@@ -34,7 +43,7 @@ export const AccessibilitePanel: StoryObj = {
 					<v-expansion-panel
 						v-for="(item, index) in AccessibiliteItemsIndeterminate"
 						:key="index" style="background-color: rgba(42, 96, 158, 0.1); margin-bottom: 10px;">
-						<v-expansion-panel-title>{{ item.title }}</v-expansion-panel-title>
+						<v-expansion-panel-title><VIcon  :icon="iconEye" style="margin-right: 5px; color:#5778b7;" />{{ item.title }}</v-expansion-panel-title>
 						
 						<v-expansion-panel-text>
 
@@ -42,41 +51,26 @@ export const AccessibilitePanel: StoryObj = {
 				<v-expansion-panels>
 
 						<v-expansion-panel >
-						<v-expansion-panel-title style="font-weight: bold;">{{ item.subtitle}} </v-expansion-panel-title>
+						<v-expansion-panel-title style="font-weight: bold; font-size: 13px; line-height: 16px;">{{ item.subtitle}} </v-expansion-panel-title>
 						
 						<v-expansion-panel-text >
-							<v-data-table
-								:items="item.items"
-								disable-pagination
-								      hide-default-footer
-								hide-default-header>
-										<template v-slot:item.expertise="{ item }">
-										</template>
-										<template v-else v-slot:item.expertise="{ item }">
-											<span></span>
-										</template>
-										<template v-slot:item.link="{ item }">
-											<span></span>
-										</template>
+							<div v-for="(value, i) in item.items"
+						:key="i">
 
-											
-									<template v-slot:item.solution="{ item }">
-										
-										</template>
-
-										   <template v-slot:bottom="{ items }" >
-										   <div v-for="element in items[0].solution" style="margin-top:15px;">
-										    <p style="font-weight: bold;">Méthodologie du test : <a href="items[0].link" target="blank" ><VIcon :icon="linkICon" /></a></p>
+						<p style="font-size: 13px;line-height: 16px;">
+						{{value.precision}}
+						</p>
+							 <div v-for="element in value.solution" style="margin-top:15px; font-size: 13px;line-height: 16px;">
+										    <p style="font-weight: bold;">Méthodologie du test : <a href="value.link" target="blank" ><VIcon :icon="linkICon" /></a></p>
 							
 											<p>{{element.info1}}</p>
 											<p>{{element.info2}}</p>
 											<p>{{element.info3}}</p>
 
 											</div>
-    										</template>
-							</v-data-table>
-						
-							
+						<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
+
+											</div>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 
@@ -90,40 +84,26 @@ export const AccessibilitePanel: StoryObj = {
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
-			`,
-		}
-	},
-	tags: ['!dev'],
-}
+				</v-col>
+					<v-col
+		cols="6"
+			>			
 
-export const AccessibilitePanelValidated: StoryObj = {
+		<div style="display:flex; margin-bottom: 10px; justify-content: space-between; align-items: center;">		
+				<h5>{{AccessibiliteItemsValidated.length}} Critères pris en charge par l'équipe Design System</h5>
 
-	render: () => {
-		return {
-			components: { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon },
-			setup() {
-				const icon = checkIcon
-
-				return { AccessibiliteItemsValidated, icon, helpICon, linkICon }
-			},
-			template: `
 			
-			<div style="display:flex; margin-bottom: 10px; justify-content: end; align-items: center;">
-			<div>Sources : </div>
-			<div style="margin-left: 4px;">
-			<v-btn variant="tonal" color="grey" size="x-small" style="margin: 4px;" rounded>Audit </v-btn>
-			<v-btn variant="tonal" color="red" size="x-small" style="margin: 4px;" rounded>Tanaguru </v-btn>
+			<div style="display: flex; align-items: center;">
+			<v-btn variant="tonal" color="grey" size="x-small" style="margin: 4px;font-size: 8px;" rounded>Audit </v-btn>
+			<v-btn variant="tonal" color="red" size="x-small" style="margin: 4px;font-size: 8px;" rounded>Tanaguru </v-btn>
 			</div>
 			</div> 
 				<v-expansion-panels value="opened" multiple>
 					<v-expansion-panel
 						v-for="(item, index) in AccessibiliteItemsValidated"
 						:key="index" style="background-color: rgba(53,135,0,0.1); margin-bottom: 10px;">
-						<v-expansion-panel-title disable-icon-rotate>{{ item.title }}
-						<template v-slot:actions>
-          
-			<VIcon color="green" :icon="icon" />
-          </template>
+						<v-expansion-panel-title> 	<VIcon color="green" :icon="icon" style="margin-right: 5px;" /> {{ item.title }}
+						
 						</v-expansion-panel-title>
 						
 						<v-expansion-panel-text>
@@ -132,42 +112,30 @@ export const AccessibilitePanelValidated: StoryObj = {
 				<v-expansion-panels>
 
 						<v-expansion-panel >
-						<v-expansion-panel-title style="font-weight: bold;" collapse-icon="mdi-minus" expand-icon="mdi-plus">{{ item.subtitle}} 
+						<v-expansion-panel-title style="font-weight: bold;font-size: 13px; line-height: 16px;">
+
+						{{ item.subtitle}} 
 					
 						</v-expansion-panel-title>
 						
 						<v-expansion-panel-text >
-							<v-data-table
-								:items="item.items"
-								disable-pagination
-								      hide-default-footer
-								hide-default-header>
-										<template v-slot:item.expertise="{ item }">
-										</template>
-										<template v-else v-slot:item.expertise="{ item }">
-											<span></span>
-										</template>
-										<template v-slot:item.link="{ item }">
-											<span></span>
-										</template>
+							<div v-for="(value, i) in item.items"
+						:key="i">
 
-											
-									<template v-slot:item.solution="{ item }">
-										
-										</template>
-
-										   <template v-slot:bottom="{ items }" >
-										   <div v-for="element in items[0].solution" style="margin-top:15px;">
-										    <p style="font-weight: bold;">Méthodologie du test : <a href="items[0].link" target="blank" ><VIcon :icon="linkICon" /></a></p>
+						<p style="font-size: 13px;line-height: 16px;">
+						{{value.precision}}
+						</p>
+							 <div v-for="element in value.solution" style="margin-top:15px; font-size: 13px;line-height: 16px;">
+										    <p style="font-weight: bold;">Méthodologie du test : <a href="value.link" target="blank" ><VIcon :icon="linkICon" /></a></p>
 							
 											<p>{{element.info1}}</p>
 											<p>{{element.info2}}</p>
 											<p>{{element.info3}}</p>
 
 											</div>
-    										</template>
-							</v-data-table>
-						
+						<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
+
+											</div>
 							
 						</v-expansion-panel-text>
 					</v-expansion-panel>
@@ -182,13 +150,19 @@ export const AccessibilitePanelValidated: StoryObj = {
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
+								</v-col>
+											<div>
+
+
 			`,
 		}
 	},
 	tags: ['!dev'],
 }
 
-export const Icon: StoryObj = {
+
+
+export const Legende: StoryObj = {
 	args: {
 		icon: checkIcon,
 	},
@@ -199,15 +173,37 @@ export const Icon: StoryObj = {
 				return { args }
 			},
 			template: `
-				
-						<div>
-							<VIcon color="green" :icon="args.icon" /> Critères prise en charge par l'équipe Design System 
-							<br/>
+
+
+
+						<div style="font-size: 14px; display:flex; justify-content:space-between;">
+<div class="first">
+						<p style="color: grey;font-size: 11px; margin-bottom: 12px;">Date de conception: 20/11/2024</p>
+
+
+<div style="font-size: 13px;">
+
+<p>Le tableau ci-dessous liste nos recommandations suivant les <a target="blank" style="color:#0C41BD;" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#contenu">catégories du RGAA</a>.</p>
+
+<p style="margin-bottom: 12px;font-weight:bold;">Pour rappel le composant seul ne garantie pas l'accessibilité du site.</p>
+ 
+<p>Nous avons deux façons de relever les problèmes d'accessibilité des composants :</p>
+								<div><v-btn variant="tonal" color="grey" size="x-small" style="margin: 2px;font-size: 8px;" rounded>Audit</v-btn>  Problèmes relevés par le projet </div>
+			<div><v-btn variant="tonal" color="red" size="x-small" style="margin: 2px;font-size: 8px;" rounded>Tanaguru</v-btn>  Problèmes relevés par Tanaguru 
 
 						</div>
+</div>
+
+
+						</div>
+						<div style="display: flex;flex-direction: column;align-items: end;">
+<ul>Liens vers les audit :</ul>
+<a style="color:#0C41BD;" href="https://github.com/assurance-maladie-digital/design-system-v3/blob/5228330a936d5b7741d7fdd101cadd8d4b4edea2/src/components/DownloadBtn/DownloadBtn.vue#L90" target="blank">Lien n°1</a>
 				
 			`,
 		}
 	},
 	tags: ['!dev'],
 }
+
+
