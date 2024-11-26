@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import HeaderNavbar from './HeaderNavigationBar.vue'
 import { VBtn } from 'vuetify/components'
 import BackBtn from '../BackBtn/BackBtn.vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar/HeaderNavigationBar',
@@ -600,6 +601,7 @@ export const WithLogoSlot: Story = {
 export const WithNavigationBarPrependSlot: Story = {
 	args: {
 		...Default.args,
+		burgerMenu: false,
 	},
 	render: (args) => {
 		return {
@@ -608,7 +610,7 @@ export const WithNavigationBarPrependSlot: Story = {
 				return { args }
 			},
 			template: `
-				<HeaderNavbar v-bind="args">
+				<HeaderNavbar v-bind="args" v-model="args.burgerMenu">
 					<template #navigation-bar-prepend>
 						<BackBtn
 							:dark="true"
@@ -688,8 +690,8 @@ export const WithNavigationBarAppendSlot: Story = {
 export const WithNavigationMenuAppendSlot: Story = {
 	args: {
 		...Default.args,
-		maxHorizontalMenuItems: 0,
-		burgerMenu: false,
+		'maxHorizontalMenuItems': 0,
+		'onUpdate:burgerMenu': fn(),
 	},
 	render: (args) => {
 		return {
@@ -698,7 +700,14 @@ export const WithNavigationMenuAppendSlot: Story = {
 				return { args }
 			},
 			template: `
-				<HeaderNavbar v-bind="args" v-model="args.burgerMenu">
+				<HeaderNavbar
+					v-bind="args"
+					v-model="args.burgerMenu"
+					@update:burgerMenu="()=>{
+						args['onUpdate:burgerMenu']
+						args.burgerMenu = !args.burgerMenu
+					}"
+				>
 					<template #navigation-menu-append>
 						<VBtn
 							variant="tonal"
@@ -709,7 +718,7 @@ export const WithNavigationMenuAppendSlot: Story = {
 						</VBtn>
 					</template>
 				</HeaderNavbar>
-				<div style="height: 200px;">
+				<div style="height: 200px;"></div>
 			`,
 		}
 	},

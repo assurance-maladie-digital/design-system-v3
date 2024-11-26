@@ -7,6 +7,7 @@ import HeaderBurgerMenu from './HeaderBurgerMenu.vue'
 import HeaderMenuItem from './HeaderMenuItem/HeaderMenuItem.vue'
 import HeaderMenuSection from './HeaderMenuSection/HeaderMenuSection.vue'
 import HeaderSubMenu from './HeaderSubMenu/HeaderSubMenu.vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar/HeaderBurgerMenu',
@@ -57,7 +58,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		default: 'Menu content',
+		'default': 'Menu content',
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -68,7 +70,10 @@ export const Default: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-model="args.modelValue">
+						<HeaderBurgerMenu
+							v-model="args.modelValue"
+							@update:modelValue="args['onUpdate:modelValue']"
+						>
 							{{ args.default }}
 						</HeaderBurgerMenu>
 					</template>
@@ -105,7 +110,9 @@ export const Default: Story = {
 }
 
 export const WithAnItem: Story = {
-	args: {},
+	args: {
+		'onUpdate:modelValue': fn(),
+	},
 	render: (args) => {
 		return {
 			components: { HeaderBurgerMenu, HeaderBar, HeaderMenuItem, HeaderMenuSection },
@@ -115,7 +122,10 @@ export const WithAnItem: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-model="args.modelValue">
+						<HeaderBurgerMenu
+							v-model="args.modelValue"
+							@update:modelValue="args['onUpdate:modelValue']"
+						>
 							<HeaderMenuSection>
 								<HeaderMenuItem>
 									<a href="">Item 1</a>
@@ -160,7 +170,9 @@ export const WithAnItem: Story = {
 }
 
 export const Populated: Story = {
-	args: {},
+	args: {
+		'onUpdate:modelValue': fn(),
+	},
 	render: (args) => {
 		return {
 			components: {
@@ -177,7 +189,10 @@ export const Populated: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-model="args.modelValue">
+						<HeaderBurgerMenu
+							v-model="args.modelValue"
+							@update:modelValue="args['onUpdate:modelValue']"
+						>
 							<HeaderMenuSection>
 								<template #title>
 									Section 1
@@ -375,7 +390,9 @@ export const Populated: Story = {
 }
 
 export const WithScroll: Story = {
-	args: {},
+	args: {
+		'onUpdate:modelValue': fn(),
+	},
 	render: (args) => {
 		return {
 			components: { HeaderBurgerMenu, HeaderBar, HeaderMenuSection, HeaderSubMenu, HeaderMenuItem, HeaderToolbar },
@@ -387,7 +404,10 @@ export const WithScroll: Story = {
 				<HeaderToolbar />
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-model="args.modelValue">
+						<HeaderBurgerMenu
+							v-model="args.modelValue"
+							@update:modelValue="args['onUpdate:modelValue']"
+						>
 							<HeaderMenuSection>
 								<HeaderMenuItem>
 									<HeaderSubMenu>
@@ -457,7 +477,9 @@ export const WithScroll: Story = {
 }
 
 export const Generated: Story = {
-	args: {},
+	args: {
+		'onUpdate:modelValue': fn(),
+	},
 	render: (args) => {
 		return {
 			components: {
@@ -693,7 +715,10 @@ export const Generated: Story = {
 			template: `
 				<HeaderBar>
 					<template #menu>
-						<HeaderBurgerMenu v-model="args.modelValue">
+						<HeaderBurgerMenu
+							v-model="args.modelValue"
+							@update:modelValue="args['onUpdate:modelValue']"
+						>
 							<HeaderMenuSection v-for="section in menu" :key="section.title">
 								<template #title>
 									{{ section.title }}
