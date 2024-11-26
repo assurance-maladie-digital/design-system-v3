@@ -624,7 +624,7 @@ export const PrependSlot: Story = {
 			template: `
 				<HeaderBar v-bind="args">
 					<template #prepend>
-						<div style="height: 26px; background-color: RebeccaPurple;"></div>
+						<div style="height: 26px; background-color: #0c419a;"></div>
 					</template>
 				</HeaderBar>
 			`,
@@ -638,7 +638,7 @@ export const PrependSlot: Story = {
 				<template>
 					<HeaderBar>
 						<template #prepend>
-							<div style="height: 26px; background-color: RebeccaPurple;"></div>
+							<div style="height: 26px; background-color: #0c419a;"></div>
 						</template>
 					</HeaderBar>
 				</template>
@@ -670,7 +670,7 @@ export const AppendSlot: Story = {
 			template: `
 				<HeaderBar v-bind="args">
 					<template #append>
-						<div style="height: 26px; background-color: RebeccaPurple;"></div>
+						<div style="height: 26px; background-color: #0c419a;"></div>
 					</template>
 				</HeaderBar>
 			`,
@@ -684,7 +684,7 @@ export const AppendSlot: Story = {
 				<template>
 					<HeaderBar>
 						<template #append>
-							<div style="height: 26px; background-color: RebeccaPurple;"></div>
+							<div style="height: 26px; background-color: #0c419a;"></div>
 						</template>
 					</HeaderBar>
 				</template>
