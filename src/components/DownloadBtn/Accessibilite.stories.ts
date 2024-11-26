@@ -26,11 +26,8 @@ export const AccessibilitePanel: StoryObj = {
 				<div class="accessibiliteItems" style="display:flex; max-width: none !important;">
 					<v-col cols="6">
 						<div style="display:flex; margin-bottom: 10px; justify-content: space-between; align-items: center;">
-							<h5>{{ AccessibiliteItemsIndeterminate.length }} Critères à prendre en charge par le projet</h5>
+							<h5>{{ AccessibiliteItemsIndeterminate.length }} critères à prendre en charge par le projet</h5>
 							<div style="display: flex; align-items: center;">
-								<v-btn variant="tonal" color="grey" size="x-small" style="margin: 4px;font-size: 8px;"
-									   rounded>Audit
-								</v-btn>
 								<v-btn variant="tonal" color="red" size="x-small" style="margin: 4px;font-size: 8px;"
 									   rounded>Tanaguru
 								</v-btn>
@@ -78,11 +75,8 @@ export const AccessibilitePanel: StoryObj = {
 					</v-col>
 					<v-col cols="6">
 						<div style="display:flex; margin-bottom: 10px; justify-content: space-between; align-items: center;">
-							<h5>{{ AccessibiliteItemsValidated.length }} Critères pris en charge par l'équipe Design System</h5>
+							<h5>{{ AccessibiliteItemsValidated.length }} critères pris en charge par l'équipe Design System</h5>
 							<div style="display: flex; align-items: center;">
-								<v-btn variant="tonal" color="grey" size="x-small" style="margin: 4px;font-size: 8px;"
-									   rounded>Audit
-								</v-btn>
 								<v-btn variant="tonal" color="red" size="x-small" style="margin: 4px;font-size: 8px;"
 									   rounded>Tanaguru
 								</v-btn>
@@ -144,30 +138,25 @@ export const Legende: StoryObj = {
 				return { args }
 			},
 			template: `
-              <div style="font-size: 14px; display:flex; justify-content:space-between;">
-                <div class="first">
-                  <p style="color: grey;font-size: 11px; margin-bottom: 12px;">Date de conception: 20/11/2024</p>
-                  <div style="font-size: 13px;">
-                    <p>Le tableau ci-dessous liste nos recommandations suivant les <a target="blank" style="color:#0C41BD;" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#contenu">catégories du RGAA</a>.</p>
-                    <p style="margin-bottom: 12px;font-weight:bold;">Pour rappel le composant seul ne garantie pas l'accessibilité du site.</p>
-                    <p>Nous avons deux façons de relever les problèmes d'accessibilité des composants :</p>
-                    <div>
-                      <v-btn variant="tonal" color="grey" size="x-small" style="margin: 2px;font-size: 8px;" rounded>
-                        Audit
-                      </v-btn>
-                      Problèmes relevés par le projet
-                    </div>
-                    <div>
-                      <v-btn variant="tonal" color="red" size="x-small" style="margin: 2px;font-size: 8px;" rounded>
-                        Tanaguru
-                      </v-btn>
-                      Problèmes relevés par Tanaguru
-                    </div>
-                  </div>
-                </div>
-                <div style="display: flex;flex-direction: column;align-items: end;">
-                  <ul>Liens vers les audit :</ul>
-                  <a style="color:#0C41BD;" href="https://github.com/assurance-maladie-digital/design-system-v3/blob/5228330a936d5b7741d7fdd101cadd8d4b4edea2/src/components/DownloadBtn/DownloadBtn.vue#L90" target="blank">Lien n°1</a>
+			  <p style="color: grey;font-size: 11px; margin-bottom: 12px;">Date de conception: 20/11/2024</p>
+			  <div>
+				<p>Le tableau ci-dessous liste nos recommandations suivant les <a target="blank" style="color:#0C41BD;" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#contenu">catégories du RGAA</a>.</p>
+				<p style="margin-bottom: 12px;font-weight:bold;">Pour rappel le composant seul ne garantie pas
+				  l'accessibilité du site.</p>
+				<div style="font-size: 14px">
+				  <p>Nous avons deux façons de relever les problèmes d'accessibilité des composants :</p>
+				  <div>
+					<v-btn variant="tonal" color="grey" size="x-small" style="margin: 2px;font-size: 8px;" rounded>
+					  Audit
+					</v-btn>
+					Problèmes relevés par le projet
+				  </div>
+				  <div>
+					<v-btn variant="tonal" color="red" size="x-small" style="margin: 2px;font-size: 8px;" rounded>
+					  Tanaguru
+					</v-btn>
+					Problèmes relevés par Tanaguru
+				  </div>
 				</div>
 			  </div>
             `,

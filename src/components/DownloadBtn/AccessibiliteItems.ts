@@ -101,7 +101,6 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-
 	{
 		title: 'Catégorie 7 : Scripts',
 		subtitle: '7.1 Chaque script est-il, si nécessaire, compatible avec les technologies d’assistance ?',
