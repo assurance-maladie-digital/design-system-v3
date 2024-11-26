@@ -160,8 +160,6 @@ export const AccessibilitePanel: StoryObj = {
 	tags: ['!dev'],
 }
 
-
-
 export const Legende: StoryObj = {
 	args: {
 		icon: checkIcon,
@@ -205,5 +203,3 @@ export const Legende: StoryObj = {
 	},
 	tags: ['!dev'],
 }
-
-
