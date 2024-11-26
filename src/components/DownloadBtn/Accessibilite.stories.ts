@@ -8,7 +8,7 @@ const iconEye = mdiEye
 const linkICon = mdiLink
 
 export default {
-	title: 'Components/DownloadBtn/Accessibilite',
+	title: 'Composants/Boutons/DownloadBtn/Accessibilité',
 }
 
 export const AccessibilitePanel: StoryObj = {
