@@ -1,10 +1,9 @@
 import type { VariantType, DensityType } from '@/types/vuetifyTypes'
-import { cnamColorsTokens } from '@/designTokens'
 
 export const config = {
 	footer: {
 		elevation: 3,
-		color: cnamColorsTokens.parma.darken60,
+		color: 'backgroundSurface',
 		height: 'auto',
 	},
 	goTopBtn: {
@@ -12,7 +11,7 @@ export const config = {
 		density: 'compact' as DensityType,
 		icon: 'true',
 		variant: 'text' as VariantType,
-		color: cnamColorsTokens.parma.darken60,
+		color: 'backgroundSurface',
 	},
 	goTopBtnIcon: {
 		color: 'white',
