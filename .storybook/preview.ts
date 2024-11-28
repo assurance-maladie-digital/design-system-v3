@@ -7,7 +7,7 @@ import * as directives from 'vuetify/directives'
 import './storybook.css'
 import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
-import { cnamLightTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
+import { cnamLightTheme, cnamDarkTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
 import { createFlattenTheme } from '../src/designTokens/utils'
 
 const vuetify = createVuetify({
@@ -19,6 +19,7 @@ const vuetify = createVuetify({
 				dark: false,
 				colors: {
 					...cnamLightTheme,
+					...cnamDarkTheme,
 					// ...bootstrapLightTheme,
 				},
 				variables: {
