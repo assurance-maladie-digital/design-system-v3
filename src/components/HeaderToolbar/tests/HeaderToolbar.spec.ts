@@ -3,7 +3,7 @@ import { expect, describe, it } from 'vitest'
 import HeaderToolbar from '../HeaderToolbar.vue'
 import { vuetify } from '@tests/unit/setup'
 
-describe('HeaderToolbar.vue', () => {
+describe('HeaderToolbar', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(HeaderToolbar, {
 			global: {

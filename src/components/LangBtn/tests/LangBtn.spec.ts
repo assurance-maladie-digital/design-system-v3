@@ -11,7 +11,7 @@ const vuetify = createVuetify({
 	directives,
 })
 
-describe('LangBtn.vue', () => {
+describe('LangBtn', () => {
 	let wrapper: VueWrapper
 
 	afterEach(() => {
