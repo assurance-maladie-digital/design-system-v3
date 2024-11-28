@@ -5,7 +5,7 @@ import { afterAll, describe, expect, it, vi } from 'vitest'
 import HeaderNavbar from '../HeaderNavigationBar.vue'
 import HorizontalNavbar from '../HorizontalNavbar/HorizontalNavbar.vue'
 
-describe('HeaderNavbar', () => {
+describe('HeaderNavigationBar', () => {
 	vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
 		default: (fn: (...args: unknown[]) => void) => fn,
 	}))

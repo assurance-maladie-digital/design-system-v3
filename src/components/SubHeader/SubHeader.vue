@@ -13,7 +13,7 @@
 	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
 
 	const props = withDefaults(defineProps<CustomizableOptions & Widthable & {
-		hideBackBtn: boolean
+		hideBackBtn?: boolean
 		backBtnText?: string
 		titleText?: string
 		subTitleText?: string

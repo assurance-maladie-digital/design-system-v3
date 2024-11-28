@@ -7,7 +7,7 @@ import { vuetify } from '@tests/unit/setup'
 import { LogoSize } from '@/components/Logo/LogoSize'
 import { nextTick } from 'vue'
 
-describe('FooterBar.vue', () => {
+describe('FooterBar', () => {
 	const getComponentType = (item: { href: unknown }) => {
 		return item.href ? 'a' : 'RouterLink'
 	}

@@ -10,7 +10,7 @@ const vuetify = createVuetify({
 	directives,
 })
 
-describe('SocialMediaLinks.vue', () => {
+describe('SocialMediaLinks', () => {
 	let wrapper: VueWrapper
 
 	afterEach(() => {
