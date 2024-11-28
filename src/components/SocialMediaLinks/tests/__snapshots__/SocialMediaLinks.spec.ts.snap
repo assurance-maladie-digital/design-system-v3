@@ -1,12 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SocialMediaLinks.vue > renders correctly with default props 1`] = `
+exports[`SocialMediaLinks > renders correctly with default props 1`] = `
 "<div data-v-9d3df26f="" class="d-flex flex-column"><span data-v-9d3df26f="" class="vd-social-media-links-label text-subtitle-2 text--primary">Suivez-nous :</span>
   <ul data-v-9d3df26f="" class="d-flex max-width-none"></ul>
 </div>"
 `;
 
-exports[`SocialMediaLinks.vue > renders correctly with provided links 1`] = `
+exports[`SocialMediaLinks > renders correctly with provided links 1`] = `
 "<div data-v-9d3df26f="" class="d-flex flex-column"><span data-v-9d3df26f="" class="vd-social-media-links-label text-subtitle-2 text--primary">Suivez-nous :</span>
   <ul data-v-9d3df26f="" class="d-flex max-width-none">
     <li data-v-9d3df26f=""><a data-v-9d3df26f="" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-default v-btn--variant-text" href="https://twitter.com" id="social-btn-0" target="_blank" rel="noopener noreferrer" aria-label="Lien vers Twitter"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
