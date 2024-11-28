@@ -8,6 +8,7 @@ export { default as CustomSelect } from './Customs/CustomSelect/CustomSelect.vue
 export { default as CustomTextField } from './Customs/CustomTextField/CustomTextField.vue'
 export { default as DataList } from './DataList/DataList.vue'
 export { default as DataListGroup } from './DataListGroup/DataListGroup.vue'
+export { default as DialogBox } from './DialogBox/DialogBox.vue'
 export { default as DownloadBtn } from './DownloadBtn/DownloadBtn.vue'
 export { default as FooterBar } from './FooterBar/FooterBar.vue'
 export { default as FranceConnectBtn } from './FranceConnectBtn/FranceConnectBtn.vue'

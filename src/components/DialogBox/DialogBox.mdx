@@ -1,0 +1,33 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as DialogBoxStories from './DialogBox.stories';
+
+<Meta of={DialogBoxStories} />
+
+# DialogBox
+
+L’élément `DialogBox` est utilisé pour afficher une boîte de dialogue avec des bouttons d'action.
+
+<Canvas of={DialogBoxStories.Default}  />
+
+# API
+
+<Controls of={DialogBoxStories.Default} />
+
+## Text des boutons d'actions
+
+<Canvas of={DialogBoxStories.ButtonTexts} />
+
+## Masquer les boutons d'actions
+
+<Canvas of={DialogBoxStories.HideActions} />
+
+## Changer la largeur maximum de la boîte de dialogue
+
+<Canvas of={DialogBoxStories.Width} />
+
+## Changer les props des composant Vuetify enfants
+
+Ce composant utilise en interne les composants Vuetify `v-card`, `v-card-title`, `v-Icons` et `v-btn`.
+Vous pouvez modifier les props passées à ces composants en utilisant la prop `vuetifyOptions`.
+
+<Canvas of={DialogBoxStories.VuetifyOptions} />
