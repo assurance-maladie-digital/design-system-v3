@@ -15,9 +15,9 @@
 	const rules = {
 		required: (value: string | number) => !!value || 'Ce champ est requis.',
 		email: (value: string | number) =>
-			typeof value === 'string' && /.+@.+\..+/.test(value) || 'Veuillez entrer un email valide.',
+			typeof value === 'string' && (/.+@.+\..+/.test(value) || 'Veuillez entrer un email valide.'),
 		minLength: (value: string | number) =>
-			typeof value === 'string' && value.length >= 3 || 'Minimum 3 caractères requis.',
+			typeof value === 'string' && (value.length >= 3 || 'Minimum 3 caractères requis.'),
 	}
 
 	// Submit form
