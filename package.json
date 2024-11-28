@@ -67,7 +67,7 @@
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitest/coverage-v8": "^2.1.4",
     "@vue/test-utils": "^2.4.6",
-    "@vue/tsconfig": "^0.5.1",
+    "@vue/tsconfig": "^0.7.0",
     "auto-changelog": "^2.4.0",
     "axios": "^1.7.7",
     "eslint": "^9.13.0",
