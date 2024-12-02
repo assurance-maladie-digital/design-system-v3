@@ -4,7 +4,7 @@ import CustomBtnSelect from './CustomBtnSelect.vue'
 import { VIcon, VListItem, VListItemTitle } from 'vuetify/components'
 
 const meta: Meta<typeof CustomBtnSelect> = {
-	title: 'Components/CustomBtnSelect',
+	title: 'Composants/Formulaires/CustomBtnSelect',
 	component: CustomBtnSelect,
 	parameters: {
 		layout: 'fullscreen',
