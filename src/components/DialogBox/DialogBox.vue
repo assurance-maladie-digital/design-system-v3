@@ -51,8 +51,8 @@
 		))
 
 		const filteredElements = elements.filter(element => (
-			element.hasAttribute('disabled')
-			|| element.getAttribute('aria-hidden')
+			!element.hasAttribute('disabled')
+			&& !element.getAttribute('aria-hidden')
 		))
 
 		return filteredElements
