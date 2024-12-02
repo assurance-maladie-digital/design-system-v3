@@ -33,7 +33,7 @@
 		},
 		primaryInfo: {
 			type: String,
-			required: true,
+			default: 'Information principale',
 		},
 		secondaryInfo: {
 			type: String,
