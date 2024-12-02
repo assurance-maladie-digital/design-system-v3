@@ -1,8 +1,9 @@
-import { mdiAccount } from '@mdi/js' // Import explicite
+import { mdiAccount } from '@mdi/js'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import CustomBtnSelect from './CustomBtnSelect.vue'
+import { VIcon } from 'vuetify/components'
 
-const meta = {
+const meta: Meta<typeof CustomBtnSelect> = {
 	title: 'Components/CustomBtnSelect',
 	component: CustomBtnSelect,
 	parameters: {
@@ -11,7 +12,7 @@ const meta = {
 	},
 	argTypes: {
 		modelValue: { control: 'text' },
-		menuItems: { control: 'array' },
+		menuItems: { control: 'object' },
 		label: { control: 'text' },
 		menuId: { control: 'text' },
 		textKey: { control: 'text' },
@@ -23,7 +24,7 @@ const meta = {
 		isMobileView: { control: 'boolean' },
 		options: { control: 'object' },
 	},
-} as Meta<typeof CustomBtnSelect>
+}
 
 export default meta
 
@@ -36,9 +37,9 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomBtnSelect },
+			components: { CustomBtnSelect, VIcon },
 			setup() {
-				return { args, mdiAccount } // Inclut l'icône
+				return { args, mdiAccount }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
@@ -61,7 +62,7 @@ export const WithIcon: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomBtnSelect },
+			components: { CustomBtnSelect, VIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
@@ -86,7 +87,7 @@ export const MobileView: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomBtnSelect },
+			components: { CustomBtnSelect, VIcon },
 			setup() {
 				return { args, mdiAccount }
 			},

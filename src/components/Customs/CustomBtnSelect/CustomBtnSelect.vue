@@ -154,7 +154,9 @@
 						v-if="isMobileVersion && hideIcon"
 						class="font-weight-bold text-sm-caption"
 					>{{ primaryInfo }}</span>
-					<slot name="icon" />
+					<slot
+						name="icon"
+					/>
 				</VBtn>
 			</template>
 			<slot name="content">
