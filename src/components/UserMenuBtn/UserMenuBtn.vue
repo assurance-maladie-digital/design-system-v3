@@ -69,7 +69,7 @@
 				{{ mdiAccount }}
 			</VIcon>
 		</template>
-		<template #logout-item>
+		<template #footer-list-item>
 			<VListItem
 				v-if="!hideLogoutBtn"
 				class="logout"

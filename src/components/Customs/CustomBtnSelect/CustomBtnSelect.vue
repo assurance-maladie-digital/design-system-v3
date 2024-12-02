@@ -175,7 +175,7 @@
 						</VListItemTitle>
 					</VListItem>
 					<slot />
-					<slot name="logout-item" />
+					<slot name="footer-list-item" />
 				</VList>
 			</slot>
 		</VMenu>
