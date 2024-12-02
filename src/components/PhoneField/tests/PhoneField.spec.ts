@@ -9,7 +9,7 @@ const vuetify = createVuetify({
 	components,
 	directives,
 })
-describe('PhoneField.vue', () => {
+describe('PhoneField', () => {
 	it('renders correctly with default props', () => {
 		const wrapper = mount(PhoneField, {
 			global: {

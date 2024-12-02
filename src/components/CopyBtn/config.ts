@@ -1,4 +1,5 @@
 import type { VariantType, DensityType, locationType } from '@/types/vuetifyTypes'
+
 export const config = {
 	menu: {
 		location: 'end center' as locationType,
@@ -12,6 +13,7 @@ export const config = {
 		density: 'comfortable' as DensityType,
 	},
 	icon: {
+		// TODO refactor to use our theme color
 		color: 'grey-darken-20',
 	},
 }

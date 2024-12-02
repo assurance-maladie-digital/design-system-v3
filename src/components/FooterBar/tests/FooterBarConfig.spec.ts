@@ -7,7 +7,7 @@ describe('FooterBar config', () => {
 	})
 
 	it('should have correct footer color', () => {
-		expect(config.footer.color).toBe('#2f384d')
+		expect(config.footer.color).toBe('backgroundSurface')
 	})
 
 	it('should have correct footer minHeight', () => {

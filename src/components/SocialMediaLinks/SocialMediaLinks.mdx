@@ -6,7 +6,7 @@ import * as SocialMediaLinksStories from './SocialMediaLinks.stories.ts';
 
 # SocialMediaLinks
 
-Le composant `SocialMediaLinks` est utilisé pour afficher des liens de reseaux sociaux dans le componant `Footer`.
+Le composant `SocialMediaLinks` est utilisé pour afficher des liens de réseaux sociaux dans le composant `Footer`.
 
 <Canvas of={SocialMediaLinksStories.Default}  />
 
@@ -19,20 +19,24 @@ Le composant `SocialMediaLinks` est utilisé pour afficher des liens de reseaux 
 <Source dark code={`
 <script setup lang="ts">
 import SocialMediaLinks from '@cnamts/synapse'
+import { mdiFacebook, mdiLinkedin, mdiTwitter } from '@mdi/js'
 
 const links = [
-  {
-    name: 'Facebook',
-    url: 'https://www.facebook.com/cnamts',
-  },
-  {
-    name: 'Twitter',
-    url: 'https://twitter.com/cnamts',
-  },
-  {
-    name: 'Linkedin',
-    url: 'https://www.linkedin.com/company/cnamts',
-  }
+	{
+		icon: mdiLinkedin,
+		name: 'LinkedIn',
+		href: 'https://www.linkedin.com/company/assurance-maladie/',
+	},
+	{
+		icon: mdiFacebook,
+		name: 'Facebook',
+		href: 'https://twitter.com/Assur_Maladie',
+	},
+	{
+		icon: mdiTwitter,
+		name: 'Twitter',
+		href: 'https://twitter.com/Assur_Maladie',
+	},
 ]
 </script>
 

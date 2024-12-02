@@ -7,7 +7,7 @@ import * as directives from 'vuetify/directives'
 import './storybook.css'
 import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
-import { cnamLightTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
+import { cnamLightTheme, cnamDarkTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
 import { createFlattenTheme } from '../src/designTokens/utils'
 
 const vuetify = createVuetify({
@@ -19,6 +19,7 @@ const vuetify = createVuetify({
 				dark: false,
 				colors: {
 					...cnamLightTheme,
+					...cnamDarkTheme,
 					// ...bootstrapLightTheme,
 				},
 				variables: {
@@ -48,7 +49,7 @@ const preview: Preview = {
 		},
 		options: {
 			storySort: {
-				order: ['Démarrer', ['Accueil', 'Politique de confidentialité'], 'Composants', ['Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'], 'Layout', ['PageContainer'], 'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink'], 'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'], 'Formulaires', ['CustomTextField', 'CustomSelect', 'CustomInputSelect', 'DatePicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'SelectBtnField', 'UploadWorkflow'], 'Tableaux', ['PaginatedTable', 'TableToolbar'], 'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'], 'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'], 'Feedback', ['Alert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker']], 'Templates', 'Guidelines', ['Introduction', 'Couleurs', 'Customisation et thèmes', 'Typographie'], 'Fondamentaux', ['Accessibilité', 'Eco-conception']],
+				order: ['Démarrer', ['Accueil', 'Politique de confidentialité'], 'Composants', ['Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'], 'Layout', ['PageContainer'], 'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink'], 'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'], 'Formulaires', ['CustomTextField', 'CustomSelect', 'CustomInputSelect', 'DatePicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'SelectBtnField', 'UploadWorkflow'], 'Tableaux', ['PaginatedTable', 'TableToolbar'], 'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'], 'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'], 'Feedback', ['Alert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker']], 'Templates', 'Fondamentaux', ['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Customisation et thèmes'], 'Guidelines', ['Accessibilité', 'Eco-conception']],
 			},
 		},
 		controls: {

@@ -202,6 +202,30 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar v-bind="docProps" />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	
+	const docProps = {
+		sitemapRoute: '/',
+		cguRoute: '/',
+		cookiesRoute: '/',
+		legalNoticeRoute: '/',
+		a11yStatementRoute: '/',
+	}
+</script>
+				`,
+			},
+		],
 		controls: { exclude: ['logoSize', 'items'] },
 	},
 	args: {
@@ -290,6 +314,43 @@ export const Default: Story = {
 
 export const changeLinks: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar :link-items="items" />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	
+	const items = [
+        		{
+			text: 'Accueil',
+			href: '/',
+		},
+		{
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Aide',
+			href: 'https://www.ameli.fr/assure/aide',
+			ariaLabel: 'Aide (s’ouvre sur le site ameli.fr)',
+			openInNewTab: true,
+		},
+	]
+</script>
+				`,
+			},
+		],
 		controls: { include: ['linkItems'] },
 	},
 	args: {
@@ -329,6 +390,47 @@ export const changeLinks: Story = {
 
 export const slotPrepend: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar :link-items="items">
+		<template #prepend>
+			<li class="text--secondary my-3 mx-4">
+				Texte ajouté
+			</li>
+		</template>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+</script>
+				`,
+			},
+		],
 		controls: { include: ['prepend'] },
 	},
 	args: {
@@ -356,6 +458,49 @@ export const slotPrepend: Story = {
 
 export const slotAppend: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar :link-items="items">
+		<template #append>
+			<li class="text--secondary my-3 mx-4">
+				{{ currentYear }}
+			</li>
+		</template>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+	
+	const currentYear = new Date().getFullYear()
+</script>
+				`,
+			},
+		],
 		controls: { include: ['append'] },
 	},
 	args: {
@@ -383,11 +528,48 @@ export const slotAppend: Story = {
 
 export const extendedMode: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar :link-items="items">
+		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+</script>
+				`,
+			},
+		],
 		controls: { include: ['default'] },
 	},
 	args: {
 		items: items,
-		default: '<p class="text--secondary mb-0"> Contenu supplémentaire.</p>',
+		default: '<p class="text--secondary mb-0">Contenu supplémentaire.</p>',
 	},
 	render: (args) => {
 		return {
@@ -397,7 +579,7 @@ export const extendedMode: Story = {
 			},
 			template: `
 				<FooterBar :link-items="args.items">
-					<p class="text--secondary mb-0"> Contenu supplémentaire.</p>
+					<p class="text--secondary mb-0">Contenu supplémentaire.</p>
 				</FooterBar>
 			`,
 		}
@@ -406,6 +588,50 @@ export const extendedMode: Story = {
 
 export const slotLogo: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar :link-items="items">
+		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
+		<template #logo>
+			<Logo
+				:risque-pro="true"
+				aria-label="Risque Pro"
+			/>
+		</template>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	import Logo from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+</script>
+				`,
+			},
+		],
 		controls: { include: ['logo'] },
 	},
 	args: {
@@ -420,7 +646,7 @@ export const slotLogo: Story = {
 			},
 			template: `
 				<FooterBar :link-items="args.items">
-					<p class="text--secondary mb-0"> Contenu supplémentaire.</p>
+					<p class="text--secondary mb-0">Contenu supplémentaire.</p>
 					<template #logo>
 						<Logo
 							:risque-pro="true"
@@ -435,6 +661,93 @@ export const slotLogo: Story = {
 
 export const collapsibleList: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar :link-items="items">
+		<VRow class="max-width-none">
+			<VCol cols="12" sm="6">
+				<CollapsibleList
+					:items="remboursementItems"
+					list-title="Remboursement"
+					class="theme--dark"
+				/>
+			</VCol>
+			<VCol cols="12" sm="6">
+				<CollapsibleList
+					:items="healthItems"
+					list-title="Santé"
+					class="theme--dark"
+				/>
+			</VCol>
+		</VRow>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	import CollapsibleList from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+	
+	const remboursementItems = [
+        		{
+			text: 'Ce qui est remboursé',
+			href: 'https://www.ameli.fr/assure/remboursements/rembourse',
+		},
+		{
+			text: 'Ce qui reste à votre charge',
+			href: 'https://www.ameli.fr/assure/remboursements/reste-charge',
+		},
+		{
+			text: 'Être bien remboursé',
+			href: 'https://www.ameli.fr/assure/remboursements/etre-bien-rembourse',
+		},
+	]
+	
+	const healthItems = [
+		{
+			text: 'Mon espace santé',
+			href: 'https://www.ameli.fr/assure/sante/mon-espace-sante',
+		},
+		{
+			text: 'Accomplir les bons gestes',
+			href: 'https://www.ameli.fr/assure/sante/bons-gestes',
+		},
+		{
+			text: 'Réagir en cas d’urgence',
+			href: 'https://www.ameli.fr/assure/sante/urgence',
+		},
+		{
+			text: 'Télésanté',
+			href: 'https://www.ameli.fr/assure/sante/telesante',
+		},
+	]
+</script>
+				`,
+			},
+		],
 		controls: { include: ['default'] },
 	},
 	args: {
@@ -488,6 +801,46 @@ export const collapsibleList: Story = {
 
 export const hideSectionLogo: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar 
+		:link-items="items"
+		hide-logo
+	>
+		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+</script>
+				`,
+			},
+		],
 		controls: { include: ['hideLogo'] },
 	},
 	args: {
@@ -502,7 +855,7 @@ export const hideSectionLogo: Story = {
 			},
 			template: `
         <FooterBar :hide-logo="args.hideLogo" :link-items="args.items">
-          <p class="text--secondary mb-0"> Contenu supplémentaire.</p>
+          <p class="text--secondary mb-0">Contenu supplémentaire.</p>
         </FooterBar>
       `,
 		}
@@ -511,6 +864,46 @@ export const hideSectionLogo: Story = {
 
 export const hideSectionSocialMediaLinks: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar 
+		:link-items="items"
+		hide-social-media-link
+	>
+		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+</script>
+				`,
+			},
+		],
 		controls: { include: ['hideSocialMediaLinks'] },
 	},
 	args: {
@@ -525,7 +918,7 @@ export const hideSectionSocialMediaLinks: Story = {
 			},
 			template: `
         <FooterBar :hide-social-media-links="args.hideSocialMediaLinks" :link-items="args.items">
-          <p class="text--secondary mb-0"> Contenu supplémentaire.</p>
+          <p class="text--secondary mb-0">Contenu supplémentaire.</p>
         </FooterBar>
       `,
 		}
@@ -534,6 +927,70 @@ export const hideSectionSocialMediaLinks: Story = {
 
 export const customSocialMediaLinks: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar 
+		:link-items="items"
+		:social-media-links="socialMediaLinks"
+	>
+		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	import { mdiFacebook, mdiTwitter, mdiLinkedin, mdiYoutube } from '@mdi/js'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+	
+	const socialMediaLinks = [
+		{
+			icon: mdiFacebook,
+			name: 'Facebook',
+			href: 'https://www.facebook.com',
+		},
+		{
+			icon: mdiTwitter,
+			name: 'Twitter',
+			href: 'https://www.twitter.com',
+		},
+		{
+			icon: mdiLinkedin,
+			name: 'LinkedIn',
+			href: 'https://www.linkedin.com',
+		},
+		{
+			icon: mdiYoutube,
+			name: 'YouTube',
+			href: 'https://youtube.com',
+		},
+	]
+</script>
+				`,
+			},
+		],
 		controls: { include: ['socialMediaLinks'] },
 	},
 	args: {
@@ -569,7 +1026,7 @@ export const customSocialMediaLinks: Story = {
 			},
 			template: `
 		<FooterBar :social-media-links="args.socialMediaLinks" :link-items="args.items">
-		  <p class="text--secondary mb-0"> Contenu supplémentaire.</p>
+		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
 		}
@@ -578,6 +1035,46 @@ export const customSocialMediaLinks: Story = {
 
 export const lightTheme: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar 
+		:link-items="items"
+		light
+	>
+		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+</script>
+				`,
+			},
+		],
 		controls: { include: ['light'] },
 	},
 	args: {
@@ -592,7 +1089,7 @@ export const lightTheme: Story = {
 			},
 			template: `
 		<FooterBar :light="args.light" :link-items="args.items">
-		  <p class="text--secondary mb-0"> Contenu supplémentaire.</p>
+		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
 		}
@@ -601,6 +1098,57 @@ export const lightTheme: Story = {
 
 export const customTheme: Story = {
 	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar 
+		:link-items="items"
+		:vuetify-options="vuetifyOptions"
+	>
+		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import FooterBar from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+	
+	const vuetifyOptions = {
+		footer: {
+			elevation: 3,
+			color: 'rgb(50, 53, 53)',
+			height: 'auto',
+		},
+		goTopBtn: {
+			color: 'rgb(50, 53, 53)',
+		},
+	}
+</script>
+				`,
+			},
+		],
 		controls: { include: ['vuetifyOptions'] },
 	},
 	args: {
@@ -624,7 +1172,7 @@ export const customTheme: Story = {
 			},
 			template: `
 		<FooterBar :vuetify-options="args.vuetifyOptions" :link-items="args.items">
-		  <p class="text--secondary mb-0"> Contenu supplémentaire.</p>
+		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
 		}
