@@ -56,7 +56,6 @@ describe('CustomBtnSelect', () => {
 		expect(listItem).toBeTruthy()
 		await listItem?.trigger('click')
 
-		// Vérifier que l'événement "update:modelValue" a été émis
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')![0]).toEqual([
 			{ text: 'Option 1', value: 'option1' },
@@ -125,8 +124,8 @@ describe('CustomBtnSelect', () => {
 			},
 			props: {
 				primaryInfo: 'John Doe',
-				isMobileView: true, // Simule la version mobile
-				hideIcon: true, // Cache l'icône
+				isMobileView: true,
+				hideIcon: true,
 			},
 		})
 
@@ -148,7 +147,6 @@ describe('CustomBtnSelect', () => {
 			},
 		})
 
-		// Vérifiez que l'élément <span> n'existe pas
 		const span = wrapper.find('span.font-weight-bold.text-sm-caption')
 		expect(span.exists()).toBe(false)
 	})

@@ -4,7 +4,7 @@
 
 	const props = defineProps({
 		modelValue: {
-			type: [Object, String],
+			type: [Object, String, null],
 			default: null,
 		},
 		menuItems: {
@@ -111,6 +111,11 @@
 
 	const generatedId = ref(`custom-btn-select-${Math.random().toString(36).substring(7)}`)
 
+	defineExpose({
+		isOpen,
+		formattedItems,
+		selectedItem,
+	})
 </script>
 
 <template>
