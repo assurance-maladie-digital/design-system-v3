@@ -194,6 +194,7 @@ export const Default: Story = {
 			>Toggle DialogBox</VBtn>
 			<DialogBox
 				v-bind="args"
+				@confirm="args.modelValue = false"
 				@update:modelValue="args.modelValue = $event"
 			>
 				{{ args.default }}
@@ -214,6 +215,7 @@ export const Default: Story = {
 					<DialogBox
 						v-model="dialogOpen"
 						title="DialogBox title"
+						@confirm="dialogOpen = false"
 					>
 						DialogBox content
 					</DialogBox>
@@ -227,7 +229,7 @@ export const Default: Story = {
 					import { DialogBox } from '@cnamts/synapse'
 					import { ref } from 'vue'
 
-					const dialogOpen = ref(true)
+					const dialogOpen = ref(false)
 				</script>
 				`,
 			},
@@ -260,6 +262,7 @@ export const ButtonTexts: Story = {
 			<DialogBox
 				v-bind="args"
 				@update:modelValue="args.modelValue = $event"
+				@confirm="args.modelValue = false"
 			>
 				{{ args.default }}
 			</DialogBox>
@@ -281,6 +284,7 @@ export const ButtonTexts: Story = {
 						title="DialogBox title"
 						cancelBtnText="Retour"
 						confirmBtnText="Valider"
+						@confirm="dialogOpen = false"
 					>
 						DialogBox content
 					</DialogBox>
@@ -294,7 +298,7 @@ export const ButtonTexts: Story = {
 					import { DialogBox } from '@cnamts/synapse'
 					import { ref } from 'vue'
 
-					const dialogOpen = ref(true)
+					const dialogOpen = ref(false)
 				</script>
 				`,
 			},
@@ -359,7 +363,74 @@ export const HideActions: Story = {
 					import { DialogBox } from '@cnamts/synapse'
 					import { ref } from 'vue'
 
-					const dialogOpen = ref(true)
+					const dialogOpen = ref(false)
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const Persistent: Story = {
+	args: {
+		'modelValue': false,
+		'title': 'DialogBox title',
+		'default': 'DialogBox content',
+		'persistent': true,
+		'onCancel': fn(),
+		'onConfirm': fn(),
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DialogBox, VBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+			<VBtn
+				@click="args.modelValue = !args.modelValue"
+				color="primary"
+			>Toggle DialogBox</VBtn>
+			<DialogBox
+				v-bind="args"
+				@update:modelValue="args.modelValue = $event"
+				@confirm="args.modelValue = false"
+			>
+				{{ args.default }}
+			</DialogBox>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<VBtn
+						color="primary"
+						@click="dialogOpen = !dialogOpen"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-model="dialogOpen"
+						title="DialogBox title"
+						Persistent
+						@confirm="dialogOpen = false"
+					>
+						DialogBox content
+					</DialogBox>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DialogBox } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const dialogOpen = ref(false)
 				</script>
 				`,
 			},
@@ -432,7 +503,76 @@ export const ActionsSlot: Story = {
 					import { DialogBox } from '@cnamts/synapse'
 					import { ref } from 'vue'
 
-					const dialogOpen = ref(true)
+					const dialogOpen = ref(false)
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const TitleSlot: Story = {
+	args: {
+		'modelValue': false,
+		'default': 'DialogBox content',
+		'onCancel': fn(),
+		'onConfirm': fn(),
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DialogBox, VBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+			<VBtn
+				@click="args.modelValue = !args.modelValue"
+				color="primary"
+			>Toggle DialogBox</VBtn>
+			<DialogBox
+				v-bind="args"
+				@update:modelValue="args.modelValue = $event"
+			>
+				<template #title>
+					<VBtn
+						color="primary"
+					>Title slot</VBtn>
+				</template>
+				{{ args.default }}
+			</DialogBox>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<VBtn
+						color="primary"
+						@click="dialogOpen = !dialogOpen"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-model="dialogOpen"
+					>
+						<template #title>
+							<VBtn color="primary">Title slot</VBtn>
+						</template>
+						DialogBox content
+					</DialogBox>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DialogBox } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const dialogOpen = ref(false)
 				</script>
 				`,
 			},
@@ -464,6 +604,7 @@ export const Width: Story = {
 				<DialogBox
 					v-bind="args"
 					@update:modelValue="args.modelValue = $event"
+					@confirm="args.modelValue = false"
 				>
 					{{ args.default }}
 				</DialogBox>
@@ -484,6 +625,7 @@ export const Width: Story = {
 							v-model="dialogOpen"
 							title="DialogBox title"
 							width="500px"
+							@confirm="dialogOpen = false"
 						>
 							DialogBox content
 						</DialogBox>
@@ -497,7 +639,7 @@ export const Width: Story = {
 						import { DialogBox } from '@cnamts/synapse'
 						import { ref } from 'vue'
 	
-						const dialogOpen = ref(true)
+						const dialogOpen = ref(false)
 					</script>
 					`,
 			},
@@ -552,6 +694,7 @@ export const VuetifyOptions: Story = {
 			<DialogBox
 				v-bind="args"
 				@update:modelValue="args.modelValue = $event"
+				@confirm="args.modelValue = false"
 			>
 				{{ args.default }}
 			</DialogBox>
@@ -571,6 +714,7 @@ export const VuetifyOptions: Story = {
 					<DialogBox
 						v-model="dialogOpen"
 						title="DialogBox title"
+						@confirm="dialogOpen = false"
 					>
 						DialogBox content
 					</DialogBox>
@@ -584,7 +728,7 @@ export const VuetifyOptions: Story = {
 					import { DialogBox } from '@cnamts/synapse'
 					import { ref } from 'vue'
 
-					const dialogOpen = ref(true)
+					const dialogOpen = ref(false)
 				</script>
 				`,
 			},

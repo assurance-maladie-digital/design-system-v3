@@ -46,24 +46,14 @@
 			return []
 		}
 
-		const elements = Array.from(
-			parentNode.querySelectorAll(
-				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-			),
-		) as HTMLElement[]
+		const elements = Array.from<HTMLElement>(parentNode.querySelectorAll(
+			'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+		))
 
-		const filteredElements: HTMLElement[] = []
-
-		elements.forEach((element) => {
-			if (
-				element.hasAttribute('disabled')
-				|| element.getAttribute('aria-hidden')
-			) {
-				return
-			}
-
-			filteredElements.push(element)
-		})
+		const filteredElements = elements.filter(element => (
+			element.hasAttribute('disabled')
+			|| element.getAttribute('aria-hidden')
+		))
 
 		return filteredElements
 	}
@@ -93,8 +83,8 @@
 	<VDialog
 		v-model="dialog"
 		v-bind="$attrs"
-		:width="width"
-		:persistent="persistent"
+		:width="props.width"
+		:persistent="props.persistent"
 		:retain-focus="false"
 		aria-modal="true"
 		class="vd-dialog-box"
@@ -104,7 +94,7 @@
 			v-bind="options.card"
 			id="dialogContent"
 			ref="dialogContent"
-			:aria-labelledby="title ? title : 'dialogContent'"
+			:aria-labelledby="props.title ? props.title : 'dialogContent'"
 		>
 			<VCardTitle v-bind="options.cardTitle">
 				<slot name="title">
@@ -112,14 +102,14 @@
 						v-if="title"
 						class="text-h6 font-weight-bold"
 					>
-						{{ title }}
+						{{ props.title }}
 					</h2>
 				</slot>
 
 				<VSpacer v-bind="options.spacer" />
 
 				<VBtn
-					v-if="!persistent"
+					v-if="!props.persistent"
 					v-bind="options.closeBtn"
 					:aria-label="locales.closeBtn"
 					@click="dialog = false"
@@ -132,7 +122,7 @@
 			<slot />
 
 			<div
-				v-if="!hideActions"
+				v-if="!props.hideActions"
 				v-bind="options.actionsCtn"
 				class="vd-dialog-box-actions-ctn"
 			>
@@ -143,7 +133,7 @@
 						v-bind="options.cancelBtn"
 						@click="$emit('cancel')"
 					>
-						{{ cancelBtnText }}
+						{{ props.cancelBtnText }}
 					</VBtn>
 
 					<VBtn
@@ -151,7 +141,7 @@
 						data-test-id="confirm-btn"
 						@click="$emit('confirm')"
 					>
-						{{ confirmBtnText }}
+						{{ props.confirmBtnText }}
 					</VBtn>
 				</slot>
 			</div>
