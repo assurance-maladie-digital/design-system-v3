@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, useSlots } from 'vue'
+	import { ref, watch, computed, onMounted, useSlots } from 'vue'
 	import { useDisplay } from 'vuetify'
 
 	const props = defineProps({
@@ -67,6 +67,15 @@
 		isOpen.value = !isOpen.value
 	}
 
+	const buttonRef = ref<HTMLElement | null>(null)
+	const buttonWidth = ref('')
+
+	onMounted(() => {
+		if (buttonRef.value && !isMobileVersion.value) {
+			buttonWidth.value = `${buttonRef.value.getBoundingClientRect().width}px`
+		}
+	})
+
 	const selectItem = (item: unknown) => {
 		selectedItem.value = item as string | Record<string, unknown> | null
 		emit('update:modelValue', item)
@@ -119,7 +128,10 @@
 </script>
 
 <template>
-	<div class="vd-user-menu-btn-ctn d-inline-block">
+	<div
+		ref="buttonRef"
+		class="vd-user-menu-btn-ctn d-inline-block"
+	>
 		<VMenu
 			:id="generatedId"
 			:disabled="!hasListContent"
@@ -162,6 +174,7 @@
 			<slot name="content">
 				<VList
 					v-if="hasListContent"
+					:style="`min-width: ${buttonWidth}; max-width: ${buttonWidth}`"
 					v-bind="props.options['list']"
 				>
 					<VListItem
