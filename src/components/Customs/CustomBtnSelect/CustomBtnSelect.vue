@@ -154,32 +154,45 @@
 					}"
 					@click="toggleMenu"
 				>
-					<span class="d-sr-only">{{ label }}</span>
-					<span
-						v-if="!isMobileVersion"
-						class="d-flex flex-column align-end"
+					<div
+						:class="['text-'+props?.options['btn']?.color]"
+						class="d-flex"
 					>
-						<span class="font-weight-bold">{{ primaryInfo }}</span>
-						<span class="text-grey text-darken-2 font-weight-medium">{{ secondaryInfo }}</span>
-					</span>
-					<span
-						v-if="isMobileVersion && hideIcon"
-						class="font-weight-bold text-sm-caption"
-					>{{ primaryInfo }}</span>
-					<slot
-						name="icon"
-					/>
+						<span class="d-sr-only">{{ props.label }}</span>
+						<span
+							v-if="!isMobileVersion"
+							class="d-flex flex-column align-end py-1 mr-1"
+						>
+							<span
+								:class="`text-${props?.options['btn']?.textColor}`"
+								class="font-weight-bold"
+							>{{ props.primaryInfo }}
+							</span>
+							<span
+								:class="`text-${props?.options['btn']?.textColor}`"
+								class="text-grey text-darken-2 font-weight-medium"
+							>{{ props.secondaryInfo }}
+							</span>
+						</span>
+						<span
+							v-if="isMobileVersion && props.hideIcon"
+							:class="`text-${props?.options['btn']?.textColor}`"
+							class="font-weight-bold text-sm-caption"
+						>{{ props.primaryInfo }}</span>
+						<slot name="icon" />
+					</div>
 				</VBtn>
 			</template>
 			<slot name="content">
 				<VList
 					v-if="hasListContent"
-					:style="`min-width: ${buttonWidth}; max-width: ${buttonWidth}`"
+					:style="`min-width: ${buttonWidth}; max-width: ${buttonWidth};`"
 					v-bind="props.options['list']"
 				>
 					<VListItem
 						v-for="(item, index) in formattedItems"
 						:key="index"
+						:class="`text-${props?.options['list']?.textColor}`"
 						v-bind="props.options['list']"
 						@click="selectItem(item)"
 					>
@@ -200,6 +213,7 @@
 
 .vd-user-menu-btn-ctn {
   position: relative;
+  z-index: 1;
 }
 
 .vd-user-menu-btn {
@@ -223,5 +237,13 @@
 
 :deep(.vd-user-menu-btn:focus > .v-btn__overlay) {
   opacity: 0 !important;
+}
+
+.vd-user-menu-btn-ctn .v-menu__content {
+
+}
+
+:deep(.v-overlay__content) {
+  left: 0px !important;
 }
 </style>

@@ -53,7 +53,7 @@ import CustomBtnSelect from './CustomBtnSelect.vue'
 import { mdiAccount } from '@mdi/js'
 
 const args = {
-  primaryInfo: 'John Doe',
+  primaryInfo: 'Albert Camus',
   menuItems: ['Option 1', 'Option 2']
 }
 </script>
@@ -62,7 +62,7 @@ const args = {
 		],
 	},
 	args: {
-		primaryInfo: 'John Doe',
+		primaryInfo: 'Albert Camus',
 		menuItems: ['Option 1', 'Option 2'],
 	},
 	render: (args) => {
@@ -102,7 +102,7 @@ export const MobileView: Story = {
 		],
 	},
 	args: {
-		primaryInfo: 'John Doe',
+		primaryInfo: 'Albert Camus',
 		menuItems: ['Option 1', 'Option 2'],
 		isMobileView: true,
 	},
@@ -188,7 +188,7 @@ export const WithLogoutItemSlot: Story = {
 		],
 	},
 	args: {
-		primaryInfo: 'John Doe',
+		primaryInfo: 'Albert Camus',
 		menuItems: ['Option 1', 'Option 2'],
 	},
 	render: (args) => {
@@ -290,9 +290,9 @@ export const WithStyledOptions: Story = {
 	args: {
 		menuItems: ['Option 1', 'Option 2'],
 		options: {
-			menu: { color: 'secondary' },
-			btn: { variant: 'outlined' },
-			list: { dense: true },
+			menu: { height: '200px' },
+			btn: { variant: 'outlined', textColor: 'primary', color: 'primary' },
+			list: { dense: true, textColor: 'primary' },
 		},
 	},
 	render: (args) => {
