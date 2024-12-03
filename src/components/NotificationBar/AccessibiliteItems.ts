@@ -6,7 +6,7 @@ export const AccessibiliteItemsIndeterminate = [
 		subtitle: '1.4 Pour chaque image utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative permet-elle d’identifier la nature et la fonction de l’image ?',
 		items: [
 			{
-	
+
 				precision: '1.4.1 Pour chaque image (balise <img>) utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative est-elle pertinente ?',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.4.1',
 				solution: [{
@@ -15,10 +15,10 @@ export const AccessibiliteItemsIndeterminate = [
 					info3: '3. Si c’est le cas pour chaque image, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
-	
+
 			},
 			{
-	
+
 				precision: ' 1.4.6 Pour chaque image vectorielle (balise <svg>) utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative est-elle pertinente ?',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.4.6',
 				solution: [{
@@ -27,9 +27,9 @@ export const AccessibiliteItemsIndeterminate = [
 					info3: '3. Si c’est le cas pour chaque image, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
-	
+
 			},
-	
+
 		],
 	},
 	{
@@ -52,7 +52,7 @@ export const AccessibiliteItemsIndeterminate = [
 		],
 	},
 	{
-		title: "Catégorie 10 : Présentation de l'information",
+		title: 'Catégorie 10 : Présentation de l\'information',
 		subtitle: '10.8 Pour chaque page web, les contenus cachés ont-ils vocation à être ignorés par les technologies d’assistance',
 		items: [
 			{
@@ -61,11 +61,11 @@ export const AccessibiliteItemsIndeterminate = [
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#10.8.1',
 				solution: [{
 					info1: '1. Retrouver les contenus cachés (éléments pourvus de l’attribut hidden ou de l’attribut WAI-ARIA aria-hidden, ou bien d’une classe ou d’un ensemble de styles CSS susceptibles de masquer le contenu)',
-					info2: '2. Pour chaque contenu caché, vérifier que :'+
-    						'Soit le contenu caché a vocation à être ignoré par les technologies d’assistance (un élément statistique de visites par exemple) ;'+
-    						'Soit le contenu caché n’a pas vocation à être ignoré par les technologies d’assistance, et dans ce cas il est rendu restituable par les technologies d’assistance au moyen :'+
-        					'Soit d’une action de l’utilisateur réalisable au clavier ou par tout dispositif de pointage sur un élément précédent le contenu caché ;'+
-        					'Soit d’une fonction de programmation qui repositionne le focus sur le contenu',
+					info2: '2. Pour chaque contenu caché, vérifier que :'
+						+ 'Soit le contenu caché a vocation à être ignoré par les technologies d’assistance (un élément statistique de visites par exemple) ;'
+						+ 'Soit le contenu caché n’a pas vocation à être ignoré par les technologies d’assistance, et dans ce cas il est rendu restituable par les technologies d’assistance au moyen :'
+						+ 'Soit d’une action de l’utilisateur réalisable au clavier ou par tout dispositif de pointage sur un élément précédent le contenu caché ;'
+						+ 'Soit d’une fonction de programmation qui repositionne le focus sur le contenu',
 					info3: '3. Si c’est le cas pour chaque contenu caché, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
@@ -131,24 +131,24 @@ export const AccessibiliteItemsValidated = [
 		items: [
 
 			{
-				precision: ' 7.1.3 Chaque script qui génère ou contrôle un composant d’interface vérifie-t-il ces conditions : '+
-				'Le composant possède un nom pertinent ;' +
-				'Le nom accessible du composant contient au moins l’intitulé visible ;' +
-				'Le composant possède un rôle pertinent.',
+				precision: ' 7.1.3 Chaque script qui génère ou contrôle un composant d’interface vérifie-t-il ces conditions : '
+					+ 'Le composant possède un nom pertinent ;'
+					+ 'Le nom accessible du composant contient au moins l’intitulé visible ;'
+					+ 'Le composant possède un rôle pertinent.',
 
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#7.1.3',
 				solution: [{
 					info1: '1. Pour chacun des composants d’interface ayant validé le test 7.1.1, vérifier que le composant d’interface possède : ',
 					info2: '2. Un nom pertinent (intitulé visible) et un rôle pertinent',
-					info3: '3. Si le composant d’interface possède un nom accessible, vérifier que ce nom est pertinent et contient au moins l’intitulé visible.'
-					}],
+					info3: '3. Si le composant d’interface possède un nom accessible, vérifier que ce nom est pertinent et contient au moins l’intitulé visible.',
+				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
 
 			},
 
 		],
 	},
-	
+
 	{
 		title: 'Catégorie 8 : Eléments Obligatoires',
 		subtitle: '8.9 Dans chaque page web, les balises ne doivent pas être utilisées uniquement à des fins de présentation',
@@ -159,9 +159,9 @@ export const AccessibiliteItemsValidated = [
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#8.9.1',
 				solution: [{
 					info1: '1. Retrouver dans le document l’ensemble des éléments sémantiques utilisés à des fins de présentation ;',
-					info2: '2. Pour chacun de ces éléments, vérifier que :'+
-    						'L’élément est pourvu d’un attribut role=“presentation” ;'+
-    						'L’utilisation de cet élément à des fins de présentation reste justifée',
+					info2: '2. Pour chacun de ces éléments, vérifier que :'
+						+ 'L’élément est pourvu d’un attribut role=“presentation” ;'
+						+ 'L’utilisation de cet élément à des fins de présentation reste justifée',
 					info3: '3. Si c’est le cas, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
@@ -170,7 +170,5 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-	
-	
 
 ]

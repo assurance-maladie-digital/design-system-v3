@@ -101,7 +101,6 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-
 	{
 		title: 'Catégorie 7 : Scripts',
 		subtitle: '7.1 Chaque script est-il, si nécessaire, compatible avec les technologies d’assistance ?',
@@ -119,28 +118,6 @@ export const AccessibiliteItemsValidated = [
 						+ ' Le nom du composant est cohérent avec l’état de la fonctionnalité ou des contenus contrôlés (par exemple pour une fonctionnalité permettant d’afficher ou de masquer une zone de contenu).',
 					info2: '2. Sinon, vérifier la présence d’un composant d’interface accessible permettant d’accéder aux mêmes fonctionnalités',
 					info3: '3. Si c’est le cas le test est validé',
-				}],
-				expertise: ExpertiseLevelEnum.DESIGN,
-
-			},
-
-		],
-	},
-
-	{
-		title: 'Catégorie 8 : Eléments Obligatoires',
-		subtitle: '8.9 Dans chaque page web, les balises ne doivent pas être utilisées uniquement à des fins de présentation',
-		items: [
-
-			{
-				precision: ' 8.9.1 Dans chaque page web les balises (à l’exception de <div>, <span> et <table>) ne doivent pas être utilisées uniquement à des fins de présentation. Cette règle est-elle respectée',
-				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#8.9.1',
-				solution: [{
-					info1: '1. Retrouver dans le document l’ensemble des éléments sémantiques utilisés à des fins de présentation ;',
-					info2: '2. Pour chacun de ces éléments, vérifier que :'
-						+ 'L’élément est pourvu d’un attribut role=“presentation” ;'
-						+ 'L’utilisation de cet élément à des fins de présentation reste justifée',
-					info3: '3. Si c’est le cas, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
 

@@ -6,7 +6,7 @@ export const AccessibiliteItemsIndeterminate = [
 		subtitle: '1.4 Pour chaque image utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative permet-elle d’identifier la nature et la fonction de l’image ?',
 		items: [
 			{
-	
+
 				precision: '1.4.1 Pour chaque image (balise <img>) utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative est-elle pertinente ?',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.4.1',
 				solution: [{
@@ -15,10 +15,10 @@ export const AccessibiliteItemsIndeterminate = [
 					info3: '3. Si c’est le cas pour chaque image, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
-	
+
 			},
 			{
-	
+
 				precision: ' 1.4.6 Pour chaque image vectorielle (balise <svg>) utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative est-elle pertinente ?',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.4.6',
 				solution: [{
@@ -27,9 +27,9 @@ export const AccessibiliteItemsIndeterminate = [
 					info3: '3. Si c’est le cas pour chaque image, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
-	
+
 			},
-	
+
 		],
 	},
 
@@ -89,24 +89,24 @@ export const AccessibiliteItemsValidated = [
 		items: [
 
 			{
-				precision: ' 7.1.3 Chaque script qui génère ou contrôle un composant d’interface vérifie-t-il ces conditions : '+
-				'Le composant possède un nom pertinent ;' +
-				'Le nom accessible du composant contient au moins l’intitulé visible ;' +
-				'Le composant possède un rôle pertinent.',
+				precision: ' 7.1.3 Chaque script qui génère ou contrôle un composant d’interface vérifie-t-il ces conditions : '
+					+ 'Le composant possède un nom pertinent ;'
+					+ 'Le nom accessible du composant contient au moins l’intitulé visible ;'
+					+ 'Le composant possède un rôle pertinent.',
 
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#7.1.3',
 				solution: [{
 					info1: '1. Pour chacun des composants d’interface ayant validé le test 7.1.1, vérifier que le composant d’interface possède : ',
 					info2: '2. Un nom pertinent (intitulé visible) et un rôle pertinent',
-					info3: '3. Si le composant d’interface possède un nom accessible, vérifier que ce nom est pertinent et contient au moins l’intitulé visible.'
-					}],
+					info3: '3. Si le composant d’interface possède un nom accessible, vérifier que ce nom est pertinent et contient au moins l’intitulé visible.',
+				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
 
 			},
 
 		],
 	},
-	
+
 	{
 		title: 'Catégorie 8 : Eléments Obligatoires',
 		subtitle: '8.9 Dans chaque page web, les balises ne doivent pas être utilisées uniquement à des fins de présentation',
@@ -117,9 +117,9 @@ export const AccessibiliteItemsValidated = [
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#8.9.1',
 				solution: [{
 					info1: '1. Retrouver dans le document l’ensemble des éléments sémantiques utilisés à des fins de présentation ;',
-					info2: '2. Pour chacun de ces éléments, vérifier que :'+
-    						'L’élément est pourvu d’un attribut role=“presentation” ;'+
-    						'L’utilisation de cet élément à des fins de présentation reste justifée',
+					info2: '2. Pour chacun de ces éléments, vérifier que :'
+						+ 'L’élément est pourvu d’un attribut role=“presentation” ;'
+						+ 'L’utilisation de cet élément à des fins de présentation reste justifée',
 					info3: '3. Si c’est le cas, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
@@ -128,7 +128,5 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-	
-	
 
 ]
