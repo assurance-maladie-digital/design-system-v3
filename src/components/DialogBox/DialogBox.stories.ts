@@ -6,6 +6,14 @@ import { fn } from '@storybook/test'
 const meta = {
 	title: 'Composants/Feedback/DialogBox',
 	component: DialogBox,
+	parameters: {
+		layout: 'fullscreen',
+		docs: {
+			controls: {
+				exclude: ['cancel', 'confirm', 'update:modelValue'],
+			},
+		},
+	},
 	argTypes: {
 		'modelValue': {
 			control: 'boolean',
@@ -159,13 +167,6 @@ const meta = {
 			},
 		},
 	},
-	parameters: {
-		docs: {
-			controls: {
-				exclude: ['cancel', 'confirm', 'update:modelValue'],
-			},
-		},
-	},
 } satisfies Meta<typeof DialogBox>
 
 export default meta
@@ -188,18 +189,20 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-			<VBtn
-				@click="args.modelValue = !args.modelValue"
-				color="primary"
-			>Toggle DialogBox</VBtn>
-			<DialogBox
-				v-bind="args"
-				@confirm="args.modelValue = false"
-				@cancel="args.modelValue = false"
-				@update:modelValue="args.modelValue = $event"
-			>
-				{{ args.default }}
-			</DialogBox>
+				<div class="pa-4">
+					<VBtn
+						@click="args.modelValue = !args.modelValue"
+						color="primary"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-bind="args"
+						@confirm="args.modelValue = false"
+						@cancel="args.modelValue = false"
+						@update:modelValue="args.modelValue = $event"
+					>
+						{{ args.default }}
+					</DialogBox>
+				</div>
 			`,
 		}
 	},
@@ -257,18 +260,20 @@ export const ButtonTexts: Story = {
 				return { args }
 			},
 			template: `
-			<VBtn
-				@click="args.modelValue = !args.modelValue"
-				color="primary"
-			>Toggle DialogBox</VBtn>
-			<DialogBox
-				v-bind="args"
-				@update:modelValue="args.modelValue = $event"
-				@confirm="args.modelValue = false"
-				@cancel="args.modelValue = false"
-			>
-				{{ args.default }}
-			</DialogBox>
+				<div class="pa-4">
+					<VBtn
+						@click="args.modelValue = !args.modelValue"
+						color="primary"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-bind="args"
+						@update:modelValue="args.modelValue = $event"
+						@confirm="args.modelValue = false"
+						@cancel="args.modelValue = false"
+					>
+						{{ args.default }}
+					</DialogBox>
+				</div>
 			`,
 		}
 	},
@@ -327,16 +332,18 @@ export const HideActions: Story = {
 				return { args }
 			},
 			template: `
-			<VBtn
-				@click="args.modelValue = !args.modelValue"
-				color="primary"
-			>Toggle DialogBox</VBtn>
-			<DialogBox
-				v-bind="args"
-				@update:modelValue="args.modelValue = $event"
-			>
-				{{ args.default }}
-			</DialogBox>
+				<div class="pa-4">
+					<VBtn
+						@click="args.modelValue = !args.modelValue"
+						color="primary"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-bind="args"
+						@update:modelValue="args.modelValue = $event"
+					>
+						{{ args.default }}
+					</DialogBox>
+				</div>
 			`,
 		}
 	},
@@ -392,18 +399,20 @@ export const Persistent: Story = {
 				return { args }
 			},
 			template: `
-			<VBtn
-				@click="args.modelValue = !args.modelValue"
-				color="primary"
-			>Toggle DialogBox</VBtn>
-			<DialogBox
-				v-bind="args"
-				@update:modelValue="args.modelValue = $event"
-				@confirm="args.modelValue = false"
-				@cancel="args.modelValue = false"
-			>
-				{{ args.default }}
-			</DialogBox>
+				<div class="pa-4">
+					<VBtn
+						@click="args.modelValue = !args.modelValue"
+						color="primary"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-bind="args"
+						@update:modelValue="args.modelValue = $event"
+						@confirm="args.modelValue = false"
+						@cancel="args.modelValue = false"
+					>
+						{{ args.default }}
+					</DialogBox>
+				</div>
 			`,
 		}
 	},
@@ -460,22 +469,24 @@ export const ActionsSlot: Story = {
 				return { args }
 			},
 			template: `
-			<VBtn
-				@click="args.modelValue = !args.modelValue"
-				color="primary"
-			>Toggle DialogBox</VBtn>
-			<DialogBox
-				v-bind="args"
-				@update:modelValue="args.modelValue = $event"
-			>
-				<template #actions>
+				<div class="pa-4">
 					<VBtn
+						@click="args.modelValue = !args.modelValue"
 						color="primary"
-						@click="args.modelValue = false"
-					>Action</VBtn>
-				</template>
-				{{ args.default }}
-			</DialogBox>
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-bind="args"
+						@update:modelValue="args.modelValue = $event"
+					>
+						<template #actions>
+							<VBtn
+								color="primary"
+								@click="args.modelValue = false"
+							>Action</VBtn>
+						</template>
+						{{ args.default }}
+					</DialogBox>
+				</div>
 			`,
 		}
 	},
@@ -534,24 +545,26 @@ export const TitleSlot: Story = {
 				return { args }
 			},
 			template: `
-			<VBtn
-				@click="args.modelValue = !args.modelValue"
-				color="primary"
-			>Toggle DialogBox</VBtn>
-			<DialogBox
-				v-bind="args"
-				@update:modelValue="args.modelValue = $event"
-				@confirm="args.modelValue = false"
-				@cancel="args.modelValue = false"
-			>
-				<template #title>
+				<div class="pa-4">
 					<VBtn
+						@click="args.modelValue = !args.modelValue"
 						color="primary"
-						@click="args.modelValue = false"
-					>Title slot</VBtn>
-				</template>
-				{{ args.default }}
-			</DialogBox>
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-bind="args"
+						@update:modelValue="args.modelValue = $event"
+						@confirm="args.modelValue = false"
+						@cancel="args.modelValue = false"
+					>
+						<template #title>
+							<VBtn
+								color="primary"
+								@click="args.modelValue = false"
+							>Title slot</VBtn>
+						</template>
+						{{ args.default }}
+					</DialogBox>
+				</div>
 			`,
 		}
 	},
@@ -611,18 +624,20 @@ export const Width: Story = {
 				return { args }
 			},
 			template: `
-				<VBtn
-					@click="args.modelValue = !args.modelValue"
-					color="primary"
-				>Toggle DialogBox</VBtn>
-				<DialogBox
-					v-bind="args"
-					@update:modelValue="args.modelValue = $event"
-					@confirm="args.modelValue = false"
-					@cancel="args.modelValue = false"
-				>
-					{{ args.default }}
-				</DialogBox>
+				<div class="pa-4">
+					<VBtn
+						@click="args.modelValue = !args.modelValue"
+						color="primary"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-bind="args"
+						@update:modelValue="args.modelValue = $event"
+						@confirm="args.modelValue = false"
+						@cancel="args.modelValue = false"
+					>
+						{{ args.default }}
+					</DialogBox>
+				</div>
 				`,
 		}
 	},
@@ -703,18 +718,20 @@ export const VuetifyOptions: Story = {
 				return { args }
 			},
 			template: `
-			<VBtn
-				@click="args.modelValue = !args.modelValue"
-				color="primary"
-			>Toggle DialogBox</VBtn>
-			<DialogBox
-				v-bind="args"
-				@update:modelValue="args.modelValue = $event"
-				@confirm="args.modelValue = false"
-				@cancel="args.modelValue = false"
-			>
-				{{ args.default }}
-			</DialogBox>
+				<div class="pa-4">
+					<VBtn
+						@click="args.modelValue = !args.modelValue"
+						color="primary"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-bind="args"
+						@update:modelValue="args.modelValue = $event"
+						@confirm="args.modelValue = false"
+						@cancel="args.modelValue = false"
+					>
+						{{ args.default }}
+					</DialogBox>
+				</div>
 			`,
 		}
 	},
