@@ -195,6 +195,7 @@ export const Default: Story = {
 			<DialogBox
 				v-bind="args"
 				@confirm="args.modelValue = false"
+				@cancel="args.modelValue = false"
 				@update:modelValue="args.modelValue = $event"
 			>
 				{{ args.default }}
@@ -216,6 +217,7 @@ export const Default: Story = {
 						v-model="dialogOpen"
 						title="DialogBox title"
 						@confirm="dialogOpen = false"
+						@cancel="dialogOpen = false"
 					>
 						DialogBox content
 					</DialogBox>
@@ -263,6 +265,7 @@ export const ButtonTexts: Story = {
 				v-bind="args"
 				@update:modelValue="args.modelValue = $event"
 				@confirm="args.modelValue = false"
+				@cancel="args.modelValue = false"
 			>
 				{{ args.default }}
 			</DialogBox>
@@ -285,6 +288,7 @@ export const ButtonTexts: Story = {
 						cancelBtnText="Retour"
 						confirmBtnText="Valider"
 						@confirm="dialogOpen = false"
+						@cancel="dialogOpen = false"
 					>
 						DialogBox content
 					</DialogBox>
@@ -396,6 +400,7 @@ export const Persistent: Story = {
 				v-bind="args"
 				@update:modelValue="args.modelValue = $event"
 				@confirm="args.modelValue = false"
+				@cancel="args.modelValue = false"
 			>
 				{{ args.default }}
 			</DialogBox>
@@ -417,6 +422,7 @@ export const Persistent: Story = {
 						title="DialogBox title"
 						Persistent
 						@confirm="dialogOpen = false"
+						@cancel="dialogOpen = false"
 					>
 						DialogBox content
 					</DialogBox>
@@ -465,6 +471,7 @@ export const ActionsSlot: Story = {
 				<template #actions>
 					<VBtn
 						color="primary"
+						@click="args.modelValue = false"
 					>Action</VBtn>
 				</template>
 				{{ args.default }}
@@ -489,6 +496,7 @@ export const ActionsSlot: Story = {
 						<template #actions>
 							<VBtn
 								color="primary"
+								@click="dialogOpen = false"
 							>Action</VBtn>
 						</template>
 						DialogBox content
@@ -533,10 +541,13 @@ export const TitleSlot: Story = {
 			<DialogBox
 				v-bind="args"
 				@update:modelValue="args.modelValue = $event"
+				@confirm="args.modelValue = false"
+				@cancel="args.modelValue = false"
 			>
 				<template #title>
 					<VBtn
 						color="primary"
+						@click="args.modelValue = false"
 					>Title slot</VBtn>
 				</template>
 				{{ args.default }}
@@ -558,7 +569,10 @@ export const TitleSlot: Story = {
 						v-model="dialogOpen"
 					>
 						<template #title>
-							<VBtn color="primary">Title slot</VBtn>
+							<VBtn 
+								color="primary"
+								@click="dialogOpen = false"
+							>Title slot</VBtn>
 						</template>
 						DialogBox content
 					</DialogBox>
@@ -605,6 +619,7 @@ export const Width: Story = {
 					v-bind="args"
 					@update:modelValue="args.modelValue = $event"
 					@confirm="args.modelValue = false"
+					@cancel="args.modelValue = false"
 				>
 					{{ args.default }}
 				</DialogBox>
@@ -626,6 +641,7 @@ export const Width: Story = {
 							title="DialogBox title"
 							width="500px"
 							@confirm="dialogOpen = false"
+							@cancel="dialogOpen = false"
 						>
 							DialogBox content
 						</DialogBox>
@@ -695,6 +711,7 @@ export const VuetifyOptions: Story = {
 				v-bind="args"
 				@update:modelValue="args.modelValue = $event"
 				@confirm="args.modelValue = false"
+				@cancel="args.modelValue = false"
 			>
 				{{ args.default }}
 			</DialogBox>
@@ -714,7 +731,9 @@ export const VuetifyOptions: Story = {
 					<DialogBox
 						v-model="dialogOpen"
 						title="DialogBox title"
+						:vuetify-options="vuetifyOptions"
 						@confirm="dialogOpen = false"
+						@cancel="dialogOpen = false"
 					>
 						DialogBox content
 					</DialogBox>
@@ -729,6 +748,31 @@ export const VuetifyOptions: Story = {
 					import { ref } from 'vue'
 
 					const dialogOpen = ref(false)
+					
+					const vuetifyOptions = {
+						card: {
+							rounded: 'xl',
+						},
+						cardTitle: {
+							class: 'pa-0 mb-4 accent--text',
+						},
+						closeBtn: {
+							class: {
+								'd-none': true,
+							},
+						},
+						icon: {
+							color: 'accent',
+						},
+						cancelBtn: {
+							color: 'accent',
+							text: false,
+						},
+						confirmBtn: {
+							color: 'accent',
+							text: true,
+						},
+					}
 				</script>
 				`,
 			},
