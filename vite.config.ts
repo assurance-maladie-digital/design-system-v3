@@ -102,7 +102,10 @@ export default defineConfig({
 	css: {
 		preprocessorOptions: {
 			scss: {
-				api: 'modern-compiler',
+				api: 'modern',
+			},
+			sass: {
+				api: 'modern',
 			},
 		},
 	},
@@ -125,6 +128,7 @@ export default defineConfig({
 			exclude: [
 				'src/**/*.spec.{js,vue,ts}',
 				'src/**/*.stories.*',
+				'src/**/*.ts*',
 				'src/**/types.*',
 				'src/main.ts',
 				'src/components/index.ts',
