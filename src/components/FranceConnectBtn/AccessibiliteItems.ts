@@ -35,7 +35,6 @@ export const AccessibiliteItemsIndeterminate = [
 	{
 		title: 'Catégorie 3 : Couleurs',
 		items: [
-			
 
 		],
 		items2: [
@@ -72,32 +71,32 @@ export const AccessibiliteItemsIndeterminate = [
 		items: [
 			{
 
-				precision: '6.1.2 Chaque lien image vérifie-t-il une de ces conditions ? ' + 
-    						'L’intitulé de lien seul permet d’en comprendre la fonction et la destination ; ' + 
-    						'L’intitulé de lien additionné au contexte du lien permet d’en comprendre la fonction et la destination.',
+				precision: '6.1.2 Chaque lien image vérifie-t-il une de ces conditions ? '
+					+ 'L’intitulé de lien seul permet d’en comprendre la fonction et la destination ; '
+					+ 'L’intitulé de lien additionné au contexte du lien permet d’en comprendre la fonction et la destination.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#6.1.2',
 				solution: [{
 					info1: '1. Retrouver dans le document les liens image (lien avec pour contenu un élément <img> ou un élément ayant l’attribut WAI-ARIA role="img", un élément <area> possédant un attribut href, un élément <object>, un élément <canvas> ou un élément <svg>) ; ',
-					info2: '2. Pour chaque lien image, vérifier que ce qui permet d’en comprendre la fonction et la destination est : '+
-    							'Soit l’intitulé du lien seul, fourni par l’alternative textuelle de l’image ; ' +
-    							'Soit le contexte du lien.',
-					info3: '3. Si c’est le cas pour chaque lien image, le test est validé.'
+					info2: '2. Pour chaque lien image, vérifier que ce qui permet d’en comprendre la fonction et la destination est : '
+						+ 'Soit l’intitulé du lien seul, fourni par l’alternative textuelle de l’image ; '
+						+ 'Soit le contexte du lien.',
+					info3: '3. Si c’est le cas pour chaque lien image, le test est validé.',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
 
 			},
 			{
 
-				precision: '6.1.3 Chaque lien composite vérifie-t-il une de ces conditions ? ' + 
-    						'L’intitulé de lien seul permet d’en comprendre la fonction et la destination ; ' + 
-    						'L’intitulé de lien additionné au contexte du lien permet d’en comprendre la fonction et la destination. ',
+				precision: '6.1.3 Chaque lien composite vérifie-t-il une de ces conditions ? '
+					+ 'L’intitulé de lien seul permet d’en comprendre la fonction et la destination ; '
+					+ 'L’intitulé de lien additionné au contexte du lien permet d’en comprendre la fonction et la destination. ',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#6.1.3',
 				solution: [{
 					info1: '1. Retrouver dans le document les liens composites (lien composé à la fois de contenu texte et d’éléments de type image) ; ',
-					info2: '2. Pour chaque lien composite, vérifier que ce qui permet d’en comprendre la fonction et la destination est : '+
-    							'Soit l’intitulé du lien seul, fourni par la combinaison du contenu texte et de l’alternative textuelle de l’image ; ' +
-    							'Soit le contexte du lien. ',
-					info3: '3. Si c’est le cas pour chaque lien composite, le test est validé.'
+					info2: '2. Pour chaque lien composite, vérifier que ce qui permet d’en comprendre la fonction et la destination est : '
+						+ 'Soit l’intitulé du lien seul, fourni par la combinaison du contenu texte et de l’alternative textuelle de l’image ; '
+						+ 'Soit le contexte du lien. ',
+					info3: '3. Si c’est le cas pour chaque lien composite, le test est validé.',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
 
@@ -167,12 +166,11 @@ export const AccessibiliteItemsValidated = [
 				solution: [{
 					info1: '1. Retrouver dans le document les liens quels qu’ils soient ; ',
 					info2: '2. Pour chaque lien, vérifier que le contenu de l’élément <a> (ou d’un élément pourvu d’un attribut WAI-ARIA role=link) contient un intitulé (texte ou alternative) ; ',
-					info3: '3. Si c’est le cas pour chaque lien, le test est validé.'
+					info3: '3. Si c’est le cas pour chaque lien, le test est validé.',
 				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
 
 			},
-		
 
 		],
 	},
@@ -186,9 +184,9 @@ export const AccessibiliteItemsValidated = [
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#8.9.1',
 				solution: [{
 					info1: '1. Retrouver dans le document l’ensemble des éléments sémantiques utilisés à des fins de présentation ;',
-					info2: '2. Pour chacun de ces éléments, vérifier que :' +
-						'L’élément est pourvu d’un attribut role=“presentation” ;' +
-						'L’utilisation de cet élément à des fins de présentation reste justifée',
+					info2: '2. Pour chacun de ces éléments, vérifier que :'
+						+ 'L’élément est pourvu d’un attribut role=“presentation” ;'
+						+ 'L’utilisation de cet élément à des fins de présentation reste justifée',
 					info3: '3. Si c’est le cas, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
@@ -197,7 +195,5 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-
-
 
 ]
