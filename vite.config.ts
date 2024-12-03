@@ -101,9 +101,11 @@ export default defineConfig({
 	},
 	css: {
 		preprocessorOptions: {
+			scss: {
+				api: 'modern',
+			},
 			sass: {
 				api: 'modern',
-				silenceDeprecations: ['legacy-js-api'],
 			},
 		},
 	},
