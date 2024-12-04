@@ -29,11 +29,7 @@ export const Default: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :hide-logout-btn="hideLogOut"
-  :hide-user-icon="hideUserIcon"
   :menuItems="menuItems"
-  :is-mobile-view="isMobileVersion"
-  :vuetify-options="isVuetifyOptions ? vuetifyOptions : undefined"
 />
 </template>`,
 			},
@@ -49,19 +45,6 @@ export const Default: Story = {
   { text: 'Profil', value: 'Profil' },
   { text: 'Paramètres', value: 'Paramètres' },
  ])
-
- const hideLogOut = ref(false)
- const hideUserIcon = ref(false)
- const isMobileVersion = ref(false)
- const isVuetifyOptions = ref(false)
-
- const vuetifyOptions = ref({
-  menu: { minWidth: '150px', maxWidth: '150px' },
-  btn: { variant: 'outlined' },
-  icon: { color: 'warning' },
-  logoutListItem: { class: 'text-warning' },
-  logoutIcon: { color: 'warning' },
- })
 </script>`,
 			},
 		],
@@ -85,7 +68,9 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-              <UserMenuBtn v-bind="args"/>`,
+<div class="pa-4">
+	<UserMenuBtn v-bind="args"/>
+</div>`,
 		}
 	},
 }
@@ -97,11 +82,8 @@ export const HideLogoutButton: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :hide-logout-btn="hideLogOut"
-  :hide-user-icon="hideUserIcon"
   :menuItems="menuItems"
-  :is-mobile-view="isMobileVersion"
-  :vuetify-options="isVuetifyOptions ? vuetifyOptions : undefined"
+  :hide-logout-btn="hideLogOut"
 />
 </template>`,
 			},
@@ -119,17 +101,6 @@ export const HideLogoutButton: Story = {
  ])
 
  const hideLogOut = ref(true)
- const hideUserIcon = ref(false)
- const isMobileVersion = ref(false)
- const isVuetifyOptions = ref(false)
-
- const vuetifyOptions = ref({
-  menu: { minWidth: '150px', maxWidth: '150px' },
-  btn: { variant: 'outlined' },
-  icon: { color: 'warning' },
-  logoutListItem: { class: 'text-warning' },
-  logoutIcon: { color: 'warning' },
- })
 </script>`,
 			},
 		],
@@ -137,6 +108,18 @@ export const HideLogoutButton: Story = {
 	args: {
 		...Default.args,
 		hideLogoutBtn: true,
+	},
+	render: (args) => {
+		return {
+			components: { UserMenuBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+<div class="pa-4">
+	<UserMenuBtn v-bind="args"/>
+</div>`,
+		}
 	},
 }
 
@@ -148,11 +131,8 @@ export const HideUserIcon: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :hide-logout-btn="hideLogOut"
-  :hide-user-icon="hideUserIcon"
   :menuItems="menuItems"
-  :is-mobile-view="isMobileVersion"
-  :vuetify-options="isVuetifyOptions ? vuetifyOptions : undefined"
+  :hide-user-icon="hideUserIcon"
 />
 </template>`,
 			},
@@ -169,18 +149,7 @@ export const HideUserIcon: Story = {
   { text: 'Paramètres', value: 'Paramètres' },
  ])
 
- const hideLogOut = ref(false)
  const hideUserIcon = ref(true)
- const isMobileVersion = ref(false)
- const isVuetifyOptions = ref(false)
-
- const vuetifyOptions = ref({
-  menu: { minWidth: '150px', maxWidth: '150px' },
-  btn: { variant: 'outlined' },
-  icon: { color: 'warning' },
-  logoutListItem: { class: 'text-warning' },
-  logoutIcon: { color: 'warning' },
- })
 </script>`,
 			},
 		],
@@ -188,6 +157,18 @@ export const HideUserIcon: Story = {
 	args: {
 		...Default.args,
 		hideUserIcon: true,
+	},
+	render: (args) => {
+		return {
+			components: { UserMenuBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+<div class="pa-4">
+	<UserMenuBtn v-bind="args"/>
+</div>`,
+		}
 	},
 }
 
@@ -199,11 +180,8 @@ export const MobileVersion: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :hide-logout-btn="hideLogOut"
-  :hide-user-icon="hideUserIcon"
   :menuItems="menuItems"
   :is-mobile-view="isMobileVersion"
-  :vuetify-options="isVuetifyOptions ? vuetifyOptions : undefined"
 />
 </template>`,
 			},
@@ -220,18 +198,7 @@ export const MobileVersion: Story = {
   { text: 'Paramètres', value: 'Paramètres' },
  ])
 
- const hideLogOut = ref(false)
- const hideUserIcon = ref(false)
  const isMobileVersion = ref(true)
- const isVuetifyOptions = ref(false)
-
- const vuetifyOptions = ref({
-  menu: { minWidth: '150px', maxWidth: '150px' },
-  btn: { variant: 'outlined' },
-  icon: { color: 'warning' },
-  logoutListItem: { class: 'text-warning' },
-  logoutIcon: { color: 'warning' },
- })
 </script>`,
 			},
 		],
@@ -239,6 +206,18 @@ export const MobileVersion: Story = {
 	args: {
 		...Default.args,
 		isMobileView: true,
+	},
+	render: (args) => {
+		return {
+			components: { UserMenuBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+<div class="pa-4">
+	<UserMenuBtn v-bind="args"/>
+</div>`,
+		}
 	},
 }
 
@@ -250,11 +229,8 @@ export const CustomFullName: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :hide-logout-btn="hideLogOut"
-  :hide-user-icon="hideUserIcon"
   :menuItems="menuItems"
-  :is-mobile-view="isMobileVersion"
-  :vuetify-options="isVuetifyOptions ? vuetifyOptions : undefined"
+  :fullName="fullName"
 />
 </template>`,
 			},
@@ -271,19 +247,6 @@ export const CustomFullName: Story = {
   { text: 'Paramètres', value: 'Paramètres' },
  ])
 
- const hideLogOut = ref(false)
- const hideUserIcon = ref(false)
- const isMobileVersion = ref(false)
- const isVuetifyOptions = ref(false)
-
- const vuetifyOptions = ref({
-  menu: { minWidth: '150px', maxWidth: '150px' },
-  btn: { variant: 'outlined' },
-  icon: { color: 'warning' },
-  logoutListItem: { class: 'text-warning' },
-  logoutIcon: { color: 'warning' },
- })
-
  const fullName = ref('John Doe')
 </script>`,
 			},
@@ -292,6 +255,18 @@ export const CustomFullName: Story = {
 	args: {
 		...Default.args,
 		fullName: 'John Doe',
+	},
+	render: (args) => {
+		return {
+			components: { UserMenuBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+<div class="pa-4">
+	<UserMenuBtn v-bind="args"/>
+</div>`,
+		}
 	},
 }
 
@@ -303,11 +278,8 @@ export const CustomAdditionalInformation: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :hide-logout-btn="hideLogOut"
-  :hide-user-icon="hideUserIcon"
   :menuItems="menuItems"
-  :is-mobile-view="isMobileVersion"
-  :vuetify-options="isVuetifyOptions ? vuetifyOptions : undefined"
+  :additionalInformation="additionalInformation"
 />
 </template>`,
 			},
@@ -324,19 +296,6 @@ export const CustomAdditionalInformation: Story = {
   { text: 'Paramètres', value: 'Paramètres' },
  ])
 
- const hideLogOut = ref(false)
- const hideUserIcon = ref(false)
- const isMobileVersion = ref(false)
- const isVuetifyOptions = ref(false)
-
- const vuetifyOptions = ref({
-  menu: { minWidth: '150px', maxWidth: '150px' },
-  btn: { variant: 'outlined' },
-  icon: { color: 'warning' },
-  logoutListItem: { class: 'text-warning' },
-  logoutIcon: { color: 'warning' },
- })
-
  const additionalInformation = ref('Custom Information')
 </script>`,
 			},
@@ -345,6 +304,18 @@ export const CustomAdditionalInformation: Story = {
 	args: {
 		...Default.args,
 		additionalInformation: 'Custom Information',
+	},
+	render: (args) => {
+		return {
+			components: { UserMenuBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+<div class="pa-4">
+	<UserMenuBtn v-bind="args"/>
+</div>`,
+		}
 	},
 }
 
@@ -356,11 +327,8 @@ export const WithVuetifyOptions: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :hide-logout-btn="hideLogOut"
-  :hide-user-icon="hideUserIcon"
   :menuItems="menuItems"
-  :is-mobile-view="isMobileVersion"
-  :vuetify-options="isVuetifyOptions ? vuetifyOptions : undefined"
+  :vuetify-options="vuetifyOptions"
 />
 </template>`,
 			},
@@ -380,11 +348,6 @@ export const WithVuetifyOptions: Story = {
  const handleLogout = () => {
   alert('User logged out')
  }
-
- const hideLogOut = ref(false)
- const hideUserIcon = ref(false)
- const isMobileVersion = ref(false)
- const isVuetifyOptions = ref(true)
 
  const vuetifyOptions = ref({
   menu: { minWidth: '150px', maxWidth: '150px' },
@@ -407,6 +370,18 @@ export const WithVuetifyOptions: Story = {
 			logoutIcon: { color: 'warning' },
 		},
 	},
+	render: (args) => {
+		return {
+			components: { UserMenuBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+<div class="pa-4">
+	<UserMenuBtn v-bind="args"/>
+</div>`,
+		}
+	},
 }
 
 export const LogoutEvent: Story = {
@@ -417,11 +392,7 @@ export const LogoutEvent: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :hide-logout-btn="hideLogOut"
-  :hide-user-icon="hideUserIcon"
   :menuItems="menuItems"
-  :is-mobile-view="isMobileVersion"
-  :vuetify-options="isVuetifyOptions ? vuetifyOptions : undefined"
   @logout="handleLogout"
 />
 </template>`,
@@ -442,19 +413,6 @@ export const LogoutEvent: Story = {
  const handleLogout = () => {
   alert('Logout event triggered')
  }
-
- const hideLogOut = ref(false)
- const hideUserIcon = ref(false)
- const isMobileVersion = ref(false)
- const isVuetifyOptions = ref(false)
-
- const vuetifyOptions = ref({
-  menu: { minWidth: '150px', maxWidth: '150px' },
-  btn: { variant: 'outlined' },
-  icon: { color: 'warning' },
-  logoutListItem: { class: 'text-warning' },
-  logoutIcon: { color: 'warning' },
- })
 </script>`,
 			},
 		],
@@ -472,7 +430,9 @@ export const LogoutEvent: Story = {
 				return { args, handleLogout }
 			},
 			template: `
-              <UserMenuBtn v-bind="args" @logout="handleLogout"/>`,
+<div class="pa-4">
+	<UserMenuBtn v-bind="args" @logout="handleLogout"/>
+</div>`,
 		}
 	},
 }

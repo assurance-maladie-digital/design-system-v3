@@ -15,7 +15,6 @@
 		hideLogoutBtn?: boolean
 		logoutIcon?: string
 		isMobileView?: boolean
-		iconOnly?: boolean
 		hideUserIcon?: boolean
 	}>(), {
 		modelValue: null,
@@ -25,7 +24,6 @@
 		hideLogoutBtn: false,
 		logoutIcon: 'mdiLoginVariant',
 		isMobileView: false,
-		iconOnly: false,
 		hideUserIcon: false,
 	})
 
@@ -48,7 +46,7 @@
 <template>
 	<CustomBtnSelect
 		:is-mobile-view="isMobileView"
-		:icon-only="iconOnly"
+		:icon-only="isMobileView"
 		:menu-items="menuItems"
 		:model-value="props.modelValue ?? undefined"
 		:options="options"
@@ -61,8 +59,8 @@
 		<template #append-icon>
 			<VIcon
 				v-if="!hideUserIcon"
-				:class="isMobileView || iconOnly ? 'mr-0 pa-2' : 'mr-2 pa-2'"
-				:size="iconOnly ? 'x-large' : 'default'"
+				:class="isMobileView ? 'mr-0 pa-2' : 'mr-2 pa-2'"
+				:size="isMobileView ? 'x-large' : 'default'"
 				class="vd-user-icon"
 				v-bind="options['icon']"
 			>

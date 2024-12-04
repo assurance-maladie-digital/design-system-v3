@@ -144,7 +144,8 @@
 				<VBtn
 					:id="generatedId"
 					:class="btnPadding"
-					:height="iconOnly ? undefined : 'auto'"
+					:height="iconOnly ? 'auto' : undefined"
+					:width="iconOnly ? 'auto' : undefined"
 					:icon="iconOnly"
 					:size="iconOnly ? 'x-large' : 'default'"
 					class="vd-user-menu-btn"
