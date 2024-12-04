@@ -51,6 +51,10 @@
 			type: Boolean,
 			default: false,
 		},
+		iconOnly: {
+			type: Boolean,
+			default: false,
+		},
 		options: {
 			type: Object,
 			default: () => ({ menu: {}, btn: {}, list: {} }),
@@ -107,11 +111,7 @@
 	})
 
 	const isMobileVersion = computed(() => {
-		return props.isMobileView || smAndDown.value
-	})
-
-	const isMobileWithIcon = computed(() => {
-		return isMobileVersion.value && !props.hideIcon
+		return props.isMobileView || smAndDown.value || props.iconOnly
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -144,9 +144,9 @@
 				<VBtn
 					:id="generatedId"
 					:class="btnPadding"
-					:height="isMobileWithIcon ? undefined : 'auto'"
-					:icon="isMobileWithIcon"
-					:size="isMobileWithIcon ? 'x-large' : 'default'"
+					:height="iconOnly ? undefined : 'auto'"
+					:icon="iconOnly"
+					:size="iconOnly ? 'x-large' : 'default'"
 					class="vd-user-menu-btn"
 					v-bind="{
 						...menuProps,
@@ -161,7 +161,7 @@
 						<slot name="prepend-icon" />
 						<span class="d-sr-only">{{ props.label }}</span>
 						<span
-							v-if="!isMobileVersion"
+							v-if="!isMobileVersion && !iconOnly"
 							class="d-flex flex-column align-end py-1 mr-1"
 						>
 							<span
@@ -176,7 +176,7 @@
 							</span>
 						</span>
 						<span
-							v-if="isMobileVersion && !isMobileWithIcon"
+							v-if="isMobileVersion && !iconOnly"
 							:class="`text-${props?.options['btn']?.textColor}`"
 							class="font-weight-bold text-caption"
 						>{{ props.primaryInfo }}</span>

@@ -15,6 +15,7 @@
 		hideLogoutBtn?: boolean
 		logoutIcon?: string
 		isMobileView?: boolean
+		iconOnly?: boolean
 		hideUserIcon?: boolean
 	}>(), {
 		modelValue: null,
@@ -24,6 +25,7 @@
 		hideLogoutBtn: false,
 		logoutIcon: 'mdiLoginVariant',
 		isMobileView: false,
+		iconOnly: false,
 		hideUserIcon: false,
 	})
 
@@ -37,10 +39,6 @@
 		return props.isMobileView || smAndDown.value
 	})
 
-	const isMobileWithIcon = computed(() => {
-		return isMobileView.value && !props.hideUserIcon
-	})
-
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	function updateModelValue(value: any) {
 		emit('update:modelValue', value)
@@ -50,6 +48,7 @@
 <template>
 	<CustomBtnSelect
 		:is-mobile-view="isMobileView"
+		:icon-only="iconOnly"
 		:menu-items="menuItems"
 		:model-value="props.modelValue ?? undefined"
 		:options="options"
@@ -63,7 +62,7 @@
 			<VIcon
 				v-if="!hideUserIcon"
 				:class="isMobileView ? 'mr-0 pa-2' : 'mr-2 pa-2'"
-				:size="isMobileWithIcon ? 'x-large' : 'default'"
+				:size="iconOnly ? 'x-large' : 'default'"
 				class="vd-user-icon"
 				v-bind="options['icon']"
 			>

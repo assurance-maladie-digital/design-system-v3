@@ -86,7 +86,7 @@ export const MobileView: Story = {
   <CustomBtnSelect
    	:primary-info="primaryInfo" 
   	:menu-items="items" 
-  	is-mobile-view 
+  	is-mobile-view
   />
 </template>
 				`,
@@ -235,7 +235,7 @@ const items = ['Option 1', 'Option 2']
 	},
 }
 
-export const MobileViewWithIcon: Story = {
+export const WithIconOnly: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -245,7 +245,7 @@ export const MobileViewWithIcon: Story = {
   <CustomBtnSelect 
   	:primary-info="primaryInfo" 
   	:menu-items="items"
-  	is-mobile-view
+  	icon-only
   >
     <template #prepend-icon>
       <VIcon :icon="mdiAccount" color="secondary" />
@@ -270,7 +270,7 @@ const items = ['Option 1', 'Option 2']
 	args: {
 		primaryInfo: 'Jane Doe',
 		menuItems: ['Option 1', 'Option 2'],
-		isMobileView: true,
+		iconOnly: true,
 	},
 	render: (args) => {
 		return {
