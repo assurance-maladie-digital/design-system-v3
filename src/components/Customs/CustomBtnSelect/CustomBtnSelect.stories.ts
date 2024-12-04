@@ -134,7 +134,6 @@ export const WithSlotPrependIcon: Story = {
   <CustomBtnSelect 
   	:primary-info="primaryInfo" 
   	:menu-items="items"
-  	:options="{ iconColor: 'secondary' }"
   >
     <template #prepend-icon>
       <VIcon :icon="mdiAccount" color="secondary" />
@@ -149,7 +148,7 @@ export const WithSlotPrependIcon: Story = {
 <script setup lang="ts">
 import CustomBtnSelect from './CustomBtnSelect.vue'
 
-const primaryInfo = 'Mes options'
+const primaryInfo = 'Jane Doe'
 const items = ['Option 1', 'Option 2']
 </script>
 				`,
@@ -158,7 +157,7 @@ const items = ['Option 1', 'Option 2']
 	},
 	args: {
 		primaryInfo: 'Jane Doe',
-		menuItems: ['Styled 1', 'Styled 2'],
+		menuItems: ['Option 1', 'Option 2'],
 		options: {
 			iconColor: 'secondary',
 		},
@@ -192,131 +191,9 @@ export const WithSlotAppendIcon: Story = {
   <CustomBtnSelect 
   	:primary-info="primaryInfo" 
   	:menu-items="items"
-  	:options="{ iconColor: 'secondary' }"
   >
     <template #append-icon>
       <VIcon :icon="mdiAccount" color="secondary" />
-    </template>
-  </CustomBtnSelect>
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import CustomBtnSelect from './CustomBtnSelect.vue'
-
-const primaryInfo = 'Mes options'
-const items = ['Option 1', 'Option 2']
-</script>
-				`,
-			},
-		],
-	},
-	args: {
-		primaryInfo: 'Jane Doe',
-		menuItems: ['Styled 1', 'Styled 2'],
-		options: {
-			iconColor: 'secondary',
-		},
-	},
-	render: (args) => {
-		return {
-			components: { CustomBtnSelect, VIcon },
-			setup() {
-				return { args, mdiAccount }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <CustomBtnSelect v-bind="args">
-                  <template #append-icon>
-                    <VIcon :icon="mdiAccount" color="secondary"/>
-                  </template>
-                </CustomBtnSelect>
-              </div>
-            `,
-		}
-	},
-}
-
-export const MobileViewWithIcon: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <CustomBtnSelect 
-  	:primary-info="primaryInfo" 
-  	:menu-items="items"
-  	:options="{ iconColor: 'secondary' }"
-  	is-mobile-view
-  >
-    <template #prepend-icon>
-      <VIcon :icon="mdiAccount" color="secondary" />
-    </template>
-  </CustomBtnSelect>
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import CustomBtnSelect from './CustomBtnSelect.vue'
-
-const primaryInfo = 'Mes options'
-const items = ['Option 1', 'Option 2']
-</script>
-				`,
-			},
-		],
-	},
-	args: {
-		primaryInfo: 'Jane Doe',
-		menuItems: ['Styled 1', 'Styled 2'],
-		options: {
-			iconColor: 'secondary',
-		},
-		isMobileView: true,
-	},
-	render: (args) => {
-		return {
-			components: { CustomBtnSelect, VIcon },
-			setup() {
-				return { args, mdiAccount }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <CustomBtnSelect v-bind="args">
-                  <template #prepend-icon>
-                    <VIcon :icon="mdiAccount" color="secondary"/>
-                  </template>
-                </CustomBtnSelect>
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithCustomStyles: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <CustomBtnSelect 
-  	:primary-info="primaryInfo"
-  	:menu-items="items"
-  	>
-    <template #prepend-icon>
-      <VIcon 
-      	:icon="mdiAccount" 
-      	class="mr-2"
-      	color="red" 
-      />
     </template>
   </CustomBtnSelect>
 </template>
@@ -348,12 +225,64 @@ const items = ['Option 1', 'Option 2']
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <CustomBtnSelect v-bind="args">
+                  <template #append-icon>
+                    <VIcon :icon="mdiAccount" color="secondary"/>
+                  </template>
+                </CustomBtnSelect>
+              </div>
+            `,
+		}
+	},
+}
+
+export const MobileViewWithIcon: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <CustomBtnSelect 
+  	:primary-info="primaryInfo" 
+  	:menu-items="items"
+  	is-mobile-view
+  >
+    <template #prepend-icon>
+      <VIcon :icon="mdiAccount" color="secondary" />
+    </template>
+  </CustomBtnSelect>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import CustomBtnSelect from './CustomBtnSelect.vue'
+
+const primaryInfo = 'Jane Doe'
+const items = ['Option 1', 'Option 2']
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		primaryInfo: 'Jane Doe',
+		menuItems: ['Option 1', 'Option 2'],
+		isMobileView: true,
+	},
+	render: (args) => {
+		return {
+			components: { CustomBtnSelect, VIcon },
+			setup() {
+				return { args, mdiAccount }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <CustomBtnSelect v-bind="args">
                   <template #prepend-icon>
-                    <VIcon 
-						:icon="mdiAccount" 
-						class="mr-2" 
-						color="red"
-					/>
+                    <VIcon :icon="mdiAccount" color="secondary"/>
                   </template>
                 </CustomBtnSelect>
               </div>
@@ -485,6 +414,131 @@ const menuItems = [
 	},
 }
 
+export const WithMultipleSlots: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <CustomBtnSelect
+    :primary-info="primaryInfo"
+  	:menu-items="menuItems"
+  >
+    <template #prepend-icon>
+      <VIcon :icon="mdiAccount" />
+    </template>
+    <template #footer-list-item>
+      <VListItem @click="args.logout">
+        <VListItemTitle>Se déconnecter</VListItemTitle>
+      </VListItem>
+    </template>
+  </CustomBtnSelect>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import CustomBtnSelect from './CustomBtnSelect.vue'
+
+const primaryInfo = 'Information principale'
+const menuItems = ['Option 1', 'Option 2']
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		menuItems: ['Option 1', 'Option 2'],
+	},
+	render: (args) => {
+		return {
+			components: { CustomBtnSelect, VIcon, VListItem, VListItemTitle },
+			setup() {
+				return { args, mdiAccount }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <CustomBtnSelect v-bind="args">
+                  <template #prepend-icon>
+                    <VIcon :icon="mdiAccount"/>
+                  </template>
+                  <template #footer-list-item>
+                    <VListItem @click="args.logout">
+                      <VListItemTitle>Se déconnecter</VListItemTitle>
+                    </VListItem>
+                  </template>
+                </CustomBtnSelect>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithCustomStyles: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <CustomBtnSelect 
+  	:primary-info="primaryInfo"
+  	:menu-items="items"
+  	>
+    <template #prepend-icon>
+      <VIcon 
+      	:icon="mdiAccount" 
+      	class="mr-2"
+      	color="red" 
+      />
+    </template>
+  </CustomBtnSelect>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import CustomBtnSelect from './CustomBtnSelect.vue'
+
+const primaryInfo = 'Jane Doe'
+const items = ['Option 1', 'Option 2']
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		primaryInfo: 'Jane Doe',
+		menuItems: ['Option 1', 'Option 2'],
+	},
+	render: (args) => {
+		return {
+			components: { CustomBtnSelect, VIcon },
+			setup() {
+				return { args, mdiAccount }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <CustomBtnSelect v-bind="args">
+                  <template #prepend-icon>
+                    <VIcon 
+						:icon="mdiAccount" 
+						class="mr-2" 
+						color="red"
+					/>
+                  </template>
+                </CustomBtnSelect>
+              </div>
+            `,
+		}
+	},
+}
+
 export const WithStyledOptions: Story = {
 	parameters: {
 		sourceCode: [
@@ -543,69 +597,6 @@ const options = {
                 >
                   <template #prepend-icon>
                     <VIcon :icon="mdiAccount"/>
-                  </template>
-                </CustomBtnSelect>
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithMultipleSlots: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <CustomBtnSelect
-    :primary-info="primaryInfo"
-  	:menu-items="menuItems"
-  >
-    <template #prepend-icon>
-      <VIcon :icon="mdiAccount" />
-    </template>
-    <template #footer-list-item>
-      <VListItem @click="args.logout">
-        <VListItemTitle>Se déconnecter</VListItemTitle>
-      </VListItem>
-    </template>
-  </CustomBtnSelect>
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import CustomBtnSelect from './CustomBtnSelect.vue'
-
-const primaryInfo = 'Information principale'
-const menuItems = ['Option 1', 'Option 2']
-</script>
-				`,
-			},
-		],
-	},
-	args: {
-		menuItems: ['Option 1', 'Option 2'],
-	},
-	render: (args) => {
-		return {
-			components: { CustomBtnSelect, VIcon, VListItem, VListItemTitle },
-			setup() {
-				return { args, mdiAccount }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <CustomBtnSelect v-bind="args">
-                  <template #prepend-icon>
-                    <VIcon :icon="mdiAccount"/>
-                  </template>
-                  <template #footer-list-item>
-                    <VListItem @click="args.logout">
-                      <VListItemTitle>Se déconnecter</VListItemTitle>
-                    </VListItem>
                   </template>
                 </CustomBtnSelect>
               </div>

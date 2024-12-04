@@ -111,7 +111,6 @@
 	})
 
 	const isMobileWithIcon = computed(() => {
-		console.log(Boolean(slots.appendIcon))
 		return isMobileVersion.value && !props.hideIcon && (Boolean(slots.appendIcon) || Boolean(slots.prepend))
 	})
 
