@@ -55,6 +55,7 @@
 		:options="options"
 		:primary-info="fullName"
 		:secondary-info="additionalInformation"
+		:hide-icon="hideUserIcon"
 		class="user-menu-btn"
 		@update:model-value="updateModelValue"
 	>

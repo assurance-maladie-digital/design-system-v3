@@ -111,11 +111,7 @@
 	})
 
 	const isMobileWithIcon = computed(() => {
-		return (
-			isMobileVersion.value
-			&& !props.hideIcon
-			&& (!!slots.appendIcon || !!slots.prependIcon)
-		)
+		return isMobileVersion.value && !props.hideIcon
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -136,7 +132,6 @@
 		ref="buttonRef"
 		class="vd-user-menu-btn-ctn d-inline-block"
 	>
-		{{ isMobileWithIcon }}
 		<VMenu
 			:id="generatedId"
 			:disabled="!hasListContent"
