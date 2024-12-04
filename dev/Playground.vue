@@ -3,6 +3,7 @@
 	import { useRequiredRules } from '@/composables/requiredRule'
 	import { useEmailRule } from '@/composables/emailRule'
 	import { useExactLengthRule } from '@/composables/exactLengthRule'
+	import { useMaxLengthRule } from '@/composables/maxLengthRule'
 	import PhoneField from '@/components/PhoneField/PhoneField.vue'
 
 	const firstName = ref('')
@@ -13,10 +14,11 @@
 	const { requiredRule } = useRequiredRules()
 	const { email: emailRule } = useEmailRule()
 	const { exactLength } = useExactLengthRule()
+	const { maxLength: maxLengthRule } = useMaxLengthRule()
 
 	const rules = {
 		firstName: [requiredRule('First name'), exactLength(3, 'Le prénom doit être exactement de 3 caractères.')],
-		lastName: [requiredRule('Last name', 'Veuillez entrer votre nom.')],
+		lastName: [requiredRule('Last name', 'Veuillez entrer votre nom.'), maxLengthRule(5, 'Le nom ne doit pas dépasser 20 caractères.', true)],
 		email: [emailRule('Email', 'Veuillez entrer un email valide.')],
 		phoneNumber: [exactLength(10, 'Le numéro de téléphone doit être exactement de 10 chiffres.', true)],
 	}

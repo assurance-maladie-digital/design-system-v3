@@ -1,3 +1,4 @@
+// src/composables/exactLengthRule.ts
 export function useExactLengthRule() {
 	const exactLength = (length: number, customMessage?: string, ignoreSpaces: boolean = false) => {
 		return (value: string) => {
@@ -5,7 +6,7 @@ export function useExactLengthRule() {
 			if (valueToCheck.length === length) {
 				return true
 			}
-			return customMessage || `La longueur doit être exactement de ${length} caractères.`
+			return customMessage || `exactLength`
 		}
 	}
 
