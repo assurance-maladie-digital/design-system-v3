@@ -58,10 +58,10 @@
 		class="user-menu-btn"
 		@update:model-value="updateModelValue"
 	>
-		<template #icon>
+		<template #append-icon>
 			<VIcon
 				v-if="!hideUserIcon"
-				:class="isMobileView ? 'ml-0 pa-2' : 'ml-2 pa-2'"
+				:class="isMobileView ? 'mr-0 pa-2' : 'mr-2 pa-2'"
 				:size="isMobileWithIcon ? 'x-large' : 'default'"
 				class="vd-user-icon"
 				v-bind="options['icon']"

@@ -111,7 +111,8 @@
 	})
 
 	const isMobileWithIcon = computed(() => {
-		return isMobileVersion.value && !props.hideIcon
+		console.log(Boolean(slots.appendIcon))
+		return isMobileVersion.value && !props.hideIcon && (Boolean(slots.appendIcon) || Boolean(slots.prepend))
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -156,8 +157,9 @@
 				>
 					<div
 						:class="['text-'+props?.options['btn']?.color]"
-						class="d-flex"
+						class="d-flex align-center"
 					>
+						<slot name="prepend-icon" />
 						<span class="d-sr-only">{{ props.label }}</span>
 						<span
 							v-if="!isMobileVersion"
@@ -175,11 +177,11 @@
 							</span>
 						</span>
 						<span
-							v-if="isMobileVersion && props.hideIcon"
+							v-if="isMobileVersion && !isMobileWithIcon"
 							:class="`text-${props?.options['btn']?.textColor}`"
-							class="font-weight-bold text-sm-caption"
+							class="font-weight-bold text-caption"
 						>{{ props.primaryInfo }}</span>
-						<slot name="icon" />
+						<slot name="append-icon" />
 					</div>
 				</VBtn>
 			</template>
@@ -237,13 +239,5 @@
 
 :deep(.vd-user-menu-btn:focus > .v-btn__overlay) {
   opacity: 0 !important;
-}
-
-.vd-user-menu-btn-ctn .v-menu__content {
-
-}
-
-:deep(.v-overlay__content) {
-  left: 0px !important;
 }
 </style>
