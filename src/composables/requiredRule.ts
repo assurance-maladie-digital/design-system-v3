@@ -8,7 +8,7 @@ export function useRequiredRules() {
 		}
 	}
 
-	const requiredRule = (fieldName: string, customMessage?: string) => [required(fieldName, customMessage)]
+	const requiredRule = (fieldName: string, customMessage?: string) => required(fieldName, customMessage)
 
 	return {
 		required,

@@ -16,7 +16,7 @@
 
 	const rules = {
 		firstName: [requiredRule('First name'), exactLength(3, 'Le prénom doit être exactement de 3 caractères.')],
-		lastName: requiredRule('Last name', 'Veuillez entrer votre nom.'),
+		lastName: [requiredRule('Last name', 'Veuillez entrer votre nom.')],
 		email: [emailRule('Email', 'Veuillez entrer un email valide.')],
 		phoneNumber: [exactLength(10, 'Le numéro de téléphone doit être exactement de 10 chiffres.', true)],
 	}
