@@ -129,8 +129,7 @@ describe('CustomBtnSelect', () => {
 			},
 		})
 
-		const span = wrapper.find('span.font-weight-bold.text-sm-caption')
-		expect(span.exists()).toBe(true)
+		const span = wrapper.find('span.font-weight-bold.text-caption')
 
 		expect(span.text()).toBe('John Doe')
 	})

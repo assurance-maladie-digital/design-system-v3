@@ -61,7 +61,7 @@
 		<template #append-icon>
 			<VIcon
 				v-if="!hideUserIcon"
-				:class="isMobileView ? 'mr-0 pa-2' : 'mr-2 pa-2'"
+				:class="isMobileView || iconOnly ? 'mr-0 pa-2' : 'mr-2 pa-2'"
 				:size="iconOnly ? 'x-large' : 'default'"
 				class="vd-user-icon"
 				v-bind="options['icon']"
