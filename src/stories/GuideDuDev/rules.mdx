@@ -1,0 +1,208 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="Guide Du Dev/Rules"/>
+
+# Documentation des Rules
+
+## Introduction
+Les `rules` sont des fonctions de validation utilisées pour vérifier les champs de formulaire dans votre application. Elles sont définies dans le dossier `src/composables/rules` et peuvent être importées et utilisées dans vos composants Vue.
+
+## Importation des Rules
+Pour utiliser les `rules` dans votre composant, vous devez les importer depuis le module `@/composables`. Voici un exemple d'importation dans un composant Vue :
+
+``` vue
+<script setup>
+import {
+  useRequiredRules,
+  useEmailRule,
+  useExactLengthRule,
+  useMaxLengthRule,
+  useMinLengthRule,
+  useMatchPatternRule,
+} from '@cnamts/synapse'
+```
+
+## Liste des Rules disponibles
+Voici la liste des `rules` disponibles dans Synapse :
+
+### `useRequiredRules`
+Cette règle vérifie si un champ est vide ou non. Elle renvoie `true` si le champ est rempli et `false` s'il est vide.
+
+### `useEmailRule`
+Cette règle vérifie si une chaîne de caractères est une adresse e-mail valide. Elle renvoie `true` si la chaîne est une adresse e-mail valide et `false` sinon.
+
+### `useExactLengthRule`
+Cette règle vérifie si une chaîne de caractères a une longueur exacte donnée. Elle renvoie `true` si la chaîne a la longueur exacte et `false` sinon.
+
+### `useMaxLengthRule`
+Cette règle vérifie si une chaîne de caractères a une longueur maximale donnée. Elle renvoie `true` si la chaîne a une longueur inférieure ou égale à la longueur maximale et `false`
+
+### `useMinLengthRule`
+Cette règle vérifie si une chaîne de caractères a une longueur minimale donnée. Elle renvoie `true` si la chaîne a une longueur supérieure ou égale à la longueur minimale et `false`
+
+### `useMatchPatternRule`
+Cette règle vérifie si une chaîne de caractères correspond à un motif de regex donné. Elle renvoie `true` si la chaîne correspond au motif et `false` sinon.
+
+## Utilisation des Rules
+Pour utiliser une `rule` dans votre composant, vous devez l'appeler avec la valeur à valider en argument. Voici un exemple d'utilisation de la `rule` `useRequiredRule` dans un composant Vue :
+
+
+Chaque rule est une fonction qui retourne une fonction de validation. Voici un exemple d'utilisation des rules dans un composant Vue :
+
+``` vue
+const { requiredRule } = useRequiredRules()
+const { email: emailRule } = useEmailRule()
+const { exactLength } = useExactLengthRule()
+const { maxLength: maxLengthRule } = useMaxLengthRule()
+const { minLength: minLengthRule } = useMinLengthRule()
+const { matchPattern } = useMatchPatternRule()
+
+const rules = {
+  firstName: [
+    requiredRule('First name'),
+    exactLength(5, 'Le prénom doit être exactement de 5 caractères.'),
+  ],
+  lastName: [
+    requiredRule('Last name', 'Veuillez entrer votre nom.'),
+    minLengthRule(4, 'Le nom doit avoir au moins 2 caractères.', true),
+    maxLengthRule(20, 'Le nom ne doit pas dépasser 20 caractères.', true),
+  ],
+  nickName: [
+    minLengthRule(4, 'Le surnom doit avoir au moins 2 caractères.', true),
+  ],
+  email: [
+    emailRule('Email', 'Veuillez entrer un email valide.'),
+  ],
+  phoneNumber: [
+    exactLength(10, 'Le numéro de téléphone doit être exactement de 10 chiffres.', true),
+  ],
+  age: [
+    matchPattern(/^\d+$/, 'Seul des numeros sont autorises.'),
+    maxLengthRule(2, 'L\'age ne doit pas dépasser 2 caractères.', true),
+  ],
+}
+```
+
+Dans cet exemple, nous utilisons différentes `rules` pour valider les champs d'un formulaire. Chaque `rule` retourne une fonction de validation qui prend la valeur à valider en argument et renvoie `true` si la valeur est valide et `false` sinon.
+
+## Exemple d'utilisation:
+
+``` vue
+<template>
+  <v-sheet class="mx-auto" width="300">
+    <v-form @submit.prevent="handleSubmit">
+      <v-text-field
+        v-model="firstName"
+        :rules="rules.firstName"
+        label="First name"
+        @blur="validateField('firstName')"
+      />
+      <v-text-field
+        v-model="lastName"
+        :rules="rules.lastName"
+        label="Last name"
+        @blur="validateField('lastName')"
+      />
+      <v-text-field
+        v-model="nickName"
+        :rules="rules.nickName"
+        label="NickName"
+        @blur="validateField('nickName')"
+      />
+      <v-text-field
+        v-model="email"
+        :rules="rules.email"
+        label="Email"
+        @blur="validateField('email')"
+      />
+      <PhoneField
+        v-model="phoneNumber"
+        :required="true"
+        label="Phone Number"
+        @blur="validateField('phoneNumber')"
+      />
+      <v-text-field
+        v-model="age"
+        :rules="rules.age"
+        label="Age Field"
+        @blur="validateField('age')"
+      />
+      <v-btn block class="mt-2" type="submit">
+        Submit
+      </v-btn>
+    </v-form>
+  </v-sheet>
+</template>
+
+<script lang="ts" setup>
+import { ref } from 'vue'
+import {
+  useRequiredRules,
+  useEmailRule,
+  useExactLengthRule,
+  useMaxLengthRule,
+  useMinLengthRule,
+  useMatchPatternRule,
+} from '@/composables'
+import PhoneField from '@/components/PhoneField/PhoneField.vue'
+
+const firstName = ref('')
+const lastName = ref('')
+const nickName = ref('')
+const email = ref('')
+const phoneNumber = ref('')
+const age = ref('')
+
+const { requiredRule } = useRequiredRules()
+const { email: emailRule } = useEmailRule()
+const { exactLength } = useExactLengthRule()
+const { maxLength: maxLengthRule } = useMaxLengthRule()
+const { minLength: minLengthRule } = useMinLengthRule()
+const { matchPattern } = useMatchPatternRule()
+
+const rules = {
+  firstName: [
+    requiredRule('First name'),
+    exactLength(5, 'Le prénom doit être exactement de 5 caractères.'),
+  ],
+  lastName: [
+    requiredRule('Last name', 'Veuillez entrer votre nom.'),
+    minLengthRule(4, 'Le nom doit avoir au moins 2 caractères.', true),
+    maxLengthRule(20, 'Le nom ne doit pas dépasser 20 caractères.', true),
+  ],
+  nickName: [
+    minLengthRule(4, 'Le surnom doit avoir au moins 2 caractères.', true),
+  ],
+  email: [
+    emailRule('Email', 'Veuillez entrer un email valide.'),
+  ],
+  phoneNumber: [
+    exactLength(10, 'Le numéro de téléphone doit être exactement de 10 chiffres.', true),
+  ],
+  age: [
+    matchPattern(/^\d+$/, 'Seul des numeros sont autorises.'),
+    maxLengthRule(2, 'L\'age ne doit pas dépasser 2 caractères.', true),
+  ],
+}
+
+const validateField = (field: string) => {
+  return rules[field].every(rule => rule(field))
+}
+
+const validateForm = () => {
+  return [firstName, lastName, email, phoneNumber].every(field => field.value)
+}
+
+const handleSubmit = () => {
+  if (validateForm()) {
+    console.log('Form valide')
+  } else {
+    console.log('Merci de renseigner tous les champs requis')
+  }
+}
+</script>
+```
+
+## Conclusion
+
+Les rules fournissent un moyen flexible et réutilisable de valider les champs de formulaire dans votre application. En les utilisant, vous pouvez garantir que les données saisies par les utilisateurs respectent les contraintes définies.
