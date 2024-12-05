@@ -1,0 +1,44 @@
+import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
+import * as CustomBtnSelectStories from "./CustomBtnSelect.stories";
+
+<Meta of={CustomBtnSelectStories}/>
+
+# CustomBtnSelect
+
+Le composant `CustomBtnSelect` est utilisé pour proposer une sélection d'options avec un bouton personnalisé, conforme au style du design-system et qui respecte les règles d'accessibilité RGAA.
+
+<Canvas of={CustomBtnSelectStories.Default}/>
+
+# API
+
+<Controls of={CustomBtnSelectStories.Default}/>
+
+# Exemple d'utilisation
+
+<Source
+    dark code={`
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import CustomBtnSelect from '@cnamts/synapse'
+
+  const model = ref(null)
+  const menuItems = ['Option 1', 'Option 2', 'Option 3']
+
+</script>
+
+<template>
+  <main class="ma-12">
+    Option sélectionnée: {{ model }}
+    <div class="d-flex flex-wrap align-center">
+      <CustomBtnSelect
+        v-model="model"
+        :menu-items="menuItems"
+        label="Sélectionnez une option"
+        primary-info="Primary Info"
+        secondary-info="Secondary Info"
+      />
+    </div>
+  </main>
+</template>
+`}
+/>

@@ -7,6 +7,7 @@ export const cnamLightTheme = {
 	accent: cnamColorsTokens.cyan.base,
 	error: cnamColorsTokens.orange.darken20,
 	info: cnamColorsTokens.blue.base,
+	avatar: cnamColorsTokens.cyan.darken20,
 	success: cnamColorsTokens.turquoise.darken60,
 	warning: cnamColorsTokens.yellow.darken60,
 	risquePro: cnamColorsTokens.brick.base,
