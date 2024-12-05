@@ -216,6 +216,10 @@
 .vd-user-menu-btn-ctn {
   position: relative;
   z-index: 1;
+
+  .v-btn.v-btn--density-default {
+    height: auto !important;
+  }
 }
 
 .vd-user-menu-btn {
