@@ -27,10 +27,8 @@ exports[`CustomTextField > matches snapshot 1`] = `
         <hr class="v-divider v-divider--vertical v-theme--light text-primary mt-4 pa-1" style="height: 25px; border-right-width: 2px; --v-border-opacity: 1;" aria-orientation="vertical" role="separator">
       </div>
       <div class="v-field__field" data-no-activator="">
-        <!----><label class="v-label v-field-label" for="input-0">
-          <!---->
-          <!---->
-        </label>
+        <!---->
+        <!---->
         <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" class="v-field__input" value="">
         <!---->
       </div>

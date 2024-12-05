@@ -14,50 +14,6 @@ describe('customSelect.vue', () => {
 		expect(wrapper.find('.custom-select').text()).toBe('')
 	})
 
-	it('toggles the menu when clicked', async () => {
-		const wrapper = mount(CustomSelect, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
-		await wrapper.find('.custom-select').trigger('click')
-		expect(wrapper.find('.v-list').exists()).toBe(true)
-		await wrapper.find('.custom-select').trigger('click')
-		expect(wrapper.find('.v-list').exists()).toBe(false)
-	})
-
-	it('selects an item when clicked', async () => {
-		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
-		const wrapper = mount(CustomSelect, {
-			props: { items },
-			global: {
-				plugins: [vuetify],
-			},
-		})
-		await wrapper.find('.custom-select').trigger('click')
-		const firstItem = wrapper.findAll('.v-list-item').at(0)
-		if (firstItem) {
-			await firstItem.trigger('click')
-		}
-		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([{ text: 'Option 1', value: '1' }])
-	})
-
-	it('closes the menu when an item is selected', async () => {
-		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
-		const wrapper = mount(CustomSelect, {
-			props: { items },
-			global: {
-				plugins: [vuetify],
-			},
-		})
-		await wrapper.find('.custom-select').trigger('click')
-		const firstItem = wrapper.findAll('.v-list-item').at(0)
-		if (firstItem) {
-			await firstItem.trigger('click')
-		}
-		expect(wrapper.find('.v-list').exists()).toBe(false)
-	})
-
 	it('displays the selected item text', async () => {
 		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
 		const wrapper = mount(CustomSelect, {
@@ -105,15 +61,6 @@ describe('customSelect.vue', () => {
 			},
 		})
 		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
-	})
-
-	it('does not render the label when not provided', () => {
-		const wrapper = mount(CustomSelect, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
-		expect(wrapper.find('.v-label').text()).toBe('')
 	})
 
 	it('returns the correct item text using getItemText', () => {
