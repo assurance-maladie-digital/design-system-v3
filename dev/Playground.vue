@@ -27,11 +27,11 @@
 	const rules = {
 		firstName: [
 			requiredRule('First name'),
-			exactLength(5, 'Le prénom doit être exactement de 3 caractères.'),
-			minLengthRule(4, 'Le prénom doit avoir au moins 2 caractères.', true),
+			exactLength(5, 'Le prénom doit être exactement de 5 caractères.'),
 		],
 		lastName: [
 			requiredRule('Last name', 'Veuillez entrer votre nom.'),
+			minLengthRule(4, 'Le nom doit avoir au moins 2 caractères.', true),
 			maxLengthRule(20, 'Le nom ne doit pas dépasser 20 caractères.', true),
 		],
 		nickName: [
