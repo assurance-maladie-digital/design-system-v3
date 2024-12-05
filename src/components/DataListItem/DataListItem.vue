@@ -62,8 +62,8 @@
 		<div class="vd-data-list-item-content">
 			<div :class="{ 'vd-row': row }">
 				<div
-					class="vd-data-list-item-label text-caption"
 					:style="{ color: labelColor }"
+					class="vd-data-list-item-label text-caption"
 				>
 					{{ label }}
 				</div>
@@ -98,8 +98,8 @@
 			<slot name="action">
 				<VBtn
 					v-if="action"
-					v-bind="options.actionBtn"
 					class="vd-data-list-item-action-btn"
+					v-bind="options.actionBtn"
 					@click="emits('click:action')"
 				>
 					{{ action }}

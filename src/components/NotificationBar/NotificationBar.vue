@@ -1,7 +1,13 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useNotificationService } from '@/services/NotificationService'
-	import { mdiAlertCircleOutline, mdiAlertOctagonOutline, mdiCheckCircleOutline, mdiClose, mdiInformationOutline } from '@mdi/js'
+	import {
+		mdiAlertCircleOutline,
+		mdiAlertOctagonOutline,
+		mdiCheckCircleOutline,
+		mdiClose,
+		mdiInformationOutline,
+	} from '@mdi/js'
 	import { computed, getCurrentInstance, ref, watch } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import defaultOptions from './options'
@@ -175,25 +181,25 @@
 <template>
 	<div v-if="currentNotification">
 		<VSnackbar
-			v-bind="options.snackbar"
 			v-model="isNotificationVisible"
-			role="status"
+			:class="[{ 'long-text': hasLongContent }]"
 			:color="color"
 			:location="props.bottom ? 'bottom' : 'top'"
-			:vertical="hasLongContent"
 			:multi-line="hasLongContent"
-			:timeout="currentNotification?.timeout ?? -1"
-			:width="isMobileVersion || isTabletVersion ? 'auto' : '960px'"
 			:rounded="props.rounded"
-			:class="[{ 'long-text': hasLongContent }]"
+			:timeout="currentNotification?.timeout ?? -1"
+			:vertical="hasLongContent"
+			:width="isMobileVersion || isTabletVersion ? 'auto' : '960px'"
+			role="status"
+			v-bind="options.snackbar"
 		>
 			<div class="d-flex align-center ga-2">
 				<VIcon
 					v-if="!isMobileVersion && icon"
-					v-bind="options.icon"
 					:icon="icon"
-					size="24"
 					aria-hidden="true"
+					size="24"
+					v-bind="options.icon"
 				/>
 				<p :class="'text-' + contentStyle.contentColor">
 					{{ currentNotification?.message }}
@@ -202,15 +208,15 @@
 
 			<template #actions>
 				<div
+					:class="hasLongContent ? 'action-section-longText' : 'action-section-shortText'"
 					class="d-flex ga-2"
 					style="width:100%"
-					:class="hasLongContent ? 'action-section-longText' : 'action-section-shortText'"
 				>
 					<slot name="action" />
 					<VBtn
-						class="notification-bar__close"
 						:class="{ 'ma-0': smallCloseBtn }"
 						aria-label="Fermer la notification"
+						class="notification-bar__close"
 						v-bind="options.btn"
 						@click="handleClearNotification"
 					>
@@ -244,6 +250,7 @@
 :deep(.v-snackbar__content) {
   padding: tokens.$padding-4 !important;
 }
+
 :deep(.v-snackbar__actions) {
   margin-inline-end: 10px;
 }
@@ -253,6 +260,7 @@
     width: 100% !important;
     align-self: auto;
   }
+
   .v-snack__wrapper {
     align-items: stretch;
     flex-direction: row;

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 	import { mdiArrowUp } from '@mdi/js'
 	import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
@@ -100,13 +100,13 @@
 		<VBtn
 			v-show="showBtn"
 			v-scroll:[targetSelector]="onScroll"
+			:min-width="minWidth"
+			:style="btnStyle"
+			class="vd-back-to-top-btn"
 			v-bind="({
 				...options.btn,
 				...$attrs,
 			} as VBtnProps)"
-			:style="btnStyle"
-			:min-width="minWidth"
-			class="vd-back-to-top-btn"
 			@click="scrollToTop"
 		>
 			<span :class="labelClasses">
@@ -126,12 +126,13 @@
 
 <style lang="scss" scoped>
 .vd-back-to-top-btn {
-	position: sticky;
-	z-index: 999;
-	opacity: 1;
-	float: right;
+  position: sticky;
+  z-index: 999;
+  opacity: 1;
+  float: right;
 }
+
 .v-btn--variant-outlined {
-	background: white;
+  background: white;
 }
 </style>

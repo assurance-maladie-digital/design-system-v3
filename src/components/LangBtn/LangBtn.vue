@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 	import { computed, ref, watch } from 'vue'
 	import type { AllLanguagesChar } from '@/components/LangBtn/types'
 	import { mdiMenuDown } from '@mdi/js'
@@ -100,48 +100,48 @@
 <template>
 	<div :id="menuId">
 		<VMenu
-			v-bind="options.menu"
 			:id="isMenuOpen ? 'lang-menu' : menuId "
 			v-model="menu"
-			role="menu"
 			location="bottom"
+			role="menu"
+			v-bind="options.menu"
 		>
 			<template #activator="{ props: activatorProps }">
 				<VBtn
 					id="lang-menu-btn"
-					:aria-label="`${props.ariaLabel} ${currentLangData.name}`"
-					aria-haspopup="menu"
 					:aria-controls="menuId"
-					:aria-owns="menuId"
 					:aria-expanded="isMenuOpen"
+					:aria-label="`${props.ariaLabel} ${currentLangData.name}`"
+					:aria-owns="menuId"
+					aria-haspopup="menu"
+					class="vd-lang-btn"
 					v-bind="{
 						...options.btn,
 						...activatorProps,
 					}"
-					class="vd-lang-btn"
 				>
 					{{ currentLangData.name }}
 					<VIcon
 						v-if="!hideDownArrow"
-						v-bind="options.icon"
 						class="ml-1"
+						v-bind="options.icon"
 					>
 						{{ mdiMenuDown }}
 					</VIcon>
 				</VBtn>
 			</template>
 			<VList
-				v-bind="options.list"
 				aria-labelledby="lang-menu-btn"
+				v-bind="options.list"
 			>
 				<VListItem
 					v-for="(langData, code, index) in languagesData"
-					v-bind="options.listTile"
 					:key="code"
-					role="menuitem"
-					:tabindex="index + 1"
 					:aria-label="`${props.ariaLabel} ${langData.nativeName}`"
 					:aria-labelledby="`${menuId} ${langData.nativeName}`"
+					:tabindex="index + 1"
+					role="menuitem"
+					v-bind="options.listTile"
 					@click="updateLang(code)"
 				>
 					<VListItemTitle v-bind="options.listTileTitle">

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 	import { computed, useSlots } from 'vue'
 	import { type RouteLocationRaw } from 'vue-router'
 
@@ -132,18 +132,18 @@
 
 <template>
 	<VFooter
-		v-bind="{
-			...options.footer,
-			...$attrs,
-		}"
-		:color="props.light ? 'white' : options.footer.color"
-		class="vd-footer-bar flex-column align-stretch pa-3 w-100"
 		:class="{
 			'py-4 py-sm-7 px-4 px-md-14': extendedMode,
 			'v-theme--light': props.light,
 			'v-theme--dark': !props.light,
 		}"
+		:color="props.light ? 'white' : options.footer.color"
+		class="vd-footer-bar flex-column align-stretch pa-3 w-100"
 		role="contentinfo"
+		v-bind="{
+			...options.footer,
+			...$attrs,
+		}"
 	>
 		<div
 			v-if="extendedMode"
@@ -153,8 +153,8 @@
 				<slot name="logo">
 					<Logo
 						v-if="!props.hideLogo"
-						:size="logoSize"
 						:class="{ 'mb-2 mb-sm-0': !props.hideSocialMediaLinks }"
+						:size="logoSize"
 						class="logo"
 					/>
 				</slot>
@@ -170,13 +170,13 @@
 
 			<VBtn
 				id="scroll-btn"
-				v-bind="options.goTopBtn"
 				:aria-label="locales.goTopBtnLabel"
+				v-bind="options.goTopBtn"
 				@click="scrollToTop"
 			>
 				<VIcon
-					v-bind="options.goTopBtnIcon"
 					class="scroll"
+					v-bind="options.goTopBtnIcon"
 				>
 					{{ arrowTopIcon }}
 				</VIcon>
@@ -185,16 +185,16 @@
 
 		<VDivider
 			v-if="extendedMode"
-			v-bind="options.divider"
 			class="mb-3"
+			v-bind="options.divider"
 		/>
 
 		<slot />
 
 		<VDivider
 			v-if="extendedMode"
-			v-bind="options.divider"
 			class="mt-3 mb-6"
+			v-bind="options.divider"
 		/>
 
 		<ul
@@ -209,12 +209,12 @@
 			>
 				<component
 					:is="getLinkComponent(item)"
-					:href="item.href"
-					:to="item.to"
 					:aria-label="item.ariaLabel"
-					:target="item.openInNewTab ? '_blank' : undefined"
-					:tabindex="index"
+					:href="item.href"
 					:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
+					:tabindex="index"
+					:target="item.openInNewTab ? '_blank' : undefined"
+					:to="item.to"
 					class="my-3 mx-4"
 				>
 					{{ item.text }}
@@ -235,95 +235,119 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens.scss';
+
 $white: #fff;
 
 a {
   cursor: pointer;
 }
+
 .v-btn--icon {
   border: 0;
 }
+
 // Fix footer bar height in SK
 .v-footer {
   flex-grow: 0 !important;
   justify-content: center;
 }
+
 .vd-footer-bar :deep() {
   .vd-footer-bar-links a {
     color: rgba(0, 0, 0, .87);
   }
+
   p,
   .text--primary {
     color: rgba(0, 0, 0, .87);
   }
+
   .text--secondary {
     color: rgba(0, 0, 0, .6);
   }
+
   .social {
     .text--primary {
       color: tokens.$primary-base;
     }
+
     a.v-btn:hover {
       background: rgba(0, 0, 0, 0.05);
     }
   }
+
   button.v-btn:hover {
     background: rgba(0, 0, 0, 0.05);
   }
+
   a.text--primary {
     color: tokens.$primary-base;
   }
+
   .v-divider {
     border-color: rgba(tokens.$parma-darken-60, 1);
   }
+
   svg.logo {
     fill: tokens.$primary-base;
   }
+
   .scroll {
     color: tokens.$primary-base !important;
   }
 }
+
 // Use deep selector to style user content as well
 .vd-footer-bar.v-theme--dark :deep() {
   .vd-footer-bar-links a {
     color: $white;
   }
+
   p,
   .text--primary {
     color: rgba($white, 0.87);
   }
+
   .text--secondary {
     color: rgba($white, 0.6);
   }
+
   a.text--primary {
     color: $white;
   }
+
   .v-divider {
     border-color: rgba($white, 1);
   }
+
   svg {
     fill: $white;
   }
 }
+
 .vd-footer-bar-links :deep() {
   li {
     list-style: none;
     display: flex;
   }
+
   a {
     transition: 0.15s;
     text-decoration: none;
     padding-top: 1px; // Add top padding to account for bottom border
     border-bottom: 1px solid transparent;
+
     &:hover,
     &:focus {
       border-color: currentColor;
     }
   }
+
   p {
     padding: 1px 0;
   }
 }
+
 .v-theme--dark button.v-btn:hover :deep() {
   background: rgba(white, 0.1);
 }

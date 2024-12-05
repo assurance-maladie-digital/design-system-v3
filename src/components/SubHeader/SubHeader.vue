@@ -44,9 +44,9 @@
 
 <template>
 	<VSheet
-		v-bind="options.sheet"
 		:style="widthStyles"
 		class="vd-sub-header white--text py-6 px-8"
+		v-bind="options.sheet"
 	>
 		<slot name="back-btn">
 			<VFadeTransition
@@ -55,15 +55,15 @@
 			>
 				<VSkeletonLoader
 					v-if="loading"
+					class="vd-subheader-loading mb-4"
+					color="secondary"
 					max-height="28"
 					type="button"
-					color="secondary"
-					class="vd-subheader-loading mb-4"
 				/>
 				<VBtn
 					v-else
-					v-bind="options.backBtn"
 					class="vd-sub-header-back-btn mb-1"
+					v-bind="options.backBtn"
 					@click="$emit('back')"
 				>
 					<slot name="back-btn-icon">
@@ -82,9 +82,9 @@
 					<VFadeTransition mode="out-in">
 						<HeaderLoading
 							v-if="loading"
-							width="300"
-							height="2rem"
 							color="secondary"
+							height="2rem"
+							width="300"
 						/>
 						<h2
 							v-else-if="titleText"
@@ -103,14 +103,14 @@
 						<HeaderLoading
 							v-if="loading"
 							class="mt-1"
-							width="250"
-							height="2rem"
 							color="secondary"
+							height="2rem"
+							width="250"
 						/>
 						<p
 							v-else
-							class="text-h6 font-weight-bold mt-1 mb-0"
 							:style="{ color: 'rgba(255, 255, 255, .7)' }"
+							class="text-h6 font-weight-bold mt-1 mb-0"
 						>
 							{{ subTitleText }}
 						</p>
@@ -126,8 +126,8 @@
 					:items="dataListGroupItems"
 					:loading="loading"
 					:render-html-value="renderHtmlValue"
-					item-width="auto"
 					class="flex-nowrap flex-shrink-0"
+					item-width="auto"
 					@click:list-item="emitItemAction"
 				/>
 			</slot>
@@ -175,6 +175,7 @@
 
 .vd-subheader-loading :deep() {
   background: transparent;
+
   .v-skeleton-loader__button {
     margin: 0;
     min-height: 28px;

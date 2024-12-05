@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { downloadFile } from '@/utils/functions/downloadFile'
 	import { mdiDownload } from '@mdi/js'
@@ -80,11 +80,11 @@
 
 <template>
 	<VBtn
-		v-bind="btnOptions"
-		:loading="state === 'loading'"
 		:class="btnOptions.variant === 'outlined' ? 'outlined-style' : ''"
+		:loading="state === 'loading'"
 		class="vd-download-btn"
 		data-testid="download-btn"
+		v-bind="btnOptions"
 		@click="download"
 	>
 		<slot name="icon">
@@ -99,15 +99,16 @@
 
 <style lang="scss" scoped>
 .vd-download-btn :deep() {
-	.v-btn__content {
-		flex-wrap: wrap;
-	}
-	.v-icon {
-		flex: none;
-	}
+  .v-btn__content {
+    flex-wrap: wrap;
+  }
+
+  .v-icon {
+    flex: none;
+  }
 }
 
 .outlined-style {
-	border: 1px solid currentColor;
+  border: 1px solid currentColor;
 }
 </style>

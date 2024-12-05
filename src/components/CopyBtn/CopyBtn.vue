@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 	import { ref } from 'vue'
 	import { VMenu, VIcon, VBtn } from 'vuetify/components'
 	import { mdiContentCopy } from '@mdi/js'
@@ -57,18 +57,18 @@
 		class="vd-copy-btn"
 	>
 		<VMenu
-			v-bind="options.menu"
 			:id="props.ariaOwns"
 			v-model="tooltip"
 			:disabled="props.hideTooltip"
 			transition="fade-transition"
+			v-bind="options.menu"
 		>
 			<template #activator="{ props: menuProps }">
 				<VBtn
-					v-bind="{ ...menuProps, ...options.btn }"
 					:aria-label="props.ariaLabel"
 					:aria-owns="props.ariaOwns"
 					:data-test-id="props.ariaOwns"
+					v-bind="{ ...menuProps, ...options.btn }"
 					@click="copy"
 				>
 					<slot name="icon">
