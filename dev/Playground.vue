@@ -7,7 +7,7 @@
 		useMaxLengthRule,
 		useMinLengthRule,
 		useMatchPatternRule,
-	} from '@/composables/rules'
+	} from '@/composables'
 	import PhoneField from '@/components/PhoneField/PhoneField.vue'
 
 	const firstName = ref('')
