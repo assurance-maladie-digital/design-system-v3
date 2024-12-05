@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import { mdiAccountCircleOutline, mdiMagnify } from '@mdi/js'
-import { VBtn } from 'vuetify/components'
+import { VBtn, VListItem, VListItemTitle } from 'vuetify/components'
 import HeaderToolbar from '../HeaderToolbar/HeaderToolbar.vue'
 import LogoBrandSection from '../LogoBrandSection/LogoBrandSection.vue'
 import SubHeader from '../SubHeader/SubHeader.vue'
+import UserMenuBtn from '../UserMenuBtn/UserMenuBtn.vue'
 import HeaderBar from './HeaderBar.vue'
 
 const meta = {
@@ -603,6 +604,65 @@ export const WithSubHeader: Story = {
 				code: `
 				<script setup lang="ts">
 					import { HeaderBar, SubHeader } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const DefaultSlot: Story = {
+	args: {
+		serviceTitle: 'Synapse',
+		serviceSubtitle: 'Design System',
+	},
+	render: (args) => {
+		return {
+			components: { HeaderBar, UserMenuBtn, VListItem, VListItemTitle },
+			setup() {
+				const listItems = ['Item 1', 'Item 2', 'Item 3']
+				return { args, listItems }
+			},
+			template: `
+				<HeaderBar v-bind="args">
+					<UserMenuBtn full-name="Édith Cartier">
+						<VListItem
+							v-for="(item, index) in listItems"
+							:key="index"
+						>
+							<VListItemTitle>{{ item }}</VListItemTitle>
+						</VListItem>
+					</UserMenuBtn>
+				</HeaderBar>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<HeaderBar>
+						<UserMenuBtn full-name="Édith Cartier">
+							<VListItem
+								v-for="(item, index) in listItems"
+								:key="index"
+							>
+								<VListItemTitle>{{ item }}</VListItemTitle>
+							</VListItem>
+					</UserMenuBtn>
+					</HeaderBar>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderBar, UserMenuBtn } from '@cnamts/synapse'
+					
+					const listItems = ['Item 1', 'Item 2', 'Item 3']
 				</script>
 				`,
 			},
