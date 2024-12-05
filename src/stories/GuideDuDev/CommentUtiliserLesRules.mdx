@@ -1,4 +1,4 @@
-import {Meta} from '@storybook/addon-docs/blocks';
+import {Meta, Source} from '@storybook/addon-docs/blocks';
 
 <Meta title="Guide Du Dev/Comment utiliser les rules"/>
 
@@ -18,16 +18,16 @@ Le composable `useFieldValidation` vous permet de définir des règles de valida
 
 ### Type `RuleOptions`
 
-```ts
+    <Source dark code={`
 type RuleOptions = {
-  fieldName?: string; // Nom du champ utilisé dans les messages d'erreur
-  message?: string; // Message personnalisé pour la règle
-  length?: number; // Longueur minimale ou maximale
-  value?: number; // Valeur minimale ou maximale
-  pattern?: RegExp; // Motif à valider
-  ignoreSpace?: boolean; // Ignorer les espaces lors de la validation de longueur
+fieldName?: string; // Nom du champ utilisé dans les messages d'erreur
+message?: string; // Message personnalisé pour la règle
+length?: number; // Longueur minimale ou maximale
+value?: number; // Valeur minimale ou maximale
+pattern?: RegExp; // Motif à valider
+ignoreSpace?: boolean; // Ignorer les espaces lors de la validation de longueur
 };
-```
+`} />
 
 ---
 
@@ -35,77 +35,76 @@ type RuleOptions = {
 
 ### Script Vue.js
 
-```vue
+    <Source dark code={`
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useFieldValidation } from '@cnamts/synapse';
+    import {ref} from 'vue';
+    import {useFieldValidation} from '@cnamts/synapse';
 
-const { generateRules } = useFieldValidation();
+    const {generateRules} = useFieldValidation();
 
-const firstName = ref('');
-const email = ref('');
-const age = ref('');
+    const firstName = ref('');
+    const email = ref('');
+    const age = ref('');
 
-const rules = {
-  firstName: generateRules([
-    { type: 'required', options: { message: 'Ce champ est requis.' } },
-    { type: 'minLength', options: { length: 3, ignoreSpace: true } },
-    { type: 'maxLength', options: { length: 20 } },
-  ]),
-  email: generateRules([
-    { type: 'required', options: { fieldName: 'Email' } },
-    { type: 'email' },
-  ]),
-  age: generateRules([
-    { type: 'min', options: { value: 18 } },
-    { type: 'max', options: { value: 99 } },
-  ]),
+    const rules = {
+    firstName: generateRules([
+{type: 'required', options: {message: 'Ce champ est requis.'}},
+{type: 'minLength', options: {length: 3, ignoreSpace: true}},
+{type: 'maxLength', options: {length: 20}},
+    ]),
+    email: generateRules([
+{type: 'required', options: {fieldName: 'Email'}},
+{type: 'email'},
+    ]),
+    age: generateRules([
+{type: 'min', options: {value: 18}},
+{type: 'max', options: {value: 99}},
+    ]),
 };
 
-const validateField = (field: string) => {
-  return rules[field].every((rule) => rule(field));
+    const validateField = (field: string) => {
+    return rules[field].every((rule) => rule(field));
 };
 
-const handleSubmit = () => {
-  if (validateField('firstName') && validateField('email') && validateField('age')) {
+    const handleSubmit = () => {
+    if (validateField('firstName') && validateField('email') && validateField('age')) {
     alert('Formulaire valide.');
-  } else {
+} else {
     alert('Merci de vérifier les champs.');
-  }
+}
 };
 </script>
-```
-
+`} />
 ---
 
 ### Template Vue.js
 
-```vue
+    <Source dark code={`
 <template>
-  <v-form @submit.prevent="handleSubmit">
+    <v-form
+    @submit.prevent="handleSubmit">
     <v-text-field
-      v-model="firstName"
-      :rules="rules.firstName"
-      label="Prénom"
-      @blur="validateField('firstName')"
+        v-model="firstName"
+    :rules="rules.firstName"
+    label="Prénom"
+    @blur="validateField('firstName')"
     />
     <v-text-field
-      v-model="email"
-      :rules="rules.email"
-      label="Email"
-      @blur="validateField('email')"
+        v-model="email"
+    :rules="rules.email"
+    label="Email"
+    @blur="validateField('email')"
     />
     <v-text-field
-      v-model="age"
-      :rules="rules.age"
-      label="Âge"
-      @blur="validateField('age')"
+        v-model="age"
+    :rules="rules.age"
+    label="Âge"
+    @blur="validateField('age')"
     />
     <v-btn block class="mt-2" type="submit">Soumettre</v-btn>
-  </v-form>
+</v-form>
 </template>
-```
-
+`} />
 ---
 
 ## Fonctionnalités supportées
