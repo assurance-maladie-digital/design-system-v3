@@ -42,7 +42,7 @@ export function useFieldValidation() {
 				return (value: string) =>
 					options.pattern ? options.pattern.test(value) || options.message || `Format invalide.` : `Format invalide.`
 			default:
-				return () => true // Aucune règle
+				return () => `La règle spécifiée n'existe pas.`
 		}
 	}
 	const generateRules = (fieldRules: Array<{ type: string, options?: RuleOptions }>) => {
