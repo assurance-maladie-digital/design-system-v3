@@ -188,7 +188,6 @@
 			<slot name="content">
 				<VList
 					v-if="hasListContent"
-					:style="`min-width: ${buttonWidth}; max-width: ${buttonWidth};`"
 					v-bind="props.options['list']"
 				>
 					<VListItem

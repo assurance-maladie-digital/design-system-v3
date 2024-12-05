@@ -350,7 +350,7 @@ export const WithVuetifyOptions: Story = {
  }
 
  const vuetifyOptions = ref({
-  menu: { minWidth: '150px', maxWidth: '150px' },
+  menu: { minWidth: '250px' },
   btn: { variant: 'outlined' },
   icon: { color: 'warning' },
   logoutListItem: { class: 'text-warning' },
@@ -363,7 +363,7 @@ export const WithVuetifyOptions: Story = {
 	args: {
 		...Default.args,
 		vuetifyOptions: {
-			menu: { minWidth: '150px', maxWidth: '150px' },
+			menu: { minWidth: '250px' },
 			btn: { variant: 'outlined' },
 			icon: { color: 'warning' },
 			logoutListItem: { class: 'text-warning' },

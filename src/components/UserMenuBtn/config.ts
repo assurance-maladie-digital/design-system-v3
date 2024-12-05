@@ -2,8 +2,8 @@ export const defaultOptions = {
 	menu: {
 		offsetY: true,
 		zIndex: 4,
-		minWidth: '400px',
-		maxWidth: '400px',
+		minWidth: '198px',
+		maxWidth: 'auto',
 		nudgeRight: 0,
 	},
 	btn: {
@@ -15,7 +15,7 @@ export const defaultOptions = {
 	},
 	logoutListItem: {
 		class: 'text-primary',
-		minWidth: '298px',
+		minWidth: '198px',
 	},
 	logoutIcon: {
 		color: 'primary',
