@@ -625,14 +625,13 @@ export const DefaultSlot: Story = {
 			},
 			template: `
 				<HeaderBar v-bind="args">
-					<UserMenuBtn full-name="Édith Cartier">
-						<VListItem
-							v-for="(item, index) in listItems"
-							:key="index"
-						>
-							<VListItemTitle>{{ item }}</VListItemTitle>
-						</VListItem>
-					</UserMenuBtn>
+					<template #header-side>
+						<UserMenuBtn
+							full-name="Édith Cartier"
+							:menu-items="listItems"
+							class="mr-4"
+						/>
+					</template>
 				</HeaderBar>
 			`,
 		}
@@ -644,14 +643,13 @@ export const DefaultSlot: Story = {
 				code: `
 				<template>
 					<HeaderBar>
-						<UserMenuBtn full-name="Édith Cartier">
-							<VListItem
-								v-for="(item, index) in listItems"
-								:key="index"
-							>
-								<VListItemTitle>{{ item }}</VListItemTitle>
-							</VListItem>
-					</UserMenuBtn>
+						 <template #header-side>
+								<UserMenuBtn 
+									full-name="Édith Cartier" 
+									:menu-items="listItems"
+									class="mr-4"
+								/>
+						</template>
 					</HeaderBar>
 				</template>
 				`,
