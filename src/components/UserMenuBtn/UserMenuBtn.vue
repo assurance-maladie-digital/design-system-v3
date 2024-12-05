@@ -59,9 +59,8 @@
 		<template #append-icon>
 			<VIcon
 				v-if="!hideUserIcon"
-				:class="isMobileView ? 'mr-0 pa-2' : 'mr-2 pa-2'"
 				:size="isMobileView ? 'x-large' : 'default'"
-				class="vd-user-icon"
+				class="vd-user-icon mr-0 pa-2"
 				v-bind="options['icon']"
 			>
 				{{ mdiAccount }}
