@@ -82,6 +82,6 @@
 .vd-code {
 	font-size: 6rem;
 	line-height: 6rem;
-	font-weight: 200;
+	font-weight: 400;
 }
 </style>
