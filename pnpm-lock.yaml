@@ -49,6 +49,9 @@ devDependencies:
   '@storybook/addon-onboarding':
     specifier: ^8.3.6
     version: 8.4.6(react@18.3.1)(storybook@8.4.6)
+  '@storybook/addon-queryparams':
+    specifier: ^7.0.1
+    version: 7.0.1(@storybook/manager-api@8.4.6)(@storybook/preview-api@8.4.6)
   '@storybook/addon-viewport':
     specifier: ^8.3.6
     version: 8.4.6(storybook@8.4.6)
@@ -1580,6 +1583,16 @@ packages:
       '@storybook/global': 5.0.0
       storybook: 8.4.6
       ts-dedent: 2.2.0
+    dev: true
+
+  /@storybook/addon-queryparams@7.0.1(@storybook/manager-api@8.4.6)(@storybook/preview-api@8.4.6):
+    resolution: {integrity: sha512-hlOrjCbUdkg/f/7HaIBMvEp2oyNkBYaxifDdGNyUhdBzfuWUeWDTUwYDxUubbhuqNcSMbw5Cje34dE+hJaGR9A==}
+    peerDependencies:
+      '@storybook/manager-api': ^7.0.0 || ^8.0.0 || ^8.0.0-rc.0
+      '@storybook/preview-api': ^7.0.0 || ^8.0.0 || ^8.0.0-rc.0
+    dependencies:
+      '@storybook/manager-api': 8.4.6(storybook@8.4.6)
+      '@storybook/preview-api': 8.4.6(storybook@8.4.6)
     dev: true
 
   /@storybook/addon-toolbars@8.4.6(storybook@8.4.6):
