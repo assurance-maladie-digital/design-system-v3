@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import DialogBox from '../DialogBox/DialogBox.vue'
 import PageContainer from '../PageContainer/PageContainer.vue'
 import CookiesSelection from './CookiesSelection.vue'
+import CookieBanner from '../CookieBanner/CookieBanner.vue'
+import { ref } from 'vue'
 
 const meta = {
 	title: 'Templates/CookiesSelection',
@@ -328,6 +330,123 @@ export const CookieDescriptionSlot: Story = {
 	}
 </script>
 				`,
+			},
+		],
+	},
+}
+
+export const WithCookieBannerComponent: Story = {
+	args: {},
+	render: (args) => {
+		return {
+			components: { CookieBanner, DialogBox, CookiesSelection },
+			setup() {
+				const openBanner = ref(true)
+				const openDialog = ref(false)
+
+				function onSubmit(e: unknown) {
+					console.log('Les cookies suivants ont été sélectionnés :', e)
+					openDialog.value = false
+					openBanner.value = false
+					alert('Vos préférences ont été enregistrées.')
+				}
+
+				return { args, openBanner, openDialog, onSubmit }
+			},
+			template: `
+			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
+				<VBtn @click="openBanner = true" v-if="!openBanner && !openDialog">Reset</VBtn>
+				<CookieBanner
+					v-model="openBanner"
+					@customize="openDialog = true"
+				/>
+					
+				<DialogBox
+					hideActions
+					persistent
+					v-model="openDialog"
+				>
+					<div style="overflow: auto">
+						<CookiesSelection
+							v-bind="args"
+							@submit="onSubmit"
+						/>
+					</div>
+				</DialogBox>
+			</div>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<DialogBox
+		hideActions
+		persistent
+		v-model="openDialog"
+	>
+		<div style="overflow: auto">
+			<CookiesSelection
+				:items="items"
+				@submit="onSubmit"
+			/>
+		</div>
+	</DialogBox>
+
+
+	<CookieBanner
+		v-model="openBanner"
+		@customize="openDialog = true"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { CookiesSelection, DialogBox, CookieBanner } from '@cnamts/synapse'
+
+	const openBanner = ref(true)
+	const openDialog = ref(false)
+
+	const items = {
+		essentials: [
+			{
+				name: 'session',
+				description: 'Sauvegarde la session pour rester connecté.',
+				conservation: '20 heures',
+			},
+			{
+				name: 'cookie_policy',
+				description: 'Sauvegarde les préférences de cookies.',
+				conservation: '1 an',
+			},
+		],
+		functional: [
+			{
+				name: 'contrast',
+				description: 'Sauvegarde la personnalisation de l’affichage.',
+				conservation: '1 an',
+			},
+		],
+		analytics: [
+			{
+				name: 'user_id',
+				description: 'Sauvegarde l’identifiant unique de visiteur.',
+				conservation: '6 mois',
+			},
+		],
+	}
+
+	function onSubmit(e) {
+		console.log('Les cookies suivants ont été sélectionnés :', e)
+		openDialog.value = false
+		openBanner.value = false
+		alert('Vos préférences ont été enregistrées.')
+	}
+
+</script>`,
 			},
 		],
 	},
