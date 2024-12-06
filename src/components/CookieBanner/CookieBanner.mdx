@@ -13,3 +13,81 @@ Le composant `CookieBanner` est utilisé pour afficher une bannière de consente
 
 <Controls of={CookieBannerStories.Default} />
 
+## Personnalisation des cookies
+
+Pour permettre a l'utilisateur de personnaliser les cookies categories de cookies acceptés, il est recommandé d'utiliser ce composant en combinaison avec le composant `CookiesSelection`.
+
+<Canvas
+	of={CookieBannerStories.WithCookiesSelectionsComponent}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { CookiesSelection, DialogBox, CookieBanner } from '@cnamts/synapse'
+
+			const openBanner = ref(true)
+			const openDialog = ref(false)
+
+			const items = {
+				essentials: [
+					{
+						name: 'session',
+						description: 'Sauvegarde la session pour rester connecté.',
+						conservation: '20 heures',
+					},
+					{
+						name: 'cookie_policy',
+						description: 'Sauvegarde les préférences de cookies.',
+						conservation: '1 an',
+					},
+				],
+				functional: [
+					{
+						name: 'contrast',
+						description: 'Sauvegarde la personnalisation de l’affichage.',
+						conservation: '1 an',
+					},
+				],
+				analytics: [
+					{
+						name: 'user_id',
+						description: 'Sauvegarde l’identifiant unique de visiteur.',
+						conservation: '6 mois',
+					},
+				],
+			}
+
+			function onSubmit(e) {
+				console.log('Les cookies suivants ont été sélectionnés :', e)
+				openDialog.value = false
+				openBanner.value = false
+				alert('Vos préférences ont été enregistrées.')
+
+				// Charger les cookies non essentiels
+			}
+		</script>
+
+		<template>
+			<DialogBox
+				hideActions
+				persistent
+				v-model="openDialog"
+			>
+				<div style="overflow: auto">
+					<CookiesSelection
+						:items="items"
+						@submit="onSubmit"
+					/>
+				</div>
+			</DialogBox>
+
+
+			<CookieBanner
+				v-model="openBanner"
+				@customize="openDialog = true"
+			/>
+		</template>
+		`
+	}}
+/>
