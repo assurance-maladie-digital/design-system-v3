@@ -1,0 +1,19 @@
+import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import * as NotFoundPageStories from "./NotFoundPage.stories";
+
+<Meta of={NotFoundPageStories} />
+
+# NotFoundPage
+
+Le composant `NotFoundPage` permet d'afficher une page 404.
+Il est basé sur le composant `ErrorPage` du design system.
+
+<Canvas of={NotFoundPageStories.Default} />
+
+## Code d'erreur
+
+Si un code d'erreur est passé en paramètre `support_id`, le composant l'affiche dans le template.
+
+Exemple : `https://www.example.fr?support_id=1234567890123456789`
+
+<Canvas of={NotFoundPageStories.WithErrorCode} />

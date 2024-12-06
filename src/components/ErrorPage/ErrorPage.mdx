@@ -1,0 +1,21 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as ErrorPageStories from './ErrorPage.stories'
+
+<Meta of={ErrorPageStories} />
+
+# ErrorPage
+
+Le composant `ErrorPage` sert à afficher une page d'erreur ou de maintenance.
+
+<Canvas of={ErrorPageStories.Default} />
+
+# API
+
+<Controls of={ErrorPageStories.Default} />
+
+## Lien de retour
+
+Vous pouvez mettre un lien vers une autre page avec les props `btn-text` et `btn-link` ou `btn-href`.
+
+<Canvas of={ErrorPageStories.WithLink} />
