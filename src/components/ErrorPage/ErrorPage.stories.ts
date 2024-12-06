@@ -96,7 +96,7 @@ export const Default: Story = {
 export const WithLink: Story = {
 	args: {
 		...Default.args,
-		btnHref: '',
+		btnHref: '/',
 		btnText: 'Retour à l\'accueil',
 	},
 	parameters: {
