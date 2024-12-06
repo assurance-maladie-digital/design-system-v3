@@ -5,7 +5,7 @@ const meta = {
 	title: 'Templates/ErrorPage',
 	component: ErrorPage,
 	parameters: {
-		layout: 'layout',
+		layout: 'fullscreen',
 	},
 	argTypes: {
 		'code': {
