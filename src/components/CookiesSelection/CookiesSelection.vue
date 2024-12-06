@@ -3,7 +3,7 @@
 	import type { VForm } from 'vuetify/components'
 	import CookiesInformation from './CookiesInformation/CookiesInformation.vue'
 	import { locales } from './locales'
-	import type { CookieTypes, CookiesItems, Preferences } from './types'
+	import type { CookieTypes, CookiesItems, Preferences } from './types.ts'
 
 	const props = defineProps<{
 		items: CookiesItems
@@ -53,10 +53,13 @@
 	<VCard
 		v-if="items"
 		elevation="0"
-		color="transparent"
-		class="vd-cookies-card"
+		class="pa-4 pa-md-8 vd-cookies-card"
 	>
 		<VForm ref="form">
+			<h2 class="text-h5 font-weight-bold mb-6">
+				{{ locales.title }}
+			</h2>
+
 			<p class="mb-4">
 				{{ locales.description }}
 			</p>

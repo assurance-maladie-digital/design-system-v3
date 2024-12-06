@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`CookiesSelection > renders correctly 1`] = `
-"<div class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated vd-cookies-card bg-transparent">
+"<div class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated pa-4 pa-md-8 vd-cookies-card">
   <!---->
   <div class="v-card__loader">
     <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
@@ -20,6 +20,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
   <!---->
   <!---->
   <form class="v-form" novalidate="">
+    <h2 class="text-h5 font-weight-bold mb-6">Gestion des cookies</h2>
     <p class="mb-4">Définissez vos préférences de collecte et de traitement de vos données sur ce site.</p>
     <p class="mb-4">Un cookie est un petit fichier texte déposé sur votre terminal (ordinateur, tablette ou mobile) lors de la visite d’un site ou lors de la consultation d’une publicité. Il contient plusieurs données&nbsp;: le nom du service qui l’a déposé, un identifiant sous forme de numéro unique, une valeur et éventuellement une date d’expiration.</p>
     <div class="d-flex flex-wrap justify-end mx-n2 mt-n2 mb-6"><button type="button" class="v-btn v-theme--light text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined ma-2" data-test-id="reject-all"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
@@ -36,7 +37,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <p data-v-2ca04413="" class="mb-4">Ces cookies sont indispensables au fonctionnement du site et ne peuvent être désactivés.</p>
       <details data-v-2ca04413="">
         <summary data-v-2ca04413="" class="mb-1">Afficher les cookies <i data-v-2ca04413="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-default mr-2" aria-hidden="true" data-test="chevron"></i></summary>
-        <div data-v-d0e8c396="" data-v-2ca04413="" class="v-table v-theme--light v-table--density-default vd-cookie-table bg-transparent mb-2">
+        <div data-v-d0e8c396="" data-v-2ca04413="" class="v-table v-theme--light v-table--density-default vd-cookie-table mb-2">
           <!---->
           <div class="v-table__wrapper">
             <table>
@@ -71,7 +72,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <p data-v-2ca04413="" class="mb-4">Ces cookies sont utilisés pour capturer vos préférences sur notre site. Ils permettent de vous assurer un confort dans votre navigation.</p>
       <details data-v-2ca04413="">
         <summary data-v-2ca04413="" class="mb-1">Afficher les cookies <i data-v-2ca04413="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-default mr-2" aria-hidden="true" data-test="chevron"></i></summary>
-        <div data-v-d0e8c396="" data-v-2ca04413="" class="v-table v-theme--light v-table--density-default vd-cookie-table bg-transparent mb-2">
+        <div data-v-d0e8c396="" data-v-2ca04413="" class="v-table v-theme--light v-table--density-default vd-cookie-table mb-2">
           <!---->
           <div class="v-table__wrapper">
             <table>
@@ -127,7 +128,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <p data-v-2ca04413="" class="mb-4">Ces cookies sont dédiés à l’amélioration de notre site en analysant votre expérience d’utilisation. Ils nous sont très utiles pour vous proposer un site de bonne qualité.</p>
       <details data-v-2ca04413="">
         <summary data-v-2ca04413="" class="mb-1">Afficher les cookies <i data-v-2ca04413="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-default mr-2" aria-hidden="true" data-test="chevron"></i></summary>
-        <div data-v-d0e8c396="" data-v-2ca04413="" class="v-table v-theme--light v-table--density-default vd-cookie-table bg-transparent mb-2">
+        <div data-v-d0e8c396="" data-v-2ca04413="" class="v-table v-theme--light v-table--density-default vd-cookie-table mb-2">
           <!---->
           <div class="v-table__wrapper">
             <table>

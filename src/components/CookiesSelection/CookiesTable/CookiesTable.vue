@@ -1,12 +1,12 @@
 <script setup lang="ts">
-	import type { Cookie } from '../types'
+	import type { Cookie } from '../types.ts'
 	import { headers } from './headers'
 
 	defineProps<{ items: Cookie[] }>()
 </script>
 
 <template>
-	<VTable class="vd-cookie-table bg-transparent">
+	<VTable class="vd-cookie-table">
 		<thead>
 			<tr>
 				<th

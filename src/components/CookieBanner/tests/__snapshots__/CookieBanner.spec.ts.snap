@@ -1,197 +1,30 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CookieBanner > does not close the dialog when the customize button is clicked and show the cookie form 1`] = `
-"<div data-v-f92e5352="" class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated vd-cookies-card bg-transparent">
-  <!---->
-  <div class="v-card__loader">
-    <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
-      <!---->
-      <div class="v-progress-linear__background" style="opacity: NaN;"></div>
-      <div class="v-progress-linear__buffer" style="opacity: NaN; width: 0%;"></div>
-      <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
-        <div class="v-progress-linear__indeterminate">
-          <div class="v-progress-linear__indeterminate long"></div>
-          <div class="v-progress-linear__indeterminate short"></div>
-        </div>
-      </transition-stub>
-      <!---->
-    </div>
-  </div>
-  <!---->
-  <!---->
-  <form class="v-form" novalidate="">
-    <p class="mb-4">Définissez vos préférences de collecte et de traitement de vos données sur ce site.</p>
-    <p class="mb-4">Un cookie est un petit fichier texte déposé sur votre terminal (ordinateur, tablette ou mobile) lors de la visite d’un site ou lors de la consultation d’une publicité. Il contient plusieurs données&nbsp;: le nom du service qui l’a déposé, un identifiant sous forme de numéro unique, une valeur et éventuellement une date d’expiration.</p>
-    <div class="d-flex flex-wrap justify-end mx-n2 mt-n2 mb-6"><button type="button" class="v-btn v-theme--light text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined ma-2" data-test-id="reject-all"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator="">Tout refuser</span>
-        <!---->
-        <!---->
-      </button><button type="button" class="v-btn v-theme--light text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined ma-2" data-test-id="accept-all"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator="">Tout accepter</span>
-        <!---->
-        <!---->
-      </button></div>
-    <div data-v-2ca04413="" class="vd-cookies-information mb-6">
-      <h2 data-v-2ca04413="" class="text-subtitle-1 font-weight-bold mb-2">Cookies requis</h2>
-      <p data-v-2ca04413="" class="mb-4">Ces cookies sont indispensables au fonctionnement du site et ne peuvent être désactivés.</p>
-      <details data-v-2ca04413="">
-        <summary data-v-2ca04413="" class="mb-1">Afficher les cookies <i data-v-2ca04413="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-default mr-2" aria-hidden="true" data-test="chevron"></i></summary>
-        <div data-v-d0e8c396="" data-v-2ca04413="" class="v-table v-theme--light v-table--density-default vd-cookie-table bg-transparent mb-2">
-          <!---->
-          <div class="v-table__wrapper">
-            <table>
-              <thead data-v-d0e8c396="">
-                <tr data-v-d0e8c396="">
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Dénomination du cookie</th>
-                  <th data-v-d0e8c396="" style="width: 328px;" class="text-left">Finalité</th>
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Durée de conservation</th>
-                </tr>
-              </thead>
-              <tbody data-v-d0e8c396="">
-                <tr data-v-d0e8c396="">
-                  <td data-v-d0e8c396="">session</td>
-                  <td data-v-d0e8c396="">Sauvegarde la session pour rester connecté.</td>
-                  <td data-v-d0e8c396="">20 heures</td>
-                </tr>
-                <tr data-v-d0e8c396="">
-                  <td data-v-d0e8c396="">cookie_policy</td>
-                  <td data-v-d0e8c396="">Sauvegarde les préférences de cookies.</td>
-                  <td data-v-d0e8c396="">1 an</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!---->
-        </div>
-      </details>
-      <!--v-if-->
-    </div>
-    <div data-v-2ca04413="" class="vd-cookies-information mb-6">
-      <h2 data-v-2ca04413="" class="text-subtitle-1 font-weight-bold mb-2">Cookies fonctionnels</h2>
-      <p data-v-2ca04413="" class="mb-4">Ces cookies sont utilisés pour capturer vos préférences sur notre site. Ils permettent de vous assurer un confort dans votre navigation.</p>
-      <details data-v-2ca04413="">
-        <summary data-v-2ca04413="" class="mb-1">Afficher les cookies <i data-v-2ca04413="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-default mr-2" aria-hidden="true" data-test="chevron"></i></summary>
-        <div data-v-d0e8c396="" data-v-2ca04413="" class="v-table v-theme--light v-table--density-default vd-cookie-table bg-transparent mb-2">
-          <!---->
-          <div class="v-table__wrapper">
-            <table>
-              <thead data-v-d0e8c396="">
-                <tr data-v-d0e8c396="">
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Dénomination du cookie</th>
-                  <th data-v-d0e8c396="" style="width: 328px;" class="text-left">Finalité</th>
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Durée de conservation</th>
-                </tr>
-              </thead>
-              <tbody data-v-d0e8c396="">
-                <tr data-v-d0e8c396="">
-                  <td data-v-d0e8c396="">contrast</td>
-                  <td data-v-d0e8c396="">Sauvegarde la personnalisation de l’affichage.</td>
-                  <td data-v-d0e8c396="">1 an</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!---->
-        </div>
-      </details>
-      <div data-v-2ca04413="" class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-radio-group vd-cookies-information__radio-group" data-test-id="radio-group">
-        <!---->
-        <div class="v-input__control">
-          <!---->
-          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" aria-describedby="radio-group-7-messages">
-            <div data-v-2ca04413="" class="v-spacer"></div>
-            <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio">
-              <div class="v-selection-control__wrapper">
-                <!---->
-                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-10" aria-disabled="false" aria-label="Refuser" type="radio" name="radio-group-7" value="reject"></div>
-              </div><label class="v-label v-label--clickable" for="input-10">
-                <!---->Refuser
-              </label>
-            </div>
-            <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio mr-0">
-              <div class="v-selection-control__wrapper">
-                <!---->
-                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-11" aria-disabled="false" aria-label="Accepter" type="radio" name="radio-group-7" value="accept"></div>
-              </div><label class="v-label v-label--clickable" for="input-11">
-                <!---->Accepter
-              </label>
-            </div>
-          </div>
-        </div>
-        <!---->
-        <!---->
-      </div>
-    </div>
-    <div data-v-2ca04413="" class="vd-cookies-information mb-6">
-      <h2 data-v-2ca04413="" class="text-subtitle-1 font-weight-bold mb-2">Cookies d’analyse</h2>
-      <p data-v-2ca04413="" class="mb-4">Ces cookies sont dédiés à l’amélioration de notre site en analysant votre expérience d’utilisation. Ils nous sont très utiles pour vous proposer un site de bonne qualité.</p>
-      <details data-v-2ca04413="">
-        <summary data-v-2ca04413="" class="mb-1">Afficher les cookies <i data-v-2ca04413="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-default mr-2" aria-hidden="true" data-test="chevron"></i></summary>
-        <div data-v-d0e8c396="" data-v-2ca04413="" class="v-table v-theme--light v-table--density-default vd-cookie-table bg-transparent mb-2">
-          <!---->
-          <div class="v-table__wrapper">
-            <table>
-              <thead data-v-d0e8c396="">
-                <tr data-v-d0e8c396="">
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Dénomination du cookie</th>
-                  <th data-v-d0e8c396="" style="width: 328px;" class="text-left">Finalité</th>
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Durée de conservation</th>
-                </tr>
-              </thead>
-              <tbody data-v-d0e8c396="">
-                <tr data-v-d0e8c396="">
-                  <td data-v-d0e8c396="">user_id</td>
-                  <td data-v-d0e8c396="">Sauvegarde l’identifiant unique de visiteur.</td>
-                  <td data-v-d0e8c396="">6 mois</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!---->
-        </div>
-      </details>
-      <div data-v-2ca04413="" class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-radio-group vd-cookies-information__radio-group" data-test-id="radio-group">
-        <!---->
-        <div class="v-input__control">
-          <!---->
-          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" aria-describedby="radio-group-12-messages">
-            <div data-v-2ca04413="" class="v-spacer"></div>
-            <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio">
-              <div class="v-selection-control__wrapper">
-                <!---->
-                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-15" aria-disabled="false" aria-label="Refuser" type="radio" name="radio-group-12" value="reject"></div>
-              </div><label class="v-label v-label--clickable" for="input-15">
-                <!---->Refuser
-              </label>
-            </div>
-            <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio mr-0">
-              <div class="v-selection-control__wrapper">
-                <!---->
-                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-16" aria-disabled="false" aria-label="Accepter" type="radio" name="radio-group-12" value="accept"></div>
-              </div><label class="v-label v-label--clickable" for="input-16">
-                <!---->Accepter
-              </label>
-            </div>
-          </div>
-        </div>
-        <!---->
-        <!---->
-      </div>
-    </div>
-    <div class="d-flex mt-16">
-      <div class="v-spacer"></div><button type="button" class="v-btn v-btn--elevated v-theme--light bg-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated" data-test-id="submit"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator="">Enregistrer mes choix</span>
-        <!---->
-        <!---->
-      </button>
-    </div>
-  </form>
-  <!---->
-  <!----><span class="v-card__underlay"></span>
-</div>"
-`;
-
 exports[`CookieBanner > renders correctly 1`] = `
-"<!--teleport start-->
-<!--teleport end-->"
+"<div data-v-f92e5352="" class="v-sheet v-theme--light elevation-3 v-sheet--rounded pa-8 vd-cookie-banner" style="max-width: 100%; width: 800px;" aria-label="Gestion des cookies" role="region">
+  <div data-v-f92e5352="" class="d-flex align-start flex-nowrap pa-0 mb-6">
+    <h2 data-v-f92e5352="" class="text-h5 font-weight-bold">À propos des cookies</h2>
+    <div data-v-f92e5352="" class="v-spacer"></div><button data-v-f92e5352="" type="button" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-default v-btn--variant-text mt-n2 mr-n2 ml-4" style="height: 32px; width: 32px;" aria-label="Continuer sans accepter"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+      <!----><span class="v-btn__content" data-no-activator=""><i data-v-f92e5352="" class="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i></span>
+      <!---->
+      <!---->
+    </button>
+  </div>
+  <p data-v-f92e5352="">Ce site utilise des cookies qui nous permettent de vous proposer une expérience en ligne optimale en enregistrant certaines informations lors de votre navigation.</p>
+  <div data-v-f92e5352="" class="vd-cookie-banner-action-ctn d-flex align-center flex-wrap max-width-none mt-6 mb-n2 mx-n2">
+    <div data-v-f92e5352="" class="v-spacer"></div><button data-v-f92e5352="" type="button" class="v-btn v-theme--light text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined text-wrap ma-2" style="height: auto; min-height: 44px; width: auto;" data-test-id="customize"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+      <!----><span class="v-btn__content" data-no-activator="">Personnaliser mes choix</span>
+      <!---->
+      <!---->
+    </button><button data-v-f92e5352="" type="button" class="v-btn v-btn--elevated v-theme--light bg-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated text-wrap ma-2" style="height: auto; min-height: 44px; width: auto;" data-test-id="reject"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+      <!----><span class="v-btn__content" data-no-activator="">Continuer sans accepter</span>
+      <!---->
+      <!---->
+    </button><button data-v-f92e5352="" type="button" class="v-btn v-btn--elevated v-theme--light bg-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated text-wrap ma-2" style="height: auto; min-height: 44px; width: auto;" data-test-id="accept"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+      <!----><span class="v-btn__content" data-no-activator="">Tout accepter</span>
+      <!---->
+      <!---->
+    </button>
+  </div>
+</div>"
 `;

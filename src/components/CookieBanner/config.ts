@@ -2,13 +2,15 @@ const commonBtnConfig = {
 	color: 'primary',
 	height: 'auto',
 	minHeight: '44px',
-	class: 'text-wrap',
+	class: 'text-wrap ma-2',
 } as const
 
 export const config = {
-	banner: {
+	sheet: {
+		width: '800px',
+		maxWidth: '100%',
 		rounded: true,
-		elevation: 2,
+		elevation: 3,
 		class: 'pa-8',
 	},
 	closeBtn: {
@@ -16,14 +18,7 @@ export const config = {
 		variant: 'text',
 		width: '32px',
 		height: '32px',
-		class: 'ml-4',
-	},
-	backBtn: {
-		icon: true,
-		variant: 'text',
-		width: '32px',
-		height: '32px',
-		class: 'ml-4',
+		class: 'mt-n2 mr-n2 ml-4',
 	},
 	customizeBtn: {
 		...commonBtnConfig,
