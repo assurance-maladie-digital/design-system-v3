@@ -1,0 +1,236 @@
+import type { StoryObj, Meta } from '@storybook/vue3'
+import NirField from './NirField.vue'
+
+const meta = {
+	title: 'Composants/Formulaires/NirField',
+	component: NirField,
+	decorators: [
+		() => ({
+			template: '<div style="padding: 20px;"><story/></div>',
+		}),
+	],
+	parameters: {
+		layout: 'fullscreen',
+	},
+	argTypes: {
+		modelValue: { control: 'text' },
+		outlined: { control: 'boolean' },
+		required: { control: 'boolean' },
+		nirTooltip: { control: 'text' },
+		keyTooltip: { control: 'text' },
+		numberLabel: { control: 'text' },
+		keyLabel: { control: 'text' },
+		displayKey: { control: 'boolean' },
+		customNumberRules: { control: 'object' },
+		customKeyRules: { control: 'object' },
+	},
+} satisfies Meta<typeof NirField>
+
+export default meta
+
+type Story = StoryObj<typeof meta>
+
+export const Default: Story = {
+	args: {
+		modelValue: '',
+		outlined: true,
+		required: false,
+		numberLabel: 'Numéro de sécurité sociale',
+		keyLabel: 'Clé',
+		displayKey: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      modelValue=""
+      :outlined="true"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="true"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import NirField from './NirField.vue'
+    </script>
+    `,
+			},
+		],
+	},
+}
+
+export const Required: Story = {
+	args: {
+		...Default.args,
+		required: true,
+	},
+	parameters: {
+		...Default.parameters,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      modelValue=""
+      :outlined="true"
+      :required="true"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="true"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import NirField from './NirField.vue'
+    </script>
+    `,
+			},
+		],
+	},
+}
+
+export const WithoutKey: Story = {
+	args: {
+		...Default.args,
+		displayKey: false,
+	},
+	parameters: {
+		...Default.parameters,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      modelValue=""
+      :outlined="true"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="false"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import NirField from './NirField.vue'
+    </script>
+    `,
+			},
+		],
+	},
+}
+
+export const CustomRules: Story = {
+	args: {
+		...Default.args,
+		customNumberRules: [
+			{
+				type: 'minLength',
+				options: {
+					length: 10,
+					message: 'Le numéro de sécurité sociale doit avoir au moins 10 caractères.',
+					successMessage: 'Le numéro de sécurité sociale a une longueur valide.',
+				},
+			},
+		],
+		customKeyRules: [
+			{
+				type: 'minLength',
+				options: {
+					length: 1,
+					message: 'La clé doit avoir au moins 1 caractère.',
+					successMessage: 'La clé a une longueur valide.',
+				},
+			},
+		],
+	},
+	parameters: {
+		...Default.parameters,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      modelValue=""
+      :outlined="true"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="true"
+      :customNumberRules="[{ type: 'minLength', options: { length: 10, message: 'Le numéro de sécurité sociale doit avoir au moins 10 caractères.', successMessage: 'Le numéro de sécurité sociale a une longueur valide.' } }]"
+      :customKeyRules="[{ type: 'minLength', options: { length: 1, message: 'La clé doit avoir au moins 1 caractère.', successMessage: 'La clé a une longueur valide.' } }]"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import NirField from './NirField.vue'
+    </script>
+    `,
+			},
+		],
+	},
+}
+
+export const WithTooltips: Story = {
+	args: {
+		...Default.args,
+		nirTooltip: 'Ceci est un tooltip pour le champs numéro de sécurité sociale',
+		keyTooltip: 'Ceci est un tooltip pour la clef du numéro de sécurité sociale',
+	},
+	parameters: {
+		...Default.parameters,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      modelValue=""
+      :outlined="true"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="true"
+      nirTooltip="Ceci est un tooltip pour le champs numéro de sécurité sociale"
+      keyTooltip="Ceci est un tooltip pour la clef du numéro de sécurité sociale"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
+    </script>
+    `,
+			},
+		],
+	},
+}

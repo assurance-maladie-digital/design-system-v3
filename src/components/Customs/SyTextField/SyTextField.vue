@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 	import { computed, ref } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import {
@@ -70,14 +70,14 @@
 <template>
 	<VTextField
 		v-model="model"
-		:variant="props.variantStyle"
-		:color="props.color"
-		:clearable="props.isClearable"
-		:clear-icon="ICONS.close"
 		:aria-label="props.label"
+		:clear-icon="ICONS.close"
+		:clearable="props.isClearable"
+		:color="props.color"
+		:error-messages="props.errorMessages"
 		:label="props.label"
 		:rules="props.required ? ['Le champ est requis.'] : []"
-		:error-messages="props.errorMessages"
+		:variant="props.variantStyle"
 		@blur="checkErrorOnBlur"
 	>
 		<template #prepend>
@@ -105,8 +105,8 @@
 			</slot>
 			<VDivider
 				v-if="props.showDivider"
-				v-bind="dividerProps"
 				class="mt-4 pa-1"
+				v-bind="dividerProps"
 				vertical
 			/>
 		</template>
@@ -117,9 +117,9 @@
 				</VIcon>
 				<VIcon
 					v-if="props.appendInnerIcon"
-					:icon="ICONS[props.appendInnerIcon]"
 					:class="{ 'error-icon': props.appendInnerIcon === 'error' }"
 					:color="appendInnerIconColor"
+					:icon="ICONS[props.appendInnerIcon]"
 				/>
 			</slot>
 		</template>
