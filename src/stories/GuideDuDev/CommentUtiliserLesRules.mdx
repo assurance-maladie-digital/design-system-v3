@@ -1,0 +1,132 @@
+import {Meta, Source} from '@storybook/addon-docs/blocks';
+
+<Meta title="Guide Du Dev/Comment utiliser les rules"/>
+
+# Comment utiliser les règles de validation
+
+Ce guide décrit comment utiliser le composable `useFieldValidation` pour créer des règles de validation flexibles et personnalisées dans votre projet Vue.js.
+
+---
+
+## Introduction
+
+Le composable `useFieldValidation` vous permet de définir des règles de validation dynamiques pour différents champs dans vos formulaires. Ce composable est conçu pour être flexible, réutilisable et facilement intégrable avec des bibliothèques comme Vuetify.
+
+---
+
+## Structure du composable
+
+### Type `RuleOptions`
+
+    <Source dark code={`
+type RuleOptions = {
+fieldName?: string; // Nom du champ utilisé dans les messages d'erreur
+message?: string; // Message personnalisé pour la règle
+length?: number; // Longueur minimale ou maximale
+value?: number; // Valeur minimale ou maximale
+pattern?: RegExp; // Motif à valider
+ignoreSpace?: boolean; // Ignorer les espaces lors de la validation de longueur
+};
+`} />
+
+---
+
+## Exemple d'intégration
+
+### Script Vue.js
+
+    <Source dark code={`
+<script lang="ts" setup>
+    import {ref} from 'vue';
+    import {useFieldValidation} from '@cnamts/synapse';
+
+    const {generateRules} = useFieldValidation();
+
+    const firstName = ref('');
+    const email = ref('');
+    const age = ref('');
+
+    const rules = {
+    firstName: generateRules([
+{type: 'required', options: {message: 'Ce champ est requis.'}},
+{type: 'minLength', options: {length: 3, ignoreSpace: true}},
+{type: 'maxLength', options: {length: 20}},
+    ]),
+    email: generateRules([
+{type: 'required', options: {fieldName: 'Email'}},
+{type: 'email'},
+    ]),
+    age: generateRules([
+{type: 'min', options: {value: 18}},
+{type: 'max', options: {value: 99}},
+    ]),
+};
+
+    const validateField = (field: string) => {
+    return rules[field].every((rule) => rule(field));
+};
+
+    const handleSubmit = () => {
+    if (validateField('firstName') && validateField('email') && validateField('age')) {
+    alert('Formulaire valide.');
+} else {
+    alert('Merci de vérifier les champs.');
+}
+};
+</script>
+`} />
+---
+
+### Template Vue.js
+
+    <Source dark code={`
+<template>
+    <v-form
+    @submit.prevent="handleSubmit">
+    <v-text-field
+        v-model="firstName"
+    :rules="rules.firstName"
+    label="Prénom"
+    @blur="validateField('firstName')"
+    />
+    <v-text-field
+        v-model="email"
+    :rules="rules.email"
+    label="Email"
+    @blur="validateField('email')"
+    />
+    <v-text-field
+        v-model="age"
+    :rules="rules.age"
+    label="Âge"
+    @blur="validateField('age')"
+    />
+    <v-btn block class="mt-2" type="submit">Soumettre</v-btn>
+</v-form>
+</template>
+`} />
+---
+
+## Fonctionnalités supportées
+
+- **Validation requise** (`required`)
+- **Longueur minimale** (`minLength`)
+- **Longueur maximale** (`maxLength`)
+- **Valeur minimale** (`min`)
+- **Valeur maximale** (`max`)
+- **Validation par motif** (`matchPattern`)
+- **Validation d'email** (`email`)
+
+---
+
+## Bonnes pratiques
+
+- Toujours tester les messages d'erreur personnalisés pour garantir une bonne expérience utilisateur.
+- Centraliser la logique de validation pour une meilleure maintenance.
+- Documenter les règles complexes pour aider votre équipe à comprendre leur fonctionnement.
+
+---
+
+## Conclusion
+
+Avec `useFieldValidation`, vous disposez d'un moyen simple et flexible pour gérer vos validations de formulaires dans Vue.js. Combinez-le avec des bibliothèques comme Vuetify pour une expérience utilisateur optimisée.
