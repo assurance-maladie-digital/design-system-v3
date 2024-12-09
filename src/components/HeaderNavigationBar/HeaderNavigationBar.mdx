@@ -9,12 +9,11 @@ Le composant `HeaderNavigationBar` est un composant de navigation qui permet de 
 
 Il est basé sur les composants `HeaderBar` et `HeaderBurgerMenu` du design system.
 
-Ce composant propose un navigation à l'aide d'un menu horizontal en mode desktop ce qui peut être util pour les produits ayant peut de page a destination des agents.
+Ce composant propose une navigation à l'aide d'un menu horizontal en mode desktop, ce qui peut être utile pour les produits ayant peu de pages et destinés aux agents.
 
 Si vous n'avez pas besoin du menu horizontal, vous devriez utiliser le composant `HeaderBar` directement.
 
-Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 liens. Vous pouvez configurer le nombre de lien affiché dans le menu horizontal en utilisant la prop `maxHorizontalMenuItems`. Au-delà de ce chiffre, le menu passera en mode burger. Par défaut, le menu horizontal affiche au maximum six items.
-
+Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 liens. Vous pouvez configurer le nombre de liens affichés dans le menu horizontal en utilisant la prop `maxHorizontalMenuItems`. Au-delà de ce chiffre, le menu passera en mode burger. Par défaut, le menu horizontal affiche au maximum six items.
 
 <Canvas of={HeaderNavigationBarStories.Default} />
 
@@ -50,7 +49,7 @@ Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 
 
 Le slot `header-side` permet d'ajouter du contenu à droite du header. Il est possible d'ajouter plusieurs éléments dans ce slot.
 Il sera principalement utilisé pour ajouter un bouton de connexion, d'accès à un compte ou de recherche.
-Il est nécessaire de faire attention à la place que prendront les éléments en mode mobile et de prévoir un mode réduit ou bien de les déporter dans le menu burger.
+Il est nécessaire de faire attention à la place que prendront les éléments en mode mobile et de prévoir un mode réduit ou de les déporter dans le menu burger.
 
 <Source dark code={`
 <script setup lang="ts">
@@ -93,7 +92,8 @@ Il est nécessaire de faire attention à la place que prendront les éléments e
 
 Quand le menu est en mode horizontal, les slots `navigation-bar-prepend` et `navigation-bar-append` permettent d'ajouter du contenu avant et après le menu.
 
-Le slot `navigation-bar-content` quant à lui, remplace les items du menu tel que généré avec la props `items`. Il n'écrase pas les slots `navigation-bar-prepend` et `navigation-bar-append`.
+Le slot `navigation-bar-content`, quant à lui, remplace les items du menu tels que générés avec la prop `items`. Il n'écrase pas les slots `navigation-bar-prepend` et `navigation-bar-append`.
+
 
 ##### Slot `Navigation-bar-prepend`
 
@@ -114,7 +114,7 @@ les slots `burger-menu-prepend` et `burger-menu-append` permettent d'ajouter du 
 
 
 Le slot `burger-menu-content` permet de remplacer le contenu du menu burger. Il n'écrase pas les slots `burger-menu-prepend` et `burger-menu-append` et permet d'utiliser les composants `HeaderMenuItem` et `HeaderMenuGroup` pour construire le menu.
-Pour plus de d'information sur la manière de construire un menu avec le composant `HeaderBurgerMenu`, vous pouvez consulter la documentation de ce [composant](/docs/components-headerbar-headerburgermenu--docs).
+Pour plus d'information sur la manière de construire un menu avec le composant `HeaderBurgerMenu`, vous pouvez consulter la documentation de ce [composant](/docs/components-headerbar-headerburgermenu--docs).
 
 ##### Slot `burger-menu-append`
 
