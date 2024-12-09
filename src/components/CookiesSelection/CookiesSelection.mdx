@@ -38,14 +38,18 @@ Une propriété `cookie` est passée au slot contenant les informations du cooki
 			const items = {
 				"functional": [
 					{
-						"name": "contrast",
-						"conservation": "1 an"
+						name: 'contrast',
+						conservation: '1 an',
 					},
 					{
-						"name": "cookie_policy",
-						"description": "Sauvegarde les préférences de cookies.",
-						"conservation": "1 an"
-					}
+						name: 'privacy',
+						conservation: '1 an',
+					},
+					{
+						name: 'cookie_policy',
+						description: 'Sauvegarde les préférences de cookies.',
+						conservation: '1 an',
+					},
 				]
 			};
 		</script>
@@ -54,6 +58,9 @@ Une propriété `cookie` est passée au slot contenant les informations du cooki
 			<CookiesSelection :items="items" >
 				<template #cookie-description-contrast="{ cookie }">
 					voir : <a href="#">En savoir plus</a>
+				</template>
+				<template #cookie-description-privacy="{ cookie }">
+					<a href="#">Politique de confidentialité</a>
 				</template>
 			</CookiesSelection>
 		</template>
