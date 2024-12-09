@@ -26,6 +26,7 @@ describe('ErrorPage', () => {
 				plugins: [vuetify],
 			},
 			props: {
+				code: '501',
 				pageTitle: 'Error',
 				message: 'Error message',
 				btnText: 'Go to...',
