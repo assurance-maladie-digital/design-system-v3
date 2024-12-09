@@ -500,7 +500,7 @@ export const Sticky: Story = {
 	},
 }
 
-export const WithExternalTopMenu: Story = {
+export const WithHeaderToolbar: Story = {
 	args: {
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
