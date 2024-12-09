@@ -3,7 +3,7 @@
 	import type { VForm } from 'vuetify/components'
 	import CookiesInformation from './CookiesInformation/CookiesInformation.vue'
 	import { locales } from './locales'
-	import type { CookieTypes, CookiesItems, Preferences } from './types.ts'
+	import type { CookieTypes, CookiesItems, Preferences } from './types'
 
 	const props = defineProps<{
 		items: CookiesItems

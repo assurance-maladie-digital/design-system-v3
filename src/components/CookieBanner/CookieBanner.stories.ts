@@ -51,6 +51,8 @@ const meta = {
 				type: { summary: '' },
 			},
 		},
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore-  Object literal may only specify known properties
 		'onUpdate:modelValue': {
 			action: 'update:modelValue',
 			description: 'Événement émis lors de la mise à jour de la visibilité de la bannière',
@@ -126,6 +128,9 @@ const meta = {
 	},
 	parameters: {
 		layout: 'fullscreen',
+		controls: {
+			exclude: ['reject', 'accept', 'customize'],
+		},
 	},
 	args: {
 		modelValue: true,
