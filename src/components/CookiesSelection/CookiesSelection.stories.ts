@@ -182,7 +182,6 @@ export const InDialogBox: Story = {
 		components: { PageContainer, DialogBox },
 		template: `<DialogBox
 	hideActions
-	persistent
 	:modelValue="true"
 >
 	<div style="overflow: auto">
@@ -197,7 +196,6 @@ export const InDialogBox: Story = {
 				code: `<template>
 	<DialogBox
 		hideActions
-		persistent
 		:modelValue="true"
 	>
 		<div style="overflow: auto">
@@ -378,7 +376,6 @@ export const WithCookieBannerComponent: Story = {
 					
 				<DialogBox
 					hideActions
-					persistent
 					v-model="openDialog"
 				>
 					<div style="overflow: auto">
@@ -399,7 +396,6 @@ export const WithCookieBannerComponent: Story = {
 				code: `<template>
 	<DialogBox
 		hideActions
-		persistent
 		v-model="openDialog"
 	>
 		<div style="overflow: auto">

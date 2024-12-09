@@ -15,7 +15,7 @@ Le composant `CookieBanner` est utilisé pour afficher une bannière de consente
 
 ## Personnalisation des cookies
 
-Pour permettre a l'utilisateur de personnaliser les cookies categories de cookies acceptés, il est recommandé d'utiliser ce composant en combinaison avec le composant `CookiesSelection`.
+Pour permettre a l'utilisateur de personnaliser les categories de cookies acceptés, il est recommandé d'utiliser ce composant en combinaison avec le composant `CookiesSelection`.
 
 <Canvas
 	of={CookieBannerStories.WithCookiesSelectionsComponent}
@@ -71,7 +71,6 @@ Pour permettre a l'utilisateur de personnaliser les cookies categories de cookie
 		<template>
 			<DialogBox
 				hideActions
-				persistent
 				v-model="openDialog"
 			>
 				<div style="overflow: auto">
