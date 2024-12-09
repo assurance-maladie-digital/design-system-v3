@@ -36,16 +36,22 @@
 					cols="12"
 					class="order-last order-sm-first text-center text-sm-left d-flex flex-column justify-center align-sm-start"
 				>
-					<div class="vd-code text-primary mb-4">
+					<div
+						v-if="code"
+						class="vd-code text-primary mb-4"
+					>
 						<span class="d-sr-only">{{ codeErrorText }}</span>
 						{{ code }}
 					</div>
 
-					<h2 class="mb-2 font-weight-bold text-h5 mb-4">
+					<h2
+						v-if="pageTitle"
+						class="mb-2 font-weight-bold text-h5 mb-4"
+					>
 						{{ pageTitle }}
 					</h2>
 
-					<p>
+					<p v-if="message">
 						{{ message }}
 					</p>
 
