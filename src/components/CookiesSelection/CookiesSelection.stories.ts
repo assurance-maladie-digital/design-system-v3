@@ -263,6 +263,10 @@ export const CookieDescriptionSlot: Story = {
 					conservation: '1 an',
 				},
 				{
+					name: 'privacy',
+					conservation: '1 an',
+				},
+				{
 					name: 'cookie_policy',
 					description: 'Sauvegarde les préférences de cookies.',
 					conservation: '1 an',
@@ -284,6 +288,10 @@ export const CookieDescriptionSlot: Story = {
 		<template #cookie-description-contrast="{ cookie }">
 			voir : <a href="#">En savoir plus</a>
 		</template>
+
+		<template #cookie-description-privacy="{ cookie }">
+			<a href="#">Politique de confidentialité</a>
+		</template>
 	</CookiesSelection>
 </PageContainer>`,
 		}
@@ -301,6 +309,9 @@ export const CookieDescriptionSlot: Story = {
 			<template #cookie-description-contrast="{ cookie }">
 				voir : <a href="#">En savoir plus</a>
 			</template>
+			<template #cookie-description-privacy="{ cookie }">
+				<a href="#">Politique de confidentialité</a>
+			</template>
 		</CookiesSelection>
 	</PageContainer>
 </template>
@@ -315,6 +326,10 @@ export const CookieDescriptionSlot: Story = {
 		functional: [
 				{
 					name: 'contrast',
+					conservation: '1 an',
+				},
+				{
+					name: 'privacy',
 					conservation: '1 an',
 				},
 				{

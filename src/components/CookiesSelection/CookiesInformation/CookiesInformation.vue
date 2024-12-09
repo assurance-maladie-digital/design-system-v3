@@ -3,7 +3,7 @@
 	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 	import { computed, ref } from 'vue'
 	import CookiesTable from '../CookiesTable/CookiesTable.vue'
-	import type { CookieTypes, Cookie } from '../types.ts'
+	import type { CookieTypes, Cookie } from '../types'
 	import { locales } from './locales'
 
 	defineProps<{
