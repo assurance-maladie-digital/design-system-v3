@@ -185,7 +185,7 @@ export const Default: Story = {
 	},
 
 	parameters: {
-		SourceCode: [
+		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
@@ -251,7 +251,7 @@ export const WithoutCookiesRoute: Story = {
 		}
 	},
 	parameters: {
-		SourceCode: [
+		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
@@ -302,7 +302,7 @@ export const DescriptionSlot: Story = {
 		}
 	},
 	parameters: {
-		SourceCode: [
+		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
@@ -372,7 +372,7 @@ export const Customization: Story = {
 		}
 	},
 	parameters: {
-		SourceCode: [
+		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
