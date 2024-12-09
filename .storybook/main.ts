@@ -8,6 +8,7 @@ const config: StorybookConfig = {
 		'@storybook/addon-essentials',
 		'@storybook/addon-viewport',
 		'@jls-digital/storybook-addon-code',
+		'@storybook/addon-queryparams',
 	],
 	framework: {
 		name: '@storybook/vue3-vite',

@@ -1,0 +1,78 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ErrorPage > renders correctly 1`] = `
+"<div data-v-fb0b02fd="" data-v-8f2b5bad="" class="py-10 px-8 vd-page-container d-flex justify-center">
+  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 960px;">
+    <div data-v-8f2b5bad="" class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated pa-6 pa-sm-16">
+      <!---->
+      <div class="v-card__loader">
+        <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+          <!---->
+          <div class="v-progress-linear__background" style="opacity: NaN;"></div>
+          <div class="v-progress-linear__buffer" style="opacity: NaN; width: 0%;"></div>
+          <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+            <div class="v-progress-linear__indeterminate">
+              <div class="v-progress-linear__indeterminate long"></div>
+              <div class="v-progress-linear__indeterminate short"></div>
+            </div>
+          </transition-stub>
+          <!---->
+        </div>
+      </div>
+      <!---->
+      <!---->
+      <div data-v-8f2b5bad="" class="v-row max-width-none">
+        <div data-v-8f2b5bad="" class="v-col-sm-12 v-col-12 order-last order-sm-first text-center text-sm-left d-flex flex-column justify-center align-sm-start">
+          <div data-v-8f2b5bad="" class="vd-code text-primary mb-4"><span data-v-8f2b5bad="" class="d-sr-only">Code d'erreur&nbsp;: </span> </div>
+          <h2 data-v-8f2b5bad="" class="mb-2 font-weight-bold text-h5 mb-4">Something went wrong</h2>
+          <p data-v-8f2b5bad="">Error message</p>
+          <!--v-if-->
+        </div>
+        <!--v-if-->
+      </div>
+      <!---->
+      <!----><span class="v-card__underlay"></span>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`ErrorPage > renders correctly with undefined route 1`] = `
+"<div data-v-fb0b02fd="" data-v-8f2b5bad="" class="py-10 px-8 vd-page-container d-flex justify-center">
+  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 960px;">
+    <div data-v-8f2b5bad="" class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated pa-6 pa-sm-16">
+      <!---->
+      <div class="v-card__loader">
+        <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+          <!---->
+          <div class="v-progress-linear__background" style="opacity: NaN;"></div>
+          <div class="v-progress-linear__buffer" style="opacity: NaN; width: 0%;"></div>
+          <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+            <div class="v-progress-linear__indeterminate">
+              <div class="v-progress-linear__indeterminate long"></div>
+              <div class="v-progress-linear__indeterminate short"></div>
+            </div>
+          </transition-stub>
+          <!---->
+        </div>
+      </div>
+      <!---->
+      <!---->
+      <div data-v-8f2b5bad="" class="v-row max-width-none">
+        <div data-v-8f2b5bad="" class="v-col-sm-12 v-col-12 order-last order-sm-first text-center text-sm-left d-flex flex-column justify-center align-sm-start">
+          <div data-v-8f2b5bad="" class="vd-code text-primary mb-4"><span data-v-8f2b5bad="" class="d-sr-only">Code d'erreur&nbsp;: </span> </div>
+          <h2 data-v-8f2b5bad="" class="mb-2 font-weight-bold text-h5 mb-4">Error</h2>
+          <p data-v-8f2b5bad="">Error message</p><a data-v-8f2b5bad="" class="v-btn v-btn--elevated v-theme--light bg-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated mt-6" href="https://google.com"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+            <!----><span class="v-btn__content" data-no-activator="">Go to...</span>
+            <!---->
+            <!---->
+          </a>
+        </div>
+        <!--v-if-->
+      </div>
+      <!---->
+      <!----><span class="v-card__underlay"></span>
+    </div>
+  </div>
+</div>"
+`;
