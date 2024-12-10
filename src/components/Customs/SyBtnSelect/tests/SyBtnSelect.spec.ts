@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import CustomBtnSelect from '../CustomBtnSelect.vue'
+import SyBtnSelect from '../SyBtnSelect.vue'
 import { vuetify } from '@tests/unit/setup'
 
-describe('CustomBtnSelect', () => {
+describe('SyBtnSelect', () => {
 	it('renders the component with default props', () => {
-		const wrapper = mount(CustomBtnSelect, {
+		const wrapper = mount(SyBtnSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -19,7 +19,7 @@ describe('CustomBtnSelect', () => {
 	})
 
 	it('shows secondaryInfo if provided', () => {
-		const wrapper = mount(CustomBtnSelect, {
+		const wrapper = mount(SyBtnSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -33,7 +33,7 @@ describe('CustomBtnSelect', () => {
 	})
 
 	it('emits "update:modelValue" when an item is selected', async () => {
-		const wrapper = mount(CustomBtnSelect, {
+		const wrapper = mount(SyBtnSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -63,7 +63,7 @@ describe('CustomBtnSelect', () => {
 	})
 
 	it('toggles the menu open and closed', async () => {
-		const wrapper = mount(CustomBtnSelect, {
+		const wrapper = mount(SyBtnSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -83,7 +83,7 @@ describe('CustomBtnSelect', () => {
 	})
 
 	it('formats menu items correctly', () => {
-		const wrapper = mount(CustomBtnSelect, {
+		const wrapper = mount(SyBtnSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -101,7 +101,7 @@ describe('CustomBtnSelect', () => {
 	})
 
 	it('updates selectedItem when modelValue changes', async () => {
-		const wrapper = mount(CustomBtnSelect, {
+		const wrapper = mount(SyBtnSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -118,7 +118,7 @@ describe('CustomBtnSelect', () => {
 	})
 
 	it('renders the primaryInfo in a span when isMobileVersion and hideIcon are true', async () => {
-		const wrapper = mount(CustomBtnSelect, {
+		const wrapper = mount(SyBtnSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -135,7 +135,7 @@ describe('CustomBtnSelect', () => {
 	})
 
 	it('does not render the span if isMobileVersion is false', () => {
-		const wrapper = mount(CustomBtnSelect, {
+		const wrapper = mount(SyBtnSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -151,7 +151,7 @@ describe('CustomBtnSelect', () => {
 	})
 
 	it('does not render the span if hideIcon is false', () => {
-		const wrapper = mount(CustomBtnSelect, {
+		const wrapper = mount(SyBtnSelect, {
 			global: {
 				plugins: [vuetify],
 			},

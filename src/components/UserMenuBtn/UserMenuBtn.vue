@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { defineProps, defineEmits, withDefaults, computed } from 'vue'
-	import CustomBtnSelect from '@/components/Customs/CustomBtnSelect/CustomBtnSelect.vue'
+	import SyBtnSelect from '../Customs/SyBtnSelect/SyBtnSelect.vue'
 	import { useDisplay } from 'vuetify'
 	import { mdiAccount, mdiLoginVariant } from '@mdi/js'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
@@ -44,7 +44,7 @@
 </script>
 
 <template>
-	<CustomBtnSelect
+	<SyBtnSelect
 		:is-mobile-view="isMobileView"
 		:icon-only="isMobileView"
 		:menu-items="menuItems"
@@ -85,7 +85,7 @@
 				</div>
 			</VListItem>
 		</template>
-	</CustomBtnSelect>
+	</SyBtnSelect>
 </template>
 
 <style scoped>

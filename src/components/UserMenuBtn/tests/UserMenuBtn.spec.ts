@@ -116,8 +116,8 @@ describe('UserMenuBtn', () => {
 			},
 		})
 
-		const customBtnSelect = wrapper.findComponent({ name: 'CustomBtnSelect' })
-		await customBtnSelect.vm.$emit('update:model-value', 'test-value')
+		const SyBtnSelect = wrapper.findComponent({ name: 'SyBtnSelect' })
+		await SyBtnSelect.vm.$emit('update:model-value', 'test-value')
 
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')![0]).toEqual(['test-value'])
