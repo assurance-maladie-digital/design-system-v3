@@ -5,7 +5,7 @@ export { default as CollapsibleList } from './CollapsibleList/CollapsibleList.vu
 export { default as CopyBtn } from './CopyBtn/CopyBtn.vue'
 export { default as SyBtnSelect } from './Customs/SyBtnSelect/SyBtnSelect.vue'
 export { default as CustomInputSelect } from './Customs/CustomInputSelect/CustomInputSelect.vue'
-export { default as CustomSelect } from './Customs/CustomSelect/CustomSelect.vue'
+export { default as SySelect } from '@/components/Customs/SySelect/SySelect.vue'
 export { default as SyTextField } from '@/components/Customs/SyTextField/SyTextField.vue'
 export { default as DataList } from './DataList/DataList.vue'
 export { default as DataListGroup } from './DataListGroup/DataListGroup.vue'

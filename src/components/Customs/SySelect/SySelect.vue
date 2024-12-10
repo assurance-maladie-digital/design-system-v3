@@ -26,7 +26,7 @@
 		},
 		menuId: {
 			type: String,
-			default: 'custom-select-menu',
+			default: 'sy-select-menu',
 		},
 		outlined: {
 			type: Boolean,
@@ -54,7 +54,7 @@
 	const closeList = () => {
 		isOpen.value = false
 	}
-	const inputId = ref(`custom-select-${Math.random().toString(36).substring(7)}`)
+	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
@@ -115,7 +115,7 @@
 			:error-messages="errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired ? ['Le champ est requis.'] : []"
-			class="custom-select"
+			class="sy-select"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
@@ -159,7 +159,7 @@
 <style scoped lang="scss">
 @use '@/assets/tokens.scss';
 
-.custom-select {
+.sy-select {
   display: flex;
   flex-direction: column;
   min-width: 225px;

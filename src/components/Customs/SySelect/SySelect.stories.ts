@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import CustomSelect from '@/components/Customs/CustomSelect/CustomSelect.vue'
+import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
 import Alert from '../../Alert/Alert.vue'
 
 const meta = {
-	title: 'Composants/Formulaires/CustomSelect',
-	component: CustomSelect,
+	title: 'Composants/Formulaires/SySelect',
+	component: SySelect,
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['selectedValue'] },
@@ -17,7 +17,7 @@ const meta = {
 		errorMessages: { control: 'object' },
 		required: { control: 'boolean' },
 	},
-} as Meta<typeof CustomSelect>
+} as Meta<typeof SySelect>
 
 export default meta
 
@@ -29,7 +29,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomSelect
+					<SySelect
 						v-model="value"
 						:items="items"
 					/>
@@ -40,7 +40,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomSelect from '@cnamts/CustomSelect'
+					import SySelect from '@cnamts/SySelect'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
@@ -59,13 +59,13 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomSelect
+					<SySelect
 						v-bind="args"
 					/>
 				</div>
@@ -82,7 +82,7 @@ export const Outlined: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomSelect
+					<SySelect
 						v-model="value"
 						:items="items"
 						outlined
@@ -94,7 +94,7 @@ export const Outlined: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomSelect from '@cnamts/CustomSelect'
+					import SySelect from '@cnamts/SySelect'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
@@ -113,13 +113,13 @@ export const Outlined: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4" style="z-index: 99999">
-					<CustomSelect
+					<SySelect
 						v-bind="args"
 						outlined
 					/>
@@ -136,7 +136,7 @@ export const Required: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomSelect
+					<SySelect
 						v-model="value"
 						:items="items"
 						required
@@ -148,7 +148,7 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomSelect from '@cnamts/CustomSelect'
+					import SySelect from '@cnamts/SySelect'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
@@ -168,13 +168,13 @@ export const Required: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomSelect },
+			components: { SySelect },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomSelect
+					<SySelect
 						v-bind="args"
 						:required="args.required"
 					/>
@@ -191,7 +191,7 @@ export const withCustomError: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomSelect
+					<SySelect
 						v-model="value"
 						:items="items"
 						:error-messages="errorMessages"
@@ -206,7 +206,7 @@ export const withCustomError: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomSelect from '@cnamts/CustomSelect'
+					import SySelect from '@cnamts/SySelect'
 					import { ref } from 'vue'
 					
 					const items =  [
@@ -232,7 +232,7 @@ export const withCustomError: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				const errorMessages = ref([])
 				const triggerError = () => {
@@ -243,7 +243,7 @@ export const withCustomError: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomSelect
+					<SySelect
 						v-bind="args"
 						:error-messages="errorMessages"
 					/>
@@ -265,7 +265,7 @@ export const withCustomKey: Story = {
 				name: 'Template',
 				code: `
 					<template>
-						<CustomSelect
+						<SySelect
 							v-model="value"
 							:items="items"
 							text-key="customKey"
@@ -278,7 +278,7 @@ export const withCustomKey: Story = {
 				name: 'Script',
 				code: `
 					<script setup lang="ts">
-						import CustomSelect from '@cnamts/CustomSelect'
+						import SySelect from '@cnamts/SySelect'
 						
 						const items =  [
 							{ customKey: 'Choix 1', value: '1' },
@@ -297,13 +297,13 @@ export const withCustomKey: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomSelect
+					<SySelect
 						v-bind="args"
 						outlined
 						text-key="customKey"

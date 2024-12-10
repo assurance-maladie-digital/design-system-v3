@@ -7,7 +7,7 @@
 	import { indicatifs } from './indicatifs'
 	import { vMaska } from 'maska/vue'
 	import { locales } from './locales'
-	import CustomSelect from '@/components/Customs/CustomSelect/CustomSelect.vue'
+	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
 	type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
@@ -142,7 +142,7 @@
 
 <template>
 	<div class="phone-field-container">
-		<CustomSelect
+		<SySelect
 			v-if="props.withCountryCode"
 			v-model="dialCode"
 			:items="dialCodeOptions"
