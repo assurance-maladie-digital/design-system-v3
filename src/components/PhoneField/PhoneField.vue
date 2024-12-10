@@ -8,7 +8,7 @@
 	import { vMaska } from 'maska/vue'
 	import { locales } from './locales'
 	import CustomSelect from '@/components/Customs/CustomSelect/CustomSelect.vue'
-	import CustomTextField from '@/components/Customs/CustomTextField/CustomTextField.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
 	type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
 	type Indicatif = {
@@ -153,7 +153,7 @@
 			class="custom-select"
 			:outlined="outlinedIndicatif"
 		/>
-		<CustomTextField
+		<SyTextField
 			v-maska="phoneMask"
 			:model-value="computedValue"
 			:rules="validationRules"
@@ -178,7 +178,7 @@
 					{{ mdiInformation }}
 				</VIcon>
 			</template>
-		</CustomTextField>
+		</SyTextField>
 	</div>
 </template>
 
