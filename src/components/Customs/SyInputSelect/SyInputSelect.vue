@@ -43,7 +43,7 @@
 		isOpen.value = false
 	}
 
-	const inputId = ref(`custom-input-select-${Math.random().toString(36).substring(7)}`)
+	const inputId = ref(`sy-input-select-${Math.random().toString(36).substring(7)}`)
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
@@ -128,7 +128,7 @@
 		<div
 			ref="menu"
 			v-click-outside="closeList"
-			:class="['custom-select', buttonClass, 'text-'+options.menu.color]"
+			:class="['sy-input-select', buttonClass, 'text-'+options.menu.color]"
 			role="menu"
 			tabindex="0"
 			@click="toggleMenu"

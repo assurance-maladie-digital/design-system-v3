@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import CustomInputSelect from './CustomInputSelect.vue'
+import SyInputSelect from './SyInputSelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
 import Alert from '../../Alert/Alert.vue'
 
 const meta = {
-	title: 'Composants/Formulaires/CustomInputSelect',
-	component: CustomInputSelect,
+	title: 'Composants/Formulaires/SyInputSelect',
+	component: SyInputSelect,
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['selectedValue'] },
@@ -20,7 +20,7 @@ const meta = {
 		valueKey: { control: 'text' },
 		vuetifyOptions: { control: 'object' },
 	},
-} as Meta<typeof CustomInputSelect>
+} as Meta<typeof SyInputSelect>
 
 export default meta
 
@@ -32,7 +32,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomInputSelect
+					<SyInputSelect
 						v-model="value"
 						:items="items"
 					/>
@@ -43,7 +43,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					import SyInputSelect from '@cnamts/SyInputSelect'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
@@ -70,13 +70,13 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SyInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomInputSelect
+					<SyInputSelect
 						v-bind="args"
 						:vuetify-options="args.vuetifyOptions"
 					/>
@@ -94,7 +94,7 @@ export const Outlined: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomInputSelect
+					<SyInputSelect
 						v-model="value"
 						:items="items"
 						outlined
@@ -106,7 +106,7 @@ export const Outlined: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					import SyInputSelect from '@cnamts/SyInputSelect'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
@@ -125,13 +125,13 @@ export const Outlined: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SyInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomInputSelect
+					<SyInputSelect
 						v-bind="args"
 						outlined
 					/>
@@ -148,7 +148,7 @@ export const Required: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomInputSelect
+					<SyInputSelect
 						v-model="value"
 						:items="items"
 						required
@@ -160,7 +160,7 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					import SyInputSelect from '@cnamts/SyInputSelect'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
@@ -180,13 +180,13 @@ export const Required: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SyInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomInputSelect
+					<SyInputSelect
 						v-bind="args"
 						:required="args.required"
 					/>
@@ -203,7 +203,7 @@ export const withCustomError: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomInputSelect
+					<SyInputSelect
 						v-model="value"
 						:items="items"
 						:error-messages="errorMessages"
@@ -218,7 +218,7 @@ export const withCustomError: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					import SyInputSelect from '@cnamts/SyInputSelect'
 					import { ref } from 'vue'
 					
 					const items =  [
@@ -244,7 +244,7 @@ export const withCustomError: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SyInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				const errorMessages = ref([])
 				const triggerError = () => {
@@ -255,7 +255,7 @@ export const withCustomError: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomInputSelect
+					<SyInputSelect
 						v-bind="args"
 						:error-messages="errorMessages"
 					/>
@@ -275,7 +275,7 @@ export const withCustomKey: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomInputSelect
+					<SyInputSelect
 						v-model="value"
 						:items="items"
 						text-key="customKey"
@@ -288,7 +288,7 @@ export const withCustomKey: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					import SyInputSelect from '@cnamts/SyInputSelect'
 					
 					const items =  [
 						{ customKey: 'Choix 1', value: '1' },
@@ -307,13 +307,13 @@ export const withCustomKey: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SyInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomInputSelect
+					<SyInputSelect
 						v-bind="args"
 						outlined
 						text-key="customKey"
@@ -331,7 +331,7 @@ export const withCustomStyles: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomInputSelect
+					<SyInputSelect
 						v-model="value"
 						:items="items"
 						:vuetify-options="vuetifyOptions
@@ -343,7 +343,7 @@ export const withCustomStyles: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomInputSelect from '@cnamts/CustomInputSelect'
+					import SyInputSelect from '@cnamts/SyInputSelect'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
@@ -379,13 +379,13 @@ export const withCustomStyles: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SyInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomInputSelect
+					<SyInputSelect
 						v-bind="args"
 						:items="args.items"
 						:vuetify-options="args.vuetifyOptions"

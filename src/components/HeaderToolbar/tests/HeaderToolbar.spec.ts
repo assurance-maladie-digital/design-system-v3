@@ -178,7 +178,7 @@ describe('HeaderToolbar', () => {
 
 		expect(wrapper.vm.highlightMenu).toBe(false)
 
-		const activeSelected = wrapper.find('.custom-select > span')
+		const activeSelected = wrapper.find('.sy-input-select > span')
 		expect(activeSelected.text()).toBe('Professionnel de santé')
 	})
 

@@ -1,32 +1,32 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import CustomSelect from '../CustomInputSelect.vue'
+import SyInputSelect from '../SyInputSelect.vue'
 import { vuetify } from '@tests/unit/setup'
 
-describe('CustomInputSelect', () => {
+describe('SyInputSelect', () => {
 	it('renders the component with default props', () => {
-		const wrapper = mount(CustomSelect, {
+		const wrapper = mount(SyInputSelect, {
 			global: {
 				plugins: [vuetify],
 			},
 		})
 		expect(wrapper.exists()).toBe(true)
-		expect(wrapper.find('.custom-select').text()).toBe('Sélectionnez une option')
+		expect(wrapper.find('.sy-input-select').text()).toBe('Sélectionnez une option')
 	})
 
 	it('displays the selected item text', async () => {
 		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
-		const wrapper = mount(CustomSelect, {
+		const wrapper = mount(SyInputSelect, {
 			props: { items, modelValue: { text: 'Option 1', value: '1' } },
 			global: {
 				plugins: [vuetify],
 			},
 		})
-		expect(wrapper.find('.custom-select').text()).toContain('Option 1')
+		expect(wrapper.find('.sy-input-select').text()).toContain('Option 1')
 	})
 
 	it('does not render error messages when not provided', () => {
-		const wrapper = mount(CustomSelect, {
+		const wrapper = mount(SyInputSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -35,7 +35,7 @@ describe('CustomInputSelect', () => {
 	})
 
 	it('does not render the label when not provided', () => {
-		const wrapper = mount(CustomSelect, {
+		const wrapper = mount(SyInputSelect, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -45,7 +45,7 @@ describe('CustomInputSelect', () => {
 
 	it('formats items correctly', () => {
 		const items = ['Option 1', 'Option 2']
-		const wrapper = mount(CustomSelect, {
+		const wrapper = mount(SyInputSelect, {
 			props: { items, textKey: 'text', valueKey: 'value' },
 			global: {
 				plugins: [vuetify],
@@ -60,12 +60,12 @@ describe('CustomInputSelect', () => {
 	})
 
 	it('applies the correct button class when outlined is true', () => {
-		const wrapper = mount(CustomSelect, {
+		const wrapper = mount(SyInputSelect, {
 			props: { outlined: true },
 			global: {
 				plugins: [vuetify],
 			},
 		})
-		expect(wrapper.find('.custom-select').classes()).toContain('v-btn--variant-outlined')
+		expect(wrapper.find('.sy-input-select').classes()).toContain('v-btn--variant-outlined')
 	})
 })
