@@ -68,4 +68,73 @@ describe('SyInputSelect', () => {
 		})
 		expect(wrapper.find('.sy-input-select').classes()).toContain('v-btn--variant-outlined')
 	})
+
+	it('toggles the menu when the button is clicked', async () => {
+		const wrapper = mount(SyInputSelect, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		const button = wrapper.find('.sy-input-select')
+		await button.trigger('click')
+		expect(wrapper.vm.isOpen).toBe(true)
+		await button.trigger('click')
+		expect(wrapper.vm.isOpen).toBe(false)
+	})
+
+	it('use closeList method', async () => {
+		const wrapper = mount(SyInputSelect, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		await wrapper.vm.closeList()
+		expect(wrapper.vm.isOpen).toBe(false)
+	})
+
+	it('selectItem method', async () => {
+		const wrapper = mount(SyInputSelect, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		await wrapper.vm.selectItem({ text: 'Option 1', value: '1' })
+		expect(wrapper.vm.isOpen).toBe(false)
+		expect(wrapper.vm.selectedItem).toEqual({ text: 'Option 1', value: '1' })
+	})
+
+	it('getItemText method', async () => {
+		const wrapper = mount(SyInputSelect, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		const item = { text: 'Option 1', value: '1' }
+		const text = wrapper.vm.getItemText(item)
+		expect(text).toBe('Option 1')
+	})
+
+	it('watch modelValue', async () => {
+		const wrapper = mount(SyInputSelect, {
+			props: { modelValue: { text: 'Option 1', value: '1' } },
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		expect(wrapper.vm.selectedItem).toEqual({ text: 'Option 1', value: '1' })
+		await wrapper.setProps({ modelValue: { text: 'Option 2', value: '2' } })
+		expect(wrapper.vm.selectedItem).toEqual({ text: 'Option 2', value: '2' })
+	})
+
+	it('watch errorMessages', async () => {
+		const wrapper = mount(SyInputSelect, {
+			props: { errorMessages: ['Error message'] },
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		expect(wrapper.find('.v-messages__message').exists()).toBe(true)
+		await wrapper.setProps({ errorMessages: [] })
+		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+	})
 })

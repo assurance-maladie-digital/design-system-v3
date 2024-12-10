@@ -193,4 +193,38 @@ describe('HeaderToolbar', () => {
 
 		expect(wrapper.vm.activeIndex).toBe(null)
 	})
+
+	it('should set highlightMenu to false when activeSelected is equal to Professionnel de santé', async () => {
+		const wrapper = mount(HeaderToolbar, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				leftMenu: [
+					{
+						title: 'Left',
+						to: '/',
+						ariaLabel: 'Left',
+					},
+					{
+						title: 'Professionnel de santé',
+						to: '/',
+						ariaLabel: 'Professionnel de santé',
+					},
+				],
+				itemsSelectMenu: [
+					{ text: 'Option 1', value: '1' },
+					{ text: 'Option 2', value: '2' },
+				],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		const activeSelected = wrapper.find('.sy-input-select > span')
+		expect(activeSelected.text()).toBe('Professionnel de santé')
+
+		await wrapper.vm.handleLink(1)
+		expect(wrapper.vm.highlightMenu).toBe(false)
+	})
 })

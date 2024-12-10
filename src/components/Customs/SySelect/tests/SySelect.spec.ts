@@ -180,4 +180,14 @@ describe('SySelect.vue', () => {
 
 		expect(wrapper.find('.v-list').exists()).toBe(false)
 	})
+
+	it('use closeList method', async () => {
+		const wrapper = mount(SySelect, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		await wrapper.vm.closeList()
+		expect(wrapper.vm.isOpen).toBe(false)
+	})
 })
