@@ -1,3 +1,19 @@
+## v0.0.5-alpha (11-12-2024)
+
+### Composants
+
+- Change CustomComponents to SyComponents [`#261`](https://github.com/assurance-maladie-digital/design-system-v3/pull/261)
+- Errors pages [`#245`](https://github.com/assurance-maladie-digital/design-system-v3/pull/245)
+- UserMenuBtn + CustomBtnSelect [`#235`](https://github.com/assurance-maladie-digital/design-system-v3/pull/235)
+- DialogBox [`#238`](https://github.com/assurance-maladie-digital/design-system-v3/pull/238)
+- Add rules management [`#252`](https://github.com/assurance-maladie-digital/design-system-v3/pull/252)
+- Add dark theme and fix theming management [`#234`](https://github.com/assurance-maladie-digital/design-system-v3/pull/234)
+
+### Documentation
+
+- Add accessibility on components pages (package 1) [`#246`](https://github.com/assurance-maladie-digital/design-system-v3/pull/246)
+- Add fondamentaux/guidelines content [`#244`](https://github.com/assurance-maladie-digital/design-system-v3/pull/244)
+
 ## v0.0.4-alpha (26-11-2024)
 
 ### Composants
