@@ -9,7 +9,7 @@ const meta = {
 	component: SyInputSelect,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['selectedValue'] },
+		controls: { exclude: ['selectedValue', 'isOpen', 'toggleMenu', 'closeList', 'selectItem', 'selectedItem', 'getItemText'] },
 	},
 	argTypes: {
 		selectedValue: { control: 'text' },

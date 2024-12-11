@@ -45,7 +45,7 @@
 	const emit = defineEmits(['update:modelValue'])
 
 	const isOpen = ref(false)
-	const selectedItem = ref<Record<string, unknown > | string | null>(props.modelValue)
+	const selectedItem = ref<Record<string, unknown > | string | null | undefined>(props.modelValue)
 	const hasError = ref(false)
 
 	const toggleMenu = () => {
@@ -97,6 +97,10 @@
 		hasError.value = !newValue && !selectedItem.value && isRequired.value
 	})
 
+	defineExpose({
+		isOpen,
+		closeList,
+	})
 </script>
 
 <template>

@@ -113,6 +113,14 @@
 		localErrorMessages.value = []
 		return true
 	}
+
+	defineExpose({
+		isOpen,
+		closeList,
+		selectItem,
+		selectedItem,
+		getItemText,
+	})
 </script>
 
 <template>

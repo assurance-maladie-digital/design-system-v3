@@ -9,7 +9,7 @@ const meta = {
 	component: SySelect,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['selectedValue'] },
+		controls: { exclude: ['selectedValue', 'isOpen', 'closeList'] },
 	},
 	argTypes: {
 		selectedValue: { control: 'text' },
