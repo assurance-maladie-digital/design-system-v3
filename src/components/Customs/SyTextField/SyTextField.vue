@@ -22,6 +22,8 @@
 			isClearable?: boolean
 			showDivider?: boolean
 			label?: string
+			required?: boolean
+			errorMessages?: string[]
 		}>(),
 		{
 			variantStyle: 'outlined', // Remplacez par la valeur par défaut souhaitée
@@ -51,6 +53,10 @@
 		opacity: '1',
 	}
 
+	const isRequired = computed(() => {
+		return (props.required || props.errorMessages?.length > 0)
+	})
+
 	defineExpose({
 		appendInnerIconColor,
 	})
@@ -65,6 +71,8 @@
 		:clear-icon="ICONS.close"
 		:aria-label="props.label"
 		:label="props.label"
+		:rules="isRequired ? ['Le champ est requis.'] : []"
+		:error-messages="errorMessages"
 	>
 		<template #prepend>
 			<slot name="prepend">
