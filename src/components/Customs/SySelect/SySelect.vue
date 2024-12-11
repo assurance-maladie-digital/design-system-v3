@@ -97,7 +97,11 @@
 	})
 
 	watch(isOpen, (newValue) => {
-		hasError.value = !newValue && !selectedItem.value && isRequired.value
+		hasError.value = (!newValue && !selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+	})
+
+	watch(() => props.errorMessages, (newValue) => {
+		hasError.value = newValue.length > 0
 	})
 
 	onMounted(() => {
@@ -129,7 +133,7 @@
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired ? ['Le champ est requis.'] : []"
 			class="sy-select"
-			:style="{ minWidth: `${labelWidth}px` }"
+			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`} "
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
@@ -141,7 +145,7 @@
 				>
 					{{ mdiInformation }}
 				</VIcon>
-				<VIcon>
+				<VIcon class="arrow">
 					{{ mdiMenuDown }}
 				</VIcon>
 			</template>
@@ -186,7 +190,7 @@
   position: relative;
 }
 .v-field--focused {
-  .v-icon {
+  .v-icon.arrow {
     transform: rotateX(180deg);
   }
 }
