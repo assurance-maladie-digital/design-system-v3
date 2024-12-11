@@ -54,7 +54,7 @@
 	}
 
 	const isRequired = computed(() => {
-		return (props.required || props.errorMessages?.length > 0)
+		return (props.required || (props.errorMessages && props.errorMessages?.length > 0))
 	})
 
 	defineExpose({
@@ -72,7 +72,7 @@
 		:aria-label="props.label"
 		:label="props.label"
 		:rules="isRequired ? ['Le champ est requis.'] : []"
-		:error-messages="errorMessages"
+		:error-messages="props.errorMessages"
 	>
 		<template #prepend>
 			<slot name="prepend">
