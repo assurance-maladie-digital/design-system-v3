@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`CookiesSelection > renders correctly 1`] = `
-"<div class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated pa-4 pa-md-8 vd-cookies-card">
+"<div class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated vd-cookies-card">
   <!---->
   <div class="v-card__loader">
     <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">

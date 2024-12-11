@@ -6,11 +6,9 @@ const commonBtnConfig = {
 } as const
 
 export const config = {
-	sheet: {
-		width: '800px',
-		maxWidth: '100%',
+	banner: {
 		rounded: true,
-		elevation: 3,
+		elevation: 2,
 		class: 'pa-8',
 	},
 	closeBtn: {
@@ -18,7 +16,14 @@ export const config = {
 		variant: 'text',
 		width: '32px',
 		height: '32px',
-		class: 'mt-n2 mr-n2 ml-4',
+		class: 'ml-4',
+	},
+	backBtn: {
+		icon: true,
+		variant: 'text',
+		width: '32px',
+		height: '32px',
+		class: 'ml-4',
 	},
 	customizeBtn: {
 		...commonBtnConfig,

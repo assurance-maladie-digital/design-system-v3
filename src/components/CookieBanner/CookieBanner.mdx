@@ -13,21 +13,77 @@ Le composant `CookieBanner` est utilisé pour afficher une bannière de consente
 
 <Controls of={CookieBannerStories.Default} />
 
-## Personnalisation des cookies
+## Sans selection des cookies
 
-Pour permettre a l'utilisateur de personnaliser les categories de cookies acceptés, il est recommandé d'utiliser ce composant en combinaison avec le composant `CookiesSelection`.
+Vous pouvez omettre la props `items`, dans ce cas la l'interface de sélection des categories de cookies ne sera pas affichée.
+Vous pourrez toujours afficher utiliser l’événement `customize` pour afficher une interface de sélection des cookies personnalisée.
 
 <Canvas
-	of={CookieBannerStories.WithCookiesSelectionsComponent}
+	of={CookieBannerStories.WithoutCookiesItems}
 	source={{
 		language: 'html',
 		format: 'dedent',
 		code: `
 		<script lang="ts" setup>
-			import { CookiesSelection, DialogBox, CookieBanner } from '@cnamts/synapse'
+			import { CookieBanner } from '@cnamts/synapse'
 
 			const openBanner = ref(true)
-			const openDialog = ref(false)
+		</script>
+
+		<template>
+			<CookieBanner
+				v-model="openBanner"
+				@customize="openDialog = true"
+			/>
+		</template>
+		`
+	}}
+/>
+
+## Description de la bannière
+
+Vous pouvez personnaliser le texte de la bannière en utilisant le slot par défaut
+
+<Canvas
+	of={CookieBannerStories.DescriptionSlot}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { CookieBanner } from '@cnamts/synapse'
+
+			const openBanner = ref(true)
+		</script>
+
+		<template>
+			<CookieBanner
+				v-model="openBanner"
+				@customize="openDialog = true"
+			>
+				<p><b>Custom</b> description</p>
+			</CookieBanner>
+		</template>
+		`
+	}}
+/>
+
+
+## Personnalisation des composants Vuetify
+
+Vous pouvez personnaliser les composants Vuetify utilisés par le composant `CookieBanner` en utilisant la props `vuetifyOptions`.
+
+
+<Canvas
+	of={CookieBannerStories.Customization}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { CookieBanner } from '@cnamts/synapse'
+
+			const openBanner = ref(true)
 
 			const items = {
 				essentials: [
@@ -58,10 +114,24 @@ Pour permettre a l'utilisateur de personnaliser les categories de cookies accept
 				],
 			}
 
+			const options = {
+				banner: {
+					color: '#ced9eb',
+				},
+				customizeBtn: {
+					variant: 'text',
+					color: 'orange',
+				},
+				rejectBtn: {
+					variant: 'outlined',
+				},
+				acceptBtn: {
+					variant: 'outlined',
+				},
+			}
+
 			function onSubmit(e) {
 				console.log('Les cookies suivants ont été sélectionnés :', e)
-				openDialog.value = false
-				openBanner.value = false
 				alert('Vos préférences ont été enregistrées.')
 
 				// Charger les cookies non essentiels
@@ -69,22 +139,9 @@ Pour permettre a l'utilisateur de personnaliser les categories de cookies accept
 		</script>
 
 		<template>
-			<DialogBox
-				hideActions
-				v-model="openDialog"
-			>
-				<div style="overflow: auto">
-					<CookiesSelection
-						:items="items"
-						@submit="onSubmit"
-					/>
-				</div>
-			</DialogBox>
-
-
 			<CookieBanner
 				v-model="openBanner"
-				@customize="openDialog = true"
+				:vuetifyOptions="options"
 			/>
 		</template>
 		`

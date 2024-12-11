@@ -53,13 +53,9 @@
 	<VCard
 		v-if="items"
 		elevation="0"
-		class="pa-4 pa-md-8 vd-cookies-card"
+		class="vd-cookies-card"
 	>
 		<VForm ref="form">
-			<h2 class="text-h5 font-weight-bold mb-6">
-				{{ locales.title }}
-			</h2>
-
 			<p class="mb-4">
 				{{ locales.description }}
 			</p>
