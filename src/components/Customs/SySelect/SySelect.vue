@@ -96,8 +96,13 @@
 		selectedItem.value = newValue
 	})
 
-	watch(isOpen, (newValue) => {
-		hasError.value = (!newValue && !selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
+		if (!newIsOpen) {
+			hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+		}
+		else {
+			hasError.value = newHasError
+		}
 	})
 
 	watch(() => props.errorMessages, (newValue) => {
