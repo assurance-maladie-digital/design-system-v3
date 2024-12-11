@@ -218,7 +218,6 @@
 :deep(.v-list) {
   position: absolute;
   left: inherit !important;
-  margin-top: 58px;
   background-color: white;
   max-height: 300px;
   padding: 0;
