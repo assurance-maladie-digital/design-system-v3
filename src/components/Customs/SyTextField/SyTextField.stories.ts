@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import CustomTextField from '@/components/Customs/CustomTextField/CustomTextField.vue'
+import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import { VIcon } from 'vuetify/components'
 import { ref } from 'vue'
 import { mdiAccountBox } from '@mdi/js'
 
 const meta = {
-	title: 'Composants/Formulaires/CustomTextField',
-	component: CustomTextField,
+	title: 'Composants/Formulaires/SyTextField',
+	component: SyTextField,
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue', 'appendInnerIconColor'] },
@@ -39,7 +39,7 @@ const meta = {
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
 		},
 	},
-} as Meta<typeof CustomTextField>
+} as Meta<typeof SyTextField>
 
 export default meta
 
@@ -51,7 +51,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomTextField v-model="value" />
+					<SyTextField v-model="value" />
 				</template>
 				`,
 			},
@@ -59,7 +59,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomTextField from '@cnamts/synapse'
+					import SyTextField from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -74,13 +74,13 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomTextField, VIcon },
+			components: { SyTextField, VIcon },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomTextField v-bind="args" />
+					<SyTextField v-bind="args" />
 				</div>
 			`,
 		}
@@ -94,7 +94,7 @@ export const SlotPrepend: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomTextField 
+					<SyTextField 
 						v-model="value" 
 						prepend-icon="info"
 					/>
@@ -105,7 +105,7 @@ export const SlotPrepend: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomTextField from '@cnamts/synapse'
+					import SyTextField from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -121,13 +121,13 @@ export const SlotPrepend: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomTextField, VIcon },
+			components: { SyTextField, VIcon },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomTextField
+					<SyTextField
 						v-bind="args"
 						:label="args.label"
 						:prepend-icon="args.prependIcon"
@@ -145,7 +145,7 @@ export const SlotAppend: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomTextField 
+					<SyTextField 
 						v-model="value" 
 						append-icon="success"
 					/>
@@ -156,7 +156,7 @@ export const SlotAppend: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomTextField from '@cnamts/synapse'
+					import SyTextField from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -172,13 +172,13 @@ export const SlotAppend: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomTextField, VIcon },
+			components: { SyTextField, VIcon },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomTextField
+					<SyTextField
 						v-bind="args"
 						:append-icon="args.appendIcon"
 					/>
@@ -195,7 +195,7 @@ export const SlotPrependInner: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomTextField 
+					<SyTextField 
 						v-model="value" 
 						prepend-inner-icon="info"
 					/>
@@ -206,7 +206,7 @@ export const SlotPrependInner: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomTextField from '@cnamts/synapse'
+					import SyTextField from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -222,13 +222,13 @@ export const SlotPrependInner: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomTextField, VIcon },
+			components: { SyTextField, VIcon },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomTextField
+					<SyTextField
 						v-bind="args"
 						:prepend-inner-icon="args.prependInnerIcon"
 					/>
@@ -245,7 +245,7 @@ export const SlotPrependInnerDivider: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomTextField 
+					<SyTextField 
 						v-model="value" 
 						prepend-inner-icon="info"
 						show-divider
@@ -257,7 +257,7 @@ export const SlotPrependInnerDivider: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomTextField from '@cnamts/synapse'
+					import SyTextField from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -273,13 +273,13 @@ export const SlotPrependInnerDivider: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomTextField, VIcon },
+			components: { SyTextField, VIcon },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomTextField
+					<SyTextField
 						v-bind="args"
 						:prepend-inner-icon="args.prependInnerIcon"
 						:show-divider="args.showDivider"
@@ -297,7 +297,7 @@ export const SlotAppendInner: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomTextField 
+					<SyTextField 
 						v-model="value" 
 						append-inner-icon="success"
 					/>
@@ -308,7 +308,7 @@ export const SlotAppendInner: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomTextField from '@cnamts/synapse'
+					import SyTextField from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -324,13 +324,13 @@ export const SlotAppendInner: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomTextField, VIcon },
+			components: { SyTextField, VIcon },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomTextField
+					<SyTextField
 						v-bind="args"
 						:append-inner-icon="args.appendInnerIcon"
 					/>
@@ -347,13 +347,13 @@ export const SlotCustomIcon: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<CustomTextField  v-model="value">
+					<SyTextField v-model="value">
 						<template #append-inner>
 							<VIcon>
 								{{ iconName }}
 							</VIcon>
 						</template>
-					</CustomTextField>
+					</SyTextField>
 				</template>
 				`,
 			},
@@ -361,7 +361,7 @@ export const SlotCustomIcon: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import CustomTextField from '@cnamts/synapse'
+					import SyTextField from '@cnamts/synapse'
 					import { mdiAccountBox } from '@mdi/js'
 					
 					const iconName = mdiAccountBox
@@ -379,7 +379,7 @@ export const SlotCustomIcon: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { CustomTextField, VIcon },
+			components: { SyTextField, VIcon },
 			setup() {
 				const iconName = ref(mdiAccountBox)
 
@@ -387,7 +387,7 @@ export const SlotCustomIcon: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CustomTextField
+					<SyTextField
 						v-bind="args"
 					>
 						<template #append-inner>
@@ -395,7 +395,7 @@ export const SlotCustomIcon: Story = {
 								{{ iconName }}
 							</VIcon>
 						</template>
-					</CustomTextField>
+					</SyTextField>
 				</div>
 			`,
 		}

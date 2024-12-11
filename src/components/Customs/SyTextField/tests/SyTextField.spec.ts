@@ -1,12 +1,12 @@
 import { mount } from '@vue/test-utils'
-import CustomTextField from '../CustomTextField.vue'
+import SyTextField from '../SyTextField.vue'
 import { expect, describe, it } from 'vitest'
 import { VIcon } from 'vuetify/components'
 import { vuetify } from '@tests/unit/setup'
 
-describe('CustomTextField', () => {
+describe('SyTextField', () => {
 	const factory = (props = {}, slots = {}) => {
-		return mount(CustomTextField, {
+		return mount(SyTextField, {
 			props,
 			slots,
 			global: {

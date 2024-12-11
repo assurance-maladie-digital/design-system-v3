@@ -1,0 +1,44 @@
+import { Meta, Canvas, Controls, Source } from '@storybook/blocks';
+import * as SyTextFieldStories from "./SyTextField.stories";
+
+<Meta of={SyTextFieldStories} />
+
+# SyTextField
+
+Le composant `SyTextField` est utilisé pour proposer une alternative au `TextField` de Vuetify, conforme au style du Design System et qui respecte les règles d'accessibilité RGAA.
+
+<Canvas of={SyTextFieldStories.Default} />
+
+
+# API
+
+<Controls of={SyTextFieldStories.Default} />
+
+
+# Exemple d'utilisation
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import SyTextField from '@cnamts/synapse'
+
+	const model = ref('')
+
+</script>
+
+<template>
+	<main class="ma-12">
+		Text saisie: {{ model }}
+		<div class="d-flex flex-wrap align-center">
+        <SyTextField
+				v-model="model"
+				label="Label"
+				color="primary"
+				is-clearable
+			/>
+		</div>
+	</main>
+</template>
+`}
+/>

@@ -1,26 +1,26 @@
 import { Canvas, Meta, Controls, Story, Source } from '@storybook/blocks';
-import * as CustomSelectStories from "./CustomSelect.stories";
+import * as SySelectStories from "./SySelect.stories";
 
-<Meta of={CustomSelectStories} />
+<Meta of={SySelectStories} />
 
-# CustomSelect
+# SySelect
 
-Le composant `CustomSelect` est utilisé pour proposer une alternative au `v-select` de Vuetify qui ne respecte pas les règles d'accessibilité RGAA.
+Le composant `SySelect` est utilisé pour proposer une alternative au `v-select` de Vuetify qui ne respecte pas les règles d'accessibilité RGAA.
 
-<Canvas of={CustomSelectStories.Default} />
+<Canvas of={SySelectStories.Default} />
 
-<Story of={CustomSelectStories.Info} />
+<Story of={SySelectStories.Info} />
 
 # API
 
-<Controls of={CustomSelectStories.Default} />
+<Controls of={SySelectStories.Default} />
 
 # Exemple d'utilisation
 
 <Source dark code={`
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import CustomSelect from '@cnamts/synapse'
+	import SySelect from '@cnamts/synapse'
 
 	const selectedValue = ref(undefined)
 

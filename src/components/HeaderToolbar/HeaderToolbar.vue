@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import { ref, type PropType } from 'vue'
 	import type { MenuItem, SelectItem } from './types'
-	import CustomInputSelect from '../Customs/CustomInputSelect/CustomInputSelect.vue'
+	import SyInputSelect from '@/components/Customs/SyInputSelect/SyInputSelect.vue'
 
 	const props = defineProps({
 		leftMenu: {
@@ -246,7 +246,7 @@
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 							>
 								<span v-if="itemsSelectMenu && index === 1">
-									<CustomInputSelect
+									<SyInputSelect
 										:items="itemsSelectMenu as unknown as string[]"
 										:label="item.title"
 										is-header-toolbar

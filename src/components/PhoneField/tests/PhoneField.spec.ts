@@ -44,14 +44,14 @@ describe('PhoneField', () => {
 		expect(wrapper.vm.computedValue).toBe('06 19 12 34 56')
 	})
 
-	it('renders CustomSelect when withCountryCode is true', () => {
+	it('renders SySelect when withCountryCode is true', () => {
 		const wrapper = mount(PhoneField, {
 			global: {
 				plugins: [vuetify],
 			},
 			props: { withCountryCode: true },
 		})
-		expect(wrapper.findComponent({ name: 'CustomSelect' }).exists()).toBe(true)
+		expect(wrapper.findComponent({ name: 'SySelect' }).exists()).toBe(true)
 	})
 
 	it('validates country code when countryCodeRequired is true', async () => {

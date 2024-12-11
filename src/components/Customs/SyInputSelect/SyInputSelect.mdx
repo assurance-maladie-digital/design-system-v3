@@ -1,0 +1,40 @@
+import { Canvas, Meta, Controls, Story, Source } from '@storybook/blocks';
+import * as SyInputSelectStories from "./SyInputSelect.stories";
+
+<Meta of={SyInputSelectStories} />
+
+# SyInputSelect
+
+Le composant `SyInputSelect` est utilisé pour proposer une alternative au `v-select` de Vuetify qui ne respecte pas les règles RGAA.
+
+<Canvas of={SyInputSelectStories.Default} />
+
+<Story of={SyInputSelectStories.Info} />
+
+# API
+
+<Controls of={SyInputSelectStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+	import SyInputSelect from '@cnamts/synapse'
+
+	const items = [
+        { text: 'Option 1', value: '1' },
+        { text: 'Option 2', value: '2' },
+    ],
+</script>
+
+<template>
+	<main>
+		<div class="mt-12 ml-12">
+			<SyInputSelect
+				v-model="value"
+				:items="items"
+			/>
+		</div>
+	</main>
+</template>
+`} />
