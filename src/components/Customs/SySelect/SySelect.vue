@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiInformation, mdiMenuDown } from '@mdi/js'
-	import { ref, watch, computed, type PropType } from 'vue'
+	import { ref, watch, onMounted, computed, type PropType } from 'vue'
 	import { VIcon, VTextField, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
 	const props = defineProps({
@@ -47,6 +47,9 @@
 	const isOpen = ref(false)
 	const selectedItem = ref<Record<string, unknown > | string | null | undefined>(props.modelValue)
 	const hasError = ref(false)
+
+	const labelWidth = ref(0)
+	const labelRef = ref<HTMLElement | null>(null)
 
 	const toggleMenu = () => {
 		isOpen.value = !isOpen.value
@@ -97,6 +100,12 @@
 		hasError.value = !newValue && !selectedItem.value && isRequired.value
 	})
 
+	onMounted(() => {
+		if (labelRef.value) {
+			labelWidth.value = labelRef.value.offsetWidth + 64
+		}
+	})
+
 	defineExpose({
 		isOpen,
 		closeList,
@@ -120,6 +129,7 @@
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired ? ['Le champ est requis.'] : []"
 			class="sy-select"
+			:style="{ minWidth: `${labelWidth}px` }"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
@@ -136,6 +146,10 @@
 				</VIcon>
 			</template>
 		</VTextField>
+		<span
+			ref="labelRef"
+			class="hidden-label"
+		>{{ label }}</span>
 		<VList
 			v-if="isOpen"
 			class="v-list"
@@ -166,7 +180,6 @@
 .sy-select {
   display: flex;
   flex-direction: column;
-  min-width: 225px;
 }
 
 .v-field {
@@ -207,5 +220,11 @@
 
 :deep(.v-field__input) {
  color: tokens.$grey-darken-20
+}
+
+.hidden-label {
+  visibility: hidden;
+  position: absolute;
+  white-space: nowrap;
 }
 </style>
