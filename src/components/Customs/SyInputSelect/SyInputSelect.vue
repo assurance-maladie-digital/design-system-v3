@@ -180,7 +180,6 @@
 @use '@/assets/tokens.scss';
 
 .sy-input-select {
-  cursor: pointer;
   text-transform: none !important;
   font-size: 16px;
 }

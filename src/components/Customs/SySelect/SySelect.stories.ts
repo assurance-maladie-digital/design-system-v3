@@ -75,60 +75,6 @@ export const Default: Story = {
 	},
 }
 
-export const Outlined: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SySelect
-						v-model="value"
-						:items="items"
-						outlined
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import SySelect from '@cnamts/SySelect'
-					
-					const items =  [
-						{ text: 'Option 1', value: '1' },
-						{ text: 'Option 2', value: '2' },
-					],
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-		],
-	},
-	render: (args) => {
-		return {
-			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
-			setup() {
-				return { args }
-			},
-			template: `
-				<div class="d-flex flex-wrap align-center pa-4" style="z-index: 99999">
-					<SySelect
-						v-bind="args"
-						outlined
-					/>
-				</div>
-			`,
-		}
-	},
-}
-
 export const Required: Story = {
 	parameters: {
 		sourceCode: [

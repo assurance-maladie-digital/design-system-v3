@@ -30,7 +30,7 @@
 		},
 		outlined: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		textKey: {
 			type: String,
