@@ -22,7 +22,7 @@
 		textKey: 'text',
 		valueKey: 'value',
 		label: 'Sélectionnez une option',
-		outlined: false,
+		outlined: true,
 		required: false,
 		errorMessages: () => [],
 		isHeaderToolbar: false,
@@ -178,6 +178,12 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens.scss';
+
+.sy-input-select {
+  cursor: pointer;
+  text-transform: none !important;
+  font-size: 16px;
+}
 
 .v-input {
   cursor: pointer;
