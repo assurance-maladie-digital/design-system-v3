@@ -8,6 +8,7 @@
 		mdiClose,
 		mdiInformation,
 	} from '@mdi/js'
+	import { VIcon } from 'vuetify/components'
 
 	// only variantStyle need a default value
 	/* eslint-disable vue/require-default-prop */
@@ -22,6 +23,8 @@
 			isClearable?: boolean
 			showDivider?: boolean
 			label?: string
+			required?: boolean
+			errorMessages?: string[]
 		}>(),
 		{
 			variantStyle: 'outlined', // Remplacez par la valeur par défaut souhaitée
@@ -37,6 +40,15 @@
 	}
 
 	const model = ref('')
+	const isBlurred = ref(false)
+
+	const hasError = computed(() => {
+		return (props.required && isBlurred.value && !model.value) || (props.errorMessages && props.errorMessages.length > 0)
+	})
+
+	const checkErrorOnBlur = () => {
+		isBlurred.value = true
+	}
 
 	const appendInnerIconColor = computed(() => {
 		return props.appendInnerIcon === 'error' || props.appendInnerIcon === 'success'
@@ -65,6 +77,9 @@
 		:clear-icon="ICONS.close"
 		:aria-label="props.label"
 		:label="props.label"
+		:rules="props.required ? ['Le champ est requis.'] : []"
+		:error-messages="props.errorMessages"
+		@blur="checkErrorOnBlur"
 	>
 		<template #prepend>
 			<slot name="prepend">
@@ -98,6 +113,9 @@
 		</template>
 		<template #append-inner>
 			<slot name="append-inner">
+				<VIcon v-if="hasError">
+					{{ mdiInformation }}
+				</VIcon>
 				<VIcon
 					v-if="props.appendInnerIcon"
 					:icon="ICONS[props.appendInnerIcon]"

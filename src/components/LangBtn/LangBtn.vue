@@ -160,8 +160,9 @@
 }
 
 .vd-lang-btn {
-  font-weight: 700;
+  font-size: 16px;
   --hoverColor: rgba(tokens.$colors-overlay, 0.5);
-  text-transform: capitalize;
+  text-transform: none;
+  letter-spacing: inherit;
 }
 </style>

@@ -16,6 +16,7 @@ const meta = {
 		items: { control: 'object' },
 		errorMessages: { control: 'object' },
 		required: { control: 'boolean' },
+		outlined: { control: 'boolean' },
 		textKey: { control: 'text' },
 		valueKey: { control: 'text' },
 		vuetifyOptions: { control: 'object' },
@@ -82,60 +83,6 @@ export const Default: Story = {
 					/>
 				</div>
 				<br/><br/><br/><br/>
-			`,
-		}
-	},
-}
-
-export const Outlined: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SyInputSelect
-						v-model="value"
-						:items="items"
-						outlined
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/SyInputSelect'
-					
-					const items =  [
-						{ text: 'Option 1', value: '1' },
-						{ text: 'Option 2', value: '2' },
-					],
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-		],
-	},
-	render: (args) => {
-		return {
-			components: { SyInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
-			setup() {
-				return { args }
-			},
-			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<SyInputSelect
-						v-bind="args"
-						outlined
-					/>
-				</div>
 			`,
 		}
 	},

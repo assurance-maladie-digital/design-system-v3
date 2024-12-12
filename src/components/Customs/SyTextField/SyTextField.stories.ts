@@ -87,6 +87,117 @@ export const Default: Story = {
 	},
 }
 
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTextField 
+						v-model="value" 
+						required
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SyTextField from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		showDivider: false,
+		variantStyle: 'outlined',
+		color: 'primary',
+		isClearable: true,
+		label: 'Label',
+		required: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField, VIcon },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<SyTextField v-bind="args" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithCustomError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTextField 
+						v-model="value" 
+						:error-messages="errorMessages"
+					/>
+					<VBtn @click="triggerError">
+						Trigger Error
+					</VBtn>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SyTextField from '@cnamts/synapse'
+					
+					const errorMessages = ref([])
+					
+					const triggerError = () => {
+						errorMessages.value = ['This is a test error message']
+					}
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		showDivider: false,
+		variantStyle: 'outlined',
+		color: 'primary',
+		isClearable: true,
+		label: 'Label',
+		required: false,
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField, VIcon },
+			setup() {
+				const errorMessages = ref([])
+				const triggerError = () => {
+					// @ts-expect-error test error message
+					errorMessages.value = ['This is a test error message']
+				}
+				return { args, errorMessages, triggerError }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<SyTextField v-bind="args" :error-messages="errorMessages" />
+				</div>
+				<VBtn class="ml-8" @click="triggerError">
+					Trigger Error
+				</VBtn>
+			`,
+		}
+	},
+}
+
 export const SlotPrepend: Story = {
 	parameters: {
 		sourceCode: [

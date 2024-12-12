@@ -827,7 +827,7 @@ export const DisplayModels: Story = {
 	},
 	args: {
 		modelValue: '',
-		dialCodeModel: undefined,
+		dialCodeModel: '',
 		required: false,
 		outlined: true,
 		outlinedIndicatif: true,
@@ -851,7 +851,7 @@ export const DisplayModels: Story = {
 					</div>
 					<PhoneField
 						v-model="args.modelValue"
-						v-model:selected-dial-code="dialCodeModel"
+						v-model:selected-dial-code="args.dialCodeModel"
 						:required="args.required"
 						:outlined="args.outlined"
 						:outlinedIndicatif="args.outlinedIndicatif"
