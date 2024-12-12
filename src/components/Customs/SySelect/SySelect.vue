@@ -138,7 +138,7 @@
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired ? ['Le champ est requis.'] : []"
 			class="sy-select"
-			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`} "
+			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
