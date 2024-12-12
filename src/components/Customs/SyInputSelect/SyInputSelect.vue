@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { mdiChevronDown } from '@mdi/js'
+	import { mdiChevronDown, mdiInformation } from '@mdi/js'
 	import { computed, onMounted, ref, watch } from 'vue'
 	import { VIcon, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
@@ -34,6 +34,7 @@
 
 	const isOpen = ref(false)
 	const selectedItem = ref<Record<string, unknown> | string | null>(props.modelValue)
+	const hasError = ref(false)
 
 	const toggleMenu = () => {
 		isOpen.value = !isOpen.value
@@ -42,6 +43,10 @@
 	const closeList = () => {
 		isOpen.value = false
 	}
+
+	const isRequired = computed(() => {
+		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
+	})
 
 	const inputId = ref(`sy-input-select-${Math.random().toString(36).substring(7)}`)
 
@@ -69,8 +74,18 @@
 		selectedItem.value = newValue
 	})
 
+	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
+		if (!newIsOpen) {
+			hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+		}
+		else {
+			hasError.value = newHasError
+		}
+	})
+
 	watch(() => props.errorMessages, (newValue) => {
 		localErrorMessages.value = newValue
+		hasError.value = newValue.length > 0
 	})
 
 	const menu = ref<HTMLElement | null>(null)
@@ -88,6 +103,9 @@
 	})
 
 	const buttonClass = computed(() => {
+		if (props.outlined && hasError.value) {
+			return 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined error text-error'
+		}
 		return props.outlined ? 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined' : 'text-color'
 	})
 
@@ -144,6 +162,13 @@
 			@keydown.space.prevent="toggleMenu"
 		>
 			<span>{{ selectedItemText }}</span>
+			<VIcon
+				v-if="hasError"
+				class="ml-2"
+				color="error"
+			>
+				{{ mdiInformation }}
+			</VIcon>
 			<VIcon> {{ mdiChevronDown }}</VIcon>
 		</div>
 		<VList
@@ -213,6 +238,10 @@
   .v-list-item-title {
     font-weight: bold;
   }
+}
+
+.error {
+  border-color: tokens.$danger-default;
 }
 
 .v-btn {
