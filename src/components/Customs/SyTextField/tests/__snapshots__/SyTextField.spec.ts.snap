@@ -35,7 +35,8 @@ exports[`SyTextField > matches snapshot 1`] = `
       <transition-stub name="expand-x-transition" appear="false" persisted="false" css="true">
         <div class="v-field__clearable" style="display: none;"><i class="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z mdi v-icon notranslate v-theme--light v-icon--size-default v-icon--clickable" role="button" aria-hidden="false" tabindex="0" aria-label="Clear "></i></div>
       </transition-stub>
-      <div class="v-field__append-inner"><i class="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z mdi v-icon notranslate v-theme--light v-icon--size-default text-error error-icon" aria-hidden="true"></i>
+      <div class="v-field__append-inner">
+        <!--v-if--><i class="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z mdi v-icon notranslate v-theme--light v-icon--size-default text-error error-icon" aria-hidden="true"></i>
         <!---->
       </div>
       <div class="v-field__outline">
