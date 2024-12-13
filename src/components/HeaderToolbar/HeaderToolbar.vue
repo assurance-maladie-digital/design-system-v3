@@ -249,6 +249,7 @@
 									<SyInputSelect
 										:items="itemsSelectMenu as unknown as string[]"
 										:label="item.title"
+										:outlined="false"
 										is-header-toolbar
 										@click="handleLink(index)"
 									/>
