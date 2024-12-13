@@ -71,7 +71,9 @@ export default defineConfig({
 		}),
 		vuetify({
 			autoImport: true,
-			styles: 'sass',
+			styles: {
+				configFile: 'src/assets/settings.scss',
+			},
 		}),
 	],
 	resolve: {

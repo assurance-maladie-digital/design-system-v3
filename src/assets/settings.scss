@@ -1,0 +1,7 @@
+@use 'vuetify' with (
+  $body-font-family: Arial
+);
+
+html, body {
+  font-family: Arial, sans-serif !important;
+}
