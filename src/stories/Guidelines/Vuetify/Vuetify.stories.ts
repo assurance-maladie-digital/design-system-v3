@@ -1,11 +1,11 @@
 import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon, VRow, VCol } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
 import { VuetifyItems } from './VuetifyItems'
-import { mdiCheckboxMarkedCircleOutline, mdiLinkVariant,mdiAlertCircleOutline } from '@mdi/js'
+import { mdiCheckboxMarkedCircleOutline, mdiLinkVariant, mdiAlertCircleOutline } from '@mdi/js'
 
 const checkIcon = mdiCheckboxMarkedCircleOutline
 const linkICon = mdiLinkVariant
-const iconAlert =mdiAlertCircleOutline
+const iconAlert = mdiAlertCircleOutline
 export default {
 	title: 'Guidelines/Vuetify',
 }
@@ -15,8 +15,7 @@ export const VuetifyPanel: StoryObj = {
 		return {
 			components: { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon },
 			setup() {
-
-				return { VuetifyItems, checkIcon,iconAlert,linkICon }
+				return { VuetifyItems, checkIcon, iconAlert, linkICon }
 			},
 			template: `
 			
@@ -111,15 +110,14 @@ export const VuetifyPanel: StoryObj = {
 	tags: ['!dev'],
 }
 
-
 export const Legende: StoryObj = {
 	args: {
 	},
 	render: (args) => {
 		return {
-			components: { VIcon ,VRow, VCol },
+			components: { VIcon, VRow, VCol },
 			setup() {
-				return { args, checkIcon,iconAlert }
+				return { args, checkIcon, iconAlert }
 			},
 			template: `
 			  <p style="color: grey;font-size: 11px; margin-bottom: 12px;">Date de conception: 13/12/2024</p>

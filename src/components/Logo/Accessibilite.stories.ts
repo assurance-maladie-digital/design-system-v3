@@ -221,4 +221,3 @@ export const Legende: StoryObj = {
 	},
 	tags: ['!dev'],
 }
-

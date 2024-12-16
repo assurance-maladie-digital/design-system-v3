@@ -8,7 +8,7 @@ const iconEye = mdiEye
 const linkICon = mdiLink
 
 export default {
-	title: 'Composants/Structure/HeaderBar/Accessibilité',
+	title: 'Composants/Structure/HeaderToolbar/Accessibilité',
 }
 
 export const AccessibilitePanel: StoryObj = {
@@ -42,33 +42,7 @@ export const AccessibilitePanel: StoryObj = {
 								</v-expansion-panel-title>
 								<v-expansion-panel-text>
 									<v-expansion-panels>
-									<v-expansion-panel v-for="(i, index) in item.items2" :key="i"  style="margin-bottom: 10px;">
-											<v-expansion-panel-title
-												style="font-weight: bold; font-size: 13px; line-height: 16px;">
-												{{ i.subtitle}}
-											</v-expansion-panel-title>
-											<v-expansion-panel-text>
-												<div>
-													<p style="font-size: 13px;line-height: 16px;">
-														{{ i.precision }}
-													</p>
-													<div v-for="(value, index) in i.solution"
-														 style="margin-top:15px; font-size: 13px;line-height: 16px;">
-														<p style="font-weight: bold;">Méthodologie du test : <a
-															href="{{i.link}}" target="blank">
-															<VIcon :icon="linkICon"/>
-														</a></p>
-
-														<p>{{ value.info1 }}</p>
-														<p>{{ value.info2 }}</p>
-														<p>{{ value.info3 }}</p>
-
-													</div>
-													<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
-												</div>
-											</v-expansion-panel-text>
-										</v-expansion-panel>
-										<v-expansion-panel >
+										<v-expansion-panel>
 											<v-expansion-panel-title
 												style="font-weight: bold; font-size: 13px; line-height: 16px;">
 												{{ item.subtitle }}
@@ -88,6 +62,10 @@ export const AccessibilitePanel: StoryObj = {
 														<p>{{ element.info1 }}</p>
 														<p>{{ element.info2 }}</p>
 														<p>{{ element.info3 }}</p>
+														<p>{{ element.info4 }}</p>
+														<p>{{ element.info5 }}</p>
+														<p>{{ element.info6 }}</p>
+														<p>{{ element.info7 }}</p>
 
 													</div>
 													<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
@@ -108,8 +86,8 @@ export const AccessibilitePanel: StoryObj = {
 								</v-btn>
 							</div>
 						</div>
-						<v-expansion-panels value="opened" multiple>
-							<v-expansion-panel
+						<v-expansion-panels v-if="AccessibiliteItemsValidated.length > 0" value="opened" multiple>
+							<v-expansion-panel 
 								v-for="(item, index) in AccessibiliteItemsValidated"
 								:key="index" style="background-color: rgba(53,135,0,0.1); margin-bottom: 10px;">
 								<v-expansion-panel-title>
@@ -118,7 +96,7 @@ export const AccessibilitePanel: StoryObj = {
 								</v-expansion-panel-title>
 								<v-expansion-panel-text>
 									<v-expansion-panels>
-									
+
 									<v-expansion-panel v-for="(i, index) in item.items2" :key="i"  style="margin-bottom: 10px;">
 											<v-expansion-panel-title
 												style="font-weight: bold; font-size: 13px; line-height: 16px;">
@@ -145,10 +123,9 @@ export const AccessibilitePanel: StoryObj = {
 												</div>
 											</v-expansion-panel-text>
 										</v-expansion-panel>
-									
-										<v-expansion-panel >
-											<v-expansion-panel-title
-												style="font-weight: bold; font-size: 13px; line-height: 16px;">
+										
+										<v-expansion-panel>
+											<v-expansion-panel-title style="font-weight: bold;font-size: 13px; line-height: 16px;">
 												{{ item.subtitle }}
 											</v-expansion-panel-title>
 											<v-expansion-panel-text>
@@ -162,11 +139,13 @@ export const AccessibilitePanel: StoryObj = {
 															href="value.link" target="blank">
 															<VIcon :icon="linkICon"/>
 														</a></p>
-
 														<p>{{ element.info1 }}</p>
 														<p>{{ element.info2 }}</p>
 														<p>{{ element.info3 }}</p>
-
+														<p>{{ element.info4 }}</p>
+														<p>{{ element.info5 }}</p>
+														<p>{{ element.info6 }}</p>
+														<p>{{ element.info7 }}</p>
 													</div>
 													<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
 												</div>
@@ -176,6 +155,7 @@ export const AccessibilitePanel: StoryObj = {
 								</v-expansion-panel-text>
 							</v-expansion-panel>
 						</v-expansion-panels>
+						<div v-else style="display: flex;justify-content: center;"><span style="text-align:center;"  >Pas de critère d'accessibilité bloquant</span></div>
 					</v-col>
 				</div>
 			`,

@@ -1,7 +1,6 @@
 import { ExpertiseLevelEnum } from './constants/ExpertiseLevelEnum'
 
 export const AccessibiliteItemsIndeterminate = [
-	
 
 ]
 

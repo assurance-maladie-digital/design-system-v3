@@ -1,7 +1,7 @@
 import { ExpertiseLevelEnum } from './constants/ExpertiseLevelEnum'
 
 export const AccessibiliteItemsIndeterminate = [
-	
+
 	{
 		title: 'Catégorie 10 : Présentation de l\'information',
 		subtitle: '10.8 Pour chaque page web, les contenus cachés ont-ils vocation à être ignorés par les technologies d’assistance',

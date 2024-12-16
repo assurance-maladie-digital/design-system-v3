@@ -73,10 +73,10 @@ export const AccessibiliteItemsIndeterminate = [
 			},
 			{
 				subtitle: '11.13 La finalité d’un champ de saisie peut-elle être déduite pour faciliter le remplissage automatique des champs avec les données de l’utilisateur ?  ',
-				precision: '11.13.1 Chaque champ de formulaire dont l’objet se rapporte à une information concernant l’utilisateur vérifie-t-il ces conditions ? ' +
-					'Le champ de formulaire possède un attribut autocomplete ; ' +
-					'L’attribut autocomplete est pourvu d’une valeur présente dans la liste des valeurs possibles pour l’attribut autocomplete associés à un champ de formulaire ; ' +
-					'La valeur indiquée pour l’attribut autocomplete est pertinente au regard du type d’information attendu. ',
+				precision: '11.13.1 Chaque champ de formulaire dont l’objet se rapporte à une information concernant l’utilisateur vérifie-t-il ces conditions ? '
+					+ 'Le champ de formulaire possède un attribut autocomplete ; '
+					+ 'L’attribut autocomplete est pourvu d’une valeur présente dans la liste des valeurs possibles pour l’attribut autocomplete associés à un champ de formulaire ; '
+					+ 'La valeur indiquée pour l’attribut autocomplete est pertinente au regard du type d’information attendu. ',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.13.1',
 				solution: [{
 					info1: '1. Retrouver dans le document les champs de formulaire qui se rapportent à une information concernant l’utilisateur (nom, prénom, numéro de téléphone, etc.) ; ',
@@ -139,7 +139,7 @@ export const AccessibiliteItemsValidated = [
 		subtitle: '11.2  Chaque étiquette associée à un champ de formulaire est-elle pertinente (hors cas particuliers) ?   ',
 		items: [
 			{
-				
+
 				precision: '11.2.2 Chaque attribut title permet-il de connaître la fonction exacte du champ de formulaire auquel il est associé ? ',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2.2',
 				solution: [{
@@ -151,11 +151,11 @@ export const AccessibiliteItemsValidated = [
 
 			},
 			{
-				precision: '11.2.5 Chaque champ de formulaire ayant un intitulé visible vérifie-t-il ces conditions (hors cas particuliers) ? ' +
-    							'S’il est présent, le contenu de l’attribut WAI-ARIA aria-label du champ de formulaire contient au moins l’intitulé visible ; ' +
-    							'S’il est présent, le passage de texte lié au champ de formulaire via un attribut WAI-ARIA aria-labelledby contient au moins l’intitulé visible ; ' +
-    							'S’il est présent, le contenu de l’attribut title du champ de formulaire contient au moins l’intitulé visible ; ' +
-    							'S’il est présent le contenu de la balise <label> associé au champ de formulaire contient au moins l’intitulé visible.',
+				precision: '11.2.5 Chaque champ de formulaire ayant un intitulé visible vérifie-t-il ces conditions (hors cas particuliers) ? '
+					+ 'S’il est présent, le contenu de l’attribut WAI-ARIA aria-label du champ de formulaire contient au moins l’intitulé visible ; '
+					+ 'S’il est présent, le passage de texte lié au champ de formulaire via un attribut WAI-ARIA aria-labelledby contient au moins l’intitulé visible ; '
+					+ 'S’il est présent, le contenu de l’attribut title du champ de formulaire contient au moins l’intitulé visible ; '
+					+ 'S’il est présent le contenu de la balise <label> associé au champ de formulaire contient au moins l’intitulé visible.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2.5',
 				solution: [{
 					info1: '1. Retrouver dans le document les champs de formulaire dont l’étiquette est fournie à la fois par un intitulé visible et par le contenu soit d’un élément <label>, soit d’un attribut title ou d’un attribut aria-label ou d’un attribut aria-labelledby ; ',
@@ -170,27 +170,27 @@ export const AccessibiliteItemsValidated = [
 		items2: [
 			{
 				subtitle: '11.1 Chaque champ de formulaire a-t-il une étiquette ',
-				precision: '11.1.1 Chaque champ de formulaire vérifie-t-il une de ces conditions ? ' +
-					'Le champ de formulaire possède un attribut WAI-ARIA aria-labelledby référençant un passage de texte identifié ; ' +
-					'Le champ de formulaire possède un attribut WAI-ARIA aria-label ; ' +
-					'Une balise <label> ayant un attribut for est associée au champ de formulaire ; ' +
-					'Le champ de formulaire possède un attribut title ; ' +
-					'Un bouton adjacent au champ de formulaire lui fournit une étiquette visible et un élément <label> visuellement caché ou un attribut WAI-ARIA aria-label, aria-labelledby ou title lui fournit un nom accessible.',
+				precision: '11.1.1 Chaque champ de formulaire vérifie-t-il une de ces conditions ? '
+					+ 'Le champ de formulaire possède un attribut WAI-ARIA aria-labelledby référençant un passage de texte identifié ; '
+					+ 'Le champ de formulaire possède un attribut WAI-ARIA aria-label ; '
+					+ 'Une balise <label> ayant un attribut for est associée au champ de formulaire ; '
+					+ 'Le champ de formulaire possède un attribut title ; '
+					+ 'Un bouton adjacent au champ de formulaire lui fournit une étiquette visible et un élément <label> visuellement caché ou un attribut WAI-ARIA aria-label, aria-labelledby ou title lui fournit un nom accessible.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.1.1',
 				solution: [{
 					info1: '1. Retrouver dans le document les champs de formulaire ; ',
-					info2: '2. Pour chaque champ de formulaire, vérifier que le champ de formulaire : ' +
-						'Possède un attribut WAI-ARIA aria-labelledby référençant un passage de texte identifié ; ' +
-						'Possède un attribut WAI-ARIA aria-label ; ' +
-						'Est associé à un élément <label> ayant un attribut for ; ' +
-						'Possède un attribut title ; ' +
-						'Un bouton adjacent au champ de formulaire lui fournit une étiquette visible et un élément <label> visuellement caché ou un attribut WAI-ARIA aria-label, aria-labelledby ou title lui fournit un nom accessible. ',
+					info2: '2. Pour chaque champ de formulaire, vérifier que le champ de formulaire : '
+						+ 'Possède un attribut WAI-ARIA aria-labelledby référençant un passage de texte identifié ; '
+						+ 'Possède un attribut WAI-ARIA aria-label ; '
+						+ 'Est associé à un élément <label> ayant un attribut for ; '
+						+ 'Possède un attribut title ; '
+						+ 'Un bouton adjacent au champ de formulaire lui fournit une étiquette visible et un élément <label> visuellement caché ou un attribut WAI-ARIA aria-label, aria-labelledby ou title lui fournit un nom accessible. ',
 					info3: '3. Si c’est le cas pour champ de formulaire, le test est validé. ',
 				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
 
 			},
-			
+
 		],
 
 	},

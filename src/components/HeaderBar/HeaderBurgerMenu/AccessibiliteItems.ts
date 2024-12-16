@@ -8,18 +8,18 @@ export const AccessibiliteItemsIndeterminate = [
 		items2: [
 			{
 				subtitle: '1.1  Chaque image porteuse d’information a-t-elle une alternative textuelle ? ',
-				precision: '1.1.5 Chaque image vectorielle (balise <svg>) porteuse d’information, vérifie-t-elle ces conditions ? ' +
-					'La balise <svg> possède un attribut WAI-ARIA role="img" ; ' +
-					'La balise <svg> a une alternative textuelle.',
+				precision: '1.1.5 Chaque image vectorielle (balise <svg>) porteuse d’information, vérifie-t-elle ces conditions ? '
+					+ 'La balise <svg> possède un attribut WAI-ARIA role="img" ; '
+					+ 'La balise <svg> a une alternative textuelle.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.1.5',
 				solution: [{
 					info1: '1. Retrouver dans le document les éléments <svg> ; Pour chaque élément <svg>, déterminer si l’image est porteuse d’information ; ',
 					info2: '2. S’assurer que l’élément <svg> est pourvu d’un attribut WAI-ARIA role="img" ; Si ce n’est pas le cas, le test est invalidé.',
-					info3: '3. Le cas échéant, vérifier que l’élément <svg> est pourvu au moins d’une alternative textuelle parmi les suivantes : ' +
-						'Contenu de l’élément <title> ; ' +
-						'Passage de texte associé via l’attribut WAI-ARIA aria-labelledby ; ' +
-						'Contenu de l’attribut WAI-ARIA aria-label ;',
-					info4: '4. Si au moins une alternative textuelle est trouvée, le test est validé. '
+					info3: '3. Le cas échéant, vérifier que l’élément <svg> est pourvu au moins d’une alternative textuelle parmi les suivantes : '
+						+ 'Contenu de l’élément <title> ; '
+						+ 'Passage de texte associé via l’attribut WAI-ARIA aria-labelledby ; '
+						+ 'Contenu de l’attribut WAI-ARIA aria-label ;',
+					info4: '4. Si au moins une alternative textuelle est trouvée, le test est validé. ',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
 
@@ -39,36 +39,36 @@ export const AccessibiliteItemsIndeterminate = [
 		],
 		items: [
 			{
-				precision: '1.6.1 Chaque image (balise <img>) porteuse d’information, qui nécessite une description détaillée, vérifie-t-elle une de ces conditions ? ' +
-					'Il existe un attribut longdesc qui donne l’adresse (URL) d’une page ou d’un emplacement dans la page contenant la description détaillée ; ' +
-					'Il existe une alternative textuelle contenant la référence à une description détaillée adjacente à l’image ; ' +
-					'Il existe un lien ou un bouton adjacent permettant d’accéder à la description détaillée.',
+				precision: '1.6.1 Chaque image (balise <img>) porteuse d’information, qui nécessite une description détaillée, vérifie-t-elle une de ces conditions ? '
+					+ 'Il existe un attribut longdesc qui donne l’adresse (URL) d’une page ou d’un emplacement dans la page contenant la description détaillée ; '
+					+ 'Il existe une alternative textuelle contenant la référence à une description détaillée adjacente à l’image ; '
+					+ 'Il existe un lien ou un bouton adjacent permettant d’accéder à la description détaillée.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.6.1',
 				solution: [{
 					info1: '1. Retrouver dans le document les images structurées au moyen d’un élément <img> (ou d’un élément possédant l’attribut WAI-ARIA role="img") porteuses d’information qui nécessitent une description détaillée ; ',
-					info2: '2. Pour chaque image, vérifier qu’il existe : ' +
-						'Soit un attribut longdesc qui donne l’adresse (url) d’une page ou d’un emplacement dans la page contenant la description détaillée ; ' +
-						'Soit une alternative textuelle contenant la référence à une description détaillée adjacente à l’image ; ' +
-						'Soit un lien ou un bouton adjacent permettant d’accéder à la description détaillée.',
+					info2: '2. Pour chaque image, vérifier qu’il existe : '
+						+ 'Soit un attribut longdesc qui donne l’adresse (url) d’une page ou d’un emplacement dans la page contenant la description détaillée ; '
+						+ 'Soit une alternative textuelle contenant la référence à une description détaillée adjacente à l’image ; '
+						+ 'Soit un lien ou un bouton adjacent permettant d’accéder à la description détaillée.',
 					info3: '3. Si c’est le cas pour chaque image, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
 
 			},
 			{
-				precision: '1.6.5 Chaque image vectorielle (balise <svg>) porteuse d’information, qui nécessite une description détaillée, vérifie-t-elle une de ces conditions ? ' +
-					'Il existe un attribut WAI-ARIA aria-label contenant l’alternative textuelle et une référence à une description détaillée adjacente ; ' +
-					'Il existe un attribut WAI-ARIA aria-labelledby associant un passage de texte faisant office d’alternative textuelle et un autre faisant office de description détaillée ; ' +
-					'Il existe un attribut WAI-ARIA aria-describedby associant un passage de texte faisant office de description détaillée ; ' +
-					'Il existe un lien ou un bouton adjacent permettant d’accéder à la description détaillée.',
+				precision: '1.6.5 Chaque image vectorielle (balise <svg>) porteuse d’information, qui nécessite une description détaillée, vérifie-t-elle une de ces conditions ? '
+					+ 'Il existe un attribut WAI-ARIA aria-label contenant l’alternative textuelle et une référence à une description détaillée adjacente ; '
+					+ 'Il existe un attribut WAI-ARIA aria-labelledby associant un passage de texte faisant office d’alternative textuelle et un autre faisant office de description détaillée ; '
+					+ 'Il existe un attribut WAI-ARIA aria-describedby associant un passage de texte faisant office de description détaillée ; '
+					+ 'Il existe un lien ou un bouton adjacent permettant d’accéder à la description détaillée.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.6.5',
 				solution: [{
 					info1: '1. Retrouver dans le document les éléments <svg> porteurs d’information qui nécessitent une description détaillée ; ',
-					info2: '2. Pour chaque élément <svg>, vérifier qu’il existe : ' +
-						'Soit un attribut WAI-ARIA aria-label contenant l’alternative textuelle et une référence à une description détaillée adjacente ; ' +
-						'Soit un attribut WAI-ARIA aria-labelledby associant un passage de texte faisant office d’alternative textuelle et un autre faisant office de description détaillée ; ' +
-						'Soit un attribut WAI-ARIA aria-describedby associant un passage de texte faisant office de description détaillée ; ' +
-						'Soit un lien ou un bouton adjacent permettant d’accéder à la description détaillée.',
+					info2: '2. Pour chaque élément <svg>, vérifier qu’il existe : '
+						+ 'Soit un attribut WAI-ARIA aria-label contenant l’alternative textuelle et une référence à une description détaillée adjacente ; '
+						+ 'Soit un attribut WAI-ARIA aria-labelledby associant un passage de texte faisant office d’alternative textuelle et un autre faisant office de description détaillée ; '
+						+ 'Soit un attribut WAI-ARIA aria-describedby associant un passage de texte faisant office de description détaillée ; '
+						+ 'Soit un lien ou un bouton adjacent permettant d’accéder à la description détaillée.',
 					info3: '3. Si c’est le cas pour chaque élément <svg>, le test est validé.',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
@@ -77,8 +77,6 @@ export const AccessibiliteItemsIndeterminate = [
 
 		],
 	},
-
-
 
 ]
 
@@ -113,23 +111,23 @@ export const AccessibiliteItemsValidated = [
 		items2: [
 			{
 				subtitle: '1.1  Chaque image porteuse d’information a-t-elle une alternative textuelle ? ',
-				precision: '1.1.5 Chaque image vectorielle (balise <svg>) porteuse d’information, vérifie-t-elle ces conditions ? ' +
-					'La balise <svg> possède un attribut WAI-ARIA role="img" ; ' +
-					'La balise <svg> a une alternative textuelle.',
+				precision: '1.1.5 Chaque image vectorielle (balise <svg>) porteuse d’information, vérifie-t-elle ces conditions ? '
+					+ 'La balise <svg> possède un attribut WAI-ARIA role="img" ; '
+					+ 'La balise <svg> a une alternative textuelle.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.1.5',
 				solution: [{
 					info1: '1. Retrouver dans le document les éléments <svg> ; Pour chaque élément <svg>, déterminer si l’image est porteuse d’information ; ',
 					info2: '2. S’assurer que l’élément <svg> est pourvu d’un attribut WAI-ARIA role="img" ; Si ce n’est pas le cas, le test est invalidé.',
-					info3: '3. Le cas échéant, vérifier que l’élément <svg> est pourvu au moins d’une alternative textuelle parmi les suivantes : ' +
-						'Contenu de l’élément <title> ; ' +
-						'Passage de texte associé via l’attribut WAI-ARIA aria-labelledby ; ' +
-						'Contenu de l’attribut WAI-ARIA aria-label ;',
-					info4: '4. Si au moins une alternative textuelle est trouvée, le test est validé. '
+					info3: '3. Le cas échéant, vérifier que l’élément <svg> est pourvu au moins d’une alternative textuelle parmi les suivantes : '
+						+ 'Contenu de l’élément <title> ; '
+						+ 'Passage de texte associé via l’attribut WAI-ARIA aria-labelledby ; '
+						+ 'Contenu de l’attribut WAI-ARIA aria-label ;',
+					info4: '4. Si au moins une alternative textuelle est trouvée, le test est validé. ',
 				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
 
 			},
-		]
+		],
 	},
 	{
 		title: 'Catégorie 3 : Couleurs',
@@ -172,8 +170,5 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-
-
-
 
 ]

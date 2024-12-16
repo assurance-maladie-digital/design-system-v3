@@ -71,7 +71,6 @@ export const AccessibiliteItemsValidated = [
 		],
 	},
 
-
 	{
 		title: 'Catégorie 8 : Eléments Obligatoires',
 		subtitle: '8.9 Dans chaque page web, les balises ne doivent pas être utilisées uniquement à des fins de présentation',
