@@ -13,6 +13,21 @@ Le composant `CookieBanner` est utilisé pour afficher une bannière de consente
 
 <Controls of={CookieBannerStories.Default} />
 
+
+## Personnalisation des cookies
+
+La props `items` permette de transmettre les cookies organisés en trois categories :
+ - Les cookies essentiels au fonctionnement du site (essentials)
+ - Les cookies sur lesquels reposent des fonctionnalités optionnelles (functional)
+ - Les cookies de mesure d'analyse d'audience (analytics)
+
+L'utilisateur peut choisir d'accepter ou de refuser les cookies de chaque catégorie à l’exception des cookies essentiels pour le fonctionnement du site.
+
+Si la props `items` n'est pas renseigné, le menu de selection des categories de cookies ne sera pas affiché.
+Si une catégorie n'est pas définie, elle n’apparaîtra pas dans le composant.
+Si l'utilisateur choisi de personnaliser ses cookies un évènement `subit` sera émit avec les catégories de cookies acceptés par l'utilisateur. Les cookies non essentiels doivent être chargés après l'événement `submit` pour respecter le RGPD.
+
+
 ## Sans selection des cookies
 
 Vous pouvez omettre la props `items`, dans ce cas la l'interface de sélection des categories de cookies ne sera pas affichée.
@@ -45,7 +60,7 @@ Vous pourrez toujours afficher utiliser l’événement `customize` pour affiche
 Vous pouvez personnaliser le texte de la bannière en utilisant le slot par défaut
 
 <Canvas
-	of={CookieBannerStories.DescriptionSlot}
+	of={CookieBannerStories.BannerDescriptionSlot}
 	source={{
 		language: 'html',
 		format: 'dedent',
@@ -67,6 +82,61 @@ Vous pouvez personnaliser le texte de la bannière en utilisant le slot par déf
 		`
 	}}
 />
+
+## Description du cookies avancée
+
+Pour mettre d'avantage que du text brut en description d'un cookie, il est possible de passer par un slot.
+Le nom du slot aura pour format `cookie-description-<cookie-name>`.
+
+Une propriété `cookie` est passée au slot contenant les informations du cookie.
+
+<Canvas
+	of={CookieBannerStories.CookiesDescriptionSlots}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { CookieBanner } from '@cnamts/synapse'
+
+			const openBanner = ref(true)
+
+			const items = {
+				"functional": [
+					{
+						name: 'contrast',
+						conservation: '1 an',
+					},
+					{
+						name: 'privacy',
+						conservation: '1 an',
+					},
+					{
+						name: 'cookie_policy',
+						description: 'Sauvegarde les préférences de cookies.',
+						conservation: '1 an',
+					},
+				]
+			};
+		</script>
+
+		<template>
+			<CookieBanner
+				v-model="openBanner"
+				:items="items"
+			>
+				<template #cookie-description-contrast="{ cookie }">
+					voir : <a href="#">En savoir plus</a>
+				</template>
+				<template #cookie-description-privacy="{ cookie }">
+					<a href="#">Politique de confidentialité</a>
+				</template>
+			</CookieBanner>
+		</template>
+		`
+	}}
+/>
+
 
 
 ## Personnalisation des composants Vuetify

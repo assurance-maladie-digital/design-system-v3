@@ -175,6 +175,7 @@
 .vd-cookie-banner__inner {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 
 .vd-cookie-banner-content {
