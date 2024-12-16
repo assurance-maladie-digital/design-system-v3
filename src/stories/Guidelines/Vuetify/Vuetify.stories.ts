@@ -50,9 +50,9 @@ export const VuetifyPanel: StoryObj = {
 						<template v-slot:item.solution="{ item }">
 							<div v-if="item.solution.length > 0">
 										<span v-for="(item, index) in item.solution"
-											  style="display:flex; font-size: 12px; line-height: 15px; font-weight: bold">
-										{{ item.name }} <a :href="item.href"><VIcon color="primary"
-											style="margin-left: 3px;" :icon="linkICon"/></a>
+											  style="display:flex; align-items: center; font-size: 12px; line-height: 15px; font-weight: bold">
+										{{ item.name }} <a :href="item.href">
+											<VBtn color="primary" style="margin-left: 5px;" :icon="linkICon"  size="small" variant="text" /></a>
 									</span>
 							</div>
 						</template>
