@@ -5,7 +5,7 @@ import { VBtn } from 'vuetify/components'
 import { ref, watch } from 'vue'
 
 const meta = {
-	title: 'Templates/CookieBanner',
+	title: 'Composants/Feedback/CookieBanner',
 	component: CookieBanner,
 	argTypes: {
 		'modelValue': {
