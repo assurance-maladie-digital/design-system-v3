@@ -2,12 +2,12 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
 
-import Alert from '../Alert.vue'
+import SyAlert from '../SyAlert.vue'
 import { VBtn } from 'vuetify/components'
 
 describe('Alert', () => {
 	it('render correctly', async () => {
-		const wrapper = mount(Alert, {
+		const wrapper = mount(SyAlert, {
 			props: {
 				title: 'title',
 				message: 'message',
@@ -25,7 +25,7 @@ describe('Alert', () => {
 	})
 
 	it('show and hide correctly when modelValue is updated', async () => {
-		const wrapper = mount(Alert, {
+		const wrapper = mount(SyAlert, {
 			props: {
 				title: 'title',
 				message: 'message',
@@ -57,7 +57,7 @@ describe('Alert', () => {
 	})
 
 	it('hide when the close btn is clicked', async () => {
-		const wrapper = mount(Alert, {
+		const wrapper = mount(SyAlert, {
 			props: {
 				title: 'title',
 				message: 'message',
@@ -84,7 +84,7 @@ describe('Alert', () => {
 	})
 
 	it('prependIcon computed property', async () => {
-		const wrapper = mount(Alert, {
+		const wrapper = mount(SyAlert, {
 			props: {
 				title: 'title',
 				message: 'message',

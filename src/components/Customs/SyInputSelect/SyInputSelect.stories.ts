@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyInputSelect from './SyInputSelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
-import Alert from '../../Alert/Alert.vue'
+import SyAlert from '@/components/SyAlert/SyAlert.vue'
 
 const meta = {
 	title: 'Composants/Formulaires/SyInputSelect',
@@ -346,12 +346,12 @@ export const withCustomStyles: Story = {
 export const Info: Story = {
 	render: (args) => {
 		return {
-			components: { Alert },
+			components: { SyAlert },
 			setup() {
 				return { args }
 			},
 			template: `
-				<Alert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
+				<SyAlert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
 					<template #default>
 						<b>Format des items :</b>
 						<ul>
@@ -359,7 +359,7 @@ export const Info: Story = {
 							<li>- Si les items sont un tableau de string, le composant les utilisera directement.</li>
 						</ul>
 					</template>
-				</Alert>
+				</SyAlert>
 			`,
 		}
 	},

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Alert from './Alert.vue'
+import SyAlert from './SyAlert.vue'
 import { VBtn } from 'vuetify/components'
 
 const meta = {
-	title: 'Composants/Feedback/Alert',
-	component: Alert,
+	title: 'Composants/Feedback/SyAlert',
+	component: SyAlert,
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['prependIcon', 'dismissAlert'] },
@@ -24,7 +24,7 @@ const meta = {
 			default: 'outlined',
 		},
 	},
-} as Meta<typeof Alert>
+} as Meta<typeof SyAlert>
 
 export default meta
 
@@ -37,9 +37,9 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 	<div class="d-flex flex-wrap align-center justify-center">
-		<Alert v-model="showAlert" type="success" variant="tonal" :closable="true">
+		<SyAlert v-model="showAlert" type="success" variant="tonal" :closable="true">
 			<template #default>This is a success alert</template>
-		</Alert>
+		</SyAlert>
 
 		<VBtn v-if="!showAlert" color="primary" @click="showAlert = true">
 			Réinitialiser
@@ -51,7 +51,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Alert from '@cnamts/synapse'
+	import SyAlert from '@cnamts/synapse'
 	import { ref } from 'vue'
 	
 	const showAlert = ref(true);
@@ -69,15 +69,15 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { Alert, VBtn },
+			components: { SyAlert, VBtn },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<Alert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable">
 						<template #default>{{ args.default }}</template>
-					</Alert>
+					</SyAlert>
 					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
 						Réinitialiser
 					</VBtn>
@@ -94,9 +94,9 @@ export const Outlined: Story = {
 				name: 'Template',
 				code: `<template>
 	<div class="d-flex flex-wrap align-center justify-center">
-		<Alert v-model="showAlert" type="warning" variant="outlined" :closable="true">
+		<SyAlert v-model="showAlert" type="warning" variant="outlined" :closable="true">
 			<template #default>This is a warning alert</template>
-		</Alert>
+		</SyAlert>
 
 		<VBtn v-if="!showAlert" color="primary" @click="showAlert = true">
 			Réinitialiser
@@ -108,7 +108,7 @@ export const Outlined: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Alert from '@cnamts/synapse'
+	import SyAlert from '@cnamts/synapse'
 	import { ref } from 'vue'
 	
 	const showAlert = ref(true);
@@ -125,15 +125,15 @@ export const Outlined: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { Alert, VBtn },
+			components: { SyAlert, VBtn },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<Alert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable">
 						<template #default>{{ args.default }}</template>
-					</Alert>
+					</SyAlert>
 					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
 						Réinitialiser
 					</VBtn>
@@ -150,10 +150,10 @@ export const SlotIcon: Story = {
 				name: 'Template',
 				code: `<template>
 	<div class="d-flex flex-wrap align-center justify-center">
-		<Alert v-model="showAlert" type="success" variant="tonal" :closable="true">
+		<SyAlert v-model="showAlert" type="success" variant="tonal" :closable="true">
 			<template #default>This is a success alert</template>
 			<template #icon>{{ icon }}</template>
-		</Alert>
+		</SyAlert>
 
 		<VBtn v-if="!showAlert" color="primary" @click="showAlert = true">
 			Réinitialiser
@@ -165,7 +165,7 @@ export const SlotIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Alert from '@cnamts/synapse'
+	import SyAlert from '@cnamts/synapse'
 	import { ref } from 'vue'
 	import { mdiAccountCheck } from '@mdi/js'
 	
@@ -185,16 +185,16 @@ export const SlotIcon: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { Alert, VBtn },
+			components: { SyAlert, VBtn },
 			setup() {
 				return { args }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<Alert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable">
 						<template #default>{{ args.default }}</template>
 						<template #icon>{{ args.icon }}</template>
-					</Alert>
+					</SyAlert>
 					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
 						Réinitialiser
 					</VBtn>
