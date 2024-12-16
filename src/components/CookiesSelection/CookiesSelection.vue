@@ -54,6 +54,7 @@
 		v-if="items"
 		elevation="0"
 		class="vd-cookies-card"
+		color="transparent"
 	>
 		<VForm ref="form">
 			<p class="mb-4">
