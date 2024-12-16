@@ -232,12 +232,6 @@ export const Default: Story = {
 		onCustomize: fn(),
 	},
 
-	decorators: [
-		() => ({
-			template: '<div style="height: 500px;"><story /></div>',
-		}),
-	],
-
 	render: (args) => {
 		return {
 			components: { CookieBanner, VBtn },
@@ -249,7 +243,7 @@ export const Default: Story = {
 				return { args, open }
 			},
 			template: `
-			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
+			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
 				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open">
 					<template #default v-if="args.default">
@@ -345,7 +339,7 @@ export const WithoutCookiesItems: Story = {
 				return { args, open }
 			},
 			template: `
-			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
+			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
 				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open" >
 					<template #default v-if="args.default">
@@ -399,7 +393,7 @@ export const BannerDescriptionSlot: Story = {
 				return { args, open }
 			},
 			template: `
-			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
+			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
 				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open">
 					<p><b>Custom</b> description</p>
@@ -463,11 +457,6 @@ export const BannerDescriptionSlot: Story = {
 			},
 		],
 	},
-	decorators: [
-		() => ({
-			template: '<div style="overflow: auto; max-height: 500px"><story /></div>',
-		}),
-	],
 }
 
 export const CookiesDescriptionSlots: Story = {
@@ -504,7 +493,7 @@ export const CookiesDescriptionSlots: Story = {
 				return { args, open }
 			},
 			template: `
-			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
+			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
 				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open">
 					<template #cookie-description-contrast="{ cookie }">
@@ -569,11 +558,6 @@ export const CookiesDescriptionSlots: Story = {
 			},
 		],
 	},
-	decorators: [
-		() => ({
-			template: '<div style="overflow: auto; max-height: 500px"><story /></div>',
-		}),
-	],
 }
 
 export const Customization: Story = {
@@ -609,7 +593,7 @@ export const Customization: Story = {
 				return { args, open }
 			},
 			template: `
-			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
+			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
 				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open" >
 					<template #default v-if="args.default">

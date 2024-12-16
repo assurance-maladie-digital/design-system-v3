@@ -6,7 +6,7 @@
 </script>
 
 <template>
-	<VTable class="vd-cookie-table">
+	<VTable class="vd-cookie-table bg-transparent">
 		<thead>
 			<tr>
 				<th
