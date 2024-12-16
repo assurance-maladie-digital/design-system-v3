@@ -52,30 +52,29 @@ export const VuetifyPanel: StoryObj = {
 										<span v-for="(item, index) in item.solution"
 											  style="display:flex; align-items: center; font-size: 12px; line-height: 15px; font-weight: bold">
 										{{ item.name }} <a :href="item.href">
-											<VBtn color="primary" style="margin-left: 5px;" :icon="linkICon"  size="small" variant="text" /></a>
+											<VBtn color="primary" style="margin-left: 5px;" :icon="linkICon"
+												  size="small" variant="text"/></a>
 									</span>
 							</div>
 						</template>
 
 						<template v-slot:item.errorImportants="{ item }">
-							<div v-if="item.errorImportants.length == 0">
+							<div v-if="item.errorImportants.length === 0">
 								<p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas d'erreur
 									d'accessibilité relevée à ce jour</p>
 							</div>
 							<div v-else v-for="item in item.errorImportants" :key="index"
 								 style="width: 100% !important; font-size: 12px; line-height: 15px;">
-
 								<p style="margin-top: 5px; margin-bottom: 5px;">
 									<span style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
-									{{ item.replace(/[0-9.]/g, '') }}</p>
-
-
+									{{ item.replace(/[0-9.]/g, '') }}
+								</p>
 							</div>
 						</template>
 
 
 						<template v-slot:item.errorIndeterminated="{ item }">
-							<div v-if="item.errorIndeterminated.length == 0">
+							<div v-if="item.errorIndeterminated.length === 0">
 								<p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas d'erreur
 									d'accessibilité relevée à ce jour</p>
 							</div>
@@ -83,12 +82,10 @@ export const VuetifyPanel: StoryObj = {
 								 style="width: 100% !important; font-size: 12px; line-height: 15px;">
 								<p style="margin-top: 5px; margin-bottom: 5px;">
 									<span style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
-									{{ item.replace(/[0-9.]/g, '') }}</p>
-
-
+									{{ item.replace(/[0-9.]/g, '') }}
+								</p>
 							</div>
 						</template>
-
 
 						<template v-slot:header.errorIndeterminated="{ header }">
 							Erreurs Indéterminées
@@ -97,17 +94,15 @@ export const VuetifyPanel: StoryObj = {
 							Solution
 						</template>
 
-
 						<template v-slot:header.href="{ header }" style="display:none">
-							<v-th v-if="false" style="display:none"></v-th>
+							<th v-if="false" style="display:none"></th>
 						</template>
 
 
 						<template v-slot:item.href="{ item }" style="display:none">
-							<v-td v-if="false">{{ item.someColumn }}</v-td>
+							<td v-if="false">{{ item.someColumn }}</td>
 						</template>
 					</v-data-table>
-
 				</div>
 			`,
 		}
