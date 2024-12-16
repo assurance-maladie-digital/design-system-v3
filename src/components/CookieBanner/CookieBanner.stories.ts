@@ -154,7 +154,8 @@ const meta = {
 				category: 'slots',
 			},
 		},
-		// @ts-expect-error - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
 		'cookie-description-${cookieName}': {
 			description: 'Slot pour personnaliser la description d’un cookie',
 			control: 'none',
