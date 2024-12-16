@@ -8,7 +8,7 @@ const iconEye = mdiEye
 const linkICon = mdiLink
 
 export default {
-	title: 'Composants/Formulaires/CustomSelect/Accessibilité',
+	title: 'Composants/Formulaires/SySelect/Accessibilité',
 }
 export const AccessibilitePanel: StoryObj = {
 
