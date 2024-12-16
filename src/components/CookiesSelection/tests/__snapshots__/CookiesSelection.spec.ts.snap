@@ -20,7 +20,6 @@ exports[`CookiesSelection > renders correctly 1`] = `
   <!---->
   <!---->
   <form class="v-form" novalidate="">
-    <h2 class="text-h5 font-weight-bold mb-6">Gestion des cookies</h2>
     <p class="mb-4">Définissez vos préférences de collecte et de traitement de vos données sur ce site.</p>
     <p class="mb-4">Un cookie est un petit fichier texte déposé sur votre terminal (ordinateur, tablette ou mobile) lors de la visite d’un site ou lors de la consultation d’une publicité. Il contient plusieurs données&nbsp;: le nom du service qui l’a déposé, un identifiant sous forme de numéro unique, une valeur et éventuellement une date d’expiration.</p>
     <div class="d-flex flex-wrap justify-end mx-n2 mt-n2 mb-6"><button type="button" class="v-btn v-theme--light text-primary v-btn--density-default v-btn--size-default v-btn--variant-outlined ma-2" data-test-id="reject-all"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>

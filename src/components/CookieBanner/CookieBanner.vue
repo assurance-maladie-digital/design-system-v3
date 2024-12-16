@@ -8,7 +8,6 @@
 	import { config } from './config'
 	import { locales } from './locales'
 	import CookiesSelection from '../CookiesSelection/CookiesSelection.vue'
-	import { VBanner } from 'vuetify/components'
 
 	const props = defineProps<CustomizableOptions & {
 		items?: CookiesItems
@@ -64,7 +63,7 @@
 			:aria-label="locales.label"
 			class="vd-cookie-banner"
 		>
-			<div>
+			<div class="vd-cookie-banner__inner">
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<h2 class="text-h5 font-weight-bold">
 						{{ locales.title }}
@@ -117,12 +116,12 @@
 									{{ locales.description }}
 								</p>
 							</slot>
-	
+
 							<div
-								class="vd-cookie-banner-action-ctn d-flex align-center flex-wrap max-width-none mt-6 mb-n2 mx-n2"
+								class="vd-cookie-banner-action-ctn d-flex align-center flex-wrap max-width-none mt-6 ga-4"
 							>
 								<VSpacer v-bind="options.actionsSpacer" />
-	
+
 								<VBtn
 									v-bind="options.customizeBtn"
 									data-test-id="customize"
@@ -131,7 +130,7 @@
 								>
 									{{ locales.customizeBtnText }}
 								</VBtn>
-	
+
 								<VBtn
 									v-bind="options.rejectBtn"
 									data-test-id="reject"
@@ -140,7 +139,7 @@
 								>
 									{{ locales.rejectBtnText }}
 								</VBtn>
-	
+
 								<VBtn
 									v-bind="options.acceptBtn"
 									data-test-id="accept"
@@ -164,6 +163,7 @@
 	position: fixed;
 	left: 50%;
 	bottom: 0;
+	display: flex;
 	transform: translateX(-50%);
 	z-index: 20;
 	max-height: calc(100dvh - 64px);
@@ -172,8 +172,14 @@
 	margin-bottom: 32px;
 }
 
+.vd-cookie-banner__inner {
+	display: flex;
+	flex-direction: column;
+}
+
 .vd-cookie-banner-content {
 	overflow-y: auto;
+	padding-right: 8px;
 }
 
 .vd-cookie-banner-action-ctn .v-btn {
