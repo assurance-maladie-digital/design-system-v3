@@ -40,8 +40,8 @@ const meta = {
 	}[],
 }`,
 				},
+				category: 'props',
 			},
-			category: 'props',
 		},
 
 		'onAccept': {
@@ -102,14 +102,14 @@ const meta = {
 		variant: 'text',
 		width: '32px',
 		height: '32px',
-		class: 'mt-n2 mr-n2 ml-4',
+		class: 'ml-4',
 	},
 	backBtn: {
 		icon: true,
 		variant: 'text',
 		width: '32px',
 		height: '32px',
-		class: 'mt-n2 mr-n2 ml-4',
+		class: 'ml-4',
 	},
 	customizeBtn: {
 		color: 'primary',
@@ -135,7 +135,7 @@ const meta = {
 				type: {
 					summary: 'Record<string, Record<string, unknown>>',
 					detail: `{
-	banner: VBannerOptions,
+	banner: VSheetOptions,
 	closeBtn: VBtnOptions,
 	customizeBtn: VBtnOptions,
 	rejectBtn: VBtnOptions,
@@ -154,15 +154,34 @@ const meta = {
 				category: 'slots',
 			},
 		},
+		// @ts-expect-error - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
+		'cookie-description-${cookieName}': {
+			description: 'Slot pour personnaliser la description d’un cookie',
+			control: 'none',
+			table: {
+				category: 'slots',
+				type: {
+					summary: 'Cookie',
+					detail: `{
+	name: string
+	description?: string
+	conservation: string
+}`,
+				},
+			},
+		},
 	},
 	parameters: {
 		layout: 'fullscreen',
 		controls: {
-			exclude: ['reject', 'accept', 'customize'],
+			exclude: ['reject', 'accept', 'customize', 'submit'],
+		},
+		docs: {
+			controls: { exclude: ['submit', 'slotName'] },
 		},
 	},
 	args: {
-		modelValue: true,
+		modelValue: false,
 	},
 } satisfies Meta<typeof CookieBanner>
 
@@ -222,7 +241,7 @@ export const Default: Story = {
 		return {
 			components: { CookieBanner, VBtn },
 			setup() {
-				const open = ref(true)
+				const open = ref(false)
 				watch(() => args.modelValue, (value) => {
 					open.value = !!value
 				}, { immediate: true })
@@ -230,7 +249,7 @@ export const Default: Story = {
 			},
 			template: `
 			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
-				<VBtn @click="open = true" v-if="!open">Reset</VBtn>
+				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open">
 					<template #default v-if="args.default">
 						{{ args.default }}
@@ -318,7 +337,7 @@ export const WithoutCookiesItems: Story = {
 		return {
 			components: { CookieBanner, VBtn },
 			setup() {
-				const open = ref(true)
+				const open = ref(false)
 				watch(() => args.modelValue, (value) => {
 					open.value = !!value
 				}, { immediate: true })
@@ -326,7 +345,7 @@ export const WithoutCookiesItems: Story = {
 			},
 			template: `
 			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
-				<VBtn @click="open = true" v-if="!open">Reset</VBtn>
+				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open" >
 					<template #default v-if="args.default">
 						{{ args.default }}
@@ -361,7 +380,7 @@ export const WithoutCookiesItems: Story = {
 	},
 }
 
-export const DescriptionSlot: Story = {
+export const BannerDescriptionSlot: Story = {
 	args: {
 		onAccept: fn(),
 		onReject: fn(),
@@ -372,7 +391,7 @@ export const DescriptionSlot: Story = {
 		return {
 			components: { CookieBanner, VBtn },
 			setup() {
-				const open = ref(true)
+				const open = ref(false)
 				watch(() => args.modelValue, (value) => {
 					open.value = !!value
 				}, { immediate: true })
@@ -380,7 +399,7 @@ export const DescriptionSlot: Story = {
 			},
 			template: `
 			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
-				<VBtn @click="open = true" v-if="!open">Reset</VBtn>
+				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open">
 					<p><b>Custom</b> description</p>
 				</CookieBanner>
@@ -450,6 +469,112 @@ export const DescriptionSlot: Story = {
 	],
 }
 
+export const CookiesDescriptionSlots: Story = {
+	args: {
+		onAccept: fn(),
+		onReject: fn(),
+		onCustomize: fn(),
+		items: {
+			functional: [
+				{
+					name: 'contrast',
+					conservation: '1 an',
+				},
+				{
+					name: 'privacy',
+					conservation: '1 an',
+				},
+				{
+					name: 'cookie_policy',
+					description: 'Sauvegarde les préférences de cookies.',
+					conservation: '1 an',
+				},
+			],
+		},
+	},
+	render: (args) => {
+		return {
+			components: { CookieBanner, VBtn },
+			setup() {
+				const open = ref(false)
+				watch(() => args.modelValue, (value) => {
+					open.value = !!value
+				}, { immediate: true })
+				return { args, open }
+			},
+			template: `
+			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
+				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
+				<CookieBanner v-bind="args" v-model="open">
+					<template #cookie-description-contrast="{ cookie }">
+						voir : <a href="#">En savoir plus</a>
+					</template>
+
+					<template #cookie-description-privacy="{ cookie }">
+						<a href="#">Politique de confidentialité</a>
+					</template>
+				</CookieBanner>
+			</div>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<CookieBanner
+		:items
+		@accept="onAccept"
+		@reject="onReject"
+		@customize="onCustomize"
+		v-model="modelValue"
+	>
+		<template #cookie-description-contrast="{ cookie }">
+			voir : <a href="#">En savoir plus</a>
+		</template>
+
+		<template #cookie-description-privacy="{ cookie }">
+			<a href="#">Politique de confidentialité</a>
+		</template>
+	</CookieBanner>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { CookieBanner } from '@cnamts/synapse'
+
+	const modelValue = ref(true)
+
+	const items = {
+		functional: [
+			{
+				name: 'contrast',
+				conservation: '1 an',
+			},
+			{
+				name: 'privacy',
+				conservation: '1 an',
+			},
+			{
+				name: 'cookie_policy',
+				description: 'Sauvegarde les préférences de cookies.',
+				conservation: '1 an',
+			},
+		],
+	},
+</script>`,
+			},
+		],
+	},
+	decorators: [
+		() => ({
+			template: '<div style="overflow: auto; max-height: 500px"><story /></div>',
+		}),
+	],
+}
+
 export const Customization: Story = {
 	args: {
 		items,
@@ -476,7 +601,7 @@ export const Customization: Story = {
 		return {
 			components: { CookieBanner, VBtn },
 			setup() {
-				const open = ref(true)
+				const open = ref(false)
 				watch(() => args.modelValue, (value) => {
 					open.value = !!value
 				}, { immediate: true })
@@ -484,7 +609,7 @@ export const Customization: Story = {
 			},
 			template: `
 			<div style="height: 500px; display: flex; align-items: center; justify-content: center;">
-				<VBtn @click="open = true" v-if="!open">Reset</VBtn>
+				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open" >
 					<template #default v-if="args.default">
 						{{ args.default }}
