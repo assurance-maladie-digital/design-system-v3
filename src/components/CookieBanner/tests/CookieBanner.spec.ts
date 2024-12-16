@@ -2,7 +2,6 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import CookieBanner from '../CookieBanner.vue'
 import { vuetify } from '@tests/unit/setup'
-
 describe('CookieBanner', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(CookieBanner, {
@@ -21,6 +20,9 @@ describe('CookieBanner', () => {
 		const wrapper = mount(CookieBanner, {
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 		await wrapper.vm.$nextTick()
@@ -32,6 +34,9 @@ describe('CookieBanner', () => {
 		const wrapper = mount(CookieBanner, {
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -44,6 +49,9 @@ describe('CookieBanner', () => {
 		const wrapper = mount(CookieBanner, {
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -52,27 +60,61 @@ describe('CookieBanner', () => {
 		expect(wrapper.emitted()).toHaveProperty('accept')
 	})
 
-	it('closes the dialog when the customize button is clicked and a cookiesRoute props is provided', async () => {
+	it('does not close the dialog when the customize button is clicked and do not show the cookie form', async () => {
 		const wrapper = mount(CookieBanner, {
 			global: {
 				plugins: [vuetify],
-			},
-			props: {
-				cookiesRoute: '/cookie',
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
 		expect(wrapper.find('.vd-cookie-banner').exists()).toBe(true)
 		await wrapper.find('[data-test-id="customize"]').trigger('click')
 		await wrapper.vm.$nextTick()
-		expect(wrapper.find('.vd-cookie-banner').exists()).toBe(false)
+		expect(wrapper.find('.vd-cookie-banner').exists()).toBe(true)
+		expect(wrapper.find('.vd-cookies-card').exists()).toBe(false)
 		expect(wrapper.emitted()).toHaveProperty('customize')
 	})
 
-	it('does not close the dialog when the customize button is clicked and no cookiesRoute props is provided', async () => {
+	it('does not close the dialog when the customize button is clicked and show the cookie form', async () => {
 		const wrapper = mount(CookieBanner, {
+			props: {
+				items: {
+					essentials: [
+						{
+							name: 'session',
+							description: 'Sauvegarde la session pour rester connecté.',
+							conservation: '20 heures',
+						},
+						{
+							name: 'cookie_policy',
+							description: 'Sauvegarde les préférences de cookies.',
+							conservation: '1 an',
+						},
+					],
+					functional: [
+						{
+							name: 'contrast',
+							description: 'Sauvegarde la personnalisation de l’affichage.',
+							conservation: '1 an',
+						},
+					],
+					analytics: [
+						{
+							name: 'user_id',
+							description: 'Sauvegarde l’identifiant unique de visiteur.',
+							conservation: '6 mois',
+						},
+					],
+				},
+			},
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -80,6 +122,8 @@ describe('CookieBanner', () => {
 		await wrapper.find('[data-test-id="customize"]').trigger('click')
 		await wrapper.vm.$nextTick()
 		expect(wrapper.find('.vd-cookie-banner').exists()).toBe(true)
+		expect(wrapper.find('.vd-cookies-card').exists()).toBe(true)
+		expect(wrapper.find('.vd-cookies-card').html()).toMatchSnapshot()
 		expect(wrapper.emitted()).toHaveProperty('customize')
 	})
 })
