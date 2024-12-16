@@ -47,13 +47,13 @@ export const AccessibiliteItemsIndeterminate = [
 	},
 	{
 		title: 'Catégorie 9 : Structuration de l’information',
-		subtitle: '9.2.1 Dans chaque page web, la structure du document vérifie-t-elle ces conditions (hors cas particuliers) ? ' +
-    				'La zone d’en-tête de la page est structurée via une balise <header> ; ' +
-    				'Les zones de navigation principales et secondaires sont structurées via une balise <nav> ; ' +
-    				'La balise <nav> est réservée à la structuration des zones de navigation principales et secondaires ; ' +
-    				'La zone de contenu principal est structurée via une balise <main> ; ' +
-    				'La structure du document utilise une balise <main> visible unique ; ' +
-    				'La zone de pied de page est structurée via une balise <footer>.',
+		subtitle: '9.2.1 Dans chaque page web, la structure du document vérifie-t-elle ces conditions (hors cas particuliers) ? '
+			+ 'La zone d’en-tête de la page est structurée via une balise <header> ; '
+			+ 'Les zones de navigation principales et secondaires sont structurées via une balise <nav> ; '
+			+ 'La balise <nav> est réservée à la structuration des zones de navigation principales et secondaires ; '
+			+ 'La zone de contenu principal est structurée via une balise <main> ; '
+			+ 'La structure du document utilise une balise <main> visible unique ; '
+			+ 'La zone de pied de page est structurée via une balise <footer>.',
 		items: [
 			{
 
@@ -174,7 +174,7 @@ export const AccessibiliteItemsValidated = [
 			},
 
 		],
-		
+
 	},
 	{
 		title: 'Catégorie 8 : Eléments Obligatoires',
