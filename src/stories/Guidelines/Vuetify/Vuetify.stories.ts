@@ -106,7 +106,7 @@ export const VuetifyPanel: StoryObj = {
 						<template v-slot:item.href="{ item }" style="display:none">
 							<v-td v-if="false">{{ item.someColumn }}</v-td>
 						</template>
-					</v-data-table
+					</v-data-table>
 
 				</div>
 			`,
