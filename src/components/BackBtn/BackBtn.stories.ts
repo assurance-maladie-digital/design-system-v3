@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import BackBtn from './BackBtn.vue'
-import Alert from '@/components/SyAlert/SyAlert.vue'
+import SyAlert from '@/components/SyAlert/SyAlert.vue'
 
 import { VSheet } from 'vuetify/components'
 
@@ -204,16 +204,16 @@ export const DarkAndHideBackIcon: Story = {
 export const Info: Story = {
 	render: (args) => {
 		return {
-			components: { Alert },
+			components: { SyAlert },
 			setup() {
 				return { args }
 			},
 			template: `
-				<Alert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
+				<SyAlert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
 					<template #default>Par défaut, le composant BackBtn n'effectue aucune action, vous devez
 						implémenter une redirection ou une action lors du clic sur le bouton.
 					</template>
-				</Alert>
+				</SyAlert>
 			`,
 		}
 	},
