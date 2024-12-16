@@ -47,15 +47,45 @@ export const AccessibiliteItemsIndeterminate = [
 	},
 	{
 		title: 'Catégorie 9 : Structuration de l’information',
-		subtitle: '9.1 Dans chaque page web, l’information est-elle structurée par l’utilisation appropriée de titres',
+		subtitle: '9.2.1 Dans chaque page web, la structure du document vérifie-t-elle ces conditions (hors cas particuliers) ? '
+			+ 'La zone d’en-tête de la page est structurée via une balise <header> ; '
+			+ 'Les zones de navigation principales et secondaires sont structurées via une balise <nav> ; '
+			+ 'La balise <nav> est réservée à la structuration des zones de navigation principales et secondaires ; '
+			+ 'La zone de contenu principal est structurée via une balise <main> ; '
+			+ 'La structure du document utilise une balise <main> visible unique ; '
+			+ 'La zone de pied de page est structurée via une balise <footer>.',
 		items: [
 			{
 
 				precision: '9.1.1 Dans chaque page web, la hiérarchie entre les titres (balise <hx> ou balise possédant un attribut WAI-ARIA role="heading" associé à un attribut WAI-ARIA aria-level) est-elle pertinente ?',
-				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#9.1.1',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#9.2.1',
 				solution: [{
-					info1: '1. Retrouver dans le document les titres (balise <hx> ou balise possédant un attribut WAI-ARIA role="heading" associé à un attribut WAI-ARIA aria-level) ;',
-					info2: '2. Vérifier que la hiérarchie entre les titres est pertinente ;',
+					info1: '1. Vérifier que la zone d’en-tête est structurée au moyen d’un élément <header> ; ',
+					info2: '2. Vérifier que les zones de navigation principales et secondaires sont structurées au moyen d’un élément <nav> ; ',
+					info3: '3. Vérifier que l’élément <nav> n’est pas utilisé en dehors de la structuration des zones de navigation principales et secondaires ; ',
+					info4: '4. Vérifier que la zone de contenu principal est structurée au moyen d’un élément <main> ; ',
+					info5: '5. Si le document possède plusieurs éléments <main>, vérifier qu’un seul de ces éléments est visible (les autres occurrences de l’élément sont pourvues d’un attribut hidden) ; ',
+					info6: '6. Vérifier que la zone de pied de page est structurée au moyen d’un élément <footer>. ',
+					info7: '7. Si c’est le cas pour chaque zone de contenu, le test est validé. ',
+
+				}],
+				expertise: ExpertiseLevelEnum.DEV,
+
+			},
+
+		],
+	},
+	{
+		title: 'Catégorie 10 : Présentation de l’information',
+		subtitle: '10.1 Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l’information ? ?',
+		items: [
+
+			{
+				precision: '10.1.1 Dans chaque page web, les balises servant à la présentation de l’information ne doivent pas être présentes dans le code source généré des pages. Cette règle est-elle respectée ? ',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#10.1.1',
+				solution: [{
+					info1: '1. Vérifier l’absence des éléments de présentation <basefont>, <big>, <blink>, <center>, <font>, <marquee>, <s>, <strike>, <tt> ; ',
+					info2: '2. Vérifier l’absence de l’élément <u> uniquement si le DOCTYPE du document ne correspond pas à HTML 5 ; ',
 					info3: '3. Si c’est le cas, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
@@ -68,10 +98,38 @@ export const AccessibiliteItemsIndeterminate = [
 
 export const AccessibiliteItemsValidated = [
 	{
+		title: 'Catégorie 1 : Images',
+		subtitle: '1.2 Chaque image de décoration est-elle correctement ignorée par les technologies d’assistance ?',
+		items: [
+
+			{
+				precision: '1.2.4 Chaque image vectorielle (balise <svg>) de décoration, sans légende, vérifie-t-elle ces conditions ?'
+					+ ' La balise <svg> possède un attribut WAI-ARIA aria-hidden="true" ;'
+					+ ' La balise <svg> et ses enfants sont dépourvus d’alternative textuelle ;'
+					+ ' Les balises <title> et <desc> sont absentes ou vides ;'
+					+ ' La balise <svg> et ses enfants sont dépourvus d’attribut title.',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.2.4',
+				solution: [{
+					info1: '1. Retrouver dans le document les images décoratives dépourvues de légende structurées au moyen d’un élément <svg> ;',
+					info2: '2. Pour chaque image, vérifier que l’élément <svg> ne possède pas d’attributs aria-labelledby ou aria-label et qu’il :'
+						+ ' Possède un attribut WAI-ARIA aria-hidden="true" ;'
+						+ ' Et est dépourvu d’alternative textuelle (ainsi que ses éléments enfants) ;'
+						+ ' Et ne contient pas d’éléments <title> et <desc> à moins que vides de contenu ;'
+						+ ' Et est dépourvu d’attribut title (ainsi que ses éléments enfants).',
+					info3: '3. Si c’est le cas pour chaque image, le test est validé',
+				}],
+				expertise: ExpertiseLevelEnum.DESIGN,
+
+			},
+
+		],
+	},
+	{
 		title: 'Catégorie 3 : Couleurs',
 		subtitle: '3.2 Dans chaque page web, le contraste entre la couleur du texte et la couleur de son arrière-plan est-il suffisamment élevé?',
 		items: [
 			{
+
 				precision: '3.2.1 Dans chaque page web, le texte et le texte en image sans effet de graisse d’une taille restituée inférieure à 24px vérifient-ils une de ces conditions? Le rapport de contraste entre le texte et son arrière-plan est de 4.5:1, au moins; Un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 4.5:1, au moins.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#3.2.1',
 				solution: [{
@@ -98,7 +156,6 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-
 	{
 		title: 'Catégorie 6 : Liens',
 		subtitle: '6.2 Dans chaque page web, chaque lien a-t-il un intitulé ? ',
@@ -117,6 +174,27 @@ export const AccessibiliteItemsValidated = [
 			},
 
 		],
-	},
 
+	},
+	{
+		title: 'Catégorie 8 : Eléments Obligatoires',
+		subtitle: '8.9 Dans chaque page web, les balises ne doivent pas être utilisées uniquement à des fins de présentation',
+		items: [
+
+			{
+				precision: ' 8.9.1 Dans chaque page web les balises (à l’exception de <div>, <span> et <table>) ne doivent pas être utilisées uniquement à des fins de présentation. Cette règle est-elle respectée',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#8.9.1',
+				solution: [{
+					info1: '1. Retrouver dans le document l’ensemble des éléments sémantiques utilisés à des fins de présentation ;',
+					info2: '2. Pour chacun de ces éléments, vérifier que :'
+						+ 'L’élément est pourvu d’un attribut role=“presentation” ;'
+						+ 'L’utilisation de cet élément à des fins de présentation reste justifée',
+					info3: '3. Si c’est le cas, le test est validé',
+				}],
+				expertise: ExpertiseLevelEnum.DESIGN,
+
+			},
+
+		],
+	},
 ]

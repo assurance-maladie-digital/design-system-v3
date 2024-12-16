@@ -1,15 +1,11 @@
 import { ExpertiseLevelEnum } from './constants/ExpertiseLevelEnum'
 
 export const AccessibiliteItemsIndeterminate = [
-
 	{
 		title: 'Catégorie 3 : Couleurs',
+		subtitle: '3.1 Dans chaque page web, l’information ne doit pas être donnée uniquement par la couleur. Cette règle est-elle respectée ?',
 		items: [
-
-		],
-		items2: [
 			{
-				subtitle: '3.1 Dans chaque page web, l’information ne doit pas être donnée uniquement par la couleur. Cette règle est-elle respectée ?',
 				precision: '3.1.2 Pour chaque indication de couleur donnée par un texte, l’information ne doit pas être donnée uniquement par la couleur. Cette règle est-elle respectée ?',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#3.1.2',
 				solution: [{
@@ -17,19 +13,7 @@ export const AccessibiliteItemsIndeterminate = [
 					info2: '2. Pour chacun de ces textes, vérifier que : Soit le rapport de contraste entre le texte et son arrière-plan est de 4.5:1, au moins; Soit un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 4.5:1, au moins.',
 					info3: '3. Si c’est le cas pour chaque texte, le test est validé',
 				}],
-				expertise: ExpertiseLevelEnum.DESIGN,
-
-			},
-			{
-				subtitle: '3.2 Dans chaque page web, le contraste entre la couleur du texte et la couleur de son arrière-plan est-il suffisamment élevé?',
-				precision: '3.2.1 Dans chaque page web, le texte et le texte en image sans effet de graisse d’une taille restituée inférieure à 24px vérifient-ils une de ces conditions? Le rapport de contraste entre le texte et son arrière-plan est de 4.5:1, au moins; Un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 4.5:1, au moins.',
-				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#3.2.1',
-				solution: [{
-					info1: '1. Retrouver dans le document les textes et les textes en image sans effet de graisse d’une taille restituée inférieure à 24px qui pourraient poser des problèmes de contraste ;',
-					info2: '2. Pour chacun de ces textes, vérifier que : Soit le rapport de contraste entre le texte et son arrière-plan est de 4.5:1, au moins; Soit un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 4.5:1, au moins.',
-					info3: '3. Si c’est le cas pour chaque texte, le test est validé',
-				}],
-				expertise: ExpertiseLevelEnum.DESIGN,
+				expertise: ExpertiseLevelEnum.DEV,
 
 			},
 
@@ -37,36 +21,23 @@ export const AccessibiliteItemsIndeterminate = [
 	},
 	{
 		title: 'Catégorie 6 : Liens',
-		subtitle: '6.1 Chaque lien est-il explicite ? ',
+		subtitle: ' 6.1 Chaque lien est-il explicite',
 		items: [
 			{
 
-				precision: '6.1.2 Chaque lien image vérifie-t-il une de ces conditions ? '
+				precision: ' 6.1.5 Pour chaque lien ayant un intitulé visible, le nom accessible du lien contient-il au moins l’intitulé visible (hors cas particuliers) ? '
 					+ 'L’intitulé de lien seul permet d’en comprendre la fonction et la destination ; '
 					+ 'L’intitulé de lien additionné au contexte du lien permet d’en comprendre la fonction et la destination.',
-				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#6.1.2',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#6.1.1',
 				solution: [{
-					info1: '1. Retrouver dans le document les liens image (lien avec pour contenu un élément <img> ou un élément ayant l’attribut WAI-ARIA role="img", un élément <area> possédant un attribut href, un élément <object>, un élément <canvas> ou un élément <svg>) ; ',
-					info2: '2. Pour chaque lien image, vérifier que ce qui permet d’en comprendre la fonction et la destination est : '
-						+ 'Soit l’intitulé du lien seul, fourni par l’alternative textuelle de l’image ; '
-						+ 'Soit le contexte du lien.',
-					info3: '3. Si c’est le cas pour chaque lien image, le test est validé.',
-				}],
-				expertise: ExpertiseLevelEnum.DEV,
+					info1: '1. Retrouver dans le document les liens autres que SVG dont le contenu est fourni à la fois par un intitulé visible et par le contenu soit d’un attribut title ou d’un attribut aria-label ou d’un attribut aria-labelledby ; ',
+					info2: '2. Pour chaque lien, vérifier que le contenu de l’attribut title ou de l’attribut aria-label ou de l’attribut aria-labelledby contient l’intitulé visible ; ',
+					info3: '3. Si c’est le cas pour chaque lien, le test est validé pour les liens autres que SVG. ',
+					info4: '4. Retrouver dans le document les liens SVG dont le contenu est fourni à la fois par un intitulé visible et par le contenu soit d’un attribut aria-labelledby, ou d’un attribut aria-label ou d’un élément title (enfant direct de l’élément <svg>) ou d’un attribut x-link:title (SVG 1.1) ou d’un ou plusieurs éléments <text>; ',
+					info5: '5. Pour chaque lien SVG, vérifier que le contenu de l’attribut aria-labelledby ou de l’attribut aria-label ou de l’élément <title> ou de l’attribut x-link:title ou d’un ou plusieurs éléments <text> contient l’intitulé visible ; ',
+					info6: '6. Si c’est le cas pour chaque lien SVG, le test est validé pour les liens SVG. ',
+					info7: '7. Si le test est validé à la fois pour les liens non SVG et pour les liens SVG, le test est globalement validé. ',
 
-			},
-			{
-
-				precision: '6.1.3 Chaque lien composite vérifie-t-il une de ces conditions ? '
-					+ 'L’intitulé de lien seul permet d’en comprendre la fonction et la destination ; '
-					+ 'L’intitulé de lien additionné au contexte du lien permet d’en comprendre la fonction et la destination. ',
-				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#6.1.3',
-				solution: [{
-					info1: '1. Retrouver dans le document les liens composites (lien composé à la fois de contenu texte et d’éléments de type image) ; ',
-					info2: '2. Pour chaque lien composite, vérifier que ce qui permet d’en comprendre la fonction et la destination est : '
-						+ 'Soit l’intitulé du lien seul, fourni par la combinaison du contenu texte et de l’alternative textuelle de l’image ; '
-						+ 'Soit le contexte du lien. ',
-					info3: '3. Si c’est le cas pour chaque lien composite, le test est validé.',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
 
@@ -75,6 +46,25 @@ export const AccessibiliteItemsIndeterminate = [
 		],
 	},
 
+	{
+		title: 'Catégorie 10 : Présentation de l’information',
+		subtitle: '10.1 Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l’information ? ?',
+		items: [
+
+			{
+				precision: '10.1.1 Dans chaque page web, les balises servant à la présentation de l’information ne doivent pas être présentes dans le code source généré des pages. Cette règle est-elle respectée ? ',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#10.1.1',
+				solution: [{
+					info1: '1. Vérifier l’absence des éléments de présentation <basefont>, <big>, <blink>, <center>, <font>, <marquee>, <s>, <strike>, <tt> ; ',
+					info2: '2. Vérifier l’absence de l’élément <u> uniquement si le DOCTYPE du document ne correspond pas à HTML 5 ; ',
+					info3: '3. Si c’est le cas, le test est validé',
+				}],
+				expertise: ExpertiseLevelEnum.DEV,
+
+			},
+
+		],
+	},
 ]
 
 export const AccessibiliteItemsValidated = [
@@ -106,6 +96,7 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
+
 	{
 		title: 'Catégorie 3 : Couleurs',
 		subtitle: '3.2 Dans chaque page web, le contraste entre la couleur du texte et la couleur de son arrière-plan est-il suffisamment élevé?',

@@ -8,7 +8,7 @@ const iconEye = mdiEye
 const linkICon = mdiLink
 
 export default {
-	title: 'Composants/Navigation/SkipLink/Accessibilité',
+	title: 'Composants/Navigation/SocialMediaLinks/Accessibilité',
 }
 
 export const AccessibilitePanel: StoryObj = {
@@ -62,6 +62,10 @@ export const AccessibilitePanel: StoryObj = {
 														<p>{{ element.info1 }}</p>
 														<p>{{ element.info2 }}</p>
 														<p>{{ element.info3 }}</p>
+														<p>{{ element.info4 }}</p>
+														<p>{{ element.info5 }}</p>
+														<p>{{ element.info6 }}</p>
+														<p>{{ element.info7 }}</p>
 
 													</div>
 													<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
@@ -82,8 +86,8 @@ export const AccessibilitePanel: StoryObj = {
 								</v-btn>
 							</div>
 						</div>
-						<v-expansion-panels v-if="AccessibiliteItemsValidated.length > 0" value="opened" multiple>
-							<v-expansion-panel 
+						<v-expansion-panels value="opened" multiple>
+							<v-expansion-panel
 								v-for="(item, index) in AccessibiliteItemsValidated"
 								:key="index" style="background-color: rgba(53,135,0,0.1); margin-bottom: 10px;">
 								<v-expansion-panel-title>
@@ -119,7 +123,6 @@ export const AccessibilitePanel: StoryObj = {
 								</v-expansion-panel-text>
 							</v-expansion-panel>
 						</v-expansion-panels>
-						<div v-else style="display: flex;justify-content: center;"><span style="text-align:center;"  >Pas de critère d'accessibilité bloquant</span></div>
 					</v-col>
 				</div>
 			`,

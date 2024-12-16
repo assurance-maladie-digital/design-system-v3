@@ -62,6 +62,10 @@ export const AccessibilitePanel: StoryObj = {
 														<p>{{ element.info1 }}</p>
 														<p>{{ element.info2 }}</p>
 														<p>{{ element.info3 }}</p>
+														<p>{{ element.info4 }}</p>
+														<p>{{ element.info5 }}</p>
+														<p>{{ element.info6 }}</p>
+														<p>{{ element.info7 }}</p>
 
 													</div>
 													<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
