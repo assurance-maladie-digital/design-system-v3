@@ -1,24 +1,24 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
 
-import * as AlertStories from './Alert.stories';
+import * as SyAlertStories from './SyAlert.stories';
 
-<Meta of={AlertStories} />
+<Meta of={SyAlertStories} />
 
-# AlertWrapper
+# SyAlert
 
-Le composant `AlertWrapper` est utilisé pour afficher une alerte à l’utilisateur.
+Le composant `SyAlert` est utilisé pour afficher une alerte à l’utilisateur.
 
-<Canvas of={AlertStories.Default}  />
+<Canvas of={SyAlertStories.Default}  />
 
 # API
 
-<Controls of={AlertStories.Default} />
+<Controls of={SyAlertStories.Default} />
 
 # Exemple d'utilisation
 
 <Source dark code={`
 <script setup lang="ts">
-import Alert from '@cnamts/synapse'
+import SyAlert from '@cnamts/synapse'
 import { ref } from 'vue'
 
 const showAlert = ref(true);
@@ -26,9 +26,9 @@ const showAlert = ref(true);
 
 <template>
   <div class="d-flex flex-wrap align-center justify-center">
-    <Alert v-model="showAlert" type="warning" variant="tonal" :closable="true">
+    <SyAlert v-model="showAlert" type="warning" variant="tonal" :closable="true">
       <template #default>This is a warning alert</template>
-    </Alert>
+    </SyAlert>
 
     <VBtn v-if="!showAlert" color="primary" @click="showAlert = true" class="ma-6">Réinitialiser</VBtn>
   </div>

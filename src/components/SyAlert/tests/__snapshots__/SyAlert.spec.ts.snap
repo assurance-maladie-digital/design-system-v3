@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Alert > render correctly 1`] = `
+"<div data-v-4c7c43b0="" class="v-alert v-alert--border v-alert--border-start v-theme--light text-success v-alert--density-default v-alert--variant-tonal alert alert--success" role="alert" message="message">
+  <!----><span class="v-alert__underlay"></span>
+  <div class="v-alert__border"></div>
+  <div class="v-alert__prepend"><i data-v-4c7c43b0="" class="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M16.59 7.58L10 14.17L7.41 11.59L6 13L10 17L18 9L16.59 7.58Z mdi v-icon notranslate v-theme--light alert-icon" style="font-size: 1.5rem; height: 1.5rem; width: 1.5rem;" aria-hidden="true"></i></div>
+  <div class="v-alert__content">
+    <div class="v-alert-title">title</div>
+    <!---->slot content
+  </div>
+  <!---->
+  <!---->
+</div>"
+`;

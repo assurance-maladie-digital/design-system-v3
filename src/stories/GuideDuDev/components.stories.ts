@@ -1,4 +1,4 @@
-import Alert from '../../components/Alert/Alert.vue'
+import Alert from '@/components/SyAlert/SyAlert.vue'
 
 export default {
 	title: 'Guide Du Dev/Rapport de bug',

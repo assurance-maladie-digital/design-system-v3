@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import BackBtn from './BackBtn.vue'
-import Alert from '../Alert/Alert.vue'
+import Alert from '@/components/SyAlert/SyAlert.vue'
 
 import { VSheet } from 'vuetify/components'
 
