@@ -1,37 +1,7 @@
 import { ExpertiseLevelEnum } from './constants/ExpertiseLevelEnum'
 
 export const AccessibiliteItemsIndeterminate = [
-	{
-		title: 'Catégorie 1 : Images',
-		subtitle: '1.4 Pour chaque image utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative permet-elle d’identifier la nature et la fonction de l’image ?',
-		items: [
-			{
-
-				precision: '1.4.1 Pour chaque image (balise <img>) utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative est-elle pertinente ?',
-				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.4.1',
-				solution: [{
-					info1: '1. Retrouver dans le document les images structurées au moyen d’un élément <img> pourvues d’une alternative textuelle et utilisées comme CAPTCHA ou comme image-test',
-					info2: '2. Pour chaque image, vérifier que l’alternative textuelle est pertinente',
-					info3: '3. Si c’est le cas pour chaque image, le test est validé',
-				}],
-				expertise: ExpertiseLevelEnum.DEV,
-
-			},
-			{
-
-				precision: ' 1.4.6 Pour chaque image vectorielle (balise <svg>) utilisée comme CAPTCHA ou comme image-test, ayant une alternative textuelle, cette alternative est-elle pertinente ?',
-				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.4.6',
-				solution: [{
-					info1: '1. Retrouver dans le document les éléments <svg> pourvus d’une alternative textuelle et utilisés comme CAPTCHA ou comme image-test;',
-					info2: '2. Pour chaque élément <svg>, vérifier que l’alternative textuelle est pertinente',
-					info3: '3. Si c’est le cas pour chaque image, le test est validé',
-				}],
-				expertise: ExpertiseLevelEnum.DEV,
-
-			},
-
-		],
-	},
+	
 	{
 		title: 'Catégorie 3 : Couleurs',
 		items: [

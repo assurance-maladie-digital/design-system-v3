@@ -15,7 +15,7 @@ export const AccessibiliteItemsIndeterminate = [
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
 
-			}
+			},
 
 		],
 	},
@@ -83,9 +83,9 @@ export const AccessibiliteItemsValidated = [
 
 			},
 			{
-				precision: ' 3.2.4 Dans chaque page web, le texte et le texte en image en gras d’une taille restituée supérieure ou égale à 18,5px vérifient-ils une de ces conditions (hors cas particuliers) ? ' +
-					'Le rapport de contraste entre le texte et son arrière-plan est de 3:1, au moins ; ' +
-					'Un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 3:1, au moins. ',
+				precision: ' 3.2.4 Dans chaque page web, le texte et le texte en image en gras d’une taille restituée supérieure ou égale à 18,5px vérifient-ils une de ces conditions (hors cas particuliers) ? '
+					+ 'Le rapport de contraste entre le texte et son arrière-plan est de 3:1, au moins ; '
+					+ 'Un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 3:1, au moins. ',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#3.2.4',
 				solution: [{
 					info1: '1. Retrouver dans le document les textes et les textes en image en gras d’une taille restituée supérieure ou égale à 18,5px qui pourraient poser des problèmes de contraste ; ',
