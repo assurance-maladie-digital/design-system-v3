@@ -13,7 +13,7 @@ export const VuetifyItems = [
 				solution: [
 					{
 						name: 'SyTextField',
-						href: '/?path=/docs/composants-formulaires-customtextfield--docs',
+						href: '/?path=/docs/composants-formulaires-sytextfield--docs',
 					},
 
 				],
@@ -36,20 +36,18 @@ export const VuetifyItems = [
 					'12.9 Dans chaque page web, la navigation ne doit pas contenir de piège au clavier.',
 
 				],
-				// solution: 'SySelect',
-				// href: '/?path=/docs/composants-formulaires-customselect--docs'
 				solution: [
 					{
 						name: 'SySelect',
-						href: '/?path=/docs/composants-formulaires-customselect--docs',
+						href: '/?path=/docs/composants-formulaires-syselect--docs',
 					},
 					{
 						name: 'SyInputSelect',
-						href: '/?path=/docs/composants-formulaires-custominputselect--docs',
+						href: '/?path=/docs/composants-formulaires-syinputselect--docs',
 					},
 					{
-						name: 'SyButtonSelect',
-						href: '/?path=/docs/composants-formulaires-custombtnselect--docs',
+						name: 'SyBtnSelect',
+						href: '/?path=/docs/composants-formulaires-sybtnselect--docs',
 					},
 				],
 			},
