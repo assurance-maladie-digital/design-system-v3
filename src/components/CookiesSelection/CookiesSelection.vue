@@ -53,8 +53,7 @@
 	<VCard
 		v-if="items"
 		elevation="0"
-		class="vd-cookies-card"
-		color="transparent"
+		class="vd-cookies-card bg-transparent"
 	>
 		<VForm ref="form">
 			<p class="mb-4">
