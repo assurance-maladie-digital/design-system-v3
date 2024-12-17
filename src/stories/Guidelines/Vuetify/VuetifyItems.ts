@@ -59,7 +59,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Buttons',
@@ -69,7 +71,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Chips',
@@ -79,7 +83,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Tooltip',
@@ -89,7 +95,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Cards',
@@ -101,7 +109,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Tabs',
@@ -111,7 +121,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 
 			{
@@ -127,7 +139,9 @@ export const VuetifyItems = [
 					'12.9 Dans chaque page web, la navigation ne doit pas contenir de piège au clavier.',
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 
 			{
@@ -138,7 +152,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Table',
@@ -148,7 +164,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Expansion panels',
@@ -160,7 +178,9 @@ export const VuetifyItems = [
 					'10.8 Pour chaque page web, les contenus cachés ont-ils vocation à être ignorés par les technologies d’assistance',
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Breadcrumbs',
@@ -170,7 +190,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 
 			{
@@ -182,7 +204,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Progress circular',
@@ -195,7 +219,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 
 			{
@@ -209,7 +235,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Steppers',
@@ -220,7 +248,9 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 					'3.1.2 Pour chaque indication de couleur donnée par un texte, l’information ne doit pas être donnée uniquement par la couleur. Cette règle est-elle respectée ?',
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Combobox',
@@ -235,7 +265,9 @@ export const VuetifyItems = [
 					'11.13.1 La finalité d\'un champs de saisie peut-elle être déduite pour faciliter le remplissage automatique des champs avec les données de l\'utilisateur',
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Autocomplete',
@@ -251,7 +283,9 @@ export const VuetifyItems = [
 					'11.13.1 La finalité d\'un champs de saisie peut-elle être déduite pour faciliter le remplissage automatique des champs avec les données de l\'utilisateur',
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Switches',
@@ -265,7 +299,9 @@ export const VuetifyItems = [
 					'12.9 Dans chaque page web, la navigation ne doit pas contenir de piège au clavier.',
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'Checkboxes',
@@ -279,7 +315,9 @@ export const VuetifyItems = [
 					'12.9 Dans chaque page web, la navigation ne doit pas contenir de piège au clavier.',
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'RadioButtons',
@@ -293,7 +331,9 @@ export const VuetifyItems = [
 					'12.9 Dans chaque page web, la navigation ne doit pas contenir de piège au clavier.',
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 			{
 				name: 'OTP Input',
@@ -308,7 +348,9 @@ export const VuetifyItems = [
 					'11.13.1 La finalité d\'un champs de saisie peut-elle être déduite pour faciliter le remplissage automatique des champs avec les données de l\'utilisateur',
 
 				],
-				solution: '',
+				solution: [{
+					name: 'En étude',
+				}],
 			},
 		],
 	},
