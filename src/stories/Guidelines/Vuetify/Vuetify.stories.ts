@@ -19,92 +19,87 @@ export const VuetifyPanel: StoryObj = {
 			},
 			template: `
 
-              <div v-for="(item, index) in VuetifyItems" :key="index">
+				<div v-for="(item, index) in VuetifyItems" :key="index">
 
-                <v-data-table
-                    :items="item.items"
-                    :items-per-page="23"
+					<v-data-table
+						:items="item.items"
+						:items-per-page="23"
+						hide-default-footer>
+						<template v-slot:header.name="{ header }">
+							Composant Vuetify
+						</template>
 
-                    hide-default-footer>
+						<template v-slot:header.errorImportants="{ header }">
+							Erreurs bloquantes (Tanaguru)
+						</template>
+						<template v-slot:item.name="{ item }">
+							<v-chip v-if="item.errorImportants === 0 && item.errorIndeterminated === 0"
+									style="font-size: 12px; line-height: 15px;">
+								<VIcon style="margin-right: 2px;" :icon="checkIcon"/>
+								{{ item.name }}
+							</v-chip>
+							<v-chip v-else style="font-size: 12px; line-height: 15px;">
+								<VIcon style="margin-right: 2px;" :icon="iconAlert"/>
+								{{ item.name }}
+							</v-chip>
+						</template>
 
+						<template v-slot:item.solution="{ item }">
+							<div v-if="item.solution.length > 0">
+							<span v-for="(item, index) in item.solution"
+								  style="display:flex; align-items: center; font-size: 12px; line-height: 15px; font-weight: bold">
+								{{ item.name }} <a :href="item.href" v-if="item.href">
+								<VBtn color="primary" style="margin-left: 5px;" :icon="linkICon" size="small"
+									  variant="text"/></a>
+							</span>
+							</div>
+						</template>
 
-                  <template v-slot:header.name="{ header }">
-                    Composant Vuetify
-                  </template>
+						<template v-slot:item.errorImportants="{ item }">
+							<div v-if="item.errorImportants.length === 0">
+								<p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas d'erreur
+									d'accessibilité relevée à ce jour</p>
+							</div>
+							<div v-else v-for="item in item.errorImportants" :key="index"
+								 style="width: 100% !important; font-size: 12px; line-height: 15px;">
+								<p style="margin-top: 5px; margin-bottom: 5px;">
+									<span style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
+									{{ item.replace(/[0-9.]/g, '') }}
+								</p>
+							</div>
+						</template>
 
-                  <template v-slot:header.errorImportants="{ header }">
-                    Erreurs bloquantes (Tanaguru)
-                  </template>
-                  <template v-slot:item.name="{ item }">
-                    <v-chip v-if="item.errorImportants == 0 && item.errorIndeterminated == 0"
-                            style="font-size: 12px; line-height: 15px;">
-                      <VIcon style="margin-right: 2px;" :icon="checkIcon"/>
-                      {{ item.name }}
-                    </v-chip>
-                    <v-chip v-else style="font-size: 12px; line-height: 15px;">
-                      <VIcon style="margin-right: 2px;" :icon="iconAlert"/>
-                      {{ item.name }}
-                    </v-chip>
-                  </template>
+						<template v-slot:item.errorIndeterminated="{ item }">
+							<div v-if="item.errorIndeterminated.length === 0">
+								<p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas d'erreur
+									d'accessibilité relevée à ce jour</p>
+							</div>
+							<div v-else v-for="item in item.errorIndeterminated" :key="index"
+								 style="width: 100% !important; font-size: 12px; line-height: 15px;">
+								<p style="margin-top: 5px; margin-bottom: 5px;">
+									<span style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
+									{{ item.replace(/[0-9.]/g, '') }}
+								</p>
+							</div>
+						</template>
 
-                  <template v-slot:item.solution="{ item }">
-                    <div v-if="item.solution.length > 0">
-										<span v-for="(item, index) in item.solution"
-                                              style="display:flex; align-items: center; font-size: 12px; line-height: 15px; font-weight: bold">
-										{{ item.name }} <a :href="item.href" v-if="item.href">
-											<VBtn color="primary" style="margin-left: 5px;" :icon="linkICon"
-                                                  size="small" variant="text"/></a>
-									</span>
-                    </div>
-                  </template>
+						<template v-slot:header.errorIndeterminated="{ header }">
+							Erreurs indéterminées (Tanaguru)
+						</template>
+						<template v-slot:header.solution="{ header }">
+							Solution
+						</template>
 
-                  <template v-slot:item.errorImportants="{ item }">
-                    <div v-if="item.errorImportants.length === 0">
-                      <p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas d'erreur
-                        d'accessibilité relevée à ce jour</p>
-                    </div>
-                    <div v-else v-for="item in item.errorImportants" :key="index"
-                         style="width: 100% !important; font-size: 12px; line-height: 15px;">
-                      <p style="margin-top: 5px; margin-bottom: 5px;">
-                        <span style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
-                        {{ item.replace(/[0-9.]/g, '') }}
-                      </p>
-                    </div>
-                  </template>
+						<template v-slot:header.href="{ header }" style="display:none">
+							<th v-if="false" style="display:none"></th>
+						</template>
 
-
-                  <template v-slot:item.errorIndeterminated="{ item }">
-                    <div v-if="item.errorIndeterminated.length === 0">
-                      <p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas d'erreur
-                        d'accessibilité relevée à ce jour</p>
-                    </div>
-                    <div v-else v-for="item in item.errorIndeterminated" :key="index"
-                         style="width: 100% !important; font-size: 12px; line-height: 15px;">
-                      <p style="margin-top: 5px; margin-bottom: 5px;">
-                        <span style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
-                        {{ item.replace(/[0-9.]/g, '') }}
-                      </p>
-                    </div>
-                  </template>
-
-                  <template v-slot:header.errorIndeterminated="{ header }">
-                    Erreurs indéterminées (Tanaguru)
-                  </template>
-                  <template v-slot:header.solution="{ header }">
-                    Solution
-                  </template>
-
-                  <template v-slot:header.href="{ header }" style="display:none">
-                    <th v-if="false" style="display:none"></th>
-                  </template>
-
-
-                  <template v-slot:item.href="{ item }" style="display:none">
-                    <td v-if="false">{{ item.someColumn }}</td>
-                  </template>
-                </v-data-table>
-              </div>
-            `,
+						<template v-slot:item.href="{ item }" style="display:none">
+							<td v-if="false">{{ item.someColumn }}</td>
+						</template>
+					</v-data-table>
+				</div>
+			`,
 		}
 	},
 	tags: ['!dev'],
