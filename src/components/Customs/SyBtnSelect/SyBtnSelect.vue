@@ -145,9 +145,9 @@
 					:id="generatedId"
 					:class="btnPadding"
 					:height="iconOnly ? 'auto' : undefined"
-					:width="iconOnly ? 'auto' : undefined"
 					:icon="iconOnly"
 					:size="iconOnly ? 'x-large' : 'default'"
+					:width="iconOnly ? 'auto' : undefined"
 					class="vd-user-menu-btn"
 					v-bind="{
 						...menuProps,
@@ -168,19 +168,23 @@
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
 								class="font-weight-bold"
-							>{{ props.primaryInfo }}
+							>
+								{{ props.primaryInfo }}
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
 								class="text-grey text-darken-2 font-weight-medium"
-							>{{ props.secondaryInfo }}
+							>
+								{{ props.secondaryInfo }}
 							</span>
 						</span>
 						<span
 							v-if="isMobileVersion && !iconOnly"
 							:class="`text-${props?.options['btn']?.textColor}`"
 							class="font-weight-bold text-caption"
-						>{{ props.primaryInfo }}</span>
+						>
+							{{ props.primaryInfo }}
+						</span>
 						<slot name="append-icon" />
 					</div>
 				</VBtn>
@@ -197,9 +201,21 @@
 						v-bind="props.options['list']"
 						@click="selectItem(item)"
 					>
-						<VListItemTitle v-bind="props.options['list']">
-							{{ getItemText(item) }}
-						</VListItemTitle>
+						<template v-if="item.link">
+							<a
+								:href="item.link"
+								class="v-list-item__content links"
+							>
+								<VListItemTitle v-bind="props.options['list']">
+									{{ getItemText(item) }}
+								</VListItemTitle>
+							</a>
+						</template>
+						<template v-else>
+							<VListItemTitle v-bind="props.options['list']">
+								{{ getItemText(item) }}
+							</VListItemTitle>
+						</template>
 					</VListItem>
 					<slot />
 					<slot name="footer-list-item" />
@@ -211,6 +227,7 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens.scss';
+@use '@/assets/tokens' as *;
 
 .vd-user-menu-btn-ctn {
   position: relative;
@@ -242,5 +259,10 @@
 
 :deep(.vd-user-menu-btn:focus > .v-btn__overlay) {
   opacity: 0 !important;
+}
+
+.links {
+  text-decoration: none;
+  color: $colors-icon-base;
 }
 </style>

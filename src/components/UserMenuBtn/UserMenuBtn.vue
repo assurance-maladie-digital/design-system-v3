@@ -8,8 +8,8 @@
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		modelValue: string | Record<string, any> | null | undefined
-		menuItems?: { text: string, value: string }[]
+		modelValue?: string | Record<string, any> | null | undefined
+		menuItems?: { text: string, value: string, link?: string }[]
 		additionalInformation?: string
 		fullName?: string
 		hideLogoutBtn?: boolean
@@ -45,14 +45,14 @@
 
 <template>
 	<SyBtnSelect
-		:is-mobile-view="isMobileView"
+		:hide-icon="hideUserIcon"
 		:icon-only="isMobileView"
+		:is-mobile-view="isMobileView"
 		:menu-items="menuItems"
 		:model-value="props.modelValue ?? undefined"
 		:options="options"
 		:primary-info="fullName"
 		:secondary-info="additionalInformation"
-		:hide-icon="hideUserIcon"
 		class="user-menu-btn"
 		@update:model-value="updateModelValue"
 	>
