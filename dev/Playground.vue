@@ -4,9 +4,10 @@
 
 	const selected = ref(null)
 	const items = ref([
-		{ text: 'Administration', value: 'Administration' },
-		{ text: 'Profil', value: 'Profil' },
-		{ text: 'Paramètres', value: 'Paramètres' },
+		{ text: 'Administration', value: 'Administration', link: '/admin' },
+		{ text: 'Profil', value: 'Profil', link: '/profile' },
+		{ text: 'Paramètres', value: 'Paramètres', link: '/settings' },
+		{ text: 'Profil', value: 'Profil', link: '/profile' },
 	])
 
 	const handleLogout = () => {

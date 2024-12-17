@@ -51,6 +51,62 @@ export const Default: Story = {
 import SyBtnSelect from './SyBtnSelect.vue'
 
 const primaryInfo = 'Mes options'
+const items = [
+		{ text: 'Administration', value: 'Administration', link: '/admin' },
+		{ text: 'Profil', value: 'Profil', link: '/profile' },
+		{ text: 'Paramètres', value: 'Paramètres', link: '/settings' },
+		{ text: 'Profil', value: 'Profil', link: '/profile' },
+	]
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		primaryInfo: 'Mes options',
+		menuItems: [
+			{ text: 'Administration', value: 'Administration', link: '/admin' },
+			{ text: 'Profil', value: 'Profil', link: '/profile' },
+			{ text: 'Paramètres', value: 'Paramètres', link: '/settings' },
+			{ text: 'Profil', value: 'Profil', link: '/profile' },
+		],
+	},
+	render: (args) => {
+		return {
+			components: { SyBtnSelect },
+			setup() {
+				return { args }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <SyBtnSelect v-bind="args"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const withLink: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyBtnSelect 
+  	:primary-info="primaryInfo" 
+  	:menu-items="items" 
+  />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import SyBtnSelect from './SyBtnSelect.vue'
+
+const primaryInfo = 'Mes options'
 const items = ['Option 1', 'Option 2']
 </script>
 				`,
@@ -69,7 +125,7 @@ const items = ['Option 1', 'Option 2']
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args" />
+                <SyBtnSelect v-bind="args"/>
               </div>
             `,
 		}
@@ -117,7 +173,7 @@ const items = ['Option 1', 'Option 2']
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args" />
+                <SyBtnSelect v-bind="args"/>
               </div>
             `,
 		}
@@ -526,11 +582,11 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnSelect v-bind="args">
                   <template #prepend-icon>
-                    <VIcon 
-						:icon="mdiAccount" 
-						class="mr-2" 
-						color="red"
-					/>
+                    <VIcon
+                        :icon="mdiAccount"
+                        class="mr-2"
+                        color="red"
+                    />
                   </template>
                 </SyBtnSelect>
               </div>
