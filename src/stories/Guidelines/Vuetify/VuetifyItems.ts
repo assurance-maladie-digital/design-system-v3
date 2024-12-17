@@ -59,9 +59,7 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: [{
-					name: 'En étude',
-				}],
+				solution: [],
 			},
 			{
 				name: 'Buttons',
@@ -71,9 +69,7 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: [{
-					name: 'En étude',
-				}],
+				solution: [],
 			},
 			{
 				name: 'Chips',
@@ -83,9 +79,7 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: [{
-					name: 'En étude',
-				}],
+				solution: [],
 			},
 			{
 				name: 'Tooltip',
@@ -95,9 +89,7 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: [{
-					name: 'En étude',
-				}],
+				solution: [],
 			},
 			{
 				name: 'Cards',
