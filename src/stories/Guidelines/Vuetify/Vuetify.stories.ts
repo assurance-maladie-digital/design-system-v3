@@ -18,9 +18,7 @@ export const VuetifyPanel: StoryObj = {
 				return { VuetifyItems, checkIcon, iconAlert, linkICon }
 			},
 			template: `
-
 				<div v-for="(item, index) in VuetifyItems" :key="index">
-
 					<v-data-table
 						:items="item.items"
 						:items-per-page="23"
@@ -33,7 +31,7 @@ export const VuetifyPanel: StoryObj = {
 							Erreurs bloquantes (Tanaguru)
 						</template>
 						<template v-slot:item.name="{ item }">
-							<v-chip v-if="item.errorImportants === 0 && item.errorIndeterminated === 0"
+							<v-chip v-if="item.errorImportants == 0 && item.errorIndeterminated == 0"
 									style="font-size: 12px; line-height: 15px;">
 								<VIcon style="margin-right: 2px;" :icon="checkIcon"/>
 								{{ item.name }}
