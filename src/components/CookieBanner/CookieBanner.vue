@@ -176,11 +176,16 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+  background: transparent;
 }
 
 .vd-cookie-banner-content {
 	overflow-y: auto;
 	padding-right: 8px;
+  background: transparent;
+  div {
+    background: transparent;
+  }
 }
 
 .vd-cookie-banner-action-ctn .v-btn {
