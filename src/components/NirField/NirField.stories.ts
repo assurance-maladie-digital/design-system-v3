@@ -194,11 +194,10 @@ export const CustomRules: Story = {
 	},
 }
 
-export const WithTooltips: Story = {
+export const WithNumberTooltip: Story = {
 	args: {
 		...Default.args,
 		nirTooltip: 'Ceci est un tooltip pour le champs numéro de sécurité sociale',
-		keyTooltip: 'Ceci est un tooltip pour la clef du numéro de sécurité sociale',
 	},
 	parameters: {
 		...Default.parameters,
@@ -215,6 +214,44 @@ export const WithTooltips: Story = {
       keyLabel="Clé"
       :displayKey="true"
       nirTooltip="Ceci est un tooltip pour le champs numéro de sécurité sociale"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
+    </script>
+    `,
+			},
+		],
+	},
+}
+
+export const WithKeyTooltip: Story = {
+	args: {
+		...Default.args,
+		keyTooltip: 'Ceci est un tooltip pour la clef du numéro de sécurité sociale',
+	},
+	parameters: {
+		...Default.parameters,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      modelValue=""
+      :outlined="true"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="true"
       keyTooltip="Ceci est un tooltip pour la clef du numéro de sécurité sociale"
      />
     </template>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, defineProps, defineEmits, defineExpose } from 'vue'
+	import { ref, watch, computed } from 'vue'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import { vMaska } from 'maska/vue'
 	import { checkNIR, isNIRKeyValid } from './nirValidation'
@@ -26,11 +26,11 @@
 		customKeyRules?: any
 	}>(), {
 		modelValue: undefined,
-		outlined: false,
+		outlined: true,
 		required: false,
 		nirTooltip: undefined,
 		keyTooltip: undefined,
-		numberLabel: 'Numéro de securite sociale',
+		numberLabel: 'Numéro de sécurité sociale',
 		keyLabel: 'Clé',
 		displayKey: true,
 		customNumberRules: [],
