@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import { mdiInformation, mdiMenuDown } from '@mdi/js'
 	import { ref, watch, onMounted, computed, type PropType } from 'vue'
-	import { VIcon, VTextField, VList, VListItem, VListItemTitle } from 'vuetify/components'
 
 	const props = defineProps({
 		modelValue: {

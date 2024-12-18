@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 	import { mdiChevronDown, mdiInformation } from '@mdi/js'
 	import { computed, onMounted, ref, watch } from 'vue'
-	import { VIcon, VList, VListItem, VListItemTitle } from 'vuetify/components'
-
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import defaultOptions from './config'
 
