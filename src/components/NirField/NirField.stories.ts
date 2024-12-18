@@ -13,16 +13,101 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
-		modelValue: { control: 'text' },
-		outlined: { control: 'boolean' },
-		required: { control: 'boolean' },
-		nirTooltip: { control: 'text' },
-		keyTooltip: { control: 'text' },
-		numberLabel: { control: 'text' },
-		keyLabel: { control: 'text' },
-		displayKey: { control: 'boolean' },
-		customNumberRules: { control: 'object' },
-		customKeyRules: { control: 'object' },
+		modelValue: {
+			description: 'La valeur du modèle pour le champ.',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		outlined: {
+			description: 'Indique si le champ est encadré.',
+			control: 'boolean',
+			default: true,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		required: {
+			description: 'Indique si le champ est requis.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		nirTooltip: {
+			description: 'Infobulle pour le champ NIR.',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		keyTooltip: {
+			description: 'Infobulle pour le champ clé.',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		numberLabel: {
+			description: 'Étiquette pour le champ numéro.',
+			control: 'text',
+			default: 'Numéro de sécurité sociale',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		keyLabel: {
+			description: 'Étiquette pour le champ clé.',
+			control: 'text',
+			default: 'Clé',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		displayKey: {
+			description: 'Indique si le champ clé est affiché.',
+			control: 'boolean',
+			default: true,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		customNumberRules: {
+			description: 'Règles de validation personnalisées pour le champ numéro.',
+			control: 'object',
+			table: {
+				type: {
+					summary: 'array',
+				},
+			},
+		},
+		customKeyRules: {
+			description: 'Règles de validation personnalisées pour le champ clé.',
+			control: 'object',
+			table: {
+				type: {
+					summary: 'array',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof NirField>
 
