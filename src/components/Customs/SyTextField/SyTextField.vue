@@ -8,7 +8,6 @@
 		mdiClose,
 		mdiInformation,
 	} from '@mdi/js'
-	import { VIcon } from 'vuetify/components'
 
 	// only variantStyle need a default value
 	/* eslint-disable vue/require-default-prop */

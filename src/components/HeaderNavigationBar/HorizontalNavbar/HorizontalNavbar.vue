@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	import { VTabs } from 'vuetify/components'
 	import type { NavigationItem } from '../types'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'

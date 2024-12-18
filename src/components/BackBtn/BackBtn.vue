@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 	import { ref, computed } from 'vue'
-	import { VIcon, VBtn } from 'vuetify/components'
 	import { mdiArrowLeft } from '@mdi/js'
 	import { locales } from './locales'
 
