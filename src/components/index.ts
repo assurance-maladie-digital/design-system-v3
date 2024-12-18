@@ -1,4 +1,4 @@
-export { default as SyAlert } from './Customs/SyAlert/SyAlert.vue'
+export { default as SyAlert } from './SyAlert/SyAlert.vue'
 export { default as BackBtn } from './BackBtn/BackBtn.vue'
 export { default as BackToTopBtn } from './BackToTopBtn/BackToTopBtn.vue'
 export { default as CollapsibleList } from './CollapsibleList/CollapsibleList.vue'
