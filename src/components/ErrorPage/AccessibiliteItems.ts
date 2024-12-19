@@ -43,15 +43,15 @@ export const AccessibiliteItemsIndeterminate = [
 				expertise: ExpertiseLevelEnum.DEV,
 
 			},
-			
+
 		],
 		items: [
 			{
-				precision: '1.3.1 Chaque image (balise <img> ou balise possédant l’attribut WAI-ARIA role="img") porteuse d’information, ayant une alternative textuelle, cette alternative est-elle pertinente (hors cas particuliers) ?  '+
-							'S’il est présent, le contenu de l’attribut title est pertinent ; '+
-							'S’il est présent, le contenu de l’attribut alt est pertinent ; '+
-							'S’il est présent, le passage de texte associé via l’attribut WAI-ARIA aria-labelledby est pertinent. '+
-							'S’il est présent, le contenu de l’attribut WAI-ARIA aria-label est pertinent ;', 
+				precision: '1.3.1 Chaque image (balise <img> ou balise possédant l’attribut WAI-ARIA role="img") porteuse d’information, ayant une alternative textuelle, cette alternative est-elle pertinente (hors cas particuliers) ?  '
+					+ 'S’il est présent, le contenu de l’attribut title est pertinent ; '
+					+ 'S’il est présent, le contenu de l’attribut alt est pertinent ; '
+					+ 'S’il est présent, le passage de texte associé via l’attribut WAI-ARIA aria-labelledby est pertinent. '
+					+ 'S’il est présent, le contenu de l’attribut WAI-ARIA aria-label est pertinent ;',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.3.1',
 				solution: [{
 					info1: '1. Retrouver dans le document les images structurées au moyen d’un élément <img> (ou d’un élément possédant l’attribut WAI-ARIA role="img") pourvues d’une alternative textuelle ; ',
@@ -140,11 +140,11 @@ export const AccessibiliteItemsValidated = [
 		subtitle: '1.3 Pour chaque image porteuse d’information ayant une alternative textuelle, cette alternative est-elle pertinente (hors cas particuliers) ? ',
 		items: [
 			{
-				precision: '1.3.1 Chaque image (balise <img> ou balise possédant l’attribut WAI-ARIA role="img") porteuse d’information, ayant une alternative textuelle, cette alternative est-elle pertinente (hors cas particuliers) ?  '+
-							'S’il est présent, le contenu de l’attribut title est pertinent ; '+
-							'S’il est présent, le contenu de l’attribut alt est pertinent ; '+
-							'S’il est présent, le passage de texte associé via l’attribut WAI-ARIA aria-labelledby est pertinent. '+
-							'S’il est présent, le contenu de l’attribut WAI-ARIA aria-label est pertinent ;', 
+				precision: '1.3.1 Chaque image (balise <img> ou balise possédant l’attribut WAI-ARIA role="img") porteuse d’information, ayant une alternative textuelle, cette alternative est-elle pertinente (hors cas particuliers) ?  '
+					+ 'S’il est présent, le contenu de l’attribut title est pertinent ; '
+					+ 'S’il est présent, le contenu de l’attribut alt est pertinent ; '
+					+ 'S’il est présent, le passage de texte associé via l’attribut WAI-ARIA aria-labelledby est pertinent. '
+					+ 'S’il est présent, le contenu de l’attribut WAI-ARIA aria-label est pertinent ;',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.3.1',
 				solution: [{
 					info1: '1. Retrouver dans le document les images structurées au moyen d’un élément <img> (ou d’un élément possédant l’attribut WAI-ARIA role="img") pourvues d’une alternative textuelle ; ',
@@ -173,9 +173,9 @@ export const AccessibiliteItemsValidated = [
 
 			},
 			{
-				precision: ' 3.2.3 Dans chaque page web, le texte et le texte en image sans effet de graisse d’une taille restituée supérieure ou égale à 24px vérifient-ils une de ces conditions (hors cas particuliers) ? ' +
-    							'Le rapport de contraste entre le texte et son arrière-plan est de 3:1, au moins ; ' +
-    							'Un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 3:1, au moins.',
+				precision: ' 3.2.3 Dans chaque page web, le texte et le texte en image sans effet de graisse d’une taille restituée supérieure ou égale à 24px vérifient-ils une de ces conditions (hors cas particuliers) ? '
+					+ 'Le rapport de contraste entre le texte et son arrière-plan est de 3:1, au moins ; '
+					+ 'Un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 3:1, au moins.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#3.2.3',
 				solution: [{
 					info1: '1. Retrouver dans le document les textes et les textes en image sans effet de graisse d’une taille restituée supérieure ou égale à 24px qui pourraient poser des problèmes de contraste ; ',
@@ -201,5 +201,5 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-	
+
 ]
