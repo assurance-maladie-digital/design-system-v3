@@ -250,7 +250,9 @@ a {
   flex-grow: 0 !important;
   justify-content: center;
   .container {
+    width: 100%;
     max-width: 1712px;
+    margin: 0 auto;
   }
 }
 .vd-footer-bar :deep() {

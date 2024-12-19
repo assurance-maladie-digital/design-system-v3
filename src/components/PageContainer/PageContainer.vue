@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { ref, computed, watchEffect } from 'vue'
 	import { useDisplay } from 'vuetify'
 
 	const props = withDefaults(defineProps<{
@@ -15,32 +15,31 @@
 	const display = useDisplay()
 
 	const spacingMapping: Record<string, string> = {
-		xs: 'px-0',
+		xs: 'px-2',
 		sm: 'px-4',
 		md: 'px-8',
-		lg: 'px-14',
-		xl: 'px-14',
+		lg: 'px-8',
+		xl: 'px-8',
 	}
 
-	const spacingX = spacingMapping[display.name.value]
-
-	const spacingClass = computed(() => {
-		if (props.spacing) {
-			return `py-10 ${spacingMapping[props.spacing]}`
-		}
-
-		return `py-10 ${spacingX}`
-	})
-
 	const sizeMapping: Record<string, number> = {
-		xl: 1440,
+		xl: 1712,
 		l: 960,
 		m: 800,
 		s: 600,
 	}
 
-	const containerSize = computed(() => {
-		return sizeMapping[props.size]
+	const spacingClass = computed(() => {
+		if (props.spacing) {
+			return `py-10 ${spacingMapping[props.spacing]}`
+		}
+		return `py-10 ${spacingMapping[display.name.value]}`
+	})
+
+	const containerSize = ref(sizeMapping[props.size ?? 'xl'])
+
+	watchEffect(() => {
+		containerSize.value = sizeMapping[display.name.value] ?? sizeMapping[props.size ?? 'xl']
 	})
 
 	defineExpose({
@@ -63,6 +62,8 @@
 <style lang="scss" scoped>
 .vd-page-container {
   flex: 1;
+  width: 100%;
   max-width: 1712px;
+  margin: 0 auto;
 }
 </style>
