@@ -233,6 +233,7 @@ export const CustomRules: Story = {
 					length: 10,
 					message: 'Le numéro de sécurité sociale doit avoir au moins 10 caractères.',
 					successMessage: 'Le numéro de sécurité sociale a une longueur valide.',
+					ignoreSpace: true,
 				},
 			},
 		],
@@ -261,7 +262,7 @@ export const CustomRules: Story = {
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
       :displayKey="true"
-      :customNumberRules="[{ type: 'minLength', options: { length: 10, message: 'Le numéro de sécurité sociale doit avoir au moins 10 caractères.', successMessage: 'Le numéro de sécurité sociale a une longueur valide.' } }]"
+      :customNumberRules="[{ type: 'minLength', options: { length: 10, ignoreSpace: true, message: 'Le numéro de sécurité sociale doit avoir au moins 10 caractères.', successMessage: 'Le numéro de sécurité sociale a une longueur valide.' } }]"
       :customKeyRules="[{ type: 'minLength', options: { length: 1, message: 'La clé doit avoir au moins 1 caractère.', successMessage: 'La clé a une longueur valide.' } }]"
      />
     </template>
