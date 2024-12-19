@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed } from 'vue'
+	import { ref, watch, computed, nextTick } from 'vue'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import { vMaska } from 'maska/vue'
 	import { checkNIR, isNIRKeyValid } from './nirValidation'
@@ -44,6 +44,11 @@
 	// Champs
 	const numberValue = ref('')
 	const keyValue = ref('')
+	const keyDeleted = ref(false)
+
+	// Refs pour les champs
+	const keyField = ref<HTMLElement | null>(null)
+	const numberField = ref<HTMLElement | null>(null)
 
 	const unmaskedNumberValue = computed(() => numberValue.value.replace(/\s/g, ''))
 
@@ -193,6 +198,35 @@
 		}
 	})
 
+	watch(keyValue, (newValue, oldValue) => {
+		keyDeleted.value = !!(!newValue && oldValue)
+	})
+
+	watch(numberValue, () => {
+		if (unmaskedNumberValue.value.length < 13) {
+			keyDeleted.value = false
+		}
+	})
+
+	// Déplacement du focus sur la clé quand le numéro est rempli
+	const focusElement = computed(() => {
+		if (props.displayKey && numberValue.value.length === 18) {
+			if (!keyDeleted.value) {
+				return keyField.value?.$el?.querySelector('input')
+			}
+			else {
+				return numberField.value?.$el?.querySelector('input')
+			}
+		}
+		return null
+	})
+
+	watch(focusElement, (newEl) => {
+		nextTick(() => {
+			newEl?.focus()
+		})
+	})
+
 	function validateOnSubmit() {
 		isValidating.value = true
 		validateFields()
@@ -233,6 +267,7 @@
 				</slot>
 			</VTooltip>
 			<SyTextField
+				ref="numberField"
 				v-model="numberValue"
 				v-maska="numberMask"
 				:append-inner-icon="hasNumberErrors ? 'error' : (hasNumberSuccess ? 'success' : undefined)"
@@ -257,6 +292,7 @@
 
 			<template v-if="displayKey">
 				<SyTextField
+					ref="keyField"
 					v-model="keyValue"
 					v-maska="keyMask"
 					:append-inner-icon="hasKeyErrors ? 'error' : (hasKeySuccess ? 'success' : undefined)"
