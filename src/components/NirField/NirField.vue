@@ -173,6 +173,21 @@
 		emit('update:modelValue', `${numberValue.value} ${keyValue.value}`)
 	})
 
+	// replication du modelValue dnas les champs
+	watch(() => props.modelValue, (newValue) => {
+		if (newValue) {
+			// retirer les espaces
+			newValue = newValue.replace(/\s/g, '')
+			if (newValue.length > 13) {
+				numberValue.value = newValue.slice(0, 13)
+				keyValue.value = newValue.slice(14)
+			}
+			else {
+				numberValue.value = newValue
+			}
+		}
+	}, { immediate: true })
+
 	function validateOnSubmit() {
 		isValidating.value = true
 		validateFields()
