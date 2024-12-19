@@ -2,7 +2,6 @@ import { ExpertiseLevelEnum } from './constants/ExpertiseLevelEnum'
 
 export const AccessibiliteItemsIndeterminate = [
 
-	
 	{
 		title: 'Catégorie 3 : Couleurs',
 		subtitle: '3.2 Dans chaque page web, le contraste entre la couleur du texte et la couleur de son arrière-plan est-il suffisamment élevé?',
@@ -118,7 +117,7 @@ export const AccessibiliteItemsValidated = [
 			},
 
 		],
-		
+
 	},
 	{
 		title: 'Catégorie 7 : Scripts',
@@ -164,5 +163,5 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-	
+
 ]

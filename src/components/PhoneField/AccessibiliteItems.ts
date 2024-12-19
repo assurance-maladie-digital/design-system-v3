@@ -56,7 +56,7 @@ export const AccessibiliteItemsIndeterminate = [
 		title: 'Catégorie 11 : Formulaires',
 		subtitle: '11.2 Chaque étiquette associée à un champ de formulaire est-elle pertinente (hors cas particuliers) ? ',
 
-		items:[
+		items: [
 			{
 				precision: '11.2.2 Chaque attribut title permet-il de connaître la fonction exacte du champ de formulaire auquel il est associé',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2.2',
