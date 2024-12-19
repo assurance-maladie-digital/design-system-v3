@@ -2,6 +2,7 @@
 
 exports[`PageContainer > render correctly 1`] = `
 "<div data-v-fb0b02fd="" class="py-10 px-8 vd-page-container d-flex justify-center">
-  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 1440px;"></div>
+  <p data-v-fb0b02fd="">Container size: 1712</p>
+  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 1712px;"></div>
 </div>"
 `;
