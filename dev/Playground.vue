@@ -15,16 +15,6 @@
 			alert('Formulaire soumis avec succès !')
 		}
 	}
-
-	// Exemple de règles personnalisées
-	const customNumberRules = [
-		{
-			type: 'minLength',
-			options: {
-				length: 10, message: 'Le NIR doit avoir au moins 10 caractères.', successMessage: 'Le NIR a une longueur valide.',
-			},
-		},
-	]
 </script>
 
 <template>
