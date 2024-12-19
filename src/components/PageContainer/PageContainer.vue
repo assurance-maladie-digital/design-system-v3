@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, computed, watchEffect } from 'vue'
+	import { computed } from 'vue'
 	import { useDisplay } from 'vuetify'
 
 	const props = withDefaults(defineProps<{
@@ -15,18 +15,19 @@
 	const display = useDisplay()
 
 	const spacingMapping: Record<string, string> = {
-		xs: 'px-2',
+		xs: 'px-4',
 		sm: 'px-4',
-		md: 'px-8',
-		lg: 'px-8',
-		xl: 'px-8',
+		md: 'px-14',
+		lg: 'px-14',
+		xl: 'px-14',
 	}
 
 	const sizeMapping: Record<string, number> = {
+		xs: 340,
+		sm: 540,
+		md: 800,
+		lg: 1280,
 		xl: 1712,
-		l: 960,
-		m: 800,
-		s: 600,
 	}
 
 	const spacingClass = computed(() => {
@@ -36,10 +37,8 @@
 		return `py-10 ${spacingMapping[display.name.value]}`
 	})
 
-	const containerSize = ref(sizeMapping[props.size ?? 'xl'])
-
-	watchEffect(() => {
-		containerSize.value = sizeMapping[display.name.value] ?? sizeMapping[props.size ?? 'xl']
+	const containerSize = computed(() => {
+		return sizeMapping[display.name.value] ?? sizeMapping[props.size ?? 'xl']
 	})
 
 	defineExpose({

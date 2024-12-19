@@ -1,8 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ErrorPage > renders correctly 1`] = `
-"<div data-v-fb0b02fd="" data-v-8f2b5bad="" class="py-10 px-8 vd-page-container d-flex justify-center">
-  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 960px;">
+"<div data-v-fb0b02fd="" data-v-8f2b5bad="" class="py-10 px-14 vd-page-container d-flex justify-center">
+  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 800px;">
     <div data-v-8f2b5bad="" class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated pa-6 pa-sm-16">
       <!---->
       <div class="v-card__loader">
@@ -38,8 +38,8 @@ exports[`ErrorPage > renders correctly 1`] = `
 `;
 
 exports[`ErrorPage > renders correctly with undefined route 1`] = `
-"<div data-v-fb0b02fd="" data-v-8f2b5bad="" class="py-10 px-8 vd-page-container d-flex justify-center">
-  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 960px;">
+"<div data-v-fb0b02fd="" data-v-8f2b5bad="" class="py-10 px-14 vd-page-container d-flex justify-center">
+  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 800px;">
     <div data-v-8f2b5bad="" class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated pa-6 pa-sm-16">
       <!---->
       <div class="v-card__loader">
