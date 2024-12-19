@@ -20,9 +20,9 @@
 		numberLabel?: string
 		keyLabel?: string
 		displayKey?: boolean
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is untyped code from old vue rules
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		customNumberRules?: any
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is untyped code from old vue rules
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		customKeyRules?: any
 	}>(), {
 		modelValue: undefined,
@@ -44,6 +44,13 @@
 	// Champs
 	const numberValue = ref('')
 	const keyValue = ref('')
+
+	const unmaskedNumberValue = computed(() => numberValue.value.replace(/\s/g, ''))
+
+	watch(() => props.modelValue, async (value) => {
+		numberValue.value = value?.slice(0, 13) ?? ''
+		keyValue.value = value?.slice(13, 15) ?? ''
+	}, { immediate: true })
 
 	// Etats d’erreur/succès
 	const errors = ref<string[]>([])
@@ -132,6 +139,11 @@
 			: generateRules(defaultKeyRules))
 		: []
 
+	/**
+	 * Valide une liste de règles sur une valeur et met à jour les tableaux d'erreurs et de succès.
+	 * @param value Valeur du champ à valider
+	 * @param rules Ensemble de règles
+	 */
 	function validateFieldSet(value: string, rules: Rule[]) {
 		rules.forEach((rule) => {
 			const { error, success } = rule(value)
@@ -140,6 +152,10 @@
 		})
 	}
 
+	/**
+	 * Valide les champs numéro et clé (si activée).
+	 * @param onBlur Si true, la validation est lancée suite à un blur, sinon validation continue
+	 */
 	function validateFields(onBlur = false) {
 		errors.value = []
 		successes.value = []
@@ -155,38 +171,16 @@
 			validateFieldSet(keyValue.value, keyRules)
 		}
 
+		// Unicité des succès
 		successes.value = Array.from(new Set(successes.value))
 	}
 
-	// On regarde les changements dans les champs internes
-	watch([numberValue, keyValue], () => {
-		const composedValue = `${numberValue.value} ${keyValue.value}`.trim()
-		if (composedValue !== (props.modelValue || '').trim()) {
-			validateFields()
-			emit('update:modelValue', composedValue)
-		}
-		else {
-			validateFields()
+	watch([unmaskedNumberValue, keyValue], () => {
+		validateFields()
+		if (unmaskedNumberValue.value + keyValue.value !== props.modelValue) {
+			emit('update:modelValue', `${unmaskedNumberValue.value}${keyValue.value}`)
 		}
 	})
-
-	// Surveille le modelValue entrant
-	watch(() => props.modelValue, (newValue) => {
-		const sanitizedModelValue = (newValue || '').replace(/\s/g, '')
-		const currentCombined = (numberValue.value + keyValue.value).replace(/\s/g, '')
-
-		// On update que si le modelValue ne correspond pas déjà aux champs internes
-		if (sanitizedModelValue !== currentCombined) {
-			if (sanitizedModelValue.length > 13) {
-				numberValue.value = sanitizedModelValue.slice(0, 13)
-				keyValue.value = sanitizedModelValue.slice(13) // on part de 13, pas 14, car on a enlevé les espaces
-			}
-			else {
-				numberValue.value = sanitizedModelValue
-				keyValue.value = ''
-			}
-		}
-	}, { immediate: true })
 
 	function validateOnSubmit() {
 		isValidating.value = true
@@ -198,7 +192,6 @@
 		validateOnSubmit,
 	})
 </script>
-
 <template>
 	<div class="d-flex align-start">
 		<v-input
@@ -228,7 +221,6 @@
 					{{ nirTooltip }}
 				</slot>
 			</VTooltip>
-
 			<SyTextField
 				v-model="numberValue"
 				v-maska="numberMask"
