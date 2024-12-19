@@ -123,5 +123,8 @@
 				/>
 			</slot>
 		</template>
+		<template #details>
+			<slot name="details" />
+		</template>
 	</VTextField>
 </template>

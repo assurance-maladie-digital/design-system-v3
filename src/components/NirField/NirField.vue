@@ -175,6 +175,17 @@
 		successes.value = Array.from(new Set(successes.value))
 	}
 
+	// Compteurs
+	const numberCounter = computed(() => {
+		const length = numberValue.value.replace(/\s/g, '').length
+		return `${Math.min(length, 13)}/13`
+	})
+
+	const keyCounter = computed(() => {
+		const length = keyValue.value.replace(/\s/g, '').length
+		return `${Math.min(length, 2)}/2`
+	})
+
 	watch([unmaskedNumberValue, keyValue], () => {
 		validateFields()
 		if (unmaskedNumberValue.value + keyValue.value !== props.modelValue) {
@@ -236,7 +247,13 @@
 				class="vd-number-field"
 				title="nirField"
 				@blur="validateFields(true)"
-			/>
+			>
+				<template #details>
+					<span class="custom-counter">
+						{{ numberCounter }}
+					</span>
+				</template>
+			</SyTextField>
 
 			<template v-if="displayKey">
 				<SyTextField
@@ -254,7 +271,13 @@
 					class="vd-key-field"
 					title="nirKeyField"
 					@blur="validateFields(true)"
-				/>
+				>
+					<template #details>
+						<span class="custom-counter">
+							{{ keyCounter }}
+						</span>
+					</template>
+				</SyTextField>
 
 				<VTooltip v-if="keyTooltip">
 					<template #activator="{ props: iconProps }">
