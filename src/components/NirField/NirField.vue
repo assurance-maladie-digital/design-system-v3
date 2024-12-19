@@ -45,6 +45,13 @@
 	const numberValue = ref('')
 	const keyValue = ref('')
 
+	const unmaskedNumberValue = computed(() => numberValue.value.replace(/\s/g, ''))
+
+	watch(() => props.modelValue, async (value) => {
+		numberValue.value = value?.slice(0, 13) ?? ''
+		keyValue.value = value?.slice(13, 15) ?? ''
+	}, { immediate: true })
+
 	// Etats d’erreur/succès
 	const errors = ref<string[]>([])
 	const successes = ref<string[]>([])
@@ -168,9 +175,11 @@
 		successes.value = Array.from(new Set(successes.value))
 	}
 
-	watch([numberValue, keyValue], () => {
+	watch([unmaskedNumberValue, keyValue], () => {
 		validateFields()
-		emit('update:modelValue', `${numberValue.value} ${keyValue.value}`)
+		if (unmaskedNumberValue.value + keyValue.value !== props.modelValue) {
+			emit('update:modelValue', `${unmaskedNumberValue.value}${keyValue.value}`)
+		}
 	})
 
 	function validateOnSubmit() {
@@ -212,7 +221,6 @@
 					{{ nirTooltip }}
 				</slot>
 			</VTooltip>
-
 			<SyTextField
 				v-model="numberValue"
 				v-maska="numberMask"
