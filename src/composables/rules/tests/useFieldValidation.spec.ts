@@ -1,82 +1,84 @@
-import { useFieldValidation } from '../useFieldValidation'
 import { describe, it, expect } from 'vitest'
+import { useFieldValidation } from '../useFieldValidation'
 
 describe('useFieldValidation', () => {
 	const { generateRules } = useFieldValidation()
 
-	describe('createRule', () => {
-		it('should validate required rule', () => {
-			const rules = generateRules([{ type: 'required', options: { fieldName: 'Nom' } }])
-			const requiredRule = rules[0]
+	it('should validate required rule', () => {
+		const rules = generateRules([{ type: 'required', options: { message: 'This field is required.' } }])
+		const rule = rules[0]
 
-			expect(requiredRule('')).toBe('Vous devez renseigner Nom.')
-			expect(requiredRule('Test')).toBe(true)
-		})
+		expect(rule('')).toEqual({ error: 'This field is required.' })
+		expect(rule('value')).toEqual({ success: 'Le champ est valide.' })
+	})
 
-		it('should validate min rule', () => {
-			const rules = generateRules([{ type: 'min', options: { value: 5 } }])
-			const minRule = rules[0]
+	it('should validate min rule', () => {
+		const rules = generateRules([{ type: 'min', options: { value: 5, message: 'Value must be at least 5.' } }])
+		const rule = rules[0]
 
-			expect(minRule(3)).toBe('La valeur doit être supérieure ou égale à 5.')
-			expect(minRule(5)).toBe(true)
-			expect(minRule(10)).toBe(true)
-		})
+		expect(rule(3)).toEqual({ error: 'Value must be at least 5.' })
+		expect(rule(5)).toEqual({ success: 'Le champ est valide.' })
+	})
 
-		it('should validate minLength rule', () => {
-			const rules = generateRules([{ type: 'minLength', options: { length: 3 } }])
-			const minLengthRule = rules[0]
+	it('should validate max rule', () => {
+		const rules = generateRules([{ type: 'max', options: { value: 10, message: 'Value must be at most 10.' } }])
+		const rule = rules[0]
 
-			expect(minLengthRule('ab')).toBe('Ce champ doit avoir au moins 3 caractères.')
-			expect(minLengthRule('abc')).toBe(true)
-		})
+		expect(rule(15)).toEqual({ error: 'Value must be at most 10.' })
+		expect(rule(10)).toEqual({ success: 'Le champ est valide.' })
+	})
 
-		it('should validate max rule', () => {
-			const rules = generateRules([{ type: 'max', options: { value: 10 } }])
-			const maxRule = rules[0]
+	it('should validate minLength rule', () => {
+		const rules = generateRules([{ type: 'minLength', options: { length: 5, message: 'Minimum length is 5.' } }])
+		const rule = rules[0]
 
-			expect(maxRule(15)).toBe('La valeur doit être inférieure ou égale à 10.')
-			expect(maxRule(10)).toBe(true)
-			expect(maxRule(5)).toBe(true)
-		})
+		expect(rule('1234')).toEqual({ error: 'Minimum length is 5.' })
+		expect(rule('12345')).toEqual({ success: 'Le champ est valide.' })
+	})
 
-		it('should validate maxLength rule', () => {
-			const rules = generateRules([{ type: 'maxLength', options: { length: 5 } }])
-			const maxLengthRule = rules[0]
+	it('should validate maxLength rule', () => {
+		const rules = generateRules([{ type: 'maxLength', options: { length: 5, message: 'Maximum length is 5.' } }])
+		const rule = rules[0]
 
-			expect(maxLengthRule('abcdef')).toBe('Ce champ ne doit pas dépasser 5 caractères.')
-			expect(maxLengthRule('abc')).toBe(true)
-		})
+		expect(rule('123456')).toEqual({ error: 'Maximum length is 5.' })
+		expect(rule('12345')).toEqual({ success: 'Le champ est valide.' })
+	})
 
-		it('should validate exactLength rule', () => {
-			const rules = generateRules([{ type: 'exactLength', options: { length: 4 } }])
-			const exactLengthRule = rules[0]
+	it('should validate exactLength rule', () => {
+		const rules = generateRules([{ type: 'exactLength', options: { length: 5, message: 'Length must be exactly 5.' } }])
+		const rule = rules[0]
 
-			expect(exactLengthRule('abc')).toBe('Ce champ doit avoir exactement 4 caractères.')
-			expect(exactLengthRule('abcd')).toBe(true)
-		})
+		expect(rule('1234')).toEqual({ error: 'Length must be exactly 5.' })
+		expect(rule('12345')).toEqual({ success: 'Le champ est valide.' })
+	})
 
-		it('should validate email rule', () => {
-			const rules = generateRules([{ type: 'email' }])
-			const emailRule = rules[0]
+	it('should validate email rule', () => {
+		const rules = generateRules([{ type: 'email', options: { message: 'Invalid email address.' } }])
+		const rule = rules[0]
 
-			expect(emailRule('invalid-email')).toBe('Veuillez entrer un email valide.')
-			expect(emailRule('test@example.com')).toBe(true)
-		})
+		expect(rule('invalid-email')).toEqual({ error: 'Invalid email address.' })
+		expect(rule('test@example.com')).toEqual({ success: 'Le champ est valide.' })
+	})
 
-		it('should validate matchPattern rule', () => {
-			const rules = generateRules([{ type: 'matchPattern', options: { pattern: /^[a-z]+$/ } }])
-			const matchPatternRule = rules[0]
+	it('should validate matchPattern rule', () => {
+		const rules = generateRules([{
+			type: 'matchPattern',
+			options: { pattern: /^[a-z]+$/, message: 'Invalid format.' },
+		}])
+		const rule = rules[0]
 
-			expect(matchPatternRule('123')).toBe('Format invalide.')
-			expect(matchPatternRule('abc')).toBe(true)
-		})
+		expect(rule('123')).toEqual({ error: 'Invalid format.' })
+		expect(rule('abc')).toEqual({ success: 'Le champ est valide.' })
+	})
 
-		it('should handle ignoreSpace option in length rules', () => {
-			const rules = generateRules([{ type: 'minLength', options: { length: 3, ignoreSpace: true } }])
-			const minLengthRule = rules[0]
+	it('should validate custom rule', () => {
+		const rules = generateRules([{
+			type: 'custom',
+			options: { validate: value => value === 'valid', message: 'Custom validation failed.' },
+		}])
+		const rule = rules[0]
 
-			expect(minLengthRule('a b')).toBe('Ce champ doit avoir au moins 3 caractères.')
-			expect(minLengthRule('ab c')).toBe(true)
-		})
+		expect(rule('invalid')).toEqual({ error: 'Custom validation failed.' })
+		expect(rule('valid')).toEqual({ success: 'Le champ est valide.' })
 	})
 })
