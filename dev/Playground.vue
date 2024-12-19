@@ -2,7 +2,7 @@
 	import Nirfield from '@/components/NirField/NirField.vue'
 	import { ref } from 'vue'
 
-	const model = ref('294037512000591')
+	const model = ref('2940375120005')
 	const nirFieldRef = ref() // Référence Vue pour accéder au composant enfant
 
 	const handleSubmit = () => {
@@ -38,6 +38,7 @@
 			class="mx-16 my-6"
 			@submit.prevent="handleSubmit"
 		>
+			{{ model }}
 			<Nirfield
 				ref="nirFieldRef"
 				v-model="model"
