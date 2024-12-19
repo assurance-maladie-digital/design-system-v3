@@ -18,8 +18,8 @@
 		xs: 'px-0',
 		sm: 'px-4',
 		md: 'px-8',
-		lg: 'px-8',
-		xl: 'px-8',
+		lg: 'px-14',
+		xl: 'px-14',
 	}
 
 	const spacingX = spacingMapping[display.name.value]
@@ -63,5 +63,6 @@
 <style lang="scss" scoped>
 .vd-page-container {
   flex: 1;
+  max-width: 1712px;
 }
 </style>

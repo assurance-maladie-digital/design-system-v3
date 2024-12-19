@@ -145,91 +145,93 @@
 		}"
 		role="contentinfo"
 	>
-		<div
-			v-if="extendedMode"
-			class="d-flex align-start align-sm-center mb-6"
-		>
-			<div class="d-flex flex-grow-1 flex-column flex-sm-row">
-				<slot name="logo">
-					<Logo
-						v-if="!props.hideLogo"
-						:size="logoSize"
-						:class="{ 'mb-2 mb-sm-0': !props.hideSocialMediaLinks }"
-						class="logo"
+		<div class="container">
+			<div
+				v-if="extendedMode"
+				class="d-flex align-start align-sm-center mb-6"
+			>
+				<div class="d-flex flex-grow-1 flex-column flex-sm-row">
+					<slot name="logo">
+						<Logo
+							v-if="!props.hideLogo"
+							:size="logoSize"
+							:class="{ 'mb-2 mb-sm-0': !props.hideSocialMediaLinks }"
+							class="logo"
+						/>
+					</slot>
+
+					<VSpacer v-bind="options.spacer" />
+
+					<SocialMediaLinks
+						v-if="!props.hideSocialMediaLinks"
+						:links="props.socialMediaLinks"
+						class="mr-8 social"
 					/>
-				</slot>
+				</div>
 
-				<VSpacer v-bind="options.spacer" />
-
-				<SocialMediaLinks
-					v-if="!props.hideSocialMediaLinks"
-					:links="props.socialMediaLinks"
-					class="mr-8 social"
-				/>
+				<VBtn
+					id="scroll-btn"
+					v-bind="options.goTopBtn"
+					:aria-label="locales.goTopBtnLabel"
+					@click="scrollToTop"
+				>
+					<VIcon
+						v-bind="options.goTopBtnIcon"
+						class="scroll"
+					>
+						{{ arrowTopIcon }}
+					</VIcon>
+				</VBtn>
 			</div>
 
-			<VBtn
-				id="scroll-btn"
-				v-bind="options.goTopBtn"
-				:aria-label="locales.goTopBtnLabel"
-				@click="scrollToTop"
+			<VDivider
+				v-if="extendedMode"
+				v-bind="options.divider"
+				class="mb-3"
+			/>
+
+			<slot />
+
+			<VDivider
+				v-if="extendedMode"
+				v-bind="options.divider"
+				class="mt-3 mb-6"
+			/>
+
+			<ul
+				:class="{ 'py-2 py-sm-0': !extendedMode }"
+				class="vd-footer-bar-links text-sm-center d-flex flex-column flex-sm-row flex-wrap align-start justify-center max-width-none mx-n3 my-n3"
 			>
-				<VIcon
-					v-bind="options.goTopBtnIcon"
-					class="scroll"
+				<slot name="prepend" />
+
+				<li
+					v-for="(item, index) in footerLinksMapping"
+					:key="index"
 				>
-					{{ arrowTopIcon }}
-				</VIcon>
-			</VBtn>
+					<component
+						:is="getLinkComponent(item)"
+						:href="item.href"
+						:to="item.to"
+						:aria-label="item.ariaLabel"
+						:target="item.openInNewTab ? '_blank' : undefined"
+						:tabindex="index"
+						:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
+						class="my-3 mx-4"
+					>
+						{{ item.text }}
+					</component>
+				</li>
+
+				<li
+					v-if="props.version"
+					class="text-primary my-3 mx-4"
+				>
+					{{ locales.versionLabel }} {{ props.version }}
+				</li>
+
+				<slot name="append" />
+			</ul>
 		</div>
-
-		<VDivider
-			v-if="extendedMode"
-			v-bind="options.divider"
-			class="mb-3"
-		/>
-
-		<slot />
-
-		<VDivider
-			v-if="extendedMode"
-			v-bind="options.divider"
-			class="mt-3 mb-6"
-		/>
-
-		<ul
-			:class="{ 'py-2 py-sm-0': !extendedMode }"
-			class="vd-footer-bar-links text-sm-center d-flex flex-column flex-sm-row flex-wrap align-start justify-center max-width-none mx-n3 my-n3"
-		>
-			<slot name="prepend" />
-
-			<li
-				v-for="(item, index) in footerLinksMapping"
-				:key="index"
-			>
-				<component
-					:is="getLinkComponent(item)"
-					:href="item.href"
-					:to="item.to"
-					:aria-label="item.ariaLabel"
-					:target="item.openInNewTab ? '_blank' : undefined"
-					:tabindex="index"
-					:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
-					class="my-3 mx-4"
-				>
-					{{ item.text }}
-				</component>
-			</li>
-
-			<li
-				v-if="props.version"
-				class="text-primary my-3 mx-4"
-			>
-				{{ locales.versionLabel }} {{ props.version }}
-			</li>
-
-			<slot name="append" />
-		</ul>
 	</VFooter>
 </template>
 
@@ -247,6 +249,9 @@ a {
 .v-footer {
   flex-grow: 0 !important;
   justify-content: center;
+  .container {
+    max-width: 1712px;
+  }
 }
 .vd-footer-bar :deep() {
   .vd-footer-bar-links a {
