@@ -50,7 +50,6 @@
 
 <template>
 	<div :class="[spacingClass, 'vd-page-container d-flex justify-center']">
-		<p>Container size: {{ containerSize }}</p>
 		<VSheet
 			:width="containerSize"
 			:color="color"
