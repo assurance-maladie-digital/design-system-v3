@@ -47,8 +47,10 @@
 	const keyDeleted = ref(false)
 
 	// Refs pour les champs
-	const keyField = ref<HTMLElement | null>(null)
-	const numberField = ref<HTMLElement | null>(null)
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+	const keyField = ref<any | null>(null)
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+	const numberField = ref<any | null>(null)
 
 	const unmaskedNumberValue = computed(() => numberValue.value.replace(/\s/g, ''))
 
