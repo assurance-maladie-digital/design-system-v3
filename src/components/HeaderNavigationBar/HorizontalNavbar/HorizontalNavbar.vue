@@ -19,7 +19,7 @@
 
 <template>
 	<VSheet v-bind="options.sheet">
-		<div class="horizontal-menu px-4">
+		<div class="horizontal-menu px-xl-0 px-14">
 			<slot name="navigation-bar-prepend" />
 			<slot>
 				<VTabs
