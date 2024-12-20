@@ -38,7 +38,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import SkipLink from '@cnamts/synapse'
+	import { SkipLink } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -88,7 +88,7 @@ export const WithSlot: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import SkipLink from '@cnamts/synapse'
+	import { SkipLink } from '@cnamts/synapse'
 </script>
 				`,
 			},

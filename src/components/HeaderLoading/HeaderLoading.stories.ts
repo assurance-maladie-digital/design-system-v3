@@ -33,7 +33,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import HeaderLoading from '@cnamts/synapse'
+					import { HeaderLoading } from '@cnamts/synapse'
 					
 					const width = '100px'
 					const height = '1rem'

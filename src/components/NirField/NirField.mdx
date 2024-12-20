@@ -21,7 +21,7 @@ Le composant `NirField` est utilisé pour afficher un champ de saisie de numéro
 
 <Source dark code={`
 <script lang="ts" setup>
-    import NirField from '@cnamts/synapse'
+    import { NirField } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
 	const model = ref('')
@@ -127,7 +127,7 @@ Voici quelques exemples d'utilisation du composant `NirField` avec des règles d
 <Source dark code={`
 <script setup lang="ts">
 import { ref } from 'vue'
-import NirField from './NirField.vue'
+import { NirField } from './NirField.vue'
 
 const nir = ref('')
 const customNumberRules = [
@@ -176,7 +176,7 @@ Pour utiliser cette méthode, vous devez ajouter une référence Vue au composan
     <Source dark code={`
 <script setup lang="ts">
     import {ref} from 'vue'
-    import NirField from '@cnamts/synapse'
+    import { NirField } from '@cnamts/synapse'
 
     const model = ref('')
     const nirFieldRef = ref() // Référence Vue pour accéder au composant enfant

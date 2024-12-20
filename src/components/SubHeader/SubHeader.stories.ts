@@ -117,7 +117,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -197,7 +197,7 @@ export const DataList: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -294,7 +294,7 @@ export const ActionBtn: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -401,7 +401,7 @@ export const HtmlValue: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -499,7 +499,7 @@ export const Loading: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 					
 					const items = [
 						{
@@ -609,7 +609,7 @@ export const SlotAdditionalInformations: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -694,7 +694,7 @@ export const SlotBackBtn: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -765,7 +765,7 @@ export const SlotBackBtnIcon: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 					import { mdiStepBackward } from '@mdi/js'
 					
 					const backArrowIcon = ref(mdiStepBackward)
@@ -829,7 +829,7 @@ export const SlotTitle: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -891,7 +891,7 @@ export const SlotSubTitle: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -954,7 +954,7 @@ export const SlotRightContent: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SubHeader from '@cnamts/synapse'
+					import { SubHeader } from '@cnamts/synapse'
 					
 					import { mdiClose, mdiContentCopy } from '@mdi/js'
 				</script>

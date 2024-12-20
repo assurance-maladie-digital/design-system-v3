@@ -49,7 +49,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import SocialMediaLinks from '@cnamts/synapse'
+	import { SocialMediaLinks } from '@cnamts/synapse'
 	import { mdiFacebook, mdiLinkedin, mdiTwitter } from '@mdi/js'
 	
 	const links = [

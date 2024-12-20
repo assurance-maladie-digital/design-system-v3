@@ -110,7 +110,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import DownloadBtn from '@cnamts/synapse'
+	import { DownloadBtn } from '@cnamts/synapse'
 	import axios from 'axios'
 	
 	const download = () => {
@@ -149,7 +149,7 @@ export const Error: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import DownloadBtn from '@cnamts/synapse'
+	import { DownloadBtn } from '@cnamts/synapse'
 	import axios from 'axios'
 	
 	const download = () => {
@@ -188,7 +188,7 @@ export const Loading: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import DownloadBtn from '@cnamts/synapse'
+	import { DownloadBtn } from '@cnamts/synapse'
 	import axios from 'axios'
 	
 	const download = () => {
@@ -234,7 +234,7 @@ export const Dark: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import DownloadBtn from '@cnamts/synapse'
+	import { DownloadBtn } from '@cnamts/synapse'
 	import axios from 'axios'
 	
 	const download = () => {
@@ -286,7 +286,7 @@ export const Notify: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import DownloadBtn from '@cnamts/synapse'
+	import { DownloadBtn } from '@cnamts/synapse'
 	import NotificationBar from '@cnamts/synapse'
 	
 	import axios from 'axios'
@@ -373,7 +373,7 @@ export const Customization: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import DownloadBtn from '@cnamts/synapse'
+	import { DownloadBtn } from '@cnamts/synapse'
 	import axios from 'axios'
 	
 	const download = () => {

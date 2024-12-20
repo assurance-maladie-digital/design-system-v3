@@ -43,7 +43,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import HeaderToolbar from '@cnamts/synapse'
+					import { HeaderToolbar } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -232,7 +232,7 @@ export const CustomLinks: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import HeaderToolbar from '@cnamts/synapse'
+					import { HeaderToolbar } from '@cnamts/synapse'
 					
 					const leftMenu = [
 						{

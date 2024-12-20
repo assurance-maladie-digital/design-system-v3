@@ -51,7 +51,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import SyAlert from '@cnamts/synapse'
+	import { SyAlert } from '@cnamts/synapse'
 	import { ref } from 'vue'
 	
 	const showAlert = ref(true);
@@ -108,7 +108,7 @@ export const Outlined: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import SyAlert from '@cnamts/synapse'
+	import { SyAlert } from '@cnamts/synapse'
 	import { ref } from 'vue'
 	
 	const showAlert = ref(true);
@@ -165,7 +165,7 @@ export const SlotIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import SyAlert from '@cnamts/synapse'
+	import { SyAlert } from '@cnamts/synapse'
 	import { ref } from 'vue'
 	import { mdiAccountCheck } from '@mdi/js'
 	

@@ -18,7 +18,7 @@ L'élément `DownloadBtn` est utilisé pour permettre à l'utilisateur de télé
 
 <Source dark code={`
 <script setup lang="ts">
-	import DownloadBtn from '@cnamts/synapse'
+	import { DownloadBtn } from '@cnamts/synapse'
 	import axios from 'axios'
 
 	function download() {
@@ -51,8 +51,8 @@ Exemple :
 
 <Source dark code={`
 <script setup lang="ts">
-	import DownloadBtn from '@cnamts/synapse'
-	import NotificationBar from '@cnamts/synapse'
+	import { DownloadBtn } from '@cnamts/synapse'
+	import { NotificationBar } from '@cnamts/synapse'
 	import axios from 'axios'
 	import { useNotificationService } from '@cnamts/synapse/src/services/NotificationService'
 	import type { Notification } from '@cnamts/synapse/src/components/NotificationBar/types'
