@@ -19,7 +19,7 @@
 		sm: 'px-4',
 		md: 'px-14',
 		lg: 'px-14',
-		xl: 'px-14',
+		xl: 'px-0',
 	}
 
 	const sizeMapping: Record<string, number> = {
