@@ -223,6 +223,10 @@
   .v-btn.v-btn--density-default {
     height: auto !important;
   }
+
+  .v-btn {
+    text-transform: none !important;
+  }
 }
 
 .vd-user-menu-btn {
