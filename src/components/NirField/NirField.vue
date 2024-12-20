@@ -370,6 +370,10 @@
   width: 104px;
 }
 
+.custom-counter {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .vd-nir-field :deep(.v-input__append-inner),
 .vd-tooltip-icon {
   flex: none;
@@ -397,6 +401,12 @@
 }
 :deep(.vd-number-field > .v-input__prepend) {
   margin-right: 0 !important;
+}
+
+:deep(.vd-key-field > .v-input__prepend) {
+  @media screen and (max-width: 360px) {
+    margin-inline-end: 0 !important;
+  }
 }
 
 :deep(.v-text-field .v-input__details) {
