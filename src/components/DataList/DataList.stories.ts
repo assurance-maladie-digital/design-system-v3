@@ -42,7 +42,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -145,7 +145,7 @@ export const Row: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -236,7 +236,7 @@ export const Title: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -327,7 +327,7 @@ export const Icons: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 					import { mdiCalendar, mdiAccount, mdiInformationOutline } from '@mdi/js'
 					
 					const icons = {
@@ -420,7 +420,7 @@ export const ActionBtn: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 							
 					const items = [
 						{
@@ -501,7 +501,7 @@ export const Chips: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -602,7 +602,7 @@ export const HtmlValue: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -681,7 +681,7 @@ export const Loading: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -770,7 +770,7 @@ export const SlotTitle: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -858,7 +858,7 @@ export const Customisation: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataList from '@cnamts/synapse'
+					import { DataList } from '@cnamts/synapse'
 					import { mdiAccount, mdiCalendar, mdiInformationOutline } from '@mdi/js'
 										
 					const items = [

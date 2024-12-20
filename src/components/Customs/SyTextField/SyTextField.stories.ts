@@ -59,7 +59,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyTextField from '@cnamts/synapse'
+					import { SyTextField } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -105,7 +105,7 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyTextField from '@cnamts/synapse'
+					import { SyTextField } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -155,7 +155,7 @@ export const WithCustomError: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyTextField from '@cnamts/synapse'
+					import { SyTextField } from '@cnamts/synapse'
 					
 					const errorMessages = ref([])
 					
@@ -216,7 +216,7 @@ export const SlotPrepend: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyTextField from '@cnamts/synapse'
+					import { SyTextField } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -267,7 +267,7 @@ export const SlotAppend: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyTextField from '@cnamts/synapse'
+					import { SyTextField } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -317,7 +317,7 @@ export const SlotPrependInner: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyTextField from '@cnamts/synapse'
+					import { SyTextField } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -368,7 +368,7 @@ export const SlotPrependInnerDivider: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyTextField from '@cnamts/synapse'
+					import { SyTextField } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -419,7 +419,7 @@ export const SlotAppendInner: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyTextField from '@cnamts/synapse'
+					import { SyTextField } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -472,7 +472,7 @@ export const SlotCustomIcon: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyTextField from '@cnamts/synapse'
+					import { SyTextField } from '@cnamts/synapse'
 					import { mdiAccountBox } from '@mdi/js'
 					
 					const iconName = mdiAccountBox

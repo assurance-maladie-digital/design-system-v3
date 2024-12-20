@@ -40,7 +40,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Logo from '@cnamts/synapse'
+	import { Logo } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -84,7 +84,7 @@ export const small: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Logo from '@cnamts/synapse'
+	import { Logo } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -125,7 +125,7 @@ export const xSmall: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Logo from '@cnamts/synapse'
+	import { Logo } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -166,7 +166,7 @@ export const hideSignature: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Logo from '@cnamts/synapse'
+	import { Logo } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -207,7 +207,7 @@ export const hideOrganism: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Logo from '@cnamts/synapse'
+	import { Logo } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -248,7 +248,7 @@ export const risquePro: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Logo from '@cnamts/synapse'
+	import { Logo } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -289,7 +289,7 @@ export const avatar: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Logo from '@cnamts/synapse'
+	import { Logo } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -332,7 +332,7 @@ export const dark: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import Logo from '@cnamts/synapse'
+	import { Logo } from '@cnamts/synapse'
 </script>
 				`,
 			},

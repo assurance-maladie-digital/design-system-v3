@@ -213,7 +213,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	
 	const docProps = {
 		sitemapRoute: '/',
@@ -325,7 +325,7 @@ export const changeLinks: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	
 	const items = [
         		{
@@ -407,7 +407,7 @@ export const slotPrepend: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	
 	const items = [
         {
@@ -475,7 +475,7 @@ export const slotAppend: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	
 	const items = [
         {
@@ -541,7 +541,7 @@ export const extendedMode: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	
 	const items = [
         {
@@ -607,8 +607,8 @@ export const slotLogo: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
-	import Logo from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
+	import { Logo } from '@cnamts/synapse'
 	
 	const items = [
         {
@@ -689,8 +689,8 @@ export const collapsibleList: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
-	import CollapsibleList from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
+	import { CollapsibleList } from '@cnamts/synapse'
 	
 	const items = [
         {
@@ -817,7 +817,7 @@ export const hideSectionLogo: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	
 	const items = [
         {
@@ -880,7 +880,7 @@ export const hideSectionSocialMediaLinks: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	
 	const items = [
         {
@@ -943,7 +943,7 @@ export const customSocialMediaLinks: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	import { mdiFacebook, mdiTwitter, mdiLinkedin, mdiYoutube } from '@mdi/js'
 	
 	const items = [
@@ -1051,7 +1051,7 @@ export const lightTheme: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	
 	const items = [
         {
@@ -1114,7 +1114,7 @@ export const customTheme: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FooterBar from '@cnamts/synapse'
+	import { FooterBar } from '@cnamts/synapse'
 	
 	const items = [
         {

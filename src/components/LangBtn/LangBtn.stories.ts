@@ -55,7 +55,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import LangBtn from '@cnamts/synapse'
+	import { LangBtn } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
 	const value = ref('fr')
@@ -117,7 +117,7 @@ export const AllLanguages: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import LangBtn from '@cnamts/synapse'
+	import { LangBtn } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
 	const value = ref('fr')
@@ -166,7 +166,7 @@ export const NoDownArrow: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import LangBtn from '@cnamts/synapse'
+	import { LangBtn } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
 	const value = ref('fr')
@@ -216,7 +216,7 @@ export const FlatBtn: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import LangBtn from '@cnamts/synapse'
+	import { LangBtn } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
 	const value = ref('fr')

@@ -37,7 +37,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -91,7 +91,7 @@ export const HideLogoutButton: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -140,7 +140,7 @@ export const HideUserIcon: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -189,7 +189,7 @@ export const MobileVersion: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -238,7 +238,7 @@ export const CustomFullName: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -287,7 +287,7 @@ export const CustomAdditionalInformation: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -336,7 +336,7 @@ export const WithVuetifyOptions: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -401,7 +401,7 @@ export const LogoutEvent: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([

@@ -40,7 +40,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import BackBtn from '@cnamts/synapse'
+	import { BackBtn } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -89,7 +89,7 @@ export const Dark: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import BackBtn from '@cnamts/synapse'
+	import { BackBtn } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -131,7 +131,7 @@ export const HideBackIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import BackBtn from '@cnamts/synapse'
+	import { BackBtn } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -173,7 +173,7 @@ export const DarkAndHideBackIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import BackBtn from '@cnamts/synapse'
+	import { BackBtn } from '@cnamts/synapse'
 </script>
 				`,
 			},

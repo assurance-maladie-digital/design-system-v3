@@ -47,7 +47,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import PageContainer from '@cnamts/synapse'
+	import { PageContainer } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -86,7 +86,7 @@ export const Size: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import PageContainer from '@cnamts/synapse'
+	import { PageContainer } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -128,7 +128,7 @@ export const Color: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import PageContainer from '@cnamts/synapse'
+	import { PageContainer } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -172,7 +172,7 @@ export const Card: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import PageContainer from '@cnamts/synapse'
+	import { PageContainer } from '@cnamts/synapse'
 	import { VCard } from 'vuetify/components'
 </script>
 				`,

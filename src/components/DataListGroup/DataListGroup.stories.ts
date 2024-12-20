@@ -37,7 +37,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataListGroup from '@cnamts/synapse'
+					import { DataListGroup } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -174,7 +174,7 @@ export const Icons: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataListGroup from '@cnamts/synapse'
+					import { DataListGroup } from '@cnamts/synapse'
 					import { mdiCalendar, mdiAccount, mdiDoctor, mdiCardAccountDetails, mdiPencil } from '@mdi/js'
 					
 					const icons = {
@@ -331,7 +331,7 @@ export const ActionBtn: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataListGroup from '@cnamts/synapse'
+					import { DataListGroup } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -474,7 +474,7 @@ export const ItemWidth: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataListGroup from '@cnamts/synapse'
+					import { DataListGroup } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -602,7 +602,7 @@ export const Chips: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataListGroup from '@cnamts/synapse'
+					import { DataListGroup } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -743,7 +743,7 @@ export const HtmlValue: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataListGroup from '@cnamts/synapse'
+					import { DataListGroup } from '@cnamts/synapse'
 										
 					const items = [
 						{
@@ -874,7 +874,7 @@ export const Loading: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import DataListGroup from '@cnamts/synapse'
+					import { DataListGroup } from '@cnamts/synapse'
 										
 					const items = [
 						{

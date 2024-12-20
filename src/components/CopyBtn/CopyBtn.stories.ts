@@ -81,7 +81,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import CopyBtn from '@cnamts/synapse'
+	import { CopyBtn } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -157,7 +157,7 @@ export const NoTooltip: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import CopyBtn from '@cnamts/synapse'
+	import { CopyBtn } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -216,7 +216,7 @@ export const SlotIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import CopyBtn from '@cnamts/synapse'
+	import { CopyBtn } from '@cnamts/synapse'
 	import { mdiContentDuplicate } from '@mdi/js'
 	
 	const duplicateIcon = mdiContentDuplicate
@@ -285,7 +285,7 @@ export const SlotTooltip: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import CopyBtn from '@cnamts/synapse'
+	import { CopyBtn } from '@cnamts/synapse'
 	
 	const tooltip = 'Texte personalisé'
 </script>
