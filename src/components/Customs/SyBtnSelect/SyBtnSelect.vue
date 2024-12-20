@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, onMounted, useSlots } from 'vue'
+	import { ref, watch, computed, onMounted, useSlots, type PropType } from 'vue'
 	import { useDisplay } from 'vuetify'
+
+	type Item = string | Record<string, unknown>
 
 	const props = defineProps({
 		modelValue: {
@@ -8,7 +10,7 @@
 			default: null,
 		},
 		menuItems: {
-			type: Array,
+			type: Array as PropType<Item[]>,
 			default: () => [],
 		},
 		label: {
@@ -80,14 +82,10 @@
 		}
 	})
 
-	const selectItem = (item: unknown) => {
-		selectedItem.value = item as string | Record<string, unknown> | null
+	const selectItem = (item: Item | null) => {
+		selectedItem.value = item
 		emit('update:modelValue', item)
 		isOpen.value = false
-	}
-
-	const getItemText = (item: unknown) => {
-		return (item as Record<string, unknown>)[props.textKey]
 	}
 
 	const formattedItems = computed(() => {
@@ -199,23 +197,12 @@
 						:key="index"
 						:class="`text-${props?.options['list']?.textColor}`"
 						v-bind="props.options['list']"
+						:href="item.link"
 						@click="selectItem(item)"
 					>
-						<template v-if="item.link">
-							<a
-								:href="item.link"
-								class="v-list-item__content links"
-							>
-								<VListItemTitle v-bind="props.options['list']">
-									{{ getItemText(item) }}
-								</VListItemTitle>
-							</a>
-						</template>
-						<template v-else>
-							<VListItemTitle v-bind="props.options['list']">
-								{{ getItemText(item) }}
-							</VListItemTitle>
-						</template>
+						<VListItemTitle v-bind="props.options['list']">
+							{{ item[props.textKey] }}
+						</VListItemTitle>
 					</VListItem>
 					<slot />
 					<slot name="footer-list-item" />
@@ -259,10 +246,5 @@
 
 :deep(.vd-user-menu-btn:focus > .v-btn__overlay) {
   opacity: 0 !important;
-}
-
-.links {
-  text-decoration: none;
-  color: $colors-icon-base;
 }
 </style>

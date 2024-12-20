@@ -56,7 +56,7 @@ const meta = {
 			description: 'Liste des éléments du menu utilisateur',
 			table: {
 				type: {
-					summary: '{ text: string, value: string }',
+					summary: '{ text: string, value: string, link?: string }[]',
 				},
 			},
 		},
