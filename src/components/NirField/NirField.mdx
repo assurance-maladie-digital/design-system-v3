@@ -1,0 +1,216 @@
+import {Canvas, Meta, Controls, Source} from '@storybook/blocks';
+import * as NirFieldStories from './NirField.stories.ts';
+import NirField from './NirField.vue';
+
+<Meta title="Composants/Formulaires/NirField" component={NirField}/>
+
+# NirField
+
+Le composant `NirField` est utilisé pour afficher un champ de saisie de numéro de sécurité sociale.
+
+<Canvas story={{
+    height: '150px',
+}} of={NirFieldStories.Default}
+/>
+
+# API
+
+<Controls of={NirFieldStories.Default}/>
+
+## Utilisation
+
+<Source dark code={`
+<script lang="ts" setup>
+    import NirField from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const model = ref('')
+	const nirFieldRef = ref() // Référence Vue pour accéder au composant enfant
+
+	const handleSubmit = () => {
+		// Appeler la méthode exposée validateOnSubmit via la référence
+		const isValid = nirFieldRef.value?.validateOnSubmit()
+		if (!isValid) {
+			alert('Corrigez les erreurs avant de soumettre !')
+		}
+		else {
+			alert('Formulaire soumis avec succès !')
+		}
+	}
+        </script>
+
+        <template>
+            <main>
+                <form
+                    class="mx-16 my-6"
+                    @submit.prevent="handleSubmit"
+                >
+                    <Nirfield
+                        ref="nirFieldRef"
+                        v-model="model"
+                        :display-key="true"
+                        key-tooltip="message d'aide pour la clef"
+                        nir-tooltip="message d'aide pour le NIR"
+                        outlined
+                        required
+                    />
+                    <button type="submit">
+                        Soumettre
+                    </button>
+                </form>
+            </main>
+        </template>
+`}
+/>
+
+### Règles de gestion par défaut
+
+Le composant `NirField` utilise des règles de validation par défaut pour le numéro NIR et la Clé. Voici les règles de validation par défaut :
+
+#### Pour le numéro NIR :
+- Le numéro NIR doit être composé de 13 chiffres.
+- Le numéro NIR doit respecter le format suivant :
+- 1 chiffre pour le sexe (1-4, 7, 8)
+- 2 chiffres pour l'année de naissance
+- 2 chiffres pour le mois de naissance (01-12, 20-42)
+- 2 chiffres pour le département de naissance (01-99, 2A, 2B, 96, 97X, 98X)
+- 3 chiffres pour la commune de naissance
+- 3 chiffres pour le rang d'inscription
+- Le numéro NIR doit passer la validation de la clé de contrôle (2 chiffres).
+
+#### Pour la Clé :
+- La clé doit être composée de 2 chiffres.
+- La clé doit être valide en fonction du calcul de la clé NIR.
+
+
+
+
+### Règles de gestion personnalisées
+
+Vous pouvez définir des règles de gestion personnalisées pour le numéro NIR et la Clé via les props `custom-number-rules` et `custom-key-rules`.
+
+Il y a deux manieres possibles:
+
+Chaque règle est un objet avec la structure suivante :
+
+#### 1. Regles que nous mettons à disposition :
+
+- `type` (string) : Le type de validation (par exemple, `minLength`).
+- `options` (object) : Options pour la règle de validation, incluant :
+- `length` (number) : La longueur requise pour les règles `minLength`, `maxLength`, `min` et `max`.
+- `message` (string | optionnel) : Le message d'erreur à afficher si la validation échoue (sinon le message par default s'affiche).
+- `successMessage` (string | optionnel) : Le message à afficher si la validation réussit (sinon le message par default s'affiche).
+
+Vous trouverez la liste des rules mises à disposition dans la section [Comment utiliser les rules](/docs/guide-du-dev-comment-utiliser-les-rules--docs).
+
+#### 2. Regles personnalisées :
+
+Pour les regles de gestion personnalisées, vous pouvez utiliser les règles de type `custom` et définir une fonction de validation personnalisée. Cette fonction doit retourner un objet avec les propriétés `valid` (booléen) et `message` (string) :
+
+<Source dark code={`
+{
+    type: 'custom',
+    options: {
+      validate: (value: string) => value.startsWith('123') || 'Le NIR doit commencer par 123.',
+      message: 'Le NIR est invalide.',
+      successMessage: 'Le NIR est valide.',
+},
+
+    `}
+/>
+
+
+### Exemple d'utilisation
+
+Voici quelques exemples d'utilisation du composant `NirField` avec des règles de gestion personnalisées :
+
+<Source dark code={`
+<script setup lang="ts">
+import { ref } from 'vue'
+import NirField from './NirField.vue'
+
+const nir = ref('')
+const customNumberRules = [
+    {
+    type: 'custom',
+    options: {
+      validate: (value: string) => value.startsWith('123') || 'Le NIR doit commencer par 123.',
+      message: 'Le NIR est invalide.',
+      successMessage: 'Le NIR est valide.',
+    },
+  },
+]
+const customKeyRules = [
+  {
+    type: 'minLength',
+    options: {
+      length: 2,
+      message: 'La clé doit avoir au moins 2 caractères.',
+      successMessage: 'La clé a une longueur valide.',
+    },
+  },
+]
+</script>
+
+<template>
+  <NirField
+    v-model="nir"
+    :outlined="true"
+    :required="true"
+    numberLabel="NIR"
+    keyLabel="Clé"
+    :displayKey="true"
+    :customNumberRules="customNumberRules"
+    :customKeyRules="customKeyRules"
+  />
+</template>
+`}
+/>
+
+### Méthode validateOnSubmit
+
+La méthode `validateOnSubmit` permet de valider les champs du composant `NirField` lors de la soumission du formulaire. Elle retourne `true` si tous les champs sont valides, sinon `false`.
+
+Pour utiliser cette méthode, vous devez ajouter une référence Vue au composant `NirField` et appeler la méthode `validateOnSubmit` via cette référence.
+
+    <Source dark code={`
+<script setup lang="ts">
+    import {ref} from 'vue'
+    import NirField from '@cnamts/synapse'
+
+    const model = ref('')
+    const nirFieldRef = ref() // Référence Vue pour accéder au composant enfant
+    const handleSubmit = () => {
+    // Appeler la méthode exposée validateOnSubmit via la référence
+    const isValid = nirFieldRef.value?.validateOnSubmit()
+    if (!isValid) {
+    alert('Corrigez les erreurs avant de soumettre !')
+} else {
+    alert('Formulaire soumis avec succès !')
+}
+}
+</script>
+
+    <template>
+      <main>
+        <form
+          class="mx-16 my-6"
+          @submit.prevent="handleSubmit"
+        >
+          <NirField
+            ref="nirFieldRef"
+            v-model="model"
+            :display-key="true"
+            key-tooltip="message d'aide pour la clef"
+            nir-tooltip="message d'aide pour le NIR"
+            outlined
+            required
+          />
+          <button type="submit">
+            Soumettre
+          </button>
+        </form>
+      </main>
+    </template>
+`}
+/>

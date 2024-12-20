@@ -18,16 +18,29 @@ Le composable `useFieldValidation` vous permet de définir des règles de valida
 
 ### Type `RuleOptions`
 
-    <Source dark code={`
+<Source dark code={`
 type RuleOptions = {
-fieldName?: string; // Nom du champ utilisé dans les messages d'erreur
-message?: string; // Message personnalisé pour la règle
-length?: number; // Longueur minimale ou maximale
-value?: number; // Valeur minimale ou maximale
-pattern?: RegExp; // Motif à valider
-ignoreSpace?: boolean; // Ignorer les espaces lors de la validation de longueur
+  fieldName?: string; // Nom du champ utilisé dans les messages d'erreur
+  message?: string; // Message personnalisé pour la règle
+  successMessage?: string; // Message personnalisé de validation réussie
+  length?: number; // Longueur minimale ou maximale
+  value?: number; // Valeur minimale ou maximale
+  pattern?: RegExp; // Motif à valider
+  ignoreSpace?: boolean; // Ignorer les espaces lors de la validation de longueur
+  validate?: (value: any) => boolean | string; // Validation personnalisée
 };
-`} />
+`}
+/>
+
+### Type `ValidationResult`
+
+<Source dark code={`
+type ValidationResult = {
+  success?: string; // Message de validation réussie
+  error?: string; // Message d'erreur
+};
+`}
+/>
 
 ---
 
@@ -35,98 +48,73 @@ ignoreSpace?: boolean; // Ignorer les espaces lors de la validation de longueur
 
 ### Script Vue.js
 
-    <Source dark code={`
+<Source dark code={`
 <script lang="ts" setup>
-    import {ref} from 'vue';
-    import {useFieldValidation} from '@cnamts/synapse';
+import { ref } from 'vue';
+import { useFieldValidation } from '@cnamts/synapse';
 
-    const {generateRules} = useFieldValidation();
+const { generateRules } = useFieldValidation();
 
-    const firstName = ref('');
-    const email = ref('');
-    const age = ref('');
+const firstName = ref('');
+const email = ref('');
+const age = ref('');
 
-    const rules = {
-    firstName: generateRules([
-{type: 'required', options: {message: 'Ce champ est requis.'}},
-{type: 'minLength', options: {length: 3, ignoreSpace: true}},
-{type: 'maxLength', options: {length: 20}},
-    ]),
-    email: generateRules([
-{type: 'required', options: {fieldName: 'Email'}},
-{type: 'email'},
-    ]),
-    age: generateRules([
-{type: 'min', options: {value: 18}},
-{type: 'max', options: {value: 99}},
-    ]),
+const rules = {
+  firstName: generateRules([
+    { type: 'required', options: { message: 'Ce champ est requis.' } },
+    { type: 'minLength', options: { length: 3, ignoreSpace: true } },
+    { type: 'maxLength', options: { length: 20 } },
+  ]),
+  email: generateRules([
+    { type: 'required', options: { fieldName: 'Email' } },
+    { type: 'email' },
+  ]),
+  age: generateRules([
+    { type: 'min', options: { value: 18 } },
+    { type: 'max', options: { value: 99 } },
+  ]),
 };
 
-    const validateField = (field: string) => {
-    return rules[field].every((rule) => rule(field));
+const validateField = (field: string) => {
+  return rules[field].every((rule) => rule(field));
 };
 
-    const handleSubmit = () => {
-    if (validateField('firstName') && validateField('email') && validateField('age')) {
+const handleSubmit = () => {
+  if (validateField('firstName') && validateField('email') && validateField('age')) {
     alert('Formulaire valide.');
-} else {
+  } else {
     alert('Merci de vérifier les champs.');
-}
+  }
 };
 </script>
-`} />
----
+`}
+/>
 
-### Template Vue.js
+Vous pouvez retrouver un exemple complet sur le [NirField](/docs/composants-formulaires-nirfield--docs).
 
-    <Source dark code={`
-<template>
-    <v-form
-    @submit.prevent="handleSubmit">
-    <v-text-field
-        v-model="firstName"
-    :rules="rules.firstName"
-    label="Prénom"
-    @blur="validateField('firstName')"
-    />
-    <v-text-field
-        v-model="email"
-    :rules="rules.email"
-    label="Email"
-    @blur="validateField('email')"
-    />
-    <v-text-field
-        v-model="age"
-    :rules="rules.age"
-    label="Âge"
-    @blur="validateField('age')"
-    />
-    <v-btn block class="mt-2" type="submit">Soumettre</v-btn>
-</v-form>
-</template>
-`} />
 ---
 
 ## Fonctionnalités supportées
 
-- **Validation requise** (`required`)
-- **Longueur minimale** (`minLength`)
-- **Longueur maximale** (`maxLength`)
-- **Valeur minimale** (`min`)
-- **Valeur maximale** (`max`)
-- **Validation par motif** (`matchPattern`)
-- **Validation d'email** (`email`)
+- **Validation requise** (`required`) : Assurez-vous qu'un champ est rempli.
+- **Longueur minimale** (`minLength`) : Validez un champ avec un nombre minimal de caractères.
+- **Longueur maximale** (`maxLength`) : Limitez un champ à un nombre maximal de caractères.
+- **Valeur minimale** (`min`) : Assurez-vous que la valeur est au moins égale à une valeur définie.
+- **Valeur maximale** (`max`) : Assurez-vous que la valeur ne dépasse pas une valeur définie.
+- **Validation par motif** (`matchPattern`) : Validez un champ à l'aide d'une expression régulière.
+- **Validation d'email** (`email`) : Assurez-vous que la valeur est une adresse email valide.
+- **Validation personnalisée** (`custom`) : Implémentez des règles spécifiques via une fonction.
 
 ---
 
 ## Bonnes pratiques
 
-- Toujours tester les messages d'erreur personnalisés pour garantir une bonne expérience utilisateur.
-- Centraliser la logique de validation pour une meilleure maintenance.
-- Documenter les règles complexes pour aider votre équipe à comprendre leur fonctionnement.
+- **Centralisation** : Centralisez la logique de validation pour garantir une maintenance facile.
+- **Accessibilité** : Vérifiez que les messages d'erreur sont clairs et concis pour tous les utilisateurs.
 
 ---
 
 ## Conclusion
 
-Avec `useFieldValidation`, vous disposez d'un moyen simple et flexible pour gérer vos validations de formulaires dans Vue.js. Combinez-le avec des bibliothèques comme Vuetify pour une expérience utilisateur optimisée.
+Avec `useFieldValidation`, vous disposez d'un outil pour gérer les validations de vos formulaires dans Vue.js. Ce composable est idéal pour créer des validations personnalisées et intégrer des champs avec des bibliothèques comme Vuetify.
+
