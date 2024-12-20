@@ -26,7 +26,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FranceConnectBtn from '@cnamts/synapse'
+	import { FranceConnectBtn } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -69,7 +69,7 @@ export const FranceConnectPlus: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FranceConnectBtn from '@cnamts/synapse'
+	import { FranceConnectBtn } from '@cnamts/synapse'
 </script>
 				`,
 			},
@@ -115,7 +115,7 @@ export const DarkTheme: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import FranceConnectBtn from '@cnamts/synapse'
+	import { FranceConnectBtn } from '@cnamts/synapse'
 </script>
 				`,
 			},
