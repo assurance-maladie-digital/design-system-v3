@@ -178,7 +178,7 @@
 					:menu-open
 				/>
 
-				<div class="header-logo">
+				<div class="header-logo pl-xl-0 pl-md-14 pl-4">
 					<slot
 						name="logo"
 						:menu-open
@@ -254,10 +254,6 @@
 	border-bottom: solid 1px $blue-lighten-80;
 }
 
-.header-logo {
-	margin-left: 1rem;
-}
-
 .header-side {
 	display: flex;
 	align-items: center;
@@ -265,10 +261,6 @@
 }
 
 @media screen and (min-width: $header-breakpoint) {
-	.header-logo {
-		margin-left: 2rem;
-	}
-
 	.inner-header {
 		height: $header-height-desktop;
 	}
