@@ -258,7 +258,7 @@
 			<VTooltip v-if="nirTooltip">
 				<template #activator="{ props: iconProps }">
 					<VIcon
-						class="vd-tooltip-icon mt-4 ml-2"
+						class="vd-tooltip-icon mt-4 mr-4"
 						v-bind="{ ...iconProps, ...options.tooltip }"
 					>
 						{{ infoIcon }}
@@ -320,7 +320,7 @@
 				<VTooltip v-if="keyTooltip">
 					<template #activator="{ props: iconProps }">
 						<VIcon
-							class="vd-tooltip-icon mt-4 ml-2"
+							class="vd-tooltip-icon mt-4 ml-4"
 							v-bind="{ ...iconProps, ...options.icon }"
 						>
 							{{ infoIcon }}
@@ -376,6 +376,10 @@
   color: rgba(0, 0, 0, 0.54);
 }
 
+:deep(.v-overlay__content) {
+  background: rgba(84, 88, 89, 0.95) !important;
+}
+
 .vd-key-field {
   flex: none;
 }
@@ -390,6 +394,9 @@
 
 :deep(.v-input__append) {
   margin-inline-start: 0 !important;
+}
+:deep(.vd-number-field > .v-input__prepend) {
+  margin-right: 0 !important;
 }
 
 :deep(.v-text-field .v-input__details) {
