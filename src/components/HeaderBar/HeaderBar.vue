@@ -254,10 +254,6 @@
 	border-bottom: solid 1px $blue-lighten-80;
 }
 
-.header-append, .header-prepend {
-
-}
-
 .header-logo {
 	margin-left: 1rem;
 }
