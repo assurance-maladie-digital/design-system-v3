@@ -5,15 +5,121 @@ const meta = {
 	title: 'Composants/Boutons/UserMenuBtn',
 	component: UserMenuBtn,
 	parameters: {
-		layout: 'fullscreen',
-		controls: { exclude: ['modelValue', 'label', 'icon', 'logoutIcon'] },
+		controls: { exclude: ['logout'] },
 	},
 	argTypes: {
-		hideLogoutBtn: { control: 'boolean' },
-		hideUserIcon: { control: 'boolean' },
-		isMobileView: { control: 'boolean' },
-		fullName: { control: 'text' },
-		additionalInformation: { control: 'text' },
+		'modelValue': {
+			control: false,
+			description: 'Élément sélectionné dans le menu',
+			table: {
+				category: 'props',
+				type: { summary: '{ text: string, value: string } | null | undefined' },
+			},
+		},
+		'hideLogoutBtn': {
+			control: 'boolean',
+			description: 'Masque le bouton de déconnexion',
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
+		'hideUserIcon': {
+			control: 'boolean',
+			description: 'Masque l\'icône utilisateur',
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
+		'isMobileView': {
+			control: 'boolean',
+			description: 'Affiche le menu en version mobile',
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
+		'fullName': {
+			control: 'text',
+			description: 'Nom complet de l\'utilisateur',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
+		'additionalInformation': {
+			control: 'text',
+			description: 'Informations supplémentaires sur l\'utilisateur (ex: rôle, service, etc.)',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
+		'menuItems': {
+			control: 'object',
+			description: 'Liste des éléments du menu utilisateur',
+			table: {
+				type: {
+					summary: '{ text: string, value: string }',
+				},
+			},
+		},
+		'vuetifyOptions': {
+			control: 'object',
+			description: 'Options de personnalisation des éléments Vuetify',
+			table: {
+				category: 'props',
+				type: {
+					summary: 'object',
+					detail: `{
+	menu: Record<string, any>,
+	btn: Record<string, any>,
+	icon: Record<string, any>,
+	logoutListItem: Record<string, any>,
+	logoutIcon: Record<string, any>,
+}`,
+				},
+				defaultValue: {
+					summary: 'object',
+					detail: `{
+	menu: {
+		offsetY: true,
+		zIndex: 4,
+		minWidth: '198px',
+		maxWidth: 'auto',
+		nudgeRight: 0,
+	},
+	btn: {
+		variant: 'text',
+		height: 'auto',
+	},
+	icon: {
+		color: 'avatar',
+	},
+	logoutListItem: {
+		class: 'text-primary',
+		minWidth: '198px',
+	},
+	logoutIcon: {
+		color: 'primary',
+		class: 'mr-4',
+	},
+}`,
+				},
+			},
+		},
+		'onLogout': {
+			action: 'logout',
+			description: 'Événement déclenché lors de la déconnexion de l\'utilisateur',
+			table: {
+				category: 'events',
+				type: { summary: 'void' },
+			},
+		},
+		'onUpdate:modelValue': {
+			action: 'update:modelValue',
+			description: 'Événement déclenché lors de la selection d\'un élément du menu',
+			table: {
+				category: 'events',
+				type: { summary: '{ text: string, value: string }' },
+			},
+		},
 	},
 } satisfies Meta<typeof UserMenuBtn>
 
@@ -37,7 +143,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -91,7 +197,7 @@ export const HideLogoutButton: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -140,7 +246,7 @@ export const HideUserIcon: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -189,7 +295,7 @@ export const MobileVersion: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -238,7 +344,7 @@ export const CustomFullName: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -287,7 +393,7 @@ export const CustomAdditionalInformation: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -336,7 +442,7 @@ export const WithVuetifyOptions: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([
@@ -344,10 +450,6 @@ export const WithVuetifyOptions: Story = {
   { text: 'Profil', value: 'Profil' },
   { text: 'Paramètres', value: 'Paramètres' },
  ])
-
- const handleLogout = () => {
-  alert('User logged out')
- }
 
  const vuetifyOptions = ref({
   menu: { minWidth: '250px' },
@@ -401,7 +503,7 @@ export const LogoutEvent: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
  import { ref } from 'vue'
- import UserMenuBtn from '@cnamts/synapse'
+ import { UserMenuBtn } from '@cnamts/synapse'
 
  const selected = ref(null)
  const menuItems = ref([

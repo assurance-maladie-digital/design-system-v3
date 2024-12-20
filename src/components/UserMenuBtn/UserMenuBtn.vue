@@ -1,60 +1,55 @@
 <script lang="ts" setup>
-	import { defineProps, defineEmits, withDefaults, computed } from 'vue'
+	import { computed } from 'vue'
 	import SyBtnSelect from '../Customs/SyBtnSelect/SyBtnSelect.vue'
 	import { useDisplay } from 'vuetify'
 	import { mdiAccount, mdiLoginVariant } from '@mdi/js'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { defaultOptions } from './config'
 
+	type MenuItem = { text: string, value: string, link?: string }
+
 	const props = withDefaults(defineProps<CustomizableOptions & {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		modelValue?: string | Record<string, any> | null | undefined
-		menuItems?: { text: string, value: string, link?: string }[]
+		menuItems?: MenuItem[]
 		additionalInformation?: string
 		fullName?: string
 		hideLogoutBtn?: boolean
-		logoutIcon?: string
 		isMobileView?: boolean
 		hideUserIcon?: boolean
 	}>(), {
-		modelValue: null,
 		menuItems: () => [],
 		additionalInformation: 'Information supplémentaire',
 		fullName: 'Prénom Nom',
 		hideLogoutBtn: false,
-		logoutIcon: 'mdiLoginVariant',
 		isMobileView: false,
 		hideUserIcon: false,
 	})
 
-	const emit = defineEmits(['update:modelValue', 'logout'])
+	const modelValue = defineModel<MenuItem | null>({
+		default: null,
+	})
+
+	defineEmits(['logout'])
+
 	const { smAndDown } = useDisplay()
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	const options = useCustomizableOptions(defaultOptions, props) as any
+	const options = useCustomizableOptions(defaultOptions, props)
 
 	const isMobileView = computed(() => {
 		return props.isMobileView || smAndDown.value
 	})
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	function updateModelValue(value: any) {
-		emit('update:modelValue', value)
-	}
 </script>
 
 <template>
 	<SyBtnSelect
+		v-model="modelValue"
 		:hide-icon="hideUserIcon"
 		:icon-only="isMobileView"
 		:is-mobile-view="isMobileView"
 		:menu-items="menuItems"
-		:model-value="props.modelValue ?? undefined"
 		:options="options"
 		:primary-info="fullName"
 		:secondary-info="additionalInformation"
 		class="user-menu-btn"
-		@update:model-value="updateModelValue"
 	>
 		<template #append-icon>
 			<VIcon
@@ -88,18 +83,19 @@
 	</SyBtnSelect>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 @use '@/assets/tokens.scss';
-.vd-user-icon {
-  width: 40px;
-  height: 40px;
-  background: tokens.$grey-lighten-90;
-  border-radius: 50%;
 
-  svg,
-  .v-icon__svg {
-    width: 24px;
-    height: 24px;
-  }
+.vd-user-icon {
+	width: 40px;
+	height: 40px;
+	background: tokens.$grey-lighten-90;
+	border-radius: 50%;
+
+	svg,
+	.v-icon__svg {
+		width: 24px;
+		height: 24px;
+	}
 }
 </style>

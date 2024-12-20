@@ -21,4 +21,4 @@ export const defaultOptions = {
 		color: 'primary',
 		class: 'mr-4',
 	},
-}
+} as const

@@ -13,23 +13,23 @@ The `UserMenuBtn` component is used to display a user menu button with a dropdow
 
 <Controls of={UserMenuBtnStories.Default}/>
 
-# Usage Example
+# Example d'utilisation
 
 <Source dark code={`
-    <script setup lang="ts">
-    import UserMenuBtn from './UserMenuBtn.vue';
+  <script setup lang="ts">
+  import { UserMenuBtn } from '@cnamts/synapse';
 
-    const menuItems = [
-                { text: 'Administration', value: 'Administration' },
-                { text: 'Profil', value: 'Profil' },
-                { text: 'Paramètres', value: 'Paramètres' },
-    ];
-    </script>
+  const menuItems = [
+    { text: 'Administration', value: 'Administration' },
+    { text: 'Profil', value: 'Profil' },
+    { text: 'Paramètres', value: 'Paramètres' },
+  ];
+  </script>
 
-    <template>
-      <UserMenuBtn
-        :items="menuItems"
-      />
-    </template>
+  <template>
+    <UserMenuBtn
+      :items="menuItems"
+    />
+  </template>
 `}
 />
