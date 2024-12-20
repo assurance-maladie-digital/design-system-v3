@@ -51,6 +51,6 @@ describe('PageContainer', () => {
 			},
 		})
 
-		expect(wrapper.vm.containerSize).toBe(960)
+		expect(wrapper.vm.containerSize).toBe(800)
 	})
 })

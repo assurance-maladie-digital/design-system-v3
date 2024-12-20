@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	import { VTabs } from 'vuetify/components'
 	import type { NavigationItem } from '../types'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
@@ -19,56 +18,59 @@
 </script>
 
 <template>
-	<VSheet
-		class="horizontal-menu px-12"
-		v-bind="options.sheet"
-	>
-		<slot name="navigation-bar-prepend" />
-		<slot>
-			<VTabs
-				class="horizontal-menu__tabs"
-				v-bind="options.tabs"
-			>
-				<VTab
-					v-for="(item, index) in items"
-					:key="index"
-					:href="item.href"
-					:to="item.to"
-					v-bind="options.tab"
-					tabindex="0"
-					class="horizontal-menu__item"
+	<VSheet v-bind="options.sheet">
+		<div class="horizontal-menu px-xl-0 px-14">
+			<slot name="navigation-bar-prepend" />
+			<slot>
+				<VTabs
+					class="horizontal-menu__tabs"
+					v-bind="options.tabs"
 				>
-					<span class="horizontal-menu__item-link">
-						{{ item.label }}
-					</span>
-				</VTab>
-			</VTabs>
-		</slot>
-		<slot name="navigation-bar-append" />
+					<VTab
+						v-for="(item, index) in items"
+						:key="index"
+						:href="item.href"
+						:to="item.to"
+						v-bind="options.tab"
+						tabindex="0"
+						class="horizontal-menu__item"
+					>
+						<span class="horizontal-menu__item-link">
+							{{ item.label }}
+						</span>
+					</VTab>
+				</VTabs>
+			</slot>
+			<slot name="navigation-bar-append" />
+		</div>
 	</VSheet>
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/tokens.scss' as *;
+@use '@/components/HeaderBar/consts' as *;
 
 .horizontal-menu {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
+  max-width: $header-max-width;
+  margin: 0 auto;
 }
 
 .horizontal-menu__tabs {
-	flex: 1 1 0;
+  flex: 1 1 0;
 }
 
 .horizontal-menu__item {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .horizontal-menu__item-link {
-	font-size: 0.875rem;
-	font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 700;
 }
 
 .v-tab-item--selected span {
-	color: #fff;
+  color: #fff;
 }
 </style>

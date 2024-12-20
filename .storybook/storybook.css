@@ -1,3 +1,7 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
 h1.title {
     color: #0C419A;
     font-size: 3rem !important;
