@@ -146,9 +146,6 @@ export const AccessibilitePanel: StoryObj = {
 							</v-expansion-panel>
 						</v-expansion-panels>
 						<div v-else style="display: flex;justify-content: center;"><span style="text-align:center;"  >Pas de critère d'accessibilité bloquant</span></div>
-								</v-expansion-panel-text>
-							</v-expansion-panel>
-						</v-expansion-panels>
 					</v-col>
 				</div>
 			`,

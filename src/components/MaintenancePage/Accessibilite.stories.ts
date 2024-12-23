@@ -58,11 +58,9 @@ export const AccessibilitePanel: StoryObj = {
 															href="{{i.link}}" target="blank">
 															<VIcon :icon="linkICon"/>
 														</a></p>
-
 														<p>{{ value.info1 }}</p>
 														<p>{{ value.info2 }}</p>
 														<p>{{ value.info3 }}</p>
-
 													</div>
 													<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
 												</div>
@@ -84,11 +82,9 @@ export const AccessibilitePanel: StoryObj = {
 															href="value.link" target="blank">
 															<VIcon :icon="linkICon"/>
 														</a></p>
-
 														<p>{{ element.info1 }}</p>
 														<p>{{ element.info2 }}</p>
 														<p>{{ element.info3 }}</p>
-
 													</div>
 													<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
 												</div>
@@ -146,9 +142,6 @@ export const AccessibilitePanel: StoryObj = {
 							</v-expansion-panel>
 						</v-expansion-panels>
 						<div v-else style="display: flex;justify-content: center;"><span style="text-align:center;"  >Pas de critère d'accessibilité bloquant</span></div>
-								</v-expansion-panel-text>
-							</v-expansion-panel>
-						</v-expansion-panels>
 					</v-col>
 				</div>
 			`,
