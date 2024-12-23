@@ -59,11 +59,9 @@ export const AccessibilitePanel: StoryObj = {
 														href="{{i.link}}" target="blank">
 														<VIcon :icon="linkICon"/>
 													</a></p>
-
 													<p>{{ value.info1 }}</p>
 													<p>{{ value.info2 }}</p>
 													<p>{{ value.info3 }}</p>
-
 												</div>
 												<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
 											</div>
@@ -85,11 +83,9 @@ export const AccessibilitePanel: StoryObj = {
 														href="value.link" target="blank">
 														<VIcon :icon="linkICon"/>
 													</a></p>
-
 													<p>{{ element.info1 }}</p>
 													<p>{{ element.info2 }}</p>
 													<p>{{ element.info3 }}</p>
-
 												</div>
 												<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
 											</div>
@@ -136,11 +132,9 @@ export const AccessibilitePanel: StoryObj = {
 														href="{{i.link}}" target="blank">
 														<VIcon :icon="linkICon"/>
 													</a></p>
-
 													<p>{{ value.info1 }}</p>
 													<p>{{ value.info2 }}</p>
 													<p>{{ value.info3 }}</p>
-
 												</div>
 												<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
 											</div>
@@ -163,11 +157,9 @@ export const AccessibilitePanel: StoryObj = {
 														href="value.link" target="blank">
 														<VIcon :icon="linkICon"/>
 													</a></p>
-
 													<p>{{ element.info1 }}</p>
 													<p>{{ element.info2 }}</p>
 													<p>{{ element.info3 }}</p>
-
 												</div>
 												<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
 											</div>
@@ -196,28 +188,31 @@ export const Legende: StoryObj = {
 				return { args }
 			},
 			template: `
-			  <p style="color: grey;font-size: 11px; margin-bottom: 12px;">Date de conception: 20/11/2024</p>
-			  <div>
-				<p>Le tableau ci-dessous liste nos recommandations suivant les <a target="blank" style="color:#0C41BD;" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#contenu">catégories du RGAA</a>.</p>
-				<p style="margin-bottom: 12px;font-weight:bold;">Pour rappel le composant seul ne garantie pas
-				  l'accessibilité du site.</p>
-				<div style="font-size: 14px">
-				  <p>Nous avons deux façons de relever les problèmes d'accessibilité des composants :</p>
-				  <div>
-					<v-btn variant="tonal" color="grey" size="x-small" style="margin: 2px;font-size: 8px;" rounded>
-					  Audit
-					</v-btn>
-					Problèmes relevés par le projet
-				  </div>
-				  <div>
-					<v-btn variant="tonal" color="red" size="x-small" style="margin: 2px;font-size: 8px;" rounded>
-					  Tanaguru
-					</v-btn>
-					Problèmes relevés par Tanaguru
-				  </div>
+				<p style="color: grey;font-size: 11px; margin-bottom: 12px;">Date de conception: 20/11/2024</p>
+				<div>
+					<p>Le tableau ci-dessous liste nos recommandations suivant les <a target="blank" style="color:#0C41BD;" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#contenu">catégories
+						du RGAA</a>.</p>
+					<p style="margin-bottom: 12px;font-weight:bold;">Pour rappel le composant seul ne garantie pas
+						l'accessibilité du site.</p>
+					<div style="font-size: 14px">
+						<p>Nous avons deux façons de relever les problèmes d'accessibilité des composants :</p>
+						<div>
+							<v-btn variant="tonal" color="grey" size="x-small" style="margin: 2px;font-size: 8px;"
+								   rounded>
+								Audit
+							</v-btn>
+							Problèmes relevés par le projet
+						</div>
+						<div>
+							<v-btn variant="tonal" color="red" size="x-small" style="margin: 2px;font-size: 8px;"
+								   rounded>
+								Tanaguru
+							</v-btn>
+							Problèmes relevés par Tanaguru
+						</div>
+					</div>
 				</div>
-			  </div>
-            `,
+			`,
 		}
 	},
 	tags: ['!dev'],
