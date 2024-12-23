@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, onMounted, useSlots } from 'vue'
+	import { ref, watch, computed, onMounted, useSlots, type PropType } from 'vue'
 	import { useDisplay } from 'vuetify'
+
+	type Item = string | Record<string, unknown>
 
 	const props = defineProps({
 		modelValue: {
@@ -8,7 +10,7 @@
 			default: null,
 		},
 		menuItems: {
-			type: Array,
+			type: Array as PropType<Item[]>,
 			default: () => [],
 		},
 		label: {
@@ -80,14 +82,10 @@
 		}
 	})
 
-	const selectItem = (item: unknown) => {
-		selectedItem.value = item as string | Record<string, unknown> | null
+	const selectItem = (item: Item | null) => {
+		selectedItem.value = item
 		emit('update:modelValue', item)
 		isOpen.value = false
-	}
-
-	const getItemText = (item: unknown) => {
-		return (item as Record<string, unknown>)[props.textKey]
 	}
 
 	const formattedItems = computed(() => {
@@ -145,9 +143,9 @@
 					:id="generatedId"
 					:class="btnPadding"
 					:height="iconOnly ? 'auto' : undefined"
-					:width="iconOnly ? 'auto' : undefined"
 					:icon="iconOnly"
 					:size="iconOnly ? 'x-large' : 'default'"
+					:width="iconOnly ? 'auto' : undefined"
 					class="vd-user-menu-btn"
 					v-bind="{
 						...menuProps,
@@ -168,19 +166,23 @@
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
 								class="font-weight-bold"
-							>{{ props.primaryInfo }}
+							>
+								{{ props.primaryInfo }}
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
 								class="text-grey text-darken-2 font-weight-medium"
-							>{{ props.secondaryInfo }}
+							>
+								{{ props.secondaryInfo }}
 							</span>
 						</span>
 						<span
 							v-if="isMobileVersion && !iconOnly"
 							:class="`text-${props?.options['btn']?.textColor}`"
 							class="font-weight-bold text-caption"
-						>{{ props.primaryInfo }}</span>
+						>
+							{{ props.primaryInfo }}
+						</span>
 						<slot name="append-icon" />
 					</div>
 				</VBtn>
@@ -195,10 +197,11 @@
 						:key="index"
 						:class="`text-${props?.options['list']?.textColor}`"
 						v-bind="props.options['list']"
+						:href="item.link"
 						@click="selectItem(item)"
 					>
 						<VListItemTitle v-bind="props.options['list']">
-							{{ getItemText(item) }}
+							{{ item[props.textKey] }}
 						</VListItemTitle>
 					</VListItem>
 					<slot />
@@ -211,6 +214,7 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens.scss';
+@use '@/assets/tokens' as *;
 
 .vd-user-menu-btn-ctn {
   position: relative;
@@ -218,6 +222,10 @@
 
   .v-btn.v-btn--density-default {
     height: auto !important;
+  }
+
+  .v-btn {
+    text-transform: none !important;
   }
 }
 
