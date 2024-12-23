@@ -114,32 +114,32 @@ export const AccessibiliteItemsIndeterminate = [
 		],
 		items: [
 			{
-				precision: '11.12.1 Pour chaque formulaire qui modifie ou supprime des données, ou qui transmet des réponses à un test ou un examen, ou dont la validation a des conséquences financières ou juridiques, la saisie des données vérifie-t-elle une de ces conditions ?  ' +
-					'L’utilisateur peut modifier ou annuler les données et les actions effectuées sur ces données après la validation du formulaire ; '
+				precision: '11.12.1 Pour chaque formulaire qui modifie ou supprime des données, ou qui transmet des réponses à un test ou un examen, ou dont la validation a des conséquences financières ou juridiques, la saisie des données vérifie-t-elle une de ces conditions ?  '
+					+ 'L’utilisateur peut modifier ou annuler les données et les actions effectuées sur ces données après la validation du formulaire ; '
 					+ 'L’utilisateur peut vérifier et corriger les données avant la validation d’un formulaire en plusieurs étapes ; '
 					+ 'Un mécanisme de confirmation explicite, via une case à cocher (balise <input> de type checkbox ou balise ayant un attribut WAI-ARIA role="checkbox") ou une étape supplémentaire, est présent.',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.12.1',
 				solution: [{
 					info1: '1. Retrouver dans le document les formulaires qui modifient ou suppriment des données, ou qui transmettent des réponses à un test ou un examen, ou dont la validation a des conséquences financières ou juridiques ; ',
-					info2: '2. Pour chaque formulaire, vérifier que l’utilisateur peut : ' +
-						'Soit modifier ou annuler les données et les actions effectuées sur ces données après la validation du formulaire ; ' +
-						'Soit vérifier et corriger les données avant la validation d’un formulaire en plusieurs étapes ; ' +
-						'Soit disposer d’un mécanisme de confirmation explicite (par exemple, une case à cocher ou une étape supplémentaire). ',
+					info2: '2. Pour chaque formulaire, vérifier que l’utilisateur peut : '
+						+ 'Soit modifier ou annuler les données et les actions effectuées sur ces données après la validation du formulaire ; '
+						+ 'Soit vérifier et corriger les données avant la validation d’un formulaire en plusieurs étapes ; '
+						+ 'Soit disposer d’un mécanisme de confirmation explicite (par exemple, une case à cocher ou une étape supplémentaire). ',
 					info3: '3. Si c’est le cas pour chaque champ de formulaire retrouvé, le test est validé.',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
 
 			},
 			{
-				precision: '11.12.2 Chaque formulaire dont la validation modifie ou supprime des données à caractère financier, juridique ou personnel vérifie-t-il une de ces conditions ? ' +
-					'Un mécanisme permet de récupérer les données supprimées ou modifiées par l’utilisateur ; ' +
-					'Un mécanisme de demande de confirmation explicite de la suppression ou de la modification, via un champ de formulaire ou une étape supplémentaire, est proposé. ',
+				precision: '11.12.2 Chaque formulaire dont la validation modifie ou supprime des données à caractère financier, juridique ou personnel vérifie-t-il une de ces conditions ? '
+					+ 'Un mécanisme permet de récupérer les données supprimées ou modifiées par l’utilisateur ; '
+					+ 'Un mécanisme de demande de confirmation explicite de la suppression ou de la modification, via un champ de formulaire ou une étape supplémentaire, est proposé. ',
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.12.2',
 				solution: [{
 					info1: '1. Retrouver dans le document les formulaires qui modifient ou suppriment des données à caractère financier, juridique ou personnel ; ',
-					info2: '2. Pour chaque formulaire, vérifier que l’utilisateur dispose : ' +
-						'Soit d’un mécanisme qui permet de récupérer les données supprimées ou modifiées ; ' +
-						'Soit d’un mécanisme de demande de confirmation explicite de la suppression ou de la modification (par exemple, une case à cocher ou une étape supplémentaire). ',
+					info2: '2. Pour chaque formulaire, vérifier que l’utilisateur dispose : '
+						+ 'Soit d’un mécanisme qui permet de récupérer les données supprimées ou modifiées ; '
+						+ 'Soit d’un mécanisme de demande de confirmation explicite de la suppression ou de la modification (par exemple, une case à cocher ou une étape supplémentaire). ',
 					info3: '3. Si c’est le cas pour chaque champ de formulaire retrouvé, le test est validé.',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
@@ -217,9 +217,9 @@ export const AccessibiliteItemsValidated = [
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#5.6.1',
 				solution: [{
 					info1: '1. Retrouver dans le document les tableaux de données ; ',
-					info2: '2. Pour chaque en-tête de colonnes s’appliquant à la totalité de la colonne, vérifier que l’en-tête de colonne est structuré au moyen : ' +
-						'Soit d’un élément <th> ; ' +
-						'Soit d’un élément pourvu d’un attribut WAI-ARIA role="columnheader".',
+					info2: '2. Pour chaque en-tête de colonnes s’appliquant à la totalité de la colonne, vérifier que l’en-tête de colonne est structuré au moyen : '
+						+ 'Soit d’un élément <th> ; '
+						+ 'Soit d’un élément pourvu d’un attribut WAI-ARIA role="columnheader".',
 					info3: '3. Si c’est le cas pour chaque en-tête de colonne s’appliquant à la totalité de la colonne, le test est validé.',
 				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
@@ -235,14 +235,13 @@ export const AccessibiliteItemsValidated = [
 				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#5.1.1',
 				solution: [{
 					info1: '1. Retrouver dans le document les tableaux de données complexes (tableau de données - élément <table> ou élément pourvu d’un attribut WAI-ARIA role="table" - contenant des en-têtes qui ne sont pas répartis uniquement sur la première ligne et/ou la première colonne de la grille ou dont la portée n’est pas valable pour l’ensemble de la colonne ou de la ligne) ; ',
-					info2: '2. Pour chaque tableau de données complexe, vérifier qu’un passage de texte permettant de comprendre la nature et la structure du tableau, est présent : ' +
-						'Soit dans l’élément <caption> ; ' +
-						'Soit dans l’attribut summary de l’élément <table> (dans les versions de HTML et de XHTML antérieures à HTML 5) ; ' +
-						'Soit dans un passage de texte lié au tableau avec l’attribut aria-describedby. ',
+					info2: '2. Pour chaque tableau de données complexe, vérifier qu’un passage de texte permettant de comprendre la nature et la structure du tableau, est présent : '
+						+ 'Soit dans l’élément <caption> ; '
+						+ 'Soit dans l’attribut summary de l’élément <table> (dans les versions de HTML et de XHTML antérieures à HTML 5) ; '
+						+ 'Soit dans un passage de texte lié au tableau avec l’attribut aria-describedby. ',
 					info3: '3. Si c’est le cas pour chaque tableau de données complexe, le test est validé.',
 				}],
 				expertise: ExpertiseLevelEnum.DESIGN,
-				
 
 			},
 
