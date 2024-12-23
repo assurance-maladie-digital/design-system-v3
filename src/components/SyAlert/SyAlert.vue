@@ -131,6 +131,13 @@
 	}
 }
 
+.v-btn {
+  text-transform: none;
+  font-weight: bold;
+  font-size: 0.75rem;
+  letter-spacing: normal;
+}
+
 @media screen and (max-width: 440px) {
 	.alert {
 		display: flex;
