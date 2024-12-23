@@ -1,3 +1,18 @@
+## v0.0.6-alpha (23-12-2024)
+
+### Composants
+
+- NirField/Rules [`#264`](https://github.com/assurance-maladie-digital/design-system-v3/pull/264)
+- CookieBanner/CookiesSelection [`#256`](https://github.com/assurance-maladie-digital/design-system-v3/pull/256)
+- Fix UserMenuBtn [`#277`](https://github.com/assurance-maladie-digital/design-system-v3/pull/277)
+- Set Arial default font [`#266`](https://github.com/assurance-maladie-digital/design-system-v3/pull/266)
+- Fix SyForms components [`#263`](https://github.com/assurance-maladie-digital/design-system-v3/pull/263)
+- Change Alert to SyAlert [`#270`](https://github.com/assurance-maladie-digital/design-system-v3/pull/270)
+
+### Documentation
+
+- Add accessibility on components pages (package 2-3) [`#271`](https://github.com/assurance-maladie-digital/design-system-v3/pull/271), [`#293`](https://github.com/assurance-maladie-digital/design-system-v3/pull/293), [`#294`](https://github.com/assurance-maladie-digital/design-system-v3/pull/294)
+
 ## v0.0.5-alpha (11-12-2024)
 
 ### Composants
