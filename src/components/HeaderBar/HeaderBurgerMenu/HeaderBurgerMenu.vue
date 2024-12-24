@@ -101,6 +101,7 @@
 		role="dialog"
 		aria-modal="true"
 		:aria-label="locals.mainMenu"
+		class="menu mr-4"
 	>
 		<div ref="menuBtnWrapper">
 			<HeaderMenuBtn

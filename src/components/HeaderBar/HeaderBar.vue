@@ -177,7 +177,6 @@
 					name="menu"
 					:menu-open
 				/>
-
 				<div class="header-logo pl-xl-0 pl-md-14 pl-4">
 					<slot
 						name="logo"
@@ -258,6 +257,12 @@
 	display: flex;
 	align-items: center;
 	margin-left: auto;
+}
+
+.menu + .header-logo {
+  @media screen and (min-width: 340px) {
+    padding-left: 16px !important;
+  }
 }
 
 @media screen and (min-width: $header-breakpoint) {
