@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import HeaderNavbar from './HeaderNavigationBar.vue'
+import HeaderNavigationBar from './HeaderNavigationBar.vue'
 import { VBtn } from 'vuetify/components'
 import BackBtn from '../BackBtn/BackBtn.vue'
 import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar/HeaderNavigationBar',
-	component: HeaderNavbar,
+	component: HeaderNavigationBar,
 	parameters: {
 		layout: 'fullscreen',
 	},
@@ -248,7 +248,7 @@ const meta = {
 			},
 		},
 	},
-} satisfies Meta<typeof HeaderNavbar>
+} satisfies Meta<typeof HeaderNavigationBar>
 
 export default meta
 
@@ -272,12 +272,20 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-<HeaderNavbar
+<HeaderNavigationBar
 	:items="[
 		{ label: 'Home', href: '' },
 		{ label: 'About', href: '' },
 	]"
 />
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderNavigationBar } from '@cnamts/synapse'
+				</script>
 				`,
 			},
 		],
@@ -313,7 +321,7 @@ export const WithScroll: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-<HeaderNavbar
+<HeaderNavigationBar
 	:items="[
 		{ label: 'Home', href: '' },
 		{ label: 'About', href: '' },
@@ -323,6 +331,14 @@ export const WithScroll: Story = {
 	style="height: 200vh; background-color: #f5f5f5; margin: auto; margin-top: 2rem; max-width: 1200px; padding: 1em;"
 >Contenu de la page</div>
 </template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderNavigationBar } from '@cnamts/synapse'
+				</script>
 				`,
 			},
 		],
@@ -371,7 +387,7 @@ export const WithManyItems: Story = {
 			{
 				name: 'Template',
 				code: `
-<HeaderNavbar
+<HeaderNavigationBar
 	:items="[
 		{
 				label: 'Home',
@@ -409,6 +425,14 @@ export const WithManyItems: Story = {
 />
 				`,
 			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderNavigationBar } from '@cnamts/synapse'
+				</script>
+				`,
+			},
 		],
 	},
 }
@@ -419,12 +443,12 @@ export const WithSlots: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderNavbar, VBtn, BackBtn },
+			components: { HeaderNavigationBar, VBtn, BackBtn },
 			setup() {
 				return { args }
 			},
 			template: `
-				<HeaderNavbar v-bind="args">
+				<HeaderNavigationBar v-bind="args">
 					<template #logo-brand-content>
 						<svg
 							width="22"
@@ -468,7 +492,7 @@ export const WithSlots: Story = {
 							Besoin d’aide ?
 						</VBtn>
 					</template>
-				</HeaderNavbar>
+				</HeaderNavigationBar>
 			`,
 		}
 	},
@@ -477,7 +501,7 @@ export const WithSlots: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<HeaderNavbar>
+	<HeaderNavigationBar>
 		<template #logo-brand-content>
 			<svg
 				width="22"
@@ -521,8 +545,16 @@ export const WithSlots: Story = {
 				Besoin d’aide ?
 			</VBtn>
 		</template>
-	</HeaderNavbar>
+	</HeaderNavigationBar>
 </template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderNavigationBar } from '@cnamts/synapse'
+				</script>
 				`,
 			},
 		],
@@ -535,12 +567,12 @@ export const WithLogoSlot: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderNavbar, VBtn, BackBtn },
+			components: { HeaderNavigationBar, VBtn, BackBtn },
 			setup() {
 				return { args }
 			},
 			template: `
-				<HeaderNavbar v-bind="args">
+				<HeaderNavigationBar v-bind="args">
 					<template #logo-brand-content>
 						<svg
 							width="22"
@@ -561,7 +593,7 @@ export const WithLogoSlot: Story = {
 							height="52px"
 						/>
 					</template>
-				</HeaderNavbar>
+				</HeaderNavigationBar>
 			`,
 		}
 	},
@@ -570,7 +602,7 @@ export const WithLogoSlot: Story = {
 			{
 				name: 'Template',
 				code: `
-<HeaderNavbar>
+<HeaderNavigationBar>
 	<template #logo-brand-content>
 		<svg
 			width="22"
@@ -591,7 +623,15 @@ export const WithLogoSlot: Story = {
 			height="52px"
 		/>
 	</template>
-</HeaderNavbar>
+</HeaderNavigationBar>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderNavigationBar } from '@cnamts/synapse'
+				</script>
 				`,
 			},
 		],
@@ -605,19 +645,19 @@ export const WithNavigationBarPrependSlot: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderNavbar, VBtn, BackBtn },
+			components: { HeaderNavigationBar, VBtn, BackBtn },
 			setup() {
 				return { args }
 			},
 			template: `
-				<HeaderNavbar v-bind="args" v-model="args.burgerMenu">
+				<HeaderNavigationBar v-bind="args" v-model="args.burgerMenu">
 					<template #navigation-bar-prepend>
 						<BackBtn
 							:dark="true"
 							class="mr-4"
 						/>
 					</template>
-				</HeaderNavbar>
+				</HeaderNavigationBar>
 			`,
 		}
 	},
@@ -626,14 +666,22 @@ export const WithNavigationBarPrependSlot: Story = {
 			{
 				name: 'Template',
 				code: `
-<HeaderNavbar>
+<HeaderNavigationBar>
 	<template #navigation-bar-prepend>
 		<BackBtn
 			:dark="true"
 			class="mr-4"
 		/>
 	</template>
-</HeaderNavbar>
+</HeaderNavigationBar>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderNavigationBar } from '@cnamts/synapse'
+				</script>
 				`,
 			},
 		],
@@ -646,12 +694,12 @@ export const WithNavigationBarAppendSlot: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderNavbar, VBtn, BackBtn },
+			components: { HeaderNavigationBar, VBtn, BackBtn },
 			setup() {
 				return { args }
 			},
 			template: `
-				<HeaderNavbar v-bind="args">
+				<HeaderNavigationBar v-bind="args">
 					<template #navigation-bar-append>
 						<VBtn
 							variant="tonal"
@@ -660,7 +708,7 @@ export const WithNavigationBarAppendSlot: Story = {
 							Besoin d’aide ?
 						</VBtn>
 					</template>
-				</HeaderNavbar>
+				</HeaderNavigationBar>
 			`,
 		}
 	},
@@ -670,7 +718,7 @@ export const WithNavigationBarAppendSlot: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<HeaderNavbar>
+	<HeaderNavigationBar>
 		<template #navigation-bar-append>
 			<VBtn
 				variant="tonal"
@@ -679,8 +727,16 @@ export const WithNavigationBarAppendSlot: Story = {
 				Besoin d’aide ?
 			</VBtn>
 		</template>
-	</HeaderNavbar>
+	</HeaderNavigationBar>
 </template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderNavigationBar } from '@cnamts/synapse'
+				</script>
 				`,
 			},
 		],
@@ -695,12 +751,12 @@ export const WithNavigationMenuAppendSlot: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderNavbar, VBtn, BackBtn },
+			components: { HeaderNavigationBar, VBtn, BackBtn },
 			setup() {
 				return { args }
 			},
 			template: `
-				<HeaderNavbar
+				<HeaderNavigationBar
 					v-bind="args"
 					v-model="args.burgerMenu"
 					@update:burgerMenu="()=>{
@@ -717,7 +773,7 @@ export const WithNavigationMenuAppendSlot: Story = {
 							Besoin d’aide ?
 						</VBtn>
 					</template>
-				</HeaderNavbar>
+				</HeaderNavigationBar>
 				<div style="height: 200px;"></div>
 			`,
 		}
@@ -728,7 +784,7 @@ export const WithNavigationMenuAppendSlot: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<HeaderNavbar
+	<HeaderNavigationBar
 		maxHorizontalMenuItems="0"
 		:items="[
 			{ label: 'Home', href: '' },
@@ -744,8 +800,16 @@ export const WithNavigationMenuAppendSlot: Story = {
 				Besoin d’aide ?
 			</VBtn>
 		</template>
-	</HeaderNavbar>
+	</HeaderNavigationBar>
 </template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderNavigationBar } from '@cnamts/synapse'
+				</script>
 				`,
 			},
 		],
@@ -766,7 +830,7 @@ export const WithVuetifyOptions: Story = {
 			{
 				name: 'Template',
 				code: `
-<HeaderNavbar
+<HeaderNavigationBar
 	:items="[
 		{ label: 'Home', href: '' },
 		{ label: 'About', href: '' },
@@ -777,6 +841,14 @@ export const WithVuetifyOptions: Story = {
 		},
 	}"
 />
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { HeaderNavigationBar } from '@cnamts/synapse'
+				</script>
 				`,
 			},
 		],
