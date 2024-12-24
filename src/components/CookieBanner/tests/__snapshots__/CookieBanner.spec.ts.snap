@@ -42,9 +42,9 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
             <table>
               <thead data-v-d0e8c396="">
                 <tr data-v-d0e8c396="">
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Dénomination du cookie</th>
-                  <th data-v-d0e8c396="" style="width: 328px;" class="text-left">Finalité</th>
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Durée de conservation</th>
+                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left" scope="col">Dénomination du cookie</th>
+                  <th data-v-d0e8c396="" style="width: 328px;" class="text-left" scope="col">Finalité</th>
+                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left" scope="col">Durée de conservation</th>
                 </tr>
               </thead>
               <tbody data-v-d0e8c396="">
@@ -77,9 +77,9 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
             <table>
               <thead data-v-d0e8c396="">
                 <tr data-v-d0e8c396="">
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Dénomination du cookie</th>
-                  <th data-v-d0e8c396="" style="width: 328px;" class="text-left">Finalité</th>
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Durée de conservation</th>
+                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left" scope="col">Dénomination du cookie</th>
+                  <th data-v-d0e8c396="" style="width: 328px;" class="text-left" scope="col">Finalité</th>
+                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left" scope="col">Durée de conservation</th>
                 </tr>
               </thead>
               <tbody data-v-d0e8c396="">
@@ -96,9 +96,10 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       </details>
       <div data-v-2ca04413="" class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-radio-group vd-cookies-information__radio-group" data-test-id="radio-group">
         <!---->
-        <div class="v-input__control">
-          <!---->
-          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" aria-describedby="radio-group-7-messages">
+        <div class="v-input__control"><label class="v-label" id="radio-group-7">
+            <!---->Accepter les cookies de type Cookies fonctionnels, ce champ est requis.
+          </label>
+          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" label="Accepter les cookies de type Cookies fonctionnels, ce champ est requis." aria-describedby="radio-group-7-messages" aria-labelledby="radio-group-7">
             <div data-v-2ca04413="" class="v-spacer"></div>
             <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio">
               <div class="v-selection-control__wrapper">
@@ -133,9 +134,9 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
             <table>
               <thead data-v-d0e8c396="">
                 <tr data-v-d0e8c396="">
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Dénomination du cookie</th>
-                  <th data-v-d0e8c396="" style="width: 328px;" class="text-left">Finalité</th>
-                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left">Durée de conservation</th>
+                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left" scope="col">Dénomination du cookie</th>
+                  <th data-v-d0e8c396="" style="width: 328px;" class="text-left" scope="col">Finalité</th>
+                  <th data-v-d0e8c396="" style="width: 180px;" class="text-left" scope="col">Durée de conservation</th>
                 </tr>
               </thead>
               <tbody data-v-d0e8c396="">
@@ -152,9 +153,10 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       </details>
       <div data-v-2ca04413="" class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-radio-group vd-cookies-information__radio-group" data-test-id="radio-group">
         <!---->
-        <div class="v-input__control">
-          <!---->
-          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" aria-describedby="radio-group-12-messages">
+        <div class="v-input__control"><label class="v-label" id="radio-group-12">
+            <!---->Accepter les cookies de type Cookies d’analyse, ce champ est requis.
+          </label>
+          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" label="Accepter les cookies de type Cookies d’analyse, ce champ est requis." aria-describedby="radio-group-12-messages" aria-labelledby="radio-group-12">
             <div data-v-2ca04413="" class="v-spacer"></div>
             <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio">
               <div class="v-selection-control__wrapper">
