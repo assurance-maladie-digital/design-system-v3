@@ -14,6 +14,7 @@
 					:key="index"
 					:style="{ width: item.width }"
 					class="text-left"
+					scope="col"
 				>
 					{{ item.label }}
 				</th>
