@@ -3,11 +3,11 @@
 	import { useDisplay } from 'vuetify'
 
 	const props = withDefaults(defineProps<{
-		size?: 'xl' | 'l' | 'm' | 's'
-		spacing?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+		size?: 'xl' | 'lg' | 'md' | 'sm' | 'xs'
+		spacing?: 'xl' | 'lg' | 'md' | 'sm' | 'xs'
 		color?: string
 	}>(), {
-		size: 'xl',
+		size: undefined,
 		spacing: undefined,
 		color: 'transparent',
 	})
@@ -38,7 +38,12 @@
 	})
 
 	const containerSize = computed(() => {
-		return sizeMapping[display.name.value] ?? sizeMapping[props.size ?? 'xl']
+		if (props.size) {
+			return sizeMapping[props.size]
+		}
+		else {
+			return sizeMapping[display.name.value] ?? sizeMapping['xl']
+		}
 	})
 
 	defineExpose({

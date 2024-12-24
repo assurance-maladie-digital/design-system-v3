@@ -44,7 +44,7 @@ describe('PageContainer', () => {
 	it('containerSize computed property', async () => {
 		const wrapper = mount(PageContainer, {
 			props: {
-				size: 'l',
+				size: 'md',
 			},
 			global: {
 				plugins: [vuetify],

@@ -11,12 +11,12 @@ const meta = {
 	},
 	argTypes: {
 		size: {
-			options: ['xl', 'l', 'm', 's'],
+			options: ['xl', 'lg', 'md', 'sm', 'xs'],
 			control: { type: 'select' },
-			default: 'xl',
+			default: undefined,
 		},
 		spacing: {
-			options: ['xs', 'sm', 'md', 'lg', 'xl'],
+			options: ['xl', 'lg', 'md', 'sm', 'xs'],
 			control: { type: 'select' },
 			default: undefined,
 		},
@@ -77,7 +77,7 @@ export const Size: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<PageContainer size="s">
+	<PageContainer size="sm">
 		Contenu de la page
 	</PageContainer>
 </template>
@@ -94,7 +94,7 @@ export const Size: Story = {
 	},
 	args: {
 		default: 'Contenu de la page',
-		size: 's',
+		size: 'sm',
 	},
 	render: (args) => {
 		return {
