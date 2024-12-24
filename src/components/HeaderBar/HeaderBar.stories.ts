@@ -584,7 +584,7 @@ export const WithSubHeader: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<HeaderBar v-bind="args">
+					<HeaderBar>
 						<template #append>
 							<SubHeader
 								title-text="Paul Dupont"
@@ -619,7 +619,11 @@ export const DefaultSlot: Story = {
 		return {
 			components: { HeaderBar, UserMenuBtn, VListItem, VListItemTitle },
 			setup() {
-				const listItems = ['Item 1', 'Item 2', 'Item 3']
+				const listItems = [
+					{ text: 'Item 1', value: 'item1' },
+					{ text: 'Item 2', value: 'item2' },
+					{ text: 'Item 3', value: 'item3' },
+				]
 				return { args, listItems }
 			},
 			template: `
@@ -659,7 +663,11 @@ export const DefaultSlot: Story = {
 				<script setup lang="ts">
 					import { HeaderBar, UserMenuBtn } from '@cnamts/synapse'
 					
-					const listItems = ['Item 1', 'Item 2', 'Item 3']
+					const listItems = [
+                        { text: 'Item 1', value: 'item1' },
+						{ text: 'Item 2', value: 'item2' },
+						{ text: 'Item 3', value: 'item3' },
+					]
 				</script>
 				`,
 			},
