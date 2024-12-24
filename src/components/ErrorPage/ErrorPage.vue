@@ -25,7 +25,7 @@
 </script>
 
 <template>
-	<PageContainer size="l">
+	<PageContainer size="md">
 		<VCard
 			:elevation="0"
 			class="pa-6 pa-sm-16"
