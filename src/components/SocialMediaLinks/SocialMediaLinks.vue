@@ -17,7 +17,7 @@
 			{{ locales.followUs }}
 		</span>
 
-		<ul class="d-flex max-width-none">
+		<ul class="vd-social-media-links-content d-flex max-width-none">
 			<li
 				v-for="(social, index) in props.links"
 				:key="index"
@@ -82,11 +82,17 @@ li {
   .vd-social-media-links-label {
     text-align: right;
   }
+  .vd-social-media-links-content {
+    justify-content: flex-end;
+  }
 }
 
 @media (max-width: 767px) {
   .vd-social-media-links-label {
     text-align: left;
+  }
+  .vd-social-media-links-content {
+    justify-content: flex-start;
   }
 }
 </style>
