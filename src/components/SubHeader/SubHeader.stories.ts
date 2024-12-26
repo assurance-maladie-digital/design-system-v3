@@ -295,8 +295,9 @@ export const ActionBtn: Story = {
 				code: `
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
+					import { ref } from 'vue'
 										
-					const items = [
+					const items = ref([
 						{
 							title: 'Informations patient',
 							items: [
@@ -317,10 +318,12 @@ export const ActionBtn: Story = {
 								{ key: 'Dernière modification', value: '04/06/2020' },
 							],
 						},
-					]
+					])
 					
 					const updateInfo = (eventValue: { dataListIndex: number, itemIndex: number }) => {
-						items[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
+                        if (items) {
+							items[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
+						}
 					}
 				</script>
 				`,
