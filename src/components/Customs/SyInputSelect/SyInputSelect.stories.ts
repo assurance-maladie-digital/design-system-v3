@@ -44,12 +44,15 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/SyInputSelect'
+					import SyInputSelect from '@cnamts/synapse'
+					import { ref } from 'vue'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
 					],
+					
+					const value = ref(undefined)
 				</script>
 				`,
 			},
@@ -107,12 +110,15 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/SyInputSelect'
+					import SyInputSelect from '@cnamts/synapse'
+					import { ref } from 'vue'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
 					],
+					
+					const value = ref(undefined)
 				</script>
 				`,
 			},
@@ -165,7 +171,7 @@ export const withCustomError: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/SyInputSelect'
+					import SyInputSelect from '@cnamts/synapse'
 					import { ref } from 'vue'
 					
 					const items =  [
@@ -178,6 +184,8 @@ export const withCustomError: Story = {
 					const triggerError = () => {
 						errorMessages.value = ['This is a test error message']
 					}
+                    
+                    const value = ref(undefined)
 				</script>
 				`,
 			},
@@ -235,12 +243,15 @@ export const withCustomKey: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/SyInputSelect'
+					import SyInputSelect from '@cnamts/synapse'
+					import { ref } from 'vue'
 					
 					const items =  [
 						{ customKey: 'Choix 1', value: '1' },
 						{ customKey: 'Choix 2', value: '2' }
 					]
+					
+					const value = ref(undefined)
 				</script>
 				`,
 			},
@@ -290,7 +301,8 @@ export const withCustomStyles: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/SyInputSelect'
+					import SyInputSelect from '@cnamts/synapse'
+					import { ref } from 'vue'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
@@ -305,6 +317,8 @@ export const withCustomStyles: Story = {
 							color: 'secondary',
 						},
 					}
+                    
+                    const value = ref(undefined)
 				</script>
 				`,
 			},

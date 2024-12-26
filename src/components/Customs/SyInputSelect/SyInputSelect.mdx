@@ -21,11 +21,14 @@ Il est basé sur un `v-input`.
 <Source dark code={`
 <script setup lang="ts">
 	import { SyInputSelect } from '@cnamts/synapse'
+	import { ref } from 'vue'
 
 	const items = [
         { text: 'Option 1', value: '1' },
         { text: 'Option 2', value: '2' },
-    ],
+    ]
+
+    const value = ref(undefined)
 </script>
 
 <template>
