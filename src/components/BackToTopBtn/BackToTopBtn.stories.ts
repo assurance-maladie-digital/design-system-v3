@@ -65,7 +65,7 @@ export const Default: Story = {
 				Haut de la section.
 			</p>
 		</VSheet>
-		<BackToTopBtn :target="target">
+		<BackToTopBtn target="target">
 			Retour en haut
 		</BackToTopBtn>
 	</VCard>
@@ -159,7 +159,7 @@ export const Customization: Story = {
 			</p>
 		</VSheet>
 		<BackToTopBtn 
-			:target="btn-customization" 
+			target="btn-customization" 
 			:vuetify-options="vuetifyOptions"
 		>
 			Retour en haut
@@ -262,7 +262,7 @@ export const CustomPosition: Story = {
 			</p>
 		</VSheet>
 		<BackToTopBtn 
-			:target="pill-btn"
+			target="pill-btn"
 			:nudge-right="30"
 			:nudge-bottom="30"
 			:vuetify-options="vuetifyOptions"
