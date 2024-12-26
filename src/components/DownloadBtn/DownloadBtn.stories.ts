@@ -99,8 +99,8 @@ export const Default: Story = {
 				code: `<template>
 	<DownloadBtn
 		:file-promise="download"
-		@error="onError"
-		@success="onSuccess"
+		@error="console.log('error')"
+		@success="console.log('success')"
 	>
 		Télécharger
 	</DownloadBtn>
@@ -138,8 +138,8 @@ export const Error: Story = {
 				code: `<template>
 	<DownloadBtn
 		:file-promise="download"
-		@error="onError"
-		@success="onSuccess"
+		@error="console.log('error')"
+		@success="console.log('success')"
 	>
 		Télécharger
 	</DownloadBtn>
@@ -177,8 +177,8 @@ export const Loading: Story = {
 				code: `<template>
 	<DownloadBtn
 		:file-promise="download"
-		@error="onError"
-		@success="onSuccess"
+		@error="console.log('error')"
+		@success="console.log('success')"
 	>
 		Télécharger
 	</DownloadBtn>
@@ -222,8 +222,8 @@ export const Dark: Story = {
 	<VThemeProvider theme="dark" with-background class="pa-4">
 		<DownloadBtn
 			:file-promise="download"
-			@error="onError"
-			@success="onSuccess"
+			@error="console.log('error')"
+			@success="console.log('success')"
 		>
 			Télécharger
 		</DownloadBtn>
@@ -274,8 +274,8 @@ export const Notify: Story = {
 		<NotificationBar />
 		<DownloadBtn
 			:file-promise="download"
-			@error="onError"
-			@success="onSuccess"
+			@error="notify('Une error est survenue', 'error')"
+			@success="notify('Votre attestation a été téléchargée', 'success')"
 		>
 			Télécharger
 		</DownloadBtn>
@@ -361,8 +361,8 @@ export const Customization: Story = {
 	<DownloadBtn
 		:file-promise="download"
 		:vuetify-options="vuetifyOptions"
-		@error="onError"
-		@success="onSuccess"
+		@error="console.log('error')"
+		@success="console.log('success')"
 	>
 		Télécharger
 	</DownloadBtn>
