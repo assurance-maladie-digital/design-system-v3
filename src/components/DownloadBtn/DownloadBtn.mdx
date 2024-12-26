@@ -52,13 +52,12 @@ Exemple :
 <Source dark code={`
 <script setup lang="ts">
 	import { DownloadBtn } from '@cnamts/synapse'
-	import { NotificationBar } from '@cnamts/synapse'
-	import axios from 'axios'
-	import { useNotificationService } from '@cnamts/synapse/src/services/NotificationService'
+	import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 	import type { Notification } from '@cnamts/synapse/src/components/NotificationBar/types'
+	import axios from 'axios'
 
 	function download() {
-		return axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124')
+		return axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f')
 	}
 
 	const { addNotification } = useNotificationService()
