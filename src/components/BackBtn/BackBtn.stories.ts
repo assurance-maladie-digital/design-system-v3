@@ -161,7 +161,10 @@ export const DarkAndHideBackIcon: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<VSheet class="pa-4">
+	<VSheet 
+		color="primary"
+		class="pa-4"
+	>
 		<BackBtn
 			dark 
 			hide-back-icon 
