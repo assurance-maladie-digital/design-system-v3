@@ -105,7 +105,8 @@ export const DarkTheme: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<FranceConnectBtn 
+	<FranceConnectBtn
+		href="https://app.franceconnect.gouv.fr/"
 		is-connect-plus 
 		dark
 	/>
