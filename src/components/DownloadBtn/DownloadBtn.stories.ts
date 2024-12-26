@@ -286,8 +286,7 @@ export const Notify: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import { DownloadBtn } from '@cnamts/synapse'
-	import NotificationBar from '@cnamts/synapse'
+	import { DownloadBtn, NotificationBar } from '@cnamts/synapse'
 	
 	import axios from 'axios'
 	
