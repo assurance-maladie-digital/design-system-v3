@@ -207,8 +207,11 @@ export const SlotIcon: Story = {
 		<CopyBtn
 			label="Copier le numéro de patient"
 			text-to-copy="1970756541"
-			:icon="duplicateIcon"
-		/>
+		>
+			<template #icon>
+				<VIcon :icon="duplicateIcon" />
+			</template>
+		</CopyBtn>
 	</div>
 </template>
 				`,
