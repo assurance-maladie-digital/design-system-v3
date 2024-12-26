@@ -24,7 +24,7 @@ const meta = {
 		},
 		filePromise: {
 			control: false,
-			description: 'Une fonction retournant un valeur de retour de Axios `Promise<AxiosResponse>`. <br>Exemple: `() => axios.get("https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124")`',
+			description: 'Une fonction retournant une valeur de retour de Axios `Promise<AxiosResponse>`. <br>Exemple: `() => axios.get("https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f")`',
 			table: {
 				category: 'props',
 			},
@@ -114,7 +114,7 @@ export const Default: Story = {
 	import axios from 'axios'
 	
 	const download = () => {
-        return axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124')
+        return axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f')
 	}
 </script>
 				`,
@@ -122,7 +122,7 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
+		filePromise: () => axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f'),
 		default: 'Télécharger',
 		onError: fn(),
 		onSuccess: fn(),
@@ -257,7 +257,7 @@ export const Dark: Story = {
 		`,
 	}),
 	args: {
-		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
+		filePromise: () => axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f'),
 		default: 'Télécharger',
 		onError: fn(),
 		onSuccess: fn(),
@@ -286,8 +286,7 @@ export const Notify: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import { DownloadBtn } from '@cnamts/synapse'
-	import NotificationBar from '@cnamts/synapse'
+	import { DownloadBtn, NotificationBar } from '@cnamts/synapse'
 	
 	import axios from 'axios'
 	
@@ -312,7 +311,7 @@ export const Notify: Story = {
 		],
 	},
 	args: {
-		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
+		filePromise: () => axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f'),
 		default: 'Télécharger',
 		onError: fn(),
 		onSuccess: fn(),
@@ -377,7 +376,7 @@ export const Customization: Story = {
 	import axios from 'axios'
 	
 	const download = () => {
-        return axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124')
+        return axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f')
 	}
     
     const vuetifyOptions = {
@@ -397,7 +396,7 @@ export const Customization: Story = {
 		],
 	},
 	args: {
-		filePromise: () => axios.get('https://run.mocky.io/v3/63e571d5-1134-4f51-82ac-fa7cc8045124'),
+		filePromise: () => axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f'),
 		default: 'Télécharger',
 		onError: fn(),
 		onSuccess: fn(),
