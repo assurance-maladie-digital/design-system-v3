@@ -347,6 +347,20 @@
         font-size: 12px;
       }
     }
+
+    :deep(.sy-input-select) {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      @media (max-width: 768px) {
+        font-size: 12px;
+        span {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
   }
 
   #left-menu {
@@ -368,10 +382,18 @@
     }
 
     li:nth-child(2) {
-      min-width: 260px;
       z-index: 2;
+      max-height: 44px;
+      min-width: 260px;
       @media (max-width: 768px) {
+        max-height: 38px;
         min-width: 152px;
+      }
+      a {
+        max-height: 44px;
+        @media (max-width: 768px) {
+          max-height: 38px;
+        }
       }
     }
 
