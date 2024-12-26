@@ -215,7 +215,6 @@ export const withCustomKey: Story = {
 							v-model="value"
 							:items="items"
 							text-key="customKey"
-							outlined
 						/>
 					</template>
 					`,
@@ -251,7 +250,6 @@ export const withCustomKey: Story = {
 				<div class="d-flex flex-wrap align-center pa-4">
 					<SySelect
 						v-bind="args"
-						outlined
 						text-key="customKey"
 					/>
 				</div>
