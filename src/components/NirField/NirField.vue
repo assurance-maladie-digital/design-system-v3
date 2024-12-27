@@ -20,6 +20,7 @@
 		numberLabel?: string
 		keyLabel?: string
 		displayKey?: boolean
+		showSuccessMessages?: boolean
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		customNumberRules?: any
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -33,6 +34,7 @@
 		numberLabel: 'Numéro de sécurité sociale',
 		keyLabel: 'Clé',
 		displayKey: true,
+		showSuccessMessages: false,
 		customNumberRules: [],
 		customKeyRules: [],
 	})
@@ -245,13 +247,13 @@
 		<v-input
 			ref="vInput"
 			:class="{
-				'v-messages__message--success': successes.length > 0,
+				'v-messages__message--success': successes.length > 0 && props.showSuccessMessages,
 				'v-messages__message--error': errors.length > 0
 			}"
 			:error-messages="errors"
 			:label="numberLabel"
 			:max-errors="3"
-			:messages="successes"
+			:messages="props.showSuccessMessages ? successes : []"
 			:model-value="[numberValue, keyValue]"
 			class="vd-nir-field__fields-wrapper multi-line"
 			validate-on="blur lazy"
