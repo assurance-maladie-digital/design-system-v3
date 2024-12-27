@@ -370,7 +370,6 @@ export const WithCustomKeys: Story = {
 				code: `
 <template>
   <SyBtnSelect
-    v-bind="args"
     text-key="customText"
     value-key="customValue"
     :menu-items="menuItems"
@@ -443,7 +442,7 @@ export const WithMultipleSlots: Story = {
       <VIcon :icon="mdiAccount" />
     </template>
     <template #footer-list-item>
-      <VListItem @click="args.logout">
+      <VListItem @click="console.log('logout')">
         <VListItemTitle>Se déconnecter</VListItemTitle>
       </VListItem>
     </template>
@@ -481,7 +480,7 @@ const menuItems = ['Option 1', 'Option 2']
                     <VIcon :icon="mdiAccount"/>
                   </template>
                   <template #footer-list-item>
-                    <VListItem @click="args.logout">
+                    <VListItem @click="console.log('logout')">
                       <VListItemTitle>Se déconnecter</VListItemTitle>
                     </VListItem>
                   </template>
