@@ -86,52 +86,6 @@ const items = [
 	},
 }
 
-export const withLink: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyBtnSelect 
-  	:primary-info="primaryInfo" 
-  	:menu-items="items" 
-  />
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
-
-const primaryInfo = 'Mes options'
-const items = ['Option 1', 'Option 2']
-</script>
-				`,
-			},
-		],
-	},
-	args: {
-		primaryInfo: 'Mes options',
-		menuItems: ['Option 1', 'Option 2'],
-	},
-	render: (args) => {
-		return {
-			components: { SyBtnSelect },
-			setup() {
-				return { args }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args"/>
-              </div>
-            `,
-		}
-	},
-}
-
 export const MobileView: Story = {
 	parameters: {
 		sourceCode: [
@@ -203,6 +157,7 @@ export const WithSlotPrependIcon: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
 const items = ['Option 1', 'Option 2']
@@ -260,6 +215,7 @@ export const WithSlotAppendIcon: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
 const items = ['Option 1', 'Option 2']
@@ -315,6 +271,7 @@ export const WithIconOnly: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
 const items = ['Option 1', 'Option 2']
@@ -359,7 +316,7 @@ export const WithLogoutItemSlot: Story = {
   	:menu-items="items"
   >
     <template #footer-list-item>
-      <VListItem @click="args.logout">
+      <VListItem @click="console.log('logout')">
         <VListItemTitle>Logout</VListItemTitle>
       </VListItem>
     </template>
@@ -394,7 +351,7 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnSelect v-bind="args">
                   <template #footer-list-item>
-                    <VListItem @click="args.logout">
+                    <VListItem @click="console.log('logout')">
                       <VListItemTitle>Logout</VListItemTitle>
                     </VListItem>
                   </template>
@@ -413,7 +370,6 @@ export const WithCustomKeys: Story = {
 				code: `
 <template>
   <SyBtnSelect
-    v-bind="args"
     text-key="customText"
     value-key="customValue"
     :menu-items="menuItems"
@@ -430,6 +386,7 @@ export const WithCustomKeys: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
 const menuItems = [
@@ -485,7 +442,7 @@ export const WithMultipleSlots: Story = {
       <VIcon :icon="mdiAccount" />
     </template>
     <template #footer-list-item>
-      <VListItem @click="args.logout">
+      <VListItem @click="console.log('logout')">
         <VListItemTitle>Se déconnecter</VListItemTitle>
       </VListItem>
     </template>
@@ -498,6 +455,7 @@ export const WithMultipleSlots: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
 const menuItems = ['Option 1', 'Option 2']
@@ -522,7 +480,7 @@ const menuItems = ['Option 1', 'Option 2']
                     <VIcon :icon="mdiAccount"/>
                   </template>
                   <template #footer-list-item>
-                    <VListItem @click="args.logout">
+                    <VListItem @click="console.log('logout')">
                       <VListItemTitle>Se déconnecter</VListItemTitle>
                     </VListItem>
                   </template>
@@ -560,6 +518,7 @@ export const WithCustomStyles: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
 const items = ['Option 1', 'Option 2']
@@ -619,6 +578,7 @@ export const WithStyledOptions: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
 const menuItems = ['Option 1', 'Option 2']
