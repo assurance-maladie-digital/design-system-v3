@@ -90,6 +90,16 @@ const meta = {
 				},
 			},
 		},
+		showSuccessMessages: {
+			description: 'Indique si les messages de succès sont affichés.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
 		customNumberRules: {
 			description: 'Règles de validation personnalisées pour le champ numéro.',
 			control: 'object',
@@ -210,6 +220,43 @@ export const WithoutKey: Story = {
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
       :displayKey="false"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
+    </script>
+    `,
+			},
+		],
+	},
+}
+
+export const WithSuccessMessages: Story = {
+	args: {
+		...Default.args,
+		showSuccessMessages: true,
+	},
+	parameters: {
+		...Default.parameters,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :showSuccessMessages="true"
      />
     </template>
     `,
