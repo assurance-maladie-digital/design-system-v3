@@ -1,3 +1,9 @@
+## v0.0.7-alpha (27-12-2024)
+
+### Composants
+
+- Improve components/doc and fix bugs [`#317`](https://github.com/assurance-maladie-digital/design-system-v3/pull/317), [`#316`](https://github.com/assurance-maladie-digital/design-system-v3/pull/316), [`#314`](https://github.com/assurance-maladie-digital/design-system-v3/pull/314), [`#313`](https://github.com/assurance-maladie-digital/design-system-v3/pull/313), [`#311`](https://github.com/assurance-maladie-digital/design-system-v3/pull/311), [`#310`](https://github.com/assurance-maladie-digital/design-system-v3/pull/310), [`#309`](https://github.com/assurance-maladie-digital/design-system-v3/pull/309), [`#308`](https://github.com/assurance-maladie-digital/design-system-v3/pull/308), [`#307`](https://github.com/assurance-maladie-digital/design-system-v3/pull/307), [`#306`](https://github.com/assurance-maladie-digital/design-system-v3/pull/306), [`#305`](https://github.com/assurance-maladie-digital/design-system-v3/pull/305), [`#304`](https://github.com/assurance-maladie-digital/design-system-v3/pull/304), [`#303`](https://github.com/assurance-maladie-digital/design-system-v3/pull/303), [`#302`](https://github.com/assurance-maladie-digital/design-system-v3/pull/302), [`#300`](https://github.com/assurance-maladie-digital/design-system-v3/pull/300), [`#299`](https://github.com/assurance-maladie-digital/design-system-v3/pull/299), [`#298`](https://github.com/assurance-maladie-digital/design-system-v3/pull/298), [`#296`](https://github.com/assurance-maladie-digital/design-system-v3/pull/296)
+
 ## v0.0.6-alpha (23-12-2024)
 
 ### Composants
