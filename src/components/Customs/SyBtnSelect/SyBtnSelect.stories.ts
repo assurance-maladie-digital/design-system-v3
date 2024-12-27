@@ -86,52 +86,6 @@ const items = [
 	},
 }
 
-export const withLink: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyBtnSelect 
-  	:primary-info="primaryInfo" 
-  	:menu-items="items" 
-  />
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
-
-const primaryInfo = 'Mes options'
-const items = ['Option 1', 'Option 2']
-</script>
-				`,
-			},
-		],
-	},
-	args: {
-		primaryInfo: 'Mes options',
-		menuItems: ['Option 1', 'Option 2'],
-	},
-	render: (args) => {
-		return {
-			components: { SyBtnSelect },
-			setup() {
-				return { args }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args"/>
-              </div>
-            `,
-		}
-	},
-}
-
 export const MobileView: Story = {
 	parameters: {
 		sourceCode: [
