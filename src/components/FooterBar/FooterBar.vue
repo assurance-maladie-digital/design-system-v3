@@ -79,8 +79,12 @@
 		return typeof complianceLabel === 'string' ? locales.a11yLabel(complianceLabel) : ''
 	})
 
-	const extendedMode = computed(() => {
-		return Boolean(slots.default)
+	const extendedMode = computed<boolean>(() => {
+		if (slots.default) {
+			return true
+		}
+
+		return false
 	})
 
 	const logoSize = computed(() => {

@@ -164,7 +164,7 @@
 			:style="headerStickyStyle"
 		>
 			<div
-				v-if="$slots.prepend"
+				v-if="$slots['prepend']"
 				class="header-prepend"
 			>
 				<slot
@@ -217,7 +217,7 @@
 				</div>
 			</div>
 			<div
-				v-if="$slots.append"
+				v-if="$slots['append']"
 				class="header-append"
 			>
 				<slot

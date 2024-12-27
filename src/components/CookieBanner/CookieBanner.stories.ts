@@ -145,6 +145,8 @@ const meta = {
 				category: 'props',
 			},
 		},
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore - 'default' storybook can't infer dynamic slot name
 		'default': {
 			description: 'Description de la bannière',
 			control: { type: 'text' },
