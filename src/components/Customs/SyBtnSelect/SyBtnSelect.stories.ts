@@ -316,7 +316,7 @@ export const WithLogoutItemSlot: Story = {
   	:menu-items="items"
   >
     <template #footer-list-item>
-      <VListItem @click="args.logout">
+      <VListItem @click="console.log('logout')">
         <VListItemTitle>Logout</VListItemTitle>
       </VListItem>
     </template>
@@ -351,7 +351,7 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnSelect v-bind="args">
                   <template #footer-list-item>
-                    <VListItem @click="args.logout">
+                    <VListItem @click="console.log('logout')">
                       <VListItemTitle>Logout</VListItemTitle>
                     </VListItem>
                   </template>
