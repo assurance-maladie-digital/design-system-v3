@@ -131,8 +131,7 @@ export const Default: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -146,6 +145,9 @@ export const Default: Story = {
 				code: `
     <script setup lang="ts">
      import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
     </script>
     `,
 			},
@@ -166,8 +168,7 @@ export const Required: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="true"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -181,6 +182,9 @@ export const Required: Story = {
 				code: `
     <script setup lang="ts">
      import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
     </script>
     `,
 			},
@@ -201,8 +205,7 @@ export const WithoutKey: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -216,6 +219,9 @@ export const WithoutKey: Story = {
 				code: `
     <script setup lang="ts">
      import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
     </script>
     `,
 			},
@@ -256,8 +262,7 @@ export const CustomRules: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -273,6 +278,9 @@ export const CustomRules: Story = {
 				code: `
     <script setup lang="ts">
      import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
     </script>
     `,
 			},
@@ -293,8 +301,7 @@ export const WithNumberTooltip: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -332,8 +339,7 @@ export const WithKeyTooltip: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
