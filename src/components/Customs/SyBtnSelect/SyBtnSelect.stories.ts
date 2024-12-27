@@ -157,6 +157,7 @@ export const WithSlotPrependIcon: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
 const items = ['Option 1', 'Option 2']
@@ -214,6 +215,7 @@ export const WithSlotAppendIcon: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
 const items = ['Option 1', 'Option 2']
@@ -269,6 +271,7 @@ export const WithIconOnly: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
 const items = ['Option 1', 'Option 2']
@@ -384,6 +387,7 @@ export const WithCustomKeys: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
 const menuItems = [
@@ -452,6 +456,7 @@ export const WithMultipleSlots: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
 const menuItems = ['Option 1', 'Option 2']
@@ -514,6 +519,7 @@ export const WithCustomStyles: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
 const items = ['Option 1', 'Option 2']
@@ -573,6 +579,7 @@ export const WithStyledOptions: Story = {
 				code: `
 <script setup lang="ts">
 import SyBtnSelect from './SyBtnSelect.vue'
+import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
 const menuItems = ['Option 1', 'Option 2']
