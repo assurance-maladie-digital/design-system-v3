@@ -90,6 +90,16 @@ const meta = {
 				},
 			},
 		},
+		showSuccessMessages: {
+			description: 'Indique si les messages de succès sont affichés.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
 		customNumberRules: {
 			description: 'Règles de validation personnalisées pour le champ numéro.',
 			control: 'object',
@@ -131,8 +141,7 @@ export const Default: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -146,6 +155,9 @@ export const Default: Story = {
 				code: `
     <script setup lang="ts">
      import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
     </script>
     `,
 			},
@@ -166,8 +178,7 @@ export const Required: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="true"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -181,6 +192,9 @@ export const Required: Story = {
 				code: `
     <script setup lang="ts">
      import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
     </script>
     `,
 			},
@@ -201,8 +215,7 @@ export const WithoutKey: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -216,6 +229,46 @@ export const WithoutKey: Story = {
 				code: `
     <script setup lang="ts">
      import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
+    </script>
+    `,
+			},
+		],
+	},
+}
+
+export const WithSuccessMessages: Story = {
+	args: {
+		...Default.args,
+		showSuccessMessages: true,
+	},
+	parameters: {
+		...Default.parameters,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :showSuccessMessages="true"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
     </script>
     `,
 			},
@@ -256,8 +309,7 @@ export const CustomRules: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -273,6 +325,9 @@ export const CustomRules: Story = {
 				code: `
     <script setup lang="ts">
      import NirField from './NirField.vue'
+     import { ref } from 'vue'
+     
+     const value = ref('')
     </script>
     `,
 			},
@@ -293,8 +348,7 @@ export const WithNumberTooltip: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
@@ -332,8 +386,7 @@ export const WithKeyTooltip: Story = {
 				code: `
     <template>
      <NirField
-      modelValue=""
-      :outlined="true"
+      v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"

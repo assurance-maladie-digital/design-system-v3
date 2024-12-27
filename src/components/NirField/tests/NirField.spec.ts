@@ -17,6 +17,7 @@ describe('NirField.vue', () => {
 			props: {
 				modelValue: '',
 				required: true,
+				showSuccessMessages: true,
 			},
 		})
 	})

@@ -45,13 +45,10 @@ Le composant `NirField` est utilisé pour afficher un champ de saisie de numéro
                     class="mx-16 my-6"
                     @submit.prevent="handleSubmit"
                 >
-                    <Nirfield
+                    <NirField
                         ref="nirFieldRef"
                         v-model="model"
                         :display-key="true"
-                        key-tooltip="message d'aide pour la clef"
-                        nir-tooltip="message d'aide pour le NIR"
-                        outlined
                         required
                     />
                     <button type="submit">
