@@ -31,11 +31,9 @@ export const AccessibiliteItemsIndeterminate = [
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
 
-			}
-		]
+			},
+		],
 	},
-
-	
 
 	{
 		title: 'Catégorie 10 : Présentation de l’information',
@@ -103,7 +101,7 @@ export const AccessibiliteItemsIndeterminate = [
 				expertise: ExpertiseLevelEnum.DEV,
 
 			},
-			
+
 		],
 
 	},
@@ -180,7 +178,6 @@ export const AccessibiliteItemsValidated = [
 
 		],
 	},
-	
 
 	{
 		title: 'Catégorie 11 : Formulaires',
