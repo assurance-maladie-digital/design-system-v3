@@ -1,0 +1,19 @@
+{
+    "extends": [
+        "stylelint-config-standard-scss",
+        "stylelint-config-recommended-vue/scss",
+        "@stylistic/stylelint-config"
+    ],
+    "rules": {
+        "no-empty-source": null,
+        "no-descending-specificity": null,
+        "selector-class-pattern": [
+            "^([a-z0-9]+(?:-[a-z0-9]+)*)(__([a-z0-9]+(?:-[a-z0-9]+)*))?(--([a-z0-9]+(?:-[a-z0-9]+)*))?$",
+            { "severity": "warning" }
+        ],
+        "max-nesting-depth": 3,
+        "selector-max-compound-selectors": 4,
+        "@stylistic/indentation": "tab",
+        "@stylistic/string-quotes": "single"
+    }
+}
