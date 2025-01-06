@@ -154,7 +154,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField from './NirField.vue'
+     import NirField  from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -191,7 +191,7 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField from './NirField.vue'
+     import NirField  from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -228,7 +228,7 @@ export const WithoutKey: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField from './NirField.vue'
+     import NirField  from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -265,7 +265,7 @@ export const WithSuccessMessages: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField from './NirField.vue'
+     import NirField  from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -324,7 +324,7 @@ export const CustomRules: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField from './NirField.vue'
+     import NirField  from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -362,7 +362,7 @@ export const WithNumberTooltip: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField from './NirField.vue'
+     import NirField  from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -400,7 +400,7 @@ export const WithKeyTooltip: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField from './NirField.vue'
+     import NirField from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
