@@ -6,7 +6,7 @@
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
 	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { computed } from 'vue'
-	import { RouterLink, type RouteLocationRaw } from 'vue-router'
+	import { type RouteLocationRaw } from 'vue-router'
 	import HorizontalNavbar from './HorizontalNavbar/HorizontalNavbar.vue'
 	import type { NavigationItem } from './types'
 
@@ -123,6 +123,7 @@
 									<RouterLink
 										v-else-if="item.to"
 										:to="item.to"
+										@click="menuOpen = false"
 									>
 										{{ item.label }}
 									</RouterLink>
