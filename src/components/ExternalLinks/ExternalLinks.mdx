@@ -1,0 +1,86 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as ExternalLinksStories from './ExternalLinks.stories.ts'
+
+<Meta of={ExternalLinksStories} />
+
+
+# ExternalLinks
+
+L'élément `ExternalLinks` est utilisé pour afficher un menu avec une liste vers des liens externes.
+
+<Canvas of={ExternalLinksStories.Default} />
+
+
+# API
+
+<Controls of={ExternalLinksStories.Default} />
+
+
+## Décalage
+
+Vous pouvez décaler le composant vers le haut ou vers le bas en utilisant les props `nudge-top` et `nude-bottom`.
+
+<Canvas of={ExternalLinksStories.Nudge} />
+
+
+## Absence de données
+
+Lorsqu'il n'y a pas de données, un message par défaut est affiché.
+
+<Canvas of={ExternalLinksStories.NoData} />
+
+## Composants Vuetify
+
+Il est possibles de personnalisé les props passé aux composants utilisés en interne en utilisant la props `vuetifyOptions`.
+
+<Canvas of={ExternalLinksStories.VuetifyOptions} />
+
+
+## Slot `link-icon`
+
+Vous pouvez utiliser le slot `link-icon` pour remplacer l'icône dans les liens.
+
+<Canvas
+	of={ExternalLinksStories.CustomLinksIcon}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { ExternalLinks } from '@cnamts/synapse'
+			import { VIcon } from 'vuetify/components'
+			import { mdiArrowTopRight } from '@mdi/js'
+
+			const items = [
+				{
+					text: 'ameli.fr',
+					href: 'https://www.ameli.fr',
+				},
+				{
+					text: 'Github',
+					href: 'https://www.github.com',
+				},
+				{
+					text: 'Twitter',
+					href: 'https://www.twitter.com',
+				},
+			]
+
+			const arrowIcon = mdiArrowTopRight
+		</script>
+
+		<template>
+			<ExternalLinks
+				:items
+			>
+				<template #link-icon>
+					<VIcon>
+						{{ arrowIcon }}
+					</VIcon>
+				</template>
+			</ExternalLinks>
+		</template>
+		`
+	}}
+/>

@@ -73,6 +73,10 @@
 		attach
 		transition="fade-transition"
 		class="vd-external-links"
+		:class="{
+			'vd-external-links--left': left,
+			'vd-external-links--right': !left,
+		}"
 	>
 		<template #activator="{ props: vMenuProps }">
 			<VBtn
@@ -157,8 +161,17 @@ $list-max-height: 248px;
 	}
 }
 
-.vd-external-links > :deep(.v-overlay__content) {
+.vd-external-links--left :deep(.v-overlay__content) {
 	left: 0 !important;
+	right: auto !important;
+}
+
+.vd-external-links--right :deep(.v-overlay__content) {
+	right: 0 !important;
+	left: auto !important;
+}
+
+.vd-external-links > :deep(.v-overlay__content) {
 	border-radius: 0;
 }
 
