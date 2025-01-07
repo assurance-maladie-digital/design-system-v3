@@ -212,7 +212,7 @@ const items = [
 	},
 }
 
-export const Nudge: Story = {
+export const NudgeTop: Story = {
 	args: {
 		position: 'top left',
 		nudgeTop: '50px',
@@ -268,6 +268,62 @@ const items = [
 	},
 }
 
+export const NudgeBottom: Story = {
+	args: {
+		position: 'bottom left',
+		nudgeBottom: '50px',
+		items: [
+			{
+				text: 'ameli.fr',
+				href: 'https://www.ameli.fr',
+			},
+			{
+				text: 'Github',
+				href: 'https://www.github.com',
+			},
+			{
+				text: 'Twitter',
+				href: 'https://www.twitter.com',
+			},
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<ExternalLinks
+	position="bottom left"
+	:items="items"
+	nudgeBottom="50px"
+/>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+import { ExternalLinks } from '@cnamts/synapse'
+
+const items = [
+	{
+		text: 'ameli.fr',
+		href: 'https://www.ameli.fr',
+	},
+	{
+		text: 'Github',
+		href: 'https://www.github.com',
+	},
+	{
+		text: 'Twitter',
+		href: 'https://www.twitter.com',
+	},
+]
+`,
+			},
+		],
+	},
+}
+
 export const NoData: Story = {
 	args: {
 		position: 'top left',
@@ -295,11 +351,66 @@ import { ExternalLinks } from '@cnamts/synapse'
 	},
 }
 
+export const BtnText: Story = {
+	args: {
+		items: [
+			{
+				text: 'ameli.fr',
+				href: 'https://www.ameli.fr',
+			},
+			{
+				text: 'Github',
+				href: 'https://www.github.com',
+			},
+			{
+				text: 'Twitter',
+				href: 'https://www.twitter.com',
+			},
+		],
+		btnText: 'Afficher les liens externes',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<ExternalLinks
+	position="top left"
+	btn-text="Afficher les liens externes"
+	:items="items"
+/>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+import { ExternalLinks } from '@cnamts/synapse'
+
+const items = [
+	{
+		text: 'ameli.fr',
+		href: 'https://www.ameli.fr',
+	},
+	{
+		text: 'Github',
+		href: 'https://www.github.com',
+	},
+	{
+		text: 'Twitter',
+		href: 'https://www.twitter.com',
+	},
+]
+`,
+			},
+		],
+	},
+}
+
 export const VuetifyOptions: Story = {
 	args: {
 		vuetifyOptions: {
 			btn: {
-				color: 'purple',
+				color: 'secondary',
 			},
 			list: {
 				density: 'compact',
@@ -388,11 +499,9 @@ export const CustomLinksIcon: Story = {
 				return { args, items, arrowIcon }
 			},
 			template: `
-			<ExternalLinks
-				:items
-			>
+			<ExternalLinks :items>
 				<template #link-icon>
-					<VIcon>
+					<VIcon color="rgba(0, 0, 0, 0.5)">
 						{{ arrowIcon }}
 					</VIcon>
 				</template>
@@ -405,16 +514,13 @@ export const CustomLinksIcon: Story = {
 			{
 				name: 'Template',
 				code: `
-<ExternalLinks
-	:items
->
+<ExternalLinks :items>
 	<template #link-icon>
-		<VIcon>
+		<VIcon color="rgba(0, 0, 0, 0.5)">
 			{{ arrowIcon }}
 		</VIcon>
 	</template>
 </ExternalLinks>
-
 				`,
 			},
 			{

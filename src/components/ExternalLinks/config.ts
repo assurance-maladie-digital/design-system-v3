@@ -21,7 +21,7 @@ export const config = {
 	},
 	list: {
 		border: false,
-		elevation: 0,
+		elevation: 3,
 		class: 'py-0',
 	},
 	listItem: {
