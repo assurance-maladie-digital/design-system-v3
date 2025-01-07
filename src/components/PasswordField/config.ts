@@ -1,9 +1,11 @@
+import { cnamColorsTokens } from '@/designTokens/tokens/cnam/cnamColors'
+
 export const config = {
 	btn: {
 		variant: 'text',
 		icon: true,
 	},
 	icon: {
-		color: 'grey-lighten-20',
+		color: cnamColorsTokens.grey.lighten20,
 	},
 } as const

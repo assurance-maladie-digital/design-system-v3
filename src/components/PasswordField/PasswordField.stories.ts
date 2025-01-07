@@ -87,9 +87,7 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-              <div class="pa-4">
                 <PasswordField v-bind="args" v-model="args.modelValue"/>
-              </div>
             `,
 		}
 	},
