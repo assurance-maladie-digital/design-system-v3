@@ -21,12 +21,16 @@
 		nudgeTop?: number | string
 		nudgeBottom?: number | string
 		fixed?: boolean
+		ariaLabel?: string
+		ariaOwns?: string
 	}>(), {
 		position: 'top left',
 		btnText: locales.btnText,
 		nudgeTop: 0,
 		nudgeBottom: 0,
 		fixed: false,
+		ariaLabel: 'external-link-btn',
+		ariaOwns: 'external-link-btn',
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -66,81 +70,88 @@
 </script>
 
 <template>
-	<VMenu
-		v-model="menu"
-		v-bind="options.menu"
-		:location="top ? 'bottom' : 'top'"
-		attach
-		transition="fade-transition"
-		class="vd-external-links"
-		:class="{
-			'vd-external-links--left': left,
-			'vd-external-links--right': !left,
-		}"
+	<div
+		:id="props.ariaOwns"
 	>
-		<template #activator="{ props: vMenuProps }">
-			<VBtn
-				v-bind="{
-					...vMenuProps,
-					...options.btn,
-				}"
-				:style="btnStyle"
-				class="vd-external-links-btn"
-				@mouseenter="hover = true"
-				@mouseleave="hover = false"
-				@focusin="hover = true"
-				@focusout="hover = false"
-			>
-				<span
-					:class="{
-						'ml-3': !left,
-						'mr-3': left,
+		<VMenu
+			v-bind="options.menu"
+			:id="props.ariaOwns"
+			v-model="menu"
+			:location="top ? 'bottom' : 'top'"
+			attach
+			transition="fade-transition"
+			class="vd-external-links"
+			:class="{
+				'vd-external-links--left': left,
+				'vd-external-links--right': !left,
+			}"
+		>
+			<template #activator="{ props: vMenuProps }">
+				<VBtn
+					v-bind="{
+						...vMenuProps,
+						...options.btn,
 					}"
-					class="vd-external-links-btn-text white--text"
+					:aria-label="props.ariaLabel"
+					:aria-owns="props.ariaOwns"
+					:style="btnStyle"
+					class="vd-external-links-btn"
+					@mouseenter="hover = true"
+					@mouseleave="hover = false"
+					@focusin="hover = true"
+					@focusout="hover = false"
 				>
-					{{ btnText }}
-				</span>
+					<span
+						:class="{
+							'ml-3': !left,
+							'mr-3': left,
+						}"
+						class="vd-external-links-btn-text white--text"
+					>
+						{{ btnText }}
+					</span>
 
-				<VIcon v-bind="options.btnIcon">
-					{{ arrowIcon }}
-				</VIcon>
-			</VBtn>
-		</template>
+					<VIcon v-bind="options.btnIcon">
+						{{ arrowIcon }}
+					</VIcon>
+				</VBtn>
+			</template>
 
-		<VList
-			v-if="items.length"
-			v-bind="options.list"
-			class="vd-external-links-list"
-		>
-			<VListItem
-				v-for="(item, index) in items"
-				:key="index"
-				:href="item.href"
-				v-bind="options.listItem"
+			<VList
+				v-if="items.length"
+				v-bind="options.list"
+				class="vd-external-links-list"
 			>
-				<div class="d-flex flex-row justify-space-between">
-					<VListItemTitle v-bind="options.listItemTitle">
-						{{ item.text }}
-					</VListItemTitle>
+				<VListItem
+					v-for="(item, index) in items"
+					:key="index"
+					:href="item.href"
+					v-bind="options.listItem"
+				>
+					<div class="d-flex flex-row justify-space-between">
+						<VListItemTitle v-bind="options.listItemTitle">
+							{{ item.text }}
+						</VListItemTitle>
 
-					<slot name="link-icon">
-						<VIcon v-bind="options.linkIcon">
-							{{ linkIcon }}
-						</VIcon>
-					</slot>
-				</div>
-			</VListItem>
-		</VList>
+						<slot name="link-icon">
+							<VIcon v-bind="options.linkIcon">
+								{{ linkIcon }}
+							</VIcon>
+						</slot>
+					</div>
+				</VListItem>
+			</VList>
 
-		<VSheet
-			v-else
-			v-bind="options.sheet"
-		>
-			<p class="mb-0">
-				{{ locales.noData }}
-			</p>
-		</VSheet>
-	</VMenu>
+			<VSheet
+				v-else
+				v-bind="options.sheet"
+			>
+				<p class="mb-0">
+					{{ locales.noData }}
+				</p>
+			</VSheet>
+		</VMenu>
+	</div>
 </template>
 
 <style lang="scss" scoped>
