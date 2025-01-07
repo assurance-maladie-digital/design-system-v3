@@ -137,6 +137,7 @@
 		:variant="outlined ? 'outlined' : 'underlined'"
 		class="vd-password"
 		color="primary"
+		title="password"
 		validate-on="blur lazy"
 		@blur="validateFields(true)"
 		@keydown="handleKeydown"
