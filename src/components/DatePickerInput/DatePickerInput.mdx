@@ -1,0 +1,161 @@
+import { Meta, Canvas, Controls, Source } from '@storybook/blocks';
+import * as DatePickerInputStories from "./DatePickerInput.stories";
+
+<Meta of={DatePickerInputStories} />
+
+# DatePickerInput
+
+Le composant `DatePickerInput` est un champ de saisie de date qui combine un champ de texte et un sélecteur de date. Il permet de saisir une date manuellement ou de la sélectionner via un calendrier, avec support pour les plages de dates.
+
+<Canvas story={{height: '550px'}} of={DatePickerInputStories.Default} />
+
+# API
+
+<Controls of={DatePickerInputStories.Default} />
+
+# Props
+
+## Valeur et contrôle
+
+### modelValue
+- **Type** : `string | string[]`
+- **Description** : La valeur du champ. Pour une plage de dates, utiliser un tableau de deux dates. La valeur doit être fournie dans le même format que celui spécifié dans la prop `format`.
+- **Défaut** : `undefined`
+
+### placeholder
+- **Type** : `string`
+- **Description** : Texte indicatif affiché quand le champ est vide
+- **Défaut** : `'Sélectionner une date'`
+
+### format
+- **Type** : `string`
+- **Description** : Format d'affichage et d'entrée de la date. Supporte les formats suivants :
+  - `DD` : jour sur 2 chiffres
+  - `MM` : mois sur 2 chiffres
+  - `YYYY` : année sur 4 chiffres
+  - `YY` : année sur 2 chiffres (assumé comme 20XX)
+  Les séparateurs peuvent être `/`, `-` ou `.`
+- **Défaut** : `'DD/MM/YYYY'`
+
+### dateFormatReturn
+- **Type** : `string`
+- **Description** : Format de la date pour la valeur de retour. Utilise les mêmes tokens que la prop `format`. Si non spécifié, utilise le même format que `format`.
+- **Défaut** : `''`
+
+> **Note importante sur les formats**
+> 
+> Le composant utilise maintenant deux formats distincts :
+> 1. **Format d'entrée/affichage** : Défini par la prop `format`, il détermine à la fois :
+>    - Le format dans lequel la date doit être fournie au composant
+>    - Comment la date est affichée visuellement dans le champ
+> 2. **Format de retour** : Défini par la prop `dateFormatReturn`, il détermine le format de la date émise lors des changements
+>
+> Par exemple, avec `format="DD-MM-YY"` et `dateFormatReturn="YYYY/MM/DD"` :
+> - Vous devez fournir la date au format : `24-12-25`
+> - Elle sera affichée comme : `24-12-25`
+> - Elle sera retournée comme : `2025/12/24`
+
+### required
+- **Type** : `boolean`
+- **Description** : Indique si le champ est obligatoire
+- **Défaut** : `false`
+
+### isDisabled
+- **Type** : `boolean`
+- **Description** : Désactive le champ
+- **Défaut** : `false`
+
+## Configuration du calendrier
+
+### isBirthDate
+- **Type** : `boolean`
+- **Description** : Active le mode date de naissance (commence par la sélection de l'année)
+- **Défaut** : `false`
+
+### showWeekNumber
+- **Type** : `boolean`
+- **Description** : Affiche les numéros de semaine dans le calendrier
+- **Défaut** : `false`
+
+### displayRange
+- **Type** : `boolean`
+- **Description** : Active la sélection d'une plage de dates
+- **Défaut** : `false`
+
+### noCalendar
+- **Type** : `boolean`
+- **Description** : Désactive l'affichage du calendrier (saisie manuelle uniquement)
+- **Défaut** : `false`
+
+## Apparence
+
+### displayIcon
+- **Type** : `boolean`
+- **Description** : Affiche l'icône de calendrier
+- **Défaut** : `false`
+
+### displayAppendIcon
+- **Type** : `boolean`
+- **Description** : Affiche l'icône à la fin du champ plutôt qu'au début
+- **Défaut** : `false`
+
+### noIcon
+- **Type** : `boolean`
+- **Description** : Masque toutes les icônes
+- **Défaut** : `false`
+
+## Validation
+
+### customRules
+- **Type** : `{ type: string, options: RuleOptions }[]`
+- **Description** : Règles de validation personnalisées
+- **Défaut** : `[]`
+
+### customWarningRules
+- **Type** : `{ type: string, options: RuleOptions }[]`
+- **Description** : Règles d'avertissement personnalisées
+- **Défaut** : `[]`
+
+# Exemple d'utilisation
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePickerInput } from '@cnamts/synapse'
+
+	const date = ref('')
+</script>
+
+<template>
+	<DatePickerInput
+		v-model="date"
+		placeholder="Sélectionner une date"
+		format="DD/MM/YYYY"
+		required
+	/>
+</template>
+`}
+/>
+
+## Exemple avec plage de dates
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePickerInput } from '@cnamts/synapse'
+
+	const dateRange = ref(['', ''])
+</script>
+
+<template>
+	<DatePickerInput
+		v-model="dateRange"
+		placeholder="Sélectionner une période"
+		format="DD/MM/YYYY"
+		display-range
+	/>
+</template>
+`}
+/>

@@ -233,7 +233,7 @@
 
 	function validateOnSubmit() {
 		isValidating.value = true
-		validateFields()
+		validateFields(true)
 		return errors.value.length === 0
 	}
 

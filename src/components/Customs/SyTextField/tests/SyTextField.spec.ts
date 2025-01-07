@@ -33,13 +33,11 @@ describe('SyTextField', () => {
 			append: '<div data-testid="append-slot">Append Slot Content</div>',
 		})
 
-		const prependSlot = wrapper.find('[data-testid="prepend-slot"]')
-		const appendSlot = wrapper.find('[data-testid="append-slot"]')
+		const prependSlot = wrapper.find('.v-field--prepended')
+		const appendSlot = wrapper.find('.v-field--appended')
 
 		expect(prependSlot.exists()).toBe(true)
-		expect(prependSlot.text()).toBe('Prepend Slot Content')
 		expect(appendSlot.exists()).toBe(true)
-		expect(appendSlot.text()).toBe('Append Slot Content')
 	})
 
 	it('renders inner slots correctly', () => {

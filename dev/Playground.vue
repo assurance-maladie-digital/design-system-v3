@@ -33,3 +33,6 @@
 		/>
 	</main>
 </template>
+
+<script>
+</script>
