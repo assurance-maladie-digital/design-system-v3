@@ -248,7 +248,7 @@ export const Usage: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import ContextualMenu from '@/components/ContextualMenu/ContextualMenu.vue'
+	import { ContextualMenu } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
 	const items = [{
