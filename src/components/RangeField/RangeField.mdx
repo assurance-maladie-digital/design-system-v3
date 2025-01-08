@@ -1,0 +1,54 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import * as RangeFieldStories from './RangeField.stories.ts';
+
+<Meta of={RangeFieldStories} />
+
+# RangeField
+
+Le composant RangeField est utilisé pour permettre à l'utilisateur de sélectionner un interval.
+
+<Canvas of={RangeFieldStories.Default} />
+
+# Api
+
+<Controls of={RangeFieldStories.Default} />
+
+
+# Personnalisation des limites
+
+Vous pouvez personnaliser les limites de l'intervalle en utilisant les props `min` et `max`.
+
+<Canvas
+	of={RangeFieldStories.OtherRange}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script setup lang="ts">
+			import { ref } from 'vue'
+			import { RangeField } from '@cnamts/synapse'
+
+			const range = ref([0, 100])
+		</script>
+
+		<template>
+			<RangeField
+				v-model="range"
+				min="-50"
+				max="50"
+			/>
+		</template>
+		`
+	}}
+/>
+
+
+# Personnalisation des composants Vuetify
+
+
+Vous pouvez personnaliser les composants Vuetify `VTextField` et `VSlider` utilisés dans le composant RangeField en utilisant la props `vuetifyOptions`.
+
+
+<Canvas
+	of={RangeFieldStories.Customization}
+/>
