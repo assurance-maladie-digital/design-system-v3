@@ -7,6 +7,11 @@ import { ref, watch } from 'vue'
 const meta = {
 	title: 'Composants/Navigation/ContextualMenu',
 	component: ContextualMenu,
+	decorators: [
+		() => ({
+			template: '<div style="padding: 20px;"><story/></div>',
+		}),
+	],
 	parameters: {
 		layout: 'fullscreen',
 	},
@@ -57,6 +62,10 @@ export const Default: Story = {
 				text: 'Titre 2',
 				hash: '#example-2',
 			},
+			{
+				text: 'Titre 3',
+				hash: '#example-3',
+			},
 		],
 		'modelValue': '#example-1',
 		'onUpdate:modelValue': fn(),
@@ -104,6 +113,10 @@ export const Default: Story = {
 			text: 'Titre 2',
 			hash: '#example-2',
 		},
+		{
+			text: 'Titre 3,
+			hash: '#example-3',
+		},
 	]
 </script>
 	`,
@@ -112,7 +125,7 @@ export const Default: Story = {
 	},
 }
 
-export const Usage: Story = {
+export const WithAnchors: Story = {
 	args: {
 		'items': [{
 			text: 'section 1',
