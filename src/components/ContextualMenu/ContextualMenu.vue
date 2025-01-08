@@ -77,7 +77,7 @@ a {
 	&::before {
 		content: '';
 		width: 2px;
-		background: rgba(0, 0, 0, 0.6);
+		background: rgb(0 0 0 / 60%);
 		position: absolute;
 		left: 0;
 		height: 100%;
@@ -87,7 +87,7 @@ a {
 		content: '';
 		width: 4px;
 		border-radius: 0 2px 2px 0;
-		background: currentColor;
+		background: currentcolor;
 		position: absolute;
 		left: 0;
 		height: 100%;

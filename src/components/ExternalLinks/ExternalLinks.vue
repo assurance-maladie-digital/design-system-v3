@@ -192,7 +192,7 @@ $list-max-height: 248px;
 	border-radius: 0;
 }
 
-@media only screen and (max-height: 340px) {
+@media only screen and (height <= 340px) {
 	.vd-external-links-btn {
 		z-index: 4 !important;
 	}
