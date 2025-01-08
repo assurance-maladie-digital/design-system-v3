@@ -163,7 +163,7 @@
 			:label="locales.label"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			color="primary"
-			class="phoneField"
+			class="phone-field"
 			@input="handlePhoneInput"
 			@blur="validateInputOnBlur"
 		>
@@ -184,46 +184,46 @@
 
 <style scoped>
 .phone-field-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
 }
 
-.phoneField {
-  width: 100%;
+.phone-field {
+	width: 100%;
 }
 
 .custom-select {
-  width: 30%;
+	width: 30%;
 }
 
-@media (min-width: 600px) {
-  .phone-field-container {
-    flex-direction: row;
-    align-items: center;
-  }
+@media (width >= 600px) {
+	.phone-field-container {
+		flex-direction: row;
+		align-items: center;
+	}
 
-  .custom-select {
-    margin-right: 1rem;
-    margin-bottom: 0;
-    min-width: 144px;
-  }
+	.custom-select {
+		margin-right: 1rem;
+		margin-bottom: 0;
+		min-width: 144px;
+	}
 
-  .phoneField {
-    min-width: 350px;
-  }
+	.phone-field {
+		min-width: 350px;
+	}
 }
 
 :deep(.v-list) {
-  position: absolute;
-  left: inherit !important;
-  background-color: white;
-  max-height: 300px;
-  padding: 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08);
-  border-radius: 4px;
-  overflow-y: auto;
-  z-index: 2;
+	position: absolute;
+	left: inherit !important;
+	background-color: white;
+	max-height: 300px;
+	padding: 0;
+	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
+	border-radius: 4px;
+	overflow-y: auto;
+	z-index: 2;
 }
 </style>

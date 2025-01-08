@@ -96,7 +96,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 details > summary {
 	cursor: pointer;

@@ -102,12 +102,13 @@
 	.v-btn__content {
 		flex-wrap: wrap;
 	}
+
 	.v-icon {
 		flex: none;
 	}
 }
 
 .outlined-style {
-	border: 1px solid currentColor;
+	border: 1px solid currentcolor;
 }
 </style>

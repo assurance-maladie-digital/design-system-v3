@@ -63,17 +63,17 @@
 </template>
 
 <style lang="scss" scoped>
-@use '/src/assets/tokens.scss';
+@use '/src/assets/tokens';
 
 .vd-skip-link {
-  z-index: 150;
-  position: fixed;
-  top: 0;
-  right: 0;
-  transition: none;
-  width: 100%;
-  background: #fff;
-  outline: none; // Disable outline to use border
-  border: 2px solid tokens.$blue-darken-60;
+	z-index: 150;
+	position: fixed;
+	top: 0;
+	right: 0;
+	transition: none;
+	width: 100%;
+	background: #fff;
+	outline: none; // Disable outline to use border
+	border: 2px solid tokens.$blue-darken-60;
 }
 </style>

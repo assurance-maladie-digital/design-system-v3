@@ -9,7 +9,7 @@
 </template>
 
 <style lang="scss" scoped>
-	@use "@/assets/tokens.scss" as *;
+	@use '@/assets/tokens.scss' as *;
 
 	.header-menu-item {
 		color: $primary-base;
@@ -24,14 +24,14 @@
 			flex-direction: column;
 			padding: 16px 50px 16px 20px;
 			text-decoration: none;
-			color: currentColor;
+			color: currentcolor;
 
 			&:hover {
 				text-decoration: underline;
 			}
 
 			&:visited {
-				color: currentColor;
+				color: currentcolor;
 			}
 
 			&::first-letter {

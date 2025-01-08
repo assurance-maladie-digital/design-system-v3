@@ -131,6 +131,7 @@
 	opacity: 1;
 	float: right;
 }
+
 .v-btn--variant-outlined {
 	background: white;
 }

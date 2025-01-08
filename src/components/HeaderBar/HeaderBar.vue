@@ -260,9 +260,9 @@
 }
 
 .menu + .header-logo {
-  @media screen and (min-width: 340px) {
-    padding-left: 16px !important;
-  }
+	@media screen and (width >= 340px) {
+		padding-left: 16px !important;
+	}
 }
 
 @media screen and (min-width: $header-breakpoint) {

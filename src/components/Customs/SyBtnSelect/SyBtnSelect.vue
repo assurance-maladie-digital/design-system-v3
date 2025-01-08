@@ -213,42 +213,42 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 @use '@/assets/tokens' as *;
 
 .vd-user-menu-btn-ctn {
-  position: relative;
-  z-index: 1;
+	position: relative;
+	z-index: 1;
 
-  .v-btn.v-btn--density-default {
-    height: auto !important;
-  }
+	.v-btn.v-btn--density-default {
+		height: auto !important;
+	}
 
-  .v-btn {
-    text-transform: none !important;
-  }
+	.v-btn {
+		text-transform: none !important;
+	}
 }
 
 .vd-user-menu-btn {
-  outline: none;
-  padding: 12px !important;
+	outline: none;
+	padding: 12px !important;
 
-  &:hover:before {
-    background: #000;
-    opacity: 0.05;
-  }
+	&:hover::before {
+		background: #000;
+		opacity: 0.05;
+	}
 
-  &:focus:before {
-    background: tokens.$blue-base;
-    opacity: 0.08;
-  }
+	&:focus::before {
+		background: tokens.$blue-base;
+		opacity: 0.08;
+	}
 
-  &:focus {
-    background: rgba(tokens.$blue-base, 0.08) !important;
-  }
+	&:focus {
+		background: rgba(tokens.$blue-base, 0.08) !important;
+	}
 }
 
 :deep(.vd-user-menu-btn:focus > .v-btn__overlay) {
-  opacity: 0 !important;
+	opacity: 0 !important;
 }
 </style>

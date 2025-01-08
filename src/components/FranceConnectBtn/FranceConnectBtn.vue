@@ -97,13 +97,14 @@
 .vd-france-connect-btn a {
 	color: #000091;
 
-  &:focus {
-    outline-offset: 3px;
-  }
+	&:focus {
+		outline-offset: 3px;
+	}
 }
 
 .vd-france-connect-link {
 	background: #000091;
+
 	&:hover {
 		background: #1212ff;
 		transition: all 0.2s ease-in-out;
@@ -113,32 +114,32 @@
 		background: #2323ff;
 	}
 
-  &:focus {
-    outline-offset: 3px;
-  }
+	&:focus {
+		outline-offset: 3px;
+	}
 }
 
 .vd-france-connect-btn--dark {
 	.vd-france-connect-link {
-		color: #FFFFFF;
-		background-color: #8585F6;
+		color: #fff;
+		background-color: #8585f6;
 
 		&:hover {
-			background-color: #B1B1F9;
+			background-color: #b1b1f9;
 		}
 
 		&:active {
-			background-color: #C6C6FB;
+			background-color: #c6c6fb;
 		}
 	}
 
 	.vd-france-connect-info-link {
-		color: #8585F6;
+		color: #8585f6;
 	}
 }
 
 .vd-france-connect-info-link {
-	background-image: linear-gradient(currentColor, currentColor);
+	background-image: linear-gradient(currentcolor, currentcolor);
 	background-position: 0% 100%;
 	background-repeat: no-repeat;
 	background-size: 100% 1px;
@@ -149,6 +150,6 @@
 }
 
 :deep(&:focus) {
-  border-radius: 0 !important;
+	border-radius: 0 !important;
 }
 </style>

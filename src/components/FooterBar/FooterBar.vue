@@ -240,102 +240,127 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
+
 $white: #fff;
 
 a {
-  cursor: pointer;
+	cursor: pointer;
 }
+
 .v-btn--icon {
-  border: 0;
+	border: 0;
 }
+
 // Fix footer bar height in SK
 .v-footer {
-  flex-grow: 0 !important;
-  justify-content: center;
-  .container {
-    width: 100%;
-    max-width: 1712px;
-    margin: 0 auto;
-  }
+	flex-grow: 0 !important;
+	justify-content: center;
+
+	.container {
+		width: 100%;
+		max-width: 1712px;
+		margin: 0 auto;
+	}
 }
+
 .vd-footer-bar :deep() {
-  .vd-footer-bar-links a {
-    color: rgba(0, 0, 0, .87);
-  }
-  p,
-  .text--primary {
-    color: rgba(0, 0, 0, .87);
-  }
-  .text--secondary {
-    color: rgba(0, 0, 0, .6);
-  }
-  .social {
-    .text--primary {
-      color: tokens.$primary-base;
-    }
-    a.v-btn:hover {
-      background: rgba(0, 0, 0, 0.05);
-    }
-  }
-  button.v-btn:hover {
-    background: rgba(0, 0, 0, 0.05);
-  }
-  a.text--primary {
-    color: tokens.$primary-base;
-  }
-  .v-divider {
-    border-color: rgba(tokens.$parma-darken-60, 1);
-  }
-  svg.logo {
-    fill: tokens.$primary-base;
-  }
-  .scroll {
-    color: tokens.$primary-base !important;
-  }
+	.vd-footer-bar-links a {
+		color: rgb(0 0 0 / 87%);
+	}
+
+	p,
+	.text--primary {
+		color: rgb(0 0 0 / 87%);
+	}
+
+	.text--secondary {
+		color: rgb(0 0 0 / 60%);
+	}
+
+	.social {
+		.text--primary {
+			color: tokens.$primary-base;
+		}
+
+		a.v-btn:hover {
+			background: rgb(0 0 0 / 5%);
+		}
+	}
+
+	button.v-btn:hover {
+		background: rgb(0 0 0 / 5%);
+	}
+
+	a.text--primary {
+		color: tokens.$primary-base;
+	}
+
+	.v-divider {
+		border-color: rgba(tokens.$parma-darken-60, 1);
+	}
+
+	svg.logo {
+		fill: tokens.$primary-base;
+	}
+
+	.scroll {
+		color: tokens.$primary-base !important;
+	}
 }
+
 // Use deep selector to style user content as well
 .vd-footer-bar.v-theme--dark :deep() {
-  .vd-footer-bar-links a {
-    color: $white;
-  }
-  p,
-  .text--primary {
-    color: rgba($white, 0.87);
-  }
-  .text--secondary {
-    color: rgba($white, 0.6);
-  }
-  a.text--primary {
-    color: $white;
-  }
-  .v-divider {
-    border-color: rgba($white, 1);
-  }
-  svg {
-    fill: $white;
-  }
+	.vd-footer-bar-links a {
+		color: $white;
+	}
+
+	p,
+	.text--primary {
+		color: rgba($white, 0.87);
+	}
+
+	.text--secondary {
+		color: rgba($white, 0.6);
+	}
+
+	a.text--primary {
+		color: $white;
+	}
+
+	.v-divider {
+		border-color: rgba($white, 1);
+	}
+
+	svg {
+		fill: $white;
+	}
 }
+
 .vd-footer-bar-links :deep() {
-  li {
-    list-style: none;
-    display: flex;
-  }
-  a {
-    transition: 0.15s;
-    text-decoration: none;
-    padding-top: 1px; // Add top padding to account for bottom border
-    border-bottom: 1px solid transparent;
-    &:hover,
-    &:focus {
-      border-color: currentColor;
-    }
-  }
-  p {
-    padding: 1px 0;
-  }
+	li {
+		list-style: none;
+		display: flex;
+	}
+
+	a {
+		transition: 0.15s;
+		text-decoration: none;
+		padding-top: 1px; // Add top padding to account for bottom border
+		border-bottom: 1px solid transparent;
+
+		&:hover,
+		&:focus {
+			border-color: currentcolor;
+		}
+	}
+
+	p {
+		padding: 1px 0;
+	}
 }
+
 .v-theme--dark button.v-btn:hover :deep() {
-  background: rgba(white, 0.1);
+	background: rgba(white, 0.1);
 }
 </style>

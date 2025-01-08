@@ -135,6 +135,6 @@
 
 <style lang="scss" scoped>
 :deep(ul) {
-  list-style: none;
+	list-style: none;
 }
 </style>

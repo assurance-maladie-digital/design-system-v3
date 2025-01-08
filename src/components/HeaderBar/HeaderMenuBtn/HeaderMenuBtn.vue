@@ -37,7 +37,7 @@
 @use '@/assets/tokens.scss' as *;
 
 .header-menu-btn {
-	text-transform: Capitalize;
+	text-transform: capitalize;
 	height: $header-height;
 	width: 82px;
 	display: flex;

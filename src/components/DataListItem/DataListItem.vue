@@ -111,25 +111,25 @@
 
 <style lang="scss" scoped>
 .vd-row {
-  display: flex;
-  flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
 
-  .vd-data-list-item-label {
-    align-self: center;
+	.vd-data-list-item-label {
+		align-self: center;
 
-    &::after {
-      content: ':';
-      margin: 0 4px;
-    }
-  }
+		&::after {
+			content: ':';
+			margin: 0 4px;
+		}
+	}
 }
 
 .vd-data-list-item-action-btn.v-btn {
-  min-width: 0;
-  margin: 0 -1px;
+	min-width: 0;
+	margin: 0 -1px;
 }
 
 .v-icon.v-theme--light {
-  color: rgba(0, 0, 0, 0.54);
+	color: rgb(0 0 0 / 54%);
 }
 </style>

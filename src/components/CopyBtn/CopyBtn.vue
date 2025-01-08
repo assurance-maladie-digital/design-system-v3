@@ -86,17 +86,17 @@
 </template>
 
 <style lang="scss">
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 .vd-copy-tooltip-menu {
-  padding: 6px 16px;
-  box-shadow: none;
-  margin-top: 2px;
-  background: rgba(84, 88, 89, 0.95);
-  color: white;
+	padding: 6px 16px;
+	box-shadow: none;
+	margin-top: 2px;
+	background: rgb(84 88 89 / 95%);
+	color: white;
 }
 
 .v-btn--icon .v-icon {
-  color: tokens.$grey-lighten-20;
+	color: tokens.$grey-lighten-20;
 }
 </style>

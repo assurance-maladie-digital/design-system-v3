@@ -111,7 +111,7 @@
 	align-items: center;
 	color: $primary-base;
 	line-height: 1.45;
-	font-family: 'Cabin', 'Arial', 'Helvetica', sans-serif;
+	font-family: Cabin, Arial, Helvetica, sans-serif;
 	text-decoration: none;
 	cursor: pointer;
 }

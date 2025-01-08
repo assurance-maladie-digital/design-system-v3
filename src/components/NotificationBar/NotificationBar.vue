@@ -203,8 +203,8 @@
 			<template #actions>
 				<div
 					class="d-flex ga-2"
-					style="width:100%"
-					:class="hasLongContent ? 'action-section-longText' : 'action-section-shortText'"
+					style="width: 100%;"
+					:class="hasLongContent ? 'action-section-long-text' : 'action-section-short-text'"
 				>
 					<slot name="action" />
 					<VBtn
@@ -228,67 +228,69 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 .vd-notification-content {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .vd-notification-bar :deep(.v-snack__wrapper) {
-  padding: 16px;
-  min-width: 0;
-  max-width: none;
+	padding: 16px;
+	min-width: 0;
+	max-width: none;
 }
 
 :deep(.v-snackbar__content) {
-  padding: tokens.$padding-4 !important;
+	padding: tokens.$padding-4 !important;
 }
+
 :deep(.v-snackbar__actions) {
-  margin-inline-end: 10px;
+	margin-inline-end: 10px;
 }
 
 .vd-notification-bar.v-snackbar--vertical :deep() {
-  .v-snackbar--vertical .v-snackbar__wrapper .v-snackbar__actions {
-    width: 100% !important;
-    align-self: auto;
-  }
-  .v-snack__wrapper {
-    align-items: stretch;
-    flex-direction: row;
-  }
+	.v-snackbar--vertical .v-snackbar__wrapper .v-snackbar__actions {
+		width: 100% !important;
+		align-self: auto;
+	}
 
-  .v-snack__action {
-    align-self: stretch;
-    align-items: stretch;
-    flex-direction: column;
-  }
+	.v-snack__wrapper {
+		align-items: stretch;
+		flex-direction: row;
+	}
 
-  .v-snackbar__content {
-    margin: 0;
-    width: 100%;
-    display: flex;
-  }
+	.v-snack__action {
+		align-self: stretch;
+		align-items: stretch;
+		flex-direction: column;
+	}
 
-  .vd-notification-content {
-    flex-direction: column;
-    display: flex;
-  }
+	.v-snackbar__content {
+		margin: 0;
+		width: 100%;
+		display: flex;
+	}
+
+	.vd-notification-content {
+		flex-direction: column;
+		display: flex;
+	}
 }
 
 .long-text :deep(.v-snackbar__actions) {
-  width: 98% !important;
+	width: 98% !important;
 }
 
 .short-text :deep(.v-snackbar__actions) {
-  width: 48% !important;
+	width: 48% !important;
 }
 
-.action-section-longText {
-  justify-content: space-around;
+.action-section-long-text {
+	justify-content: space-around;
 }
 
-.action-section-shortText {
-  justify-content: end !important;
+.action-section-short-text {
+	justify-content: end !important;
 }
 </style>

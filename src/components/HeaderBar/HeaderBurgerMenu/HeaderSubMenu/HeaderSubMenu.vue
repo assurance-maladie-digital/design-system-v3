@@ -61,7 +61,7 @@
 </template>
 
 <style lang="scss" scoped>
-	@use "@/assets/tokens.scss" as *;
+	@use '@/assets/tokens.scss' as *;
 	@use '../../consts' as *;
 
 	.sub-menu-btn {
@@ -119,6 +119,7 @@
 
 			&:hover {
 				color: #000;
+
 				> :deep(*) {
 					color: #000 !important;
 				}
@@ -158,8 +159,7 @@
 			height: 100%;
 			background: #f9f9f9;
 			border-left: 1px solid $menu-border-color;
-			overflow-y: auto;
-			overflow-x: hidden;
+			overflow: hidden auto;
 
 			> .sub-menu--open .sub-menu-content {
 				left: $menu-width * 2;
@@ -180,13 +180,15 @@
 			transition: opacity 0.08s ease-in, transform 0.08s ease-in;
 		}
 
-		.slide-fade-enter-from, .slide-fade-leave-to {
+		.slide-fade-enter-from,
+		.slide-fade-leave-to {
 			opacity: 0;
 			transform: translateX(-10px);
 		}
 
 		@media (prefers-reduced-motion) {
-			.slide-fade-enter-active, .slide-fade-leave-active {
+			.slide-fade-enter-active,
+			.slide-fade-leave-active {
 				transition: none;
 			}
 		}

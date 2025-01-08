@@ -200,53 +200,53 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 .sy-input-select {
-  text-transform: none !important;
-  font-size: 16px;
+	text-transform: none !important;
+	font-size: 16px;
 }
 
 .v-input {
-  cursor: pointer;
-  position: relative;
+	cursor: pointer;
+	position: relative;
 }
 
 .v-list {
-  position: absolute;
-  width: 100%;
-  z-index: 1;
-  background-color: white;
-  min-width: fit-content;
-  max-width: 100px;
-  padding: 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08);
-  border-radius: 4px;
-  overflow-y: auto;
-  max-height: 300px;
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+	background-color: white;
+	min-width: fit-content;
+	max-width: 100px;
+	padding: 0;
+	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
+	border-radius: 4px;
+	overflow-y: auto;
+	max-height: 300px;
 }
 
 .v-list-item:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+	background-color: rgb(0 0 0 / 4%);
 }
 
 :deep(.v-list-item[aria-selected='true']) {
-  background-color: rgba(0, 0, 0, 0.08);
+	background-color: rgb(0 0 0 / 8%);
 
-  .v-list-item-title {
-    font-weight: bold;
-  }
+	.v-list-item-title {
+		font-weight: bold;
+	}
 }
 
 .error {
-  border-color: tokens.$danger-default;
+	border-color: tokens.$danger-default;
 }
 
 .v-btn {
-  color: tokens.$blue-base;
+	color: tokens.$blue-base;
 }
 
 .text-color {
-  color: tokens.$blue-base;
+	color: tokens.$blue-base;
 }
 </style>

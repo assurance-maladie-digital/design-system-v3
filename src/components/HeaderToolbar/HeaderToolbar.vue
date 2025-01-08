@@ -298,213 +298,226 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 @use '../HeaderBar/consts' as *;
 
 .toolbar {
-  background: tokens.$blue-lighten-90;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
+	background: tokens.$blue-lighten-90;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 100;
 
-  .container {
-    width: 100%;
-    max-height: 45px;
-    max-width: $header-max-width;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    @media (max-width: 768px) {
-      max-height: 41px;
-    }
+	.container {
+		width: 100%;
+		max-height: 45px;
+		max-width: $header-max-width;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 
-    :deep(ul) {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      list-style: none;
-      text-decoration: none;
+		@media (width <= 768px) {
+			max-height: 41px;
+		}
 
-      li {
-        text-align: center;
-      }
-    }
+		:deep(ul) {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			list-style: none;
+			text-decoration: none;
 
-    :deep(ul > li > a) {
-      display: block;
-      color: tokens.$blue-darken-40;
-      text-decoration: none;
-      padding: 10px 16px;
-      cursor: pointer;
+			li {
+				text-align: center;
+			}
+		}
 
-      &:hover {
-        text-decoration: underline;
-      }
+		:deep(ul > li > a) {
+			display: block;
+			color: tokens.$blue-darken-40;
+			text-decoration: none;
+			padding: 10px 16px;
+			cursor: pointer;
 
-      @media (max-width: 768px) {
-        font-size: 12px;
-      }
-    }
+			&:hover {
+				text-decoration: underline;
+			}
 
-    :deep(.sy-input-select) {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      @media (max-width: 768px) {
-        font-size: 12px;
-        span {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-      }
-    }
-  }
+			@media (width <= 768px) {
+				font-size: 12px;
+			}
+		}
 
-  #left-menu {
-    ul > li > a {
-      font-weight: 700;
-      color: tokens.$blue-darken-40;
+		:deep(.sy-input-select) {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
 
-      &:hover {
-        text-decoration: none;
-      }
-    }
+			@media (width <= 768px) {
+				font-size: 12px;
 
-    li:first-child {
-      min-width: 95px;
-      background: transparent;
-      @media (max-width: $header-breakpoint) {
-        min-width: 82px;
-      }
-    }
+				span {
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
+			}
+		}
+	}
 
-    li:nth-child(2) {
-      z-index: 2;
-      max-height: 44px;
-      min-width: 260px;
-      @media (max-width: 768px) {
-        max-height: 38px;
-        min-width: 152px;
-      }
-      a {
-        max-height: 44px;
-        @media (max-width: 768px) {
-          max-height: 38px;
-        }
-      }
-    }
+	#left-menu {
+		ul > li > a {
+			font-weight: 700;
+			color: tokens.$blue-darken-40;
 
-    li:nth-child(3) {
-      background: transparent;
-    }
+			&:hover {
+				text-decoration: none;
+			}
+		}
 
-    li:first-child a:hover, li:first-child.active {
-      background: tokens.$user-assure;
-    }
+		li:first-child {
+			min-width: 95px;
+			background: transparent;
 
-    li:nth-child(2) a:hover, .highlight {
-      background: tokens.$user-professionnel;
-    }
+			@media (max-width: $header-breakpoint) {
+				min-width: 82px;
+			}
+		}
 
-    li:nth-child(3) a:hover, li:nth-child(3).active {
-      background: tokens.$user-entreprise;
-    }
-  }
+		li:nth-child(2) {
+			z-index: 2;
+			max-height: 44px;
+			min-width: 260px;
 
-  #right-menu {
-    @media (max-width: 1000px) {
-      display: none;
-    }
-  }
+			@media (width <= 768px) {
+				max-height: 38px;
+				min-width: 152px;
+			}
 
-  #right-menu ul {
-    white-space: nowrap;
-    overflow: hidden;
-  }
+			a {
+				max-height: 44px;
 
-  #right-menu ul li {
-    display: inline-block;
-  }
+				@media (width <= 768px) {
+					max-height: 38px;
+				}
+			}
+		}
 
-  :deep(.v-input) {
-    .v-input__details {
-      display: none;
-    }
+		li:nth-child(3) {
+			background: transparent;
+		}
 
-    .v-input__control {
-      font-weight: 700;
+		li:first-child a:hover,
+		li:first-child.active {
+			background: tokens.$user-assure;
+		}
 
-      .text-color {
-        color: tokens.$blue-darken-60 !important;
-      }
+		li:nth-child(2) a:hover,
+		.highlight {
+			background: tokens.$user-professionnel;
+		}
 
-      .v-icon {
-        margin-left: 10px;
-      }
+		li:nth-child(3) a:hover,
+		li:nth-child(3).active {
+			background: tokens.$user-entreprise;
+		}
+	}
 
-      .custom-select {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
+	#right-menu {
+		@media (width <= 1000px) {
+			display: none;
+		}
+	}
 
-        span {
-          max-width: 260px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          @media (max-width: 768px) {
-            max-width: 182px;
-          }
-        }
-      }
+	#right-menu ul {
+		white-space: nowrap;
+		overflow: hidden;
+	}
 
-      @media (max-width: 768px) {
-        font-size: 12px;
-      }
-    }
+	#right-menu ul li {
+		display: inline-block;
+	}
 
-    .v-list {
-      top: 34px !important;
-      left: -16px !important;
-      text-align: left;
-      min-width: 260px;
-      max-width: fit-content !important;
-      border-radius: 0;
-      @media (max-width: 768px) {
-        position: fixed;
-        top: 38px !important;
-        left: 0 !important;
-        min-width: 100% !important;
-        box-shadow: none !important;
-      }
+	:deep(.v-input) {
+		.v-input__details {
+			display: none;
+		}
 
-      .v-list-item--density-default.v-list-item--one-line {
-        min-height: 40px;
-      }
-    }
-  }
+		.v-input__control {
+			font-weight: 700;
 
-  .overlay {
-    position: fixed;
-    display: block;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(3, 16, 37, .5);
-    cursor: default;
-    backdrop-filter: blur(2px);
-    z-index: 1;
-    @media (max-width: 768px) {
-      display: none;
-    }
-  }
+			.text-color {
+				color: tokens.$blue-darken-60 !important;
+			}
+
+			.v-icon {
+				margin-left: 10px;
+			}
+
+			.custom-select {
+				display: flex;
+				justify-content: space-between;
+				width: 100%;
+
+				span {
+					max-width: 260px;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+
+					@media (width <= 768px) {
+						max-width: 182px;
+					}
+				}
+			}
+
+			@media (width <= 768px) {
+				font-size: 12px;
+			}
+		}
+
+		.v-list {
+			top: 34px !important;
+			left: -16px !important;
+			text-align: left;
+			min-width: 260px;
+			max-width: fit-content !important;
+			border-radius: 0;
+
+			@media (width <= 768px) {
+				position: fixed;
+				top: 38px !important;
+				left: 0 !important;
+				min-width: 100% !important;
+				box-shadow: none !important;
+			}
+
+			.v-list-item--density-default.v-list-item--one-line {
+				min-height: 40px;
+			}
+		}
+	}
+
+	.overlay {
+		position: fixed;
+		display: block;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgb(3 16 37 / 50%);
+		cursor: default;
+		backdrop-filter: blur(2px);
+		z-index: 1;
+
+		@media (width <= 768px) {
+			display: none;
+		}
+	}
 }
 
 .right-menu-item {
-  color: tokens.$blue-darken-60;
+	color: tokens.$blue-darken-60;
 }
 </style>
