@@ -183,56 +183,57 @@
 </template>
 
 <style scoped lang="scss">
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 .sy-select {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .v-field {
-  position: relative;
+	position: relative;
 }
+
 .v-field--focused {
-  .v-icon.arrow {
-    transform: rotateX(180deg);
-  }
+	.v-icon.arrow {
+		transform: rotateX(180deg);
+	}
 }
 
 .v-list {
-  position: absolute;
-  left: inherit !important;
-  margin-top: -22px;
-  background-color: white;
-  max-height: 300px;
-  padding: 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08);
-  border-radius: 4px;
-  overflow-y: auto;
-  z-index: 2;
+	position: absolute;
+	left: inherit !important;
+	margin-top: -22px;
+	background-color: white;
+	max-height: 300px;
+	padding: 0;
+	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
+	border-radius: 4px;
+	overflow-y: auto;
+	z-index: 2;
 }
 
 .v-list-item:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+	background-color: rgb(0 0 0 / 4%);
 }
 
 .v-list-item[aria-selected='true'] {
-  background-color: rgba(0, 0, 0, 0.08);
+	background-color: rgb(0 0 0 / 8%);
 }
 
 .v-icon {
-  position: absolute;
-  right: 10px;
-  color: tokens.$grey-darken-20;
+	position: absolute;
+	right: 10px;
+	color: tokens.$grey-darken-20;
 }
 
 :deep(.v-field__input) {
- color: tokens.$grey-darken-20
+	color: tokens.$grey-darken-20;
 }
 
 .hidden-label {
-  visibility: hidden;
-  position: absolute;
-  white-space: nowrap;
+	visibility: hidden;
+	position: absolute;
+	white-space: nowrap;
 }
 </style>

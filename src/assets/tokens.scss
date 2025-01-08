@@ -129,19 +129,19 @@ $grey-lighten-20: #76797a;
 $grey-lighten-40: #989b9b;
 $grey-lighten-60: #bbbcbd;
 $grey-lighten-80: #dddede;
-$grey-lighten-90: #eeeeee;
+$grey-lighten-90: #eee;
 $grey-lighten-97: #fafafa;
-$white-20: rgba(255, 255, 255, 0.2000);
-$white-38: rgba(255, 255, 255, 0.3800);
-$white-40: rgba(255, 255, 255, 0.4000);
-$white-70: rgba(255, 255, 255, 0.7000);
-$white-base: #ffffff;
-$white-08: rgba(255, 255, 255, 0.0800);
-$white-00: rgba(255, 255, 255, 0.0000);
+$white-20: rgb(255 255 255 / 20%);
+$white-38: rgb(255 255 255 / 38%);
+$white-40: rgb(255 255 255 / 40%);
+$white-70: rgb(255 255 255 / 70%);
+$white-base: #fff;
+$white-08: rgb(255 255 255 / 8%);
+$white-00: rgb(255 255 255 / 0%);
 $none-value: undefined;
-$transparent-blue-18: rgba(12, 65, 154, 0.1800);
-$transparent-blue-08: rgba(12, 65, 154, 0.0800);
-$transparent-blue-00: rgba(12, 65, 154, 0.0000);
+$transparent-blue-18: rgb(12 65 154 / 18%);
+$transparent-blue-08: rgb(12 65 154 / 8%);
+$transparent-blue-00: rgb(12 65 154 / 0%);
 
 // Semantic Tokens
 $primary-darker-2: #07275c;
@@ -156,11 +156,11 @@ $neutral-black: #222324;
 $neutral-black-lighter: #545859;
 $neutral-black-lighter-2: #989b9b;
 $neutral-grey: #dddede;
-$neutral-white: #ffffff;
-$neutral-white-alpha: rgba(255, 255, 255, 0.7);
-$neutral-white-alpha-lighter: rgba(255, 255, 255, 0.4);
-$neutral-white-alpha-lighter-2: rgba(255, 255, 255, 0.2);
-$neutral-white-alpha-lighter-3: rgba(255, 255, 255, 0.08);
+$neutral-white: #fff;
+$neutral-white-alpha: rgb(255 255 255 / 70%);
+$neutral-white-alpha-lighter: rgb(255 255 255 / 40%);
+$neutral-white-alpha-lighter-2: rgb(255 255 255 / 20%);
+$neutral-white-alpha-lighter-3: rgb(255 255 255 / 8%);
 $info-info-lightest: #e7ecf5;
 $info-info-lighter: #ced9eb;
 $info-default: #0c419a;
@@ -180,11 +180,11 @@ $user-assure: #ed76b3;
 $user-entreprise: #f0b323;
 
 // Contextual Tokens
-$colors-background: #ffffff;
-$colors-border: #dddddd;
-$colors-text: #333333;
-$colors-icon: #666666;
-$colors-overlay: rgba(0, 0, 0, 0.5);
+$colors-background: #fff;
+$colors-border: #ddd;
+$colors-text: #333;
+$colors-icon: #666;
+$colors-overlay: rgb(0 0 0 / 50%);
 $colors-interactive: #007bff;
 $gap-0: 0;
 $gap-1: 4px;
@@ -227,8 +227,8 @@ $font-size-link-label: 14px;
 
 // Additional Contextual Tokens
 $colors-background-main: #e7ecf5;
-$colors-background-surface: #ffffff;
-$colors-background-main-alt: #ffffff;
+$colors-background-surface: #fff;
+$colors-background-main-alt: #fff;
 $colors-background-surface-alt: #e7ecf5;
 $colors-background-raised: #f8f9fc;
 $colors-background-accent: #0c419a;
@@ -247,25 +247,23 @@ $colors-background-error: #f9dcd7;
 $colors-background-error-subdued: #fcedeb;
 $colors-background-error-contrasted: #b33f2e;
 $colors-background-disabled: #dddede;
-$colors-background-disabled-ondark: rgba(255, 255, 255, 0.0800);
+$colors-background-disabled-ondark: rgb(255 255 255 / 8%);
 $colors-background-assure: #ed76b3;
 $colors-background-professionnel: #66c9ec;
 $colors-background-entreprise: #f0b323;
-
 $colors-border-darker: #222324;
 $colors-border-base: #989b9b;
 $colors-border-subdued: #dddede;
 $colors-border-accent: #0c419a;
 $colors-border-accent-contrasted: #07275c;
-$colors-border-accent-ondark: #ffffff;
+$colors-border-accent-ondark: #fff;
 $colors-border-info: #0c419a;
 $colors-border-success: #224e2d;
 $colors-border-warning: #60480e;
 $colors-border-error: #b33f2e;
-$colors-border-ondark: rgba(255, 255, 255, 0.7);
+$colors-border-ondark: rgb(255 255 255 / 70%);
 $colors-border-disabled: #dddede;
-$colors-border-disabled-ondark: rgba(255, 255, 255, 0.4);
-
+$colors-border-disabled-ondark: rgb(255 255 255 / 40%);
 $colors-text-base: #222324;
 $colors-text-accent: #0c419a;
 $colors-text-accent-contrasted: #07275c;
@@ -275,34 +273,30 @@ $colors-text-success: #224e2d;
 $colors-text-warning: #60480e;
 $colors-text-error: #b33f2e;
 $colors-text-disabled: #989b9b;
-$colors-text-ondark: #ffffff;
-$colors-text-subdued-ondark: rgba(255, 255, 255, 0.7);
-$colors-text-disabled-ondark: rgba(255, 255, 255, 0.4);
-
+$colors-text-ondark: #fff;
+$colors-text-subdued-ondark: rgb(255 255 255 / 70%);
+$colors-text-disabled-ondark: rgb(255 255 255 / 40%);
 $colors-icon-base: #222324;
 $colors-icon-subdued: #545859;
-$colors-icon-subdued-ondark: rgba(255, 255, 255, 0.7);
+$colors-icon-subdued-ondark: rgb(255 255 255 / 70%);
 $colors-icon-accent: #0c419a;
 $colors-icon-accent-contrasted: #07275c;
 $colors-icon-info: #0c419a;
 $colors-icon-success: #224e2d;
 $colors-icon-warning: #60480e;
 $colors-icon-error: #b33f2e;
-$colors-icon-ondark: #ffffff;
+$colors-icon-ondark: #fff;
 $colors-icon-disabled: #989b9b;
-$colors-icon-disabled-ondark: rgba(255, 255, 255, 0.4);
-
+$colors-icon-disabled-ondark: rgb(255 255 255 / 40%);
 $colors-overlay-fullpage: #989b9b;
-$colors-overlay-ondark: #ffffff;
+$colors-overlay-ondark: #fff;
 $colors-overlay-onlight: #0c419a;
-
-$colors-interactive-default: rgba(255, 255, 255, 0.0000);
+$colors-interactive-default: rgb(255 255 255 / 0%);
 $colors-interactive-hover: #e7ecf5;
 $colors-interactive-pressed: #ced9eb;
 $colors-interactive-focus: #e7ecf5;
-$colors-interactive-disabled: rgba(255, 255, 255, 0.0000);
+$colors-interactive-disabled: rgb(255 255 255 / 0%);
 $colors-interactive-hover-on-selected: #ced9eb;
-
 $padding-0: 0;
 $padding-2: 8px;
 $padding-3: 12px;
@@ -312,93 +306,91 @@ $padding-8: 32px;
 $padding-10: 40px;
 $padding-14: 56px;
 $padding-16: 64px;
-
 $heading-1-font-size: 24px;
 $heading-2-font-size: 20px;
 $heading-3-font-size: 16px;
 $heading-4-font-size: 14px;
 
-
 .title {
-  font-size: $font-size-title !important;
+	font-size: $font-size-title !important;
 }
 
 .alt-title {
-  font-size: $font-size-alt-title !important;
+	font-size: $font-size-alt-title !important;
 }
 
 .body-text {
-  font-size: $font-size-body-text !important;
+	font-size: $font-size-body-text !important;
 }
 
 .link-label {
-  font-size: $font-size-link-label !important;
+	font-size: $font-size-link-label !important;
 }
 
 h1 {
-  font-size: 32px !important;
-  line-height: 130% !important;
+	font-size: 32px !important;
+	line-height: 130% !important;
 }
 
 .h1-bold {
-  font-size: 32px !important;
-  font-weight: bold !important;
-  line-height: 130% !important;
+	font-size: 32px !important;
+	font-weight: bold !important;
+	line-height: 130% !important;
 }
 
 h2 {
-  font-size: 28px !important;
-  line-height: 130% !important;
+	font-size: 28px !important;
+	line-height: 130% !important;
 }
 
 .h2-bold {
-  font-size: 28px !important;
-  font-weight: bold !important;
-  line-height: 130% !important;
+	font-size: 28px !important;
+	font-weight: bold !important;
+	line-height: 130% !important;
 }
 
 h3 {
-  font-size: 24px !important;
-  line-height: 130% !important;
+	font-size: 24px !important;
+	line-height: 130% !important;
 }
 
 .h3-bold {
-  font-size: 24px !important;
-  font-weight: bold !important;
-  line-height: 130% !important;
+	font-size: 24px !important;
+	font-weight: bold !important;
+	line-height: 130% !important;
 }
 
 h4 {
-  font-size: 20px !important;
-  line-height: 130% !important;
+	font-size: 20px !important;
+	line-height: 130% !important;
 }
 
 .h4-bold {
-  font-size: 20px !important;
-  font-weight: bold !important;
-  line-height: 130% !important;
+	font-size: 20px !important;
+	font-weight: bold !important;
+	line-height: 130% !important;
 }
 
 .display-1 {
-  font-size: 40px !important;
-  line-height: 130% !important;
+	font-size: 40px !important;
+	line-height: 130% !important;
 }
 
 .display-1-bold {
-  font-size: 40px !important;
-  font-weight: bold !important;
-  line-height: 130% !important;
+	font-size: 40px !important;
+	font-weight: bold !important;
+	line-height: 130% !important;
 }
 
 .display-2 {
-  font-size: 30px !important;
-  line-height: 130% !important;
+	font-size: 30px !important;
+	line-height: 130% !important;
 }
 
 .display-2-bold {
-  font-size: 30px !important;
-  font-weight: bold !important;
-  line-height: 130% !important;
+	font-size: 30px !important;
+	font-weight: bold !important;
+	line-height: 130% !important;
 }
 
 // espacement verticaux des elements
@@ -427,7 +419,6 @@ $spacing-horizontal-xx-large: 56px;
 $spacing-horizontal-xxx-large: 64px;
 $spacing-horizontal-huge: 80px;
 
-
 // Surcharger toutes les élévations pour utiliser uniquement l'élévation 02
 .elevation-1,
 .elevation-2,
@@ -453,7 +444,10 @@ $spacing-horizontal-huge: 80px;
 .elevation-22,
 .elevation-23,
 .elevation-24 {
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
+	box-shadow:
+		0 3px 1px -2px rgb(0 0 0 / 20%),
+		0 2px 2px 0 rgb(0 0 0 / 14%),
+		0 1px 5px 0 rgb(0 0 0 / 12%) !important;
 }
 
 // global.scss
@@ -465,35 +459,36 @@ $container-desktop-max-width: 960px;
 
 // Conteneur général
 .page-container {
-  text-align: center;
-  margin: 0 auto; // Centrer les conteneurs
-  padding: 40px 40px 56px 56px;
-  width: 1160px;
-  // Mobile Styles
-  @media (max-width: 600px) {
-    max-width: $container-mobile-max-width;
-    padding: 40px 24px 80px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 24px;
-    width: 80%;
-  }
+	text-align: center;
+	margin: 0 auto; // Centrer les conteneurs
+	padding: 40px 40px 56px 56px;
+	width: 1160px;
 
-  // Tablet Styles
-  @media (min-width: 601px) and (max-width: 960px) {
-    max-width: $container-tablet-max-width;
-    width: 80%;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-gap: 24px;
-  }
+	// Mobile Styles
+	@media (width <= 600px) {
+		max-width: $container-mobile-max-width;
+		padding: 40px 24px 80px;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-gap: 24px;
+		width: 80%;
+	}
 
-  // Desktop Styles
-  @media (min-width: 960px) {
-    max-width: $container-desktop-max-width;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-gap: 24px;
-  }
+	// Tablet Styles
+	@media (width >= 601px) and (width <= 960px) {
+		max-width: $container-tablet-max-width;
+		width: 80%;
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		grid-gap: 24px;
+	}
+
+	// Desktop Styles
+	@media (width >= 960px) {
+		max-width: $container-desktop-max-width;
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		grid-gap: 24px;
+	}
 }

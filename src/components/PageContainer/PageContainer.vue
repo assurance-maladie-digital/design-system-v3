@@ -65,9 +65,9 @@
 
 <style lang="scss" scoped>
 .vd-page-container {
-  flex: 1;
-  width: 100%;
-  max-width: 1712px;
-  margin: 0 auto;
+	flex: 1;
+	width: 100%;
+	max-width: 1712px;
+	margin: 0 auto;
 }
 </style>

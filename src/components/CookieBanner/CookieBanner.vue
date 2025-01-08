@@ -158,7 +158,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .vd-cookie-banner {
 	position: fixed;
 	left: 50%;
@@ -176,16 +175,17 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-  background: transparent;
+	background: transparent;
 }
 
 .vd-cookie-banner-content {
 	overflow-y: auto;
 	padding-right: 8px;
-  background: transparent;
-  div {
-    background: transparent;
-  }
+	background: transparent;
+
+	div {
+		background: transparent;
+	}
 }
 
 .vd-cookie-banner-action-ctn .v-btn {
@@ -193,12 +193,13 @@
 }
 
 .v-btn--icon {
-	color: rgba(0, 0, 0, 0.54);
+	color: rgb(0 0 0 / 54%);
 	position: absolute;
 	right: 24px;
 }
 
-.height-enter-active, .height-leave-active {
+.height-enter-active,
+.height-leave-active {
 	box-sizing: border-box;
 	transition: height 2s ease;
 	interpolate-size: allow-keywords;
@@ -214,11 +215,13 @@
 	transition: height 0.1s ease;
 }
 
-.height-enter-from, .height-leave-to {
+.height-enter-from,
+.height-leave-to {
 	height: 0;
 }
 
-.height-enter-to, .height-leave-from {
+.height-enter-to,
+.height-leave-from {
 	height: auto;
 }
 

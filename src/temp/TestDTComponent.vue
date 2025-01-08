@@ -74,16 +74,15 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 h1 {
-  color: tokens.$orange-base;
+	color: tokens.$orange-base;
 }
 
 button {
-  background-color: tokens.$blue-base;
-  color: tokens.$white-base;
-  border-radius: tokens.$radius-rounded;
-  //padding: tokens.$padding-10 tokens.$padding-4;
+	background-color: tokens.$blue-base;
+	color: tokens.$white-base;
+	border-radius: tokens.$radius-rounded;
 }
 </style>

@@ -51,9 +51,9 @@
 <style lang="scss" scoped>
 // Désactiver l'état de hover sur le thème clair
 .v-btn.v-theme--light:deep() {
-  .v-btn__underlay,
-  .v-btn__overlay {
-    display: none;
-  }
+	.v-btn__underlay,
+	.v-btn__overlay {
+		display: none;
+	}
 }
 </style>

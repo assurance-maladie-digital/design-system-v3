@@ -114,4 +114,5 @@
 	</svg>
 </template>
 
-<style scoped>.cls-2{fill:#0c419a}</style>
+<style scoped>.cls-2 { fill: #0c419a; }
+</style>

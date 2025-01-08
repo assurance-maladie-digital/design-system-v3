@@ -44,55 +44,57 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 .vd-social-media-links {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 li {
-  list-style: none;
+	list-style: none;
 }
 
 .vd-social-media-links-label.text--primary {
-  color: tokens.$blue-base;
-  font-weight: 600;
+	color: tokens.$blue-base;
+	font-weight: 600;
 }
 
 .v-theme--dark .vd-social-media-links-label.text--primary {
-  color: white;
+	color: white;
 }
 
 .vd-social-media-links-icon {
-  color: tokens.$grey-base;
+	color: tokens.$grey-base;
 }
 
 .v-btn--icon {
-  width: calc(var(--v-btn-height) + 5px);
-  height: calc(var(--v-btn-height) + 5px);
-  border: 0;
+	width: calc(var(--v-btn-height) + 5px);
+	height: calc(var(--v-btn-height) + 5px);
+	border: 0;
 }
 
 .v-theme--dark .v-btn--variant-text:hover :deep() {
-  background: rgba(white, 0.1);
+	background: rgba(white, 0.1);
 }
 
-@media (min-width: 768px) {
-  .vd-social-media-links-label {
-    text-align: right;
-  }
-  .vd-social-media-links-content {
-    justify-content: flex-end;
-  }
+@media (width >= 768px) {
+	.vd-social-media-links-label {
+		text-align: right;
+	}
+
+	.vd-social-media-links-content {
+		justify-content: flex-end;
+	}
 }
 
-@media (max-width: 767px) {
-  .vd-social-media-links-label {
-    text-align: left;
-  }
-  .vd-social-media-links-content {
-    justify-content: flex-start;
-  }
+@media (width <= 767px) {
+	.vd-social-media-links-label {
+		text-align: left;
+	}
+
+	.vd-social-media-links-content {
+		justify-content: flex-start;
+	}
 }
 </style>

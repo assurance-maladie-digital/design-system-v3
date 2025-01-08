@@ -51,26 +51,26 @@
 @use '@/components/HeaderBar/consts' as *;
 
 .horizontal-menu {
-  display: flex;
-  align-items: center;
-  max-width: $header-max-width;
-  margin: 0 auto;
+	display: flex;
+	align-items: center;
+	max-width: $header-max-width;
+	margin: 0 auto;
 }
 
 .horizontal-menu__tabs {
-  flex: 1 1 0;
+	flex: 1 1 0;
 }
 
 .horizontal-menu__item {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .horizontal-menu__item-link {
-  font-size: 0.875rem;
-  font-weight: 700;
+	font-size: 0.875rem;
+	font-weight: 700;
 }
 
 .v-tab-item--selected span {
-  color: #fff;
+	color: #fff;
 }
 </style>

@@ -151,6 +151,7 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens' as *;
+
 .v-card__title > * {
 	line-height: 1em;
 }
@@ -166,7 +167,7 @@ h2 {
 	text-wrap: balance;
 }
 
-.vd-dialog-box-actions-ctn  {
+.vd-dialog-box-actions-ctn {
 	display: flex;
 	flex-direction: column-reverse;
 	justify-content: stretch;
@@ -174,7 +175,7 @@ h2 {
 }
 
 @media screen and (min-width: $container-mobile-max-width) {
-	.vd-dialog-box-actions-ctn  {
+	.vd-dialog-box-actions-ctn {
 		flex-direction: row;
 	}
 }

@@ -95,7 +95,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 @use 'sass:map';
 
 .alert {
@@ -115,7 +115,7 @@
 }
 
 :deep(.v-btn--variant-text .v-btn__overlay) {
-  background: transparent !important;
+	background: transparent !important;
 }
 
 .alert-icon :deep(.v-icon__svg) {
@@ -132,13 +132,13 @@
 }
 
 .v-btn {
-  text-transform: none;
-  font-weight: bold;
-  font-size: 0.75rem;
-  letter-spacing: normal;
+	text-transform: none;
+	font-weight: bold;
+	font-size: 0.75rem;
+	letter-spacing: normal;
 }
 
-@media screen and (max-width: 440px) {
+@media screen and (width <= 440px) {
 	.alert {
 		display: flex;
 		flex-direction: column;
@@ -160,8 +160,8 @@
 	}
 }
 
-@media screen and (min-width: 441px) {
-	.alert{
+@media screen and (width >= 441px) {
+	.alert {
 		.alert-icon {
 			width: 3.5rem !important;
 			height: 3.5rem !important;
@@ -175,6 +175,7 @@
 	&.alert--#{$type}.v-alert--variant-tonal {
 		background: map.get($map, 'background') !important;
 		color: tokens.$colors-text-base !important;
+
 		:deep(.v-alert__border) {
 			border-color: map.get($map, 'border') !important;
 			opacity: 1 !important;
@@ -184,6 +185,7 @@
 
 	&.alert--#{$type}.v-alert--variant-outlined {
 		background: transparent !important;
+
 		:deep(.v-alert__border) {
 			border-color: map.get($map, 'border') !important;
 			opacity: 1 !important;
@@ -194,6 +196,7 @@
 	&.text-#{$type} {
 		.v-alert__prepend > .v-icon {
 			background: map.get($map, 'icon-bg');
+
 			:deep(svg) {
 				fill: map.get($map, 'accent');
 			}
@@ -217,7 +220,6 @@
 			'icon-bg': tokens.$colors-background-warning-subdued,
 		)
 	);
-
 	@include redesign(
 		'success',
 		(
@@ -228,7 +230,6 @@
 			'icon-bg': tokens.$colors-background-success-subdued,
 		)
 	);
-
 	@include redesign(
 		'error',
 		(
@@ -239,7 +240,6 @@
 			'icon-bg': tokens.$colors-background-error-subdued,
 		)
 	);
-
 	@include redesign(
 		'info',
 		(

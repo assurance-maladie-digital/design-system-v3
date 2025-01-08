@@ -153,7 +153,7 @@
 	inset: 0;
 	position: fixed;
 	z-index: 1000;
-	background-color: rgba(3, 16, 37, .5);
+	background-color: rgb(3 16 37 / 50%);
 	backdrop-filter: blur(2px);
 }
 
@@ -188,8 +188,7 @@
 
 	.header-menu {
 		background-color: $neutral-white;
-		overflow-y : auto;
-		overflow-x: hidden;
+		overflow: hidden auto;
 		height: 100%;
 	}
 }
@@ -210,12 +209,14 @@
 	}
 }
 
-.menu-enter-from, .menu-leave-to {
+.menu-enter-from,
+.menu-leave-to {
 	opacity: 0;
 }
 
 @media screen and (min-width: $header-breakpoint) {
-	.menu-enter-from, .menu-leave-to {
+	.menu-enter-from,
+	.menu-leave-to {
 		.header-menu-wrapper {
 			transform: translateY(10px);
 		}
@@ -223,10 +224,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.menu-enter-active, .menu-leave-active {
+	.menu-enter-active,
+	.menu-leave-active {
 		transition: opacity 0s;
 	}
-	.menu-enter-from, .menu-leave-to {
+
+	.menu-enter-from,
+	.menu-leave-to {
 		.header-menu-wrapper {
 			transform: none;
 		}

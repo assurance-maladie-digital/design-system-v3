@@ -79,79 +79,78 @@
 
 <style lang="scss" scoped>
 .vd-panel {
-  background-color: transparent;
+	background-color: transparent;
 }
 
 .vd-panel-title :deep(.v-expansion-panel-title__overlay) {
-  background: transparent !important;
+	background: transparent !important;
 }
 
 .vd-panel-text :deep(.v-expansion-panel-text__wrapper) {
-  padding: 0;
+	padding: 0;
 }
 
 li {
-  list-style: none;
+	list-style: none;
 }
 
 a {
-  transition: 0.15s;
-  padding-top: 1px; // Add top padding to account for bottom border
-  border-bottom: 1px solid transparent;
-  color: black;
+	transition: 0.15s;
+	padding-top: 1px; // Add top padding to account for bottom border
+	border-bottom: 1px solid transparent;
+	color: black;
 
-  &:hover,
-  &:focus {
-    border-color: currentColor;
-  }
+	&:hover,
+	&:focus {
+		border-color: currentcolor;
+	}
 }
 
 .v-theme--dark a :deep() {
-  color: white;
+	color: white;
 }
 
 .vd-collapse-list a {
-  color: black;
+	color: black;
 }
 
 .vd-collapse-list :deep() {
-  .text-subtitle-1 {
-    font-size: 1.125rem !important;
-    letter-spacing: .0015em !important;
-    line-height: 1.75rem;
-  }
+	.text-subtitle-1 {
+		font-size: 1.125rem !important;
+		letter-spacing: 0.0015em !important;
+		line-height: 1.75rem;
+	}
 }
 
 .vd-collapse-list.theme--dark :deep() {
-  h4,
-  ul,
-  a,
-  button {
-    color: white !important;
-  }
+	h4,
+	ul,
+	a,
+	button {
+		color: white !important;
+	}
 }
 
 .vd-collapse-list-mobile :deep() {
-  .text-subtitle-2 {
-    font-size: 1rem !important;
-    letter-spacing: .001em !important;
-    line-height: 1.375rem;
-    font-weight: 600;
-  }
-  .v-icon {
-    color: rgba(0, 0, 0, .54) !important;
-  }
+	.text-subtitle-2 {
+		font-size: 1rem !important;
+		letter-spacing: 0.001em !important;
+		line-height: 1.375rem;
+		font-weight: 600;
+	}
+
+	button {
+		color: red !important;
+	}
+
+	.v-icon {
+		color: rgb(0 0 0 / 54%) !important;
+	}
 }
 
 .vd-collapse-list-mobile.theme--dark :deep() {
-  button {
-    color: white !important;
-  }
-}
-
-.vd-collapse-list-mobile :deep() {
-  button {
-    color: red !important;
-  }
+	button {
+		color: white !important;
+	}
 }
 </style>

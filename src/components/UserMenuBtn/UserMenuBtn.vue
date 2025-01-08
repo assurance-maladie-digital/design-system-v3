@@ -84,7 +84,7 @@
 </template>
 
 <style scoped lang="scss">
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 .vd-user-icon {
 	width: 40px;

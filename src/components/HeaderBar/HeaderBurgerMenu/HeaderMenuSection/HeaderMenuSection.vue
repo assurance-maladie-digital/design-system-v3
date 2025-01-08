@@ -30,8 +30,8 @@
 </template>
 
 <style lang="scss" scoped>
-@use "@/assets/tokens.scss" as *;
-@use "../../consts.scss" as menu;
+@use '@/assets/tokens.scss' as *;
+@use '../../consts.scss' as menu;
 
 .header-menu-section {
 	list-style-type: none;

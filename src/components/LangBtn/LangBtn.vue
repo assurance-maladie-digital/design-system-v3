@@ -153,16 +153,18 @@
 	</div>
 </template>
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 .v-list-item:hover {
-  background-color: rgba(tokens.$colors-overlay, 0.005)
+	background-color: rgba(tokens.$colors-overlay, 0.005);
 }
 
 .vd-lang-btn {
-  font-size: 16px;
-  --hoverColor: rgba(tokens.$colors-overlay, 0.5);
-  text-transform: none;
-  letter-spacing: inherit;
+	font-size: 16px;
+
+	--hover-color: rgba(tokens.$colors-overlay, 0.5);
+
+	text-transform: none;
+	letter-spacing: inherit;
 }
 </style>

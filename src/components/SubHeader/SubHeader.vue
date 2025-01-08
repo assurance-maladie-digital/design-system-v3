@@ -137,49 +137,50 @@
 
 <style lang="scss" scoped>
 .vd-sub-header {
-  overflow-x: auto;
+	overflow-x: auto;
 }
 
 .vd-sub-header-back-btn {
-  margin: 0 -6px;
+	margin: 0 -6px;
 }
 
 .vd-data-list-group,
 .vd-sub-header-informations {
-  // Don't take all available space
-  max-width: none;
+	// Don't take all available space
+	max-width: none;
 }
 
 .vd-data-list-group :deep(.vd-data-list) {
-  max-width: 200px;
+	max-width: 200px;
 
-  // Apply margin right to avoid empty
-  // space on smaller screens
-  &:not(:last-child) {
-    margin-right: 80px !important;
-  }
+	// Apply margin right to avoid empty
+	// space on smaller screens
+	&:not(:last-child) {
+		margin-right: 80px !important;
+	}
 
-  .vd-key {
-    display: inline-block;
-    font-size: 0.75rem !important;
-  }
+	.vd-key {
+		display: inline-block;
+		font-size: 0.75rem !important;
+	}
 
-  .vd-data-list-item-label {
-    color: rgba(255, 255, 255, 0.7) !important;
-  }
+	.vd-data-list-item-label {
+		color: rgb(255 255 255 / 70%) !important;
+	}
 
-  .vd-data-list-item-action-btn {
-    color: #fff !important;
-  }
+	.vd-data-list-item-action-btn {
+		color: #fff !important;
+	}
 }
 
 .vd-subheader-loading :deep() {
-  background: transparent;
-  .v-skeleton-loader__button {
-    margin: 0;
-    min-height: 28px;
-    height: auto;
-    background: rgba(white, var(--v-border-opacity));
-  }
+	background: transparent;
+
+	.v-skeleton-loader__button {
+		margin: 0;
+		min-height: 28px;
+		height: auto;
+		background: rgba(white, var(--v-border-opacity));
+	}
 }
 </style>
