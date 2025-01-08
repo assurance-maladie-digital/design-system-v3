@@ -4,7 +4,7 @@
 	import { useDisplay } from 'vuetify'
 	import { config } from './config'
 	import { locales } from './locales'
-import SyTextField from '../Customs/SyTextField/SyTextField.vue'
+	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		min?: number
