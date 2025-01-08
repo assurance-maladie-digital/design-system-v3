@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, computed, defineEmits, defineProps, withDefaults, watch } from 'vue'
+	import { ref, computed, watch } from 'vue'
 	import { config } from './config'
 	import { locales } from './locales'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
