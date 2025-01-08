@@ -35,10 +35,6 @@
 		return showEyeIcon.value ? locales.hidePassword : locales.showPassword
 	})
 
-	// const textFieldOptions = computed(() => {
-	// 	return deepMerge(config, props)
-	// })
-
 	const password = ref<string | null>(props.modelValue)
 	watch(
 		() => props.modelValue,
@@ -133,12 +129,16 @@
 	<VTextField
 		v-model="password"
 		:error-messages="errors"
+		:messages="successes"
 		:type="showEyeIcon ? 'text' : 'password'"
 		:variant="outlined ? 'outlined' : 'underlined'"
 		class="vd-password"
 		color="primary"
 		title="password"
 		validate-on="blur lazy"
+		:class="{
+			'v-messages__message--success': successes.length > 0
+		}"
 		@blur="validateFields(true)"
 		@keydown="handleKeydown"
 		@update:model-value="emitChangeEvent"
@@ -159,6 +159,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/tokens.scss';
+
 .vd-password {
   .v-btn--icon.v-btn--density-default {
     width: var(--v-btn-height);
@@ -174,6 +176,14 @@
 
   :deep(.v-field.v-field--variant-underlined .v-field__input) {
     padding-top: calc(var(--v-field-input-padding-top) - 15px);
+  }
+}
+
+.v-messages__message--success {
+  color: tokens.$colors-border-success !important;
+
+  .v-field--active & {
+    color: tokens.$colors-border-success !important;
   }
 }
 </style>
