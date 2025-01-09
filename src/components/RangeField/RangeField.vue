@@ -74,7 +74,7 @@
 			color="primary"
 			:max="max"
 			:min="min"
-			@end="model = $event"
+			@update:model-value="model = $event"
 		>
 			<template #prepend>
 				{{ min }}
