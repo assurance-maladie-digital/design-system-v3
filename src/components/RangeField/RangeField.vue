@@ -55,6 +55,7 @@
 				:label="locales.minLabel"
 				inputmode="numeric"
 				color="primary"
+				title="locales.minLabel"
 				@update:model-value="model = [clamp($event), model[1]]"
 			/>
 			<SyTextField
@@ -64,6 +65,7 @@
 				variant="underlined"
 				:label="locales.maxLabel"
 				inputmode="numeric"
+				title="locales.maxLabel"
 				@update:model-value="model = [model[0], clamp($event)]"
 			/>
 		</div>
