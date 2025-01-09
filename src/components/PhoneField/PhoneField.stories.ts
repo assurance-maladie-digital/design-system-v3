@@ -47,8 +47,6 @@ export const Default: Story = {
 					<PhoneField
 						v-model="modelValue"
 						:required="required"
-						:outlined="outlined"
-						:outlinedIndicatif="outlinedIndicatif"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
@@ -63,12 +61,10 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import PhoneField from '@cnamts/PhoneField'
+					import { PhoneField } from '@cnamts/synapse'
 					
 					const modelValue = ref('')
 					const required = ref(true)
-					const outlined = ref(true)
-					const outlinedIndicatif = ref(true)
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
@@ -129,8 +125,6 @@ export const Required: Story = {
 					<PhoneField
 						v-model="modelValue"
 						:required="required"
-						:outlined="outlined"
-						:outlinedIndicatif="outlinedIndicatif"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
@@ -145,12 +139,10 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import PhoneField from '@cnamts/PhoneField'
+					import { PhoneField } from '@cnamts/synapse'
 					
 					const modelValue = ref('')
 					const required = ref(true)
-					const outlined = ref(true)
-					const outlinedIndicatif = ref(true)
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
@@ -210,8 +202,6 @@ export const CustomIndicatifs: Story = {
 					<PhoneField
 						v-model="modelValue"
 						:required="required"
-						:outlined="outlined"
-						:outlinedIndicatif="outlinedIndicatif"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
@@ -226,12 +216,10 @@ export const CustomIndicatifs: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import PhoneField from '@cnamts/PhoneField'
+					import { PhoneField } from '@cnamts/synapse'
 					
 					const modelValue = ref('')
 					const required = ref(true)
-					const outlined = ref(true)
-					const outlinedIndicatif = ref(true)
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
@@ -301,8 +289,6 @@ export const NotValidatedOnBlur: Story = {
 					<PhoneField
 						v-model="modelValue"
 						:required="required"
-						:outlined="outlined"
-						:outlinedIndicatif="outlinedIndicatif"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
@@ -317,12 +303,10 @@ export const NotValidatedOnBlur: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import PhoneField from '@cnamts/PhoneField'
+					import { PhoneField } from '@cnamts/synapse'
 					
 					const modelValue = ref('')
 					const required = ref(true)
-					const outlined = ref(true)
-					const outlinedIndicatif = ref(true)
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
@@ -382,8 +366,6 @@ export const DisplayFormatCode: Story = {
 					<PhoneField
 						v-model="modelValue"
 						:required="required"
-						:outlined="outlined"
-						:outlinedIndicatif="outlinedIndicatif"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
@@ -398,12 +380,10 @@ export const DisplayFormatCode: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import PhoneField from '@cnamts/PhoneField'
+					import { PhoneField } from '@cnamts/synapse'
 					
 					const modelValue = ref('')
 					const required = ref(true)
-					const outlined = ref(true)
-					const outlinedIndicatif = ref(true)
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
@@ -463,8 +443,6 @@ export const DisplayFormatCodeAbbreviation: Story = {
 					<PhoneField
 						v-model="modelValue"
 						:required="required"
-						:outlined="outlined"
-						:outlinedIndicatif="outlinedIndicatif"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
@@ -479,12 +457,10 @@ export const DisplayFormatCodeAbbreviation: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import PhoneField from '@cnamts/PhoneField'
+					import { PhoneField } from '@cnamts/synapse'
 					
 					const modelValue = ref('')
 					const required = ref(true)
-					const outlined = ref(true)
-					const outlinedIndicatif = ref(true)
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code-abbreviation')
@@ -544,8 +520,6 @@ export const DisplayFormatCodeCountry: Story = {
 					<PhoneField
 						v-model="modelValue"
 						:required="required"
-						:outlined="outlined"
-						:outlinedIndicatif="outlinedIndicatif"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
@@ -560,12 +534,10 @@ export const DisplayFormatCodeCountry: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import PhoneField from '@cnamts/PhoneField'
+					import { PhoneField } from '@cnamts/synapse'
 					
 					const modelValue = ref('')
 					const required = ref(true)
-					const outlined = ref(true)
-					const outlinedIndicatif = ref(true)
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code-country')
@@ -625,8 +597,6 @@ export const DisplayFormatCountry: Story = {
 					<PhoneField
 						v-model="modelValue"
 						:required="required"
-						:outlined="outlined"
-						:outlinedIndicatif="outlinedIndicatif"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
@@ -641,12 +611,10 @@ export const DisplayFormatCountry: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import PhoneField from '@cnamts/PhoneField'
+					import { PhoneField } from '@cnamts/synapse'
 					
 					const modelValue = ref('')
 					const required = ref(true)
-					const outlined = ref(true)
-					const outlinedIndicatif = ref(true)
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('country')
@@ -706,8 +674,6 @@ export const DisplayFormatAbbreviation: Story = {
 					<PhoneField
 						v-model="modelValue"
 						:required="required"
-						:outlined="outlined"
-						:outlinedIndicatif="outlinedIndicatif"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
@@ -722,12 +688,10 @@ export const DisplayFormatAbbreviation: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import PhoneField from '@cnamts/PhoneField'
+					import { PhoneField } from '@cnamts/synapse'
 					
 					const modelValue = ref('')
 					const required = ref(true)
-					const outlined = ref(true)
-					const outlinedIndicatif = ref(true)
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('abbreviation')
@@ -791,8 +755,6 @@ export const DisplayModels: Story = {
             v-model="modelValue"
             v-model:selectedDialCode="selectedDialCode"
             :required="required"
-            :outlined="outlined"
-            :outlinedIndicatif="outlinedIndicatif"
             :withCountryCode="withCountryCode"
             :countryCodeRequired="countryCodeRequired"
             :displayFormat="displayFormat"
@@ -807,13 +769,11 @@ export const DisplayModels: Story = {
 				name: 'Script',
 				code: `
         <script setup lang="ts">
-          import PhoneField from '@cnamts/PhoneField'
+          import { PhoneField } from '@cnamts/synapse'
 
           const modelValue = ref('')
           const selectedDialCode = ref('')
           const required = ref(true)
-          const outlined = ref(true)
-          const outlinedIndicatif = ref(true)
           const withCountryCode = ref(true)
           const countryCodeRequired = ref(true)
           const displayFormat = ref('code-country')
