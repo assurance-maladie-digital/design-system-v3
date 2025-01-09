@@ -73,6 +73,7 @@
 			:rules="[required]"
 			data-test-id="radio-group"
 			inline
+			:label="locales.fieldLabel(locales[type].title)"
 			hide-details="auto"
 			class="vd-cookies-information__radio-group"
 			@update:model-value="status = $event === 'accept'"
@@ -118,6 +119,10 @@ details > summary {
 
 	:deep(.v-messages) {
 		text-align: end;
+	}
+
+	:deep(.v-label) {
+		justify-content: end;
 	}
 }
 </style>

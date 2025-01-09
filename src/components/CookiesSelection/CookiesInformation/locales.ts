@@ -18,4 +18,5 @@ export const locales = {
 	hideInformation: 'Masquer les cookies',
 	reject: 'Refuser',
 	accept: 'Accepter',
+	fieldLabel: (cookieCategory: string) => `Accepter les cookies de type ${cookieCategory}, ce champ est requis.`,
 } as const
