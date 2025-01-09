@@ -91,8 +91,8 @@ export const Default: Story = {
 				code: `
 				<template>
 					<LogoBrandSection
-						:service-title="Synapse"
-						:service-sub-title="Documentation du Design System"
+						service-title="Synapse"
+						service-sub-title="Documentation du Design System"
 					/>
 				</template>
 				`,
