@@ -24,8 +24,8 @@
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		dialCodeModel: { type: [String, Object] as PropType<string | Record<string, any>>, default: '' },
 		required: { type: Boolean, default: false },
-		outlined: { type: Boolean, default: false },
-		outlinedIndicatif: { type: Boolean, default: false },
+		outlined: { type: Boolean, default: true },
+		outlinedIndicatif: { type: Boolean, default: true },
 		withCountryCode: { type: Boolean, default: false },
 		countryCodeRequired: { type: Boolean, default: false },
 		displayFormat: { type: String as PropType<DisplayFormat>, default: 'code' },
