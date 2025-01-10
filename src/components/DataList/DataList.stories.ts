@@ -421,8 +421,9 @@ export const ActionBtn: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DataList } from '@cnamts/synapse'
+					import { ref } from 'vue'
 							
-					const items = [
+					const items = ref([
 						{
 							key: 'Nom',
 							value: 'Dupont',
@@ -436,7 +437,7 @@ export const ActionBtn: Story = {
 							value: '24/09/1970',
 							action: 'Modifier',
 						},
-					]
+					])
 					
 					const updateBirthdate = (index: number) => {
 						items[index].value = '25/09/1970'

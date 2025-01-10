@@ -332,8 +332,9 @@ export const ActionBtn: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DataListGroup } from '@cnamts/synapse'
+					import { ref } from 'vue'
 										
-					const items = [
+					const items = ref([
 						{
 							title: 'Informations patient',
 							items: [
@@ -374,7 +375,7 @@ export const ActionBtn: Story = {
 								},
 							],
 						},
-					]
+					])
 					
 					const updateBirthdate = (eventValue: object) => {
 						items.value[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
