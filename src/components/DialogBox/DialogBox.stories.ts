@@ -429,7 +429,7 @@ export const Persistent: Story = {
 					<DialogBox
 						v-model="dialogOpen"
 						title="DialogBox title"
-						Persistent
+						persistent
 						@confirm="dialogOpen = false"
 						@cancel="dialogOpen = false"
 					>
