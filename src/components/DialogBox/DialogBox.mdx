@@ -1,4 +1,4 @@
-import { Meta, Canvas, Controls } from '@storybook/blocks';
+import { Meta, Canvas, Controls, Source } from '@storybook/blocks';
 import * as DialogBoxStories from './DialogBox.stories';
 
 <Meta of={DialogBoxStories} />
@@ -12,3 +12,29 @@ L’élément `DialogBox` est utilisé pour afficher une boîte de dialogue avec
 # API
 
 <Controls of={DialogBoxStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+    import { DialogBox } from '@cnamts/synapse'
+    import { ref } from 'vue'
+
+    const dialogOpen = ref(false)
+</script>
+
+<template>
+    <VBtn
+        color="primary"
+        @click="dialogOpen = !dialogOpen"
+    >Toggle DialogBox</VBtn>
+    <DialogBox
+        v-model="dialogOpen"
+        title="DialogBox title"
+        @confirm="dialogOpen = false"
+        @cancel="dialogOpen = false"
+    >
+        DialogBox content
+    </DialogBox>
+</template>
+`} />
