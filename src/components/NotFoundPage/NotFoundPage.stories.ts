@@ -66,6 +66,10 @@ export const Default: Story = {
 }
 
 export const WithErrorCode: Story = {
+	args: {
+		btnText: 'Retour à l’accueil',
+		btnHref: '/',
+	},
 	parameters: {
 		query: {
 			support_id: '1234567890123456789',
