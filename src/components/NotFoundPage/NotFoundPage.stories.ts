@@ -28,13 +28,14 @@ export default meta
 type Story = StoryObj<typeof NotFoundPage>
 
 export const Default: Story = {
+	args: {
+		btnText: 'Retour à l’accueil',
+		btnHref: '/',
+	},
 	parameters: {
 		query: {
 			support_id: '',
 		},
-		btnText: 'Retour à l’accueil',
-		btnHref: '/',
-		hideBtn: false,
 		sourceCode: [
 			{
 				name: 'Template',
