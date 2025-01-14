@@ -7,6 +7,23 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 	},
+	argTypes: {
+		support_id: {
+			control: { type: 'text' },
+		},
+		hideBtn: {
+			control: { type: 'boolean' },
+		},
+		btnText: {
+			control: { type: 'text' },
+		},
+		btnHref: {
+			control: { type: 'text' },
+		},
+		btnLink: {
+			control: { type: 'text' },
+		},
+	},
 } satisfies Meta<typeof NotFoundPage>
 
 export default meta
@@ -18,13 +35,19 @@ export const Default: Story = {
 		query: {
 			support_id: '',
 		},
+		btnText: 'Retour à l’accueil',
+		btnHref: '/',
+		hideBtn: false,
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 				<template>
 					<div style="padding: 20px; background: rgb(231, 236, 245)">
-						<NotFoundPage />
+						<NotFoundPage 
+							btn-text="Retour à l’accueil" 
+							btn-href="/" 
+						/>
 					</div>
 				</template>
 				`,
@@ -49,13 +72,19 @@ export const WithErrorCode: Story = {
 		query: {
 			support_id: '1234567890123456789',
 		},
+		btnText: 'Retour à l’accueil',
+		btnHref: '/',
+		hideBtn: false,
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 				<template>
 					<div style="padding: 20px; background: rgb(231, 236, 245)">
-						<NotFoundPage />
+						<NotFoundPage 
+							btn-text="Retour à l’accueil" 
+							btn-href="/" 
+						/>
 					</div>
 				</template>
 				`,
