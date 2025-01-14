@@ -8,9 +8,6 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
-		support_id: {
-			control: { type: 'text' },
-		},
 		hideBtn: {
 			control: { type: 'boolean' },
 		},
