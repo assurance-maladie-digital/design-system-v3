@@ -7,6 +7,20 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 	},
+	argTypes: {
+		hideBtn: {
+			control: { type: 'boolean' },
+		},
+		btnText: {
+			control: { type: 'text' },
+		},
+		btnHref: {
+			control: { type: 'text' },
+		},
+		btnLink: {
+			control: { type: 'text' },
+		},
+	},
 } satisfies Meta<typeof NotFoundPage>
 
 export default meta
@@ -14,6 +28,10 @@ export default meta
 type Story = StoryObj<typeof NotFoundPage>
 
 export const Default: Story = {
+	args: {
+		btnText: 'Retour à l’accueil',
+		btnHref: '/',
+	},
 	parameters: {
 		query: {
 			support_id: '',
@@ -24,7 +42,10 @@ export const Default: Story = {
 				code: `
 				<template>
 					<div style="padding: 20px; background: rgb(231, 236, 245)">
-						<NotFoundPage />
+						<NotFoundPage 
+							btn-text="Retour à l’accueil" 
+							btn-href="/" 
+						/>
 					</div>
 				</template>
 				`,
@@ -45,17 +66,27 @@ export const Default: Story = {
 }
 
 export const WithErrorCode: Story = {
+	args: {
+		btnText: 'Retour à l’accueil',
+		btnHref: '/',
+	},
 	parameters: {
 		query: {
 			support_id: '1234567890123456789',
 		},
+		btnText: 'Retour à l’accueil',
+		btnHref: '/',
+		hideBtn: false,
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 				<template>
 					<div style="padding: 20px; background: rgb(231, 236, 245)">
-						<NotFoundPage />
+						<NotFoundPage 
+							btn-text="Retour à l’accueil" 
+							btn-href="/" 
+						/>
 					</div>
 				</template>
 				`,

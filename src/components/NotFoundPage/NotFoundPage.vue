@@ -2,9 +2,22 @@
 	import { onMounted, ref } from 'vue'
 	import ErrorPage from '../ErrorPage/ErrorPage.vue'
 	import { locales } from './locales'
+	import type { RouteRecordRaw } from 'vue-router'
 
 	const SUPPORT_ID_PARAM_NAME = 'support_id'
 	const supportId = ref<string | undefined>()
+
+	withDefaults(defineProps<{
+		btnText?: string
+		btnHref?: string
+		btnLink?: RouteRecordRaw | string
+		hideBtn?: boolean
+	}>(), {
+		btnText: undefined,
+		btnLink: '/',
+		btnHref: undefined,
+		hideBtn: false,
+	})
 
 	onMounted(() => {
 		const params = new URLSearchParams(document.location.search)
@@ -23,6 +36,10 @@
 		:code="locales.code"
 		:page-title="locales.pageTitle"
 		:message="locales.message"
+		:btn-text="btnText"
+		:btn-href="btnHref"
+		:btn-link="btnLink"
+		:hide-btn="hideBtn"
 	>
 		<template
 			v-if="supportId"
