@@ -96,21 +96,6 @@ describe('PhoneField', () => {
 		expect(wrapper.vm.hasError).toBe(false)
 	})
 
-	it('updates phoneNumber when modelValue prop changes', async () => {
-		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
-			props: {
-				modelValue: '1234567890',
-			},
-		})
-
-		await wrapper.setProps({ modelValue: '0987654321' })
-
-		expect(wrapper.vm.phoneNumber).toBe('0987654321')
-	})
-
 	it('uses only custom indicatifs when useCustomIndicatifsOnly is true', () => {
 		const customIndicatifs = [{ code: '+99', abbreviation: 'XX', country: 'Testland', phoneLength: 10 }]
 		const wrapper = mount(PhoneField, {

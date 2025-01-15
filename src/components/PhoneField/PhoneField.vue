@@ -1,5 +1,5 @@
-<script setup lang="ts">
-	import { computed, ref, watch, toRaw } from 'vue'
+<script lang="ts" setup>
+	import { computed, ref, watch } from 'vue'
 	import type { PropType } from 'vue'
 	import { required as RequiredRule } from '@/utils/rules/required'
 	import { exactLength } from '@/utils/rules/exactLength'
@@ -44,6 +44,34 @@
 	const hasError = ref(false)
 	const onBlur = ref(false)
 
+	function formatPhoneNumber(value: string): string {
+		if (!value) return ''
+		const cleaned = value.replace(/\D/g, '')
+		return cleaned.replace(/(.{2})/g, '$1 ').trim()
+	}
+
+	const computedValue = computed(() => formatPhoneNumber(phoneNumber.value))
+
+	watch(() => props.modelValue, (newVal) => {
+		phoneNumber.value = (newVal || '').replace(/\s/g, '')
+	}, { immediate: true })
+
+	watch(dialCode, (newVal) => {
+		emit('update:selectedDialCode', newVal)
+		if (typeof newVal === 'object' && newVal !== null) {
+			counter.value = newVal.phoneLength || 10
+			phoneMask.value = newVal.mask || '#'.repeat(newVal.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
+		}
+	})
+
+	function handlePhoneInput(event: Event) {
+		const input = (event.target as HTMLInputElement).value
+		const cleanedInput = input.replace(/\D/g, '')
+		phoneNumber.value = cleanedInput
+		emit('update:modelValue', cleanedInput)
+		emit('change', cleanedInput)
+	}
+
 	const mergedDialCodes = computed(() =>
 		props.useCustomIndicatifsOnly ? props.customIndicatifs : [...indicatifs, ...props.customIndicatifs],
 	)
@@ -66,28 +94,13 @@
 		return format[props.displayFormat] || ind.code
 	}
 
-	const currentDialCode = computed(() => {
-		const rawDialCode = toRaw(dialCode.value)
-		return dialCodeOptions.value.find(ind => ind.code === String(rawDialCode))
-	})
-
-	function applyPhoneMask(phone: string): string {
-		phone = phone.replace(/\D/g, '')
-		if (currentDialCode.value?.mask) {
-			const regex = new RegExp(currentDialCode.value.mask.replace(/#/g, '\\d'))
-			return phone.replace(regex, currentDialCode.value.mask).trim()
+	const validationRules = computed(() => {
+		const rules = [exactLength(counter.value, true)]
+		if (props.required) {
+			rules.unshift(RequiredRule)
 		}
-		return phone.replace(/(.{2})/g, '$1 ').trim()
-	}
-
-	function handlePhoneInput(event: Event) {
-		const input = (event.target as HTMLInputElement).value.replace(/\s|\D/g, '')
-		phoneNumber.value = input.startsWith(String(dialCode.value) || '')
-			? input.slice(String(dialCode.value || '').length)
-			: input
-		emit('update:modelValue', phoneNumber.value)
-		emit('change', phoneNumber.value)
-	}
+		return rules
+	})
 
 	function validateInputOnBlur() {
 		if (!props.isValidatedOnBlur) return
@@ -100,34 +113,6 @@
 		onBlur.value = true
 	}
 
-	const validationRules = computed(() => {
-		const rules = [exactLength(counter.value, true)]
-		if (props.required) {
-			rules.unshift(RequiredRule)
-		}
-		return rules
-	})
-
-	const computedValue = computed(() =>
-		phoneNumber.value ? applyPhoneMask(phoneNumber.value) : '',
-	)
-
-	watch(() => props.modelValue, (newVal) => {
-		phoneNumber.value = newVal || ''
-	})
-
-	watch(dialCode, (newVal) => {
-		emit('update:selectedDialCode', newVal)
-	})
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	watch(dialCode, (selectedPhoneCode: any) => {
-		if (selectedPhoneCode) {
-			counter.value = selectedPhoneCode?.phoneLength || 10
-			phoneMask.value = selectedPhoneCode?.mask || '## ## ## ## ##'
-		}
-	})
-
 	defineExpose({
 		computedValue,
 		dialCode,
@@ -137,7 +122,6 @@
 		phoneNumber,
 		mergedDialCodes,
 	})
-
 </script>
 
 <template>
@@ -146,26 +130,26 @@
 			v-if="props.withCountryCode"
 			v-model="dialCode"
 			:items="dialCodeOptions"
-			text-key="displayText"
-			value-key="code"
 			:label="locales.indicatifLabel"
+			:outlined="outlinedIndicatif"
 			:required="props.countryCodeRequired"
 			class="custom-select"
-			:outlined="outlinedIndicatif"
+			text-key="displayText"
+			value-key="code"
 		/>
 		<SyTextField
+			v-model="phoneNumber"
 			v-maska="phoneMask"
-			:model-value="computedValue"
-			:rules="validationRules"
-			:required="props.required"
 			:counter="counter"
 			:counter-value="(value: string) => value.replace(/\s/g, '').length"
 			:label="locales.label"
+			:required="props.required"
+			:rules="validationRules"
 			:variant="outlined ? 'outlined' : 'underlined'"
-			color="primary"
 			class="phone-field"
-			@input="handlePhoneInput"
+			color="primary"
 			@blur="validateInputOnBlur"
+			@input="handlePhoneInput"
 		>
 			<template #append-inner>
 				<VIcon
@@ -184,46 +168,46 @@
 
 <style scoped>
 .phone-field-container {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .phone-field {
-	width: 100%;
+  width: 100%;
 }
 
 .custom-select {
-	width: 30%;
+  width: 30%;
 }
 
 @media (width >= 600px) {
-	.phone-field-container {
-		flex-direction: row;
-		align-items: center;
-	}
+  .phone-field-container {
+    flex-direction: row;
+    align-items: center;
+  }
 
-	.custom-select {
-		margin-right: 1rem;
-		margin-bottom: 0;
-		min-width: 144px;
-	}
+  .custom-select {
+    margin-right: 1rem;
+    margin-bottom: 0;
+    min-width: 144px;
+  }
 
-	.phone-field {
-		min-width: 350px;
-	}
+  .phone-field {
+    min-width: 350px;
+  }
 }
 
 :deep(.v-list) {
-	position: absolute;
-	left: inherit !important;
-	background-color: white;
-	max-height: 300px;
-	padding: 0;
-	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
-	border-radius: 4px;
-	overflow-y: auto;
-	z-index: 2;
+  position: absolute;
+  left: inherit !important;
+  background-color: white;
+  max-height: 300px;
+  padding: 0;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
+  border-radius: 4px;
+  overflow-y: auto;
+  z-index: 2;
 }
 </style>
