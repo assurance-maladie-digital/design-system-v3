@@ -26,7 +26,7 @@ const meta = {
 		outlined: {
 			description: 'Définit la variante du champ (outlined ou underlined).',
 			control: 'boolean',
-			default: false,
+			default: true,
 			table: {
 				type: {
 					summary: 'boolean',
@@ -76,7 +76,7 @@ export const Default: Story = {
 	args: {
 		modelValue: '',
 		outlined: true,
-		required: true,
+		required: false,
 		isValidateOnBlur: true,
 		customRules: [],
 	},
@@ -99,7 +99,6 @@ export const Default: Story = {
 <template>
   <PasswordField
     v-model="password"
-    :outlined="false"
     :required="false"
     :isValidateOnBlur="true"
   />
@@ -138,7 +137,6 @@ export const Required: Story = {
 <template>
   <PasswordField
     v-model="password"
-    :outlined="false"
     :required="true"
     :isValidateOnBlur="true"
   />
@@ -183,7 +181,6 @@ export const WithCustomRules: Story = {
 <template>
   <PasswordField
     v-model="password"
-    :outlined="false"
     :required="false"
     :isValidateOnBlur="true"
     :customRules="[
