@@ -3,17 +3,13 @@ name: Rapport de bug
 about: Créez un rapport de bug pour nous aider à améliorer notre Design System
 ---
 
-## Type d'issue
+### Priorisation :
 
-- 🐛 Bug Report
-- ✨ Feature Request
-- 📝 Documentation
-- 🔄 Refactoring
-
-### 3. Priorisation :
-
+<!-- Choisissez une priorité -->
 🟢 Peu prioritaire : Améliorations mineures, bugs non bloquants
+
 🟡 Prioritaire : Bugs impactant l'expérience utilisateur, nouvelles fonctionnalités importantes
+
 🔴 Très prioritaire : Bugs critiques, problèmes de sécurité, fonctionnalités essentielles
 
 ## Description
