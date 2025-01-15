@@ -464,7 +464,7 @@ const items = [
 
 const options = {
 	btn: {
-		color: 'purple',
+		color: 'secondary',
 	},
 	list: {
 		density: 'compact',
