@@ -9,6 +9,8 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 	import useMouseSlide from './useMouseSlide'
 	import { vAnimateClick } from './vAnimateClick'
 	import useTrack from './useTrack'
+	import useDoubleSlider from './useDoubleSlider'
+	import useThumb from './useThumb'
 
 	const props = withDefaults(
 		defineProps<{
@@ -29,60 +31,42 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 		},
 	)
 
-	const step = toRef(props, 'step')
-	const max = toRef(props, 'max')
-	const min = toRef(props, 'min')
+	const range = useDoubleSlider(
+		toRef(props, 'min'),
+		toRef(props, 'max'),
+		toRef(props, 'step'),
+		toRef(props, 'modelValue'),
+	)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: number[]): void
 	}>()
 
 	const {
-		increase: increaseMin,
-		decrease: decreaseMin,
-		setRange: setRangeMin,
-		style: thumbMinStyle,
-		range: rangeMin,
-	} = useRange(min, max, step, min.value)
+		thumbStyle: thumbMinStyle,
+	} = useThumb(
+		range.selectedMin,
+		range.rangeMin,
+		range.rangeMax,
+	)
 
 	const {
-		increase: increaseMax,
-		decrease: decreaseMax,
-		setRange: setRangeMax,
-		style: thumbMaxStyle,
-		range: rangeMax,
-	} = useRange(min, max, step, max.value)
-
-	const track = ref<HTMLElement | null>(null)
-
-	const { startDrag: startMinDrag, inProgress: minThumbDrag } = useMouseSlide(
-		track as Ref<HTMLElement>,
-		rangeMin,
-		min,
-		max,
-		step,
-		min,
-		rangeMax,
-		setRangeMin,
+		thumbStyle: thumbMaxStyle,
+	} = useThumb(
+		range.selectedMax,
+		range.rangeMin,
+		range.rangeMax,
 	)
-
-	const { startDrag: startMaxDrag, inProgress: maxThumbDrag } = useMouseSlide(
-		track as Ref<HTMLElement>,
-		rangeMax,
-		min,
-		max,
-		step,
-		rangeMin,
-		max,
-		setRangeMax,
-	)
-
-	const dragInProgress = computed(() => minThumbDrag.value || maxThumbDrag.value)
 
 	const filledTrackStyle = computed(() => {
-		const rangeWidth = props.max - props.min
-		const left = (rangeMin.value - props.min) * 100 / rangeWidth
-		const width = (rangeMax.value - props.min) * 100 / rangeWidth - left
+		const rangeMin = range.rangeMin.value
+		const rangeMax = range.rangeMax.value
+		const selectedMin = range.selectedMin.value
+		const selectedMax = range.selectedMax.value
+
+		const rangeWidth = rangeMax - rangeMin
+		const left = (selectedMin - rangeMin) * 100 / rangeWidth
+		const width = (selectedMax - rangeMin) * 100 / rangeWidth - left
 
 		return {
 			left: `${left}%`,
@@ -90,43 +74,53 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 		}
 	})
 
+	const track = ref<HTMLElement | null>(null)
+
+	const { startDrag: startMinDrag, inProgress: minThumbDrag } = useMouseSlide(
+		track as Ref<HTMLElement>,
+		range.selectedMin,
+		range.rangeMin,
+		range.rangeMax,
+		range.step,
+		range.rangeMin,
+		range.selectedMax,
+		(value: number) => range.selectedMin.value = value,
+	)
+
+	const { startDrag: startMaxDrag, inProgress: maxThumbDrag } = useMouseSlide(
+		track as Ref<HTMLElement>,
+		range.selectedMax,
+		range.rangeMin,
+		range.rangeMax,
+		range.step,
+		range.selectedMin,
+		range.rangeMax,
+		(value: number) => range.selectedMax.value = value,
+	)
+
+	const dragInProgress = computed(() => minThumbDrag.value || maxThumbDrag.value)
+
 	useTrack(
 		track as Ref<HTMLElement>,
-		min,
-		max,
-		step,
-		rangeMin,
-		rangeMax,
-		setRangeMin,
-		setRangeMax,
+		range,
+		(value: number) => range.selectedMin.value = value,
+		(value: number) => range.selectedMax.value = value,
 		dragInProgress,
 	)
 
-	watch(
-		() => props.modelValue[0] + props.modelValue[1],
-		(value) => {
-			console.log('update modelValue', value)
-
-			if (value.length === 2) {
-				setRangeMin(value[0])
-				setRangeMax(value[1])
-			}
-		},
-		{ immediate: true },
-	)
-
-	watch([rangeMin, rangeMax], () => {
+	watch([range.rangeMin, range.rangeMax], () => {
 		if (
-			rangeMin.value !== props.modelValue[0]
-			|| rangeMax.value !== props.modelValue[1]
+			range.rangeMin.value !== props.modelValue[0]
+			|| range.rangeMax.value !== props.modelValue[1]
 		) {
-			emits('update:modelValue', [rangeMin.value, rangeMax.value])
+			emits('update:modelValue', [range.rangeMin.value, range.rangeMax.value])
 		}
 	})
 </script>
 
 <template>
 	<div class="wrapper">
+		{{ range }}
 		<div
 			ref="track"
 			class="track"
@@ -136,9 +130,9 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				class="thumb-min"
 				:style="thumbMinStyle"
 				role="slider"
-				:aria-valuenow="rangeMin"
+				:aria-valuenow="range.rangeMin.value"
 				tabindex="0"
-				:aria-valuemax="rangeMax"
+				:aria-valuemax="range.rangeMax.value"
 				:aria-valuemin="min"
 				aria-orientation="horizontal"
 				:aria-label="minLabel"
@@ -156,17 +150,14 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				role="slider"
 				class="thumb-max"
 				:style="thumbMaxStyle"
-				:aria-valuenow="rangeMax"
+				:aria-valuenow="range.rangeMax.value"
 				tabindex="0"
 				:aria-valuemax="max"
-				:aria-valuemin="rangeMin"
+				:aria-valuemin="range.rangeMin.value"
 				aria-orientation="horizontal"
 				:aria-label="maxLabel"
 				:title="maxLabel"
-				@keyup.right="increaseMax"
-				@keyup.up="increaseMax"
-				@keyup.left="decreaseMax"
-				@keyup.down="decreaseMax"
+
 				@mousedown.stop="startMaxDrag"
 			>
 				<span class="inner-thumb" />

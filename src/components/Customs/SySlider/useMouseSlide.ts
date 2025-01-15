@@ -5,11 +5,11 @@ import { ref, toValue, type MaybeRef } from 'vue'
  *
  * @param track - The track element of the slider.
  * @param range - The current range value of the slider.
- * @param rangeStart - The starting value of the slider range.
- * @param rangeEnd - The ending value of the slider range.
+ * @param rangeStart - The minimal value of the slider range.
+ * @param rangeEnd - The maximal value of the slider range.
  * @param step - The step value for the slider.
- * @param minSelectedValue - The minimum currently selectable value for the slider.
- * @param maxSelectedValue - The maximum currently selectable value for the slider.
+ * @param minSelectableValue - The minimum currently selectable value for the slider.
+ * @param maxSelectableValue - The maximum currently selectable value for the slider.
  * @param callback - The callback function to be called with the new value when the slider is dragged.
  *
  * @returns An object containing the `startDrag` function to initiate the dragging.
@@ -20,8 +20,8 @@ export default function useMouseSlide(
 	rangeStart: MaybeRef<number>,
 	rangeEnd: MaybeRef<number>,
 	step: MaybeRef<number>,
-	minSelectedValue: MaybeRef<number>,
-	maxSelectedValue: MaybeRef<number>,
+	minSelectableValue: MaybeRef<number>,
+	maxSelectableValue: MaybeRef<number>,
 	callback: (value: number) => void,
 ) {
 	const inProgress = ref(false)
@@ -64,9 +64,9 @@ export default function useMouseSlide(
 		const theoricNewValue = toValue(range) + theoricCurrentChange
 
 		const clampedNewValue = clamp(
-			toValue(minSelectedValue),
+			toValue(minSelectableValue),
 			theoricNewValue,
-			toValue(maxSelectedValue),
+			toValue(maxSelectableValue),
 		)
 
 		const currentChange = clampedNewValue - toValue(range)

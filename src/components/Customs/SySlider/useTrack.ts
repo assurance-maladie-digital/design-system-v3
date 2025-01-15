@@ -1,4 +1,5 @@
 import { onMounted, toValue, type MaybeRef } from 'vue'
+import type { Range } from './types'
 
 /**
  * Custom hook to handle the click event on the track of a
@@ -16,11 +17,7 @@ import { onMounted, toValue, type MaybeRef } from 'vue'
  */
 export default function useTrack(
 	track: MaybeRef<HTMLElement>,
-	rangeStart: MaybeRef<number>,
-	rangeEnd: MaybeRef<number>,
-	step: MaybeRef<number>,
-	minSelectedValue: MaybeRef<number>,
-	maxSelectedValue: MaybeRef<number>,
+	range: Range,
 	setMin: (value: number) => void,
 	setMax: (value: number) => void,
 	disable: MaybeRef<boolean> = false,
@@ -29,8 +26,8 @@ export default function useTrack(
 		if (toValue(disable)) return
 
 		const rect = toValue(track).getBoundingClientRect()
-		const rangeStartValue = toValue(rangeStart)
-		const rangeEndValue = toValue(rangeEnd)
+		const rangeStartValue = toValue(range.rangeMin)
+		const rangeEndValue = toValue(range.rangeMax)
 
 		const clickX = event.clientX - rect.left
 		const clickXPercentage = (clickX / rect.width) * 100
@@ -38,8 +35,8 @@ export default function useTrack(
 			clickXPercentage,
 			rangeStartValue,
 			rangeEndValue,
-			toValue(minSelectedValue),
-			toValue(maxSelectedValue),
+			toValue(range.selectedMin),
+			toValue(range.selectedMax),
 			setMin,
 			setMax,
 		)
@@ -47,8 +44,9 @@ export default function useTrack(
 			clickXPercentage,
 			rangeStartValue,
 			rangeEndValue,
-			toValue(step),
+			toValue(range.step),
 		)
+		console.log('newPosition', newPosition)
 
 		setThumb(newPosition)
 	}
