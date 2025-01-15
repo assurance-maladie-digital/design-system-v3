@@ -5,19 +5,18 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 
 <script setup lang="ts">
 	import { computed, ref, toRef, watch, type Ref } from 'vue'
-	import useRange from './useRange'
-	import useMouseSlide from './useMouseSlide'
-	import { vAnimateClick } from './vAnimateClick'
-	import useTrack from './useTrack'
 	import useDoubleSlider from './useDoubleSlider'
+	import useMouseSlide from './useMouseSlide'
 	import useThumb from './useThumb'
+	import useTrack from './useTrack'
+	import { vAnimateClick } from './vAnimateClick'
 
 	const props = withDefaults(
 		defineProps<{
-			modelValue: Array<number>
-			min?: number
-			max?: number
-			step?: number
+			modelValue: Array<number | string>
+			min?: number | string
+			max?: number | string
+			step?: number | string
 			minLabel?: string
 			maxLabel?: string
 		}>(),
@@ -108,12 +107,12 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 		dragInProgress,
 	)
 
-	watch([range.rangeMin, range.rangeMax], () => {
+	watch(() => [range.selectedMin.value, range.selectedMax.value], (value) => {
 		if (
-			range.rangeMin.value !== props.modelValue[0]
-			|| range.rangeMax.value !== props.modelValue[1]
+			value[0] !== Number(props.modelValue[0])
+			|| value[1] !== Number(props.modelValue[1])
 		) {
-			emits('update:modelValue', [range.rangeMin.value, range.rangeMax.value])
+			emits('update:modelValue', value)
 		}
 	})
 </script>
@@ -121,6 +120,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 <template>
 	<div class="wrapper">
 		{{ range }}
+		<br><br>
 		<div
 			ref="track"
 			class="track"

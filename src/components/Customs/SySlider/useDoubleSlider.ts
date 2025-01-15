@@ -12,20 +12,12 @@ import { ref, watch, toValue, type MaybeRef } from 'vue'
 export default function useDoubleSlider(
 	min: MaybeRef<number | string>,
 	max: MaybeRef<number | string>,
-	step: MaybeRef<number>,
+	step: MaybeRef<number | string>,
 	value: MaybeRef<Array<number | string>>,
 ) {
 	if (toValue(min) > toValue(max)) {
 		[min, max] = [max, min]
 	}
-
-	/* const range = reactive({
-		selectedMin: Number(toValue(min)),
-		selectedMax: Number(toValue(max)),
-		rangeMin: Number(toValue(min)),
-		rangeMax: Number(toValue(max)),
-		step: Number(toValue(step)),
-	}) */
 
 	const range = {
 		selectedMin: ref(Number(toValue(min))),
@@ -76,6 +68,7 @@ export default function useDoubleSlider(
 	})
 
 	watch(() => toValue(step), (newVal) => {
+		newVal = Number(newVal)
 		if (!isStepValid(newVal, range.rangeMin.value, range.rangeMax.value)) {
 			return
 		}
