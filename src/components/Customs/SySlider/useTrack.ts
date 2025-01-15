@@ -77,7 +77,7 @@ function getClosetStep(
 	const percentStep = (step * 100) / rangeWidth
 	const stepsChange = Math.round(percentPosition / percentStep)
 
-	return (stepsChange * step) + rangeStart
+	return stepsChange * step + rangeStart
 }
 
 /**
@@ -103,10 +103,19 @@ function getThumbMoveFunc(
 ) {
 	const rangeWidth = rangeEnd - rangeStart
 
-	const minPercent = Math.abs((minSelectedValue - rangeStart) / rangeWidth * 100)
-	const maxPercent = Math.abs((maxSelectedValue - rangeStart) / rangeWidth * 100)
+	const minPercent = Math.abs(((minSelectedValue - rangeStart) / rangeWidth) * 100,
+	)
+	const maxPercent = Math.abs(((maxSelectedValue - rangeStart) / rangeWidth) * 100,
+	)
 	const minDistance = Math.abs(minPercent - percentPosition)
 	const maxDistance = Math.abs(maxPercent - percentPosition)
 
-	return minDistance < maxDistance ? setMin : setMax
+	if (
+		minDistance < maxDistance
+		|| (minDistance === maxDistance && percentPosition < minPercent)
+	) {
+		return setMin
+	}
+
+	return setMax
 }
