@@ -6,13 +6,13 @@ import * as NotificationBarStories from './NotificationBar.stories';
 
 # NotificationBar
 
-##### Les notification bars servent à notifier l’utilisateur soit d’un retour d’action.
+##### Les NotificationsBar servent à notifier l’utilisateur soit d’un retour d’action.
 
-##### Deux actions sont possible :
+##### Deux actions sont possibles :
  - Fermer la notification lorsqu’elle a été vue
  - Cliquer sur un élément qui permet de faire une action secondaire (comme amener sur une page visée par la notification).
 
-##### L’affichage d’une durée de quelques secondes et disprition automatique de la notification bar est déconseillé pour des raisons d’accessibilité afin de permettre à tout le monde de prendre le temps nécessaire de lire la notification.
+##### L’affichage d’une durée de quelques secondes et disparition automatique de la notification bar est déconseillé pour des raisons d’accessibilité afin de permettre à tout le monde de prendre le temps nécessaire de lire la notification.
 
 ##### Les 4 états son disponibles :
 - **Information** : Information supplémentaire nécessaire à la compréhension de l’utilisateur d’un élément spécifique.
@@ -20,10 +20,10 @@ import * as NotificationBarStories from './NotificationBar.stories';
 - **Warning** : Alerte, élément important mais pas bloquant. L’utilisateur a besoin d’être informé d’un élément ou d’une conséquence.
 - **Success** : l’action a été réalisée correctement et prise en compte.
 
-<Canvas of={NotificationBarStories.Success}  />
+<Canvas of={NotificationBarStories.Default}  />
 
 # API
-<Controls of={NotificationBarStories.Success} />
+<Controls of={NotificationBarStories.Default} />
 
 # Exemple d'utilisation
 
