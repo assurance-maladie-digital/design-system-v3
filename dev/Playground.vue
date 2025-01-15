@@ -10,7 +10,7 @@
 	}
 	const customIndicatifs = ref([
 		{ code: '+99', country: 'Utopia', abbreviation: 'UT', mask: '## ## ## ##', phoneLength: 8 },
-		{ code: '+98', country: 'Paradise', abbreviation: 'PA', mask: '### #### ## ## ## ## ### ###', phoneLength: 18 },
+		{ code: '+98', country: 'Paradise', abbreviation: 'PA', mask: '### #### ## ## ## ## ###', phoneLength: 18 },
 	])
 </script>
 
