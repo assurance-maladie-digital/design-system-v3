@@ -3,13 +3,30 @@ name: Rapport de bug
 about: Créez un rapport de bug pour nous aider à améliorer notre Design System
 ---
 
+## Type d'issue
+
+🐛 Bug
+
+### Priorisation :
+
+<!-- Choisissez une priorité -->
+🟢 Peu prioritaire : Améliorations mineures, bugs non bloquants
+
+🟡 Prioritaire : Bugs impactant l'expérience utilisateur, nouvelles fonctionnalités importantes
+
+🔴 Très prioritaire : Bugs critiques, problèmes de sécurité, fonctionnalités essentielles
+
 ## Description
 
 <!-- Écrivez un résumé du bug rencontré. -->
 
 ## Reproduction minimale
 
-<!-- Fournissez un lien vers une reproduction minimale du bug. -->
+<!-- Fournissez un lien vers une reproduction minimale du bug ou du code. -->
+
+Lorsque vous créez une reproduction minimale, supprimez tous les éléments, propriétés, variables, données et autres qui
+ne sont pas nécessaires pour reproduire le bug.
+Cela facilitera le traitement du rapport et le temps qu’il faudra pour identifier puis résoudre le bug.
 
 ## Comment reproduire
 
@@ -34,14 +51,6 @@ about: Créez un rapport de bug pour nous aider à améliorer notre Design Syste
 - OS : <!-- Android, … -->
 - Navigateur : <!-- IE 11, Firefox, Safari, … -->
 
-## Priorisation
-
-<!-- Sélectionnez le niveau de priorité que vous estimez en fonction de l'impact sur votre projet. -->
-
-- Peu prioritaire 
-- Prioritaire
-- Très prioritaire
-
 ## Projet
 
 <!-- Nom du projet impacté par le bug. -->
@@ -50,6 +59,6 @@ about: Créez un rapport de bug pour nous aider à améliorer notre Design Syste
 
 <!-- Nom(s) et rôle(s) du ou des personnes à contacter. -->
 
-## Commentaires 
+## Commentaires
 
 <!-- Ajoutez ici des précisions ou informations supplémentaires (optionnel). -->
