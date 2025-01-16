@@ -2,6 +2,6 @@
 import { cnamColorsTokens } from '../cnam/cnamColors'
 
 // Pour l'utiilser cf : dev/main.ts -> a ajouter a la place des cnamColorsTokens
-export const bootstrapLightTheme = {
+export const bootstrapDarkTheme = {
 	backgroundSurface: cnamColorsTokens.parma.darken60,
 }
