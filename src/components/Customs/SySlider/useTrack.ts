@@ -42,7 +42,6 @@ export default function useTrack(
 			rangeEndValue,
 			toValue(range.step),
 		)
-		console.log('newPosition', newPosition)
 
 		setThumb(newPosition)
 	}
