@@ -140,8 +140,6 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 
 <template>
 	<div class="wrapper">
-		{{ range }}
-		<br><br>
 		<div
 			ref="track"
 			class="track"
@@ -192,118 +190,118 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 @use "@/assets/tokens";
 
 .wrapper {
-  --sy-track-height: 4px;
-  --sy-thumb-size: 20px;
+	--sy-track-height: 4px;
+	--sy-thumb-size: 20px;
 
-  position: relative;
-  margin-inline: var(--sy-thumb-size);
-  width: calc(100% - var(--sy-thumb-size) * 2);
+	position: relative;
+	margin-inline: var(--sy-thumb-size);
+	width: calc(100% - var(--sy-thumb-size) * 2);
 }
 
 .track {
-  height: 32px;
-  // margin-left: calc(var(--sy-thumb-size) * -1);
-  // margin-right: calc(var(--sy-thumb-size) * -1);
-  cursor: pointer;
+	height: 32px;
+	// margin-left: calc(var(--sy-thumb-size) * -1);
+	// margin-right: calc(var(--sy-thumb-size) * -1);
+	cursor: pointer;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translate(0, -50%);
-    width: 100%;
-    height: var(--sy-track-height);
-    background-color: tokens.$blue-lighten-80;
-  }
+	&::before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 0;
+		transform: translate(0, -50%);
+		width: 100%;
+		height: var(--sy-track-height);
+		background-color: tokens.$blue-lighten-80;
+	}
 }
 
 .thumb-min,
 .thumb-max {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  transition: left 0.1s;
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	z-index: 2;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	transition: left 0.1s;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: var(--sy-thumb-size);
-    height: var(--sy-thumb-size);
-    background-color: tokens.$blue-lighten-40;
-    border-radius: 50%;
-    transform-origin: bottom right;
-    transition: transform 0.1s;
-    opacity: 0.4;
-  }
+	&::before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: var(--sy-thumb-size);
+		height: var(--sy-thumb-size);
+		background-color: tokens.$blue-lighten-40;
+		border-radius: 50%;
+		transform-origin: bottom right;
+		transition: transform 0.1s;
+		opacity: 0.4;
+	}
 
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: var(--sy-thumb-size);
-    height: var(--sy-thumb-size);
-    background-color: tokens.$primary-base;
-    opacity: 0.4;
-    border-radius: 50%;
-    transform-origin: bottom right;
-    transition: transform 0.1s ease-in, opacity 0.1s ease-in;
-  }
+	&::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: var(--sy-thumb-size);
+		height: var(--sy-thumb-size);
+		background-color: tokens.$primary-base;
+		opacity: 0.4;
+		border-radius: 50%;
+		transform-origin: bottom right;
+		transition: transform 0.1s ease-in, opacity 0.1s ease-in;
+	}
 
-  &:focus,
-  &:hover {
-    &::before {
-      transform: scale(2);
-    }
-  }
+	&:focus,
+	&:hover {
+		&::before {
+			transform: scale(2);
+		}
+	}
 }
 
 .inner-thumb {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 2;
-  transform: translate(-50%, -50%);
-  width: var(--sy-thumb-size);
-  height: var(--sy-thumb-size);
-  background-color: tokens.$primary-base;
-  border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 2;
+	transform: translate(-50%, -50%);
+	width: var(--sy-thumb-size);
+	height: var(--sy-thumb-size);
+	background-color: tokens.$primary-base;
+	border-radius: 50%;
 }
 
 .thumb-min {
-  //transform: translate(var(--sy-track-height), -20px);
-  transform: translate(-30px, -50%);
+	//transform: translate(var(--sy-track-height), -20px);
+	transform: translate(-30px, -50%);
 }
 
 .thumb-max {
-  //transform: translate(calc(var(--sy-track-height) * -2), -20px);
-  transform: translate(-10px, -50%);
+	//transform: translate(calc(var(--sy-track-height) * -2), -20px);
+	transform: translate(-10px, -50%);
 }
 
 .filled-track {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translate(0, -50%);
-  width: 100%;
-  height: var(--sy-track-height);
-  background-color: tokens.$blue-lighten-40;
-  transition: all 0.1s;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translate(0, -50%);
+	width: 100%;
+	height: var(--sy-track-height);
+	background-color: tokens.$blue-lighten-40;
+	transition: all 0.1s;
 }
 
 .animate-click::after {
-  transform: scale(2);
-  opacity: 0.4;
-  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+	transform: scale(2);
+	opacity: 0.4;
+	transition: transform 0.25s ease-out, opacity 0.25s ease-out;
 }
 </style>
