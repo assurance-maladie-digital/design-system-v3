@@ -1,7 +1,7 @@
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 
 export default {
-	title: 'Guide Du Dev/Comment créer une issue',
+	title: 'Guide Du Dev/Créer une issue',
 	component: SyAlert,
 }
 export const Info = {
