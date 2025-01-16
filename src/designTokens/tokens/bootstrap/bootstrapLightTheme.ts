@@ -1,6 +1,6 @@
 import { bootstrapColorsTokens } from './bootstrapColors'
 import { cnamColorsTokens } from '../cnam/cnamColors'
-import { cnamSemanticTokens } from '@/designTokens'
+import { cnamSemanticTokens } from '../cnam/cnamSemantic'
 
 // Pour l'utiilser cf : dev/main.ts -> a ajouter a la place des cnamColorsTokens
 export const bootstrapLightTheme = {
