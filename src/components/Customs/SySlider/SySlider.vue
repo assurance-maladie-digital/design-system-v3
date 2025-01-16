@@ -8,6 +8,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 	import useDoubleSlider from './useDoubleSlider'
 	import useMouseSlide from './useMouseSlide'
 	import useThumb from './useThumb'
+	import useThumbKeyboard from './useThumbKeyboard'
 	import useTrack from './useTrack'
 	import { vAnimateClick } from './vAnimateClick'
 
@@ -74,6 +75,8 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 	})
 
 	const track = ref<HTMLElement | null>(null)
+	const thumbMin = ref<HTMLElement | null>(null)
+	const thumbMax = ref<HTMLElement | null>(null)
 
 	const { startDrag: startMinDrag, inProgress: minThumbDrag } = useMouseSlide(
 		track as Ref<HTMLElement>,
@@ -107,6 +110,24 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 		dragInProgress,
 	)
 
+	useThumbKeyboard(
+		thumbMin as Ref<HTMLElement>,
+		range.selectedMin,
+		range.rangeMin,
+		range.selectedMax,
+		range.step,
+		(value: number) => range.selectedMin.value = value,
+	)
+
+	useThumbKeyboard(
+		thumbMax as Ref<HTMLElement>,
+		range.selectedMax,
+		range.selectedMin,
+		range.rangeMax,
+		range.step,
+		(value: number) => range.selectedMax.value = value,
+	)
+
 	watch(() => [range.selectedMin.value, range.selectedMax.value], (value) => {
 		if (
 			value[0] !== Number(props.modelValue[0])
@@ -126,6 +147,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 			class="track"
 		>
 			<button
+				ref="thumbMin"
 				v-animate-click
 				class="thumb-min"
 				:style="thumbMinStyle"
@@ -137,15 +159,12 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				aria-orientation="horizontal"
 				:aria-label="minLabel"
 				:title="minLabel"
-				@keyup.right="increaseMin"
-				@keyup.up="increaseMin"
-				@keyup.left="decreaseMin"
-				@keyup.down="decreaseMin"
 				@mousedown.stop="startMinDrag"
 			>
 				<span class="inner-thumb" />
 			</button>
 			<button
+				ref="thumbMax"
 				v-animate-click
 				role="slider"
 				class="thumb-max"
@@ -157,7 +176,6 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				aria-orientation="horizontal"
 				:aria-label="maxLabel"
 				:title="maxLabel"
-
 				@mousedown.stop="startMaxDrag"
 			>
 				<span class="inner-thumb" />
