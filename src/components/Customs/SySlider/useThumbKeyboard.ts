@@ -34,7 +34,7 @@ export default function useThumbKeyboard(
 			event.preventDefault()
 			const newValue = toValue(value) + toValue(step)
 			if (newValue <= toValue(maxSelectableValue)) {
-				value.value = newValue
+				setValue(newValue)
 			}
 		}
 		else if (event.key === 'Home') {
