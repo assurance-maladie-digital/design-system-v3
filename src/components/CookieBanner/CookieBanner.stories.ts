@@ -617,7 +617,6 @@ export const Customization: Story = {
 		@reject="onReject"
 		@customize="onCustomize"
 		v-model="modelValue"
-		:cookiesRoute="cookiesRoute"
 		:vuetifyOptions="vuetifyOptions"
 	/>
 </template>`,
@@ -659,7 +658,7 @@ export const Customization: Story = {
 	}
 
 	const vuetifyOptions = {
-		sheet: {
+		banner: {
 			color: '#ced9eb',
 		},
 		customizeBtn: {
