@@ -78,7 +78,8 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 	const thumbMin = ref<HTMLElement | null>(null)
 	const thumbMax = ref<HTMLElement | null>(null)
 
-	const { startDrag: startMinDrag, inProgress: minThumbDrag } = useMouseSlide(
+	const { inProgress: minThumbDrag } = useMouseSlide(
+		thumbMin as Ref<HTMLElement>,
 		track as Ref<HTMLElement>,
 		range.selectedMin,
 		range.rangeMin,
@@ -89,7 +90,8 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 		(value: number) => range.selectedMin.value = value,
 	)
 
-	const { startDrag: startMaxDrag, inProgress: maxThumbDrag } = useMouseSlide(
+	const { inProgress: maxThumbDrag } = useMouseSlide(
+		thumbMax as Ref<HTMLElement>,
 		track as Ref<HTMLElement>,
 		range.selectedMax,
 		range.rangeMin,
@@ -152,12 +154,11 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				role="slider"
 				:aria-valuenow="range.rangeMin.value"
 				tabindex="0"
-				:aria-valuemax="range.rangeMax.value"
-				:aria-valuemin="min"
+				:aria-valuemin="range.rangeMin.value"
+				:aria-valuemax="range.selectedMax.value"
 				aria-orientation="horizontal"
 				:aria-label="minLabel"
 				:title="minLabel"
-				@mousedown.stop="startMinDrag"
 			>
 				<span class="inner-thumb" />
 			</button>
@@ -169,12 +170,11 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				:style="thumbMaxStyle"
 				:aria-valuenow="range.rangeMax.value"
 				tabindex="0"
-				:aria-valuemax="max"
-				:aria-valuemin="range.rangeMin.value"
+				:aria-valuemin="range.selectedMin.value"
+				:aria-valuemax="range.rangeMax.value"
 				aria-orientation="horizontal"
 				:aria-label="maxLabel"
 				:title="maxLabel"
-				@mousedown.stop="startMaxDrag"
 			>
 				<span class="inner-thumb" />
 			</button>

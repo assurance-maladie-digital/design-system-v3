@@ -6,11 +6,7 @@ import type { Range } from './types'
  * min - max slider component.
  *
  * @param track The track element of the slider.
- * @param rangeStart The start of the range.
- * @param rangeEnd The end of the range.
- * @param step The step value for the slider.
- * @param minSelectedValue The minimum currently selectable value for the slider.
- * @param maxSelectedValue The maximum currently selectable value for the slider.
+ * @param range An object containing the the following informations about the range: rangeMin, rangeMax, selectedMin, selectedMax, step.
  * @param setMin A function to set the minimum value.
  * @param setMax A function to set the maximum value.
  * @param disable Temporary disable the click on the track
@@ -101,9 +97,11 @@ function getThumbMoveFunc(
 ) {
 	const rangeWidth = rangeEnd - rangeStart
 
-	const minPercent = Math.abs(((minSelectedValue - rangeStart) / rangeWidth) * 100,
+	const minPercent = Math.abs(
+		((minSelectedValue - rangeStart) / rangeWidth) * 100,
 	)
-	const maxPercent = Math.abs(((maxSelectedValue - rangeStart) / rangeWidth) * 100,
+	const maxPercent = Math.abs(
+		((maxSelectedValue - rangeStart) / rangeWidth) * 100,
 	)
 	const minDistance = Math.abs(minPercent - percentPosition)
 	const maxDistance = Math.abs(maxPercent - percentPosition)

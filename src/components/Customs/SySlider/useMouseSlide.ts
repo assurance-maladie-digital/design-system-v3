@@ -1,10 +1,10 @@
-import { ref, toValue, type MaybeRef } from 'vue'
+import { onMounted, ref, toValue, type MaybeRef } from 'vue'
 
 /**
  * Custom hook to handle mouse dragging functionality for a slider component.
  *
  * @param track - The track element of the slider.
- * @param range - The current range value of the slider.
+ * @param currentValue - The current range value of the slider.
  * @param rangeStart - The minimal value of the slider range.
  * @param rangeEnd - The maximal value of the slider range.
  * @param step - The step value for the slider.
@@ -15,8 +15,9 @@ import { ref, toValue, type MaybeRef } from 'vue'
  * @returns An object containing the `startDrag` function to initiate the dragging.
  */
 export default function useMouseSlide(
+	thumb: MaybeRef<HTMLElement>,
 	track: MaybeRef<HTMLElement>,
-	range: Readonly<MaybeRef<number>>,
+	currentValue: Readonly<MaybeRef<number>>,
 	rangeStart: MaybeRef<number>,
 	rangeEnd: MaybeRef<number>,
 	step: MaybeRef<number>,
@@ -27,6 +28,10 @@ export default function useMouseSlide(
 	const inProgress = ref(false)
 	let effectedChange = 0
 	let startX: null | number = null
+
+	onMounted(() => {
+		toValue(thumb).addEventListener('mousedown', startDrag)
+	})
 
 	function startDrag() {
 		inProgress.value = true
@@ -59,17 +64,17 @@ export default function useMouseSlide(
 		const percentStep = toValue(step) * 100 / (toValue(rangeEnd) - toValue(rangeStart))
 		const stepsChange = Math.round(percentChange / percentStep)
 
-		const theoricTotalChange = stepsChange * toValue(step)
-		const theoricCurrentChange = theoricTotalChange - effectedChange
-		const theoricNewValue = toValue(range) + theoricCurrentChange
+		const theoreticalTotalChange = stepsChange * toValue(step)
+		const theoreticalCurrentChange = theoreticalTotalChange - effectedChange
+		const theoreticalNewValue = toValue(currentValue) + theoreticalCurrentChange
 
 		const clampedNewValue = clamp(
 			toValue(minSelectableValue),
-			theoricNewValue,
+			theoreticalNewValue,
 			toValue(maxSelectableValue),
 		)
 
-		const currentChange = clampedNewValue - toValue(range)
+		const currentChange = clampedNewValue - toValue(currentValue)
 
 		if (currentChange === 0) {
 			return
@@ -80,7 +85,6 @@ export default function useMouseSlide(
 	}
 
 	return {
-		startDrag,
 		inProgress,
 	}
 }
