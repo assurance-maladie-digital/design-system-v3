@@ -28,7 +28,7 @@ describe('RangeField', () => {
 		expect(inputMax.element.value).toBe('80')
 	})
 
-	/*it('render correcly when the modelValue is not defined', async () => {
+	/* it('render correcly when the modelValue is not defined', async () => {
 		const wrapper = mount(RangeField, {
 			global: {
 				plugins: [vuetify],
@@ -151,5 +151,5 @@ describe('RangeField', () => {
 		expect(inputMin.element.value).toBe('100')
 		expect(inputMax.element.value).toBe('0')
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[100, 0]])
-	})*/
+	}) */
 })

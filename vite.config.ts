@@ -130,7 +130,6 @@ export default defineConfig({
 			exclude: [
 				'src/**/*.spec.{js,vue,ts}',
 				'src/**/*.stories.*',
-				'src/**/*.ts*',
 				'src/**/types.*',
 				'src/main.ts',
 				'src/components/index.ts',
