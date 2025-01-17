@@ -17,25 +17,25 @@ export const VuetifyPanel: StoryObj = {
 		return {
 			components: { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VListItem, VDataTable, VIcon, VContainer, VSelect, VBtn, VCombobox },
 			setup() {
-				const menuProps = ref({ top: false });
-				const itemValue = ref(0);
-				const activeBtnIndex = ref('null');
-				const search = ref([]);
-				const searchString = ref('');
+				const menuProps = ref({ top: false })
+				const itemValue = ref(0)
+				const activeBtnIndex = ref('null')
+				const search = ref([])
+				const searchString = ref('')
 				const items = computed(() => {
-					return itemsChips.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()));
-				}
+					return itemsChips.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()))
+				},
 				)
 
 				const itemsString = computed(() => {
-					const items = itemsChips.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()));
-					return items.map(o => o.text);
-				}
+					const items = itemsChips.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()))
+					return items.map(o => o.text)
+				},
 				)
 
 				const cardItem = computed(() => {
 					return VuetifyItems[0].items[itemValue.value - 1]
-				}
+				},
 				)
 				return { VuetifyItems, menuProps, items, itemsString, checkIcon, iconAlert, linkICon, itemValue, cardItem, activeBtnIndex, search, searchString }
 			},
