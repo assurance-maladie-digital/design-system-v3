@@ -12,7 +12,7 @@
 	@use '@/assets/tokens.scss' as *;
 
 	.header-menu-item {
-		color: $primary-base;
+		color: rgb(var(--v-theme-primary));
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
@@ -41,7 +41,7 @@
 	}
 
 	.header-menu-item:hover {
-    background-color:  rgb(var(--v-theme-primary));
+		background-color: rgb(var(--v-theme-primary));
 		color: $neutral-white;
 
 		> :deep(a > *) {

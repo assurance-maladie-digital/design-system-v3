@@ -280,7 +280,7 @@ a {
 
 	.social {
 		.text--primary {
-			color: tokens.$primary-base;
+			color: rgb(var(--v-theme-primary));
 		}
 
 		a.v-btn:hover {
@@ -293,7 +293,7 @@ a {
 	}
 
 	a.text--primary {
-		color: tokens.$primary-base;
+		color: rgb(var(--v-theme-primary));
 	}
 
 	.v-divider {
@@ -301,11 +301,11 @@ a {
 	}
 
 	svg.logo {
-		fill: tokens.$primary-base;
+		fill: rgb(var(--v-theme-primary));
 	}
 
 	.scroll {
-		color: tokens.$primary-base !important;
+		color: rgb(var(--v-theme-primary)) !important;
 	}
 }
 

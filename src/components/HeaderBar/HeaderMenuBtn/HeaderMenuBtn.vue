@@ -46,7 +46,7 @@
 	flex-shrink: 0;
 	justify-content: center;
 	font-weight: 700;
-	background-color:  rgb(var(--v-theme-primary));
+	background-color: rgb(var(--v-theme-primary));
 	color: tokens.$neutral-white;
 	border-bottom: solid 1px tokens.$blue-lighten-80;
 	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border-bottom 0.15s 0.1s;
