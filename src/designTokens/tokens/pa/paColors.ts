@@ -1,4 +1,4 @@
-export const bootstrapColorsTokens = {
+export const paColorsTokens = {
 	amBlue: {
 		darken80: '#020d1f',
 		darken60: '#052C64',
