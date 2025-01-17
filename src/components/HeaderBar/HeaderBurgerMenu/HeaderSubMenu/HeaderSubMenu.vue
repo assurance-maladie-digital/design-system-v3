@@ -74,7 +74,7 @@
 		color: $primary-base;
 
 		&:hover {
-			background-color: $primary-base;
+      background-color:  rgb(var(--v-theme-primary));
 			color: $neutral-white;
 			text-decoration: underline;
 
@@ -138,7 +138,7 @@
 		}
 
 		.sub-menu--open > .sub-menu-btn {
-			background-color: $primary-base;
+      background-color:  rgb(var(--v-theme-primary));
 			color: $neutral-white;
 			transition: color 0.15s linear, background-color 0.15s linear;
 

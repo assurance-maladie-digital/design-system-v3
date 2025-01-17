@@ -34,7 +34,7 @@
 
 <style lang="scss" scoped>
 @use '../consts' as *;
-@use '@/assets/tokens.scss' as *;
+@use '@/assets/tokens';
 
 .header-menu-btn {
 	text-transform: capitalize;
@@ -46,21 +46,21 @@
 	flex-shrink: 0;
 	justify-content: center;
 	font-weight: 700;
-	background-color: $primary-base;
-	color: $neutral-white;
-	border-bottom: solid 1px $blue-lighten-80;
+	background-color:  rgb(var(--v-theme-primary));
+	color: tokens.$neutral-white;
+	border-bottom: solid 1px tokens.$blue-lighten-80;
 	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border-bottom 0.15s 0.1s;
 
 	&:focus-visible {
-		background-color: $neutral-white;
-		color: $primary-base;
+		background-color: tokens.$neutral-white;
+		color: rgb(var(--v-theme-primary));
 	}
 }
 
 .header-menu-btn__open {
-	background-color: $neutral-white;
-	color: $primary-base;
-	border-color: $neutral-white;
+	background-color: tokens.$neutral-white;
+	color: rgb(var(--v-theme-primary));
+	border-color: tokens.$neutral-white;
 }
 
 @media screen and (max-width: ($header-breakpoint + 1)) {

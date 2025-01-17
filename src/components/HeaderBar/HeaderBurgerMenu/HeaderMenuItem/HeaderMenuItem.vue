@@ -41,7 +41,7 @@
 	}
 
 	.header-menu-item:hover {
-		background-color: $primary-base;
+    background-color:  rgb(var(--v-theme-primary));
 		color: $neutral-white;
 
 		> :deep(a > *) {
