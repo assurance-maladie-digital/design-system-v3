@@ -1,16 +1,16 @@
-import { bootstrapColorsTokens } from './bootstrapColors'
+import { paColorsTokens } from './paColors'
 import { cnamColorsTokens } from '../cnam/cnamColors'
 import { cnamSemanticTokens } from '../cnam/cnamSemantic'
 
 // Pour l'utiilser cf : dev/main.ts -> a ajouter a la place des cnamColorsTokens
-export const bootstrapLightTheme = {
-	primary: bootstrapColorsTokens.amBlue.darken40,
-	secondary: bootstrapColorsTokens.pink.darken40,
-	accent: bootstrapColorsTokens.cyan.base,
-	error: bootstrapColorsTokens.brick.darken20,
-	info: bootstrapColorsTokens.amBlue.darken60,
-	success: bootstrapColorsTokens.green.lighten40,
-	warning: bootstrapColorsTokens.yellow.lighten90,
+export const paLightTheme = {
+	primary: paColorsTokens.amBlue.darken40,
+	secondary: paColorsTokens.pink.darken40,
+	accent: paColorsTokens.cyan.base,
+	error: paColorsTokens.brick.darken20,
+	info: paColorsTokens.amBlue.darken60,
+	success: paColorsTokens.green.lighten40,
+	warning: paColorsTokens.yellow.lighten90,
 	risquePro: cnamColorsTokens.brick.base,
 	light: cnamColorsTokens.grey.lighten60,
 	dark: cnamColorsTokens.grey.darken80,

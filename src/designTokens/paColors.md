@@ -1,4 +1,4 @@
-# Color Bootstrap Cnam Light
+# Color Palette Portail Agent Light
 
 ## Primary
 

@@ -20,7 +20,7 @@ const vuetify = createVuetify({
 				colors: {
 					...cnamLightTheme,
 					...cnamDarkTheme,
-					// ...bootstrapLightTheme,
+					// ...paLightTheme,
 				},
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
