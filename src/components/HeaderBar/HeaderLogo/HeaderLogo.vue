@@ -109,7 +109,7 @@
 	display: flex;
 	height: 52px;
 	align-items: center;
-	color: $primary-base;
+	color: rgb(var(--v-theme-primary));
 	line-height: 1.45;
 	font-family: Cabin, Arial, Helvetica, sans-serif;
 	text-decoration: none;
