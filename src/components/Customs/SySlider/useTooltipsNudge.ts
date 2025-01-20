@@ -32,8 +32,8 @@ export default function useTooltipsNudge(
 	async function calculateNudges() {
 		await nextTick()
 
-		const rectMin = placeholderMinThumb.value!.$el.getBoundingClientRect()
-		const rectMax = placeholderMaxThumb.value!.$el.getBoundingClientRect()
+		const rectMin = placeholderMinThumb.value!.element.getBoundingClientRect()
+		const rectMax = placeholderMaxThumb.value!.element.getBoundingClientRect()
 
 		const difference = rectMin.right - rectMax.left
 

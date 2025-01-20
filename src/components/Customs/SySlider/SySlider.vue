@@ -240,6 +240,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 
 <style lang="scss" scoped>
 @use "@/assets/tokens";
+$virtualThumbSize: 40px;
 
 .wrapper {
 	--sy-track-height: 4px;
@@ -252,8 +253,6 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 
 .track {
 	height: 32px;
-	// margin-left: calc(var(--sy-thumb-size) * -1);
-	// margin-right: calc(var(--sy-thumb-size) * -1);
 	cursor: pointer;
 
 	&::before {
@@ -275,8 +274,8 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 	top: 50%;
 	left: 0;
 	z-index: 2;
-	width: 40px;
-	height: 40px;
+	width: $virtualThumbSize;
+	height: $virtualThumbSize;
 	border-radius: 50%;
 	transition: left 0.1s;
 	will-change: left;
@@ -329,19 +328,23 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 	height: var(--sy-thumb-size);
 	background-color: tokens.$primary-base;
 	border-radius: 50%;
-	box-shadow: 0px 1px 5px 0px #0000001F;
-	box-shadow: 0px 2px 2px 0px #00000024;
-	box-shadow: 0px 3px 1px -2px #00000033;
+	box-shadow: 0px 1px 5px 0px #0000001F, 0px 2px 2px 0px #00000024, 0px 3px 1px -2px #00000033;
 }
 
 .thumb-min {
-	//transform: translate(var(--sy-track-height), -20px);
-	transform: translate(-30px, -50%);
+	transform: translate(
+		calc(
+			($virtualThumbSize / 2 + var(--sy-thumb-size) / 2) * -1
+		),
+		-50%
+	);
 }
 
 .thumb-max {
-	//transform: translate(calc(var(--sy-track-height) * -2), -20px);
-	transform: translate(-10px, -50%);
+	transform: translate(
+		calc((var(--sy-thumb-size) - $virtualThumbSize) / 2),
+		-50%
+	);
 }
 
 .filled-track {

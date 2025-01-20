@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, ref } from 'vue'
 
 	const props = withDefaults(defineProps<{
 		nudgeLeft?: number
@@ -14,6 +14,12 @@
 		return {
 			transform: `translateX(calc(-50% + ${Math.ceil(correction)}px))`,
 		}
+	})
+
+	const tooltip = ref<HTMLElement | null>(null)
+
+	defineExpose({
+		element: tooltip,
 	})
 </script>
 
