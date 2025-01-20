@@ -68,17 +68,20 @@ export default function useMouseSlide(
 			startX = pointerPositionX
 			return
 		}
+		const curStep = toValue(step)
+		const curValue = Math.round(toValue(currentValue) / curStep) * curStep
+
 		const trackRect = toValue(track).getBoundingClientRect()
 		const trackWidth = trackRect.width
 		const dx = pointerPositionX - startX
 
 		const percentChange = dx * 100 / trackWidth
-		const percentStep = toValue(step) * 100 / (toValue(rangeEnd) - toValue(rangeStart))
+		const percentStep = curStep * 100 / (toValue(rangeEnd) - toValue(rangeStart))
 		const stepsChange = Math.round(percentChange / percentStep)
 
-		const theoreticalTotalChange = stepsChange * toValue(step)
+		const theoreticalTotalChange = stepsChange * curStep
 		const theoreticalCurrentChange = theoreticalTotalChange - effectedChange
-		const theoreticalNewValue = toValue(currentValue) + theoreticalCurrentChange
+		const theoreticalNewValue = curValue + theoreticalCurrentChange
 
 		const clampedNewValue = clamp(
 			toValue(minSelectableValue),
@@ -86,7 +89,7 @@ export default function useMouseSlide(
 			toValue(maxSelectableValue),
 		)
 
-		const currentChange = clampedNewValue - toValue(currentValue)
+		const currentChange = clampedNewValue - curValue
 
 		if (currentChange === 0) {
 			return

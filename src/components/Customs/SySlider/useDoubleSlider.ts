@@ -29,75 +29,89 @@ export default function useDoubleSlider(
 	}
 
 	// if min change, the other values must be coherent
-	watch(() => toValue(min), (newVal) => {
-		newVal = Number(newVal)
+	watch(
+		() => toValue(min),
+		(newVal) => {
+			newVal = Number(newVal)
 
-		if (isNaN(newVal) || !isFinite(newVal)) {
-			return
-		}
-		if (newVal > range.rangeMax.value) {
-			return
-		}
-		// TODO: Normalize all the selected values for all the bounds
-		if (range.selectedMin.value < newVal) {
-			range.selectedMin.value = newVal
-		}
-		if (range.selectedMax.value < newVal) {
-			range.selectedMax.value = newVal
-		}
+			if (isNaN(newVal) || !isFinite(newVal)) {
+				return
+			}
+			if (newVal > range.rangeMax.value) {
+				return
+			}
+			if (range.selectedMin.value < newVal) {
+				range.selectedMin.value = newVal
+			}
+			if (range.selectedMax.value < newVal) {
+				range.selectedMax.value = newVal
+			}
 
-		range.rangeMin.value = newVal
-	})
+			range.rangeMin.value = newVal
+		},
+	)
 
 	// if max change, the other values must be coherent
-	watch(() => toValue(max), (newVal) => {
-		newVal = Number(newVal)
+	watch(
+		() => toValue(max),
+		(newVal) => {
+			newVal = Number(newVal)
 
-		if (isNaN(newVal) || !isFinite(newVal)) {
-			return
-		}
-		if (newVal < range.rangeMin.value) {
-			return
-		}
-		if (range.selectedMin.value > newVal) {
-			range.selectedMin.value = newVal
-		}
-		if (range.selectedMax.value > newVal) {
-			range.selectedMax.value = newVal
-		}
+			if (isNaN(newVal) || !isFinite(newVal)) {
+				return
+			}
+			if (newVal < range.rangeMin.value) {
+				return
+			}
+			if (range.selectedMin.value > newVal) {
+				range.selectedMin.value = newVal
+			}
+			if (range.selectedMax.value > newVal) {
+				range.selectedMax.value = newVal
+			}
 
-		range.rangeMax.value = newVal
-	})
+			range.rangeMax.value = newVal
+		},
+	)
 
-	watch(() => toValue(step), (newVal) => {
-		newVal = Number(newVal)
-		if (!isStepValid(newVal, range.rangeMin.value, range.rangeMax.value)) {
-			return
-		}
-		range.step.value = Math.abs(newVal)
-	})
+	watch(
+		() => toValue(step),
+		(newVal) => {
+			newVal = Number(newVal)
+			if (!isStepValid(newVal, range.rangeMin.value, range.rangeMax.value)) {
+				return
+			}
+			range.step.value = Math.abs(newVal)
+		},
+	)
 
 	// the selected values must be in the bounds and coherent
-	watch(() => toValue(value), (newVal) => {
-		const newValCasted = newVal.map(Number)
+	watch(
+		() => toValue(value),
+		(newVal) => {
+			const newValCasted = newVal.map(Number)
 
-		if (!isValidNumber(newValCasted[0]) || !isValidNumber(newValCasted[1])) {
-			return
-		}
-		if (newValCasted[0] > newValCasted[1]) {
-			return
-		}
-		if (newValCasted[0] < range.rangeMin.value) {
-			range.selectedMin.value = range.rangeMin.value
-		}
-		if (newValCasted[1] > range.rangeMax.value) {
-			range.selectedMax.value = range.rangeMax.value
-		}
-
-		// TODO: fix this bug
-		range.selectedMin.value = newValCasted[0]
-		range.selectedMax.value = newValCasted[1]
-	}, { immediate: true })
+			if (!isValidNumber(newValCasted[0]) || !isValidNumber(newValCasted[1])) {
+				return
+			}
+			if (newValCasted[0] > newValCasted[1]) {
+				return
+			}
+			if (newValCasted[0] < range.rangeMin.value) {
+				range.selectedMin.value = range.rangeMin.value
+			}
+			else {
+				range.selectedMin.value = newValCasted[0]
+			}
+			if (newValCasted[1] > range.rangeMax.value) {
+				range.selectedMax.value = range.rangeMax.value
+			}
+			else {
+				range.selectedMax.value = newValCasted[1]
+			}
+		},
+		{ immediate: true },
+	)
 
 	return range
 }
@@ -107,5 +121,7 @@ function isValidNumber(value: number) {
 }
 
 function isStepValid(step: number, rangeStart: number, rangeEnd: number) {
-	return !isNaN(step) && isFinite(step) && step != 0 && step <= rangeEnd - rangeStart
+	return (
+		!isNaN(step) && isFinite(step) && step != 0 && step <= rangeEnd - rangeStart
+	)
 }
