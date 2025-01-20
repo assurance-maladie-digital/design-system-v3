@@ -42,7 +42,7 @@ export const VuetifyPanel: StoryObj = {
 			template: `
 				<VSheet :elevation="1"  class="mt-6 pa-4">
 					<VRow cols="12" class="d-flex align-items justify-between ">
-						<VCol cols="6" sm="5" >
+						<VCol cols="12" sm="6" >
 							<v-combobox
 								:menu-props="menuProps"
 								variant="outlined"
@@ -74,7 +74,7 @@ export const VuetifyPanel: StoryObj = {
 				</VSheet>
 
 				<div style="display: flex; justify-content: center;" class="mt-12">
-					<v-card v-if="cardItem && itemValue !== 0 " style="width:80%;">
+					<v-card v-if="cardItem && itemValue !==0 " class="w-100 w-md-75">
 						<v-card-item>
 							<v-card-title>
 								<div style="align-items: center;display: flex;">
