@@ -40,126 +40,144 @@ export const VuetifyPanel: StoryObj = {
 				return { VuetifyItems, menuProps, items, itemsString, checkIcon, iconAlert, linkICon, itemValue, cardItem, activeBtnIndex, search, searchString }
 			},
 			template: `
-<div style="display:flex; justify-content:space-beetween;">
-			<VCol cols="12" sm="6" class="m-2 p-2 v-col-auto">
-			<p style="font-size: 13px;"><VIcon style="margin-right: 2px;" :icon="iconAlert" />  Composant non conforme par défaut.</p>
-			<p style="font-size: 13px;"><VIcon style="margin-right: 2px;" :icon="checkIcon" />  Composant conforme.</p>
- 			</VCol>
-
-			
-	<VCol cols="6" sm="5" class="m-2 ">
-	
-		<v-combobox
-		 	:menu-props="menuProps"
-			variant="outlined"
-              v-model="search"
-              clearable
-			  dense
-      		  :items="items"
-              item-value="value"
-	          item-title="text"
-	          :selected="search ? itemValue = search.value :  itemValue = 0"
-              label="Rechercher un composant"
-              hide-selected
-	          return-object >
-
-    	</v-combobox>
- 			</VCol>
-
- </div>
-
-<div style="display: flex;justify-content: center;">
-	 <v-card v-if="cardItem && itemValue !== 0 " style="width:80%;">
-    <v-card-item>
-      <v-card-title>
-	  <div style="align-items: center;display: flex;">
-	  <VIcon v-if="cardItem.errorImportants.length > 0 && cardItem.errorIndeterminated.length > 0" style="margin-right: 5px;font-size: 25px;" :icon="iconAlert"/>
-	<VIcon v-else style="margin-right: 5px;font-size: 25px;" :icon="checkIcon"/>
-
-       {{cardItem.name}}
-	  <div>
-
-      </v-card-title>
-
-    <v-card-text style="margin-top:20px;">
-	<v-expansion-panels multiple>
-
-					<v-expansion-panel>
-						<v-expansion-panel-title>Erreurs bloquantes
-						<v-btn variant="tonal" size="x-small" style="margin-left: 3px;font-size: 9px;" rounded> Tanaguru	</v-btn>
-						</v-expansion-panel-title>
-						<v-expansion-panel-text>
-						<div v-if="cardItem.errorImportants.length == 0">
-								<p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas d'erreur
-									d'accessibilité relevée à ce jour</p>
-							</div>	
-							<div v-for="item in cardItem.errorImportants" :key="index"
-								 style="width: 100% !important; font-size: 12px; line-height: 15px;">
-								<p style="margin-top: 5px; margin-bottom: 5px;">
-									<span style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
-									{{ item.replace(/[0-9.]/g, '') }}
-								</p>
-							</div>
-							<v-divider class="mt-4 mb-2" v-if="cardItem.errorImportants.length != 0" style="display: flex; justify-content:center"></v-divider>
-							<div style="display: flex;align-items: center;" v-if="cardItem.errorSolutionImportant && cardItem.errorSolutionImportant.length > 0">
-							<span style="line-height: 15px; font-weight: bold; margin-right:5px;">Recommandation : </span>
-							<div v-for="item in cardItem.errorSolutionImportant" :key="index"
-								style="line-height: 15px;">
-								<p style="margin-top: 5px; margin-bottom: 5px;">
-									<span> {{item}} </span>
-									
-								</p>
-							</div>
-							</div>
-						</v-expansion-panel-text>
-					</v-expansion-panel>   
-
-					<v-expansion-panel style="margin-top:10px;">
-						<v-expansion-panel-title>Erreurs indéterminées
-												<v-btn variant="tonal" size="x-small" style="margin-left: 3px;font-size: 9px;" rounded> Tanaguru	</v-btn>
-
-						</v-expansion-panel-title>
-						<v-expansion-panel-text>
-							<div v-if="cardItem.errorIndeterminated.length == 0">
-								<p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas d'erreur
-									d'accessibilité relevée à ce jour</p>
-							</div>	
-							<div v-for="item in cardItem.errorIndeterminated" :key="index" style="width: 100% !important; font-size: 12px; line-height: 15px;">
-
-							<p style="margin-top: 5px; margin-bottom: 5px;">
-									<span style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
-									{{ item.replace(/[0-9.]/g, '') }}
+				<VSheet :elevation="1"  class="mt-6 pa-4">
+					<VRow cols="12" class="d-flex align-items justify-between ">
+						<VCol cols="6" sm="5" >
+							<v-combobox
+								:menu-props="menuProps"
+								variant="outlined"
+								color="primary"
+								v-model="search"
+								clearable
+								dense
+								:items="items"
+								item-value="value"
+								item-title="text"
+								:selected="search ? itemValue = search.value :  itemValue = 0"
+								label="Rechercher un composant"
+								hide-selected
+								return-object 
+								style="margin-bottom: -20px"
+							/>
+						</VCol>
+						<VCol cols="12" sm="6" class="v-col-auto">
+							<p style="font-size: 13px;">
+								<VIcon style="margin-right: 2px;" :icon="iconAlert"/>
+								Composant non conforme par défaut.
 							</p>
-							</div>
+							<p style="font-size: 13px;">
+								<VIcon style="margin-right: 2px;" :icon="checkIcon"/>
+								Composant conforme.
+							</p>
+						</VCol>
+					</VRow>
+				</VSheet>
 
-							<v-divider  class="mt-4 mb-2" v-if="cardItem.errorIndeterminated.length != 0" style="display: flex; justify-content:center"></v-divider>
+				<div style="display: flex; justify-content: center;" class="mt-12">
+					<v-card v-if="cardItem && itemValue !== 0 " style="width:80%;">
+						<v-card-item>
+							<v-card-title>
+								<div style="align-items: center;display: flex;">
+									<VIcon
+										v-if="cardItem.errorImportants.length > 0 && cardItem.errorIndeterminated.length > 0"
+										style="margin-right: 5px;font-size: 25px;" :icon="iconAlert"/>
+									<VIcon v-else style="margin-right: 5px;font-size: 25px;" :icon="checkIcon"/>
 
-							<div style="align-items: center;" v-if="cardItem.errorSolutionIndeterminated && cardItem.errorSolutionIndeterminated.length > 0">
-							<span style="line-height: 15px; font-weight: bold; margin-right:5px;">Recommandation : </span>
-							<div v-for="item in cardItem.errorSolutionIndeterminated" :key="index"
-								style="line-height: 15px;">
-								<p style="margin-top: 5px; margin-bottom: 5px;">
-									<span> {{item}} </span>
-								</p>
-							</div>
-							</div>
-						</v-expansion-panel-text>
-					</v-expansion-panel>   
-	</v-expansion-panels>
+									{{ cardItem.name }}
+									</div>
+							</v-card-title>
 
-					</v-card-text>
-					 <v-card-actions>
-					 <p v-if="cardItem.solution.length > 0">Solution :</p>
-							<span v-for="(item, index) in cardItem.solution"
-								  style="display:flex; align-items: center; line-height: 15px; font-weight: bold">
+							<v-card-text style="margin-top:20px;">
+								<v-expansion-panels multiple>
+
+									<v-expansion-panel>
+										<v-expansion-panel-title>Erreurs bloquantes
+											<v-btn variant="tonal" size="x-small"
+												   style="margin-left: 3px;font-size: 9px;" rounded> Tanaguru
+											</v-btn>
+										</v-expansion-panel-title>
+										<v-expansion-panel-text>
+											<div v-if="cardItem.errorImportants.length == 0">
+												<p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas
+													d'erreur
+													d'accessibilité relevée à ce jour</p>
+											</div>
+											<div v-for="item in cardItem.errorImportants" :key="index"
+												 style="width: 100% !important; font-size: 12px; line-height: 15px;">
+												<p style="margin-top: 5px; margin-bottom: 5px;">
+													<span
+														style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
+													{{ item.replace(/[0-9.]/g, '') }}
+												</p>
+											</div>
+											<v-divider class="mt-4 mb-2" v-if="cardItem.errorImportants.length != 0"
+													   style="display: flex; justify-content:center"></v-divider>
+											<div style="display: flex;align-items: center;"
+												 v-if="cardItem.errorSolutionImportant && cardItem.errorSolutionImportant.length > 0">
+												<span style="line-height: 15px; font-weight: bold; margin-right:5px;">Recommandation : </span>
+												<div v-for="item in cardItem.errorSolutionImportant" :key="index"
+													 style="line-height: 15px;">
+													<p style="margin-top: 5px; margin-bottom: 5px;">
+														<span> {{ item }} </span>
+
+													</p>
+												</div>
+											</div>
+										</v-expansion-panel-text>
+									</v-expansion-panel>
+
+									<v-expansion-panel style="margin-top:10px;">
+										<v-expansion-panel-title>Erreurs indéterminées
+											<v-btn variant="tonal" size="x-small"
+												   style="margin-left: 3px;font-size: 9px;" rounded> Tanaguru
+											</v-btn>
+
+										</v-expansion-panel-title>
+										<v-expansion-panel-text>
+											<div v-if="cardItem.errorIndeterminated.length == 0">
+												<p style="margin-top: 5px; margin-bottom: 5px; font-size: 12px;">Pas
+													d'erreur
+													d'accessibilité relevée à ce jour</p>
+											</div>
+											<div v-for="item in cardItem.errorIndeterminated" :key="index"
+												 style="width: 100% !important; font-size: 12px; line-height: 15px;">
+
+												<p style="margin-top: 5px; margin-bottom: 5px;">
+													<span
+														style="font-weight: bold;">{{ item.match('[0-9.]+')?.join('') || '' }} </span>
+													{{ item.replace(/[0-9.]/g, '') }}
+												</p>
+											</div>
+
+											<v-divider class="mt-4 mb-2" v-if="cardItem.errorIndeterminated.length != 0" style="display: flex; justify-content:center" />
+
+											<div style="align-items: center;"
+												 v-if="cardItem.errorSolutionIndeterminated && cardItem.errorSolutionIndeterminated.length > 0">
+												<span style="line-height: 15px; font-weight: bold; margin-right:5px;">Recommandation : </span>
+												<div v-for="item in cardItem.errorSolutionIndeterminated" :key="index"
+													 style="line-height: 15px;">
+													<p style="margin-top: 5px; margin-bottom: 5px;">
+														<span> {{ item }} </span>
+													</p>
+												</div>
+											</div>
+										</v-expansion-panel-text>
+									</v-expansion-panel>
+								</v-expansion-panels>
+
+							</v-card-text>
+							<v-card-actions>
+								<p v-if="cardItem.solution.length > 0">Solution :</p>
+								<span v-for="(item, index) in cardItem.solution"
+									  style="display:flex; align-items: center; line-height: 15px; font-weight: bold">
 								{{ item.name }} <a :href="item.href" v-if="item.href">
 								<VBtn color="primary" style="margin-left: 5px;" :icon="linkICon" size="small"
 									  variant="text"/></a>
 							</span>
-    </v-card-actions>
-  </v-card>			
-
-			</div>
+							</v-card-actions>
+						</v-card-item>
+					</v-card>
+				</div>
 			`,
 		}
 	},
@@ -188,7 +206,6 @@ export const Legende: StoryObj = {
                 </VCol>
             
               </VRow>
-			 
             `,
 		}
 	},
