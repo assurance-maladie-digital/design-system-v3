@@ -40,7 +40,7 @@ describe('useThumbKeyboard', () => {
 				plugins: [vuetify],
 			},
 			props: {
-				step: 9,
+				step: 5,
 			},
 		})
 
@@ -49,7 +49,7 @@ describe('useThumbKeyboard', () => {
 		})
 
 		expect(setValue).toHaveBeenCalledTimes(1)
-		expect(setValue).toHaveBeenCalledWith(41)
+		expect(setValue).toHaveBeenCalledWith(45)
 	})
 
 	it('should handle ArrowDown key', async () => {
@@ -58,7 +58,7 @@ describe('useThumbKeyboard', () => {
 				plugins: [vuetify],
 			},
 			props: {
-				step: 9,
+				step: 5,
 			},
 		})
 
@@ -67,7 +67,7 @@ describe('useThumbKeyboard', () => {
 		})
 
 		expect(setValue).toHaveBeenCalledTimes(1)
-		expect(setValue).toHaveBeenCalledWith(41)
+		expect(setValue).toHaveBeenCalledWith(45)
 	})
 
 	it('should handle ArrowRight key', async () => {
@@ -76,7 +76,7 @@ describe('useThumbKeyboard', () => {
 				plugins: [vuetify],
 			},
 			props: {
-				step: 9,
+				step: 5,
 			},
 		})
 
@@ -85,7 +85,7 @@ describe('useThumbKeyboard', () => {
 		})
 
 		expect(setValue).toHaveBeenCalledTimes(1)
-		expect(setValue).toHaveBeenCalledWith(59)
+		expect(setValue).toHaveBeenCalledWith(55)
 	})
 
 	it('should handle ArrowUp key', async () => {
@@ -94,7 +94,7 @@ describe('useThumbKeyboard', () => {
 				plugins: [vuetify],
 			},
 			props: {
-				step: 9,
+				step: 5,
 			},
 		})
 
@@ -103,7 +103,24 @@ describe('useThumbKeyboard', () => {
 		})
 
 		expect(setValue).toHaveBeenCalledTimes(1)
-		expect(setValue).toHaveBeenCalledWith(59)
+		expect(setValue).toHaveBeenCalledWith(55)
+	})
+
+	it('should set a value that is a multiple of the step', async () => {
+		const wrapper = mount(TestComponent, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				step: 6,
+			},
+		})
+
+		await wrapper.find('div.thumb').trigger('keydown', {
+			key: 'ArrowRight',
+		})
+
+		expect(setValue).toHaveBeenCalledWith(54)
 	})
 
 	it('should handle Home key', async () => {
