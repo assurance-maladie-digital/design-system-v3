@@ -112,9 +112,10 @@
 
 <style lang="scss" scoped>
 .v-list {
-  background: transparent;
+	background: transparent;
 }
+
 .vd-search-list .v-list-item--active::before {
-  opacity: 0;
+	opacity: 0;
 }
 </style>
