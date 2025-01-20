@@ -25,14 +25,19 @@ export default function useThumbKeyboard(
 	function handleKeyDown(event: KeyboardEvent) {
 		if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
 			event.preventDefault()
-			const newValue = toValue(value) - toValue(step)
+			const curStep = toValue(step)
+			const curValue = normalizePositionByStep(toValue(value), curStep)
+
+			const newValue = curValue - curStep
 			if (newValue >= toValue(minSelectableValue)) {
 				setValue(newValue)
 			}
 		}
 		else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
 			event.preventDefault()
-			const newValue = toValue(value) + toValue(step)
+			const curStep = toValue(step)
+			const curValue = normalizePositionByStep(toValue(value), curStep)
+			const newValue = curValue + curStep
 			if (newValue <= toValue(maxSelectableValue)) {
 				setValue(newValue)
 			}
@@ -47,7 +52,10 @@ export default function useThumbKeyboard(
 		}
 		else if (event.key === 'PageDown') {
 			event.preventDefault()
-			const newValue = toValue(value) - toValue(step) * 10
+			const curStep = toValue(step)
+			const curValue = normalizePositionByStep(toValue(value), curStep)
+
+			const newValue = curValue - curStep * 10
 			if (newValue >= toValue(minSelectableValue)) {
 				setValue(newValue)
 			}
@@ -57,7 +65,10 @@ export default function useThumbKeyboard(
 		}
 		else if (event.key === 'PageUp') {
 			event.preventDefault()
-			const newValue = toValue(value) + toValue(step) * 10
+			const curStep = toValue(step)
+			const curValue = normalizePositionByStep(toValue(value), curStep)
+
+			const newValue = curValue + curStep * 10
 			if (newValue <= toValue(maxSelectableValue)) {
 				setValue(newValue)
 			}
@@ -66,4 +77,8 @@ export default function useThumbKeyboard(
 			}
 		}
 	}
+}
+
+function normalizePositionByStep(position: number, step: number) {
+	return Math.round(position / step) * step
 }
