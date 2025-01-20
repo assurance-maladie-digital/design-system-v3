@@ -11,6 +11,8 @@ export const cnamLightTheme = {
 	success: cnamColorsTokens.turquoise.darken60,
 	warning: cnamColorsTokens.yellow.darken60,
 	risquePro: cnamColorsTokens.brick.base,
+	light: cnamColorsTokens.grey.lighten60,
+	dark: cnamColorsTokens.grey.darken80,
 	onBackground: cnamSemanticTokens.colors.background.surface,
 	onSurfaceAlt: cnamSemanticTokens.colors.background.surfaceAlt,
 	onSurface: cnamSemanticTokens.colors.background.surface,
