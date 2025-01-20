@@ -1,9 +1,9 @@
-function addClass(el: MouseEvent) {
+function addClass(el: MouseEvent | TouchEvent) {
 	if (!(el.currentTarget instanceof HTMLElement)) return
 	el.currentTarget.classList.add('animate-click')
 }
 
-function removeClass(el: MouseEvent) {
+function removeClass(el: MouseEvent | TouchEvent) {
 	if (!(el.currentTarget instanceof HTMLElement)) return
 	el.currentTarget.classList.remove('animate-click')
 }
@@ -13,10 +13,9 @@ export const vAnimateClick = {
 		el.addEventListener('mousedown', addClass)
 		el.addEventListener('mouseup', removeClass)
 		el.addEventListener('mouseleave', removeClass)
-	},
-	beforeUnmounted: (el: HTMLElement) => {
-		el.removeEventListener('mousedown', addClass)
-		el.removeEventListener('mouseup', removeClass)
-		el.removeEventListener('mouseleave', removeClass)
+
+		el.addEventListener('touchstart', addClass)
+		el.addEventListener('touchend', removeClass)
+		el.addEventListener('touchcancel', removeClass)
 	},
 }

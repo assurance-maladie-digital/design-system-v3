@@ -31,34 +31,46 @@ export default function useMouseSlide(
 
 	onMounted(() => {
 		toValue(thumb).addEventListener('mousedown', startDrag)
+		toValue(thumb).addEventListener('touchstart', startDrag)
 	})
 
 	function startDrag() {
 		inProgress.value = true
 		document.addEventListener('mousemove', drag)
 		document.addEventListener('mouseup', stopDrag)
+
+		document.addEventListener('touchmove', drag)
+		document.addEventListener('touchend', stopDrag)
+		document.addEventListener('touchcancel', stopDrag)
 	}
 
 	function stopDrag() {
 		document.removeEventListener('mousemove', drag)
 		document.removeEventListener('mouseup', stopDrag)
+
+		document.removeEventListener('touchmove', drag)
+		document.removeEventListener('touchend', stopDrag)
+		document.removeEventListener('touchcancel', stopDrag)
+
 		effectedChange = 0
 		startX = null
 
+		// avoid click on track after dragging
 		setTimeout(() => {
 			inProgress.value = false
 		}, 100)
 	}
 
-	function drag(event: MouseEvent) {
+	function drag(event: MouseEvent | TouchEvent) {
 		event.stopPropagation()
+		const pointerPositionX = ('touches' in event) ? event.touches[0].clientX : event.clientX
 		if (startX === null) {
-			startX = event.clientX
+			startX = pointerPositionX
 			return
 		}
 		const trackRect = toValue(track).getBoundingClientRect()
 		const trackWidth = trackRect.width
-		const dx = event.clientX - startX
+		const dx = pointerPositionX - startX
 
 		const percentChange = dx * 100 / trackWidth
 		const percentStep = toValue(step) * 100 / (toValue(rangeEnd) - toValue(rangeStart))

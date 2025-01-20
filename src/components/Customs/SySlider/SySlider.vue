@@ -1,16 +1,17 @@
 // @see
 https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/examples/slider-multithumb/
-// @see
 https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
 
 <script setup lang="ts">
 	import { computed, ref, toRef, watch, type Ref } from 'vue'
+	import Tooltip from './tooltip/Tooltip.vue'
 	import useDoubleSlider from './useDoubleSlider'
 	import useMouseSlide from './useMouseSlide'
 	import useThumb from './useThumb'
 	import useThumbKeyboard from './useThumbKeyboard'
 	import useTrack from './useTrack'
 	import { vAnimateClick } from './vAnimateClick'
+	import useTooltipsNudge from './useTooltipsNudge'
 
 	const props = withDefaults(
 		defineProps<{
@@ -130,6 +131,22 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 		(value: number) => range.selectedMax.value = value,
 	)
 
+	const hiddenTooltipMin = ref<typeof Tooltip | null>(null)
+	const hiddenTooltipMax = ref<typeof Tooltip | null>(null)
+	const tooltipMin = ref<typeof Tooltip | null>(null)
+	const tooltipMax = ref<typeof Tooltip | null>(null)
+
+	const {
+		nudgeMinThumb,
+		nudgeMaxThumb,
+	} = useTooltipsNudge(
+		tooltipMin,
+		tooltipMax,
+		hiddenTooltipMin,
+		hiddenTooltipMax,
+		range,
+	)
+
 	watch(() => [range.selectedMin.value, range.selectedMax.value], (value) => {
 		if (
 			value[0] !== Number(props.modelValue[0])
@@ -138,6 +155,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 			emits('update:modelValue', value)
 		}
 	})
+
 </script>
 
 <template>
@@ -160,6 +178,12 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				:aria-label="minLabel"
 				:title="minLabel"
 			>
+				<Tooltip
+					ref="tooltipMin"
+					:nudge-right="nudgeMinThumb"
+				>
+					{{ range.selectedMin.value }}
+				</Tooltip>
 				<span class="inner-thumb" />
 			</button>
 			<button
@@ -176,8 +200,36 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				:aria-label="maxLabel"
 				:title="maxLabel"
 			>
+				<Tooltip
+					ref="tooltipMax"
+					:nudge-left="nudgeMaxThumb"
+				>
+					{{ range.selectedMax.value }}
+				</Tooltip>
 				<span class="inner-thumb" />
 			</button>
+			<div
+				class="fakeThumb thumb-min"
+				aria-hidden
+				:style="thumbMinStyle"
+			>
+				<Tooltip
+					ref="hiddenTooltipMin"
+				>
+					{{ range.selectedMin.value }}
+				</Tooltip>
+			</div>
+			<div
+				class="fakeThumb thumb-max"
+				aria-hidden
+				:style="thumbMaxStyle"
+			>
+				<Tooltip
+					ref="hiddenTooltipMax"
+				>
+					{{ range.selectedMax.value }}
+				</Tooltip>
+			</div>
 			<div
 				class="filled-track"
 				:style="filledTrackStyle"
@@ -227,6 +279,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 	height: 40px;
 	border-radius: 50%;
 	transition: left 0.1s;
+	will-change: left;
 
 	&::before {
 		content: "";
@@ -276,6 +329,9 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 	height: var(--sy-thumb-size);
 	background-color: tokens.$primary-base;
 	border-radius: 50%;
+	box-shadow: 0px 1px 5px 0px #0000001F;
+	box-shadow: 0px 2px 2px 0px #00000024;
+	box-shadow: 0px 3px 1px -2px #00000033;
 }
 
 .thumb-min {
@@ -303,5 +359,13 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 	transform: scale(2);
 	opacity: 0.4;
 	transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+}
+
+.fakeThumb {
+	visibility: hidden;
+	transition: none !important;
+	cursor: default;
+	z-index: -1;
+	user-select: none;
 }
 </style>

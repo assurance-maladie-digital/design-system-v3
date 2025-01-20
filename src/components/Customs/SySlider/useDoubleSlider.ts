@@ -1,5 +1,6 @@
 import { ref, watch, toValue, type MaybeRef } from 'vue'
 
+// TODO: Find a better name for this function
 /**
  * Handle the incoming values for a range slider.
  *
@@ -37,6 +38,7 @@ export default function useDoubleSlider(
 		if (newVal > range.rangeMax.value) {
 			return
 		}
+		// TODO: Normalize all the selected values for all the bounds
 		if (range.selectedMin.value < newVal) {
 			range.selectedMin.value = newVal
 		}
@@ -92,6 +94,7 @@ export default function useDoubleSlider(
 			range.selectedMax.value = range.rangeMax.value
 		}
 
+		// TODO: fix this bug
 		range.selectedMin.value = newValCasted[0]
 		range.selectedMax.value = newValCasted[1]
 	}, { immediate: true })
