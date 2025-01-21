@@ -107,7 +107,7 @@
 				:value="item.value"
 				role="option"
 				:aria-selected="internalValue.includes(item.value)"
-				:aria-labelledby="`search-list-item-label-${index}`"
+				:aria-labelledby="`search-list-item-${index}`"
 				:tabindex="0"
 				active-class="text-primary"
 				class="d-flex align-center justify-start"
@@ -123,11 +123,13 @@
 						<input
 							:id="`checkbox-${index}`"
 							type="checkbox"
+							role="option"
 							:checked="isActive"
+							:aria-selected="isActive"
 							:aria-label="`${locales.checkboxLabel} ${item.label}`"
+							:aria-labelledby="`checkbox-${index}`"
 							:title="`${locales.checkboxLabel} ${item.label}`"
-							class="custom-checkbox"
-							@change="$emit('update:modelValue', !isActive)"
+							class="custom-checkbox ml-2"
 						>
 						<!-- eslint-disable-next-line  vuejs-accessibility/label-has-for -->
 						<label
@@ -146,11 +148,41 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/tokens';
+
 .v-list {
 	background: transparent;
 }
 
 .vd-search-list .v-list-item--active::before {
 	opacity: 0;
+}
+
+.custom-checkbox {
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #ccc;
+	border-radius: 2px;
+	outline: none;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.custom-checkbox:checked {
+	background-color: tokens.$primary-base !important;
+	border-color: tokens.$primary-base !important;
+
+	&::before {
+		content: '\2713';
+		display: block;
+		text-align: center;
+		line-height: 15px;
+		color: #fff;
+	}
+}
+
+.custom-checkbox:hover {
+	border-color: tokens.$primary-darker !important;
 }
 </style>
