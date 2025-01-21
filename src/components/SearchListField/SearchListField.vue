@@ -5,6 +5,8 @@
 	import type { SearchListItem } from './types'
 	import { locales } from './locales'
 
+	import { SyTextField } from '@/components'
+
 	const props = defineProps({
 		modelValue: {
 			type: Array as PropType<unknown[]>,
@@ -13,6 +15,10 @@
 		items: {
 			type: Array as PropType<SearchListItem[]>,
 			default: () => [],
+		},
+		outlined: {
+			type: Boolean,
+			default: true,
 		},
 	})
 
@@ -45,62 +51,91 @@
 </script>
 
 <template>
-	<div
-		class="vd-search-list"
-		role="search"
-		aria-labelledby="search-list-title"
-	>
-		<VTextField
-			v-model="search"
+	<div class="vd-search-list">
+		<SyTextField
+			:model-value="search"
 			:label="locales.search"
-			:aria-label="locales.search"
-			:title="locales.search"
+			aria-describedby="search-description"
+			aria-labelledby="search-label"
 			hide-details
-			role="combobox"
-			aria-expanded="true"
-			aria-controls="filtered-list"
-			variant="outlined"
 			color="primary"
+			:variant="outlined ? 'outlined' : 'underlined'"
 			clearable
+			tabindex="0"
 		>
 			<template #prepend-inner>
 				<VIcon class="mr-1">
 					{{ searchIcon }}
 				</VIcon>
 			</template>
-		</VTextField>
+		</SyTextField>
+
+		<!-- eslint-disable-next-line  vuejs-accessibility/label-has-for -->
+		<label
+			id="search-label"
+			class="d-sr-only"
+		>
+			{{ locales.search }}
+		</label>
+		<span
+			id="search-description"
+			class="d-sr-only"
+		>
+			{{ locales.search }}
+		</span>
 
 		<VList
+			id="search-list"
 			v-model:selected="internalValue"
+			title="search-list"
 			select-strategy="classic"
 			class="pb-0"
 			role="listbox"
-			aria-labelledby="search-list"
+			aria-labelledby="search-list-title"
 			@update:selected="emitChangeEvent"
 		>
+			<h2
+				id="search-list-title"
+				class="d-sr-only"
+			>
+				{{ locales.searchListTitle }}
+			</h2>
 			<VListItem
 				v-for="(item, index) in filteredItems"
+				:id="`search-list-item-${index}`"
 				:key="index"
 				:value="item.value"
-				role="menuitem"
+				role="option"
+				:aria-selected="internalValue.includes(item.value)"
+				:aria-labelledby="`search-list-item-label-${index}`"
 				:tabindex="0"
 				active-class="text-primary"
 				class="d-flex align-center justify-start"
-				:aria-selected="internalValue.includes(item.value)"
-				:aria-label="item.label"
 			>
+				<span
+					:id="`search-list-item-label-${index}`"
+					class="d-sr-only"
+				>
+					{{ item.label }}
+				</span>
 				<template #prepend="{ isActive }">
 					<VListItemAction start>
-						<VCheckboxBtn
-							:model-value="isActive"
+						<input
+							:id="`checkbox-${index}`"
+							type="checkbox"
+							:checked="isActive"
 							:aria-label="`${locales.checkboxLabel} ${item.label}`"
+							:title="`${locales.checkboxLabel} ${item.label}`"
+							class="custom-checkbox"
+							@change="$emit('update:modelValue', !isActive)"
 						>
-							<template #label>
-								<span class="d-sr-only">
-									{{ locales.checkboxLabel }}
-								</span>
-							</template>
-						</VCheckboxBtn>
+						<!-- eslint-disable-next-line  vuejs-accessibility/label-has-for -->
+						<label
+							:for="`checkbox-${index}`"
+							class="d-sr-only"
+						>
+							{{ locales.checkboxLabel }}
+						</label>
 					</VListItemAction>
 
 					<VListItemTitle>{{ item.label }}</VListItemTitle>

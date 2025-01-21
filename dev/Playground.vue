@@ -39,10 +39,12 @@
 </script>
 
 <template>
-	<SearchListField
-		:items="items"
-		@update:model-value="($event) => selectChoice($event)"
-	/>
-	<br>
-	<pre>Selected: {{ value }}</pre>
+	<main>
+		<SearchListField
+			:items="items"
+			@update:model-value="($event) => selectChoice($event)"
+		/>
+		<br>
+		<pre>Selected: {{ value }}</pre>
+	</main>
 </template>
