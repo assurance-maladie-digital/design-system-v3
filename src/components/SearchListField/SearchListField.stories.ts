@@ -4,23 +4,20 @@ import SearchListField from './SearchListField.vue'
 const meta = {
 	title: 'Composants/Formulaires/SearchListField',
 	component: SearchListField,
+	parameters: {
+		layout: 'fullscreen',
+		controls: { exclude: ['filteredItems', 'search', 'emitChangeEvent'] },
+	},
 	decorators: [
 		() => ({
 			template: '<div style="padding: 20px;"><story/></div>',
 		}),
 	],
-	parameters: {
-		layout: 'fullscreen',
-	},
 	argTypes: {
-		// props
-		'modelValue': {
-			control: { type: 'text' },
-			default: '[ ]',
+		modelValue: {
+			default: '[]',
 		},
-		'items': { control: { type: 'object' } },
-		// events
-		'update:modelValue': { action: 'update:modelValue' },
+		items: { control: { type: 'object' } },
 	},
 } satisfies Meta<typeof SearchListField>
 
@@ -33,7 +30,7 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
 	args: {
-		modelValue: '',
+		modelValue: [],
 		items: [
 			{
 				label: 'Chirurgien-dentiste',

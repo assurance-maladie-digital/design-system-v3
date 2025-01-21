@@ -48,6 +48,12 @@
 	const emitChangeEvent = (value: unknown[]) => {
 		emit('update:modelValue', value)
 	}
+
+	defineExpose({
+		filteredItems,
+		search,
+		emitChangeEvent,
+	})
 </script>
 
 <template>
@@ -162,7 +168,7 @@
 	appearance: none;
 	width: 20px;
 	height: 20px;
-	border: 2px solid #ccc;
+	border: 2px solid rgba(0, 0, 0, .5);
 	border-radius: 2px;
 	outline: none;
 	cursor: pointer;
