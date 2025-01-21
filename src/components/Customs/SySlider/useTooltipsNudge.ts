@@ -32,16 +32,37 @@ export default function useTooltipsNudge(
 	async function calculateNudges() {
 		await nextTick()
 
-		const rectMin = placeholderMinThumb.value!.element.getBoundingClientRect()
-		const rectMax = placeholderMaxThumb.value!.element.getBoundingClientRect()
+		const rectMin: DOMRect = placeholderMinThumb.value!.element.getBoundingClientRect()
+		const rectMax: DOMRect = placeholderMaxThumb.value!.element.getBoundingClientRect()
 
-		const difference = rectMin.right - rectMax.left
+		const tooltipsOverlaps = rectMin.right - rectMax.left
 
-		if (difference >= 0) {
-			const nudge = Math.ceil(difference / 2) + 1
+		if (tooltipsOverlaps >= 0) {
+			const tooltipArrowWidth = 12
 
-			nudgeMinThumb.value = nudge
-			nudgeMaxThumb.value = nudge
+			const minOverflow = rectMin.width / 2 - tooltipArrowWidth
+			const maxOverflow = rectMax.width / 2 - tooltipArrowWidth
+
+			const overflowDiff = Math.abs(minOverflow - maxOverflow)
+
+			let nudgeMin = 0, nudgeMax = 0
+
+			if (minOverflow > maxOverflow) {
+				nudgeMin = Math.min(tooltipsOverlaps, overflowDiff)
+			}
+			else {
+				nudgeMax = Math.min(tooltipsOverlaps, overflowDiff)
+			}
+
+			if (tooltipsOverlaps > overflowDiff) {
+				const residualDifference = tooltipsOverlaps - overflowDiff
+				const gap = Math.ceil(residualDifference / 2)
+				nudgeMin += gap
+				nudgeMax += gap
+			}
+
+			nudgeMinThumb.value = nudgeMin + 1
+			nudgeMaxThumb.value = nudgeMax + 1
 		}
 		else {
 			nudgeMinThumb.value = 0
