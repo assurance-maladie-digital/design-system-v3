@@ -168,7 +168,7 @@
 	appearance: none;
 	width: 20px;
 	height: 20px;
-	border: 2px solid rgba(0, 0, 0, .5);
+	border: 2px solid rgb(0 0 0 / 50%);
 	border-radius: 2px;
 	outline: none;
 	cursor: pointer;
