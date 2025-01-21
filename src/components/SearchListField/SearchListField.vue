@@ -53,7 +53,7 @@
 <template>
 	<div class="vd-search-list">
 		<SyTextField
-			:model-value="search"
+			v-model="search"
 			:label="locales.search"
 			aria-describedby="search-description"
 			aria-labelledby="search-label"
@@ -110,7 +110,7 @@
 				:aria-labelledby="`search-list-item-${index}`"
 				:tabindex="0"
 				active-class="text-primary"
-				class="d-flex align-center justify-start"
+				class="d-flex align-center justify-start mx-4"
 			>
 				<span
 					:id="`search-list-item-label-${index}`"

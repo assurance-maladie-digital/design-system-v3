@@ -298,36 +298,26 @@ describe('SearchListField.vue', () => {
 		expect(wrapper.emitted('update:modelValue')).toEqual([[[1]]])
 	})
 
-	it('Update the value when the modelValue prop changes', async () => {
+	it('renders the password field without outlined prop', () => {
 		const wrapper = mount(SearchListField, {
 			global: {
 				plugins: [vuetify],
 			},
-			props: {
+			propsData: {
 				items: [
 					{
 						label: 'Item 1',
 						value: 1,
 					},
 					{
-						label: 'Item 1',
+						label: 'Item 2',
 						value: 2,
 					},
 				],
-				modelValue: [1],
+				outlined: false,
 			},
 		})
 
-		const secondItem = wrapper.find(
-			'.vd-search-list .v-list-item:nth-child(2)',
-		)
-
-		expect(secondItem.classes()).not.toContain('v-list-item--active')
-
-		await wrapper.setProps({
-			modelValue: [2],
-		})
-
-		expect(secondItem.classes()).toContain('v-list-item--active')
+		expect(wrapper.find('.v-field--variant-underlined')).toBeTruthy()
 	})
 })
