@@ -1,11 +1,9 @@
 function addClass(el: MouseEvent | TouchEvent) {
-	if (!(el.currentTarget instanceof HTMLElement)) return
-	el.currentTarget.classList.add('animate-click')
+	(el.currentTarget as HTMLElement).classList.add('animate-click')
 }
 
 function removeClass(el: MouseEvent | TouchEvent) {
-	if (!(el.currentTarget instanceof HTMLElement)) return
-	el.currentTarget.classList.remove('animate-click')
+	(el.currentTarget as HTMLElement).classList.remove('animate-click')
 }
 
 export const vAnimateClick = {
