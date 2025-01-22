@@ -1,0 +1,35 @@
+import {Canvas, Meta, Controls, Source} from '@storybook/blocks';
+import * as RatingPickerStories from './RatingPicker.stories.js';
+import RatingPicker from './RatingPicker.vue';
+
+<Meta title="Composants/Formulaires/RatingPicker" component={RatingPicker}/>
+
+# RatingPicker
+
+L’élément `RatingPicker` permet de recueillir l’avis d’un utilisateur.
+
+<Canvas story={{height: '150px'}} of={RatingPickerStories.Default}/>
+
+# API
+
+<Controls of={RatingPickerStories.Default}/>
+
+## Utilisation de base
+
+    <Source
+        dark
+        code={`
+<script setup lang="ts">
+    import { ref } from 'vue'
+    import { RatingPicker } from '@cnamts/synapse'
+
+    const rating = ref(0)
+</script>
+
+    <template>
+        <RatingPicker v-model="rating" />
+    </template>
+`}
+/>
+
+

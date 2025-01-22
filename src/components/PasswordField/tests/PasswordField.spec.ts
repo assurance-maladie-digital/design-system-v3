@@ -11,7 +11,7 @@ interface PasswordFieldVM {
 	validateOnSubmit: () => boolean
 }
 
-describe('PasswordField.vue', () => {
+describe('RatingPicker.vue', () => {
 	let vuetify
 
 	beforeEach(() => {
