@@ -4,7 +4,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 
 <script setup lang="ts">
 	import { computed, ref, toRef, watch, type Ref } from 'vue'
-	import Tooltip from './tooltip/Tooltip.vue'
+	import Tooltip from './Tooltip/Tooltip.vue'
 	import useDoubleSlider from './useRangeSlider'
 	import useMouseSlide from './useMouseSlide'
 	import useThumb from './useThumb'
@@ -170,7 +170,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				class="thumb-min"
 				:style="thumbMinStyle"
 				role="slider"
-				:aria-valuenow="range.rangeMin.value"
+				:aria-valuenow="range.selectedMin.value"
 				tabindex="0"
 				:aria-valuemin="range.rangeMin.value"
 				:aria-valuemax="range.selectedMax.value"
@@ -192,7 +192,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				role="slider"
 				class="thumb-max"
 				:style="thumbMaxStyle"
-				:aria-valuenow="range.rangeMax.value"
+				:aria-valuenow="range.selectedMax.value"
 				tabindex="0"
 				:aria-valuemin="range.selectedMin.value"
 				:aria-valuemax="range.rangeMax.value"
