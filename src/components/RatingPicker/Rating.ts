@@ -1,5 +1,4 @@
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import { defineComponent, computed, type PropType } from 'vue'
 
 export interface RatingInterface {
 	emitInputEvent(event: string | number): void
@@ -38,9 +37,18 @@ export const Rating = defineComponent({
 		},
 	},
 	emits: ['update:modelValue'],
-	methods: {
-		emitInputEvent(value: string | number): void {
-			this.$emit('update:modelValue', value)
-		},
+	setup(props, { emit }) {
+		const hasAnswered = computed(() => props.modelValue !== -1)
+
+		function emitInputEvent(value: string | number): void {
+			if (!props.readonly) {
+				emit('update:modelValue', value)
+			}
+		}
+
+		return {
+			hasAnswered,
+			emitInputEvent,
+		}
 	},
 })

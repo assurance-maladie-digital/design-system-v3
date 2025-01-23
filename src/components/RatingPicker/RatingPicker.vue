@@ -1,9 +1,11 @@
 <script setup lang="ts">
 	import { type PropType, defineProps, defineEmits, computed, ref } from 'vue'
+
 	import EmotionPicker from './EmotionPicker/EmotionPicker.vue'
 	import NumberPicker from './NumberPicker/NumberPicker.vue'
 	import StarsPicker from './StarsPicker/StarsPicker.vue'
 	import SyAlert from '@/components/SyAlert/SyAlert.vue'
+
 	import { RATING_ENUM_VALUES, RatingEnum, AlertTypeEnum } from './Rating'
 	import { propValidator } from '@/utils/propValidator'
 	import { locales } from './locales'
@@ -42,7 +44,6 @@
 
 	const emit = defineEmits(['update:modelValue'])
 
-	const localesRef = ref(locales)
 	const alertTypeEnumRef = ref(AlertTypeEnum)
 	const internalValue = ref(-1)
 	const displayAdditionalContent = ref(false)
@@ -90,11 +91,11 @@
 	<div class="vd-rating-picker">
 		<component
 			:is="ratingComponent"
+			:model-value="internalValue"
 			:label="props.label"
 			:length="length"
 			:readonly="props.readonly"
 			:item-labels="props.itemLabels || undefined"
-			:model-value="internalValue"
 			@update:model-value="setValue"
 		>
 			<template #label>
@@ -112,7 +113,7 @@
 				:type="alertTypeEnumRef.SUCCESS"
 				class="mt-4"
 			>
-				{{ localesRef.thanks }}
+				{{ locales.thanks }}
 			</SyAlert>
 
 			<slot v-if="displayAdditionalContent" />
