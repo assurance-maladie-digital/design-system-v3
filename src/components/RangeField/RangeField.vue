@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { vMaska } from 'maska/vue'
 	import { ref, watch } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import RangeSlider from './RangeSlider/RangeSlider.vue'
@@ -24,8 +25,8 @@
 		default: [0, 0],
 	})
 
-	const fieldMin = ref(model.value[0])
-	const fieldMax = ref(model.value[1])
+	const fieldMin = ref<string | number>(model.value[0])
+	const fieldMax = ref<string | number>(model.value[1])
 
 	watch(model, (value) => {
 		const start = clamp(value[0]), end = clamp(value[1])
@@ -41,6 +42,16 @@
 
 	const display = useDisplay()
 
+	const mask = {
+		tokens: {
+			'N': { pattern: /-/, optional: true },
+			'n': { pattern: /\d/, multiple: true, optional: true },
+			'.': { pattern: /\./, optional: true },
+			'd': { pattern: /\d/, multiple: true, optional: true },
+		},
+		mask: 'Nn.d',
+	}
+
 	function clamp(value: number | string) {
 		value = Math.round(Number(value))
 		if (isNaN(value)) return props.min
@@ -48,6 +59,9 @@
 	}
 
 	function updateMin(value: string) {
+		if (value === '') {
+			return
+		}
 		const newValue = Number(value)
 		if (
 			!isNaN(newValue)
@@ -60,6 +74,9 @@
 	}
 
 	function updateMax(value: string) {
+		if (value === '') {
+			return
+		}
 		const newValue = Number(value)
 		if (
 			!isNaN(newValue)
@@ -86,7 +103,7 @@
 
 <template>
 	<div class="vd-range-field">
-		<div class="mt-8 mb-2 mx-3">
+		<div class="mt-10 mb-2 mx-3">
 			<RangeSlider
 				:model-value="model"
 				:max="max"
@@ -102,23 +119,27 @@
 		>
 			<VTextField
 				v-model="fieldMin"
+				v-maska="mask"
 				v-bind="options.textField"
 				:label="locales.minLabel"
+				:aria-label="locales.minLabel"
 				inputmode="numeric"
 				color="primary"
-				title="locales.minLabel"
+				:title="locales.minLabel"
 				@update:model-value="updateMin"
-				@focused="validateMin"
+				@update:focused="validateMin"
 			/>
 			<VTextField
 				v-model="fieldMax"
+				v-maska="mask"
 				v-bind="options.textField"
-				color="primary"
 				:label="locales.maxLabel"
+				:aria-label="locales.maxLabel"
 				inputmode="numeric"
-				title="locales.maxLabel"
+				color="primary"
+				:title="locales.maxLabel"
 				@update:model-value="updateMax"
-				@focused="validateMax"
+				@update:focused="validateMax"
 			/>
 		</div>
 	</div>

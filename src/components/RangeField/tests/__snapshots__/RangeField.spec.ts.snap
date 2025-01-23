@@ -1,15 +1,37 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RangeField > renders correctly 1`] = `
+exports[`RangeField > render correcly when the modelValue is not defined 1`] = `
 "<div class="vd-range-field">
-  <div class="d-flex flex-wrap max-width-none ma-n3">
-    <div class="v-input v-input--horizontal v-input--density-default v-theme--light v-locale--is-ltr v-input--dirty v-text-field v-input--plain-underlined ma-3">
-      <div class="v-input__prepend">
-        <!--v-if-->
-        <!---->
+  <div class="mt-10 mb-2 mx-3">
+    <div data-v-cfbfc2ef="" class="wrapper mt-8 mb-2">
+      <div data-v-cfbfc2ef="" class="track"><button data-v-cfbfc2ef="" class="thumb-min" style="left: 0%;" role="slider" aria-valuenow="0" tabindex="0" aria-valuemin="0" aria-valuemax="0" aria-orientation="horizontal" aria-label="Minimum" title="Minimum">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">0</div>
+          </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
+        </button><button data-v-cfbfc2ef="" role="slider" class="thumb-max" style="left: 0%;" aria-valuenow="0" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-orientation="horizontal" aria-label="Maximum" title="Maximum">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">0</div>
+          </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
+        </button>
+        <div data-v-cfbfc2ef="" class="fakeThumb thumb-min" aria-hidden="" style="left: 0%;">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
+          </div>
+        </div>
+        <div data-v-cfbfc2ef="" class="fakeThumb thumb-max" aria-hidden="" style="left: 0%;">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
+          </div>
+        </div>
+        <div data-v-cfbfc2ef="" class="filled-track" style="left: 0%; width: 0%;"></div>
       </div>
+    </div>
+  </div>
+  <div class="d-flex flex-wrap max-width-none">
+    <div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-input--dirty v-text-field ma-3">
+      <!---->
       <div class="v-input__control">
-        <div class="v-field v-field--active v-field--appended v-field--dirty v-field--prepended v-field--variant-underlined v-theme--light v-locale--is-ltr">
+        <div class="v-field v-field--active v-field--center-affix v-field--dirty v-field--variant-outlined v-theme--light v-locale--is-ltr">
           <div class="v-field__overlay"></div>
           <div class="v-field__loader">
             <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
@@ -25,35 +47,27 @@ exports[`RangeField > renders correctly 1`] = `
               <!---->
             </div>
           </div>
-          <div class="v-field__prepend-inner">
-            <!---->
-            <!--v-if-->
-            <!--v-if-->
-          </div>
+          <!---->
           <div class="v-field__field" data-no-activator="">
             <!----><label class="v-label v-field-label" for="input-0">
               <!---->Valeur min
             </label>
-            <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" aria-label="Valeur min" inputmode="numeric" title="locales.minLabel" class="v-field__input" value="50">
+            <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" aria-label="Valeur min" inputmode="numeric" title="Valeur min" class="v-field__input" value="0">
             <!---->
           </div>
           <!---->
-          <div class="v-field__append-inner">
-            <!--v-if-->
-            <!--v-if-->
-            <!---->
-          </div>
+          <!---->
           <div class="v-field__outline">
-            <!----><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-0">
-              <!---->Valeur min
-            </label>
+            <div class="v-field__outline__start"></div>
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-0">
+                <!---->Valeur min
+              </label></div>
+            <div class="v-field__outline__end"></div>
+            <!---->
           </div>
         </div>
       </div>
-      <div class="v-input__append">
-        <!---->
-        <!--v-if-->
-      </div>
+      <!---->
       <div class="v-input__details">
         <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
           <!---->
@@ -61,13 +75,10 @@ exports[`RangeField > renders correctly 1`] = `
         <!---->
       </div>
     </div>
-    <div class="v-input v-input--horizontal v-input--density-default v-theme--light v-locale--is-ltr v-input--dirty v-text-field v-input--plain-underlined ma-3">
-      <div class="v-input__prepend">
-        <!--v-if-->
-        <!---->
-      </div>
+    <div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-input--dirty v-text-field ma-3">
+      <!---->
       <div class="v-input__control">
-        <div class="v-field v-field--active v-field--appended v-field--dirty v-field--prepended v-field--variant-underlined v-theme--light v-locale--is-ltr">
+        <div class="v-field v-field--active v-field--center-affix v-field--dirty v-field--variant-outlined v-theme--light v-locale--is-ltr">
           <div class="v-field__overlay"></div>
           <div class="v-field__loader">
             <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
@@ -83,35 +94,27 @@ exports[`RangeField > renders correctly 1`] = `
               <!---->
             </div>
           </div>
-          <div class="v-field__prepend-inner">
-            <!---->
-            <!--v-if-->
-            <!--v-if-->
-          </div>
+          <!---->
           <div class="v-field__field" data-no-activator="">
             <!----><label class="v-label v-field-label" for="input-2">
               <!---->Valeur max
             </label>
-            <!----><input size="1" type="text" id="input-2" aria-describedby="input-2-messages" aria-label="Valeur max" inputmode="numeric" title="locales.maxLabel" class="v-field__input" value="80">
+            <!----><input size="1" type="text" id="input-2" aria-describedby="input-2-messages" aria-label="Valeur max" inputmode="numeric" title="Valeur max" class="v-field__input" value="0">
             <!---->
           </div>
           <!---->
-          <div class="v-field__append-inner">
-            <!--v-if-->
-            <!--v-if-->
-            <!---->
-          </div>
+          <!---->
           <div class="v-field__outline">
-            <!----><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-2">
-              <!---->Valeur max
-            </label>
+            <div class="v-field__outline__start"></div>
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-2">
+                <!---->Valeur max
+              </label></div>
+            <div class="v-field__outline__end"></div>
+            <!---->
           </div>
         </div>
       </div>
-      <div class="v-input__append">
-        <!---->
-        <!--v-if-->
-      </div>
+      <!---->
       <div class="v-input__details">
         <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-2-messages">
           <!---->
@@ -120,50 +123,256 @@ exports[`RangeField > renders correctly 1`] = `
       </div>
     </div>
   </div>
-  <div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-input--dirty v-slider v-range-slider v-locale--is-ltr align-center mt-2 mb-6">
-    <div class="v-input__prepend">
-      <!---->0
-      <!---->
-    </div>
-    <div class="v-input__control">
-      <div class="v-slider__container"><input id="input-4_start" name="input-4" tabindex="-1" value="50"><input id="input-4_stop" name="input-4" tabindex="-1" value="80">
-        <div class="v-slider-track" style="--v-slider-track-size: 4px; --v-slider-tick-size: 2px;">
-          <div class="v-slider-track__background bg-primary v-slider-track__background--opacity" style="inset-inline-start: 0%; width: 100%;"></div>
-          <div class="v-slider-track__fill bg-primary" style="inset-inline-start: 50%; width: 30%;"></div>
-          <!---->
+</div>"
+`;
+
+exports[`RangeField > renders correctly 1`] = `
+"<div class="vd-range-field">
+  <div class="mt-10 mb-2 mx-3">
+    <div data-v-cfbfc2ef="" class="wrapper mt-8 mb-2">
+      <div data-v-cfbfc2ef="" class="track"><button data-v-cfbfc2ef="" class="thumb-min" style="left: 50%;" role="slider" aria-valuenow="50" tabindex="0" aria-valuemin="0" aria-valuemax="80" aria-orientation="horizontal" aria-label="Minimum" title="Minimum">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">50</div>
+          </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
+        </button><button data-v-cfbfc2ef="" role="slider" class="thumb-max" style="left: 80%;" aria-valuenow="80" tabindex="0" aria-valuemin="50" aria-valuemax="100" aria-orientation="horizontal" aria-label="Maximum" title="Maximum">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">80</div>
+          </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
+        </button>
+        <div data-v-cfbfc2ef="" class="fakeThumb thumb-min" aria-hidden="" style="left: 50%;">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">50</div>
+          </div>
         </div>
-        <div class="v-slider-thumb v-slider-thumb--focused v-locale--is-ltr" style="--v-slider-thumb-position: 50%; --v-slider-thumb-size: 20px;" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="80" aria-valuenow="50" aria-readonly="false" aria-orientation="horizontal" aria-describedby="input-4-messages">
-          <div class="v-slider-thumb__surface text-primary elevation-2"></div>
-          <div class="v-slider-thumb__ripple text-primary"></div>
-          <transition-stub name="scale-transition" appear="false" persisted="false" css="true">
-            <div class="v-slider-thumb__label-container" style="display: none;">
-              <div class="v-slider-thumb__label">
-                <div>50</div>
-              </div>
-            </div>
-          </transition-stub>
+        <div data-v-cfbfc2ef="" class="fakeThumb thumb-max" aria-hidden="" style="left: 80%;">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">80</div>
+          </div>
         </div>
-        <div class="v-slider-thumb v-slider-thumb--focused v-locale--is-ltr" style="--v-slider-thumb-position: 80%; --v-slider-thumb-size: 20px;" role="slider" tabindex="0" aria-valuemin="50" aria-valuemax="100" aria-valuenow="80" aria-readonly="false" aria-orientation="horizontal" aria-describedby="input-4-messages">
-          <div class="v-slider-thumb__surface text-primary elevation-2"></div>
-          <div class="v-slider-thumb__ripple text-primary"></div>
-          <transition-stub name="scale-transition" appear="false" persisted="false" css="true">
-            <div class="v-slider-thumb__label-container" style="display: none;">
-              <div class="v-slider-thumb__label">
-                <div>80</div>
-              </div>
-            </div>
-          </transition-stub>
-        </div>
+        <div data-v-cfbfc2ef="" class="filled-track" style="left: 50%; width: 30%;"></div>
       </div>
     </div>
-    <div class="v-input__append">
-      <!---->100
-    </div>
-    <div class="v-input__details">
-      <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-4-messages">
-        <!---->
-      </transition-group-stub>
+  </div>
+  <div class="d-flex flex-wrap max-width-none">
+    <div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-input--dirty v-text-field ma-3">
       <!---->
+      <div class="v-input__control">
+        <div class="v-field v-field--active v-field--center-affix v-field--dirty v-field--variant-outlined v-theme--light v-locale--is-ltr">
+          <div class="v-field__overlay"></div>
+          <div class="v-field__loader">
+            <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+              <!---->
+              <div class="v-progress-linear__background bg-primary" style="opacity: NaN;"></div>
+              <div class="v-progress-linear__buffer bg-primary" style="opacity: NaN; width: 0%;"></div>
+              <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+                <div class="v-progress-linear__indeterminate">
+                  <div class="v-progress-linear__indeterminate long bg-primary"></div>
+                  <div class="v-progress-linear__indeterminate short bg-primary"></div>
+                </div>
+              </transition-stub>
+              <!---->
+            </div>
+          </div>
+          <!---->
+          <div class="v-field__field" data-no-activator="">
+            <!----><label class="v-label v-field-label" for="input-0">
+              <!---->Valeur min
+            </label>
+            <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" aria-label="Valeur min" inputmode="numeric" title="Valeur min" class="v-field__input" value="50">
+            <!---->
+          </div>
+          <!---->
+          <!---->
+          <div class="v-field__outline">
+            <div class="v-field__outline__start"></div>
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-0">
+                <!---->Valeur min
+              </label></div>
+            <div class="v-field__outline__end"></div>
+            <!---->
+          </div>
+        </div>
+      </div>
+      <!---->
+      <div class="v-input__details">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
+          <!---->
+        </transition-group-stub>
+        <!---->
+      </div>
+    </div>
+    <div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-input--dirty v-text-field ma-3">
+      <!---->
+      <div class="v-input__control">
+        <div class="v-field v-field--active v-field--center-affix v-field--dirty v-field--variant-outlined v-theme--light v-locale--is-ltr">
+          <div class="v-field__overlay"></div>
+          <div class="v-field__loader">
+            <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+              <!---->
+              <div class="v-progress-linear__background bg-primary" style="opacity: NaN;"></div>
+              <div class="v-progress-linear__buffer bg-primary" style="opacity: NaN; width: 0%;"></div>
+              <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+                <div class="v-progress-linear__indeterminate">
+                  <div class="v-progress-linear__indeterminate long bg-primary"></div>
+                  <div class="v-progress-linear__indeterminate short bg-primary"></div>
+                </div>
+              </transition-stub>
+              <!---->
+            </div>
+          </div>
+          <!---->
+          <div class="v-field__field" data-no-activator="">
+            <!----><label class="v-label v-field-label" for="input-2">
+              <!---->Valeur max
+            </label>
+            <!----><input size="1" type="text" id="input-2" aria-describedby="input-2-messages" aria-label="Valeur max" inputmode="numeric" title="Valeur max" class="v-field__input" value="80">
+            <!---->
+          </div>
+          <!---->
+          <!---->
+          <div class="v-field__outline">
+            <div class="v-field__outline__start"></div>
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-2">
+                <!---->Valeur max
+              </label></div>
+            <div class="v-field__outline__end"></div>
+            <!---->
+          </div>
+        </div>
+      </div>
+      <!---->
+      <div class="v-input__details">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-2-messages">
+          <!---->
+        </transition-group-stub>
+        <!---->
+      </div>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`RangeField > renders correctly with value NaN 1`] = `
+"<div class="vd-range-field">
+  <div class="mt-10 mb-2 mx-3">
+    <div data-v-cfbfc2ef="" class="wrapper mt-8 mb-2">
+      <div data-v-cfbfc2ef="" class="track"><button data-v-cfbfc2ef="" class="thumb-min" style="left: 0%;" role="slider" aria-valuenow="0" tabindex="0" aria-valuemin="0" aria-valuemax="0" aria-orientation="horizontal" aria-label="Minimum" title="Minimum">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">0</div>
+          </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
+        </button><button data-v-cfbfc2ef="" role="slider" class="thumb-max" style="left: 0%;" aria-valuenow="0" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-orientation="horizontal" aria-label="Maximum" title="Maximum">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">0</div>
+          </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
+        </button>
+        <div data-v-cfbfc2ef="" class="fakeThumb thumb-min" aria-hidden="" style="left: 0%;">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
+          </div>
+        </div>
+        <div data-v-cfbfc2ef="" class="fakeThumb thumb-max" aria-hidden="" style="left: 0%;">
+          <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+            <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
+          </div>
+        </div>
+        <div data-v-cfbfc2ef="" class="filled-track" style="left: 0%; width: 0%;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex flex-wrap max-width-none">
+    <div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-input--dirty v-text-field ma-3">
+      <!---->
+      <div class="v-input__control">
+        <div class="v-field v-field--active v-field--center-affix v-field--dirty v-field--variant-outlined v-theme--light v-locale--is-ltr">
+          <div class="v-field__overlay"></div>
+          <div class="v-field__loader">
+            <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+              <!---->
+              <div class="v-progress-linear__background bg-primary" style="opacity: NaN;"></div>
+              <div class="v-progress-linear__buffer bg-primary" style="opacity: NaN; width: 0%;"></div>
+              <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+                <div class="v-progress-linear__indeterminate">
+                  <div class="v-progress-linear__indeterminate long bg-primary"></div>
+                  <div class="v-progress-linear__indeterminate short bg-primary"></div>
+                </div>
+              </transition-stub>
+              <!---->
+            </div>
+          </div>
+          <!---->
+          <div class="v-field__field" data-no-activator="">
+            <!----><label class="v-label v-field-label" for="input-0">
+              <!---->Valeur min
+            </label>
+            <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" aria-label="Valeur min" inputmode="numeric" title="Valeur min" class="v-field__input" value="0">
+            <!---->
+          </div>
+          <!---->
+          <!---->
+          <div class="v-field__outline">
+            <div class="v-field__outline__start"></div>
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-0">
+                <!---->Valeur min
+              </label></div>
+            <div class="v-field__outline__end"></div>
+            <!---->
+          </div>
+        </div>
+      </div>
+      <!---->
+      <div class="v-input__details">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
+          <!---->
+        </transition-group-stub>
+        <!---->
+      </div>
+    </div>
+    <div class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-input--dirty v-text-field ma-3">
+      <!---->
+      <div class="v-input__control">
+        <div class="v-field v-field--active v-field--center-affix v-field--dirty v-field--variant-outlined v-theme--light v-locale--is-ltr">
+          <div class="v-field__overlay"></div>
+          <div class="v-field__loader">
+            <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+              <!---->
+              <div class="v-progress-linear__background bg-primary" style="opacity: NaN;"></div>
+              <div class="v-progress-linear__buffer bg-primary" style="opacity: NaN; width: 0%;"></div>
+              <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+                <div class="v-progress-linear__indeterminate">
+                  <div class="v-progress-linear__indeterminate long bg-primary"></div>
+                  <div class="v-progress-linear__indeterminate short bg-primary"></div>
+                </div>
+              </transition-stub>
+              <!---->
+            </div>
+          </div>
+          <!---->
+          <div class="v-field__field" data-no-activator="">
+            <!----><label class="v-label v-field-label" for="input-2">
+              <!---->Valeur max
+            </label>
+            <!----><input size="1" type="text" id="input-2" aria-describedby="input-2-messages" aria-label="Valeur max" inputmode="numeric" title="Valeur max" class="v-field__input" value="0">
+            <!---->
+          </div>
+          <!---->
+          <!---->
+          <div class="v-field__outline">
+            <div class="v-field__outline__start"></div>
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-2">
+                <!---->Valeur max
+              </label></div>
+            <div class="v-field__outline__end"></div>
+            <!---->
+          </div>
+        </div>
+      </div>
+      <!---->
+      <div class="v-input__details">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-2-messages">
+          <!---->
+        </transition-group-stub>
+        <!---->
+      </div>
     </div>
   </div>
 </div>"
