@@ -2,7 +2,6 @@ import { vuetify } from '@tests/unit/setup'
 import { DOMWrapper, mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import RangeField from '../RangeField.vue'
-import RangeSlider from '../RangeSlider/RangeSlider.vue'
 
 describe('RangeField', () => {
 	it('renders correctly', () => {
