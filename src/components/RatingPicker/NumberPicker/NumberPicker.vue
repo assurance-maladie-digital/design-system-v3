@@ -129,9 +129,10 @@
 
 <style lang="scss" scoped>
 .vd-number-picker {
-  border: 0;
+	border: 0;
 }
+
 .vd-btn-answer.v-btn.v-btn--disabled {
-  opacity: 1;
+	opacity: 1;
 }
 </style>

@@ -79,16 +79,19 @@
 @use '@/assets/tokens';
 
 .vd-stars-picker {
-  border: 0;
+	border: 0;
 }
+
 .v-rating .v-icon {
-  width: 52px !important;
-  height: 36px !important;
-  &--disabled.blue--text {
-    color: tokens.$blue-base !important;
-  }
-  &--disabled.blue-lighten-60--text {
-    color: tokens.$blue-lighten-60 !important;
-  }
+	width: 52px !important;
+	height: 36px !important;
+
+	&--disabled.blue--text {
+		color: tokens.$blue-base !important;
+	}
+
+	&--disabled.blue-lighten-60--text {
+		color: tokens.$blue-lighten-60 !important;
+	}
 }
 </style>
