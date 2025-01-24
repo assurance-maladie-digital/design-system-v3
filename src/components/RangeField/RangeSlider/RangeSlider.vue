@@ -209,7 +209,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				<span class="inner-thumb" />
 			</button>
 			<div
-				class="fakeThumb thumb-min"
+				class="fake-thumb thumb-min"
 				aria-hidden
 				:style="thumbMinStyle"
 			>
