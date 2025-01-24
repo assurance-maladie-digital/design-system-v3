@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-	import { ref, computed, defineProps, defineEmits } from 'vue'
-	import { Rating } from '../Rating'
+	import { computed, defineProps, defineEmits } from 'vue'
+	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import type { PropType } from 'vue'
 
@@ -12,6 +12,10 @@
 	}
 
 	const props = defineProps({
+		label: {
+			type: String as PropType<string | null>,
+			default: RatingEnum.NUMBER,
+		},
 		length: {
 			type: Number,
 			default: 10,
@@ -20,12 +24,21 @@
 			type: Array as PropType<string[]>,
 			default: () => [],
 		},
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		modelValue: {
+			type: Number,
+			default: -1,
+		},
 	})
 
 	const { smAndDown } = useDisplay()
 	const isMobile = computed(() => smAndDown.value)
 
 	const emit = defineEmits(['update:modelValue'])
+	const { hasAnswered } = useRating(props, emit)
 
 	const selectItems = computed<SelectItem[]>(() => {
 		return [...Array(props.length)].map((_, index) => ({
@@ -35,10 +48,6 @@
 	})
 
 	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
-
-	const hasAnswered = computed(() => modelValue.value !== -1)
-
-	const modelValue = ref(-1)
 </script>
 
 <template>
@@ -46,8 +55,8 @@
 		<VSelect
 			v-if="isMobile"
 			:model-value="modelValue === -1 ? null : modelValue"
-			:label="Rating.label ?? ''"
-			:disabled="Rating.readonly || hasAnswered"
+			:label="props.label"
+			:disabled="props.readonly || hasAnswered"
 			:items="selectItems"
 			hide-details
 			variant="outlined"
@@ -57,7 +66,7 @@
 		<template v-else>
 			<legend class="text-h6 mb-6">
 				<slot name="label">
-					{{ Rating.label }}
+					{{ props.label }}
 				</slot>
 			</legend>
 			<div
@@ -67,14 +76,14 @@
 				<VRating
 					:model-value="modelValue"
 					:length="props.length"
-					:readonly="Rating.readonly || hasAnswered"
+					:readonly="props.readonly || hasAnswered"
 					class="d-flex flex-wrap max-width-none"
 					@update:model-value="(value) => emit('update:modelValue', value)"
 				>
 					<template #item="{ index }">
 						<VBtn
 							:aria-label="locales.ariaLabel(index + 1, props.length)"
-							:disabled="Rating.readonly"
+							:disabled="props.readonly"
 							size="x-small"
 							variant="outlined"
 							color="primary"

@@ -1,4 +1,4 @@
-import { defineComponent, computed, type PropType } from 'vue'
+import { ref, computed } from 'vue'
 
 export interface RatingInterface {
 	emitInputEvent(event: string | number): void
@@ -21,34 +21,25 @@ export enum AlertTypeEnum {
 
 export const ALERT_TYPE_ENUM_VALUES = Object.values(AlertTypeEnum)
 
-export const Rating = defineComponent({
-	props: {
-		label: {
-			type: String as PropType<string | null>,
-			default: null,
-		},
-		readonly: {
-			type: Boolean,
-			default: false,
-		},
-		modelValue: {
-			type: Number,
-			default: -1,
-		},
-	},
-	emits: ['update:modelValue'],
-	setup(props, { emit }) {
-		const hasAnswered = computed(() => props.modelValue !== -1)
+export function useRating(props: {
+	label: string | null
+	readonly: boolean
+	modelValue: number
+}, emit: (event: 'update:modelValue', value: number) => void) {
+	const internalValue = ref<number>(props.modelValue)
 
-		function emitInputEvent(value: string | number): void {
-			if (!props.readonly) {
-				emit('update:modelValue', value)
-			}
-		}
+	const hasAnswered = computed(() => internalValue.value !== -1)
 
-		return {
-			hasAnswered,
-			emitInputEvent,
+	function emitInputEvent(value: string | number): void {
+		if (!props.readonly) {
+			internalValue.value = typeof value === 'number' ? value : parseInt(value, 10)
+			emit('update:modelValue', internalValue.value) // Emit the updated value
 		}
-	},
-})
+	}
+
+	return {
+		internalValue,
+		hasAnswered,
+		emitInputEvent,
+	}
+}

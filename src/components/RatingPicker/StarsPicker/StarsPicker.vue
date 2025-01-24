@@ -1,34 +1,41 @@
 <script lang="ts" setup>
-	import { ref, computed, defineProps, defineEmits } from 'vue'
-	import { Rating } from '../Rating'
+	import { ref, defineProps, defineEmits, type PropType } from 'vue'
+	import { RatingEnum, useRating } from '../Rating'
 	import { mdiStarOutline, mdiStar } from '@mdi/js'
 
 	const props = defineProps({
+		label: {
+			type: String as PropType<string | null>,
+			default: RatingEnum.STARS,
+		},
 		length: {
 			type: Number,
 			default: 5,
 		},
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		modelValue: {
+			type: Number,
+			default: -1,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
+	const { hasAnswered } = useRating(props, emit)
 
 	const starOutlineIcon = mdiStarOutline
 	const starIcon = mdiStar
 	const hoverIndex = ref(-1)
 
-	const hasAnswered = computed(() => {
-		return modelValue.value !== -1
-	})
-
-	const modelValue = ref(-1)
-
 	function isActive(index: number): boolean {
-		return modelValue.value - 1 === index
+		return props.modelValue - 1 === index
 	}
 
 	function isFilled(index: number): boolean {
 		const isHovered = hoverIndex.value >= index
-		const isActive = modelValue.value - 1 >= index
+		const isActive = props.modelValue - 1 >= index
 		return isHovered || isActive
 	}
 </script>
@@ -37,21 +44,20 @@
 	<fieldset class="vd-stars-picker">
 		<legend class="text-h6 mb-6">
 			<slot name="label">
-				{{ Rating.label }}
+				{{ props.label }}
 			</slot>
 		</legend>
 
 		<VRating
 			:model-value="modelValue"
 			:length="props.length"
-			:readonly="Rating.readonly || hasAnswered"
+			:readonly="props.readonly || hasAnswered"
 			class="d-flex flex-wrap max-width-none mx-n3"
 			@update:model-value="(value) => emit('update:modelValue', value)"
 		>
 			<template #item="{ index }">
-				<!-- Using click event on VIcon will convert it into a button -->
 				<button
-					:disabled="Rating.readonly"
+					:disabled="props.readonly"
 					:aria-pressed="isActive(index)"
 					@mouseover="hoverIndex.value = index"
 					@focus="hoverIndex.value = index"

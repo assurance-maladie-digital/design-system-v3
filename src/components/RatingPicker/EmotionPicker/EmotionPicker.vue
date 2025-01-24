@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { type PropType, defineProps, computed, defineEmits } from 'vue'
-	import { Rating } from '../Rating'
+	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import { propValidator } from '@/utils/propValidator'
 	import {
@@ -14,6 +14,10 @@
 	const isMobile = computed(() => smAndDown.value)
 
 	const props = defineProps({
+		label: {
+			type: String as PropType<string | null>,
+			default: RatingEnum.EMOTION,
+		},
 		length: {
 			type: Number,
 			default: 3,
@@ -22,6 +26,14 @@
 		itemLabels: {
 			type: Array as PropType<string[]>,
 			default: () => locales.defaultEmotionLabels,
+		},
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		modelValue: {
+			type: Number,
+			default: -1,
 		},
 	})
 
@@ -33,12 +45,11 @@
 		return isMobile.value ? '70px' : '88px'
 	})
 
-	const hasAnswered = computed(() => Rating.modelValue !== -1)
-
 	const emit = defineEmits(['update:modelValue'])
+	const { hasAnswered, emitInputEvent } = useRating(props, emit)
 
 	const isActive = (index: number) => {
-		return index === Rating.modelValue - 1
+		return index === props.modelValue - 1
 	}
 
 	const getIcon = (index: number) => {
@@ -73,30 +84,27 @@
 	<fieldset class="vd-emotion-picker">
 		<legend class="text-h6 mb-6">
 			<slot name="label">
-				{{ Rating.label }}
+				{{ props.label }}
 			</slot>
 		</legend>
 
-		{{ Rating.modelValue }}
-
 		<VRating
-			:model-value="Rating.modelValue"
+			:model-value="props.modelValue"
 			:length="props.length"
-			:readonly="Rating.readonly"
+			:readonly="props.readonly"
 			class="max-width-none mx-n1 mx-sm-n2"
 			@update:model-value="(value) => emit('update:modelValue', value)"
 		>
 			<template #item="{ index }">
-				{{ hasAnswered }}
 				<VBtn
-					:disabled="Rating.readonly || hasAnswered"
+					:disabled="props.readonly || hasAnswered"
 					:aria-pressed="isActive(index).toString()"
 					:class="[getColor(index), { 'v-btn--active': isActive(index) }]"
 					:min-height="btnSize"
 					:min-width="btnSize"
 					variant="text"
 					class="rounded-lg px-1 px-sm-4 mx-1 mx-sm-2"
-					@click="Rating.emitInputEvent(index + 1)"
+					@click="emitInputEvent(index + 1)"
 				>
 					<VIcon
 						size="40"
