@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RangeField > render correcly when the modelValue is not defined 1`] = `
+exports[`RangeField > render correctly when the modelValue is not defined 1`] = `
 "<div class="vd-range-field">
   <div class="mt-10 mb-2 mx-3">
     <div data-v-cfbfc2ef="" class="wrapper mt-8 mb-2">
@@ -18,7 +18,7 @@ exports[`RangeField > render correcly when the modelValue is not defined 1`] = `
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
           </div>
         </div>
-        <div data-v-cfbfc2ef="" class="fakeThumb thumb-max" aria-hidden="" style="left: 0%;">
+        <div data-v-cfbfc2ef="" class="fake-thumb thumb-max" aria-hidden="" style="left: 0%;">
           <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
           </div>
@@ -144,7 +144,7 @@ exports[`RangeField > renders correctly 1`] = `
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">50</div>
           </div>
         </div>
-        <div data-v-cfbfc2ef="" class="fakeThumb thumb-max" aria-hidden="" style="left: 80%;">
+        <div data-v-cfbfc2ef="" class="fake-thumb thumb-max" aria-hidden="" style="left: 80%;">
           <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">80</div>
           </div>
@@ -270,7 +270,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
           </div>
         </div>
-        <div data-v-cfbfc2ef="" class="fakeThumb thumb-max" aria-hidden="" style="left: 0%;">
+        <div data-v-cfbfc2ef="" class="fake-thumb thumb-max" aria-hidden="" style="left: 0%;">
           <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
           </div>
