@@ -23,6 +23,15 @@ const meta = {
 				},
 			},
 		},
+		'step': {
+			control: 'number',
+			description: 'Le pas du slider',
+			table: {
+				type: {
+					summary: 'number',
+				},
+			},
+		},
 		'modelValue': {
 			control: 'object',
 			description: 'Valeur du champ',
@@ -57,11 +66,6 @@ const meta = {
 							class: 'ma-3',
 							variant: 'outlined',
 						},
-						rangeSlider: {
-							hideDetails: true,
-							class: 'align-center mt-2 mb-6',
-							step: 1,
-						},
 					}`,
 				},
 				type: {
@@ -69,7 +73,6 @@ const meta = {
 					detail: `
 					{
 	textField?: Record<string, any>,
-	rangeSlider?: Record<string, any>,
 }
 					`,
 				},
@@ -144,9 +147,6 @@ export const Customization: Story = {
 			textField: {
 				variant: 'plain',
 			},
-			rangeSlider: {
-				step: 5,
-			},
 		},
 	},
 	parameters: {
@@ -168,9 +168,6 @@ export const Customization: Story = {
 	const vuetifyOptions = {
 		textField: {
 			variant: 'plain',
-		},
-		rangeSlider: {
-			step: 5,
 		},
 	}
 	const range = ref([0, 100])
