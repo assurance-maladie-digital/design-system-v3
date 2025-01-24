@@ -4,7 +4,7 @@ import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/component
 import { ref } from 'vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 
-const meta = {
+const meta: Meta<typeof SySelect> = {
 	title: 'Composants/Formulaires/SySelect',
 	component: SySelect,
 	parameters: {
