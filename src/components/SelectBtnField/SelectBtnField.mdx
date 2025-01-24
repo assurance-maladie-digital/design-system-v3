@@ -1,0 +1,53 @@
+import {Controls, Canvas, Meta, Source, Story} from '@storybook/blocks';
+
+import * as SelectBtnFieldStories from './SelectBtnField.stories';
+
+<Meta of={SelectBtnFieldStories} />
+
+# SelectBtnField
+
+Le composant `SelectBtnField` est utilisé pour permettre à l’utilisateur de sélectionner une valeur dans une liste.
+
+
+<Canvas of={SelectBtnFieldStories.Default}  />
+
+## API
+
+<Controls of={SelectBtnFieldStories.Default} />
+
+## Multiple
+
+Vous pouvez permettre à l’utilisateur de sélectionner plusieurs valeurs en utilisant la prop multiple.
+<Canvas of={SelectBtnFieldStories.Multiple}  />
+
+## Item unique
+Vous pouvez créer un bouton qui désélectionne tous les autres boutons en utilisant la prop unique.
+
+<Canvas of={SelectBtnFieldStories.itemUnique}  />
+
+## Inline
+Vous pouvez afficher les boutons de sélection sur une seule ligne en utilisant la prop inline.
+
+<Canvas of={SelectBtnFieldStories.inline}  />
+
+## Messages d’aide
+Vous pouvez afficher un message d’aide en utilisant la prop hint.
+
+<Canvas of={SelectBtnFieldStories.messageAide}  />
+
+## Erreur
+Vous pouvez afficher une erreur en utilisant la prop error.
+<Story of={SelectBtnFieldStories.Info} />
+
+<Canvas of={SelectBtnFieldStories.erreur}  />
+
+
+## Messages d'erreur
+Vous pouvez afficher des messages d’erreur en utilisant la prop error-messages.
+<Story of={SelectBtnFieldStories.Info} />
+<Canvas of={SelectBtnFieldStories.messageErreur}  />
+
+
+
+
+
