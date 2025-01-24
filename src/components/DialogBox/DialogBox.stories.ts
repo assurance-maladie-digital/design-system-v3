@@ -3,7 +3,7 @@ import { VBtn } from 'vuetify/components'
 import DialogBox from './DialogBox.vue'
 import { fn } from '@storybook/test'
 
-const meta = {
+const meta: Meta<typeof DialogBox> = {
 	title: 'Composants/Feedback/DialogBox',
 	component: DialogBox,
 	parameters: {

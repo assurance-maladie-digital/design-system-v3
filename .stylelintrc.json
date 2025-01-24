@@ -13,6 +13,7 @@
         ],
         "max-nesting-depth": 5,
         "selector-max-compound-selectors": 8,
+        "declaration-property-value-no-unknown": null,
         "@stylistic/indentation": "tab",
         "@stylistic/string-quotes": "single"
     }

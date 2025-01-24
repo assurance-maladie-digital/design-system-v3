@@ -1,7 +1,7 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import NirField from './NirField.vue'
 
-const meta = {
+const meta: Meta<typeof NirField> = {
 	title: 'Composants/Formulaires/NirField',
 	component: NirField,
 	decorators: [
