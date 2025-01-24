@@ -13,7 +13,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">0</div>
           </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
         </button>
-        <div data-v-cfbfc2ef="" class="fakeThumb thumb-min" aria-hidden="" style="left: 0%;">
+        <div data-v-cfbfc2ef="" class="fake-thumb thumb-min" aria-hidden="" style="left: 0%;">
           <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
           </div>
@@ -139,7 +139,7 @@ exports[`RangeField > renders correctly 1`] = `
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">80</div>
           </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
         </button>
-        <div data-v-cfbfc2ef="" class="fakeThumb thumb-min" aria-hidden="" style="left: 50%;">
+        <div data-v-cfbfc2ef="" class="fake-thumb thumb-min" aria-hidden="" style="left: 50%;">
           <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">50</div>
           </div>
@@ -265,7 +265,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">0</div>
           </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
         </button>
-        <div data-v-cfbfc2ef="" class="fakeThumb thumb-min" aria-hidden="" style="left: 0%;">
+        <div data-v-cfbfc2ef="" class="fake-thumb thumb-min" aria-hidden="" style="left: 0%;">
           <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
             <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">0</div>
           </div>
