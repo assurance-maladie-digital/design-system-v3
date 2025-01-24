@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, defineProps, defineEmits, computed, ref } from 'vue'
+	import { type PropType, computed, ref } from 'vue'
 
 	import EmotionPicker from './EmotionPicker/EmotionPicker.vue'
 	import NumberPicker from './NumberPicker/NumberPicker.vue'

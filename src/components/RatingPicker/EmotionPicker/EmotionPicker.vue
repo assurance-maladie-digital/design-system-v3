@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { type PropType, defineProps, computed, defineEmits } from 'vue'
+	import { type PropType, computed } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import { propValidator } from '@/utils/propValidator'
@@ -10,6 +10,7 @@
 	} from '@mdi/js'
 
 	import { useDisplay } from 'vuetify'
+
 	const { smAndDown } = useDisplay()
 	const isMobile = computed(() => smAndDown.value)
 

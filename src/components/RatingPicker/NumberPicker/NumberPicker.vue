@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, defineProps, defineEmits } from 'vue'
+	import { computed } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import type { PropType } from 'vue'

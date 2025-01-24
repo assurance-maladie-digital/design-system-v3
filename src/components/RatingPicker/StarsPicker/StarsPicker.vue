@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, defineProps, defineEmits, type PropType } from 'vue'
+	import { ref, type PropType } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { mdiStarOutline, mdiStar } from '@mdi/js'
 
