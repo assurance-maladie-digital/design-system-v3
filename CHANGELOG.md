@@ -1,3 +1,25 @@
+## v0.0.8-alpha (24-01-2024)
+
+### Composants
+
+- ContextualMenu [`#328`](https://github.com/assurance-maladie-digital/design-system-v3/pull/328)
+- PasswordField [`#327`](https://github.com/assurance-maladie-digital/design-system-v3/pull/327)
+- ExternalLinks [`#326`](https://github.com/assurance-maladie-digital/design-system-v3/pull/326)
+- Fix CookieBanner accessibility [`#301`](https://github.com/assurance-maladie-digital/design-system-v3/pull/301)
+- Fix HeaderNavigationBar [`#322`](https://github.com/assurance-maladie-digital/design-system-v3/pull/322)
+- Add StyleLint [`#323`](https://github.com/assurance-maladie-digital/design-system-v3/pull/323)
+- Add PA theme [`#345`](https://github.com/assurance-maladie-digital/design-system-v3/pull/345), [`#346`](https://github.com/assurance-maladie-digital/design-system-v3/pull/346), [`#347`](https://github.com/assurance-maladie-digital/design-system-v3/pull/347), [`#348`](https://github.com/assurance-maladie-digital/design-system-v3/pull/348), [`#349`](https://github.com/assurance-maladie-digital/design-system-v3/pull/349)
+
+### Documentation
+
+- Improve Vuetify page [`#350`](https://github.com/assurance-maladie-digital/design-system-v3/pull/350)
+- Add issues page and templates [`#343`](https://github.com/assurance-maladie-digital/design-system-v3/pull/343)
+- Fix doc DialogBox [`#334`](https://github.com/assurance-maladie-digital/design-system-v3/pull/334)
+- Fix doc NotFoundPage [`#339`](https://github.com/assurance-maladie-digital/design-system-v3/pull/339)
+- Fix doc PasswordField [`#342`](https://github.com/assurance-maladie-digital/design-system-v3/pull/342)
+- Fix doc NotificationBar [`#338`](https://github.com/assurance-maladie-digital/design-system-v3/pull/338)
+- Fix doc CookieBanner [`#344`](https://github.com/assurance-maladie-digital/design-system-v3/pull/344)
+
 ## v0.0.7-alpha (27-12-2024)
 
 ### Composants
