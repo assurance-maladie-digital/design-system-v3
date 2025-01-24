@@ -2,7 +2,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { defineComponent, nextTick, onMounted, ref, type Ref } from 'vue'
-import type Tooltip from '../tooltip/Tooltip.vue'
+import type Tooltip from '../Tooltip/Tooltip.vue'
 import type { Range } from '../types'
 import useTooltipsNudge from '../useTooltipsNudge'
 

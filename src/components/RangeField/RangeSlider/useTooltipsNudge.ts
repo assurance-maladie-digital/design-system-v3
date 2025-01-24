@@ -7,7 +7,7 @@ import {
 	watch,
 	type Ref,
 } from 'vue'
-import type Tooltip from './tooltip/Tooltip.vue'
+import type Tooltip from './Tooltip/Tooltip.vue'
 import type { Range } from './types'
 
 /**
