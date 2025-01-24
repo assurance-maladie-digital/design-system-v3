@@ -23,11 +23,11 @@
 	})
 
 	const emit = defineEmits(['update:modelValue'])
-	const { hasAnswered } = useRating(props, emit)
+	const { hasAnswered, emitInputEvent } = useRating(props, emit)
 
 	const starOutlineIcon = mdiStarOutline
 	const starIcon = mdiStar
-	const hoverIndex = ref(-1)
+	const hoverIndex = ref<number | null>(-1)
 
 	function isActive(index: number): boolean {
 		return props.modelValue - 1 === index
@@ -49,7 +49,7 @@
 		</legend>
 
 		<VRating
-			:model-value="modelValue"
+			:model-value="props.modelValue"
 			:length="props.length"
 			:readonly="props.readonly || hasAnswered"
 			class="d-flex flex-wrap max-width-none mx-n3"
@@ -59,15 +59,17 @@
 				<button
 					:disabled="props.readonly"
 					:aria-pressed="isActive(index)"
-					@mouseover="hoverIndex.value = index"
-					@focus="hoverIndex.value = index"
-					@mouseleave="hoverIndex.value = -1"
-					@blur="hoverIndex.value = -1"
+					@mouseover="hoverIndex = index"
+					@focus="hoverIndex = index"
+					@mouseleave="hoverIndex = -1"
+					@blur="hoverIndex = -1"
+					@click="emitInputEvent(index + 1)"
 				>
 					<VIcon
+						color="primary"
 						:class="
 							isFilled(index)
-								? 'text-blue'
+								? 'primary'
 								: 'text-blue-lighten-60'
 						"
 						size="36px"
@@ -92,11 +94,11 @@
 	width: 52px !important;
 	height: 36px !important;
 
-	&--disabled.blue--text {
-		color: tokens.$blue-base !important;
+	&--disabled.text-blue {
+		color: tokens.$primary-base !important;
 	}
 
-	&--disabled.blue-lighten-60--text {
+	&--disabled.text-blue-lighten-60 {
 		color: tokens.$blue-lighten-60 !important;
 	}
 }

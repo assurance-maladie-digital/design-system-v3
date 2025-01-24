@@ -4,15 +4,33 @@
 	import RatingPicker from '@/components/RatingPicker/RatingPicker.vue'
 	import PageContainer from '@/components/PageContainer/PageContainer.vue'
 
-	const rating = ref(-1)
+	const ratingEmotion = ref(-1)
+	const ratingNumber = ref(-1)
+	const ratingStars = ref(-1)
 </script>
 
 <template>
 	<PageContainer>
 		<RatingPicker
-			v-model="rating"
+			v-model="ratingEmotion"
 			label="Êtes-vous satisfait de ce service ?"
 			type="emotion"
+		/>
+
+		<br>
+
+		<RatingPicker
+			v-model="ratingNumber"
+			label="Êtes-vous satisfait de ce service ?"
+			type="number"
+		/>
+
+		<br>
+
+		<RatingPicker
+			v-model="ratingStars"
+			label="Êtes-vous satisfait de ce service ?"
+			type="stars"
 		/>
 	</PageContainer>
 </template>

@@ -38,7 +38,7 @@
 	const isMobile = computed(() => smAndDown.value)
 
 	const emit = defineEmits(['update:modelValue'])
-	const { hasAnswered } = useRating(props, emit)
+	const { hasAnswered, emitInputEvent } = useRating(props, emit)
 
 	const selectItems = computed<SelectItem[]>(() => {
 		return [...Array(props.length)].map((_, index) => ({
@@ -54,7 +54,7 @@
 	<fieldset class="vd-number-picker">
 		<VSelect
 			v-if="isMobile"
-			:model-value="modelValue === -1 ? null : modelValue"
+			:model-value="props.modelValue === -1 ? null : props.modelValue"
 			:label="props.label"
 			:disabled="props.readonly || hasAnswered"
 			:items="selectItems"
@@ -74,7 +74,7 @@
 				class="d-inline-block"
 			>
 				<VRating
-					:model-value="modelValue"
+					:model-value="props.modelValue"
 					:length="props.length"
 					:readonly="props.readonly || hasAnswered"
 					class="d-flex flex-wrap max-width-none"
@@ -89,6 +89,7 @@
 							color="primary"
 							height="36px"
 							class="text-body-2 pa-0 mr-2"
+							@click="emitInputEvent(index + 1)"
 						>
 							{{ index + 1 }}
 						</VBtn>
@@ -116,7 +117,7 @@
 			</div>
 			<p
 				v-else
-				:aria-label="locales.ariaLabel(modelValue, props.length)"
+				:aria-label="locales.ariaLabel(props.modelValue, props.length)"
 				class="mb-0 d-flex align-center"
 			>
 				<VBtn
@@ -128,7 +129,7 @@
 					height="36px"
 					class="vd-btn-answer text-body-2 mr-1 pa-0"
 				>
-					{{ modelValue }}
+					{{ props.modelValue }}
 				</VBtn>
 				/ {{ props.length }}
 			</p>
