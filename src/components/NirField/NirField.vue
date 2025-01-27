@@ -9,8 +9,6 @@
 	import { locales } from './locales'
 	import defaultOptions from './config'
 
-	type Rule = (value: string) => { error?: string, success?: string }
-
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: string | undefined
 		outlined?: boolean
@@ -139,13 +137,13 @@
 
 	// Génération des règles finales
 	const numberRules = props.customNumberRules?.length
-		? generateRules(props.customNumberRules)
-		: generateRules(defaultNumberRules)
+		? props.customNumberRules
+		: defaultNumberRules
 
 	const keyRules = props.displayKey
 		? (props.customKeyRules?.length
-			? generateRules(props.customKeyRules)
-			: generateRules(defaultKeyRules))
+			? props.customKeyRules
+			: defaultKeyRules)
 		: []
 
 	/**
@@ -153,8 +151,10 @@
 	 * @param value Valeur du champ à valider
 	 * @param rules Ensemble de règles
 	 */
-	function validateFieldSet(value: string, rules: Rule[]) {
-		rules.forEach((rule) => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+	function validateFieldSet(value: string, rules: Array<{ type: string, options?: any }>) {
+		const validationRules = generateRules(rules)
+		validationRules.forEach((rule) => {
 			const { error, success } = rule(value)
 			if (error) errors.value.push(error)
 			if (success && success !== 'Le champ est valide.') successes.value.push(success)
@@ -275,17 +275,16 @@
 				ref="numberField"
 				v-model="numberValue"
 				v-maska="numberMask"
+				:rules="numberRules"
 				:aria-errormessage="hasNumberErrors ? 'number-field-errors' : undefined"
 				:aria-invalid="hasNumberErrors"
 				:aria-required="required"
 				:color="hasNumberErrors ? 'error' : 'primary'"
 				:error="hasNumberErrors"
-				:error-messages="errors.filter(error => error.includes(fieldIdentifierNumber))"
 				:hint="locales.numberHint"
 				:label="numberLabel"
 				:required="required"
 				:success="hasNumberSuccess"
-				:success-messages="successes.filter(success => success.includes(fieldIdentifierNumber))"
 				:variant-style="outlined ? 'outlined' : 'underlined'"
 				class="vd-number-field"
 				title="nirField"
@@ -303,17 +302,16 @@
 					ref="keyField"
 					v-model="keyValue"
 					v-maska="keyMask"
+					:rules="keyRules"
 					:aria-errormessage="hasKeyErrors ? 'key-field-errors' : undefined"
 					:aria-invalid="hasKeyErrors"
 					:aria-required="required"
 					:color="hasKeyErrors ? 'error' : 'primary'"
 					:error="hasKeyErrors"
-					:error-messages="errors.filter(error => error.includes(fieldIdentifierKey))"
 					:hint="locales.keyHint"
 					:label="keyLabel"
 					:required="required"
 					:success="hasKeySuccess"
-					:success-messages="successes.filter(success => success.includes(fieldIdentifierKey))"
 					:variant-style="outlined ? 'outlined' : 'underlined'"
 					class="vd-key-field"
 					title="nirKeyField"
