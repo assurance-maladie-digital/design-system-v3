@@ -1,0 +1,74 @@
+import {Canvas, Meta, Controls, Source} from '@storybook/blocks';
+import * as SearchListFieldStories from './SearchListField.stories';
+import SearchListField from './SearchListField.vue';
+
+<Meta title="Composants/Formulaires/SearchListField" component={SearchListField}/>
+
+# SearchListField
+
+Le composant `SearchListField` est utilisé pour afficher un champ de saisie de mot de passe et gérer sa validation.
+Il permet également d’afficher ou de masquer le contenu du champ à l’aide d’une icône.
+
+<Canvas story={{height: '150px'}} of={SearchListFieldStories.Default}/>
+
+# API
+
+<Controls of={SearchListFieldStories.Default}/>
+
+## Utilisation de base
+
+    <Source
+        dark
+        code={`
+<script setup lang="ts">
+    import { ref } from 'vue'
+    import { SearchListField } from '@cnamts/synapse'
+
+    import type { SearchListItem } from '@cnamts/synapse/src/components/SearchListField/types'
+
+    const items: SearchListItem[] = [
+    {
+        label: 'Chirurgien-dentiste',
+        value: 'chirurgien-dentiste',
+    },
+    {
+        label: 'Infirmier',
+        value: 'infirmier',
+    },
+    {
+        label: 'Orthophoniste',
+        value: 'orthophoniste',
+    },
+    {
+        label: 'Orthoptiste',
+        value: 'orthoptiste',
+    },
+    {
+        label: 'Pédicure-podologue',
+        value: 'pedicure-podologue',
+    },
+    {
+        label: 'Pharmacien',
+        value: 'pharmacien',
+    },
+    ]
+
+    const value = ref<string | null>(null)
+
+    const selectChoice = (choice: string) => {
+    value.value = choice
+}
+</script>
+
+<template>
+    <SearchListField
+        :items="items"
+        @update:model-value="($event) => selectChoice($event)"
+    />
+    <br>
+    <pre>Selected: {{ value }}</pre>
+</template>
+`}
+/>
+
+
