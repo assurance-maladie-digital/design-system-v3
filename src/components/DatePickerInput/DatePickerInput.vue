@@ -464,7 +464,7 @@
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: tokens.$colors-background-warning-contrasted !important;
+		color: tokens.$colors-text-warning !important;
 	}
 
 	:deep(.v-messages__message) {
@@ -472,7 +472,7 @@
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-background-warning-contrasted !important;
+		color: tokens.$colors-text-warning !important;
 	}
 }
 
