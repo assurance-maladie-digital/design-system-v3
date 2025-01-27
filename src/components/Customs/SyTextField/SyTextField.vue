@@ -12,7 +12,7 @@
 
 	const props = withDefaults(
 		defineProps<{
-			modelValue?: string | number
+			modelValue?: string | number | null
 			prependIcon?: IconType
 			appendIcon?: IconType
 			prependInnerIcon?: IconType
@@ -241,9 +241,9 @@
 		>
 			<slot name="prepend">
 				<VIcon
+					:aria-label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
 					:icon="ICONS[props.prependIcon]"
 					role="button"
-					:aria-label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
 					@click="$emit('prepend-icon-click')"
 				/>
 			</slot>
@@ -254,9 +254,9 @@
 		>
 			<slot name="append">
 				<VIcon
+					:aria-label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
 					:icon="ICONS[props.appendIcon]"
 					role="button"
-					:aria-label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
 					@click="$emit('append-icon-click')"
 				/>
 			</slot>
@@ -265,9 +265,9 @@
 			<slot name="prepend-inner">
 				<VIcon
 					v-if="props.prependInnerIcon && !props.noIcon"
+					:aria-label="props.label ? `${props.label} - bouton ${props.prependInnerIcon}` : `Bouton ${props.prependInnerIcon}`"
 					:icon="ICONS[props.prependInnerIcon]"
 					role="button"
-					:aria-label="props.label ? `${props.label} - bouton ${props.prependInnerIcon}` : `Bouton ${props.prependInnerIcon}`"
 				/>
 			</slot>
 			<VDivider
@@ -284,11 +284,11 @@
 				</VIcon>
 				<VIcon
 					v-if="props.appendInnerIcon && !props.noIcon"
+					:aria-label="props.label ? `${props.label} - bouton ${props.appendInnerIcon}` : `Bouton ${props.appendInnerIcon}`"
 					:class="{ 'error-icon': props.appendInnerIcon === 'error' }"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.appendInnerIcon]"
 					role="button"
-					:aria-label="props.label ? `${props.label} - bouton ${props.appendInnerIcon}` : `Bouton ${props.appendInnerIcon}`"
 				/>
 			</slot>
 		</template>
