@@ -113,7 +113,6 @@ export const Default: Story = {
 
 export const OtherRange: Story = {
 	args: {
-		modelValue: [-20, 10],
 		min: -50,
 		max: 50,
 	},
