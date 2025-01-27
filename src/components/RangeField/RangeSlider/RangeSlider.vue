@@ -1,6 +1,6 @@
 // @see
-https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/examples/slider-multithumb/
-https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
+// https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/examples/slider-multithumb/
+// https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
 
 <script setup lang="ts">
 	import { cnamColorsTokens } from '@/designTokens'
@@ -217,7 +217,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 			</button>
 			<div
 				class="fake-thumb thumb-min"
-				aria-hidden
+				aria-hidden="true"
 				:style="thumbMinStyle"
 			>
 				<Tooltip
@@ -227,8 +227,8 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 				</Tooltip>
 			</div>
 			<div
-				class="fakeThumb thumb-max"
-				aria-hidden
+				class="fake-thumb thumb-max"
+				aria-hidden="true"
 				:style="thumbMaxStyle"
 			>
 				<Tooltip
@@ -246,8 +246,9 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_rol
 </template>
 
 <style lang="scss" scoped>
-@use "@/assets/tokens";
-$virtualThumbSize: 40px;
+@use '@/assets/tokens';
+
+$virtual-thumb-size: 40px;
 
 .wrapper {
 	--sy-track-height: 4px;
@@ -266,7 +267,7 @@ $virtualThumbSize: 40px;
 	cursor: pointer;
 
 	&::before {
-		content: "";
+		content: '';
 		position: absolute;
 		top: 50%;
 		left: 0;
@@ -284,14 +285,14 @@ $virtualThumbSize: 40px;
 	top: 50%;
 	left: 0;
 	z-index: 2;
-	width: $virtualThumbSize;
-	height: $virtualThumbSize;
+	width: $virtual-thumb-size;
+	height: $virtual-thumb-size;
 	border-radius: 50%;
 	transition: left 0.1s;
 	will-change: left;
 
 	&::before {
-		content: "";
+		content: '';
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -306,7 +307,7 @@ $virtualThumbSize: 40px;
 	}
 
 	&::after {
-		content: "";
+		content: '';
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -338,23 +339,25 @@ $virtualThumbSize: 40px;
 	height: var(--sy-thumb-size);
 	background-color: var(--sy-thumb-color);
 	border-radius: 50%;
-	box-shadow: 0px 1px 5px 0px #0000001F, 0px 2px 2px 0px #00000024, 0px 3px 1px -2px #00000033;
+	box-shadow: 0 1px 5px 0 #0000001f, 0 2px 2px 0 #00000024, 0 3px 1px -2px #0003;
 }
 
 .thumb-min {
-	transform: translate(
-		calc(
-			($virtualThumbSize / 2 + var(--sy-thumb-size) / 2) * -1
-		),
-		-50%
-	);
+	transform:
+		translate(
+			calc(
+				($virtual-thumb-size / 2 + var(--sy-thumb-size) / 2) * -1
+			),
+			-50%
+		);
 }
 
 .thumb-max {
-	transform: translate(
-		calc((var(--sy-thumb-size) - $virtualThumbSize) / 2),
-		-50%
-	);
+	transform:
+		translate(
+			calc((var(--sy-thumb-size) - $virtual-thumb-size) / 2),
+			-50%
+		);
 }
 
 .filled-track {
@@ -374,7 +377,7 @@ $virtualThumbSize: 40px;
 	transition: transform 0.25s ease-out, opacity 0.25s ease-out;
 }
 
-.fakeThumb {
+.fake-thumb {
 	visibility: hidden;
 	transition: none !important;
 	cursor: default;

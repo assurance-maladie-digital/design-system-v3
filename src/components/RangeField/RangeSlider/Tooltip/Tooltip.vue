@@ -36,30 +36,29 @@
 </template>
 
 <style lang="scss" scoped>
-
 .tooltip-wrapper {
 	position: absolute;
 	top: 0;
 	left: 20px;
+
 	&::before {
-		content: "";
+		content: '';
 		position: absolute;
 		top: 100%;
 		left: 50%;
 		transform: translate(-50%, 0);
 		border: 6px solid transparent;
-		border-top-color: rgba(0, 0, 0, 0.7);
+		border-top-color: rgb(0 0 0 / 70%);
 	}
 }
 
-.tooltip{
+.tooltip {
 	position: absolute;
 	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.7);
+	background-color: rgb(0 0 0 / 70%);
 	color: #fff;
 	padding: 4px 8px;
 	border-radius: 4px;
 	will-change: transform;
-
 }
 </style>
