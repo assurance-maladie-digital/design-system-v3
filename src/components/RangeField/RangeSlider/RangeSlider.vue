@@ -252,9 +252,9 @@ $virtualThumbSize: 40px;
 .wrapper {
 	--sy-track-height: 4px;
 	--sy-thumb-size: 20px;
-	--sy-thumb-color: v-bind(props['thumbColor']);
-	--sy-track-color: v-bind(props['trackColor']);
-	--sy-track-fill-color: v-bind(props['trackFillColor']);
+	--sy-thumb-color: v-bind(props.thumbColor);
+	--sy-track-color: v-bind(props.trackColor);
+	--sy-track-fill-color: v-bind(props.trackFillColor);
 
 	position: relative;
 	margin-inline: var(--sy-thumb-size);
