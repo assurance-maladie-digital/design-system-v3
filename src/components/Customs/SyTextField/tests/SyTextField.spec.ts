@@ -71,13 +71,23 @@ describe('SyTextField', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
-	it('returns error color for appendInnerIcon when value is error', () => {
-		const wrapper = factory({ appendInnerIcon: 'error' })
+	it('returns error color for appendInnerIcon when there is a validation error', () => {
+		const wrapper = factory({
+			modelValue: 'test',
+			rules: [{ type: 'required' }],
+			validateOnInput: true
+		})
+		wrapper.vm.errors = ['Error message']
 		expect(wrapper.vm.appendInnerIconColor).toBe('error')
 	})
 
-	it('returns success color for appendInnerIcon when value is success', () => {
-		const wrapper = factory({ appendInnerIcon: 'success' })
+	it('returns success color for appendInnerIcon when field is valid', () => {
+		const wrapper = factory({
+			modelValue: 'test',
+			rules: [{ type: 'required' }],
+			validateOnInput: true
+		})
+		wrapper.vm.hasSuccess = true
 		expect(wrapper.vm.appendInnerIconColor).toBe('success')
 	})
 
