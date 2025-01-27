@@ -75,7 +75,7 @@ describe('SyTextField', () => {
 		const wrapper = factory({
 			modelValue: 'test',
 			rules: [{ type: 'required' }],
-			validateOnInput: true
+			validateOnInput: true,
 		})
 		wrapper.vm.errors = ['Error message']
 		expect(wrapper.vm.appendInnerIconColor).toBe('error')
@@ -85,7 +85,7 @@ describe('SyTextField', () => {
 		const wrapper = factory({
 			modelValue: 'test',
 			rules: [{ type: 'required' }],
-			validateOnInput: true
+			validateOnInput: true,
 		})
 		wrapper.vm.hasSuccess = true
 		expect(wrapper.vm.appendInnerIconColor).toBe('success')
