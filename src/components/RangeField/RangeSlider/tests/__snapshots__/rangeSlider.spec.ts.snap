@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RangeField component > should render the component 1`] = `
+"<div data-v-cfbfc2ef="" class="wrapper">
+  <div data-v-cfbfc2ef="" class="track"><button data-v-cfbfc2ef="" class="thumb-min" style="left: 25%;" role="slider" aria-valuenow="25" tabindex="0" aria-valuemin="0" aria-valuemax="75" aria-orientation="horizontal" aria-label="Minimum" title="Minimum">
+      <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+        <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">25</div>
+      </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
+    </button><button data-v-cfbfc2ef="" role="slider" class="thumb-max" style="left: 75%;" aria-valuenow="75" tabindex="0" aria-valuemin="25" aria-valuemax="100" aria-orientation="horizontal" aria-label="Maximum" title="Maximum">
+      <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+        <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">75</div>
+      </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
+    </button>
+    <div data-v-cfbfc2ef="" class="fake-thumb thumb-min" aria-hidden="true" style="left: 25%;">
+      <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+        <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">25</div>
+      </div>
+    </div>
+    <div data-v-cfbfc2ef="" class="fake-thumb thumb-max" aria-hidden="true" style="left: 75%;">
+      <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
+        <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">75</div>
+      </div>
+    </div>
+    <div data-v-cfbfc2ef="" class="filled-track" style="left: 25%; width: 50%;"></div>
+  </div>
+</div>"
+`;
