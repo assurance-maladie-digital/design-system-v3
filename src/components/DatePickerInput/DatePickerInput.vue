@@ -373,6 +373,7 @@
 			<DateTextInput
 				ref="dateTextInputRef"
 				v-model="displayFormattedDate"
+				:class="getMessageClasses()"
 				:date-format-return="props.dateFormatReturn"
 				:format="props.format"
 				:placeholder="props.placeholder"
@@ -380,7 +381,6 @@
 				:required="props.required"
 				:rules="props.customRules"
 				:warning-rules="props.customWarningRules"
-				:class="getMessageClasses()"
 				title="Date text input"
 				@update:model-value="updateSelectedDates"
 			/>
@@ -408,25 +408,27 @@
 			/>
 		</template>
 		<transition name="fade">
-			<VDatePicker
-				v-if="isDatePickerVisible && !props.noCalendar"
-				v-model="selectedDates"
-				:first-day-of-week="1"
-				:multiple="props.displayRange ? 'range' : false"
-				:show-adjacent-months="true"
-				:show-week="props.showWeekNumber"
-				:view-mode="props.isBirthDate ? 'year' : 'month'"
-				color="primary"
-			>
-				<template #title>
-					Selectionnez une date
-				</template>
-				<template #header>
-					<h3 class="mx-auto my-auto ml-5 mb-4">
-						{{ todayInString }}
-					</h3>
-				</template>
-			</VDatePicker>
+			<v-locale-provider locale="fr">
+				<VDatePicker
+					v-if="isDatePickerVisible && !props.noCalendar"
+					v-model="selectedDates"
+					:first-day-of-week="1"
+					:multiple="props.displayRange ? 'range' : false"
+					:show-adjacent-months="true"
+					:show-week="props.showWeekNumber"
+					:view-mode="props.isBirthDate ? 'year' : 'month'"
+					color="primary"
+				>
+					<template #title>
+						Selectionnez une date
+					</template>
+					<template #header>
+						<h3 class="mx-auto my-auto ml-5 mb-4">
+							{{ todayInString }}
+						</h3>
+					</template>
+				</VDatePicker>
+			</v-locale-provider>
 		</transition>
 	</div>
 </template>
@@ -435,78 +437,77 @@
 @use '@/assets/tokens';
 
 .dp-width {
-	min-width: 345px;
+  min-width: 345px;
 }
 
 .v-messages__message--success {
-	:deep(.v-input__control),
-	:deep(.v-messages__message) {
-		color: tokens.$colors-border-success !important;
-	}
+  :deep(.v-input__control),
+  :deep(.v-messages__message) {
+    color: tokens.$colors-border-success !important;
+  }
 
-	.v-field--active & {
-		color: tokens.$colors-text-success !important;
-	}
+  .v-field--active & {
+    color: tokens.$colors-text-success !important;
+  }
 }
 
 .v-messages__message--error {
-	:deep(.v-input__control),
-	:deep(.v-messages__message) {
-		color: tokens.$colors-border-error !important;
-	}
+  :deep(.v-input__control),
+  :deep(.v-messages__message) {
+    color: tokens.$colors-border-error !important;
+  }
 
-	.v-field--active & {
-		color: tokens.$colors-border-error !important;
-	}
+  .v-field--active & {
+    color: tokens.$colors-border-error !important;
+  }
 }
 
 .v-messages__message--warning {
-	:deep(.v-input__control) {
-		color: tokens.$colors-background-warning-contrasted !important;
-	}
+  :deep(.v-input__control) {
+    color: tokens.$colors-background-warning-contrasted !important;
+  }
 
-	:deep(.v-messages__message) {
-		color: tokens.$colors-text-warning !important;
-	}
+  :deep(.v-messages__message) {
+    color: tokens.$colors-text-warning !important;
+  }
 
-	.v-field--active & {
-		color: tokens.$colors-background-warning-contrasted !important;
-	}
+  .v-field--active & {
+    color: tokens.$colors-background-warning-contrasted !important;
+  }
 }
 
 :deep(.v-btn__content) {
-	font-size: tokens.$font-size-body-text + 3;
-	font-weight: bold;
+  font-size: tokens.$font-size-body-text + 3;
+  font-weight: bold;
 }
 
 .date-picker-container {
-	max-width: 345px;
-	position: relative;
+  max-width: 345px;
+  position: relative;
 
-	:deep(.v-date-picker) {
-		width: 345px;
-		position: absolute;
-		top: 56px;
-		left: 0;
-		z-index: 2;
-		box-shadow:
-			0 5px 5px -3px rgb(0 0 0 / 20%),
-			0 8px 10px 1px rgb(0 0 0 / 14%),
-			0 3px 14px 2px rgb(0 0 0 / 12%) !important;
-	}
+  :deep(.v-date-picker) {
+    width: 345px;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    z-index: 2;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%),
+    0 8px 10px 1px rgb(0 0 0 / 14%),
+    0 3px 14px 2px rgb(0 0 0 / 12%) !important;
+  }
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
-	opacity: 1;
+  opacity: 1;
 }
 
 .fade-enter-active,
 .fade-leave-active {
-	transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-	opacity: 0;
+  opacity: 0;
 }
 </style>
