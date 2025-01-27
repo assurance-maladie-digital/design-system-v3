@@ -11,12 +11,12 @@ exports[`RangeField component > should render the component 1`] = `
         <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;">75</div>
       </div><span data-v-cfbfc2ef="" class="inner-thumb"></span>
     </button>
-    <div data-v-cfbfc2ef="" class="fake-thumb thumb-min" aria-hidden="" style="left: 25%;">
+    <div data-v-cfbfc2ef="" class="fake-thumb thumb-min" aria-hidden="true" style="left: 25%;">
       <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
         <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">25</div>
       </div>
     </div>
-    <div data-v-cfbfc2ef="" class="fake-thumb thumb-max" aria-hidden="" style="left: 75%;">
+    <div data-v-cfbfc2ef="" class="fake-thumb thumb-max" aria-hidden="true" style="left: 75%;">
       <div data-v-24e1b71f="" data-v-cfbfc2ef="" class="tooltip-wrapper">
         <div data-v-24e1b71f="" class="tooltip" style="transform: translateX(calc(-50% + 0px));">75</div>
       </div>
