@@ -281,8 +281,10 @@
 				:aria-required="required"
 				:color="hasNumberErrors ? 'error' : 'primary'"
 				:error="hasNumberErrors"
+				:error-messages="errors.filter(error => error.includes(fieldIdentifierNumber))"
 				:hint="locales.numberHint"
 				:label="numberLabel"
+				:success-messages="successes.filter(success => success.includes(fieldIdentifierNumber))"
 				:variant-style="outlined ? 'outlined' : 'underlined'"
 				class="vd-number-field"
 				title="nirField"
@@ -306,8 +308,10 @@
 					:aria-required="required"
 					:color="hasKeyErrors ? 'error' : 'primary'"
 					:error="hasKeyErrors"
+					:error-messages="errors.filter(error => error.includes(fieldIdentifierKey))"
 					:hint="locales.keyHint"
 					:label="keyLabel"
+					:success-messages="successes.filter(success => success.includes(fieldIdentifierKey))"
 					:variant-style="outlined ? 'outlined' : 'underlined'"
 					class="vd-key-field"
 					title="nirKeyField"
@@ -337,7 +341,6 @@
 		</v-input>
 	</div>
 </template>
-
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
