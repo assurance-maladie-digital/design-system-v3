@@ -132,7 +132,7 @@ export default defineConfig({
 				'src/**/*.stories.*',
 				'src/**/*ExpertiseLevelEnum.ts*',
 				'src/**/*AccessibiliteItems.ts*',
-				'src/**/*filePromise.ts*',
+				'src/**/tests/data/*',
 				'src/composables/index.ts*',
 				'src/**/types.*',
 				'src/main.ts',
