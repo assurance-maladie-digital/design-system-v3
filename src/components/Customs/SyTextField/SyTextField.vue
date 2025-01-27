@@ -128,7 +128,7 @@
 	const appendInnerIconColor = computed(() => {
 		if (hasError.value) return 'error'
 		if (hasSuccess.value) return 'success'
-		return props.color || 'primary'
+		return props.color || 'black'
 	})
 
 	const dividerProps = {
