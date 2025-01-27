@@ -34,7 +34,7 @@
 		numberLabel: 'Numéro de sécurité sociale',
 		keyLabel: 'Clé',
 		displayKey: true,
-		showSuccessMessages: false,
+		showSuccessMessages: true,
 		customNumberRules: [],
 		customKeyRules: [],
 	})
@@ -275,7 +275,6 @@
 				ref="numberField"
 				v-model="numberValue"
 				v-maska="numberMask"
-				:append-inner-icon="hasNumberErrors ? 'error' : (hasNumberSuccess ? 'success' : undefined)"
 				:aria-errormessage="hasNumberErrors ? 'number-field-errors' : undefined"
 				:aria-invalid="hasNumberErrors"
 				:aria-required="required"
@@ -284,6 +283,7 @@
 				:error-messages="errors.filter(error => error.includes(fieldIdentifierNumber))"
 				:hint="locales.numberHint"
 				:label="numberLabel"
+				:success="hasNumberSuccess"
 				:success-messages="successes.filter(success => success.includes(fieldIdentifierNumber))"
 				:variant-style="outlined ? 'outlined' : 'underlined'"
 				class="vd-number-field"
@@ -302,7 +302,6 @@
 					ref="keyField"
 					v-model="keyValue"
 					v-maska="keyMask"
-					:append-inner-icon="hasKeyErrors ? 'error' : (hasKeySuccess ? 'success' : undefined)"
 					:aria-errormessage="hasKeyErrors ? 'key-field-errors' : undefined"
 					:aria-invalid="hasKeyErrors"
 					:aria-required="required"
@@ -311,6 +310,7 @@
 					:error-messages="errors.filter(error => error.includes(fieldIdentifierKey))"
 					:hint="locales.keyHint"
 					:label="keyLabel"
+					:success="hasKeySuccess"
 					:success-messages="successes.filter(success => success.includes(fieldIdentifierKey))"
 					:variant-style="outlined ? 'outlined' : 'underlined'"
 					class="vd-key-field"

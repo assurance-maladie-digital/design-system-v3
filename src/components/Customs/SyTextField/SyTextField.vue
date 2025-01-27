@@ -30,6 +30,8 @@
 			errorMessages?: string[]
 			successMessages?: string[]
 			showSuccessMessages?: boolean
+			error?: boolean
+			success?: boolean
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			rules?: Array<{ type: string, options?: any }>
 			validateOnInput?: boolean
@@ -41,6 +43,8 @@
 			showSuccessMessages: false,
 			validateOnInput: false,
 			rules: () => [],
+			error: false,
+			success: false,
 		},
 	)
 
@@ -99,7 +103,7 @@
 			})
 
 			// Mise à jour du statut de succès indépendamment des messages
-			hasSuccess.value = isValid && model.value !== undefined && model.value !== ''
+			hasSuccess.value = (isValid && model.value !== undefined && model.value !== '') || props.success
 		}
 
 		// Unicité des messages
@@ -114,7 +118,7 @@
 		return errors.value.length === 0
 	}
 
-	const hasError = computed(() => errors.value.length > 0)
+	const hasError = computed(() => errors.value.length > 0 || props.error)
 
 	const checkErrorOnBlur = () => {
 		isBlurred.value = true
@@ -124,7 +128,7 @@
 	const appendInnerIconColor = computed(() => {
 		if (hasError.value) return 'error'
 		if (hasSuccess.value) return 'success'
-		return props.color || 'black'
+		return props.color || 'primary'
 	})
 
 	const dividerProps = {
@@ -209,13 +213,13 @@
 				<slot name="append-inner">
 					<VIcon
 						v-if="hasError"
-						color="error"
 						:icon="ICONS.error"
+						color="error"
 					/>
 					<VIcon
 						v-else-if="hasSuccess"
-						color="success"
 						:icon="ICONS.success"
+						color="success"
 					/>
 				</slot>
 			</template>
@@ -225,10 +229,10 @@
 
 <style>
 .v-messages__message--success .v-messages__message {
-	color: rgb(var(--v-theme-success)) !important;
+  color: rgb(var(--v-theme-success)) !important;
 }
 
 .v-messages__message--error .v-messages__message {
-	color: rgb(var(--v-theme-error)) !important;
+  color: rgb(var(--v-theme-error)) !important;
 }
 </style>
