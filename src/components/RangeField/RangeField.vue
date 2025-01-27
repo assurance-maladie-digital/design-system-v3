@@ -116,6 +116,7 @@
 		<div class="mt-10 mb-2 mx-3">
 			<RangeSlider
 				:model-value="innerValue"
+				v-bind="options.rangeSlider"
 				:max="max"
 				:min="min"
 				:step="step"

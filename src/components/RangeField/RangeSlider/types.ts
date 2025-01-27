@@ -7,3 +7,9 @@ export interface Range {
 	rangeMax: MaybeRef<number>
 	step: MaybeRef<number>
 }
+
+export interface PropsStyle {
+	'thumb-color'?: string
+	'track-color'?: string
+	'track-fill-color'?: string
+}

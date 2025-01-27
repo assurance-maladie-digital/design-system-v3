@@ -73,6 +73,7 @@ const meta = {
 					detail: `
 					{
 	textField?: Record<string, any>,
+	rangeSlider?: Record<string, any>,
 }
 					`,
 				},
@@ -146,6 +147,11 @@ export const Customization: Story = {
 			textField: {
 				variant: 'plain',
 			},
+			rangeSlider: {
+				'thumb-color': 'purple',
+				'track-color': 'LightSteelBlue',
+				'track-fill-color': 'purple',
+			},
 		},
 	},
 	parameters: {
@@ -167,6 +173,11 @@ export const Customization: Story = {
 	const vuetifyOptions = {
 		textField: {
 			variant: 'plain',
+		},
+		rangeSlider: {
+			'thumb-color': 'purple',
+			'track-color': 'LightSteelBlue',
+			'track-fill-color': 'purple',
 		},
 	}
 	const range = ref([0, 100])

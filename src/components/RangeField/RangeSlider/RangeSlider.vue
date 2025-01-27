@@ -3,32 +3,39 @@ https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/examples/slider-multi
 https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
 
 <script setup lang="ts">
+	import { cnamColorsTokens } from '@/designTokens'
 	import { computed, ref, toRef, watch, type Ref } from 'vue'
 	import Tooltip from './Tooltip/Tooltip.vue'
-	import useDoubleSlider from './useRangeSlider'
+	import type { PropsStyle } from './types'
 	import useMouseSlide from './useMouseSlide'
+	import useDoubleSlider from './useRangeSlider'
 	import useThumb from './useThumb'
 	import useThumbKeyboard from './useThumbKeyboard'
+	import useTooltipsNudge from './useTooltipsNudge'
 	import useTrack from './useTrack'
 	import { vAnimateClick } from './vAnimateClick'
-	import useTooltipsNudge from './useTooltipsNudge'
 
 	const props = withDefaults(
-		defineProps<{
-			modelValue: Array<number | string>
-			min?: number | string
-			max?: number | string
-			step?: number | string
-			minLabel?: string
-			maxLabel?: string
-		}>(),
+		defineProps<
+			PropsStyle &
+			{
+				modelValue?: Array<number | string>
+				min?: number | string
+				max?: number | string
+				step?: number | string
+				minLabel?: string
+				maxLabel?: string
+			}>(),
 		{
-			modelValue: () => [],
-			min: 0,
-			max: 100,
-			step: 1,
-			minLabel: 'Minimum',
-			maxLabel: 'Maximum',
+			'modelValue': () => [],
+			'min': 0,
+			'max': 100,
+			'step': 1,
+			'minLabel': 'Minimum',
+			'maxLabel': 'Maximum',
+			'thumb-color': cnamColorsTokens.blue.base,
+			'track-color': cnamColorsTokens.blue.lighten80,
+			'track-fill-color': cnamColorsTokens.blue.lighten40,
 		},
 	)
 
@@ -245,6 +252,9 @@ $virtualThumbSize: 40px;
 .wrapper {
 	--sy-track-height: 4px;
 	--sy-thumb-size: 20px;
+	--sy-thumb-color: v-bind(props.thumbColor);
+	--sy-track-color: v-bind(props.trackColor);
+	--sy-track-fill-color: v-bind(props.trackFillColor);
 
 	position: relative;
 	margin-inline: var(--sy-thumb-size);
@@ -263,7 +273,7 @@ $virtualThumbSize: 40px;
 		transform: translate(0, -50%);
 		width: 100%;
 		height: var(--sy-track-height);
-		background-color: tokens.$blue-lighten-80;
+		background-color: var(--sy-track-color);
 	}
 }
 
@@ -288,7 +298,7 @@ $virtualThumbSize: 40px;
 		transform: translate(-50%, -50%);
 		width: var(--sy-thumb-size);
 		height: var(--sy-thumb-size);
-		background-color: tokens.$blue-lighten-40;
+		background-color: var(--sy-thumb-color);
 		border-radius: 50%;
 		transform-origin: bottom right;
 		transition: transform 0.1s;
@@ -303,7 +313,7 @@ $virtualThumbSize: 40px;
 		transform: translate(-50%, -50%);
 		width: var(--sy-thumb-size);
 		height: var(--sy-thumb-size);
-		background-color: tokens.$primary-base;
+		background-color: var(--sy-thumb-color);
 		opacity: 0.4;
 		border-radius: 50%;
 		transform-origin: bottom right;
@@ -326,7 +336,7 @@ $virtualThumbSize: 40px;
 	transform: translate(-50%, -50%);
 	width: var(--sy-thumb-size);
 	height: var(--sy-thumb-size);
-	background-color: tokens.$primary-base;
+	background-color: var(--sy-thumb-color);
 	border-radius: 50%;
 	box-shadow: 0px 1px 5px 0px #0000001F, 0px 2px 2px 0px #00000024, 0px 3px 1px -2px #00000033;
 }
@@ -354,7 +364,7 @@ $virtualThumbSize: 40px;
 	transform: translate(0, -50%);
 	width: 100%;
 	height: var(--sy-track-height);
-	background-color: tokens.$blue-lighten-40;
+	background-color: var(--sy-track-fill-color);
 	transition: all 0.1s;
 }
 
