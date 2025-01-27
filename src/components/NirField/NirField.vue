@@ -151,7 +151,7 @@
 	 * @param value Valeur du champ à valider
 	 * @param rules Ensemble de règles
 	 */
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	function validateFieldSet(value: string, rules: Array<{ type: string, options?: any }>) {
 		const validationRules = generateRules(rules)
 		validationRules.forEach((rule) => {
