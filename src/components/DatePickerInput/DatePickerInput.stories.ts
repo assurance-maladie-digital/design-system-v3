@@ -265,7 +265,7 @@ export const WithError: Story = {
 						v-model="date"
 						placeholder="Date invalide"
 						:custom-rules="[
-							{ type: 'notAfterToday', options: { message: 'La date ne peut pas être apres à aujourd'hui' } }
+							{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } }
 						]"
 					/>
 				</template>
@@ -299,7 +299,7 @@ export const WithError: Story = {
 		noCalendar: false,
 		modelValue: '01/01/2100',
 		customRules: [
-			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être apres à aujourd\'hui' } },
+			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
 		],
 	},
 	render: (args) => {
