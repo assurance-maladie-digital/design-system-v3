@@ -130,6 +130,10 @@ export default defineConfig({
 			exclude: [
 				'src/**/*.spec.{js,vue,ts}',
 				'src/**/*.stories.*',
+				'src/**/*ExpertiseLevelEnum.ts*',
+				'src/**/*AccessibiliteItems.ts*',
+				'src/**/*filePromise.ts*',
+				'src/composables/index.ts*',
 				'src/**/types.*',
 				'src/main.ts',
 				'src/components/index.ts',
