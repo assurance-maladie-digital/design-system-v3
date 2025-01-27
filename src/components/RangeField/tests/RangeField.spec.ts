@@ -43,7 +43,7 @@ describe('RangeField', () => {
 		const inputMax = wrapper.findAll('input').at(1) as DOMWrapper<HTMLInputElement>
 
 		expect(inputMin.element.value).toBe('0')
-		expect(inputMax.element.value).toBe('0')
+		expect(inputMax.element.value).toBe('100')
 	})
 
 	it('updates modelValue when input changes', async () => {

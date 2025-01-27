@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { vMaska } from 'maska/vue'
-	import { ref, watch } from 'vue'
+	import { computed, ref, watch } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import RangeSlider from './RangeSlider/RangeSlider.vue'
 	import { config } from './config'
@@ -21,14 +21,24 @@
 
 	const model = defineModel<
 		Array<number>
-	>({
-		default: [0, 0],
+	>()
+
+	const innerValue = computed(() => {
+		return model.value ? model.value : [props.min, props.max]
 	})
 
-	const fieldMin = ref<string | number>(model.value[0])
-	const fieldMax = ref<string | number>(model.value[1])
+	const fieldMin = ref<string | number>(innerValue.value[0])
+	const fieldMax = ref<string | number>(innerValue.value[1])
 
 	watch(model, (value) => {
+		if (!Array.isArray(value)) {
+			model.value = [
+				props.min,
+				props.max,
+			]
+			return
+		}
+
 		const start = clamp(value[0]), end = clamp(value[1])
 		fieldMin.value = start
 		fieldMax.value = end
@@ -67,9 +77,9 @@
 			!isNaN(newValue)
 			&& isFinite(newValue)
 			&& newValue >= props.min
-			&& newValue <= model.value[1]
+			&& newValue <= model.value![1]
 		) {
-			model.value = [newValue, model.value[1]]
+			model.value = [newValue, innerValue.value[1]]
 		}
 	}
 
@@ -82,21 +92,21 @@
 			!isNaN(newValue)
 			&& isFinite(newValue)
 			&& newValue <= props.max
-			&& newValue >= model.value[0]
+			&& newValue >= innerValue.value[0]
 		) {
-			model.value = [model.value[0], newValue]
+			model.value = [innerValue.value[0], newValue]
 		}
 	}
 
 	function validateMin(focus: boolean) {
 		if (!focus) {
-			fieldMin.value = model.value[0]
+			fieldMin.value = innerValue.value[0]
 		}
 	}
 
 	function validateMax(focus: boolean) {
 		if (!focus) {
-			fieldMax.value = model.value[1]
+			fieldMax.value = innerValue.value[1]
 		}
 	}
 </script>
@@ -105,7 +115,7 @@
 	<div class="vd-range-field">
 		<div class="mt-10 mb-2 mx-3">
 			<RangeSlider
-				:model-value="model"
+				:model-value="innerValue"
 				:max="max"
 				:min="min"
 				:step="step"
