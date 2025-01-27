@@ -5,7 +5,7 @@ import { VBtn } from 'vuetify/components'
 import { ref } from 'vue'
 
 const meta = {
-	title: 'Composants/Boutons/SelectBtnField',
+	title: 'Composants/Formulaires/SelectBtnField',
 	component: SelectBtnField,
 	parameters: {
 		layout: 'fullscreen',
