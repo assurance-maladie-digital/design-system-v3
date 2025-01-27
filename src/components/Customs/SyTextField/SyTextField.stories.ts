@@ -512,3 +512,85 @@ export const SlotCustomIcon: Story = {
 		}
 	},
 }
+
+export const WithValidation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTextField 
+						v-model="value"
+						:rules="[
+							{ type: 'required', options: { message: 'Ce champ est requis', fieldName: 'Test' } },
+							{ type: 'minLength', options: { length: 3, message: 'Le champ doit contenir au moins 3 caractères', successMessage: 'Le champs contient au moins 3 caractères' } }
+						]"
+						:show-success-messages="true"
+						validate-on-input
+						label="Champ avec validation"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTextField } from '@cnamts/synapse'
+
+					const value = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		showDivider: false,
+		variantStyle: 'outlined',
+		color: 'primary',
+		isClearable: true,
+		label: 'Champ avec validation',
+		required: false,
+		showSuccessMessages: true,
+		validateOnInput: true,
+		rules: [
+			{
+				type: 'required',
+				options: {
+					message: 'Ce champ est requis',
+					fieldName: 'Test',
+				},
+			},
+			{
+				type: 'minLength',
+				options: {
+					length: 3,
+					message: 'Le champ doit contenir au moins 3 caractères',
+					successMessage: 'Le champs contient au moins 3 caractères',
+				},
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<SyTextField 
+						v-model="value"
+						v-bind="args"
+					/>
+					<div class="mt-4">
+						Valeur actuelle : {{ value }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
