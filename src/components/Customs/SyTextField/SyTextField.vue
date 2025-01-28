@@ -229,10 +229,10 @@
 
 <style>
 .v-messages__message--success .v-messages__message {
-  color: rgb(var(--v-theme-success)) !important;
+	color: rgb(var(--v-theme-success)) !important;
 }
 
 .v-messages__message--error .v-messages__message {
-  color: rgb(var(--v-theme-error)) !important;
+	color: rgb(var(--v-theme-error)) !important;
 }
 </style>

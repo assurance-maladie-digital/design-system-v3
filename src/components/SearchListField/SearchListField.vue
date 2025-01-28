@@ -163,38 +163,38 @@
 @use '@/assets/tokens';
 
 .v-list {
-  background: transparent;
+	background: transparent;
 }
 
 .vd-search-list .v-list-item--active::before {
-  opacity: 0;
+	opacity: 0;
 }
 
 .custom-checkbox {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgb(0 0 0 / 50%);
-  border-radius: 2px;
-  outline: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	border: 2px solid rgb(0 0 0 / 50%);
+	border-radius: 2px;
+	outline: none;
+	cursor: pointer;
+	transition: all 0.3s ease;
 }
 
 .custom-checkbox:checked {
-  background-color: tokens.$primary-base !important;
-  border-color: tokens.$primary-base !important;
+	background-color: tokens.$primary-base !important;
+	border-color: tokens.$primary-base !important;
 
-  &::before {
-    content: '\2713';
-    display: block;
-    text-align: center;
-    line-height: 15px;
-    color: #fff;
-  }
+	&::before {
+		content: '\2713';
+		display: block;
+		text-align: center;
+		line-height: 15px;
+		color: #fff;
+	}
 }
 
 .custom-checkbox:hover {
-  border-color: tokens.$primary-darker !important;
+	border-color: tokens.$primary-darker !important;
 }
 </style>
