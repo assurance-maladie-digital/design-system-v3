@@ -75,7 +75,7 @@
 			prependInnerIcon: undefined,
 			variantStyle: 'outlined',
 			color: 'primary',
-			label: undefined,
+			label: 'custom label',
 			errorMessages: null,
 			isReadOnly: false,
 			isClearable: false,
@@ -279,7 +279,7 @@
 		</template>
 		<template #append-inner>
 			<slot name="append-inner">
-				<VIcon v-if="hasError">
+				<VIcon v-if="hasError && !props.appendInnerIcon">
 					{{ mdiInformation }}
 				</VIcon>
 				<VIcon
