@@ -174,6 +174,26 @@ export function useFieldValidation() {
 					)
 				}
 
+				case 'dateExact': {
+					if (!options.date) {
+						return { error: 'Configuration de la règle invalide' }
+					}
+
+					const dateValue = new Date(value)
+
+					if (typeof options.date !== 'string') {
+						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+					}
+
+					const [day, month, year] = options.date.split('/')
+					const referenceDate = new Date(`${year}-${month}-${day}`)
+
+					return createValidationResult(
+						dateValue.getTime() === referenceDate.getTime(),
+						options.message || `${identifier} doit être exactement le ${options.date}.`,
+					)
+				}
+
 				case 'custom': {
 					const result = options.validate?.(value)
 					if (result === true) {
