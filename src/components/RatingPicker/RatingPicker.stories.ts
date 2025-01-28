@@ -2,7 +2,7 @@ import type { StoryObj, Meta } from '@storybook/vue3'
 import RatingPicker from './RatingPicker.vue'
 
 const meta = {
-	title: 'Composants/Formulaires/RatingPicker',
+	title: 'Composants/Feedback/RatingPicker',
 	component: RatingPicker,
 	decorators: [
 		() => ({
