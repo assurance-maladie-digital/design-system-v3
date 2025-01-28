@@ -15,7 +15,7 @@
 
 	const props = defineProps({
 		label: {
-			type: String as PropType<string | null>,
+			type: String as PropType<string | undefined>,
 			default: RatingEnum.NUMBER,
 		},
 		length: {
@@ -56,7 +56,7 @@
 	<fieldset class="vd-number-picker">
 		<SySelect
 			v-if="isMobile"
-			:model-value="props.modelValue === -1 ? null : props.modelValue"
+			:model-value="props.modelValue === -1 ? undefined : props.modelValue"
 			:label="props.label"
 			:disabled="props.readonly || hasAnswered"
 			:items="selectItems"

@@ -50,13 +50,13 @@
 
 	const ratingComponent = computed(() => {
 		if (props.type === RatingEnum.EMOTION) {
-			return EmotionPicker as string
+			return EmotionPicker as unknown as string
 		}
 		else if (props.type === RatingEnum.NUMBER) {
-			return NumberPicker as string
+			return NumberPicker as unknown as string
 		}
 		else {
-			return StarsPicker as string
+			return StarsPicker as unknown as string
 		}
 	})
 

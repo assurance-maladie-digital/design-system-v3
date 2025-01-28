@@ -22,7 +22,7 @@ export enum AlertTypeEnum {
 export const ALERT_TYPE_ENUM_VALUES = Object.values(AlertTypeEnum)
 
 export function useRating(props: {
-	label: string | null
+	label: string | null | undefined
 	readonly: boolean
 	modelValue: number
 }, emit: (event: 'update:modelValue', value: number) => void) {

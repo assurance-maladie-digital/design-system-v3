@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { type PropType, computed } from 'vue'
+	import { type PropType, computed, onMounted } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import { propValidator } from '@/utils/propValidator'
@@ -79,6 +79,14 @@
 		}
 		return props.itemLabels[value]
 	}
+
+	onMounted(() => {
+		const hiddenInputs = document.querySelectorAll('.v-rating__hidden')
+		hiddenInputs.forEach((input) => {
+			(input as HTMLElement).setAttribute('tabindex', '0')
+			// (input as HTMLElement).setAttribute('aria-label', getEmotionLabel(Number(input.getAttribute('value'))))
+		})
+	})
 </script>
 
 <template>
@@ -99,6 +107,7 @@
 			<template #item="{ index }">
 				<VBtn
 					:disabled="props.readonly || hasAnswered"
+					:title="getEmotionLabel(index)"
 					:aria-pressed="isActive(index).toString()"
 					:class="[getColor(index), { 'v-btn--active': isActive(index) }]"
 					:min-height="btnSize"
@@ -146,19 +155,19 @@
 	}
 
 	.text-secondary {
-		color: tokens.$grey-lighten-20 !important;
+		color: tokens.$grey-darken-20 !important;
 	}
 
 	&.sad {
-		color: tokens.$orange-darken-20 !important;
+		color: tokens.$orange-darken-40 !important;
 	}
 
 	&.neutral {
-		color: tokens.$yellow-darken-20 !important;
+		color: tokens.$yellow-darken-40 !important;
 	}
 
 	&.happy {
-		color: tokens.$turquoise-darken-20 !important;
+		color: tokens.$turquoise-darken-40 !important;
 	}
 
 	&--active.v-btn--disabled .v-icon {

@@ -1,5 +1,5 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
-import PasswordField from './RatingPicker.vue'
+import RatingPicker from './RatingPicker.vue'
 
 const meta = {
 	title: 'Composants/Formulaires/PasswordField',
@@ -23,45 +23,6 @@ const meta = {
 				},
 			},
 		},
-		outlined: {
-			description: 'Définit la variante du champ (outlined ou underlined).',
-			control: 'boolean',
-			default: true,
-			table: {
-				type: {
-					summary: 'boolean',
-				},
-			},
-		},
-		required: {
-			description: 'Indique si le champ est requis.',
-			control: 'boolean',
-			default: false,
-			table: {
-				type: {
-					summary: 'boolean',
-				},
-			},
-		},
-		isValidateOnBlur: {
-			description: 'Active ou non la validation lors du blur.',
-			control: 'boolean',
-			default: true,
-			table: {
-				type: {
-					summary: 'boolean',
-				},
-			},
-		},
-		customRules: {
-			description: 'Règles de validation personnalisées.',
-			control: 'object',
-			table: {
-				type: {
-					summary: 'array',
-				},
-			},
-		},
 	},
 } satisfies Meta<typeof PasswordField>
 
@@ -75,10 +36,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	args: {
 		modelValue: '',
-		outlined: true,
-		required: false,
-		isValidateOnBlur: true,
-		customRules: [],
 	},
 	render: (args) => {
 		return {

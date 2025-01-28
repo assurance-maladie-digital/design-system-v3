@@ -10,27 +10,29 @@
 </script>
 
 <template>
-	<PageContainer>
-		<RatingPicker
-			v-model="ratingEmotion"
-			label="Êtes-vous satisfait de ce service ?"
-			type="emotion"
-		/>
+	<main>
+		<PageContainer>
+			<RatingPicker
+				v-model="ratingEmotion"
+				label="Êtes-vous satisfait de ce service ?"
+				type="emotion"
+			/>
 
-		<br>
+			<br>
 
-		<RatingPicker
-			v-model="ratingNumber"
-			label="Êtes-vous satisfait de ce service ?"
-			type="number"
-		/>
+			<!--		<RatingPicker
+				v-model="ratingNumber"
+				label="Êtes-vous satisfait de ce service ?"
+				type="number"
+				/>-->
 
-		<br>
+			<br>
 
-		<RatingPicker
+		<!--		<RatingPicker
 			v-model="ratingStars"
 			label="Êtes-vous satisfait de ce service ?"
 			type="stars"
-		/>
-	</PageContainer>
+			/>-->
+		</PageContainer>
+	</main>
 </template>

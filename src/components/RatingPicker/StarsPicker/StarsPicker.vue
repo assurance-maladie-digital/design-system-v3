@@ -34,7 +34,7 @@
 	}
 
 	function isFilled(index: number): boolean {
-		const isHovered = hoverIndex.value >= index
+		const isHovered = hoverIndex.value !== null && hoverIndex.value >= index
 		const isActive = props.modelValue - 1 >= index
 		return isHovered || isActive
 	}
