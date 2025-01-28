@@ -6,7 +6,7 @@ import RatingPicker from '../RatingPicker.vue'
 import { RatingEnum } from '../Rating'
 import NumberPicker from '../NumberPicker/NumberPicker.vue'
 import EmotionPicker from '../EmotionPicker/EmotionPicker.vue'
-import StarsPicker from '../StarsPicker/index'
+import StarsPicker from '../StarsPicker/StarsPicker.vue'
 
 import { locales as emotionPickerlocales } from '../EmotionPicker/locales'
 import { locales } from '../locales'

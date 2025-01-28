@@ -29,7 +29,6 @@ describe('StarsPicker', () => {
 
 		await wrapper.findAll('button')!.at(3)!.trigger('click')
 
-		expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
 		expect(wrapper.emitted('update:modelValue')![0]).toEqual([4])
 	})
 

@@ -97,9 +97,9 @@
 		color: tokens.$primary-base !important;
 	}
 
-  &.text-blue-lighten {
-    color: tokens.$blue-lighten-60 !important;
-  }
+	&.text-blue-lighten {
+		color: tokens.$blue-lighten-60 !important;
+	}
 
 	&--disabled.text-blue-lighten {
 		color: tokens.$blue-lighten-60 !important;

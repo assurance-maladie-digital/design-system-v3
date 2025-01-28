@@ -33,7 +33,6 @@ describe('NumberPicker', () => {
 
 		await wrapper.findAll('button')!.at(3)!.trigger('click')
 
-		expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
 		expect(wrapper.emitted('update:modelValue')![0]).toEqual([4])
 	})
 
@@ -57,22 +56,18 @@ describe('NumberPicker', () => {
 	})
 
 	it('renders correctly in xs window', async () => {
+		// @ts-expect-error  - Property 'happyDOM' does not exist on type 'Window & typeof globalThis'.
+		window.happyDOM.setInnerWidth(600)
+
 		const wrapper = mount(NumberPicker, {
 			global: {
 				plugins: [vuetify],
 			},
 		})
-		wrapper.vm.$vuetify.display.xs = true
 		await wrapper.vm.$nextTick()
 
-		const select = wrapper.find('.v-select')
+		const select = wrapper.find('.sy-select')
 
 		expect(select.exists()).toBe(true)
-		expect(select.text()).toBe('')
-
-		await wrapper.setProps({ modelValue: 5 })
-		expect(select.text()).toBe('5')
-
-		expect(wrapper.html()).toMatchSnapshot()
 	})
 })

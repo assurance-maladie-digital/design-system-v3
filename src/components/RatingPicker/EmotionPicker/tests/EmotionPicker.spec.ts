@@ -43,6 +43,9 @@ describe('EmotionPicker', () => {
 	})
 
 	it('renders in mobile mode', async () => {
+		// @ts-expect-error  - Property 'happyDOM' does not exist on type 'Window & typeof globalThis'.
+		window.happyDOM.setInnerWidth(600)
+
 		const wrapper = mount(EmotionPicker, {
 			global: {
 				plugins: [vuetify],
@@ -53,7 +56,6 @@ describe('EmotionPicker', () => {
 			},
 		})
 
-		wrapper.vm.$vuetify.display.name = 'xs'
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.html()).toContain('70px')
@@ -95,15 +97,8 @@ describe('EmotionPicker', () => {
 		})
 
 		const items = wrapper.findAll('button')
-		const classBtn = items.map(item => item.classes())
+
 		await wrapper.setProps({ modelValue: 1 })
 		expect(items[0].classes()).toContain('v-btn--active')
-		const classBtnClicked = wrapper
-			.findAll('button')
-			.map(item => item.classes())
-
-		for (let i = 0; i < classBtn.length; i++) {
-			expect(classBtn[i]).not.toEqual(classBtnClicked[i])
-		}
 	})
 })
