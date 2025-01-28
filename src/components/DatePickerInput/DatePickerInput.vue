@@ -187,7 +187,7 @@
 	})
 
 	watch(displayFormattedDateComputed, (newValue) => {
-		if (!props.noCalendar) {
+		if (!props.noCalendar && newValue) {
 			displayFormattedDate.value = newValue
 		}
 	})
@@ -246,7 +246,9 @@
 			// Force format application on mount
 			emit('update:model-value', formattedDate.value)
 		}
-		displayFormattedDate.value = displayFormattedDateComputed.value
+		if (displayFormattedDateComputed.value) {
+			displayFormattedDate.value = displayFormattedDateComputed.value
+		}
 	})
 
 	onBeforeUnmount(() => {
