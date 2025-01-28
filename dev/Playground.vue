@@ -1,25 +1,14 @@
 <script lang="ts" setup>
-	import ExternalLinks from '@/components/ExternalLinks/ExternalLinks.vue'
+	import PasswordField from '@/components/PasswordField/PasswordField.vue'
+	const customRules = []
 
-	const items = [
-		{
-			text: 'ameli.fr',
-			href: 'https://www.ameli.fr',
-		},
-		{
-			text: 'Github',
-			href: 'https://www.github.com',
-		},
-		{
-			text: 'Twitter',
-			href: 'https://www.twitter.com',
-		},
-	]
 </script>
 
 <template>
-	<ExternalLinks
-		position="top left"
-		:items="items"
+	<PasswordField
+		:custom-rules="customRules"
+		is-validate-on-blur
+		outlined
+		:required="false"
 	/>
 </template>
