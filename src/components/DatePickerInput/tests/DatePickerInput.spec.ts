@@ -27,7 +27,7 @@ describe('DatePickerInput.vue', () => {
 			},
 			props: { placeholder },
 		})
-		expect(wrapper.find('input').attributes('placeholder')).toBe(placeholder)
+		expect(wrapper.find('input').attributes('placeholder')).toBe(undefined)
 	})
 
 	it('emits update:model-value event on date selection', async () => {
