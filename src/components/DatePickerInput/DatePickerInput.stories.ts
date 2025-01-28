@@ -612,11 +612,6 @@ export const DifferentFormats: Story = {
 							placeholder="Format DD-MM-YY"
 							format="DD-MM-YY"
 						/>
-						<DatePickerInput
-							v-model="date5"
-							placeholder="Format personnalisé DD MM YYYY"
-							format="DD MM YYYY"
-						/>
 					</div>
 				</template>
 				`,
@@ -632,7 +627,6 @@ export const DifferentFormats: Story = {
 				const value2 = ref('12/24/2025')
 				const value3 = ref('2025-12-24')
 				const value4 = ref('24-12-25')
-				const value5 = ref('24 12 2025')
 				</script>
 				`,
 			},
@@ -646,8 +640,7 @@ export const DifferentFormats: Story = {
 				const value2 = ref('12/24/2025')
 				const value3 = ref('2025-12-24')
 				const value4 = ref('24-12-25')
-				const value5 = ref('24 12 2025')
-				return { value1, value2, value3, value4, value5 }
+				return { value1, value2, value3, value4 }
 			},
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
@@ -670,11 +663,6 @@ export const DifferentFormats: Story = {
                     v-model="value4"
                     placeholder="Format DD-MM-YY"
                     format="DD-MM-YY"
-                />
-                <DatePickerInput
-                    v-model="value5"
-                    placeholder="Format personnalisé DD MM YYYY"
-                    format="DD MM YYYY"
                 />
               </div>
             `,
@@ -719,8 +707,8 @@ export const WithDateFormatReturn: Story = {
 					import { DatePickerInput } from '@cnamts/synapse'
 					
 					const date1 = ref('24/12/2025')
-					const date2 = ref('12/24/2025')
-					const date3 = ref('2025-12-24')
+					const date2 = ref('24/12/2025')
+					const date3 = ref('24/12/2025')
 				</script>
 				`,
 			},
@@ -746,8 +734,8 @@ export const WithDateFormatReturn: Story = {
 			components: { DatePickerInput },
 			setup() {
 				const value1 = ref('24/12/2025')
-				const value2 = ref('12/24/2025')
-				const value3 = ref('2025-12-24')
+				const value2 = ref('24/12/2025')
+				const value3 = ref('24/12/2025')
 				return { value1, value2, value3 }
 			},
 			template: `
