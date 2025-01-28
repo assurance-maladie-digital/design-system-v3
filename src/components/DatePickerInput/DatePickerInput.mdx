@@ -42,7 +42,43 @@ Les séparateurs peuvent être `/`, `-` ou `.`
 - **Description** : Format de la date pour la valeur de retour. Utilise les mêmes tokens que la prop `format`. Si non spécifié, utilise le même format que `format`.
 - **Défaut** : `''`
 
-> **Note importante sur les formats**Le composant utilise maintenant deux formats distincts :1. **Format d'entrée/affichage** : Défini par la prop `format`, il détermine à la fois :- Le format dans lequel la date doit être fournie au composant- Comment la date est affichée visuellement dans le champ2. **Format de retour** : Défini par la prop `dateFormatReturn`, il détermine le format de la date émise lors des changementsPar exemple, avec `format="DD-MM-YY"` et `dateFormatReturn="YYYY/MM/DD"` :- Vous devez fournir la date au format : `24-12-25`- Elle sera affichée comme : `24-12-25`- Elle sera retournée comme : `2025/12/24`
+<div
+    style={{
+        border: '2px solid #FF0000',
+        padding: '1rem',
+        borderRadius: '4px',
+        marginBottom: '1rem',
+    }}
+>
+    <strong>Note importante sur les formats</strong>
+    <p>
+        Le composant utilise deux formats distincts :
+    </p>
+    <ol>
+        <li>
+            <strong>Format d'entrée/affichage</strong><br/>
+            Défini par la prop <code>format</code>, il détermine à la fois :
+            <ul>
+                <li>Le format dans lequel la date doit être fournie au composant</li>
+                <li>Comment la date est affichée visuellement dans le champ</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Format de retour</strong><br/>
+            Défini par la prop <code>dateFormatReturn</code>, il détermine le format de la date émise
+        </li>
+    </ol>
+    <p>
+        Par exemple, avec <code>format="DD-MM-YY"</code> et <code>dateFormatReturn="YYYY/MM/DD"</code> :
+    </p>
+    <ul>
+        <li>Vous devez fournir la date au format : <code>24-12-25</code></li>
+        <li>Elle sera affichée comme : <code>24-12-25</code></li>
+        <li>Elle sera retournée comme : <code>2025/12/24</code></li>
+    </ul>
+</div>
+
+
 
 ### required
 - **Type** : `boolean`
