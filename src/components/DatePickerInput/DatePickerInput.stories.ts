@@ -272,7 +272,7 @@ export const WithoutIcon: Story = {
 				<template>
 					<DatePickerInput
 						v-model="date"
-						placeholder="Renseigner une date"
+						placeholder="Sélectionner une date"
 						format="DD/MM/YYYY"
 						:displayIcon="false"
 					/>
@@ -293,7 +293,7 @@ export const WithoutIcon: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Renseigner une date',
+		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: '',
 		isBirthDate: false,
@@ -412,7 +412,7 @@ export const WithError: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Selectionner une date',
+		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: '',
 		isBirthDate: false,
