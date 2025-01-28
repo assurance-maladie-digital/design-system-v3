@@ -35,6 +35,12 @@
 		},
 	)
 
+	watch(search, (newValue) => {
+		if (newValue === '') {
+			search.value = null
+		}
+	})
+
 	const filteredItems = computed(() => {
 		if (search.value === null) {
 			return props.items
@@ -61,12 +67,12 @@
 		<SyTextField
 			v-model="search"
 			:label="locales.search"
+			:variant="outlined ? 'outlined' : 'underlined'"
 			aria-describedby="search-description"
 			aria-labelledby="search-label"
-			hide-details
 			color="primary"
-			:variant="outlined ? 'outlined' : 'underlined'"
-			clearable
+			hide-details
+			is-clearable
 			tabindex="0"
 		>
 			<template #prepend-inner>
@@ -93,11 +99,11 @@
 		<VList
 			id="search-list"
 			v-model:selected="internalValue"
-			title="search-list"
-			select-strategy="classic"
+			aria-labelledby="search-list-title"
 			class="pb-0"
 			role="listbox"
-			aria-labelledby="search-list-title"
+			select-strategy="classic"
+			title="search-list"
 			@update:selected="emitChangeEvent"
 		>
 			<h2
@@ -110,13 +116,13 @@
 				v-for="(item, index) in filteredItems"
 				:id="`search-list-item-${index}`"
 				:key="index"
-				:value="item.value"
-				role="option"
-				:aria-selected="internalValue.includes(item.value)"
 				:aria-labelledby="`search-list-item-${index}`"
+				:aria-selected="internalValue.includes(item.value)"
 				:tabindex="0"
+				:value="item.value"
 				active-class="text-primary"
 				class="d-flex align-center justify-start mx-4"
+				role="option"
 			>
 				<span
 					:id="`search-list-item-label-${index}`"
@@ -128,14 +134,14 @@
 					<VListItemAction start>
 						<input
 							:id="`checkbox-${index}`"
-							type="checkbox"
-							role="option"
-							:checked="isActive"
-							:aria-selected="isActive"
 							:aria-label="`${locales.checkboxLabel} ${item.label}`"
 							:aria-labelledby="`checkbox-${index}`"
+							:aria-selected="isActive"
+							:checked="isActive"
 							:title="`${locales.checkboxLabel} ${item.label}`"
 							class="custom-checkbox ml-2"
+							role="option"
+							type="checkbox"
 						>
 						<!-- eslint-disable-next-line  vuejs-accessibility/label-has-for -->
 						<label
@@ -157,38 +163,38 @@
 @use '@/assets/tokens';
 
 .v-list {
-	background: transparent;
+  background: transparent;
 }
 
 .vd-search-list .v-list-item--active::before {
-	opacity: 0;
+  opacity: 0;
 }
 
 .custom-checkbox {
-	appearance: none;
-	width: 20px;
-	height: 20px;
-	border: 2px solid rgb(0 0 0 / 50%);
-	border-radius: 2px;
-	outline: none;
-	cursor: pointer;
-	transition: all 0.3s ease;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(0 0 0 / 50%);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .custom-checkbox:checked {
-	background-color: tokens.$primary-base !important;
-	border-color: tokens.$primary-base !important;
+  background-color: tokens.$primary-base !important;
+  border-color: tokens.$primary-base !important;
 
-	&::before {
-		content: '\2713';
-		display: block;
-		text-align: center;
-		line-height: 15px;
-		color: #fff;
-	}
+  &::before {
+    content: '\2713';
+    display: block;
+    text-align: center;
+    line-height: 15px;
+    color: #fff;
+  }
 }
 
 .custom-checkbox:hover {
-	border-color: tokens.$primary-darker !important;
+  border-color: tokens.$primary-darker !important;
 }
 </style>

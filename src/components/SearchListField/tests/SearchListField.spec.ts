@@ -161,7 +161,6 @@ describe('SearchListField.vue', () => {
 
 		wrapper.vm.search = 'Item 1'
 		await wrapper.vm.$nextTick()
-
 		await wrapper.find('.v-icon--clickable').trigger('click')
 
 		expect(wrapper.vm.search).toBeNull()
@@ -291,7 +290,7 @@ describe('SearchListField.vue', () => {
 		})
 
 		const listItem = wrapper.find('.vd-search-list .v-list-item')
-		listItem.trigger('click')
+		await listItem.trigger('click')
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
