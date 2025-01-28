@@ -66,11 +66,10 @@
 					@click="emitInputEvent(index + 1)"
 				>
 					<VIcon
-						color="primary"
 						:class="
 							isFilled(index)
-								? 'primary'
-								: 'text-blue-lighten-60'
+								? 'text-primary'
+								: 'text-blue-lighten'
 						"
 						size="36px"
 						class="py-0 px-2"
@@ -94,11 +93,15 @@
 	width: 52px !important;
 	height: 36px !important;
 
-	&--disabled.text-blue {
+	&--disabled.text-primary {
 		color: tokens.$primary-base !important;
 	}
 
-	&--disabled.text-blue-lighten-60 {
+  &.text-blue-lighten {
+    color: tokens.$blue-lighten-60 !important;
+  }
+
+	&--disabled.text-blue-lighten {
 		color: tokens.$blue-lighten-60 !important;
 	}
 }

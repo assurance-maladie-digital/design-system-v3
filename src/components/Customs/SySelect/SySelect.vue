@@ -23,6 +23,10 @@
 			type: Boolean,
 			default: false,
 		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
 		menuId: {
 			type: String,
 			default: 'sy-select-menu',
@@ -131,6 +135,7 @@
 			color="primary"
 			tabindex="0"
 			readonly
+			:disabled="disabled"
 			:label="selectedItem ? label : ''"
 			:aria-label="selectedItem ? label : 'Sélectionnez une option'"
 			:error-messages="errorMessages"

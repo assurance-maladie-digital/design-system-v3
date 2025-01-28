@@ -4,10 +4,12 @@
 	import { locales } from './locales'
 	import type { PropType } from 'vue'
 
+	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+
 	import { useDisplay } from 'vuetify'
 
 	interface SelectItem {
-		title: string
+		text: string
 		value: number
 	}
 
@@ -42,7 +44,7 @@
 
 	const selectItems = computed<SelectItem[]>(() => {
 		return [...Array(props.length)].map((_, index) => ({
-			title: `${index + 1}`,
+			text: `${index + 1}`,
 			value: index + 1,
 		}))
 	})
@@ -52,15 +54,13 @@
 
 <template>
 	<fieldset class="vd-number-picker">
-		<VSelect
+		<SySelect
 			v-if="isMobile"
 			:model-value="props.modelValue === -1 ? null : props.modelValue"
 			:label="props.label"
 			:disabled="props.readonly || hasAnswered"
 			:items="selectItems"
-			hide-details
-			variant="outlined"
-			class="vd-form-input"
+			color="primary"
 			@update:model-value="(value) => emit('update:modelValue', value)"
 		/>
 		<template v-else>
