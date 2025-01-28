@@ -37,6 +37,10 @@ const meta = {
 			control: 'boolean',
 			description: 'Mode date de naissance',
 		},
+		isOutlined: {
+			control: 'boolean',
+			description: 'Affiche le champ en contour',
+		},
 		showWeekNumber: {
 			control: 'boolean',
 			description: 'Affiche les numéros de semaine',
@@ -91,7 +95,11 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePickerInput v-model="date" />
+					<DatePickerInput
+					 v-model="date"
+					 placeholder="Sélectionner une date"
+					format="DD/MM/YYYY"
+					  />
 				</template>
 				`,
 			},
@@ -108,7 +116,6 @@ export const Default: Story = {
 	args: {
 		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
 		isBirthDate: false,
 		showWeekNumber: false,
 		required: false,
@@ -128,10 +135,10 @@ export const Default: Story = {
 				return { args, value }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<DatePickerInput v-bind="args" v-model="value" />
-				</div>
-			`,
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePickerInput v-bind="args" v-model="value"/>
+              </div>
+            `,
 		}
 	},
 }
@@ -145,8 +152,9 @@ export const DateRange: Story = {
 				<template>
 					<DatePickerInput
 						v-model="dateRange"
-						display-range
 						placeholder="Sélectionner une période"
+						format="DD/MM/YYYY"
+						displayRange
 					/>
 				</template>
 				`,
@@ -187,14 +195,132 @@ export const DateRange: Story = {
 				return { args, value }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<DatePickerInput v-bind="args" v-model="value" />
-				</div>
-			`,
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePickerInput v-bind="args" v-model="value"/>
+              </div>
+            `,
 		}
 	},
 }
 
+export const WithAppendIcon: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerInput
+						v-model="date"
+						placeholder="Sélectionner une date"
+						format="DD/MM/YYYY"
+						displayAppendIcon
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePickerInput } from '@cnamts/synapse'
+					
+					const date = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'Sélectionner une date',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
+		isBirthDate: false,
+		showWeekNumber: false,
+		required: false,
+		displayRange: false,
+		displayIcon: true,
+		displayAppendIcon: true,
+		isDisabled: false,
+		noIcon: false,
+		noCalendar: false,
+		modelValue: '',
+	},
+	render: (args) => {
+		return {
+			components: { DatePickerInput },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePickerInput v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithoutIcon: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerInput
+						v-model="date"
+						placeholder="Renseigner une date"
+						format="DD/MM/YYYY"
+						:displayIcon="false"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePickerInput } from '@cnamts/synapse'
+					
+					const date = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'Renseigner une date',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
+		isBirthDate: false,
+		showWeekNumber: false,
+		required: false,
+		displayRange: false,
+		displayIcon: false,
+		displayAppendIcon: false,
+		isDisabled: false,
+		noIcon: false,
+		modelValue: '',
+	},
+	render: (args) => {
+		return {
+			components: { DatePickerInput },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePickerInput v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
 export const BirthDate: Story = {
 	parameters: {
 		sourceCode: [
@@ -204,8 +330,9 @@ export const BirthDate: Story = {
 				<template>
 					<DatePickerInput
 						v-model="birthDate"
-						is-birth-date
 						placeholder="Date de naissance"
+						format="DD/MM/YYYY"
+						isBirthDate
 					/>
 				</template>
 				`,
@@ -246,10 +373,10 @@ export const BirthDate: Story = {
 				return { args, value }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<DatePickerInput v-bind="args" v-model="value" />
-				</div>
-			`,
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePickerInput v-bind="args" v-model="value"/>
+              </div>
+            `,
 		}
 	},
 }
@@ -263,7 +390,7 @@ export const WithError: Story = {
 				<template>
 					<DatePickerInput
 						v-model="date"
-						placeholder="Date invalide"
+						placeholder="notAfterToday"
 						:custom-rules="[
 							{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } }
 						]"
@@ -310,10 +437,10 @@ export const WithError: Story = {
 				return { args, value }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<DatePickerInput v-bind="args" v-model="value" />
-				</div>
-			`,
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePickerInput v-bind="args" v-model="value"/>
+              </div>
+            `,
 		}
 	},
 }
@@ -367,11 +494,13 @@ export const WithWarning: Story = {
 		noCalendar: false,
 		modelValue: '20/12/2023',
 		customWarningRules: [
-			{ type: 'notBeforeDate', options: {
-				warningMessage: 'Attention : la date est antérieure à la date de référence',
-				date: '01/01/2024',
-				isWarning: true,
-			} },
+			{
+				type: 'notBeforeDate', options: {
+					warningMessage: 'Attention : la date est antérieure à la date de référence',
+					date: '01/01/2024',
+					isWarning: true,
+				},
+			},
 		],
 	},
 	render: (args) => {
@@ -382,10 +511,10 @@ export const WithWarning: Story = {
 				return { args, value }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<DatePickerInput v-bind="args" v-model="value" />
-				</div>
-			`,
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePickerInput v-bind="args" v-model="value"/>
+              </div>
+            `,
 		}
 	},
 }
@@ -447,10 +576,10 @@ export const WithSuccess: Story = {
 				return { args, value }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<DatePickerInput v-bind="args" v-model="value" />
-				</div>
-			`,
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePickerInput v-bind="args" v-model="value"/>
+              </div>
+            `,
 		}
 	},
 }
@@ -521,34 +650,34 @@ export const DifferentFormats: Story = {
 				return { value1, value2, value3, value4, value5 }
 			},
 			template: `
-				<div class="d-flex flex-column gap-4 pa-4">
-					<DatePickerInput
-						v-model="value1"
-						placeholder="Format DD/MM/YYYY"
-						format="DD/MM/YYYY"
-					/>
-					<DatePickerInput
-						v-model="value2"
-						placeholder="Format MM/DD/YYYY"
-						format="MM/DD/YYYY"
-					/>
-					<DatePickerInput
-						v-model="value3"
-						placeholder="Format YYYY-MM-DD"
-						format="YYYY-MM-DD"
-					/>
-					<DatePickerInput
-						v-model="value4"
-						placeholder="Format DD-MM-YY"
-						format="DD-MM-YY"
-					/>
-					<DatePickerInput
-						v-model="value5"
-						placeholder="Format personnalisé DD MM YYYY"
-						format="DD MM YYYY"
-					/>
-				</div>
-			`,
+              <div class="d-flex flex-column gap-4 pa-4">
+                <DatePickerInput
+                    v-model="value1"
+                    placeholder="Format DD/MM/YYYY"
+                    format="DD/MM/YYYY"
+                />
+                <DatePickerInput
+                    v-model="value2"
+                    placeholder="Format MM/DD/YYYY"
+                    format="MM/DD/YYYY"
+                />
+                <DatePickerInput
+                    v-model="value3"
+                    placeholder="Format YYYY-MM-DD"
+                    format="YYYY-MM-DD"
+                />
+                <DatePickerInput
+                    v-model="value4"
+                    placeholder="Format DD-MM-YY"
+                    format="DD-MM-YY"
+                />
+                <DatePickerInput
+                    v-model="value5"
+                    placeholder="Format personnalisé DD MM YYYY"
+                    format="DD MM YYYY"
+                />
+              </div>
+            `,
 		}
 	},
 }
@@ -622,29 +751,29 @@ export const WithDateFormatReturn: Story = {
 				return { value1, value2, value3 }
 			},
 			template: `
-				<div class="d-flex flex-column gap-4 pa-4">
-					Date au format: {{ value1 }}  
-					<DatePickerInput
-						v-model="value1"
-						placeholder="Format d'affichage DD/MM/YYYY, retour par défaut"
-						format="DD/MM/YYYY"
-					/>
-					Date au format: {{ value2 }}
-					<DatePickerInput
-						v-model="value2"
-						placeholder="Format d'affichage DD/MM/YYYY, retour MM/DD/YYYY"
-						format="DD/MM/YYYY"
-						dateFormatReturn="MM/DD/YYYY"
-					/>
-					Date au format: {{ value3 }}
-					<DatePickerInput
-						v-model="value3"
-						placeholder="Format d'affichage DD/MM/YYYY, retour YYYY-MM-DD"
-						format="DD/MM/YYYY"
-						dateFormatReturn="YYYY-MM-DD"
-					/>
-				</div>
-			`,
+              <div class="d-flex flex-column gap-4 pa-4">
+                Date au format: {{ value1 }}
+                <DatePickerInput
+                    v-model="value1"
+                    placeholder="Format d'affichage DD/MM/YYYY, retour par défaut"
+                    format="DD/MM/YYYY"
+                />
+                Date au format: {{ value2 }}
+                <DatePickerInput
+                    v-model="value2"
+                    placeholder="Format d'affichage DD/MM/YYYY, retour MM/DD/YYYY"
+                    format="DD/MM/YYYY"
+                    dateFormatReturn="MM/DD/YYYY"
+                />
+                Date au format: {{ value3 }}
+                <DatePickerInput
+                    v-model="value3"
+                    placeholder="Format d'affichage DD/MM/YYYY, retour YYYY-MM-DD"
+                    format="DD/MM/YYYY"
+                    dateFormatReturn="YYYY-MM-DD"
+                />
+              </div>
+            `,
 		}
 	},
 }
@@ -713,36 +842,37 @@ export const WithCustomFormats: Story = {
 				return { value1, value2, value3 }
 			},
 			template: `
-				<div class="d-flex flex-column gap-4 pa-4">
-					<div>
-						<DatePickerInput
-							v-model="value1"
-							placeholder="Format d'affichage DD-MM-YY, retour YYYY/MM/DD"
-							format="DD-MM-YY"
-							dateFormatReturn="YYYY/MM/DD"
-						/>
-						Date au format: {{ value1 }}
-					</div>
-					<div>
-						<DatePickerInput
-							v-model="value2"
-							placeholder="Format d'affichage YY.MM.DD, retour DD-MM-YYYY"
-							format="YY.MM.DD"
-							dateFormatReturn="DD-MM-YYYY"
-						/>
-						Date au format: {{ value2 }}
-					</div>
-					<div>
-						<DatePickerInput
-							v-model="value3"
-							placeholder="Format d'affichage YYYY-DD-MM, retour MM/DD/YY"
-							format="YYYY-DD-MM"
-							dateFormatReturn="MM/DD/YY"
-						/>
-						Date au format: {{ value3 }}
-					</div>
-				</div>
-			`,
+              <div class="d-flex flex-column gap-4 pa-4">
+                <div>
+                  <DatePickerInput
+                      v-model="value1"
+                      placeholder="Format d'affichage DD-MM-YY, retour YYYY/MM/DD"
+                      format="DD-MM-YY"
+                      dateFormatReturn="YYYY/MM/DD"
+                      display-icon
+                  />
+                  Date au format: {{ value1 }}
+                </div>
+                <div>
+                  <DatePickerInput
+                      v-model="value2"
+                      placeholder="Format d'affichage YY.MM.DD, retour DD-MM-YYYY"
+                      format="YY.MM.DD"
+                      dateFormatReturn="DD-MM-YYYY"
+                  />
+                  Date au format: {{ value2 }}
+                </div>
+                <div>
+                  <DatePickerInput
+                      v-model="value3"
+                      placeholder="Format d'affichage YYYY-DD-MM, retour MM/DD/YY"
+                      format="YYYY-DD-MM"
+                      dateFormatReturn="MM/DD/YY"
+                  />
+                  Date au format: {{ value3 }}
+                </div>
+              </div>
+            `,
 		}
 	},
 }
@@ -822,45 +952,45 @@ export const WithMoreFormats: Story = {
 				return { value1, value2, value3, value4 }
 			},
 			template: `
-				<div class="d-flex flex-column gap-4 pa-4">
-					<div>
-						<DatePickerInput
-							v-model="value1"
-							placeholder="Format YY.MM.DD, retour DD/MM/YYYY"
-							format="YY.MM.DD"
-							dateFormatReturn="DD/MM/YYYY"
-						/>
-						Date au format: {{ value1 }}
-					</div>
-					<div>
-						<DatePickerInput
-							v-model="value2"
-							placeholder="Format YYYY-DD-MM, retour MM-DD-YY"
-							format="YYYY-DD-MM"
-							dateFormatReturn="MM-DD-YY"
-						/>
-						Date au format: {{ value2 }}
-					</div>
-					<div>
-						<DatePickerInput
-							v-model="value3"
-							placeholder="Format DD.MM.YY, retour YY/MM/DD"
-							format="DD.MM.YY"
-							dateFormatReturn="YY/MM/DD"
-						/>
-						Date au format: {{ value3 }}
-					</div>
-					<div>
-						<DatePickerInput
-							v-model="value4"
-							placeholder="Format MM-YYYY-DD, retour DD.MM.YYYY"
-							format="MM-YYYY-DD"
-							dateFormatReturn="DD.MM.YYYY"
-						/>
-						Date au format: {{ value4 }}
-					</div>
-				</div>
-			`,
+              <div class="d-flex flex-column gap-4 pa-4">
+                <div>
+                  <DatePickerInput
+                      v-model="value1"
+                      placeholder="Format YY.MM.DD, retour DD/MM/YYYY"
+                      format="YY.MM.DD"
+                      dateFormatReturn="DD/MM/YYYY"
+                  />
+                  Date au format: {{ value1 }}
+                </div>
+                <div>
+                  <DatePickerInput
+                      v-model="value2"
+                      placeholder="Format YYYY-DD-MM, retour MM-DD-YY"
+                      format="YYYY-DD-MM"
+                      dateFormatReturn="MM-DD-YY"
+                  />
+                  Date au format: {{ value2 }}
+                </div>
+                <div>
+                  <DatePickerInput
+                      v-model="value3"
+                      placeholder="Format DD.MM.YY, retour YY/MM/DD"
+                      format="DD.MM.YY"
+                      dateFormatReturn="YY/MM/DD"
+                  />
+                  Date au format: {{ value3 }}
+                </div>
+                <div>
+                  <DatePickerInput
+                      v-model="value4"
+                      placeholder="Format MM-YYYY-DD, retour DD.MM.YYYY"
+                      format="MM-YYYY-DD"
+                      dateFormatReturn="DD.MM.YYYY"
+                  />
+                  Date au format: {{ value4 }}
+                </div>
+              </div>
+            `,
 		}
 	},
 }

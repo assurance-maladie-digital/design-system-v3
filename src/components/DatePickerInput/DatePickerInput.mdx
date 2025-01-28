@@ -1,17 +1,17 @@
-import { Meta, Canvas, Controls, Source } from '@storybook/blocks';
+import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
 import * as DatePickerInputStories from "./DatePickerInput.stories";
 
-<Meta of={DatePickerInputStories} />
+<Meta of={DatePickerInputStories}/>
 
 # DatePickerInput
 
 Le composant `DatePickerInput` est un champ de saisie de date qui combine un champ de texte et un sélecteur de date. Il permet de saisir une date manuellement ou de la sélectionner via un calendrier, avec support pour les plages de dates.
 
-<Canvas story={{height: '550px'}} of={DatePickerInputStories.Default} />
+<Canvas story={{height: '550px'}} of={DatePickerInputStories.Default}/>
 
 # API
 
-<Controls of={DatePickerInputStories.Default} />
+<Controls of={DatePickerInputStories.Default}/>
 
 # Props
 
@@ -30,11 +30,11 @@ Le composant `DatePickerInput` est un champ de saisie de date qui combine un cha
 ### format
 - **Type** : `string`
 - **Description** : Format d'affichage et d'entrée de la date. Supporte les formats suivants :
-  - `DD` : jour sur 2 chiffres
-  - `MM` : mois sur 2 chiffres
-  - `YYYY` : année sur 4 chiffres
-  - `YY` : année sur 2 chiffres (assumé comme 20XX)
-  Les séparateurs peuvent être `/`, `-` ou `.`
+- `DD` : jour sur 2 chiffres
+- `MM` : mois sur 2 chiffres
+- `YYYY` : année sur 4 chiffres
+- `YY` : année sur 2 chiffres (assumé comme 20XX)
+Les séparateurs peuvent être `/`, `-` ou `.`
 - **Défaut** : `'DD/MM/YYYY'`
 
 ### dateFormatReturn
@@ -42,18 +42,7 @@ Le composant `DatePickerInput` est un champ de saisie de date qui combine un cha
 - **Description** : Format de la date pour la valeur de retour. Utilise les mêmes tokens que la prop `format`. Si non spécifié, utilise le même format que `format`.
 - **Défaut** : `''`
 
-> **Note importante sur les formats**
-> 
-> Le composant utilise maintenant deux formats distincts :
-> 1. **Format d'entrée/affichage** : Défini par la prop `format`, il détermine à la fois :
->    - Le format dans lequel la date doit être fournie au composant
->    - Comment la date est affichée visuellement dans le champ
-> 2. **Format de retour** : Défini par la prop `dateFormatReturn`, il détermine le format de la date émise lors des changements
->
-> Par exemple, avec `format="DD-MM-YY"` et `dateFormatReturn="YYYY/MM/DD"` :
-> - Vous devez fournir la date au format : `24-12-25`
-> - Elle sera affichée comme : `24-12-25`
-> - Elle sera retournée comme : `2025/12/24`
+> **Note importante sur les formats**Le composant utilise maintenant deux formats distincts :1. **Format d'entrée/affichage** : Défini par la prop `format`, il détermine à la fois :- Le format dans lequel la date doit être fournie au composant- Comment la date est affichée visuellement dans le champ2. **Format de retour** : Défini par la prop `dateFormatReturn`, il détermine le format de la date émise lors des changementsPar exemple, avec `format="DD-MM-YY"` et `dateFormatReturn="YYYY/MM/DD"` :- Vous devez fournir la date au format : `24-12-25`- Elle sera affichée comme : `24-12-25`- Elle sera retournée comme : `2025/12/24`
 
 ### required
 - **Type** : `boolean`
@@ -71,6 +60,11 @@ Le composant `DatePickerInput` est un champ de saisie de date qui combine un cha
 - **Type** : `boolean`
 - **Description** : Active le mode date de naissance (commence par la sélection de l'année)
 - **Défaut** : `false`
+
+### isOutlined
+- **Type** : `boolean`
+- **Description** : Active le style de champ de saisie "outlined" (bordure) plutôt que "underlined" (fond)
+- **Défaut** : `true`
 
 ### showWeekNumber
 - **Type** : `boolean`
