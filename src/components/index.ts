@@ -1,4 +1,6 @@
 export { useNotificationService } from '../services/NotificationService'
+export { useFieldValidation } from '../composables/rules/useFieldValidation'
+export type { RuleOptions } from '../composables/rules/useFieldValidation'
 export { default as BackBtn } from './BackBtn/BackBtn.vue'
 export { default as BackToTopBtn } from './BackToTopBtn/BackToTopBtn.vue'
 export { default as CollapsibleList } from './CollapsibleList/CollapsibleList.vue'
