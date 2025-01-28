@@ -393,7 +393,7 @@
 			<DateTextInput
 				ref="dateTextInputRef"
 				v-model="displayFormattedDate"
-				:class="getMessageClasses()"
+				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:date-format-return="props.dateFormatReturn"
 				:format="props.format"
 				:label="props.placeholder"
@@ -411,7 +411,7 @@
 				v-model="displayFormattedDate"
 				:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
 				:append-inner-icon="getIcon()"
-				:class="getMessageClasses()"
+				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:error-messages="errorMessages"
 				:is-disabled="props.isDisabled"
 				:is-read-only="true"
@@ -458,99 +458,102 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
+.label-hidden-on-focus:focus + label {
+  display: none;
+}
+
 .dp-width {
-	min-width: 345px;
+  min-width: 345px;
 }
 
 .v-messages__message--success {
-	:deep(.v-input__control),
-	:deep(.v-messages__message) {
-		color: tokens.$colors-text-success !important;
+  :deep(.v-input__control),
+  :deep(.v-messages__message) {
+    color: tokens.$colors-text-success !important;
 
-		--v-medium-emphasis-opacity: 1;
-	}
+    --v-medium-emphasis-opacity: 1;
+  }
 
-	.v-field--active & {
-		color: tokens.$colors-border-success !important;
-	}
+  .v-field--active & {
+    color: tokens.$colors-border-success !important;
+  }
 }
 
 .v-messages__message--error {
-	:deep(.v-input__control),
-	:deep(.v-messages__message) {
-		color: tokens.$colors-text-error !important;
-	}
+  :deep(.v-input__control),
+  :deep(.v-messages__message) {
+    color: tokens.$colors-text-error !important;
+  }
 
-	.v-field--active & {
-		color: tokens.$colors-border-error !important;
-	}
+  .v-field--active & {
+    color: tokens.$colors-border-error !important;
+  }
 }
 
 .v-messages__message--warning {
-	:deep(.v-input__control) {
-		color: tokens.$colors-text-warning !important;
+  :deep(.v-input__control) {
+    color: tokens.$colors-text-warning !important;
 
-		--v-medium-emphasis-opacity: 1;
-	}
+    --v-medium-emphasis-opacity: 1;
+  }
 
-	:deep(.v-messages__message) {
-		color: tokens.$colors-text-warning !important;
-	}
+  :deep(.v-messages__message) {
+    color: tokens.$colors-text-warning !important;
+  }
 
-	.v-field--active & {
-		color: tokens.$colors-text-warning !important;
-	}
+  .v-field--active & {
+    color: tokens.$colors-text-warning !important;
+  }
 }
 
 :deep(.v-btn__content) {
-	font-size: tokens.$font-size-body-text + 3;
-	font-weight: bold;
+  font-size: tokens.$font-size-body-text + 3;
+  font-weight: bold;
 }
 
 :deep(.v-messages) {
-	opacity: 1;
+  opacity: 1;
 }
 
 :deep(.v-field--dirty) {
-	opacity: 1 !important;
+  opacity: 1 !important;
 
-	--v-medium-emphasis-opacity: 1;
+  --v-medium-emphasis-opacity: 1;
 }
 
 :deep(.v-field--focused) {
-	opacity: 1 !important;
+  opacity: 1 !important;
 
-	--v-medium-emphasis-opacity: 1;
+  --v-medium-emphasis-opacity: 1;
 }
 
 .date-picker-container {
-	max-width: 345px;
-	position: relative;
+  max-width: 345px;
+  position: relative;
 
-	:deep(.v-date-picker) {
-		width: 345px;
-		position: absolute;
-		top: 56px;
-		left: 0;
-		z-index: 2;
-		box-shadow:
-			0 5px 5px -3px rgb(0 0 0 / 20%),
-			0 8px 10px 1px rgb(0 0 0 / 14%),
-			0 3px 14px 2px rgb(0 0 0 / 12%) !important;
-	}
+  :deep(.v-date-picker) {
+    width: 345px;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    z-index: 2;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%),
+    0 8px 10px 1px rgb(0 0 0 / 14%),
+    0 3px 14px 2px rgb(0 0 0 / 12%) !important;
+  }
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
-	opacity: 1;
+  opacity: 1;
 }
 
 .fade-enter-active,
 .fade-leave-active {
-	transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-	opacity: 0;
+  opacity: 0;
 }
 </style>
