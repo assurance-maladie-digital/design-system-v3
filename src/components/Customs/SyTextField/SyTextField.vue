@@ -75,7 +75,7 @@
 			prependInnerIcon: undefined,
 			variantStyle: 'outlined',
 			color: 'primary',
-			label: 'custom label',
+			label: undefined,
 			errorMessages: null,
 			isReadOnly: false,
 			isClearable: false,

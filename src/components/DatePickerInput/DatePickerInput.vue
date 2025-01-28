@@ -396,7 +396,6 @@
 				:label="props.placeholder"
 				:messages="[...successMessages, ...warningMessages]"
 				:no-icon="props.noIcon"
-				:placeholder="props.placeholder"
 				:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 				color="primary"
 				is-clearable
@@ -443,18 +442,24 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: tokens.$colors-border-success !important;
+		color: tokens.$colors-text-success !important;
+    --v-medium-emphasis-opacity: 1;
 	}
 
+  :deep(.v-icon) {
+    color: tokens.$colors-text-success !important;
+    --v-medium-emphasis-opacity: 1;
+  }
+
 	.v-field--active & {
-		color: tokens.$colors-text-success !important;
+		color: tokens.$colors-border-success !important;
 	}
 }
 
 .v-messages__message--error {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: tokens.$colors-border-error !important;
+		color: tokens.$colors-text-error !important;
 	}
 
 	.v-field--active & {
@@ -465,11 +470,17 @@
 .v-messages__message--warning {
 	:deep(.v-input__control) {
 		color: tokens.$colors-text-warning !important;
+    --v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
 		color: tokens.$colors-text-warning !important;
 	}
+
+  :deep(.v-icon) {
+    color: tokens.$colors-text-warning !important;
+    --v-medium-emphasis-opacity: 1;
+  }
 
 	.v-field--active & {
 		color: tokens.$colors-text-warning !important;
@@ -479,6 +490,18 @@
 :deep(.v-btn__content) {
 	font-size: tokens.$font-size-body-text + 3;
 	font-weight: bold;
+}
+
+:deep(.v-messages) {
+  opacity: 1;
+}
+:deep(.v-field--dirty) {
+  opacity: 1 !important;
+  --v-medium-emphasis-opacity: 1;
+}
+:deep(.v-field--focused) {
+  opacity: 1 !important;
+  --v-medium-emphasis-opacity: 1;
 }
 
 .date-picker-container {
