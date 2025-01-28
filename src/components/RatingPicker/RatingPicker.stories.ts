@@ -2,8 +2,8 @@ import type { StoryObj, Meta } from '@storybook/vue3'
 import RatingPicker from './RatingPicker.vue'
 
 const meta = {
-	title: 'Composants/Formulaires/PasswordField',
-	component: PasswordField,
+	title: 'Composants/Formulaires/RatingPicker',
+	component: RatingPicker,
 	decorators: [
 		() => ({
 			template: '<div style="padding: 20px;"><story/></div>',
