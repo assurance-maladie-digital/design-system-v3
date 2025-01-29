@@ -1,8 +1,8 @@
 import {Canvas, Meta, Controls, Source} from '@storybook/blocks';
-import * as RatingPickerStories from './RatingPicker.stories.js';
+import * as RatingPickerStories from './RatingPicker.stories';
 import RatingPicker from './RatingPicker.vue';
 
-<Meta title="Composants/Formulaires/RatingPicker" component={RatingPicker}/>
+<Meta title="Composants/Feedback/RatingPicker" component={RatingPicker}/>
 
 # RatingPicker
 
@@ -23,12 +23,33 @@ L’élément `RatingPicker` permet de recueillir l’avis d’un utilisateur.
     import { ref } from 'vue'
     import { RatingPicker } from '@cnamts/synapse'
 
-    const rating = ref(0)
+    const ratingEmotion = ref(-1)
+    const ratingNumber = ref(-1)
+    const ratingStars = ref(-1)
 </script>
 
-    <template>
-        <RatingPicker v-model="rating" />
-    </template>
+<template>
+   {{ ratingEmotion }}
+    <RatingPicker
+        v-model="ratingEmotion"
+        label="Êtes-vous satisfait de ce service ?"
+        type="emotion"
+    />
+    <br>
+    {{ ratingNumber }}
+    <RatingPicker
+        v-model="ratingNumber"
+        label="Êtes-vous satisfait de ce service ?"
+        type="number"
+    />
+    <br>
+    {{ ratingStars }}
+    <RatingPicker
+        v-model="ratingStars"
+        label="Êtes-vous satisfait de ce service ?"
+        type="stars"
+    />
+</template>
 `}
 />
 

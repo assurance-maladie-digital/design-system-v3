@@ -89,7 +89,6 @@
 
 <template>
 	<div class="vd-rating-picker">
-		{{ 'hasAnswered : ' + hasAnswered }}
 		<component
 			:is="ratingComponent"
 			:model-value="internalValue"

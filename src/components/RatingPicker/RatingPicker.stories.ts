@@ -13,8 +13,21 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
-		modelValue: {
-			description: 'La valeur du modèle pour le champ.',
+		type: {
+			description: 'Le type de notation.',
+			control: {
+				type: 'select',
+				options: ['emotion', 'number', 'stars'],
+			},
+			default: 'emotion',
+			table: {
+				type: {
+					summary: 'RatingEnum',
+				},
+			},
+		},
+		label: {
+			description: 'Le libellé du champ.',
 			control: 'text',
 			default: null,
 			table: {
@@ -23,8 +36,58 @@ const meta = {
 				},
 			},
 		},
+		readonly: {
+			description: 'Si le champ est en lecture seule.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		itemLabels: {
+			description: 'Les libellés des items.',
+			control: 'array',
+			default: null,
+			table: {
+				type: {
+					summary: 'string[]',
+				},
+			},
+		},
+		twoEmotions: {
+			description: 'Si le champ est en deux émotions.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		hideAlert: {
+			description: 'Si le champ est en alerte.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		modelValue: {
+			description: 'La valeur sélectionnée.',
+			control: 'text',
+			default: -1,
+			table: {
+				type: {
+					summary: 'number',
+				},
+			},
+		},
 	},
-} satisfies Meta<typeof PasswordField>
+} satisfies Meta<typeof RatingPicker>
 
 export default meta
 
@@ -35,16 +98,21 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
 	args: {
-		modelValue: '',
+		type: 'emotion',
+		label: 'Êtes-vous satisfait de ce service ?',
+		readonly: false,
+		twoEmotions: false,
+		hideAlert: false,
+		modelValue: -1,
 	},
 	render: (args) => {
 		return {
-			components: { PasswordField },
+			components: { RatingPicker },
 			setup() {
 				return { args }
 			},
 			template: `
-                <PasswordField v-bind="args" v-model="args.modelValue"/>
+                <RatingPicker v-bind="args" v-model="args.modelValue"/>
             `,
 		}
 	},
@@ -54,11 +122,11 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <PasswordField
-    v-model="password"
-    :required="false"
-    :isValidateOnBlur="true"
-  />
+	<RatingPicker
+		v-model="ratingEmotion"
+		label="Êtes-vous satisfait de ce service ?"
+		type="emotion"
+	/>
 </template>
         `,
 			},
@@ -67,101 +135,9 @@ export const Default: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import PasswordField from '@cnamts/synapse'
+import RatingPicker from '@cnamts/synapse'
 
-const password = ref('')
-</script>
-        `,
-			},
-		],
-	},
-}
-
-/**
- * Story avec champ requis
- */
-export const Required: Story = {
-	args: {
-		...Default.args,
-		required: true,
-	},
-	parameters: {
-		...Default.parameters,
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <PasswordField
-    v-model="password"
-    :required="true"
-    :isValidateOnBlur="true"
-  />
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import PasswordField  from '@cnamts/synapse'
-
-const password = ref('')
-</script>
-        `,
-			},
-		],
-	},
-}
-
-export const WithCustomRules: Story = {
-	args: {
-		...Default.args,
-		customRules: [
-			{
-				type: 'minLength',
-				options: {
-					length: 8,
-					message: 'Le mot de passe doit comporter au moins 8 caractères.',
-					successMessage: 'Le mot de passe est suffisamment long.',
-				},
-			},
-		],
-	},
-	parameters: {
-		...Default.parameters,
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <PasswordField
-    v-model="password"
-    :required="false"
-    :isValidateOnBlur="true"
-    :customRules="[
-      { 
-        type: 'minLength', 
-        options: { 
-          length: 8, 
-          message: 'Le mot de passe doit comporter au moins 8 caractères.', 
-          successMessage: 'Le mot de passe est suffisamment long.' 
-        } 
-      },
-    ]"
-  />
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import PasswordField  from '@cnamts/synapse'
-
-const password = ref('')
+const ratingEmotion = ref(-1)
 </script>
         `,
 			},
