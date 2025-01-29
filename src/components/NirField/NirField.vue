@@ -233,7 +233,7 @@
 
 	function validateOnSubmit() {
 		isValidating.value = true
-		validateFields()
+		validateFields(true)
 		return errors.value.length === 0
 	}
 
@@ -372,6 +372,7 @@
 .vd-key-field {
 	width: 104px;
 	flex: none;
+	margin-left: 2%;
 }
 
 .custom-counter {
