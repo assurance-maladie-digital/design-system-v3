@@ -19,10 +19,12 @@ const meta = {
 				type: 'select',
 				options: ['emotion', 'number', 'stars'],
 			},
-			default: 'emotion',
 			table: {
 				type: {
-					summary: 'RatingEnum',
+					summary: 'emotion, number, stars',
+				},
+				defaultValue: {
+					summary: 'emotion',
 				},
 			},
 		},

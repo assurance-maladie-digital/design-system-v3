@@ -2,6 +2,7 @@
 
 exports[`NumberPicker > renders correctly 1`] = `
 "<fieldset data-v-30bbac4d="" class="vd-number-picker">
+  <legend data-v-30bbac4d="" class="d-sr-only">Pourriez-vous donner une note ?</legend>
   <legend data-v-30bbac4d="" class="text-h6 mb-6">Pourriez-vous donner une note ?</legend>
   <div data-v-30bbac4d="" class="d-inline-block">
     <div data-v-30bbac4d="" class="v-rating v-theme--light d-flex flex-wrap max-width-none"><label for="v-rating-0-0" class=""><span class="v-rating__hidden">Rating 0 of 10</span>

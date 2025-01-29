@@ -1,7 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`RatingPicker > renders correctly 1`] = `
-"<div class="vd-rating-picker">hasAnswered : false <fieldset data-v-30bbac4d="" class="vd-number-picker">
+"<div class="vd-rating-picker">
+  <fieldset data-v-30bbac4d="" class="vd-number-picker">
+    <legend data-v-30bbac4d="" class="d-sr-only"></legend>
     <legend data-v-30bbac4d="" class="text-h6 mb-6"></legend>
     <div data-v-30bbac4d="" class="d-inline-block">
       <div data-v-30bbac4d="" class="v-rating v-theme--light d-flex flex-wrap max-width-none"><label for="v-rating-0-0" class=""><span class="v-rating__hidden">Rating 0 of 10</span>
