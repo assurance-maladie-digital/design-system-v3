@@ -61,13 +61,17 @@
 
 <template>
 	<fieldset class="vd-number-picker">
+		<legend class="d-sr-only">
+			<slot name="label">
+				{{ props.label }}
+			</slot>
+		</legend>
 		<SySelect
 			v-if="isMobile"
 			:model-value="props.modelValue === -1 ? undefined : props.modelValue"
 			:label="props.label"
 			:disabled="props.readonly || hasAnswered"
 			:items="selectItems"
-			color="primary"
 			@update:model-value="(value) => emit('update:modelValue', value)"
 		/>
 		<template v-else>

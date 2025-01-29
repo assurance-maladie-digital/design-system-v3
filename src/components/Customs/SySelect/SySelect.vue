@@ -13,7 +13,7 @@
 		},
 		label: {
 			type: String,
-			default: 'Sélectionnez une option',
+			default: '',
 		},
 		errorMessages: {
 			type: [String, Array] as PropType<string | readonly string[]>,

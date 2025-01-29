@@ -13,11 +13,11 @@
 	<main>
 		<PageContainer>
 			{{ ratingEmotion }}
-			<RatingPicker
+			<!--			<RatingPicker
 				v-model="ratingEmotion"
 				label="Êtes-vous satisfait de ce service ?"
 				type="emotion"
-			/>
+				/>-->
 
 			<br>
 			{{ ratingNumber }}
@@ -29,11 +29,11 @@
 
 			<br>
 			{{ ratingStars }}
-			<RatingPicker
+			<!--			<RatingPicker
 				v-model="ratingStars"
 				label="Êtes-vous satisfait de ce service ?"
 				type="stars"
-			/>
+				/>-->
 		</PageContainer>
 	</main>
 </template>
