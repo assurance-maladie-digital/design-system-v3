@@ -78,7 +78,7 @@ const meta = {
 		},
 		modelValue: {
 			description: 'La valeur sélectionnée.',
-			control: 'text',
+			control: 'number',
 			default: -1,
 			table: {
 				type: {
