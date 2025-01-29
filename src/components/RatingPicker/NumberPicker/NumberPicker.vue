@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed } from 'vue'
+	import { computed, onMounted } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import type { PropType } from 'vue'
@@ -50,6 +50,13 @@
 	})
 
 	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
+
+	onMounted(() => {
+		const hiddenInputs = document.querySelectorAll('.v-rating__hidden')
+		hiddenInputs.forEach((input) => {
+			(input as HTMLElement).setAttribute('aria-hidden', 'true')
+		})
+	})
 </script>
 
 <template>

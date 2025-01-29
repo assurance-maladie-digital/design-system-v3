@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, type PropType } from 'vue'
+	import { ref, type PropType, onMounted } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { mdiStarOutline, mdiStar } from '@mdi/js'
 
@@ -38,6 +38,13 @@
 		const isActive = props.modelValue - 1 >= index
 		return isHovered || isActive
 	}
+
+	onMounted(() => {
+		const hiddenInputs = document.querySelectorAll('.v-rating__hidden')
+		hiddenInputs.forEach((input) => {
+			(input as HTMLElement).setAttribute('aria-hidden', 'true')
+		})
+	})
 </script>
 
 <template>
@@ -59,6 +66,7 @@
 				<button
 					:disabled="props.readonly"
 					:aria-pressed="isActive(index)"
+					:aria-label="`${index + 1} star`"
 					@mouseover="hoverIndex = index"
 					@focus="hoverIndex = index"
 					@mouseleave="hoverIndex = -1"

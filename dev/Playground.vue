@@ -12,27 +12,28 @@
 <template>
 	<main>
 		<PageContainer>
-			<RatingPicker
+			{{ ratingEmotion }}
+			<!--			<RatingPicker
 				v-model="ratingEmotion"
 				label="Êtes-vous satisfait de ce service ?"
 				type="emotion"
-			/>
+				/>-->
 
 			<br>
-
-			<!--		<RatingPicker
+			{{ ratingNumber }}
+			<!--			<RatingPicker
 				v-model="ratingNumber"
 				label="Êtes-vous satisfait de ce service ?"
 				type="number"
 				/>-->
 
 			<br>
-
-		<!--		<RatingPicker
-			v-model="ratingStars"
-			label="Êtes-vous satisfait de ce service ?"
-			type="stars"
-			/>-->
+			{{ ratingStars }}
+			<RatingPicker
+				v-model="ratingStars"
+				label="Êtes-vous satisfait de ce service ?"
+				type="stars"
+			/>
 		</PageContainer>
 	</main>
 </template>

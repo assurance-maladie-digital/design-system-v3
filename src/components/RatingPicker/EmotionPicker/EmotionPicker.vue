@@ -83,8 +83,7 @@
 	onMounted(() => {
 		const hiddenInputs = document.querySelectorAll('.v-rating__hidden')
 		hiddenInputs.forEach((input) => {
-			(input as HTMLElement).setAttribute('tabindex', '0')
-			// (input as HTMLElement).setAttribute('aria-label', getEmotionLabel(Number(input.getAttribute('value'))))
+			(input as HTMLElement).setAttribute('aria-hidden', 'true')
 		})
 	})
 </script>
