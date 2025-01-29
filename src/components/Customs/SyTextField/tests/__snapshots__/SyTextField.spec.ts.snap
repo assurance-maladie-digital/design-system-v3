@@ -48,8 +48,8 @@ exports[`SyTextField > matches snapshot 1`] = `
   <div class="v-input__append">
     <!----><i class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i>
   </div>
-  <div class="v-input__details">
-    <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
+  <div id="input-0-messages" class="v-input__details" role="alert" aria-live="polite">
+    <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
       <!---->
     </transition-group-stub>
     <!---->
