@@ -2,13 +2,13 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
 import { nextTick } from 'vue'
-import DatePickerInput from '../DatePickerInput.vue'
+import DatePicker from '../DatePicker.vue'
 
-describe('DatePickerInput.vue', () => {
+describe('DatePicker.vue', () => {
 	let wrapper
 
 	beforeEach(() => {
-		wrapper = mount(DatePickerInput, {
+		wrapper = mount(DatePicker, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -21,7 +21,7 @@ describe('DatePickerInput.vue', () => {
 
 	it('displays the placeholder text', () => {
 		const placeholder = 'Sélectionner une date'
-		const wrapper = mount(DatePickerInput, {
+		const wrapper = mount(DatePicker, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -31,7 +31,7 @@ describe('DatePickerInput.vue', () => {
 	})
 
 	it('emits update:model-value event on date selection', async () => {
-		const wrapper = mount(DatePickerInput, {
+		const wrapper = mount(DatePicker, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -42,7 +42,7 @@ describe('DatePickerInput.vue', () => {
 	})
 
 	it('renders the component', () => {
-		const wrapper = mount(DatePickerInput, {
+		const wrapper = mount(DatePicker, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -105,7 +105,7 @@ describe('DatePickerInput.vue', () => {
 	})
 
 	it('hides the date picker when at least two dates are selected in range mode', async () => {
-		const wrapper = mount(DatePickerInput, {
+		const wrapper = mount(DatePicker, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -129,7 +129,7 @@ describe('DatePickerInput.vue', () => {
 		const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener')
 
 		// Monte le composant
-		const wrapper = mount(DatePickerInput, {
+		const wrapper = mount(DatePicker, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -180,7 +180,7 @@ describe('DatePickerInput.vue', () => {
 	})
 
 	it('returns true when there are no validation errors', async () => {
-		const wrapper = mount(DatePickerInput, {
+		const wrapper = mount(DatePicker, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -201,7 +201,7 @@ describe('DatePickerInput.vue', () => {
 	})
 
 	it('returns false when there are validation errors', async () => {
-		const wrapper = mount(DatePickerInput, {
+		const wrapper = mount(DatePicker, {
 			global: {
 				plugins: [vuetify],
 			},

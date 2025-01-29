@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import DatePickerInput from './DatePickerInput.vue'
+import DatePicker from './DatePicker.vue'
 import { ref } from 'vue'
 
 const meta = {
-	title: 'Composants/Formulaires/DatePickerInput',
-	component: DatePickerInput,
+	title: 'Composants/Formulaires/DatePicker',
+	component: DatePicker,
 	decorators: [
 		() => ({
 			template: '<div style="padding: 20px;"><story/></div>',
@@ -82,7 +82,7 @@ const meta = {
 			description: 'Règles d\'avertissement',
 		},
 	},
-} as Meta<typeof DatePickerInput>
+} as Meta<typeof DatePicker>
 
 export default meta
 
@@ -95,7 +95,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePickerInput
+					<DatePicker
 					 v-model="date"
 					 placeholder="Sélectionner une date"
 					format="DD/MM/YYYY"
@@ -107,7 +107,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -129,14 +129,14 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref('')
 				return { args, value }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <DatePickerInput v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}
@@ -150,7 +150,7 @@ export const DateRange: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePickerInput
+					<DatePicker
 						v-model="dateRange"
 						placeholder="Sélectionner une période"
 						format="DD/MM/YYYY"
@@ -164,7 +164,7 @@ export const DateRange: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const dateRange = ref(['', ''])
 				</script>
@@ -189,14 +189,14 @@ export const DateRange: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref(['', ''])
 				return { args, value }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <DatePickerInput v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}
@@ -210,7 +210,7 @@ export const WithAppendIcon: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePickerInput
+					<DatePicker
 						v-model="date"
 						placeholder="Sélectionner une date"
 						format="DD/MM/YYYY"
@@ -224,7 +224,7 @@ export const WithAppendIcon: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const date = ref('')
 				</script>
@@ -249,14 +249,14 @@ export const WithAppendIcon: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref('')
 				return { args, value }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <DatePickerInput v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}
@@ -270,7 +270,7 @@ export const WithoutIcon: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePickerInput
+					<DatePicker
 						v-model="date"
 						placeholder="Sélectionner une date"
 						format="DD/MM/YYYY"
@@ -284,7 +284,7 @@ export const WithoutIcon: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const date = ref('')
 				</script>
@@ -308,14 +308,14 @@ export const WithoutIcon: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref('')
 				return { args, value }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <DatePickerInput v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}
@@ -328,7 +328,7 @@ export const BirthDate: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePickerInput
+					<DatePicker
 						v-model="birthDate"
 						placeholder="Date de naissance"
 						format="DD/MM/YYYY"
@@ -342,7 +342,7 @@ export const BirthDate: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const birthDate = ref('')
 				</script>
@@ -367,14 +367,14 @@ export const BirthDate: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref('')
 				return { args, value }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <DatePickerInput v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}
@@ -388,7 +388,7 @@ export const WithError: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePickerInput
+					<DatePicker
 						v-model="date"
 						placeholder="notAfterToday"
 						:custom-rules="[
@@ -403,7 +403,7 @@ export const WithError: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const date = ref('01/01/2100')
 				</script>
@@ -431,14 +431,14 @@ export const WithError: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref('01/01/2100')
 				return { args, value }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <DatePickerInput v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}
@@ -452,7 +452,7 @@ export const WithWarning: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePickerInput
+					<DatePicker
 						v-model="date"
 						placeholder="Date avec avertissement"
 						:custom-warning-rules="[
@@ -471,7 +471,7 @@ export const WithWarning: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const date = ref('20/12/2023')
 				</script>
@@ -505,14 +505,14 @@ export const WithWarning: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref('20/12/2023')
 				return { args, value }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <DatePickerInput v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}
@@ -526,7 +526,7 @@ export const WithSuccess: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePickerInput
+					<DatePicker
 						v-model="date"
 						placeholder="Date valide"
 						required
@@ -542,7 +542,7 @@ export const WithSuccess: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const date = ref('22/01/2024')
 				</script>
@@ -570,14 +570,14 @@ export const WithSuccess: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref('22/01/2024')
 				return { args, value }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <DatePickerInput v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}
@@ -592,22 +592,22 @@ export const DifferentFormats: Story = {
 				code: `
 				<template>
 					<div class="d-flex flex-column gap-4">
-						<DatePickerInput
+						<DatePicker
 							v-model="date1"
 							placeholder="Format DD/MM/YYYY"
 							format="DD/MM/YYYY"
 						/>
-						<DatePickerInput
+						<DatePicker
 							v-model="date2"
 							placeholder="Format MM/DD/YYYY"
 							format="MM/DD/YYYY"
 						/>
-						<DatePickerInput
+						<DatePicker
 							v-model="date3"
 							placeholder="Format YYYY-MM-DD"
 							format="YYYY-MM-DD"
 						/>
-						<DatePickerInput
+						<DatePicker
 							v-model="date4"
 							placeholder="Format DD-MM-YY"
 							format="DD-MM-YY"
@@ -621,7 +621,7 @@ export const DifferentFormats: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 				const value1 = ref('24/12/2025')
 				const value2 = ref('12/24/2025')
@@ -634,7 +634,7 @@ export const DifferentFormats: Story = {
 	},
 	render: () => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value1 = ref('24/12/2025')
 				const value2 = ref('12/24/2025')
@@ -644,22 +644,22 @@ export const DifferentFormats: Story = {
 			},
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
-                <DatePickerInput
+                <DatePicker
                     v-model="value1"
                     placeholder="Format DD/MM/YYYY"
                     format="DD/MM/YYYY"
                 />
-                <DatePickerInput
+                <DatePicker
                     v-model="value2"
                     placeholder="Format MM/DD/YYYY"
                     format="MM/DD/YYYY"
                 />
-                <DatePickerInput
+                <DatePicker
                     v-model="value3"
                     placeholder="Format YYYY-MM-DD"
                     format="YYYY-MM-DD"
                 />
-                <DatePickerInput
+                <DatePicker
                     v-model="value4"
                     placeholder="Format DD-MM-YY"
                     format="DD-MM-YY"
@@ -678,18 +678,18 @@ export const WithDateFormatReturn: Story = {
 				code: `
 				<template>
 					<div class="d-flex flex-column gap-4">
-						<DatePickerInput
+						<DatePicker
 							v-model="date1"
 							placeholder="Format d'affichage DD/MM/YYYY, retour par défaut"
 							format="DD/MM/YYYY"
 						/>
-						<DatePickerInput
+						<DatePicker
 							v-model="date2"
 							placeholder="Format d'affichage DD/MM/YYYY, retour MM/DD/YYYY"
 							format="DD/MM/YYYY"
 							dateFormatReturn="MM/DD/YYYY"
 						/>
-						<DatePickerInput
+						<DatePicker
 							v-model="date3"
 							placeholder="Format d'affichage DD/MM/YYYY, retour YYYY-MM-DD"
 							format="DD/MM/YYYY"
@@ -704,7 +704,7 @@ export const WithDateFormatReturn: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const date1 = ref('24/12/2025')
 					const date2 = ref('24/12/2025')
@@ -731,7 +731,7 @@ export const WithDateFormatReturn: Story = {
 	},
 	render: () => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value1 = ref('24/12/2025')
 				const value2 = ref('24/12/2025')
@@ -741,20 +741,20 @@ export const WithDateFormatReturn: Story = {
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
                 Date au format: {{ value1 }}
-                <DatePickerInput
+                <DatePicker
                     v-model="value1"
                     placeholder="Format d'affichage DD/MM/YYYY, retour par défaut"
                     format="DD/MM/YYYY"
                 />
                 Date au format: {{ value2 }}
-                <DatePickerInput
+                <DatePicker
                     v-model="value2"
                     placeholder="Format d'affichage DD/MM/YYYY, retour MM/DD/YYYY"
                     format="DD/MM/YYYY"
                     dateFormatReturn="MM/DD/YYYY"
                 />
                 Date au format: {{ value3 }}
-                <DatePickerInput
+                <DatePicker
                     v-model="value3"
                     placeholder="Format d'affichage DD/MM/YYYY, retour YYYY-MM-DD"
                     format="DD/MM/YYYY"
@@ -775,7 +775,7 @@ export const WithCustomFormats: Story = {
 				<template>
 					<div class="d-flex flex-column gap-4">
 						<div>
-							<DatePickerInput
+							<DatePicker
 								v-model="date1"
 								placeholder="Format d'affichage DD-MM-YY, retour YYYY/MM/DD"
 								format="DD-MM-YY"
@@ -784,7 +784,7 @@ export const WithCustomFormats: Story = {
 							Date au format: {{ date1 }}
 						</div>
 						<div>
-							<DatePickerInput
+							<DatePicker
 								v-model="date2"
 								placeholder="Format d'affichage YY.MM.DD, retour DD-MM-YYYY"
 								format="YY.MM.DD"
@@ -793,7 +793,7 @@ export const WithCustomFormats: Story = {
 							Date au format: {{ date2 }}
 						</div>
 						<div>
-							<DatePickerInput
+							<DatePicker
 								v-model="date3"
 								placeholder="Format d'affichage YYYY-DD-MM, retour MM/DD/YY"
 								format="YYYY-DD-MM"
@@ -810,7 +810,7 @@ export const WithCustomFormats: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const date1 = ref('24-12-25')     // Format d'entrée DD-MM-YY
 					const date2 = ref('25.12.24')     // Format d'entrée YY.MM.DD
@@ -822,7 +822,7 @@ export const WithCustomFormats: Story = {
 	},
 	render: () => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value1 = ref('24-12-25') // Format d'entrée DD-MM-YY
 				const value2 = ref('25.12.24') // Format d'entrée YY.MM.DD
@@ -832,7 +832,7 @@ export const WithCustomFormats: Story = {
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
                 <div>
-                  <DatePickerInput
+                  <DatePicker
                       v-model="value1"
                       placeholder="Format d'affichage DD-MM-YY, retour YYYY/MM/DD"
                       format="DD-MM-YY"
@@ -842,7 +842,7 @@ export const WithCustomFormats: Story = {
                   Date au format: {{ value1 }}
                 </div>
                 <div>
-                  <DatePickerInput
+                  <DatePicker
                       v-model="value2"
                       placeholder="Format d'affichage YY.MM.DD, retour DD-MM-YYYY"
                       format="YY.MM.DD"
@@ -851,7 +851,7 @@ export const WithCustomFormats: Story = {
                   Date au format: {{ value2 }}
                 </div>
                 <div>
-                  <DatePickerInput
+                  <DatePicker
                       v-model="value3"
                       placeholder="Format d'affichage YYYY-DD-MM, retour MM/DD/YY"
                       format="YYYY-DD-MM"
@@ -874,7 +874,7 @@ export const WithMoreFormats: Story = {
 				<template>
 					<div class="d-flex flex-column gap-4">
 						<div>
-							<DatePickerInput
+							<DatePicker
 								v-model="date1"
 								placeholder="Format YY.MM.DD, retour DD/MM/YYYY"
 								format="YY.MM.DD"
@@ -883,7 +883,7 @@ export const WithMoreFormats: Story = {
 							Date au format: {{ date1 }}
 						</div>
 						<div>
-							<DatePickerInput
+							<DatePicker
 								v-model="date2"
 								placeholder="Format YYYY-DD-MM, retour MM-DD-YY"
 								format="YYYY-DD-MM"
@@ -892,7 +892,7 @@ export const WithMoreFormats: Story = {
 							Date au format: {{ date2 }}
 						</div>
 						<div>
-							<DatePickerInput
+							<DatePicker
 								v-model="date3"
 								placeholder="Format DD.MM.YY, retour YY/MM/DD"
 								format="DD.MM.YY"
@@ -901,7 +901,7 @@ export const WithMoreFormats: Story = {
 							Date au format: {{ date3 }}
 						</div>
 						<div>
-							<DatePickerInput
+							<DatePicker
 								v-model="date4"
 								placeholder="Format MM-YYYY-DD, retour DD.MM.YYYY"
 								format="MM-YYYY-DD"
@@ -918,7 +918,7 @@ export const WithMoreFormats: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { DatePickerInput } from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					
 					const date1 = ref('25.12.24')     // Format YY.MM.DD
 					const date2 = ref('2025-24-12')   // Format YYYY-DD-MM
@@ -931,7 +931,7 @@ export const WithMoreFormats: Story = {
 	},
 	render: () => {
 		return {
-			components: { DatePickerInput },
+			components: { DatePicker: DatePicker },
 			setup() {
 				const value1 = ref('25.12.24') // Format YY.MM.DD
 				const value2 = ref('2025-24-12') // Format YYYY-DD-MM
@@ -942,7 +942,7 @@ export const WithMoreFormats: Story = {
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
                 <div>
-                  <DatePickerInput
+                  <DatePicker
                       v-model="value1"
                       placeholder="Format YY.MM.DD, retour DD/MM/YYYY"
                       format="YY.MM.DD"
@@ -951,7 +951,7 @@ export const WithMoreFormats: Story = {
                   Date au format: {{ value1 }}
                 </div>
                 <div>
-                  <DatePickerInput
+                  <DatePicker
                       v-model="value2"
                       placeholder="Format YYYY-DD-MM, retour MM-DD-YY"
                       format="YYYY-DD-MM"
@@ -960,7 +960,7 @@ export const WithMoreFormats: Story = {
                   Date au format: {{ value2 }}
                 </div>
                 <div>
-                  <DatePickerInput
+                  <DatePicker
                       v-model="value3"
                       placeholder="Format DD.MM.YY, retour YY/MM/DD"
                       format="DD.MM.YY"
@@ -969,7 +969,7 @@ export const WithMoreFormats: Story = {
                   Date au format: {{ value3 }}
                 </div>
                 <div>
-                  <DatePickerInput
+                  <DatePicker
                       v-model="value4"
                       placeholder="Format MM-YYYY-DD, retour DD.MM.YYYY"
                       format="MM-YYYY-DD"

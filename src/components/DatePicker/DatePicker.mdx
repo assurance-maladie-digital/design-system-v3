@@ -1,17 +1,17 @@
 import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
-import * as DatePickerInputStories from "./DatePickerInput.stories";
+import * as DatePickerStories from "./DatePicker.stories.js";
 
-<Meta of={DatePickerInputStories}/>
+<Meta of={DatePickerStories}/>
 
-# DatePickerInput
+# DatePicker
 
-Le composant `DatePickerInput` est un champ de saisie de date qui combine un champ de texte et un sélecteur de date. Il permet de saisir une date manuellement ou de la sélectionner via un calendrier, avec support pour les plages de dates.
+Le composant `DatePicker` est un champ de saisie de date qui combine un champ de texte et un sélecteur de date. Il permet de saisir une date manuellement ou de la sélectionner via un calendrier, avec support pour les plages de dates.
 
-<Canvas story={{height: '550px'}} of={DatePickerInputStories.Default}/>
+<Canvas story={{height: '550px'}} of={DatePickerStories.Default}/>
 
 # API
 
-<Controls of={DatePickerInputStories.Default}/>
+<Controls of={DatePickerStories.Default}/>
 
 # Props
 
@@ -152,13 +152,13 @@ Les séparateurs peuvent être `/`, `-` ou `.`
     dark code={`
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { DatePickerInput } from '@cnamts/synapse'
+	import { DatePicker } from '@cnamts/synapse'
 
 	const date = ref('')
 </script>
 
 <template>
-	<DatePickerInput
+	<DatePicker
 		v-model="date"
 		placeholder="Sélectionner une date"
 		format="DD/MM/YYYY"
@@ -174,13 +174,13 @@ Les séparateurs peuvent être `/`, `-` ou `.`
     dark code={`
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { DatePickerInput } from '@cnamts/synapse'
+	import { DatePicker } from '@cnamts/synapse'
 
 	const dateRange = ref(['', ''])
 </script>
 
 <template>
-	<DatePickerInput
+	<DatePicker
 		v-model="dateRange"
 		placeholder="Sélectionner une période"
 		format="DD/MM/YYYY"
