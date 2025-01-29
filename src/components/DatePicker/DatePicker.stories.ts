@@ -96,9 +96,9 @@ export const Default: Story = {
 				code: `
 				<template>
 					<DatePicker
-					 v-model="date"
-					 placeholder="Sélectionner une date"
-					format="DD/MM/YYYY"
+						v-model="date"
+						placeholder="Sélectionner une date"
+						format="DD/MM/YYYY"
 					  />
 				</template>
 				`,
@@ -321,6 +321,7 @@ export const WithoutIcon: Story = {
 		}
 	},
 }
+
 export const BirthDate: Story = {
 	parameters: {
 		sourceCode: [
@@ -505,7 +506,7 @@ export const WithWarning: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePicker: DatePicker },
+			components: { DatePicker },
 			setup() {
 				const value = ref('20/12/2023')
 				return { args, value }
@@ -570,7 +571,7 @@ export const WithSuccess: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePicker: DatePicker },
+			components: { DatePicker },
 			setup() {
 				const value = ref('22/01/2024')
 				return { args, value }
@@ -632,7 +633,7 @@ export const DifferentFormats: Story = {
 				const value2 = ref('12/24/2025')
 				const value3 = ref('2025-12-24')
 				const value4 = ref('24-12-25')
-				const value5 = ref('24.12.2025')
+				const value5 = ref('25.12.2025')
 				</script>
 				`,
 			},
@@ -640,7 +641,7 @@ export const DifferentFormats: Story = {
 	},
 	render: () => {
 		return {
-			components: { DatePicker: DatePicker },
+			components: { DatePicker },
 			setup() {
 				const value1 = ref('24/12/2025')
 				const value2 = ref('12/24/2025')
@@ -713,8 +714,8 @@ export const WithDateFormatReturn: Story = {
                     format="DD/MM/YYYY"
                     dateFormatReturn="YYYY-MM-DD"
                 />
-				</template>
-				`,
+              </div>
+            `,
 			},
 			{
 				name: 'Script',
@@ -748,7 +749,7 @@ export const WithDateFormatReturn: Story = {
 	},
 	render: () => {
 		return {
-			components: { DatePicker: DatePicker },
+			components: { DatePicker },
 			setup() {
 				const value1 = ref('24/12/2025')
 				const value2 = ref('24/12/2025')
@@ -780,6 +781,458 @@ export const WithDateFormatReturn: Story = {
                     format="DD/MM/YYYY"
                     dateFormatReturn="YYYY-MM-DD"
                 />
+              </div>
+            `,
+		}
+	},
+}
+
+export const DifferentFormatsWithRange: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div class="d-flex flex-column gap-4">
+						<DatePicker
+							v-model="dateRange1"
+							placeholder="Format DD/MM/YYYY"
+							format="DD/MM/YYYY"
+							displayRange
+						/>
+						<DatePicker
+							v-model="dateRange2"
+							placeholder="Format MM/DD/YYYY"
+							format="MM/DD/YYYY"
+							displayRange
+						/>
+						<DatePicker
+							v-model="dateRange3"
+							placeholder="Format YYYY-MM-DD"
+							format="YYYY-MM-DD"
+							displayRange
+						/>
+						<div class="mt-4">
+							<p>Valeurs retournées :</p>
+							<pre>Format DD/MM/YYYY : {{ dateRange1 }}</pre>
+							<pre>Format MM/DD/YYYY : {{ dateRange2 }}</pre>
+							<pre>Format YYYY-MM-DD : {{ dateRange3 }}</pre>
+						</div>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const dateRange1 = ref(['24/12/2025', '31/12/2025'])
+					const dateRange2 = ref(['12/24/2025', '12/31/2025'])
+					const dateRange3 = ref(['2025-12-24', '2025-12-31'])
+				</script>
+				`,
+			},
+		],
+	},
+	render: () => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const dateRange1 = ref(['24/12/2025', '31/12/2025'])
+				const dateRange2 = ref(['12/24/2025', '12/31/2025'])
+				const dateRange3 = ref(['2025-12-24', '2025-12-31'])
+				return { dateRange1, dateRange2, dateRange3 }
+			},
+			template: `
+              <div class="d-flex flex-column gap-4 pa-4">
+                <DatePicker
+                    v-model="dateRange1"
+                    placeholder="Format DD/MM/YYYY"
+                    format="DD/MM/YYYY"
+                    displayRange
+                />
+                <DatePicker
+                    v-model="dateRange2"
+                    placeholder="Format MM/DD/YYYY"
+                    format="MM/DD/YYYY"
+                    displayRange
+                />
+                <DatePicker
+                    v-model="dateRange3"
+                    placeholder="Format YYYY-MM-DD"
+                    format="YYYY-MM-DD"
+                    displayRange
+                />
+                <div class="mt-4">
+                    <p>Valeurs retournées :</p>
+                    <pre>Format DD/MM/YYYY : {{ dateRange1 }}</pre>
+                    <pre>Format MM/DD/YYYY : {{ dateRange2 }}</pre>
+                    <pre>Format YYYY-MM-DD : {{ dateRange3 }}</pre>
+                </div>
+              </div>
+            `,
+		}
+	},
+}
+
+export const NoCalendar: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Saisir une date"
+						format="DD/MM/YYYY"
+						noCalendar
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const date = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'Saisir une date',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
+		isBirthDate: false,
+		showWeekNumber: false,
+		required: false,
+		displayRange: false,
+		displayIcon: true,
+		displayAppendIcon: false,
+		isDisabled: false,
+		noIcon: false,
+		noCalendar: true,
+		modelValue: '',
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const NoCalendarWithRange: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="dateRange"
+						placeholder="Saisir une période"
+						format="DD/MM/YYYY"
+						noCalendar
+						displayRange
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const dateRange = ref(['', ''])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'Saisir une période',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
+		isBirthDate: false,
+		showWeekNumber: false,
+		required: false,
+		displayRange: true,
+		displayIcon: true,
+		displayAppendIcon: false,
+		isDisabled: false,
+		noIcon: false,
+		noCalendar: true,
+		modelValue: ['', ''],
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref(['', ''])
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const NoCalendarWithError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="notAfterToday"
+						format="DD/MM/YYYY"
+						noCalendar
+						:custom-rules="[
+							{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } }
+						]"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const date = ref('01/01/2100')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'notAfterToday',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
+		isBirthDate: false,
+		showWeekNumber: false,
+		required: false,
+		displayRange: false,
+		displayIcon: true,
+		displayAppendIcon: false,
+		isDisabled: false,
+		noIcon: false,
+		noCalendar: true,
+		modelValue: '01/01/2100',
+		customRules: [
+			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
+		],
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref('01/01/2100')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const NoCalendarWithWarning: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Date avec avertissement"
+						format="DD/MM/YYYY"
+						noCalendar
+						:custom-warning-rules="[
+							{ type: 'notBeforeDate', options: { 
+								warningMessage: 'Attention : la date est antérieure à la date de référence',
+								date: '01/01/2031',
+								isWarning: true,
+							} }
+						]"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const date = ref('20/12/2023')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'Date avec avertissement',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
+		isBirthDate: false,
+		showWeekNumber: false,
+		required: false,
+		displayRange: false,
+		displayIcon: true,
+		displayAppendIcon: false,
+		isDisabled: false,
+		noIcon: false,
+		noCalendar: true,
+		modelValue: '20/12/2023',
+		customWarningRules: [
+			{
+				type: 'notBeforeDate', options: {
+					warningMessage: 'Attention : la date est antérieure à la date de référence',
+					date: '01/01/2031',
+					isWarning: true,
+				},
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref('20/12/2023')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+
+export const NoCalendarWithDifferentFormats: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div class="d-flex flex-column gap-4">
+						<DatePicker
+							v-model="date1"
+							placeholder="Format DD/MM/YYYY"
+							format="DD/MM/YYYY"
+							noCalendar
+						/>
+						<DatePicker
+							v-model="date2"
+							placeholder="Format DD/MM/YYYY, retour YYYY-MM-DD"
+							format="DD/MM/YYYY"
+							dateFormatReturn="YYYY-MM-DD"
+							noCalendar
+						/>
+						<DatePicker
+							v-model="dateRange"
+							placeholder="Plage avec format DD/MM/YYYY"
+							format="DD/MM/YYYY"
+							displayRange
+							noCalendar
+						/>
+						<div class="mt-4">
+							<p>Valeurs retournées :</p>
+							<pre>Date simple : {{ date1 }}</pre>
+							<pre>Date avec format retour : {{ date2 }}</pre>
+							<pre>Plage de dates : {{ dateRange }}</pre>
+						</div>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const date1 = ref('24/12/2025')
+					const date2 = ref('24/12/2025')
+					const dateRange = ref(['24/12/2025', '31/12/2025'])
+				</script>
+				`,
+			},
+		],
+	},
+	render: () => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const date1 = ref('24/12/2025')
+				const date2 = ref('24/12/2025')
+				const dateRange = ref(['24/12/2025', '31/12/2025'])
+				return { date1, date2, dateRange }
+			},
+			template: `
+              <div class="d-flex flex-column gap-4 pa-4">
+                <DatePicker
+                    v-model="date1"
+                    placeholder="Format DD/MM/YYYY"
+                    format="DD/MM/YYYY"
+                    noCalendar
+                />
+                <DatePicker
+                    v-model="date2"
+                    placeholder="Format DD/MM/YYYY, retour YYYY-MM-DD"
+                    format="DD/MM/YYYY"
+                    dateFormatReturn="YYYY-MM-DD"
+                    noCalendar
+                />
+                <DatePicker
+                    v-model="dateRange"
+                    placeholder="Plage avec format DD/MM/YYYY"
+                    format="DD/MM/YYYY"
+                    displayRange
+                    noCalendar
+                />
+                <div class="mt-4">
+                    <p>Valeurs retournées :</p>
+                    <pre>Date simple : {{ date1 }}</pre>
+                    <pre>Date avec format retour : {{ date2 }}</pre>
+                    <pre>Plage de dates : {{ dateRange }}</pre>
+                </div>
               </div>
             `,
 		}
