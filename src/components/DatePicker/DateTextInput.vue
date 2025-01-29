@@ -1,409 +1,212 @@
+<template>
+	<SyTextField
+		:model-value="inputValue"
+		:placeholder="placeholder"
+		:error-messages="errorMessages"
+		:warning-messages="warningMessages"
+		:success-messages="successMessages"
+		:has-error="hasError"
+		:has-warning="hasWarning"
+		:has-success="hasSuccess"
+		:required="required"
+		@update:model-value="handleInput"
+		@blur="handleBlur"
+	/>
+</template>
+
 <script lang="ts" setup>
-	import { computed, ref, watch, onMounted } from 'vue'
-	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
-	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
-	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
+import { computed, ref, watch } from 'vue'
+import SyTextField from '../Customs/SyTextField/SyTextField.vue'
+import { useFieldValidation } from '@/composables/rules/useFieldValidation'
+import type { RuleOptions } from '@/composables/rules/useFieldValidation'
 
-	// Type pour les valeurs de date
-	type DateValue = string | [string, string]
+// Types
+type DateValue = string | [string, string]
 
-	const props = withDefaults(defineProps<{
-		modelValue?: DateValue
-		displayFormat?: string
-		returnFormat?: string
-		range?: boolean
-		placeholder?: string
-		rules?: { type: string, options: RuleOptions }[]
-		warningRules?: { type: string, options: RuleOptions }[]
-		required?: boolean
-	}>(), {
-		modelValue: undefined,
-		displayFormat: 'DD/MM/YYYY',
-		returnFormat: '',
-		range: false,
-		placeholder: '',
-		rules: () => [],
-		warningRules: () => [],
-		required: false,
-	})
+interface Props {
+	modelValue?: DateValue
+	placeholder?: string
+	required?: boolean
+	range?: boolean
+	rules?: { type: string, options: RuleOptions }[]
+	warningRules?: { type: string, options: RuleOptions }[]
+}
 
-	const emit = defineEmits<{
-		(e: 'update:modelValue', value: DateValue): void
-	}>()
+const props = withDefaults(defineProps<Props>(), {
+	modelValue: undefined,
+	placeholder: '',
+	required: false,
+	range: false,
+	rules: () => [],
+	warningRules: () => [],
+})
 
-	const inputValue = ref('')
+const emit = defineEmits<{
+	(e: 'update:model-value', value: DateValue): void
+}>()
 
-	const { generateRules } = useFieldValidation()
+// État local
+const inputValue = ref('')
+const errorMessages = ref<string[]>([])
+const warningMessages = ref<string[]>([])
+const successMessages = ref<string[]>([])
+const hasError = ref(false)
+const hasWarning = ref(false)
+const hasSuccess = ref(false)
 
-	// Règles de validation
-	const validationRules = computed(() => generateRules(props.rules || []))
-	const warningValidationRules = computed(() => generateRules(props.warningRules || []))
+// Validation setup
+const { generateRules } = useFieldValidation()
 
-	// États de validation
-	const hasError = ref(false)
-	const hasWarning = ref(false)
-	const hasSuccess = ref(false)
-	const errorMessages = ref<string[]>([])
-	const warningMessages = ref<string[]>([])
-	const successMessages = ref<string[]>([])
+// Règles de validation
+const defaultRules = computed(() => {
+    // Règle de base selon le type (date simple ou range)
+    const baseRule = {
+        type: props.range ? 'dateRange' : 'dateFormat',
+        options: {
+            message: props.range ? 'Format invalide (JJ/MM/AAAA - JJ/MM/AAAA)' : 'Format invalide (JJ/MM/AAAA)'
+        }
+    }
 
-	// Valider le champ
-	const validateField = () => {
-		// Réinitialiser les états
-		errorMessages.value = []
-		warningMessages.value = []
-		successMessages.value = []
+    // Combiner avec les règles personnalisées
+    return [baseRule, ...(props.rules || [])]
+})
 
-		if (props.required && !inputValue.value) {
-			errorMessages.value.push('La date est requise.')
-			hasError.value = true
-			return
-		}
+const validationRules = computed(() => generateRules(defaultRules.value))
+const warningValidationRules = computed(() => generateRules(props.warningRules))
 
-		if (inputValue.value) {
-			if (props.range) {
-				// Pour une plage, valider chaque date séparément
-				const [start, end] = inputValue.value.split('-').map(d => d.trim())
-				if (start && isValidDate(start)) {
-					// Validation des erreurs et succès pour la date de début
-					addMessages(start, validationRules.value, 'error')
-					addMessages(start, validationRules.value, 'success')
-					// Validation des warnings pour la date de début
-					addMessages(start, warningValidationRules.value, 'warning')
-				}
+// Validation
+const validateField = () => {
+	// Réinitialiser les messages
+	errorMessages.value = []
+	warningMessages.value = []
+	successMessages.value = []
+	hasError.value = false
+	hasWarning.value = false
+	hasSuccess.value = false
 
-				if (end && isValidDate(end)) {
-					// Validation des erreurs et succès pour la date de fin
-					addMessages(end, validationRules.value, 'error')
-					addMessages(end, validationRules.value, 'success')
-					// Validation des warnings pour la date de fin
-					addMessages(end, warningValidationRules.value, 'warning')
-
-					// Valider que la date de fin est après la date de début
-					if (start && isValidDate(start)) {
-						const startDate = parseDate(start, props.displayFormat)
-						const endDate = parseDate(end, props.displayFormat)
-						if (startDate && endDate && endDate < startDate) {
-							errorMessages.value.push('La date de fin doit être après la date de début')
-						}
-					}
-				}
-			}
-			else {
-				// Validation pour une date simple
-				addMessages(inputValue.value, validationRules.value, 'error')
-				addMessages(inputValue.value, validationRules.value, 'success')
-				addMessages(inputValue.value, warningValidationRules.value, 'warning')
-			}
-		}
-
-		// Mettre à jour les états
-		hasError.value = errorMessages.value.length > 0
-		hasWarning.value = warningMessages.value.length > 0
-		hasSuccess.value = successMessages.value.length > 0 && !hasError.value && !hasWarning.value
+	// Vérifier si le champ est requis
+	if (props.required && !inputValue.value) {
+		errorMessages.value = ['Ce champ est requis']
+		hasError.value = true
+		return
 	}
 
-	// Fonction pour ajouter les messages
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	const addMessages = (value: string, rules: any[], messageType: 'error' | 'warning' | 'success') => {
-		if (!value) return
+	if (!inputValue.value) return
 
-		// Convertir la date au format YYYY-MM-DD pour la validation
-		const validationValue = toValidationFormat(value)
-		if (!validationValue) return
-
-		rules.forEach((rule) => {
-			const result = rule(validationValue)
-			if (result) {
-				const targetMessages = messageType === 'error'
-					? errorMessages
-					: messageType === 'warning'
-						? warningMessages
-						: successMessages
-				if (result[messageType]) {
-					targetMessages.value.push(result[messageType])
-					targetMessages.value = [...new Set(targetMessages.value)]
-				}
-			}
-		})
-	}
-
-	// Convert a date string to YYYY-MM-DD format for validation
-	const toValidationFormat = (dateStr: string): string => {
-		if (!dateStr) return ''
-		const date = parseDate(dateStr, 'DD/MM/YYYY')
-		if (!date) return dateStr
-
-		// Formatter en YYYY-MM-DD
-		return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
-	}
-
-	// Fonction pour parser les dates selon le format spécifié
-	const parseDate = (dateStr: string, format: string): Date | null => {
-		const formatParts = format.split(/[^A-Z]/)
-		const dateParts = dateStr.split(/[^0-9]/)
-
-		if (dateParts.length !== formatParts.length) return null
-
-		let day = 1, month = 0, year = 2000
-
-		for (let i = 0; i < formatParts.length; i++) {
-			const value = parseInt(dateParts[i])
-			if (isNaN(value)) return null
-
-			switch (formatParts[i]) {
-			case 'DD':
-				day = value
-				break
-			case 'MM':
-				month = value - 1 // JavaScript months are 0-based
-				break
-			case 'YYYY':
-			case 'YY':
-				year = value
-				if (formatParts[i] === 'YY') {
-					const currentYear = new Date().getFullYear()
-					const currentCentury = Math.floor(currentYear / 100) * 100
-					year = currentCentury + value
-				}
-				break
-			}
+	// Appliquer les règles de validation
+	for (const rule of validationRules.value) {
+		const result = rule(inputValue.value)
+		if (result.error) {
+			errorMessages.value.push(result.error)
 		}
-
-		const date = new Date(year, month, day)
-		return date.getFullYear() === year && date.getMonth() === month && date.getDate() === day ? date : null
-	}
-
-	// Convert between different date formats
-	const convertDateFormat = (dateStr: string, fromFormat: string, toFormat: string): string => {
-		if (!dateStr) return ''
-
-		const date = parseDate(dateStr, fromFormat)
-		if (!date) return dateStr
-
-		// Format the date according to the target format
-		let result = toFormat
-		result = result.replace('YYYY', String(date.getFullYear()))
-		result = result.replace('YY', String(date.getFullYear()).slice(-2))
-		result = result.replace('MM', String(date.getMonth() + 1).padStart(2, '0'))
-		result = result.replace('DD', String(date.getDate()).padStart(2, '0'))
-		return result
-	}
-
-	// Format a date input string (add slashes)
-	const formatDateInput = (value: string): string => {
-		const numbers = value.replace(/\D/g, '')
-		const chars = numbers.split('')
-
-		if (chars.length <= 2) return numbers
-		if (chars.length <= 4) return `${chars.slice(0, 2).join('')}/${chars.slice(2).join('')}`
-
-		// Permettre les années à 4 chiffres
-		const yearPart = chars.slice(4).join('')
-		return `${chars.slice(0, 2).join('')}/${chars.slice(2, 4).join('')}/${yearPart}`
-	}
-
-	// Initialisation au montage
-	onMounted(() => {
-		if (props.modelValue) {
-			if (Array.isArray(props.modelValue)) {
-				// Si on reçoit un tableau de dates, on les formate pour l'affichage
-				const [start, end] = props.modelValue
-				const formattedStart = convertDateFormat(start, props.returnFormat || 'YYYY-MM-DD', props.displayFormat)
-				const formattedEnd = convertDateFormat(end, props.returnFormat || 'YYYY-MM-DD', props.displayFormat)
-				inputValue.value = `${formattedStart} - ${formattedEnd}`
-			}
-			else if (typeof props.modelValue === 'string') {
-				// Si on reçoit une chaîne, on la convertit dans le format d'affichage
-				inputValue.value = convertDateFormat(props.modelValue, props.returnFormat || 'YYYY-MM-DD', props.displayFormat)
-			}
-			validateField()
-		}
-	})
-
-	// Mise à jour quand la valeur change
-	watch(() => props.modelValue, (newValue) => {
-		if (newValue) {
-			if (Array.isArray(newValue)) {
-				// Si on reçoit un tableau de dates, on les formate pour l'affichage
-				const [start, end] = newValue
-				const formattedStart = convertDateFormat(start, props.returnFormat || 'YYYY-MM-DD', props.displayFormat)
-				const formattedEnd = convertDateFormat(end, props.returnFormat || 'YYYY-MM-DD', props.displayFormat)
-				inputValue.value = `${formattedStart} - ${formattedEnd}`
-			}
-			else if (typeof newValue === 'string') {
-				// Si on reçoit une chaîne, on la convertit dans le format d'affichage
-				inputValue.value = convertDateFormat(newValue, props.returnFormat || 'YYYY-MM-DD', props.displayFormat)
-			}
-			validateField()
-		}
-		else {
-			inputValue.value = ''
-		}
-	})
-
-	// Émission de la valeur
-	const emitValue = (value: string) => {
-		if (!value) {
-			emit('update:modelValue', '')
-			return
-		}
-
-		const returnFormat = props.returnFormat || 'YYYY-MM-DD'
-
-		if (props.range) {
-			const [start, end] = value.split('-').map(d => d.trim())
-			if (start && end) {
-				// Pour les ranges, convertir les deux dates au format demandé
-				const formattedStart = convertDateFormat(start, props.displayFormat, returnFormat)
-				const formattedEnd = convertDateFormat(end, props.displayFormat, returnFormat)
-				emit('update:modelValue', [formattedStart, formattedEnd])
-			}
-		}
-		else {
-			// Pour une date simple, convertir au format demandé
-			const formattedValue = convertDateFormat(value, props.displayFormat, returnFormat)
-			emit('update:modelValue', formattedValue)
+		if (result.success) {
+			successMessages.value.push(result.success)
 		}
 	}
 
-	// Handle the input value formatting
-	const maxLength = computed(() => props.range ? 23 : 10) // 10 pour "DD/MM/YYYY", 23 pour "DD/MM/YYYY - DD/MM/YYYY"
-	const handleInput = (value: string) => {
-		// Limiter la longueur du texte
-		if (value.length > maxLength.value) {
-			value = value.slice(0, maxLength.value)
+	// Appliquer les règles d'avertissement
+	for (const rule of warningValidationRules.value) {
+		const result = rule(inputValue.value)
+		if (result.warning) {
+			warningMessages.value.push(result.warning)
 		}
+	}
 
-		if (!value) {
-			inputValue.value = ''
-			emitValue('')
-			validateField()
-			return
+	// Mettre à jour les états
+	hasError.value = errorMessages.value.length > 0
+	hasWarning.value = warningMessages.value.length > 0
+	hasSuccess.value = successMessages.value.length > 0 && !hasError.value && !hasWarning.value
+}
+
+// Formatage de la date pendant la saisie
+const formatDateInput = (value: string): string => {
+	// Garder uniquement les chiffres
+	const numbers = value.replace(/\D/g, '')
+	
+	// Format: DD/MM/YYYY
+	if (numbers.length <= 2) return numbers
+	if (numbers.length <= 4) return `${numbers.slice(0, 2)}/${numbers.slice(2)}`
+	return `${numbers.slice(0, 2)}/${numbers.slice(2, 4)}/${numbers.slice(4, 8)}`
+}
+
+// Gestion de la saisie
+const handleInput = (value: string) => {
+	if (!value) {
+		inputValue.value = ''
+		emit('update:model-value', props.range ? ['', ''] : '')
+		validateField()
+		return
+	}
+
+	if (props.range) {
+		// Gestion du range
+		const [start, end] = value.split('-').map(d => d?.trim() || '')
+		
+		// Formater la première date
+		let formattedValue = formatDateInput(start)
+		
+		// Si la première date est complète (10 caractères) et qu'il n'y a pas encore de tiret
+		if (start.length >= 10 && !value.includes('-')) {
+			formattedValue += ' - '
 		}
-
-		// Garder uniquement les chiffres et le séparateur de plage
-		let formattedValue = value.replace(/[^\d-]/g, '')
-
-		if (props.range) {
-			const [start, end] = formattedValue.split('-').map(d => d.trim())
-			let result = ''
-
-			// Formater la première date
-			if (start) {
-				result = formatDateInput(start)
-
-				// Si la première date est complète, ajouter automatiquement le séparateur
-				const yearLength = props.displayFormat.includes('YYYY') ? 8 : 6
-				if (start.length === yearLength && !formattedValue.includes('-')) {
-					result += ' -'
-				}
-			}
-
-			// Ajouter le séparateur et la deuxième date si présente
-			if (formattedValue.includes('-')) {
-				if (!result.includes(' -')) {
-					result += ' -'
-				}
-				if (end) {
-					result += ' ' + formatDateInput(end)
-				}
-			}
-
-			formattedValue = result
-		}
-		else {
-			formattedValue = formatDateInput(formattedValue)
+		
+		// Si on a un tiret, formater aussi la deuxième date
+		if (value.includes('-')) {
+			formattedValue = `${formatDateInput(start)} - ${formatDateInput(end)}`
 		}
 
 		inputValue.value = formattedValue
-		emitValue(formattedValue)
-	}
-
-	// Handle blur event to format the final value
-	const handleBlur = () => {
-		if (!inputValue.value) {
-			emitValue('')
-			return
-		}
-
-		if (props.range) {
-			const [start, end] = inputValue.value.split('-').map(d => d.trim())
-			if (start && end) {
-				// Nettoyer et formater les dates
-				const cleanStart = start.replace(/\D/g, '')
-				const cleanEnd = end.replace(/\D/g, '')
-
-				// Extraire les parties des dates
-				const startDay = cleanStart.slice(0, 2)
-				const startMonth = cleanStart.slice(2, 4)
-				const startYear = cleanStart.slice(4)
-
-				const endDay = cleanEnd.slice(0, 2)
-				const endMonth = cleanEnd.slice(2, 4)
-				const endYear = cleanEnd.slice(4)
-
-				// Formater pour l'affichage
-				const formattedStart = `${startDay}/${startMonth}/${startYear}`
-				const formattedEnd = `${endDay}/${endMonth}/${endYear}`
-				inputValue.value = `${formattedStart} - ${formattedEnd}`
-
-				// Émettre les dates si elles sont valides
-				if (isValidDate(formattedStart) && isValidDate(formattedEnd)) {
-					emitValue(`${formattedStart} - ${formattedEnd}`)
-				}
+		
+		// Valider et émettre si les deux dates sont complètes
+		if (formattedValue.includes(' - ') && formattedValue.length === 23) {
+			validateField()
+			if (!hasError.value) {
+				const [startDate, endDate] = formattedValue.split(' - ')
+				emit('update:model-value', [startDate, endDate])
 			}
 		}
-		else {
-			const cleanValue = inputValue.value.replace(/\D/g, '')
-
-			// Extraire les parties de la date
-			const day = cleanValue.slice(0, 2)
-			const month = cleanValue.slice(2, 4)
-			const year = cleanValue.slice(4)
-
-			// Formater pour l'affichage
-			const formattedValue = `${day}/${month}/${year}`
-			inputValue.value = formattedValue
-
-			if (isValidDate(formattedValue)) {
-				emitValue(formattedValue)
+	} else {
+		// Gestion d'une date simple
+		const formattedValue = formatDateInput(value)
+		inputValue.value = formattedValue
+		
+		// Valider et émettre si la date est complète
+		if (formattedValue.length === 10) {
+			validateField()
+			if (!hasError.value) {
+				emit('update:model-value', formattedValue)
 			}
 		}
+	}
+}
 
-		validateField()
+// Gestion du blur
+const handleBlur = () => {
+	validateField()
+}
+
+// Initialisation et synchronisation avec modelValue
+watch(() => props.modelValue, (newValue) => {
+	if (!newValue) {
+		inputValue.value = ''
+		return
 	}
 
-	// Validate single date
-	const isValidDate = (dateString: string): boolean => {
-		return parseDate(dateString, props.displayFormat) !== null
+	if (Array.isArray(newValue)) {
+		inputValue.value = newValue.map(d => d || '').join(' - ')
+	} else {
+		inputValue.value = newValue
 	}
+	validateField()
+}, { immediate: true })
 
-	// Exposer la méthode de validation
-	const validateOnSubmit = () => {
-		validateField()
-		return errorMessages.value.length === 0
-	}
+// Exposer la méthode de validation
+const validateOnSubmit = () => {
+	validateField()
+	return !hasError.value
+}
 
-	defineExpose({
-		validate: validateField,
-		validateOnSubmit,
-	})
+defineExpose({
+	validateOnSubmit
+})
 </script>
-
-<template>
-	<SyTextField
-		v-model="inputValue"
-		:error="hasError"
-		:error-messages="errorMessages"
-		:messages="successMessages"
-		:placeholder="placeholder"
-		:success="hasSuccess"
-		:warning="hasWarning"
-		:warning-messages="warningMessages"
-		:maxlength="maxLength"
-		v-bind="$attrs"
-		@blur="handleBlur"
-		@update:model-value="handleInput"
-	/>
-</template>

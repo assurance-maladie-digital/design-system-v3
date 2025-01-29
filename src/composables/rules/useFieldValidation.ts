@@ -194,6 +194,74 @@ export function useFieldValidation() {
 					)
 				}
 
+				case 'dateFormat': {
+					if (!value) return {}
+					if (typeof value !== 'string') return createValidationResult(false, options.message || `${identifier} doit être une chaîne de caractères`)
+
+					// Si la saisie est incomplète, on ne valide pas
+					if (value.length < 10) return {}
+
+					const parts = value.split('/')
+					if (parts.length !== 3) {
+						return createValidationResult(false, options.message || `${identifier} doit respecter le format JJ/MM/AAAA`)
+					}
+
+					const [day, month, year] = parts.map(p => parseInt(p))
+
+					if (isNaN(day) || isNaN(month) || isNaN(year)) {
+						return createValidationResult(false, options.message || `${identifier} doit contenir uniquement des chiffres`)
+					}
+
+					if (day < 1 || day > 31) {
+						return createValidationResult(false, options.message || `Le jour doit être entre 1 et 31`)
+					}
+
+					if (month < 1 || month > 12) {
+						return createValidationResult(false, options.message || `Le mois doit être entre 1 et 12`)
+					}
+
+					if (year < 1900 || year > 2100) {
+						return createValidationResult(false, options.message || `L'année doit être entre 1900 et 2100`)
+					}
+
+					const date = new Date(year, month - 1, day)
+					if (date.getDate() !== day || date.getMonth() !== month - 1 || date.getFullYear() !== year) {
+						return createValidationResult(false, options.message || `La date n'est pas valide`)
+					}
+
+					return createValidationResult(true)
+				}
+
+				case 'dateRange': {
+					if (!value) return {}
+					if (typeof value !== 'string') return createValidationResult(false, options.message || `${identifier} doit être une chaîne de caractères`)
+
+					// Si la saisie est incomplète, on ne valide pas
+					if (!value.includes(' - ')) return {}
+
+					const [start, end] = value.split(' - ')
+					if (!start || !end) return {}
+
+					// Valider chaque date individuellement
+					const startValidation = createRule('dateFormat', options)(start)
+					const endValidation = createRule('dateFormat', options)(end)
+
+					if (!startValidation.success) return startValidation
+					if (!endValidation.success) return endValidation
+
+					// Vérifier que la date de fin est après la date de début
+					const [startDay, startMonth, startYear] = start.split('/').map(Number)
+					const [endDay, endMonth, endYear] = end.split('/').map(Number)
+					const startDate = new Date(startYear, startMonth - 1, startDay)
+					const endDate = new Date(endYear, endMonth - 1, endDay)
+
+					if (endDate < startDate) {
+						return createValidationResult(false, options.message || `La date de fin doit être après la date de début`)
+					}
+
+					return createValidationResult(true)
+				}
+
 				case 'custom': {
 					const result = options.validate?.(value)
 					if (result === true) {

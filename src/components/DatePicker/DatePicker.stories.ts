@@ -880,124 +880,140 @@ export const DifferentFormatsWithRange: Story = {
 }
 
 export const NoCalendar: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						placeholder="Saisir une date"
-						format="DD/MM/YYYY"
-						noCalendar
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('')
-				</script>
-				`,
-			},
-		],
-	},
+	name: 'Sans calendrier',
 	args: {
-		placeholder: 'Saisir une date',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		isDisabled: false,
+		label: 'Date',
 		noIcon: false,
 		noCalendar: true,
 		modelValue: '',
+		rules: [
+			{ 
+				type: 'dateFormat',
+				options: { 
+					message: 'Le format de la date est invalide (format attendu : JJ/MM/AAAA)'
+				}
+			}
+		]
 	},
-	render: (args) => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const value = ref('')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
+	render: (args) => ({
+		components: {
+			DatePicker
+		},
+		setup() {
+			const date = ref(args.modelValue)
+			return { args, date }
+		},
+		template: `
+			<DatePicker
+				v-bind="args"
+				v-model="date"
+			/>
+		`
+	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Le composant peut être utilisé sans le calendrier, permettant uniquement la saisie manuelle de la date.'
+			}
 		}
-	},
+	}
 }
 
-export const NoCalendarWithRange: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="dateRange"
-						placeholder="Saisir une période"
-						format="DD/MM/YYYY"
-						noCalendar
-						displayRange
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const dateRange = ref(['', ''])
-				</script>
-				`,
-			},
-		],
-	},
+export const NoCalendarRange: Story = {
+	name: 'Sans calendrier avec plage',
 	args: {
-		placeholder: 'Saisir une période',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: true,
-		displayIcon: true,
-		displayAppendIcon: false,
-		isDisabled: false,
+		label: 'Période',
 		noIcon: false,
 		noCalendar: true,
+		range: true,
 		modelValue: ['', ''],
+		rules: [
+			{
+				type: 'dateRange',
+				options: {
+					message: 'Le format de la plage est invalide (format attendu : JJ/MM/AAAA - JJ/MM/AAAA)'
+				}
+			}
+		]
 	},
-	render: (args) => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const value = ref(['', ''])
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
+	render: (args) => ({
+		components: {
+			DatePicker
+		},
+		setup() {
+			const date = ref(args.modelValue)
+			return { args, date }
+		},
+		template: `
+			<DatePicker
+				v-bind="args"
+				v-model="date"
+			/>
+		`
+	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Le composant peut être utilisé sans le calendrier en mode plage de dates.'
+			}
 		}
+	}
+}
+
+export const NoCalendarWithCustomRules: Story = {
+	name: 'Sans calendrier avec règles personnalisées',
+	args: {
+		label: 'Date',
+		noIcon: false,
+		noCalendar: true,
+		modelValue: '',
+		rules: [
+			{ 
+				type: 'dateFormat',
+				options: { 
+					message: 'Le format de la date est invalide (format attendu : JJ/MM/AAAA)'
+				}
+			},
+			{
+				type: 'notBeforeDate',
+				options: {
+					date: new Date(),
+					message: 'La date ne peut pas être antérieure à aujourd\'hui'
+				}
+			}
+		],
+		warningRules: [
+			{
+				type: 'notAfterDate',
+				options: {
+					date: new Date(new Date().setMonth(new Date().getMonth() + 3)),
+					message: 'Attention : La date est à plus de 3 mois'
+				}
+			}
+		]
 	},
+	render: (args) => ({
+		components: {
+			DatePicker
+		},
+		setup() {
+			const date = ref(args.modelValue)
+			return { args, date }
+		},
+		template: `
+			<DatePicker
+				v-bind="args"
+				v-model="date"
+			/>
+		`
+	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Le composant peut être utilisé avec des règles de validation personnalisées, comme la vérification de dates minimales et maximales.'
+			}
+		}
+	}
 }
 
 export const NoCalendarWithError: Story = {
@@ -1141,7 +1157,6 @@ export const NoCalendarWithWarning: Story = {
 		}
 	},
 }
-
 
 export const NoCalendarWithDifferentFormats: Story = {
 	parameters: {
