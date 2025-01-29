@@ -58,6 +58,18 @@
 	const validationRules = computed(() => generateRules(defaultRules.value))
 	const warningValidationRules = computed(() => generateRules(props.warningRules))
 
+	// Vérifier si une date est valide
+	const isValidDate = (dateString: string): boolean => {
+		if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dateString)) return false
+		
+		const [day, month, year] = dateString.split('/').map(Number)
+		const date = new Date(year, month - 1, day)
+		
+		return date.getDate() === day &&
+			date.getMonth() === month - 1 &&
+			date.getFullYear() === year
+	}
+
 	// Validation
 	const validateField = () => {
 		// Réinitialiser les messages
@@ -81,28 +93,54 @@
 		let hasAnyWarning = false
 		let hasAnySuccess = false
 
-		// Appliquer les règles de validation
-		for (const rule of validationRules.value) {
-			const result = rule(inputValue.value)
-			if (result.error) {
-				errorMessages.value.push(result.error)
+		const validateValue = (value: string) => {
+			// Vérifier d'abord si la date est valide
+			if (value.length === 10 && !isValidDate(value)) {
+				errorMessages.value.push(defaultRules.value[0].options.message)
 				hasAnyError = true
+				return
 			}
-			if (result.success && !hasAnyError) {
-				successMessages.value.push(result.success)
-				hasAnySuccess = true
+
+			// Appliquer les règles de validation
+			for (const rule of validationRules.value) {
+				const result = rule(value)
+				if (result.error) {
+					errorMessages.value.push(result.error)
+					hasAnyError = true
+				}
+				if (result.success && !hasAnyError) {
+					successMessages.value.push(result.success)
+					hasAnySuccess = true
+				}
+			}
+
+			// Appliquer les règles d'avertissement
+			if (!hasAnyError) {
+				for (const rule of warningValidationRules.value) {
+					const result = rule(value)
+					if (result.warning) {
+						warningMessages.value.push(result.warning)
+						hasAnyWarning = true
+					}
+				}
 			}
 		}
 
-		// Appliquer les règles d'avertissement
-		if (!hasAnyError) {
-			for (const rule of warningValidationRules.value) {
-				const result = rule(inputValue.value)
-				if (result.warning) {
-					warningMessages.value.push(result.warning)
-					hasAnyWarning = true
+		if (props.range) {
+			// Pour une plage, valider les deux dates
+			const dates = inputValue.value.split(' - ')
+			if (dates.length === 2) {
+				validateValue(dates[0])
+				if (!hasAnyError) {
+					validateValue(dates[1])
 				}
+			} else {
+				// Si on n'a pas deux dates, valider la première
+				validateValue(inputValue.value)
 			}
+		} else {
+			// Pour une date simple
+			validateValue(inputValue.value)
 		}
 
 		// Mettre à jour les états en respectant la priorité
@@ -113,12 +151,15 @@
 
 	// Formatage de la date pendant la saisie
 	const formatDateInput = (value: string): string => {
+		if (!value) return ''
+		
 		// Garder uniquement les chiffres
 		const numbers = value.replace(/\D/g, '')
 
 		// Format: DD/MM/YYYY
 		if (numbers.length <= 2) return numbers
 		if (numbers.length <= 4) return `${numbers.slice(0, 2)}/${numbers.slice(2)}`
+		if (numbers.length <= 8) return `${numbers.slice(0, 2)}/${numbers.slice(2, 4)}/${numbers.slice(4, 8)}`
 		return `${numbers.slice(0, 2)}/${numbers.slice(2, 4)}/${numbers.slice(4, 8)}`
 	}
 
@@ -133,33 +174,36 @@
 
 		if (props.range) {
 			// Gestion du range
-			const [start, end] = value.split('-').map(d => d?.trim() || '')
+			let formattedValue = ''
+
+			// Séparer les dates en utilisant le tiret comme séparateur
+			const [firstPart = '', secondPart = ''] = value.includes(' - ') 
+				? value.split(' - ')
+				: [value.slice(0, 10), value.slice(11)]
 
 			// Formater la première date
-			let formattedValue = formatDateInput(start)
-
-			// Si la première date est complète (10 caractères) et qu'il n'y a pas encore de tiret
-			if (start.length >= 10 && !value.includes('-')) {
-				formattedValue += ' - '
-			}
-
-			// Si on a un tiret, formater aussi la deuxième date
-			if (value.includes('-')) {
-				formattedValue = `${formatDateInput(start)} - ${formatDateInput(end)}`
+			const formattedFirstDate = formatDateInput(firstPart)
+			
+			// Si la première date est complète, ajouter le séparateur et la deuxième date
+			if (formattedFirstDate.length === 10) {
+				formattedValue = `${formattedFirstDate} - ${formatDateInput(secondPart)}`
+			} else {
+				formattedValue = formattedFirstDate
 			}
 
 			inputValue.value = formattedValue
 
 			// Valider et émettre si les deux dates sont complètes
-			if (formattedValue.includes(' - ') && formattedValue.length === 23) {
-				validateField()
-				if (!hasError.value) {
-					const [startDate, endDate] = formattedValue.split(' - ')
-					emit('update:model-value', [startDate, endDate])
+			if (formattedValue.includes(' - ')) {
+				const [startDate, endDate] = formattedValue.split(' - ')
+				if (startDate.length === 10 && endDate.length === 10) {
+					validateField()
+					if (!hasError.value) {
+						emit('update:model-value', [startDate, endDate])
+					}
 				}
 			}
-		}
-		else {
+		} else {
 			// Gestion d'une date simple
 			const formattedValue = formatDateInput(value)
 			inputValue.value = formattedValue

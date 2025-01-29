@@ -923,7 +923,7 @@ export const NoCalendarRange: Story = {
 		label: 'Période',
 		noIcon: false,
 		noCalendar: true,
-		range: true,
+		displayRange: true,
 		modelValue: ['', ''],
 		rules: [
 			{
