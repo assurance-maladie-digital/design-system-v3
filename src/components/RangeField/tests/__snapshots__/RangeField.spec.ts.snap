@@ -68,8 +68,8 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
         </div>
       </div>
       <!---->
-      <div class="v-input__details">
-        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
+      <div id="input-0-messages" class="v-input__details" role="alert" aria-live="polite">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
         <!---->
@@ -115,8 +115,8 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
         </div>
       </div>
       <!---->
-      <div class="v-input__details">
-        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-2-messages">
+      <div id="input-2-messages" class="v-input__details" role="alert" aria-live="polite">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
         <!---->
@@ -194,8 +194,8 @@ exports[`RangeField > renders correctly 1`] = `
         </div>
       </div>
       <!---->
-      <div class="v-input__details">
-        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
+      <div id="input-0-messages" class="v-input__details" role="alert" aria-live="polite">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
         <!---->
@@ -241,8 +241,8 @@ exports[`RangeField > renders correctly 1`] = `
         </div>
       </div>
       <!---->
-      <div class="v-input__details">
-        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-2-messages">
+      <div id="input-2-messages" class="v-input__details" role="alert" aria-live="polite">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
         <!---->
@@ -320,8 +320,8 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
         </div>
       </div>
       <!---->
-      <div class="v-input__details">
-        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-0-messages">
+      <div id="input-0-messages" class="v-input__details" role="alert" aria-live="polite">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
         <!---->
@@ -367,8 +367,8 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
         </div>
       </div>
       <!---->
-      <div class="v-input__details">
-        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages" role="alert" aria-live="polite" id="input-2-messages">
+      <div id="input-2-messages" class="v-input__details" role="alert" aria-live="polite">
+        <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
         <!---->
