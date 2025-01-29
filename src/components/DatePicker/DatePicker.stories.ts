@@ -612,6 +612,11 @@ export const DifferentFormats: Story = {
 							placeholder="Format DD-MM-YY"
 							format="DD-MM-YY"
 						/>
+						<DatePicker
+							v-model="date5"
+							placeholder="Format DD.MM.YYYY"
+							format="DD.MM.YYYY"
+						/>
 					</div>
 				</template>
 				`,
@@ -627,6 +632,7 @@ export const DifferentFormats: Story = {
 				const value2 = ref('12/24/2025')
 				const value3 = ref('2025-12-24')
 				const value4 = ref('24-12-25')
+				const value5 = ref('24.12.2025')
 				</script>
 				`,
 			},
@@ -640,7 +646,8 @@ export const DifferentFormats: Story = {
 				const value2 = ref('12/24/2025')
 				const value3 = ref('2025-12-24')
 				const value4 = ref('24-12-25')
-				return { value1, value2, value3, value4 }
+				const value5 = ref('25.12.2025')
+				return { value1, value2, value3, value4, value5 }
 			},
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
@@ -664,6 +671,11 @@ export const DifferentFormats: Story = {
                     placeholder="Format DD-MM-YY"
                     format="DD-MM-YY"
                 />
+				  <DatePicker
+					  v-model="value5"
+					  placeholder="Format DD.MM.YYYY"
+					  format="DD.MM.YYYY"
+				  />  
               </div>
             `,
 		}
@@ -683,18 +695,25 @@ export const WithDateFormatReturn: Story = {
 							placeholder="Format d'affichage DD/MM/YYYY, retour par défaut"
 							format="DD/MM/YYYY"
 						/>
+						<span>Date de retour : {{ date1 }}</span>
+				  		<br/> <br/>
+				  		
 						<DatePicker
 							v-model="date2"
 							placeholder="Format d'affichage DD/MM/YYYY, retour MM/DD/YYYY"
 							format="DD/MM/YYYY"
 							dateFormatReturn="MM/DD/YYYY"
 						/>
+						<span>Date de retour : {{ date2 }}</span>
+				  		<br/> <br/>
+						
 						<DatePicker
 							v-model="date3"
 							placeholder="Format d'affichage DD/MM/YYYY, retour YYYY-MM-DD"
 							format="DD/MM/YYYY"
 							dateFormatReturn="YYYY-MM-DD"
 						/>
+						<span>Date de retour : {{ date3 }}</span>
 					</div>
 				</template>
 				`,
@@ -740,26 +759,30 @@ export const WithDateFormatReturn: Story = {
 			},
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
-                Date au format: {{ value1 }}
                 <DatePicker
                     v-model="value1"
-                    placeholder="Format d'affichage DD/MM/YYYY, retour par défaut"
+                    placeholder="Format DD/MM/YYYY, retour par défaut"
                     format="DD/MM/YYYY"
                 />
-                Date au format: {{ value2 }}
+				  <span>Date de retour : {{ value1 }}</span>
+				  <br/> <br/>
+				  
                 <DatePicker
                     v-model="value2"
-                    placeholder="Format d'affichage DD/MM/YYYY, retour MM/DD/YYYY"
+                    placeholder="Format DD/MM/YYYY, retour MM/DD/YYYY"
                     format="DD/MM/YYYY"
                     dateFormatReturn="MM/DD/YYYY"
                 />
-                Date au format: {{ value3 }}
+				  <span>Date de retour : {{ value2 }}</span>
+				  <br/> <br/>
+				  
                 <DatePicker
                     v-model="value3"
-                    placeholder="Format d'affichage DD/MM/YYYY, retour YYYY-MM-DD"
+                    placeholder="Format DD/MM/YYYY, retour YYYY-MM-DD"
                     format="DD/MM/YYYY"
                     dateFormatReturn="YYYY-MM-DD"
                 />
+				  <span>Date de retour : {{ value3 }}</span>
               </div>
             `,
 		}
@@ -774,33 +797,31 @@ export const WithCustomFormats: Story = {
 				code: `
 				<template>
 					<div class="d-flex flex-column gap-4">
-						<div>
-							<DatePicker
-								v-model="date1"
-								placeholder="Format d'affichage DD-MM-YY, retour YYYY/MM/DD"
-								format="DD-MM-YY"
-								dateFormatReturn="YYYY/MM/DD"
-							/>
-							Date au format: {{ date1 }}
-						</div>
-						<div>
-							<DatePicker
-								v-model="date2"
-								placeholder="Format d'affichage YY.MM.DD, retour DD-MM-YYYY"
-								format="YY.MM.DD"
-								dateFormatReturn="DD-MM-YYYY"
-							/>
-							Date au format: {{ date2 }}
-						</div>
-						<div>
-							<DatePicker
-								v-model="date3"
-								placeholder="Format d'affichage YYYY-DD-MM, retour MM/DD/YY"
-								format="YYYY-DD-MM"
-								dateFormatReturn="MM/DD/YY"
-							/>
-							Date au format: {{ date3 }}
-						</div>
+						<DatePicker
+							v-model="date1"
+							placeholder="Format DD-MM-YY, retour YYYY/MM/DD"
+							format="DD-MM-YY"
+							dateFormatReturn="YYYY/MM/DD"
+						/>
+						<span>Date de retour : {{ date1 }}</span>
+						<br/><br/>
+						
+						<DatePicker
+							v-model="date2"
+							placeholder="Format YY.MM.DD, retour DD-MM-YYYY"
+							format="YY.MM.DD"
+							dateFormatReturn="DD-MM-YYYY"
+						/>
+						<span>Date de retour : {{ date2 }}</span>
+						<br/><br/>
+						
+						<DatePicker
+							v-model="date3"
+							placeholder="Format YYYY-DD-MM, retour MM/DD/YY"
+							format="YYYY-DD-MM"
+							dateFormatReturn="MM/DD/YY"
+						/>
+						<span>Date de retour : {{ date3 }}</span>
 					</div>
 				</template>
 				`,
@@ -831,7 +852,6 @@ export const WithCustomFormats: Story = {
 			},
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
-                <div>
                   <DatePicker
                       v-model="value1"
                       placeholder="Format d'affichage DD-MM-YY, retour YYYY/MM/DD"
@@ -839,26 +859,24 @@ export const WithCustomFormats: Story = {
                       dateFormatReturn="YYYY/MM/DD"
                       display-icon
                   />
-                  Date au format: {{ value1 }}
-                </div>
-                <div>
+				  <span>Date de retour : {{ value1 }}</span>
+				  <br/><br/>
                   <DatePicker
                       v-model="value2"
                       placeholder="Format d'affichage YY.MM.DD, retour DD-MM-YYYY"
                       format="YY.MM.DD"
                       dateFormatReturn="DD-MM-YYYY"
                   />
-                  Date au format: {{ value2 }}
-                </div>
-                <div>
+				  <span>Date de retou : {{ value2 }}</span>
+				  <br/><br/>
                   <DatePicker
                       v-model="value3"
                       placeholder="Format d'affichage YYYY-DD-MM, retour MM/DD/YY"
                       format="YYYY-DD-MM"
                       dateFormatReturn="MM/DD/YY"
                   />
-                  Date au format: {{ value3 }}
-                </div>
+				  <span>Date de retour : {{ value3 }}</span>
+				  <br/><br/>
               </div>
             `,
 		}
@@ -873,42 +891,40 @@ export const WithMoreFormats: Story = {
 				code: `
 				<template>
 					<div class="d-flex flex-column gap-4">
-						<div>
-							<DatePicker
-								v-model="date1"
-								placeholder="Format YY.MM.DD, retour DD/MM/YYYY"
-								format="YY.MM.DD"
-								dateFormatReturn="DD/MM/YYYY"
-							/>
-							Date au format: {{ date1 }}
-						</div>
-						<div>
-							<DatePicker
-								v-model="date2"
-								placeholder="Format YYYY-DD-MM, retour MM-DD-YY"
-								format="YYYY-DD-MM"
-								dateFormatReturn="MM-DD-YY"
-							/>
-							Date au format: {{ date2 }}
-						</div>
-						<div>
-							<DatePicker
-								v-model="date3"
-								placeholder="Format DD.MM.YY, retour YY/MM/DD"
-								format="DD.MM.YY"
-								dateFormatReturn="YY/MM/DD"
-							/>
-							Date au format: {{ date3 }}
-						</div>
-						<div>
-							<DatePicker
-								v-model="date4"
-								placeholder="Format MM-YYYY-DD, retour DD.MM.YYYY"
-								format="MM-YYYY-DD"
-								dateFormatReturn="DD.MM.YYYY"
-							/>
-							Date au format: {{ date4 }}
-						</div>
+						<DatePicker
+							v-model="date1"
+							placeholder="Format YY.MM.DD, retour DD/MM/YYYY"
+							format="YY.MM.DD"
+							dateFormatReturn="DD/MM/YYYY"
+						/>
+						 <span>Date de retour : {{ date1 }}</span>
+						<br/><br/>
+						
+						<DatePicker
+							v-model="date2"
+							placeholder="Format YYYY-DD-MM, retour MM-DD-YY"
+							format="YYYY-DD-MM"
+							dateFormatReturn="MM-DD-YY"
+						/>
+						 <span>Date de retour : {{ date2 }}</span>
+						<br/><br/>
+						
+						<DatePicker
+							v-model="date3"
+							placeholder="Format DD.MM.YY, retour YY/MM/DD"
+							format="DD.MM.YY"
+							dateFormatReturn="YY/MM/DD"
+						/>
+						<span>Date de retour : {{ date3 }}</span>
+						<br/><br/>
+						
+						<DatePicker
+							v-model="date4"
+							placeholder="Format MM-YYYY-DD, retour DD.MM.YYYY"
+							format="MM-YYYY-DD"
+							dateFormatReturn="DD.MM.YYYY"
+						/>
+						<span>Date de retour : {{ date4 }}</span>
 					</div>
 				</template>
 				`,
@@ -941,42 +957,40 @@ export const WithMoreFormats: Story = {
 			},
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
-                <div>
                   <DatePicker
                       v-model="value1"
                       placeholder="Format YY.MM.DD, retour DD/MM/YYYY"
                       format="YY.MM.DD"
                       dateFormatReturn="DD/MM/YYYY"
                   />
-                  Date au format: {{ value1 }}
-                </div>
-                <div>
+					<span>Date de retour : {{ value1 }}</span>
+					<br/><br/>
+				  
                   <DatePicker
                       v-model="value2"
                       placeholder="Format YYYY-DD-MM, retour MM-DD-YY"
                       format="YYYY-DD-MM"
                       dateFormatReturn="MM-DD-YY"
                   />
-                  Date au format: {{ value2 }}
-                </div>
-                <div>
+				  <span>Date de retour : {{ value2 }}</span>
+				  <br/><br/>
+				  
                   <DatePicker
                       v-model="value3"
                       placeholder="Format DD.MM.YY, retour YY/MM/DD"
                       format="DD.MM.YY"
                       dateFormatReturn="YY/MM/DD"
                   />
-                  Date au format: {{ value3 }}
-                </div>
-                <div>
+				  <span>Date de retour : {{ value3 }}</span>
+				  <br/><br/>
+
                   <DatePicker
                       v-model="value4"
                       placeholder="Format MM-YYYY-DD, retour DD.MM.YYYY"
                       format="MM-YYYY-DD"
                       dateFormatReturn="DD.MM.YYYY"
                   />
-                  Date au format: {{ value4 }}
-                </div>
+				  <span>Date de retour : {{ value4 }}</span>
               </div>
             `,
 		}
