@@ -269,7 +269,6 @@
 					v-if="props.prependInnerIcon && !props.noIcon"
 					:aria-label="props.label ? `${props.label} - bouton ${props.prependInnerIcon}` : `Bouton ${props.prependInnerIcon}`"
 					:icon="ICONS[props.prependInnerIcon]"
-					role="button"
 				/>
 			</slot>
 			<VDivider
@@ -290,7 +289,6 @@
 					:class="{ 'error-icon': props.appendInnerIcon === 'error' }"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.appendInnerIcon]"
-					role="button"
 				/>
 			</slot>
 		</template>
