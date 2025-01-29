@@ -689,32 +689,30 @@ export const WithDateFormatReturn: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<div class="d-flex flex-column gap-4">
-						<DatePicker
-							v-model="date1"
-							placeholder="Format d'affichage DD/MM/YYYY, retour par défaut"
-							format="DD/MM/YYYY"
-						/>
-						<span>Date de retour : {{ date1 }}</span>
-				  		<br/> <br/>
-				  		
-						<DatePicker
-							v-model="date2"
-							placeholder="Format d'affichage DD/MM/YYYY, retour MM/DD/YYYY"
-							format="DD/MM/YYYY"
-							dateFormatReturn="MM/DD/YYYY"
-						/>
-						<span>Date de retour : {{ date2 }}</span>
-				  		<br/> <br/>
-						
-						<DatePicker
-							v-model="date3"
-							placeholder="Format d'affichage DD/MM/YYYY, retour YYYY-MM-DD"
-							format="DD/MM/YYYY"
-							dateFormatReturn="YYYY-MM-DD"
-						/>
-						<span>Date de retour : {{ date3 }}</span>
-					</div>
+              <div class="d-flex flex-column gap-4 pa-4">
+                <span class="mb-4">Date de retour : {{ value1 }}</span>
+                <DatePicker
+                    v-model="value1"
+                    placeholder="Format DD/MM/YYYY, retour par défaut"
+                    format="DD/MM/YYYY"
+                />
+
+                <span class="mb-4">Date de retour : {{ value2 }}</span>
+                <DatePicker
+                    v-model="value2"
+                    placeholder="Format DD/MM/YYYY, retour MM/DD/YYYY"
+                    format="DD/MM/YYYY"
+                    dateFormatReturn="MM/DD/YYYY"
+                />
+
+
+                <span class="mb-4">Date de retour : {{ value3 }}</span>
+                <DatePicker
+                    v-model="value3"
+                    placeholder="Format DD/MM/YYYY, retour YYYY-MM-DD"
+                    format="DD/MM/YYYY"
+                    dateFormatReturn="YYYY-MM-DD"
+                />
 				</template>
 				`,
 			},
@@ -759,30 +757,29 @@ export const WithDateFormatReturn: Story = {
 			},
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
+                <span class="mb-4">Date de retour : {{ value1 }}</span>
                 <DatePicker
                     v-model="value1"
                     placeholder="Format DD/MM/YYYY, retour par défaut"
                     format="DD/MM/YYYY"
                 />
-                <span>Date de retour : {{ value1 }}</span>
-                <br/> <br/>
 
+                <span class="mb-4">Date de retour : {{ value2 }}</span>
                 <DatePicker
                     v-model="value2"
                     placeholder="Format DD/MM/YYYY, retour MM/DD/YYYY"
                     format="DD/MM/YYYY"
                     dateFormatReturn="MM/DD/YYYY"
                 />
-                <span>Date de retour : {{ value2 }}</span>
-                <br/> <br/>
 
+
+                <span class="mb-4">Date de retour : {{ value3 }}</span>
                 <DatePicker
                     v-model="value3"
                     placeholder="Format DD/MM/YYYY, retour YYYY-MM-DD"
                     format="DD/MM/YYYY"
                     dateFormatReturn="YYYY-MM-DD"
                 />
-                <span>Date de retour : {{ value3 }}</span>
               </div>
             `,
 		}
