@@ -50,7 +50,7 @@ const meta = {
 		},
 		itemLabels: {
 			description: 'Les libellés des items.',
-			control: 'array',
+			control: 'object',
 			default: null,
 			table: {
 				type: {
