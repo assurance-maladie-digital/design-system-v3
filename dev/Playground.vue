@@ -13,19 +13,19 @@
 	<main>
 		<PageContainer>
 			{{ ratingEmotion }}
-			<!--			<RatingPicker
+			<RatingPicker
 				v-model="ratingEmotion"
 				label="Êtes-vous satisfait de ce service ?"
 				type="emotion"
-				/>-->
+			/>
 
 			<br>
 			{{ ratingNumber }}
-			<!--			<RatingPicker
+			<RatingPicker
 				v-model="ratingNumber"
 				label="Êtes-vous satisfait de ce service ?"
 				type="number"
-				/>-->
+			/>
 
 			<br>
 			{{ ratingStars }}
