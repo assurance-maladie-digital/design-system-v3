@@ -342,110 +342,110 @@
 @use '@/assets/tokens';
 
 .v-messages__message--success {
-  color: tokens.$colors-border-success !important;
+	color: tokens.$colors-border-success !important;
 
-  .v-field--active & {
-    color: tokens.$colors-border-success !important;
-  }
+	.v-field--active & {
+		color: tokens.$colors-border-success !important;
+	}
 }
 
 .v-messages__message--error {
-  color: tokens.$colors-border-error;
+	color: tokens.$colors-border-error;
 
-  .v-field--active & {
-    color: tokens.$colors-border-error;
-  }
+	.v-field--active & {
+		color: tokens.$colors-border-error;
+	}
 }
 
 :deep(.v-field.v-field--active .v-label.v-field-label--floating) {
-  opacity: 1;
+	opacity: 1;
 }
 
 .multi-line {
-  white-space: pre-line !important;
+	white-space: pre-line !important;
 }
 
 .vd-number-field {
-  max-width: 296px;
+	max-width: 296px;
 }
 
 .vd-key-field {
-  width: 104px;
-  flex: none;
-  margin-left: 1%;
+	width: 104px;
+	flex: none;
+	margin-left: 1%;
 }
 
 .custom-counter {
-  color: rgb(0 0 0 / 54%);
+	color: rgb(0 0 0 / 54%);
 }
 
 .vd-nir-field :deep(.v-input__append-inner),
 .vd-tooltip-icon {
-  flex: none;
-  color: rgb(0 0 0 / 54%);
+	flex: none;
+	color: rgb(0 0 0 / 54%);
 }
 
 :deep(.v-overlay__content) {
-  background: rgb(84 88 89 / 95%) !important;
+	background: rgb(84 88 89 / 95%) !important;
 }
 
 .vd-nir-field--outlined :deep(.v-messages.error--text) {
-  padding: 6px;
+	padding: 6px;
 }
 
 .vd-nir-field {
-  container-name: nirfieldwrapper;
+	container-name: nirfieldwrapper;
 }
 
 :deep(.v-input__append) {
-  margin-inline-start: 0 !important;
+	margin-inline-start: 0 !important;
 }
 
 :deep(.vd-number-field > .v-input__prepend) {
-  margin-right: 0 !important;
+	margin-right: 0 !important;
 }
 
 :deep(.vd-key-field > .v-input__prepend) {
-  @media screen and (width <= 360px) {
-    margin-inline-end: 0 !important;
-  }
+	@media screen and (width <= 360px) {
+		margin-inline-end: 0 !important;
+	}
 }
 
 :deep(.v-text-field .v-input__details) {
-  padding-inline: 0 !important;
-  flex: none !important;
+	padding-inline: 0 !important;
+	flex: none !important;
 }
 
 :deep(.v-text-field .v-input__details .v-messages) {
-  color: rgb(0 0 0 / 100%) !important;
+	color: rgb(0 0 0 / 100%) !important;
 }
 
 @mixin responsive-nir-wrapper {
-  .vd-nir-field__fields-wrapper :deep(> .v-input__control) {
-    justify-content: start;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-bottom: 4px;
+	.vd-nir-field__fields-wrapper :deep(> .v-input__control) {
+		justify-content: start;
+		flex-wrap: wrap;
+		gap: 4px;
+		margin-bottom: 4px;
 
-    .vd-number-field {
-      flex: 100% 0 0;
-    }
-  }
+		.vd-number-field {
+			flex: 100% 0 0;
+		}
+	}
 }
 
 @container nirFieldwrapper (max-width: 300px) {
-  @include responsive-nir-wrapper;
+	@include responsive-nir-wrapper;
 }
 
 @media screen and (width <= 360px) {
-  @include responsive-nir-wrapper;
+	@include responsive-nir-wrapper;
 }
 
 .v-text-field .v-input__append-inner {
-  padding-left: 0 !important;
+	padding-left: 0 !important;
 }
 
 :deep(.v-text-field > .v-input__control > .v-input__slot > .v-text-field__slot) {
-  width: min-content !important;
+	width: min-content !important;
 }
 </style>
