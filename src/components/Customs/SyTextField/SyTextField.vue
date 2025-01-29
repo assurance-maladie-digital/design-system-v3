@@ -24,6 +24,11 @@
 			label?: string
 			required?: boolean
 			errorMessages?: string[] | null
+			warningMessages?: string[] | null
+			successMessages?: string[] | null
+			hasError?: boolean
+			hasWarning?: boolean
+			hasSuccess?: boolean
 			isReadOnly?: boolean
 			isActive?: boolean
 			baseColor?: string
@@ -77,6 +82,11 @@
 			color: 'primary',
 			label: 'custom label',
 			errorMessages: null,
+			warningMessages: null,
+			successMessages: null,
+			hasError: false,
+			hasWarning: false,
+			hasSuccess: false,
 			isReadOnly: false,
 			isClearable: false,
 			isActive: false,
@@ -202,6 +212,7 @@
 		:display-asterisk="isShouldDisplayAsterisk"
 		:error="props.isOnError"
 		:error-messages="props.errorMessages"
+		:messages="[...(props.warningMessages || []), ...(props.successMessages || [])]"
 		:flat="props.isFlat"
 		:focused="props.isFocused"
 		:hide-details="props.areDetailsHidden"
@@ -211,7 +222,6 @@
 		:loading="props.loading"
 		:max-errors="props.maxErrors"
 		:max-width="props.maxWidth"
-		:messages="props.messages"
 		:min-width="props.minWidth"
 		:name="props.name"
 		:no-icon="props.noIcon"
@@ -233,6 +243,11 @@
 		:type="props.type"
 		:variant="props.variantStyle"
 		:width="props.width"
+		:class="{
+			'min-width': true,
+			'warning-field': props.hasWarning && !props.hasError,
+			'success-field': props.hasSuccess && !props.hasError && !props.hasWarning
+		}"
 		@blur="checkErrorOnBlur"
 	>
 		<template
@@ -280,8 +295,14 @@
 		</template>
 		<template #append-inner>
 			<slot name="append-inner">
-				<VIcon v-if="hasError && !props.appendInnerIcon">
+				<VIcon v-if="hasError && !props.appendInnerIcon" color="error">
 					{{ mdiInformation }}
+				</VIcon>
+				<VIcon v-else-if="props.hasWarning && !props.appendInnerIcon" color="warning">
+					{{ mdiAlertOutline }}
+				</VIcon>
+				<VIcon v-else-if="props.hasSuccess && !props.appendInnerIcon" color="success">
+					{{ mdiCheck }}
 				</VIcon>
 				<VIcon
 					v-if="props.appendInnerIcon && !props.noIcon"
@@ -297,3 +318,26 @@
 		</template>
 	</VTextField>
 </template>
+
+<style lang="scss" scoped>
+.min-width {
+	min-width: 345px;
+}
+.warning-field {
+	:deep(.v-field) {
+		color: rgb(var(--v-theme-warning)) !important;
+		.v-field__outline {
+			color: rgb(var(--v-theme-warning)) !important;
+		}
+	}
+}
+
+.success-field {
+	:deep(.v-field) {
+		color: rgb(var(--v-theme-success)) !important;
+		.v-field__outline {
+			color: rgb(var(--v-theme-success)) !important;
+		}
+	}
+}
+</style>

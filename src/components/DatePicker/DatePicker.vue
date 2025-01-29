@@ -118,13 +118,15 @@
 	const errorMessages = ref<string[]>([])
 	const successMessages = ref<string[]>([])
 	const warningMessages = ref<string[]>([])
+	const hasError = ref(false)
+	const hasWarning = ref(false)
+	const hasSuccess = ref(false)
 	const displayFormattedDate = ref('')
 
 	const getMessageClasses = () => ({
-		'dp-width': true,
-		'v-messages__message--success': successMessages.value.length > 0,
-		'v-messages__message--error': errorMessages.value.length > 0,
-		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
+		'has-error': hasError.value,
+		'has-warning': hasWarning.value && !hasError.value,
+		'has-success': hasSuccess.value && !hasError.value && !hasWarning.value,
 	})
 
 	// Formate une date unique au format spécifié
@@ -319,6 +321,9 @@
 		errorMessages.value = []
 		successMessages.value = []
 		warningMessages.value = []
+		hasError.value = false
+		hasWarning.value = false
+		hasSuccess.value = false
 
 		const addMessages = (dates, rules) => {
 			dates.forEach((date) => {
@@ -327,14 +332,17 @@
 					if (result?.error) {
 						errorMessages.value.push(result.error)
 						errorMessages.value = [...new Set(errorMessages.value)]
+						hasError.value = true
 					}
 					else if (result?.warning) {
 						warningMessages.value.push(result.warning)
 						warningMessages.value = [...new Set(warningMessages.value)]
+						hasWarning.value = true
 					}
 					else if (result?.success) {
 						successMessages.value.push(result.success)
 						successMessages.value = [...new Set(successMessages.value)]
+						hasSuccess.value = true
 					}
 				})
 			})
@@ -364,6 +372,7 @@
 			&& (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))
 		) {
 			errorMessages.value.push('La date est requise.')
+			hasError.value = true
 		}
 		else if (selectedDates.value) {
 			handleValidation(Array.isArray(selectedDates.value) ? selectedDates.value : [selectedDates.value])
@@ -413,10 +422,14 @@
 				:append-inner-icon="getIcon()"
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:error-messages="errorMessages"
+				:warning-messages="warningMessages"
+				:success-messages="successMessages"
+				:has-error="hasError"
+				:has-warning="hasWarning"
+				:has-success="hasSuccess"
 				:is-disabled="props.isDisabled"
 				:is-read-only="true"
 				:label="props.placeholder"
-				:messages="[...successMessages, ...warningMessages]"
 				:no-icon="props.noIcon"
 				:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 				:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
@@ -466,23 +479,12 @@
 	min-width: 345px;
 }
 
-.v-messages__message--success {
-	:deep(.v-input__control),
-	:deep(.v-messages__message) {
-		color: tokens.$colors-text-success !important;
-
-		--v-medium-emphasis-opacity: 1;
-	}
-
-	.v-field--active & {
-		color: tokens.$colors-border-success !important;
-	}
-}
-
-.v-messages__message--error {
+.has-error {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
 		color: tokens.$colors-text-error !important;
+
+		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
@@ -490,7 +492,7 @@
 	}
 }
 
-.v-messages__message--warning {
+.has-warning {
 	:deep(.v-input__control) {
 		color: tokens.$colors-text-warning !important;
 
@@ -503,6 +505,19 @@
 
 	.v-field--active & {
 		color: tokens.$colors-text-warning !important;
+	}
+}
+
+.has-success {
+	:deep(.v-input__control),
+	:deep(.v-messages__message) {
+		color: tokens.$colors-text-success !important;
+
+		--v-medium-emphasis-opacity: 1;
+	}
+
+	.v-field--active & {
+		color: tokens.$colors-border-success !important;
 	}
 }
 

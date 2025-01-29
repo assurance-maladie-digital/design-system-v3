@@ -880,24 +880,23 @@ export const DifferentFormatsWithRange: Story = {
 }
 
 export const NoCalendar: Story = {
-	name: 'Sans calendrier',
 	args: {
 		label: 'Date',
 		noIcon: false,
 		noCalendar: true,
 		modelValue: '',
 		rules: [
-			{ 
+			{
 				type: 'dateFormat',
-				options: { 
-					message: 'Le format de la date est invalide (format attendu : JJ/MM/AAAA)'
-				}
-			}
-		]
+				options: {
+					message: 'Le format de la date est invalide (format attendu : JJ/MM/AAAA)',
+				},
+			},
+		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: {
-			DatePicker
+			DatePicker,
 		},
 		setup() {
 			const date = ref(args.modelValue)
@@ -908,19 +907,18 @@ export const NoCalendar: Story = {
 				v-bind="args"
 				v-model="date"
 			/>
-		`
+		`,
 	}),
 	parameters: {
 		docs: {
 			description: {
-				story: 'Le composant peut être utilisé sans le calendrier, permettant uniquement la saisie manuelle de la date.'
-			}
-		}
-	}
+				story: 'Le composant peut être utilisé sans le calendrier, permettant uniquement la saisie manuelle de la date.',
+			},
+		},
+	},
 }
 
 export const NoCalendarRange: Story = {
-	name: 'Sans calendrier avec plage',
 	args: {
 		label: 'Période',
 		noIcon: false,
@@ -931,14 +929,14 @@ export const NoCalendarRange: Story = {
 			{
 				type: 'dateRange',
 				options: {
-					message: 'Le format de la plage est invalide (format attendu : JJ/MM/AAAA - JJ/MM/AAAA)'
-				}
-			}
-		]
+					message: 'Le format de la plage est invalide (format attendu : JJ/MM/AAAA - JJ/MM/AAAA)',
+				},
+			},
+		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: {
-			DatePicker
+			DatePicker,
 		},
 		setup() {
 			const date = ref(args.modelValue)
@@ -949,72 +947,17 @@ export const NoCalendarRange: Story = {
 				v-bind="args"
 				v-model="date"
 			/>
-		`
+		`,
 	}),
 	parameters: {
 		docs: {
 			description: {
-				story: 'Le composant peut être utilisé sans le calendrier en mode plage de dates.'
-			}
-		}
-	}
+				story: 'Le composant peut être utilisé sans le calendrier en mode plage de dates.',
+			},
+		},
+	},
 }
 
-export const NoCalendarWithCustomRules: Story = {
-	name: 'Sans calendrier avec règles personnalisées',
-	args: {
-		label: 'Date',
-		noIcon: false,
-		noCalendar: true,
-		modelValue: '',
-		rules: [
-			{ 
-				type: 'dateFormat',
-				options: { 
-					message: 'Le format de la date est invalide (format attendu : JJ/MM/AAAA)'
-				}
-			},
-			{
-				type: 'notBeforeDate',
-				options: {
-					date: new Date(),
-					message: 'La date ne peut pas être antérieure à aujourd\'hui'
-				}
-			}
-		],
-		warningRules: [
-			{
-				type: 'notAfterDate',
-				options: {
-					date: new Date(new Date().setMonth(new Date().getMonth() + 3)),
-					message: 'Attention : La date est à plus de 3 mois'
-				}
-			}
-		]
-	},
-	render: (args) => ({
-		components: {
-			DatePicker
-		},
-		setup() {
-			const date = ref(args.modelValue)
-			return { args, date }
-		},
-		template: `
-			<DatePicker
-				v-bind="args"
-				v-model="date"
-			/>
-		`
-	}),
-	parameters: {
-		docs: {
-			description: {
-				story: 'Le composant peut être utilisé avec des règles de validation personnalisées, comme la vérification de dates minimales et maximales.'
-			}
-		}
-	}
-}
 
 export const NoCalendarWithError: Story = {
 	parameters: {
