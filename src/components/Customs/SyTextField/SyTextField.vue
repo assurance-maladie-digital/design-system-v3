@@ -149,7 +149,7 @@
 	}
 
 	const appendInnerIconColor = computed(() => {
-		return props.appendInnerIcon === 'error' || props.appendInnerIcon === 'success'
+		return props.appendInnerIcon === 'error' || props.appendInnerIcon === 'success' || props.appendInnerIcon === 'warning'
 			? props.appendInnerIcon
 			: 'black'
 	})
@@ -242,6 +242,7 @@
 			<slot name="prepend">
 				<VIcon
 					:aria-label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
+					:color="appendInnerIconColor"
 					:icon="ICONS[props.prependIcon]"
 					role="button"
 					@click="$emit('prepend-icon-click')"
@@ -255,6 +256,7 @@
 			<slot name="append">
 				<VIcon
 					:aria-label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
+					:color="appendInnerIconColor"
 					:icon="ICONS[props.appendIcon]"
 					role="button"
 					@click="$emit('append-icon-click')"
