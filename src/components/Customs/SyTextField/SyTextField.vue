@@ -295,13 +295,22 @@
 		</template>
 		<template #append-inner>
 			<slot name="append-inner">
-				<VIcon v-if="hasError && !props.appendInnerIcon" color="error">
+				<VIcon
+					v-if="hasError && !props.appendInnerIcon"
+					color="error"
+				>
 					{{ mdiInformation }}
 				</VIcon>
-				<VIcon v-else-if="props.hasWarning && !props.appendInnerIcon" color="warning">
+				<VIcon
+					v-else-if="props.hasWarning && !props.appendInnerIcon"
+					color="warning"
+				>
 					{{ mdiAlertOutline }}
 				</VIcon>
-				<VIcon v-else-if="props.hasSuccess && !props.appendInnerIcon" color="success">
+				<VIcon
+					v-else-if="props.hasSuccess && !props.appendInnerIcon"
+					color="success"
+				>
 					{{ mdiCheck }}
 				</VIcon>
 				<VIcon
@@ -323,9 +332,11 @@
 .min-width {
 	min-width: 345px;
 }
+
 .warning-field {
 	:deep(.v-field) {
 		color: rgb(var(--v-theme-warning)) !important;
+
 		.v-field__outline {
 			color: rgb(var(--v-theme-warning)) !important;
 		}
@@ -335,6 +346,7 @@
 .success-field {
 	:deep(.v-field) {
 		color: rgb(var(--v-theme-success)) !important;
+
 		.v-field__outline {
 			color: rgb(var(--v-theme-success)) !important;
 		}
