@@ -372,7 +372,7 @@
 .vd-key-field {
 	width: 104px;
 	flex: none;
-	margin-left: 1%;
+	margin-left: 2%;
 }
 
 .custom-counter {
