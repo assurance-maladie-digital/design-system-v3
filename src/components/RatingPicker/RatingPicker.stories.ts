@@ -1,5 +1,7 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import RatingPicker from './RatingPicker.vue'
+import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+import { VBtn, VSpacer } from 'vuetify/components'
 
 const meta = {
 	title: 'Composants/Feedback/RatingPicker',
@@ -140,6 +142,363 @@ import { ref } from 'vue'
 import RatingPicker from '@cnamts/synapse'
 
 const ratingEmotion = ref(-1)
+</script>
+        `,
+			},
+		],
+	},
+}
+
+export const TwoEmotions: Story = {
+	args: {
+		type: 'emotion',
+		label: 'Êtes-vous satisfait de ce service ?',
+		readonly: false,
+		twoEmotions: true,
+		hideAlert: false,
+		modelValue: -1,
+	},
+	render: (args) => {
+		return {
+			components: { RatingPicker },
+			setup() {
+				return { args }
+			},
+			template: `
+                <RatingPicker v-bind="args" v-model="args.modelValue"/>
+            `,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<RatingPicker
+		v-model="ratingEmotion"
+		label="Êtes-vous satisfait de ce service ?"
+		type="emotion"
+		two-emotions
+	/>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import RatingPicker from '@cnamts/synapse'
+
+const ratingEmotion = ref(-1)
+</script>
+        `,
+			},
+		],
+	},
+}
+
+export const Numbers: Story = {
+	args: {
+		type: 'number',
+		label: 'Êtes-vous satisfait de ce service ?',
+		readonly: false,
+		hideAlert: false,
+		modelValue: -1,
+	},
+	render: (args) => {
+		return {
+			components: { RatingPicker },
+			setup() {
+				return { args }
+			},
+			template: `
+                <RatingPicker v-bind="args" v-model="args.modelValue"/>
+            `,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<RatingPicker
+		v-model="ratingNumber"
+		label="Êtes-vous satisfait de ce service ?"
+		type="number"
+	/>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import RatingPicker from '@cnamts/synapse'
+
+const ratingNumber = ref(-1)
+</script>
+        `,
+			},
+		],
+	},
+}
+
+export const Stars: Story = {
+	args: {
+		type: 'star',
+		label: 'Êtes-vous satisfait de ce service ?',
+		readonly: false,
+		hideAlert: false,
+		modelValue: -1,
+	},
+	render: (args) => {
+		return {
+			components: { RatingPicker },
+			setup() {
+				return { args }
+			},
+			template: `
+                <RatingPicker v-bind="args" v-model="args.modelValue"/>
+            `,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<RatingPicker
+		v-model="ratingStar"
+		label="Êtes-vous satisfait de ce service ?"
+		type="star"
+	/>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import RatingPicker from '@cnamts/synapse'
+
+const ratingStar = ref(-1)
+</script>
+        `,
+			},
+		],
+	},
+}
+
+export const ReadOnly: Story = {
+	args: {
+		type: 'emotion',
+		label: 'Êtes-vous satisfait de ce service ?',
+		readonly: true,
+		twoEmotions: false,
+		hideAlert: false,
+		modelValue: -1,
+	},
+	render: (args) => {
+		return {
+			components: { RatingPicker },
+			setup() {
+				return { args }
+			},
+			template: `
+                <RatingPicker v-bind="args" v-model="args.modelValue"/>
+            `,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<RatingPicker
+		v-model="ratingEmotion"
+		label="Êtes-vous satisfait de ce service ?"
+		type="emotion"
+		read-only
+	/>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import RatingPicker from '@cnamts/synapse'
+
+const ratingEmotion = ref(-1)
+</script>
+        `,
+			},
+		],
+	},
+}
+
+export const HideAlert: Story = {
+	args: {
+		type: 'emotion',
+		label: 'Êtes-vous satisfait de ce service ?',
+		readonly: false,
+		twoEmotions: false,
+		hideAlert: true,
+		modelValue: -1,
+	},
+	render: (args) => {
+		return {
+			components: { RatingPicker },
+			setup() {
+				return { args }
+			},
+			template: `
+                <RatingPicker v-bind="args" v-model="args.modelValue"/>
+            `,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<RatingPicker
+		v-model="ratingEmotion"
+		label="Êtes-vous satisfait de ce service ?"
+		type="emotion"
+		hide-alert
+	/>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import RatingPicker from '@cnamts/synapse'
+
+const ratingEmotion = ref(-1)
+</script>
+        `,
+			},
+		],
+	},
+}
+
+export const DefaultSlot: Story = {
+	args: {
+		type: 'emotion',
+		label: 'Êtes-vous satisfait de ce service ?',
+		readonly: false,
+		twoEmotions: false,
+		hideAlert: false,
+		modelValue: -1,
+	},
+	render: (args) => {
+		return {
+			components: { RatingPicker, SySelect, VBtn, VSpacer },
+			setup() {
+				const items = [
+					{
+						text: 'Via une recherche internet',
+						value: 'internet',
+					},
+					{
+						text: 'Via un professionnel de santé',
+						value: 'professional',
+					},
+					{
+						text: 'Via un ami',
+						value: 'friend',
+					},
+				]
+				return { args, items }
+			},
+			template: `
+                <RatingPicker v-bind="args" v-model="args.modelValue">
+					<SySelect
+						:items="items"
+						label="Comment avez-vous connu ce service ?"
+						class="mt-8"
+					/>
+					<div class="d-flex">
+						<VSpacer/>
+
+						<VBtn
+							right
+							color="primary"
+						>
+							Terminé
+						</VBtn>
+					</div>
+				</RatingPicker>
+            `,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<RatingPicker
+		v-model="ratingEmotion"
+		label="Êtes-vous satisfait de ce service ?"
+		type="emotion"
+	>
+		<SySelect
+			:items="items"
+			label="Comment avez-vous connu ce service ?"
+			class="mt-8"
+		/>
+		<div class="d-flex">
+			<VSpacer/>
+
+			<VBtn
+				right
+				color="primary"
+			>
+				Terminé
+			</VBtn>
+		</div>
+	</RatingPicker>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import {RatingPicker, SySelect} from '@cnamts/synapse'
+import { VBtn, VSpacer } from 'vuetify/components'
+
+const ratingEmotion = ref(-1)
+
+const items = [
+	{
+		text: 'Via une recherche internet',
+		value: 'internet'
+	},
+	{
+		text: 'Via un professionnel de santé',
+		value: 'professional'
+	},
+	{
+		text: 'Via un ami',
+		value: 'friend'
+	}
+]
 </script>
         `,
 			},
