@@ -168,7 +168,13 @@ export const Default: Story = {
                     <SelectBtnField
 						v-model="args.modelValue"
 						:items="args.items"
-						label="Moyen de contact"
+						:label="args.label"
+						:multiple="args.multiple"
+						:inline="args.inline"
+						:hint="args.hint"
+						:error="args.error"
+						:error-messages="args.errorMessages"
+						:readonly="args.readonly"
 					/>
 				</div>
             `,
