@@ -207,8 +207,8 @@
 		min-width: 48px !important;
 		text-wrap: auto;
 		text-align: left;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
 
 		&.v-btn--active::before {
 			opacity: 0 !important;
@@ -264,8 +264,8 @@
 		opacity: 0;
 	}
 
-  :deep(.bg-primary) {
-    --v-theme-overlay-multiplier: 1;
-  }
+	:deep(.bg-primary) {
+		--v-theme-overlay-multiplier: 1;
+	}
 }
 </style>
