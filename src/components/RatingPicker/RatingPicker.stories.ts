@@ -2,6 +2,7 @@ import type { StoryObj, Meta } from '@storybook/vue3'
 import RatingPicker from './RatingPicker.vue'
 import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 import { VBtn, VSpacer } from 'vuetify/components'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Feedback/RatingPicker',
@@ -102,12 +103,13 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
 	args: {
-		type: 'emotion',
-		label: 'Êtes-vous satisfait de ce service ?',
-		readonly: false,
-		twoEmotions: false,
-		hideAlert: false,
-		modelValue: -1,
+		'type': 'emotion',
+		'label': 'Êtes-vous satisfait de ce service ?',
+		'readonly': false,
+		'twoEmotions': false,
+		'hideAlert': false,
+		'modelValue': -1,
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -151,12 +153,13 @@ const ratingEmotion = ref(-1)
 
 export const TwoEmotions: Story = {
 	args: {
-		type: 'emotion',
-		label: 'Êtes-vous satisfait de ce service ?',
-		readonly: false,
-		twoEmotions: true,
-		hideAlert: false,
-		modelValue: -1,
+		'type': 'emotion',
+		'label': 'Êtes-vous satisfait de ce service ?',
+		'readonly': false,
+		'twoEmotions': true,
+		'hideAlert': false,
+		'modelValue': -1,
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -201,11 +204,12 @@ const ratingEmotion = ref(-1)
 
 export const Numbers: Story = {
 	args: {
-		type: 'number',
-		label: 'Êtes-vous satisfait de ce service ?',
-		readonly: false,
-		hideAlert: false,
-		modelValue: -1,
+		'type': 'number',
+		'label': 'Êtes-vous satisfait de ce service ?',
+		'readonly': false,
+		'hideAlert': false,
+		'modelValue': -1,
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -249,11 +253,12 @@ const ratingNumber = ref(-1)
 
 export const Stars: Story = {
 	args: {
-		type: 'star',
-		label: 'Êtes-vous satisfait de ce service ?',
-		readonly: false,
-		hideAlert: false,
-		modelValue: -1,
+		'type': 'star',
+		'label': 'Êtes-vous satisfait de ce service ?',
+		'readonly': false,
+		'hideAlert': false,
+		'modelValue': -1,
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -297,12 +302,13 @@ const ratingStar = ref(-1)
 
 export const ReadOnly: Story = {
 	args: {
-		type: 'emotion',
-		label: 'Êtes-vous satisfait de ce service ?',
-		readonly: true,
-		twoEmotions: false,
-		hideAlert: false,
-		modelValue: -1,
+		'type': 'emotion',
+		'label': 'Êtes-vous satisfait de ce service ?',
+		'readonly': true,
+		'twoEmotions': false,
+		'hideAlert': false,
+		'modelValue': -1,
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -347,12 +353,13 @@ const ratingEmotion = ref(-1)
 
 export const HideAlert: Story = {
 	args: {
-		type: 'emotion',
-		label: 'Êtes-vous satisfait de ce service ?',
-		readonly: false,
-		twoEmotions: false,
-		hideAlert: true,
-		modelValue: -1,
+		'type': 'emotion',
+		'label': 'Êtes-vous satisfait de ce service ?',
+		'readonly': false,
+		'twoEmotions': false,
+		'hideAlert': true,
+		'modelValue': -1,
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -397,12 +404,13 @@ const ratingEmotion = ref(-1)
 
 export const DefaultSlot: Story = {
 	args: {
-		type: 'emotion',
-		label: 'Êtes-vous satisfait de ce service ?',
-		readonly: false,
-		twoEmotions: false,
-		hideAlert: false,
-		modelValue: -1,
+		'type': 'emotion',
+		'label': 'Êtes-vous satisfait de ce service ?',
+		'readonly': false,
+		'twoEmotions': false,
+		'hideAlert': false,
+		'modelValue': -1,
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
