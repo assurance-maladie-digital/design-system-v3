@@ -181,7 +181,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss';
+@use '@/assets/tokens';
 
 :deep(.v-btn-group) {
 	height: auto !important;
@@ -229,7 +229,7 @@
 			border-width: 1px !important;
 		}
 
-		.vd-select-list-item+.vd-select-list-item .v-btn {
+		.vd-select-list-item + .vd-select-list-item .v-btn {
 			margin-top: 8px;
 		}
 	}
@@ -260,10 +260,6 @@
 
 	:deep(.v-btn--disabled.v-btn--variant-flat .v-btn__overlay) {
 		opacity: 0;
-	}
-
-	&.flex-column .v-btn {
-		border: 1px solid;
 	}
 }
 </style>
