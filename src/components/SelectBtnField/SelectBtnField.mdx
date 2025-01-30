@@ -1,13 +1,13 @@
 import {Controls, Canvas, Meta, Source, Story} from '@storybook/blocks';
 
+import SelectBtnField from './SelectBtnField.vue';
 import * as SelectBtnFieldStories from './SelectBtnField.stories';
 
-<Meta of={SelectBtnFieldStories} />
+<Meta title="Composants/Formulaires/SelectBtnField" component={SelectBtnField}/>
 
 # SelectBtnField
 
 Le composant `SelectBtnField` est utilisé pour permettre à l’utilisateur de sélectionner une valeur dans une liste.
-
 
 <Canvas of={SelectBtnFieldStories.Default}  />
 
@@ -15,39 +15,36 @@ Le composant `SelectBtnField` est utilisé pour permettre à l’utilisateur de 
 
 <Controls of={SelectBtnFieldStories.Default} />
 
-## Multiple
+## Exemple d'utilisation avec Vue
 
-Vous pouvez permettre à l’utilisateur de sélectionner plusieurs valeurs en utilisant la prop multiple.
-<Canvas of={SelectBtnFieldStories.Multiple}  />
+<Source dark code={`
+<script setup lang="ts">
+    import { ref } from 'vue'
+    import { SelectBtnField } from '@cnamts/synapse'
 
-## Item unique
-Vous pouvez créer un bouton qui désélectionne tous les autres boutons en utilisant la prop unique.
+    const items = [
+      {
+        "text": "Email",
+        "value": "email"
+      },
+      {
+        "text": "Courrier",
+        "value": "courrier"
+      },
+      {
+        "text": "SMS",
+        "value": "sms"
+      }
+    ];
 
-<Canvas of={SelectBtnFieldStories.itemUnique}  />
+    const selected = ref(null)
+</script>
 
-## Inline
-Vous pouvez afficher les boutons de sélection sur une seule ligne en utilisant la prop inline.
-
-<Canvas of={SelectBtnFieldStories.inline}  />
-
-## Messages d’aide
-Vous pouvez afficher un message d’aide en utilisant la prop hint.
-
-<Canvas of={SelectBtnFieldStories.messageAide}  />
-
-## Erreur
-Vous pouvez afficher une erreur en utilisant la prop error.
-<Story of={SelectBtnFieldStories.Info} />
-
-<Canvas of={SelectBtnFieldStories.erreur}  />
-
-
-## Messages d'erreur
-Vous pouvez afficher des messages d’erreur en utilisant la prop error-messages.
-<Story of={SelectBtnFieldStories.Info} />
-<Canvas of={SelectBtnFieldStories.messageErreur}  />
-
-
-
-
-
+<template>
+    <SelectBtnField
+        v-model="selected"
+        label="Moyen de contact"
+        :items="items"
+    />
+</template>
+`} />

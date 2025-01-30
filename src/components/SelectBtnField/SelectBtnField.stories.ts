@@ -7,6 +7,11 @@ import { ref } from 'vue'
 const meta = {
 	title: 'Composants/Formulaires/SelectBtnField',
 	component: SelectBtnField,
+	decorators: [
+		() => ({
+			template: '<div style="padding: 20px;"><story/></div>',
+		}),
+	],
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['copy'] },
@@ -91,12 +96,13 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-
-        <SelectBtnField
+	<div style="max-width: 400px">
+		<SelectBtnField
 			v-model="args.modelValue"
 			:items="args.items"
 			label="Moyen de contact"
 		/>
+	</div>
 </template>
                 `,
 			},
@@ -158,12 +164,13 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-            
+				<div style="max-width: 400px">
                     <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
-		/>
+						v-model="args.modelValue"
+						:items="args.items"
+						label="Moyen de contact"
+					/>
+				</div>
             `,
 		}
 	},
@@ -175,12 +182,14 @@ export const Multiple: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-   <SelectBtnField
+	<div style="max-width: 400px">
+	   <SelectBtnField
 			v-model="args.modelValue"
 			:items="args.items"
 			label="Moyen de contact"
-            multiple
+			multiple
 		/>
+	</div>
 </template>
                 `,
 			},
@@ -236,12 +245,14 @@ export const Multiple: Story = {
 				return { args }
 			},
 			template: `
-                <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
-            multiple="args.multiple"
-		/>
+			<div style="max-width: 400px">
+				<SelectBtnField
+					v-model="args.modelValue"
+					:items="args.items"
+					label="Moyen de contact"
+					:multiple="args.multiple"
+				/>
+			</div>
             `,
 		}
 	},
@@ -253,12 +264,14 @@ export const inline: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-   <SelectBtnField
+	<div style="max-width: 400px">
+	   <SelectBtnField
 			v-model="args.modelValue"
 			:items="args.items"
 			label="Moyen de contact"
-            inline
+			inline
 		/>
+	</div>
 </template>
                 `,
 			},
@@ -314,12 +327,14 @@ export const inline: Story = {
 				return { args }
 			},
 			template: `
-                <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
-            inline="args.inline"
-		/>
+				<div style="max-width: 400px">
+					<SelectBtnField
+						v-model="args.modelValue"
+						:items="args.items"
+						label="Moyen de contact"
+						:inline="args.inline"
+					/>
+				</div>
             `,
 		}
 	},
@@ -331,12 +346,14 @@ export const itemUnique: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-   <SelectBtnField
+	<div style="max-width: 400px">
+	   <SelectBtnField
 			v-model="args.modelValue"
 			:items="args.items"
 			label="Moyen de contact"
-            multiple
+			multiple
 		/>
+	</div>
 </template>
                 `,
 			},
@@ -402,12 +419,14 @@ export const itemUnique: Story = {
 				return { args }
 			},
 			template: `
-                <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
-            multiple="args.multiple"
-		/>
+				<div style="max-width: 400px">
+					<SelectBtnField
+						v-model="args.modelValue"
+						:items="args.items"
+						label="Moyen de contact"
+						:multiple="args.multiple"
+					/>
+				</div>
             `,
 		}
 	},
@@ -419,12 +438,14 @@ export const messageAide: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-   <SelectBtnField
+	<div style="max-width: 400px">
+	   <SelectBtnField
 			v-model="args.modelValue"
 			:items="args.items"
 			label="Moyen de contact"
-		    hint="Par défaut, le moyen de contact est l’email."
-        		/>
+			hint="Par défaut, le moyen de contact est l’email."
+		/>
+	</div>
 </template>
                 `,
 			},
@@ -480,12 +501,14 @@ export const messageAide: Story = {
 				return { args }
 			},
 			template: `
-                <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
-            :hint="args.hint"
-		/>
+				<div style="max-width: 400px">
+					<SelectBtnField
+						v-model="args.modelValue"
+						:items="args.items"
+						label="Moyen de contact"
+						:hint="args.hint"
+					/>
+				</div>
             `,
 		}
 	},
@@ -497,20 +520,21 @@ export const erreur: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-            <SelectBtnField
+	<div style="max-width: 400px">
+		<SelectBtnField
 			v-model="args.modelValue"
 			:items="args.items"
 			label="Moyen de contact"
 			v-model:error="true"
-                    		/>
-
-                     <VBtn
+		/>
+		<VBtn
 			color="primary"
 			class="mt-3"
 			@click="resetExample"
 		>
 			Réinitialiser
-		</VBtn>       
+		</VBtn>      
+	</div> 
 </template>
                 `,
 			},
@@ -577,21 +601,21 @@ export const erreur: Story = {
 				return { args, resetExample, error, value }
 			},
 			template: `
-                <SelectBtnField
-			v-model="value"
-			:items="args.items"
-			label="Moyen de contact"
-		  	v-model:error="error"
-		    />
-
-        
-                     <VBtn
-			color="primary"
-			class="mt-3"
-			@click="resetExample"
-		>
-			Réinitialiser
-		</VBtn>       
+				<div style="max-width: 400px">
+					<SelectBtnField
+						v-model="value"
+						:items="args.items"
+						label="Moyen de contact"
+						v-model:error="error"
+					/>
+					<VBtn
+						color="primary"
+						class="mt-3"
+						@click="resetExample"
+					>
+						Réinitialiser
+					</VBtn>       
+				</div>
             `,
 		}
 	},
@@ -603,22 +627,22 @@ export const messageErreur: Story = {
 			{
 				name: 'Template',
 				code: `<template>
+	<div style="max-width: 400px">
         <SelectBtnField
-        v-model="args.modelValue"
-        :items="args.items"
-        label="Moyen de contact"
-        v-model:error="true"
-       v-model:error-messages="Le champ est requis."
-
-                        />
-
-                 <VBtn
-        color="primary"
-        class="mt-3"
-        @click="resetExample"
-    >
-        Réinitialiser
-    </VBtn>       
+			v-model="args.modelValue"
+			:items="args.items"
+			label="Moyen de contact"
+			v-model:error="true"
+		    v-model:error-messages="Le champ est requis."
+		/>
+		<VBtn
+			color="primary"
+			class="mt-3"
+			@click="resetExample"
+		>
+			Réinitialiser
+		</VBtn>       
+    </div>
 </template>
             `,
 			},
@@ -694,23 +718,22 @@ const items = [
 				return { args, resetExample, error, value, errorMessages }
 			},
 			template: `
-            <SelectBtnField
-        v-model="value"
-        :items="args.items"
-        label="Moyen de contact"
-        v-model:error="error"
-        v-model:error-messages="errorMessages"
-
-        />
-
-    
-                 <VBtn
-        color="primary"
-        class="mt-3"
-        @click="resetExample"
-    >
-        Réinitialiser
-    </VBtn>       
+				<div style="max-width: 400px">
+					<SelectBtnField
+						v-model="value"
+						:items="args.items"
+						label="Moyen de contact"
+						v-model:error="error"
+						v-model:error-messages="errorMessages"
+					/>
+					<VBtn
+						color="primary"
+						class="mt-3"
+						@click="resetExample"
+					>
+						Réinitialiser
+					</VBtn>
+			</div>
         `,
 		}
 	},

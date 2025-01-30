@@ -109,7 +109,7 @@
 
 <template>
 	<div
-		:class="{ 'vd-form-input': !inline }"
+		:class="{ 'form-input': !inline }"
 		class="select-btn-field"
 	>
 		<VBtnToggle
@@ -119,12 +119,12 @@
 			:multiple="multiple"
 			:aria-label="label"
 			:class="{ 'd-flex flex-column': !inline }"
-			class="vd-select-btn-field-toggle d-flex flex-wrap text-primary"
+			class="select-btn-field-toggle d-flex flex-wrap text-primary"
 		>
 			<li
 				v-for="(item, index) in filteredItems"
 				:key="`${index} + ${item.value}`"
-				class="vd-select-list-item"
+				class="select-list-item"
 			>
 				<VBtn
 					v-bind="options.btn"
@@ -164,7 +164,7 @@
 				v-for="(errorMessage, index) in errorMessages"
 				:key="index"
 				:class="darktheme ? 'theme--dark' : 'theme--light'"
-				class="v-messages text-error px-3 mt-2 mb-0"
+				class="v-messages text-error px-3 mt-2 mb-0 opacity-100"
 			>
 				{{ errorMessage }}
 			</p>
@@ -173,7 +173,7 @@
 		<p
 			v-else-if="hint"
 			:class="darktheme ? 'theme--dark' : 'theme--light'"
-			class="v-messages px-3 mt-2 mb-0"
+			class="v-messages px-3 mt-2 mb-0 opacity-100"
 		>
 			{{ hint }}
 		</p>
@@ -197,7 +197,7 @@
 	}
 }
 
-.vd-select-btn-field-toggle {
+.select-btn-field-toggle {
 	background: none !important;
 	padding-left: 0 !important;
 
@@ -207,6 +207,8 @@
 		min-width: 48px !important;
 		text-wrap: auto;
 		text-align: left;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 
 		&.v-btn--active::before {
 			opacity: 0 !important;
@@ -229,12 +231,12 @@
 			border-width: 1px !important;
 		}
 
-		.vd-select-list-item + .vd-select-list-item .v-btn {
+		.select-list-item + .select-list-item .v-btn {
 			margin-top: 8px;
 		}
 	}
 
-	.vd-select-list-item {
+	.select-list-item {
 		all: unset;
 		display: contents;
 	}
@@ -261,5 +263,9 @@
 	:deep(.v-btn--disabled.v-btn--variant-flat .v-btn__overlay) {
 		opacity: 0;
 	}
+
+  :deep(.bg-primary) {
+    --v-theme-overlay-multiplier: 1;
+  }
 }
 </style>
