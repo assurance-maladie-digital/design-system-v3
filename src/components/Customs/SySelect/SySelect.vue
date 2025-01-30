@@ -4,7 +4,7 @@
 
 	const props = defineProps({
 		modelValue: {
-			type: [Object, String],
+			type: [Object, String, Number],
 			default: null,
 		},
 		items: {
@@ -13,13 +13,17 @@
 		},
 		label: {
 			type: String,
-			default: 'Sélectionnez une option',
+			default: '',
 		},
 		errorMessages: {
 			type: [String, Array] as PropType<string | readonly string[]>,
 			default: () => [],
 		},
 		required: {
+			type: Boolean,
+			default: false,
+		},
+		disabled: {
 			type: Boolean,
 			default: false,
 		},
@@ -44,7 +48,7 @@
 	const emit = defineEmits(['update:modelValue'])
 
 	const isOpen = ref(false)
-	const selectedItem = ref<Record<string, unknown > | string | null | undefined>(props.modelValue)
+	const selectedItem = ref<Record<string, unknown > | string | number | null | undefined>(props.modelValue)
 	const hasError = ref(false)
 
 	const labelWidth = ref(0)
@@ -131,7 +135,8 @@
 			color="primary"
 			tabindex="0"
 			readonly
-			:label="selectedItem ? label : ''"
+			:disabled="disabled"
+			:label="selectedItem ? label : 'Sélectionnez une option'"
 			:aria-label="selectedItem ? label : 'Sélectionnez une option'"
 			:error-messages="errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
