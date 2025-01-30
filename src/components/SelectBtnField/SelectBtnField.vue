@@ -196,16 +196,17 @@
 		border-inline-start: inherit;
 	}
 
-  .v-btn:last-child {
-    border-end-end-radius: 4px ;
-    border-start-end-radius: 4px ;
-    margin-right: 0;
-  }
-  .v-btn:first-child {
-    border-start-start-radius: 4px;
-    border-end-start-radius: 4px;
-    margin-right: 8px;
-  }
+	.v-btn:last-child {
+		border-end-end-radius: 4px;
+		border-start-end-radius: 4px;
+		margin-right: 0;
+	}
+
+	.v-btn:first-child {
+		border-start-start-radius: 4px;
+		border-end-start-radius: 4px;
+		margin-right: 8px;
+	}
 }
 
 .select-btn-field-toggle {
