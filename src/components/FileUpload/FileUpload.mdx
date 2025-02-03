@@ -18,7 +18,29 @@ Le composant `FileUpload` est un champ d'upload de fichier par glisser-déposer 
 
 Il est possible d'uploader plusieurs fichiers en même temps en utilisant l'attribut `multiple`.
 
-<Canvas of={FileUploadStories.ShowMultipleFiles} />
+<Canvas
+	of={FileUploadStories.ShowMultipleFiles}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		
+		`,
+	}}
+/>
+
+## Personnalisation du champ
+
+<Canvas
+	of={FileUploadStories.DefaultSlot}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		
+		`,
+	}}
+/>
 
 ## Gérer l'envoi des fichiers
 
