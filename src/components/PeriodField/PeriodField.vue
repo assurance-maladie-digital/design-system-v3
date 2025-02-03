@@ -3,7 +3,7 @@
 	import DatePicker from '@/components/DatePicker/DatePicker.vue'
 	import type { RuleOptions } from '@/composables'
 
-	type PeriodValue = { from: string | null, to: string | null }
+	type PeriodValue = { from: string | undefined, to: string | undefined }
 
 	const props = withDefaults(defineProps<{
 		modelValue?: PeriodValue
@@ -17,11 +17,12 @@
 		displayAppendIcon?: boolean
 		isDisabled?: boolean
 		noIcon?: boolean
+		noCalendar?: boolean
 		isOutlined?: boolean
 		customRules?: { type: string, options: RuleOptions }[]
 		customWarningRules?: { type: string, options: RuleOptions }[]
 	}>(), {
-		modelValue: () => ({ from: null, to: null }),
+		modelValue: () => ({ from: undefined, to: undefined }),
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
@@ -32,6 +33,7 @@
 		displayAppendIcon: false,
 		isDisabled: false,
 		noIcon: false,
+		noCalendar: false,
 		isOutlined: true,
 		customRules: () => [],
 		customWarningRules: () => [],
@@ -39,8 +41,8 @@
 
 	const emit = defineEmits(['update:modelValue'])
 
-	const fromDate = ref<string | null>(props.modelValue.from)
-	const toDate = ref<string | null>(props.modelValue.to)
+	const fromDate = ref<string | undefined>(props.modelValue.from)
+	const toDate = ref<string | undefined>(props.modelValue.to)
 
 	watch(() => props.modelValue, (newValue) => {
 		fromDate.value = newValue.from
@@ -77,6 +79,7 @@
 			:display-append-icon="props.displayAppendIcon"
 			:is-disabled="props.isDisabled"
 			:no-icon="props.noIcon"
+			:no-calendar="props.noCalendar"
 			:is-outlined="props.isOutlined"
 		/>
 		<DatePicker
@@ -90,6 +93,7 @@
 			:display-append-icon="props.displayAppendIcon"
 			:is-disabled="props.isDisabled"
 			:no-icon="props.noIcon"
+			:no-calendar="props.noCalendar"
 			:is-outlined="props.isOutlined"
 		/>
 	</div>

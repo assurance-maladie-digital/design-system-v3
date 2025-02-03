@@ -12,15 +12,25 @@ const meta: Meta<typeof PeriodField> = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: ['modelValue'] },
 	},
 	argTypes: {
 		modelValue: {
 			control: 'text',
 			description: 'Valeur du champ',
+			table: {
+				type: {
+					summary: 'object',
+				},
+			},
 		},
-		placeholder: {
+		placeholderFrom: {
 			control: 'text',
-			description: 'Texte indicatif',
+			description: 'Placeholder pour la date de début',
+		},
+		placeholderTo: {
+			control: 'text',
+			description: 'Placeholder pour la date de fin',
 		},
 		format: {
 			control: 'select',
@@ -83,7 +93,7 @@ export const Default: Story = {
 				code: `
 				<template>
 					<PeriodField v-model="selectedPeriod" />
-					<p>Selected Period: {{ selectedPeriod }}</p>
+					<p>Période sélectionnée : {{ selectedPeriod }}</p>
 				</template>
 				`,
 			},
@@ -94,7 +104,7 @@ export const Default: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const selectedPeriod = ref({ from: null, to: null })
+					const selectedPeriod = ref({ from: undefined, to: undefined })
 				</script>
 				`,
 			},
@@ -109,20 +119,19 @@ export const Default: Story = {
 		displayAppendIcon: false,
 		isDisabled: false,
 		noIcon: false,
-		noCalendar: false,
-		modelValue: () => ({ from: null, to: null }),
+		modelValue: { from: undefined, to: undefined },
 	},
 	render: (args) => {
 		return {
 			components: { PeriodField: PeriodField },
 			setup() {
-				const value = ref({ from: null, to: null })
+				const value = ref({ from: undefined, to: undefined })
 				return { args, value }
 			},
 			template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
-				  <p>Selected Period: {{ value }}</p>
+				  <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
 		}

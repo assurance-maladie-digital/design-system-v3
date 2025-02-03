@@ -57,8 +57,8 @@ describe('PeriodField.vue', () => {
 			},
 			props: {
 				modelValue: {
-					from: null,
-					to: null,
+					from: undefined,
+					to: undefined,
 				},
 			},
 		})
@@ -72,7 +72,7 @@ describe('PeriodField.vue', () => {
 			[
 				{
 					from: '12/12/1995',
-					to: null,
+					to: undefined,
 				},
 			],
 		])
@@ -97,8 +97,8 @@ describe('PeriodField.vue', () => {
 			},
 			props: {
 				modelValue: {
-					from: null,
-					to: null,
+					from: undefined,
+					to: undefined,
 				},
 			},
 		})
