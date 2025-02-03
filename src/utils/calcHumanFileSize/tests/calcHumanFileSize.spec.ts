@@ -15,7 +15,7 @@ describe('calcHumanFileSize', () => {
 		const separator = '_'
 
 		expect(calcHumanFileSize(sizeMax, fileSizeUnits, separator)).toEqual(
-			'4_MB'
+			'4_MB',
 		)
 	})
 })

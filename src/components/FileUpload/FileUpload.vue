@@ -155,6 +155,7 @@
 	&.dragover {
 		background: tokens.$colors-background-surface-alt;
 	}
+
 	&.dark-mode {
 		&:hover,
 		&:focus-within,
