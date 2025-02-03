@@ -82,6 +82,7 @@
 			:no-icon="props.noIcon"
 			:no-calendar="props.noCalendar"
 			:is-outlined="props.isOutlined"
+			class="mr-2"
 		/>
 		<DatePicker
 			v-model="toDate"
