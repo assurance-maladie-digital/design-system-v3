@@ -60,7 +60,7 @@
 
 	// Vérifier si une date est valide
 	const isValidDate = (dateString: string): boolean => {
-		if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dateString)) return false
+		if (!dateString || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateString)) return false
 		
 		const [day, month, year] = dateString.split('/').map(Number)
 		const date = new Date(year, month - 1, day)
@@ -68,6 +68,14 @@
 		return date.getDate() === day &&
 			date.getMonth() === month - 1 &&
 			date.getFullYear() === year
+	}
+
+	// Vérifier si une plage de dates est valide
+	const isValidDateRange = (rangeString: string): boolean => {
+		if (!rangeString || !/^\d{2}\/\d{2}\/\d{4}\s-\s\d{2}\/\d{2}\/\d{4}$/.test(rangeString)) return false
+
+		const [startDate, endDate] = rangeString.split(' - ')
+		return isValidDate(startDate) && isValidDate(endDate)
 	}
 
 	// Validation
@@ -94,11 +102,19 @@
 		let hasAnySuccess = false
 
 		const validateValue = (value: string) => {
-			// Vérifier d'abord si la date est valide
-			if (value.length === 10 && !isValidDate(value)) {
-				errorMessages.value.push(defaultRules.value[0].options.message)
-				hasAnyError = true
-				return
+			// Vérifier d'abord si la date ou la plage de dates est valide
+			if (props.range) {
+				if (!isValidDateRange(value)) {
+					errorMessages.value.push(defaultRules.value[0].options.message)
+					hasAnyError = true
+					return
+				}
+			} else {
+				if (!isValidDate(value)) {
+					errorMessages.value.push(defaultRules.value[0].options.message)
+					hasAnyError = true
+					return
+				}
 			}
 
 			// Appliquer les règles de validation
@@ -126,22 +142,7 @@
 			}
 		}
 
-		if (props.range) {
-			// Pour une plage, valider les deux dates
-			const dates = inputValue.value.split(' - ')
-			if (dates.length === 2) {
-				validateValue(dates[0])
-				if (!hasAnyError) {
-					validateValue(dates[1])
-				}
-			} else {
-				// Si on n'a pas deux dates, valider la première
-				validateValue(inputValue.value)
-			}
-		} else {
-			// Pour une date simple
-			validateValue(inputValue.value)
-		}
+		validateValue(inputValue.value)
 
 		// Mettre à jour les états en respectant la priorité
 		hasError.value = hasAnyError
@@ -259,6 +260,7 @@
 			warningMessages,
 			successMessages,
 			hasError,
+			rules,
 			hasWarning,
 			hasSuccess,
 			required,

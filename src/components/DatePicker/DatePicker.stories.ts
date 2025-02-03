@@ -304,6 +304,7 @@ export const WithoutIcon: Story = {
 		displayAppendIcon: false,
 		isDisabled: false,
 		noIcon: false,
+		noCalendar: false,
 		modelValue: '',
 	},
 	render: (args) => {
@@ -365,6 +366,7 @@ export const BirthDate: Story = {
 		noIcon: false,
 		noCalendar: false,
 		modelValue: '',
+		customRules: [],
 	},
 	render: (args) => {
 		return {
@@ -432,7 +434,7 @@ export const WithError: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePicker: DatePicker },
+			components: { DatePicker },
 			setup() {
 				const value = ref('01/01/2100')
 				return { args, value }
@@ -496,7 +498,8 @@ export const WithWarning: Story = {
 		modelValue: '20/12/2023',
 		customWarningRules: [
 			{
-				type: 'notBeforeDate', options: {
+				type: 'notBeforeDate',
+				options: {
 					warningMessage: 'Attention : la date est antérieure à la date de référence',
 					date: '01/01/2024',
 					isWarning: true,
@@ -920,18 +923,23 @@ export const NoCalendar: Story = {
 
 export const NoCalendarRange: Story = {
 	args: {
-		label: 'Période',
 		noIcon: false,
 		noCalendar: true,
 		displayRange: true,
 		modelValue: ['', ''],
-		rules: [
+		customRules: [
 			{
 				type: 'dateRange',
 				options: {
 					message: 'Le format de la plage est invalide (format attendu : JJ/MM/AAAA - JJ/MM/AAAA)',
 				},
 			},
+			{
+				type:'notAfterToday',
+				options: {
+					message: 'La date ne peut pas être après aujourd\'hui'
+				}
+			}
 		],
 	},
 	render: args => ({
@@ -1190,6 +1198,91 @@ export const NoCalendarWithDifferentFormats: Story = {
                     <pre>Date avec format retour : {{ date2 }}</pre>
                     <pre>Plage de dates : {{ dateRange }}</pre>
                 </div>
+              </div>
+            `,
+		}
+	},
+}
+
+export const NoCalendarWithWarningUpdated: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Date avec avertissement"
+						format="DD/MM/YYYY"
+						noCalendar
+						:custom-rules="[
+							{
+								type: 'custom',
+								options: {
+									validate: (value: string[]) => {
+										if (!Array.isArray(value) || value.length !== 2) return 'La plage de dates est invalide'
+										if (!value[0] || !value[1]) return true // Allow empty values
+										const [startDate, endDate] = value
+										const start = new Date(startDate)
+										const end = new Date(endDate)
+										return start <= end || 'La date de fin doit être après la date de début'
+									},
+									message: 'La date de fin doit être après la date de début'
+								}
+							},
+						]"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const date = ref(['20/12/2023', '31/12/2023'])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'Date avec avertissement',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
+		isBirthDate: false,
+		showWeekNumber: false,
+		required: false,
+		displayRange: true,
+		displayIcon: true,
+		displayAppendIcon: false,
+		isDisabled: false,
+		noIcon: false,
+		noCalendar: true,
+		modelValue: ['', ''],
+		customWarningRules: [
+			{
+				type: 'notBeforeDate', options: {
+					warningMessage: 'Attention : la date est antérieure à la date de référence',
+					date: '01/01/2031',
+					isWarning: true,
+				},
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref(['20/12/2023', '31/12/2023'])
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}
