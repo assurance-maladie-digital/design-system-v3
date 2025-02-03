@@ -61,13 +61,13 @@
 	// Vérifier si une date est valide
 	const isValidDate = (dateString: string): boolean => {
 		if (!dateString || !/^\d{2}\/\d{2}\/\d{4}$/.test(dateString)) return false
-		
+
 		const [day, month, year] = dateString.split('/').map(Number)
 		const date = new Date(year, month - 1, day)
-		
-		return date.getDate() === day &&
-			date.getMonth() === month - 1 &&
-			date.getFullYear() === year
+
+		return date.getDate() === day
+			&& date.getMonth() === month - 1
+			&& date.getFullYear() === year
 	}
 
 	// Vérifier si une plage de dates est valide
@@ -109,7 +109,8 @@
 					hasAnyError = true
 					return
 				}
-			} else {
+			}
+			else {
 				if (!isValidDate(value)) {
 					errorMessages.value.push(defaultRules.value[0].options.message)
 					hasAnyError = true
@@ -153,7 +154,7 @@
 	// Formatage de la date pendant la saisie
 	const formatDateInput = (value: string): string => {
 		if (!value) return ''
-		
+
 		// Garder uniquement les chiffres
 		const numbers = value.replace(/\D/g, '')
 
@@ -178,17 +179,18 @@
 			let formattedValue = ''
 
 			// Séparer les dates en utilisant le tiret comme séparateur
-			const [firstPart = '', secondPart = ''] = value.includes(' - ') 
+			const [firstPart = '', secondPart = ''] = value.includes(' - ')
 				? value.split(' - ')
 				: [value.slice(0, 10), value.slice(11)]
 
 			// Formater la première date
 			const formattedFirstDate = formatDateInput(firstPart)
-			
+
 			// Si la première date est complète, ajouter le séparateur et la deuxième date
 			if (formattedFirstDate.length === 10) {
 				formattedValue = `${formattedFirstDate} - ${formatDateInput(secondPart)}`
-			} else {
+			}
+			else {
 				formattedValue = formattedFirstDate
 			}
 
@@ -204,7 +206,8 @@
 					}
 				}
 			}
-		} else {
+		}
+		else {
 			// Gestion d'une date simple
 			const formattedValue = formatDateInput(value)
 			inputValue.value = formattedValue

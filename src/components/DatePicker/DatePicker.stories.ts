@@ -935,11 +935,11 @@ export const NoCalendarRange: Story = {
 				},
 			},
 			{
-				type:'notAfterToday',
+				type: 'notAfterToday',
 				options: {
-					message: 'La date ne peut pas être après aujourd\'hui'
-				}
-			}
+					message: 'La date ne peut pas être après aujourd\'hui',
+				},
+			},
 		],
 	},
 	render: args => ({
