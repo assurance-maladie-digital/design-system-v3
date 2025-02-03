@@ -57,8 +57,8 @@ describe('PeriodField.vue', () => {
 			},
 			props: {
 				modelValue: {
-					from: undefined,
-					to: undefined,
+					from: null,
+					to: null,
 				},
 			},
 		})
@@ -68,13 +68,13 @@ describe('PeriodField.vue', () => {
 		await startField.setValue('12/12/1995')
 		await startField.trigger('blur')
 
-		expect(wrapper.emitted('update:modelValue')).toEqual([
-			[
-				{
-					from: '12/12/1995',
-					to: undefined,
-				},
-			],
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([
+			{
+				from: '12/12/1995',
+				to: null,
+			},
 		])
 
 		const endField = wrapper.findAll('input')[1]
@@ -82,7 +82,9 @@ describe('PeriodField.vue', () => {
 		await endField.setValue('20/12/1995')
 		await endField.trigger('blur')
 
-		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[2]).toEqual([
 			{
 				from: '12/12/1995',
 				to: '20/12/1995',
@@ -97,8 +99,8 @@ describe('PeriodField.vue', () => {
 			},
 			props: {
 				modelValue: {
-					from: undefined,
-					to: undefined,
+					from: null,
+					to: null,
 				},
 			},
 		})

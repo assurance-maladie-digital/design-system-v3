@@ -3,7 +3,8 @@
 	import DatePicker from '@/components/DatePicker/DatePicker.vue'
 	import type { RuleOptions } from '@/composables'
 
-	type PeriodValue = { from: string | undefined, to: string | undefined }
+	type DateInput = string | null
+	type PeriodValue = { from: DateInput, to: DateInput }
 
 	const props = withDefaults(defineProps<{
 		modelValue?: PeriodValue
@@ -22,7 +23,7 @@
 		customRules?: { type: string, options: RuleOptions }[]
 		customWarningRules?: { type: string, options: RuleOptions }[]
 	}>(), {
-		modelValue: () => ({ from: undefined, to: undefined }),
+		modelValue: () => ({ from: null, to: null }),
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
@@ -41,8 +42,8 @@
 
 	const emit = defineEmits(['update:modelValue'])
 
-	const fromDate = ref<string | undefined>(props.modelValue.from)
-	const toDate = ref<string | undefined>(props.modelValue.to)
+	const fromDate = ref<string | null>(props.modelValue.from)
+	const toDate = ref<string | null>(props.modelValue.to)
 
 	watch(() => props.modelValue, (newValue) => {
 		fromDate.value = newValue.from

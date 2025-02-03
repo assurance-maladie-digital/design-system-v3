@@ -104,7 +104,7 @@ export const Default: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const selectedPeriod = ref({ from: undefined, to: undefined })
+					const selectedPeriod = ref({ from: null, to: null })
 				</script>
 				`,
 			},
@@ -119,13 +119,13 @@ export const Default: Story = {
 		displayAppendIcon: false,
 		isDisabled: false,
 		noIcon: false,
-		modelValue: { from: undefined, to: undefined },
+		modelValue: { from: null, to: null },
 	},
 	render: (args) => {
 		return {
 			components: { PeriodField: PeriodField },
 			setup() {
-				const value = ref({ from: undefined, to: undefined })
+				const value = ref({ from: null, to: null })
 				return { args, value }
 			},
 			template: `
@@ -159,7 +159,7 @@ export const Disabled: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const selectedPeriod = ref({ from: undefined, to: undefined })
+					const selectedPeriod = ref({ from: null, to: null })
 				</script>
 				`,
 			},
@@ -174,13 +174,13 @@ export const Disabled: Story = {
 		displayAppendIcon: false,
 		isDisabled: true,
 		noIcon: false,
-		modelValue: { from: undefined, to: undefined },
+		modelValue: { from: null, to: null },
 	},
 	render: (args) => {
 		return {
 			components: { PeriodField: PeriodField },
 			setup() {
-				const value = ref({ from: undefined, to: undefined })
+				const value = ref({ from: null, to: null })
 				return { args, value }
 			},
 			template: `
@@ -214,7 +214,7 @@ export const Required: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const selectedPeriod = ref({ from: undefined, to: undefined })
+					const selectedPeriod = ref({ from: null, to: null })
 				</script>
 				`,
 			},
@@ -229,13 +229,13 @@ export const Required: Story = {
 		displayAppendIcon: false,
 		isDisabled: false,
 		noIcon: false,
-		modelValue: { from: undefined, to: undefined },
+		modelValue: { from: null, to: null },
 	},
 	render: (args) => {
 		return {
 			components: { PeriodField: PeriodField },
 			setup() {
-				const value = ref({ from: undefined, to: undefined })
+				const value = ref({ from: null, to: null })
 				return { args, value }
 			},
 			template: `

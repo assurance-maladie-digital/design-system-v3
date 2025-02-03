@@ -7,7 +7,7 @@
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
 
 	type DateValue = string | [string, string]
-	type DateInput = string | string[]
+	type DateInput = string | string[] | null
 
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
