@@ -97,7 +97,7 @@
 
 <style scoped>
 .period-field {
-  display: flex;
-  gap: 10px;
+	display: flex;
+	gap: 10px;
 }
 </style>
