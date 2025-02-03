@@ -351,5 +351,11 @@
 			color: rgb(var(--v-theme-success)) !important;
 		}
 	}
+
+	:deep(.v-messages) {
+		.v-messages__message {
+			color: rgb(var(--v-theme-success)) !important;
+		}
+	}
 }
 </style>
