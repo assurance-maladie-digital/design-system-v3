@@ -108,26 +108,41 @@ export function useFieldValidation() {
 
 				case 'notWeekend': {
 					const dateValue = new Date(value)
-					return createValidationResult(
-						!(dateValue.getDay() === 0 || dateValue.getDay() === 6),
-						options.message || `${identifier} ne peut pas être un jour de weekend.`,
-					)
+					const dayOfWeek = dateValue.getDay()
+					const isValid = dayOfWeek !== 0 && dayOfWeek !== 6 // 0 = Dimanche, 6 = Samedi
+					const message = options.isWarning
+						? options.warningMessage
+						: options.message || `${identifier} ne doit pas être un weekend.`
+
+					return createValidationResult(isValid, message)
 				}
 
 				case 'notBeforeToday': {
+					const today = new Date()
+					today.setHours(0, 0, 0, 0)
 					const dateValue = new Date(value)
-					return createValidationResult(
-						dateValue >= new Date(),
-						options.message || `${identifier} ne peut pas être antérieur à aujourd'hui.`,
-					)
+					dateValue.setHours(0, 0, 0, 0)
+
+					const isValid = dateValue >= today
+					const message = options.isWarning
+						? options.warningMessage
+						: options.message || `${identifier} ne peut pas être avant aujourd'hui.`
+
+					return createValidationResult(isValid, message)
 				}
 
 				case 'notAfterToday': {
+					const today = new Date()
+					today.setHours(0, 0, 0, 0)
 					const dateValue = new Date(value)
-					return createValidationResult(
-						dateValue <= new Date(),
-						options.message || `${identifier} ne peut pas être postérieur à aujourd'hui.`,
-					)
+					dateValue.setHours(0, 0, 0, 0)
+
+					const isValid = dateValue <= today
+					const message = options.isWarning
+						? options.warningMessage
+						: options.message || `${identifier} ne peut pas être après aujourd'hui.`
+
+					return createValidationResult(isValid, message)
 				}
 
 				case 'notBeforeDate': {
@@ -146,10 +161,12 @@ export function useFieldValidation() {
 					const [day, month, year] = options.date.split('/')
 					const referenceDate = new Date(`${year}-${month}-${day}`)
 
-					return createValidationResult(
-						dateValue >= referenceDate,
-						options.message || `${identifier} ne peut pas être avant le ${options.date}.`,
-					)
+					const isValid = dateValue >= referenceDate
+					const message = options.isWarning
+						? options.warningMessage
+						: options.message || `${identifier} ne peut pas être avant le ${options.date}.`
+
+					return createValidationResult(isValid, message)
 				}
 
 				case 'notAfterDate': {
@@ -168,10 +185,12 @@ export function useFieldValidation() {
 					const [day, month, year] = options.date.split('/')
 					const referenceDate = new Date(`${year}-${month}-${day}`)
 
-					return createValidationResult(
-						dateValue <= referenceDate,
-						options.message || `${identifier} ne peut pas être après le ${options.date}.`,
-					)
+					const isValid = dateValue <= referenceDate
+					const message = options.isWarning
+						? options.warningMessage
+						: options.message || `${identifier} ne peut pas être après le ${options.date}.`
+
+					return createValidationResult(isValid, message)
 				}
 
 				case 'dateExact': {
@@ -188,10 +207,12 @@ export function useFieldValidation() {
 					const [day, month, year] = options.date.split('/')
 					const referenceDate = new Date(`${year}-${month}-${day}`)
 
-					return createValidationResult(
-						dateValue.getTime() === referenceDate.getTime(),
-						options.message || `${identifier} doit être exactement le ${options.date}.`,
-					)
+					const isValid = dateValue.getTime() === referenceDate.getTime()
+					const message = options.isWarning
+						? options.warningMessage
+						: options.message || `${identifier} doit être exactement le ${options.date}.`
+
+					return createValidationResult(isValid, message)
 				}
 
 				case 'dateFormat': {

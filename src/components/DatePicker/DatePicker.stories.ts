@@ -458,69 +458,51 @@ export const WithWarning: Story = {
 					<DatePicker
 						v-model="date"
 						placeholder="Date avec avertissement"
-						:custom-warning-rules="[
-							{ type: 'notBeforeDate', options: { 
-								warningMessage: 'Attention : la date est antérieure à la date de référence',
-								date: '01/01/2031',
-								isWarning: true,
-							} }
-						]"
+						:custom-warning-rules="warningRules"
 					/>
 				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('20/12/2023')
+
+				<script setup>
+				import { ref } from 'vue'
+
+				const date = ref('20/12/2023')
+				const warningRules = [{
+					type: 'notBeforeDate',
+					options: {
+						warningMessage: 'Attention : la date est antérieure à la date de référence : 01/01/2024',
+						date: '01/01/2024',
+						isWarning: true,
+					},
+				}]
 				</script>
 				`,
 			},
 		],
 	},
-	args: {
-		placeholder: 'Date avec avertissement',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		isDisabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '20/12/2023',
-		customWarningRules: [
-			{
+	render: () => ({
+		components: { DatePicker },
+		setup() {
+			const value = ref('20/12/2023')
+			const warningRules = [{
 				type: 'notBeforeDate',
 				options: {
-					warningMessage: 'Attention : la date est antérieure à la date de référence',
+					warningMessage: 'Attention : la date est antérieure à la date de référence : 01/01/2024',
 					date: '01/01/2024',
 					isWarning: true,
 				},
-			},
-		],
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const value = ref('20/12/2023')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
+			}]
+			return { value, warningRules }
+		},
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<DatePicker
+					v-model="value"
+					placeholder="Date avec avertissement"
+					:custom-warning-rules="warningRules"
+				/>
+			</div>
+		`,
+	}),
 }
 
 export const WithSuccess: Story = {
@@ -1214,8 +1196,6 @@ export const NoCalendarWithWarningUpdated: Story = {
 					<DatePicker
 						v-model="date"
 						placeholder="Date avec avertissement"
-						format="DD/MM/YYYY"
-						noCalendar
 						:custom-rules="[
 							{
 								type: 'custom',
