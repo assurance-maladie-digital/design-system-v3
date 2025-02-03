@@ -37,6 +37,181 @@ const meta = {
 		color: {
 			control: 'select',
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
+			description: 'Couleur du champ',
+		},
+		density: {
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité du champ',
+		},
+		direction: {
+			control: 'select',
+			options: ['horizontal', 'vertical'],
+			description: 'Direction d\'affichage',
+		},
+		type: {
+			control: 'select',
+			options: ['text', 'number', 'password', 'email', 'tel', 'url', 'search', 'date', 'time', 'datetime-local'],
+			description: 'Type d\'input HTML',
+		},
+		baseColor: {
+			control: 'color',
+			description: 'Couleur de base personnalisée',
+		},
+		bgColor: {
+			control: 'color',
+			description: 'Couleur de fond personnalisée',
+		},
+		width: {
+			control: 'text',
+			description: 'Largeur du champ (px, %, vh, etc.)',
+		},
+		maxWidth: {
+			control: 'text',
+			description: 'Largeur maximale (px, %, vh, etc.)',
+		},
+		minWidth: {
+			control: 'text',
+			description: 'Largeur minimale (px, %, vh, etc.)',
+		},
+		rounded: {
+			control: 'select',
+			options: [true, false, 0, 'sm', 'lg', 'xl', 'pill'],
+			description: 'Style des coins arrondis',
+		},
+		required: {
+			control: 'boolean',
+			description: 'Champ obligatoire',
+		},
+		isReadOnly: {
+			control: 'boolean',
+			description: 'Mode lecture seule',
+		},
+		isDisabled: {
+			control: 'boolean',
+			description: 'Désactive le champ',
+		},
+		isClearable: {
+			control: 'boolean',
+			description: 'Affiche un bouton pour effacer',
+		},
+		isTiled: {
+			control: 'boolean',
+			description: 'Style tuile',
+		},
+		isFlat: {
+			control: 'boolean',
+			description: 'Sans élévation',
+		},
+		isActive: {
+			control: 'boolean',
+			description: 'Force l\'état actif',
+		},
+		isFocused: {
+			control: 'boolean',
+			description: 'Force l\'état focus',
+		},
+		isDirty: {
+			control: 'boolean',
+			description: 'Indique si modifié',
+		},
+		isOnError: {
+			control: 'boolean',
+			description: 'Force l\'état erreur',
+		},
+		displayAsterisk: {
+			control: 'boolean',
+			description: 'Affiche l\'astérisque requis',
+		},
+		displayPersistentClear: {
+			control: 'boolean',
+			description: 'Bouton effacer toujours visible',
+		},
+		displayPersistentCounter: {
+			control: 'boolean',
+			description: 'Compteur toujours visible',
+		},
+		displayPersistentHint: {
+			control: 'boolean',
+			description: 'Aide toujours visible',
+		},
+		displayPersistentPlaceholder: {
+			control: 'boolean',
+			description: 'Placeholder toujours visible',
+		},
+		areDetailsHidden: {
+			control: 'select',
+			options: [true, false, 'auto'],
+			description: 'Masque les détails',
+		},
+		areSpinButtonsHidden: {
+			control: 'boolean',
+			description: 'Masque les boutons number',
+		},
+		noIcon: {
+			control: 'boolean',
+			description: 'Masque toutes les icônes',
+		},
+		centerAffix: {
+			control: 'boolean',
+			description: 'Centre les affixes',
+		},
+		counter: {
+			control: 'select',
+			options: [true, false, 'words', 'characters'],
+			description: 'Type de compteur',
+		},
+		counterValue: {
+			control: 'number',
+			description: 'Valeur du compteur',
+		},
+		maxErrors: {
+			control: 'number',
+			description: 'Nombre max d\'erreurs',
+		},
+		errorMessages: {
+			control: 'object',
+			description: 'Messages d\'erreur',
+		},
+		messages: {
+			control: 'object',
+			description: 'Messages additionnels',
+		},
+		hint: {
+			control: 'text',
+			description: 'Message d\'aide',
+		},
+		placeholder: {
+			control: 'text',
+			description: 'Texte indicatif',
+		},
+		prefix: {
+			control: 'text',
+			description: 'Texte avant la valeur',
+		},
+		suffix: {
+			control: 'text',
+			description: 'Texte après la valeur',
+		},
+		id: {
+			control: 'text',
+			description: 'ID HTML',
+		},
+		name: {
+			control: 'text',
+			description: 'Nom du champ',
+		},
+		role: {
+			control: 'text',
+			description: 'Rôle ARIA',
+		},
+		theme: {
+			control: 'text',
+			description: 'Thème personnalisé',
+		},
+		loading: {
+			control: 'boolean',
+			description: 'État de chargement',
 		},
 	},
 } as Meta<typeof SyTextField>
@@ -71,16 +246,18 @@ export const Default: Story = {
 		color: 'primary',
 		isClearable: true,
 		label: 'Label',
+		modelValue: '',
 	},
 	render: (args) => {
 		return {
 			components: { SyTextField, VIcon },
 			setup() {
-				return { args }
+				const value = ref('')
+				return { args, value }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<SyTextField v-bind="args" />
+					<SyTextField v-bind="args" v-model="value" />
 				</div>
 			`,
 		}
@@ -118,6 +295,7 @@ export const Required: Story = {
 		isClearable: true,
 		label: 'Label',
 		required: true,
+		modelValue: '',
 	},
 	render: (args) => {
 		return {
@@ -174,6 +352,7 @@ export const WithCustomError: Story = {
 		isClearable: true,
 		label: 'Label',
 		required: false,
+		modelValue: '',
 	},
 	render: (args) => {
 		return {
@@ -229,6 +408,7 @@ export const SlotPrepend: Story = {
 		label: 'Label',
 		color: 'primary',
 		prependIcon: 'info',
+		modelValue: '',
 	},
 	render: (args) => {
 		return {
@@ -280,6 +460,7 @@ export const SlotAppend: Story = {
 		label: 'champs de text',
 		color: 'primary',
 		appendIcon: 'success',
+		modelValue: '',
 	},
 	render: (args) => {
 		return {
@@ -330,6 +511,7 @@ export const SlotPrependInner: Story = {
 		label: 'Label',
 		color: 'primary',
 		prependInnerIcon: 'info',
+		modelValue: '',
 	},
 	render: (args) => {
 		return {
@@ -381,6 +563,7 @@ export const SlotPrependInnerDivider: Story = {
 		label: 'Label',
 		color: 'primary',
 		prependInnerIcon: 'info',
+		modelValue: '',
 	},
 	render: (args) => {
 		return {
@@ -432,6 +615,7 @@ export const SlotAppendInner: Story = {
 		label: 'Label',
 		color: 'primary',
 		appendInnerIcon: 'success',
+		modelValue: '',
 	},
 	render: (args) => {
 		return {
@@ -487,6 +671,7 @@ export const SlotCustomIcon: Story = {
 		showDivider: false,
 		label: 'Label',
 		color: 'primary',
+		modelValue: '',
 	},
 	render: (args) => {
 		return {

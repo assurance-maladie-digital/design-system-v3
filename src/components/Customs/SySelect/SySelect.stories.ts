@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
-import SyAlert from '@/components/SyAlert/SyAlert.vue'
 
 const meta: Meta<typeof SySelect> = {
 	title: 'Composants/Formulaires/SySelect',
@@ -64,7 +64,7 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="pa-4">
 					<SySelect
 						v-bind="args"
 					/>
@@ -119,7 +119,7 @@ export const Required: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="pa-4">
 					<SySelect
 						v-bind="args"
 						:required="args.required"
@@ -188,13 +188,13 @@ export const withCustomError: Story = {
 				return { args, errorMessages, triggerError }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="pa-4">
 					<SySelect
 						v-bind="args"
 						:error-messages="errorMessages"
 					/>
 				</div>
-				<div class="d-flex flex-wrap align-center px-4">
+				<div class="px-4">
 					<VBtn @click="triggerError">
 						Trigger Error
 					</VBtn>
@@ -247,7 +247,7 @@ export const withCustomKey: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="pa-4">
 					<SySelect
 						v-bind="args"
 						text-key="customKey"

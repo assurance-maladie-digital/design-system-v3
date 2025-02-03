@@ -128,6 +128,9 @@
 <template>
 	<VTextField
 		v-model="password"
+		:class="{
+			'v-messages__message--success': successes.length > 0
+		}"
 		:error-messages="errors"
 		:messages="successes"
 		:type="showEyeIcon ? 'text' : 'password'"
@@ -136,9 +139,6 @@
 		color="primary"
 		title="password"
 		validate-on="blur lazy"
-		:class="{
-			'v-messages__message--success': successes.length > 0
-		}"
 		@blur="validateFields(true)"
 		@keydown="handleKeydown"
 		@update:model-value="emitChangeEvent"
