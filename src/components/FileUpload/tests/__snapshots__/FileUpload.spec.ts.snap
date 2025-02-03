@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FileUpload > renders correctly 1`] = `"Déposer votre fichier iciOuChoisir un fichierTaille max. : 10 Mo. Formats acceptés : pdf, jpg, jpeg, png"`;
+
+exports[`FileUpload > renders correctly in multiple mode 1`] = `"Déposer vos fichiers iciOuChoisir un fichierTaille max. : 10 Mo. Formats acceptés : pdf, jpg, jpeg, png"`;
+
+exports[`FileUpload > renders correctly with only one extension allowed 1`] = `"Déposer votre fichier iciOuChoisir un fichierTaille max. : 10 Mo. Format accepté : pdf"`;

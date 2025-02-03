@@ -1,0 +1,171 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as FileUploadStories from './FileUpload.stories.ts';
+
+<Meta of={FileUploadStories} />
+
+# FileUpload
+
+Le composant `FileUpload` est un champ d'upload de fichier par glisser-déposer ou par sélection de fichier.
+
+<Canvas of={FileUploadStories.Default} />
+
+# API
+
+<Controls of={FileUploadStories.Default} />
+
+## Usage en mode multi-fichier
+
+Il est possible d'uploader plusieurs fichiers en même temps en utilisant l'attribut `multiple`.
+
+<Canvas of={FileUploadStories.ShowMultipleFiles} />
+
+## Gérer l'envoi des fichiers
+
+Vous pouvez envoyer les fichiers sur un serveur en un objet FormData.
+
+<Source dark language="typescript" code={`
+<script setup lang="ts">
+	import { FileUpload } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const files = ref<File[]>([])
+
+	function upload() {
+		const formData = new FormData()
+		files.value.forEach((file: File) => {
+			formData.append(file.name, file)
+		})
+
+		fetch('http://localhost:3000/upload', {
+			method: 'POST',
+			body: formData,
+		})
+	}
+
+</script>
+
+<template>
+	<main class="pa-12">
+		{{ files?.map(file => file.name).join(', ') }}
+
+		<br>
+		<FileUpload
+			v-model="files"
+			:multiple="true"
+			@error="console.log"
+		/>
+
+		<VBtn
+			@click="upload"
+		>
+			submit
+		</VBtn>
+	</main>
+</template>
+`} />
+
+Même exemple avec axios :
+
+<Source dark language="typescript" code={`
+<script setup lang="ts">
+	import { FileUpload } from '@cnamts/synapse'
+	import { ref } from 'vue'
+	import axios from 'axios'
+
+	const files = ref<File[]>([])
+
+	function upload() {
+		const formData = new FormData()
+		files.value.forEach((file: File) => {
+			formData.append(file.name, file)
+		})
+
+		axios.post('http://localhost:3000/upload', formData, {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		})
+	}
+
+</script>
+
+<template>
+	<main class="pa-12">
+		{{ files?.map(file => file.name).join(', ') }}
+
+		<br>
+		<FileUpload
+			v-model="files"
+			:multiple="true"
+			@error="console.log"
+		/>
+
+		<VBtn
+			@click="upload"
+		>
+			submit
+		</VBtn>
+
+	</main>
+</template>
+`} />
+
+## Coté backend
+
+Voici un exemple de code pour gérer l'upload de fichier en Node.js avec Express,
+ce code est destiné à des fins de tests uniquement.
+
+<Source dark language="javascript" code={`
+import express from "express";
+import fileUpload from "express-fileupload";
+import cors from "cors";
+import { join } from "path";
+import { existsSync, mkdirSync } from "fs";
+
+const app = express();
+
+app.use(fileUpload());
+app.use(cors({ origin: true, credentials: true }));
+
+const uploadDir = join(import.meta.dirname, "uploads");
+
+if (!existsSync(uploadDir)) {
+	mkdirSync(uploadDir);
+}
+
+app.post("/upload", async function (req, res) {
+	if (!req.files || Object.keys(req.files).length === 0) {
+		return res.status(400).send("No files were uploaded.");
+	}
+
+	let errors = [];
+
+	const uploadPromises = Object.keys(req.files).map(async (fileKey) => {
+		const file = req.files[fileKey];
+		const filePath = join(uploadDir, file.name);
+
+		try {
+			await file.mv(filePath);
+		} catch (err) {
+			errors.push(err);
+		}
+	});
+
+	try {
+		await Promise.all(uploadPromises);
+
+		if (errors.length > 0) {
+			return res.status(500).send(errors.join(", "));
+		}
+		res.send("Files uploaded!");
+	} catch (err) {
+		res.status(500).send("An error occurred during file upload.");
+	}
+});
+
+app.listen(3000, function () {
+	console.log("App is listening on port 3000");
+});
+
+`} />
