@@ -47,7 +47,7 @@
 	watch(() => props.modelValue, (newValue) => {
 		fromDate.value = newValue.from
 		toDate.value = newValue.to
-	}, { deep: true })
+	}, { deep: true, immediate: true })
 
 	watch([fromDate, toDate], async ([newFrom, newTo]) => {
 		if (newFrom && newTo && new Date(newFrom) > new Date(newTo)) {
@@ -63,7 +63,7 @@
 		else {
 			emit('update:modelValue', { from: newFrom, to: newTo })
 		}
-	}, { deep: true })
+	}, { deep: true, immediate: true })
 </script>
 
 <template>

@@ -137,3 +137,113 @@ export const Default: Story = {
 		}
 	},
 }
+
+export const Disabled: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PeriodField 
+						v-model="selectedPeriod" 
+						is-disabled
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PeriodField } from '@cnamts/synapse'
+					
+					const selectedPeriod = ref({ from: undefined, to: undefined })
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholderFrom: 'Début',
+		placeholderTo: 'Fin',
+		format: 'DD/MM/YYYY',
+		required: false,
+		displayIcon: true,
+		displayAppendIcon: false,
+		isDisabled: true,
+		noIcon: false,
+		modelValue: { from: undefined, to: undefined },
+	},
+	render: (args) => {
+		return {
+			components: { PeriodField: PeriodField },
+			setup() {
+				const value = ref({ from: undefined, to: undefined })
+				return { args, value }
+			},
+			template: `
+              <div class="pa-4">
+                <PeriodField v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PeriodField 
+						v-model="selectedPeriod"
+						required
+					/>
+					<p>Période sélectionnée : {{ selectedPeriod }}</p>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PeriodField } from '@cnamts/synapse'
+					
+					const selectedPeriod = ref({ from: undefined, to: undefined })
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholderFrom: 'Début',
+		placeholderTo: 'Fin',
+		format: 'DD/MM/YYYY',
+		required: true,
+		displayIcon: true,
+		displayAppendIcon: false,
+		isDisabled: false,
+		noIcon: false,
+		modelValue: { from: undefined, to: undefined },
+	},
+	render: (args) => {
+		return {
+			components: { PeriodField: PeriodField },
+			setup() {
+				const value = ref({ from: undefined, to: undefined })
+				return { args, value }
+			},
+			template: `
+              <div class="pa-4">
+                <PeriodField v-bind="args" v-model="value"/>
+				  <p>Période sélectionnée : {{ value }}</p>
+              </div>
+            `,
+		}
+	},
+}
