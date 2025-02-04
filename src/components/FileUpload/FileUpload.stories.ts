@@ -50,6 +50,7 @@ const meta = {
 					summary: 'number',
 				},
 			},
+			defaultValue: 10485760,
 		},
 		'fileSizeUnits': {
 			description: 'Unité de taille des fichiers',
@@ -221,6 +222,23 @@ export const Default: Story = {
 		'onUpdate:modelValue': fn(),
 		'onError': fn(),
 	},
+	render: args => ({
+		components: { FileUpload },
+		setup() {
+			return { args }
+		},
+		template: `<div>
+			<FileUpload
+				v-model="args.modelValue"
+				:multiple="true"
+				@error="args.onError"
+				@update:modelValue="args['onUpdate:modelValue']"
+			/>
+			<ul class="ma-2">
+				<li v-for="file in args.modelValue" :key="file.name">{{ file.name }}</li>
+			</ul>
+		</div>`,
+	}),
 	parameters: {
 		sourceCode: [
 			{
@@ -230,6 +248,9 @@ export const Default: Story = {
 	<FileUpload
 		v-model="modelValue"
 	/>
+	<ul class="ma-2">
+		<li v-for="file in modelValue" :key="file.name">{{ file.name }}</li>
+	</ul>
 </template>
 				`,
 			},
@@ -249,7 +270,7 @@ export const Default: Story = {
 	},
 }
 
-export const ShowMultipleFiles: Story = {
+export const MultipleFiles: Story = {
 	args: {
 		'modelValue': [],
 		'onUpdate:modelValue': fn(),
@@ -327,7 +348,7 @@ export const ShowMultipleFiles: Story = {
 	},
 }
 
-export const DefaultSlot: Story = {
+export const Customization: Story = {
 	args: {
 		'modelValue': [],
 		'onUpdate:modelValue': fn(),
@@ -359,6 +380,9 @@ export const DefaultSlot: Story = {
 					Sélectionner un fichier
 				</span>
 			</FileUpload>
+			<ul class="ma-2">
+				<li v-for="file in args.modelValue" :key="file.name">{{ file.name }}</li>
+			</ul>
 		</div>`,
 	}),
 	parameters: {
@@ -382,6 +406,9 @@ export const DefaultSlot: Story = {
 				Sélectionner un fichier
 			</span>
 		</FileUpload>
+		<ul class="ma-2">
+			<li v-for="file in files" :key="file.name">{{ file.name }}</li>
+		</ul>
 	</div>
 </template>
 				`,
