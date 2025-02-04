@@ -46,26 +46,32 @@
 	const toDate = ref<string | null>(props.modelValue.to)
 
 	watch(fromDate, async (newFrom) => {
-		if (newFrom && toDate.value && new Date(newFrom) > new Date(toDate.value)) {
-			// Échange automatique des valeurs
+		console.warn('Before Swap - fromDate:', newFrom, 'toDate:', toDate.value)
+
+		if (newFrom && toDate.value && newFrom > toDate.value) {
 			const temp = fromDate.value
 			fromDate.value = toDate.value
 			toDate.value = temp
 
 			await nextTick()
+
+			console.warn('After Swap - fromDate:', fromDate.value, 'toDate:', toDate.value)
 		}
 
 		emit('update:modelValue', { from: fromDate.value, to: toDate.value })
 	})
 
 	watch(toDate, async (newTo) => {
-		if (newTo && fromDate.value && new Date(fromDate.value) > new Date(newTo)) {
-			// Échange automatique des valeurs
+		console.warn('Before Swap - toDate:', newTo, 'fromDate:', fromDate.value)
+
+		if (newTo && fromDate.value && fromDate.value > newTo) {
 			const temp = toDate.value
 			toDate.value = fromDate.value
 			fromDate.value = temp
 
 			await nextTick()
+
+			console.warn('After Swap - toDate:', toDate.value, 'fromDate:', fromDate.value)
 		}
 
 		emit('update:modelValue', { from: fromDate.value, to: toDate.value })
@@ -114,7 +120,7 @@
 
 <style scoped>
 .period-field {
-  display: flex;
-  gap: 10px;
+	display: flex;
+	gap: 10px;
 }
 </style>
