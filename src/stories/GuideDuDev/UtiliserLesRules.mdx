@@ -16,49 +16,138 @@ Le composable `useFieldValidation` vous permet de définir des règles de valida
 
 ## Structure du composable
 
-### Type `RuleOptions`
-
-<Source dark code={`
-type RuleOptions = {
-  fieldName?: string; // Nom du champ utilisé dans les messages d'erreur
-  message?: string; // Message personnalisé pour la règle
-  successMessage?: string; // Message personnalisé de validation réussie
-  length?: number; // Longueur minimale ou maximale
-  value?: number; // Valeur minimale ou maximale
-  pattern?: RegExp; // Motif à valider
-  ignoreSpace?: boolean; // Ignorer les espaces lors de la validation de longueur
-  validate?: (value: any) => boolean | string; // Validation personnalisée
-};
-`}
-/>
-
 ### Type `ValidationResult`
 
 <Source dark code={`
 type ValidationResult = {
   success?: string; // Message de validation réussie
   error?: string; // Message d'erreur
+  warning?: string; // Message d'avertissement (warning)
+};
+`}
+/>
+
+### Type `RuleOptions`
+
+<Source dark code={`
+type RuleOptions = {
+  message?: string; // Message d'erreur personnalisé
+  successMessage?: string; // Message de validation réussie
+  warningMessage?: string; // Message d'avertissement personnalisé
+  fieldName?: string; // Nom du champ pour les messages génériques
+  fieldIdentifier?: string; // Identifiant spécifique pour personnaliser les messages
+  value?: any; // Valeur de référence pour les règles min/max
+  length?: number; // Longueur pour les règles de validation de longueur
+  pattern?: RegExp; // Expression régulière pour la validation de motif
+  ignoreSpace?: boolean; // Ignorer les espaces dans la validation de longueur
+  isWarning?: boolean; // Si true, génère un warning au lieu d'une erreur
+  validate?: (value: any) => boolean | string; // Fonction de validation personnalisée
+  date?: string | Date; // Date de référence pour les règles de date (format: JJ/MM/AAAA)
 };
 `}
 />
 
 ---
 
-## Exemple d'intégration
+## Fonctionnalités supportées
 
-### Script Vue.js
+### Validations basiques
+
+- **Validation requise** (`required`) : Assurez-vous qu'un champ est rempli.
+- **Longueur minimale** (`minLength`) : Validez un champ avec un nombre minimal de caractères.
+- **Longueur maximale** (`maxLength`) : Limitez un champ à un nombre maximal de caractères.
+- **Longueur exacte** (`exactLength`) : Validez un champ avec un nombre exact de caractères.
+- **Valeur minimale** (`min`) : Assurez-vous que la valeur est au moins égale à une valeur définie.
+- **Valeur maximale** (`max`) : Assurez-vous que la valeur ne dépasse pas une valeur définie.
+- **Validation par motif** (`matchPattern`) : Validez un champ à l'aide d'une expression régulière.
+- **Validation d'email** (`email`) : Assurez-vous que la valeur est une adresse email valide.
+
+### Validation d'email
+
+La règle `email` vérifie qu'une adresse email est valide selon les critères suivants :
+- Ne doit pas contenir d'espaces (`[^\s]`)
+- Doit contenir exactement un symbole `@`
+- Doit avoir du texte avant et après le `@`
+- Doit avoir au moins un point `.` après le `@`
+- Doit avoir du texte après le point
+
+Exemple d'utilisation :
 
 <Source dark code={`
-<script lang="ts" setup>
-import { ref } from 'vue';
-import { useFieldValidation } from '@cnamts/synapse';
+const rules = {
+  email: generateRules([
+    { 
+      type: 'email',
+      options: {
+        message: 'Veuillez saisir une adresse email valide',
+        fieldName: 'Email'
+      }
+    }
+  ])
+};
+`}
+/>
 
-const { generateRules } = useFieldValidation();
+Exemples d'emails valides :
+- user@domain.com
+- user.name@domain.com
+- user+tag@domain.com
 
-const firstName = ref('');
-const email = ref('');
-const age = ref('');
+Exemples d'emails invalides :
+- user@domain (pas de point)
+- @domain.com (pas de texte avant @)
+- user@ (pas de domaine)
+- user.domain.com (pas de @)
+- user @domain.com (contient un espace)
 
+### Validations de date
+
+Toutes les validations de date attendent le format `JJ/MM/AAAA`.
+
+- **Format de date** (`dateFormat`) : Vérifie que la date respecte le format JJ/MM/AAAA.
+- **Plage de dates** (`dateRange`) : Valide une plage de dates (format: "JJ/MM/AAAA - JJ/MM/AAAA").
+- **Date exacte** (`dateExact`) : Vérifie que la date correspond exactement à une date donnée.
+- **Pas avant aujourd'hui** (`notBeforeToday`) : Vérifie que la date n'est pas antérieure à aujourd'hui.
+- **Pas après aujourd'hui** (`notAfterToday`) : Vérifie que la date n'est pas postérieure à aujourd'hui.
+- **Pas avant une date** (`notBeforeDate`) : Vérifie que la date n'est pas antérieure à une date de référence.
+- **Pas après une date** (`notAfterDate`) : Vérifie que la date n'est pas postérieure à une date de référence.
+- **Pas un weekend** (`notWeekend`) : Vérifie que la date ne tombe pas un samedi ou un dimanche.
+
+### Validation personnalisée
+
+- **Validation personnalisée** (`custom`) : Implémentez des règles spécifiques via une fonction.
+
+---
+
+## Gestion des warnings
+
+Le composable permet de générer des avertissements (warnings) au lieu d'erreurs en utilisant l'option `isWarning`. Cela est utile pour des validations souples qui ne doivent pas bloquer la soumission du formulaire.
+
+### Exemple avec warning
+
+<Source dark code={`
+const rules = {
+  dateNaissance: generateRules([
+    {
+      type: 'notWeekend',
+      options: {
+        isWarning: true,
+        warningMessage: 'Attention : la date sélectionnée tombe un weekend.',
+        fieldName: 'Date de naissance'
+      }
+    }
+  ])
+};
+`}
+/>
+
+---
+
+## Exemples d'utilisation
+
+### Validation basique
+
+<Source dark code={`
 const rules = {
   firstName: generateRules([
     { type: 'required', options: { message: 'Ce champ est requis.' } },
@@ -74,47 +163,85 @@ const rules = {
     { type: 'max', options: { value: 99 } },
   ]),
 };
-
-const validateField = (field: string) => {
-  return rules[field].every((rule) => rule(field));
-};
-
-const handleSubmit = () => {
-  if (validateField('firstName') && validateField('email') && validateField('age')) {
-    alert('Formulaire valide.');
-  } else {
-    alert('Merci de vérifier les champs.');
-  }
-};
-</script>
 `}
 />
 
-Vous pouvez retrouver un exemple complet sur le [NirField](/docs/composants-formulaires-nirfield--docs).
+### Validation de dates
 
----
+<Source dark code={`
+const rules = {
+  dateNaissance: generateRules([
+    { type: 'dateFormat' }, // Vérifie le format JJ/MM/AAAA
+    { 
+      type: 'notAfterToday',
+      options: { 
+        message: 'La date de naissance ne peut pas être dans le futur',
+        fieldName: 'Date de naissance'
+      }
+    }
+  ]),
+  periodeSejour: generateRules([
+    { 
+      type: 'dateRange',
+      options: {
+        message: 'La période de séjour doit être valide',
+        fieldName: 'Période de séjour'
+      }
+    }
+  ]),
+  dateRdv: generateRules([
+    {
+      type: 'notWeekend',
+      options: {
+        message: 'Les rendez-vous ne peuvent pas être pris le weekend',
+        fieldName: 'Date de rendez-vous'
+      }
+    },
+    {
+      type: 'notBeforeDate',
+      options: {
+        date: '01/01/2024',
+        message: 'Les rendez-vous ne peuvent pas être pris avant le 01/01/2024',
+        fieldName: 'Date de rendez-vous'
+      }
+    }
+  ])
+};
+`}
+/>
 
-## Fonctionnalités supportées
+### Validation personnalisée
 
-- **Validation requise** (`required`) : Assurez-vous qu'un champ est rempli.
-- **Longueur minimale** (`minLength`) : Validez un champ avec un nombre minimal de caractères.
-- **Longueur maximale** (`maxLength`) : Limitez un champ à un nombre maximal de caractères.
-- **Valeur minimale** (`min`) : Assurez-vous que la valeur est au moins égale à une valeur définie.
-- **Valeur maximale** (`max`) : Assurez-vous que la valeur ne dépasse pas une valeur définie.
-- **Validation par motif** (`matchPattern`) : Validez un champ à l'aide d'une expression régulière.
-- **Validation d'email** (`email`) : Assurez-vous que la valeur est une adresse email valide.
-- **Validation personnalisée** (`custom`) : Implémentez des règles spécifiques via une fonction.
+<Source dark code={`
+const rules = {
+  customField: generateRules([
+    {
+      type: 'custom',
+      options: {
+        validate: (value) => {
+          // Retourne true si valide, une chaîne de caractères pour le message d'erreur si invalide
+          return value === 'valeur attendue' || 'La valeur n\'est pas celle attendue'
+        },
+        fieldName: 'Champ personnalisé'
+      }
+    }
+  ])
+};
+`}
+/>
 
 ---
 
 ## Bonnes pratiques
 
 - **Centralisation** : Centralisez la logique de validation pour garantir une maintenance facile.
-- **Accessibilité** : Vérifiez que les messages d'erreur sont clairs et concis pour tous les utilisateurs.
+- **Messages clairs** : Utilisez `fieldName` pour les messages génériques et `fieldIdentifier` pour des messages plus spécifiques.
+- **Warnings vs Erreurs** : Utilisez `isWarning` pour les validations qui ne doivent pas bloquer la soumission du formulaire.
+- **Format des dates** : Respectez toujours le format JJ/MM/AAAA pour les validations de date.
+- **Validation progressive** : Commencez par les validations basiques avant d'ajouter des règles plus complexes.
 
 ---
 
 ## Conclusion
 
-Avec `useFieldValidation`, vous disposez d'un outil pour gérer les validations de vos formulaires dans Vue.js. Ce composable est idéal pour créer des validations personnalisées et intégrer des champs avec des bibliothèques comme Vuetify.
-
+Le composable `useFieldValidation` offre un système complet et flexible pour gérer les validations de formulaires dans Vue.js. Avec son support étendu pour les validations de dates, la gestion des warnings et les validations personnalisées, il s'adapte à la plupart des besoins de validation.
