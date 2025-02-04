@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, nextTick } from 'vue'
+	import { ref, watch, computed } from 'vue'
 	import DatePicker from '@/components/DatePicker/DatePicker.vue'
 	import type { RuleOptions } from '@/composables'
 
@@ -37,44 +37,42 @@
 		noCalendar: false,
 		isOutlined: true,
 		customRules: () => [],
-		customWarningRules: () => [],
+		customWarningRules: () => [
+		],
 	})
 
 	const emit = defineEmits(['update:modelValue'])
 
 	const fromDate = ref<string | null>(props.modelValue.from)
 	const toDate = ref<string | null>(props.modelValue.to)
+	const errorMessage = ref<string | null>(null)
 
-	watch(fromDate, async (newFrom) => {
-		console.warn('Before Swap - fromDate:', newFrom, 'toDate:', toDate.value)
-
-		if (newFrom && toDate.value && newFrom > toDate.value) {
-			const temp = fromDate.value
-			fromDate.value = toDate.value
-			toDate.value = temp
-
-			await nextTick()
-
-			console.warn('After Swap - fromDate:', fromDate.value, 'toDate:', toDate.value)
+	const combinedRules = computed(() => {
+		const rules = [...props.customRules]
+		if (errorMessage.value) {
+			rules.push({ type: 'error', options: { message: errorMessage.value } })
 		}
-
-		emit('update:modelValue', { from: fromDate.value, to: toDate.value })
+		return rules
 	})
 
-	watch(toDate, async (newTo) => {
-		console.warn('Before Swap - toDate:', newTo, 'fromDate:', fromDate.value)
-
-		if (newTo && fromDate.value && fromDate.value > newTo) {
-			const temp = toDate.value
-			toDate.value = fromDate.value
-			fromDate.value = temp
-
-			await nextTick()
-
-			console.warn('After Swap - toDate:', toDate.value, 'fromDate:', fromDate.value)
+	watch(fromDate, (newFrom) => {
+		if (newFrom && toDate.value && newFrom < toDate.value) {
+			errorMessage.value = 'La date de début ne peut pas être supérieure à la date de fin'
 		}
+		else {
+			errorMessage.value = null
+		}
+		emit('update:modelValue', { from: newFrom, to: toDate.value })
+	})
 
-		emit('update:modelValue', { from: fromDate.value, to: toDate.value })
+	watch(toDate, (newTo) => {
+		if (newTo && fromDate.value && fromDate.value < newTo) {
+			errorMessage.value = 'La date de fin ne peut pas être inférieure à la date de début'
+		}
+		else {
+			errorMessage.value = null
+		}
+		emit('update:modelValue', { from: fromDate.value, to: newTo })
 	})
 
 	// Watch pour synchroniser les props en cas de changement externe
@@ -99,6 +97,8 @@
 			:no-icon="props.noIcon"
 			:no-calendar="props.noCalendar"
 			:is-outlined="props.isOutlined"
+			:custom-rules="combinedRules"
+			:custom-warning-rules="props.customWarningRules"
 			class="mr-2"
 		/>
 		<DatePicker
@@ -114,6 +114,8 @@
 			:no-icon="props.noIcon"
 			:no-calendar="props.noCalendar"
 			:is-outlined="props.isOutlined"
+			:custom-rules="combinedRules"
+			:custom-warning-rules="props.customWarningRules"
 		/>
 	</div>
 </template>
