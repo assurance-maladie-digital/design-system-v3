@@ -702,17 +702,17 @@ export const WithDateFormatReturn: Story = {
                     v-model="value2"
                     placeholder="Format DD/MM/YYYY, retour MM/DD/YYYY"
                     format="DD/MM/YYYY"
-                    dateFormatReturn="MM/DD/YYYY"
+                    date-format-return="MM/DD/YYYY"
                 />
-
 
                 <span class="mb-4">Date de retour : {{ value3 }}</span>
                 <DatePicker
                     v-model="value3"
                     placeholder="Format DD/MM/YYYY, retour YYYY-MM-DD"
                     format="DD/MM/YYYY"
-                    dateFormatReturn="YYYY-MM-DD"
+                    date-format-return="YYYY-MM-DD"
                 />
+                </div>
 				</template>
 				`,
 			},
@@ -724,8 +724,8 @@ export const WithDateFormatReturn: Story = {
 					import { DatePicker } from '@cnamts/synapse'
 					
 					const value1 = ref('24/12/2025')
-					const value2 = ref('24/12/2025')
-					const value3 = ref('24/12/2025')
+					const value2 = ref('25/12/2025')
+					const value3 = ref('26/12/2025')
 				</script>
 				`,
 			},
@@ -751,8 +751,8 @@ export const WithDateFormatReturn: Story = {
 			components: { DatePicker: DatePicker },
 			setup() {
 				const value1 = ref('24/12/2025')
-				const value2 = ref('24/12/2025')
-				const value3 = ref('24/12/2025')
+				const value2 = ref('25/12/2025')
+				const value3 = ref('26/12/2025')
 				return { value1, value2, value3 }
 			},
 			template: `
@@ -769,7 +769,7 @@ export const WithDateFormatReturn: Story = {
                     v-model="value2"
                     placeholder="Format DD/MM/YYYY, retour MM/DD/YYYY"
                     format="DD/MM/YYYY"
-                    dateFormatReturn="MM/DD/YYYY"
+					date-format-return="MM/DD/YYYY"
                 />
 
 
@@ -778,7 +778,7 @@ export const WithDateFormatReturn: Story = {
                     v-model="value3"
                     placeholder="Format DD/MM/YYYY, retour YYYY-MM-DD"
                     format="DD/MM/YYYY"
-                    dateFormatReturn="YYYY-MM-DD"
+					date-format-return="YYYY-MM-DD"
                 />
               </div>
             `,

@@ -442,7 +442,7 @@
 					color="primary"
 				>
 					<template #title>
-						Selectionnez une date
+						Sélectionnez une date
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">

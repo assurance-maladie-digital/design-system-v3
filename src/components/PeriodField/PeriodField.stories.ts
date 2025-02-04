@@ -114,6 +114,7 @@ export const Default: Story = {
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -171,6 +172,7 @@ export const CustomPlaceholders: Story = {
 		placeholderFrom: 'Début de la période',
 		placeholderTo: 'Fin de la période',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -226,6 +228,7 @@ export const Disabled: Story = {
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -281,6 +284,7 @@ export const Required: Story = {
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: true,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -393,6 +397,7 @@ export const WithoutIcon: Story = {
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: true,
 		displayIcon: false,
 		displayAppendIcon: true,
@@ -451,6 +456,7 @@ export const WithError: Story = {
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: true,
 		displayIcon: false,
 		displayAppendIcon: true,
@@ -516,6 +522,7 @@ export const WithWarning: Story = {
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: true,
 		displayIcon: false,
 		displayAppendIcon: true,
@@ -583,6 +590,7 @@ export const WithSuccess: Story = {
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: true,
 		displayIcon: false,
 		displayAppendIcon: true,
@@ -656,6 +664,8 @@ export const DifferentFormats: Story = {
 	args: {
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -693,27 +703,27 @@ export const WithDateFormatReturn: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<span class="mb-4">Période de retour : {{ value1 }}</span>
-					<PeriodField
-						v-model="value"
-						format="DD/MM/YYYY"
-					/>
-	
-					<span class="mb-4">Période de retour : {{ value2 }}</span>
-					<PeriodField
-						v-model="value"
-						format="DD/MM/YYYY"
-						dateFormatReturn="MM/DD/YYYY"
-					/>
-	
-					<span class="mb-4">Période de retour : {{ value3 }}</span>
-					<PeriodField
-						v-model="value"
-						format="DD/MM/YYYY"
-						dateFormatReturn="YYYY-MM-DD"
-					/>
-				</template>
+			<template>
+				<span class="mb-4">Période de retour : {{ value1 }}</span>
+				<PeriodField
+					v-model="value1"
+					format="DD/MM/YYYY"
+				/>
+
+				<span class="mb-4">Période de retour : {{ value2 }}</span>
+				<PeriodField
+					v-model="value2"
+					format="DD/MM/YYYY"
+					date-format-return="MM/DD/YYYY"
+				/>
+
+				<span class="mb-4">Période de retour : {{ value3 }}</span>
+				<PeriodField
+					v-model="value3"
+					format="DD/MM/YYYY"
+					date-format-return="YYYY-MM-DD"
+				/>
+			</template>
 				`,
 			},
 			{
@@ -723,7 +733,9 @@ export const WithDateFormatReturn: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const value =  ref({ from: '12/10/2023', to: '15/10/2023'  })
+					const value1 = ref({ from: '12/10/2023', to: '15/10/2023' })
+					const value2 = ref({ from: '12/10/2023', to: '15/10/2023' })
+					const value3 = ref({ from: '12/10/2023', to: '15/10/2023' })
 				</script>
 				`,
 			},
@@ -733,6 +745,7 @@ export const WithDateFormatReturn: Story = {
 		placeholderFrom: 'Début',
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: '',
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -744,29 +757,38 @@ export const WithDateFormatReturn: Story = {
 		return {
 			components: { PeriodField: PeriodField },
 			setup() {
-				const value = ref({ from: '12/10/2023', to: '15/10/2023' })
-				return { args, value }
+				const value1 = ref({ from: '12/10/2023', to: '15/10/2023' })
+				const value2 = ref({ from: '12/10/2023', to: '15/10/2023' })
+				const value3 = ref({ from: '12/10/2023', to: '15/10/2023' })
+				const valueReturn1 = ref({ from: '12/10/2023', to: '15/10/2023' })
+				const valueReturn2 = ref({ from: '10/12/2023', to: '10/15/2023' })
+				const valueReturn3 = ref({ from: '2023/12/10', to: '2023/15/10' })
+				return { args, value1, value2, value3, valueReturn1, valueReturn2, valueReturn3 }
 			},
 			template: `
               <div class="pa-4">
-				  <span class="mb-4">Période de retour : {{ value }}</span>
+				  <span>Période de retour : {{ valueReturn1 }}<br/><br/></span>
 				  <PeriodField
-					  v-model="value"
+					  v-bind="args"
+					  v-model="value1"
 					  format="DD/MM/YYYY"
+					  date-format-return="DD/MM/YYYY"
 				  />
 
-				  <span class="mb-4">Période de retour : {{ value }}</span>
+				  <span>Période de retour : {{ valueReturn2 }}<br/><br/></span>
 				  <PeriodField
-					  v-model="value"
+					  v-bind="args"
+					  v-model="value2"
 					  format="DD/MM/YYYY"
-					  dateFormatReturn="MM/DD/YYYY"
+					  date-format-return="MM/DD/YYYY"
 				  />
-				  
-				  <span class="mb-4">Période de retour : {{ value }}</span>
+
+				  <span>Période de retour : {{ valueReturn3 }}<br/><br/></span>
 				  <PeriodField
-					  v-model="value"
+					  v-bind="args"
+					  v-model="value3"
 					  format="DD/MM/YYYY"
-					  dateFormatReturn="YYYY-MM-DD"
+					  date-format-return="YYYY-MM-DD"
 				  />
               </div>
             `,
