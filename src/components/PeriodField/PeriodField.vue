@@ -45,25 +45,36 @@
 	const fromDate = ref<string | null>(props.modelValue.from)
 	const toDate = ref<string | null>(props.modelValue.to)
 
+	watch(fromDate, async (newFrom) => {
+		if (newFrom && toDate.value && new Date(newFrom) > new Date(toDate.value)) {
+			// Échange automatique des valeurs
+			const temp = fromDate.value
+			fromDate.value = toDate.value
+			toDate.value = temp
+
+			await nextTick()
+		}
+
+		emit('update:modelValue', { from: fromDate.value, to: toDate.value })
+	})
+
+	watch(toDate, async (newTo) => {
+		if (newTo && fromDate.value && new Date(fromDate.value) > new Date(newTo)) {
+			// Échange automatique des valeurs
+			const temp = toDate.value
+			toDate.value = fromDate.value
+			fromDate.value = temp
+
+			await nextTick()
+		}
+
+		emit('update:modelValue', { from: fromDate.value, to: toDate.value })
+	})
+
+	// Watch pour synchroniser les props en cas de changement externe
 	watch(() => props.modelValue, (newValue) => {
 		fromDate.value = newValue.from
 		toDate.value = newValue.to
-	}, { deep: true, immediate: true })
-
-	watch([fromDate, toDate], async ([newFrom, newTo]) => {
-		if (newFrom && newTo && new Date(newFrom) > new Date(newTo)) {
-			// Swap values with nextTick to ensure Vue updates the DOM first
-			const tempFrom = fromDate.value
-			fromDate.value = toDate.value
-			toDate.value = tempFrom
-
-			await nextTick()
-
-			emit('update:modelValue', { from: fromDate.value, to: toDate.value })
-		}
-		else {
-			emit('update:modelValue', { from: newFrom, to: newTo })
-		}
 	}, { deep: true, immediate: true })
 </script>
 
@@ -103,7 +114,7 @@
 
 <style scoped>
 .period-field {
-	display: flex;
-	gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 </style>
