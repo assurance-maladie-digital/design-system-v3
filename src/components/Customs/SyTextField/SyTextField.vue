@@ -23,9 +23,9 @@
 			showDivider?: boolean
 			label?: string
 			required?: boolean
-			errorMessages?: string[] | null
-			warningMessages?: string[] | null
-			successMessages?: string[] | null
+			errorMessages?: string | readonly string[]
+			warningMessages?: string | readonly string[]
+			successMessages?: string | readonly string[]
 			hasError?: boolean
 			hasWarning?: boolean
 			hasSuccess?: boolean
@@ -81,9 +81,9 @@
 			variantStyle: 'outlined',
 			color: 'primary',
 			label: 'custom label',
-			errorMessages: null,
-			warningMessages: null,
-			successMessages: null,
+			errorMessages: undefined,
+			warningMessages: undefined,
+			successMessages: undefined,
 			hasError: false,
 			hasWarning: false,
 			hasSuccess: false,

@@ -131,7 +131,7 @@
 			// Appliquer les règles d'avertissement seulement s'il n'y a pas d'erreur
 			if (!hasAnyError) {
 				let hasWarningRule = false
-				
+
 				// Vérifier d'abord s'il y a des règles d'avertissement
 				for (const rule of warningValidationRules.value) {
 					hasWarningRule = true
