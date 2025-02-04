@@ -92,36 +92,49 @@ describe('PeriodField.vue', () => {
 		])
 	})
 
-	it('do not set a `from` older that `to`', async () => {
+	it('show error message if start date is after end date', async () => {
 		const wrapper = mount(PeriodField, {
 			global: {
 				plugins: [vuetify],
 			},
 			props: {
 				modelValue: {
-					from: null,
-					to: null,
+					from: '12/12/1995',
+					to: '20/12/1995',
+				},
+			},
+		})
+
+		const startField = wrapper.findAll('input')[0]
+		await startField.trigger('focus')
+		await startField.setValue('22/12/1995')
+		await startField.trigger('blur')
+
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.text()).toContain('La date de début ne peut pas être supérieure à la date de fin')
+	})
+
+	it('show error message if end date is before start date', async () => {
+		const wrapper = mount(PeriodField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: {
+					from: '12/12/1995',
+					to: '20/12/1995',
 				},
 			},
 		})
 
 		const endField = wrapper.findAll('input')[1]
 		await endField.trigger('focus')
-		await endField.setValue('20/12/1995')
+		await endField.setValue('10/12/1995')
 		await endField.trigger('blur')
-
-		const startField = wrapper.findAll('input')[0]
-		await startField.trigger('focus')
-		await startField.setValue('21/12/1995')
-		await startField.trigger('blur')
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([
-			{
-				from: '20/12/1995',
-				to: '21/12/1995',
-			},
-		])
+		expect(wrapper.text()).toContain('La date de fin ne peut pas être inférieure à la date de début')
 	})
 })
