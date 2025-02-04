@@ -105,14 +105,14 @@
 			// Vérifier d'abord si la date ou la plage de dates est valide
 			if (props.range) {
 				if (!isValidDateRange(value)) {
-					errorMessages.value.push(defaultRules.value[0].options.message)
+					errorMessages.value.push(defaultRules.value[0]?.options?.message || 'Date range is invalid')
 					hasAnyError = true
 					return
 				}
 			}
 			else {
 				if (!isValidDate(value)) {
-					errorMessages.value.push(defaultRules.value[0].options.message)
+					errorMessages.value.push(defaultRules.value[0]?.options?.message || 'Date is invalid')
 					hasAnyError = true
 					return
 				}
@@ -143,7 +143,9 @@
 			}
 		}
 
-		validateValue(inputValue.value)
+		if (inputValue.value) {
+			validateValue(inputValue.value)
+		}
 
 		// Mettre à jour les états en respectant la priorité
 		hasError.value = hasAnyError

@@ -26,6 +26,7 @@
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
+		label?: string
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -43,6 +44,7 @@
 		noIcon: false,
 		noCalendar: false,
 		isOutlined: true,
+		label: '',
 	})
 
 	const emit = defineEmits<{
@@ -405,7 +407,7 @@
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:date-format-return="props.dateFormatReturn"
 				:format="props.format"
-				:label="props.placeholder"
+				:label="props.label || props.placeholder"
 				:placeholder="props.placeholder"
 				:range="props.displayRange"
 				:required="props.required"
@@ -429,7 +431,7 @@
 				:has-success="hasSuccess"
 				:is-disabled="props.isDisabled"
 				:is-read-only="true"
-				:label="props.placeholder"
+				:label="props.label || props.placeholder"
 				:no-icon="props.noIcon"
 				:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 				:variant-style="props.isOutlined ? 'outlined' : 'underlined'"

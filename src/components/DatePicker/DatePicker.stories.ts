@@ -870,7 +870,7 @@ export const NoCalendar: Story = {
 		noIcon: false,
 		noCalendar: true,
 		modelValue: '',
-		rules: [
+		customRules: [
 			{
 				type: 'dateFormat',
 				options: {
