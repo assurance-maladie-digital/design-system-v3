@@ -212,7 +212,7 @@
 		:display-asterisk="isShouldDisplayAsterisk"
 		:error="props.isOnError"
 		:error-messages="props.errorMessages"
-		:messages="[...(props.warningMessages || []), ...(props.successMessages || [])]"
+		:messages="props.hasWarning ? props.warningMessages : props.successMessages"
 		:flat="props.isFlat"
 		:focused="props.isFocused"
 		:hide-details="props.areDetailsHidden"

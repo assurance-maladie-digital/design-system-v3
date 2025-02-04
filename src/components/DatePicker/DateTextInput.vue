@@ -80,7 +80,7 @@
 
 	// Validation
 	const validateField = () => {
-		// Réinitialiser les messages
+		// Réinitialiser les messages et les états
 		errorMessages.value = []
 		warningMessages.value = []
 		successMessages.value = []
@@ -88,14 +88,14 @@
 		hasWarning.value = false
 		hasSuccess.value = false
 
-		// Vérifier si le champ est requis
-		if (props.required && !inputValue.value) {
-			errorMessages.value = ['Ce champ est requis']
-			hasError.value = true
+		// Si le champ est vide
+		if (!inputValue.value) {
+			if (props.required) {
+				errorMessages.value = ['Ce champ est requis']
+				hasError.value = true
+			}
 			return
 		}
-
-		if (!inputValue.value) return
 
 		let hasAnyError = false
 		let hasAnyWarning = false
@@ -124,21 +124,30 @@
 				if (result.error) {
 					errorMessages.value.push(result.error)
 					hasAnyError = true
-				}
-				if (result.success && !hasAnyError) {
-					successMessages.value.push(result.success)
-					hasAnySuccess = true
+					break // Arrêter à la première erreur
 				}
 			}
 
-			// Appliquer les règles d'avertissement
+			// Appliquer les règles d'avertissement seulement s'il n'y a pas d'erreur
 			if (!hasAnyError) {
+				let hasWarningRule = false
+				
+				// Vérifier d'abord s'il y a des règles d'avertissement
 				for (const rule of warningValidationRules.value) {
+					hasWarningRule = true
 					const result = rule(value)
 					if (result.warning) {
 						warningMessages.value.push(result.warning)
 						hasAnyWarning = true
 					}
+				}
+
+				// Ajouter le message de succès seulement si :
+				// 1. Il n'y a pas d'avertissement OU
+				// 2. Il n'y avait pas de règle d'avertissement à vérifier
+				if (!hasAnyWarning || !hasWarningRule) {
+					successMessages.value = ['Le champ est valide']
+					hasAnySuccess = true
 				}
 			}
 		}
