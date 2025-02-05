@@ -134,9 +134,11 @@
 	watch([() => fromDate.value, () => toDate.value], ([newFromDate, newToDate], [oldFromDate, oldToDate]) => {
 		if (newFromDate !== oldFromDate && oldFromDate) {
 			tempFromDate.value = stringToDate(oldFromDate)
+			emit('update:modelValue', { from: tempFromDate.value, to: toDate.value })
 		}
 		if (newToDate !== oldToDate && oldToDate) {
 			tempToDate.value = stringToDate(oldToDate)
+			emit('update:modelValue', { from: fromDate.value, to: tempToDate.value })
 		}
 	})
 
@@ -243,7 +245,7 @@
 
 <style scoped>
 .period-field {
-  display: flex;
-  gap: 10px;
+	display: flex;
+	gap: 10px;
 }
 </style>
