@@ -253,11 +253,6 @@
 		}
 	}
 
-	// Gestion du blur
-	const handleBlur = () => {
-		validateField()
-	}
-
 	// Initialisation et synchronisation avec modelValue
 	watch(() => props.modelValue, (newValue) => {
 		if (!newValue) {
@@ -303,6 +298,5 @@
 			dateFormatReturn,
 		}"
 		@update:model-value="handleInput"
-		@blur="handleBlur"
 	/>
 </template>
