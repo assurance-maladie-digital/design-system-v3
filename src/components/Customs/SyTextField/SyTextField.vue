@@ -244,7 +244,6 @@
 		:variant="props.variantStyle"
 		:width="props.width"
 		:class="{
-			'min-width': true,
 			'warning-field': props.hasWarning && !props.hasError,
 			'success-field': props.hasSuccess && !props.hasError && !props.hasWarning
 		}"
@@ -329,10 +328,6 @@
 </template>
 
 <style lang="scss" scoped>
-.min-width {
-	min-width: 345px;
-}
-
 .warning-field {
 	:deep(.v-field) {
 		color: rgb(var(--v-theme-warning)) !important;

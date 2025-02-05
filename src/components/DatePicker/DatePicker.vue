@@ -411,7 +411,7 @@
 			<DateTextInput
 				ref="dateTextInputRef"
 				v-model="displayFormattedDate"
-				:class="[getMessageClasses(), 'label-hidden-on-focus']"
+				:class="[getMessageClasses(), 'label-hidden-on-focus', 'min-width']"
 				:date-format-return="props.dateFormatReturn"
 				:format="props.format"
 				:label="props.label || props.placeholder"
@@ -435,7 +435,7 @@
 				v-model="displayFormattedDate"
 				:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
 				:append-inner-icon="getIcon()"
-				:class="[getMessageClasses(), 'label-hidden-on-focus']"
+				:class="[getMessageClasses(), 'label-hidden-on-focus', 'min-width']"
 				:error-messages="errorMessages"
 				:warning-messages="warningMessages"
 				:success-messages="successMessages"
@@ -586,5 +586,9 @@
 .fade-enter-from,
 .fade-leave-to {
 	opacity: 0;
+}
+
+.min-width {
+	min-width: 345px;
 }
 </style>
