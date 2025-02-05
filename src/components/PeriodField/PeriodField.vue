@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 	import { ref, watch, computed } from 'vue'
 	import DatePicker from '@/components/DatePicker/DatePicker.vue'
-	import type { RuleOptions } from '@/composables'
+	import { type RuleOptions, useFieldValidation } from '@/composables'
 
 	type DateInput = string | null
 	type PeriodValue = { from: DateInput, to: DateInput }
-
-	type Rule = (value: string) => { error?: string, success?: string }
 
 	const props = withDefaults(defineProps<{
 		modelValue?: PeriodValue
@@ -22,6 +20,7 @@
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
+		showSuccessMessages?: boolean
 		customRules?: { type: string, options: RuleOptions }[]
 		customWarningRules?: { type: string, options: RuleOptions }[]
 	}>(), {
@@ -38,130 +37,213 @@
 		noIcon: false,
 		noCalendar: false,
 		isOutlined: true,
+		showSuccessMessages: false,
 		customRules: () => [],
-		customWarningRules: () => [
-		],
+		customWarningRules: () => [],
 	})
 
 	const emit = defineEmits(['update:modelValue'])
 
-	const fromDate = ref<string | null>(props.modelValue.from)
-	const toDate = ref<string | null>(props.modelValue.to)
-	const errorMessage = ref<string[]>([])
+	const fromDate = ref<string | null>(props.modelValue?.from ?? null)
+	const toDate = ref<string | null>(props.modelValue?.to ?? null)
+	const errors = ref<string[]>([])
+	const successes = ref<string[]>([])
+	const tempFromDate = ref()
+	const tempToDate = ref()
 
+	const { generateRules } = useFieldValidation()
+
+	// Règles de validation pour la date de début
 	const fromDateRules = [
 		{
 			type: 'custom',
 			options: {
-				validate: (value: never) => {
-					if (value && toDate.value && value < toDate.value) {
-						return { error: 'La date de début ne peut pas être supérieure à la date de fin.' }
-					}
-					return {}
+				validate: (value: string | null) => {
+					if (value === null) return true
+					if (tempToDate.value === undefined) return true
+					return value <= tempToDate.value
 				},
-				message: 'La date de début ne peut pas être supérieur à la date de fin.',
+				message: 'La date de début ne peut pas être supérieure à la date de fin.',
+				successMessage: 'La date de début est valide.',
 				fieldIdentifier: 'fromDate',
 			},
 		},
 		...(props.required
 			? [{
 				type: 'required',
-				options: { message: 'La date de début est requise.', fieldIdentifier: 'fromDate' },
+				options: {
+					message: 'La date de début est requise.',
+					successMessage: 'La date de début est renseignée.',
+					fieldIdentifier: 'fromDate',
+				},
 			}]
 			: []),
+		...props.customRules,
 	]
 
-	const fieldIdentifierFromDate = fromDateRules[0]?.options?.fieldIdentifier
+	// Règles de validation pour la date de fin
+	const toDateRules = [
+		{
+			type: 'custom',
+			options: {
+				validate: (value: string | null) => {
+					if (value === null) return true
+					if (tempFromDate.value === undefined || value === null) return true
+					return value >= tempFromDate.value
+				},
+				message: 'La date de fin ne peut pas être inférieure à la date de début.',
+				successMessage: 'La date de fin est valide.',
+				fieldIdentifier: 'toDate',
+			},
+		},
+		...(props.required
+			? [{
+				type: 'required',
+				options: {
+					message: 'La date de fin est requise.',
+					successMessage: 'La date de fin est renseignée.',
+					fieldIdentifier: 'toDate',
+				},
+			}]
+			: []),
+		...props.customRules,
+	]
 
-	const hasFromDateErrors = computed(() => errorMessage.value.some(error => error.includes(fieldIdentifierFromDate)))
+	const hasFromDateErrors = computed(() =>
+		errors.value.some(error => error.includes('fromDate')),
+	)
 
-	function validateFieldSet(value: string, fromDateRules: Rule[]) {
-		fromDateRules.forEach((rule) => {
-			const { error } = rule.options.validate(value)
-			if (error) errorMessage.value.push(error)
-		})
+	const hasToDateErrors = computed(() =>
+		errors.value.some(error => error.includes('toDate')),
+	)
+
+	const hasFromDateSuccesses = computed(() =>
+		successes.value.some(success => success.includes('fromDate')),
+	)
+
+	const hasToDateSuccesses = computed(() =>
+		successes.value.some(success => success.includes('toDate')),
+	)
+
+	function stringToDate(dateString: string | null): Date | undefined {
+		if (!dateString || typeof dateString !== 'string') return undefined
+		const [day, month, year] = dateString.split('/').map(part => parseInt(part, 10))
+		return new Date(year, month - 1, day)
 	}
-	function validateFields(onBlur = false) {
-		errorMessage.value = []
 
-		const shouldValidateFromDate = onBlur || fromDate.value < toDate.value
-
-		if (shouldValidateFromDate) {
-			validateFieldSet(fromDate.value, fromDateRules)
+	watch([() => fromDate.value, () => toDate.value], ([newFromDate, newToDate], [oldFromDate, oldToDate]) => {
+		if (newFromDate !== oldFromDate && oldFromDate) {
+			tempFromDate.value = stringToDate(oldFromDate)
 		}
-	}
-
-	watch(fromDate, (newFrom) => {
-		validateFields()
-		emit('update:modelValue', { from: newFrom, to: toDate.value })
+		if (newToDate !== oldToDate && oldToDate) {
+			tempToDate.value = stringToDate(oldToDate)
+		}
 	})
-
-	/* watch(toDate, (newTo) => {
-		if (fromDate.value > newTo) {
-			errorMessage.value = 'La date de fin ne peut pas être inférieure à la date de début'
-		}
-		else if (fromDate.value === newTo) {
-			errorMessage.value = 'La date de fin ne peut pas être égale à la date de début'
-		}
-		else {
-			errorMessage.value = null
-		}
-		emit('update:modelValue', { from: fromDate.value, to: newTo })
-	}) */
 
 	// Watch pour synchroniser les props en cas de changement externe
 	watch(() => props.modelValue, (newValue) => {
 		fromDate.value = newValue.from
 		toDate.value = newValue.to
 	}, { deep: true, immediate: true })
+
+	function validateFieldSet(value: string | null, fieldRules: {
+		type: string
+		options: RuleOptions
+	}[], fieldIdentifier: string) {
+		const rules = generateRules(fieldRules)
+		const results = rules.map(rule => rule(value || ''))
+
+		const fieldErrors = results
+			.filter(result => result.error)
+			.map(result => result.error!)
+
+		const fieldSuccesses = results
+			.filter(result => result.success)
+			.map(result => result.success!)
+
+		errors.value = errors.value.filter(error => !error.includes(fieldIdentifier))
+		errors.value.push(...fieldErrors)
+
+		if (props.showSuccessMessages) {
+			successes.value = successes.value.filter(success => !success.includes(fieldIdentifier))
+			successes.value.push(...fieldSuccesses)
+		}
+	}
+
+	function validateFields() {
+		errors.value = []
+		successes.value = []
+
+		// Ne valider la date de début que si elle est renseignée et requise, ou si les deux dates sont renseignées
+		if ((fromDate.value && props.required) || (fromDate.value && toDate.value)) {
+			validateFieldSet(fromDate.value, fromDateRules, 'fromDate')
+		}
+
+		// Ne valider la date de fin que si elle est renseignée et requise, ou si les deux dates sont renseignées
+		if ((toDate.value && props.required) || (fromDate.value && toDate.value)) {
+			validateFieldSet(toDate.value, toDateRules, 'toDate')
+		}
+	}
+
+	const validateOnSubmit = () => {
+		validateFields()
+		return errors.value.length === 0
+	}
+
+	defineExpose({
+		validateOnSubmit,
+		errors,
+		successes,
+	})
 </script>
 
 <template>
 	<div class="period-field">
-		{{ fromDate }}
 		<DatePicker
 			ref="fromDate"
 			v-model="fromDate"
-			:format="props.format"
+			:custom-rules="fromDateRules"
+			:custom-warning-rules="props.customWarningRules"
 			:date-format-return="props.dateFormatReturn"
-			:show-week-number="props.showWeekNumber"
+			:display-append-icon="props.displayAppendIcon"
+			:display-icon="props.displayIcon"
+			:error-message="hasFromDateErrors"
+			:format="props.format"
+			:is-disabled="props.isDisabled"
+			:is-outlined="props.isOutlined"
+			:no-calendar="props.noCalendar"
+			:no-icon="props.noIcon"
 			:placeholder="placeholderFrom"
 			:required="props.required"
-			:display-icon="props.displayIcon"
-			:display-append-icon="props.displayAppendIcon"
-			:is-disabled="props.isDisabled"
-			:no-icon="props.noIcon"
-			:no-calendar="props.noCalendar"
-			:is-outlined="props.isOutlined"
-			:custom-rules="props.customRules"
-			:custom-warning-rules="props.customWarningRules"
-			:error-message="hasFromDateErrors"
+			:show-week-number="props.showWeekNumber"
+			:success-message="hasFromDateSuccesses"
 			class="mr-2"
 		/>
 		<DatePicker
 			ref="toDate"
 			v-model="toDate"
-			:format="props.format"
+			:custom-rules="toDateRules"
+			:custom-warning-rules="props.customWarningRules"
 			:date-format-return="props.dateFormatReturn"
-			:show-week-number="props.showWeekNumber"
+			:display-append-icon="props.displayAppendIcon"
+			:display-icon="props.displayIcon"
+			:error-message="hasToDateErrors"
+			:format="props.format"
+			:is-disabled="props.isDisabled"
+			:is-outlined="props.isOutlined"
+			:no-calendar="props.noCalendar"
+			:no-icon="props.noIcon"
 			:placeholder="placeholderTo"
 			:required="props.required"
-			:display-icon="props.displayIcon"
-			:display-append-icon="props.displayAppendIcon"
-			:is-disabled="props.isDisabled"
-			:no-icon="props.noIcon"
-			:no-calendar="props.noCalendar"
-			:is-outlined="props.isOutlined"
-			:custom-rules="props.customRules"
-			:custom-warning-rules="props.customWarningRules"
-			:error-message="hasFromDateErrors"
+			:show-week-number="props.showWeekNumber"
+			:success-message="hasToDateSuccesses"
 		/>
 	</div>
 </template>
 
 <style scoped>
 .period-field {
-	display: flex;
-	gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 </style>
