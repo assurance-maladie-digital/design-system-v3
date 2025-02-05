@@ -14,6 +14,15 @@
 		range?: boolean
 		rules?: { type: string, options: RuleOptions }[]
 		warningRules?: { type: string, options: RuleOptions }[]
+		errorMessages?: string[]
+		warningMessages?: string[]
+		successMessages?: string[]
+		hasError?: boolean
+		hasWarning?: boolean
+		hasSuccess?: boolean
+		label?: string
+		format?: string
+		dateFormatReturn?: string
 	}
 
 	const props = withDefaults(defineProps<Props>(), {
@@ -23,6 +32,15 @@
 		range: false,
 		rules: () => [],
 		warningRules: () => [],
+		errorMessages: () => [],
+		warningMessages: () => [],
+		successMessages: () => [],
+		hasError: false,
+		hasWarning: false,
+		hasSuccess: false,
+		label: '',
+		format: '',
+		dateFormatReturn: '',
 	})
 
 	const emit = defineEmits<{
@@ -31,12 +49,28 @@
 
 	// État local
 	const inputValue = ref('')
-	const errorMessages = ref<string[]>([])
-	const warningMessages = ref<string[]>([])
-	const successMessages = ref<string[]>([])
-	const hasError = ref(false)
-	const hasWarning = ref(false)
-	const hasSuccess = ref(false)
+	const localErrorMessages = ref<string[]>([])
+	const localWarningMessages = ref<string[]>([])
+	const localSuccessMessages = ref<string[]>([])
+	const localHasError = ref(false)
+	const localHasWarning = ref(false)
+	const localHasSuccess = ref(false)
+
+	// Synchroniser les messages externes avec l'état local
+	watch(() => props.errorMessages, (newValue) => {
+		localErrorMessages.value = newValue || []
+		localHasError.value = props.hasError || false
+	}, { immediate: true })
+
+	watch(() => props.warningMessages, (newValue) => {
+		localWarningMessages.value = newValue || []
+		localHasWarning.value = props.hasWarning || false
+	}, { immediate: true })
+
+	watch(() => props.successMessages, (newValue) => {
+		localSuccessMessages.value = newValue || []
+		localHasSuccess.value = props.hasSuccess || false
+	}, { immediate: true })
 
 	// Validation setup
 	const { generateRules } = useFieldValidation()
@@ -81,85 +115,69 @@
 	// Validation
 	const validateField = () => {
 		// Réinitialiser les messages et les états
-		errorMessages.value = []
-		warningMessages.value = []
-		successMessages.value = []
-		hasError.value = false
-		hasWarning.value = false
-		hasSuccess.value = false
+		localErrorMessages.value = []
+		localWarningMessages.value = []
+		localSuccessMessages.value = []
+		localHasError.value = false
+		localHasWarning.value = false
+		localHasSuccess.value = false
 
 		// Si le champ est vide
 		if (!inputValue.value) {
 			if (props.required) {
-				errorMessages.value = ['Ce champ est requis']
-				hasError.value = true
+				localErrorMessages.value = ['Ce champ est requis']
+				localHasError.value = true
 			}
 			return
 		}
 
-		let hasAnyError = false
-		let hasAnyWarning = false
-		let hasAnySuccess = false
+		// Vérifier d'abord si la date ou la plage de dates est valide
+		const isValid = props.range ? isValidDateRange(inputValue.value) : isValidDate(inputValue.value)
+		if (!isValid) {
+			localErrorMessages.value = [props.range ? 'Format invalide (JJ/MM/AAAA - JJ/MM/AAAA)' : 'Format invalide (JJ/MM/AAAA)']
+			localHasError.value = true
+			return
+		}
 
-		const validateValue = (value: string) => {
-			// Vérifier d'abord si la date ou la plage de dates est valide
-			if (props.range) {
-				if (!isValidDateRange(value)) {
-					errorMessages.value.push(defaultRules.value[0]?.options?.message || 'Date range is invalid')
-					hasAnyError = true
-					return
-				}
-			}
-			else {
-				if (!isValidDate(value)) {
-					errorMessages.value.push(defaultRules.value[0]?.options?.message || 'Date is invalid')
-					hasAnyError = true
-					return
-				}
-			}
-
-			// Appliquer les règles de validation
-			for (const rule of validationRules.value) {
-				const result = rule(value)
+		// Appliquer les règles de validation
+		for (const rule of validationRules.value) {
+			const result = rule(inputValue.value)
+			if (typeof result === 'object') {
 				if (result.error) {
-					errorMessages.value.push(result.error)
-					hasAnyError = true
-					break // Arrêter à la première erreur
+					localErrorMessages.value.push(result.error)
+					localHasError.value = true
+					return
 				}
+				if (result.success) {
+					localSuccessMessages.value.push(result.success)
+					localHasSuccess.value = true
+				}
+			} else if (result !== true) {
+				localErrorMessages.value.push(result)
+				localHasError.value = true
+				return
 			}
+		}
 
-			// Appliquer les règles d'avertissement seulement s'il n'y a pas d'erreur
-			if (!hasAnyError) {
-				let hasWarningRule = false
-
-				// Vérifier d'abord s'il y a des règles d'avertissement
-				for (const rule of warningValidationRules.value) {
-					hasWarningRule = true
-					const result = rule(value)
-					if (result.warning) {
-						warningMessages.value.push(result.warning)
-						hasAnyWarning = true
+		// Si pas d'erreur, appliquer les règles d'avertissement
+		if (!localHasError.value) {
+			for (const rule of warningValidationRules.value) {
+				const result = rule(inputValue.value)
+				if (typeof result === 'object') {
+					if (result.success) {
+						localSuccessMessages.value.push(result.success)
+						localHasSuccess.value = true
 					}
-				}
-
-				// Ajouter le message de succès seulement si :
-				// 1. Il n'y a pas d'avertissement OU
-				// 2. Il n'y avait pas de règle d'avertissement à vérifier
-				if (!hasAnyWarning || !hasWarningRule) {
-					successMessages.value = ['Le champ est valide']
-					hasAnySuccess = true
+					else if (result.warning) {
+						localWarningMessages.value.push(result.warning)
+						localHasWarning.value = true
+					}
+				} else if (result !== true) {
+					localWarningMessages.value.push(result)
+					localHasWarning.value = true
 				}
 			}
 		}
-
-		if (inputValue.value) {
-			validateValue(inputValue.value)
-		}
-
-		// Mettre à jour les états en respectant la priorité
-		hasError.value = hasAnyError
-		hasWarning.value = !hasAnyError && hasAnyWarning
-		hasSuccess.value = !hasAnyError && !hasAnyWarning && hasAnySuccess
 	}
 
 	// Formatage de la date pendant la saisie
@@ -212,7 +230,7 @@
 				const [startDate, endDate] = formattedValue.split(' - ')
 				if (startDate.length === 10 && endDate.length === 10) {
 					validateField()
-					if (!hasError.value) {
+					if (!localHasError.value) {
 						emit('update:model-value', [startDate, endDate])
 					}
 				}
@@ -226,7 +244,7 @@
 			// Valider et émettre si la date est complète
 			if (formattedValue.length === 10) {
 				validateField()
-				if (!hasError.value) {
+				if (!localHasError.value) {
 					emit('update:model-value', formattedValue)
 				}
 			}
@@ -257,7 +275,7 @@
 	// Exposer la méthode de validation
 	const validateOnSubmit = () => {
 		validateField()
-		return !hasError.value
+		return !localHasError.value
 	}
 
 	defineExpose({
@@ -270,14 +288,17 @@
 		v-bind="{
 			modelValue: inputValue,
 			placeholder,
-			errorMessages,
-			warningMessages,
-			successMessages,
-			hasError,
+			errorMessages: localErrorMessages,
+			warningMessages: localWarningMessages,
+			successMessages: localSuccessMessages,
+			hasError: localHasError,
 			rules,
-			hasWarning,
-			hasSuccess,
+			hasWarning: localHasWarning,
+			hasSuccess: localHasSuccess,
 			required,
+			label,
+			format,
+			dateFormatReturn,
 		}"
 		@update:model-value="handleInput"
 		@blur="handleBlur"

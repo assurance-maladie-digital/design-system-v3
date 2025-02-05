@@ -49,11 +49,15 @@ export function useFieldValidation() {
 			}
 
 			const createValidationResult = (isValid: boolean, message?: string): ValidationResult => {
-				if (isValid) {
-					return { success: baseMessages.success }
+				if (options.isWarning) {
+					// Pour un warning, on retourne un succès si la validation est réussie
+					return isValid 
+						? { success: baseMessages.success }
+						: { warning: message || baseMessages.warning }
 				}
-				return options.isWarning
-					? { warning: message || baseMessages.warning }
+				// Pour une erreur, on retourne un succès si la validation est réussie
+				return isValid 
+					? { success: baseMessages.success }
 					: { error: message || baseMessages.error }
 			}
 
@@ -161,6 +165,7 @@ export function useFieldValidation() {
 					const [day, month, year] = options.date.split('/')
 					const referenceDate = new Date(`${year}-${month}-${day}`)
 
+					// Pour un warning, on veut l'afficher quand la date est avant la référence
 					const isValid = dateValue >= referenceDate
 					const message = options.isWarning
 						? options.warningMessage

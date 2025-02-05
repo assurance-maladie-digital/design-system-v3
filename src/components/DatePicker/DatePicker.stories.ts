@@ -1063,7 +1063,7 @@ export const NoCalendarWithWarning: Story = {
 		isDisabled: false,
 		noIcon: false,
 		noCalendar: true,
-		modelValue: '20/12/2023',
+		modelValue: '20/12/2005',
 		customWarningRules: [
 			{
 				type: 'notBeforeDate', options: {
@@ -1078,7 +1078,7 @@ export const NoCalendarWithWarning: Story = {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ref('20/12/2023')
+				const value = ref('20/12/2005')
 				return { args, value }
 			},
 			template: `

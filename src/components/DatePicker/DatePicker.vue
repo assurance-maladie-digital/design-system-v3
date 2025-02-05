@@ -320,6 +320,7 @@
 	const warningValidationRules = generateRules(customWarningRules.value)
 
 	const validateDates = () => {
+		// Réinitialiser les messages et les états
 		errorMessages.value = []
 		successMessages.value = []
 		warningMessages.value = []
@@ -336,15 +337,15 @@
 						errorMessages.value = [...new Set(errorMessages.value)]
 						hasError.value = true
 					}
-					else if (result?.warning) {
-						warningMessages.value.push(result.warning)
-						warningMessages.value = [...new Set(warningMessages.value)]
-						hasWarning.value = true
-					}
 					else if (result?.success) {
 						successMessages.value.push(result.success)
 						successMessages.value = [...new Set(successMessages.value)]
 						hasSuccess.value = true
+					}
+					else if (result?.warning) {
+						warningMessages.value.push(result.warning)
+						warningMessages.value = [...new Set(warningMessages.value)]
+						hasWarning.value = true
 					}
 				})
 			})
@@ -381,6 +382,12 @@
 		}
 	}
 
+	watch(() => props.modelValue, () => {
+		nextTick(() => {
+			validateDates()
+		})
+	})
+
 	const getIcon = () => {
 		if (props.noCalendar) {
 			return
@@ -413,6 +420,12 @@
 				:required="props.required"
 				:rules="props.customRules"
 				:warning-rules="props.customWarningRules"
+				:error-messages="errorMessages"
+				:warning-messages="warningMessages"
+				:success-messages="successMessages"
+				:has-error="hasError"
+				:has-warning="hasWarning"
+				:has-success="hasSuccess"
 				title="Date text input"
 				@update:model-value="updateSelectedDates"
 			/>
