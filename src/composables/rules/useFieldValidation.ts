@@ -51,12 +51,12 @@ export function useFieldValidation() {
 			const createValidationResult = (isValid: boolean, message?: string): ValidationResult => {
 				if (options.isWarning) {
 					// Pour un warning, on retourne un succès si la validation est réussie
-					return isValid 
+					return isValid
 						? { success: baseMessages.success }
 						: { warning: message || baseMessages.warning }
 				}
 				// Pour une erreur, on retourne un succès si la validation est réussie
-				return isValid 
+				return isValid
 					? { success: baseMessages.success }
 					: { error: message || baseMessages.error }
 			}

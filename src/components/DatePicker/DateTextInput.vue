@@ -152,7 +152,8 @@
 					localSuccessMessages.value.push(result.success)
 					localHasSuccess.value = true
 				}
-			} else if (result !== true) {
+			}
+			else if (result !== true) {
 				localErrorMessages.value.push(result)
 				localHasError.value = true
 				return
@@ -172,7 +173,8 @@
 						localWarningMessages.value.push(result.warning)
 						localHasWarning.value = true
 					}
-				} else if (result !== true) {
+				}
+				else if (result !== true) {
 					localWarningMessages.value.push(result)
 					localHasWarning.value = true
 				}
