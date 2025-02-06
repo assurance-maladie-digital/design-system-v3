@@ -46,6 +46,7 @@ export { default as NotificationBar } from './NotificationBar/NotificationBar.vu
 export * from './NotificationBar/types'
 export { default as PageContainer } from './PageContainer/PageContainer.vue'
 export { default as PasswordField } from './PasswordField/PasswordField.vue'
+export { default as PeriodField } from './PeriodField/PeriodField.vue'
 export { default as PhoneField } from './PhoneField/PhoneField.vue'
 export { default as RangeField } from './RangeField/RangeField.vue'
 export { default as RatingPicker } from './RatingPicker/RatingPicker.vue'
