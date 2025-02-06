@@ -1,4 +1,24 @@
-## v0.0.8-alpha (24-01-2024)
+## v0.0.9-alpha (06-02-2025)
+
+### Composants
+
+- FileUpload [`#371`](https://github.com/assurance-maladie-digital/design-system-v3/pull/371)
+- SelectBtnField [`#356`](https://github.com/assurance-maladie-digital/design-system-v3/pull/356)
+- SearchListField [`#351`](https://github.com/assurance-maladie-digital/design-system-v3/pull/351)
+- RatingPicker [`#353`](https://github.com/assurance-maladie-digital/design-system-v3/pull/353)
+- RangeField [`#355`](https://github.com/assurance-maladie-digital/design-system-v3/pull/355)
+- DatePicker v1 [`#365`](https://github.com/assurance-maladie-digital/design-system-v3/pull/365)
+- Fix PhoneField bug [`#360`](https://github.com/assurance-maladie-digital/design-system-v3/pull/360)
+- Fix CI [`#374`](https://github.com/assurance-maladie-digital/design-system-v3/pull/374)
+- Fix Tokens import [`#370`](https://github.com/assurance-maladie-digital/design-system-v3/pull/370)
+- Fix TS errors on build [`#357`](https://github.com/assurance-maladie-digital/design-system-v3/pull/357)
+
+### Documentation
+
+- Add accessibility on components pages (package 4) [`#366`](https://github.com/assurance-maladie-digital/design-system-v3/pull/366)
+- Add theme customisation page [`#363`](https://github.com/assurance-maladie-digital/design-system-v3/pull/363)
+
+## v0.0.8-alpha (24-01-2025)
 
 ### Composants
 
