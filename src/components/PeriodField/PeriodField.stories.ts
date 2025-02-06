@@ -93,7 +93,9 @@ export const Default: Story = {
 				code: `
 				<template>
 					<PeriodField v-model="selectedPeriod" />
-					<p>Période sélectionnée : {{ selectedPeriod }}</p>
+					<p>Période sélectionnée : <pre>{{ selectedPeriod }}</pre></p>
+					<p v-if="selectedPeriod.from">Date de début : {{ selectedPeriod.from.selectedDates }}</p>
+				    <p v-if="selectedPeriod.to">Date de fin : {{ selectedPeriod.to.selectedDates }}</p>
 				</template>
 				`,
 			},
@@ -133,6 +135,8 @@ export const Default: Story = {
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
 				  <p>Période sélectionnée : {{ value }}</p>
+				  <p v-if="value.from">Date de début : {{ value.from.selectedDates }}</p>
+				  <p v-if="value.to">Date de fin : {{ value.to.selectedDates }}</p>
               </div>
             `,
 		}

@@ -48,8 +48,8 @@
 	const toDate = ref<string | null>(props.modelValue?.to ?? null)
 	const errors = ref<string[]>([])
 	const successes = ref<string[]>([])
-	const tempFromDate = ref()
-	const tempToDate = ref()
+	const tempFromDate = ref<Date | undefined>()
+	const tempToDate = ref<Date | undefined>()
 
 	const { generateRules } = useFieldValidation()
 
@@ -132,17 +132,15 @@
 	}
 
 	watch([() => fromDate.value, () => toDate.value], ([newFromDate, newToDate], [oldFromDate, oldToDate]) => {
-		if (newFromDate !== oldFromDate && oldFromDate) {
+		if (newFromDate !== oldFromDate) {
 			tempFromDate.value = stringToDate(oldFromDate)
-			emit('update:modelValue', { from: tempFromDate.value, to: toDate.value })
 		}
-		if (newToDate !== oldToDate && oldToDate) {
+		if (newToDate !== oldToDate) {
 			tempToDate.value = stringToDate(oldToDate)
-			emit('update:modelValue', { from: fromDate.value, to: tempToDate.value })
 		}
+		emit('update:modelValue', { from: tempFromDate.value ? tempFromDate.value : newFromDate, to: tempToDate.value ? tempToDate.value : newToDate })
 	})
 
-	// Watch pour synchroniser les props en cas de changement externe
 	watch(() => props.modelValue, (newValue) => {
 		fromDate.value = newValue.from
 		toDate.value = newValue.to
@@ -245,7 +243,7 @@
 
 <style scoped>
 .period-field {
-	display: flex;
-	gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 </style>
