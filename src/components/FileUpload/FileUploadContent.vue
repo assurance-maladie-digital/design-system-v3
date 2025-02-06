@@ -62,7 +62,7 @@
 			class="sy-file-upload-btn bg-primary text-white elevation-2"
 		>
 			<slot name="button-text">
-				{{ locales.chooseFile }}
+				{{ locales.chooseFile(multiple) }}
 			</slot>
 		</span>
 

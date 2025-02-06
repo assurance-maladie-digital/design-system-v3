@@ -187,14 +187,13 @@ const meta = {
 					summary: `Locales`,
 					detail: `{
 	or: 'Ou',
-	chooseFile: 'Choisir un fichier',
+	chooseFile: (multiple: boolean) => multiple ? 'Choisir des fichiers' : 'Choisir un fichier',
 	infoText: (max: string, ext: string[]): string =>
 		\`Taille max. : \${max}. \${ext.length === 1 ? 'Format accepté' : 'Formats acceptés'} : \${ext.join(', ')}\`,
 	fileSizeUnits: ['o', 'Ko', 'Mo', 'Go', 'To'],
 	dropFilesHere: (multiple: boolean): string => (!multiple ? 'Déposer votre fichier ici' : 'Déposer vos fichiers ici'),
 	errorSize: (fileName: string, max: string): string => \`Le fichier \${fileName} est trop volumineux. Taille max. : \${max}\`,
 	errorExtension: (fileName: string, ext: string[]): string => \`Le fichier \${fileName} a une extension invalide. Extensions acceptées : \${ext.join(', ')}\`,
-	ariaLabel: 'Uploader un fichier',
 }`,
 				},
 			},
@@ -219,6 +218,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	args: {
 		'modelValue': [],
+		'multiple': false,
 		'onUpdate:modelValue': fn(),
 		'onError': fn(),
 	},
@@ -230,9 +230,7 @@ export const Default: Story = {
 		template: `<div>
 			<FileUpload
 				v-model="args.modelValue"
-				:multiple="true"
-				@error="args.onError"
-				@update:modelValue="args['onUpdate:modelValue']"
+				v-bind="args"
 			/>
 			<ul class="ma-2">
 				<li v-for="file in args.modelValue" :key="file.name">{{ file.name }}</li>
@@ -294,9 +292,7 @@ export const MultipleFiles: Story = {
 			<NotificationBar />
 			<FileUpload
 				v-model="args.modelValue"
-				:multiple="true"
-				@error="[sendError, args.onError]"
-				@update:modelValue="args['onUpdate:modelValue']"
+				v-bind="args"
 			/>
 			<ul class="ma-2">
 				<li v-for="file in args.modelValue" :key="file.name">{{ file.name }}</li>
@@ -353,6 +349,9 @@ export const Customization: Story = {
 		'modelValue': [],
 		'onUpdate:modelValue': fn(),
 		'onError': fn(),
+		'width': '50%',
+		'minWidth': '300px',
+		'maxWidth': '600px',
 	},
 	render: args => ({
 		components: { FileUpload, VIcon },
@@ -362,10 +361,7 @@ export const Customization: Story = {
 		template: `<div>
 			<FileUpload
 				v-model="args.modelValue"
-				width="50%"
-				min-width="300px"
-				@error="args.onError"
-				@update:modelValue="args['onUpdate:modelValue']"
+				v-bind="args"
 				class="bg-accent elevation-3 px-4 py-3 border-0 rounded-0"
 			>
 				<span class="d-flex align-center white--text">
