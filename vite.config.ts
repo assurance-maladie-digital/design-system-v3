@@ -45,6 +45,8 @@ function generateVuetifyGlobals() {
 		'VSlider',
 		'VTextarea',
 		'transitions',
+		'VProgressLinear',
+		'VLocaleProvider',
 	]
 
 	const globals: Record<string, string> = {}
