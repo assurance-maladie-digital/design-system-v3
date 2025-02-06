@@ -271,6 +271,7 @@ export const Default: Story = {
 export const MultipleFiles: Story = {
 	args: {
 		'modelValue': [],
+		'multiple': true,
 		'onUpdate:modelValue': fn(),
 		'onError': fn(),
 	},
