@@ -42,7 +42,7 @@ export const AccessibilitePanel: StoryObj = {
 								</v-expansion-panel-title>
 								<v-expansion-panel-text>
 									<v-expansion-panels>
-									<v-expansion-panel v-for="(i, index) in item.items2" :key="i"  style="margin-bottom: 10px;">
+										<v-expansion-panel v-for="(i, index) in item.items2" :key="i"  style="margin-bottom: 10px;">
 											<v-expansion-panel-title
 												style="font-weight: bold; font-size: 13px; line-height: 16px;">
 												{{ i.subtitle}}
