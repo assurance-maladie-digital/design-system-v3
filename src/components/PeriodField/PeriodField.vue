@@ -44,12 +44,8 @@
 
 	const emit = defineEmits(['update:modelValue'])
 
-	const fromDate = ref<string | null>(props.modelValue?.from ?? null)
-	const toDate = ref<string | null>(props.modelValue?.to ?? null)
-	const errors = ref<string[]>([])
-	const successes = ref<string[]>([])
-	const tempFromDate = ref<Date | undefined>()
-	const tempToDate = ref<Date | undefined>()
+	const internalFromDate = ref<string | null>(null)
+	const internalToDate = ref<string | null>(null)
 
 	const { generateRules } = useFieldValidation()
 
@@ -109,6 +105,28 @@
 		...props.customRules,
 	]
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+	function formatDateValue(value: any): string | null {
+		if (!value) return null
+		if (typeof value === 'string') return value
+		if (value.selectedDates) {
+			const date = new Date(value.selectedDates)
+			const day = date.getDate().toString().padStart(2, '0')
+			const month = (date.getMonth() + 1).toString().padStart(2, '0')
+			const year = date.getFullYear()
+			return `${day}/${month}/${year}`
+		}
+		return null
+	}
+
+	// Computed properties pour les dates formatées
+	const formattedFromDate = computed(() => formatDateValue(internalFromDate.value))
+	const formattedToDate = computed(() => formatDateValue(internalToDate.value))
+
+	// Computed properties pour les dates temporaires
+	const tempFromDate = computed(() => formattedFromDate.value ? stringToDate(formattedFromDate.value) : undefined)
+	const tempToDate = computed(() => formattedToDate.value ? stringToDate(formattedToDate.value) : undefined)
+
 	const hasFromDateErrors = computed(() =>
 		errors.value.some(error => error.includes('fromDate')),
 	)
@@ -125,26 +143,69 @@
 		successes.value.some(success => success.includes('toDate')),
 	)
 
-	function stringToDate(dateString: string | null): Date | undefined {
-		if (!dateString || typeof dateString !== 'string') return undefined
-		const [day, month, year] = dateString.split('/').map(part => parseInt(part, 10))
-		return new Date(year, month - 1, day)
-	}
+	const errors = ref<string[]>([])
+	const successes = ref<string[]>([])
 
-	watch([() => fromDate.value, () => toDate.value], ([newFromDate, newToDate], [oldFromDate, oldToDate]) => {
-		if (newFromDate !== oldFromDate) {
-			tempFromDate.value = stringToDate(oldFromDate)
+	// Computed property pour vérifier si le formulaire est valide
+	const isValid = computed(() => {
+		// Si aucune date n'est renseignée et que ce n'est pas required, c'est valide
+		if (!props.required && !formattedFromDate.value && !formattedToDate.value) {
+			return true
 		}
-		if (newToDate !== oldToDate) {
-			tempToDate.value = stringToDate(oldToDate)
+
+		// Si c'est required, les deux dates doivent être renseignées
+		if (props.required && (!formattedFromDate.value || !formattedToDate.value)) {
+			return false
 		}
-		emit('update:modelValue', { from: newFromDate, to: newToDate })
+
+		// Si une seule date est renseignée et que ce n'est pas required
+		if (!props.required && (formattedFromDate.value || formattedToDate.value)) {
+			// Les deux dates doivent être renseignées ensemble
+			if ((formattedFromDate.value && !formattedToDate.value) || (!formattedFromDate.value && formattedToDate.value)) {
+				return false
+			}
+		}
+
+		// Si les deux dates sont renseignées, vérifier qu'elles sont cohérentes
+		if (formattedFromDate.value && formattedToDate.value) {
+			const fromDate = stringToDate(formattedFromDate.value)
+			const toDate = stringToDate(formattedToDate.value)
+			if (!fromDate || !toDate || fromDate > toDate) {
+				return false
+			}
+		}
+
+		// Vérifier qu'il n'y a pas d'erreurs
+		return errors.value.length === 0
 	})
 
+	// Watch pour les changements internes
+	watch([internalFromDate, internalToDate], () => {
+		validateFields()
+		emit('update:modelValue', {
+			from: formattedFromDate.value,
+			to: formattedToDate.value,
+		})
+	})
+
+	// Watch pour les changements externes
 	watch(() => props.modelValue, (newValue) => {
-		fromDate.value = newValue.from
-		toDate.value = newValue.to
-	}, { deep: true, immediate: true })
+		if (!newValue) return
+
+		const newFromDate = formatDateValue(newValue.from)
+		const newToDate = formatDateValue(newValue.to)
+
+		if (internalFromDate.value !== newFromDate) {
+			internalFromDate.value = newFromDate
+		}
+		if (internalToDate.value !== newToDate) {
+			internalToDate.value = newToDate
+		}
+	}, { deep: true })
+
+	// Initialisation
+	internalFromDate.value = formatDateValue(props.modelValue?.from)
+	internalToDate.value = formatDateValue(props.modelValue?.to)
 
 	function validateFieldSet(value: string | null, fieldRules: {
 		type: string
@@ -153,55 +214,91 @@
 		const rules = generateRules(fieldRules)
 		const results = rules.map(rule => rule(value || ''))
 
+		// Filtrer et ajouter les erreurs
 		const fieldErrors = results
-			.filter(result => result.error)
-			.map(result => result.error!)
+			.filter(result => !result.isValid && !result.isWarning && result.message)
+			.map(result => result.message || '')
 
+		// Filtrer et ajouter les succès
 		const fieldSuccesses = results
-			.filter(result => result.success)
-			.map(result => result.success!)
+			.filter(result => result.isValid && result.successMessage)
+			.map(result => result.successMessage || '')
 
+		// Réinitialiser les erreurs et succès pour ce champ spécifique
 		errors.value = errors.value.filter(error => !error.includes(fieldIdentifier))
-		errors.value.push(...fieldErrors)
+		successes.value = successes.value.filter(success => !success.includes(fieldIdentifier))
 
-		if (props.showSuccessMessages) {
-			successes.value = successes.value.filter(success => !success.includes(fieldIdentifier))
+		// Ajouter les nouvelles erreurs et succès
+		if (fieldErrors.length > 0) {
+			errors.value.push(...fieldErrors)
+		}
+
+		if (props.showSuccessMessages && fieldSuccesses.length > 0) {
 			successes.value.push(...fieldSuccesses)
 		}
+
+		// Retourner true si pas d'erreurs
+		return fieldErrors.length === 0
 	}
 
 	function validateFields() {
+		// Réinitialiser les tableaux d'erreurs et de succès
 		errors.value = []
 		successes.value = []
 
+		let isValid = true
+
 		// Ne valider la date de début que si elle est renseignée et requise, ou si les deux dates sont renseignées
-		if ((fromDate.value && props.required) || (fromDate.value && toDate.value)) {
-			validateFieldSet(fromDate.value, fromDateRules, 'fromDate')
+		if ((formattedFromDate.value && props.required) || (formattedFromDate.value && formattedToDate.value)) {
+			const fromResult = validateFieldSet(formattedFromDate.value, fromDateRules, 'fromDate')
+			isValid = isValid && fromResult
 		}
 
 		// Ne valider la date de fin que si elle est renseignée et requise, ou si les deux dates sont renseignées
-		if ((toDate.value && props.required) || (fromDate.value && toDate.value)) {
-			validateFieldSet(toDate.value, toDateRules, 'toDate')
+		if ((formattedToDate.value && props.required) || (formattedFromDate.value && formattedToDate.value)) {
+			const toResult = validateFieldSet(formattedToDate.value, toDateRules, 'toDate')
+			isValid = isValid && toResult
 		}
+
+		return isValid
 	}
 
-	const validateOnSubmit = () => {
-		validateFields()
-		return errors.value.length === 0
+	const fromDateRef = ref()
+	const toDateRef = ref()
+
+	const validateOnSubmit = (): boolean => {
+		// Valider les deux DatePicker
+		const fromDateValid = fromDateRef.value?.validateOnSubmit() ?? true
+		const toDateValid = toDateRef.value?.validateOnSubmit() ?? true
+
+		// Valider le PeriodField lui-même
+		const fieldsValid = validateFields()
+
+		// Retourner true seulement si tout est valide
+		const result = fromDateValid && toDateValid && fieldsValid && isValid.value
+
+		return result
+	}
+
+	function stringToDate(dateString: string | null): Date | undefined {
+		if (!dateString || typeof dateString !== 'string') return undefined
+		const [day, month, year] = dateString.split('/').map(part => parseInt(part, 10))
+		return new Date(year, month - 1, day)
 	}
 
 	defineExpose({
 		validateOnSubmit,
 		errors,
 		successes,
+		isValid,
 	})
 </script>
 
 <template>
 	<div class="period-field">
 		<DatePicker
-			ref="fromDate"
-			v-model="fromDate"
+			ref="fromDateRef"
+			v-model="internalFromDate"
 			:custom-rules="fromDateRules"
 			:custom-warning-rules="props.customWarningRules"
 			:date-format-return="props.dateFormatReturn"
@@ -213,15 +310,15 @@
 			:is-outlined="props.isOutlined"
 			:no-calendar="props.noCalendar"
 			:no-icon="props.noIcon"
-			:placeholder="placeholderFrom"
+			:placeholder="props.placeholderFrom"
 			:required="props.required"
 			:show-week-number="props.showWeekNumber"
 			:success-message="hasFromDateSuccesses"
 			class="mr-2"
 		/>
 		<DatePicker
-			ref="toDate"
-			v-model="toDate"
+			ref="toDateRef"
+			v-model="internalToDate"
 			:custom-rules="toDateRules"
 			:custom-warning-rules="props.customWarningRules"
 			:date-format-return="props.dateFormatReturn"
@@ -233,7 +330,7 @@
 			:is-outlined="props.isOutlined"
 			:no-calendar="props.noCalendar"
 			:no-icon="props.noIcon"
-			:placeholder="placeholderTo"
+			:placeholder="props.placeholderTo"
 			:required="props.required"
 			:show-week-number="props.showWeekNumber"
 			:success-message="hasToDateSuccesses"
