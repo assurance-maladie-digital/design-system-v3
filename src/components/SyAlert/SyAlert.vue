@@ -215,8 +215,8 @@
 .v-alert {
 	@include redesign(
 		'warning',
-          (
-              'background': tokens.$colors-background-warning,
+		(
+			'background': tokens.$colors-background-warning,
               'accent': tokens.$colors-border-warning,
               'border': tokens.$colors-border-warning,
               'icon':tokens.$colors-icon-warning,
@@ -225,8 +225,8 @@
   );
 	@include redesign(
 		'success',
-          (
-              'background': tokens.$colors-background-success,
+		(
+			'background': tokens.$colors-background-success,
               'accent': tokens.$colors-border-success,
               'border': tokens.$colors-border-success,
               'icon':tokens.$colors-icon-success,
@@ -235,8 +235,8 @@
   );
 	@include redesign(
 		'error',
-          (
-              'background': tokens.$colors-background-error,
+		(
+			'background': tokens.$colors-background-error,
               'accent': tokens.$colors-border-error,
               'border': tokens.$colors-border-error,
               'icon':tokens.$colors-icon-error,
@@ -245,8 +245,8 @@
   );
 	@include redesign(
 		'info',
-          (
-              'background': tokens.$colors-background-info,
+		(
+			'background': tokens.$colors-background-info,
               'accent': tokens.$colors-border-info,
               'border': tokens.$colors-border-info,
               'icon':tokens.$colors-icon-info,
