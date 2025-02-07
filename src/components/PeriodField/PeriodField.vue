@@ -138,7 +138,7 @@
 		if (newToDate !== oldToDate) {
 			tempToDate.value = stringToDate(oldToDate)
 		}
-		emit('update:modelValue', { from: tempFromDate.value ? tempFromDate.value : newFromDate, to: tempToDate.value ? tempToDate.value : newToDate })
+		emit('update:modelValue', { from: newFromDate, to: newToDate })
 	})
 
 	watch(() => props.modelValue, (newValue) => {
