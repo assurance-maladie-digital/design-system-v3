@@ -217,7 +217,7 @@
 		'warning',
 		(
 			'background': tokens.$colors-background-warning,
-              'accent': tokens.$colors-border-warning,
+			'accent': tokens.$colors-border-warning,
               'border': tokens.$colors-border-warning,
               'icon':tokens.$colors-icon-warning,
               'icon-bg': tokens.$colors-background-warning-subdued,
@@ -227,7 +227,7 @@
 		'success',
 		(
 			'background': tokens.$colors-background-success,
-              'accent': tokens.$colors-border-success,
+			'accent': tokens.$colors-border-success,
               'border': tokens.$colors-border-success,
               'icon':tokens.$colors-icon-success,
               'icon-bg': tokens.$colors-background-success-subdued,
@@ -237,7 +237,7 @@
 		'error',
 		(
 			'background': tokens.$colors-background-error,
-              'accent': tokens.$colors-border-error,
+			'accent': tokens.$colors-border-error,
               'border': tokens.$colors-border-error,
               'icon':tokens.$colors-icon-error,
               'icon-bg': tokens.$colors-background-error-subdued,
@@ -247,7 +247,7 @@
 		'info',
 		(
 			'background': tokens.$colors-background-info,
-              'accent': tokens.$colors-border-info,
+			'accent': tokens.$colors-border-info,
               'border': tokens.$colors-border-info,
               'icon':tokens.$colors-icon-info,
               'icon-bg': tokens.$colors-background-info-subdued,
