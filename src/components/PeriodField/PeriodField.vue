@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import { ref, watch, computed } from 'vue'
 	import DatePicker from '@/components/DatePicker/DatePicker.vue'
-	import { type RuleOptions, useFieldValidation } from '@/composables'
+	import { type RuleOptions } from '@/composables'
 
 	type DateInput = string | null
 	type PeriodValue = { from: DateInput, to: DateInput }
@@ -125,21 +125,16 @@
 	const tempFromDate = computed(() => formattedFromDate.value ? stringToDate(formattedFromDate.value) : undefined)
 	const tempToDate = computed(() => formattedToDate.value ? stringToDate(formattedToDate.value) : undefined)
 
-	const hasFromDateErrors = computed(() =>
-		errors.value.some(error => error.includes('fromDate')),
-	)
+	// Sets pour optimiser la recherche des erreurs et succès
+	const fromDateErrorsSet = computed(() => new Set(errors.value.filter(error => error.includes('fromDate'))))
+	const toDateErrorsSet = computed(() => new Set(errors.value.filter(error => error.includes('toDate'))))
+	const fromDateSuccessesSet = computed(() => new Set(successes.value.filter(success => success.includes('fromDate'))))
+	const toDateSuccessesSet = computed(() => new Set(successes.value.filter(success => success.includes('toDate'))))
 
-	const hasToDateErrors = computed(() =>
-		errors.value.some(error => error.includes('toDate')),
-	)
-
-	const hasFromDateSuccesses = computed(() =>
-		successes.value.some(success => success.includes('fromDate')),
-	)
-
-	const hasToDateSuccesses = computed(() =>
-		successes.value.some(success => success.includes('toDate')),
-	)
+	const hasFromDateErrors = computed(() => fromDateErrorsSet.value.size > 0)
+	const hasToDateErrors = computed(() => toDateErrorsSet.value.size > 0)
+	const hasFromDateSuccesses = computed(() => fromDateSuccessesSet.value.size > 0)
+	const hasToDateSuccesses = computed(() => toDateSuccessesSet.value.size > 0)
 
 	const errors = ref<string[]>([])
 	const successes = ref<string[]>([])
@@ -185,7 +180,7 @@
 		})
 	})
 
-	// Watch pour les changements externes
+	// Watch pour les changements externes avec immediate pour synchroniser l'état initial
 	watch(() => props.modelValue, (newValue) => {
 		if (!newValue) return
 
@@ -198,7 +193,7 @@
 		if (internalToDate.value !== newToDate) {
 			internalToDate.value = newToDate
 		}
-	}, { deep: true })
+	}, { deep: true, immediate: true })
 
 	// Initialisation
 	internalFromDate.value = formatDateValue(props.modelValue?.from)
