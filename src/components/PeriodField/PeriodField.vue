@@ -47,8 +47,6 @@
 	const internalFromDate = ref<string | null>(null)
 	const internalToDate = ref<string | null>(null)
 
-	const { generateRules } = useFieldValidation()
-
 	// Règles de validation pour la date de début
 	const fromDateRules = [
 		{
@@ -181,7 +179,6 @@
 
 	// Watch pour les changements internes
 	watch([internalFromDate, internalToDate], () => {
-		validateFields()
 		emit('update:modelValue', {
 			from: formattedFromDate.value,
 			to: formattedToDate.value,
@@ -207,62 +204,6 @@
 	internalFromDate.value = formatDateValue(props.modelValue?.from)
 	internalToDate.value = formatDateValue(props.modelValue?.to)
 
-	function validateFieldSet(value: string | null, fieldRules: {
-		type: string
-		options: RuleOptions
-	}[], fieldIdentifier: string) {
-		const rules = generateRules(fieldRules)
-		const results = rules.map(rule => rule(value || ''))
-
-		// Filtrer et ajouter les erreurs
-		const fieldErrors = results
-			.filter(result => !result.isValid && !result.isWarning && result.message)
-			.map(result => result.message || '')
-
-		// Filtrer et ajouter les succès
-		const fieldSuccesses = results
-			.filter(result => result.isValid && result.successMessage)
-			.map(result => result.successMessage || '')
-
-		// Réinitialiser les erreurs et succès pour ce champ spécifique
-		errors.value = errors.value.filter(error => !error.includes(fieldIdentifier))
-		successes.value = successes.value.filter(success => !success.includes(fieldIdentifier))
-
-		// Ajouter les nouvelles erreurs et succès
-		if (fieldErrors.length > 0) {
-			errors.value.push(...fieldErrors)
-		}
-
-		if (props.showSuccessMessages && fieldSuccesses.length > 0) {
-			successes.value.push(...fieldSuccesses)
-		}
-
-		// Retourner true si pas d'erreurs
-		return fieldErrors.length === 0
-	}
-
-	function validateFields() {
-		// Réinitialiser les tableaux d'erreurs et de succès
-		errors.value = []
-		successes.value = []
-
-		let isValid = true
-
-		// Ne valider la date de début que si elle est renseignée et requise, ou si les deux dates sont renseignées
-		if ((formattedFromDate.value && props.required) || (formattedFromDate.value && formattedToDate.value)) {
-			const fromResult = validateFieldSet(formattedFromDate.value, fromDateRules, 'fromDate')
-			isValid = isValid && fromResult
-		}
-
-		// Ne valider la date de fin que si elle est renseignée et requise, ou si les deux dates sont renseignées
-		if ((formattedToDate.value && props.required) || (formattedFromDate.value && formattedToDate.value)) {
-			const toResult = validateFieldSet(formattedToDate.value, toDateRules, 'toDate')
-			isValid = isValid && toResult
-		}
-
-		return isValid
-	}
-
 	const fromDateRef = ref()
 	const toDateRef = ref()
 
@@ -271,11 +212,8 @@
 		const fromDateValid = fromDateRef.value?.validateOnSubmit() ?? true
 		const toDateValid = toDateRef.value?.validateOnSubmit() ?? true
 
-		// Valider le PeriodField lui-même
-		const fieldsValid = validateFields()
-
 		// Retourner true seulement si tout est valide
-		const result = fromDateValid && toDateValid && fieldsValid && isValid.value
+		const result = fromDateValid && toDateValid && isValid.value
 
 		return result
 	}
