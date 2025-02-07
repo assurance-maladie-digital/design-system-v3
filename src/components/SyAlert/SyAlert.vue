@@ -32,9 +32,13 @@
 		}[props.type]
 	})
 
+	const emit = defineEmits<{
+		'click:close': void
+	}>()
+
 	function dismissAlert() {
 		show.value = false
-		this.$emit('click:close')
+		emit('click:close')
 	}
 
 	defineExpose({
