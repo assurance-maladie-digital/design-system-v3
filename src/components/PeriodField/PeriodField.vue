@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed } from 'vue'
+	import { ref, watch } from 'vue'
 	import DatePicker from '@/components/DatePicker/DatePicker.vue'
 	import type { RuleOptions } from '@/composables'
 
@@ -45,32 +45,25 @@
 
 	const fromDate = ref<string | null>(props.modelValue.from)
 	const toDate = ref<string | null>(props.modelValue.to)
-	const errorMessage = ref<string | null>(null)
-
-	const combinedRules = computed(() => {
-		const rules = [...props.customRules]
-		if (errorMessage.value) {
-			rules.push({ type: 'error', options: { message: errorMessage.value } })
-		}
-		return rules
-	})
+	const errorMessageFrom = ref<string[]>([])
+	const errorMessageTo = ref<string[]>([])
 
 	watch(fromDate, (newFrom) => {
-		if (newFrom && toDate.value && newFrom < toDate.value) {
-			errorMessage.value = 'La date de début ne peut pas être supérieure à la date de fin'
+		if (newFrom && toDate.value && newFrom > toDate.value) {
+			errorMessageFrom.value.push('La date de début ne peut pas être supérieure à la date de fin')
 		}
 		else {
-			errorMessage.value = null
+			errorMessageFrom.value = []
 		}
 		emit('update:modelValue', { from: newFrom, to: toDate.value })
 	})
 
 	watch(toDate, (newTo) => {
-		if (newTo && fromDate.value && fromDate.value < newTo) {
-			errorMessage.value = 'La date de fin ne peut pas être inférieure à la date de début'
+		if (newTo && fromDate.value && fromDate.value > newTo) {
+			errorMessageTo.value.push('La date de fin ne peut pas être inférieure à la date de début')
 		}
 		else {
-			errorMessage.value = null
+			errorMessageTo.value = []
 		}
 		emit('update:modelValue', { from: fromDate.value, to: newTo })
 	})
@@ -97,10 +90,18 @@
 			:no-icon="props.noIcon"
 			:no-calendar="props.noCalendar"
 			:is-outlined="props.isOutlined"
-			:custom-rules="combinedRules"
+			:custom-rules="props.customRules"
 			:custom-warning-rules="props.customWarningRules"
+			:custom-error-messages="errorMessageFrom"
+			:class="errorMessageFrom ? 'error' : ''"
 			class="mr-2"
 		/>
+		<p
+			v-if="errorMessageFrom.length"
+			class="text-error"
+		>
+			{{ errorMessageFrom }}
+		</p>
 		<DatePicker
 			v-model="toDate"
 			:format="props.format"
@@ -114,9 +115,17 @@
 			:no-icon="props.noIcon"
 			:no-calendar="props.noCalendar"
 			:is-outlined="props.isOutlined"
-			:custom-rules="combinedRules"
+			:custom-rules="props.customRules"
 			:custom-warning-rules="props.customWarningRules"
+			:custom-error-messages="errorMessageTo"
+			:class="errorMessageTo ? 'error' : ''"
 		/>
+		<p
+			v-if="errorMessageTo.length"
+			class="text-error"
+		>
+			{{ errorMessageTo }}
+		</p>
 	</div>
 </template>
 

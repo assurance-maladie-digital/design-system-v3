@@ -26,6 +26,7 @@
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
+		customErrorMessages?: string[]
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -43,6 +44,7 @@
 		noIcon: false,
 		noCalendar: false,
 		isOutlined: true,
+		customErrorMessages: () => [],
 	})
 
 	const emit = defineEmits<{
@@ -123,7 +125,7 @@
 	const getMessageClasses = () => ({
 		'dp-width': true,
 		'v-messages__message--success': successMessages.value.length > 0,
-		'v-messages__message--error': errorMessages.value.length > 0,
+		'v-messages__message--error': errorMessages.value.length > 0 || (props.customErrorMessages && props.customErrorMessages.length > 0),
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
 	})
 
@@ -375,7 +377,7 @@
 			return
 		}
 		switch (true) {
-		case errorMessages.value.length > 0:
+		case errorMessages.value.length > 0 || (props.customErrorMessages && props.customErrorMessages.length > 0):
 			return 'error'
 		case warningMessages.value.length > 0:
 			return 'warning'
