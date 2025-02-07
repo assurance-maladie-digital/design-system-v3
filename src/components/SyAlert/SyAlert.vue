@@ -220,8 +220,8 @@
 			'accent': tokens.$colors-border-warning,
 			'border': tokens.$colors-border-warning,
 			'icon':tokens.$colors-icon-warning,
-              'icon-bg': tokens.$colors-background-warning-subdued,
-          )
+			'icon-bg': tokens.$colors-background-warning-subdued,
+		)
   );
 	@include redesign(
 		'success',
@@ -230,8 +230,8 @@
 			'accent': tokens.$colors-border-success,
 			'border': tokens.$colors-border-success,
 			'icon':tokens.$colors-icon-success,
-              'icon-bg': tokens.$colors-background-success-subdued,
-          )
+			'icon-bg': tokens.$colors-background-success-subdued,
+		)
   );
 	@include redesign(
 		'error',
@@ -240,8 +240,8 @@
 			'accent': tokens.$colors-border-error,
 			'border': tokens.$colors-border-error,
 			'icon':tokens.$colors-icon-error,
-              'icon-bg': tokens.$colors-background-error-subdued,
-          )
+			'icon-bg': tokens.$colors-background-error-subdued,
+		)
   );
 	@include redesign(
 		'info',
@@ -250,8 +250,8 @@
 			'accent': tokens.$colors-border-info,
 			'border': tokens.$colors-border-info,
 			'icon':tokens.$colors-icon-info,
-              'icon-bg': tokens.$colors-background-info-subdued,
-          )
+			'icon-bg': tokens.$colors-background-info-subdued,
+		)
   );
 }
 </style>
