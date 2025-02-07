@@ -34,6 +34,7 @@
 
 	function dismissAlert() {
 		show.value = false
+		this.$emit('click:close')
 	}
 
 	defineExpose({
