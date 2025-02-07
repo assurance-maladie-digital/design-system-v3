@@ -29,7 +29,6 @@
 	<div class="mt-4">
 		<PeriodField
 			ref="ref1"
-			required
 			v-model="selectedPeriod"
 		/>
 		<p>Selected Period: {{ selectedPeriod }}</p>

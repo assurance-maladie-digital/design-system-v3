@@ -52,7 +52,7 @@
 		{
 			type: 'custom',
 			options: {
-				validate: (value: string | null) => {
+				validate: (value: Date | null) => {
 					if (value === null) return true
 					if (tempToDate.value === undefined) return true
 					return value <= tempToDate.value
@@ -80,7 +80,7 @@
 		{
 			type: 'custom',
 			options: {
-				validate: (value: string | null) => {
+				validate: (value: Date | null) => {
 					if (value === null) return true
 					if (tempFromDate.value === undefined || value === null) return true
 					return value >= tempFromDate.value

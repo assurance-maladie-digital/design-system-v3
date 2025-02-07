@@ -105,6 +105,11 @@
 			return []
 		}
 
+		// Si modelValue est un objet, on le convertit en chaîne
+		if (typeof modelValue === 'object') {
+			return null
+		}
+
 		const date = parseDate(modelValue)
 		return date === null ? null : date
 	}
