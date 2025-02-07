@@ -32,7 +32,10 @@
 		}[props.type]
 	})
 
+	const emit = defineEmits(['click:close'])
+
 	function dismissAlert() {
+		emit('click:close')
 		show.value = false
 	}
 
@@ -45,12 +48,12 @@
 <template>
 	<VAlert
 		v-model="show"
-		:type
-		:closable
-		:variant
-		:class="`alert alert--${type}`"
-		:color="type"
-		:border="variant === 'tonal' ? 'start' : false"
+		:type="props.type"
+		:closable="props.closable"
+		:variant="props.variant"
+		:class="`alert alert--${props.type}`"
+		:color="props.type"
+		:border="props.variant === 'tonal' ? 'start' : false"
 	>
 		<template #prepend>
 			<VIcon
@@ -68,11 +71,11 @@
 		</template>
 
 		<template
-			v-if="closable"
+			v-if="props.closable"
 			#close
 		>
 			<VBtn
-				:color="variant === 'outlined' ? undefined : 'primary'"
+				:color="props.variant === 'outlined' ? undefined : 'primary'"
 				:ripple="false"
 				variant="text"
 				width="auto"
@@ -251,5 +254,4 @@
 		)
 	);
 }
-
 </style>
