@@ -264,6 +264,50 @@ describe('PeriodField.vue', () => {
 		})
 	})
 
+	describe('Utils', () => {
+		it('formats date from selectedDates correctly', async () => {
+			const wrapper = mount(PeriodField, {
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			const input = {
+				selectedDates: new Date('2025-02-07T15:42:00.000Z'),
+			}
+
+			// @ts-expect-error: accès à une méthode privée pour le test
+			const result = wrapper.vm.formatDateValue(input)
+			expect(result).toBe('07/02/2025')
+		})
+
+		it('returns null for invalid inputs', async () => {
+			const wrapper = mount(PeriodField, {
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// @ts-expect-error: accès à une méthode privée pour le test
+			expect(wrapper.vm.formatDateValue(null)).toBe(null)
+			// @ts-expect-error: accès à une méthode privée pour le test
+			expect(wrapper.vm.formatDateValue(undefined)).toBe(null)
+			// @ts-expect-error: accès à une méthode privée pour le test
+			expect(wrapper.vm.formatDateValue({ selectedDates: null })).toBe(null)
+		})
+
+		it('returns string value directly', async () => {
+			const wrapper = mount(PeriodField, {
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// @ts-expect-error: accès à une méthode privée pour le test
+			expect(wrapper.vm.formatDateValue('07/02/2025')).toBe('07/02/2025')
+		})
+	})
+
 	describe('Custom Rules', () => {
 		it('applies custom validation rules', async () => {
 			const wrapper = mount(PeriodField, {
