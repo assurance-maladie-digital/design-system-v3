@@ -222,7 +222,7 @@
 			'icon':tokens.$colors-icon-warning,
 			'icon-bg': tokens.$colors-background-warning-subdued,
 		)
-  );
+	);
 	@include redesign(
 		'success',
 		(
@@ -232,7 +232,7 @@
 			'icon':tokens.$colors-icon-success,
 			'icon-bg': tokens.$colors-background-success-subdued,
 		)
-  );
+	);
 	@include redesign(
 		'error',
 		(
@@ -242,7 +242,7 @@
 			'icon':tokens.$colors-icon-error,
 			'icon-bg': tokens.$colors-background-error-subdued,
 		)
-  );
+	);
 	@include redesign(
 		'info',
 		(
@@ -252,6 +252,6 @@
 			'icon':tokens.$colors-icon-info,
 			'icon-bg': tokens.$colors-background-info-subdued,
 		)
-  );
+	);
 }
 </style>
