@@ -239,7 +239,7 @@
 
 		const target = event.target as HTMLElement
 		const container = target.closest('.date-picker-container')
-		
+
 		// Si on clique dans le conteneur du DatePicker, on ne fait rien
 		if (container) return
 
