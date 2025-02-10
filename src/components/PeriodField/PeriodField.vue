@@ -253,7 +253,7 @@
 
 	function stringToDate(dateString: string | null): Date | undefined {
 		if (!dateString) return undefined
-		
+
 		// Créer un mapping des positions des éléments de date selon le format
 		const format = props.format || 'DD/MM/YYYY'
 		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
