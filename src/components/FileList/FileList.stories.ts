@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UploadList from './UploadList.vue'
+import FileList from './FileList.vue'
 import { fn } from '@storybook/test'
 import { VIcon } from 'vuetify/components'
 import { mdiCardAccountDetailsOutline, mdiCertificateOutline } from '@mdi/js'
 
 const meta = {
-	title: 'Composants/Formulaires/UploadList',
-	component: UploadList,
+	title: 'Composants/Formulaires/FileList',
+	component: FileList,
 	argTypes: {
 		'uploadList': {
 			description: 'Liste des fichiers à uploader',
@@ -163,7 +163,7 @@ const meta = {
 			exclude: ['upload', 'preview', 'delete', '`file-icon-${item.id}`'],
 		},
 	},
-} satisfies Meta<typeof UploadList>
+} satisfies Meta<typeof FileList>
 
 export default meta
 
@@ -198,7 +198,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<UploadList
+	<FileList
 		:uploadList="uploadList"
 	/>
 </template>
@@ -208,7 +208,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { UploadList } from '@cnamts/synapse'
+import { FileList } from '@cnamts/synapse'
 import { ref } from 'vue'
 
 const uploadList = ref([
@@ -267,7 +267,7 @@ export const States: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<UploadList
+	<FileList
 		:uploadList="uploadList"
 	/>
 </template>
@@ -277,7 +277,7 @@ export const States: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { UploadList } from '@cnamts/synapse'
+import { FileList } from '@cnamts/synapse'
 import { ref } from 'vue'
 
 const uploadList = ref([
@@ -337,7 +337,7 @@ export const OptionalDocument: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<UploadList
+	<FileList
 		:uploadList="uploadList"
 	/>
 </template>
@@ -347,7 +347,7 @@ export const OptionalDocument: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { UploadList } from '@cnamts/synapse'
+import { FileList } from '@cnamts/synapse'
 import { ref } from 'vue'
 
 const uploadList = ref([
@@ -413,7 +413,7 @@ export const Actions: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<UploadList
+	<FileList
 		:uploadList="uploadList"
 	/>
 </template>
@@ -423,7 +423,7 @@ export const Actions: Story = {
 				name: 'Script',
 				code: `	
 <script setup lang="ts">
-import { UploadList } from '@cnamts/synapse'
+import { FileList } from '@cnamts/synapse'
 import { ref } from 'vue'
 
 const uploadList = ref([
@@ -477,12 +477,12 @@ export const Customization: Story = {
 		onPreview: fn(),
 	},
 	render: args => ({
-		components: { UploadList, VIcon },
+		components: { FileList, VIcon },
 		setup() {
 			return { args, mdiCertificateOutline, mdiCardAccountDetailsOutline }
 		},
 		template: `
-			<UploadList
+			<FileList
 				:uploadList="args.uploadList"
 				:maxWidth="600"
 				:minWidth="400"
@@ -501,7 +501,7 @@ export const Customization: Story = {
 						color="primary"
 					>{{ mdiCardAccountDetailsOutline }}</VIcon>
 				</template>
-			</UploadList>
+			</FileList>
 		`,
 	}),
 	parameters: {
@@ -510,7 +510,7 @@ export const Customization: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<UploadList
+	<FileList
 		:uploadList="uploadList"
 		:maxWidth="600"
 		:minWidth="400"
@@ -529,7 +529,7 @@ export const Customization: Story = {
 				color="primary"
 			>{{ mdiCardAccountDetailsOutline }}</VIcon>
 		</template>
-	</UploadList>
+	</FileList>
 </template>
 				`,
 			},
@@ -537,7 +537,7 @@ export const Customization: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { UploadList } from '@cnamts/synapse'
+import { FileList } from '@cnamts/synapse'
 import { ref } from 'vue'
 import { mdiCertificateOutline, mdiCardAccountDetailsOutline } from '@mdi/js'
 

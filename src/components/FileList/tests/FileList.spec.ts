@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import UploadList from '../UploadList.vue'
+import FileList from '../FileList.vue'
 import { vuetify } from '@tests/unit/setup'
 import { locales } from '../UploadItem/locales'
 
-describe('UploadList', () => {
+describe('FileList', () => {
 	it('renders many file items', () => {
-		const wrapper = mount(UploadList, {
+		const wrapper = mount(FileList, {
 			props: {
 				uploadList: [
 					{
@@ -33,7 +33,7 @@ describe('UploadList', () => {
 	})
 
 	it('shows the right action for each state and item preference', async () => {
-		const wrapper = mount(UploadList, {
+		const wrapper = mount(FileList, {
 			props: {
 				uploadList: [
 					{
@@ -121,7 +121,7 @@ describe('UploadList', () => {
 			showPreviewBtn: true,
 		}
 
-		const wrapper = mount(UploadList, {
+		const wrapper = mount(FileList, {
 			props: {
 				uploadList: [fileItem1, fileItem2],
 			},
@@ -146,7 +146,7 @@ describe('UploadList', () => {
 	})
 
 	it('shows when a file is optional', () => {
-		const wrapper = mount(UploadList, {
+		const wrapper = mount(FileList, {
 			props: {
 				uploadList: [
 					{

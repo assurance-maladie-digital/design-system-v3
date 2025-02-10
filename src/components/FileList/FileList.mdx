@@ -1,17 +1,17 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
-import * as UploadListStories from './UploadList.stories';
+import * as FileListStories from './FileList.stories';
 
-<Meta of={UploadListStories}/>
+<Meta of={FileListStories}/>
 
-# UploadList
+# FileList
 
-Le composant `UploadList` est utilisé pour afficher une liste de document à téléversé.
+Le composant `FileList` est utilisé pour afficher une liste de document à téléversé.
 
-<Canvas of={UploadListStories.Default} className="bg-backgroundMain"/>
+<Canvas of={FileListStories.Default} className="bg-backgroundMain"/>
 
 # API
 
-<Controls of={UploadListStories.Default}/>
+<Controls of={FileListStories.Default}/>
 
 # Exemple d'utilisation
 
@@ -19,17 +19,17 @@ Le composant `UploadList` est utilisé pour afficher une liste de document à t�
 ## Les différents états d'un fichier
 
 Un fichier peut être dans différents états 'initial', 'success', 'error' et 'loading'.
-quant il est dans l'état 'loading' une barre de progression est affiché.
+quand il est dans l'état 'loading' une barre de progression est affiché.
 
 Renseigner la propriété `progress` permet de donner a l'utilisateur une indication de progression du téléversement.
 
-<Canvas of={UploadListStories.States} className="bg-backgroundMain"/>
+<Canvas of={FileListStories.States} className="bg-backgroundMain"/>
 
 ## Fichiers optionnels
 
 Il est possible de rendre un fichier optionnel en ajoutant la propriété `optional` à l'objet fichier.
 
-<Canvas of={UploadListStories.OptionalDocument} className="bg-backgroundMain"/>
+<Canvas of={FileListStories.OptionalDocument} className="bg-backgroundMain"/>
 
 ## Actions
 
@@ -42,7 +42,7 @@ Pour afficher ou masquer une action, il est possible d'utiliser les propriétés
 
 Quand une action est cliqué, un événement `upload`, `delete` ou `preview` est émis avec l'objet de l'item en paramètre.
 
-<Canvas of={UploadListStories.Actions} className="bg-backgroundMain"/>
+<Canvas of={FileListStories.Actions} className="bg-backgroundMain"/>
 
 ## Personnalisation des icons de fichier
 
@@ -50,13 +50,13 @@ Il est possible de personnaliser les icons de fichier en utilisant le slot dynam
 
 <Canvas
 	className="bg-backgroundMain"
-	of={UploadListStories.Customization}
+	of={FileListStories.Customization}
 		source={{
 		language: 'html',
 		format: 'dedent',
 		code: `
 		<script lang="ts" setup>
-			import { UploadList } from '@cnamts/synapse'
+			import { FileList } from '@cnamts/synapse'
 			import { mdiCardAccountDetailsOutline, mdiCertificateOutline } from '@mdi/js'
 			import { ref } from 'vue'
 
@@ -79,7 +79,7 @@ Il est possible de personnaliser les icons de fichier en utilisant le slot dynam
 			])
 		</script>
 
-		<UploadList
+		<FileList
 			:uploadList="args.uploadList"
 			:maxWidth="600"
 			:minWidth="400"
@@ -98,7 +98,7 @@ Il est possible de personnaliser les icons de fichier en utilisant le slot dynam
 					color="primary"
 				>{{ mdiCardAccountDetailsOutline }}</VIcon>
 			</template>
-		</UploadList>
+		</FileList>
 		`
 	}}
 />

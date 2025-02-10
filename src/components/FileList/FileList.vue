@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import UploadItem from '@/components/UploadList/UploadItem/UploadItem.vue'
+	import UploadItem from '@/components/FileList/UploadItem/UploadItem.vue'
 	import { useWidthable, type Widthable } from '@/composables/widthable'
 	import { locales as defaultLocales } from './UploadItem/locales'
 
