@@ -252,9 +252,32 @@
 	}
 
 	function stringToDate(dateString: string | null): Date | undefined {
-		if (!dateString || typeof dateString !== 'string') return undefined
-		const [day, month, year] = dateString.split('/').map(part => parseInt(part, 10))
-		return new Date(year, month - 1, day)
+		if (!dateString) return undefined
+		
+		// Créer un mapping des positions des éléments de date selon le format
+		const format = props.format || 'DD/MM/YYYY'
+		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
+		const parts = format.split(separator)
+		const dateParts = dateString.split(separator)
+
+		if (parts.length !== dateParts.length) return undefined
+
+		let day = '', month = '', year = ''
+
+		// Extraire les valeurs selon leur position dans le format
+		parts.forEach((part, index) => {
+			const value = dateParts[index]
+			if (part.includes('DD')) day = value
+			else if (part.includes('MM')) month = value
+			else if (part.includes('YYYY')) year = value
+			else if (part.includes('YY')) year = '20' + value // Assumons que nous sommes au 21ème siècle
+		})
+
+		// Vérifier que nous avons toutes les parties nécessaires
+		if (!day || !month || !year) return undefined
+
+		const date = new Date(`${year}-${month}-${day}`)
+		return isNaN(date.getTime()) ? undefined : date
 	}
 
 	defineExpose({
