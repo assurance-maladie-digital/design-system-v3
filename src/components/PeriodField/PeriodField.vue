@@ -240,6 +240,19 @@
 	const fromDateRef = ref()
 	const toDateRef = ref()
 
+	// Gestionnaires d'événements closed
+	const handleFromDateClosed = () => {
+		if (fromDateRef.value) {
+			fromDateRef.value.validateOnSubmit()
+		}
+	}
+
+	const handleToDateClosed = () => {
+		if (toDateRef.value) {
+			toDateRef.value.validateOnSubmit()
+		}
+	}
+
 	const validateOnSubmit = (): boolean => {
 		// Valider les deux DatePicker
 		const fromDateValid = fromDateRef.value?.validateOnSubmit() ?? true
@@ -309,6 +322,7 @@
 			:show-week-number="props.showWeekNumber"
 			:success-message="hasFromDateSuccesses"
 			class="mr-2"
+			@closed="handleFromDateClosed"
 		/>
 		<DatePicker
 			ref="toDateRef"
@@ -328,6 +342,7 @@
 			:required="props.required"
 			:show-week-number="props.showWeekNumber"
 			:success-message="hasToDateSuccesses"
+			@closed="handleToDateClosed"
 		/>
 	</div>
 </template>

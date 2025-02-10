@@ -47,6 +47,7 @@
 
 	const emit = defineEmits<{
 		(e: 'update:model-value', value: DateValue): void
+		(e: 'closed'): void
 	}>()
 
 	// Fonction pour parser les dates selon le format spécifié
@@ -223,19 +224,27 @@
 		if (props.displayRange) {
 			if (Array.isArray(newValue) && newValue.length >= 2) {
 				isDatePickerVisible.value = false
+				emit('closed')
 			}
 		}
 		else {
 			isDatePickerVisible.value = false
+			emit('closed')
 		}
 	})
 
 	// Gestionnaire de clic en dehors
 	const handleClickOutside = (event: MouseEvent) => {
+		if (!isDatePickerVisible.value) return
+
 		const target = event.target as HTMLElement
-		if (!target.closest('.date-picker-container')) {
-			isDatePickerVisible.value = false
-		}
+		const container = target.closest('.date-picker-container')
+		
+		// Si on clique dans le conteneur du DatePicker, on ne fait rien
+		if (container) return
+
+		isDatePickerVisible.value = false
+		emit('closed')
 	}
 
 	const todayInString = computed(() => {
