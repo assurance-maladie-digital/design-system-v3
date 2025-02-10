@@ -88,7 +88,7 @@ describe('FilePreview', async () => {
 			file: testFileImg,
 			options: {
 				image: {
-					alt: 'Photo de paysage montagneux du site Picsum.',
+					alt: 'Photo de paysage montagneux.',
 				},
 			},
 		})
