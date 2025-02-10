@@ -60,7 +60,9 @@ export function useFieldValidation() {
 			switch (type) {
 				case 'required':
 					return createValidationResult(
-						typeof value === 'string' && value.trim() !== '',
+						(typeof value === 'string' && value.trim() !== '') || 
+						(value instanceof Date) ||
+						(typeof value === 'object' && value !== null),
 						options.message || `Vous devez renseigner ${identifier}.`,
 					)
 
