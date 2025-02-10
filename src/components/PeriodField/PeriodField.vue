@@ -66,6 +66,17 @@
 			? [{
 				type: 'required',
 				options: {
+					validate: (value: Date | null) => {
+						// Si les deux champs sont vides, on affiche l'erreur sur les deux
+						if (!value && !tempToDate.value) {
+							return false
+						}
+						// Si l'autre champ est rempli, on force la validation de celui-ci
+						if (!value && tempToDate.value) {
+							return false
+						}
+						return true
+					},
 					message: 'La date de début est requise.',
 					successMessage: 'La date de début est renseignée.',
 					fieldIdentifier: 'fromDate',
@@ -82,7 +93,7 @@
 			options: {
 				validate: (value: Date | null) => {
 					if (value === null) return true
-					if (tempFromDate.value === undefined || value === null) return true
+					if (tempFromDate.value === undefined) return true
 					return value >= tempFromDate.value
 				},
 				message: 'La date de fin ne peut pas être inférieure à la date de début.',
@@ -94,6 +105,17 @@
 			? [{
 				type: 'required',
 				options: {
+					validate: (value: Date | null) => {
+						// Si les deux champs sont vides, on affiche l'erreur sur les deux
+						if (!value && !tempFromDate.value) {
+							return false
+						}
+						// Si l'autre champ est rempli, on force la validation de celui-ci
+						if (!value && tempFromDate.value) {
+							return false
+						}
+						return true
+					},
 					message: 'La date de fin est requise.',
 					successMessage: 'La date de fin est renseignée.',
 					fieldIdentifier: 'toDate',
@@ -170,6 +192,22 @@
 
 		// Vérifier qu'il n'y a pas d'erreurs
 		return errors.value.length === 0
+	})
+
+	// Watch pour les changements de la date de début
+	watch(formattedFromDate, () => {
+		// Si la date de fin existe, on revalide
+		if (formattedToDate.value && toDateRef.value) {
+			toDateRef.value.validateOnSubmit()
+		}
+	})
+
+	// Watch pour les changements de la date de fin
+	watch(formattedToDate, () => {
+		// Si la date de début existe, on revalide
+		if (formattedFromDate.value && fromDateRef.value) {
+			fromDateRef.value.validateOnSubmit()
+		}
 	})
 
 	// Watch pour les changements internes
