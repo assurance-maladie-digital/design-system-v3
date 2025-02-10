@@ -63,56 +63,56 @@ export function useFieldValidation() {
 						(typeof value === 'string' && value.trim() !== '')
 						|| (value instanceof Date)
 						|| (typeof value === 'object' && value !== null),
-						options.message || `Vous devez renseigner ${identifier}.`,
+						options.message || options.warningMessage || `Vous devez renseigner ${identifier}.`,
 					)
 
 				case 'min':
 					return createValidationResult(
 						typeof value === 'number' && value >= (options.value ?? 0),
-						options.message || `La valeur de ${identifier} doit être supérieure ou égale à ${options.value}.`,
+						options.message || options.warningMessage || `La valeur de ${identifier} doit être supérieure ou égale à ${options.value}.`,
 					)
 
 				case 'max':
 					return createValidationResult(
 						typeof value === 'number' && value <= (options.value ?? Infinity),
-						options.message || `La valeur de ${identifier} doit être inférieure ou égale à ${options.value}.`,
+						options.message || options.warningMessage || `La valeur de ${identifier} doit être inférieure ou égale à ${options.value}.`,
 					)
 
 				case 'minLength':
 					return createValidationResult(
 						typeof value === 'string' && getValueLength(value, options.ignoreSpace) >= (options.length ?? 0),
-						options.message || `${identifier} doit contenir au moins ${options.length} caractères.`,
+						options.message || options.warningMessage || `${identifier} doit contenir au moins ${options.length} caractères.`,
 					)
 
 				case 'maxLength':
 					return createValidationResult(
 						typeof value === 'string' && getValueLength(value, options.ignoreSpace) <= (options.length ?? Infinity),
-						options.message || `${identifier} ne doit pas dépasser ${options.length} caractères.`,
+						options.message || options.warningMessage || `${identifier} ne doit pas dépasser ${options.length} caractères.`,
 					)
 
 				case 'exactLength':
 					return createValidationResult(
 						typeof value === 'string' && getValueLength(value, options.ignoreSpace) === (options.length ?? 0),
-						options.message || `${identifier} doit contenir exactement ${options.length} caractères.`,
+						options.message || options.warningMessage || `${identifier} doit contenir exactement ${options.length} caractères.`,
 					)
 
 				case 'email':
 					return createValidationResult(
 						typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-						options.message || `${identifier} doit être un email valide.`,
+						options.message || options.warningMessage || `${identifier} doit être un email valide.`,
 					)
 
 				case 'matchPattern':
 					return createValidationResult(
 						typeof value === 'string' && !!options.pattern && options.pattern.test(value),
-						options.message || `Le format de ${identifier} est invalide.`,
+						options.message || options.warningMessage || `Le format de ${identifier} est invalide.`,
 					)
 
 				case 'notWeekend': {
 					const dateValue = new Date(value)
 					return createValidationResult(
 						!(dateValue.getDay() === 0 || dateValue.getDay() === 6),
-						options.message || `${identifier} ne peut pas être un jour de weekend.`,
+						options.message || options.warningMessage || `${identifier} ne peut pas être un jour de weekend.`,
 					)
 				}
 
@@ -120,7 +120,7 @@ export function useFieldValidation() {
 					const dateValue = new Date(value)
 					return createValidationResult(
 						dateValue >= new Date(),
-						options.message || `${identifier} ne peut pas être antérieur à aujourd'hui.`,
+						options.message || options.warningMessage || `${identifier} ne peut pas être antérieur à aujourd'hui.`,
 					)
 				}
 
@@ -128,7 +128,7 @@ export function useFieldValidation() {
 					const dateValue = new Date(value)
 					return createValidationResult(
 						dateValue <= new Date(),
-						options.message || `${identifier} ne peut pas être postérieur à aujourd'hui.`,
+						options.message || options.warningMessage || `${identifier} ne peut pas être postérieur à aujourd'hui.`,
 					)
 				}
 
@@ -150,7 +150,7 @@ export function useFieldValidation() {
 
 					return createValidationResult(
 						dateValue >= referenceDate,
-						options.message || `${identifier} ne peut pas être avant le ${options.date}.`,
+						options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${options.date}.`,
 					)
 				}
 
@@ -172,7 +172,7 @@ export function useFieldValidation() {
 
 					return createValidationResult(
 						dateValue <= referenceDate,
-						options.message || `${identifier} ne peut pas être après le ${options.date}.`,
+						options.message || options.warningMessage || `${identifier} ne peut pas être après le ${options.date}.`,
 					)
 				}
 
@@ -192,7 +192,7 @@ export function useFieldValidation() {
 
 					return createValidationResult(
 						dateValue.getTime() === referenceDate.getTime(),
-						options.message || `${identifier} doit être exactement le ${options.date}.`,
+						options.message || options.warningMessage || `${identifier} doit être exactement le ${options.date}.`,
 					)
 				}
 

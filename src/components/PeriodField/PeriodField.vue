@@ -59,7 +59,7 @@
 				},
 				message: 'La date de début ne peut pas être supérieure à la date de fin.',
 				successMessage: 'La date de début est valide.',
-				fieldIdentifier: 'fromDate',
+				fieldIdentifier: 'fromDateRef',
 			},
 		},
 		...(props.required
@@ -79,7 +79,7 @@
 					},
 					message: 'La date de début est requise.',
 					successMessage: 'La date de début est renseignée.',
-					fieldIdentifier: 'fromDate',
+					fieldIdentifier: 'fromDateRef',
 				},
 			}]
 			: []),
@@ -349,7 +349,7 @@
 
 <style scoped>
 .period-field {
-	display: flex;
-	gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 </style>

@@ -134,9 +134,9 @@ export const Default: Story = {
 			template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
-				  <p>Période sélectionnée : {{ value }}</p>
-				  <p v-if="value.from">Date de début : {{ value.from.selectedDates }}</p>
-				  <p v-if="value.to">Date de fin : {{ value.to.selectedDates }}</p>
+                <p>Période sélectionnée : {{ value }}</p>
+                <p v-if="value.from">Date de début : {{ value.from.selectedDates }}</p>
+                <p v-if="value.to">Date de fin : {{ value.to.selectedDates }}</p>
               </div>
             `,
 		}
@@ -194,7 +194,7 @@ export const CustomPlaceholders: Story = {
 			template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
-				  <p>Période sélectionnée : {{ value }}</p>
+                <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
 		}
@@ -306,7 +306,7 @@ export const Required: Story = {
 			template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
-				  <p>Période sélectionnée : {{ value }}</p>
+                <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
 		}
@@ -362,7 +362,7 @@ export const AppendIcon: Story = {
 			template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
-				  <p>Période sélectionnée : {{ value }}</p>
+                <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
 		}
@@ -419,7 +419,7 @@ export const WithoutIcon: Story = {
 			template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
-				  <p>Période sélectionnée : {{ value }}</p>
+                <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
 		}
@@ -481,7 +481,7 @@ export const WithError: Story = {
 			template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
-				  <p>Période sélectionnée : {{ value }}</p>
+                <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
 		}
@@ -499,9 +499,10 @@ export const WithWarning: Story = {
 						v-model="selectedPeriod"
 						:custom-warning-rules="[
 							{ type: 'notBeforeDate', options: { 
-								warningMessage: 'Attention : les dates sont antérieures à la date de référence',
-								date: '01/01/2031',
+								warningMessage: 'Attention : les dates sont antérieures au 02/01/2031',
+								date: '02/01/2031',
 								isWarning: true,
+								fieldIdentifier: 'fromDate'
 							} }
 						]"
 					/>
@@ -516,7 +517,7 @@ export const WithWarning: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const date = ref('20/12/2023')
+					const date = ref('20/12/2031')
 				</script>
 				`,
 			},
@@ -536,8 +537,8 @@ export const WithWarning: Story = {
 		customWarningRules: [
 			{
 				type: 'notBeforeDate', options: {
-					warningMessage: 'Attention : les dates sont antérieures à la date de référence',
-					date: '01/01/2024',
+					warningMessage: 'Attention : les dates sont antérieures au 02/01/2031',
+					date: '02/01/2031',
 					isWarning: true,
 				},
 			},
@@ -553,7 +554,7 @@ export const WithWarning: Story = {
 			template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
-				<p>Période sélectionnée : {{ value }}</p>
+                <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
 		}
@@ -570,7 +571,7 @@ export const WithSuccess: Story = {
 					<PeriodField 
 						v-model="selectedPeriod"
 						:custom-rules="[
-							{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } }
+							{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend', successMessage: 'La date n\\'est pas un week-end' } }
 						]"
 					/>
 					<p>Période sélectionnée : {{ selectedPeriod }}</p>
@@ -595,14 +596,19 @@ export const WithSuccess: Story = {
 		placeholderTo: 'Fin',
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: '',
-		required: true,
 		displayIcon: false,
 		displayAppendIcon: true,
 		isDisabled: false,
 		noIcon: false,
 		modelValue: { from: '22/01/2024', to: '23/01/2024' },
 		customRules: [
-			{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } },
+			{
+				type: 'notWeekend',
+				options: {
+					message: 'La date ne peut pas être un weekend',
+					successMessage: 'La date n\'est pas un week-end',
+				},
+			},
 		],
 	},
 	render: (args) => {
@@ -615,7 +621,7 @@ export const WithSuccess: Story = {
 			template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
-				  <p>Période sélectionnée : {{ value }}</p>
+                <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
 		}
@@ -690,11 +696,11 @@ export const DifferentFormats: Story = {
 			},
 			template: `
               <div class="pa-4">
-                <PeriodField v-bind="args" v-model="value1" format="DD/MM/YYYY"  />
-				<PeriodField v-bind="args" v-model="value2" format="MM/DD/YYYY"  />
-				<PeriodField v-bind="args" v-model="value3" format="YYYY-MM-DD"  />
-				<PeriodField v-bind="args" v-model="value4" format="DD-MM-YY"  />
-				<PeriodField v-bind="args" v-model="value5" format="DD.MM.YYYY"  />
+                <PeriodField v-bind="args" v-model="value1" format="DD/MM/YYYY"/>
+                <PeriodField v-bind="args" v-model="value2" format="MM/DD/YYYY"/>
+                <PeriodField v-bind="args" v-model="value3" format="YYYY-MM-DD"/>
+                <PeriodField v-bind="args" v-model="value4" format="DD-MM-YY"/>
+                <PeriodField v-bind="args" v-model="value5" format="DD.MM.YYYY"/>
               </div>
             `,
 		}
@@ -771,29 +777,29 @@ export const WithDateFormatReturn: Story = {
 			},
 			template: `
               <div class="pa-4">
-				  <span>Période de retour : {{ valueReturn1 }}<br/><br/></span>
-				  <PeriodField
-					  v-bind="args"
-					  v-model="value1"
-					  format="DD/MM/YYYY"
-					  date-format-return="DD/MM/YYYY"
-				  />
+                <span>Période de retour : {{ valueReturn1 }}<br/><br/></span>
+                <PeriodField
+                    v-bind="args"
+                    v-model="value1"
+                    format="DD/MM/YYYY"
+                    date-format-return="DD/MM/YYYY"
+                />
 
-				  <span>Période de retour : {{ valueReturn2 }}<br/><br/></span>
-				  <PeriodField
-					  v-bind="args"
-					  v-model="value2"
-					  format="DD/MM/YYYY"
-					  date-format-return="MM/DD/YYYY"
-				  />
+                <span>Période de retour : {{ valueReturn2 }}<br/><br/></span>
+                <PeriodField
+                    v-bind="args"
+                    v-model="value2"
+                    format="DD/MM/YYYY"
+                    date-format-return="MM/DD/YYYY"
+                />
 
-				  <span>Période de retour : {{ valueReturn3 }}<br/><br/></span>
-				  <PeriodField
-					  v-bind="args"
-					  v-model="value3"
-					  format="DD/MM/YYYY"
-					  date-format-return="YYYY-MM-DD"
-				  />
+                <span>Période de retour : {{ valueReturn3 }}<br/><br/></span>
+                <PeriodField
+                    v-bind="args"
+                    v-model="value3"
+                    format="DD/MM/YYYY"
+                    date-format-return="YYYY-MM-DD"
+                />
               </div>
             `,
 		}
