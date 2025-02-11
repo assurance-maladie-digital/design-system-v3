@@ -1,0 +1,32 @@
+import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
+import * as PeriodFieldStories from "./PeriodField.stories.ts";
+
+<Meta of={PeriodFieldStories}/>
+
+# PeriodField
+
+Le composant `PeriodField` est utilisé pour permettre à l’utilisateur de saisir une période.
+
+<Canvas story={{height: '550px'}} of={PeriodFieldStories.Default}/>
+
+# API
+
+<Controls of={PeriodFieldStories.Default}/>
+
+## Utilisation de base
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { PeriodField } from '@cnamts/synapse'
+
+	const selectedPeriod = ref({ from: null, to: null })
+</script>
+
+<template>
+	<PeriodField v-model="selectedPeriod" />
+	<p>Selected Period: {{ selectedPeriod }}</p>
+</template>
+`}
+/>
