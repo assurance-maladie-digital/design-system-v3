@@ -138,7 +138,7 @@ describe('LocalStorageUtility', () => {
 		const localStorageUtility = new LocalStorageUtility(
 			undefined,
 			undefined,
-			'test-'
+			'test-',
 		)
 
 		localStorageUtility.setItem('test', testString)
