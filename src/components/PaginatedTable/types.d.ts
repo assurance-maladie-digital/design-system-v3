@@ -19,6 +19,12 @@ export interface DataOptions {
 	mustSort: boolean
 }
 
+export interface PaginatedTableProps {
+	items: unknown[]
+	headers: DataTableHeaders
+	options: DataOptions
+}
+
 export type DataTableHeaders = {
 	title?: string
 	value?: string

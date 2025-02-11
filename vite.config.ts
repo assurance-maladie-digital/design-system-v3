@@ -17,6 +17,7 @@ function generateVuetifyGlobals() {
 		'VRadio',
 		'VTable',
 		'VDataTable',
+		'VDataTableServer',
 		'VBtnToggle',
 		'VCheckbox',
 		'VSelect',
