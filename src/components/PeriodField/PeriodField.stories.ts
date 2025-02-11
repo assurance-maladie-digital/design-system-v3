@@ -94,8 +94,6 @@ export const Default: Story = {
 				<template>
 					<PeriodField v-model="selectedPeriod" />
 					<p>Période sélectionnée : <pre>{{ selectedPeriod }}</pre></p>
-					<p v-if="selectedPeriod.from">Date de début : {{ selectedPeriod.from.selectedDates }}</p>
-				    <p v-if="selectedPeriod.to">Date de fin : {{ selectedPeriod.to.selectedDates }}</p>
 				</template>
 				`,
 			},
@@ -135,8 +133,6 @@ export const Default: Story = {
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
                 <p>Période sélectionnée : {{ value }}</p>
-                <p v-if="value.from">Date de début : {{ value.from.selectedDates }}</p>
-                <p v-if="value.to">Date de fin : {{ value.to.selectedDates }}</p>
               </div>
             `,
 		}
@@ -638,18 +634,22 @@ export const DifferentFormats: Story = {
 					<PeriodField 
 						v-model="selectedPeriod"
 						format="DD/MM/YYYY"
+						class="mb-4" 
 					 />
 					<PeriodField 
 						v-model="selectedPeriod"
 						format="MM/DD/YYYY"
+						class="mb-4" 
 					 />
 					<PeriodField 
 						v-model="selectedPeriod"
 						format="YYYY-MM-DD"
+						class="mb-4" 
 					 />
 					<PeriodField 
 						v-model="selectedPeriod"
 						format="DD-MM-YY"
+						class="mb-4" 
 					 />
 					<PeriodField 
 						v-model="selectedPeriod"
@@ -696,10 +696,10 @@ export const DifferentFormats: Story = {
 			},
 			template: `
               <div class="pa-4">
-                <PeriodField v-bind="args" v-model="value1" format="DD/MM/YYYY"/>
-                <PeriodField v-bind="args" v-model="value2" format="MM/DD/YYYY"/>
-                <PeriodField v-bind="args" v-model="value3" format="YYYY-MM-DD"/>
-                <PeriodField v-bind="args" v-model="value4" format="DD-MM-YY"/>
+                <PeriodField v-bind="args" v-model="value1" format="DD/MM/YYYY" class="mb-4" />
+                <PeriodField v-bind="args" v-model="value2" format="MM/DD/YYYY" class="mb-4" />
+                <PeriodField v-bind="args" v-model="value3" format="YYYY-MM-DD" class="mb-4" />
+                <PeriodField v-bind="args" v-model="value4" format="DD-MM-YY" class="mb-4" />
                 <PeriodField v-bind="args" v-model="value5" format="DD.MM.YYYY"/>
               </div>
             `,
