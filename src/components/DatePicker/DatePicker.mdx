@@ -5,7 +5,11 @@ import * as DatePickerStories from "./DatePicker.stories.ts";
 
 # DatePicker
 
-Le composant `DatePicker` est un champ qui permet de sélectionner une date via un calendrier, avec une option pour sélectionner une plage de dates.
+Le composant `DatePicker` est disponible en deux variantes :
+- La version avec un calendrier interactif pour sélectionner une date,
+- La version (avec la prop `no-calendar`) qui propose uniquement un champ de saisie textuelle pour entrer la date manuellement et permettre aux robots de la renseigner automatiquement.
+
+Nous feront évoluer le composant pour qu'il propose les 2 en même temps.
 
 <Canvas story={{height: '550px'}} of={DatePickerStories.Default}/>
 
@@ -112,6 +116,27 @@ Les séparateurs peuvent être `/`, `-` ou `.`
 - **Description** : Active la sélection d'une plage de dates
 - **Défaut** : `false`
 
+### noCalendar
+- **Type** : `boolean`
+- **Description** : Désactive l\'affichage du calendrier (saisie manuelle uniquement), elle permet les copier coller et le passage de robots.
+- **Défaut** : `false`
+
+## Utilisation de noCalendar
+
+L'option `noCalendar` est particulièrement utile dans les cas suivants :
+
+### Cas d'utilisation
+- **Saisie rapide** : Permet aux utilisateurs de saisir directement une date sans avoir à naviguer dans un calendrier
+- **Copier-coller** : Facilite le copier-coller de dates depuis d'autres sources
+- **Automatisation** : Compatible avec les tests automatisés et les robots qui doivent interagir avec le champ de date
+- **Accessibilité** : Offre une alternative pour les utilisateurs qui préfèrent ou doivent utiliser le clavier
+
+### Bonnes pratiques
+- Toujours spécifier le format de date attendu via la prop `format` pour guider l'utilisateur
+- Utiliser la prop `placeholder` pour indiquer le format de saisie attendu
+- Combiner avec la prop `required` si le champ est obligatoire
+- Penser à ajouter des règles de validation personnalisées si nécessaire
+
 ## Apparence
 
 ### displayIcon
@@ -128,6 +153,17 @@ Les séparateurs peuvent être `/`, `-` ou `.`
 - **Type** : `boolean`
 - **Description** : Masque toutes les icônes
 - **Défaut** : `false`
+
+### Exemple
+```vue
+<DatePicker
+  v-model="date"
+  no-calendar
+  format="DD/MM/YYYY"
+  placeholder="JJ/MM/AAAA"
+  required
+/>
+```
 
 ## Validation
 
