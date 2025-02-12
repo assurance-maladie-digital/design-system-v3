@@ -16,6 +16,7 @@
 		label?: string
 		required?: boolean
 		isDisabled?: boolean
+		isReadOnly?: boolean
 		isOutlined?: boolean
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
@@ -32,6 +33,7 @@
 		label: undefined,
 		required: false,
 		isDisabled: false,
+		isReadOnly: false,
 		isOutlined: true,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -249,6 +251,7 @@
 			rules.forEach((rule) => {
 				const result = rule(value)
 				if (result?.warning) {
+					console.log(result.warning)
 					warningMessages.value.push(result.warning)
 				}
 			})
@@ -299,10 +302,10 @@
 	]
 	const warningValidationRules = generateCustomRules(props.customWarningRules || [])
 
-	// Déterminer les messages à afficher
-	const displayMessages = computed(() => {
-		return warningMessages.value.length > 0 ? [...warningMessages.value] : [...successMessages.value]
-	})
+	// Déterminer si le champ est en erreur
+	const isOnError = computed(() => errorMessages.value.length > 0)
+	const isOnWarning = computed(() => warningMessages.value.length > 0)
+	const isOnSuccess = computed(() => successMessages.value.length > 0)
 
 	// Déterminer l'icône à afficher
 	const getIcon = computed(() => {
@@ -317,9 +320,6 @@
 		}
 		return undefined
 	})
-
-	// Déterminer si le champ est en erreur
-	const isOnError = computed(() => errorMessages.value.length > 0)
 
 	// Gestionnaire de changement de valeur
 	const handleInput = (event: Event) => {
@@ -431,17 +431,57 @@
 		v-model="inputValue"
 		:placeholder="placeholder"
 		:label="label"
-		:disabled="isDisabled"
-		:outlined="isOutlined"
 		:error-messages="errorMessages"
-		:messages="displayMessages"
-		:append-inner-icon="getIcon"
+		:messages="warningMessages.length > 0 ? warningMessages :successMessages"
 		:is-on-error="isOnError"
+		:is-disabled="isDisabled"
+		:is-read-only="isReadOnly"
 		:display-icon="displayIcon"
 		:display-append-icon="displayAppendIcon"
 		:no-icon="noIcon"
+		:append-inner-icon="getIcon"
+		:variant-style="isOutlined ? 'outlined' : 'filled'"
+		:class="{
+			'warning-field': isOnWarning,
+			'success-field': isOnSuccess
+		}"
 		@input="handleInput"
 		@focus="handleFocus"
 		@blur="handleBlur"
 	/>
 </template>
+
+<style lang="scss" scoped>
+
+@use '@/assets/tokens';
+
+.warning-field {
+	:deep(.v-field) {
+		color: tokens.$colors-border-warning !important;
+		.v-field__outline {
+			color: tokens.$colors-border-warning !important;
+		}
+	}
+	:deep(.v-messages) {
+		opacity: 1 !important;
+		.v-messages__message {
+			color: tokens.$colors-border-warning !important;
+		}
+	}
+}
+
+.success-field {
+	:deep(.v-field) {
+		color: tokens.$colors-border-success !important;
+		.v-field__outline {
+			color: tokens.$colors-border-success !important;
+		}
+	}
+	:deep(.v-messages) {
+		opacity: 1 !important;
+		.v-messages__message {
+			color: tokens.$colors-border-success !important;
+		}
+	}
+}
+</style>
