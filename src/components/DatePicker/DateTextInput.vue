@@ -106,10 +106,10 @@
 
 	// Fonction pour formater une date en chaîne selon le format spécifié
 	const formatDateToString = (date: Date, format: string): string => {
-		const day = date.getDate().toString().padStart(2, '0')
-		const month = (date.getMonth() + 1).toString().padStart(2, '0')
+		const day = date.getDate().toString()
+		const month = (date.getMonth() + 1).toString()
 		const year = date.getFullYear()
-		const shortYear = (year % 100).toString().padStart(2, '0')
+		const shortYear = (year % 100).toString()
 
 		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
 		const parts: string[] = []
@@ -142,10 +142,13 @@
 
 		const numbers = input.replace(/\D/g, '')
 		const separator = props.format.includes('/') ? '/' : props.format.includes('-') ? '-' : '.'
+		const parts = props.format.split(/[-/.]/)
 
-		if (numbers.length <= 2) return numbers
-		if (numbers.length <= 4) return `${numbers.slice(0, 2)}${separator}${numbers.slice(2)}`
-		return `${numbers.slice(0, 2)}${separator}${numbers.slice(2, 4)}${separator}${numbers.slice(4)}`
+		if (numbers.length <= parts[0].length) return numbers
+		if (numbers.length <= parts[0].length + parts[1].length) {
+			return `${numbers.slice(0, parts[0].length)}${separator}${numbers.slice(parts[0].length)}`
+		}
+		return `${numbers.slice(0, parts[0].length)}${separator}${numbers.slice(parts[0].length, parts[0].length + parts[1].length)}${separator}${numbers.slice(parts[0].length + parts[1].length)}`
 	}
 
 	// Fonction pour valider le format de la date

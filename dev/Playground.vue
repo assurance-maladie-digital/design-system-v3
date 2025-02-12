@@ -19,7 +19,7 @@
 			<DateTextInput
 				v-model="customRulesDate"
 				date-format-return="DD/MM/YYYY"
-        format="YY/MM/DD"
+        format="YYYY-MM-DD"
 				placeholder="JJ/MM/AAAA"
         required
 				:custom-rules="[{
