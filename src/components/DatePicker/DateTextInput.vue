@@ -305,7 +305,7 @@
 	]
 	const warningValidationRules = [
 		...generateCustomRules(props.customWarningRules || []),
-		...generateCustomRules(props.customRules?.filter(r => r.type === 'custom' && r.options.isWarning) || [])
+		...generateCustomRules(props.customRules?.filter(r => r.type === 'custom' && r.options.isWarning) || []),
 	]
 
 	// Déterminer si le champ est en erreur
