@@ -11,8 +11,6 @@
 		placeholder?: string
 		format?: string
 		dateFormatReturn?: string
-		minDate?: string
-		maxDate?: string
 		label?: string
 		required?: boolean
 		isDisabled?: boolean
@@ -28,8 +26,6 @@
 		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: undefined,
-		minDate: undefined,
-		maxDate: undefined,
 		label: undefined,
 		required: false,
 		isDisabled: false,
