@@ -50,7 +50,7 @@ export const Default: Story = {
 						:options="options"
 						:headers="headers"
 						:items="users"
-						@update:options="options = $event"
+						@update:options="options.value = $event"
 					/>
 				</template>
 				`,
@@ -70,16 +70,16 @@ export const Default: Story = {
 					
 					const headers = ref([
 						{
-							text: 'Nom',
+							title: 'Nom',
 							key: 'lastname',
-							value: 'lastname',
 							filterable: true,
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							key: 'firstname',
 						},
 						{
+                            title: 'Email',
 							value: 'email',
 						},
 					])
@@ -119,16 +119,17 @@ export const Default: Story = {
 		},
 		headers: [
 			{
-				text: 'Nom',
+				title: 'Nom',
 				key: 'lastname',
-				value: 'lastname',
 				filterable: true,
 			},
 			{
 				title: 'Prénom',
+				key: 'firstname',
 				value: 'firstname',
 			},
 			{
+				title: 'Email',
 				value: 'email',
 			},
 		],
@@ -167,7 +168,7 @@ export const Default: Story = {
 					:items="args.users"
 					:headers="args.headers"
 					:options="args.options"
-					@update:options="args.options = $event"
+					@update:options="args.options.value = $event"
 				/>
               </div>
             `,
@@ -186,7 +187,7 @@ export const TableServer: Story = {
 						:options="options"
 						:headers="headers"
 						:items="users"
-						@update:options="options = $event"
+						@update:options="options.value = $event"
 					/>
 				</template>
 				`,
@@ -206,16 +207,16 @@ export const TableServer: Story = {
 					
 					const headers = ref([
 						{
-							text: 'Nom',
+							title: 'Nom',
 							key: 'lastname',
-							value: 'lastname',
 							filterable: true,
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							key: 'firstname',
 						},
 						{
+                            title: 'Email',
 							value: 'email',
 						},
 					])
@@ -255,16 +256,16 @@ export const TableServer: Story = {
 		},
 		headers: [
 			{
-				text: 'Nom',
+				title: 'Nom',
 				key: 'lastname',
-				value: 'lastname',
 				filterable: true,
 			},
 			{
 				title: 'Prénom',
-				value: 'firstname',
+				key: 'firstname',
 			},
 			{
+				title: 'Email',
 				value: 'email',
 			},
 		],
@@ -303,7 +304,7 @@ export const TableServer: Story = {
 					:items="args.users"
 					:headers="args.headers"
 					:options="args.options"
-					@update:options="args.options = $event"
+					@update:options="args.options.value = $event"
 				/>
               </div>
             `,

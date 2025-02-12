@@ -4,23 +4,22 @@
 
 	const options = ref({
 		itemsPerPage: 2,
-		sortBy: 'lastname',
 		sortDesc: false,
 	})
 
 	const headers = ref([
 		{
-			text: 'Nom',
+			title: 'Nom',
 			key: 'lastname',
-			value: 'lastname',
 			filterable: true,
 		},
 		{
 			title: 'Prénom',
-			value: 'firstname',
+			key: 'firstname',
 		},
 		{
-			value: 'email',
+			title: 'Email',
+			key: 'email',
 		},
 	])
 
@@ -53,7 +52,7 @@
 		:options="options"
 		:headers="headers"
 		:items="users"
-		@update:options="options = $event"
+		@update:options="options.value = $event"
 	/>
 
 	<br><br>

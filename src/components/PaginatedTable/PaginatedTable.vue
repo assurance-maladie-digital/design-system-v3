@@ -153,7 +153,7 @@
 	<div>
 		<VDataTable
 			v-if="!serverItemsLength"
-			color="warning"
+			color="primary"
 			v-bind="propsFacade"
 			@update:options="updateOptions"
 		>
