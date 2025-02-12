@@ -241,18 +241,21 @@
 				if (result?.error) {
 					errorMessages.value.push(result.error)
 				}
-				else if (result?.success && !result?.warning) {
-					successMessages.value.push(result.success)
+				else if (!result?.warning && !result?.error) {
+					successMessages.value.push(result?.success || 'Date valide')
 				}
 			})
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const validateWarningRules = (rules: any[]) => {
 			rules.forEach((rule) => {
 				const result = rule(value)
 				if (result?.warning) {
-					console.log(result.warning)
 					warningMessages.value.push(result.warning)
+				}
+				else if (result?.success) {
+					successMessages.value.push(result.success)
 				}
 			})
 		}
@@ -274,7 +277,7 @@
 		return rules.map((rule) => {
 			return (value: string) => {
 				if (rule.type === 'custom') {
-					const { validate, message, successMessage, isWarning } = rule.options
+					const { validate, message, warningMessage, successMessage, isWarning } = rule.options
 					const isValid = validate(value)
 
 					if (isWarning) {
@@ -282,7 +285,7 @@
 						// - Si la validation échoue (date en 2025) -> warning
 						// - Si la validation réussit (date hors 2025) -> success
 						return !isValid
-							? { warning: message }
+							? { warning: warningMessage || message }
 							: { success: successMessage }
 					}
 
@@ -297,10 +300,13 @@
 	}
 
 	const validationRules = [
-		...generateCustomRules(props.customRules?.filter(r => r.type === 'custom') || []),
+		...generateCustomRules(props.customRules?.filter(r => r.type === 'custom' && !r.options.isWarning) || []),
 		...generateRules(props.customRules?.filter(r => r.type !== 'custom') || []),
 	]
-	const warningValidationRules = generateCustomRules(props.customWarningRules || [])
+	const warningValidationRules = [
+		...generateCustomRules(props.customWarningRules || []),
+		...generateCustomRules(props.customRules?.filter(r => r.type === 'custom' && r.options.isWarning) || [])
+	]
 
 	// Déterminer si le champ est en erreur
 	const isOnError = computed(() => errorMessages.value.length > 0)
@@ -427,6 +433,7 @@
 </script>
 
 <template>
+	{{ successMessages }}
 	<SyTextField
 		v-model="inputValue"
 		:placeholder="placeholder"
@@ -452,18 +459,20 @@
 </template>
 
 <style lang="scss" scoped>
-
 @use '@/assets/tokens';
 
 .warning-field {
 	:deep(.v-field) {
 		color: tokens.$colors-border-warning !important;
+
 		.v-field__outline {
 			color: tokens.$colors-border-warning !important;
 		}
 	}
+
 	:deep(.v-messages) {
 		opacity: 1 !important;
+
 		.v-messages__message {
 			color: tokens.$colors-border-warning !important;
 		}
@@ -473,12 +482,15 @@
 .success-field {
 	:deep(.v-field) {
 		color: tokens.$colors-border-success !important;
+
 		.v-field__outline {
 			color: tokens.$colors-border-success !important;
 		}
 	}
+
 	:deep(.v-messages) {
 		opacity: 1 !important;
+
 		.v-messages__message {
 			color: tokens.$colors-border-success !important;
 		}

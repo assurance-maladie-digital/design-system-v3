@@ -42,7 +42,7 @@
 					type: 'custom',
 					options: {
 						validate: value => !value || !value.includes('2025'),
-						message: 'Attention : date en 2025',
+						warningMessage: 'Attention : date en 2025',
 						successMessage: 'Date hors 2025',
 						fieldIdentifier: 'date',
             isWarning: true
