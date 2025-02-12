@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 	import { ref, computed, watch } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
 
 	type DateValue = string | null
@@ -9,6 +10,7 @@
 		modelValue?: DateValue
 		placeholder?: string
 		format?: string
+		dateFormatReturn?: string
 		minDate?: string
 		maxDate?: string
 		label?: string
@@ -20,19 +22,11 @@
 		noIcon?: boolean
 		customRules?: { type: string, options: RuleOptions }[]
 		customWarningRules?: { type: string, options: RuleOptions }[]
-		errorMessages?: {
-			required?: string
-			format?: string
-			min?: string
-			max?: string
-			invalid?: string
-		}
-		successMessages?: string[]
-		warningMessages?: string[]
 	}>(), {
 		modelValue: null,
 		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
+		dateFormatReturn: undefined,
 		minDate: undefined,
 		maxDate: undefined,
 		label: undefined,
@@ -44,15 +38,6 @@
 		noIcon: false,
 		customRules: () => [],
 		customWarningRules: () => [],
-		errorMessages: () => ({
-			required: 'La date est requise',
-			format: 'Format invalide (JJ/MM/AAAA)',
-			min: 'La date doit être après le',
-			max: 'La date doit être avant le',
-			invalid: 'Date invalide',
-		}),
-		successMessages: () => [],
-		warningMessages: () => [],
 	})
 
 	const emit = defineEmits<{
@@ -63,27 +48,80 @@
 
 	const inputValue = ref<string>('')
 	const isFocused = ref(false)
-	const currentErrorMessage = ref<string>('')
 	const hasInteracted = ref(false)
+	const errorMessages = ref<string[]>([])
+	const warningMessages = ref<string[]>([])
+	const successMessages = ref<string[]>([])
 
-	// Fonction pour convertir une date au format DD/MM/YYYY en objet Date
-	const parseDate = (dateStr: string): Date | null => {
-		const parts = dateStr.split('/')
+	// Fonction pour parser une date selon le format spécifié
+	const parseDate = (dateStr: string, format: string = props.format): Date | null => {
+		const parts = dateStr.split(/[-/.]/)
 		if (parts.length !== 3) return null
 
-		// Utiliser parseInt pour ignorer les zéros en début
-		const day = parseInt(parts[0], 10)
-		const month = parseInt(parts[1], 10) - 1 // Les mois commencent à 0 en JS
-		const year = parseInt(parts[2], 10)
+		let day: number, month: number, year: number
+
+		// Extraire les positions du jour, mois et année selon le format
+		const dayPos = format.indexOf('DD')
+		const monthPos = format.indexOf('MM')
+		const yearPos = format.indexOf('YYYY')
+
+		if (dayPos === -1 || monthPos === -1 || yearPos === -1) return null
+
+		// Déterminer l'ordre des composants
+		const positions = [
+			{ pos: dayPos, type: 'day' },
+			{ pos: monthPos, type: 'month' },
+			{ pos: yearPos, type: 'year' },
+		].sort((a, b) => a.pos - b.pos)
+
+		// Assigner les valeurs selon l'ordre du format
+		for (let i = 0; i < 3; i++) {
+			const value = parseInt(parts[i], 10)
+			switch (positions[i].type) {
+			case 'day':
+				day = value
+				break
+			case 'month':
+				month = value - 1 // Les mois commencent à 0 en JS
+				break
+			case 'year':
+				year = value
+				break
+			}
+		}
 
 		if (isNaN(day) || isNaN(month) || isNaN(year)) return null
 
 		const date = new Date(year, month, day)
-		// Vérifier que la date est valide (pas de débordement)
-		if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+		// Vérifier que la date est valide
+		if (
+			date.getFullYear() !== year
+			|| date.getMonth() !== month
+			|| date.getDate() !== day
+		) {
 			return null
 		}
+
 		return date
+	}
+
+	// Fonction pour formater une date selon un format spécifique
+	const formatDateToString = (date: Date, format: string): string => {
+		const year = date.getFullYear().toString()
+		const month = String(date.getMonth() + 1).padStart(2, '0')
+		const day = String(date.getDate()).padStart(2, '0')
+
+		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
+		const parts = format.split(/[-/.]/)
+		const result = []
+
+		for (const part of parts) {
+			if (part.includes('DD')) result.push(day)
+			else if (part.includes('MM')) result.push(month)
+			else if (part.includes('YYYY')) result.push(year)
+		}
+
+		return result.join(separator)
 	}
 
 	// Fonction pour formater la date pendant la saisie
@@ -105,74 +143,67 @@
 		if (!dateStr) {
 			return {
 				isValid: !props.required || !hasInteracted.value,
-				message: (props.required && hasInteracted.value) ? props.errorMessages.required : '',
+				message: (props.required && hasInteracted.value) ? 'La date est requise' : '',
 			}
 		}
 
-		const parts = dateStr.split('/')
-		if (parts.length !== 3) {
+		// Vérifier que la chaîne ne contient que des chiffres et des séparateurs
+		if (!/^[\d/.-]*$/.test(dateStr)) {
 			return {
 				isValid: false,
-				message: props.errorMessages.format,
+				message: 'Format invalide (JJ/MM/AAAA)',
 			}
 		}
 
-		// Vérifier le format de chaque partie (2 chiffres pour jour/mois, 4 pour année)
-		if (!/^\d{1,2}$/.test(parts[0]) || !/^\d{1,2}$/.test(parts[1]) || !/^\d{4}$/.test(parts[2])) {
+		// Vérifier le format complet avec regex
+		const formatRegex = /^(\d{2})[/.-](\d{2})[/.-](\d{4})$/
+		if (!formatRegex.test(dateStr)) {
 			return {
 				isValid: false,
-				message: props.errorMessages.format,
+				message: 'Format invalide (JJ/MM/AAAA)',
 			}
 		}
 
-		const day = parseInt(parts[0], 10)
-		const month = parseInt(parts[1], 10)
-		const year = parseInt(parts[2], 10)
+		// Vérifier la validité de la date
+		const [day, month, year] = dateStr.split(/[/.-]/).map(Number)
+		const numMonth = parseInt(month, 10)
+		const daysInMonth = new Date(year, numMonth, 0).getDate()
 
-		if (day < 1 || day > 31) {
+		if (numMonth < 1 || numMonth > 12) {
 			return {
 				isValid: false,
-				message: 'Le jour doit être entre 1 et 31',
-			}
-		}
-		if (month < 1 || month > 12) {
-			return {
-				isValid: false,
-				message: 'Le mois doit être entre 1 et 12',
-			}
-		}
-		if (year < 1000 || year > 9999) {
-			return {
-				isValid: false,
-				message: 'L\'année doit être sur 4 chiffres',
+				message: 'Format invalide (JJ/MM/AAAA)',
 			}
 		}
 
-		const date = parseDate(dateStr)
-		if (!date) {
+		const numDay = parseInt(day, 10)
+		if (numDay < 1 || numDay > daysInMonth) {
 			return {
 				isValid: false,
-				message: props.errorMessages.invalid,
+				message: 'Date invalide',
 			}
 		}
 
-		// Vérification des dates min/max
+		// Vérifier la date minimale
 		if (props.minDate) {
+			const currentDate = new Date(year, numMonth - 1, numDay)
 			const minDate = parseDate(props.minDate)
-			if (minDate && date < minDate) {
+			if (minDate && currentDate && currentDate < minDate) {
 				return {
 					isValid: false,
-					message: `${props.errorMessages.min} ${props.minDate}`,
+					message: `La date doit être après le ${props.minDate}`,
 				}
 			}
 		}
 
+		// Vérifier la date maximale
 		if (props.maxDate) {
+			const currentDate = new Date(year, numMonth - 1, numDay)
 			const maxDate = parseDate(props.maxDate)
-			if (maxDate && date > maxDate) {
+			if (maxDate && currentDate && currentDate > maxDate) {
 				return {
 					isValid: false,
-					message: `${props.errorMessages.max} ${props.maxDate}`,
+					message: `La date doit être avant le ${props.maxDate}`,
 				}
 			}
 		}
@@ -180,46 +211,142 @@
 		return { isValid: true, message: '' }
 	}
 
-	// Règles de validation
-	const dateRules = computed(() => [
-		...(props.required && hasInteracted.value
-			? [{
-				type: 'required',
-				options: {
-					message: props.errorMessages.required,
-					successMessage: '',
-					fieldIdentifier: 'date',
-				},
-			}]
-			: []),
-		{
-			type: 'custom',
-			options: {
-				validate: (value: string) => {
-					if (!value) return !props.required || !hasInteracted.value
-					const validation = validateDateFormat(value)
-					currentErrorMessage.value = validation.message
-					return validation.isValid
-				},
-				message: computed(() => currentErrorMessage.value),
-				successMessage: '',
-				fieldIdentifier: 'date',
-			},
-		},
-		...props.customRules,
-	])
+	// Fonction pour valider les règles et mettre à jour les messages
+	const validateRules = (value: string) => {
+		errorMessages.value = []
+		warningMessages.value = []
+		successMessages.value = []
+
+		if (!value) {
+			if (props.required && hasInteracted.value) {
+				errorMessages.value.push('La date est requise')
+			}
+			return
+		}
+
+		// Validation du format
+		const validation = validateDateFormat(value)
+		if (!validation.isValid) {
+			errorMessages.value.push(validation.message)
+			return
+		}
+
+		// Validation des règles
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+		const validateErrorRules = (rules: any[]) => {
+			rules.forEach((rule) => {
+				const result = rule(value)
+				if (result?.error) {
+					errorMessages.value.push(result.error)
+				}
+				else if (result?.success && !result?.warning) {
+					successMessages.value.push(result.success)
+				}
+			})
+		}
+
+		const validateWarningRules = (rules: any[]) => {
+			rules.forEach((rule) => {
+				const result = rule(value)
+				if (result?.warning) {
+					warningMessages.value.push(result.warning)
+				}
+			})
+		}
+
+		// Appliquer les règles
+		validateErrorRules(validationRules)
+		validateWarningRules(warningValidationRules)
+
+		// Supprimer les doublons
+		errorMessages.value = [...new Set(errorMessages.value)]
+		warningMessages.value = [...new Set(warningMessages.value)]
+		successMessages.value = [...new Set(successMessages.value)]
+	}
+
+	const { generateRules } = useFieldValidation()
+
+	// Générer les règles de validation
+	const generateCustomRules = (rules: { type: string, options: RuleOptions }[]) => {
+		return rules.map((rule) => {
+			return (value: string) => {
+				if (rule.type === 'custom') {
+					const { validate, message, successMessage, isWarning } = rule.options
+					const isValid = validate(value)
+
+					if (isWarning) {
+						// Pour les règles de warning, on inverse la logique :
+						// - Si la validation échoue (date en 2025) -> warning
+						// - Si la validation réussit (date hors 2025) -> success
+						return !isValid
+							? { warning: message }
+							: { success: successMessage }
+					}
+
+					// Pour les règles normales
+					return !isValid
+						? { error: message }
+						: { success: successMessage }
+				}
+				return null
+			}
+		})
+	}
+
+	const validationRules = [
+		...generateCustomRules(props.customRules?.filter(r => r.type === 'custom') || []),
+		...generateRules(props.customRules?.filter(r => r.type !== 'custom') || []),
+	]
+	const warningValidationRules = generateCustomRules(props.customWarningRules || [])
+
+	// Déterminer les messages à afficher
+	const displayMessages = computed(() => {
+		return warningMessages.value.length > 0 ? [...warningMessages.value] : [...successMessages.value]
+	})
+
+	// Déterminer l'icône à afficher
+	const getIcon = computed(() => {
+		if (errorMessages.value.length > 0) {
+			return 'error'
+		}
+		if (warningMessages.value.length > 0) {
+			return 'warning'
+		}
+		if (successMessages.value.length > 0 && !warningMessages.value.length) {
+			return 'success'
+		}
+		return undefined
+	})
+
+	// Déterminer si le champ est en erreur
+	const isOnError = computed(() => errorMessages.value.length > 0)
 
 	// Gestionnaire de changement de valeur
 	const handleInput = (event: Event) => {
 		hasInteracted.value = true
-		const target = event.target as HTMLInputElement
-		const formatted = formatDateInput(target.value)
+		const inputElement = event.target as HTMLInputElement
+		const value = inputElement.value
+
+		// Formatage de la date pendant la saisie
+		const formatted = formatDateInput(value)
 		inputValue.value = formatted
 
+		// Ne pas valider pendant la saisie
+		if (isFocused.value) {
+			return
+		}
+
+		// Validation et mise à jour du modèle
 		const validation = validateDateFormat(formatted)
-		currentErrorMessage.value = validation.message
 		if (validation.isValid) {
-			emit('update:model-value', formatted)
+			const date = parseDate(formatted)
+			if (date) {
+				const formattedDate = props.dateFormatReturn
+					? formatDateToString(date, props.dateFormatReturn)
+					: formatted
+				emit('update:model-value', formattedDate)
+				validateRules(formattedDate)
+			}
 		}
 		else {
 			emit('update:model-value', null)
@@ -236,10 +363,23 @@
 	const handleBlur = () => {
 		hasInteracted.value = true
 		isFocused.value = false
-		const validation = validateDateFormat(inputValue.value)
-		currentErrorMessage.value = validation.message
-		if (!validation.isValid) {
+		const formatted = inputValue.value
+
+		// Validation et mise à jour du modèle
+		const validation = validateDateFormat(formatted)
+		if (validation.isValid) {
+			const date = parseDate(formatted)
+			if (date) {
+				const formattedDate = props.dateFormatReturn
+					? formatDateToString(date, props.dateFormatReturn)
+					: formatted
+				emit('update:model-value', formattedDate)
+				validateRules(formattedDate)
+			}
+		}
+		else {
 			emit('update:model-value', null)
+			validateRules(formatted)
 		}
 		emit('blur')
 	}
@@ -247,21 +387,25 @@
 	// Watch pour mettre à jour l'input quand modelValue change
 	watch(() => props.modelValue, (newValue) => {
 		if (newValue) {
+			// Si on a un format de retour différent, convertir la valeur au format d'affichage
+			if (props.dateFormatReturn && props.dateFormatReturn !== props.format) {
+				const date = parseDate(newValue, props.dateFormatReturn)
+				if (date) {
+					inputValue.value = formatDateToString(date, props.format)
+					return
+				}
+			}
+
 			const validation = validateDateFormat(newValue)
 			if (validation.isValid) {
 				inputValue.value = newValue
-				currentErrorMessage.value = ''
 			}
 			else {
 				inputValue.value = ''
-				// Ne pas afficher de message d'erreur au chargement
-				currentErrorMessage.value = hasInteracted.value ? validation.message : ''
 			}
 		}
 		else {
 			inputValue.value = ''
-			// Ne pas afficher de message d'erreur au chargement
-			currentErrorMessage.value = hasInteracted.value && props.required ? props.errorMessages.required : ''
 		}
 	}, { immediate: true })
 
@@ -289,10 +433,10 @@
 		:label="label"
 		:disabled="isDisabled"
 		:outlined="isOutlined"
-		:rules="dateRules"
-		:error-messages="currentErrorMessage ? [currentErrorMessage] : []"
-		:success-messages="successMessages"
-		:warning-messages="warningMessages"
+		:error-messages="errorMessages"
+		:messages="displayMessages"
+		:append-inner-icon="getIcon"
+		:is-on-error="isOnError"
 		:display-icon="displayIcon"
 		:display-append-icon="displayAppendIcon"
 		:no-icon="noIcon"
