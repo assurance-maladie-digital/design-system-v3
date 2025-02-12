@@ -6,7 +6,7 @@
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
 
-	type DateValue = string | [string, string]
+	type DateValue = string | [string, string] | null
 	type DateInput = string | string[] | null | object
 
 	const props = withDefaults(defineProps<{
@@ -179,7 +179,7 @@
 		return formatDate(selectedDates.value, props.format)
 	})
 
-	const validateDateValue = (value: string | string[]): DateValue => {
+	const validateDateValue = (value: DateValue): DateValue => {
 		if (Array.isArray(value)) {
 			if (value.length >= 2) {
 				return [value[0], value[1]] as [string, string]
@@ -257,6 +257,9 @@
 
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
+		if (props.modelValue) {
+			validateDates()
+		}
 		if (selectedDates.value !== null) {
 			validateDates()
 			// Force format application on mount

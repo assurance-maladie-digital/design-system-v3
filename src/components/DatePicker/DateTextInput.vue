@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, computed, watch } from 'vue'
+	import { ref, computed, watch, onMounted } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
@@ -379,6 +379,7 @@
 	watch(() => props.modelValue, (newValue) => {
 		if (!newValue) {
 			inputValue.value = ''
+			validateRules('')
 			return
 		}
 
@@ -386,14 +387,20 @@
 		if (props.dateFormatReturn && props.dateFormatReturn !== props.format) {
 			const date = parseDate(newValue, props.dateFormatReturn)
 			if (date) {
-				inputValue.value = formatDateToString(date, props.format)
+				const formatted = formatDateToString(date, props.format)
+				inputValue.value = formatted
+				validateRules(formatted)
 				return
 			}
 		}
 
-		// Si la valeur est déjà dans le bon format ou si la conversion a échoué
 		inputValue.value = newValue
+		validateRules(newValue)
 	}, { immediate: true })
+
+	onMounted(() => {
+		validateRules(props.modelValue || '')
+	})
 
 	// Exposer les méthodes et propriétés nécessaires
 	defineExpose({

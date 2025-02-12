@@ -93,7 +93,7 @@ import { ref } from 'vue'
 import DateTextInput from '@/components/DatePicker/DateTextInput.vue'
 
 const europeanDate = ref<string | null>(null)
-const customRulesDate = ref<string | null>(null)
+const customRulesDate = ref<string | null>('2025-12-12')
 const warningDate = ref<string | null>(null)
 const rangeDate = ref<string | null>(null)
 </script>
