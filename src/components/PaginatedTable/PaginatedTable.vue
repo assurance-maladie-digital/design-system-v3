@@ -151,7 +151,6 @@
 
 <template>
 	<div>
-		{{ propsFacade }}
 		<VDataTable
 			v-if="!serverItemsLength"
 			color="warning"

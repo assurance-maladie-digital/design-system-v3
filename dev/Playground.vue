@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, reactive } from 'vue'
+	import { ref } from 'vue'
 	import PaginatedTable from '@/components/PaginatedTable/PaginatedTable.vue'
 
 	const options = ref({
@@ -8,7 +8,7 @@
 		sortDesc: false,
 	})
 
-	const headers = reactive([
+	const headers = ref([
 		{
 			text: 'Nom',
 			key: 'lastname',
@@ -24,7 +24,7 @@
 		},
 	])
 
-	const users = reactive([
+	const users = ref([
 		{
 			firstname: 'Virginie',
 			lastname: 'Beauchesne',
@@ -40,13 +40,21 @@
 			lastname: 'Salois',
 			email: 'etienne.salois@example.com',
 		},
+		{
+			firstname: 'Thierry',
+			lastname: 'Bobu',
+			email: 'thierry.bobu@example.com',
+		},
 	])
 </script>
 
 <template>
 	<PaginatedTable
+		:options="options"
 		:headers="headers"
 		:items="users"
-		:options="options"
+		@update:options="options = $event"
 	/>
+
+	<br><br>
 </template>
