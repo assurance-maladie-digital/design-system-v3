@@ -395,7 +395,26 @@
 	}, { immediate: true })
 
 	onMounted(() => {
-		validateRules(props.modelValue || '')
+		if (!props.modelValue) {
+			return
+		}
+
+		// Parser la date avec le format d'entrée
+		const date = parseDate(props.modelValue, props.format)
+		if (date) {
+			// Si un format de retour est spécifié, l'utiliser pour la valeur émise
+			if (props.dateFormatReturn && props.dateFormatReturn !== props.format) {
+				const formattedForReturn = formatDateToString(date, props.dateFormatReturn)
+				emit('update:model-value', formattedForReturn)
+			}
+			
+			// Toujours afficher dans le format d'entrée
+			inputValue.value = formatDateToString(date, props.format)
+			validateRules(inputValue.value)
+		} else {
+			inputValue.value = props.modelValue
+			validateRules(props.modelValue)
+		}
 	})
 
 	// Exposer les méthodes et propriétés nécessaires
