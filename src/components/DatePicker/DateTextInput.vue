@@ -407,11 +407,12 @@
 				const formattedForReturn = formatDateToString(date, props.dateFormatReturn)
 				emit('update:model-value', formattedForReturn)
 			}
-			
+
 			// Toujours afficher dans le format d'entrée
 			inputValue.value = formatDateToString(date, props.format)
 			validateRules(inputValue.value)
-		} else {
+		}
+		else {
 			inputValue.value = props.modelValue
 			validateRules(props.modelValue)
 		}
