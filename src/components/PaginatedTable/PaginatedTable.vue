@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, computed, watch, useSlots, useAttrs } from 'vue'
+	import { ref, computed, watch, useAttrs } from 'vue'
 	import type { PropType } from 'vue'
 	import type { DataOptions, SortOption, GroupOption } from './types'
 	import { LocalStorageUtility } from '@/utils/localStorageUtility'
@@ -25,22 +25,21 @@
 
 	const emit = defineEmits(['update:options'])
 
-	const localStorageUtility = ref(new LocalStorageUtility())
+	const localStorageUtility = new LocalStorageUtility()
 	const localOptions = ref({})
-	const slotNames = ref(Object.keys(useSlots()) as 'default'[])
 
 	const storageKey = computed(() => {
 		const prefix = 'pagination'
 		return props.suffix ? `${prefix}-${props.suffix}` : prefix
 	})
 
-	const attrs = useAttrs()
+	const componentAttributes = useAttrs()
 
 	const headers = computed(() => {
-		if (!Array.isArray(attrs['headers'])) {
+		if (!Array.isArray(componentAttributes['headers'])) {
 			return undefined
 		}
-		return attrs['headers'].map(header => ({
+		return componentAttributes['headers'].map(header => ({
 			...header,
 			title: header.title ?? header.text,
 		}))
@@ -79,7 +78,7 @@
 				]
 
 		return {
-			page: props.options.page || attrs['page'],
+			page: props.options.page || componentAttributes['page'],
 			itemsPerPage: props.options.itemsPerPage || props.itemsPerPage,
 			sortBy,
 			groupBy,
@@ -90,7 +89,7 @@
 
 	const propsFacade = computed(() => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { 'onUpdate:options': _, ...attrs } = props
+		const { 'onUpdate:options': _, ...attrs } = componentAttributes
 
 		return {
 			...attrs,
@@ -136,7 +135,7 @@
 		() => props.options,
 		() => {
 			if (props.serverItemsLength !== 0) {
-				localStorageUtility.value.setItem(storageKey.value, {
+				localStorageUtility.setItem(storageKey.value, {
 					...optionsFacade.value,
 					itemsLength: props.serverItemsLength ?? 0,
 				})
@@ -147,11 +146,12 @@
 		{ deep: true },
 	)
 
-	localOptions.value = localStorageUtility.value.getItem(storageKey.value) ?? optionsFacade.value
+	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
 </script>
 
 <template>
 	<div>
+		{{ propsFacade }}
 		<VDataTable
 			v-if="!serverItemsLength"
 			color="warning"
@@ -159,7 +159,7 @@
 			@update:options="updateOptions"
 		>
 			<template
-				v-for="slotName in slotNames"
+				v-for="slotName in Object.keys($slots)"
 				#[slotName]="slotProps"
 			>
 				<slot
@@ -174,7 +174,7 @@
 			@update:options="updateOptions"
 		>
 			<template
-				v-for="slotName in slotNames"
+				v-for="slotName in Object.keys($slots)"
 				#[slotName]="slotProps"
 			>
 				<slot
