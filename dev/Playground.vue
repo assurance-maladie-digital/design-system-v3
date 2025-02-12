@@ -7,6 +7,7 @@
 			<DateTextInput
 				v-model="europeanDate"
 				format="DD/MM/YYYY"
+        date-format-return="YYYY/MM/DD"
 				placeholder="JJ/MM/AAAA"
 				required
 			/>
@@ -17,7 +18,8 @@
 			<h2>2. Format avec règles personnalisées</h2>
 			<DateTextInput
 				v-model="customRulesDate"
-				format="DD/MM/YYYY"
+				date-format-return="DD/MM/YYYY"
+        format="YY/MM/DD"
 				placeholder="JJ/MM/AAAA"
         required
 				:custom-rules="[{

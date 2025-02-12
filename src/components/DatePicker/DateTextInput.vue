@@ -58,72 +58,80 @@
 	// Fonction pour parser une date selon le format spécifié
 	const parseDate = (dateStr: string, format: string = props.format): Date | null => {
 		const parts = dateStr.split(/[-/.]/)
-		if (parts.length !== 3) return null
+		const formatParts = format.split(/[-/.]/)
 
-		let day: number, month: number, year: number
+		if (parts.length !== formatParts.length) {
+			return null
+		}
 
-		// Extraire les positions du jour, mois et année selon le format
-		const dayPos = format.indexOf('DD')
-		const monthPos = format.indexOf('MM')
-		const yearPos = format.indexOf('YYYY')
+		let day = 1, month = 0, year = 1970
 
-		if (dayPos === -1 || monthPos === -1 || yearPos === -1) return null
-
-		// Déterminer l'ordre des composants
-		const positions = [
-			{ pos: dayPos, type: 'day' },
-			{ pos: monthPos, type: 'month' },
-			{ pos: yearPos, type: 'year' },
-		].sort((a, b) => a.pos - b.pos)
-
-		// Assigner les valeurs selon l'ordre du format
-		for (let i = 0; i < 3; i++) {
+		// Mapper les parties selon le format
+		for (let i = 0; i < formatParts.length; i++) {
 			const value = parseInt(parts[i], 10)
-			switch (positions[i].type) {
-			case 'day':
+			if (isNaN(value)) {
+				return null
+			}
+
+			switch (formatParts[i].toUpperCase()) {
+			case 'DD':
 				day = value
 				break
-			case 'month':
-				month = value - 1 // Les mois commencent à 0 en JS
+			case 'MM':
+				month = value - 1 // JavaScript months are 0-based
 				break
-			case 'year':
+			case 'YY':
+				year = value + 2000 // Assuming 20xx for YY format
+				break
+			case 'YYYY':
 				year = value
 				break
 			}
 		}
 
-		if (isNaN(day) || isNaN(month) || isNaN(year)) return null
+		// Valider les limites
+		if (month < 0 || month > 11) return null
+		if (day < 1 || day > 31) return null
+		if (year < 1900 || year > 2100) return null
 
 		const date = new Date(year, month, day)
-		// Vérifier que la date est valide
-		if (
-			date.getFullYear() !== year
-			|| date.getMonth() !== month
-			|| date.getDate() !== day
-		) {
+
+		// Vérifier si la date est valide (ex: 31/04 n'existe pas)
+		if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
 			return null
 		}
 
 		return date
 	}
 
-	// Fonction pour formater une date selon un format spécifique
+	// Fonction pour formater une date en chaîne selon le format spécifié
 	const formatDateToString = (date: Date, format: string): string => {
-		const year = date.getFullYear().toString()
-		const month = String(date.getMonth() + 1).padStart(2, '0')
-		const day = String(date.getDate()).padStart(2, '0')
+		const day = date.getDate().toString().padStart(2, '0')
+		const month = (date.getMonth() + 1).toString().padStart(2, '0')
+		const year = date.getFullYear()
+		const shortYear = (year % 100).toString().padStart(2, '0')
 
 		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
-		const parts = format.split(/[-/.]/)
-		const result = []
+		const parts: string[] = []
 
-		for (const part of parts) {
-			if (part.includes('DD')) result.push(day)
-			else if (part.includes('MM')) result.push(month)
-			else if (part.includes('YYYY')) result.push(year)
-		}
+		format.split(/[-/.]/).forEach((part) => {
+			switch (part.toUpperCase()) {
+			case 'DD':
+				parts.push(day)
+				break
+			case 'MM':
+				parts.push(month)
+				break
+			case 'YY':
+				parts.push(shortYear)
+				break
+			case 'YYYY':
+				parts.push(year.toString())
+				break
+			}
+		})
 
-		return result.join(separator)
+		return parts.join(separator)
 	}
 
 	// Fonction pour formater la date pendant la saisie
@@ -143,71 +151,24 @@
 	// Fonction pour valider le format de la date
 	const validateDateFormat = (dateStr: string): { isValid: boolean, message: string } => {
 		if (!dateStr) {
-			return {
-				isValid: !props.required || !hasInteracted.value,
-				message: (props.required && hasInteracted.value) ? 'La date est requise' : '',
-			}
+			return { isValid: !props.required || !hasInteracted.value, message: (props.required && hasInteracted.value) ? 'La date est requise' : '' }
 		}
 
 		// Vérifier que la chaîne ne contient que des chiffres et des séparateurs
 		if (!/^[\d/.-]*$/.test(dateStr)) {
-			return {
-				isValid: false,
-				message: 'Format invalide (JJ/MM/AAAA)',
-			}
+			return { isValid: false, message: 'Format de date invalide' }
 		}
 
-		// Vérifier le format complet avec regex
-		const formatRegex = /^(\d{2})[/.-](\d{2})[/.-](\d{4})$/
-		if (!formatRegex.test(dateStr)) {
-			return {
-				isValid: false,
-				message: 'Format invalide (JJ/MM/AAAA)',
-			}
+		// Essayer de parser avec le format d'entrée
+		let date = parseDate(dateStr, props.format)
+
+		// Si ça échoue et qu'on a un format de retour, essayer avec celui-ci
+		if (!date && props.dateFormatReturn) {
+			date = parseDate(dateStr, props.dateFormatReturn)
 		}
 
-		// Vérifier la validité de la date
-		const [day, month, year] = dateStr.split(/[/.-]/).map(Number)
-		const numMonth = parseInt(month, 10)
-		const daysInMonth = new Date(year, numMonth, 0).getDate()
-
-		if (numMonth < 1 || numMonth > 12) {
-			return {
-				isValid: false,
-				message: 'Format invalide (JJ/MM/AAAA)',
-			}
-		}
-
-		const numDay = parseInt(day, 10)
-		if (numDay < 1 || numDay > daysInMonth) {
-			return {
-				isValid: false,
-				message: 'Date invalide',
-			}
-		}
-
-		// Vérifier la date minimale
-		if (props.minDate) {
-			const currentDate = new Date(year, numMonth - 1, numDay)
-			const minDate = parseDate(props.minDate)
-			if (minDate && currentDate && currentDate < minDate) {
-				return {
-					isValid: false,
-					message: `La date doit être après le ${props.minDate}`,
-				}
-			}
-		}
-
-		// Vérifier la date maximale
-		if (props.maxDate) {
-			const currentDate = new Date(year, numMonth - 1, numDay)
-			const maxDate = parseDate(props.maxDate)
-			if (maxDate && currentDate && currentDate > maxDate) {
-				return {
-					isValid: false,
-					message: `La date doit être avant le ${props.maxDate}`,
-				}
-			}
+		if (!date) {
+			return { isValid: false, message: 'Format de date invalide' }
 		}
 
 		return { isValid: true, message: '' }
@@ -362,11 +323,13 @@
 		if (validation.isValid) {
 			const date = parseDate(formatted)
 			if (date) {
-				const formattedDate = props.dateFormatReturn
+				// Si un format de retour est spécifié, convertir la date dans ce format
+				const outputValue = props.dateFormatReturn
 					? formatDateToString(date, props.dateFormatReturn)
 					: formatted
-				emit('update:model-value', formattedDate)
-				validateRules(formattedDate)
+
+				emit('update:model-value', outputValue)
+				validateRules(outputValue)
 			}
 		}
 		else {
@@ -407,27 +370,22 @@
 
 	// Watch pour mettre à jour l'input quand modelValue change
 	watch(() => props.modelValue, (newValue) => {
-		if (newValue) {
-			// Si on a un format de retour différent, convertir la valeur au format d'affichage
-			if (props.dateFormatReturn && props.dateFormatReturn !== props.format) {
-				const date = parseDate(newValue, props.dateFormatReturn)
-				if (date) {
-					inputValue.value = formatDateToString(date, props.format)
-					return
-				}
-			}
-
-			const validation = validateDateFormat(newValue)
-			if (validation.isValid) {
-				inputValue.value = newValue
-			}
-			else {
-				inputValue.value = ''
-			}
-		}
-		else {
+		if (!newValue) {
 			inputValue.value = ''
+			return
 		}
+
+		// Si la valeur est dans le format de retour, la convertir au format d'affichage
+		if (props.dateFormatReturn && props.dateFormatReturn !== props.format) {
+			const date = parseDate(newValue, props.dateFormatReturn)
+			if (date) {
+				inputValue.value = formatDateToString(date, props.format)
+				return
+			}
+		}
+
+		// Si la valeur est déjà dans le bon format ou si la conversion a échoué
+		inputValue.value = newValue
 	}, { immediate: true })
 
 	// Exposer les méthodes et propriétés nécessaires
@@ -448,7 +406,6 @@
 </script>
 
 <template>
-	{{ successMessages }}
 	<SyTextField
 		v-model="inputValue"
 		:placeholder="placeholder"
