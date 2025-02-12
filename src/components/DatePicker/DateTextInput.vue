@@ -242,12 +242,16 @@
 			return (value: string) => {
 				if (rule.type === 'custom') {
 					const { validate, message, warningMessage, successMessage, isWarning } = rule.options
+					
+					if (typeof validate !== 'function') {
+						console.warn('Custom rule is missing validate function')
+						return true
+					}
+					
 					const isValid = validate(value)
 
 					if (isWarning) {
 						// Pour les règles de warning, on inverse la logique :
-						// - Si la validation échoue (date en 2025) -> warning
-						// - Si la validation réussit (date hors 2025) -> success
 						return !isValid
 							? { warning: warningMessage || message }
 							: { success: successMessage }

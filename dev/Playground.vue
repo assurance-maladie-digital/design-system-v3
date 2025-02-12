@@ -20,7 +20,7 @@
 				v-model="customRulesDate"
 				date-format-return="DD/MM/YYYY"
         format="YYYY-MM-DD"
-				placeholder="JJ/MM/AAAA"
+				placeholder="YYYY-MM-DD"
         required
 				:custom-rules="[{
 					type: 'custom',
