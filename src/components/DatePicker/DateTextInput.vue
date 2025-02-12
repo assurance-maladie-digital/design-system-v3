@@ -327,20 +327,35 @@
 		return undefined
 	})
 
+	// Gestionnaire de touches pour bloquer les caractères non numériques
+	const handleKeydown = (event: KeyboardEvent) => {
+		// Autoriser les touches de contrôle (backspace, delete, flèches, etc.)
+		if (event.key.length > 1) {
+			return
+		}
+
+		// Bloquer si on a déjà 10 caractères et qu'on n'est pas en train de sélectionner du texte
+		const input = event.target as HTMLInputElement
+		if (input.value.length === 10) {
+			event.preventDefault()
+			return
+		}
+
+		// N'autoriser que les chiffres
+		if (!/^\d$/.test(event.key)) {
+			event.preventDefault()
+		}
+	}
+
 	// Gestionnaire de changement de valeur
 	const handleInput = (event: Event) => {
 		hasInteracted.value = true
 		const inputElement = event.target as HTMLInputElement
-		const value = inputElement.value
+		let value = inputElement.value
 
 		// Formatage de la date pendant la saisie
 		const formatted = formatDateInput(value)
 		inputValue.value = formatted
-
-		// Ne pas valider pendant la saisie
-		if (isFocused.value) {
-			return
-		}
 
 		// Validation et mise à jour du modèle
 		const validation = validateDateFormat(formatted)
@@ -453,6 +468,7 @@
 			'success-field': isOnSuccess
 		}"
 		@input="handleInput"
+		@keydown="handleKeydown"
 		@focus="handleFocus"
 		@blur="handleBlur"
 	/>

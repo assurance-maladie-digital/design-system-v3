@@ -19,12 +19,13 @@
 				v-model="customRulesDate"
 				format="DD/MM/YYYY"
 				placeholder="JJ/MM/AAAA"
+        required
 				:custom-rules="[{
 					type: 'custom',
 					options: {
 						validate: value => !value || !value.includes('2024'),
 						message: 'Les dates en 2024 ne sont pas autorisées',
-						successMessage: 'Date valide',
+						successMessage: 'Les dates hors 2024 sont autorisées',
 						fieldIdentifier: 'date'
 					}
 				}]"
@@ -42,7 +43,7 @@
 					type: 'custom',
 					options: {
 						validate: value => !value || !value.includes('2025'),
-						warningMessage: 'Attention : date en 2025',
+						warningMessage: 'Les dates en 2025 ne sont pas autorisées',
 						successMessage: 'Date hors 2025',
 						fieldIdentifier: 'date',
             isWarning: true
