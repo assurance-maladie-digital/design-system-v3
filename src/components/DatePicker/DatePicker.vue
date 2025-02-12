@@ -26,6 +26,7 @@
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
+		isReadOnly?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -43,11 +44,14 @@
 		noIcon: false,
 		noCalendar: false,
 		isOutlined: true,
+		isReadOnly: false,
 	})
 
 	const emit = defineEmits<{
 		(e: 'update:model-value', value: DateValue): void
 		(e: 'closed'): void
+		(e: 'focus'): void
+		(e: 'blur'): void
 	}>()
 
 	// Fonction pour parser les dates selon le format spécifié
@@ -126,6 +130,22 @@
 	const warningMessages = ref<string[]>([])
 	const displayFormattedDate = ref('')
 
+	const textInputValue = ref<string>('')
+
+	watch(selectedDates, (newValue) => {
+		validateDates()
+		if (props.displayRange) {
+			if (Array.isArray(newValue) && newValue.length >= 2) {
+				isDatePickerVisible.value = false
+				emit('closed')
+			}
+		}
+		else {
+			isDatePickerVisible.value = false
+			emit('closed')
+		}
+	})
+
 	const getMessageClasses = () => ({
 		'dp-width': true,
 		'v-messages__message--success': successMessages.value.length > 0,
@@ -162,6 +182,16 @@
 		return formatDate(selectedDates.value, returnFormat)
 	})
 
+	watch(formattedDate, (newValue) => {
+		if (typeof newValue === 'string') {
+			textInputValue.value = newValue
+		}
+	}, { immediate: true })
+
+	watch(textInputValue, (newValue) => {
+		updateSelectedDates(newValue)
+	})
+
 	// Date(s) formatée(s) en chaîne de caractères pour l'affichage
 	const displayFormattedDateComputed = computed(() => {
 		if (!selectedDates.value) return null
@@ -179,20 +209,15 @@
 		return formatDate(selectedDates.value, props.format)
 	})
 
-	const validateDateValue = (value: DateValue): DateValue => {
-		if (Array.isArray(value)) {
-			if (value.length >= 2) {
-				return [value[0], value[1]] as [string, string]
-			}
-			return value[0] || ''
-		}
-		return value
-	}
-
-	watch(formattedDate, (newValue) => {
-		const validValue = validateDateValue(newValue)
-		emit('update:model-value', validValue)
-	})
+	// const validateDateValue = (value: DateValue): DateValue => {
+	// 	if (Array.isArray(value)) {
+	// 		if (value.length >= 2) {
+	// 			return [value[0], value[1]] as [string, string]
+	// 		}
+	// 		return value[0] || ''
+	// 	}
+	// 	return value
+	// }
 
 	watch(displayFormattedDateComputed, (newValue) => {
 		if (!props.noCalendar && newValue) {
@@ -218,20 +243,6 @@
 		const date = input ? parseDate(input) : null
 		selectedDates.value = date === null ? null : date
 	}
-
-	watch(selectedDates, (newValue) => {
-		validateDates()
-		if (props.displayRange) {
-			if (Array.isArray(newValue) && newValue.length >= 2) {
-				isDatePickerVisible.value = false
-				emit('closed')
-			}
-		}
-		else {
-			isDatePickerVisible.value = false
-			emit('closed')
-		}
-	})
 
 	// Gestionnaire de clic en dehors
 	const handleClickOutside = (event: MouseEvent) => {
@@ -337,6 +348,11 @@
 		successMessages.value = []
 		warningMessages.value = []
 
+		if (props.noCalendar) {
+			// En mode no-calendar, on délègue la validation au DateTextInput
+			return
+		}
+
 		const addMessages = (dates, rules) => {
 			dates.forEach((date) => {
 				rules.forEach((rule) => {
@@ -376,10 +392,7 @@
 			}
 		}
 
-		if (
-			props.required
-			&& (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))
-		) {
+		if (props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
 			errorMessages.value.push('La date est requise.')
 		}
 		else if (selectedDates.value) {
@@ -409,18 +422,24 @@
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
-				v-model="displayFormattedDate"
+				v-model="textInputValue"
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:date-format-return="props.dateFormatReturn"
 				:format="props.format"
 				:label="props.placeholder"
 				:placeholder="props.placeholder"
-				:range="props.displayRange"
 				:required="props.required"
-				:rules="props.customRules"
-				:warning-rules="props.customWarningRules"
+				:custom-rules="props.customRules"
+				:custom-warning-rules="props.customWarningRules"
+				:is-disabled="props.isDisabled"
+				:is-read-only="props.isReadOnly"
+				:is-outlined="props.isOutlined"
+				:display-icon="props.displayIcon"
+				:display-append-icon="props.displayAppendIcon"
+				:no-icon="props.noIcon"
 				title="Date text input"
-				@update:model-value="updateSelectedDates"
+				@focus="emit('focus')"
+				@blur="emit('blur')"
 			/>
 		</template>
 		<template v-else>

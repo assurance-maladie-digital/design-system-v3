@@ -4,24 +4,26 @@
 
 		<div class="test-case">
 			<h2>1. Format européen avec règles de base</h2>
-			<DateTextInput
+			<DatePicker
 				v-model="europeanDate"
 				format="DD/MM/YYYY"
         date-format-return="YYYY/MM/DD"
 				placeholder="JJ/MM/AAAA"
 				required
+        no-calendar
 			/>
 			<div class="value">Valeur : {{ europeanDate }}</div>
 		</div>
 
 		<div class="test-case">
 			<h2>2. Format avec règles personnalisées</h2>
-			<DateTextInput
+			<DatePicker
 				v-model="customRulesDate"
 				date-format-return="DD/MM/YYYY"
         format="YYYY-MM-DD"
 				placeholder="YYYY-MM-DD"
         required
+        no-calendar
 				:custom-rules="[{
 					type: 'custom',
 					options: {
@@ -37,10 +39,11 @@
 
 		<div class="test-case">
 			<h2>3. Format avec règles d'avertissement</h2>
-			<DateTextInput
+			<DatePicker
 				v-model="warningDate"
 				format="DD/MM/YYYY"
 				placeholder="JJ/MM/AAAA"
+        no-calendar
 				:custom-warning-rules="[{
 					type: 'custom',
 					options: {
@@ -57,11 +60,12 @@
 
     <div class="test-case">
     <h2>4. Format avec validation min/max</h2>
-    <DateTextInput
+    <DatePicker
         v-model="rangeDate"
         format="DD/MM/YYYY"
         placeholder="JJ/MM/AAAA"
         required
+        no-calendar
         :custom-rules="[
             {
                 type: 'notBeforeDate',
@@ -90,7 +94,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import DateTextInput from '@/components/DatePicker/DateTextInput.vue'
+import DatePicker from '@/components/DatePicker/DatePicker.vue'
 
 const europeanDate = ref<string | null>(null)
 const customRulesDate = ref<string | null>('2025-12-12')
