@@ -21,6 +21,10 @@
 			type: Number,
 			default: undefined,
 		},
+		caption: {
+			type: String,
+			default: 'caption',
+		},
 	})
 
 	const emit = defineEmits(['update:options'])
@@ -149,14 +153,33 @@
 	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
 
 	onMounted(() => {
+		const table = document.querySelector('table')
+		const caption = document.createElement('caption')
+		caption.innerHTML = props.caption
+		if (props.caption === 'caption') {
+			caption.classList.add('d-sr-only')
+		}
+		else {
+			caption.classList.add('text-subtitle-1')
+		}
+		table?.prepend(caption)
+
 		const input = document.getElementsByTagName('input')
 		input[0].setAttribute('aria-describedby', 'items per page')
 
 		const field = document.querySelectorAll('.v-field')
 		field[0].setAttribute('tabindex', '0')
 
+		const fieldLabel = document.querySelectorAll('.v-field')
+		fieldLabel[0].setAttribute('aria-label', 'items per page')
+
+		const fieldTitle = document.querySelectorAll('.v-field')
+		fieldTitle[0].setAttribute('title', 'items per page')
+
 		const th = document.getElementsByTagName('th')
-		th[0].setAttribute('scope', 'col')
+		for (let i = 0; i < th.length; i++) {
+			th[i].setAttribute('scope', 'col')
+		}
 	})
 </script>
 
@@ -207,11 +230,11 @@
 	}
 
 	table thead th {
-    .v-data-table-header__content {
-      opacity: 0.65;
-      font-size: 0.875rem;
-      font-weight: 700 !important;
-    }
+		.v-data-table-header__content {
+			opacity: 0.65;
+			font-size: 0.875rem;
+			font-weight: 700 !important;
+		}
 	}
 
 	table :not(thead) tr {
