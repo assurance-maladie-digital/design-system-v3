@@ -55,11 +55,10 @@
 	}>()
 
 	// Fonction pour parser les dates selon le format spécifié
-	const parseDate = (dateString: string): Date | null => {
+	const parseDate = (dateString: string, format: string = props.format): Date | null => {
 		if (!dateString) return null
 
 		// Créer un mapping des positions des éléments de date selon le format
-		const format = props.format || 'DD/MM/YYYY'
 		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
 		const parts = format.split(separator)
 		const dateParts = dateString.split(separator)
@@ -184,11 +183,32 @@
 
 	watch(formattedDate, (newValue) => {
 		if (typeof newValue === 'string') {
-			textInputValue.value = newValue
+			// Si on a un format de retour différent, on doit convertir la date
+			if (props.dateFormatReturn) {
+				const date = parseDate(newValue, props.dateFormatReturn)
+				if (date) {
+					textInputValue.value = formatDate(date, props.format)
+				}
+			}
+			else {
+				textInputValue.value = newValue
+			}
 		}
 	}, { immediate: true })
 
 	watch(textInputValue, (newValue) => {
+		// Parse la date avec le format d'affichage
+		const date = parseDate(newValue, props.format)
+		if (date) {
+			// Si on a un format de retour, formater la date dans ce format
+			const formattedValue = props.dateFormatReturn
+				? formatDate(date, props.dateFormatReturn)
+				: formatDate(date, props.format)
+			emit('update:model-value', formattedValue)
+		}
+		else {
+			emit('update:model-value', newValue || null)
+		}
 		updateSelectedDates(newValue)
 	})
 

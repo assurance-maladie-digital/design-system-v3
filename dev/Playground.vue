@@ -7,7 +7,7 @@
 			<DatePicker
 				v-model="europeanDate"
 				format="DD/MM/YYYY"
-        date-format-return="YYYY/MM/DD"
+        		date-format-return="YYYY/MM/DD"
 				placeholder="JJ/MM/AAAA"
 				required
         no-calendar
@@ -20,7 +20,7 @@
 			<DatePicker
 				v-model="customRulesDate"
 				date-format-return="DD/MM/YYYY"
-        format="YYYY-MM-DD"
+        		format="YYYY-MM-DD"
 				placeholder="YYYY-MM-DD"
         required
         no-calendar
@@ -72,7 +72,7 @@
                 options: {
                     date: '01/01/2025',
                     message: 'La date doit être postérieure ou égale au 01/01/2025',
-                    successMessage: 'Date valide',
+                    successMessage: 'Date valide est postérieure ou égale au 01/01/2025',
                     fieldIdentifier: 'date'
                 }
             },
@@ -81,7 +81,7 @@
                 options: {
                     date: '31/12/2025',
                     message: 'La date doit être antérieure ou égale au 31/12/2025',
-                    successMessage: 'Date valide',
+                    successMessage: 'La date est antérieure ou égale au 31/12/2025',
                     fieldIdentifier: 'date'
                 }
             }
@@ -97,9 +97,9 @@ import { ref } from 'vue'
 import DatePicker from '@/components/DatePicker/DatePicker.vue'
 
 const europeanDate = ref<string | null>(null)
-const customRulesDate = ref<string | null>('2025-12-12')
-const warningDate = ref<string | null>(null)
-const rangeDate = ref<string | null>(null)
+const customRulesDate = ref<string | null>('2025-12-21')
+const warningDate = ref<string | null>('20/12/2025')
+const rangeDate = ref<string | null>('20/12/2024')
 </script>
 
 <style scoped>

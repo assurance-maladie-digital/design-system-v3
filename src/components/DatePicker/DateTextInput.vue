@@ -196,28 +196,46 @@
 		// Validation des règles
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const validateErrorRules = (rules: any[]) => {
+			let allValid = true
+			const successMsgs: string[] = []
+
 			rules.forEach((rule) => {
 				const result = rule(value)
 				if (result?.error) {
 					errorMessages.value.push(result.error)
+					allValid = false
 				}
 				else if (!result?.warning && !result?.error) {
-					successMessages.value.push(result?.success || 'Date valide')
+					successMsgs.push(result?.success || 'Date valide')
 				}
 			})
+
+			// N'ajouter les messages de succès que si toutes les règles sont validées
+			if (allValid && successMsgs.length > 0) {
+				successMessages.value.push(...successMsgs)
+			}
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const validateWarningRules = (rules: any[]) => {
+			let allValid = true
+			const successMsgs: string[] = []
+
 			rules.forEach((rule) => {
 				const result = rule(value)
 				if (result?.warning) {
 					warningMessages.value.push(result.warning)
+					allValid = false
 				}
 				else if (result?.success) {
-					successMessages.value.push(result.success)
+					successMsgs.push(result.success)
 				}
 			})
+
+			// N'ajouter les messages de succès que si toutes les règles sont validées
+			if (allValid && successMsgs.length > 0) {
+				successMessages.value.push(...successMsgs)
+			}
 		}
 
 		// Appliquer les règles
