@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, computed, watch, useAttrs } from 'vue'
+	import { ref, computed, watch, useAttrs, onMounted } from 'vue'
 	import type { PropType } from 'vue'
 	import type { DataOptions, SortOption, GroupOption } from './types'
 	import { LocalStorageUtility } from '@/utils/localStorageUtility'
@@ -147,6 +147,17 @@
 	)
 
 	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
+
+	onMounted(() => {
+		const input = document.getElementsByTagName('input')
+		input[0].setAttribute('aria-describedby', 'items per page')
+
+		const field = document.querySelectorAll('.v-field')
+		field[0].setAttribute('tabindex', '0')
+
+		const th = document.getElementsByTagName('th')
+		th[0].setAttribute('scope', 'col')
+	})
 </script>
 
 <template>
@@ -196,9 +207,11 @@
 	}
 
 	table thead th {
-		opacity: 0.6;
-		font-size: 0.875rem;
-		font-weight: 700 !important;
+    .v-data-table-header__content {
+      opacity: 0.65;
+      font-size: 0.875rem;
+      font-weight: 700 !important;
+    }
 	}
 
 	table :not(thead) tr {

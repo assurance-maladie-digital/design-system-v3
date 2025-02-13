@@ -48,12 +48,12 @@
 </script>
 
 <template>
-	<PaginatedTable
-		:options="options"
-		:headers="headers"
-		:items="users"
-		@update:options="options.value = $event"
-	/>
-
-	<br><br>
+	<main>
+		<PaginatedTable
+			:options="options"
+			:headers="headers"
+			:items="users"
+			@update:options="options.value = $event"
+		/>
+	</main>
 </template>
