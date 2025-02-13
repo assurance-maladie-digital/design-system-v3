@@ -5,7 +5,7 @@ import * as FileListStories from './FileList.stories';
 
 # FileList
 
-Le composant `FileList` est utilisé pour afficher une liste de document à téléversé.
+Le composant `FileList` est utilisé pour afficher une liste de document à téléverser.
 
 <Canvas of={FileListStories.Default} />
 
@@ -18,8 +18,8 @@ Le composant `FileList` est utilisé pour afficher une liste de document à tél
 
 ## Les différents états d'un fichier
 
-Un fichier peut être dans différents états 'initial', 'success', 'error' et 'loading'.
-quand il est dans l'état 'loading' une barre de progression est affiché.
+Un fichier peut être dans différents états : « initial », « success », « error » et « loading ».
+Lorsqu’il est dans l’état « loading », une barre de progression est affichée.
 
 Renseigner la propriété `progress` permet de donner a l'utilisateur une indication de progression du téléversement.
 
@@ -44,9 +44,9 @@ Quand une action est cliqué, un événement `upload`, `delete` ou `preview` est
 
 <Canvas of={FileListStories.Actions} />
 
-## Personnalisation des icons de fichier
+## Personnalisation des icônes de fichier
 
-Il est possible de personnaliser les icons de fichier en utilisant le slot dynamique `file-icon-<id du fichier>`.
+Il est possible de personnaliser les icônes de fichier en utilisant le slot dynamique `file-icon-<id du fichier>`.
 
 <Canvas
 	of={FileListStories.Customization}

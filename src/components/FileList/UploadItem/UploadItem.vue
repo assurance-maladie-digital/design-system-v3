@@ -243,7 +243,7 @@
 	display: flex;
 	justify-content: end;
 	text-transform: unset;
-	padding:  0.625rem 1.25rem;
+	padding: 0.625rem 1.25rem;
 	font-weight: bold;
 }
 
