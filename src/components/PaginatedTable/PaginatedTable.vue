@@ -170,6 +170,7 @@
 		<VDataTableServer
 			v-else
 			v-bind="propsFacade"
+			color="primary"
 			@update:options="updateOptions"
 		>
 			<template
@@ -184,3 +185,61 @@
 		</VDataTableServer>
 	</div>
 </template>
+
+<style lang="scss">
+@use '@/assets/tokens';
+
+.vd-data-table,
+.v-data-table {
+  table thead tr {
+    white-space: nowrap;
+  }
+
+  table thead th {
+    opacity: 0.6;
+    font-size: 0.875rem;
+    font-weight: 700 !important;
+  }
+
+  table :not(thead) tr {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  :deep(.v-select--selected) {
+    border-color: tokens.$primary-base !important;
+  }
+
+  &.row-clickable table tbody tr {
+    cursor: pointer;
+  }
+
+  &.fixed-min-height {
+    .v-data-table__wrapper {
+      min-height: 540px;
+    }
+  }
+
+  &.no-mobile-header {
+    .v-data-table-header-mobile {
+      display: none;
+    }
+
+    table {
+      border-top: 2px solid #eee;
+    }
+  }
+
+  .v-data-table-progress {
+    .v-progress-linear {
+      height: 4px !important;
+    }
+
+    .v-progress-linear__background,
+    .v-progress-linear__indeterminate {
+      background: tokens.$primary-base;
+    }
+  }
+}
+</style>
