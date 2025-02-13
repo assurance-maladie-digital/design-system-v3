@@ -70,7 +70,6 @@
 .upload-list {
 	display: flex;
 	flex-direction: column;
-	gap: tokens.$padding-4;
 	margin: 0;
 	padding: 0;
 	list-style: none;

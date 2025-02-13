@@ -1,13 +1,13 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
 import * as FileListStories from './FileList.stories';
 
-<Meta of={FileListStories}/>
+<Meta of={FileListStories} />
 
 # FileList
 
 Le composant `FileList` est utilisé pour afficher une liste de document à téléversé.
 
-<Canvas of={FileListStories.Default} className="bg-backgroundMain"/>
+<Canvas of={FileListStories.Default} />
 
 # API
 
@@ -23,13 +23,13 @@ quand il est dans l'état 'loading' une barre de progression est affiché.
 
 Renseigner la propriété `progress` permet de donner a l'utilisateur une indication de progression du téléversement.
 
-<Canvas of={FileListStories.States} className="bg-backgroundMain"/>
+<Canvas of={FileListStories.States} />
 
 ## Fichiers optionnels
 
 Il est possible de rendre un fichier optionnel en ajoutant la propriété `optional` à l'objet fichier.
 
-<Canvas of={FileListStories.OptionalDocument} className="bg-backgroundMain"/>
+<Canvas of={FileListStories.OptionalDocument} />
 
 ## Actions
 
@@ -42,14 +42,13 @@ Pour afficher ou masquer une action, il est possible d'utiliser les propriétés
 
 Quand une action est cliqué, un événement `upload`, `delete` ou `preview` est émis avec l'objet de l'item en paramètre.
 
-<Canvas of={FileListStories.Actions} className="bg-backgroundMain"/>
+<Canvas of={FileListStories.Actions} />
 
 ## Personnalisation des icons de fichier
 
 Il est possible de personnaliser les icons de fichier en utilisant le slot dynamique `file-icon-<id du fichier>`.
 
 <Canvas
-	className="bg-backgroundMain"
 	of={FileListStories.Customization}
 		source={{
 		language: 'html',

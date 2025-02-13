@@ -1,10 +1,13 @@
 <script setup lang="ts">
 	import {
-		mdiFolder,
+		mdiFile,
 		mdiTrayArrowUp,
 		mdiDeleteOutline,
 		mdiEyeOutline,
+		mdiAlertCircle,
+		mdiCheckCircle,
 	} from '@mdi/js'
+	import { cnamContextualTokens } from '@/designTokens/tokens/cnam/cnamContextual'
 	import { locales as defaultLocales } from './locales'
 
 	type FileState = 'initial' | 'success' | 'error' | 'loading'
@@ -56,21 +59,44 @@
 			<div class="file-item__content">
 				<span
 					class="file-item__icon"
-					:class="{
-						'bg-backgroundInfoSubdued': state === 'initial',
-						'bg-backgroundSuccessSubdued': state === 'success',
-						'bg-backgroundErrorSubdued': state === 'error',
-					}"
 				>
 					<slot
 						name="file-icon"
 						:state
 					>
+						<span
+							v-if="state === 'success'"
+							class="d-sr-only"
+						>
+							{{ locales.success }}
+						</span>
+
+						<span
+							v-else-if="state === 'error'"
+							class="d-sr-only"
+						>
+							{{ locales.error }}
+						</span>
+
 						<VIcon
-							:size="22"
-							class=""
-							:color="state === 'success' ? 'success' : state === 'error' ? 'error' : 'primary'"
-						>{{ mdiFolder }}</VIcon>
+							v-if="state === 'error'"
+							:size="cnamContextualTokens.iconSize.default"
+							:aria-label="locales.error"
+							color="error"
+						>{{ mdiAlertCircle }}</VIcon>
+
+						<VIcon
+							v-else-if="state === 'success'"
+							:size="cnamContextualTokens.iconSize.default"
+							:aria-label="locales.success"
+							color="success"
+						>{{ mdiCheckCircle }}</VIcon>
+
+						<VIcon
+							v-else
+							:size="cnamContextualTokens.iconSize.default"
+							color="primary"
+						>{{ mdiFile }}</VIcon>
 					</slot>
 				</span>
 				<div>
@@ -87,35 +113,6 @@
 				class="file-item__message"
 			>
 				{{ message ?? locales.optionalDocument }}
-			</div>
-			<div
-				v-if="state === 'success'"
-				class="file-item__message-success"
-			>
-				<VChip
-					color="success"
-					variant="flat"
-					density="compact"
-				>
-					{{ locales.success }}
-				</VChip>
-			</div>
-			<div
-				v-if="state === 'error'"
-				class="file-item__message-error"
-			>
-				<VChip
-					color="backgroundErrorContrasted"
-					variant="flat"
-					density="compact"
-				>
-					{{ locales.error }}
-				</VChip>
-				<p
-					class="text-error"
-				>
-					{{ locales.errorOccurred }}
-				</p>
 			</div>
 			<div class="file-item__actions">
 				<VBtn
@@ -170,14 +167,14 @@
 			v-if="state === 'loading'"
 			class="file-item__message-progress"
 		>
-			<p class="text-primary">
+			<p class="d-sr-only">
 				{{ locales.uploading }}
 			</p>
 			<VProgressLinear
-				height="7"
 				:indeterminate="progress === undefined"
 				:model-value="progress"
 				:progress="progress"
+				height="7"
 				color="primary"
 				rounded="true"
 			/>
@@ -192,20 +189,12 @@
 	display: flex;
 	flex-direction: column;
 	gap: tokens.$gap-3;
-	padding: tokens.$padding-4;
-	border-radius: tokens.$radius-rounded;
-	background-color: tokens.$colors-background-surface;
-}
-
-.file-item__icon {
-	padding: 9px;
-	border-radius: tokens.$radius-rounded;
-	background-color: tokens.$colors-background-main;
+	padding-block: tokens.$padding-4;
+	border-bottom: 1px solid tokens.$colors-border-subdued;
 }
 
 .file-item__title {
 	font-size: tokens.$font-size-body-text;
-	font-weight: bold;
 }
 
 .file-item__name {
@@ -245,6 +234,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: end;
+	justify-content: center;
+	height: 100%;
 	gap: tokens.$gap-1;
 }
 
@@ -252,7 +243,7 @@
 	display: flex;
 	justify-content: end;
 	text-transform: unset;
-	padding: 0.625rem 1.25rem;
+	padding:  0.625rem 1.25rem;
 	font-weight: bold;
 }
 
@@ -268,13 +259,6 @@
 
 .file-item__message-error {
 	display: flex;
-	align-items: center;
-	gap: tokens.$gap-4;
-}
-
-.file-item__message-progress {
-	display: grid;
-	grid-template-columns: auto 1fr;
 	align-items: center;
 	gap: tokens.$gap-4;
 }
