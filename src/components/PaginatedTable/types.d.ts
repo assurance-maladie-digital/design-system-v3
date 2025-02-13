@@ -13,10 +13,10 @@ export interface DataOptions {
 	itemsPerPage: number
 	sortBy: string[] | string
 	sortDesc: boolean[] | boolean
-	groupBy: string[] | string
-	groupDesc: boolean[] | boolean
-	multiSort: boolean
-	mustSort: boolean
+	groupBy?: string[] | string
+	groupDesc?: boolean[] | boolean
+	multiSort?: boolean
+	mustSort?: boolean
 }
 
 export interface PaginatedTableProps {
