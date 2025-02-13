@@ -881,8 +881,8 @@ export const NoCalendarCustomRules: Story = {
 				validate: (value: string) => !value || !value.includes('2024'),
 				message: 'Les dates en 2024 ne sont pas autorisées',
 				successMessage: 'Les dates hors 2024 sont autorisées',
-				fieldIdentifier: 'date'
-			}
+				fieldIdentifier: 'date',
+			},
 		}],
 	},
 	render(args) {
@@ -947,8 +947,8 @@ export const NoCalendarWarningRules: Story = {
 				warningMessage: 'Les dates en 2025 ne sont pas autorisées',
 				successMessage: 'Date hors 2025',
 				fieldIdentifier: 'date',
-				isWarning: true
-			}
+				isWarning: true,
+			},
 		}],
 	},
 	render(args) {

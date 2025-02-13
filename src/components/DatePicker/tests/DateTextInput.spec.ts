@@ -67,7 +67,7 @@ describe('DateTextInput.vue', () => {
 		await input.setValue('01/01/2025')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
-		expect(wrapper.emitted('update:model-value')?.[0]).toEqual(['2025-1-1'])
+		expect(wrapper.emitted('update:model-value')?.[0]).toEqual(['2025-01-01'])
 	})
 
 	it('validates custom rules', async () => {
