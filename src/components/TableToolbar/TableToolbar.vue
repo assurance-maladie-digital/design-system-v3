@@ -43,10 +43,9 @@
 	}))
 
 	const displayNbRows = computed(() => {
-		const nbRows = props.nbFiltered ?? props.nbTotal
-		const percent = `${nbRows}/${props.nbTotal}`
+		const lines = props.nbFiltered ? `${props.nbFiltered}/${props.nbTotal}` : String(props.nbTotal)
 		return props.locales.rowText(
-			percent,
+			lines,
 			props.nbTotal > 1,
 		)
 	})
@@ -65,7 +64,8 @@
 		>
 			{{ displayNbRows }}
 		</p>
-		<div class="d-flex align-end justify-end flex-grow-1">
+
+		<div class="sy-table-toolbar__search">
 			<slot name="search-left" />
 			<VTextField
 				v-bind="options.textField"
@@ -113,7 +113,20 @@
 :deep(.v-field--disabled) {
 	opacity: 0.7 !important;
 }
-.sy-table-toolbar {
+
+.sy-table-toolbar__search {
+	display: grid;
+	grid-auto-columns: auto;
+	grid-auto-flow: column;
+	margin-left: auto;
+	align-items: end;
+}
+
+.sy-form-input {
+	width: 328px;
+}
+
+.sy-form-input--s {
 	z-index: 1; // Display content above the table on mobile
 	contain: none; // Allow fixed elements to be displayed properly
 

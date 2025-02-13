@@ -112,7 +112,8 @@ describe('TableToolbar', () => {
 				nbTotal: 50,
 			},
 		})
-		expect(wrapper.find('[data-test-id="nb-rows"]').text()).toContain('50/50')
+		expect(wrapper.find('[data-test-id="nb-rows"]').text()).not.toContain('/')
+		expect(wrapper.find('[data-test-id="nb-rows"]').text()).toContain('50')
 	})
 
 	it('render correctly with the button add', () => {

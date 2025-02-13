@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import TableToolbar from './TableToolbar.vue'
+import { VDataTable } from 'vuetify/components'
+import { ref } from 'vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Tableaux/TableToolbar',
@@ -135,9 +138,6 @@ const meta = {
 				category: 'events',
 			},
 		},
-		'add': {
-			description: 'Slot pour le contenu du bouton d\'ajout',
-		},
 	},
 	parameters: {
 		controls: {
@@ -152,7 +152,784 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		nbFiltered: 5,
-		nbTotal: 10,
+		'nbFiltered': 5,
+		'nbTotal': 10,
+		'onAdd': fn(),
+		'onUpdate:search': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<TableToolbar
+						v-model="search"
+						:nb-total="10"
+						:nb-filtered="5"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { TableToolbar } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const search = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const AddButton: Story = {
+	args: {
+		'nbTotal': 2,
+		'onAdd': fn(),
+		'onUpdate:search': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { TableToolbar, VDataTable },
+			setup() {
+				const headers = [
+					{
+						title: 'Nom',
+						value: 'lastname',
+					},
+					{
+						title: 'Prénom',
+						value: 'firstname',
+					},
+					{
+						title: 'Email',
+						value: 'email',
+					},
+				]
+
+				const items = [
+					{
+						firstname: 'Virginie',
+						lastname: 'Beauchesne',
+						email: 'virginie.beauchesne@example.com',
+					},
+					{
+						firstname: 'Étienne',
+						lastname: 'Salois',
+						email: 'etienne.salois@example.com',
+					},
+				]
+
+				const search = ref('')
+
+				return { args, headers, items, search }
+			},
+			template: `
+				<VDataTable
+					:headers="headers"
+					:items="items"
+					hide-default-footer
+				>
+					<template #top>
+						<TableToolbar
+							v-bind="args"
+							v-model="search"
+							:nb-total="items.length"
+							show-add-button
+						/>
+					</template>
+				</VDataTable>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<VDataTable
+						:headers="headers"
+						:items="items"
+						hide-default-footer
+					>
+						<template #top>
+							<TableToolbar
+								v-model="search"
+								:nb-total="items.length"
+								show-add-button
+							/>
+						</template>
+					</VDataTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { TableToolbar } from '@cnamts/synapse'
+					import { VDataTable } from 'vuetify/components'
+					import { ref } from 'vue'
+
+					const headers = [
+						{
+							title: 'Nom',
+							value: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							value: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					]
+
+					const items = [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+					]
+
+					const search = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const Labels: Story = {
+	args: {
+		'nbTotal': 2,
+		'onAdd': fn(),
+		'onUpdate:search': fn(),
+		'showAddButton': true,
+		'addButtonLabel': 'Ajouter un patient',
+		'searchLabel': 'Rechercher un patient',
+	},
+	render: (args) => {
+		return {
+			components: { TableToolbar, VDataTable },
+			setup() {
+				const headers = [
+					{
+						title: 'Nom',
+						value: 'lastname',
+					},
+					{
+						title: 'Prénom',
+						value: 'firstname',
+					},
+					{
+						title: 'Email',
+						value: 'email',
+					},
+				]
+
+				const items = [
+					{
+						firstname: 'Virginie',
+						lastname: 'Beauchesne',
+						email: 'virginie.beauchesne@example.com',
+					},
+					{
+						firstname: 'Étienne',
+						lastname: 'Salois',
+						email: 'etienne.salois@example.com',
+					},
+				]
+
+				const search = ref('')
+
+				return { args, headers, items, search }
+			},
+			template: `
+				<VDataTable
+					:headers="headers"
+					:items="items"
+					hide-default-footer
+				>
+					<template #top>
+						<TableToolbar
+							v-bind="args"
+							v-model="search"
+						/>
+					</template>
+				</VDataTable>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<VDataTable
+						:headers="headers"
+						:items="items"
+						hide-default-footer
+					>
+						<template #top>
+							<TableToolbar
+								v-model="search"
+								:nb-total="items.length"
+								show-add-button
+								showAddButton
+								addButtonLabel="Ajouter un patient"
+								searchLabel="Rechercher un patient"
+							/>
+						</template>
+					</VDataTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { TableToolbar } from '@cnamts/synapse'
+					import { VDataTable } from 'vuetify/components'
+					import { ref } from 'vue'
+
+					const headers = [
+						{
+							title: 'Nom',
+							value: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							value: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					]
+
+					const items = [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+					]
+
+					const search = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const Loading: Story = {
+	args: {
+		'nbTotal': 2,
+		'onAdd': fn(),
+		'onUpdate:search': fn(),
+		'loading': true,
+	},
+	render: (args) => {
+		return {
+			components: { TableToolbar, VDataTable },
+			setup() {
+				const headers = [
+					{
+						title: 'Nom',
+						value: 'lastname',
+					},
+					{
+						title: 'Prénom',
+						value: 'firstname',
+					},
+					{
+						title: 'Email',
+						value: 'email',
+					},
+				]
+
+				const items = [
+					{
+						firstname: 'Virginie',
+						lastname: 'Beauchesne',
+						email: 'virginie.beauchesne@example.com',
+					},
+					{
+						firstname: 'Étienne',
+						lastname: 'Salois',
+						email: 'etienne.salois@example.com',
+					},
+				]
+
+				const search = ref('')
+
+				return { args, headers, items, search }
+			},
+			template: `
+				<VDataTable
+					:headers="headers"
+					:items="items"
+					loading
+					hide-default-footer
+				>
+					<template #top>
+						<TableToolbar
+							v-bind="args"
+							v-model="search"
+						/>
+					</template>
+				</VDataTable>
+			`,
+		}
+	},
+}
+
+export const NbFiltered: Story = {
+	args: {
+		'nbTotal': 10,
+		'nbFiltered': 5,
+		'onAdd': fn(),
+		'onUpdate:search': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { TableToolbar, VDataTable },
+			setup() {
+				const headers = [
+					{
+						title: 'Nom',
+						value: 'lastname',
+					},
+					{
+						title: 'Prénom',
+						value: 'firstname',
+					},
+					{
+						title: 'Email',
+						value: 'email',
+					},
+				]
+
+				const items = [
+					{
+						firstname: 'Virginie',
+						lastname: 'Beauchesne',
+						email: 'virginie.beauchesne@example.com',
+					},
+					{
+						firstname: 'Étienne',
+						lastname: 'Salois',
+						email: 'etienne.salois@example.com',
+					},
+				]
+
+				const search = ref('')
+
+				return { args, headers, items, search }
+			},
+			template: `
+				<VDataTable
+					:headers="headers"
+					:items="items"
+					hide-default-footer
+				>
+					<template #top>
+						<TableToolbar
+							v-bind="args"
+							v-model="search"
+						/>
+					</template>
+				</VDataTable>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<VDataTable
+						:headers="headers"
+						:items="items"
+						hide-default-footer
+					>
+						<template #top>
+							<TableToolbar
+								v-model="search"
+								:nbTotal="10"
+								:nbFiltered="5"
+							/>
+						</template>
+					</VDataTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { TableToolbar } from '@cnamts/synapse'
+					import { VDataTable } from 'vuetify/components'
+					import { ref } from 'vue'
+
+					const headers = [
+						{
+							title: 'Nom',
+							value: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							value: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					]
+
+					const items = [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+					]
+
+					const search = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const Customization: Story = {
+	args: {
+		'nbTotal': 10,
+		'onAdd': fn(),
+		'onUpdate:search': fn(),
+		'showAddButton': true,
+		'vuetifyOptions': {
+			toolbar: {
+				class: 'py-2',
+			},
+			textField: {
+				variant: 'outlined',
+				density: 'compact',
+			},
+			addBtn: {
+				height: '40px',
+				color: '#663399',
+			},
+			addIcon: {
+				class: 'd-none',
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { TableToolbar, VDataTable },
+			setup() {
+				const headers = [
+					{
+						title: 'Nom',
+						value: 'lastname',
+					},
+					{
+						title: 'Prénom',
+						value: 'firstname',
+					},
+					{
+						title: 'Email',
+						value: 'email',
+					},
+				]
+
+				const items = [
+					{
+						firstname: 'Virginie',
+						lastname: 'Beauchesne',
+						email: 'virginie.beauchesne@example.com',
+					},
+					{
+						firstname: 'Étienne',
+						lastname: 'Salois',
+						email: 'etienne.salois@example.com',
+					},
+				]
+
+				const search = ref('')
+
+				return { args, headers, items, search }
+			},
+			template: `
+				<VDataTable
+					:headers="headers"
+					:items="items"
+					hide-default-footer
+				>
+					<template #top>
+						<TableToolbar
+							v-bind="args"
+							v-model="search"
+						/>
+					</template>
+				</VDataTable>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<VDataTable
+						:headers="headers"
+						:items="items"
+						hide-default-footer
+					>
+						<template #top>
+							<TableToolbar
+								v-model="search"
+								:nb-total="10"
+								show-add-button
+								:vuetifyOptions
+							/>
+						</template>
+					</VDataTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { TableToolbar } from '@cnamts/synapse'
+					import { VDataTable } from 'vuetify/components'
+					import { ref } from 'vue'
+
+					const headers = [
+						{
+							title: 'Nom',
+							value: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							value: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					]
+
+					const items = [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+					]
+
+					const vuetifyOptions = {
+						toolbar: {
+							class: 'py-2',
+						},
+						textField: {
+							variant: 'outlined',
+							density: 'compact',
+						},
+						addBtn: {
+							height: '40px',
+							color: '#663399',
+						},
+						addIcon: {
+							class: 'd-none',
+						},
+					}
+
+					const search = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const Slots: Story = {
+	args: {
+		'nbTotal': 2,
+		'onAdd': fn(),
+		'onUpdate:search': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { TableToolbar, VDataTable },
+			setup() {
+				const headers = [
+					{
+						title: 'Nom',
+						value: 'lastname',
+					},
+					{
+						title: 'Prénom',
+						value: 'firstname',
+					},
+					{
+						title: 'Email',
+						value: 'email',
+					},
+				]
+
+				const items = [
+					{
+						firstname: 'Virginie',
+						lastname: 'Beauchesne',
+						email: 'virginie.beauchesne@example.com',
+					},
+					{
+						firstname: 'Étienne',
+						lastname: 'Salois',
+						email: 'etienne.salois@example.com',
+					},
+				]
+
+				const search = ref('')
+
+				return { args, headers, items, search }
+			},
+			template: `
+				<VDataTable
+					:headers="headers"
+					:items="items"
+					hide-default-footer
+				>
+					<template #top>
+						<TableToolbar
+							v-bind="args"
+							v-model="search"
+						>
+							<template #search-left>
+								<VBtn
+									color="primary"
+									variant="outlined"
+									size="small"
+									class="mx-5"
+								>
+									Exemple
+								</VBtn>
+							</template>
+						</TableToolbar>
+					</template>
+				</VDataTable>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<VDataTable
+						:headers="headers"
+						:items="items"
+						hide-default-footer
+					>
+						<template #top>
+							<TableToolbar
+								v-model="search"
+								:nb-total="2"
+								show-add-button
+							>
+								<template #search-left>
+									<VBtn
+										color="primary"
+										variant="outlined"
+										size="small"
+										class="mx-5"
+									>
+										Exemple
+									</VBtn>
+								</template>
+							</TableToolbar>
+						</template>
+					</VDataTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { TableToolbar } from '@cnamts/synapse'
+					import { VDataTable } from 'vuetify/components'
+					import { ref } from 'vue'
+
+					const headers = [
+						{
+							title: 'Nom',
+							value: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							value: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					]
+
+					const items = [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+					]
+
+					const search = ref('')
+				</script>
+				`,
+			},
+		],
 	},
 }
