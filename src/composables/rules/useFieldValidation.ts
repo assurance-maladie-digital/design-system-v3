@@ -30,8 +30,13 @@ export function useFieldValidation() {
 	}
 
 	// Fonction pour parser une date selon le format spécifié
-	const parseDate = (dateStr: string, format: string = 'DD/MM/YYYY'): Date | null => {
+	const parseDate = (dateStr: string | Date, format: string = 'DD/MM/YYYY'): Date | null => {
 		if (!dateStr) return null
+		
+		// If dateStr is already a Date object, return it
+		if (dateStr instanceof Date) {
+			return dateStr
+		}
 
 		const parts = dateStr.split(/[-/.]/)
 		const formatParts = format.split(/[-/.]/)
