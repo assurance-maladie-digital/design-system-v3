@@ -110,6 +110,7 @@
 .loading :deep(.v-field__append-inner) {
 	opacity: 0.6 !important;
 }
+
 :deep(.v-field--disabled) {
 	opacity: 0.7 !important;
 }
