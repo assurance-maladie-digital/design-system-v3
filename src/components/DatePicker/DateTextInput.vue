@@ -258,7 +258,6 @@
 					const { validate, message, warningMessage, successMessage, isWarning } = rule.options
 
 					if (typeof validate !== 'function') {
-						console.warn('Custom rule is missing validate function')
 						return true
 					}
 
@@ -329,34 +328,15 @@
 		}
 	}
 
-	// Gestionnaire de changement de valeur
-	const handleInput = (event: Event) => {
-		hasInteracted.value = true
-		const inputElement = event.target as HTMLInputElement
-		let value = inputElement.value
-
-		// Formatage de la date pendant la saisie
-		const formatted = formatDateInput(value)
-		inputValue.value = formatted
-
-		// Validation et mise à jour du modèle
-		const validation = validateDateFormat(formatted)
-		if (validation.isValid) {
-			const date = parseDate(formatted)
-			if (date) {
-				// Si un format de retour est spécifié, convertir la date dans ce format
-				const outputValue = props.dateFormatReturn
-					? formatDateToString(date, props.dateFormatReturn)
-					: formatted
-
-				emit('update:model-value', outputValue)
-				validateRules(outputValue)
+	// Watch sur inputValue pour formater la valeur
+	watch(inputValue, (newValue) => {
+		if (newValue) {
+			const formatted = formatDateInput(newValue)
+			if (formatted !== newValue) {
+				inputValue.value = formatted
 			}
 		}
-		else {
-			emit('update:model-value', null)
-		}
-	}
+	})
 
 	// Gestionnaire de focus
 	const handleFocus = () => {
@@ -472,7 +452,6 @@
 			'warning-field': isOnWarning,
 			'success-field': isOnSuccess
 		}"
-		@input="handleInput"
 		@keydown="handleKeydown"
 		@focus="handleFocus"
 		@blur="handleBlur"
