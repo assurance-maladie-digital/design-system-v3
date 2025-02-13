@@ -56,7 +56,7 @@
 			options: {
 				validate: (value: Date | null) => {
 					if (value === null) return true
-					if (tempToDate.value === undefined) return true
+					if (tempToDate.value === undefined || tempToDate.value === null) return true
 					return value <= tempToDate.value
 				},
 				message: 'La date de début ne peut pas être supérieure à la date de fin.',
@@ -95,7 +95,7 @@
 			options: {
 				validate: (value: Date | null) => {
 					if (value === null) return true
-					if (tempFromDate.value === undefined) return true
+					if (tempFromDate.value === undefined || tempFromDate.value === null) return true
 					return value >= tempFromDate.value
 				},
 				message: 'La date de fin ne peut pas être inférieure à la date de début.',
