@@ -102,10 +102,10 @@
 
 	// Fonction pour formater une date en chaîne selon le format spécifié
 	const formatDateToString = (date: Date, format: string): string => {
-		const day = date.getDate().toString()
-		const month = (date.getMonth() + 1).toString()
+		const day = date.getDate().toString().padStart(2, '0')
+		const month = (date.getMonth() + 1).toString().padStart(2, '0')
 		const year = date.getFullYear()
-		const shortYear = (year % 100).toString()
+		const shortYear = (year % 100).toString().padStart(2, '0')
 
 		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
 		const parts: string[] = []
