@@ -448,7 +448,7 @@
 		:display-icon="displayIcon"
 		:display-append-icon="displayAppendIcon"
 		:no-icon="noIcon"
-		:prepend-icon="props.displayPrependIcon ? 'calendar' : undefined"
+		:prepend-icon="props.displayPrependIcon && !props.displayAppendIcon ? 'calendar' : undefined"
 		:append-icon="props.displayAppendIcon ? 'calendar' : undefined"
 		:append-inner-icon="getIcon"
 		:variant-style="isOutlined ? 'outlined' : 'filled'"
