@@ -20,6 +20,7 @@
 		displayRange?: boolean
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
+		displayPrependIcon?: boolean
 		customRules?: { type: string, options: RuleOptions }[]
 		customWarningRules?: { type: string, options: RuleOptions }[]
 		isDisabled?: boolean
@@ -38,6 +39,7 @@
 		displayRange: false,
 		displayIcon: true,
 		displayAppendIcon: false,
+		displayPrependIcon: true,
 		customRules: () => [],
 		customWarningRules: () => [],
 		isDisabled: false,
@@ -456,6 +458,7 @@
 				:is-outlined="props.isOutlined"
 				:display-icon="props.displayIcon"
 				:display-append-icon="props.displayAppendIcon"
+				:display-prepend-icon="props.displayPrependIcon"
 				:no-icon="props.noIcon"
 				title="Date text input"
 				@focus="emit('focus')"

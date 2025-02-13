@@ -21,6 +21,7 @@
 		noIcon?: boolean
 		customRules?: { type: string, options: RuleOptions }[]
 		customWarningRules?: { type: string, options: RuleOptions }[]
+		displayPrependIcon?: boolean
 	}>(), {
 		modelValue: null,
 		placeholder: 'Sélectionner une date',
@@ -36,6 +37,7 @@
 		noIcon: false,
 		customRules: () => [],
 		customWarningRules: () => [],
+		displayPrependIcon: true
 	})
 
 	const emit = defineEmits<{
@@ -446,6 +448,8 @@
 		:display-icon="displayIcon"
 		:display-append-icon="displayAppendIcon"
 		:no-icon="noIcon"
+		:prepend-icon="props.displayPrependIcon ? 'calendar' : undefined"
+		:append-icon="props.displayAppendIcon ? 'calendar' : undefined"
 		:append-inner-icon="getIcon"
 		:variant-style="isOutlined ? 'outlined' : 'filled'"
 		:class="{

@@ -1,7 +1,6 @@
 <template>
 	<div class="playground">
 		<h1>Test des formats de date</h1>
-
 		<div class="test-case">
 			<h2>1. Format européen avec règles de base</h2>
 			<DatePicker
@@ -10,6 +9,7 @@
         		date-format-return="YYYY/MM/DD"
 				placeholder="JJ/MM/AAAA"
 				required
+				no-icon
         no-calendar
 			/>
 			<div class="value">Valeur : {{ europeanDate }}</div>
