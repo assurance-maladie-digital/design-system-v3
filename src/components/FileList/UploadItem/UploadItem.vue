@@ -106,13 +106,13 @@
 					<div class="file-item__name text-base">
 						{{ fileName }}
 					</div>
+					<div
+						v-if="message || optional"
+						class="file-item__message text-base"
+					>
+						{{ message ?? locales.optionalDocument }}
+					</div>
 				</div>
-			</div>
-			<div
-				v-if="message || optional"
-				class="file-item__message"
-			>
-				{{ message ?? locales.optionalDocument }}
 			</div>
 			<div class="file-item__actions">
 				<VBtn
@@ -248,7 +248,7 @@
 }
 
 .file-item__message {
-	margin-top: tokens.$gap-1;
+	font-size: 0.875rem;
 	color: tokens.$colors-text-subdued;
 }
 
