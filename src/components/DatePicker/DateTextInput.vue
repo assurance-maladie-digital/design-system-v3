@@ -453,6 +453,7 @@
 		:append-inner-icon="getIcon"
 		:variant-style="isOutlined ? 'outlined' : 'filled'"
 		:class="{
+			'error-field': isOnError,
 			'warning-field': isOnWarning,
 			'success-field': isOnSuccess
 		}"
@@ -480,6 +481,17 @@
 		.v-messages__message {
 			color: tokens.$colors-border-warning !important;
 		}
+	}
+}
+
+.error-field {
+	:deep(.v-input__control),
+	:deep(.v-messages__message) {
+		color: tokens.$colors-text-error !important;
+	}
+
+	.v-field--active & {
+		color: tokens.$colors-border-error !important;
 	}
 }
 
