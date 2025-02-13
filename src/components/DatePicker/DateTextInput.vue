@@ -37,7 +37,7 @@
 		noIcon: false,
 		customRules: () => [],
 		customWarningRules: () => [],
-		displayPrependIcon: true
+		displayPrependIcon: true,
 	})
 
 	const emit = defineEmits<{
