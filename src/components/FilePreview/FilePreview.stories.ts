@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { onMounted, ref } from 'vue'
 import FilePreview from './FilePreview.vue'
+import FileUpload from '../FileUpload/FileUpload.vue'
 
 const meta: Meta = {
 	title: 'Composants/Feedback/FilePreview',
@@ -24,9 +25,9 @@ const meta: Meta = {
 				type: {
 					summary: 'Object',
 					detail: `{
-						pdf?: Record<string, string>,
-						image?: Record<string, string>,
-					}`,
+	pdf?: Record<string, string>,
+	image?: Record<string, string>,
+}`,
 				},
 				category: 'props',
 			},
@@ -72,7 +73,7 @@ export const Default: Story = {
 		components: { FilePreview },
 		template: `
 			<div>
-				<input type="file" @change="file = $event.target.files[0]" />
+				<input type="file" @change="file = $event.target.files[0]" id="file-test-upload" />
 				<FilePreview v-bind="args" :file >
 					<template #default v-if="args.default">
 						{{ args.default }}
@@ -193,6 +194,48 @@ onMounted(() => {
 		.then(res => res.blob())
 		.then(blob => file.value = blob)
 })`,
+			},
+		],
+	},
+}
+
+export const WithFileUpload: Story = {
+	render: args => ({
+		components: { FilePreview, FileUpload },
+		template: `
+			<div>
+				<FileUpload v-model="files" class="mb-4"/>
+				<FilePreview v-bind="args" :file="files[0]">
+					<template #default v-if="args.default">
+						{{ args.default }}
+					</template>
+				</FilePreview>
+			</div>
+		`,
+		setup: () => {
+			const files = ref<File[]>([])
+
+			return { args, files }
+		},
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<div>
+	<FileUpload v-model="files" class="mb-4"/>
+	<FilePreview :file="files[0]"/>
+</div>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+import { ref } from 'vue'
+import { FilePreview, FileUpload } from '@cnamts/synapse'
+
+const files = ref<File[]>([])`,
 			},
 		],
 	},
