@@ -31,7 +31,7 @@ const meta: Meta = {
 				},
 				category: 'props',
 			},
-			description: 'Configuration des attributs pour les balises <object> et <img>. Par défaut, l\'image a une description vide.',
+			description: 'Configuration des attributs pour les balises `object` et `img`. Par défaut, l\'image a une description vide.',
 		},
 		locales: {
 			description: 'Traductions',
