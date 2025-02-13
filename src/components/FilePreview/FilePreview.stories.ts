@@ -4,7 +4,7 @@ import FilePreview from './FilePreview.vue'
 import FileUpload from '../FileUpload/FileUpload.vue'
 
 const meta: Meta = {
-	title: 'Composants/Feedback/FilePreview',
+	title: 'Composants/Données/FilePreview',
 	component: FilePreview,
 	argTypes: {
 		file: {
