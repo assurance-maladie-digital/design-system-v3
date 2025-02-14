@@ -149,6 +149,12 @@
 		return `${numbers.slice(0, parts[0].length)}${separator}${numbers.slice(parts[0].length, parts[0].length + parts[1].length)}${separator}${numbers.slice(parts[0].length + parts[1].length)}`
 	}
 
+	// Fonction pour nettoyer une chaîne de date
+	const cleanDateString = (input: string): string => {
+		// Conserver uniquement les chiffres et les séparateurs valides
+		return input.replace(/[^\d/.-]/g, '')
+	}
+
 	// Fonction pour valider le format de la date
 	const validateDateFormat = (dateStr: string): { isValid: boolean, message: string } => {
 		if (!dateStr) {
@@ -310,24 +316,29 @@
 		return undefined
 	})
 
-	// Gestionnaire de touches pour bloquer les caractères non numériques
+	// Gestionnaire de touches pour permettre le copier-coller
 	const handleKeydown = (event: KeyboardEvent) => {
-		// Autoriser les touches de contrôle (backspace, delete, flèches, etc.)
-		if (event.key.length > 1) {
+		// Autoriser les touches de contrôle (Ctrl+C, Ctrl+V, etc.)
+		if (event.ctrlKey || event.metaKey) {
+			return
+		}
+	}
+
+	// Gestionnaire de l'événement paste
+	const handlePaste = (event: ClipboardEvent) => {
+		event.preventDefault()
+		const pastedText = event.clipboardData?.getData('text')
+		
+		if (!pastedText) {
 			return
 		}
 
-		// Bloquer si on a déjà 10 caractères et qu'on n'est pas en train de sélectionner du texte
-		const input = event.target as HTMLInputElement
-		if (input.value.length === 10) {
-			event.preventDefault()
-			return
-		}
-
-		// N'autoriser que les chiffres
-		if (!/^\d$/.test(event.key)) {
-			event.preventDefault()
-		}
+		// Nettoyer et formater la valeur collée
+		const cleanedText = cleanDateString(pastedText)
+		const formattedText = formatDateInput(cleanedText)
+		
+		// Mettre à jour la valeur
+		inputValue.value = formattedText
 	}
 
 	// Watch sur inputValue pour formater la valeur
@@ -460,6 +471,8 @@
 		@keydown="handleKeydown"
 		@focus="handleFocus"
 		@blur="handleBlur"
+		@paste="handlePaste"
+		ref="inputRef"
 	/>
 </template>
 
