@@ -400,36 +400,27 @@
 		}
 	})
 
-	// Gestionnaire de focus
-	const handleFocus = () => {
-		isFocused.value = true
-		emit('focus')
-	}
+	// Watch sur inputValue pour gérer la suppression de date
+	watch(inputValue, (newValue) => {
+		if (!newValue) {
+			emit('update:model-value', null)
+			validateRules('')
+			return
+		}
 
-	// Gestionnaire de blur
-	const handleBlur = () => {
-		hasInteracted.value = true
-		isFocused.value = false
-		const formatted = inputValue.value
-
-		// Validation et mise à jour du modèle
-		const validation = validateDateFormat(formatted)
+		// On ne met à jour le v-model que si la date est valide
+		const validation = validateDateFormat(newValue)
 		if (validation.isValid) {
-			const date = parseDate(formatted)
+			const date = parseDate(newValue)
 			if (date) {
 				const formattedDate = props.dateFormatReturn
 					? formatDateToString(date, props.dateFormatReturn)
-					: formatted
+					: newValue
 				emit('update:model-value', formattedDate)
-				validateRules(formattedDate)
 			}
 		}
-		else {
-			// Ne pas effacer la valeur si elle est invalide
-			validateRules(formatted)
-		}
-		emit('blur')
-	}
+		validateRules(newValue)
+	})
 
 	// Watch pour mettre à jour l'input quand modelValue change
 	watch(() => props.modelValue, (newValue) => {
@@ -453,6 +444,36 @@
 		inputValue.value = newValue
 		validateRules(newValue)
 	}, { immediate: true })
+
+	// Gestionnaire de focus
+	const handleFocus = () => {
+		isFocused.value = true
+		emit('focus')
+	}
+
+	// Gestionnaire de blur
+	const handleBlur = () => {
+		hasInteracted.value = true
+		isFocused.value = false
+		const formatted = inputValue.value
+
+		// Validation et mise à jour du modèle
+		const validation = validateDateFormat(formatted)
+		if (validation.isValid) {
+			const date = parseDate(formatted)
+			if (date) {
+				const formattedDate = props.dateFormatReturn
+					? formatDateToString(date, props.dateFormatReturn)
+					: formatted
+				emit('update:model-value', formattedDate)
+			}
+		}
+		else {
+			// Ne pas effacer la valeur si elle est invalide
+			validateRules(formatted)
+		}
+		emit('blur')
+	}
 
 	onMounted(() => {
 		if (!props.modelValue) {
