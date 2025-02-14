@@ -412,9 +412,8 @@
 			if (formatted !== newValue) {
 				inputValue.value = formatted
 				// Rétablir la position du curseur après le formatage
-				await nextTick(() => {
-					input?.setSelectionRange(newPos, newPos)
-				})
+				await nextTick()
+				input?.setSelectionRange(newPos, newPos)
 			}
 		}
 	}, { flush: 'post' })
