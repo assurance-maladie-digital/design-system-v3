@@ -114,7 +114,7 @@ Les séparateurs peuvent être `/`, `-` ou `.`
 
 ### noCalendar
 - **Type** : `boolean`
-- **Description** : Désactive l'affichage du calendrier (saisie manuelle uniquement)
+- **Description** : Désactive l\'affichage du calendrier (saisie manuelle uniquement), elle permet les copier coller et le passage de robots.
 - **Défaut** : `false`
 
 ## Apparence
@@ -133,6 +133,33 @@ Les séparateurs peuvent être `/`, `-` ou `.`
 - **Type** : `boolean`
 - **Description** : Masque toutes les icônes
 - **Défaut** : `false`
+
+## Utilisation de noCalendar
+
+L'option `noCalendar` est particulièrement utile dans les cas suivants :
+
+### Cas d'utilisation
+- **Saisie rapide** : Permet aux utilisateurs de saisir directement une date sans avoir à naviguer dans un calendrier
+- **Copier-coller** : Facilite le copier-coller de dates depuis d'autres sources
+- **Automatisation** : Compatible avec les tests automatisés et les robots qui doivent interagir avec le champ de date
+- **Accessibilité** : Offre une alternative pour les utilisateurs qui préfèrent ou doivent utiliser le clavier
+
+### Bonnes pratiques
+- Toujours spécifier le format de date attendu via la prop `format` pour guider l'utilisateur
+- Utiliser la prop `placeholder` pour indiquer le format de saisie attendu
+- Combiner avec la prop `required` si le champ est obligatoire
+- Penser à ajouter des règles de validation personnalisées si nécessaire
+
+### Exemple
+```vue
+<DatePicker
+  v-model="date"
+  no-calendar
+  format="DD/MM/YYYY"
+  placeholder="JJ/MM/AAAA"
+  required
+/>
+```
 
 ## Validation
 

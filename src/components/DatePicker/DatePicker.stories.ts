@@ -71,7 +71,7 @@ const meta = {
 		},
 		noCalendar: {
 			control: 'boolean',
-			description: 'Désactive le calendrier',
+			description: 'Désactive l\'affichage du calendrier (saisie manuelle uniquement), elle permet les copier coller et le passage de robots',
 		},
 		customRules: {
 			control: 'object',
