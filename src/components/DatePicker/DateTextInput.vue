@@ -328,7 +328,7 @@
 	const handlePaste = (event: ClipboardEvent) => {
 		event.preventDefault()
 		const pastedText = event.clipboardData?.getData('text')
-		
+
 		if (!pastedText) {
 			return
 		}
@@ -336,7 +336,7 @@
 		// Nettoyer et formater la valeur collée
 		const cleanedText = cleanDateString(pastedText)
 		const formattedText = formatDateInput(cleanedText)
-		
+
 		// Mettre à jour la valeur
 		inputValue.value = formattedText
 	}
@@ -448,6 +448,7 @@
 
 <template>
 	<SyTextField
+		ref="inputRef"
 		v-model="inputValue"
 		:placeholder="placeholder"
 		:label="label"
@@ -472,7 +473,6 @@
 		@focus="handleFocus"
 		@blur="handleBlur"
 		@paste="handlePaste"
-		ref="inputRef"
 	/>
 </template>
 
