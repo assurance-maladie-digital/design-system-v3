@@ -1,0 +1,103 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import * as FileListStories from './FileList.stories';
+
+<Meta of={FileListStories} />
+
+# FileList
+
+Le composant `FileList` est utilisé pour afficher une liste de document à téléverser.
+
+<Canvas of={FileListStories.Default} />
+
+# API
+
+<Controls of={FileListStories.Default}/>
+
+# Exemple d'utilisation
+
+
+## Les différents états d'un fichier
+
+Un fichier peut être dans différents états : « initial », « success », « error » et « loading ».
+Lorsqu’il est dans l’état « loading », une barre de progression est affichée.
+
+Renseigner la propriété `progress` permet de donner a l'utilisateur une indication de progression du téléversement.
+
+<Canvas of={FileListStories.States} />
+
+## Fichiers optionnels
+
+Il est possible de rendre un fichier optionnel en ajoutant la propriété `optional` à l'objet fichier.
+
+<Canvas of={FileListStories.OptionalDocument} />
+
+## Actions
+
+Une fichier permet trois actions : `upload` quand son état est `initial` ou `error`. 
+`delete` et `preview` quand son état est `success`.
+
+Les boutons `upload` et `delete` sont affichés par défaut, le bouton `preview` est masqué par défaut.
+
+Pour afficher ou masquer une action, il est possible d'utiliser les propriétés `showUploadBtn`, `showDeleteBtn` et `showPreviewBtn`, ces propriétés sont de type `boolean`.
+
+Quand une action est cliqué, un événement `upload`, `delete` ou `preview` est émis avec l'objet de l'item en paramètre.
+
+<Canvas of={FileListStories.Actions} />
+
+## Personnalisation des icônes de fichier
+
+Il est possible de personnaliser les icônes de fichier en utilisant le slot dynamique `file-icon-<id du fichier>`.
+
+<Canvas
+	of={FileListStories.Customization}
+		source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { FileList } from '@cnamts/synapse'
+			import { mdiCardAccountDetailsOutline, mdiCertificateOutline } from '@mdi/js'
+			import { ref } from 'vue'
+
+			const uploadList = ref([
+				{
+					id: 'residenceCertificate',
+					title: 'Attestation de domicile',
+					state: 'initial',
+				},
+				{
+					id: 'identityCard',
+					title: 'Carte d\\'identité',
+					state: 'initial',
+				},
+				{
+					id: 'paySlip',
+					title: 'Fiche de paie',
+					state: 'initial',
+				},
+			])
+		</script>
+
+		<FileList
+			:uploadList="args.uploadList"
+			:maxWidth="600"
+			:minWidth="400"
+			:width="'50%'"
+			@upload="console.log"
+			@delete="console.log"
+			@preview="console.log"
+		>
+			<template #file-icon-residenceCertificate>
+				<VIcon
+					color="primary"
+				>{{ mdiCertificateOutline }}</VIcon>
+			</template>
+			<template #file-icon-identityCard>
+				<VIcon
+					color="primary"
+				>{{ mdiCardAccountDetailsOutline }}</VIcon>
+			</template>
+		</FileList>
+		`
+	}}
+/>
