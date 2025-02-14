@@ -4,7 +4,6 @@ export const config = {
 		color: '#FFFFFF',
 		height: 'auto',
 		minHeight: '56px',
-		class: 'd-flex',
 	},
 	addBtn: {
 		variant: 'outlined',
@@ -20,5 +19,6 @@ export const config = {
 		clearable: true,
 		singleLine: true,
 		hideDetails: true,
+		density: 'compact',
 	},
 } as const

@@ -55,7 +55,7 @@
 	<VToolbar
 		v-bind="options.toolbar"
 		:class="{ 'v-theme-dark': theme.current.value.dark}"
-		class="sy-table-toolbar px-4 d-flex flex-wrap align-center justify-space-between"
+		class="sy-table-toolbar px-4 py-2 d-flex flex-wrap align-center justify-space-between"
 	>
 		<p
 			v-if="nbTotal > 0"
@@ -106,6 +106,10 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+
+.sy-table-toolbar {
+	min-height: 56px;
+}
 
 .loading :deep(.v-field__append-inner) {
 	opacity: 0.6 !important;
