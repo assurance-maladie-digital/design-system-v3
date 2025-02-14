@@ -500,9 +500,21 @@
 	const validateOnSubmit = (): boolean => {
 		isValidating.value = true
 
+		// Vérifier si le champ est requis et vide
+		if (props.required && !inputValue.value) {
+			errorMessages.value = ['Ce champ est requis']
+			return false
+		}
+
+		// Si le champ n'est pas requis et est vide, c'est valide
+		if (!inputValue.value) {
+			return true
+		}
+
 		// Valider le format de la date
-		const { isValid } = validateDateFormat(inputValue.value)
-		if (!isValid && props.required) {
+		const { isValid, message } = validateDateFormat(inputValue.value)
+		if (!isValid) {
+			errorMessages.value = [message]
 			return false
 		}
 
@@ -513,6 +525,7 @@
 		return errorMessages.value.length === 0
 	}
 
+	// Exposer les méthodes et propriétés nécessaires
 	defineExpose({
 		validateOnSubmit,
 		focus: () => {
