@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted } from 'vue'
+	import { ref, computed, watch, onMounted, nextTick } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
@@ -90,7 +90,7 @@
 		// Valider les limites
 		if (month < 0 || month > 11) return null
 		if (day < 1 || day > 31) return null
-		if (year < 1900 || year > 2100) return null
+		if (year < 1000 || year > 9999) return null // Accepter une plage d'années plus large
 
 		const date = new Date(year, month, day)
 
@@ -133,20 +133,57 @@
 	}
 
 	// Fonction pour formater la date pendant la saisie
-	const formatDateInput = (input: string): string => {
-		// On garde les 0 en début de chaîne
-		if (input === '0') return '0'
-		if (input === '00') return '00'
-
-		const numbers = input.replace(/\D/g, '')
+	const formatDateInput = (input: string, cursorPosition?: number): { formatted: string, cursorPos: number } => {
 		const separator = props.format.includes('/') ? '/' : props.format.includes('-') ? '-' : '.'
-		const parts = props.format.split(/[-/.]/)
+		const mask = `__${separator}__${separator}____` // JJ/MM/AAAA
+		let result = mask
+		let pos = cursorPosition || 0
 
-		if (numbers.length <= parts[0].length) return numbers
-		if (numbers.length <= parts[0].length + parts[1].length) {
-			return `${numbers.slice(0, parts[0].length)}${separator}${numbers.slice(parts[0].length)}`
+		// Nettoyer l'entrée pour ne garder que les chiffres et les séparateurs
+		let cleanInput = input
+		
+		// Si l'entrée contient déjà des séparateurs, on les garde pour préserver l'ordre
+		if (input.includes(separator)) {
+			const parts = input.split(separator)
+			cleanInput = parts.map(part => part.replace(/\D/g, '')).join(separator)
+		} else {
+			cleanInput = input.replace(/\D/g, '')
 		}
-		return `${numbers.slice(0, parts[0].length)}${separator}${numbers.slice(parts[0].length, parts[0].length + parts[1].length)}${separator}${numbers.slice(parts[0].length + parts[1].length)}`
+
+		// Si l'entrée contient des séparateurs, on traite chaque partie séparément
+		if (cleanInput.includes(separator)) {
+			const parts = cleanInput.split(separator)
+			const day = parts[0]?.padEnd(2, '_')
+			const month = parts[1]?.padEnd(2, '_')
+			const year = parts[2]?.padEnd(4, '_')
+			
+			result = `${day}${separator}${month}${separator}${year}`
+		} else {
+			// Sinon on formate selon la longueur
+			const numbers = cleanInput
+			if (numbers.length >= 1) result = numbers[0] + result.substring(1)
+			if (numbers.length >= 2) result = result.substring(0, 1) + numbers[1] + result.substring(2)
+			if (numbers.length >= 3) result = result.substring(0, 3) + numbers[2] + result.substring(4)
+			if (numbers.length >= 4) result = result.substring(0, 4) + numbers[3] + result.substring(5)
+			if (numbers.length >= 5) result = result.substring(0, 6) + numbers[4] + result.substring(7)
+			if (numbers.length >= 6) result = result.substring(0, 7) + numbers[5] + result.substring(8)
+			if (numbers.length >= 7) result = result.substring(0, 8) + numbers[6] + result.substring(9)
+			if (numbers.length >= 8) result = result.substring(0, 9) + numbers[7] + result.substring(10)
+		}
+
+		// Calculer la nouvelle position du curseur
+		if (cursorPosition !== undefined) {
+			pos = cursorPosition
+			// Si on est sur un séparateur, avancer d'une position
+			if (mask[pos] === separator) {
+				pos++
+			}
+		}
+
+		return {
+			formatted: result,
+			cursorPos: pos
+		}
 	}
 
 	// Fonction pour nettoyer une chaîne de date
@@ -335,18 +372,30 @@
 
 		// Nettoyer et formater la valeur collée
 		const cleanedText = cleanDateString(pastedText)
-		const formattedText = formatDateInput(cleanedText)
+		const formattedText = formatDateInput(cleanedText).formatted
 
 		// Mettre à jour la valeur
 		inputValue.value = formattedText
 	}
 
+	// Référence vers l'élément input
+	const inputRef = ref<InstanceType<typeof SyTextField> | null>(null)
+
 	// Watch sur inputValue pour formater la valeur
 	watch(inputValue, (newValue) => {
 		if (newValue) {
-			const formatted = formatDateInput(newValue)
+			// Récupérer la position du curseur avant le formatage
+			const input = inputRef.value?.$el.querySelector('input')
+			const cursorPos = input?.selectionStart || 0
+
+			const { formatted, cursorPos: newPos } = formatDateInput(newValue, cursorPos)
+			
 			if (formatted !== newValue) {
 				inputValue.value = formatted
+				// Rétablir la position du curseur après le formatage
+				nextTick(() => {
+					input?.setSelectionRange(newPos, newPos)
+				})
 			}
 		}
 	})
