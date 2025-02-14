@@ -1,0 +1,82 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as FilePreviewStories from './FilePreview.stories.ts'
+
+<Meta of={FilePreviewStories} />
+
+
+# FilePreview
+
+L'élément `FilePreview` est utilisé pour afficher l'aperçu d'un fichier.
+
+<Canvas of={FilePreviewStories.Default} />
+
+
+# API
+
+<Controls of={FilePreviewStories.Default} />
+
+
+# Exemple
+
+## Afficher un fichier depuis une API
+
+Vous pouvez afficher une image ou un fichier PDF récupéré depuis une API sous forme de `Blob`.
+
+<Canvas
+	of={FilePreviewStories.FromApi}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { onMounted, ref } from 'vue'
+			import { FilePreview } from '@cnamts/synapse'
+
+			const file = ref<File | Blob | undefined>()
+
+			onMounted(() => {
+				fetch('https://picsum.photos/seed/picsum/750/350')
+					.then(res => res.blob())
+					.then(blob => file.value = blob)
+			})
+		</script>
+
+		<template>
+			<FilePreview :file="file" />
+		</template>
+		`,
+	}}
+/>
+
+## Fichier non supporté
+
+Lorsque le fichier n'est pas supporté, un message d'erreur est affiché.
+
+<Canvas of={FilePreviewStories.UnsupportedFile} />
+
+## Usage avec `FileUpload`
+
+Vous pouvez utiliser ce composant en combinaison avec `FileUpload` pour afficher un aperçu du fichier avant de l'envoyer.
+
+<Canvas
+	of={FilePreviewStories.WithFileUpload}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { ref } from 'vue'
+			import { FilePreview, FileUpload } from '@cnamts/synapse'
+
+			const files = ref<File[]>([])
+		</script>
+		<template>
+			<div>
+				<FileUpload v-model="files" class="mb-4"/>
+				<FilePreview :file="files[0]"/>
+			</div>
+		</template>
+		`,
+	}}
+/>

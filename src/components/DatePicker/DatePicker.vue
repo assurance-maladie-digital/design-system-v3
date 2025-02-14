@@ -7,7 +7,7 @@
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
 
 	type DateValue = string | [string, string]
-	type DateInput = string | string[]
+	type DateInput = string | string[] | null | object
 
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
@@ -47,6 +47,7 @@
 
 	const emit = defineEmits<{
 		(e: 'update:model-value', value: DateValue): void
+		(e: 'closed'): void
 	}>()
 
 	// Fonction pour parser les dates selon le format spécifié
@@ -103,6 +104,11 @@
 				return date === null ? [] : [date]
 			}
 			return []
+		}
+
+		// Si modelValue est un objet, on le convertit en chaîne
+		if (typeof modelValue === 'object') {
+			return null
 		}
 
 		const date = parseDate(modelValue)
@@ -218,19 +224,27 @@
 		if (props.displayRange) {
 			if (Array.isArray(newValue) && newValue.length >= 2) {
 				isDatePickerVisible.value = false
+				emit('closed')
 			}
 		}
 		else {
 			isDatePickerVisible.value = false
+			emit('closed')
 		}
 	})
 
 	// Gestionnaire de clic en dehors
 	const handleClickOutside = (event: MouseEvent) => {
+		if (!isDatePickerVisible.value) return
+
 		const target = event.target as HTMLElement
-		if (!target.closest('.date-picker-container')) {
-			isDatePickerVisible.value = false
-		}
+		const container = target.closest('.date-picker-container')
+
+		// Si on clique dans le conteneur du DatePicker, on ne fait rien
+		if (container) return
+
+		isDatePickerVisible.value = false
+		emit('closed')
 	}
 
 	const todayInString = computed(() => {
@@ -416,7 +430,7 @@
 				:is-disabled="props.isDisabled"
 				:is-read-only="true"
 				:label="props.placeholder"
-				:messages="[...successMessages, ...warningMessages]"
+				:messages="warningMessages.length > 0 ? [...warningMessages] : [ ...successMessages]"
 				:no-icon="props.noIcon"
 				:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 				:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
@@ -442,7 +456,7 @@
 					color="primary"
 				>
 					<template #title>
-						Selectionnez une date
+						Sélectionnez une date
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
