@@ -1,14 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`TableToolbar > renders correctly when all the item are displayed 1`] = `
-"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr d-flex sy-table-toolbar px-4 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
+"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr sy-table-toolbar px-4 py-2 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
   <!---->
   <div class="v-toolbar__content">
     <!---->
     <!---->
     <p data-v-91e2c1b3="" class="mb-0 font-weight-bold mr-4 my-3" data-test-id="nb-rows">5/5 lignes</p>
     <div data-v-91e2c1b3="" class="sy-table-toolbar__search">
-      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-default v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
+      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-compact v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
         <!---->
         <div class="v-input__control">
           <div class="v-field v-field--appended v-field--single-line v-field--variant-underlined v-theme--light v-locale--is-ltr">
@@ -61,14 +61,14 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
 `;
 
 exports[`TableToolbar > renders correctly when loading 1`] = `
-"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr d-flex sy-table-toolbar px-4 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
+"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr sy-table-toolbar px-4 py-2 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
   <!---->
   <div class="v-toolbar__content">
     <!---->
     <!---->
     <p data-v-91e2c1b3="" class="mb-0 font-weight-bold mr-4 my-3" data-test-id="nb-rows">1 ligne</p>
     <div data-v-91e2c1b3="" class="sy-table-toolbar__search">
-      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-default v-theme--light v-locale--is-ltr v-input--disabled v-text-field v-input--plain-underlined sy-form-input flex-grow-1 loading" data-test-id="search-input">
+      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-compact v-theme--light v-locale--is-ltr v-input--disabled v-text-field v-input--plain-underlined sy-form-input flex-grow-1 loading" data-test-id="search-input">
         <!---->
         <div class="v-input__control">
           <div class="v-field v-field--appended v-field--disabled v-field--single-line v-field--variant-underlined v-theme--light v-locale--is-ltr">
@@ -119,14 +119,14 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
 `;
 
 exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
-"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr d-flex sy-table-toolbar px-4 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
+"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr sy-table-toolbar px-4 py-2 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
   <!---->
   <div class="v-toolbar__content">
     <!---->
     <!---->
     <p data-v-91e2c1b3="" class="mb-0 font-weight-bold mr-4 my-3" data-test-id="nb-rows">1 ligne</p>
     <div data-v-91e2c1b3="" class="sy-table-toolbar__search">
-      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-default v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
+      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-compact v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
         <!---->
         <div class="v-input__control">
           <div class="v-field v-field--appended v-field--single-line v-field--variant-underlined v-theme--light v-locale--is-ltr">
@@ -179,14 +179,14 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
 `;
 
 exports[`TableToolbar > renders correctly with content slot 1`] = `
-"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr d-flex sy-table-toolbar px-4 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
+"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr sy-table-toolbar px-4 py-2 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
   <!---->
   <div class="v-toolbar__content">
     <!---->
     <!---->
     <p data-v-91e2c1b3="" class="mb-0 font-weight-bold mr-4 my-3" data-test-id="nb-rows">1 ligne</p>
     <div data-v-91e2c1b3="" class="sy-table-toolbar__search">
-      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-default v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
+      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-compact v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
         <!---->
         <div class="v-input__control">
           <div class="v-field v-field--appended v-field--single-line v-field--variant-underlined v-theme--light v-locale--is-ltr">
@@ -239,14 +239,14 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
 `;
 
 exports[`TableToolbar > renders correctly with no items 1`] = `
-"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr d-flex sy-table-toolbar px-4 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
+"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr sy-table-toolbar px-4 py-2 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px">
   <!---->
   <div class="v-toolbar__content">
     <!---->
     <!---->
     <!--v-if-->
     <div data-v-91e2c1b3="" class="sy-table-toolbar__search">
-      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-default v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
+      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-compact v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
         <!---->
         <div class="v-input__control">
           <div class="v-field v-field--appended v-field--single-line v-field--variant-underlined v-theme--light v-locale--is-ltr">
@@ -299,14 +299,14 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
 `;
 
 exports[`TableToolbar > should render 1`] = `
-"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr d-flex sy-table-toolbar px-4 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px" showaddbtn="true">
+"<header data-v-91e2c1b3="" class="v-toolbar v-toolbar--flat v-toolbar--density-default v-theme--light v-locale--is-ltr sy-table-toolbar px-4 py-2 d-flex flex-wrap align-center justify-space-between" style="background-color: #FFFFFF; color: #000; caret-color: #000;" minheight="56px" showaddbtn="true">
   <!---->
   <div class="v-toolbar__content">
     <!---->
     <!---->
     <p data-v-91e2c1b3="" class="mb-0 font-weight-bold mr-4 my-3" data-test-id="nb-rows">1/2 lignes</p>
     <div data-v-91e2c1b3="" class="sy-table-toolbar__search">
-      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-default v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
+      <div data-v-91e2c1b3="" class="v-input v-input--horizontal v-input--density-compact v-theme--light v-locale--is-ltr v-text-field v-input--plain-underlined sy-form-input flex-grow-1" data-test-id="search-input">
         <!---->
         <div class="v-input__control">
           <div class="v-field v-field--appended v-field--single-line v-field--variant-underlined v-theme--light v-locale--is-ltr">
