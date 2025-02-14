@@ -499,16 +499,16 @@
 
 	const validateOnSubmit = (): boolean => {
 		isValidating.value = true
-		
+
 		// Valider le format de la date
 		const { isValid } = validateDateFormat(inputValue.value)
 		if (!isValid && props.required) {
 			return false
 		}
-		
+
 		// Valider les règles personnalisées
 		validateRules(inputValue.value)
-		
+
 		// Retourner true seulement si pas d'erreurs
 		return errorMessages.value.length === 0
 	}
