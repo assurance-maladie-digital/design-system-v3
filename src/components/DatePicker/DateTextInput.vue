@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted, nextTick } from 'vue'
+	import { ref, computed, watch, onMounted } from 'vue'
+	import { nextTick } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
@@ -416,7 +417,7 @@
 				input?.setSelectionRange(newPos, newPos)
 			}
 		}
-	}, { flush: 'post' })
+	}, { flush: 'post' }) // Le watcher s'exécute après le rendu du DOM
 
 	// Watch sur inputValue pour gérer la suppression de date
 	watch(inputValue, (newValue) => {
@@ -461,7 +462,7 @@
 
 		inputValue.value = newValue
 		validateRules(newValue)
-	}, { immediate: true })
+	}, { immediate: true }) // Le watcher s'exécute après le rendu du DOM
 
 	// Gestionnaire de focus
 	const handleFocus = () => {
