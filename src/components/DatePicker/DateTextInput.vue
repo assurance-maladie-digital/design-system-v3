@@ -401,7 +401,7 @@
 	const inputRef = ref<InstanceType<typeof SyTextField> | null>(null)
 
 	// Watch sur inputValue pour formater la valeur
-	watch(inputValue, (newValue) => {
+	watch(inputValue, async (newValue) => {
 		if (newValue) {
 			// Récupérer la position du curseur avant le formatage
 			const input = inputRef.value?.$el.querySelector('input')
@@ -412,12 +412,12 @@
 			if (formatted !== newValue) {
 				inputValue.value = formatted
 				// Rétablir la position du curseur après le formatage
-				nextTick(() => {
+				await nextTick(() => {
 					input?.setSelectionRange(newPos, newPos)
 				})
 			}
 		}
-	})
+	}, { flush: 'post' })
 
 	// Watch sur inputValue pour gérer la suppression de date
 	watch(inputValue, (newValue) => {
