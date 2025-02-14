@@ -242,6 +242,7 @@
 			background-color: rgb(12 65 154 / 10%);
 		}
 	}
+
 	&.row-clickable table tbody tr {
 		cursor: pointer;
 	}
@@ -275,8 +276,8 @@
 }
 
 :deep(.v-data-table-footer__items-per-page) {
-  .v-select--selected {
-    border-color: tokens.$primary-base !important;
-  }
+	.v-select--selected {
+		border-color: tokens.$primary-base !important;
+	}
 }
 </style>
