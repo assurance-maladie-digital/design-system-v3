@@ -34,7 +34,7 @@ describe('DateTextInput.vue', () => {
 
 	it('validates date format', async () => {
 		const input = wrapper.find('input')
-		await input.setValue('32/13/2025')  // Un jour et un mois invalides
+		await input.setValue('32/13/2025')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)

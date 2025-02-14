@@ -141,12 +141,13 @@
 
 		// Nettoyer l'entrée pour ne garder que les chiffres et les séparateurs
 		let cleanInput = input
-		
+
 		// Si l'entrée contient déjà des séparateurs, on les garde pour préserver l'ordre
 		if (input.includes(separator)) {
 			const parts = input.split(separator)
 			cleanInput = parts.map(part => part.replace(/\D/g, '')).join(separator)
-		} else {
+		}
+		else {
 			cleanInput = input.replace(/\D/g, '')
 		}
 
@@ -156,9 +157,10 @@
 			const day = parts[0]?.padEnd(2, '_')
 			const month = parts[1]?.padEnd(2, '_')
 			const year = parts[2]?.padEnd(4, '_')
-			
+
 			result = `${day}${separator}${month}${separator}${year}`
-		} else {
+		}
+		else {
 			// Sinon on formate selon la longueur
 			const numbers = cleanInput
 			if (numbers.length >= 1) result = numbers[0] + result.substring(1)
@@ -182,7 +184,7 @@
 
 		return {
 			formatted: result,
-			cursorPos: pos
+			cursorPos: pos,
 		}
 	}
 
@@ -389,7 +391,7 @@
 			const cursorPos = input?.selectionStart || 0
 
 			const { formatted, cursorPos: newPos } = formatDateInput(newValue, cursorPos)
-			
+
 			if (formatted !== newValue) {
 				inputValue.value = formatted
 				// Rétablir la position du curseur après le formatage
