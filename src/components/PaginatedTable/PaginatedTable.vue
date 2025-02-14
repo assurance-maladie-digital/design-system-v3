@@ -282,19 +282,20 @@
 		}
 	}
 
-  .v-field {
-    &--active {
-      .v-field__prepend-inner > .v-icon,
-      .v-field__append-inner > .v-icon,
-      .v-field__clearable > .v-icon {
-        opacity: 1;
-        color: tokens.$primary-base;
-      }
-    }
-    &--focused {
-      border-color: tokens.$primary-base;
-      color:  tokens.$primary-base;
-    }
-  }
+	.v-field {
+		&--active {
+			.v-field__prepend-inner > .v-icon,
+			.v-field__append-inner > .v-icon,
+			.v-field__clearable > .v-icon {
+				opacity: 1;
+				color: tokens.$primary-base;
+			}
+		}
+
+		&--focused {
+			border-color: tokens.$primary-base;
+			color: tokens.$primary-base;
+		}
+	}
 }
 </style>

@@ -244,7 +244,6 @@ describe('PaginatedTable', () => {
 		expect(wrapper.emitted('update:options')).toBeTruthy()
 
 		await wrapper.setProps({
-			items: fakeItems,
 			serverItemsLength: 20,
 		})
 
