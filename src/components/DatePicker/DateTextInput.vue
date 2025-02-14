@@ -374,9 +374,8 @@
 				emit('update:model-value', formattedDate)
 				validateRules(formattedDate)
 			}
-		}
-		else {
-			emit('update:model-value', null)
+		} else {
+			// Ne pas effacer la valeur si elle est invalide
 			validateRules(formatted)
 		}
 		emit('blur')
