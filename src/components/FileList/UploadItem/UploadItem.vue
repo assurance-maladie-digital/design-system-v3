@@ -203,11 +203,10 @@
 }
 
 .file-item__description {
-	display: grid;
-	grid-template-columns: 1fr auto;
-	grid-template-rows: auto auto;
-	grid-auto-flow: column;
-	align-items: start;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
 
 	> * {
 		grid-column: 1 / -1;
@@ -235,8 +234,13 @@
 	flex-direction: column;
 	align-items: end;
 	justify-content: center;
+	margin-left: auto;
 	height: 100%;
 	gap: tokens.$gap-1;
+
+	@media screen and (min-width: tokens.$container-tablet-max-width) {
+		flex-direction: row;
+	}
 }
 
 .file-item__action {

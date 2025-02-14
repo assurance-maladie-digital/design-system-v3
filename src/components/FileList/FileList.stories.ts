@@ -5,7 +5,7 @@ import { VIcon } from 'vuetify/components'
 import { mdiCardAccountDetailsOutline, mdiCertificateOutline } from '@mdi/js'
 
 const meta = {
-	title: 'Composants/Formulaires/FileList',
+	title: 'Composants/Données/FileList',
 	component: FileList,
 	argTypes: {
 		'uploadList': {
@@ -153,7 +153,7 @@ const meta = {
 					summary: 'Object',
 					detail: `{
 	state: 'initial' | 'success' | 'error' | 'loading',
-`,
+}`,
 				},
 			},
 		},
