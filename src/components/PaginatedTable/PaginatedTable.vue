@@ -153,7 +153,7 @@
 	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
 
 	onMounted(() => {
-		const table = document.querySelector('table')
+		const table = document.querySelector('#paginated-table table')
 		const caption = document.createElement('caption')
 		caption.innerHTML = props.caption
 		if (props.caption === 'caption') {
@@ -164,27 +164,27 @@
 		}
 		table?.prepend(caption)
 
-		const inputs = document.querySelectorAll('input')
+		const inputs = document.querySelectorAll('#paginated-table input')
 		inputs.forEach((input) => {
-			(input as HTMLElement).setAttribute('aria-describedby', 'items per page')
+			(input as HTMLElement).removeAttribute('aria-describedby')
 		})
 
-		const fields = document.querySelectorAll('.v-field')
+		const fields = document.querySelectorAll('#paginated-table .v-field')
 		fields.forEach((field) => {
 			(field as HTMLElement).setAttribute('tabindex', '0')
 		})
 
-		const fieldLabels = document.querySelectorAll('.v-field')
+		const fieldLabels = document.querySelectorAll('#paginated-table .v-field')
 		fieldLabels.forEach((fieldLabel) => {
 			(fieldLabel as HTMLElement).setAttribute('aria-label', 'items per page')
 		})
 
-		const fieldTitles = document.querySelectorAll('.v-field')
+		const fieldTitles = document.querySelectorAll('#paginated-table .v-field')
 		fieldTitles.forEach((fieldTitle) => {
 			(fieldTitle as HTMLElement).setAttribute('title', 'items per page')
 		})
 
-		const th = document.getElementsByTagName('th')
+		const th = document.querySelectorAll('#paginated-table th')
 		for (let i = 0; i < th.length; i++) {
 			th[i].setAttribute('scope', 'col')
 		}
@@ -192,7 +192,7 @@
 </script>
 
 <template>
-	<div>
+	<div id="paginated-table">
 		<VDataTable
 			v-if="!serverItemsLength"
 			color="primary"
