@@ -164,17 +164,25 @@
 		}
 		table?.prepend(caption)
 
-		const input = document.getElementsByTagName('input')
-		input[0].setAttribute('aria-describedby', 'items per page')
+		const inputs = document.querySelectorAll('input')
+		inputs.forEach((input) => {
+			(input as HTMLElement).setAttribute('aria-describedby', 'items per page')
+		})
 
-		const field = document.querySelectorAll('.v-field')
-		field[0].setAttribute('tabindex', '0')
+		const fields = document.querySelectorAll('.v-field')
+		fields.forEach((field) => {
+			(field as HTMLElement).setAttribute('tabindex', '0')
+		})
 
-		const fieldLabel = document.querySelectorAll('.v-field')
-		fieldLabel[0].setAttribute('aria-label', 'items per page')
+		const fieldLabels = document.querySelectorAll('.v-field')
+		fieldLabels.forEach((fieldLabel) => {
+			(fieldLabel as HTMLElement).setAttribute('aria-label', 'items per page')
+		})
 
-		const fieldTitle = document.querySelectorAll('.v-field')
-		fieldTitle[0].setAttribute('title', 'items per page')
+		const fieldTitles = document.querySelectorAll('.v-field')
+		fieldTitles.forEach((fieldTitle) => {
+			(fieldTitle as HTMLElement).setAttribute('title', 'items per page')
+		})
 
 		const th = document.getElementsByTagName('th')
 		for (let i = 0; i < th.length; i++) {
@@ -273,11 +281,20 @@
 			background: tokens.$primary-base;
 		}
 	}
-}
 
-:deep(.v-data-table-footer__items-per-page) {
-	.v-select--selected {
-		border-color: tokens.$primary-base !important;
-	}
+  .v-field {
+    &--active {
+      .v-field__prepend-inner > .v-icon,
+      .v-field__append-inner > .v-icon,
+      .v-field__clearable > .v-icon {
+        opacity: 1;
+        color: tokens.$primary-base;
+      }
+    }
+    &--focused {
+      border-color: tokens.$primary-base;
+      color:  tokens.$primary-base;
+    }
+  }
 }
 </style>
