@@ -120,43 +120,6 @@ export const Default: Story = {
 		options: {
 			itemsPerPage: 2,
 		},
-		headers: ref([
-			{
-				title: 'Nom',
-				key: 'lastname',
-			},
-			{
-				title: 'Prénom',
-				key: 'firstname',
-				value: 'firstname',
-			},
-			{
-				title: 'Email',
-				value: 'email',
-			},
-		]),
-		items: ref([
-			{
-				firstname: 'Virginie',
-				lastname: 'Beauchesne',
-				email: 'virginie.beauchesne@example.com',
-			},
-			{
-				firstname: 'Simone',
-				lastname: 'Bellefeuille',
-				email: 'simone.bellefeuille@example.com',
-			},
-			{
-				firstname: 'Étienne',
-				lastname: 'Salois',
-				email: 'etienne.salois@example.com',
-			},
-			{
-				firstname: 'Thierry',
-				lastname: 'Bobu',
-				email: 'thierry.bobu@example.com',
-			},
-		]),
 	},
 	render: (args) => {
 		return {
@@ -167,8 +130,43 @@ export const Default: Story = {
 			template: `
               <div class="pa-4">
                 <PaginatedTable 
-					:items="args.items"
-					:headers="args.headers"
+					:items="[
+                        {
+						  firstname: 'Virginie',
+						  lastname: 'Beauchesne',
+						  email: 'virginie.beauchesne@example.com',
+						},
+						{
+						  firstname: 'Simone',
+						  lastname: 'Bellefeuille',
+						  email: 'simone.bellefeuille@example.com',
+						},
+						{
+						  firstname: 'Étienne',
+						  lastname: 'Salois',
+						  email: 'etienne.salois@example.com',
+						},
+						{
+						  firstname: 'Thierry',
+						  lastname: 'Bobu',
+						  email: 'thierry.bobu@example.com',
+						}
+					]"
+					:headers="[
+                        {
+						  title: 'Nom',
+						  key: 'lastname',
+						},
+						{
+						  title: 'Prénom',
+						  key: 'firstname',
+						  value: 'firstname',
+						},
+						{
+						  title: 'Email',
+						  value: 'email',
+						},
+					]"
 					:options="args.options"
 					@update:options="args.options.value = $event"
 				/>
@@ -253,44 +251,6 @@ export const SortBy: Story = {
 			sortBy: 'lastname',
 			sortDesc: true,
 		},
-		headers: ref([
-			{
-				title: 'Nom',
-				key: 'lastname',
-				filterable: true,
-			},
-			{
-				title: 'Prénom',
-				key: 'firstname',
-				value: 'firstname',
-			},
-			{
-				title: 'Email',
-				value: 'email',
-			},
-		]),
-		items: ref([
-			{
-				firstname: 'Virginie',
-				lastname: 'Beauchesne',
-				email: 'virginie.beauchesne@example.com',
-			},
-			{
-				firstname: 'Simone',
-				lastname: 'Bellefeuille',
-				email: 'simone.bellefeuille@example.com',
-			},
-			{
-				firstname: 'Étienne',
-				lastname: 'Salois',
-				email: 'etienne.salois@example.com',
-			},
-			{
-				firstname: 'Thierry',
-				lastname: 'Bobu',
-				email: 'thierry.bobu@example.com',
-			},
-		]),
 	},
 	render: (args) => {
 		return {
@@ -301,8 +261,44 @@ export const SortBy: Story = {
 			template: `
               <div class="pa-4">
                 <PaginatedTable 
-					:items="args.items"
-					:headers="args.headers"
+					:items="[
+                        {
+						  firstname: 'Virginie',
+						  lastname: 'Beauchesne',
+						  email: 'virginie.beauchesne@example.com',
+						},
+						{
+						  firstname: 'Simone',
+						  lastname: 'Bellefeuille',
+						  email: 'simone.bellefeuille@example.com',
+						},
+						{
+						  firstname: 'Étienne',
+						  lastname: 'Salois',
+						  email: 'etienne.salois@example.com',
+						},
+						{
+						  firstname: 'Thierry',
+						  lastname: 'Bobu',
+						  email: 'thierry.bobu@example.com',
+						},
+					]"
+					:headers="[
+                        {
+						  title: 'Nom',
+						  key: 'lastname',
+						  filterable: true,
+						},
+						{
+						  title: 'Prénom',
+						  key: 'firstname',
+						  value: 'firstname',
+						},
+						{
+						  title: 'Email',
+						  value: 'email',
+						},
+					]"
 					:options="args.options"
 					@update:options="args.options.value = $event"
 				/>
@@ -424,7 +420,14 @@ export const TableServer: Story = {
 			},
 		],
 	},
-	args: {},
+	args: {
+		options: {
+			itemsPerPage: 5,
+			sortBy: 'lastname',
+			sortDesc: false,
+			page: 1,
+		},
+	},
 	render: (args) => {
 		return {
 			components: { PaginatedTable },
