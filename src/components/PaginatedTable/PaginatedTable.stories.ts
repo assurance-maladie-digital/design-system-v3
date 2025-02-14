@@ -16,7 +16,7 @@ interface DataObj {
 	total: number
 }
 
-const meta: Meta<typeof PaginatedTable> = {
+const meta = {
 	title: 'Composants/Tableaux/PaginatedTable',
 	component: PaginatedTable,
 	decorators: [
@@ -26,27 +26,8 @@ const meta: Meta<typeof PaginatedTable> = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: [] },
 	},
 	argTypes: {
-		headers: {
-			control: { type: 'object' },
-			table: {
-				type: {
-					summary: 'array',
-				},
-				category: 'props',
-			},
-		},
-		items: {
-			control: { type: 'object' },
-			table: {
-				type: {
-					summary: 'array',
-				},
-				category: 'props',
-			},
-		},
 		options: {
 			control: { type: 'object' },
 		},
@@ -54,13 +35,13 @@ const meta: Meta<typeof PaginatedTable> = {
 			control: { type: 'number' },
 		},
 		suffix: {
-			control: { type: 'string' },
+			control: { type: 'text' },
 		},
 		itemsPerPage: {
 			control: { type: 'number' },
 		},
 	},
-} as Meta<typeof PaginatedTable>
+} satisfies Meta<typeof PaginatedTable>
 
 export default meta
 
@@ -139,7 +120,7 @@ export const Default: Story = {
 		options: {
 			itemsPerPage: 2,
 		},
-		headers: [
+		headers: ref([
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -153,8 +134,8 @@ export const Default: Story = {
 				title: 'Email',
 				value: 'email',
 			},
-		],
-		items: [
+		]),
+		items: ref([
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -175,7 +156,7 @@ export const Default: Story = {
 				lastname: 'Bobu',
 				email: 'thierry.bobu@example.com',
 			},
-		],
+		]),
 	},
 	render: (args) => {
 		return {
@@ -272,7 +253,7 @@ export const SortBy: Story = {
 			sortBy: 'lastname',
 			sortDesc: true,
 		},
-		headers: [
+		headers: ref([
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -287,8 +268,8 @@ export const SortBy: Story = {
 				title: 'Email',
 				value: 'email',
 			},
-		],
-		items: [
+		]),
+		items: ref([
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -309,7 +290,7 @@ export const SortBy: Story = {
 				lastname: 'Bobu',
 				email: 'thierry.bobu@example.com',
 			},
-		],
+		]),
 	},
 	render: (args) => {
 		return {
