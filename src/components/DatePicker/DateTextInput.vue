@@ -135,7 +135,18 @@
 	// Fonction pour formater la date pendant la saisie
 	const formatDateInput = (input: string, cursorPosition?: number): { formatted: string, cursorPos: number } => {
 		const separator = props.format.includes('/') ? '/' : props.format.includes('-') ? '-' : '.'
-		const mask = `__${separator}__${separator}____` // JJ/MM/AAAA
+
+		// Déterminer l'ordre des composants (jour, mois, année) en fonction du format
+		const formatParts = props.format.split(/[/.-]/)
+		const dayIndex = formatParts.findIndex(part => part.toUpperCase().includes('D'))
+		const monthIndex = formatParts.findIndex(part => part.toUpperCase().includes('M'))
+		const yearIndex = formatParts.findIndex(part => part.toUpperCase().includes('Y'))
+
+		// Créer le masque en fonction du format
+		const parts = Array(3).fill('__')
+		parts[yearIndex] = '____' // L'année a toujours 4 caractères
+		const mask = parts.join(separator)
+
 		let result = mask
 		let pos = cursorPosition || 0
 
@@ -154,23 +165,29 @@
 		// Si l'entrée contient des séparateurs, on traite chaque partie séparément
 		if (cleanInput.includes(separator)) {
 			const parts = cleanInput.split(separator)
-			const day = parts[0]?.padEnd(2, '_')
-			const month = parts[1]?.padEnd(2, '_')
-			const year = parts[2]?.padEnd(4, '_')
+			const formattedParts = Array(3).fill('__')
+			formattedParts[yearIndex] = (parts[yearIndex] || '').padEnd(4, '_')
+			formattedParts[monthIndex] = (parts[monthIndex] || '').padEnd(2, '_')
+			formattedParts[dayIndex] = (parts[dayIndex] || '').padEnd(2, '_')
 
-			result = `${day}${separator}${month}${separator}${year}`
+			result = formattedParts.join(separator)
 		}
 		else {
 			// Sinon on formate selon la longueur
 			const numbers = cleanInput
-			if (numbers.length >= 1) result = numbers[0] + result.substring(1)
-			if (numbers.length >= 2) result = result.substring(0, 1) + numbers[1] + result.substring(2)
-			if (numbers.length >= 3) result = result.substring(0, 3) + numbers[2] + result.substring(4)
-			if (numbers.length >= 4) result = result.substring(0, 4) + numbers[3] + result.substring(5)
-			if (numbers.length >= 5) result = result.substring(0, 6) + numbers[4] + result.substring(7)
-			if (numbers.length >= 6) result = result.substring(0, 7) + numbers[5] + result.substring(8)
-			if (numbers.length >= 7) result = result.substring(0, 8) + numbers[6] + result.substring(9)
-			if (numbers.length >= 8) result = result.substring(0, 9) + numbers[7] + result.substring(10)
+			const maxLength = 8 // 2 chiffres pour le jour, 2 pour le mois, 4 pour l'année
+
+			// Distribution des chiffres selon le format
+			for (let i = 0; i < Math.min(numbers.length, maxLength); i++) {
+				const digit = numbers[i]
+				let targetPos = i
+
+				// Ajuster la position en fonction des séparateurs
+				if (i >= 2) targetPos += 1 // Après les 2 premiers chiffres
+				if (i >= 4) targetPos += 1 // Après les 4 premiers chiffres
+
+				result = result.substring(0, targetPos) + digit + result.substring(targetPos + 1)
+			}
 		}
 
 		// Calculer la nouvelle position du curseur
