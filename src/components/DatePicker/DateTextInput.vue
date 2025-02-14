@@ -494,6 +494,41 @@
 		emit('blur')
 	}
 
+	// Fonction de validation lors de la soumission
+	const isValidating = ref(false)
+
+	const validateOnSubmit = (): boolean => {
+		isValidating.value = true
+		
+		// Valider le format de la date
+		const { isValid } = validateDateFormat(inputValue.value)
+		if (!isValid && props.required) {
+			return false
+		}
+		
+		// Valider les règles personnalisées
+		validateRules(inputValue.value)
+		
+		// Retourner true seulement si pas d'erreurs
+		return errorMessages.value.length === 0
+	}
+
+	defineExpose({
+		validateOnSubmit,
+		focus: () => {
+			const input = document.querySelector('input')
+			if (input) {
+				input.focus()
+			}
+		},
+		blur: () => {
+			const input = document.querySelector('input')
+			if (input) {
+				input.blur()
+			}
+		},
+	})
+
 	onMounted(() => {
 		if (!props.modelValue) {
 			return
@@ -518,21 +553,6 @@
 		}
 	})
 
-	// Exposer les méthodes et propriétés nécessaires
-	defineExpose({
-		focus: () => {
-			const input = document.querySelector('input')
-			if (input) {
-				input.focus()
-			}
-		},
-		blur: () => {
-			const input = document.querySelector('input')
-			if (input) {
-				input.blur()
-			}
-		},
-	})
 </script>
 
 <template>
