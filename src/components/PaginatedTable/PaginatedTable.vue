@@ -239,14 +239,9 @@
 
 	table :not(thead) tr {
 		&:hover {
-			background-color: rgb(0 0 0 / 10%);
+			background-color: rgb(12 65 154 / 10%);
 		}
 	}
-
-	:deep(.v-select--selected) {
-		border-color: tokens.$primary-base !important;
-	}
-
 	&.row-clickable table tbody tr {
 		cursor: pointer;
 	}
@@ -277,5 +272,11 @@
 			background: tokens.$primary-base;
 		}
 	}
+}
+
+:deep(.v-data-table-footer__items-per-page) {
+  .v-select--selected {
+    border-color: tokens.$primary-base !important;
+  }
 }
 </style>
