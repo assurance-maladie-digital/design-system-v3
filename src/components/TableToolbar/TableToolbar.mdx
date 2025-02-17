@@ -1,0 +1,130 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as TableToolbarStories from './TableToolbar.stories';
+
+<Meta of={TableToolbarStories} />
+
+# TableToolbar
+
+Le composant `TableToolbar` est utilisé pour afficher une barre d'outils pour les tableaux.
+
+<Canvas of={TableToolbarStories.Default}  />
+
+# API
+
+<Controls of={TableToolbarStories.Default} />
+
+# Exemples
+
+## Bouton `Ajouter`
+
+Vous pouvez afficher un bouton permettant une action d’ajout en utilisant la prop `show-add-button`.
+
+<Canvas of={TableToolbarStories.AddButton} />
+
+## Nombre de lignes filtrées
+
+Vous pouvez afficher le nombre de lignes filtrées par rapport au nombre total en utilisant la prop `nb-filtered`.
+
+<Canvas of={TableToolbarStories.NbFiltered} />
+
+## Mode chargement
+
+Vous pouvez afficher le composant en mode chargement en utilisant la prop `loading`, cela va désactiver les éléments interactifs.
+
+<Canvas of={TableToolbarStories.Loading} />
+
+## Textes par défaut
+
+Vous pouvez personnaliser les différents labels en utilisant les props `addButtonLabel` et `searchLabel`.
+
+<Canvas of={TableToolbarStories.Labels} />
+
+## Slots
+
+Vous pouvez utiliser les slots `search-left` ou `search-right` pour ajouter du contenu à gauche ou à droite du champ de recherche.
+
+<Canvas
+	of={TableToolbarStories.Slots}
+	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script setup lang="ts">
+			import { TableToolbar } from '@cnamts/synapse'
+			import { VDataTable } from 'vuetify/components'
+			import { ref } from 'vue'
+
+			const headers = [
+				{
+					title: 'Nom',
+					value: 'lastname',
+				},
+				{
+					title: 'Prénom',
+					value: 'firstname',
+				},
+				{
+					title: 'Email',
+					value: 'email',
+				},
+			]
+
+			const items = [
+				{
+					firstname: 'Virginie',
+					lastname: 'Beauchesne',
+					email: 'virginie.beauchesne@example.com',
+				},
+				{
+					firstname: 'Étienne',
+					lastname: 'Salois',
+					email: 'etienne.salois@example.com',
+				},
+			]
+
+			const vuetifyOptions = {
+				toolbar: {
+					class: 'py-2',
+				},
+				textField: {
+					variant: 'outlined',
+					density: 'compact',
+				},
+				addBtn: {
+					height: '40px',
+					color: '#663399',
+				},
+				addIcon: {
+					class: 'd-none',
+				},
+			}
+
+			const search = ref('')
+		</script>
+
+		<template>
+			<VDataTable
+				:headers="headers"
+				:items="items"
+				hide-default-footer
+			>
+				<template #top>
+					<TableToolbar
+						v-model="search"
+						:nb-total="10"
+						show-add-button
+						:vuetifyOptions
+					/>
+				</template>
+			</VDataTable>
+		</template>
+		`
+	}}
+/>
+
+## Personnalisation
+
+Vous pouvez personnaliser les composants Vuetify utilisés par ce composant en utilisant la prop vuetify-options.
+
+<Canvas of={TableToolbarStories.Customization} />
