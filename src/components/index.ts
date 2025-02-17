@@ -1,4 +1,3 @@
-export { useFieldValidation } from '../composables/rules/useFieldValidation'
 export type { RuleOptions } from '../composables/rules/useFieldValidation'
 export { useNotificationService } from '../services/NotificationService'
 export { default as BackBtn } from './BackBtn/BackBtn.vue'
