@@ -12,7 +12,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['modelValue'] },
+		controls: { exclude: ['modelValue', 'noCalendar'] },
 	},
 	argTypes: {
 		modelValue: {
