@@ -4,7 +4,7 @@ import { vuetify } from '@tests/unit/setup'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
 
-describe('DatePicker.vue', () => {
+describe('DatePicker', () => {
 	let wrapper
 
 	beforeEach(() => {

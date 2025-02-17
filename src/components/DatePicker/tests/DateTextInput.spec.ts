@@ -4,7 +4,7 @@ import { vuetify } from '@tests/unit/setup'
 import DateTextInput from '../DateTextInput.vue'
 import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 
-describe('DateTextInput.vue', () => {
+describe('DateTextInput', () => {
 	let wrapper
 
 	beforeEach(() => {
