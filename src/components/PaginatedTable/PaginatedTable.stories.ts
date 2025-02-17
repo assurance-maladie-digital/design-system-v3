@@ -3,6 +3,7 @@ import PaginatedTable from './PaginatedTable.vue'
 import { StateEnum } from './constants/StateEnum'
 import type { DataOptions } from './types'
 import { ref } from 'vue'
+import type { VDataTable } from 'vuetify/components'
 
 interface User {
 	[key: string]: string
@@ -28,6 +29,18 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
+		headers: {
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+			},
+		},
+		items: {
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+			},
+		},
 		options: {
 			control: { type: 'object' },
 		},
@@ -41,7 +54,7 @@ const meta = {
 			control: { type: 'number' },
 		},
 	},
-} satisfies Meta<typeof PaginatedTable>
+} satisfies Meta<typeof PaginatedTable & typeof VDataTable>
 
 export default meta
 
@@ -117,6 +130,42 @@ export const Default: Story = {
 		],
 	},
 	args: {
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+		],
 		options: {
 			itemsPerPage: 2,
 		},
