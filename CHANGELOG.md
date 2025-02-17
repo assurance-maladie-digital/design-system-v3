@@ -1,3 +1,17 @@
+## v0.0.10-alpha (17-02-2025)
+
+### Composants
+
+- TableToolbar [`#388`](https://github.com/assurance-maladie-digital/design-system-v3/pull/388)
+- FileList [`#377`](https://github.com/assurance-maladie-digital/design-system-v3/pull/377)
+- FilePreview [`#382`](https://github.com/assurance-maladie-digital/design-system-v3/pull/382)
+- PeriodField [`#368`](https://github.com/assurance-maladie-digital/design-system-v3/pull/368)
+- SyAlert: add click:close event [`#379`](https://github.com/assurance-maladie-digital/design-system-v3/pull/379)
+
+### Documentation
+
+-  Add accessibility on components pages (package 5) [`#380`](https://github.com/assurance-maladie-digital/design-system-v3/pull/380)
+
 ## v0.0.9-alpha (06-02-2025)
 
 ### Composants
