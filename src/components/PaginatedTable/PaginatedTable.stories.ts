@@ -84,7 +84,7 @@ export const Default: Story = {
 					import { PaginatedTable } from '@cnamts/synapse'
 					
 					const options = ref({
-						itemsPerPage: 2,
+						itemsPerPage: 4,
 					})
 					
 					const headers = ref([
@@ -123,6 +123,16 @@ export const Default: Story = {
 							lastname: 'Bobu',
 							email: 'thierry.bobu@example.com',
 						},
+						{
+                            firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+                            firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
 					])
 				</script>
 				`,
@@ -166,9 +176,19 @@ export const Default: Story = {
 				lastname: 'Bobu',
 				email: 'thierry.bobu@example.com',
 			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
 		],
 		options: {
-			itemsPerPage: 2,
+			itemsPerPage: 4,
 		},
 	},
 	render: (args) => {
@@ -180,43 +200,8 @@ export const Default: Story = {
 			template: `
               <div class="pa-4">
                 <PaginatedTable 
-					:items="[
-                        {
-						  firstname: 'Virginie',
-						  lastname: 'Beauchesne',
-						  email: 'virginie.beauchesne@example.com',
-						},
-						{
-						  firstname: 'Simone',
-						  lastname: 'Bellefeuille',
-						  email: 'simone.bellefeuille@example.com',
-						},
-						{
-						  firstname: 'Étienne',
-						  lastname: 'Salois',
-						  email: 'etienne.salois@example.com',
-						},
-						{
-						  firstname: 'Thierry',
-						  lastname: 'Bobu',
-						  email: 'thierry.bobu@example.com',
-						}
-					]"
-					:headers="[
-                        {
-						  title: 'Nom',
-						  key: 'lastname',
-						},
-						{
-						  title: 'Prénom',
-						  key: 'firstname',
-						  value: 'firstname',
-						},
-						{
-						  title: 'Email',
-						  value: 'email',
-						},
-					]"
+					:items="args.items"
+					:headers="args.headers"
 					:options="args.options"
 					@update:options="args.options.value = $event"
 				/>
@@ -290,6 +275,16 @@ export const SortBy: Story = {
 							lastname: 'Bobu',
 							email: 'thierry.bobu@example.com',
 						},
+						{
+                            firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+                            firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
 					])
 				</script>
 				`,
@@ -297,6 +292,53 @@ export const SortBy: Story = {
 		],
 	},
 	args: {
+		// @ts-expect-error - props of VDataTable
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
 		options: {
 			sortBy: 'lastname',
 			sortDesc: true,
@@ -311,44 +353,8 @@ export const SortBy: Story = {
 			template: `
               <div class="pa-4">
                 <PaginatedTable 
-					:items="[
-                        {
-						  firstname: 'Virginie',
-						  lastname: 'Beauchesne',
-						  email: 'virginie.beauchesne@example.com',
-						},
-						{
-						  firstname: 'Simone',
-						  lastname: 'Bellefeuille',
-						  email: 'simone.bellefeuille@example.com',
-						},
-						{
-						  firstname: 'Étienne',
-						  lastname: 'Salois',
-						  email: 'etienne.salois@example.com',
-						},
-						{
-						  firstname: 'Thierry',
-						  lastname: 'Bobu',
-						  email: 'thierry.bobu@example.com',
-						},
-					]"
-					:headers="[
-                        {
-						  title: 'Nom',
-						  key: 'lastname',
-						  filterable: true,
-						},
-						{
-						  title: 'Prénom',
-						  key: 'firstname',
-						  value: 'firstname',
-						},
-						{
-						  title: 'Email',
-						  value: 'email',
-						},
-					]"
+					:items="args.items"
+					:headers="args.headers"
 					:options="args.options"
 					@update:options="args.options.value = $event"
 				/>
