@@ -130,6 +130,7 @@ export const Default: Story = {
 		],
 	},
 	args: {
+		// @ts-expect-error - props of VDataTable
 		headers: [
 			{
 				title: 'Nom',
