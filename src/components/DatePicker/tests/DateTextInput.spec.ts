@@ -161,7 +161,7 @@ describe('DateTextInput.vue', () => {
 		const input = wrapper.find('input')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
-		expect(textField.props('errorMessages')).toContain('La date est requise')
+		expect(textField.props('errorMessages')).toContain('Format de date invalide')
 	})
 
 	it('formats date during input', async () => {
