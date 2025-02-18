@@ -116,6 +116,7 @@
 			sortDesc: createSortDesc(options),
 			groupBy: createGroupBy(options),
 			groupDesc: createGroupDesc(options),
+			page: optionsFacade.value.page,
 		}
 	}
 
@@ -151,8 +152,15 @@
 	)
 
 	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
+	console.log('localOptions', localOptions.value)
 
 	onMounted(() => {
+		const savedOptions = localStorageUtility.getItem(storageKey.value)
+		if (savedOptions) {
+			console.log(savedOptions)
+			emit('update:options', savedOptions)
+		}
+
 		const table = document.querySelector('#paginated-table table')
 		const caption = document.createElement('caption')
 		caption.innerHTML = props.caption
