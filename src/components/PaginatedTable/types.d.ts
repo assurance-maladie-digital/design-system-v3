@@ -11,10 +11,8 @@ export type GroupOption = {
 export interface DataOptions {
 	page: number
 	itemsPerPage: number
-	sortBy: string[] | string
-	sortDesc: boolean[] | boolean
-	groupBy?: string[] | string
-	groupDesc?: boolean[] | boolean
+	sortBy: SortOptions[]
+	groupBy?: GroupOption[]
 	multiSort?: boolean
 	mustSort?: boolean
 }

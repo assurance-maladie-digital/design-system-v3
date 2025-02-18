@@ -1,14 +1,9 @@
 <script setup lang="ts">
 	import { ref, computed, watch, useAttrs, onMounted } from 'vue'
-	import type { PropType } from 'vue'
 	import type { DataOptions, SortOption, GroupOption } from './types'
 	import { LocalStorageUtility } from '@/utils/localStorageUtility'
 
 	const props = defineProps({
-		options: {
-			type: Object as PropType<Partial<DataOptions>>,
-			required: true,
-		},
 		serverItemsLength: {
 			type: Number,
 			default: undefined,
@@ -27,7 +22,10 @@
 		},
 	})
 
-	const emit = defineEmits(['update:options'])
+	const options = defineModel<Partial<DataOptions>>('options', {
+		required: false,
+		default: () => ({}),
+	})
 
 	const localStorageUtility = new LocalStorageUtility()
 	const localOptions = ref({})
@@ -50,44 +48,13 @@
 	})
 
 	const optionsFacade = computed(() => {
-		const sortBy = !props.options.sortBy
-			? []
-			: Array.isArray(props.options.sortBy)
-				? props.options.sortBy
-					.filter((key: string) => key)
-					.map((key: string, index: number) => ({
-						key,
-						order: props.options?.sortDesc?.[index] ? 'desc' : 'asc',
-					}))
-				: [
-					{
-						key: props.options.sortBy,
-						order: props.options.sortDesc ? 'desc' : 'asc',
-					},
-				]
-		const groupBy = !props.options.groupBy
-			? []
-			: Array.isArray(props.options.groupBy)
-				? props.options.groupBy
-					.filter((key: string) => key)
-					.map((key: string, index: number) => ({
-						key,
-						order: props.options?.groupDesc?.[index] ? 'desc' : 'asc',
-					}))
-				: [
-					{
-						key: props.options.groupBy,
-						order: props.options.groupDesc ? 'desc' : 'asc',
-					},
-				]
-
 		return {
-			page: props.options.page || componentAttributes['page'],
-			itemsPerPage: props.options.itemsPerPage || props.itemsPerPage,
-			sortBy,
-			groupBy,
-			multiSort: props.options.multiSort,
-			mustSort: props.options.mustSort,
+			page: options.value.page || componentAttributes['page'],
+			itemsPerPage: options.value.itemsPerPage || props.itemsPerPage,
+			sortBy: options.value.sortBy,
+			groupBy: options.value.groupBy,
+			multiSort: options.value.multiSort,
+			mustSort: options.value.mustSort,
 		}
 	})
 
@@ -103,41 +70,15 @@
 		}
 	})
 
-	function updateOptions(options: SortOption[] | GroupOption[]): void {
-		emit('update:options', createUpdatedOptions(options))
-	}
-
-	function createUpdatedOptions(options): DataOptions {
-		return {
-			...options,
-			multiSort: optionsFacade.value.multiSort,
-			mustSort: optionsFacade.value.mustSort,
-			sortBy: createSortBy(options),
-			sortDesc: createSortDesc(options),
-			groupBy: createGroupBy(options),
-			groupDesc: createGroupDesc(options),
-			page: optionsFacade.value.page,
+	function updateOptions(tableOptions: SortOption[] | GroupOption[]): void {
+		options.value = {
+			...options.value,
+			...tableOptions,
 		}
 	}
 
-	function createSortBy(options): string[] {
-		return options.sortBy.filter(sort => sort.key).map(sort => sort.key)
-	}
-
-	function createSortDesc(options): boolean[] {
-		return options.sortBy.filter(sort => sort.key).map(sort => sort.order === 'desc')
-	}
-
-	function createGroupBy(options): string[] {
-		return options.groupBy.filter(group => group.key).map(group => group?.key)
-	}
-
-	function createGroupDesc(options): boolean[] {
-		return options.groupBy.filter(group => group.key).map(group => group?.order === 'desc')
-	}
-
 	watch(
-		() => props.options,
+		() => options.value,
 		() => {
 			if (props.serverItemsLength !== 0) {
 				localStorageUtility.setItem(storageKey.value, {
@@ -152,15 +93,8 @@
 	)
 
 	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
-	// console.log('localOptions', localOptions.value)
 
 	onMounted(() => {
-		const savedOptions = localStorageUtility.getItem(storageKey.value)
-		if (savedOptions) {
-			// console.log(savedOptions)
-			emit('update:options', savedOptions)
-		}
-
 		const table = document.querySelector('#paginated-table table')
 		const caption = document.createElement('caption')
 		caption.innerHTML = props.caption

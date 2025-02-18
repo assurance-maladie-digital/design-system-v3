@@ -23,8 +23,7 @@ Le composant `PaginatedTable` est utilisé pour afficher une `VDataTable` de Vue
 
     const options = ref({
         itemsPerPage: 5,
-        sortBy: ['name'],
-        sortDesc: [false],
+        sortBy: [{ key: 'name', order: 'asc' }],
     })
 
 	const headers = reactive([
@@ -46,9 +45,9 @@ Le composant `PaginatedTable` est utilisé pour afficher une `VDataTable` de Vue
 
 <template>
 	 <PaginatedTable
+	    v-model:options="options"
         :headers="headers"
         :items="desserts"
-        :options="options"
     />
 </template>
 `}

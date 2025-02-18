@@ -235,8 +235,7 @@ export const SortBy: Story = {
 					import { PaginatedTable } from '@cnamts/synapse'
 					
 					const options = ref({
-						sortBy: 'lastname',
-						sortDesc: true,
+						sortBy: [{ key: 'lastname', order: 'desc' }],
 					})
 					
 					const headers = ref([
@@ -340,8 +339,7 @@ export const SortBy: Story = {
 			},
 		],
 		options: {
-			sortBy: 'lastname',
-			sortDesc: true,
+			sortBy: [{ key: 'lastname', order: 'desc' }],
 		},
 	},
 	render: (args) => {

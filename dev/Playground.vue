@@ -4,8 +4,7 @@
 
 	const options = ref({
 		itemsPerPage: 2,
-		sortBy: 'lastname',
-		sortDesc: false,
+		sortBy: [{ key: 'lastname', order: 'asc' }],
 	})
 
 	const headers = reactive([
@@ -45,8 +44,8 @@
 
 <template>
 	<PaginatedTable
+		v-model:options="options"
 		:headers="headers"
 		:items="users"
-		:options="options"
 	/>
 </template>
