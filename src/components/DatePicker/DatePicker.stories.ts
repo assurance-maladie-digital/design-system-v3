@@ -12,7 +12,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['modelValue', 'noCalendar'] },
+		controls: { exclude: ['modelValue'] },
 	},
 	argTypes: {
 		modelValue: {
@@ -70,6 +70,9 @@ const meta = {
 			description: 'Masque toutes les icônes',
 		},
 		noCalendar: {
+			table: {
+				category: 'props',
+			},
 			control: 'boolean',
 			description: 'Désactive l\'affichage du calendrier (saisie manuelle uniquement), elle permet les copier coller et le passage de robots',
 		},
