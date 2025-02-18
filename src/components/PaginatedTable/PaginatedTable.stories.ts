@@ -42,7 +42,11 @@ const meta = {
 			},
 		},
 		options: {
+			name: 'v-model:options',
 			control: { type: 'object' },
+			table: {
+				category: 'props',
+			},
 		},
 		serverItemsLength: {
 			control: { type: 'number' },
@@ -68,7 +72,7 @@ export const Default: Story = {
 				code: `
 				<template>
 					<PaginatedTable
-						:options="options"
+						v-model:options="options"
 						:headers="headers"
 						:items="items"
 						@update:options="options.value = $event"
@@ -199,11 +203,10 @@ export const Default: Story = {
 			},
 			template: `
               <div class="pa-4">
-                <PaginatedTable 
+                <PaginatedTable
+					v-model:options="args.options"
 					:items="args.items"
 					:headers="args.headers"
-					:options="args.options"
-					@update:options="args.options.value = $event"
 				/>
               </div>
             `,
@@ -219,10 +222,9 @@ export const SortBy: Story = {
 				code: `
 				<template>
 					<PaginatedTable
-						:options="options"
+						v-model:options="options"
 						:headers="headers"
 						:items="items"
-						@update:options="options.value = $event"
 					/>
 				</template>
 				`,
@@ -350,11 +352,10 @@ export const SortBy: Story = {
 			},
 			template: `
               <div class="pa-4">
-                <PaginatedTable 
+                <PaginatedTable
+					v-model:options="args.options"
 					:items="args.items"
 					:headers="args.headers"
-					:options="args.options"
-					@update:options="args.options.value = $event"
 				/>
               </div>
             `,
@@ -370,9 +371,9 @@ export const TableServer: Story = {
 				code: `
 				<template>
 					<PaginatedTable
+						v-model:options="options"
 						:items="users"
 						:headers="headers"
-						:options="options"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
 						suffix="api-example"
@@ -394,8 +395,7 @@ export const TableServer: Story = {
 					
 					const options = ref({
 					  itemsPerPage: 5,
-					  sortBy: 'lastname',
-					  sortDesc: false,
+					  sortBy: [{ key: 'lastname', order: 'asc' }],
 					  page: 1,
 					})
 					
@@ -477,8 +477,7 @@ export const TableServer: Story = {
 	args: {
 		options: {
 			itemsPerPage: 5,
-			sortBy: 'lastname',
-			sortDesc: false,
+			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
 	},
@@ -492,8 +491,7 @@ export const TableServer: Story = {
 
 				const options = ref({
 					itemsPerPage: 5,
-					sortBy: 'lastname',
-					sortDesc: false,
+					sortBy: [{ key: 'lastname', order: 'asc' }],
 					page: 1,
 				})
 
@@ -574,10 +572,10 @@ export const TableServer: Story = {
 			},
 			template: `
               <div class="pa-4">
-                <PaginatedTable 
+                <PaginatedTable
+					v-model:options="options"
 					:items="users"
 					:headers="headers"
-					:options="options"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
 					suffix="api-example"
