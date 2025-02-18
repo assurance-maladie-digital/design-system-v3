@@ -111,7 +111,7 @@ describe('PaginatedTable', () => {
 			wrapper.find('.v-data-table__td:nth-child(3)').text(),
 		).not.toMatch(/age/i)
 
-		expect(wrapper.findAll('tbody .v-data-table__tr').length).toBe(2)
+		expect(wrapper.findAll('tbody .v-data-table__tr').length).toBe(3)
 	})
 
 	it('Sort items correctly in local mode', async () => {
@@ -119,8 +119,7 @@ describe('PaginatedTable', () => {
 			propsData: {
 				suffix: 'test 1',
 				options: {
-					sortBy: ['name'],
-					sortDesc: [false],
+					sortBy: [{ key: 'name', order: 'asc' }],
 				},
 				items: fakeItems,
 				headers: headers,
@@ -135,8 +134,7 @@ describe('PaginatedTable', () => {
 		await wrapper.setProps({
 			suffix: 'test 2',
 			options: {
-				sortBy: ['name'],
-				sortDesc: [true],
+				sortBy: [{ key: 'name', order: 'desc' }],
 			},
 		})
 
@@ -149,8 +147,7 @@ describe('PaginatedTable', () => {
 			propsData: {
 				suffix: 'test 3',
 				options: {
-					sortBy: ['name'],
-					sortDesc: [false],
+					sortBy: [{ key: 'name', order: 'asc' }],
 				},
 				items: fakeItems,
 				headers: headers,
@@ -162,8 +159,7 @@ describe('PaginatedTable', () => {
 		const setItemMock = vi.spyOn(LocalStorageUtility.prototype, 'setItem')
 		await wrapper.setProps({
 			options: {
-				sortBy: ['name'],
-				sortDesc: [true],
+				sortBy: [{ key: 'name', order: 'desc' }],
 			},
 		})
 		expect(setItemMock).toHaveBeenCalledWith(
@@ -179,8 +175,12 @@ describe('PaginatedTable', () => {
 		)
 		await wrapper.setProps({
 			options: {
-				sortBy: ['age'],
-				sortDesc: [true],
+				sortBy: [
+					{
+						key: 'age',
+						order: 'desc',
+					},
+				],
 			},
 		})
 		expect(setItemMock).toHaveBeenCalledWith(
@@ -211,8 +211,7 @@ describe('PaginatedTable', () => {
 			propsData: {
 				suffix: 'test 4',
 				options: {
-					sortBy: ['name'],
-					sortDesc: [false],
+					sortBy: [{ key: 'name', order: 'asc' }],
 				},
 				items: fakeItems,
 				headers: headers,
@@ -270,8 +269,7 @@ describe('PaginatedTable', () => {
 
 		expect(wrapper.emitted('update:options')?.at(-1)).toEqual([
 			expect.objectContaining({
-				sortBy: ['id'],
-				sortDesc: [false],
+				sortBy: [{ key: 'id', order: 'asc' }],
 			}),
 		])
 
@@ -281,8 +279,7 @@ describe('PaginatedTable', () => {
 
 		expect(wrapper.emitted('update:options')?.at(-1)).toEqual([
 			expect.objectContaining({
-				sortBy: ['name'],
-				sortDesc: [false],
+				sortBy: [{ key: 'name', order: 'asc' }],
 			}),
 		])
 
@@ -292,8 +289,7 @@ describe('PaginatedTable', () => {
 
 		expect(wrapper.emitted('update:options')?.at(-1)).toEqual([
 			expect.objectContaining({
-				sortBy: ['name'],
-				sortDesc: [true],
+				sortBy: [{ key: 'name', order: 'desc' }],
 			}),
 		])
 	})
@@ -302,8 +298,8 @@ describe('PaginatedTable', () => {
 		const wrapper = mount(PaginatedTable, {
 			propsData: {
 				options: {
-					sortBy: ['id'],
-					groupBy: 'name',
+					sortBy: [{ key: 'id', order: 'desc' }],
+					groupBy: ['name'],
 				},
 				items: [],
 				serverItemsLength: 0,
@@ -317,10 +313,8 @@ describe('PaginatedTable', () => {
 
 		expect(wrapper.emitted('update:options')?.at(-1)).toEqual([
 			expect.objectContaining({
-				sortBy: ['id'],
-				sortDesc: [false],
+				sortBy: [{ key: 'id', order: 'desc' }],
 				groupBy: ['name'],
-				groupDesc: [false],
 			}),
 		])
 	})
