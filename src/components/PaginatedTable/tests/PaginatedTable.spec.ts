@@ -229,7 +229,6 @@ describe('PaginatedTable', () => {
 		const wrapper = mount(PaginatedTable, {
 			propsData: {
 				options: {} as DataOptions,
-				items: [],
 				serverItemsLength: 0,
 				suffix: 'test 5',
 				headers: headers,
@@ -255,7 +254,6 @@ describe('PaginatedTable', () => {
 		const wrapper = mount(PaginatedTable, {
 			propsData: {
 				options: {} as DataOptions,
-				items: [],
 				serverItemsLength: 0,
 				suffix: 'test 6',
 				headers: headers,
@@ -299,12 +297,10 @@ describe('PaginatedTable', () => {
 			propsData: {
 				options: {
 					sortBy: [{ key: 'id', order: 'desc' }],
-					groupBy: ['name'],
+					groupBy: [{ key: 'name', order: 'asc' }],
 				},
-				items: [],
 				serverItemsLength: 0,
 				suffix: 'test 7',
-				headers: headers,
 			},
 			global: {
 				plugins: [vuetify],
@@ -314,7 +310,7 @@ describe('PaginatedTable', () => {
 		expect(wrapper.emitted('update:options')?.at(-1)).toEqual([
 			expect.objectContaining({
 				sortBy: [{ key: 'id', order: 'desc' }],
-				groupBy: ['name'],
+				groupBy: [{ key: 'name', order: 'asc' }],
 			}),
 		])
 	})
