@@ -30,18 +30,21 @@ const meta = {
 	},
 	argTypes: {
 		headers: {
+			description: 'Liste des colonnes du tableau',
 			control: { type: 'object' },
 			table: {
 				category: 'props',
 			},
 		},
 		items: {
+			description: 'Liste des éléments à afficher dans le tableau',
 			control: { type: 'object' },
 			table: {
 				category: 'props',
 			},
 		},
 		options: {
+			description: 'Options de configuration du tableau',
 			name: 'v-model:options',
 			control: { type: 'object' },
 			table: {
@@ -49,12 +52,15 @@ const meta = {
 			},
 		},
 		serverItemsLength: {
+			description: 'Nombre total d\'éléments à afficher',
 			control: { type: 'number' },
 		},
 		suffix: {
+			description: 'Suffixe pour la pagination',
 			control: { type: 'text' },
 		},
 		itemsPerPage: {
+			description: 'Nombre d\'éléments par page',
 			control: { type: 'number' },
 		},
 	},
@@ -75,7 +81,6 @@ export const Default: Story = {
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
-						@update:options="options.value = $event"
 					/>
 				</template>
 				`,
