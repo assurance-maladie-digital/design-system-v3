@@ -152,12 +152,12 @@
 	)
 
 	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
-	console.log('localOptions', localOptions.value)
+	// console.log('localOptions', localOptions.value)
 
 	onMounted(() => {
 		const savedOptions = localStorageUtility.getItem(storageKey.value)
 		if (savedOptions) {
-			console.log(savedOptions)
+			// console.log(savedOptions)
 			emit('update:options', savedOptions)
 		}
 
