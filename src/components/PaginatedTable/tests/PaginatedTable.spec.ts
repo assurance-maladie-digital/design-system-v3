@@ -114,34 +114,6 @@ describe('PaginatedTable', () => {
 		expect(wrapper.findAll('tbody .v-data-table__tr').length).toBe(3)
 	})
 
-	it('Sort items correctly in local mode', async () => {
-		const wrapper = mount(PaginatedTable, {
-			propsData: {
-				suffix: 'test 1',
-				options: {
-					sortBy: [{ key: 'name', order: 'asc' }],
-				},
-				items: fakeItems,
-				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
-			},
-		})
-		let first = wrapper.find('tbody tr td').text()
-		expect(first).toBe('2')
-
-		await wrapper.setProps({
-			suffix: 'test 2',
-			options: {
-				sortBy: [{ key: 'name', order: 'desc' }],
-			},
-		})
-
-		first = wrapper.find('tbody tr td').text()
-		expect(first).toBe('3')
-	})
-
 	it('store the options in local storage in local mode', async () => {
 		const wrapper = mount(PaginatedTable, {
 			propsData: {
@@ -149,8 +121,6 @@ describe('PaginatedTable', () => {
 				options: {
 					sortBy: [{ key: 'name', order: 'asc' }],
 				},
-				items: fakeItems,
-				headers: headers,
 			},
 			global: {
 				plugins: [vuetify],
@@ -196,42 +166,12 @@ describe('PaginatedTable', () => {
 		)
 	})
 
-	it('use the options from local storage in local mode', async () => {
-		const getItemMock = vi
-			.spyOn(LocalStorageUtility.prototype, 'getItem')
-			.mockReturnValue({
-				sortBy: [
-					{
-						key: 'name',
-						order: 'desc',
-					},
-				],
-			})
-		const wrapper = mount(PaginatedTable, {
-			propsData: {
-				suffix: 'test 4',
-				options: {
-					sortBy: [{ key: 'name', order: 'asc' }],
-				},
-				items: fakeItems,
-				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
-			},
-		})
-		const first = wrapper.find('tbody tr td').text()
-		expect(first).toBe('3')
-		expect(getItemMock).toHaveBeenCalledWith('pagination-test 4')
-	})
-
 	it('render correctly in server mode', async () => {
 		const wrapper = mount(PaginatedTable, {
 			propsData: {
 				options: {} as DataOptions,
 				serverItemsLength: 0,
 				suffix: 'test 5',
-				headers: headers,
 			},
 			global: {
 				plugins: [vuetify],

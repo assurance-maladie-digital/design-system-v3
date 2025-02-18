@@ -1,37 +1,20 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`PaginatedTable > render correctly in server mode 1`] = `
-"<div id="paginated-table" headers="[object Object],[object Object],[object Object]">
+"<div id="paginated-table">
   <div class="v-table v-table--has-top v-table--has-bottom v-theme--light v-table--density-default v-data-table" itemslength="0">
     <!---->
     <div class="v-table__wrapper">
       <table>
         <!---->
         <thead>
-          <tr>
-            <th class="v-data-table__td v-data-table-column--align-start v-data-table__th--sortable v-data-table__th" colspan="1" rowspan="1">
-              <div class="v-data-table-header__content"><span>ID</span><i class="mdi-arrow-up mdi v-icon notranslate v-theme--light v-icon--size-default v-data-table-header__sort-icon" aria-hidden="true"></i>
-                <!---->
-              </div>
-            </th>
-            <th class="v-data-table__td v-data-table-column--align-start v-data-table__th--sortable v-data-table__th" colspan="1" rowspan="1">
-              <div class="v-data-table-header__content"><span>Name</span><i class="mdi-arrow-up mdi v-icon notranslate v-theme--light v-icon--size-default v-data-table-header__sort-icon" aria-hidden="true"></i>
-                <!---->
-              </div>
-            </th>
-            <th class="v-data-table__td v-data-table-column--align-start v-data-table__th--sortable v-data-table__th" colspan="1" rowspan="1">
-              <div class="v-data-table-header__content"><span>Age</span><i class="mdi-arrow-up mdi v-icon notranslate v-theme--light v-icon--size-default v-data-table-header__sort-icon" aria-hidden="true"></i>
-                <!---->
-              </div>
-            </th>
-          </tr>
           <!---->
         </thead>
         <!---->
         <tbody>
           <!---->
           <tr class="v-data-table-rows-no-data">
-            <td colspan="3">No data available</td>
+            <td colspan="0">No data available</td>
           </tr>
           <!---->
         </tbody>

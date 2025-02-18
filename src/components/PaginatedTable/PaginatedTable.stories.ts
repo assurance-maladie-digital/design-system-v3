@@ -513,6 +513,7 @@ export const TableServer: Story = {
 				]
 
 				const fetchData = async (): Promise<void> => {
+					// @ts-expect-error - fetchData is not defined
 					const { items, total } = await getDataFromApi(options.value)
 					users.value = items
 					totalUsers.value = total
