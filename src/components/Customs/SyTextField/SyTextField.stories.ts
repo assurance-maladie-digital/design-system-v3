@@ -7,66 +7,17 @@ import { mdiAccountBox } from '@mdi/js'
 const meta = {
 	title: 'Composants/Formulaires/SyTextField',
 	component: SyTextField,
+	decorators: [
+		() => ({
+			template: '<div style="padding: 20px;"><story/></div>',
+		}),
+	],
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue', 'appendInnerIconColor'] },
 		docs: {
 			description: {
-				component: `
-# SyTextField
-
-Le composant SyTextField est un champ de texte enrichi qui étend les fonctionnalités de base de Vuetify avec :
-- Un système de validation avancé
-- Des états visuels (erreur, avertissement, succès)
-- Des icônes de validation automatiques
-- Une personnalisation poussée des messages
-
-## Validation
-
-Le composant supporte trois types de validation :
-- Règles d'erreur standard (\`customRules\`)
-- Règles d'avertissement (\`customWarningRules\`)
-- Messages de succès (\`showSuccessMessages\`)
-
-### Exemples de règles :
-\`\`\`vue
-<SyTextField
-  v-model="value"
-  :customRules="[
-    {
-      type: 'required',
-      options: {
-        message: 'Ce champ est requis'
-      }
-    }
-  ]"
-  :customWarningRules="[
-    {
-      type: 'maxLength',
-      options: {
-        length: 10,
-        message: 'Le texte est un peu long'
-      }
-    }
-  ]"
-  showSuccessMessages
-/>
-\`\`\`
-
-### Types de règles disponibles :
-- required
-- min/max (valeurs numériques)
-- minLength/maxLength/exactLength
-- email
-- matchPattern (expression régulière)
-- custom (validation personnalisée)
-
-### États visuels :
-Le champ adapte automatiquement son apparence selon son état :
-- Rouge pour les erreurs
-- Orange pour les avertissements
-- Vert pour les succès
-`,
+				component: `SyTextField`,
 			},
 		},
 	},
@@ -163,7 +114,7 @@ export const Default: Story = {
 				return { args, value }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center">
 					<SyTextField v-bind="args" v-model="value" />
 				</div>
 			`,
@@ -211,7 +162,7 @@ export const Required: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center">
 					<SyTextField v-bind="args" />
 				</div>
 			`,
@@ -259,7 +210,7 @@ export const SlotPrepend: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center">
 					<SyTextField
 						v-bind="args"
 						:label="args.label"
@@ -311,7 +262,7 @@ export const SlotAppend: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center">
 					<SyTextField
 						v-bind="args"
 						:append-icon="args.appendIcon"
@@ -362,7 +313,7 @@ export const SlotPrependInner: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center">
 					<SyTextField
 						v-bind="args"
 						:prepend-inner-icon="args.prependInnerIcon"

@@ -126,7 +126,7 @@
 			noIcon: false,
 			customRules: () => [],
 			customWarningRules: () => [],
-			showSuccessMessages: false,
+			showSuccessMessages: true,
 		},
 	)
 
@@ -227,7 +227,8 @@
 
 	const validateOnSubmit = () => {
 		isBlurred.value = true
-		return validateField(model.value)
+		// On s'assure que model.value n'est pas undefined
+		return validateField(model.value ?? null)
 	}
 
 	const hasError = computed(() => {
@@ -244,11 +245,11 @@
 
 	const checkErrorOnBlur = () => {
 		isBlurred.value = true
-		validateField(model.value, true)
+		validateField(model.value ?? null)
 	}
 
 	watch(model, (newValue) => {
-		validateField(newValue)
+		validateField(newValue ?? null)
 		if (props.isClearable && newValue === '') {
 			emit('clear')
 		}
