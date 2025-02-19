@@ -26,7 +26,7 @@
     "build-storybook": "storybook build",
     "lint": "eslint 'src/**/*.{ts,js,vue}'",
     "lint:style": "stylelint 'src/**/*.{css,scss,vue}'",
-    "lint:fix": "eslint 'src/**/*.{ts,js,vue}' --fix && stylelint 'src/**/*.{css,scss,vue}' --fix",
+    "lint:fix": "eslint src/**/*.{ts,js,vue} --fix && stylelint src/**/*.{css,scss,vue} --fix",
     "test:unit": "vitest run",
     "prepare": "husky",
     "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10"
