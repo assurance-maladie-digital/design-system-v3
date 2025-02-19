@@ -829,7 +829,7 @@ export const NoCalendarEuropeanFormat: Story = {
 			},
 			template: `
 				<div style="padding: 20px;">
-					<h3 class="mb-4">Format européen avec règles de base(Format de date valide):</h3>
+					<h4 class="mb-4">Format européen avec règles de base (format de date valide) :</h4>
 					<DatePicker
 						v-model="date"
 						v-bind="args"
@@ -897,7 +897,8 @@ export const NoCalendarCustomRules: Story = {
 			},
 			template: `
 				<div style="padding: 20px;">
-					<h3 class="mb-4">Format avec règles personnalisées: Les dates en 2024 ne sont pas autorisées</h3>
+					<h4 class="mb-0">Format avec règles personnalisées :</h4>
+					<p class="mb-4">Les dates en 2024 ne sont pas autorisées</p>
 					<DatePicker
 						v-model="date"
 						v-bind="args"
@@ -963,7 +964,8 @@ export const NoCalendarWarningRules: Story = {
 			},
 			template: `
 				<div style="padding: 20px;">
-					<h3 class="mb-4">Format avec règles d'avertissement: Les dates en 2025 ne sont pas autorisées</h3>
+					<h4 class="mb-0">Format avec règles d'avertissement :</h4>
+					<p class="mb-4">Les dates en 2025 ne sont pas autorisées</p>
 					<DatePicker
 						v-model="date"
 						v-bind="args"
@@ -1011,7 +1013,7 @@ export const NoCalendarWithAppendIcon: Story = {
 			},
 			template: `
 				<div style="padding: 20px;">
-					<h3 class="mb-4">Format avec icône en préfixe</h3>
+					<h4 class="mb-4">Format avec icône en préfixe</h4>
 					<DatePicker
 						v-model="date"
 						v-bind="args"
