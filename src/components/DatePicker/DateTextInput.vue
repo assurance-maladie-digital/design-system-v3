@@ -622,6 +622,8 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
+:deep(.v-icon__svg) { cursor: default; }
+
 .warning-field {
 	:deep(.v-input__details > .v-icon),
 	:deep(.v-input__prepend > .v-icon),
