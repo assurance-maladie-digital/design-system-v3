@@ -190,14 +190,17 @@
 			return
 		}
 
+		let hasSuccess = false
+
 		// Validation des règles standard
 		validationRules.value.forEach((rule) => {
 			const result = rule(value)
 			if (result.error) {
 				errors.value.push(result.error)
 			}
-			else if (props.showSuccessMessages && result.success && !errors.value.length) {
-				successes.value.push(result.success)
+			else if (props.showSuccessMessages && result.success && !errors.value.length && !hasSuccess) {
+				successes.value = [result.success]
+				hasSuccess = true
 			}
 		})
 
