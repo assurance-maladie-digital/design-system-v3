@@ -297,3 +297,11 @@
 		</template>
 	</VTextField>
 </template>
+
+<style lang="scss" scoped>
+:deep(.v-field__input input::placeholder),
+:deep(input.v-field__input::placeholder),
+:deep(textarea.v-field__input::placeholder) {
+	opacity: 0;
+}
+</style>

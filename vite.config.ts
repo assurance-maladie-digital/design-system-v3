@@ -3,8 +3,8 @@ import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import { coverageConfigDefaults } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
-import dts from 'vite-plugin-dts'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import dts from 'vite-plugin-dts'
 
 function generateVuetifyGlobals() {
 	const components = [
@@ -65,18 +65,18 @@ function generateVuetifyGlobals() {
 export default defineConfig({
 	plugins: [
 		dts({
-			rollupTypes: true,
+			exclude: ['**/*.stories.ts'],
+			staticImport: true,
 			insertTypesEntry: true,
-			tsconfigPath: './tsconfig.app.json',
 		}),
 		vue({
-			template: { transformAssetUrls },
+			template: {
+				transformAssetUrls,
+			},
 		}),
 		vuetify({
 			autoImport: true,
-			styles: {
-				configFile: 'src/assets/settings.scss',
-			},
+			styles: { configFile: 'src/assets/settings.scss' },
 		}),
 	],
 	resolve: {

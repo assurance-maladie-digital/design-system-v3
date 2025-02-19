@@ -12,7 +12,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['modelValue', 'noCalendar'] },
+		controls: { exclude: ['modelValue'] },
 	},
 	argTypes: {
 		modelValue: {
@@ -70,8 +70,11 @@ const meta = {
 			description: 'Masque toutes les icônes',
 		},
 		noCalendar: {
+			table: {
+				category: 'props',
+			},
 			control: 'boolean',
-			description: 'Désactive le calendrier',
+			description: 'Désactive l\'affichage du calendrier (saisie manuelle uniquement), elle permet les copier coller et le passage de robots',
 		},
 		customRules: {
 			control: 'object',
@@ -96,9 +99,9 @@ export const Default: Story = {
 				code: `
 				<template>
 					<DatePicker
-					 v-model="date"
-					 placeholder="Sélectionner une date"
-					format="DD/MM/YYYY"
+						v-model="date"
+						placeholder="Sélectionner une date"
+						format="DD/MM/YYYY"
 					  />
 				</template>
 				`,
@@ -304,6 +307,7 @@ export const WithoutIcon: Story = {
 		displayAppendIcon: false,
 		isDisabled: false,
 		noIcon: false,
+		noCalendar: false,
 		modelValue: '',
 	},
 	render: (args) => {
@@ -321,6 +325,7 @@ export const WithoutIcon: Story = {
 		}
 	},
 }
+
 export const BirthDate: Story = {
 	parameters: {
 		sourceCode: [
@@ -784,4 +789,368 @@ export const WithDateFormatReturn: Story = {
             `,
 		}
 	},
+}
+
+export const NoCalendarEuropeanFormat: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						format="DD/MM/YYYY"
+						date-format-return="YYYY/MM/DD"
+						placeholder="JJ/MM/AAAA"
+						required
+						no-icon
+						no-calendar
+					/>
+				</template>
+				`,
+			},
+		],
+	},
+	args: {
+		noCalendar: true,
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: 'YYYY/MM/DD',
+		placeholder: 'JJ/MM/AAAA',
+		required: true,
+		noIcon: true,
+	},
+	render(args) {
+		const date = ref<string | null>(null)
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div style="padding: 20px;">
+					<h4 class="mb-4">Format européen avec règles de base (format de date valide) :</h4>
+					<DatePicker
+						v-model="date"
+						v-bind="args"
+					/>
+					<div style="margin-top: 10px; font-family: monospace; color: #666;">
+						Valeur (dateFormatReturn: 'YYYY/MM/DD') : {{ date }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const NoCalendarCustomRules: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						date-format-return="DD/MM/YYYY"
+						format="YYYY-MM-DD"
+						placeholder="YYYY-MM-DD"
+						required
+						no-calendar
+						:custom-rules="[{
+							type: 'custom',
+							options: {
+								validate: value => !value || !value.includes('2024'),
+								message: 'Les dates en 2024 ne sont pas autorisées',
+								successMessage: 'Les dates hors 2024 sont autorisées',
+								fieldIdentifier: 'date'
+							}
+						}]"
+					/>
+				</template>
+				`,
+			},
+		],
+	},
+	args: {
+		noCalendar: true,
+		format: 'YYYY-MM-DD',
+		dateFormatReturn: 'DD/MM/YYYY',
+		placeholder: 'YYYY-MM-DD',
+		required: true,
+		customRules: [{
+			type: 'custom',
+			options: {
+				validate: (value: string) => !value || !value.includes('2024'),
+				message: 'Les dates en 2024 ne sont pas autorisées',
+				successMessage: 'Les dates hors 2024 sont autorisées',
+				fieldIdentifier: 'date',
+			},
+		}],
+	},
+	render(args) {
+		const date = ref<string | null>('2024-12-21')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div style="padding: 20px;">
+					<h4 class="mb-0">Format avec règles personnalisées :</h4>
+					<p class="mb-4">Les dates en 2024 ne sont pas autorisées</p>
+					<DatePicker
+						v-model="date"
+						v-bind="args"
+					/>
+					<div style="margin-top: 10px; font-family: monospace; color: #666;">
+						Valeur : {{ date }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const NoCalendarWarningRules: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						format="DD/MM/YYYY"
+						placeholder="JJ/MM/AAAA"
+						no-calendar
+						:custom-warning-rules="[{
+							type: 'custom',
+							options: {
+								validate: value => !value || !value.includes('2025'),
+								warningMessage: 'Les dates en 2025 ne sont pas autorisées',
+								successMessage: 'Date hors 2025',
+								fieldIdentifier: 'date',
+								isWarning: true
+							}
+						}]"
+					/>
+				</template>
+				`,
+			},
+		],
+	},
+	args: {
+		noCalendar: true,
+		format: 'DD/MM/YYYY',
+		placeholder: 'JJ/MM/AAAA',
+		customWarningRules: [{
+			type: 'custom',
+			options: {
+				validate: (value: string) => !value || !value.includes('2025'),
+				warningMessage: 'Les dates en 2025 ne sont pas autorisées',
+				successMessage: 'Date hors 2025',
+				fieldIdentifier: 'date',
+				isWarning: true,
+			},
+		}],
+	},
+	render(args) {
+		const date = ref<string | null>('20/12/2025')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div style="padding: 20px;">
+					<h4 class="mb-0">Format avec règles d'avertissement :</h4>
+					<p class="mb-4">Les dates en 2025 ne sont pas autorisées</p>
+					<DatePicker
+						v-model="date"
+						v-bind="args"
+					/>
+					<div style="margin-top: 10px; font-family: monospace; color: #666;">
+						Valeur : {{ date }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const NoCalendarWithAppendIcon: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						format="DD/MM/YYYY"
+						placeholder="JJ/MM/AAAA"
+						no-calendar
+						display-append-icon
+					/>
+				</template>
+				`,
+			},
+		],
+	},
+	args: {
+		noCalendar: true,
+		format: 'DD/MM/YYYY',
+		placeholder: 'JJ/MM/AAAA',
+		displayAppendIcon: true,
+	},
+	render(args) {
+		const date = ref<string | null>(null)
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div style="padding: 20px;">
+					<h4 class="mb-4">Format avec icône en préfixe</h4>
+					<DatePicker
+						v-model="date"
+						v-bind="args"
+					/>
+					<div style="margin-top: 10px; font-family: monospace; color: #666;">
+						Valeur : {{ date }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithFormSubmission: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<v-form @submit.prevent="handleSubmit">
+						<div style="display: flex; flex-direction: column; gap: 16px;">
+							<div>
+								<h3 class="mb-4">Avec calendrier</h3>
+								<DatePicker
+									ref="datePicker1"
+									v-model="date1"
+									required
+									format="DD/MM/YYYY"
+									placeholder="Date requise"
+								/>
+							</div>
+							<div>
+								<h3 class="mb-4">Sans calendrier</h3>
+								<DatePicker
+									ref="datePicker2"
+									v-model="date2"
+									required
+									format="DD/MM/YYYY"
+									placeholder="Date requise"
+									no-calendar
+								/>
+							</div>
+						</div>
+						<button type="submit" style="margin-top: 16px; padding: 8px 16px; background-color:#0c419a; color: white; border: none; border-radius: 4px; cursor: pointer;">
+							Soumettre
+						</button>
+					</v-form>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const datePicker1 = ref()
+					const datePicker2 = ref()
+					const date1 = ref('')
+					const date2 = ref('')
+
+					const handleSubmit = () => {
+						const isValid1 = datePicker1.value?.validateOnSubmit()
+						const isValid2 = datePicker2.value?.validateOnSubmit()
+						
+						if (!isValid1 || !isValid2) {
+							alert('Corrigez les erreurs avant de soumettre !')
+						} else {
+							alert('Formulaire soumis avec succès !')
+						}
+					}
+				</script>
+				`,
+			},
+		],
+	},
+	render: () => ({
+		components: { DatePicker },
+		setup() {
+			const datePicker1 = ref()
+			const datePicker2 = ref()
+			const date1 = ref('')
+			const date2 = ref('')
+
+			const handleSubmit = () => {
+				const isValid1 = datePicker1.value?.validateOnSubmit()
+				const isValid2 = datePicker2.value?.validateOnSubmit()
+
+				if (!isValid1 || !isValid2) {
+					alert('Corrigez les erreurs avant de soumettre !')
+				}
+				else {
+					alert('Formulaire soumis avec succès !')
+				}
+			}
+
+			return {
+				datePicker1,
+				datePicker2,
+				date1,
+				date2,
+				handleSubmit,
+			}
+		},
+		template: `
+			<div class="d-flex flex-wrap align-center pa-4">
+				<form @submit.prevent="handleSubmit" style="width: 100%;">
+					<div style="display: flex; flex-direction: column; gap: 16px;">
+						<div>
+							<h3 class="mb-4">Avec soumission de formulaire:</h3>
+							<DatePicker
+								ref="datePicker1"
+								v-model="date1"
+								required
+								format="DD/MM/YYYY"
+								placeholder="Date requise"
+							/>
+						</div>
+						<div>
+							<h3 class="mb-4">Sans calendrier</h3>
+							<DatePicker
+								ref="datePicker2"
+								v-model="date2"
+								required
+								format="DD/MM/YYYY"
+								placeholder="Date requise"
+								no-calendar
+							/>
+						</div>
+					</div>
+					<button type="submit" style="margin-top: 16px; padding: 8px 16px; background-color:#0c419a; color: white; border: none; border-radius: 4px; cursor: pointer;">
+						Soumettre
+					</button>
+				</form>
+			</div>
+		`,
+	}),
 }
