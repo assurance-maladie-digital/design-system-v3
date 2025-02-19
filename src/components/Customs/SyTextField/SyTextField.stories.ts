@@ -10,6 +10,65 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue', 'appendInnerIconColor'] },
+		docs: {
+			description: {
+				component: `
+# SyTextField
+
+Le composant SyTextField est un champ de texte enrichi qui étend les fonctionnalités de base de Vuetify avec :
+- Un système de validation avancé
+- Des états visuels (erreur, avertissement, succès)
+- Des icônes de validation automatiques
+- Une personnalisation poussée des messages
+
+## Validation
+
+Le composant supporte trois types de validation :
+- Règles d'erreur standard (\`customRules\`)
+- Règles d'avertissement (\`customWarningRules\`)
+- Messages de succès (\`showSuccessMessages\`)
+
+### Exemples de règles :
+\`\`\`vue
+<SyTextField
+  v-model="value"
+  :customRules="[
+    {
+      type: 'required',
+      options: {
+        message: 'Ce champ est requis'
+      }
+    }
+  ]"
+  :customWarningRules="[
+    {
+      type: 'maxLength',
+      options: {
+        length: 10,
+        message: 'Le texte est un peu long'
+      }
+    }
+  ]"
+  showSuccessMessages
+/>
+\`\`\`
+
+### Types de règles disponibles :
+- required
+- min/max (valeurs numériques)
+- minLength/maxLength/exactLength
+- email
+- matchPattern (expression régulière)
+- custom (validation personnalisée)
+
+### États visuels :
+Le champ adapte automatiquement son apparence selon son état :
+- Rouge pour les erreurs
+- Orange pour les avertissements
+- Vert pour les succès
+`,
+			},
+		},
 	},
 	argTypes: {
 		modelValue: { control: 'text' },
@@ -49,169 +108,17 @@ const meta = {
 			options: ['horizontal', 'vertical'],
 			description: 'Direction d\'affichage',
 		},
-		type: {
-			control: 'select',
-			options: ['text', 'number', 'password', 'email', 'tel', 'url', 'search', 'date', 'time', 'datetime-local'],
-			description: 'Type d\'input HTML',
-		},
-		baseColor: {
-			control: 'color',
-			description: 'Couleur de base personnalisée',
-		},
-		bgColor: {
-			control: 'color',
-			description: 'Couleur de fond personnalisée',
-		},
-		width: {
-			control: 'text',
-			description: 'Largeur du champ (px, %, vh, etc.)',
-		},
-		maxWidth: {
-			control: 'text',
-			description: 'Largeur maximale (px, %, vh, etc.)',
-		},
-		minWidth: {
-			control: 'text',
-			description: 'Largeur minimale (px, %, vh, etc.)',
-		},
-		rounded: {
-			control: 'select',
-			options: [true, false, 0, 'sm', 'lg', 'xl', 'pill'],
-			description: 'Style des coins arrondis',
-		},
-		required: {
-			control: 'boolean',
-			description: 'Champ obligatoire',
-		},
-		isReadOnly: {
-			control: 'boolean',
-			description: 'Mode lecture seule',
-		},
-		isDisabled: {
-			control: 'boolean',
-			description: 'Désactive le champ',
-		},
-		isClearable: {
-			control: 'boolean',
-			description: 'Affiche un bouton pour effacer',
-		},
-		isTiled: {
-			control: 'boolean',
-			description: 'Style tuile',
-		},
-		isFlat: {
-			control: 'boolean',
-			description: 'Sans élévation',
-		},
-		isActive: {
-			control: 'boolean',
-			description: 'Force l\'état actif',
-		},
-		isFocused: {
-			control: 'boolean',
-			description: 'Force l\'état focus',
-		},
-		isDirty: {
-			control: 'boolean',
-			description: 'Indique si modifié',
-		},
-		isOnError: {
-			control: 'boolean',
-			description: 'Force l\'état erreur',
-		},
-		displayAsterisk: {
-			control: 'boolean',
-			description: 'Affiche l\'astérisque requis',
-		},
-		displayPersistentClear: {
-			control: 'boolean',
-			description: 'Bouton effacer toujours visible',
-		},
-		displayPersistentCounter: {
-			control: 'boolean',
-			description: 'Compteur toujours visible',
-		},
-		displayPersistentHint: {
-			control: 'boolean',
-			description: 'Aide toujours visible',
-		},
-		displayPersistentPlaceholder: {
-			control: 'boolean',
-			description: 'Placeholder toujours visible',
-		},
-		areDetailsHidden: {
-			control: 'select',
-			options: [true, false, 'auto'],
-			description: 'Masque les détails',
-		},
-		areSpinButtonsHidden: {
-			control: 'boolean',
-			description: 'Masque les boutons number',
-		},
-		noIcon: {
-			control: 'boolean',
-			description: 'Masque toutes les icônes',
-		},
-		centerAffix: {
-			control: 'boolean',
-			description: 'Centre les affixes',
-		},
-		counter: {
-			control: 'select',
-			options: [true, false, 'words', 'characters'],
-			description: 'Type de compteur',
-		},
-		counterValue: {
-			control: 'number',
-			description: 'Valeur du compteur',
-		},
-		maxErrors: {
-			control: 'number',
-			description: 'Nombre max d\'erreurs',
-		},
-		errorMessages: {
+		customRules: {
+			description: 'Règles de validation personnalisées',
 			control: 'object',
-			description: 'Messages d\'erreur',
 		},
-		messages: {
+		customWarningRules: {
+			description: 'Règles d\'avertissement personnalisées',
 			control: 'object',
-			description: 'Messages additionnels',
 		},
-		hint: {
-			control: 'text',
-			description: 'Message d\'aide',
-		},
-		placeholder: {
-			control: 'text',
-			description: 'Texte indicatif',
-		},
-		prefix: {
-			control: 'text',
-			description: 'Texte avant la valeur',
-		},
-		suffix: {
-			control: 'text',
-			description: 'Texte après la valeur',
-		},
-		id: {
-			control: 'text',
-			description: 'ID HTML',
-		},
-		name: {
-			control: 'text',
-			description: 'Nom du champ',
-		},
-		role: {
-			control: 'text',
-			description: 'Rôle ARIA',
-		},
-		theme: {
-			control: 'text',
-			description: 'Thème personnalisé',
-		},
-		loading: {
+		showSuccessMessages: {
+			description: 'Afficher les messages de succès',
 			control: 'boolean',
-			description: 'État de chargement',
 		},
 	},
 } as Meta<typeof SyTextField>
@@ -307,71 +214,6 @@ export const Required: Story = {
 				<div class="d-flex flex-wrap align-center pa-4">
 					<SyTextField v-bind="args" />
 				</div>
-			`,
-		}
-	},
-}
-
-export const WithCustomError: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SyTextField 
-						v-model="value" 
-						:error-messages="errorMessages"
-					/>
-					<VBtn @click="triggerError">
-						Trigger Error
-					</VBtn>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-					
-					const errorMessages = ref([])
-					
-					const triggerError = () => {
-						errorMessages.value = ['This is a test error message']
-					}
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		showDivider: false,
-		variantStyle: 'outlined',
-		color: 'primary',
-		isClearable: true,
-		label: 'Label',
-		required: false,
-		modelValue: '',
-	},
-	render: (args) => {
-		return {
-			components: { SyTextField, VIcon },
-			setup() {
-				const errorMessages = ref([])
-				const triggerError = () => {
-					// @ts-expect-error test error message
-					errorMessages.value = ['This is a test error message']
-				}
-				return { args, errorMessages, triggerError }
-			},
-			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<SyTextField v-bind="args" :error-messages="errorMessages" />
-				</div>
-				<VBtn class="ml-8" @click="triggerError">
-					Trigger Error
-				</VBtn>
 			`,
 		}
 	},
@@ -696,4 +538,292 @@ export const SlotCustomIcon: Story = {
 			`,
 		}
 	},
+}
+
+export const ValidationRules: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation avec règles standard
+
+Cette story montre l'utilisation des règles de validation standard. Le champ :
+- Est requis
+- Doit contenir au moins 3 caractères
+- Affiche un message de succès quand valide
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyTextField
+	v-model="value"
+	label="Champ avec validation"
+	:customRules="[
+		{
+			type: 'required',
+			options: {
+				message: 'Ce champ est requis',
+				fieldIdentifier: 'mon champ'
+			}
+		},
+		{
+			type: 'minLength',
+			options: {
+				length: 3,
+				message: 'Le champ doit contenir au moins 3 caractères'
+			}
+		}
+	]"
+	showSuccessMessages
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `
+			<SyTextField
+				v-model="value"
+				v-bind="args"
+				label="Champ avec validation"
+				:customRules="[
+					{
+						type: 'required',
+						options: {
+							message: 'Ce champ est requis',
+							fieldIdentifier: 'mon champ'
+						}
+					},
+					{
+						type: 'minLength',
+						options: {
+							length: 3,
+							message: 'Le champ doit contenir au moins 3 caractères'
+						}
+					}
+				]"
+				showSuccessMessages
+			/>
+		`,
+	}),
+}
+
+export const ValidationWithWarnings: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation avec avertissements
+
+Cette story montre l'utilisation combinée des règles standard et d'avertissement. Le champ :
+- Est requis (règle standard)
+- Affiche un avertissement si le texte dépasse 10 caractères
+- Les avertissements sont affichés en orange et n'empêchent pas la validation
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyTextField
+	v-model="value"
+	label="Champ avec avertissements"
+	:customRules="[
+		{
+			type: 'required',
+			options: {
+				message: 'Ce champ est requis',
+				fieldIdentifier: 'mon champ'
+			}
+		}
+	]"
+	:customWarningRules="[
+		{
+			type: 'maxLength',
+			options: {
+				length: 10,
+				message: 'Le texte commence à être un peu long'
+			}
+		}
+	]"
+	showSuccessMessages
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `
+			<SyTextField
+				v-model="value"
+				v-bind="args"
+				label="Champ avec avertissements"
+				:customRules="[
+					{
+						type: 'required',
+						options: {
+							message: 'Ce champ est requis',
+							fieldIdentifier: 'mon champ'
+						}
+					}
+				]"
+				:customWarningRules="[
+					{
+						type: 'maxLength',
+						options: {
+							length: 10,
+							message: 'Le texte comporte plus de 10 caracteres'
+						}
+					}
+				]"
+				showSuccessMessages
+			/>
+		`,
+	}),
+}
+
+export const EmailValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation d'email
+
+Cette story montre un cas d'usage courant : la validation d'une adresse email. Le champ :
+- Est requis
+- Vérifie le format de l'email
+- Affiche un message de succès quand l'email est valide
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyTextField
+	v-model="value"
+	label="Email"
+	:customRules="[
+		{
+			type: 'required',
+			options: {
+				message: 'L'email est requis',
+				fieldIdentifier: 'l'email'
+			}
+		},
+		{
+			type: 'email',
+			options: {
+				message: 'L'email n'est pas valide',
+				successMessage: 'L'email est valide'
+			}
+		}
+	]"
+	showSuccessMessages
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `
+			<SyTextField
+				v-model="value"
+				v-bind="args"
+				label="Email"
+				:customRules="[
+					{
+						type: 'required',
+						options: {
+							message: 'L\\'email est requis',
+							fieldIdentifier: 'l\\'email'
+						}
+					},
+					{
+						type: 'email',
+						options: {
+							message: 'L\\'email n\\'est pas valide',
+							successMessage: 'L\\'email est valide'
+						}
+					}
+				]"
+				showSuccessMessages
+			/>
+		`,
+	}),
+}
+
+export const PatternValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation par expression régulière
+
+Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un format spécifique. Ici, un code postal français :
+- Doit contenir exactement 5 chiffres
+- Utilise une expression régulière pour la validation
+- Affiche des messages personnalisés
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyTextField
+	v-model="value"
+	label="Code postal"
+	:customRules="[
+		{
+			type: 'matchPattern',
+			options: {
+				pattern: /^\\d{5}$/,
+				message: 'Le code postal doit contenir exactement 5 chiffres',
+				successMessage: 'Le format du code postal est valide'
+			}
+		}
+	]"
+	showSuccessMessages
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `
+			<SyTextField
+				v-model="value"
+				v-bind="args"
+				label="Code postal"
+				:customRules="[
+					{
+						type: 'matchPattern',
+						options: {
+							pattern: /^\\d{5}$/,
+							message: 'Le code postal doit contenir exactement 5 chiffres',
+							successMessage: 'Le format du code postal est valide'
+						}
+					}
+				]"
+				showSuccessMessages
+			/>
+		`,
+	}),
 }
