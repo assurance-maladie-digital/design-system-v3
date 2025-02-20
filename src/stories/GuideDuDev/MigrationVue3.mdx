@@ -1,25 +1,19 @@
 import {Meta, Source} from '@storybook/addon-docs/blocks';
 
-<Meta title="Guide Du Dev/Migration"/>
+<Meta title="Guide Du Dev/Migration Vue3"/>
 
-# Migrez vers Synapse
+# Migrer vers Synapse
 
-Ce guide vous explique comment migrer de la version Vue-dot (Vue2) ou Bridge (Vue3) du Design System vers Synapse.
+Ce guide vous explique comment migrer de la version Bridge (Vue3) du Design System vers Synapse.
 
 ## Bridge (Vue3) vers Synapse
 
-## Vue-dot (Vue2) vers Synapse
-#
-### 1 - Commencer la migration
-
-Pour réaliser la migration d'un produit VueJS 2 vers VueJS 3, vous pouvez suivre les étapes suivantes :
-
 - 1.1 - Téléchargez la stack de migration Starter Kit Synapse
 
-- 1.2 - Copier les pages de votre projet VueJS 2 dans le dossier pages du projet Starter Kit, les composants peuvent placés dans le dossier components
+- 1.2 - Transférez les pages de votre projet du Starter Kit Bridge dans le dossier pages du projet Starter Kit Synapse, les composants peuvent placés dans le dossier components
 
-- 1.3 - Identifier les dépendances à conserver dans la nouvelle version, il faut choisir la version vue3 de la librairie et la version Nuxt si elle existe. Ajouter ces dépendances dans le nouveau projet.
-Le package @cnamts/vue-dot a été remplacé par @cnamts/synapse, le package vue-i18n a été remplacé par @nuxtjs/i18n.
+- 1.3 - Identifier les dépendances à conserver dans la nouvelle version.
+Le package `@cnamts/synpase-bridge` a été remplacé par `@cnamts/synapse`.
 
 - 1.4 - Dans le fichier nuxt.config.ts, ajouter le lien vers votre fichier de style global.
 
@@ -198,160 +192,247 @@ console.log(counterStore.count)
 
 Nb : pour la persistance des données vous pouvez utiliser le plugin [pinia-plugin-persistedstate](https://prazdevs.github.io/pinia-plugin-persistedstate/).
 
-### 4 - Animations des pages
+### 4 - Migration de la syntaxe des composants
 
-Si le projet utilise des transitions de page,
+La grande différence entre la version Bridge et la version Synapse est la syntaxe des composants qui passe de l'option API à la composition API.
+Voir la documentation sur la composition API [ici](https://v3.vuejs.org/guide/composition-api-introduction.html).
 
-4.1 - Retirer le composant `<transition>` dans le fichier `app.vue`
+Vue 3 introduit la Composition API qui offre plusieurs avantages :
 
-4.2 - Configurer une transition de page dans le fichier `nuxt.config.ts`
+- Meilleure organisation du code pour les projets complexes
+- Réutilisation facile avec des fonctions composables
+- Meilleure performance grâce à une gestion plus optimisée du rendu
+- Meilleur support TypeScript
 
-<Source dark code={`
-// nuxt.config.ts
-export default defineNuxtConfig({
-	...
-	app: {
-		...
-		pageTransition: {
-			name: 'page',
-			mode: 'out-in'
-		}
-	}
-`}
-/>
+L'Option API et la Composition API peuvent coexister dans un même projet, mais il est recommandé d'utiliser la composition API pour de meilleures performances et une meilleure organisation du code.
 
-4.3 - Définir le style de la transition dans un fichier de style global.
+#### 4.1 - Migration des `data()`
+
+Avant (Options API) :
 
 <Source dark code={`
-.page-enter-active,
-.page-leave-active {
-	transition-duration: .15s;
-	transition-property: opacity;
-	transition-timing-function: ease;
-}
-
-.page-enter,
-.page-leave-active {
-	opacity: 0;
-}
-`}
-/>
-
-### 5 - Migration de la syntaxe des composants
-
-Voir le [guide migration officiel](https://v3-migration.vuejs.org/).
-
-### 6 - Migration des composants Vuetify
-
-Pour faciliter la migration des composants Vuetify, ce starter kit intègre le plugin [eslint-plugin-vuetify](https://github.com/vuetifyjs/eslint-plugin-vuetify).
-Il permet de faire remonter certains problèmes tels que des props qui n'existent plus ou dont le nom a changé.
-Certains changements peuvent être effectués automatiquement.
-
-<Source dark code={`
-pnpm lint:migrate:fix
-`}
-/>
-
-Voici un aperçu des changements qui seront effectués par le script :
-
-<Source dark code={`
-// passage de la syntaxe vue2 a vue3 pour la réactivité :
-- value
-+ modelValue
-
-- xxx.sync
-+ v-model:xxx
-
-// Changement de nom de certaines props :
-- outlined
-+ variant="outlined"
-- accordion
-+ variant="accordion"
-- text
-+ variant="text"
-- background-color="xxx"
-+ bg-color="xxx"
-- top
-+ location="top"
-- large
-+ size="large"
-...
-
-// Autres changements concernants les props :
-- validate-on-blur
-+ :validate-on="blur"
-
-// Changement concernants les events :
-- @change
-+ @update:model-value
-
-// Changement de nom de certains composants :
-- VExpansionPanelHeader
-+ VExpansionPanelTitle
-- VExpansionPanelContent
-+ VExpansionPanelText
-- VSimpleCheckbox
-+ VCheckboxBtn
-...
-`}
-/>
-
-Ces changements seront uniquement effectués sur les composants Vuetify.
-
-### 7 - Migration de la localisation
-
-Le plugin `vue-i18n` a été remplacé par [`@nuxtjs/i18n`]( https://v8.i18n.nuxtjs.org/getting-started/basic-usage ).
-
-7.1 - Mettre à jour le fichier `nuxt.config.ts` pour configurer le plugin `@nuxtjs/i18n`.
-
-<Source dark code={`
- modules: [
-    '@nuxtjs/i18n',
-    ...
-  ],
-  i18n: {
-		vueI18n: './nuxt-i18n.ts'
-	},
-`}
-/>
-
-7.2 - Créer un fichier `nuxt-i18n.ts` à la racine du projet, importer les traductions et les configurer.
-
-<Source dark code={`
-import translationFR from "@/translations/fr";
-
+<script>
 export default {
-	legacy: false,
-	locale: 'fr',
-	messages : {
-		fr: translationFR
-	}
+  data() {
+    return {
+      count: 0,
+      user: {
+        name: 'John Doe',
+        age: 30
+      }
+    }
+  }
 }
+</script>
 `}
 />
 
-7.3 - Dans les composants, quand un object est importé avec la fonction `$t`, il faut le remplacer par `$tm`.
-
-7.4 - Remplacer l'usage du composant `<i18n>` par`<i18n-t>`.
+Après (Composition API) :
 
 <Source dark code={`
-<i18n path="my.path" tag="p">My default text</i18n>
+<script setup>
+import { ref, reactive } from 'vue'
+
+const count = ref(0)
+const user = reactive({ name: 'John Doe', age: 30 })
+</script>
 `}
 />
 
-Devient :
+#### 4.2 Migration des `methods`
+
+Avant (Options API) :
 
 <Source dark code={`
-<i18n-t keypath="my.path" tag="p">My default text</i18n-t>
+<script>
+export default {
+  data() {
+    return { count: 0 }
+  },
+  methods: {
+    increment() {
+      this.count++
+    }
+  }
+}
+</script>
 `}
 />
 
-plus de détails sur la page de [migration vue-i18n](https://vue-i18n.intlify.dev/guide/migration/breaking.html).
+Après (Composition API) :
 
-### 8 - Migration des tests unitaires et de composants
+<Source dark code={`
+<script setup>
+import { ref } from 'vue'
 
-Les tests unitaires et de composants doivent être mis à jour pour être compatibles avec VueJS 3. Ils utilisent désormais vitest et `@nuxt/test-utils` pour les tests de composants.
+const count = ref(0)
+const increment = () => count.value++
+</script>
+`}
+/>
 
-L'API de Vitest est similaire à celle de Jest, pour faire des mocks il faut désormais utiliser `vi` au lieu de `jest`.
+#### 4.3 Migration des `computed`
 
-Pour l'utilisation de `@nuxt/test-utils`, voir la [documentation](https://nuxt.com/docs/getting-started/testing).
+Avant (Options API) :
+
+<Source dark code={`
+<script>
+export default {
+  data() {
+    return { count: 5 }
+  },
+  computed: {
+    doubleCount() {
+      return this.count * 2
+    }
+  }
+}
+</script>
+`}
+/>
+
+Après (Composition API) :
+
+<Source dark code={`
+<script setup>
+import { ref, computed } from 'vue'
+
+const count = ref(5)
+const doubleCount = computed(() => count.value * 2)
+</script>
+`}
+/>
+
+#### 4.4 Migration des `watch`
+
+Avant (Options API) :
+
+<Source dark code={`
+<script>
+export default {
+  data() {
+    return { count: 0 }
+  },
+  watch: {
+    count(newValue, oldValue) {
+      console.log(\`Count changed from \${oldValue} to \${newValue}\`)
+    }
+  }
+}
+</script>
+`}
+/>
+
+Après (Composition API) :
+
+<Source dark code={`
+<script setup>
+import { ref, watch } from 'vue'
+
+const count = ref(0)
+
+watch(count, (newValue, oldValue) => {
+  console.log(\`Count changed from \${oldValue} to \${newValue}\`)
+})
+</script>
+`}
+/>
+
+`watch()` fonctionne directement sur une variable réactive.
+
+#### 4.5 - Migration des Hooks de cycle de vie
+
+Avant (Options API) :
+
+<Source dark code={`
+<script>
+export default {
+  created() {
+    console.log('Component created')
+  },
+  mounted() {
+    console.log('Component mounted')
+  }
+}
+</script>
+`}
+/>
+
+Après (Composition API) :
+
+<Source dark code={`
+<script setup>
+import { onMounted, onBeforeMount } from 'vue'
+
+onBeforeMount(() => {
+  console.log('Component will be created')
+})
+
+onMounted(() => {
+  console.log('Component mounted')
+})
+</script>
+`}
+/>
+
+On remplace les hooks par `onMounted()`, `onBeforeMount()`, etc.
+
+#### 4.6 - Migration des `props`
+
+Avant (Options API) :
+
+<Source dark code={`
+<script>
+export default {
+  props: {
+    msg: String
+  }
+}
+</script>
+`}
+/>
+
+Après (Composition API) :
+
+<Source dark code={`
+<script setup>
+import { defineProps } from 'vue'
+
+const props = defineProps({
+  msg: String
+})
+</script>
+`}
+/>
+
+#### 4.7 - Migration des `emits`
+
+Avant (Options API) :
+
+<Source dark code={`
+<script>
+export default {
+  methods: {
+    handleClick() {
+      this.$emit('clicked')
+    }
+  }
+}
+</script>
+`}
+/>
+
+Après (Composition API) :
+
+<Source dark code={`
+<script setup>
+import { defineEmits } from 'vue'
+
+const { emit } = defineEmits()
+
+const handleClick = () => {
+  emit('clicked')
+}
+</script>
+`}
+/>
