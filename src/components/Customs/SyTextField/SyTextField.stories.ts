@@ -778,3 +778,132 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 		`,
 	}),
 }
+
+export const FormValidation: Story = {
+	render: (args) => ({
+		components: { SyTextField },
+		setup() {
+			const nomField = ref()
+			const prenomField = ref()
+			const ageField = ref()
+			const nomValue = ref('')
+			const prenomValue = ref('')
+			const ageValue = ref('')
+
+			// Règle minLength pour le prénom
+			const prenomRules = [{
+				type: 'minLength',
+				options: {
+					length: 3,
+					message: 'Le prénom doit contenir au moins 3 caractères',
+					successMessage: 'Le prénom est valide',
+					fieldIdentifier: 'prénom'
+				}
+			}]
+
+			// Règle pattern pour l'âge (uniquement des chiffres)
+			const ageRules = [{
+				type: 'matchPattern',
+				options: {
+					pattern: /^\d+$/,
+					message: 'L\'âge doit contenir uniquement des chiffres',
+					successMessage: 'L\'âge est valide',
+					fieldIdentifier: 'âge'
+				}
+			}]
+
+			const handleSubmit = () => {
+				const fields = [
+					{ ref: nomField, name: 'Nom' },
+					{ ref: prenomField, name: 'Prénom' },
+					{ ref: ageField, name: 'Âge' }
+				]
+
+				const invalidFields = fields
+					.filter(({ ref }) => !ref.value?.validateOnSubmit())
+					.map(({ name }) => name)
+
+				if (invalidFields.length > 0) {
+					alert(`Les champs suivants sont invalides :\n${invalidFields.join('\n')}`)
+				} else {
+					alert('Formulaire soumis avec succès !')
+				}
+			}
+
+			return {
+				args,
+				nomField,
+				prenomField,
+				ageField,
+				nomValue,
+				prenomValue,
+				ageValue,
+				prenomRules,
+				ageRules,
+				handleSubmit
+			}
+		},
+		template: `
+			<div style="max-width: 500px;">
+				<h3>Validation de formulaire</h3>
+				<form @submit.prevent="handleSubmit">
+					<div class="mb-4">
+						<SyTextField
+							ref="nomField"
+							v-model="nomValue"
+							label="Nom"
+							placeholder="Votre nom"
+							required
+							show-success-messages
+							class="mb-4"
+						/>
+
+						<SyTextField
+							ref="prenomField"
+							v-model="prenomValue"
+							label="Prénom"
+							placeholder="Votre prénom"
+							:custom-rules="prenomRules"
+							show-success-messages
+							class="mb-4"
+						/>
+
+						<SyTextField
+							ref="ageField"
+							v-model="ageValue"
+							label="Âge"
+							placeholder="Votre âge"
+							:custom-rules="ageRules"
+							show-success-messages
+							class="mb-4"
+						/>
+					</div>
+
+					<div class="text-caption mb-4">
+						<strong>Règles de validation :</strong>
+						<ul>
+							<li>Nom : Champ requis</li>
+							<li>Prénom : Minimum 3 caractères</li>
+							<li>Âge : Uniquement des chiffres</li>
+						</ul>
+					</div>
+
+					<button
+						type="submit"
+						style="
+							background-color: #1976d2;
+							color: white;
+							padding: 8px 16px;
+							border: none;
+							border-radius: 4px;
+							cursor: pointer;
+							font-size: 1rem;
+						"
+					>
+						Soumettre
+					</button>
+				</form>
+			</div>
+		`,
+	}),
+}

@@ -203,7 +203,7 @@
 
 		// Si le champ est vide et non requis, on ne fait pas de validation
 		if (!value && !props.required) {
-			return
+			return true
 		}
 
 		let hasSuccess = false
@@ -224,7 +224,7 @@
 		if (errors.value.length) {
 			warnings.value = []
 			successes.value = []
-			return
+			return false
 		}
 
 		// Validation des règles d'avertissement
@@ -239,6 +239,8 @@
 		if (warnings.value.length) {
 			successes.value = []
 		}
+
+		return true
 	}
 
 	const validateOnSubmit = () => {
