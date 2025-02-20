@@ -780,7 +780,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 }
 
 export const FormValidation: Story = {
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const nomField = ref()
@@ -797,8 +797,8 @@ export const FormValidation: Story = {
 					length: 3,
 					message: 'Le prénom doit contenir au moins 3 caractères',
 					successMessage: 'Le prénom est valide',
-					fieldIdentifier: 'prénom'
-				}
+					fieldIdentifier: 'prénom',
+				},
 			}]
 
 			// Règle pattern pour l'âge (uniquement des chiffres)
@@ -808,15 +808,15 @@ export const FormValidation: Story = {
 					pattern: /^\d+$/,
 					message: 'L\'âge doit contenir uniquement des chiffres',
 					successMessage: 'L\'âge est valide',
-					fieldIdentifier: 'âge'
-				}
+					fieldIdentifier: 'âge',
+				},
 			}]
 
 			const handleSubmit = () => {
 				const fields = [
 					{ ref: nomField, name: 'Nom' },
 					{ ref: prenomField, name: 'Prénom' },
-					{ ref: ageField, name: 'Âge' }
+					{ ref: ageField, name: 'Âge' },
 				]
 
 				const invalidFields = fields
@@ -825,7 +825,8 @@ export const FormValidation: Story = {
 
 				if (invalidFields.length > 0) {
 					alert(`Les champs suivants sont invalides :\n${invalidFields.join('\n')}`)
-				} else {
+				}
+				else {
 					alert('Formulaire soumis avec succès !')
 				}
 			}
@@ -840,7 +841,7 @@ export const FormValidation: Story = {
 				ageValue,
 				prenomRules,
 				ageRules,
-				handleSubmit
+				handleSubmit,
 			}
 		},
 		template: `
