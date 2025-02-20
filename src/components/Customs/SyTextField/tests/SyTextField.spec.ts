@@ -56,14 +56,15 @@ describe('SyTextField', () => {
 	})
 
 	it('matches snapshot', () => {
-		const wrapper = factory({
-			prependIcon: 'info',
-			appendIcon: 'success',
-			prependInnerIcon: 'warning',
-			appendInnerIcon: 'error',
-			variantStyle: 'filled',
-			isClearable: true,
-			showDivider: true,
+		const wrapper = mount(SyTextField, {
+			props: {
+				label: 'custom label',
+				modelValue: '',
+				errorMessages: ['Test error message'],
+			},
+			global: {
+				plugins: [vuetify],
+			},
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
