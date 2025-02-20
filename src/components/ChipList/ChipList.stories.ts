@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import ChipList from './ChipList.vue'
 import { mdiHeart } from '@mdi/js'
+import type { ChipItem } from './types'
 
 const meta = {
 	title: 'Composants/Données/ChipList',
