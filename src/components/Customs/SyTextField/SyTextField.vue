@@ -26,6 +26,8 @@
 			label?: string
 			required?: boolean
 			errorMessages?: string[] | null
+			warningMessages?: string[] | null
+			successMessages?: string[] | null
 			isReadOnly?: boolean
 			isActive?: boolean
 			baseColor?: string
@@ -82,6 +84,8 @@
 			color: 'primary',
 			label: 'custom label',
 			errorMessages: null,
+			warningMessages: null,
+			successMessages: null,
 			isReadOnly: false,
 			isClearable: false,
 			isActive: false,
@@ -148,8 +152,20 @@
 
 	const isBlurred = ref(false)
 	const errors = ref<string[]>([])
-	const successes = ref<string[]>([])
 	const warnings = ref<string[]>([])
+	const successes = ref<string[]>([])
+
+	watch(() => props.errorMessages, (newVal) => {
+		errors.value = newVal || []
+	}, { immediate: true })
+
+	watch(() => props.warningMessages, (newVal) => {
+		warnings.value = newVal || []
+	}, { immediate: true })
+
+	watch(() => props.successMessages, (newVal) => {
+		successes.value = newVal || []
+	}, { immediate: true })
 
 	type Rule = { type: string, options?: RuleOptions }
 
@@ -231,17 +247,9 @@
 		return validateField(model.value ?? null)
 	}
 
-	const hasError = computed(() => {
-		return errors.value.length > 0
-	})
-
-	const hasWarning = computed(() => {
-		return warnings.value.length > 0
-	})
-
-	const hasSuccess = computed(() => {
-		return successes.value.length > 0 && !hasError.value && !hasWarning.value
-	})
+	const hasError = computed(() => errors.value.length > 0)
+	const hasWarning = computed(() => warnings.value.length > 0)
+	const hasSuccess = computed(() => successes.value.length > 0 && !hasError.value && !hasWarning.value)
 
 	const checkErrorOnBlur = () => {
 		isBlurred.value = true
@@ -326,7 +334,7 @@
 		:loading="props.loading"
 		:max-errors="props.maxErrors"
 		:max-width="props.maxWidth"
-		:messages="[...warnings, ...successes]"
+		:messages="hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : [])"
 		:min-width="props.minWidth"
 		:name="props.name"
 		:no-icon="props.noIcon"
