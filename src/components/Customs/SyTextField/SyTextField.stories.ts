@@ -513,13 +513,6 @@ Cette story montre l'utilisation des règles de validation standard. Le champ :
 	label="Champ avec validation"
 	:customRules="[
 		{
-			type: 'required',
-			options: {
-				message: 'Ce champ est requis',
-				fieldIdentifier: 'mon champ'
-			}
-		},
-		{
 			type: 'minLength',
 			options: {
 				length: 3,
@@ -544,13 +537,6 @@ Cette story montre l'utilisation des règles de validation standard. Le champ :
 				v-bind="args"
 				label="Champ avec validation"
 				:customRules="[
-					{
-						type: 'required',
-						options: {
-							message: 'Ce champ est requis',
-							fieldIdentifier: 'mon champ'
-						}
-					},
 					{
 						type: 'minLength',
 						options: {
@@ -585,15 +571,7 @@ Cette story montre l'utilisation combinée des règles standard et d'avertisseme
 				code: `<SyTextField
 	v-model="value"
 	label="Champ avec avertissements"
-	:customRules="[
-		{
-			type: 'required',
-			options: {
-				message: 'Ce champ est requis',
-				fieldIdentifier: 'mon champ'
-			}
-		}
-	]"
+	required
 	:customWarningRules="[
 		{
 			type: 'maxLength',
@@ -619,15 +597,7 @@ Cette story montre l'utilisation combinée des règles standard et d'avertisseme
 				v-model="value"
 				v-bind="args"
 				label="Champ avec avertissements"
-				:customRules="[
-					{
-						type: 'required',
-						options: {
-							message: 'Ce champ est requis',
-							fieldIdentifier: 'mon champ'
-						}
-					}
-				]"
+				required
 				:customWarningRules="[
 					{
 						type: 'maxLength',
@@ -663,14 +633,8 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 				code: `<SyTextField
 	v-model="value"
 	label="Email"
+	required
 	:customRules="[
-		{
-			type: 'required',
-			options: {
-				message: 'L'email est requis',
-				fieldIdentifier: 'l'email'
-			}
-		},
 		{
 			type: 'email',
 			options: {
@@ -695,14 +659,8 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 				v-model="value"
 				v-bind="args"
 				label="Email"
+				required
 				:customRules="[
-					{
-						type: 'required',
-						options: {
-							message: 'L\\'email est requis',
-							fieldIdentifier: 'l\\'email'
-						}
-					},
 					{
 						type: 'email',
 						options: {
@@ -737,6 +695,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 				code: `<SyTextField
 	v-model="value"
 	label="Code postal"
+	required
 	:customRules="[
 		{
 			type: 'matchPattern',
@@ -763,6 +722,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 				v-model="value"
 				v-bind="args"
 				label="Code postal"
+				required
 				:customRules="[
 					{
 						type: 'matchPattern',
