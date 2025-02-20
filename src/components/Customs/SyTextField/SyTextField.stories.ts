@@ -365,7 +365,7 @@ export const SlotPrependInnerDivider: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center">
 					<SyTextField
 						v-bind="args"
 						:prepend-inner-icon="args.prependInnerIcon"
@@ -417,7 +417,7 @@ export const SlotAppendInner: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center">
 					<SyTextField
 						v-bind="args"
 						:append-inner-icon="args.appendInnerIcon"
@@ -475,7 +475,7 @@ export const SlotCustomIcon: Story = {
 				return { args, iconName }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="d-flex flex-wrap align-center">
 					<SyTextField
 						v-bind="args"
 					>
