@@ -2,21 +2,47 @@
 	import { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { ref, computed } from 'vue'
 	import type { ChipItem } from './types'
-	import { mdiWindowClose } from '@mdi/js'
+	import { mdiWindowClose, mdiCheckCircle, mdiAlertCircle, mdiInformationOutline, mdiAlertOutline } from '@mdi/js'
 	import { locales } from './locales'
 
-	const props = withDefaults(defineProps<CustomizableOptions & {
+	type ChipState = 'success' | 'warning' | 'error' | 'info' | ''
+	type NonEmptyChipState = Exclude<ChipState, ''>
+
+	interface Props extends CustomizableOptions {
 		items?: ChipItem[]
 		overflowLimit?: number
+		readonly?: boolean
+		resetText?: string
+		displayPrependStateIcon?: boolean
+		displayAppendStateIcon?: boolean
+		customIcon?: string
+	}
 
-	}>(), {
+	const BACKGROUND_COLORS: Record<NonEmptyChipState, string> = {
+		success: 'backgroundSuccessSubdued',
+		warning: 'backgroundWarningSubdued',
+		error: 'backgroundErrorSubdued',
+		info: 'backgroundInfoSubdued',
+	} as const
+
+	const props = withDefaults(defineProps<Props>(), {
 		items: () => [],
 		overflowLimit: 4,
+		readonly: false,
+		resetText: undefined,
+		displayPrependStateIcon: false,
+		displayAppendStateIcon: false,
+		customIcon: undefined,
 	})
-	const emits = defineEmits(['remove', 'reset'])
+
+	const emits = defineEmits<{
+		(e: 'remove', item: ChipItem): void
+		(e: 'reset'): void
+	}>()
 
 	const locale = ref(locales)
 	const deleteIcon = ref(mdiWindowClose)
+
 	const filteredItems = computed(() => {
 		return props.items.slice(0, props.overflowLimit - 1)
 	})
@@ -29,30 +55,52 @@
 		return `+${props.items.length - props.overflowLimit + 1}`
 	})
 
-	function emitRemoveEvent(item: ChipItem): void {
-		emits('remove', item)
+	const resetButtonText = computed(() => {
+		return props.resetText ?? locale.value.reset
+	})
+
+	/**
+	 * Retourne la couleur de fond correspondant à l'état du chip
+	 *
+	 * @param state - L'état du chip
+	 * @returns La couleur de fond correspondante
+	 */
+	function getBackgroundColor(state: ChipState): string {
+		return BACKGROUND_COLORS[state] || 'primary'
 	}
 
-	function getBackgroundColor(state) {
-		if (state === 'success') {
-			return 'backgroundSuccessSubdued'
+	/**
+	 * Retourne l'icône correspondant à l'état du chip
+	 *
+	 * @param state - L'état du chip
+	 * @returns L'icône MDI correspondante
+	 */
+	function getIcon(state: ChipState): string {
+		switch (state) {
+		case 'success':
+			return mdiCheckCircle
+		case 'warning':
+			return mdiAlertOutline
+		case 'error':
+			return mdiAlertCircle
+		case 'info':
+			return mdiInformationOutline
+		default:
+			return ''
 		}
-		if (state === 'warning') {
-			return 'backgroundWarningSubdued'
+	}
+
+	function emitRemoveEvent(item: ChipItem): void {
+		if (!props.readonly) {
+			emits('remove', item)
 		}
-		if (state === 'error') {
-			return 'backgroundErrorSubdued'
-		}
-		if (state === 'info') {
-			return 'backgroundInfoSubdued'
-		}
-		return 'primary'
 	}
 
 	function emitResetEvent(): void {
-		emits('reset')
+		if (!props.readonly) {
+			emits('reset')
+		}
 	}
-
 </script>
 
 <template>
@@ -62,54 +110,82 @@
 			'flex-column': showOverflowChip,
 		}"
 		class="vd-chip-list d-flex flex-wrap max-width-none mx-n1 mt-n1"
+		role="list"
 	>
-		<div class="d-flex flex-wrap align-center">
+		<div
+			class="d-flex flex-wrap align-center"
+			role="group"
+			:aria-label="locale.chipGroupLabel"
+		>
 			<VChip
 				v-for="item in filteredItems"
 				:key="item.text"
 				:color="getBackgroundColor(item.state)"
 				size="small"
 				variant="flat"
-				class="ma-1 "
+				class="ma-1"
 				:class="{
 					'sy-chip-success': item.state === 'success',
 					'sy-chip-info': item.state === 'info',
 					'sy-chip-warning': item.state === 'warning',
 					'sy-chip-error': item.state === 'error',
-
 				}"
+				role="listitem"
 			>
-				<div class="d-flex align-center ga-sm-1 pl-1">
+				<div class="d-flex align-center ga-sm-1">
+					<template v-if="displayPrependStateIcon">
+						<VIcon
+							:icon="customIcon || getIcon(item.state)"
+							size="small"
+						/>
+					</template>
+
 					<span>{{ item.text }}</span>
+
+					<template v-if="displayAppendStateIcon">
+						<VIcon
+							:icon="customIcon || getIcon(item.state)"
+							size="small"
+						/>
+					</template>
+
 					<VBtn
-						icon="mdi-close"
-						variant="text"
+						v-if="!readonly"
 						:aria-label="locale.closeBtnLabel"
-						density="compact"
-						size="small"
 						class="vd-remove-chip"
+						density="compact"
+						icon
+						size="x-small"
+						variant="text"
 						@click="emitRemoveEvent(item)"
 					>
-						<VIcon size="default">
-							{{ deleteIcon }}
-						</VIcon>
+						<VIcon
+							:icon="deleteIcon"
+							size="small"
+						/>
 					</VBtn>
 				</div>
 			</VChip>
 		</div>
 
-		<div>
+		<div
+			v-if="showOverflowChip || !readonly"
+			class="d-flex align-center"
+		>
 			<VChip
 				v-if="showOverflowChip"
 				color="cyan-lighten-90"
 				size="small"
 				variant="flat"
 				class="vd-overflow-chip text-cyan-darken-40 ma-1"
+				role="status"
+				:aria-label="locale.overflowLabel"
 			>
 				{{ overflowText }}
 			</VChip>
 
 			<VBtn
+				v-if="!readonly"
 				data-test-id="reset-btn"
 				color="primary"
 				size="small"
@@ -117,7 +193,7 @@
 				class="vd-overflow-btn px-1 ml-0 my-1"
 				@click="emitResetEvent"
 			>
-				{{ locale.reset }}
+				{{ resetButtonText }}
 			</VBtn>
 		</div>
 	</div>
