@@ -99,30 +99,26 @@ describe('DateTextInput.vue', () => {
 
 	it('validates warning rules', async () => {
 		const wrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
-				modelValue: null,
-				format: 'DD/MM/YYYY',
+				modelValue: '01/01/2025',
 				customWarningRules: [{
 					type: 'custom',
 					options: {
-						validate: (value: string) => !value.includes('2025'),
-						warningMessage: 'Les dates en 2025 ne sont pas recommandées',
+						validate: (value: string) => !/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/2025$/.test(value),
+						message: 'Les dates en 2025 ne sont pas recommandées',
 						fieldIdentifier: 'date',
 						isWarning: true,
 					},
 				}],
 			},
+			global: {
+				plugins: [vuetify],
+			},
 		})
 
-		const input = wrapper.find('input')
-		await input.setValue('01/01/2025')
-		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
-		expect(textField.props('messages')).toContain('Les dates en 2025 ne sont pas recommandées')
+		expect(textField.props('warningMessages')).toContain('Les dates en 2025 ne sont pas recommandées')
 	})
 
 	it('handles invalid dates correctly', async () => {

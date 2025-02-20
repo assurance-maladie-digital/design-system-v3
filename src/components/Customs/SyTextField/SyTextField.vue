@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 	import { computed, ref, watch } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
+	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
+	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
 	import {
 		mdiAlertOutline,
 		mdiCheck,
@@ -24,6 +26,8 @@
 			label?: string
 			required?: boolean
 			errorMessages?: string[] | null
+			warningMessages?: string[] | null
+			successMessages?: string[] | null
 			isReadOnly?: boolean
 			isActive?: boolean
 			baseColor?: string
@@ -66,6 +70,9 @@
 			width?: string | number
 			displayAsterisk?: boolean
 			noIcon?: boolean
+			customRules?: { type: string, options: RuleOptions }[]
+			customWarningRules?: { type: string, options: RuleOptions }[]
+			showSuccessMessages?: boolean
 		}>(),
 		{
 			modelValue: undefined,
@@ -77,6 +84,8 @@
 			color: 'primary',
 			label: 'custom label',
 			errorMessages: null,
+			warningMessages: null,
+			successMessages: null,
 			isReadOnly: false,
 			isClearable: false,
 			isActive: false,
@@ -119,6 +128,9 @@
 			width: undefined,
 			displayAsterisk: false,
 			noIcon: false,
+			customRules: () => [],
+			customWarningRules: () => [],
+			showSuccessMessages: true,
 		},
 	)
 
@@ -139,19 +151,134 @@
 	})
 
 	const isBlurred = ref(false)
+	const errors = ref<string[]>([])
+	const warnings = ref<string[]>([])
+	const successes = ref<string[]>([])
 
-	const hasError = computed(() => {
-		return (props.required && isBlurred.value && !model.value) || (props.errorMessages && props.errorMessages.length > 0)
+	watch(() => props.errorMessages, (newVal) => {
+		errors.value = newVal || []
+	}, { immediate: true })
+
+	watch(() => props.warningMessages, (newVal) => {
+		warnings.value = newVal || []
+	}, { immediate: true })
+
+	watch(() => props.successMessages, (newVal) => {
+		successes.value = newVal || []
+	}, { immediate: true })
+
+	type Rule = { type: string, options?: RuleOptions }
+
+	const customRules = ref<Rule[]>(props.customRules || [])
+	const customWarningRules = ref<Rule[]>(props.customWarningRules || [])
+
+	const { generateRules } = useFieldValidation()
+
+	const validationRules = computed(() => {
+		const defaultRules: Rule[] = props.required
+			? [{
+				type: 'required',
+				options: {
+					message: `Le champ ${props.label || 'ce champ'} est requis.`,
+					fieldIdentifier: props.label,
+				},
+			}]
+			: []
+
+		return generateRules([...defaultRules, ...customRules.value])
 	})
+
+	const warningValidationRules = computed(() => {
+		const rulesWithWarning = customWarningRules.value.map(rule => ({
+			type: rule.type,
+			options: { ...(rule.options || {}), isWarning: true },
+		}))
+		return generateRules(rulesWithWarning)
+	})
+
+	const validateField = (value: string | number | null) => {
+		errors.value = []
+		warnings.value = []
+		successes.value = []
+
+		// Si le champ est vide et non requis, on ne fait pas de validation
+		if (!value && !props.required) {
+			return true
+		}
+
+		let hasSuccess = false
+
+		// Validation des règles standard
+		validationRules.value.forEach((rule) => {
+			const result = rule(value)
+			if (result.error) {
+				errors.value.push(result.error)
+			}
+			else if (props.showSuccessMessages && result.success && !errors.value.length && !hasSuccess) {
+				successes.value = [result.success]
+				hasSuccess = true
+			}
+		})
+
+		// Si on a des erreurs, on n'affiche pas les warnings ni les succès
+		if (errors.value.length) {
+			warnings.value = []
+			successes.value = []
+			return false
+		}
+
+		// Validation des règles d'avertissement
+		warningValidationRules.value.forEach((rule) => {
+			const result = rule(value)
+			if (result.warning) {
+				warnings.value.push(result.warning)
+			}
+		})
+
+		// Si on a des warnings, on n'affiche pas les succès
+		if (warnings.value.length) {
+			successes.value = []
+		}
+
+		return true
+	}
+
+	const validateOnSubmit = () => {
+		isBlurred.value = true
+		// On s'assure que model.value n'est pas undefined
+		return validateField(model.value ?? null)
+	}
+
+	const hasError = computed(() => errors.value.length > 0)
+	const hasWarning = computed(() => warnings.value.length > 0)
+	const hasSuccess = computed(() => successes.value.length > 0 && !hasError.value && !hasWarning.value)
 
 	const checkErrorOnBlur = () => {
 		isBlurred.value = true
+		validateField(model.value ?? null)
 	}
 
+	watch(model, (newValue) => {
+		validateField(newValue ?? null)
+		if (props.isClearable && newValue === '') {
+			emit('clear')
+		}
+	})
+
 	const appendInnerIconColor = computed(() => {
+		if (hasError.value) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
 		return props.appendInnerIcon === 'error' || props.appendInnerIcon === 'success' || props.appendInnerIcon === 'warning'
 			? props.appendInnerIcon
 			: 'black'
+	})
+
+	const validationIcon = computed(() => {
+		if (hasError.value) return ICONS['error']
+		if (hasWarning.value) return ICONS['warning']
+		if (hasSuccess.value) return ICONS['success']
+		return null
 	})
 
 	const isShouldDisplayAsterisk = computed(() => {
@@ -171,14 +298,12 @@
 
 	const emit = defineEmits(['update:model-value', 'clear', 'prepend-icon-click', 'append-icon-click'])
 
-	watch(model, (newValue) => {
-		if (props.isClearable && newValue === '') {
-			emit('clear')
-		}
-	})
-
 	defineExpose({
 		appendInnerIconColor,
+		validateOnSubmit,
+		errors,
+		warnings,
+		successes,
 	})
 </script>
 
@@ -200,8 +325,8 @@
 		:dirty="props.isDirty"
 		:disabled="props.isDisabled"
 		:display-asterisk="isShouldDisplayAsterisk"
-		:error="props.isOnError"
-		:error-messages="props.errorMessages"
+		:error="hasError"
+		:error-messages="errors"
 		:flat="props.isFlat"
 		:focused="props.isFocused"
 		:hide-details="props.areDetailsHidden"
@@ -211,7 +336,7 @@
 		:loading="props.loading"
 		:max-errors="props.maxErrors"
 		:max-width="props.maxWidth"
-		:messages="props.messages"
+		:messages="hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : [])"
 		:min-width="props.minWidth"
 		:name="props.name"
 		:no-icon="props.noIcon"
@@ -225,7 +350,6 @@
 		:reverse="props.isReversed"
 		:role="props.role"
 		:rounded="props.rounded"
-		:rules="props.required ? ['Le champ est requis.'] : []"
 		:single-line="props.isOnSingleLine"
 		:suffix="props.suffix"
 		:theme="props.theme"
@@ -233,6 +357,11 @@
 		:type="props.type"
 		:variant="props.variantStyle"
 		:width="props.width"
+		:class="{
+			'error-field': hasError,
+			'warning-field': hasWarning,
+			'success-field': hasSuccess
+		}"
 		@blur="checkErrorOnBlur"
 	>
 		<template
@@ -280,16 +409,16 @@
 		</template>
 		<template #append-inner>
 			<slot name="append-inner">
-				<VIcon v-if="hasError && !props.appendInnerIcon">
-					{{ mdiInformation }}
-				</VIcon>
+				<VIcon
+					v-if="validationIcon && !props.appendInnerIcon"
+					:icon="validationIcon"
+				/>
 				<VIcon
 					v-if="props.appendInnerIcon && !props.noIcon"
-					:aria-label="props.label ? `${props.label} - bouton ${props.appendInnerIcon}` : `Bouton ${props.appendInnerIcon}`"
-					:class="{ 'error-icon': props.appendInnerIcon === 'error' }"
 					:color="appendInnerIconColor"
-					:icon="ICONS[props.appendInnerIcon]"
-				/>
+				>
+					{{ ICONS[props.appendInnerIcon] }}
+				</VIcon>
 			</slot>
 		</template>
 		<template #details>
@@ -299,9 +428,70 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/tokens';
+
 :deep(.v-field__input input::placeholder),
 :deep(input.v-field__input::placeholder),
 :deep(textarea.v-field__input::placeholder) {
 	opacity: 0;
+}
+
+.warning-field {
+	:deep(.v-input__details > .v-icon),
+	:deep(.v-input__prepend > .v-icon),
+	:deep(.v-input__append > .v-icon) {
+		opacity: 1 !important;
+	}
+
+	:deep(.v-field) {
+		color: tokens.$colors-border-warning !important;
+
+		.v-field__outline {
+			color: tokens.$colors-border-warning !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: tokens.$colors-border-warning !important;
+		}
+	}
+}
+
+.error-field {
+	:deep(.v-input__control),
+	:deep(.v-messages__message) {
+		color: tokens.$colors-text-error !important;
+	}
+
+	.v-field--active & {
+		color: tokens.$colors-border-error !important;
+	}
+}
+
+.success-field {
+	:deep(.v-input__details > .v-icon),
+	:deep(.v-input__prepend > .v-icon),
+	:deep(.v-input__append > .v-icon) {
+		opacity: 1 !important;
+	}
+
+	:deep(.v-field) {
+		color: tokens.$colors-border-success !important;
+
+		.v-field__outline {
+			color: tokens.$colors-border-success !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: tokens.$colors-border-success !important;
+		}
+	}
 }
 </style>
