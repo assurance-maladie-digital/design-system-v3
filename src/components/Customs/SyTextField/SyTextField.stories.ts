@@ -596,7 +596,7 @@ Cette story montre l'utilisation combinée des règles standard et d'avertisseme
 			<SyTextField
 				v-model="value"
 				v-bind="args"
-				label="Champ avec avertissements"
+				label="avec avertissements"
 				required
 				:customWarningRules="[
 					{
