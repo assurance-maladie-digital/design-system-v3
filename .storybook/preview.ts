@@ -68,7 +68,9 @@ const preview: Preview = {
 					'Templates',
 					'Fondamentaux',
 					['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Customisation et thèmes'],
-					'Guidelines', ['Accessibilité', 'Eco-conception', 'Vuetify']],
+					'Guidelines', ['Accessibilité', 'Eco-conception', 'Vuetify'],
+					'Guide du dev', ['Créer une issue', 'Migration Vue3', 'Migration Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
+				],
 			},
 		},
 		controls: {
