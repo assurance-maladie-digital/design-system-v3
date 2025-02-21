@@ -109,7 +109,7 @@
 		:class="{
 			'flex-column': showOverflowChip,
 		}"
-		class="vd-chip-list d-flex flex-wrap max-width-none mx-n1 mt-n1"
+		class="chip-list d-flex flex-wrap max-width-none mx-n1 mt-n1"
 		role="list"
 	>
 		<div
@@ -132,11 +132,11 @@
 				}"
 				role="listitem"
 			>
-				<div class="d-flex align-center ga-sm-1">
+				<div class="d-flex align-center justify-center ga-sm-1">
 					<template v-if="displayPrependStateIcon">
 						<VIcon
 							:icon="customIcon || getIcon(item.state)"
-							size="small"
+							size="medium"
 						/>
 					</template>
 
@@ -145,17 +145,16 @@
 					<template v-if="displayAppendStateIcon">
 						<VIcon
 							:icon="customIcon || getIcon(item.state)"
-							size="small"
+							size="medium"
 						/>
 					</template>
 
 					<VBtn
 						v-if="!readonly"
 						:aria-label="locale.closeBtnLabel"
-						class="vd-remove-chip"
 						density="compact"
 						icon
-						size="x-small"
+						size="small"
 						variant="text"
 						@click="emitRemoveEvent(item)"
 					>
@@ -177,7 +176,7 @@
 				color="cyan-lighten-90"
 				size="small"
 				variant="flat"
-				class="vd-overflow-chip text-cyan-darken-40 ma-1"
+				class="overflow-chip text-cyan-darken-40 ma-1"
 				role="status"
 				:aria-label="locale.overflowLabel"
 			>
@@ -190,7 +189,7 @@
 				color="primary"
 				size="small"
 				variant="text"
-				class="vd-overflow-btn px-1 ml-0 my-1"
+				class="overflow-btn px-1 ml-0 my-1"
 				@click="emitResetEvent"
 			>
 				{{ resetButtonText }}
@@ -222,12 +221,12 @@
 	border: 1px solid tokens.$colors-border-warning !important;
 }
 
-.vd-overflow-chip {
+.overflow-chip {
 	border: 1px solid tokens.$cyan-lighten-90 !important;
 }
 
 // Disable overflow button hover state
-.vd-overflow-btn :deep(.v-btn__overlay) {
+.overflow-btn :deep(.v-btn__overlay) {
 	display: none;
 }
 </style>
