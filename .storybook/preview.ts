@@ -53,6 +53,10 @@ const preview: Preview = {
 				order: [
 					'Démarrer',
 					['Accueil', 'Politique de confidentialité'],
+					'Accessibilité',
+					[
+						'Kit de pré-audit', ['Introduction', 'Kick-off échantillonnage', 'Outils', 'Pré-audit'],
+					],
 					'Composants',
 					[
 						'Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'],
