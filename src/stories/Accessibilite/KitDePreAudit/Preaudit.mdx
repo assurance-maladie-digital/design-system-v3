@@ -1,0 +1,90 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="Accessibilité/Kit de pré-audit/Pré-audit"/>
+
+# Pré-audit
+
+## Vérification assistée des outils automatisés
+
+L’objectif est de vérifier chacun des points suivants pour chaque page de l’échantillon de test. Au sein de la check-list, il faudra choisir entre “Conforme”, “Non conforme”, “Non applicable”, “Dérogé” ou “Non testé” pour chacun des critères suivants. Il est possible d’ajouter un commentaire pour expliciter les erreurs relevées, des recommandations ou d’éventuelles questions.
+
+## Vérification manuelle
+
+**1. Navigation au clavier** :
+
+- Testez que toutes les parties de votre site sont entièrement navigables à l’aide du clavier (touche Tab pour se déplacer, Shift+Tab pour revenir en arrière, Entrée pour activer un élément, Espace pour les actions interactives comme les boutons).
+  - **Vérification manuelle** :
+  - Naviguez sur toutes les sections du site uniquement avec le clavier.
+  - Testez tous les éléments interactifs : menus, formulaires, liens, boutons, carrousels, fenêtres modales, etc.
+  - Assurez-vous que les menus déroulants s'ouvrent avec le clavier et que vous pouvez accéder à tous les champs de formulaire et boutons sans difficulté.
+  - Vérifiez qu’aucun piège au clavier n’existe (boucle, etc.)
+  - Exemple : Vérifiez si un utilisateur peut remplir un formulaire de contact en utilisant uniquement les touches de tabulation
+
+**2. Éléments visuels (animations, transitions, etc.) et déclenchement automatiques** :
+
+- Assurez-vous que les animations et transitions ne causent pas de problèmes pour les personnes souffrant de troubles comme l’épilepsie photosensible et qu’un contrôle est possible sur les éléments qui se déclenchent automatiquement.
+  - **Vérification manuelle** :
+  - Testez les animations sur le site (bannières, carrousels, transitions de pages).
+  - Vérifiez que la durée d’une animation est inférieure ou égale à 5 secondes
+  - Vérifiez que l’utilisateur peut arrêter, relancer, afficher et masquer une animation
+  - Pour les contenus clignotants ou avec effet de flash, assurez-vous que la fréquence d’effet est inférieure à 3 par seconde et la surface cumulée inférieure à inférieure à 21824 pixels.
+  - Exemple : Si un carrousel d’images se déclenche automatiquement, vérifiez qu’il peut être mis en pause ou que l'utilisateur peut le contrôler avec le clavier ou la souris.
+
+**3. Pertinence des liens et des boutons** :
+
+- Le texte des liens et des boutons doit être explicite, clair et contextuel, en évitant les termes génériques comme "Cliquez ici" ou "En savoir plus".
+  - **Vérification manuelle** :
+  - Lisez tous les textes des liens et boutons du site. Vérifiez qu’ils décrivent clairement ce qu'ils ouvrent ou accomplissent, et qu'ils sont compréhensibles même hors contexte.
+  - [Voir le critère RGAA 6.1 pour en savoir plus sur les liens explicites.](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#6.1)
+  - Exemple : Remplacer un lien "En savoir plus" par un lien plus descriptif comme "Voir les services proposés" ou "Découvrir les détails de notre offre".
+
+**4. Formulaires** :
+
+- Assurez-vous que tous les éléments d'un formulaire sont accessibles et compréhensibles pour les utilisateurs, y compris ceux qui utilisent des technologies d'assistance (lecteurs d'écran, commandes vocales, etc.).
+  - **Vérification manuelle** :
+  1. **Labels associés aux champs** :
+ - Vérifiez que chaque champ de formulaire a un label explicite et associé correctement, en utilisant les balises `<label>` avec l'attribut `for` correspondant à l'`id` du champ de saisie. Cela permet aux utilisateurs de lecteurs d'écran d'identifier la fonction de chaque champ.
+  - [Voir le critère RGAA 11.2 pour en savoir plus sur la pertinence d’une étiquette associée à un champ de formulaire](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2)
+ - **Exemple** : Pour un champ de saisie de nom, assurez-vous qu’il est bien associé à un label : `<label for="nom">Nom :</label> <input type="text" id="nom">`.
+  2. **Messages d'erreur et validation** :
+ - Vérifiez que des messages d'erreur sont clairement associés aux champs en cas de saisie incorrecte (par exemple, email mal formé, champ obligatoire non rempli).
+ - Testez que ces messages d’erreur sont visibles, compréhensibles et bien positionnés. Vérifiez également qu’ils sont annoncés par le lecteur d'écran.
+ - **Exemple** : Si un utilisateur laisse le champ "Email" vide ou entre un format incorrect, un message comme "Veuillez entrer une adresse email valide" doit s'afficher à proximité du champ concerné, et ce message doit être lisible pour les technologies d'assistance.
+  3. **Groupes de champs et aide contextuelle** :
+ - Vérifiez que les champs sont regroupés de manière logique, avec des titres ou des instructions claires pour chaque section (par exemple, "Informations personnelles" ou "Adresse de facturation").
+ - Assurez-vous que des indices ou des descriptions contextuelles sont fournis pour aider l’utilisateur à comprendre ce qui est attendu dans chaque champ.
+ - **Exemple** : Si un champ de formulaire demande un "numéro de carte de crédit", assurez-vous qu'une aide contextuelle est présente pour indiquer le format attendu.
+  4. **Focus visuel** :
+ - Testez que le focus visuel (le cadre ou l’indication de l’élément sélectionné) est bien visible lorsqu’un utilisateur navigue au clavier entre les champs du formulaire. Cela permet de garantir une navigation fluide pour les personnes malvoyantes.
+ - **Exemple** : Lorsque vous appuyez sur la touche Tab, assurez-vous que chaque champ de saisie est bien mis en surbrillance pour indiquer où le focus est situé.
+
+**5. Tableaux accessibles** :
+
+- Vérifiez que les tableaux de données sont bien structurés avec des balises `<th>` pour les en-têtes et des descriptions de colonnes et lignes claires, permettant une navigation facile pour les utilisateurs de lecteurs d'écran.
+  - **Vérification manuelle** :
+  - Inspectez les tableaux sur le site pour vérifier que les en-têtes de colonnes et lignes utilisent les balises `<th>` et que des attributs `scope` sont utilisés pour clarifier la structure du tableau.
+  - Vérifiez que des descriptions sont disponibles pour les tableaux complexes ou que des alternatives sont fournies.
+  - Exemple : Si un tableau contient des données financières, assurez-vous que les en-têtes de colonnes comme "Date" et "Montant" sont bien définis et que l'ordre des colonnes est logique pour les utilisateurs de lecteurs d’écran.
+
+**6. Langue de la page** :
+
+- Vérifiez que la langue du contenu principal de la page est correctement définie avec l’attribut `lang` dans l'élément `<html>`, ce qui permet aux technologies d’assistance de prononcer le texte dans la langue correcte.
+  - **Vérification manuelle** :
+  - Inspectez le code source de la page (clic droit > "Inspecter" dans le navigateur) et vérifiez que l’attribut `lang="fr"` (ou la langue correspondante) est bien présent dans l’élément `<html>`. S’il s’agit d’une autre langue, elle doit être pertinente ([voir documentation MDN sur l’attribut lang](https://developer.mozilla.org/fr/docs/Web/HTML/Global_attributes/lang))
+  - Exemple : Si votre site est en français, l'élément `<html>` devrait être : `<html lang="fr">`.
+
+**7. Titre de la page** :
+
+- Le titre de chaque page (`<title>`) doit être descriptif, unique et pertinent par rapport au contenu de la page.
+  - **Vérification manuelle** :
+  - Ouvrez chaque page du site et lisez le titre affiché dans l'onglet du navigateur.
+  - Vérifiez que le titre est spécifique à la page (par exemple, "Page d'accueil" pour la page d'accueil, "Contactez-nous" pour la page de contact).
+  - Exemple : Le titre de la page sur un annuaire pourrait être "Annuaire - [Nom du service]" et non "Page 1".
+
+**8. Accès aux contenus multimédia** :
+
+- Vérifiez que les vidéos et autres contenus multimédia sont accessibles, notamment en fournissant des sous-titres, des transcriptions ou d’autres alternatives textuelles.
+  - **Vérification manuelle** :
+  - Testez les vidéos du site pour vérifier si elles proposent des sous-titres ou des transcriptions disponibles.
+  - Assurez-vous que les lecteurs vidéo permettent l’activation des sous-titres et que ces derniers sont synchronisés avec le contenu audio.
+  - Exemple : Si une vidéo présente une interview, vérifiez qu’une transcription complète ou des sous-titres sont fournis pour les utilisateurs sourds ou malentendants.
