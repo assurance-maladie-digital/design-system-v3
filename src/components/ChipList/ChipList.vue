@@ -156,6 +156,7 @@
 						icon
 						size="small"
 						variant="text"
+						class="remove-chip"
 						@click="emitRemoveEvent(item)"
 					>
 						<VIcon

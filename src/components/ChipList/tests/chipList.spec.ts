@@ -130,7 +130,7 @@ describe('ChipList', () => {
 			},
 		})
 
-		const removeButtons = wrapper.findAll('.vd-remove-chip')
+		const removeButtons = wrapper.findAll('.remove-chip')
 		expect(removeButtons).toHaveLength(0)
 
 		const resetButton = wrapper.find('[data-test-id="reset-btn"]')
@@ -165,12 +165,12 @@ describe('ChipList', () => {
 
 		// Vérifie que le nombre de chips visibles est correct
 		const visibleChips = wrapper.findAll('.v-chip').filter(chip =>
-			!chip.classes().includes('vd-overflow-chip'),
+			!chip.classes().includes('overflow-chip'),
 		)
 		expect(visibleChips).toHaveLength(2) // overflowLimit - 1
 
 		// Vérifie la présence du chip de débordement
-		const overflowChip = wrapper.find('.vd-overflow-chip')
+		const overflowChip = wrapper.find('.overflow-chip')
 		expect(overflowChip.exists()).toBe(true)
 		expect(overflowChip.text()).toContain('+2') // nombre d'items restants
 	})
@@ -187,7 +187,7 @@ describe('ChipList', () => {
 		})
 
 		// Test de l'événement remove
-		const removeButton = wrapper.find('.vd-remove-chip')
+		const removeButton = wrapper.find('.remove-chip')
 		await removeButton.trigger('click')
 		expect(wrapper.emitted('remove')).toBeTruthy()
 		expect(wrapper.emitted('remove')?.[0]).toEqual([defaultItems[0]])
@@ -232,7 +232,7 @@ describe('ChipList', () => {
 		expect(wrapper.findAll('[role="listitem"]')).toHaveLength(defaultItems.length)
 
 		// Vérifie les labels ARIA des boutons
-		const removeButton = wrapper.find('.vd-remove-chip')
+		const removeButton = wrapper.find('.remove-chip')
 		expect(removeButton.attributes('aria-label')).toBeTruthy()
 	})
 
@@ -286,11 +286,11 @@ describe('ChipList', () => {
 		})
 
 		// Vérifie la présence des boutons de suppression
-		const removeButtons = wrapper.findAll('.vd-remove-chip')
+		const removeButtons = wrapper.findAll('.remove-chip')
 		expect(removeButtons).toHaveLength(expectedRemoveButtons)
 
 		// Vérifie la présence du chip de débordement
-		const overflowChip = wrapper.find('.vd-overflow-chip')
+		const overflowChip = wrapper.find('.overflow-chip')
 		expect(overflowChip.exists()).toBe(showsOverflowChip)
 
 		// Vérifie la présence du bouton reset
