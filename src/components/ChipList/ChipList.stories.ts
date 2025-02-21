@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import ChipList from './ChipList.vue'
-import { mdiHeart } from '@mdi/js'
+import { mdiAccount } from '@mdi/js'
 import type { ChipItem } from './types'
 
 const meta = {
@@ -982,86 +982,6 @@ const items = [
 	},
 }
 
-export const WithBothStateIcons: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-	<ChipList
-		:items="items"
-		:display-prepend-state-icon="true"
-		:display-append-state-icon="true"
-	/>
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-import ChipList from '@/components/ChipList/ChipList.vue'
-
-const items = [
-	{
-		text: 'Email',
-		value: 'email',
-		state: 'success',
-	},
-	{
-		text: 'SMS',
-		value: 'sms',
-		state: 'info',
-	},
-	{
-		text: 'Téléphone',
-		value: 'telephone',
-		state: 'warning',
-	},
-	{
-		text: 'Courrier',
-		value: 'mail',
-		state: 'error',
-	},
-]
-</script>
-				`,
-			},
-		],
-		docs: {
-			description: {
-				story: 'Cette story montre les chips avec des icônes d\'état au début et à la fin. Les icônes changent en fonction de l\'état du chip.',
-			},
-		},
-	},
-	args: {
-		items: [
-			{
-				text: 'Email',
-				value: 'email',
-				state: 'success',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-				state: 'info',
-			},
-			{
-				text: 'Téléphone',
-				value: 'telephone',
-				state: 'warning',
-			},
-			{
-				text: 'Courrier',
-				value: 'mail',
-				state: 'error',
-			},
-		],
-		displayPrependStateIcon: true,
-		displayAppendStateIcon: true,
-	},
-}
-
 export const WithCustomIcon: Story = {
 	parameters: {
 		sourceCode: [
@@ -1072,7 +992,6 @@ export const WithCustomIcon: Story = {
 	<ChipList
 		:items="items"
 		:display-prepend-state-icon="true"
-		:display-append-state-icon="true"
 		:custom-icon="mdiHeart"
 	/>
 </template>
@@ -1140,7 +1059,7 @@ const items = [
 			},
 		],
 		displayPrependStateIcon: true,
-		displayAppendStateIcon: true,
-		customIcon: mdiHeart,
+		displayAppendStateIcon: false,
+		customIcon: mdiAccount,
 	},
 }
