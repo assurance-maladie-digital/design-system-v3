@@ -8,6 +8,7 @@
 
 	type ChipState = 'success' | 'warning' | 'error' | 'info' | ''
 	type NonEmptyChipState = Exclude<ChipState, ''>
+	type VuetifyVariant = 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
 
 	interface Props extends CustomizableOptions {
 		items?: ChipItem[]
@@ -17,6 +18,13 @@
 		displayPrependStateIcon?: boolean
 		displayAppendStateIcon?: boolean
 		customIcon?: string
+		vuetifyOptions?: {
+			chip?: {
+				color?: string
+				size?: string
+				variant?: VuetifyVariant
+			}
+		}
 	}
 
 	const BACKGROUND_COLORS: Record<NonEmptyChipState, string> = {
@@ -69,8 +77,14 @@
    * @param options - Les options de personnalisation
    * @returns La couleur de fond correspondante
    */
-	function getBackgroundColor(state: ChipState, options?: CustomizableOptions): string {
-		return options?.vuetifyOptions?.chip?.color as string || BACKGROUND_COLORS[state] || 'primary'
+	function getBackgroundColor(state: ChipState): string {
+		// Si des options Vuetify sont définies et qu'une couleur est spécifiée, on l'utilise
+		const vuetifyColor = props.vuetifyOptions?.chip?.color
+		if (typeof vuetifyColor === 'string' && vuetifyColor) {
+			return vuetifyColor
+		}
+		// Sinon on utilise la couleur basée sur l'état
+		return state ? BACKGROUND_COLORS[state] : 'primary'
 	}
 
 	/**
