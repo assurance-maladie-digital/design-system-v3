@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-	import { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { ref, computed } from 'vue'
 	import type { ChipItem } from './types'
 	import { mdiWindowClose, mdiCheckCircle, mdiAlertCircle, mdiInformationOutline, mdiAlertOutline } from '@mdi/js'
 	import { locales } from './locales'
+	import { config } from '@/components/ChipList/config'
 
 	type ChipState = 'success' | 'warning' | 'error' | 'info' | ''
 	type NonEmptyChipState = Exclude<ChipState, ''>
@@ -25,7 +26,7 @@
 		info: 'backgroundInfoSubdued',
 	} as const
 
-	const props = withDefaults(defineProps<Props>(), {
+	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
 		items: () => [],
 		overflowLimit: 4,
 		readonly: false,
@@ -34,6 +35,8 @@
 		displayAppendStateIcon: false,
 		customIcon: undefined,
 	})
+
+	const options = useCustomizableOptions(config, props)
 
 	const emits = defineEmits<{
 		(e: 'remove', item: ChipItem): void
@@ -119,11 +122,9 @@
 		>
 			<VChip
 				v-for="item in filteredItems"
+				v-bind="options.chip"
 				:key="item.text"
 				:color="getBackgroundColor(item.state)"
-				size="small"
-				variant="flat"
-				class="ma-1"
 				:class="{
 					'sy-chip-success': item.state === 'success',
 					'sy-chip-info': item.state === 'info',
@@ -135,8 +136,9 @@
 				<div class="d-flex align-center justify-center ga-sm-1">
 					<template v-if="displayPrependStateIcon">
 						<VIcon
+							v-bind="options.icon"
 							:icon="customIcon || getIcon(item.state)"
-							size="medium"
+							:color="item.state"
 						/>
 					</template>
 
@@ -144,24 +146,22 @@
 
 					<template v-if="displayAppendStateIcon">
 						<VIcon
+							v-bind="options.icon"
 							:icon="customIcon || getIcon(item.state)"
-							size="medium"
 						/>
 					</template>
 
 					<VBtn
 						v-if="!readonly"
+						v-bind="options.btn"
 						:aria-label="locale.closeBtnLabel"
-						density="compact"
 						icon
-						size="small"
-						variant="text"
 						class="remove-chip"
 						@click="emitRemoveEvent(item)"
 					>
 						<VIcon
+							v-bind="options.icon"
 							:icon="deleteIcon"
-							size="small"
 						/>
 					</VBtn>
 				</div>
@@ -174,9 +174,7 @@
 		>
 			<VChip
 				v-if="showOverflowChip"
-				color="cyan-lighten-90"
-				size="small"
-				variant="flat"
+				v-bind="options.chip"
 				class="overflow-chip text-cyan-darken-40 ma-1"
 				role="status"
 				:aria-label="locale.overflowLabel"
@@ -186,10 +184,10 @@
 
 			<VBtn
 				v-if="!readonly"
-				data-test-id="reset-btn"
+				variant="text"
 				color="primary"
 				size="small"
-				variant="text"
+				data-test-id="reset-btn"
 				class="overflow-btn px-1 ml-0 my-1"
 				@click="emitResetEvent"
 			>

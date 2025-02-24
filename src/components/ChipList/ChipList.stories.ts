@@ -48,14 +48,14 @@ const meta = {
 				defaultValue: { summary: 'undefined' },
 			},
 		},
-		onRemove: {
+		remove: {
 			description: 'Événement émis lors de la suppression d\'un élément',
 			table: {
 				type: { summary: '(item: ChipItem) => void' },
 			},
 			action: 'remove',
 		},
-		onReset: {
+		reset: {
 			description: 'Événement émis lors de la réinitialisation',
 			table: {
 				type: { summary: '() => void' },
