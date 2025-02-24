@@ -63,13 +63,14 @@
 	})
 
 	/**
-	 * Retourne la couleur de fond correspondant à l'état du chip
-	 *
-	 * @param state - L'état du chip
-	 * @returns La couleur de fond correspondante
-	 */
-	function getBackgroundColor(state: ChipState): string {
-		return BACKGROUND_COLORS[state] || 'primary'
+   * Retourne la couleur de fond correspondant à l'état du chip
+   *
+   * @param state - L'état du chip
+   * @param options - Les options de personnalisation
+   * @returns La couleur de fond correspondante
+   */
+	function getBackgroundColor(state: ChipState, options?: CustomizableOptions): string {
+		return options?.vuetifyOptions?.chip?.color as string || BACKGROUND_COLORS[state] || 'primary'
 	}
 
 	/**

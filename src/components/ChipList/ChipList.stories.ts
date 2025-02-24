@@ -1063,3 +1063,103 @@ const items = [
 		customIcon: mdiAccount,
 	},
 }
+
+export const Customization: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+	<ChipList
+		:items="args.items"
+		:overflow-limit="args.overflowLimit"
+		:vuetify-options="vuetifyOptions"
+	/>
+</template>
+                `,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+   import ChipList from '@/components/ChipList/ChipList.vue'
+	const items = [
+		{
+			text: 'Email',
+			value: 'email',
+		},
+		{
+			text: 'Courrier',
+			value: 'courrier',
+
+		},
+		{
+			text: 'SMS',
+			value: 'sms',
+		},
+
+		{
+			text: 'Telephone',
+			value: 'telephone',
+		},
+	]
+	
+	const vuetifyOptions = {
+		chip: {
+			color: 'secondary',
+			size: 'large',
+			variant: 'elevated',
+		}
+	}
+    
+</script>
+                `,
+			},
+		],
+	},
+	args: {
+		items: [
+			{
+				text: 'Email',
+				value: 'email',
+			},
+			{
+				text: 'Courrier',
+				value: 'courrier',
+
+			},
+			{
+				text: 'SMS',
+				value: 'sms',
+			},
+
+			{
+				text: 'Telephone',
+				value: 'telephone',
+			},
+		],
+		overflowLimit: 5,
+		vuetifyOptions: {
+			chip: {
+				color: 'secondary',
+				size: 'large',
+				variant: 'elevated',
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { ChipList },
+			setup() {
+				return { args }
+			},
+			template: `
+			<ChipList
+		:items="args.items"
+		:overflow-limit="args.overflowLimit"
+		:vuetify-options="args.vuetifyOptions"
+	/>
+            `,
+		}
+	},
+}
