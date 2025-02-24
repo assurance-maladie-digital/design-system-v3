@@ -42,6 +42,7 @@
 		displayPrependStateIcon: false,
 		displayAppendStateIcon: false,
 		customIcon: undefined,
+		vuetifyOptions: () => ({}),
 	})
 
 	const options = useCustomizableOptions(config, props)
