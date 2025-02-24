@@ -13,6 +13,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: ['onRemove', 'onReset'] },
 	},
 	argTypes: {
 		'items': {
@@ -105,10 +106,10 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
+<template>
 	<ChipList
-		:items="args.items"
-		:overflow-limit="args.overflowLimit"
+		:items="items"
+		:overflow-limit="overflowLimit"
 	/>
 </template>
                 `,
@@ -116,7 +117,8 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@/components/ChipList/ChipList.vue'
+   import ChipList from '@cnamts/synapse'
+   
 	const items = [
 		{
 			text: 'Email',
@@ -140,9 +142,9 @@ export const Default: Story = {
 			value: 'telephone',
 			state: '',
 		},
-
 	]
-    
+	
+	const overflowLimit = 5
 </script>
                 `,
 			},
@@ -182,7 +184,7 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-			<ChipList
+	<ChipList
 		:items="args.items"
 		:overflow-limit="args.overflowLimit"
 	/>
@@ -197,10 +199,10 @@ export const Success: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
+<template>
 	<ChipList
-		:items="args.items"
-		:overflow-limit="args.overflowLimit"
+		:items="items"
+		:overflow-limit="overflowLimit"
 	/>
 </template>
                 `,
@@ -208,7 +210,8 @@ export const Success: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@/components/ChipList/ChipList.vue'
+   import ChipList from '@cnamts/synapse'
+   
 	const items = [
 		{
 			text: 'Email',
@@ -232,9 +235,9 @@ export const Success: Story = {
 			value: 'telephone',
 			state: 'success',
 		},
-
 	]
-    
+	
+	const overflowLimit = 5
 </script>
                 `,
 			},
@@ -274,7 +277,7 @@ export const Success: Story = {
 				return { args }
 			},
 			template: `
-			<ChipList
+	<ChipList
 		:items="args.items"
 		:overflow-limit="args.overflowLimit"
 	/>
@@ -289,10 +292,10 @@ export const Info: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
+<template>
 	<ChipList
-		:items="args.items"
-		:overflow-limit="args.overflowLimit"
+		:items="items"
+		:overflow-limit="overflowLimit"
 	/>
 </template>
                 `,
@@ -300,7 +303,8 @@ export const Info: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@/components/ChipList/ChipList.vue'
+   import ChipList from '@cnamts/synapse'
+   
 	const items = [
 		{
 			text: 'Email',
@@ -324,9 +328,9 @@ export const Info: Story = {
 			value: 'telephone',
 			state: 'info',
 		},
-
 	]
-    
+	
+	const overflowLimit = 5
 </script>
                 `,
 			},
@@ -366,7 +370,7 @@ export const Info: Story = {
 				return { args }
 			},
 			template: `
-			<ChipList
+	<ChipList
 		:items="args.items"
 		:overflow-limit="args.overflowLimit"
 	/>
@@ -381,10 +385,10 @@ export const Warning: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
+<template>
 	<ChipList
-		:items="args.items"
-		:overflow-limit="args.overflowLimit"
+		:items="items"
+		:overflow-limit="overflowLimit"
 	/>
 </template>
                 `,
@@ -392,7 +396,8 @@ export const Warning: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@/components/ChipList/ChipList.vue'
+   import ChipList from '@cnamts/synapse'
+   
 	const items = [
 		{
 			text: 'Email',
@@ -416,9 +421,9 @@ export const Warning: Story = {
 			value: 'telephone',
 			state: 'warning',
 		},
-
+		
+		const overflowLimit = 5
 	]
-    
 </script>
                 `,
 			},
@@ -458,7 +463,7 @@ export const Warning: Story = {
 				return { args }
 			},
 			template: `
-			<ChipList
+	<ChipList
 		:items="args.items"
 		:overflow-limit="args.overflowLimit"
 	/>
@@ -473,10 +478,10 @@ export const Error: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
+<template>
 	<ChipList
-		:items="args.items"
-		:overflow-limit="args.overflowLimit"
+		:items="items"
+		:overflow-limit="overflowLimit"
 	/>
 </template>
                 `,
@@ -484,7 +489,8 @@ export const Error: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@/components/ChipList/ChipList.vue'
+   import ChipList from '@cnamts/synapse'
+   
 	const items = [
 		{
 			text: 'Email',
@@ -508,9 +514,9 @@ export const Error: Story = {
 			value: 'telephone',
 			state: 'error',
 		},
-
 	]
-    
+	
+	const overflowLimit = 5
 </script>
                 `,
 			},
@@ -550,7 +556,7 @@ export const Error: Story = {
 				return { args }
 			},
 			template: `
-			<ChipList
+	<ChipList
 		:items="args.items"
 		:overflow-limit="args.overflowLimit"
 	/>
@@ -567,12 +573,40 @@ export const ReadOnly: Story = {
 				code: `
 <template>
 	<ChipList
-		:items="args.items"
-		:overflow-limit="args.overflowLimit"
+		:items="items"
+		:overflow-limit="overflowLimit"
 		:readonly="true"
 	/>
 </template>
 				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+   import ChipList from '@cnamts/synapse'
+   
+	const items = [
+		{
+			text: 'Email',
+			value: 'email',
+			state: 'success',
+		},
+		{
+			text: 'SMS',
+			value: 'sms',
+			state: 'error',
+		},
+
+		{
+			text: 'Téléphone',
+			value: 'telephone',
+			state: 'warning',
+		},
+	]
+	
+	const overflowLimit = 5
+</script>
+                `,
 			},
 		],
 	},
@@ -620,12 +654,34 @@ export const CustomResetText: Story = {
 				code: `
 <template>
 	<ChipList
-		:items="args.items"
-		:overflow-limit="args.overflowLimit"
+		:items="items"
+		:overflow-limit="overflowLimit"
 		reset-text="Tout effacer"
 	/>
 </template>
 				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+   import ChipList from '@cnamts/synapse'
+   
+	const items = [
+		{
+			text: 'Email',
+			value: 'email',
+			state: 'success',
+		},
+		{
+			text: 'SMS',
+			value: 'sms',
+			state: 'info'',
+		}
+	]
+	
+	const overflowLimit = 5
+</script>
+                `,
 			},
 		],
 	},
@@ -668,11 +724,45 @@ export const WithOverflow: Story = {
 				code: `
 <template>
 	<ChipList
-		:items="args.items"
+		:items="items"
 		:overflow-limit="3"
 	/>
 </template>
 				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+   import ChipList from '@cnamts/synapse'
+   
+	const items = [
+		{
+			text: 'Email',
+			value: 'email',
+			state: 'success',
+		},
+		{
+			text: 'Courrier',
+			value: 'courrier',
+			state: 'info',
+
+		},
+		{
+			text: 'SMS',
+			value: 'sms',
+			state: 'warning',
+		},
+
+		{
+			text: 'Telephone',
+			value: 'telephone',
+			state: 'error',
+		},
+	]
+	
+	const overflowLimit = 3
+</script>
+                `,
 			},
 		],
 	},
@@ -738,8 +828,8 @@ export const WithEvents: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import ChipList from '@/components/ChipList/ChipList.vue'
-import type { ChipItem } from './types'
+import ChipList from '@cnamts/synapse'
+import type { ChipItem } from '@cnamts/synapse/src/components/ChipList/types'
 
 const items = [
 	{
@@ -849,7 +939,7 @@ export const WithPrependStateIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import ChipList from '@/components/ChipList/ChipList.vue'
+import ChipList from '@cnamts/synapse'
 
 const items = [
 	{
@@ -927,7 +1017,7 @@ export const WithAppendStateIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import ChipList from '@/components/ChipList/ChipList.vue'
+import ChipList from '@cnamts/synapse'
 
 const items = [
 	{
@@ -998,7 +1088,7 @@ export const WithCustomIcon: Story = {
 	<ChipList
 		:items="items"
 		:display-prepend-state-icon="true"
-		:custom-icon="mdiHeart"
+		:custom-icon="mdiAccount"
 	/>
 </template>
 				`,
@@ -1006,8 +1096,8 @@ export const WithCustomIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import ChipList from '@/components/ChipList/ChipList.vue'
-import { mdiStar } from '@mdi/js'
+import ChipList from '@cnamts/synapse'
+import { mdiAccount } from '@mdi/js'
 
 const items = [
 	{
@@ -1076,10 +1166,10 @@ export const Customization: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
+<template>
 	<ChipList
-		:items="args.items"
-		:overflow-limit="args.overflowLimit"
+		:items="items"
+		:overflow-limit="overflowLimit"
 		:vuetify-options="vuetifyOptions"
 	/>
 </template>
@@ -1089,6 +1179,7 @@ export const Customization: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
    import ChipList from '@/components/ChipList/ChipList.vue'
+   
 	const items = [
 		{
 			text: 'Email',
@@ -1110,6 +1201,8 @@ export const Customization: Story = {
 		},
 	]
 	
+	const overflowLimit = 5
+	
 	const vuetifyOptions = {
 		chip: {
 			color: 'secondary',
@@ -1117,7 +1210,6 @@ export const Customization: Story = {
 			variant: 'elevated',
 		}
 	}
-    
 </script>
                 `,
 			},
@@ -1151,7 +1243,7 @@ export const Customization: Story = {
 		overflowLimit: 5,
 		vuetifyOptions: {
 			chip: {
-				color: 'warning',
+				color: 'secondary',
 				size: 'small',
 				variant: 'elevated',
 			},
@@ -1165,10 +1257,10 @@ export const Customization: Story = {
 			},
 			template: `
 			<ChipList
-		:items="args.items"
-		:overflow-limit="args.overflowLimit"
-		:vuetify-options="args.vuetifyOptions"
-	/>
+				:items="args.items"
+				:overflow-limit="args.overflowLimit"
+				:vuetify-options="args.vuetifyOptions"
+			/>
             `,
 		}
 	},
