@@ -32,6 +32,7 @@
 		customIndicatifs: { type: Array as PropType<Indicatif[]>, default: () => [] },
 		useCustomIndicatifsOnly: { type: Boolean, default: false },
 		isValidatedOnBlur: { type: Boolean, default: true },
+		displayAsterisk: { type: Boolean, default: false },
 	})
 
 	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
@@ -133,6 +134,7 @@
 			:label="locales.indicatifLabel"
 			:outlined="outlinedIndicatif"
 			:required="props.countryCodeRequired"
+			:display-asterisk="props.displayAsterisk"
 			class="custom-select"
 			text-key="displayText"
 			value-key="code"
@@ -146,6 +148,7 @@
 			:required="props.required"
 			:rules="validationRules"
 			:variant="outlined ? 'outlined' : 'underlined'"
+			:display-asterisk="props.displayAsterisk"
 			class="phone-field"
 			color="primary"
 			@blur="validateInputOnBlur"

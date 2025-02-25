@@ -1,3 +1,6 @@
+// Regular expressions
+export const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+
 export type ValidationResult = {
 	success?: string
 	error?: string
@@ -100,7 +103,7 @@ export function useFieldValidation() {
 
 			const baseMessages = {
 				success: options.successMessage || 'Le champ est valide.',
-				error: options.message || `Validation échouée pour ${identifier}.`,
+				error: options.message || `Validation pour ${identifier}.`,
 				warning: options.warningMessage || `Attention : ${identifier} peut contenir une erreur.`,
 			}
 
@@ -154,7 +157,7 @@ export function useFieldValidation() {
 
 				case 'email':
 					return createValidationResult(
-						typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+						typeof value === 'string' && EMAIL_REGEXP.test(value),
 						options.message || options.warningMessage || `${identifier} doit être un email valide.`,
 					)
 
