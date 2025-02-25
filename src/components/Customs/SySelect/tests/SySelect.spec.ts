@@ -84,7 +84,7 @@ describe('SySelect.vue', () => {
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const instance = wrapper.vm as any
-		expect(instance.selectedItemText).toBe('')
+		expect(instance.selectedItemText).toBe('Sélectionnez une option')
 	})
 
 	it('returns the correct text when selectedItem is an object', async () => {

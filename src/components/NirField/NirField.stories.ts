@@ -1,4 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
+import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
 import NirField from './NirField.vue'
 
 const meta: Meta<typeof NirField> = {
@@ -51,9 +53,29 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
+		nirTooltipPosition: {
+			description: 'Position de l\'infobulle pour le champ NIR.',
+			control: 'select',
+			options: ['prepend', 'append'],
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
 		keyTooltip: {
 			description: 'Infobulle pour le champ clé.',
 			control: 'text',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		keyTooltipPosition: {
+			description: 'Position de l\'infobulle pour le champ clé.',
+			control: 'select',
+			options: ['prepend', 'append'],
 			table: {
 				type: {
 					summary: 'string',
@@ -118,6 +140,19 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
+		width: {
+			description: 'Définit la largeur du champ NIR. Accepte toute valeur CSS valide (%, px, rem, etc.). Le champ numéro occupera 80% de cette largeur et le champ clé 20%.',
+			control: 'text',
+			default: '100%',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: '100%',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof NirField>
 
@@ -171,32 +206,73 @@ export const Required: Story = {
 		required: true,
 	},
 	parameters: {
-		...Default.parameters,
+		docs: {
+			description: {
+				story: `
+### Champs requis sans astérisque
+
+Cette story montre des champs requis sans astérisque.
+Pour afficher l'astérisque sur des champs requis, il faut activer la prop \`displayAsterisk\`.`,
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-    <template>
-     <NirField
-      v-model="value"
-      :required="true"
-      numberLabel="Numéro de sécurité sociale"
-      keyLabel="Clé"
-      :displayKey="true"
-     />
-    </template>
-    `,
+				code: `<template>
+	<NirField
+		v-model="value"
+		required
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-    <script setup lang="ts">
-     import NirField  from '@cnamts/synapse'
-     import { ref } from 'vue'
-     
-     const value = ref('')
-    </script>
-    `,
+				code: `<script setup lang="ts">
+import { NirField } from '@cnamts/synapse'
+import { ref } from 'vue'
+
+const value = ref('')
+</script>`,
+			},
+		],
+	},
+}
+
+export const RequiredWithAsterisk: Story = {
+	args: {
+		...Default.args,
+		displayAsterisk: true,
+		required: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Champs non requis avec astérisque
+
+Cette story montre que des champs non requis ne peuvent pas avoir d'astérisque.
+Même si \`displayAsterisk\` est à \`true\`, l'astérisque ne s'affichera pas car les champs ne sont pas requis.`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<NirField
+		v-model="value"
+		display-asterisk
+		required
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { NirField } from '@cnamts/synapse'
+import { ref } from 'vue'
+
+const value = ref('')
+</script>`,
 			},
 		],
 	},
@@ -335,13 +411,22 @@ export const CustomRules: Story = {
 	},
 }
 
-export const WithNumberTooltip: Story = {
+export const WithNirTooltip: Story = {
 	args: {
 		...Default.args,
 		nirTooltip: 'Ceci est un tooltip pour le champs numéro de sécurité sociale',
+		nirTooltipPosition: 'prepend',
 	},
 	parameters: {
-		...Default.parameters,
+		docs: {
+			description: {
+				story: `
+### Tooltip sur le champ NIR
+
+Cette story montre l'affichage d'une infobulle sur le champ du numéro de sécurité sociale.
+L'infobulle est positionnée avant le champ et s'affiche au survol de l'icône d'information.`,
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -353,7 +438,8 @@ export const WithNumberTooltip: Story = {
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
       :displayKey="true"
-      nirTooltip="Ceci est un tooltip pour le champs numéro de sécurité sociale"
+      :nirTooltip="'Ceci est un tooltip pour le champs numéro de sécurité sociale'"
+      nirTooltipPosition="prepend"
      />
     </template>
     `,
@@ -377,9 +463,18 @@ export const WithKeyTooltip: Story = {
 	args: {
 		...Default.args,
 		keyTooltip: 'Ceci est un tooltip pour la clef du numéro de sécurité sociale',
+		keyTooltipPosition: 'append',
 	},
 	parameters: {
-		...Default.parameters,
+		docs: {
+			description: {
+				story: `
+### Tooltip sur le champ clé
+
+Cette story montre l'affichage d'une infobulle sur le champ de la clé.
+L'infobulle est positionnée après le champ et s'affiche au survol de l'icône d'information.`,
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -391,7 +486,8 @@ export const WithKeyTooltip: Story = {
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
       :displayKey="true"
-      keyTooltip="Ceci est un tooltip pour la clef du numéro de sécurité sociale"
+      :keyTooltip="'Ceci est un tooltip pour la clef du numéro de sécurité sociale'"
+      keyTooltipPosition="append"
      />
     </template>
     `,
@@ -400,7 +496,7 @@ export const WithKeyTooltip: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField from '@cnamts/synapse'
+     import NirField  from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -409,4 +505,280 @@ export const WithKeyTooltip: Story = {
 			},
 		],
 	},
+}
+
+export const WithWarnings: Story = {
+	args: {
+		...Default.args,
+		showSuccessMessages: false,
+		customNumberWarningRules: [
+			{
+				type: 'custom',
+				options: {
+					message: 'Attention : ce NIR commence par 1 (homme)',
+					warningMessage: 'Attention : ce NIR commence par 1 (homme)',
+					validate: (value: string) => {
+						if (!value) return false
+						// On retourne true si la règle n'est PAS respectée (= warning)
+						return !value.startsWith('1')
+					},
+					isWarning: true,
+				},
+			},
+			{
+				type: 'custom',
+				options: {
+					message: 'Attention : ce NIR commence par 2 (femme)',
+					warningMessage: 'Attention : ce NIR commence par 2 (femme)',
+					validate: (value: string) => {
+						if (!value) return false
+						// On retourne true si la règle n'est PAS respectée (= warning)
+						return !value.startsWith('2')
+					},
+					isWarning: true,
+				},
+			},
+		],
+		customKeyRules: [
+			{
+				type: 'custom',
+				options: {
+					message: 'La clé doit être comprise entre 01 et 97',
+					validate: (value: string) => {
+						if (!value) return true
+						const numValue = parseInt(value)
+						return numValue >= 1 && numValue <= 97
+					},
+				},
+			},
+		],
+		customKeyWarningRules: [
+			{
+				type: 'custom',
+				options: {
+					message: 'Attention : la clé est supérieure à 50',
+					warningMessage: 'Attention : la clé est supérieure à 50',
+					validate: (value: string) => {
+						if (!value) return false
+						const numValue = parseInt(value)
+						// On retourne true si la règle n'est PAS respectée (= warning)
+						return !(numValue > 50)
+					},
+					isWarning: true,
+				},
+			},
+		],
+	},
+	parameters: {
+		...Default.parameters,
+		docs: {
+			description: {
+				story: `
+## Exemple d'utilisation des warnings
+
+Le NirField peut afficher des warnings pour guider l'utilisateur sans bloquer la validation.
+
+### Warnings sur le NIR
+- Un warning s'affiche si le NIR commence par 1 (homme)
+- Un warning s'affiche si le NIR commence par 2 (femme)
+
+### Warnings sur la clé
+- Un warning s'affiche si la clé est supérieure à 50
+- Une erreur s'affiche si la clé n'est pas entre 01 et 97
+
+### Exemples de NIR valides avec warnings :
+- \`1234567891011\` (warning : homme)
+- \`2234567891011\` (warning : femme)
+- Clé \`51\` (warning : clé > 50)
+
+Les warnings sont affichés en jaune avec une icône d'avertissement mais ne bloquent pas la validation.
+Les erreurs sont affichées en rouge et bloquent la validation.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      :required="false"
+      :show-success-messages="true"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :display-key="true"
+      :customNumberWarningRules="[
+        {
+          type: 'custom',
+          options: {
+            message: 'Attention : ce NIR commence par 1 (homme)',
+            warningMessage: 'Attention : ce NIR commence par 1 (homme)',
+            validate: (value) => {
+              if (!value) return false
+              // On retourne true si la règle n'est PAS respectée (= warning)
+              return !value.startsWith('1')
+            },
+            isWarning: true,
+          },
+        },
+        {
+          type: 'custom',
+          options: {
+            message: 'Attention : ce NIR commence par 2 (femme)',
+            warningMessage: 'Attention : ce NIR commence par 2 (femme)',
+            validate: (value) => {
+              if (!value) return false
+              // On retourne true si la règle n'est PAS respectée (= warning)
+              return !value.startsWith('2')
+            },
+            isWarning: true,
+          },
+        },
+      ]"
+      :customKeyRules="[
+        {
+          type: 'custom',
+          options: {
+            message: 'La clé doit être comprise entre 01 et 97',
+            validate: (value) => {
+              if (!value) return true
+              const numValue = parseInt(value)
+              return numValue >= 1 && numValue <= 97
+            },
+          },
+        },
+      ]"
+      :customKeyWarningRules="[
+        {
+          type: 'custom',
+          options: {
+            message: 'Attention : la clé est supérieure à 50',
+            warningMessage: 'Attention : la clé est supérieure à 50',
+            validate: (value) => {
+              if (!value) return false
+              const numValue = parseInt(value)
+              // On retourne true si la règle n'est PAS respectée (= warning)
+              return !(numValue > 50)
+            },
+            isWarning: true,
+          },
+        },
+      ]"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import { NirField } from '@cnamts/synapse'
+     import { ref } from 'vue'
+     
+     const value = ref('')
+    </script>
+    `,
+			},
+		],
+	},
+}
+
+export const FormValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation de formulaire
+
+Cette story montre l'utilisation du NirField dans un formulaire avec validation. Le formulaire :
+- Requiert un NIR valide (13 chiffres)
+- Requiert une clé valide (2 chiffres)
+- Affiche des messages de succès quand les champs sont valides
+- Affiche des messages d'erreur quand les champs sont invalides
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<form @submit.prevent="onSubmit">
+	<NirField
+		v-model="value"
+		label="Numéro de sécurité sociale"
+		required
+		showSuccessMessages
+		ref="nirField"
+	/>
+	<v-btn
+		type="submit"
+		color="primary"
+		class="mt-4"
+	>
+		Valider
+	</v-btn>
+</form>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { NirField } from '@cnamts/synapse'
+
+const value = ref('')
+const nirField = ref()
+
+const onSubmit = async () => {
+	const isValid = await nirField.value?.validateOnSubmit()
+	
+	if (isValid) {
+		alert('Formulaire soumis avec succès !')
+	}
+						else {
+					alert('Formulaire non soumis !')
+				}
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { NirField, VBtn },
+		setup() {
+			const value = ref('')
+			const nirField = ref()
+
+			const onSubmit = async () => {
+				const isValid = await nirField.value?.validateOnSubmit()
+
+				if (isValid) {
+					alert('Formulaire soumis avec succès !')
+				}
+				else {
+					alert('Formulaire non soumis !')
+				}
+			}
+
+			return { args, value, nirField, onSubmit }
+		},
+		template: `
+			<form @submit.prevent="onSubmit">
+				<NirField
+					v-model="value"
+					v-bind="args"
+					label="Numéro de sécurité sociale"
+					required
+					showSuccessMessages
+					ref="nirField"
+				/>
+				<v-btn
+					type="submit"
+					color="primary"
+					class="mt-4"
+				>
+					Valider
+				</v-btn>
+			</form>
+		`,
+	}),
 }

@@ -30,6 +30,7 @@ const meta = {
 			description: 'Permet d\'utiliser uniquement les indicatifs que vous renseignez dans la props customIndicatifs',
 		},
 		isValidatedOnBlur: { control: 'boolean' },
+		displayAsterisk: { control: 'boolean' },
 	},
 } satisfies Meta<typeof PhoneField>
 
@@ -188,6 +189,74 @@ export const Required: Story = {
     />
 				</div>
    `,
+		}
+	},
+}
+
+/**
+ * Story avec champ requis et astérisque.
+ */
+export const RequiredWithAsterisk: Story = {
+	args: {
+		...Default.args,
+		required: true,
+		displayAsterisk: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Version du champ téléphone requis avec un astérisque visuel.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <PhoneField
+    v-model="phoneNumber"
+    required
+    display-asterisk
+  />
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import PhoneField from '@cnamts/synapse'
+
+const phoneNumber = ref('')
+</script>
+        `,
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { PhoneField },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<PhoneField
+						v-model="args.modelValue"
+						:required="args.required"
+						:outlined="args.outlined"
+						:outlinedIndicatif="args.outlinedIndicatif"
+						:withCountryCode="args.withCountryCode"
+						:countryCodeRequired="args.countryCodeRequired"
+						:displayFormat="args.displayFormat"
+						:customIndicatifs="args.customIndicatifs"
+						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
+						:isValidatedOnBlur="args.isValidatedOnBlur"
+						:display-asterisk="args.displayAsterisk"
+					/>
+				</div>
+			`,
 		}
 	},
 }

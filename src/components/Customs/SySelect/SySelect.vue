@@ -13,7 +13,7 @@
 		},
 		label: {
 			type: String,
-			default: '',
+			default: 'Sélectionnez une option',
 		},
 		errorMessages: {
 			type: [String, Array] as PropType<string | readonly string[]>,
@@ -42,6 +42,10 @@
 		valueKey: {
 			type: String,
 			default: 'value',
+		},
+		displayAsterisk: {
+			type: Boolean,
+			default: false,
 		},
 	})
 
@@ -79,7 +83,15 @@
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			return (selectedItem.value as Record<string, any>)[props.textKey]
 		}
-		return props.label
+		return labelWithAsterisk.value
+	})
+
+	const isShouldDisplayAsterisk = computed(() => {
+		return props.displayAsterisk && props.required
+	})
+
+	const labelWithAsterisk = computed(() => {
+		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
 
 	const formattedItems = computed(() => {
@@ -131,16 +143,17 @@
 			ref="input"
 			v-model="selectedItemText"
 			v-click-outside="closeList"
-			title="Sélectionnez une option"
+			:title="labelWithAsterisk"
 			color="primary"
 			tabindex="0"
 			readonly
 			:disabled="disabled"
-			:label="selectedItem ? label : 'Sélectionnez une option'"
-			:aria-label="selectedItem ? label : 'Sélectionnez une option'"
+			:label="labelWithAsterisk"
+			:aria-label="labelWithAsterisk"
 			:error-messages="errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired ? ['Le champ est requis.'] : []"
+			:display-asterisk="displayAsterisk"
 			class="sy-select"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"

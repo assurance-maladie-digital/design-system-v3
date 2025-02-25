@@ -20,6 +20,7 @@ const meta = {
 		textKey: { control: 'text' },
 		valueKey: { control: 'text' },
 		vuetifyOptions: { control: 'object' },
+		displayAsterisk: { control: 'boolean' },
 	},
 } as Meta<typeof SyInputSelect>
 
@@ -142,6 +143,70 @@ export const Required: Story = {
 					<SyInputSelect
 						v-bind="args"
 						:required="args.required"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const RequiredWithAsterisk: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Version du champ de sélection requis avec un astérisque visuel.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyInputSelect
+    v-model="value"
+    :items="items"
+    label="Sélectionnez une option"
+    required
+    display-asterisk
+  />
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import SyInputSelect from '@cnamts/synapse'
+
+const value = ref('')
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+]
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		label: 'Sélectionnez une option',
+		required: true,
+		displayAsterisk: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyInputSelect },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<SyInputSelect
+						v-bind="args"
+						:required="args.required"
+						:display-asterisk="args.displayAsterisk"
 					/>
 				</div>
 			`,

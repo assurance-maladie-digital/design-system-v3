@@ -7,8 +7,12 @@ import { createVuetify } from 'vuetify'
 interface PasswordFieldVM {
 	showEyeIcon: boolean
 	errors: string[]
-	isValidating: boolean
 	validateOnSubmit: () => boolean
+	hasError: boolean
+	hasWarning: boolean
+	hasSuccess: boolean
+	validationIcon: string
+	validationIconColor: string
 }
 
 describe('PasswordField.vue', () => {
@@ -36,7 +40,7 @@ describe('PasswordField.vue', () => {
 		// 2. Cast wrapper.vm as your interface
 		const vm = wrapper.vm as unknown as PasswordFieldVM
 
-		const button = wrapper.find('button')
+		const button = wrapper.find('[role="button"]')
 		expect(vm.showEyeIcon).toBe(false) // from your interface
 		await button.trigger('click')
 		expect(vm.showEyeIcon).toBe(true)
@@ -62,35 +66,160 @@ describe('PasswordField.vue', () => {
 			},
 			props: {
 				required: true,
+				label: 'Password',
 			},
 		})
 		const vm = wrapper.vm as unknown as PasswordFieldVM
 
 		const input = wrapper.find('input')
 		await input.trigger('blur')
-		expect(vm.errors).toContain('Le mot de passe est requis.')
+		expect(vm.errors).toContain('Le mot de passe est requis')
 	})
 
-	it('validates fields on submit and sets validating flag', async () => {
+	it('validates fields on submit', async () => {
 		const wrapper = mount(PasswordField, {
 			global: {
 				plugins: [vuetify],
 			},
 			props: {
 				modelValue: '',
-				outlined: false,
+				variantStyle: 'underlined',
 				required: true,
+				label: 'Password',
 			},
 		})
 		const vm = wrapper.vm as unknown as PasswordFieldVM
 
 		const result = vm.validateOnSubmit()
-		expect(vm.isValidating).toBe(true)
 		expect(result).toBe(false)
+		expect(vm.errors).toContain('Le mot de passe est requis')
 
-		// This awaits the Vue microtask queue to let any reactive data settle
-		await wrapper.vm.$nextTick()
+		// Test avec un mot de passe valide
+		await wrapper.setProps({ modelValue: 'valid-password' })
+		const validResult = vm.validateOnSubmit()
+		expect(validResult).toBe(true)
+		expect(wrapper.emitted().submit).toBeTruthy()
+	})
 
-		expect(vm.errors).toContain('Le mot de passe est requis.')
+	it('displays warning and success messages', async () => {
+		const wrapper = mount(PasswordField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: 'test',
+				warningMessages: ['Attention: mot de passe court'],
+				successMessages: ['Mot de passe valide'],
+			},
+		})
+
+		const messages = wrapper.findAll('.v-messages__message')
+		expect(messages.length).toBe(1) // SyTextField affiche soit les warnings, soit les succès
+		expect(messages[0].text()).toBe('Attention: mot de passe court')
+
+		// Simuler la suppression du warning pour voir le message de succès
+		await wrapper.setProps({ warningMessages: [] })
+		const successMessages = wrapper.findAll('.v-messages__message')
+		expect(successMessages.length).toBe(1)
+		expect(successMessages[0].text()).toBe('Mot de passe valide')
+	})
+
+	it('handles custom validation rules', async () => {
+		const wrapper = mount(PasswordField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: 'test',
+				customRules: [{
+					type: 'custom',
+					options: {
+						message: 'Le mot de passe doit contenir au moins 8 caractères',
+						validate: (value: string) => value.length >= 8,
+					},
+				}],
+				customWarningRules: [{
+					type: 'custom',
+					options: {
+						warningMessage: 'Le mot de passe pourrait être plus fort',
+						validate: (value: string) => /[A-Z]/.test(value),
+					},
+				}],
+				customSuccessRules: [{
+					type: 'custom',
+					options: {
+						successMessage: 'Mot de passe fort',
+						validate: (value: string) => value.length >= 12,
+					},
+				}],
+			},
+		})
+
+		const vm = wrapper.vm as unknown as PasswordFieldVM
+
+		// Forcer la validation initiale
+		await wrapper.find('input').trigger('blur')
+		expect(vm.errors).toContain('Le mot de passe doit contenir au moins 8 caractères')
+
+		// Mettons un mot de passe plus long mais sans majuscule -> warning
+		await wrapper.setProps({ modelValue: 'testpassword' })
+		await wrapper.find('input').trigger('blur')
+		const messages = wrapper.findAll('.v-messages__message')
+		expect(messages[0].text()).toBe('Le mot de passe pourrait être plus fort')
+
+		// Mettons un mot de passe fort -> succès
+		await wrapper.setProps({ modelValue: 'TestPassword123' })
+		await wrapper.find('input').trigger('blur')
+		const successMessages = wrapper.findAll('.v-messages__message')
+		expect(successMessages[0].text()).toBe('Mot de passe fort')
+	})
+
+	it('displays validation states based on validation rules', async () => {
+		const wrapper = mount(PasswordField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: 'test',
+				customRules: [{
+					type: 'custom',
+					options: {
+						message: 'Le mot de passe doit contenir au moins 8 caractères',
+						validate: (value: string) => value.length >= 8,
+					},
+				}],
+				customWarningRules: [{
+					type: 'custom',
+					options: {
+						warningMessage: 'Le mot de passe pourrait être plus fort',
+						validate: (value: string) => /[A-Z]/.test(value),
+					},
+				}],
+				customSuccessRules: [{
+					type: 'custom',
+					options: {
+						successMessage: 'Mot de passe fort',
+						validate: (value: string) => value.length >= 12,
+					},
+				}],
+			},
+		})
+
+		// Forcer la validation initiale
+		await wrapper.find('input').trigger('blur')
+
+		// État d'erreur
+		const vm = wrapper.vm as unknown as PasswordFieldVM
+		expect(vm.hasError).toBe(true)
+
+		// État d'avertissement
+		await wrapper.setProps({ modelValue: 'testpassword' })
+		await wrapper.find('input').trigger('blur')
+		expect(vm.hasWarning).toBe(true)
+
+		// État de succès
+		await wrapper.setProps({ modelValue: 'TestPassword123' })
+		await wrapper.find('input').trigger('blur')
+		expect(vm.hasSuccess).toBe(true)
 	})
 })
