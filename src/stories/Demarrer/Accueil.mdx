@@ -1,10 +1,15 @@
 import {Story, Meta} from '@storybook/blocks';
 import * as AccueilStories from './Accueil.stories';
+import { css } from '@emotion/css';
 
 <Meta of={AccueilStories} />
 
-<Story of={AccueilStories.Header}  />
+<div class={css`position: relative; padding: 4rem; margin: -4rem -4rem 1rem !important;`}>
+    <Story of={AccueilStories.Header} />
+</div>
 
-<p>Au service des équipes-produits de la Caisse Nationale de l’Assurance Maladie, cette boîte à outil met à disposition un ensemble de principes et de composants d’interfaces pour harmoniser et accélérer la fabrication des produits.</p>
+<Story of={AccueilStories.Welcome} />
 
-<Story of={AccueilStories.List}  />
+<Story of={AccueilStories.DesignSystem} />
+
+<Story of={AccueilStories.Guidelines} />

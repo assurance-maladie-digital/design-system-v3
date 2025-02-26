@@ -1,0 +1,15 @@
+<svg width="320" height="180" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="319" height="179" rx="5.5" fill="#F9F9F9" stroke="#C3C3C3"/>
+<rect width="64.5" height="13.851" transform="translate(31 82)" fill="#FDF7E9"/>
+<rect width="64.5" height="13.851" transform="translate(95.5 82)" fill="#FCF0D3"/>
+<rect width="64.5" height="13.851" transform="translate(160 82)" fill="#F0B323"/>
+<rect width="64.5" height="13.851" transform="translate(224.5 82)" fill="#60480E"/>
+<rect width="64.75" height="13.9046" transform="matrix(1 0 0 -1 30 62)" fill="#E5F7F4"/>
+<rect width="64.75" height="13.9046" transform="matrix(1 0 0 -1 94.75 62)" fill="#CCEEE8"/>
+<rect width="64.75" height="13.9046" transform="matrix(1 0 0 -1 159.5 62)" fill="#56C271"/>
+<rect width="64.75" height="13.9046" transform="matrix(1 0 0 -1 224.25 62)" fill="#004439"/>
+<rect width="64" height="14" transform="translate(96 115.925)" fill="#FFE6E3"/>
+<rect width="65" height="14" transform="translate(31 115.925)" fill="#FCEDEB"/>
+<rect width="65" height="14" transform="translate(160 115.925)" fill="#FFCFC7"/>
+<rect width="64" height="14" transform="translate(225 115.925)" fill="#B33F2E"/>
+</svg>
