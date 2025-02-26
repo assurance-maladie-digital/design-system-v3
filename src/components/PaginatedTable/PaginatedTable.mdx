@@ -1,0 +1,54 @@
+import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
+import * as PaginatedTableStories from "./PaginatedTable.stories.ts";
+
+<Meta of={PaginatedTableStories}/>
+
+# PaginatedTable
+
+Le composant `PaginatedTable` est utilisé pour afficher une `VDataTable` de Vuetify avec une pagination persistante.
+
+<Canvas story={{height: '550px'}} of={PaginatedTableStories.Default}/>
+
+# API
+
+<Controls of={PaginatedTableStories.Default}/>
+
+## Utilisation de base
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref, reactive } from 'vue'
+	import { PaginatedTable } from '@cnamts/synapse'
+
+	const options = ref({
+		itemsPerPage: 4,
+		sortBy: [{ key: 'calories', order: 'desc' }],
+	})
+
+	const headers = reactive([
+		{ text: 'Dessert (100g serving)', value: 'name' },
+		{ text: 'Calories', value: 'calories' },
+		{ text: 'Fat (g)', value: 'fat' },
+		{ text: 'Carbs (g)', value: 'carbs' },
+		{ text: 'Protein (g)', value: 'protein' },
+	])
+
+	const desserts = reactive([
+		{ name: 'Frozen Yogurt', calories: 159, fat: 6.0, carbs: 24, protein: 4.0 },
+		{ name: 'Ice cream sandwich', calories: 237, fat: 9.0, carbs: 37, protein: 4.3 },
+		{ name: 'Eclair', calories: 262, fat: 16.0, carbs: 24, protein: 6.0 },
+		{ name: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3 },
+		{ name: 'Gingerbread', calories: 356, fat: 16.0, carbs: 49, protein: 3.9 },
+	])
+</script>
+
+<template>
+	<PaginatedTable
+		v-model:options="options"
+		:headers="headers"
+		:items="desserts"
+	/>
+</template>
+`}
+/>

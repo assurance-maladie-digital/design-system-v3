@@ -7,6 +7,13 @@ import * as SyTextFieldStories from "./SyTextField.stories";
 
 Le composant `SyTextField` est utilisé pour proposer une alternative au `TextField` de Vuetify, conforme au style du Design System et qui respecte les règles d'accessibilité RGAA.
 
+Il étend les fonctionnalités de base de Vuetify avec :
+
+- Un système de validation avancé
+- Des états visuels (erreur, avertissement, succès)
+- Des icônes de validation automatiques
+- Une personnalisation poussée des messages
+
 <Canvas of={SyTextFieldStories.Default} />
 
 
@@ -14,6 +21,20 @@ Le composant `SyTextField` est utilisé pour proposer une alternative au `TextFi
 
 <Controls of={SyTextFieldStories.Default} />
 
+
+
+## Validation
+
+Le composant supporte deux types de validation :
+- Règles d'erreur standard (\`customRules\`)
+- Règles d'avertissement (\`customWarningRules\`)
+
+### États visuels :
+
+Le champ adapte automatiquement son apparence selon son état :
+- Rouge pour les erreurs
+- Orange pour les avertissements
+- Vert pour les succès
 
 # Exemple d'utilisation
 

@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 	import { ref, watch, computed } from 'vue'
 	import DatePicker from '@/components/DatePicker/DatePicker.vue'
-	import { type RuleOptions } from '@/composables'
+	import { type RuleOptions, useFieldValidation } from '@/composables'
+
+	const { parseDate } = useFieldValidation()
 
 	type DateInput = string | null
 	type PeriodValue = { from: DateInput, to: DateInput }
@@ -54,7 +56,7 @@
 			options: {
 				validate: (value: Date | null) => {
 					if (value === null) return true
-					if (tempToDate.value === undefined) return true
+					if (tempToDate.value === undefined || tempToDate.value === null) return true
 					return value <= tempToDate.value
 				},
 				message: 'La date de début ne peut pas être supérieure à la date de fin.',
@@ -93,7 +95,7 @@
 			options: {
 				validate: (value: Date | null) => {
 					if (value === null) return true
-					if (tempFromDate.value === undefined) return true
+					if (tempFromDate.value === undefined || tempFromDate.value === null) return true
 					return value >= tempFromDate.value
 				},
 				message: 'La date de fin ne peut pas être inférieure à la date de début.',
@@ -144,8 +146,8 @@
 	const formattedToDate = computed(() => formatDateValue(internalToDate.value))
 
 	// Computed properties pour les dates temporaires
-	const tempFromDate = computed(() => formattedFromDate.value ? stringToDate(formattedFromDate.value) : undefined)
-	const tempToDate = computed(() => formattedToDate.value ? stringToDate(formattedToDate.value) : undefined)
+	const tempFromDate = computed(() => formattedFromDate.value ? parseDate(formattedFromDate.value, props.format) : undefined)
+	const tempToDate = computed(() => formattedToDate.value ? parseDate(formattedToDate.value, props.format) : undefined)
 
 	// Sets pour optimiser la recherche des erreurs et succès
 	const fromDateErrorsSet = computed(() => new Set(errors.value.filter(error => error.includes('fromDate'))))
@@ -183,8 +185,8 @@
 
 		// Si les deux dates sont renseignées, vérifier qu'elles sont cohérentes
 		if (formattedFromDate.value && formattedToDate.value) {
-			const fromDate = stringToDate(formattedFromDate.value)
-			const toDate = stringToDate(formattedToDate.value)
+			const fromDate = parseDate(formattedFromDate.value, props.format)
+			const toDate = parseDate(formattedToDate.value, props.format)
 			if (!fromDate || !toDate || fromDate > toDate) {
 				return false
 			}
@@ -262,35 +264,6 @@
 		const result = fromDateValid && toDateValid && isValid.value
 
 		return result
-	}
-
-	function stringToDate(dateString: string | null): Date | undefined {
-		if (!dateString) return undefined
-
-		// Créer un mapping des positions des éléments de date selon le format
-		const format = props.format || 'DD/MM/YYYY'
-		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
-		const parts = format.split(separator)
-		const dateParts = dateString.split(separator)
-
-		if (parts.length !== dateParts.length) return undefined
-
-		let day = '', month = '', year = ''
-
-		// Extraire les valeurs selon leur position dans le format
-		parts.forEach((part, index) => {
-			const value = dateParts[index]
-			if (part.includes('DD')) day = value
-			else if (part.includes('MM')) month = value
-			else if (part.includes('YYYY')) year = value
-			else if (part.includes('YY')) year = '20' + value // Assumons que nous sommes au 21ème siècle
-		})
-
-		// Vérifier que nous avons toutes les parties nécessaires
-		if (!day || !month || !year) return undefined
-
-		const date = new Date(`${year}-${month}-${day}`)
-		return isNaN(date.getTime()) ? undefined : date
 	}
 
 	defineExpose({

@@ -1,0 +1,33 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="Accessibilité/Kit de pré-audit/Outils"/>
+
+# Outils
+
+Dans le cadre du pré-audit et de l’audit, il existe des outils automatisés pour vérifier certains critères de conformité en matière d'accessibilité.
+
+Voici les outils requis pour le pré-audit :
+
+1. [**Tanaguru webext RGAA (Extension Firefox)**](https://addons.mozilla.org/fr/firefox/addon/tanaguru-webext/) :
+Tanaguru Webext RGAA est une extension de navigateur conçue pour faciliter l'audit d'accessibilité des sites web selon le **Référentiel Général d'Amélioration de l'Accessibilité (RGAA)**. Elle permet aux utilisateurs de vérifier, directement depuis leur navigateur, la conformité de pages web aux critères d'accessibilité du RGAA, en offrant une évaluation rapide des problèmes d'accessibilité tels que les contrastes, les alternatives textuelles manquantes, la structure des balises HTML, etc. Cette extension fonctionne comme un outil d'audit instantané pour les développeurs et les testeurs d'accessibilité, en affichant directement les erreurs et en proposant des suggestions pour améliorer l'accessibilité du site. Attention, ce service ne permet pas d’évaluer l’ensemble des 106 critères du RGAA, uniquement ceux qui sont automatisable. Sur les 258 tests du RGAA, Tanaguru estime qu’environ 100 tests ne sont pas automatisés.
+2. [**PDF Accessibility Checker (PAC)**](https://pac.pdf-accessibility.org/en) :
+PDF Accessibility Checker (PAC) est un logiciel Windows dédié à l'audit de l'accessibilité des documents PDF. Il permet de vérifier la conformité d'un fichier PDF aux normes d'accessibilité, telles que les WCAG et les directives PDF/UA (PDF Universal Accessibility). PAC analyse la structure du document, y compris les titres, les balises, les liens, les tables et les éléments multimédia, pour s'assurer que le contenu est correctement organisé et peut être interprété par des technologies d'assistance comme les lecteurs d'écran.
+3. [**NVDA (NonVisual Desktop Access)**](https://www.nvda.fr/c2) :
+Lecteur d’écran bureau - NVDA est un lecteur d'écran open-source conçu pour les personnes malvoyantes ou aveugles. Il permet de rendre accessibles les interfaces graphiques des ordinateurs Windows en lisant à haute voix les éléments affichés à l'écran. NVDA prend en charge plusieurs applications et navigateurs web, et il est utilisé pour tester la compatibilité des sites web et des applications avec les technologies d'assistance. Cet outil est particulièrement apprécié pour son accessibilité gratuite et sa capacité à détecter des erreurs de conception qui peuvent nuire à l'expérience des utilisateurs ayant des déficiences visuelles.
+4. (Si pré-audit sur mobile) [**TalkBack**](https://www.notion.so/Pr-audit-web-conformit-l-accessibilit-18c4ee4a529d80e2ab27cadba4829e37?pvs=21) :
+Lecteur d’écran mobile - TalkBack est une fonctionnalité d'accessibilité déjà intégrée aux appareils Android qui fournit des retours vocaux sur les éléments affichés à l'écran. Ce lecteur d'écran permet à l'utilisateur d'interagir avec son appareil sans avoir besoin de visionner l'écran. En utilisant des gestes tactiles spécifiques, l'utilisateur peut naviguer à travers les applications, lire des messages, envoyer des e-mails ou encore interagir avec des contenus multimédia. TalkBack offre également des options de personnalisation pour ajuster la vitesse de la voix, le volume et d'autres paramètres en fonction des besoins de l'utilisateur. Il prend en charge une large gamme de contenus accessibles et est régulièrement mis à jour pour améliorer son efficacité et sa compatibilité avec les dernières versions d'Android. Cet outil est essentiel pour garantir que les utilisateurs en situation de handicap visuel peuvent utiliser pleinement leurs appareils Android.
+
+En complément, voici d’autres outils optionnels qui pourraient vous être utiles :
+
+- [**Assistant RGAA (extension Firefox)**](https://addons.mozilla.org/fr/firefox/addon/assistant-rgaa/) :
+L'Assistant RGAA est un outil français destiné à vérifier la conformité des sites web aux critères d’accessibilité définis par le Référentiel Général d'Amélioration de l'Accessibilité (RGAA). Il permet d’effectuer des audits sur des sites en ligne pour identifier et corriger les problèmes d'accessibilité.
+- [**WAVE (extension Firefox)**](https://addons.mozilla.org/fr/firefox/addon/wave-accessibility-tool/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search) :
+WAVE est un outil d'évaluation de l'accessibilité des sites web. Il analyse les pages pour identifier les erreurs d'accessibilité et fournit des rapports détaillés afin d'aider les développeurs à corriger les problèmes de conformité aux normes d'accessibilité.
+- [**WCAG Contrast Checker (extension Firefox)**](https://addons.mozilla.org/fr/firefox/addon/wcag-contrast-checker/) :
+Un outil en ligne qui permet de vérifier si le contraste entre le texte et son arrière-plan respecte les exigences des WCAG (Web Content Accessibility Guidelines). Il aide à garantir une lisibilité suffisante pour les utilisateurs malvoyants.
+- [**Colour Contrast Analyser**](https://www.tpgi.com/color-contrast-checker/) :
+Outil permettant de tester le contraste des couleurs dans les interfaces numériques pour s'assurer qu'il respecte les normes d'accessibilité, notamment celles des WCAG. Il aide à garantir que le texte est lisible pour les personnes ayant des troubles visuels.
+- [**Stark**](https://www.getstark.co/) :
+Stark est un plugin pour des outils de conception comme Figma, Sketch et Adobe XD. Il permet de tester l'accessibilité des designs, en particulier en vérifiant la conformité du contraste des couleurs et en fournissant des suggestions pour améliorer l'accessibilité visuelle.
+- [**Check-list du designer (de Design Accessible)**](https://design-accessible.fr/checklist) :
+Checklist d'accessibilité disponible sur le site Design Accessible. Elle propose une liste de critères à vérifier pour garantir l’accessibilité des sites web en conformité avec les normes d’accessibilité.

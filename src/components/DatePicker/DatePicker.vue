@@ -6,7 +6,7 @@
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
 
-	type DateValue = string | [string, string]
+	type DateValue = string | [string, string] | null
 	type DateInput = string | string[] | null | object
 
 	const props = withDefaults(defineProps<{
@@ -20,12 +20,14 @@
 		displayRange?: boolean
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
+		displayPrependIcon?: boolean
 		customRules?: { type: string, options: RuleOptions }[]
 		customWarningRules?: { type: string, options: RuleOptions }[]
 		isDisabled?: boolean
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
+		isReadOnly?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -37,25 +39,28 @@
 		displayRange: false,
 		displayIcon: true,
 		displayAppendIcon: false,
+		displayPrependIcon: true,
 		customRules: () => [],
 		customWarningRules: () => [],
 		isDisabled: false,
 		noIcon: false,
 		noCalendar: false,
 		isOutlined: true,
+		isReadOnly: false,
 	})
 
 	const emit = defineEmits<{
 		(e: 'update:model-value', value: DateValue): void
 		(e: 'closed'): void
+		(e: 'focus'): void
+		(e: 'blur'): void
 	}>()
 
 	// Fonction pour parser les dates selon le format spécifié
-	const parseDate = (dateString: string): Date | null => {
+	const parseDate = (dateString: string, format: string = props.format): Date | null => {
 		if (!dateString) return null
 
 		// Créer un mapping des positions des éléments de date selon le format
-		const format = props.format || 'DD/MM/YYYY'
 		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
 		const parts = format.split(separator)
 		const dateParts = dateString.split(separator)
@@ -126,6 +131,22 @@
 	const warningMessages = ref<string[]>([])
 	const displayFormattedDate = ref('')
 
+	const textInputValue = ref<string>('')
+
+	watch(selectedDates, (newValue) => {
+		validateDates()
+		if (props.displayRange) {
+			if (Array.isArray(newValue) && newValue.length >= 2) {
+				isDatePickerVisible.value = false
+				emit('closed')
+			}
+		}
+		else {
+			isDatePickerVisible.value = false
+			emit('closed')
+		}
+	})
+
 	const getMessageClasses = () => ({
 		'dp-width': true,
 		'v-messages__message--success': successMessages.value.length > 0,
@@ -162,6 +183,37 @@
 		return formatDate(selectedDates.value, returnFormat)
 	})
 
+	watch(formattedDate, (newValue) => {
+		if (typeof newValue === 'string') {
+			// Si on a un format de retour différent, on doit convertir la date
+			if (props.dateFormatReturn) {
+				const date = parseDate(newValue, props.dateFormatReturn)
+				if (date) {
+					textInputValue.value = formatDate(date, props.format)
+				}
+			}
+			else {
+				textInputValue.value = newValue
+			}
+		}
+	}, { immediate: true })
+
+	watch(textInputValue, (newValue) => {
+		// Parse la date avec le format d'affichage
+		const date = parseDate(newValue, props.format)
+		if (date) {
+			// Si on a un format de retour, formater la date dans ce format
+			const formattedValue = props.dateFormatReturn
+				? formatDate(date, props.dateFormatReturn)
+				: formatDate(date, props.format)
+			emit('update:model-value', formattedValue)
+		}
+		else {
+			emit('update:model-value', newValue || null)
+		}
+		updateSelectedDates(newValue)
+	})
+
 	// Date(s) formatée(s) en chaîne de caractères pour l'affichage
 	const displayFormattedDateComputed = computed(() => {
 		if (!selectedDates.value) return null
@@ -179,20 +231,15 @@
 		return formatDate(selectedDates.value, props.format)
 	})
 
-	const validateDateValue = (value: string | string[]): DateValue => {
-		if (Array.isArray(value)) {
-			if (value.length >= 2) {
-				return [value[0], value[1]] as [string, string]
-			}
-			return value[0] || ''
-		}
-		return value
-	}
-
-	watch(formattedDate, (newValue) => {
-		const validValue = validateDateValue(newValue)
-		emit('update:model-value', validValue)
-	})
+	// const validateDateValue = (value: DateValue): DateValue => {
+	// 	if (Array.isArray(value)) {
+	// 		if (value.length >= 2) {
+	// 			return [value[0], value[1]] as [string, string]
+	// 		}
+	// 		return value[0] || ''
+	// 	}
+	// 	return value
+	// }
 
 	watch(displayFormattedDateComputed, (newValue) => {
 		if (!props.noCalendar && newValue) {
@@ -219,20 +266,6 @@
 		selectedDates.value = date === null ? null : date
 	}
 
-	watch(selectedDates, (newValue) => {
-		validateDates()
-		if (props.displayRange) {
-			if (Array.isArray(newValue) && newValue.length >= 2) {
-				isDatePickerVisible.value = false
-				emit('closed')
-			}
-		}
-		else {
-			isDatePickerVisible.value = false
-			emit('closed')
-		}
-	})
-
 	// Gestionnaire de clic en dehors
 	const handleClickOutside = (event: MouseEvent) => {
 		if (!isDatePickerVisible.value) return
@@ -245,6 +278,8 @@
 
 		isDatePickerVisible.value = false
 		emit('closed')
+		// Déclencher la validation à la fermeture
+		validateDates()
 	}
 
 	const todayInString = computed(() => {
@@ -257,6 +292,9 @@
 
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
+		if (props.modelValue) {
+			validateDates()
+		}
 		if (selectedDates.value !== null) {
 			validateDates()
 			// Force format application on mount
@@ -334,6 +372,11 @@
 		successMessages.value = []
 		warningMessages.value = []
 
+		if (props.noCalendar) {
+			// En mode no-calendar, on délègue la validation au DateTextInput
+			return
+		}
+
 		const addMessages = (dates, rules) => {
 			dates.forEach((date) => {
 				rules.forEach((rule) => {
@@ -373,10 +416,7 @@
 			}
 		}
 
-		if (
-			props.required
-			&& (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))
-		) {
+		if (props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
 			errorMessages.value.push('La date est requise.')
 		}
 		else if (selectedDates.value) {
@@ -406,18 +446,25 @@
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
-				v-model="displayFormattedDate"
+				v-model="textInputValue"
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:date-format-return="props.dateFormatReturn"
 				:format="props.format"
 				:label="props.placeholder"
 				:placeholder="props.placeholder"
-				:range="props.displayRange"
 				:required="props.required"
-				:rules="props.customRules"
-				:warning-rules="props.customWarningRules"
+				:custom-rules="props.customRules"
+				:custom-warning-rules="props.customWarningRules"
+				:is-disabled="props.isDisabled"
+				:is-read-only="props.isReadOnly"
+				:is-outlined="props.isOutlined"
+				:display-icon="props.displayIcon"
+				:display-append-icon="props.displayAppendIcon"
+				:display-prepend-icon="props.displayPrependIcon"
+				:no-icon="props.noIcon"
 				title="Date text input"
-				@update:model-value="updateSelectedDates"
+				@focus="emit('focus')"
+				@blur="emit('blur')"
 			/>
 		</template>
 		<template v-else>
@@ -427,10 +474,11 @@
 				:append-inner-icon="getIcon()"
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:error-messages="errorMessages"
+				:warning-messages="warningMessages"
+				:success-messages="successMessages"
 				:is-disabled="props.isDisabled"
 				:is-read-only="true"
 				:label="props.placeholder"
-				:messages="warningMessages.length > 0 ? [...warningMessages] : [ ...successMessages]"
 				:no-icon="props.noIcon"
 				:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 				:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
