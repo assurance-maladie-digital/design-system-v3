@@ -217,14 +217,14 @@
 <style lang="scss" scoped>
 .v-enter-active,
 .v-leave-active {
-  interpolate-size: allow-keywords;
-  transition: height 0.2s ease, opacity 0.2s ease;
-  overflow: hidden;
+	interpolate-size: allow-keywords;
+	transition: height 0.2s ease, opacity 0.2s ease;
+	overflow: hidden;
 }
 
 .v-enter-from,
 .v-leave-to {
-  height: 0;
-  opacity: 0;
+	height: 0;
+	opacity: 0;
 }
 </style>
