@@ -147,6 +147,36 @@ const meta: Meta<typeof UploadWorkflow> = {
 				},
 			},
 		},
+		'maxWidth': {
+			description: 'Largeur maximale du composant',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'number | string',
+				},
+				category: 'props',
+			},
+		},
+		'minWidth': {
+			description: 'Largeur minimale du composant',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'number | string',
+				},
+				category: 'props',
+			},
+		},
+		'width': {
+			description: 'Largeur du composant',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'number | string',
+				},
+				category: 'props',
+			},
+		},
 		'onError': {
 			description: 'Événement émis lorsqu\'une erreur survient.',
 			table: {
