@@ -69,6 +69,7 @@
 
 		if (errors.length) {
 			emits('error', errors)
+			return
 		}
 		if (props.multiple) {
 			fileList.value = [...fileList.value, ...validFiles]

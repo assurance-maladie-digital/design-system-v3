@@ -112,6 +112,12 @@
 					>
 						{{ message ?? locales.optionalDocument }}
 					</div>
+					<div
+						v-if="state === 'error'"
+						class="file-item__error-message text-error"
+					>
+						{{ locales.error }}
+					</div>
 				</div>
 			</div>
 			<div class="file-item__actions">
