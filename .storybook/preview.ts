@@ -72,7 +72,7 @@ const preview: Preview = {
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
 					],
-					'Templates',
+					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
 					'Fondamentaux',
 					['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Customisation et thèmes'],
 					'Guidelines', ['Accessibilité', 'Eco-conception', 'Vuetify'],
