@@ -1,10 +1,6 @@
 import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
-import { mdiCheck, mdiLink, mdiClose } from '@mdi/js'
-
-const checkIcon = mdiCheck
-const croixIcon = mdiClose
-const linkICon = mdiLink
+import { checkIcon, linkICon, croixIcon } from '@/constants/icons'
 
 export default {
 	title: 'Composants/Boutons/BackBtn/Usages',
