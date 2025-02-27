@@ -61,6 +61,7 @@ const preview: Preview = {
 					],
 					'Composants',
 					[
+						'Vue d\'ensemble',
 						'Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'],
 						'Layout', ['PageContainer'],
 						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink'],

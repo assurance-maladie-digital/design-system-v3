@@ -48,3 +48,16 @@ pre.prismjs {
 .card-hover:hover {
     background-color: rgba(12, 65, 154, 0.05);
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.img-animate {
+    animation: fadeIn 0.5s ease-in-out;
+}
