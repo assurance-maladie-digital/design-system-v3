@@ -52,7 +52,7 @@ const preview: Preview = {
 			storySort: {
 				order: [
 					'Démarrer',
-					['Accueil', 'Politique de confidentialité'],
+					['Accueil', 'Introduction', 'Politique de confidentialité'],
 					'Accessibilité',
 					[
 						'Introduction',

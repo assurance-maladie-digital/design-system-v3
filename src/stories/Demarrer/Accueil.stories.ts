@@ -94,7 +94,7 @@ export const DesignSystem: StoryObj = {
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/templates-errorpage--docs">
+						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/templates-vue-d-ensemble--docs">
 							  <img src="/.storybook/public/home-card-templates.svg" alt="Templates" class="w-100" />
                               <VCardTitle><b>Templates</b></VCardTitle>
                               <VCardText>Les Templates facilitent la mise en page en proposant des structures prédéfinies garantissant cohérence et efficacité dans la conception des interfaces.</VCardText>
