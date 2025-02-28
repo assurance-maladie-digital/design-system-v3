@@ -37,7 +37,7 @@ export const Header: StoryObj = {
 						  <img alt="line" src="/.storybook/public/home-illustration.svg" width="auto" height="300" class="img-animate" />
 					  </VCol>
 				  </VRow>
-				  <div class="position-absolute right-0" style="bottom: -10px">
+				  <div class="position-absolute" style="right: 60px; bottom: -10px">
 					  <VBtn
 						  aria-label="GitHub"
 						  href="https://github.com/assurance-maladie-digital/design-system-v3"
