@@ -101,7 +101,7 @@ export const DesignSystem: StoryObj = {
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/d%C3%A9marrer-guide-du-dev-cr%C3%A9er-une-issue--creeruneissue">
+						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/guide-du-dev-migration-depuis-bridge--docs">
 							  <img src="/.storybook/public/home-card-dev.svg" alt="Guide du dev" class="w-100" />
                               <VCardTitle><b>Guides du dev</b></VCardTitle>
                               <VCardText>Les Guides du Dev accompagnent les équipes techniques dans l'implémentation du Design System en garantissant une intégration fluide et efficace.</VCardText>
@@ -133,7 +133,7 @@ export const Guidelines: StoryObj = {
 							</VCard>
 						</VCol>
 						<VCol cols="12" md="4">
-							<VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/accessibilit%C3%A9-introduction--docs">
+							<VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/%C3%A9co-conception-introduction--introduction">
 								<img src="/.storybook/public/home-card-eco.svg" alt="Eco-conception" class="w-100"/>
 								<VCardTitle><b>Éco-conception</b></VCardTitle>
 								<VCardText>L'éco-conception vise à réduire l'impact environnemental des interfaces
