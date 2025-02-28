@@ -52,13 +52,19 @@ const preview: Preview = {
 			storySort: {
 				order: [
 					'Démarrer',
-					['Accueil', 'Introduction', 'Politique de confidentialité'],
+					['Accueil', 'Introduction', 'Politique de confidentialité', 'Guide du dev', ['Créer une issue', 'Migration Vue3', 'Migration Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services']],
 					'Accessibilité',
 					[
 						'Introduction',
 						'Aculturation', ['Sensibilisation à l’accessibilité numérique', 'Demander un audit RGAA'],
 						'Kit de pré-audit', ['Introduction', 'Kick-off échantillonnage', 'Outils', 'Pré-audit'],
 					],
+					'Eco-conception',
+					[
+						'Introduction',
+					],
+					'Design Tokens',
+					['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Thème Portail Agent'],
 					'Composants',
 					[
 						'Vue d\'ensemble',
@@ -73,10 +79,7 @@ const preview: Preview = {
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
 					],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
-					'Fondamentaux',
-					['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Customisation et thèmes'],
 					'Guidelines', ['Accessibilité', 'Eco-conception', 'Vuetify'],
-					'Guide du dev', ['Créer une issue', 'Migration Vue3', 'Migration Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
 				],
 			},
 		},

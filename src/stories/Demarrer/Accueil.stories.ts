@@ -80,7 +80,7 @@ export const DesignSystem: StoryObj = {
                   <h3 class="text-h5 font-weight-bold mb-6 text-primary">Design System</h3>
                   <VRow>
                       <VCol cols="12" md="4">
-                          <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/fondamentaux-introduction--docs">
+                          <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/design-tokens-introduction--docs">
 							  <img src="/.storybook/public/home-card-tokens.svg" alt="Design Tokens" class="w-100" />
 							  <VCardTitle><b>Design Tokens</b></VCardTitle>
                               <VCardText>Les Design Tokens fournissent des recommandations claires et des bonnes pratiques pour assurer l'uniformité et la qualité des interfaces numériques.</VCardText>
@@ -101,7 +101,7 @@ export const DesignSystem: StoryObj = {
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/guide-du-dev-cr%C3%A9er-une-issue--creeruneissue">
+						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/d%C3%A9marrer-guide-du-dev-cr%C3%A9er-une-issue--creeruneissue">
 							  <img src="/.storybook/public/home-card-dev.svg" alt="Guide du dev" class="w-100" />
                               <VCardTitle><b>Guides du dev</b></VCardTitle>
                               <VCardText>Les Guides du Dev accompagnent les équipes techniques dans l'implémentation du Design System en garantissant une intégration fluide et efficace.</VCardText>
