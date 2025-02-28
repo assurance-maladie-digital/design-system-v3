@@ -9,7 +9,7 @@ const linkICon = mdiLinkVariant
 const iconAlert = mdiAlertCircleOutline
 
 export default {
-	title: 'Guidelines/Vuetify',
+	title: 'Accessibilité/Vuetify',
 }
 
 export const VuetifyPanel: StoryObj = {
