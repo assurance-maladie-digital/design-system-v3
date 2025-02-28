@@ -1,25 +1,21 @@
 import {Meta, Source} from '@storybook/addon-docs/blocks';
 
-<Meta title="Démarrer/Guide Du Dev/Migration Vue2"/>
+<Meta title="Guide Du Dev/Migration depuis Vue2"/>
 
-# Migrer vers Synapse
+# Migrer de Vue-dot (Vue2) vers Synapse
 
-Ce guide vous explique comment migrer de la version Vue-dot (Vue2) du Design System vers Synapse.
-
-## Vue-dot (Vue2) vers Synapse
-#
-### 1 - Commencer la migration
+## 1 - Commencer la migration
 
 Pour réaliser la migration d'un produit VueJS 2 vers VueJS 3, vous pouvez suivre les étapes suivantes :
 
-- 1.1 - Téléchargez la stack de migration [Starter Kit Synapse](https://gitlab.cnqd.cnamts.fr/human/developpement/SKV3_X).
+- Téléchargez la stack de migration [Starter Kit Synapse](https://gitlab.cnqd.cnamts.fr/human/developpement/SKV3_X).
 
-- 1.2 - Copier les pages de votre projet VueJS 2 dans le dossier pages du projet Starter Kit, les composants peuvent être placés dans le dossier components.
+- Copier les pages de votre projet VueJS 2 dans le dossier pages du projet Starter Kit, les composants peuvent être placés dans le dossier components.
 
-- 1.3 - Identifier les dépendances à conserver dans la nouvelle version, il faut choisir la version vue3 de la librairie et la version Nuxt si elle existe. Ajouter ces dépendances dans le nouveau projet.
+- Identifier les dépendances à conserver dans la nouvelle version, il faut choisir la version vue3 de la librairie et la version Nuxt si elle existe. Ajouter ces dépendances dans le nouveau projet.
 Le package `@cnamts/vue-dot` a été remplacé par `@cnamts/synapse`, le package `vue-i18n` a été remplacé par `@nuxtjs/i18n`.
 
-- 1.4 - Dans le fichier nuxt.config.ts, ajouter le lien vers votre fichier de style global.
+- Dans le fichier nuxt.config.ts, ajouter le lien vers votre fichier de style global.
 
 <Source dark code={`
 // nuxt.config.ts
@@ -34,7 +30,7 @@ export default defineNuxtConfig({
 `}
 />
 
-- 1.5 - Dans le fichier nuxt.config.ts, ajouter les variables de configurations.
+- Dans le fichier nuxt.config.ts, ajouter les variables de configurations.
 
 <Source dark code={`
 // nuxt.config.ts
@@ -72,9 +68,7 @@ Pour utiliser ces variables dans un composant, il faut les importer et les utili
 `}
 />
 
-### 2 - Migration du routeur
-
-2.1 - Mettre à jour le tableau de déclaration des routes vue-router avec la version 4.
+## 2 - Migration du routeur
 
 Dans Nuxt 3, il n’est pas nécessaire de créer un fichier `router/index.ts` comme dans Vue classique. Nuxt 3 utilise un système de routing automatique basé sur les fichiers présents dans le dossier `pages/`.
 Cependant, pour ajouter un router personnalisé, voici comment faire :
@@ -100,9 +94,7 @@ export default router
 
 Voir le [guide de migration de vue-router](https://router.vuejs.org/guide/migration/) pour plus d'informations.
 
-### 3 - Migration des stores VueX vers Pinia
-
-3.1 - Conversion d’un store Vuex en Pinia
+## 3 - Migration des stores VueX vers Pinia
 
 Prenons un exemple de store Vuex :
 
@@ -196,13 +188,13 @@ console.log(counterStore.count)
 
 Nb : pour la persistance des données vous pouvez utiliser le plugin [pinia-plugin-persistedstate](https://prazdevs.github.io/pinia-plugin-persistedstate/).
 
-### 4 - Animations des pages
+## 4 - Animations des pages
 
 Si le projet utilise des transitions de page,
 
-4.1 - Retirer le composant `<transition>` dans le fichier `app.vue`
+- Retirer le composant `<transition>` dans le fichier `app.vue`
 
-4.2 - Configurer une transition de page dans le fichier `nuxt.config.ts`
+- Configurer une transition de page dans le fichier `nuxt.config.ts`
 
 <Source dark code={`
 // nuxt.config.ts
@@ -218,7 +210,7 @@ export default defineNuxtConfig({
 `}
 />
 
-4.3 - Définir le style de la transition dans un fichier de style global.
+- Définir le style de la transition dans un fichier de style global.
 
 <Source dark code={`
 .page-enter-active,
@@ -235,7 +227,7 @@ export default defineNuxtConfig({
 `}
 />
 
-### 5 - Migration de la syntaxe des composants
+## 5 - Migration de la syntaxe des composants
 
 Voir le [guide migration officiel](https://v3-migration.vuejs.org/).
 
@@ -243,13 +235,13 @@ Utilisation du script [vue-class-migrator](https://github.com/getyourguide/vue-c
 
 `vue-class-migrator` est un script permettant de migrer automatiquement les composants vueJs écrient avec `vue-class-component` à la syntaxe native VueJs Option API
 
-5.1 - Supprimer tous les décorateurs personnalisés, ils ne seront pas reconnus par `vue-class-migrator` et causeront l'échec de la migration du composant.
+- Supprimer tous les décorateurs personnalisés, ils ne seront pas reconnus par `vue-class-migrator` et causeront l'échec de la migration du composant.
 
-5.2 - Exécuter la commande `npx vue-class-migrator -d`  à la racine de votre projet.
+- Exécuter la commande `npx vue-class-migrator -d`  à la racine de votre projet.
 
-5.3 - Consulter les logs dans le terminal pour repérer les éventuels composants causant des erreurs et n'ayant pas pu être migré automatiquement.
+- Consulter les logs dans le terminal pour repérer les éventuels composants causant des erreurs et n'ayant pas pu être migré automatiquement.
 
-5.4 - Si vous avez déclaré vos props en tant que mixins dans vos composants en utilisant le helper 'mixin' de `vue-class-componant`, vous devrez les migrer manuellement, les mixins ne sont pas supportés dans la syntaxe native VueJs.
+- Si vous avez déclaré vos props en tant que mixins dans vos composants en utilisant le helper 'mixin' de `vue-class-componant`, vous devrez les migrer manuellement, les mixins ne sont pas supportés dans la syntaxe native VueJs.
 
 <Source dark code={`
 const Props = Vue.extend({
@@ -286,7 +278,7 @@ const Props = defineComponent({
 `}
 />
 
-5.5 - Implémenter les fonctionnalités qui utilisaient des décorateurs retiré à l'étape 1 en utilisant l'option API, des mixins ou des composables.
+- Implémenter les fonctionnalités qui utilisaient des décorateurs retiré à l'étape 1 en utilisant l'option API, des mixins ou des composables.
 
 Par example : la gestion des [tag metas](https://nuxt.com/docs/migration/meta#options-api)
 
@@ -307,7 +299,7 @@ metaInfo(): MetaInfo {
 `}
 />
 
-### 6 - Migration des composants Vuetify
+## 6 - Migration des composants Vuetify
 
 Pour faciliter la migration des composants Vuetify, ce starter kit intègre le plugin [eslint-plugin-vuetify](https://github.com/vuetifyjs/eslint-plugin-vuetify).
 Il permet de faire remonter certains problèmes tels que des props qui n'existent plus ou dont le nom a changé.
@@ -364,11 +356,11 @@ Voici un aperçu des changements qui seront effectués par le script :
 
 Ces changements seront uniquement effectués sur les composants Vuetify.
 
-### 7 - Migration de la localisation
+## 7 - Migration de la localisation
 
 Le plugin `vue-i18n` a été remplacé par [`@nuxtjs/i18n`]( https://v8.i18n.nuxtjs.org/getting-started/basic-usage ).
 
-7.1 - Mettre à jour le fichier `nuxt.config.ts` pour configurer le plugin `@nuxtjs/i18n`.
+- Mettre à jour le fichier `nuxt.config.ts` pour configurer le plugin `@nuxtjs/i18n`.
 
 <Source dark code={`
  modules: [
@@ -381,7 +373,7 @@ Le plugin `vue-i18n` a été remplacé par [`@nuxtjs/i18n`]( https://v8.i18n.nux
 `}
 />
 
-7.2 - Créer un fichier `nuxt-i18n.ts` à la racine du projet, importer les traductions et les configurer.
+- Créer un fichier `nuxt-i18n.ts` à la racine du projet, importer les traductions et les configurer.
 
 <Source dark code={`
 import translationFR from "@/translations/fr";
@@ -396,9 +388,9 @@ export default {
 `}
 />
 
-7.3 - Dans les composants, quand un object est importé avec la fonction `$t`, il faut le remplacer par `$tm`.
+- Dans les composants, quand un object est importé avec la fonction `$t`, il faut le remplacer par `$tm`.
 
-7.4 - Remplacer l'usage du composant `<i18n>` par`<i18n-t>`.
+- Remplacer l'usage du composant `<i18n>` par`<i18n-t>`.
 
 <Source dark code={`
 <i18n path="my.path" tag="p">My default text</i18n>
@@ -414,7 +406,7 @@ Devient :
 
 plus de détails sur la page de [migration vue-i18n](https://vue-i18n.intlify.dev/guide/migration/breaking.html).
 
-### 8 - Migration des tests unitaires et de composants
+## 8 - Migration des tests unitaires et de composants
 
 Les tests unitaires et de composants doivent être mis à jour pour être compatibles avec VueJS 3. Ils utilisent désormais vitest et `@nuxt/test-utils` pour les tests de composants.
 

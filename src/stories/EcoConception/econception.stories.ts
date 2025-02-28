@@ -1,9 +1,9 @@
 import { VExpansionPanels, VExpansionPanel } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
-import { ecoDesignItems } from '@/stories/Guidelines/EcoConception/ecoDesignItems'
+import { ecoDesignItems } from '@/stories/EcoConception/ecoDesignItems'
 
 export default {
-	title: 'Guidelines/Éco-conception',
+	title: 'Éco-conception/Introduction',
 }
 
 export const EcoPanel: StoryObj = {

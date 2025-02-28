@@ -1,7 +1,7 @@
-import SyAlert from '@/components/SyAlert/SyAlert.vue'
+import SyAlert from '../../components/SyAlert/SyAlert.vue'
 
 export default {
-	title: 'Démarrer/Guide Du Dev/Créer une issue',
+	title: 'Démarrer/Créer une issue',
 	component: SyAlert,
 }
 export const Info = {

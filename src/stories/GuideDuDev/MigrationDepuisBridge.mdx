@@ -1,21 +1,19 @@
 import {Meta, Source} from '@storybook/addon-docs/blocks';
 
-<Meta title="Démarrer/Guide Du Dev/Migration Vue3"/>
+<Meta title="Guide Du Dev/Migration depuis Bridge"/>
 
-# Migrer vers Synapse
+# Migrer de Bridge (Vue3) vers Synapse
 
-Ce guide vous explique comment migrer de la version Bridge (Vue3) du Design System vers Synapse.
+## 1 - Commencer la migration
 
-## Bridge (Vue3) vers Synapse
+- Téléchargez la stack de migration [Starter Kit Synapse](https://gitlab.cnqd.cnamts.fr/human/developpement/SKV3_X).
 
-- 1.1 - Téléchargez la stack de migration [Starter Kit Synapse](https://gitlab.cnqd.cnamts.fr/human/developpement/SKV3_X).
+- Transférez les pages de votre projet du Starter Kit Bridge dans le dossier pages du projet Starter Kit Synapse, les composants peuvent être placés dans le dossier components.
 
-- 1.2 - Transférez les pages de votre projet du Starter Kit Bridge dans le dossier pages du projet Starter Kit Synapse, les composants peuvent être placés dans le dossier components.
-
-- 1.3 - Identifier les dépendances à conserver dans la nouvelle version.
+- Identifier les dépendances à conserver dans la nouvelle version.
 Le package `@cnamts/synpase-bridge` a été remplacé par `@cnamts/synapse`.
 
-- 1.4 - Dans le fichier nuxt.config.ts, ajouter le lien vers votre fichier de style global.
+- Dans le fichier nuxt.config.ts, ajouter le lien vers votre fichier de style global.
 
 <Source dark code={`
 // nuxt.config.ts
@@ -30,7 +28,7 @@ export default defineNuxtConfig({
 `}
 />
 
-- 1.5 - Dans le fichier nuxt.config.ts, ajouter les variables de configurations.
+- Dans le fichier nuxt.config.ts, ajouter les variables de configurations.
 
 <Source dark code={`
 // nuxt.config.ts
@@ -68,9 +66,7 @@ Pour utiliser ces variables dans un composant, il faut les importer et les utili
 `}
 />
 
-### 2 - Migration du routeur
-
-2.1 - Mettre à jour le tableau de déclaration des routes vue-router avec la version 4.
+## 2 - Migration du routeur
 
 Dans Nuxt 3, il n’est pas nécessaire de créer un fichier `router/index.ts` comme dans Vue classique. Nuxt 3 utilise un système de routing automatique basé sur les fichiers présents dans le dossier `pages/`.
 Cependant, pour ajouter un router personnalisé, voici comment faire :
@@ -96,9 +92,7 @@ export default router
 
 Voir le [guide de migration de vue-router](https://router.vuejs.org/guide/migration/) pour plus d'informations.
 
-### 3 - Migration des stores VueX vers Pinia
-
-3.1 - Conversion d’un store Vuex en Pinia
+## 3 - Migration des stores VueX vers Pinia
 
 Prenons un exemple de store Vuex :
 
@@ -192,7 +186,7 @@ console.log(counterStore.count)
 
 Nb : pour la persistance des données vous pouvez utiliser le plugin [pinia-plugin-persistedstate](https://prazdevs.github.io/pinia-plugin-persistedstate/).
 
-### 4 - Migration de la syntaxe des composants
+## 4 - Migration de la syntaxe des composants
 
 La grande différence entre la version Bridge et la version Synapse est la syntaxe des composants qui passe de l'option API à la composition API.
 Voir la documentation sur la composition API [ici](https://v3.vuejs.org/guide/composition-api-introduction.html).
@@ -206,7 +200,7 @@ Vue 3 introduit la Composition API qui offre plusieurs avantages :
 
 L'Option API et la Composition API peuvent coexister dans un même projet, mais il est recommandé d'utiliser la composition API pour de meilleures performances et une meilleure organisation du code.
 
-#### 4.1 - Migration des `data()`
+### 4.1 - Migration des `data()`
 
 Avant (Options API) :
 
@@ -239,7 +233,7 @@ const user = reactive({ name: 'John Doe', age: 30 })
 `}
 />
 
-#### 4.2 Migration des `methods`
+### 4.2 Migration des `methods`
 
 Avant (Options API) :
 
@@ -271,7 +265,7 @@ const increment = () => count.value++
 `}
 />
 
-#### 4.3 Migration des `computed`
+### 4.3 Migration des `computed`
 
 Avant (Options API) :
 
@@ -303,7 +297,7 @@ const doubleCount = computed(() => count.value * 2)
 `}
 />
 
-#### 4.4 Migration des `watch`
+### 4.4 Migration des `watch`
 
 Avant (Options API) :
 
@@ -340,7 +334,7 @@ watch(count, (newValue, oldValue) => {
 
 `watch()` fonctionne directement sur une variable réactive.
 
-#### 4.5 - Migration des Hooks de cycle de vie
+### 4.5 - Migration des Hooks de cycle de vie
 
 Avant (Options API) :
 
@@ -377,7 +371,7 @@ onMounted(() => {
 
 On remplace les hooks par `onMounted()`, `onBeforeMount()`, etc.
 
-#### 4.6 - Migration des `props`
+### 4.6 - Migration des `props`
 
 Avant (Options API) :
 
@@ -405,7 +399,7 @@ const props = defineProps({
 `}
 />
 
-#### 4.7 - Migration des `emits`
+### 4.7 - Migration des `emits`
 
 Avant (Options API) :
 

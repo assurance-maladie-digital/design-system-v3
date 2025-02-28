@@ -52,7 +52,7 @@ const preview: Preview = {
 			storySort: {
 				order: [
 					'Démarrer',
-					['Accueil', 'Introduction', 'Politique de confidentialité', 'Guide du dev', ['Créer une issue', 'Migration Vue3', 'Migration Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services']],
+					['Accueil', 'Introduction', 'Politique de confidentialité', 'Créer une issue'],
 					'Accessibilité',
 					[
 						'Introduction',
@@ -79,7 +79,7 @@ const preview: Preview = {
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
 					],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
-					'Guidelines', ['Accessibilité', 'Eco-conception', 'Vuetify'],
+					'Guide du dev', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
 				],
 			},
 		},
