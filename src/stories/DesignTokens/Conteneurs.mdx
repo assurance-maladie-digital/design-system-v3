@@ -1,7 +1,18 @@
-import { Meta } from "@storybook/blocks";
+import { Meta, Story } from "@storybook/blocks";
+import * as ConteneursStories from './Conteneurs.stories';
 
 <Meta title="Design Tokens/Conteneurs de page" />
 
 # Conteneurs de page
 
-Maquettes à mettre à jour
+## Desktop
+
+<Story of={ConteneursStories.Desktop} />
+
+## Tablet
+
+<Story of={ConteneursStories.Tablet} />
+
+## Mobile
+
+<Story of={ConteneursStories.Mobile} />
