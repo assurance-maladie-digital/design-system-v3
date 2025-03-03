@@ -186,7 +186,8 @@
 	watch(formattedDate, (newValue) => {
 		if (!newValue || newValue === '') {
 			textInputValue.value = ''
-		} else if (typeof newValue === 'string') {
+		}
+		else if (typeof newValue === 'string') {
 			// Si on a un format de retour différent, on doit convertir la date
 			if (props.dateFormatReturn) {
 				const date = parseDate(newValue, props.dateFormatReturn)
@@ -448,7 +449,8 @@
 			selectedDates.value = null
 			textInputValue.value = ''
 			displayFormattedDate.value = ''
-		} else {
+		}
+		else {
 			selectedDates.value = initializeSelectedDates(newValue)
 		}
 	}, { immediate: true })
@@ -499,7 +501,7 @@
 				is-clearable
 				title="Date Picker"
 				@focus="isDatePickerVisible = true"
-				@update:modelValue="updateSelectedDates"
+				@update:model-value="updateSelectedDates"
 				@prepend-icon-click="handlePrependIconClick"
 				@append-icon-click="handleAppendIconClick"
 			/>
