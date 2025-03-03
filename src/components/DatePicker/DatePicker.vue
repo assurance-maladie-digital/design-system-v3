@@ -28,6 +28,7 @@
 		noCalendar?: boolean
 		isOutlined?: boolean
 		isReadOnly?: boolean
+		width?: string
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -47,6 +48,7 @@
 		noCalendar: false,
 		isOutlined: true,
 		isReadOnly: false,
+		width: '100%'
 	})
 
 	const emit = defineEmits<{
@@ -153,6 +155,10 @@
 		'v-messages__message--error': errorMessages.value.length > 0,
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
 	})
+
+	const inputStyle = computed(() => ({
+		'min-width': props.width
+	}))
 
 	// Formate une date unique au format spécifié
 	const formatDate = (date: Date, format: string): string => {
@@ -457,7 +463,7 @@
 </script>
 
 <template>
-	<div class="date-picker-container">
+	<div class="date-picker-container" :style="inputStyle">
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
@@ -540,7 +546,7 @@
 }
 
 .dp-width {
-	min-width: 345px;
+	width: v-bind('props.width');
 }
 
 .v-messages__message--success {
@@ -605,11 +611,11 @@
 }
 
 .date-picker-container {
-	max-width: 345px;
+	max-width: 100%;
 	position: relative;
 
 	:deep(.v-date-picker) {
-		width: 345px;
+		max-width: 445px;
 		position: absolute;
 		top: 56px;
 		left: 0;
