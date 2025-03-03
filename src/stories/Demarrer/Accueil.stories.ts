@@ -26,7 +26,7 @@ export const Header: StoryObj = {
 				  <VRow cols="12" style="z-index: 1; position: relative">
 					  <VCol md="6" sm="12">
 						  <h1 class="font-weight-bold text-h4 mb-2">Synapse</h1>
-						  <img alt="line" src="/.storybook/public/home-line.svg" width="120" height="5" class="mb-5" />
+						  <img alt="line" src="/home-line.svg" width="120" height="5" class="mb-5" />
 						  <h2 class="text-h4 mb-5">Documentation d'aide<br/> à la fabrication des IHM<br/>de la CNAM</h2>
 						  <VBtn color="primary" href="/?path=/docs/d%C3%A9marrer-introduction--docs">
 							  Démarrer
@@ -34,7 +34,7 @@ export const Header: StoryObj = {
 						  </VBtn>
 					  </VCol>
 					  <VCol md="6" sm="12" class="d-flex justify-center">
-						  <img alt="line" src="/.storybook/public/home-illustration.svg" width="auto" height="300" class="img-animate" />
+						  <img alt="line" src="/home-illustration.svg" width="auto" height="300" class="img-animate" />
 					  </VCol>
 				  </VRow>
 				  <div class="position-absolute" style="right: 60px; bottom: -10px">
@@ -81,28 +81,28 @@ export const DesignSystem: StoryObj = {
                   <VRow>
                       <VCol cols="12" md="4">
                           <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/design-tokens-introduction--docs">
-							  <img src="/.storybook/public/home-card-tokens.svg" alt="Design Tokens" class="w-100" />
+							  <img src="/home-card-tokens.svg" alt="Design Tokens" class="w-100" />
 							  <VCardTitle><b>Design Tokens</b></VCardTitle>
                               <VCardText>Les Design Tokens fournissent des recommandations claires et des bonnes pratiques pour assurer l'uniformité et la qualité des interfaces numériques.</VCardText>
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
 						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/composants-vue-d-ensemble--docs">
-							  <img src="/.storybook/public/home-card-components.svg" alt="Components" class="w-100" />
+							  <img src="/home-card-components.svg" alt="Components" class="w-100" />
                               <VCardTitle><b>Composants</b></VCardTitle>
                               <VCardText>Les Composants assurent une expérience utilisateur homogène en offrant des éléments réutilisables et standardisés.</VCardText>
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
 						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/templates-vue-d-ensemble--docs">
-							  <img src="/.storybook/public/home-card-templates.svg" alt="Templates" class="w-100" />
+							  <img src="/home-card-templates.svg" alt="Templates" class="w-100" />
                               <VCardTitle><b>Templates</b></VCardTitle>
                               <VCardText>Les Templates facilitent la mise en page en proposant des structures prédéfinies garantissant cohérence et efficacité dans la conception des interfaces.</VCardText>
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
 						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/guide-du-dev-migration-depuis-bridge--docs">
-							  <img src="/.storybook/public/home-card-dev.svg" alt="Guide du dev" class="w-100" />
+							  <img src="/home-card-dev.svg" alt="Guide du dev" class="w-100" />
                               <VCardTitle><b>Guides du dev</b></VCardTitle>
                               <VCardText>Les Guides du Dev accompagnent les équipes techniques dans l'implémentation du Design System en garantissant une intégration fluide et efficace.</VCardText>
                           </VCard>
@@ -125,7 +125,7 @@ export const Guidelines: StoryObj = {
 					<VRow>
 						<VCol cols="12" md="4">
 							<VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/accessibilit%C3%A9-introduction--docs">
-								<img src="/.storybook/public/home-card-access.svg" alt="Accessibilité" class="w-100"/>
+								<img src="/home-card-access.svg" alt="Accessibilité" class="w-100"/>
 								<VCardTitle><b>Accessibilité</b></VCardTitle>
 								<VCardText>L'Accessibilité permet de concevoir des interfaces inclusives respectant les
 									normes d'accessibilité pour une expérience optimale pour tous les utilisateurs.
@@ -134,7 +134,7 @@ export const Guidelines: StoryObj = {
 						</VCol>
 						<VCol cols="12" md="4">
 							<VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/%C3%A9co-conception-introduction--introduction">
-								<img src="/.storybook/public/home-card-eco.svg" alt="Eco-conception" class="w-100"/>
+								<img src="/home-card-eco.svg" alt="Eco-conception" class="w-100"/>
 								<VCardTitle><b>Éco-conception</b></VCardTitle>
 								<VCardText>L'éco-conception vise à réduire l'impact environnemental des interfaces
 									numériques en incluant des pratiques optimales en termes de performance, de
