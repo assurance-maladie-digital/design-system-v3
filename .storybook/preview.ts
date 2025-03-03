@@ -52,15 +52,22 @@ const preview: Preview = {
 			storySort: {
 				order: [
 					'Démarrer',
-					['Accueil', 'Politique de confidentialité'],
+					['Accueil', 'Introduction', 'Politique de confidentialité', 'Créer une issue'],
 					'Accessibilité',
 					[
 						'Introduction',
 						'Aculturation', ['Sensibilisation à l’accessibilité numérique', 'Demander un audit RGAA'],
-						'Kit de pré-audit', ['Introduction', 'Kick-off échantillonnage', 'Outils', 'Pré-audit'],
+						'Kit de pré-audit', ['Introduction', 'Kick-off échantillonnage', 'Outils', ['Introduction', 'Tanaguru'], 'Pré-audit'],
 					],
+					'Éco-conception',
+					[
+						'Introduction',
+					],
+					'Design Tokens',
+					['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Thème Portail Agent'],
 					'Composants',
 					[
+						'Vue d\'ensemble',
 						'Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'],
 						'Layout', ['PageContainer'],
 						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink'],
@@ -71,11 +78,8 @@ const preview: Preview = {
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
 					],
-					'Templates',
-					'Fondamentaux',
-					['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Customisation et thèmes'],
-					'Guidelines', ['Accessibilité', 'Eco-conception', 'Vuetify'],
-					'Guide du dev', ['Créer une issue', 'Migration Vue3', 'Migration Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
+					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
+					'Guide du dev', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
 				],
 			},
 		},
