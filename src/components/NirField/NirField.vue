@@ -25,6 +25,7 @@
 		customNumberRules?: any
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		customKeyRules?: any
+		width?: string
 	}>(), {
 		modelValue: undefined,
 		outlined: true,
@@ -37,6 +38,7 @@
 		showSuccessMessages: false,
 		customNumberRules: [],
 		customKeyRules: [],
+		width: '100%',
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -243,7 +245,7 @@
 </script>
 
 <template>
-	<div class="d-flex align-start">
+	<div class="d-flex align-start sy-container">
 		<v-input
 			ref="vInput"
 			:class="{
@@ -341,6 +343,10 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
+.sy-container {
+	width: v-bind('props.width');
+}
+
 .v-messages__message--success {
 	color: tokens.$colors-border-success !important;
 
@@ -366,11 +372,11 @@
 }
 
 .vd-number-field {
-	max-width: 296px;
+	min-width: 296px;
 }
 
 .vd-key-field {
-	width: 104px;
+	min-width: 104px;
 	flex: none;
 	margin-left: 2%;
 }
