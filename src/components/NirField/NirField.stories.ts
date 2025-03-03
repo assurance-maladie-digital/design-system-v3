@@ -6,7 +6,7 @@ const meta: Meta<typeof NirField> = {
 	component: NirField,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div style="padding:20px; max-width: 600px;"><story/></div>',
 		}),
 	],
 	parameters: {
