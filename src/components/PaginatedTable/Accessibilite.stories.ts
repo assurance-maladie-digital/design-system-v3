@@ -8,7 +8,7 @@ const iconEye = mdiEye
 const linkICon = mdiLink
 
 export default {
-	title: 'Composants/Données/ChipList/Accessibilité',
+	title: 'Composants/Tableaux/PaginatedTable/Accessibilité',
 }
 
 export const AccessibilitePanel: StoryObj = {
@@ -23,7 +23,7 @@ export const AccessibilitePanel: StoryObj = {
 				return { AccessibiliteItemsIndeterminate, AccessibiliteItemsValidated, icon, linkICon, iconEye }
 			},
 			template: `
-<div class="accessibiliteItems" style="display:flex; max-width: none !important;">
+					<div class="accessibiliteItems" style="display:flex; max-width: none !important;">
 				<v-col cols="6">
 					<div style="display:flex; margin-bottom: 10px; justify-content: space-between; align-items: center;">
 						<h5>{{ AccessibiliteItemsIndeterminate.length }} critères à prendre en charge par le projet</h5>
