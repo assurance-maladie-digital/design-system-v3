@@ -30,7 +30,7 @@ describe('DatePicker.vue', () => {
 		expect(wrapper.find('input').attributes('placeholder')).toBe(undefined)
 	})
 
-	it('emits update:model-value event on date selection', async () => {
+	it('emits update:modelValue event on date selection', async () => {
 		const wrapper = mount(DatePicker, {
 			global: {
 				plugins: [vuetify],
@@ -38,7 +38,7 @@ describe('DatePicker.vue', () => {
 		})
 		const input = wrapper.find('input')
 		await input.setValue('01/01/2023')
-		expect(wrapper.emitted('update:model-value')).toBeTruthy()
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 	})
 
 	it('renders the component', () => {
@@ -53,8 +53,8 @@ describe('DatePicker.vue', () => {
 	it('emits the correct formatted date on date selection', async () => {
 		const input = wrapper.find('input')
 		await input.setValue('01/01/2023')
-		expect(wrapper.emitted('update:model-value')).toBeTruthy()
-		expect(wrapper.emitted('update:model-value')[0]).toEqual(['01/01/2023'])
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		expect(wrapper.emitted('update:modelValue')[0]).toEqual(['01/01/2023'])
 	})
 
 	it('toggles the date picker visibility on focus', async () => {
@@ -101,7 +101,7 @@ describe('DatePicker.vue', () => {
 		const input = wrapper.find('input')
 		await input.setValue('invalid date')
 		expect(wrapper.vm.selectedDates).toBeNull()
-		expect(wrapper.emitted('update:model-value')).toBeFalsy()
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
 	})
 
 	it('hides the date picker when at least two dates are selected in range mode', async () => {

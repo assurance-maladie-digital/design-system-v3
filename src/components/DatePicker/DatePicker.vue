@@ -50,7 +50,7 @@
 	})
 
 	const emit = defineEmits<{
-		(e: 'update:model-value', value: DateValue): void
+		(e: 'update:modelValue', value: DateValue): void
 		(e: 'closed'): void
 		(e: 'focus'): void
 		(e: 'blur'): void
@@ -184,7 +184,9 @@
 	})
 
 	watch(formattedDate, (newValue) => {
-		if (typeof newValue === 'string') {
+		if (!newValue || newValue === '') {
+			textInputValue.value = ''
+		} else if (typeof newValue === 'string') {
 			// Si on a un format de retour différent, on doit convertir la date
 			if (props.dateFormatReturn) {
 				const date = parseDate(newValue, props.dateFormatReturn)
@@ -206,10 +208,10 @@
 			const formattedValue = props.dateFormatReturn
 				? formatDate(date, props.dateFormatReturn)
 				: formatDate(date, props.format)
-			emit('update:model-value', formattedValue)
+			emit('update:modelValue', formattedValue)
 		}
 		else {
-			emit('update:model-value', newValue || null)
+			emit('update:modelValue', newValue || null)
 		}
 		updateSelectedDates(newValue)
 	})
@@ -298,7 +300,7 @@
 		if (selectedDates.value !== null) {
 			validateDates()
 			// Force format application on mount
-			emit('update:model-value', formattedDate.value)
+			emit('update:modelValue', formattedDate.value)
 		}
 		if (displayFormattedDateComputed.value) {
 			displayFormattedDate.value = displayFormattedDateComputed.value
@@ -439,6 +441,17 @@
 			return
 		}
 	}
+
+	// Watch sur modelValue pour gérer les changements externes
+	watch(() => props.modelValue, (newValue) => {
+		if (!newValue || newValue === '') {
+			selectedDates.value = null
+			textInputValue.value = ''
+			displayFormattedDate.value = ''
+		} else {
+			selectedDates.value = initializeSelectedDates(newValue)
+		}
+	}, { immediate: true })
 </script>
 
 <template>
@@ -486,7 +499,7 @@
 				is-clearable
 				title="Date Picker"
 				@focus="isDatePickerVisible = true"
-				@update:model-value="updateSelectedDates"
+				@update:modelValue="updateSelectedDates"
 				@prepend-icon-click="handlePrependIconClick"
 				@append-icon-click="handleAppendIconClick"
 			/>
