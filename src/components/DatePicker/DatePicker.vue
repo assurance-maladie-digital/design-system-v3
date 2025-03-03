@@ -28,6 +28,7 @@
 		noCalendar?: boolean
 		isOutlined?: boolean
 		isReadOnly?: boolean
+		width?: string
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -47,10 +48,11 @@
 		noCalendar: false,
 		isOutlined: true,
 		isReadOnly: false,
+		width: '100%',
 	})
 
 	const emit = defineEmits<{
-		(e: 'update:model-value', value: DateValue): void
+		(e: 'update:modelValue', value: DateValue): void
 		(e: 'closed'): void
 		(e: 'focus'): void
 		(e: 'blur'): void
@@ -154,6 +156,10 @@
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
 	})
 
+	const inputStyle = computed(() => ({
+		'min-width': props.width,
+	}))
+
 	// Formate une date unique au format spécifié
 	const formatDate = (date: Date, format: string): string => {
 		if (!date) return ''
@@ -184,7 +190,10 @@
 	})
 
 	watch(formattedDate, (newValue) => {
-		if (typeof newValue === 'string') {
+		if (!newValue || newValue === '') {
+			textInputValue.value = ''
+		}
+		else if (typeof newValue === 'string') {
 			// Si on a un format de retour différent, on doit convertir la date
 			if (props.dateFormatReturn) {
 				const date = parseDate(newValue, props.dateFormatReturn)
@@ -206,10 +215,10 @@
 			const formattedValue = props.dateFormatReturn
 				? formatDate(date, props.dateFormatReturn)
 				: formatDate(date, props.format)
-			emit('update:model-value', formattedValue)
+			emit('update:modelValue', formattedValue)
 		}
 		else {
-			emit('update:model-value', newValue || null)
+			emit('update:modelValue', newValue || null)
 		}
 		updateSelectedDates(newValue)
 	})
@@ -298,7 +307,7 @@
 		if (selectedDates.value !== null) {
 			validateDates()
 			// Force format application on mount
-			emit('update:model-value', formattedDate.value)
+			emit('update:modelValue', formattedDate.value)
 		}
 		if (displayFormattedDateComputed.value) {
 			displayFormattedDate.value = displayFormattedDateComputed.value
@@ -439,10 +448,25 @@
 			return
 		}
 	}
+
+	// Watch sur modelValue pour gérer les changements externes
+	watch(() => props.modelValue, (newValue) => {
+		if (!newValue || newValue === '') {
+			selectedDates.value = null
+			textInputValue.value = ''
+			displayFormattedDate.value = ''
+		}
+		else {
+			selectedDates.value = initializeSelectedDates(newValue)
+		}
+	}, { immediate: true })
 </script>
 
 <template>
-	<div class="date-picker-container">
+	<div
+		class="date-picker-container"
+		:style="inputStyle"
+	>
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
@@ -525,7 +549,7 @@
 }
 
 .dp-width {
-	min-width: 345px;
+	width: v-bind('props.width');
 }
 
 .v-messages__message--success {
@@ -590,11 +614,11 @@
 }
 
 .date-picker-container {
-	max-width: 345px;
+	max-width: 100%;
 	position: relative;
 
 	:deep(.v-date-picker) {
-		width: 345px;
+		max-width: 445px;
 		position: absolute;
 		top: 56px;
 		left: 0;
