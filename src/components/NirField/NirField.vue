@@ -378,7 +378,7 @@
 .vd-key-field {
 	min-width: 104px;
 	flex: none;
-	margin-left: 2%;
+	margin-left: 1rem;
 }
 
 .custom-counter {
