@@ -48,7 +48,7 @@
 		noCalendar: false,
 		isOutlined: true,
 		isReadOnly: false,
-		width: '100%'
+		width: '100%',
 	})
 
 	const emit = defineEmits<{
@@ -157,7 +157,7 @@
 	})
 
 	const inputStyle = computed(() => ({
-		'min-width': props.width
+		'min-width': props.width,
 	}))
 
 	// Formate une date unique au format spécifié
@@ -463,7 +463,10 @@
 </script>
 
 <template>
-	<div class="date-picker-container" :style="inputStyle">
+	<div
+		class="date-picker-container"
+		:style="inputStyle"
+	>
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
