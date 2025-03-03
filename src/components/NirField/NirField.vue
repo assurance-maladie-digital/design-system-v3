@@ -245,7 +245,7 @@
 </script>
 
 <template>
-	<div class="d-flex align-start sy-container">
+	<div class="d-flex align-start nir-container">
 		<v-input
 			ref="vInput"
 			:class="{
@@ -343,7 +343,7 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
-.sy-container {
+.nir-container {
 	width: v-bind('props.width');
 }
 
