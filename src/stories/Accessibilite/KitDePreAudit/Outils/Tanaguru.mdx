@@ -1,0 +1,33 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="Accessibilité/Kit de pré-audit/Outils/Tanaguru"/>
+
+# Utilisation de Tanaguru
+
+**1. Analyse d’une page d’ameli.fr , [https://www.ameli.fr/assure/adresses-et-contacts/l-obtention-d-un-document/obtenir-une-attestation](https://www.ameli.fr/assure/adresses-et-contacts/l-obtention-d-un-document/obtenir-une-attestation)**
+
+<img alt="UtilisationTanaguruEtape1" src={'tanaguruetape1.png'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
+
+**2. Installation de l’extension de navigateur **Tanaguru webext.****
+
+**3. Ouvrir les outils de développement ou faire F12, et aller jusqu’à l’onglet **Tanaguru webtext RGAA4****
+
+<img alt="UtilisationTanaguruEtape2" src={'/tanaguruetape2.png'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
+
+**4. Par défaut, laisser les éléments tel quel, et cochez la case **Statuts invalidés**.**
+
+Cliquez ensuite sur **Analyser cette page**
+
+<img alt="UtilisationTanaguruEtape3" src={'/tanaguruetape3.png'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
+
+**5. Les éléments sur la gauche, correspondent aux thématiques du RGAA**
+
+<img alt="UtilisationTanaguruEtape4" src={'/tanaguruetape4.png'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
+
+**6. Exemple: **Eléments obligatoires** 3 erreurs qui correspondent a plusieurs éléments dans notre page. Dont l’erreur est “**propriété ARIA non autorisées sur leur élément**”.**
+
+On va chercher dans la thématique **Eléments obligatoires** du RGAA, les critères qui pourraient correspondre à l’erreur de Tanaguru.
+
+<img alt="UtilisationTanaguruEtape5" src={'/tanaguruetape5.png'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
+1. La loupe permet de localiser le problème dans le code ( /!\ cet élément n’est pas toujours accessible).
+2. Bou de code ou on retrouve généralement les propriétés ou les éléments en erreur.

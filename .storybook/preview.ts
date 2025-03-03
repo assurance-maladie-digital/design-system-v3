@@ -57,7 +57,7 @@ const preview: Preview = {
 					[
 						'Introduction',
 						'Aculturation', ['Sensibilisation à l’accessibilité numérique', 'Demander un audit RGAA'],
-						'Kit de pré-audit', ['Introduction', 'Kick-off échantillonnage', 'Outils', 'Pré-audit'],
+						'Kit de pré-audit', ['Introduction', 'Kick-off échantillonnage', 'Outils', ['Introduction', 'Tanaguru'], 'Pré-audit'],
 					],
 					'Éco-conception',
 					[
