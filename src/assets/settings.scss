@@ -1,3 +1,13 @@
 @use 'vuetify/settings' with (
 	$body-font-family: Arial,
 );
+
+.v-btn {
+	text-transform: inherit !important;
+	font-weight: 700 !important;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.v-btn.v-tab {
+	text-transform: uppercase !important;
+}
