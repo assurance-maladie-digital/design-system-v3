@@ -109,7 +109,8 @@
     "maska": "^3.0.3",
     "sass-embedded": "^1.83.0",
     "sass-loader": "^16.0.3",
-    "semantic-release": "^24.1.2"
+    "semantic-release": "^24.1.2",
+    "slugify": "^1.6.6"
   },
   "publishConfig": {
     "access": "public"

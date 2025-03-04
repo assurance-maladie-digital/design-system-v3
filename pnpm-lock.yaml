@@ -26,6 +26,9 @@ dependencies:
   semantic-release:
     specifier: ^24.1.2
     version: 24.2.1(typescript@5.4.2)
+  slugify:
+    specifier: ^1.6.6
+    version: 1.6.6
   vuetify:
     specifier: ^3.6.13
     version: 3.7.8(typescript@5.4.2)(vite-plugin-vuetify@2.0.4)(vue@3.5.13)
@@ -1964,7 +1967,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.5.13(typescript@5.4.2)
-      vue-component-type-helpers: 2.2.2
+      vue-component-type-helpers: 2.2.4
     dev: true
 
   /@stylistic/eslint-plugin-ts@2.13.0(eslint@9.19.0)(typescript@5.4.2):
@@ -6182,6 +6185,11 @@ packages:
       is-fullwidth-code-point: 3.0.0
     dev: true
 
+  /slugify@1.6.6:
+    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
+    engines: {node: '>=8.0.0'}
+    dev: false
+
   /source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -7070,8 +7078,8 @@ packages:
     resolution: {integrity: sha512-cYrAnv2me7bPDcg9kIcGwjJiSB6Qyi08+jLDo9yuvoFQjzHiPTzML7RnkJB1+3P6KMsX/KbCD4QE3Tv/knEllw==}
     dev: true
 
-  /vue-component-type-helpers@2.2.2:
-    resolution: {integrity: sha512-6lLY+n2xz2kCYshl59mL6gy8OUUTmkscmDFMO8i7Lj+QKwgnIFUZmM1i/iTYObtrczZVdw7UakPqDTGwVSGaRg==}
+  /vue-component-type-helpers@2.2.4:
+    resolution: {integrity: sha512-F66p0XLbAu92BRz6kakHyAcaUSF7HWpWX/THCqL0TxySSj7z/nok5UUMohfNkkCm1pZtawsdzoJ4p1cjNqCx0Q==}
     dev: true
 
   /vue-docgen-api@4.79.2(vue@3.5.13):

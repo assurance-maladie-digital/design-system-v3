@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
-	import { ref, computed } from 'vue'
-	import type { ChipItem } from './types'
-	import { mdiWindowClose, mdiCheckCircle, mdiAlertCircle, mdiInformationOutline, mdiAlertOutline } from '@mdi/js'
-	import { locales } from './locales'
 	import { config } from '@/components/ChipList/config'
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { mdiAlertCircle, mdiAlertOutline, mdiCheckCircle, mdiInformationOutline, mdiWindowClose } from '@mdi/js'
+	import { computed, ref } from 'vue'
+	import { locales } from './locales'
+	import type { ChipItem, ChipState } from './types'
 
-	type ChipState = 'success' | 'warning' | 'error' | 'info' | ''
-	type NonEmptyChipState = Exclude<ChipState, ''>
+	type NonEmptyChipState = Exclude<ChipState, undefined>
 	type VuetifyVariant = 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
 
 	interface Props extends CustomizableOptions {

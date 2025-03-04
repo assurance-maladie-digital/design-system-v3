@@ -1,7 +1,7 @@
-export type ChipState = 'success' | 'warning' | 'error' | 'info' | ''
+export type ChipState = 'success' | 'warning' | 'error' | 'info' | undefined
 
 export interface ChipItem {
 	text: string
-	value: string
-	state: ChipState
+	value: unknown
+	state?: ChipState
 }

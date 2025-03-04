@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FilterInline > should render correctly 1`] = `"<div data-v-12532412="" class="sy-filters-inline d-flex flex-wrap max-width-none ma-n2"></div>"`;
