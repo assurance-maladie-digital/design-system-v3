@@ -331,11 +331,11 @@ export const FilterCombination: Story = {
 					title: 'Type de dossier',
 					value: [
 						{
-							text: 'AT',
+							title: 'AT',
 							value: 'at',
 						},
 						{
-							text: 'MP',
+							title: 'MP',
 							value: 'mp',
 						},
 					],
@@ -400,7 +400,7 @@ export const FilterCombination: Story = {
 	</template>
 
 	<template #folder="{ props }">
-		<p class="text--secondary">
+		<p class="text-secondary mb-4">
 			Vous pouvez filtrer entre les dossiers de type <b>Arrêt de Travail (AT)</b> et <b>Maladie Professionnelle (MP)</b> ou <b>Autre</b>.
 		</p>
 
@@ -449,7 +449,7 @@ export const FilterCombination: Story = {
 	</template>
 
 	<template #folder="{ props }">
-		<p class="text--secondary">
+		<p class="text-secondary mb-4">
 			Vous pouvez filtrer entre les dossiers de type <b>Arrêt de Travail (AT)</b> et <b>Maladie Professionnelle (MP)</b> ou <b>Autre</b>.
 		</p>
 
@@ -496,11 +496,11 @@ const filters = [
 		title: 'Type de dossier',
 		value: [
 			{
-				text: 'AT',
+				title: 'AT',
 				value: 'at',
 			},
 			{
-				text: 'MP',
+				title: 'MP',
 				value: 'mp',
 			},
 		],
