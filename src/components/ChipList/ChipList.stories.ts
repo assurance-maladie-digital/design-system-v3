@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3'
 import ChipList from './ChipList.vue'
 import { mdiAccount } from '@mdi/js'
 import type { ChipItem } from './types'
@@ -16,7 +16,7 @@ const meta = {
 		controls: { exclude: ['onRemove', 'onReset'] },
 	},
 	argTypes: {
-		'items': {
+		items: {
 			description: 'Liste des éléments à afficher',
 			control: { type: 'object' },
 			table: {
@@ -24,7 +24,7 @@ const meta = {
 				defaultValue: { summary: '[]' },
 			},
 		},
-		'overflowLimit': {
+		overflowLimit: {
 			description: 'Nombre maximum d\'éléments avant débordement',
 			control: { type: 'number', min: 1 },
 			table: {
@@ -32,7 +32,7 @@ const meta = {
 				defaultValue: { summary: '4' },
 			},
 		},
-		'readonly': {
+		readonly: {
 			description: 'Désactive la possibilité de supprimer des éléments',
 			control: { type: 'boolean' },
 			table: {
@@ -40,7 +40,7 @@ const meta = {
 				defaultValue: { summary: 'false' },
 			},
 		},
-		'resetText': {
+		resetText: {
 			description: 'Texte personnalisé pour le bouton de réinitialisation',
 			control: { type: 'text' },
 			table: {
@@ -48,20 +48,19 @@ const meta = {
 				defaultValue: { summary: 'undefined' },
 			},
 		},
-		'onUpdate:items': { table: { disable: true } },
-		'onRemove': {
+		onRemove: {
 			description: 'Événement émis lors de la suppression d\'un élément',
 			table: {
 				type: { summary: '(item: ChipItem) => void' },
 			},
 		},
-		'onReset': {
+		onReset: {
 			description: 'Événement émis lors de la réinitialisation',
 			table: {
 				type: { summary: '() => void' },
 			},
 		},
-		'displayPrependStateIcon': {
+		displayPrependStateIcon: {
 			description: 'Affiche l\'icône d\'état au début du chip',
 			control: { type: 'boolean' },
 			table: {
@@ -69,7 +68,7 @@ const meta = {
 				defaultValue: { summary: 'false' },
 			},
 		},
-		'displayAppendStateIcon': {
+		displayAppendStateIcon: {
 			description: 'Affiche l\'icône d\'état à la fin du chip',
 			control: { type: 'boolean' },
 			table: {
@@ -77,7 +76,7 @@ const meta = {
 				defaultValue: { summary: 'false' },
 			},
 		},
-		'customIcon': {
+		customIcon: {
 			description: 'Icône personnalisée qui remplace l\'icône d\'état',
 			control: { type: 'text' },
 			table: {
@@ -85,7 +84,7 @@ const meta = {
 				defaultValue: { summary: 'undefined' },
 			},
 		},
-		'vuetifyOptions': {
+		vuetifyOptions: {
 			description: 'Options de personnalisation Vuetify',
 			control: { type: 'object' },
 			table: {
@@ -94,7 +93,7 @@ const meta = {
 			},
 		},
 	},
-}
+} satisfies Meta<typeof ChipList>
 
 export default meta
 
@@ -155,24 +154,20 @@ export const Default: Story = {
 			{
 				text: 'Email',
 				value: 'email',
-				state: '',
 			},
 			{
 				text: 'Courrier',
 				value: 'courrier',
-				state: '',
 
 			},
 			{
 				text: 'SMS',
 				value: 'sms',
-				state: '',
 			},
 
 			{
 				text: 'Telephone',
 				value: 'telephone',
-				state: '',
 			},
 		],
 		overflowLimit: 5,
@@ -791,7 +786,6 @@ export const WithOverflow: Story = {
 			{
 				text: 'Notification',
 				value: 'notification',
-				state: '',
 			},
 		],
 		overflowLimit: 3,
@@ -1220,24 +1214,20 @@ export const Customization: Story = {
 			{
 				text: 'Email',
 				value: 'email',
-				state: '',
 			},
 			{
 				text: 'Courrier',
 				value: 'courrier',
-				state: '',
 
 			},
 			{
 				text: 'SMS',
 				value: 'sms',
-				state: '',
 			},
 
 			{
 				text: 'Telephone',
 				value: 'telephone',
-				state: '',
 			},
 		],
 		overflowLimit: 5,

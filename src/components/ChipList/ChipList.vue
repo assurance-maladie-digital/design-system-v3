@@ -9,7 +9,7 @@
 	type NonEmptyChipState = Exclude<ChipState, undefined>
 	type VuetifyVariant = 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
 
-	interface Props extends CustomizableOptions {
+	export interface Props extends CustomizableOptions {
 		items?: ChipItem[]
 		overflowLimit?: number
 		readonly?: boolean
