@@ -4,6 +4,8 @@
     "composite": true,
     "noImplicitAny": false,
     "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "./dist/src",
     "paths": {
       "@/*": [
         "src/*"
@@ -12,7 +14,7 @@
         "./tests/*"
       ]
     },
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
   },
   "include": [
     "dev/**/*",
@@ -23,5 +25,5 @@
     "src/**/*.json",
     "tests/**/*",
     "package.json"
-  ],
+  ]
 }

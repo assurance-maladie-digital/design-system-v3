@@ -66,8 +66,14 @@ export default defineConfig({
 	plugins: [
 		dts({
 			exclude: ['**/*.stories.ts'],
-			staticImport: true,
+			entryRoot: 'src',
+			outDir: 'dist/src',
+			tsconfigPath: 'tsconfig.app.json',
+			rollupTypes: false,
 			insertTypesEntry: true,
+			copyDtsFiles: true,
+			cleanVueFileName: true,
+			aliasesExclude: [/vuetify/]
 		}),
 		vue({
 			template: {
