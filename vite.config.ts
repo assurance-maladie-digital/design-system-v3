@@ -69,9 +69,11 @@ export default defineConfig({
 			entryRoot: 'src',
 			outDir: 'dist/src',
 			tsconfigPath: 'tsconfig.app.json',
-			skipDiagnostics: false,
-			logDiagnostics: true,
-			rollupTypes: false
+			rollupTypes: false,
+			insertTypesEntry: true,
+			copyDtsFiles: true,
+			cleanVueFileName: true,
+			aliasesExclude: [/vuetify/]
 		}),
 		vue({
 			template: {
