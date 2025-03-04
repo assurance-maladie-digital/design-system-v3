@@ -6,16 +6,12 @@ import {Meta, Source} from '@storybook/addon-docs/blocks';
 
 Ce guide décrit comment utiliser le composable `useFieldValidation` pour créer des règles de validation flexibles et personnalisées dans votre projet Vue.js.
 
----
-
 ## Introduction
 
 Le composable `useFieldValidation` vous permet de définir des règles de validation dynamiques pour différents champs dans vos formulaires. Ce composable est conçu pour être flexible, réutilisable et facilement intégrable avec des bibliothèques comme Vuetify.
 
----
-
 ## Structure du composable
-
+#
 ### Type `RuleOptions`
 
 <Source dark code={`
@@ -41,8 +37,6 @@ type ValidationResult = {
 };
 `}
 />
-
----
 
 ## Exemple d'intégration
 
@@ -92,8 +86,6 @@ const handleSubmit = () => {
 
 Vous pouvez retrouver un exemple complet sur le [NirField](/docs/composants-formulaires-nirfield--docs).
 
----
-
 ## Fonctionnalités supportées
 
 - **Validation requise** (`required`) : Assurez-vous qu'un champ est rempli.
@@ -105,14 +97,10 @@ Vous pouvez retrouver un exemple complet sur le [NirField](/docs/composants-form
 - **Validation d'email** (`email`) : Assurez-vous que la valeur est une adresse email valide.
 - **Validation personnalisée** (`custom`) : Implémentez des règles spécifiques via une fonction.
 
----
-
 ## Bonnes pratiques
 
 - **Centralisation** : Centralisez la logique de validation pour garantir une maintenance facile.
 - **Accessibilité** : Vérifiez que les messages d'erreur sont clairs et concis pour tous les utilisateurs.
-
----
 
 ## Conclusion
 
