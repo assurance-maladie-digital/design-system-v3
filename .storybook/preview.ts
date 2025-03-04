@@ -57,7 +57,7 @@ const preview: Preview = {
 					[
 						'Introduction',
 						'Aculturation', ['Sensibilisation à l’accessibilité numérique'],
-						'Kit de pré-audit', ['Introduction', 'Kick-off échantillonnage', 'Pré-audit', 'Outils', ['Introduction', 'Tanaguru']],
+						'Kit de pré-audit', ['Introduction', 'Échantillonnage', 'Pré-audit', 'Outils', ['Introduction', 'Tanaguru']],
 						'Audit', ['RGAA'],
 					],
 					'Éco-conception',
