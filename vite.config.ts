@@ -67,7 +67,7 @@ export default defineConfig({
 		dts({
 			exclude: ['**/*.stories.ts'],
 			entryRoot: 'src',
-			outDir: 'dist/types',
+			outDir: 'dist/src',
 			tsconfigPath: 'tsconfig.app.json',
 			skipDiagnostics: false,
 			logDiagnostics: true,
