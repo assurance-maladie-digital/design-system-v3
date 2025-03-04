@@ -51,10 +51,8 @@ export const AccessibiliteItemsIndeterminate = [
 				expertise: ExpertiseLevelEnum.DEV,
 
 			},
-
 		],
 	},
-
 	{
 		title: 'Catégorie 11 : Formulaires',
 		subtitle: '11.2 Chaque étiquette associée à un champ de formulaire est-elle pertinente (hors cas particuliers) ? ',

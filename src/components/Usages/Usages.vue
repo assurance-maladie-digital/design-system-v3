@@ -3,14 +3,13 @@
 	import { checkIcon, croixIcon } from '@/constants/icons'
 	import { ref } from 'vue'
 
-	const props = withDefaults(defineProps<CustomizableOptions & {
-		itemsToDo?: []
-		itemsNotToDo?: []
+	withDefaults(defineProps<CustomizableOptions & {
+		items1?: string[]
+		items2?: string[]
 
 	}>(), {
-		modelValue: null,
-		itemsToDo: () => [],
-		itemsNotToDo: () => [],
+		items1: undefined,
+		items2: undefined,
 	})
 
 	const iconCheck = ref(checkIcon)
@@ -19,19 +18,18 @@
 </script>
 
 <template>
-	<div
+	<VRow
 		class="mt-8"
 		style="display: flex;justify-content: center;"
 	>
-		<div
+		<VCol
 			cols="12"
 			sm="5"
-			class="m-2 p-2 mr-2 v-col-auto"
-			style="background-color: '#E5F7F4';"
+			class="m-2 p-2 mr-2 v-col-auto check"
 		>
 			<div
-				class="d-flex"
-				style="color: '#004439'; font-weight: 'bold';"
+				style="display: flex;"
+				class="d-flex check-text"
 			>
 				<VIcon :icon="iconCheck" />
 				<p class="font-weight-bold mb-2">
@@ -40,21 +38,22 @@
 			</div>
 			<ul style="font-size: 13px;margin-left: 20px;">
 				<li
-					v-for="(item, index) in itemsToDo"
+					v-for="(item, index) in items1"
 					:key="index"
-				/>
+					style="margin-bottom: 5px;"
+				>
+					<span>
+						{{ item }}
+					</span>
+				</li>
 			</ul>
-		</div>
-		<div
+		</VCol>
+		<VCol
 			cols="12"
 			sm="5"
-			class="m-2 p-2 v-col-auto"
-			style="background-color: '#FCEDEB';"
+			class="m-2 p-2 v-col-auto not-check"
 		>
-			<div
-				class="d-flex"
-				style="color: '#B33F2E'; font-weight: 'bold';"
-			>
+			<div class="d-flex not-check-text">
 				<VIcon :icon="iconCross" />
 				<p class="font-weight-bold mb-2">
 					À ne pas faire
@@ -62,12 +61,35 @@
 			</div>
 			<ul style="font-size: 13px;margin-left: 20px;">
 				<li
-					v-for="(item, index) in props.itemsNotToDo"
+					v-for="(item, index) in items2"
 					:key="index"
-				/>
+					style="margin-bottom: 5px;"
+				>
+					<span>
+						{{ item }}
+					</span>
+				</li>
 			</ul>
-		</div>
-	</div>
+		</VCol>
+	</VRow>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.check {
+	background-color: #e5f7f4;
+
+	.check-text {
+		color: #004439;
+		font-weight: bold;
+	}
+}
+
+.not-check {
+	background: #fcedeb;
+
+	.not-check-text {
+		color: #b33f2e;
+		font-weight: bold;
+	}
+}
+</style>
