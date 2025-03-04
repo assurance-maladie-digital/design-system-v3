@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { mdiInformation, mdiMenuDown } from '@mdi/js'
 	import { ref, watch, onMounted, computed, type PropType } from 'vue'
+	import type { VTextField } from 'vuetify/components'
 
 	const props = defineProps({
 		modelValue: {
@@ -95,6 +96,8 @@
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
+	const input = ref<InstanceType<typeof VTextField> | null>(null)
+
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
 	})
@@ -166,7 +169,7 @@
 		<VList
 			v-if="isOpen"
 			class="v-list"
-			:style="`min-width: ${$refs.input?.$el.offsetWidth}px`"
+			:style="`min-width: ${input?.$el.offsetWidth}px`"
 			@keydown.esc.prevent="isOpen = false"
 		>
 			<VListItem
