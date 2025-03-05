@@ -60,34 +60,29 @@ setup((app, { globals }) => {
 	app.use(vuetify)
     app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
-	// Track if this is initial load
-	let isInitialLoad = true
+	// Apply theme class to <html> (document.documentElement) instead of #root
+	const applyThemeClass = (theme) => {
+		const rootElement = document.documentElement // Always exists
+		rootElement.classList.remove('theme-cnam', 'theme-pa')
+		rootElement.classList.add(`theme-${theme}`)
+	}
 
-	// Update Vuetify theme based on Storybook global theme
-	vuetify.theme.global.name.value = globals.theme
+	// Apply theme immediately on load
+	if (typeof window !== 'undefined') {
+		applyThemeClass(globals.theme)
+	}
 
 	watch(
 		() => globals.theme,
-		async (newTheme) => {
-			console.log(`Switching theme to: ${newTheme}`)
-
-			if (isInitialLoad) {
-				isInitialLoad = false
-				return
-			}
-
-			// Set new theme
+		(newTheme) => {
+			// Update Vuetify theme
 			vuetify.theme.global.name.value = newTheme
 
-			// Update document classes
-			document.documentElement.classList.remove('theme-cnam', 'theme-pa')
-			document.documentElement.classList.add(`theme-${newTheme}`)
+			// Apply the new theme class
+			applyThemeClass(newTheme)
 
 			// Store theme in localStorage
 			localStorage.setItem('storybook-theme', newTheme)
-
-			// Reload the page to apply theme changes
-			window.location.reload()
 		},
 		{ immediate: true },
 	)
