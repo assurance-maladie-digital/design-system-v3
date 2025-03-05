@@ -8,8 +8,14 @@ import { watch } from 'vue'
 import './storybook.css'
 import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
-import { cnamLightTheme, cnamDarkTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
-import { paLightTheme, paDarkTheme, paContextualTokens, paColorsTokens } from '../src/designTokens'
+import {
+	cnamColorsTokens,
+	cnamContextualTokens,
+	cnamLightTheme,
+	paColorsTokens,
+	paContextualTokens,
+	paLightTheme,
+} from '../src/designTokens'
 
 import { createFlattenTheme } from '../src/designTokens/utils'
 
@@ -90,11 +96,13 @@ const globalTypes = {
 		description: 'Switch between CNAM and PA themes',
 		defaultValue: 'cnam',
 		toolbar: {
-			title: 'Theme',
+			title: 'Thèmes',
+			icon: 'paintbrush',
 			items: [
-				{ value: 'cnam', title: 'CNAM Theme', icon: 'user' },
-				{ value: 'pa', title: 'PA Theme', icon: 'user' },
+				{ value: 'cnam', title: 'Thème CNAM' },
+				{ value: 'pa', title: 'Thème PA' },
 			],
+			dynamicTitle: true,
 		},
 	},
 }
