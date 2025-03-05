@@ -85,6 +85,9 @@ setup((app, { globals }) => {
 
 			// Store theme in localStorage
 			localStorage.setItem('storybook-theme', newTheme)
+
+			// Reload the page to apply theme changes
+			window.location.reload()
 		},
 		{ immediate: true },
 	)
@@ -114,12 +117,20 @@ const preview: Preview = {
 	globalTypes,
 	initialGlobals: {
 		theme: storedTheme || 'cnam',
-		vueMdx: {
-			beforeVueAppMount(app): void {
-				app.use(vuetify)
-			},
-		},
 	},
+	decorators: [
+		(story, context) => {
+			// Handle theme changes
+			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
+				vuetify.theme.global.name.value = context.globals.theme
+				document.documentElement.classList.remove('theme-cnam', 'theme-pa')
+				document.documentElement.classList.add(`theme-${context.globals.theme}`)
+				localStorage.setItem('storybook-theme', context.globals.theme)
+				window.location.reload()
+			}
+			return story()
+		},
+	],
 	parameters: {
 		interactions: {
 			disable: true,
