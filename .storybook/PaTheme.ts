@@ -7,11 +7,11 @@ export default create({
 	brandImage: '/logos/logo-pa.svg',
 	brandTarget: '_self',
 
-	colorPrimary: 'rgba(74, 63, 89, 0.5)',
+	colorPrimary: 'rgba(74, 63, 89, 0.7)',
 	colorSecondary: 'rgba(74, 63, 89, 1)',
 
 	// UI
-	appBg: 'rgba(244, 245, 241, 0.7)',
+	appBg: 'rgba(74, 63, 89, 0.05)',
 	appContentBg: 'white',
 	appBorderColor: 'grey',
 	appBorderRadius: 4,
