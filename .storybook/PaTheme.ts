@@ -4,33 +4,33 @@ export default create({
 	base: 'light',
 	brandTitle: 'PA-DS',
 	brandUrl: './',
-	brandImage: 'https://www.assurance-maladie.ameli.fr/themes/custom/ameli_instit/images/logo-assurance-maladie.svg', // TODO: Update with PA logo
+	brandImage: '/logos/logo-pa.svg',
 	brandTarget: '_self',
 
-	colorPrimary: '#0c419a',
-	colorSecondary: '#0c419a',
+	colorPrimary: 'rgba(74, 63, 89, 0.5)',
+	colorSecondary: 'rgba(74, 63, 89, 1)',
 
 	// UI
-	appBg: '#e7ecf5',
+	appBg: 'rgba(244, 245, 241, 0.7)',
 	appContentBg: 'white',
 	appBorderColor: 'grey',
 	appBorderRadius: 4,
 
 	// Text colors
-	textColor: '#0c419a',
+	textColor: '#4A3F59',
 	textInverseColor: 'rgba(255,255,255,0.9)',
 
 	// Toolbar default and active colors
-	barTextColor: '#0c419a',
-	barSelectedColor: '#0c419a',
-	barBg: '#FFFFFF',
+	barTextColor: '#4A3F59',
+	barSelectedColor: '#4A3F59',
+	barBg: 'rgba(244, 245, 241, 0.7)',
 
 	// Form colors
 	inputBg: 'white',
-	inputBorder: '#0c419a',
-	inputTextColor: '#0c419a',
+	inputBorder: 'rgba(74, 63, 89, 1)',
+	inputTextColor: 'rgba(74, 63, 89, 1)',
 	inputBorderRadius: 4,
 
 	// Links colors
-	textMutedColor: '#0c419a',
+	textMutedColor: 'rgba(74, 63, 89, 1)',
 })
