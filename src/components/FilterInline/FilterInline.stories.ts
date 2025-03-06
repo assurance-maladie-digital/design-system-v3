@@ -4,7 +4,6 @@ import { VSelect, VTextField } from 'vuetify/components'
 import PeriodField from '../PeriodField/PeriodField.vue'
 import SearchListField from '../SearchListField/SearchListField.vue'
 import FilterInline from './FilterInline.vue'
-import DatePicker from '../DatePicker/DatePicker.vue'
 import RangeField from '../RangeField/RangeField.vue'
 
 const meta = {
@@ -166,11 +165,12 @@ export const Default: Story = {
 			label="Nom"
 			variant="outlined"
 			hide-details
+			color="primary"
 		/>
 	</template>
 
 	<template #folder="{ props }">
-		<p class="text--secondary">
+		<p class="text-secondary mb-4">
 			Vous pouvez filtrer entre les dossiers de type <b>Arrêt de Travail (AT)</b> et <b>Maladie Professionnelle (MP)</b> ou <b>Autre</b>.
 		</p>
 
@@ -182,6 +182,7 @@ export const Default: Story = {
 			variant="outlined"
 			return-object
 			hide-details
+			color="primary"
 		/>
 	</template>
 
@@ -196,6 +197,7 @@ export const Default: Story = {
 		<SearchListField
 			v-bind="props"
 			:items="professionList"
+			color="primary"
 		/>
 	</template>
 </FilterInline>
@@ -215,11 +217,12 @@ export const Default: Story = {
 			label="Nom"
 			variant="outlined"
 			hide-details
+			color="primary"
 		/>
 	</template>
 
 	<template #folder="{ props }">
-		<p class="text--secondary">
+		<p class="text-secondary mb-4">
 			Vous pouvez filtrer entre les dossiers de type <b>Arrêt de Travail (AT)</b> et <b>Maladie Professionnelle (MP)</b> ou <b>Autre</b>.
 		</p>
 
@@ -231,6 +234,7 @@ export const Default: Story = {
 			variant="outlined"
 			return-object
 			hide-details
+			color="primary"
 		/>
 	</template>
 
@@ -245,6 +249,7 @@ export const Default: Story = {
 		<SearchListField
 			v-bind="props"
 			:items="professionList"
+			color="primary"
 		/>
 	</template>
 </FilterInline>
@@ -264,246 +269,6 @@ const filters = [
 	{
 		name: 'folder',
 		title: 'Type de dossier',
-	},
-	{
-		name: 'period',
-		title: 'Période',
-	},
-	{
-		name: 'profession',
-		title: 'Profession',
-	},
-]
-
-const folderTypes = [
-	{ title: 'Arrêt de Travail (AT)', value: 'AT' },
-	{ title: 'Maladie Professionnelle (MP)', value: 'MP' },
-	{ title: 'Autre', value: 'other' },
-]
-
-const professionList = [
-	{
-		label: 'Chirurgien-dentiste',
-		value: 'chirurgien-dentiste',
-	},
-	{
-		label: 'Infirmier',
-		value: 'infirmier',
-	},
-	{
-		label: 'Orthophoniste',
-		value: 'orthophoniste',
-	},
-	{
-		label: 'Orthoptiste',
-		value: 'orthoptiste',
-	},
-	{
-		label: 'Pédicure-podologue',
-		value: 'pedicure-podologue',
-	},
-	{
-		label: 'Pharmacien',
-		value: 'pharmacien',
-	},
-]
-				`,
-			},
-		],
-	},
-}
-
-export const FilterCombination: Story = {
-	args: {
-		'onUpdate:modelValue': fn(),
-	},
-	render: args => ({
-		components: { FilterInline, VTextField, VSelect, PeriodField, SearchListField },
-		setup() {
-			const filters = [
-				{
-					name: 'name',
-					title: 'Identité',
-					value: 'Dupont Jean',
-				},
-				{
-					name: 'folder',
-					title: 'Type de dossier',
-					value: [
-						{
-							title: 'AT',
-							value: 'at',
-						},
-						{
-							title: 'MP',
-							value: 'mp',
-						},
-					],
-				},
-				{
-					name: 'period',
-					title: 'Période',
-				},
-				{
-					name: 'profession',
-					title: 'Profession',
-				},
-			]
-
-			const folderTypes = [
-				{ title: 'Arrêt de Travail (AT)', value: 'AT' },
-				{ title: 'Maladie Professionnelle (MP)', value: 'MP' },
-				{ title: 'Autre', value: 'other' },
-			]
-
-			const professionList = [
-				{
-					label: 'Chirurgien-dentiste',
-					value: 'chirurgien-dentiste',
-				},
-				{
-					label: 'Infirmier',
-					value: 'infirmier',
-				},
-				{
-					label: 'Orthophoniste',
-					value: 'orthophoniste',
-				},
-				{
-					label: 'Orthoptiste',
-					value: 'orthoptiste',
-				},
-				{
-					label: 'Pédicure-podologue',
-					value: 'pedicure-podologue',
-				},
-				{
-					label: 'Pharmacien',
-					value: 'pharmacien',
-				},
-			]
-
-			return { args, filters, folderTypes, professionList }
-		},
-		template: `
-<FilterInline
-	v-model="filters"
-	v-bind="args"
->
-	<template #name="{ props }">
-		<VTextField
-			v-bind="props"
-			label="Nom"
-			variant="outlined"
-			hide-details
-		/>
-	</template>
-
-	<template #folder="{ props }">
-		<p class="text-secondary mb-4">
-			Vous pouvez filtrer entre les dossiers de type <b>Arrêt de Travail (AT)</b> et <b>Maladie Professionnelle (MP)</b> ou <b>Autre</b>.
-		</p>
-
-		<VSelect
-			v-bind="props"
-			:items="folderTypes"
-			label="Type de dossier"
-			multiple
-			variant="outlined"
-			return-object
-			hide-details
-		/>
-	</template>
-
-	<template #period="{ props }">
-		<PeriodField
-			v-bind="props"
-			variant="outlined"
-		/>
-	</template>
-
-	<template #profession="{ props }">
-		<SearchListField
-			v-bind="props"
-			:items="professionList"
-		/>
-	</template>
-</FilterInline>
-		`,
-	}),
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<FilterInline
-	v-model="filters"
->
-	<template #name="{ props }">
-		<VTextField
-			v-bind="props"
-			label="Nom"
-			variant="outlined"
-			hide-details
-		/>
-	</template>
-
-	<template #folder="{ props }">
-		<p class="text-secondary mb-4">
-			Vous pouvez filtrer entre les dossiers de type <b>Arrêt de Travail (AT)</b> et <b>Maladie Professionnelle (MP)</b> ou <b>Autre</b>.
-		</p>
-
-		<VSelect
-			v-bind="props"
-			:items="folderTypes"
-			label="Type de dossier"
-			multiple
-			variant="outlined"
-			return-object
-			hide-details
-		/>
-	</template>
-
-	<template #period="{ props }">
-		<PeriodField
-			v-bind="props"
-			variant="outlined"
-		/>
-	</template>
-
-	<template #profession="{ props }">
-		<SearchListField
-			v-bind="props"
-			:items="professionList"
-		/>
-	</template>
-</FilterInline>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-import { FilterInline, PeriodField, SearchListField } from '@cnamts/synapse'
-import { VTextField, VSelect } from 'vuetify/components'
-
-const filters = [
-	{
-		name: 'name',
-		title: 'Identité',
-	},
-	{
-		name: 'folder',
-		title: 'Type de dossier',
-		value: [
-			{
-				title: 'AT',
-				value: 'at',
-			},
-			{
-				title: 'MP',
-				value: 'mp',
-			},
-		],
 	},
 	{
 		name: 'period',
@@ -558,20 +323,13 @@ export const ChipFormat: Story = {
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
-		components: { FilterInline, VSelect, DatePicker, RangeField },
+		components: { FilterInline, RangeField },
 		setup() {
 			const filters = [
 				{
-					name: 'updated-at',
-					title: 'Mise à jour',
-				},
-				{
-					name: 'folder',
-					title: 'Type de dossier',
-				},
-				{
 					name: 'range-slider',
 					title: 'Intervalle',
+					value: [0, 50],
 					formatChip: ([min, max]: [number, number]) => [
 						{
 							text: `De ${min} à ${max}`,
@@ -591,25 +349,6 @@ export const ChipFormat: Story = {
 		},
 		template: `
 <FilterInline v-model="filters">
-	<template #updated-at="{ props }">
-		<DatePicker
-			v-bind="props"
-			label="Date de mise à jour"
-			variant="outlined"
-		/>
-	</template>
-
-	<template #folder="{ props }">
-		<VSelect
-			v-bind="props"
-			:items="folderTypes"
-			label="Type de dossier"
-			multiple
-			variant="outlined"
-			hide-details
-		/>
-	</template>
-
 	<template #range-slider="{ props }">
 		<RangeField
 			v-bind="props"	
@@ -625,25 +364,6 @@ export const ChipFormat: Story = {
 				name: 'Template',
 				code: `
 <FiltersInline v-model="filters">
-	<template #updated-at="{ props }">
-		<DatePicker
-			v-bind="props"
-			label="Date de mise à jour"
-			variant="outlined"
-		/>
-	</template>
-
-	<template #folder="{ props }">
-		<VSelect
-			v-bind="props"
-			:items="folderTypes"
-			label="Type de dossier"
-			multiple
-			variant="outlined"
-			hide-details
-		/>
-	</template>
-
 	<template #range-slider="{ props }">
 		<RangeField
 			v-bind="props"
@@ -662,14 +382,6 @@ import { FilterInline, RangeField } from '@cnamts/synapse'
 import { VSelect } from 'vuetify/components'
 
 const filters = [
-	{
-		name: 'updated-at',
-		title: 'Mise à jour',
-	},
-	{
-		name: 'folder',
-		title: 'Type de dossier',
-	},
 	{
 		name: 'range-slider',
 		title: 'Intervalle',
