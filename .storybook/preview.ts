@@ -12,9 +12,11 @@ import {
 	cnamColorsTokens,
 	cnamContextualTokens,
 	cnamLightTheme,
+	cnamDarkTheme,
 	paColorsTokens,
 	paContextualTokens,
 	paLightTheme,
+	paDarkTheme,
 } from '../src/designTokens'
 
 import { createFlattenTheme } from '../src/designTokens/utils'
@@ -29,6 +31,7 @@ const vuetify = createVuetify({
 				dark: false,
 				colors: {
 					...cnamLightTheme,
+					...cnamDarkTheme,
 				},
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
@@ -39,6 +42,7 @@ const vuetify = createVuetify({
 				dark: false,
 				colors: {
 					...paLightTheme,
+					...paDarkTheme,
 				},
 				variables: {
 					'border-color': paColorsTokens.grey.base,

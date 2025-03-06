@@ -83,8 +83,3 @@ pre.prismjs {
 .img-animate {
 	animation: fadeIn 0.5s ease-in-out;
 }
-
-.sidebar-header a {
-	display: block !important;
-	margin: 0 auto !important;
-}

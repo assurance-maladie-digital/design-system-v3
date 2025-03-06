@@ -4,7 +4,7 @@ export default create({
 	base: 'light',
 	brandTitle: 'PA-DS',
 	brandUrl: './',
-	brandImage: '/logos/logo-pa.svg',
+	brandImage: '/logos/logo-pa.png',
 	brandTarget: '_self',
 
 	colorPrimary: 'rgba(74, 63, 89, 0.7)',
