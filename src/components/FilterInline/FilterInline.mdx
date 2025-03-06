@@ -1,0 +1,91 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as FilterInlineStories from './FilterInline.stories.ts';
+
+<Meta of={FilterInlineStories} />
+
+# FilterInline
+
+<Canvas of={FilterInlineStories.Default} />
+
+# API
+
+<Controls of={FilterInlineStories.Default} />
+
+# Examples
+
+## Formatage des puces
+
+Vous pouvez modifier le formatage des puces en utilisant la propriété `chipFormat`.
+
+<Canvas
+	of={FilterInlineStories.ChipFormat}
+		source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { FilterInline, RangeField } from '@cnamts/synapse'
+			import { VSelect } from 'vuetify/components'
+
+			const filters = [
+				{
+					name: 'updated-at',
+					title: 'Mise à jour',
+				},
+				{
+					name: 'folder',
+					title: 'Type de dossier',
+				},
+				{
+					name: 'range-slider',
+					title: 'Intervalle',
+					formatChip: ([min, max]: [number, number]) => [
+						{
+							text: \`De \${min} à \${max}\`,
+							value: [min, max],
+						},
+					],
+				},
+			]
+
+			const folderTypes = [
+				'AT',
+				'MP',
+				'Autre',
+			]
+		</script>
+
+		<template>
+			<FiltersInline v-model="filters">
+				<template #updated-at="{ props }">
+					<DatePicker
+						v-bind="props"
+						label="Date de mise à jour"
+						variant="outlined"
+					/>
+				</template>
+
+				<template #folder="{ props }">
+					<VSelect
+						v-bind="props"
+						:items="folderTypes"
+						label="Type de dossier"
+						multiple
+						variant="outlined"
+						hide-details
+					/>
+				</template>
+
+				<template #range-slider="{ props }">
+					<RangeField
+						v-bind="props"
+						label="Intervalle"
+						max="50"
+						min="0"
+					/>
+				</template>
+			</FiltersInline>
+		</template>
+		`
+	}}
+/>

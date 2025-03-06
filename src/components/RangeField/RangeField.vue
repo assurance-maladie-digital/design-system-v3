@@ -32,10 +32,6 @@
 
 	watch(model, (value) => {
 		if (!Array.isArray(value)) {
-			model.value = [
-				props.min,
-				props.max,
-			]
 			return
 		}
 
