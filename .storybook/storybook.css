@@ -1,8 +1,3 @@
-/* Base styles */
-body {
-	font-family: Arial, sans-serif;
-}
-
 /* Theme-aware styles for CNAM */
 html.theme-cnam {
 	--title-color: #0c419a;
@@ -11,6 +6,7 @@ html.theme-cnam {
 	--hover-color: rgb(12 65 154 / 5%);
 	--button-bg: #0c419a;
 	--button-text: #fff;
+	--body-font-family: 'Arial';
 }
 
 /* Theme-aware styles for PA */
@@ -21,6 +17,12 @@ html.theme-pa {
 	--hover-color: rgb(0 0 145 / 5%);
 	--button-bg: #0062ac;
 	--button-text: #fff;
+	--body-font-family: 'Arial';
+}
+
+/* Base styles */
+body {
+	font-family: var(--body-font-family), sans-serif;
 }
 
 h1.title {
