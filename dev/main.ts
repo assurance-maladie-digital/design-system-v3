@@ -6,7 +6,6 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
-// import { cnamLightTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
 import { cnamLightTheme, cnamDarkTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
 import { createFlattenTheme } from '@/designTokens/utils'
 // import { paLightTheme } from '../designTokens/tokens/pa/paLightTheme'
@@ -31,7 +30,14 @@ const vuetify = createVuetify({
 			},
 			dark: {
 				dark: true,
-				colors: { ...cnamDarkTheme },
+				colors: {
+					...cnamDarkTheme,
+					// ...paLightTheme,
+				},
+				variables: {
+					'border-color': cnamColorsTokens.grey.base,
+					...createFlattenTheme(cnamContextualTokens),
+				},
 			},
 		},
 	},
