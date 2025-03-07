@@ -1,31 +1,32 @@
 import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
-import * as FilterInlineStories from './FilterInline.stories.ts';
-import * as FilterSideBarStories from '@/components/FilterSideBar/FilterSideBar.stories.ts';
+import * as FilterSideBarStories from './FilterSideBar.stories.ts';
 
-<Meta of={FilterInlineStories} />
+<Meta of={FilterSideBarStories} />
 
-# FilterInline
+# FilterSideBar
 
-<Canvas of={FilterInlineStories.Default} />
+Le composant `FilterSideBar` est utilisé pour permettre à l’utilisateur de sélectionner des filtres dans un panel dédié.
+
+<Canvas of={FilterSideBarStories.Default} />
 
 # API
 
-<Controls of={FilterInlineStories.Default} />
+<Controls of={FilterSideBarStories.Default} />
 
-# Examples
+# Exemples
 
 ## Formatage des puces
 
-Vous pouvez modifier le formatage des puces en utilisant la propriété `chipFormat`.
+Vous pouvez modifier le formatage des puces en utilisant la propriété de filtre `chipFormat`.
 
 <Canvas
-	of={FilterInlineStories.ChipFormat}
-		source={{
+	of={FilterSideBarStories.ChipFormat}
+	source={{
 		language: 'html',
 		format: 'dedent',
 		code: `
 		<script lang="ts" setup>
-			import { FilterInline, RangeField } from '@cnamts/synapse'
+			import { FilterSideBar, RangeField } from '@cnamts/synapse'
 			import { VSelect } from 'vuetify/components'
 
 			const filters = [
@@ -43,7 +44,7 @@ Vous pouvez modifier le formatage des puces en utilisant la propriété `chipFor
 		</script>
 
 		<template>
-			<FiltersInline v-model="filters">
+			<FilterSideBar v-model="filters">
 				<template #range-slider="{ props }">
 					<RangeField
 						v-bind="props"
@@ -52,12 +53,11 @@ Vous pouvez modifier le formatage des puces en utilisant la propriété `chipFor
 						min="0"
 					/>
 				</template>
-			</FiltersInline>
+			</FilterSideBar>
 		</template>
 		`
 	}}
 />
-
 
 ## Combinaison de composants filtres
 

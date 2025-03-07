@@ -258,10 +258,11 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `
+import { ref } from 'vue'
 import { FilterInline, PeriodField, SearchListField } from '@cnamts/synapse'
 import { VTextField, VSelect } from 'vuetify/components'
 
-const filters = [
+const filters = ref([
 	{
 		name: 'name',
 		title: 'Identité',
@@ -278,7 +279,7 @@ const filters = [
 		name: 'profession',
 		title: 'Profession',
 	},
-]
+])
 
 const folderTypes = [
 	{ title: 'Arrêt de Travail (AT)', value: 'AT' },
@@ -378,10 +379,11 @@ export const ChipFormat: Story = {
 			{
 				name: 'Script',
 				code: `
+import { ref } from 'vue'
 import { FilterInline, RangeField } from '@cnamts/synapse'
 import { VSelect } from 'vuetify/components'
 
-const filters = [
+const filters = ref([
 	{
 		name: 'range-slider',
 		title: 'Intervalle',
@@ -392,7 +394,7 @@ const filters = [
 			},
 		],
 	},
-]
+])
 
 const folderTypes = [
 	'AT',
