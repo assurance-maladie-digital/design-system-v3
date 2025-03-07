@@ -1,44 +1,10 @@
 import { createApp } from 'vue'
 import Playground from './Playground.vue'
-
 import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
-import { cnamLightTheme, cnamDarkTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
-import { createFlattenTheme } from '@/designTokens/utils'
-// import { paLightTheme } from '../designTokens/tokens/pa/paLightTheme'
-
+import { createVuetifyInstance } from '../.storybook/vuetifyConfig'
 import { router } from './router'
 
-const vuetify = createVuetify({
-	components,
-	directives,
-	theme: {
-		defaultTheme: 'cnam',
-		themes: {
-			cnam: {
-				dark: false,
-				colors: {
-					...cnamLightTheme,
-					...cnamDarkTheme,
-				},
-				variables: {
-					'border-color': cnamColorsTokens.grey.base,
-					...createFlattenTheme(cnamContextualTokens),
-				},
-			},
-		},
-	},
-	icons: {
-		defaultSet: 'mdi',
-		aliases,
-		sets: {
-			mdi,
-		},
-	},
-})
+const vuetify = createVuetifyInstance()
 
 createApp(Playground)
 	.use(vuetify)

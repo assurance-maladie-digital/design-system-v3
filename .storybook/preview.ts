@@ -1,64 +1,11 @@
-import { createVuetify } from 'vuetify'
-import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import 'vuetify/styles'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { watch } from 'vue'
-
 import './storybook.css'
 import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
-import {
-	cnamColorsTokens,
-	cnamContextualTokens,
-	cnamLightTheme,
-	cnamDarkTheme,
-	paColorsTokens,
-	paContextualTokens,
-	paLightTheme,
-	paDarkTheme,
-} from '../src/designTokens'
+import { createVuetifyInstance } from './vuetifyConfig'
 
-import { createFlattenTheme } from '../src/designTokens/utils'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-	theme: {
-		defaultTheme: 'cnam',
-		themes: {
-			cnam: {
-				dark: false,
-				colors: {
-					...cnamLightTheme,
-					...cnamDarkTheme,
-				},
-				variables: {
-					'border-color': cnamColorsTokens.grey.base,
-					...createFlattenTheme(cnamContextualTokens),
-				},
-			},
-			pa: {
-				dark: false,
-				colors: {
-					...paLightTheme,
-					...paDarkTheme,
-				},
-				variables: {
-					'border-color': paColorsTokens.grey.base,
-					...createFlattenTheme(paContextualTokens),
-				},
-			},
-		},
-	},
-	icons: {
-		defaultSet: 'mdi',
-		aliases,
-		sets: {
-			mdi,
-		},
-	},
-})
+const vuetify = createVuetifyInstance()
 
 setup((app, { globals }) => {
 	app.use(vuetify)
