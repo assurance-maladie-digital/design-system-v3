@@ -621,7 +621,7 @@ export const Events: Story = {
 					if (items.length === 0) {
 						return
 					}
-					snackbarText.value = `Le fichier '"${items.at(-1)!.fileName}"' a été ajouté avec succès.'`
+					snackbarText.value = `Le fichier '"${items.at(-1)!.fileName}"' a été ajouté avec succès.`
 					snackbarColor.value = 'success'
 					snackbar.value = true
 				}
@@ -708,7 +708,7 @@ export const Events: Story = {
 		if(items.length === 0) {
 			return
 		}
-		snackbarText.value = \`Le fichier "\${items[0].fileName}" a été ajouté avec succès.'\`;
+		snackbarText.value = \`Le fichier "\${items[0].fileName}" a été ajouté avec succès.\`;
 		snackbarColor.value = 'success';
 		snackbar.value = true
 	}
