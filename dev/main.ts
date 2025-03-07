@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import Playground from './Playground.vue'
 import 'vuetify/styles'
-import { createVuetifyInstance } from '../.storybook/vuetifyConfig'
+import { createVuetifyInstance } from '@/vuetifyConfig'
 import { router } from './router'
 
 const vuetify = createVuetifyInstance()
