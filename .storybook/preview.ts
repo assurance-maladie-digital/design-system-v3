@@ -3,7 +3,7 @@ import { watch } from 'vue'
 import './storybook.css'
 import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
-import { createVuetifyInstance } from './vuetifyConfig'
+import { createVuetifyInstance } from '../src/vuetifyConfig'
 
 const vuetify = createVuetifyInstance()
 

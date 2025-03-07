@@ -25,6 +25,6 @@
     "src/**/*.json",
     "tests/**/*",
     "package.json",
-    ".storybook/vuetifyConfig.ts"
+    "src/vuetifyConfig.ts"
   ]
 }
