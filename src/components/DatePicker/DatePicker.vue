@@ -157,7 +157,7 @@
 	})
 
 	const inputStyle = computed(() => ({
-		'min-width': props.width,
+		'min-width': '100%',
 	}))
 
 	// Formate une date unique au format spécifié
