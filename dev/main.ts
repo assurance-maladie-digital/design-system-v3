@@ -16,23 +16,13 @@ const vuetify = createVuetify({
 	components,
 	directives,
 	theme: {
+		defaultTheme: 'cnam',
 		themes: {
-			light: {
+			cnam: {
 				dark: false,
 				colors: {
 					...cnamLightTheme,
-					// ...paLightTheme,
-				},
-				variables: {
-					'border-color': cnamColorsTokens.grey.base,
-					...createFlattenTheme(cnamContextualTokens),
-				},
-			},
-			dark: {
-				dark: true,
-				colors: {
 					...cnamDarkTheme,
-					// ...paLightTheme,
 				},
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
