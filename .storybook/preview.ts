@@ -7,6 +7,44 @@ import { createVuetifyInstance } from '../src/vuetifyConfig'
 
 const vuetify = createVuetifyInstance()
 
+const cnamStoryOrder = [
+	'Démarrer',
+	['Accueil', 'Introduction', 'Politique de confidentialité', 'Créer une issue'],
+	'Accessibilité',
+	[
+		'Introduction',
+		'Aculturation', ['Sensibilisation à l’accessibilité numérique'],
+		'Kit de pré-audit', ['Introduction', 'Kick-off échantillonnage', 'Pré-audit', 'Outils', ['Introduction', 'Tanaguru']],
+		'Audit', ['RGAA'],
+	],
+	'Éco-conception',
+	[
+		'Introduction',
+	],
+	'Design Tokens',
+	['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Thème Portail Agent'],
+	'Composants',
+	[
+		'Vue d\'ensemble',
+		'Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'],
+		'Layout', ['PageContainer'],
+		'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink'],
+		'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'],
+		'Formulaires', ['SyTextField', 'SySelect', 'SyInputSelect', 'SyBtnSelect', 'DatePicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'SelectBtnField', 'UploadWorkflow', 'SyBtnSelect'],
+		'Tableaux', ['PaginatedTable', 'TableToolbar'],
+		'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
+		'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
+		'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
+	],
+	'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
+	'Guide du dev', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
+]
+
+const paStoryOrder = [
+	'Démarrer',
+	['Accueil', 'Introduction', 'Politique de confidentialité', 'Créer une issue'],
+]
+
 setup((app, { globals }) => {
 	app.use(vuetify)
     app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
@@ -81,41 +119,8 @@ const preview: Preview = {
 		interactions: {
 			disable: true,
 		},
-		options: {
-			storySort: {
-				order: [
-					'Démarrer',
-					['Accueil', 'Introduction', 'Politique de confidentialité', 'Créer une issue'],
-					'Accessibilité',
-					[
-						'Introduction',
-						'Aculturation', ['Sensibilisation à l’accessibilité numérique'],
-						'Kit de pré-audit', ['Introduction', 'Échantillonnage', 'Pré-audit', 'Outils', ['Introduction', 'Tanaguru']],
-						'Audit', ['RGAA'],
-					],
-					'Éco-conception',
-					[
-						'Introduction',
-					],
-					'Design Tokens',
-					['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Thème Portail Agent'],
-					'Composants',
-					[
-						'Vue d\'ensemble',
-						'Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'],
-						'Layout', ['PageContainer'],
-						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink'],
-						'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'],
-						'Formulaires', ['SyTextField', 'SySelect', 'SyInputSelect', 'SyBtnSelect', 'DatePicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'SelectBtnField', 'UploadWorkflow', 'SyBtnSelect'],
-						'Tableaux', ['PaginatedTable', 'TableToolbar'],
-						'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
-						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
-						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
-					],
-					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
-					'Guide du dev', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
-				],
-			},
+		storySort: {
+			order: localStorage.getItem('storybook-theme') === 'pa' ? paStoryOrder : cnamStoryOrder,
 		},
 		controls: {
 			matchers: {
