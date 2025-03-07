@@ -28,6 +28,7 @@ export const createVuetifyInstance = () => createVuetify({
 				},
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
+					'font-family': '"Arial", sans-serif',
 					...createFlattenTheme(cnamContextualTokens),
 				},
 			},
@@ -39,6 +40,7 @@ export const createVuetifyInstance = () => createVuetify({
 				},
 				variables: {
 					'border-color': paColorsTokens.grey.base,
+					'font-family': '"Arial", sans-serif',
 					...createFlattenTheme(paContextualTokens),
 				},
 			},
