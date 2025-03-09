@@ -40,7 +40,7 @@ export const createVuetifyInstance = () => createVuetify({
 				},
 				variables: {
 					'border-color': paColorsTokens.grey.base,
-					'font-family': '"Arial", sans-serif',
+					'font-family': '"Roboto", sans-serif',
 					...createFlattenTheme(paContextualTokens),
 				},
 			},
