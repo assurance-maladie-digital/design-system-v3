@@ -2,11 +2,16 @@
 	import { ref, computed } from 'vue'
 	import { mdiArrowLeft } from '@mdi/js'
 	import { locales } from './locales'
+	import { useTheme } from 'vuetify'
 
 	const props = defineProps<{
 		hideBackIcon?: boolean
 		dark?: boolean
 	}>()
+
+	const theme = useTheme()
+	const currentTheme = computed(() => theme.global.name.value
+		|| (typeof localStorage !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'))
 
 	const backIcon = ref(mdiArrowLeft)
 	const isDark = computed(() => props.dark ?? false)
@@ -16,8 +21,8 @@
 	const buttonColor = computed(() => isDark.value ? 'white' : 'primary')
 
 	const buttonClasses = computed(() => ({
-		'px-0': !isDark.value,
-		'pr-1': !isDark.value && !props.hideBackIcon,
+		'px-0': !isDark.value && currentTheme.value === 'cnam',
+		'px-4': !isDark.value && currentTheme.value === 'pa',
 	}))
 
 </script>
