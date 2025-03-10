@@ -279,7 +279,7 @@
 		<v-row>
 			<v-col
 				cols="12"
-				sm="6"
+				md="6"
 			>
 				<DatePicker
 					ref="fromDateRef"
@@ -305,7 +305,7 @@
 			</v-col>
 			<v-col
 				cols="12"
-				sm="6"
+				md="6"
 			>
 				<DatePicker
 					ref="toDateRef"
