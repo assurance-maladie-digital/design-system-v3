@@ -365,40 +365,22 @@ export const OptionalDocument: Story = {
 	},
 }
 
-export const ManuallySetFile: Story = {
+export const WithPreviewStep: Story = {
 	args: {
-		'modelValue': [
-			{
-				id: '1',
-				title: 'Carte d\'identité',
-				state: 'success',
-				fileName: 'carte_identite.jpg',
-				optional: false,
-				showPreviewBtn: false,
-				file: new File([''], 'carte_identite.jpg', { type: 'image/jpeg' }),
-			},
-			{
-				id: '2',
-				title: 'Facture de soin',
-				state: 'success',
-				fileName: 'facture_soin.pdf',
-				optional: false,
-				showPreviewBtn: false,
-				file: new File([''], 'facture_soin.pdf', { type: 'application/pdf' }),
-			},
-		],
+		'modelValue': [],
 		'uploadList': [
 			{
-				id: '1',
+				id: 'ID',
 				title: 'Carte d\'identité',
 			},
 			{
-				id: '2',
+				id: 'Bill',
 				title: 'Facture de soin',
 			},
 		],
 		'onUpdate:modelValue': fn(),
 		'onError': fn(),
+		'showFilePreview': true,
 	},
 	parameters: {
 		sourceCode: [
@@ -408,8 +390,10 @@ export const ManuallySetFile: Story = {
 	<UploadWorkflow
 		v-model="files"
 		:uploadList="uploadList"
+		:showFilePreview="true"
 	/>
 </template>`,
+
 			},
 			{
 				name: 'Script',
@@ -417,119 +401,18 @@ export const ManuallySetFile: Story = {
 	import { ref } from 'vue'
 	import { UploadWorkflow } from '@cnamts/synapse'
 
-	const files = ref([
-		{
-			id: '1',
-			title: 'Carte d'identité',
-			state: 'success',
-			fileName: 'carte_identite.jpg',
-			optional: false,
-			showPreviewBtn: false,
-			file: new File([''], 'carte_identite.jpg', { type: 'image/jpeg' }),
-		},
-		{
-			id: '2',
-			title: 'Facture de soin',
-			state: 'success',
-			fileName: 'facture_soin.pdf',
-			optional: false,
-			showPreviewBtn: false,
-			file: new File([''], 'facture_soin.pdf', { type: 'application/pdf' }),
-		},
-	])
-
+	const files = ref([])
 	const uploadList = [
 		{
-			id: '1',
+			id: 'ID',
 			title: 'Carte d'identité',
 		},
 		{
-			id: '2',
+			id: 'Bill',
 			title: 'Facture de soin',
 		},
 	]
 </script>`,
-			},
-		],
-	},
-}
-
-export const ManuallySetStates: Story = {
-	args: {
-		'modelValue': [
-			{
-				id: '1',
-				title: 'Carte d\'identité',
-				state: 'error',
-				fileName: 'carte_identite.jpg',
-				optional: false,
-				showPreviewBtn: false,
-				file: new File([''], 'carte_identite.jpg', { type: 'image/jpeg' }),
-			},
-			{
-				id: '2',
-				title: 'Facture de soin',
-				state: 'loading',
-				progress: 50,
-				fileName: 'facture_soin.pdf',
-				optional: false,
-				showPreviewBtn: false,
-				file: new File([''], 'facture_soin.pdf', { type: 'application/pdf' }),
-			},
-		],
-		'uploadList': [
-			{
-				id: '1',
-				title: 'Carte d\'identité',
-			},
-			{
-				id: '2',
-				title: 'Facture de soin',
-			},
-		],
-		'onUpdate:modelValue': fn(),
-		'onError': fn(),
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<UploadWorkflow
-		v-model="files"
-		:uploadList="uploadList"
-	/>
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-	import { ref } from 'vue'
-	import { UploadWorkflow } from '@cnamts/synapse'
-
-	const files = ref([
-		{
-			id: '1',
-			title: 'Carte d'identité',
-			state: 'error',
-			fileName: 'carte_identite.jpg',
-			optional: false,
-			showPreviewBtn: false,
-			file: new File([''], 'carte_identite.jpg', { type: 'image/jpeg' }),
-		},
-		{
-			id: '2',
-			title: 'Facture de soin',
-			state: 'loading',
-			progress: 50,
-			fileName: 'facture_soin.pdf',
-			optional: false,
-			showPreviewBtn: false,
-			file: new File([''], 'facture_soin.pdf', { type: 'application/pdf' }),
-		},
-	])
-		
-	</script>`,
 			},
 		],
 	},
@@ -718,22 +601,50 @@ export const Events: Story = {
 	},
 }
 
-export const WithPreviewStep: Story = {
+export const Slots: Story = {
 	args: {
 		'modelValue': [],
 		'uploadList': [
 			{
 				id: 'ID',
 				title: 'Carte d\'identité',
+				showPreviewBtn: true,
 			},
 			{
 				id: 'Bill',
 				title: 'Facture de soin',
+				showPreviewBtn: true,
 			},
 		],
 		'onUpdate:modelValue': fn(),
 		'onError': fn(),
-		'showFilePreview': true,
+	},
+	render: (args) => {
+		return {
+			components: { UploadWorkflow },
+			setup() {
+				return { args }
+			},
+			template: `
+			<UploadWorkflow
+				v-model="args.modelValue"
+				:uploadList="args.uploadList"
+			>
+				<template #title>
+					<h2>’Title’ slot</h2>
+				</template>
+				<template #modal-title>
+					<h2>’Modal Title’ slot</h2>
+				</template>
+				<template #modal-description>
+					<p>’Modal Description’ slot</p>
+				</template>
+				<template #preview-description>
+					<p>’Preview Description’ slot</p>
+				</template>
+			</UploadWorkflow>
+			`,
+		}
 	},
 	parameters: {
 		sourceCode: [
@@ -743,10 +654,21 @@ export const WithPreviewStep: Story = {
 	<UploadWorkflow
 		v-model="files"
 		:uploadList="uploadList"
-		:showFilePreview="true"
-	/>
+	>
+		<template #title>
+			<h2>’Title’ slot</h2>
+		</template>
+		<template #modal-title>
+			<h2>’Modal Title’ slot</h2>
+		</template>
+		<template #modal-description>
+			<p>’Modal Description’ slot</p>
+		</template>
+		<template #preview-description>
+			<p>’Preview Description’ slot</p>
+		</template>
+	</UploadWorkflow>
 </template>`,
-
 			},
 			{
 				name: 'Script',
@@ -766,6 +688,255 @@ export const WithPreviewStep: Story = {
 		},
 	]
 </script>`,
+			},
+		],
+	},
+}
+
+export const Customization: Story = {
+	args: {
+		'modelValue': [],
+		'uploadList': [
+			{
+				id: '1',
+				title: 'Carte d\'identité',
+			},
+			{
+				id: '2',
+				title: 'Facture de soin',
+			},
+		],
+		'vuetifyOptions': {
+			fileUpload: {
+				allowedExtensions: [
+					'pdf',
+				],
+			},
+			select: {
+				variant: 'solo-filled',
+			},
+			dialog: {
+				width: '400px',
+			},
+		},
+		'onUpdate:modelValue': fn(),
+		'onError': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<UploadWorkflow
+		v-model="files"
+		:uploadList="uploadList"
+		:vuetify-options="options"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	import { UploadWorkflow } from '@cnamts/synapse'
+
+	const files = ref([])
+
+	const uploadList = [
+		{
+			id: '1',
+			title: 'Carte d'identité',
+		},
+		{
+			id: '2',
+			title: 'Facture de soin',
+		},
+	]
+
+	const options = {
+		fileUpload: {
+			allowedExtensions: [
+				'pdf',
+			],
+		},
+		select: {
+			variant: 'solo-filled',
+		},
+		dialog: {
+			width: '400px',
+		},
+	}
+</script>`,
+			},
+		],
+	},
+}
+
+export const ManuallySetFile: Story = {
+	args: {
+		'modelValue': [
+			{
+				id: '1',
+				title: 'Carte d\'identité',
+				state: 'success',
+				fileName: 'carte_identite.jpg',
+				optional: false,
+				showPreviewBtn: false,
+				file: new File([''], 'carte_identite.jpg', { type: 'image/jpeg' }),
+			},
+			{
+				id: '2',
+				title: 'Facture de soin',
+				state: 'success',
+				fileName: 'facture_soin.pdf',
+				optional: false,
+				showPreviewBtn: false,
+				file: new File([''], 'facture_soin.pdf', { type: 'application/pdf' }),
+			},
+		],
+		'uploadList': [
+			{
+				id: '1',
+				title: 'Carte d\'identité',
+			},
+			{
+				id: '2',
+				title: 'Facture de soin',
+			},
+		],
+		'onUpdate:modelValue': fn(),
+		'onError': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<UploadWorkflow
+		v-model="files"
+		:uploadList="uploadList"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	import { UploadWorkflow } from '@cnamts/synapse'
+
+	const files = ref([
+		{
+			id: '1',
+			title: 'Carte d'identité',
+			state: 'success',
+			fileName: 'carte_identite.jpg',
+			optional: false,
+			showPreviewBtn: false,
+			file: new File([''], 'carte_identite.jpg', { type: 'image/jpeg' }),
+		},
+		{
+			id: '2',
+			title: 'Facture de soin',
+			state: 'success',
+			fileName: 'facture_soin.pdf',
+			optional: false,
+			showPreviewBtn: false,
+			file: new File([''], 'facture_soin.pdf', { type: 'application/pdf' }),
+		},
+	])
+
+	const uploadList = [
+		{
+			id: '1',
+			title: 'Carte d'identité',
+		},
+		{
+			id: '2',
+			title: 'Facture de soin',
+		},
+	]
+</script>`,
+			},
+		],
+	},
+}
+
+export const ManuallySetStates: Story = {
+	args: {
+		'modelValue': [
+			{
+				id: '1',
+				title: 'Carte d\'identité',
+				state: 'error',
+				fileName: 'carte_identite.jpg',
+				optional: false,
+				showPreviewBtn: false,
+				file: new File([''], 'carte_identite.jpg', { type: 'image/jpeg' }),
+			},
+			{
+				id: '2',
+				title: 'Facture de soin',
+				state: 'loading',
+				progress: 50,
+				fileName: 'facture_soin.pdf',
+				optional: false,
+				showPreviewBtn: false,
+				file: new File([''], 'facture_soin.pdf', { type: 'application/pdf' }),
+			},
+		],
+		'uploadList': [
+			{
+				id: '1',
+				title: 'Carte d\'identité',
+			},
+			{
+				id: '2',
+				title: 'Facture de soin',
+			},
+		],
+		'onUpdate:modelValue': fn(),
+		'onError': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<UploadWorkflow
+		v-model="files"
+		:uploadList="uploadList"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	import { UploadWorkflow } from '@cnamts/synapse'
+
+	const files = ref([
+		{
+			id: '1',
+			title: 'Carte d'identité',
+			state: 'error',
+			fileName: 'carte_identite.jpg',
+			optional: false,
+			showPreviewBtn: false,
+			file: new File([''], 'carte_identite.jpg', { type: 'image/jpeg' }),
+		},
+		{
+			id: '2',
+			title: 'Facture de soin',
+			state: 'loading',
+			progress: 50,
+			fileName: 'facture_soin.pdf',
+			optional: false,
+			showPreviewBtn: false,
+			file: new File([''], 'facture_soin.pdf', { type: 'application/pdf' }),
+		},
+	])
+		
+	</script>`,
 			},
 		],
 	},
