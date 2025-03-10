@@ -79,7 +79,7 @@ const meta = {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore - storybook can't infer dynamic slot name
 		'${filterName}': {
-			description: 'Slot pour les filtres. <br>Le nom de chaque slot correspond au nom (`name`) du filtre. <br>Le paramètre du slot `props` est un objet contenant les props à passer du filtre.',
+			description: 'Slot pour les filtres. <br>Le nom de chaque slot correspond au nom (`name`) du filtre. <br>Le paramètre du slot `props` est un objet contenant les props à passer au filtre.',
 			table: {
 				category: 'slots',
 				type: {
