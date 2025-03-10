@@ -199,32 +199,79 @@ export const ReadOnly: Story = {
 }
 
 /**
- * Champ de mot de passe avec message d'erreur.
+ * Champ de mot de passe avec règles de validation qui génèrent une erreur.
  */
 export const WithError: Story = {
 	args: {
-		errorMessages: ['Le mot de passe doit contenir au moins 8 caractères'],
 		modelValue: 'Mdp123',
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value || value.length < 8) {
+							return 'Le mot de passe doit contenir au moins 8 caractères'
+						}
+						return true
+					},
+					fieldIdentifier: 'password',
+				},
+			},
+		],
 	},
 }
 
 /**
- * Champ de mot de passe avec message d'avertissement.
+ * Champ de mot de passe avec règles de validation qui génèrent un avertissement.
  */
 export const WithWarning: Story = {
 	args: {
-		warningMessages: ['Le mot de passe pourrait être plus fort avec des caractères spéciaux'],
 		modelValue: 'MotDePasse123',
+		customWarningRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
+						if (!hasSpecialChar) {
+							return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux'
+						}
+						return true
+					},
+					fieldIdentifier: 'password',
+				},
+			},
+		],
 	},
 }
 
 /**
- * Champ de mot de passe avec message de succès.
+ * Champ de mot de passe avec règles de validation qui génèrent un succès.
  */
 export const WithSuccess: Story = {
 	args: {
-		successMessages: ['Mot de passe fort'],
 		modelValue: 'MotDePasse123!@#',
+		customSuccessRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						const hasUpperCase = /[A-Z]/.test(value)
+						const hasLowerCase = /[a-z]/.test(value)
+						const hasNumber = /[0-9]/.test(value)
+						const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
+						const isLongEnough = value.length >= 8
+
+						if (hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isLongEnough) {
+							return 'Mot de passe fort'
+						}
+						return false
+					},
+					fieldIdentifier: 'password',
+					isSuccess: true,
+				},
+			},
+		],
 	},
 }
 
@@ -303,7 +350,7 @@ export const WithValidation: Story = {
 					:custom-success-rules="customSuccessRules"
 					:show-success-messages="true"
 					:display-asterisk="true"
-					:is-validate-on-blur="true"
+					:is-validate-on-blur="false"
 				/>
 				<div class="mt-4">
 					<p><strong>Conseils pour tester :</strong></p>
