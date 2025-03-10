@@ -200,8 +200,8 @@
 			return
 		}
 
-		// Vérifier si le champ est requis et vide
-		if (props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
+		// Vérifier si le champ est requis et vide, mais seulement après une interaction et pas au chargement initial
+		if (!isUpdatingFromInternal.value && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
 			errorMessages.value.push('La date est requise.')
 			return
 		}
