@@ -305,6 +305,15 @@
 	const hasKeyWarning = computed(() => !hasKeyErrors.value && keyValidation.hasWarning.value)
 	const hasKeySuccess = computed(() => !hasKeyErrors.value && !hasKeyWarning.value && keyValidation.hasSuccess.value)
 
+	// Labels avec astérisque si nécessaire
+	const numberLabelWithAsterisk = computed(() => {
+		return props.required && props.displayAsterisk ? `${props.numberLabel} *` : props.numberLabel
+	})
+
+	const keyLabelWithAsterisk = computed(() => {
+		return props.required && props.displayAsterisk ? `${props.keyLabel} *` : props.keyLabel
+	})
+
 	// Gestion des événements
 	const handleNumberInput = () => {
 		emitValue()
@@ -357,7 +366,7 @@
 				ref="numberField"
 				v-model="numberValue"
 				v-maska="numberMask"
-				:label="numberLabel"
+				:label="numberLabelWithAsterisk"
 				:variant-style="outlined ? 'outlined' : 'underlined'"
 				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
@@ -375,13 +384,14 @@
 				:has-error="hasNumberErrors"
 				:required="required"
 				class="number-field"
-				:display-asterisk="displayAsterisk"
+				:display-asterisk="false"
 				:hint="locales.numberHint"
 				@input="handleNumberInput"
 				@blur="handleNumberBlur"
 			/>
 		</div>
 
+		{{ keyLabel }}
 		<div
 			v-if="displayKey"
 			class="key-field-container"
@@ -390,7 +400,7 @@
 				ref="keyField"
 				v-model="keyValue"
 				v-maska="keyMask"
-				:label="keyLabel"
+				:label="keyLabelWithAsterisk"
 				:variant-style="outlined ? 'outlined' : 'underlined'"
 				:prepend-icon="keyTooltip && keyTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="keyTooltip && keyTooltipPosition === 'append' ? 'info' : undefined"
@@ -406,7 +416,7 @@
 				:messages="hasKeyErrors ? keyValidation.errors.value : (hasKeyWarning ? keyValidation.warnings.value : (hasKeySuccess ? keyValidation.successes.value : []))"
 				:has-error="hasKeyErrors"
 				class="key-field"
-				:display-asterisk="displayAsterisk"
+				:display-asterisk="false"
 				@input="handleKeyInput"
 				@blur="handleKeyBlur"
 			/>

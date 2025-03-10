@@ -519,7 +519,7 @@
 
 .basic-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(0 0 0 / 85%);
+		fill: rgb(0 0 0 / 60%);
 	}
 }
 </style>

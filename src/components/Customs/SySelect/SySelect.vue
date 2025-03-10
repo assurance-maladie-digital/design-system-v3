@@ -84,7 +84,7 @@
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			return (selectedItem.value as Record<string, any>)[props.textKey]
 		}
-		return labelWithAsterisk.value
+		return ''
 	})
 
 	const isShouldDisplayAsterisk = computed(() => {
