@@ -266,7 +266,7 @@
 		// Mettre à jour le modèle si nécessaire
 		if (newValue !== null) {
 			updateModel(formattedDate.value)
-			
+
 			// Mettre à jour textInputValue pour le DateTextInput
 			try {
 				isUpdatingFromInternal.value = true
@@ -275,11 +275,13 @@
 					if (newValue.length > 0) {
 						textInputValue.value = formatDate(newValue[0], props.format)
 					}
-				} else {
+				}
+				else {
 					// Pour une date unique
 					textInputValue.value = formatDate(newValue, props.format)
 				}
-			} finally {
+			}
+			finally {
 				setTimeout(() => {
 					isUpdatingFromInternal.value = false
 				}, 0)
@@ -390,14 +392,15 @@
 				? formatDate(date, props.dateFormatReturn)
 				: formatDate(date, props.format)
 			updateModel(formattedValue)
-			
+
 			// Mettre à jour selectedDates sans déclencher de watchers supplémentaires
 			try {
 				isUpdatingFromInternal.value = true
 				selectedDates.value = date
 				// Mettre à jour l'affichage formaté
 				displayFormattedDate.value = formatDate(date, props.format)
-			} finally {
+			}
+			finally {
 				setTimeout(() => {
 					isUpdatingFromInternal.value = false
 				}, 0)
@@ -411,7 +414,8 @@
 			try {
 				isUpdatingFromInternal.value = true
 				displayFormattedDate.value = newValue
-			} finally {
+			}
+			finally {
 				setTimeout(() => {
 					isUpdatingFromInternal.value = false
 				}, 0)
@@ -424,7 +428,8 @@
 				isUpdatingFromInternal.value = true
 				displayFormattedDate.value = ''
 				selectedDates.value = null
-			} finally {
+			}
+			finally {
 				setTimeout(() => {
 					isUpdatingFromInternal.value = false
 				}, 0)
@@ -673,10 +678,10 @@
 	watch(() => props.modelValue, (newValue) => {
 		// Éviter les mises à jour récursives
 		if (isUpdatingFromInternal.value) return
-		
+
 		try {
 			isUpdatingFromInternal.value = true
-			
+
 			if (!newValue || newValue === '') {
 				selectedDates.value = null
 				textInputValue.value = ''
@@ -685,7 +690,7 @@
 			else {
 				// Initialiser les dates sélectionnées
 				selectedDates.value = initializeSelectedDates(newValue)
-				
+
 				// Mettre à jour l'affichage et le textInputValue
 				if (selectedDates.value) {
 					if (Array.isArray(selectedDates.value)) {
@@ -693,16 +698,18 @@
 							textInputValue.value = formatDate(selectedDates.value[0], props.format)
 							displayFormattedDate.value = displayFormattedDateComputed.value || ''
 						}
-					} else {
+					}
+					else {
 						textInputValue.value = formatDate(selectedDates.value, props.format)
 						displayFormattedDate.value = displayFormattedDateComputed.value || ''
 					}
 				}
 			}
-			
+
 			// Valider les dates
 			validateDates()
-		} finally {
+		}
+		finally {
 			setTimeout(() => {
 				isUpdatingFromInternal.value = false
 			}, 0)

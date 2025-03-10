@@ -509,20 +509,23 @@
 						: inputValue.value
 					emit('update:model-value', formattedDate)
 				}
-			} else {
+			}
+			else {
 				// Même si la validation échoue, conserver la valeur actuelle
 				// pour éviter que la date ne disparaisse
 				emit('update:model-value', props.modelValue)
 			}
-		} else if (props.required) {
+		}
+		else if (props.required) {
 			// Si le champ est vide mais requis, émettre quand même la valeur actuelle
 			// pour éviter que la date ne disparaisse
 			emit('update:model-value', props.modelValue)
-		} else {
+		}
+		else {
 			// Si le champ est vide et non requis, émettre null
 			emit('update:model-value', null)
 		}
-		
+
 		// Toujours valider les règles, même si le champ est vide
 		validateRules(inputValue.value || '')
 	}
