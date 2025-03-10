@@ -197,6 +197,10 @@
 	gap: tokens.$gap-3;
 	padding-block: tokens.$padding-4;
 	border-bottom: 1px solid tokens.$colors-border-subdued;
+
+	&:first-child:last-child {
+		border-bottom: none;
+	}
 }
 
 .file-item__title {
