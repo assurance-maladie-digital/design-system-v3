@@ -41,6 +41,7 @@ const vuetify = createVuetify({
 
 setup((app) => {
 	app.use(vuetify)
+	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 })
 
 const preview: Preview = {
