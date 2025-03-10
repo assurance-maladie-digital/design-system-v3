@@ -119,7 +119,7 @@ type Story = StoryObj<typeof meta>
  * Story par défaut montrant un champ de mot de passe basique.
  */
 export const Default: Story = {
-	render: (args) => ({
+	render: args => ({
 		components: { PasswordField },
 		setup() {
 			const password = ref(args.modelValue)
@@ -279,11 +279,11 @@ export const WithSuccess: Story = {
  * Démonstration des différents types de validation (erreurs, avertissements, succès).
  */
 export const WithValidation: Story = {
-	render: (args) => ({
+	render: args => ({
 		components: { PasswordField },
 		setup() {
 			const password = ref('')
-			
+
 			// Règles personnalisées pour la validation du mot de passe
 			const customRules = [
 				{
@@ -299,7 +299,7 @@ export const WithValidation: Story = {
 					},
 				},
 			]
-			
+
 			const customWarningRules = [
 				{
 					type: 'custom',
@@ -314,16 +314,16 @@ export const WithValidation: Story = {
 					},
 				},
 			]
-			
+
 			const customSuccessRules = [
 				{
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
-							if (value && value.length >= 12 && 
-								/[A-Z]/.test(value) && 
-								/[0-9]/.test(value) && 
-								/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+							if (value && value.length >= 12
+								&& /[A-Z]/.test(value)
+								&& /[0-9]/.test(value)
+								&& /[!@#$%^&*(),.?":{}|<>]/.test(value)) {
 								return true
 							}
 							return 'Pas encore un mot de passe fort'
@@ -333,7 +333,7 @@ export const WithValidation: Story = {
 					},
 				},
 			]
-			
+
 			return { args, password, customRules, customWarningRules, customSuccessRules }
 		},
 		template: `
@@ -370,11 +370,11 @@ export const WithValidation: Story = {
  * Champ de mot de passe avec règles de validation personnalisées.
  */
 export const WithCustomRules: Story = {
-	render: (args) => ({
+	render: args => ({
 		components: { PasswordField },
 		setup() {
 			const password = ref(args.modelValue)
-			
+
 			// Règles personnalisées pour la validation du mot de passe
 			const customRules = [
 				{
@@ -414,7 +414,7 @@ export const WithCustomRules: Story = {
 					},
 				},
 			]
-			
+
 			return { args, password, customRules }
 		},
 		template: `
@@ -440,13 +440,13 @@ export const WithCustomRules: Story = {
  * Démonstration de la validation de formulaire avec la méthode validateOnSubmit.
  */
 export const WithFormValidation: Story = {
-	render: (args) => ({
+	render: args => ({
 		components: { PasswordField },
 		setup() {
 			const password = ref('')
 			const passwordFieldRef = ref<InstanceType<typeof PasswordField> | null>(null)
 			const formStatus = ref('')
-			
+
 			// Règles personnalisées pour la validation du mot de passe
 			const customRules = [
 				{
@@ -474,19 +474,20 @@ export const WithFormValidation: Story = {
 					},
 				},
 			]
-			
+
 			// Fonction de soumission du formulaire
 			const handleSubmit = () => {
 				if (passwordFieldRef.value) {
 					const isValid = passwordFieldRef.value.validateOnSubmit()
 					if (isValid) {
 						formStatus.value = 'Formulaire soumis avec succès !'
-					} else {
+					}
+					else {
 						formStatus.value = 'Erreur de validation, veuillez corriger les champs'
 					}
 				}
 			}
-			
+
 			return { args, password, passwordFieldRef, customRules, handleSubmit, formStatus }
 		},
 		template: `
