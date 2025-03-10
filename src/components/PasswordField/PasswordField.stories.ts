@@ -119,6 +119,33 @@ type Story = StoryObj<typeof meta>
  * Story par défaut montrant un champ de mot de passe basique.
  */
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						placeholder="Entrez votre mot de passe"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+				</script>
+				`,
+			},
+		],
+	},
 	render: args => ({
 		components: { PasswordField },
 		setup() {
@@ -153,6 +180,33 @@ export const Default: Story = {
  * Champ de mot de passe avec validation requise.
  */
 export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:required="true"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		required: true,
 		displayAsterisk: false,
@@ -163,6 +217,34 @@ export const Required: Story = {
  * Champ de mot de passe avec validation requise avec asterisk.
  */
 export const RequiredWithAsterisk: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:required="true"
+						:display-asterisk="true"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		required: true,
 		displayAsterisk: true,
@@ -170,18 +252,36 @@ export const RequiredWithAsterisk: Story = {
 }
 
 /**
- * Champ de mot de passe avec style souligné.
- */
-export const Underlined: Story = {
-	args: {
-		variantStyle: 'underlined',
-	},
-}
-
-/**
  * Champ de mot de passe désactivé.
  */
 export const Disabled: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:is-disabled="true"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('MonMotDePasse123')
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		isDisabled: true,
 		modelValue: 'MonMotDePasse123',
@@ -192,6 +292,33 @@ export const Disabled: Story = {
  * Champ de mot de passe en lecture seule.
  */
 export const ReadOnly: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:is-read-only="true"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('MonMotDePasse123')
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		isReadOnly: true,
 		modelValue: 'MonMotDePasse123',
@@ -202,6 +329,48 @@ export const ReadOnly: Story = {
  * Champ de mot de passe avec règles de validation qui génèrent une erreur.
  */
 export const WithError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:custom-rules="customRules"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('Mdp123')
+					
+					const customRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (!value || value.length < 8) {
+										return 'Le mot de passe doit contenir au moins 8 caractères'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: 'Mdp123',
 		customRules: [
@@ -225,6 +394,49 @@ export const WithError: Story = {
  * Champ de mot de passe avec règles de validation qui génèrent un avertissement.
  */
 export const WithWarning: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:custom-warning-rules="customWarningRules"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('MotDePasse123')
+					
+					const customWarningRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
+									if (!hasSpecialChar) {
+										return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: 'MotDePasse123',
 		customWarningRules: [
@@ -249,6 +461,54 @@ export const WithWarning: Story = {
  * Champ de mot de passe avec règles de validation qui génèrent un succès.
  */
 export const WithSuccess: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:custom-success-rules="customSuccessRules"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('MotDePasse123!@#')
+					
+					const customSuccessRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									const hasUpperCase = /[A-Z]/.test(value)
+									const hasLowerCase = /[a-z]/.test(value)
+									const hasNumber = /[0-9]/.test(value)
+									const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
+									const hasMinLength = value.length >= 8
+									
+									if (hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && hasMinLength) {
+										return 'Mot de passe fort'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		modelValue: 'MotDePasse123!@#',
 		customSuccessRules: [
@@ -279,6 +539,88 @@ export const WithSuccess: Story = {
  * Démonstration des différents types de validation (erreurs, avertissements, succès).
  */
 export const WithValidation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:required="true"
+						:custom-rules="customRules"
+						:custom-warning-rules="customWarningRules"
+						:custom-success-rules="customSuccessRules"
+						:show-success-messages="true"
+						:display-asterisk="true"
+						:is-validate-on-blur="false"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+					
+					// Règles personnalisées pour la validation du mot de passe
+					const customRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (!value || value.length < 8) {
+										return 'Le mot de passe doit contenir au moins 8 caractères'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+					
+					const customWarningRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (!value || !/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+										return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+					
+					const customSuccessRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (value && value.length >= 12
+										&& /[A-Z]/.test(value)
+										&& /[0-9]/.test(value)
+										&& /[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+										return 'Mot de passe très sécurisé !'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	render: args => ({
 		components: { PasswordField },
 		setup() {
@@ -370,6 +712,73 @@ export const WithValidation: Story = {
  * Champ de mot de passe avec règles de validation personnalisées.
  */
 export const WithCustomRules: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:custom-rules="customRules"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+					
+					// Règles personnalisées pour la validation du mot de passe
+					const customRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (!value || value.length < 8) {
+										return 'Le mot de passe doit contenir au moins 8 caractères'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (!value || !/[A-Z]/.test(value)) {
+										return 'Le mot de passe doit contenir au moins une lettre majuscule'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (!value || !/[0-9]/.test(value)) {
+										return 'Le mot de passe doit contenir au moins un chiffre'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	render: args => ({
 		components: { PasswordField },
 		setup() {
@@ -440,6 +849,90 @@ export const WithCustomRules: Story = {
  * Démonstration de la validation de formulaire avec la méthode validateOnSubmit.
  */
 export const WithFormValidation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<form @submit.prevent="handleSubmit">
+						<PasswordField
+							ref="passwordFieldRef"
+							v-model="password"
+							label="Mot de passe"
+							:required="true"
+							:custom-rules="customRules"
+							:display-asterisk="true"
+							:is-validate-on-blur="false"
+						/>
+						<button 
+							type="submit" 
+							class="mt-4 px-4 py-2 bg-primary text-white rounded"
+						>
+							Valider
+						</button>
+					</form>
+					<div v-if="formStatus" class="mt-4 p-4 rounded" :class="formStatus.includes('succès') ? 'bg-success-lighten5' : 'bg-error-lighten5'">
+						{{ formStatus }}
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+					const passwordFieldRef = ref(null)
+					const formStatus = ref('')
+					
+					// Règles personnalisées pour la validation du mot de passe
+					const customRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (!value || value.length < 8) {
+										return 'Le mot de passe doit contenir au moins 8 caractères'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (!value || !/[A-Z]/.test(value)) {
+										return 'Le mot de passe doit contenir au moins une lettre majuscule'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+					
+					// Fonction de soumission du formulaire
+					const handleSubmit = () => {
+						if (passwordFieldRef.value) {
+							const isValid = passwordFieldRef.value.validateOnSubmit()
+							if (isValid) {
+								formStatus.value = 'Formulaire soumis avec succès !'
+							} else {
+								formStatus.value = 'Erreur de validation, veuillez corriger les champs'
+							}
+						}
+					}
+				</script>
+				`,
+			},
+		],
+	},
 	render: args => ({
 		components: { PasswordField },
 		setup() {
