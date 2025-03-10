@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
 import PasswordField from './PasswordField.vue'
-import { VBtn } from 'vuetify/components'
 
 const meta = {
-	title: 'Composants/Formulaires/PasswordField',
+	title: 'Composants/Formulaires/Passwordfield',
 	component: PasswordField,
 	decorators: [
 		() => ({
@@ -15,117 +14,100 @@ const meta = {
 		layout: 'fullscreen',
 		docs: {
 			description: {
-				component: 'Le composant PasswordField est un champ de saisie sécurisé pour les mots de passe. Il hérite des fonctionnalités du SyTextField avec des fonctionnalités spécifiques pour la gestion des mots de passe comme le masquage/affichage du texte et la validation avancée.',
+				component: `PasswordField est un champ de saisie sécurisé pour les mots de passe`,
 			},
 		},
 	},
 	argTypes: {
 		modelValue: {
-			description: 'La valeur du modèle pour le champ.',
 			control: 'text',
-			default: null,
-			table: {
-				type: {
-					summary: 'string | null',
-				},
-			},
+			description: 'Valeur du champ de mot de passe',
 		},
 		variantStyle: {
-			description: 'Définit le style visuel du champ (outlined ou underlined).',
 			control: 'select',
 			options: ['outlined', 'underlined'],
-			default: 'outlined',
-			table: {
-				type: {
-					summary: 'string',
-				},
-				defaultValue: { summary: 'outlined' },
-			},
+			description: 'Style du champ (contour ou souligné)',
+		},
+		color: {
+			control: 'select',
+			options: ['primary', 'secondary', 'error', 'warning', 'success', 'info'],
+			description: 'Couleur principale du champ',
+		},
+		label: {
+			control: 'text',
+			description: 'Libellé du champ',
 		},
 		required: {
-			description: 'Indique si le champ est requis.',
 			control: 'boolean',
-			default: false,
-			table: {
-				type: {
-					summary: 'boolean',
-				},
-				defaultValue: { summary: 'false' },
-			},
+			description: 'Indique si le champ est obligatoire',
+		},
+		errorMessages: {
+			control: 'object',
+			description: 'Messages d\'erreur à afficher',
+		},
+		warningMessages: {
+			control: 'object',
+			description: 'Messages d\'avertissement à afficher',
+		},
+		successMessages: {
+			control: 'object',
+			description: 'Messages de succès à afficher',
+		},
+		isReadOnly: {
+			control: 'boolean',
+			description: 'Indique si le champ est en lecture seule',
+		},
+		isDisabled: {
+			control: 'boolean',
+			description: 'Indique si le champ est désactivé',
+		},
+		placeholder: {
+			control: 'text',
+			description: 'Texte d\'indication affiché lorsque le champ est vide',
+		},
+		customRules: {
+			control: 'object',
+			description: 'Règles de validation personnalisées',
+		},
+		customWarningRules: {
+			control: 'object',
+			description: 'Règles d\'avertissement personnalisées',
+		},
+		customSuccessRules: {
+			control: 'object',
+			description: 'Règles de succès personnalisées',
+		},
+		showSuccessMessages: {
+			control: 'boolean',
+			description: 'Indique si les messages de succès doivent être affichés',
+		},
+		displayAsterisk: {
+			control: 'boolean',
+			description: 'Affiche un astérisque à côté du libellé pour indiquer que le champ est obligatoire',
 		},
 		isValidateOnBlur: {
 			control: 'boolean',
-			description: 'Active la validation automatique lors de la perte de focus',
-			table: {
-				type: {
-					summary: 'boolean',
-				},
-				defaultValue: { summary: 'true' },
-			},
+			description: 'Indique si la validation doit être effectuée lors de la perte de focus',
 		},
-		customRules: {
-			description: 'Règles de validation personnalisées pour les erreurs.',
-			control: 'object',
-			table: {
-				type: {
-					summary: 'array',
-					detail: '{ type: string, options: { message: string, validate: (value: string) => string } }[]',
-				},
-			},
-		},
-		customWarningRules: {
-			description: 'Règles de validation personnalisées pour les avertissements.',
-			control: 'object',
-			table: {
-				type: {
-					summary: 'array',
-					detail: '{ type: string, options: { warningMessage: string, validate: (value: string) => string } }[]',
-				},
-			},
-		},
-		customSuccessRules: {
-			description: 'Règles de validation personnalisées pour les succès.',
-			control: 'object',
-			table: {
-				type: {
-					summary: 'array',
-					detail: '{ type: string, options: { successMessage: string, validate: (value: string) => string } }[]',
-				},
-			},
-		},
-		showSuccessMessages: {
-			description: 'Affiche les messages de succès.',
-			control: 'boolean',
-			default: false,
-			table: {
-				type: {
-					summary: 'boolean',
-				},
-				defaultValue: { summary: 'false' },
-			},
-		},
-		isDisabled: {
-			description: 'Désactive le champ.',
-			control: 'boolean',
-			default: false,
-			table: {
-				type: {
-					summary: 'boolean',
-				},
-				defaultValue: { summary: 'false' },
-			},
-		},
-		isReadOnly: {
-			description: 'Rend le champ en lecture seule.',
-			control: 'boolean',
-			default: false,
-			table: {
-				type: {
-					summary: 'boolean',
-				},
-				defaultValue: { summary: 'false' },
-			},
-		},
+	},
+	args: {
+		modelValue: '',
+		variantStyle: 'outlined',
+		color: 'primary',
+		label: 'Mot de passe',
+		required: false,
+		errorMessages: null,
+		warningMessages: null,
+		successMessages: null,
+		isReadOnly: false,
+		isDisabled: false,
+		placeholder: 'Entrez votre mot de passe',
+		customRules: [],
+		customWarningRules: [],
+		customSuccessRules: [],
+		showSuccessMessages: true,
+		displayAsterisk: false,
+		isValidateOnBlur: true,
 	},
 } satisfies Meta<typeof PasswordField>
 
@@ -134,414 +116,362 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * Story par défaut montrant un champ de mot de passe simple.
+ * Story par défaut montrant un champ de mot de passe basique.
  */
 export const Default: Story = {
-	args: {
-		modelValue: '',
-		variantStyle: 'outlined',
-		required: false,
-		isValidateOnBlur: true,
-		customRules: [],
-		showSuccessMessages: false,
-	},
-	render: (args) => {
-		return {
-			components: { PasswordField },
-			setup() {
-				return { args }
-			},
-			template: `
-                <PasswordField v-bind="args" v-model="args.modelValue"/>
-            `,
-		}
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Version basique du champ de mot de passe avec le style outlined par défaut.',
-			},
+	render: (args) => ({
+		components: { PasswordField },
+		setup() {
+			const password = ref(args.modelValue)
+			return { args, password }
 		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <PasswordField
-    v-model="password"
-    variant-style="outlined"
-  />
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import PasswordField from '@cnamts/synapse'
-
-const password = ref('')
-</script>
-        `,
-			},
-		],
-	},
+		template: `
+			<PasswordField
+				v-model="password"
+				:variant-style="args.variantStyle"
+				:color="args.color"
+				:label="args.label"
+				:required="args.required"
+				:error-messages="args.errorMessages"
+				:warning-messages="args.warningMessages"
+				:success-messages="args.successMessages"
+				:is-read-only="args.isReadOnly"
+				:is-disabled="args.isDisabled"
+				:placeholder="args.placeholder"
+				:custom-rules="args.customRules"
+				:custom-warning-rules="args.customWarningRules"
+				:custom-success-rules="args.customSuccessRules"
+				:show-success-messages="args.showSuccessMessages"
+				:display-asterisk="args.displayAsterisk"
+				:is-validate-on-blur="args.isValidateOnBlur"
+			/>
+		`,
+	}),
 }
 
 /**
- * Story avec champ requis.
+ * Champ de mot de passe avec validation requise.
  */
 export const Required: Story = {
 	args: {
-		...Default.args,
 		required: true,
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Champ de mot de passe requis avec validation.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <PasswordField
-    v-model="password"
-    required
-  />
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import PasswordField from '@cnamts/synapse'
-
-const password = ref('')
-</script>
-        `,
-			},
-		],
+		displayAsterisk: false,
 	},
 }
 
 /**
- * Story avec validation et différents états
+ * Champ de mot de passe avec validation requise avec asterisk.
+ */
+export const RequiredWithAsterisk: Story = {
+	args: {
+		required: true,
+		displayAsterisk: true,
+	},
+}
+
+/**
+ * Champ de mot de passe avec style souligné.
+ */
+export const Underlined: Story = {
+	args: {
+		variantStyle: 'underlined',
+	},
+}
+
+/**
+ * Champ de mot de passe désactivé.
+ */
+export const Disabled: Story = {
+	args: {
+		isDisabled: true,
+		modelValue: 'MonMotDePasse123',
+	},
+}
+
+/**
+ * Champ de mot de passe en lecture seule.
+ */
+export const ReadOnly: Story = {
+	args: {
+		isReadOnly: true,
+		modelValue: 'MonMotDePasse123',
+	},
+}
+
+/**
+ * Champ de mot de passe avec message d'erreur.
+ */
+export const WithError: Story = {
+	args: {
+		errorMessages: ['Le mot de passe doit contenir au moins 8 caractères'],
+		modelValue: 'Mdp123',
+	},
+}
+
+/**
+ * Champ de mot de passe avec message d'avertissement.
+ */
+export const WithWarning: Story = {
+	args: {
+		warningMessages: ['Le mot de passe pourrait être plus fort avec des caractères spéciaux'],
+		modelValue: 'MotDePasse123',
+	},
+}
+
+/**
+ * Champ de mot de passe avec message de succès.
+ */
+export const WithSuccess: Story = {
+	args: {
+		successMessages: ['Mot de passe fort'],
+		modelValue: 'MotDePasse123!@#',
+	},
+}
+
+/**
+ * Démonstration des différents types de validation (erreurs, avertissements, succès).
  */
 export const WithValidation: Story = {
-	args: {
-		...Default.args,
-		modelValue: '',
-		required: true,
-		showSuccessMessages: true,
-		customRules: [
-			{
-				type: 'custom',
-				options: {
-					message: 'Le mot de passe doit contenir au moins 8 caractères',
-					validate: (value: string) => value.length >= 8,
-				},
-			},
-		],
-		customWarningRules: [
-			{
-				type: 'custom',
-				options: {
-					warningMessage: 'Le mot de passe devrait contenir des caractères spéciaux',
-					validate: (value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value),
-				},
-			},
-		],
-		customSuccessRules: [
-			{
-				type: 'custom',
-				options: {
-					successMessage: 'Le mot de passe est fort',
-					validate: (value: string) => {
-						const hasLength = value.length >= 8
-						const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value)
-						const hasNumber = /[0-9]/.test(value)
-						return hasLength && hasSpecial && hasNumber
-					},
-				},
-			},
-		],
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Exemple de champ avec validation complète : erreur, warning et succès.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <PasswordField
-    v-model="password"
-    :required="true"
-    :show-success-messages="true"
-    :custom-rules="customRules"
-    :custom-warning-rules="customWarningRules"
-    :custom-success-rules="customSuccessRules"
-  />
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import PasswordField from '@cnamts/synapse'
-
-const password = ref('')
-
-const customRules = [{
-  type: 'custom',
-  options: {
-    message: 'Le mot de passe doit contenir au moins 8 caractères',
-    validate: (value: string) => value.length >= 8,
-  },
-}]
-
-const customWarningRules = [{
-  type: 'custom',
-  options: {
-    warningMessage: 'Le mot de passe devrait contenir des caractères spéciaux',
-    validate: (value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value),
-  },
-}]
-
-const customSuccessRules = [{
-  type: 'custom',
-  options: {
-    successMessage: 'Le mot de passe est fort',
-    validate: (value: string) => {
-      const hasLength = value.length >= 8
-      const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value)
-      const hasNumber = /[0-9]/.test(value)
-      return hasLength && hasSpecial && hasNumber
-    },
-  },
-}]
-</script>
-				`,
-			},
-		],
-	},
-}
-
-/**
- * Story avec validation complète (erreur, warning, succès).
- */
-export const WithFullValidation: Story = {
-	args: {
-		...Default.args,
-		showSuccessMessages: true,
-		customRules: [
-			{
-				type: 'minLength',
-				options: {
-					length: 8,
-					message: 'Le mot de passe doit comporter au moins 8 caractères.',
-					validate: (value: string) => value.length >= 8,
-				},
-			},
-		],
-		customWarningRules: [
-			{
-				type: 'custom',
-				options: {
-					warningMessage: 'Le mot de passe devrait contenir au moins une majuscule.',
-					validate: (value: string) => /[A-Z]/.test(value),
-				},
-			},
-		],
-		customSuccessRules: [
-			{
-				type: 'custom',
-				options: {
-					successMessage: 'Le mot de passe est fort !',
-					validate: (value: string) => {
-						const hasLength = value.length >= 8
-						const hasUpper = /[A-Z]/.test(value)
-						const hasLower = /[a-z]/.test(value)
-						const hasNumber = /[0-9]/.test(value)
-						return hasLength && hasUpper && hasLower && hasNumber
-					},
-				},
-			},
-		],
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Exemple complet avec validation montrant les différents états (erreur, warning, succès) et leurs icônes associées.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <PasswordField
-    v-model="password"
-    :show-success-messages="true"
-    :custom-rules="[
-      {
-        type: 'minLength',
-        options: {
-          length: 8,
-          message: 'Le mot de passe doit comporter au moins 8 caractères.'
-        }
-      }
-    ]"
-    :custom-warning-rules="[
-      {
-        type: 'custom',
-        options: {
-          warningMessage: 'Le mot de passe devrait contenir au moins une majuscule.',
-          validate: value => /[A-Z]/.test(value)
-        }
-      }
-    ]"
-    :custom-success-rules="[
-      {
-        type: 'custom',
-        options: {
-          successMessage: 'Le mot de passe est fort !',
-          validate: value => 
-            value.length >= 8 && 
-            /[A-Z]/.test(value) && 
-            /[a-z]/.test(value) && 
-            /[0-9]/.test(value)
-        }
-      }
-    ]"
-  />
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import PasswordField from '@cnamts/synapse'
-
-const password = ref('')
-</script>
-        `,
-			},
-		],
-	},
-}
-
-/**
- * Story avec validation de formulaire
- */
-export const WithFormValidation: Story = {
-	args: {
-		...Default.args,
-		required: true,
-		customRules: [
-			{
-				type: 'custom',
-				options: {
-					message: 'Le mot de passe doit contenir au moins 8 caractères',
-					validate: (value: string) => value.length >= 8,
-				},
-			},
-		],
-	},
-	render: args => ({
-		components: { PasswordField, VBtn },
+	render: (args) => ({
+		components: { PasswordField },
 		setup() {
 			const password = ref('')
-			const passwordFieldRef = ref()
-			const isValid = ref(false)
-
-			function handleSubmit() {
-				isValid.value = passwordFieldRef.value?.validateOnSubmit() ?? false
-				alert(isValid.value ? 'Formulaire soumis avec succès !' : 'Veuillez corriger les erreurs avant de soumettre.')
-			}
-
-			return { args, password, passwordFieldRef, isValid, handleSubmit }
-		},
-		template: `
-			<form @submit.prevent="handleSubmit">
-				<PasswordField
-					ref="passwordFieldRef"
-					v-model="password"
-					v-bind="args"
-					label="Mot de passe"
-				/>
-				<div>
-					<VBtn type="submit" class="mt-4" color="primary">
-						Valider
-					</VBtn>
-				</div>
-			</form>
-		`,
-	}),
-	parameters: {
-		docs: {
-			description: {
-				story: 'Exemple de validation de formulaire avec le composant PasswordField.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-	<form @submit.prevent="handleSubmit">
-		<PasswordField
-			ref="passwordFieldRef"
-			v-model="password"
-			required
-			:custom-rules="[
+			
+			// Règles personnalisées pour la validation du mot de passe
+			const customRules = [
 				{
 					type: 'custom',
 					options: {
-						message: 'Le mot de passe doit contenir au moins 8 caractères',
-						validate: value => value.length >= 8
+						validate: (value: string) => {
+							if (!value || value.length < 8) {
+								return 'Le mot de passe doit contenir au moins 8 caractères'
+							}
+							return true
+						},
+						fieldIdentifier: 'password',
+					},
+				},
+			]
+			
+			const customWarningRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || !/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+								return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux'
+							}
+							return true
+						},
+						fieldIdentifier: 'password',
+					},
+				},
+			]
+			
+			const customSuccessRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (value && value.length >= 12 && 
+								/[A-Z]/.test(value) && 
+								/[0-9]/.test(value) && 
+								/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+								return true
+							}
+							return 'Pas encore un mot de passe fort'
+						},
+						successMessage: 'Mot de passe très sécurisé !',
+						fieldIdentifier: 'password',
+					},
+				},
+			]
+			
+			return { args, password, customRules, customWarningRules, customSuccessRules }
+		},
+		template: `
+			<div>
+				<p class="mb-2">Entrez un mot de passe pour voir les différents types de validation :</p>
+				<PasswordField
+					v-model="password"
+					:variant-style="args.variantStyle"
+					:color="args.color"
+					label="Mot de passe"
+					:required="true"
+					:custom-rules="customRules"
+					:custom-warning-rules="customWarningRules"
+					:custom-success-rules="customSuccessRules"
+					:show-success-messages="true"
+					:display-asterisk="true"
+					:is-validate-on-blur="true"
+				/>
+				<div class="mt-4">
+					<p><strong>Conseils pour tester :</strong></p>
+					<ul>
+						<li>Laissez le champ vide pour voir l'erreur de champ requis</li>
+						<li>Entrez moins de 8 caractères pour voir l'erreur de longueur</li>
+						<li>Entrez un mot de passe sans caractères spéciaux pour voir l'avertissement</li>
+						<li>Entrez un mot de passe fort (12+ caractères avec majuscules, chiffres et caractères spéciaux) pour voir le message de succès</li>
+					</ul>
+				</div>
+			</div>
+		`,
+	}),
+}
+
+/**
+ * Champ de mot de passe avec règles de validation personnalisées.
+ */
+export const WithCustomRules: Story = {
+	render: (args) => ({
+		components: { PasswordField },
+		setup() {
+			const password = ref(args.modelValue)
+			
+			// Règles personnalisées pour la validation du mot de passe
+			const customRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || value.length < 8) {
+								return 'Le mot de passe doit contenir au moins 8 caractères'
+							}
+							return true
+						},
+						fieldIdentifier: 'password',
+					},
+				},
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || !/[A-Z]/.test(value)) {
+								return 'Le mot de passe doit contenir au moins une lettre majuscule'
+							}
+							return true
+						},
+						fieldIdentifier: 'password',
+					},
+				},
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || !/[0-9]/.test(value)) {
+								return 'Le mot de passe doit contenir au moins un chiffre'
+							}
+							return true
+						},
+						fieldIdentifier: 'password',
+					},
+				},
+			]
+			
+			return { args, password, customRules }
+		},
+		template: `
+			<PasswordField
+				v-model="password"
+				:variant-style="args.variantStyle"
+				:color="args.color"
+				:label="args.label"
+				:required="args.required"
+				:is-read-only="args.isReadOnly"
+				:is-disabled="args.isDisabled"
+				:placeholder="args.placeholder"
+				:custom-rules="customRules"
+				:show-success-messages="args.showSuccessMessages"
+				:display-asterisk="args.displayAsterisk"
+				:is-validate-on-blur="args.isValidateOnBlur"
+			/>
+		`,
+	}),
+}
+
+/**
+ * Démonstration de la validation de formulaire avec la méthode validateOnSubmit.
+ */
+export const WithFormValidation: Story = {
+	render: (args) => ({
+		components: { PasswordField },
+		setup() {
+			const password = ref('')
+			const passwordFieldRef = ref<InstanceType<typeof PasswordField> | null>(null)
+			const formStatus = ref('')
+			
+			// Règles personnalisées pour la validation du mot de passe
+			const customRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || value.length < 8) {
+								return 'Le mot de passe doit contenir au moins 8 caractères'
+							}
+							return true
+						},
+						fieldIdentifier: 'password',
+					},
+				},
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || !/[A-Z]/.test(value)) {
+								return 'Le mot de passe doit contenir au moins une lettre majuscule'
+							}
+							return true
+						},
+						fieldIdentifier: 'password',
+					},
+				},
+			]
+			
+			// Fonction de soumission du formulaire
+			const handleSubmit = () => {
+				if (passwordFieldRef.value) {
+					const isValid = passwordFieldRef.value.validateOnSubmit()
+					if (isValid) {
+						formStatus.value = 'Formulaire soumis avec succès !'
+					} else {
+						formStatus.value = 'Erreur de validation, veuillez corriger les champs'
 					}
 				}
-			]"
-		/>
-		<VBtn type="submit" class="mt-4" color="primary">
-			Valider
-		</VBtn>
-	</form>
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import PasswordField from '@cnamts/synapse'
-
-const password = ref('')
-const passwordFieldRef = ref()
-const isValid = ref(false)
-
-function handleSubmit() {
-	isValid.value = passwordFieldRef.value?.validateOnSubmit() ?? false
-	alert(isValid.value ? 'Formulaire soumis avec succès !' : 'Veuillez corriger les erreurs avant de soumettre.')
-}
-</script>
-				`,
-			},
-		],
-	},
+			}
+			
+			return { args, password, passwordFieldRef, customRules, handleSubmit, formStatus }
+		},
+		template: `
+			<div>
+				<form @submit.prevent="handleSubmit" class="mb-4">
+					<PasswordField
+						ref="passwordFieldRef"
+						v-model="password"
+						:variant-style="args.variantStyle"
+						:color="args.color"
+						label="Mot de passe"
+						:required="true"
+						:custom-rules="customRules"
+						:display-asterisk="true"
+						:is-validate-on-blur="false"
+					/>
+					<button 
+						type="submit" 
+						class="mt-4 px-4 py-2 bg-primary text-white rounded"
+					>
+						Valider
+					</button>
+				</form>
+				<div v-if="formStatus" class="mt-4 p-4 rounded" :class="formStatus.includes('succès') ? 'bg-success-lighten5' : 'bg-error-lighten5'">
+					{{ formStatus }}
+				</div>
+				<div class="mt-4">
+					<p><strong>Instructions :</strong></p>
+					<p>Ce formulaire utilise la méthode <code>validateOnSubmit()</code> pour valider le champ lors de la soumission.</p>
+					<p>La validation ne se fait pas à la perte de focus (<code>isValidateOnBlur="false"</code>) mais uniquement lors du clic sur le bouton.</p>
+				</div>
+			</div>
+		`,
+	}),
 }
