@@ -71,7 +71,6 @@ const preview: Preview = {
 				document.documentElement.classList.remove('theme-cnam', 'theme-pa')
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
-				window.location.reload()
 			}
 			return story()
 		},
