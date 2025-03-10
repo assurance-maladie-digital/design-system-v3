@@ -112,38 +112,38 @@
 			if (modelValue.length >= 2) {
 				// Essayer d'abord avec le format de retour, puis avec le format d'affichage
 				let dates = [parseDate(modelValue[0], parseFormat), parseDate(modelValue[1], parseFormat)]
-				
+
 				// Si l'une des dates est invalide avec le format de retour, essayer avec le format d'affichage
 				if (dates.some(date => date === null) && props.dateFormatReturn) {
 					dates = [parseDate(modelValue[0], props.format), parseDate(modelValue[1], props.format)]
 				}
-				
+
 				// Vérifie si l'une des dates est toujours invalide
 				if (dates.some(date => date === null)) {
 					return []
 				}
-				
+
 				// Vérifie si la première date est après la seconde
 				if (dates[0] && dates[1] && dates[0] > dates[1]) {
 					return []
 				}
-				
+
 				// Filtrer les dates nulles et convertir en tableau de Date
 				return dates.filter((date): date is Date => date !== null)
 			}
-			
+
 			if (modelValue.length === 1) {
 				// Essayer d'abord avec le format de retour, puis avec le format d'affichage
 				let date = parseDate(modelValue[0], parseFormat)
-				
+
 				// Si la date est invalide avec le format de retour, essayer avec le format d'affichage
 				if (date === null && props.dateFormatReturn) {
 					date = parseDate(modelValue[0], props.format)
 				}
-				
+
 				return date === null ? [] : [date]
 			}
-			
+
 			return []
 		}
 
@@ -154,12 +154,12 @@
 
 		// Essayer d'abord avec le format de retour, puis avec le format d'affichage
 		let date = parseDate(modelValue, parseFormat)
-		
+
 		// Si la date est invalide avec le format de retour, essayer avec le format d'affichage
 		if (date === null && props.dateFormatReturn) {
 			date = parseDate(modelValue, props.format)
 		}
-		
+
 		return date === null ? null : date
 	}
 
@@ -178,7 +178,7 @@
 
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
-	
+
 	// Déclaration des règles de validation
 	type Rule = { type: string, options: RuleOptions }
 	const customRules = ref<Rule[]>(props.customRules || [])
@@ -187,7 +187,7 @@
 	const { generateRules } = useFieldValidation()
 	const validationRules = generateRules(customRules.value)
 	const warningValidationRules = generateRules(customWarningRules.value)
-	
+
 	// Déclaration de la fonction validateDates avant son utilisation
 	const validateDates = () => {
 		// Réinitialiser tous les messages
@@ -209,8 +209,8 @@
 		if (!selectedDates.value) return
 
 		// Préparer les dates à valider
-		const datesToValidate = Array.isArray(selectedDates.value) 
-			? selectedDates.value 
+		const datesToValidate = Array.isArray(selectedDates.value)
+			? selectedDates.value
 			: [selectedDates.value]
 
 		// Collecter tous les messages
@@ -219,16 +219,16 @@
 		const allSuccess: string[] = []
 
 		// Appliquer les règles de validation
-		datesToValidate.forEach(date => {
+		datesToValidate.forEach((date) => {
 			// Appliquer d'abord les règles de validation standard
-			validationRules.forEach(rule => {
+			validationRules.forEach((rule) => {
 				const result = rule(date)
 				if (result?.error) allErrors.push(result.error)
 				else if (result?.success) allSuccess.push(result.success)
 			})
 
 			// Ensuite appliquer les règles d'avertissement
-			warningValidationRules.forEach(rule => {
+			warningValidationRules.forEach((rule) => {
 				const result = rule(date)
 				if (result?.warning) allWarnings.push(result.warning)
 				else if (result?.success && !allErrors.length) allSuccess.push(result.success)
@@ -245,11 +245,12 @@
 	const updateModel = (value: DateValue) => {
 		// Éviter les mises à jour inutiles
 		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
-		
+
 		try {
 			isUpdatingFromInternal.value = true
 			emit('update:modelValue', value)
-		} finally {
+		}
+		finally {
 			// S'assurer que le flag est toujours réinitialisé
 			setTimeout(() => {
 				isUpdatingFromInternal.value = false
@@ -261,21 +262,43 @@
 	watch(selectedDates, (newValue) => {
 		// Valider les dates
 		validateDates()
-		
+
 		// Mettre à jour le modèle si nécessaire
 		if (newValue !== null) {
 			updateModel(formattedDate.value)
-		} else {
-			updateModel(null)
+			
+			// Mettre à jour textInputValue pour le DateTextInput
+			try {
+				isUpdatingFromInternal.value = true
+				if (Array.isArray(newValue)) {
+					// Pour les plages de dates, utiliser la première date
+					if (newValue.length > 0) {
+						textInputValue.value = formatDate(newValue[0], props.format)
+					}
+				} else {
+					// Pour une date unique
+					textInputValue.value = formatDate(newValue, props.format)
+				}
+			} finally {
+				setTimeout(() => {
+					isUpdatingFromInternal.value = false
+				}, 0)
+			}
 		}
-		
+		else {
+			updateModel(null)
+			// Réinitialiser textInputValue
+			textInputValue.value = ''
+		}
+
 		// Gérer la visibilité du date picker
 		if (props.displayRange) {
 			if (Array.isArray(newValue) && newValue.length >= 2) {
 				isDatePickerVisible.value = false
 				emit('closed')
 			}
-		} else {
+		}
+		else {
 			isDatePickerVisible.value = false
 			emit('closed')
 		}
@@ -295,17 +318,17 @@
 	// Formate une date unique au format spécifié
 	const formatDate = (date: Date, format: string): string => {
 		if (!date) return ''
-		
+
 		// Formats de base
 		const day = date.getDate().toString().padStart(2, '0')
 		const month = (date.getMonth() + 1).toString().padStart(2, '0')
 		const year = date.getFullYear().toString()
 		const shortYear = year.slice(-2)
-		
+
 		// Formats sans padding
 		const dayNoPad = date.getDate().toString()
 		const monthNoPad = (date.getMonth() + 1).toString()
-		
+
 		// Remplacer les tokens dans l'ordre correct (du plus spécifique au moins spécifique)
 		let result = format
 			.replace(/YYYY/g, year)
@@ -314,7 +337,7 @@
 			.replace(/M/g, monthNoPad)
 			.replace(/DD/g, day)
 			.replace(/D/g, dayNoPad)
-		
+
 		return result
 	}
 
@@ -358,7 +381,7 @@
 	watch(textInputValue, (newValue) => {
 		// Éviter les mises à jour récursives
 		if (isUpdatingFromInternal.value) return
-		
+
 		// Parse la date avec le format d'affichage
 		const date = parseDate(newValue, props.format)
 		if (date) {
@@ -367,22 +390,45 @@
 				? formatDate(date, props.dateFormatReturn)
 				: formatDate(date, props.format)
 			updateModel(formattedValue)
+			
+			// Mettre à jour selectedDates sans déclencher de watchers supplémentaires
+			try {
+				isUpdatingFromInternal.value = true
+				selectedDates.value = date
+				// Mettre à jour l'affichage formaté
+				displayFormattedDate.value = formatDate(date, props.format)
+			} finally {
+				setTimeout(() => {
+					isUpdatingFromInternal.value = false
+				}, 0)
+			}
 		}
 		else if (newValue) {
-			// Ne mettre à jour que si la valeur n'est pas vide
+			// Même si la date n'est pas valide, conserver la valeur saisie
+			// pour éviter que la date ne disparaisse
 			updateModel(newValue)
-		} else {
-			updateModel(null)
+			// Mettre à jour l'affichage formaté pour qu'il corresponde à ce qui est saisi
+			try {
+				isUpdatingFromInternal.value = true
+				displayFormattedDate.value = newValue
+			} finally {
+				setTimeout(() => {
+					isUpdatingFromInternal.value = false
+				}, 0)
+			}
 		}
-		
-		// Mettre à jour les dates sélectionnées sans déclencher de watchers supplémentaires
-		try {
-			isUpdatingFromInternal.value = true
-			updateSelectedDates(newValue)
-		} finally {
-			setTimeout(() => {
-				isUpdatingFromInternal.value = false
-			}, 0)
+		else {
+			updateModel(null)
+			// Réinitialiser l'affichage formaté
+			try {
+				isUpdatingFromInternal.value = true
+				displayFormattedDate.value = ''
+				selectedDates.value = null
+			} finally {
+				setTimeout(() => {
+					isUpdatingFromInternal.value = false
+				}, 0)
+			}
 		}
 	})
 
@@ -466,28 +512,30 @@
 	watch(() => props.modelValue, (newValue) => {
 		// Éviter les mises à jour récursives
 		if (isUpdatingFromInternal.value) return
-		
+
 		try {
 			isUpdatingFromInternal.value = true
-			
+
 			if (!newValue || newValue === '') {
 				// Réinitialiser les valeurs
 				selectedDates.value = null
 				textInputValue.value = ''
 				displayFormattedDate.value = ''
-			} else {
+			}
+			else {
 				// Initialiser les dates sélectionnées
 				selectedDates.value = initializeSelectedDates(newValue)
-				
+
 				// Mettre à jour l'affichage
 				if (selectedDates.value) {
 					displayFormattedDate.value = displayFormattedDateComputed.value || ''
 				}
 			}
-			
+
 			// Valider les dates
 			validateDates()
-		} finally {
+		}
+		finally {
 			setTimeout(() => {
 				isUpdatingFromInternal.value = false
 			}, 0)
@@ -496,12 +544,12 @@
 
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
-		
+
 		// Initialiser l'affichage formaté
 		if (displayFormattedDateComputed.value) {
 			displayFormattedDate.value = displayFormattedDateComputed.value
 		}
-		
+
 		// Valider les dates au montage
 		validateDates()
 	})
@@ -532,37 +580,39 @@
 	// Fonction pour améliorer l'accessibilité du DatePicker
 	const updateAccessibility = async () => {
 		await nextTick()
-		
+
 		// Utiliser des attributs data pour sélectionner les éléments, ce qui est plus stable que les classes CSS
 		const datePickerEl = document.querySelector('.v-date-picker')
 		if (!datePickerEl) return
-		
+
 		// Ajouter un attribut role="application" au conteneur principal
 		datePickerEl.setAttribute('role', 'application')
 		datePickerEl.setAttribute('aria-label', 'Sélecteur de date')
-		
+
 		// Sélectionner tous les boutons de navigation
 		const navigationButtons = datePickerEl.querySelectorAll('button')
-		
+
 		// Attribuer des labels significatifs basés sur la position ou l'icône
-		navigationButtons.forEach(button => {
+		navigationButtons.forEach((button) => {
 			const iconEl = button.querySelector('.v-icon')
 			if (!iconEl) return
-			
+
 			// Utiliser le contenu de l'icône pour déterminer sa fonction
 			const iconContent = iconEl.textContent || ''
 			const iconClasses = iconEl.className || ''
-			
+
 			if (iconClasses.includes('mdi-chevron-left') || iconContent.includes('chevron-left')) {
 				button.setAttribute('aria-label', 'Mois précédent')
-			} else if (iconClasses.includes('mdi-chevron-right') || iconContent.includes('chevron-right')) {
+			}
+			else if (iconClasses.includes('mdi-chevron-right') || iconContent.includes('chevron-right')) {
 				button.setAttribute('aria-label', 'Mois suivant')
-			} else if (iconClasses.includes('mdi-chevron-down') || iconContent.includes('chevron-down') || 
-						 iconClasses.includes('mdi-menu-down') || iconContent.includes('menu-down')) {
+			}
+			else if (iconClasses.includes('mdi-chevron-down') || iconContent.includes('chevron-down')
+				|| iconClasses.includes('mdi-menu-down') || iconContent.includes('menu-down')) {
 				button.setAttribute('aria-label', 'Changer de vue')
 			}
 		})
-		
+
 		// Ajouter des instructions pour les lecteurs d'écran
 		let srOnlyEl = datePickerEl.querySelector('.sr-only-instructions')
 		if (!srOnlyEl) {
@@ -581,7 +631,7 @@
 			srOnlyHtmlEl.style.whiteSpace = 'nowrap'
 			srOnlyHtmlEl.style.border = '0'
 			srOnlyEl.textContent = 'Utilisez les flèches pour naviguer entre les dates et Entrée pour sélectionner une date'
-			
+
 			datePickerEl.prepend(srOnlyEl)
 		}
 	}
@@ -621,13 +671,41 @@
 
 	// Watch sur modelValue pour gérer les changements externes
 	watch(() => props.modelValue, (newValue) => {
-		if (!newValue || newValue === '') {
-			selectedDates.value = null
-			textInputValue.value = ''
-			displayFormattedDate.value = ''
-		}
-		else {
-			selectedDates.value = initializeSelectedDates(newValue)
+		// Éviter les mises à jour récursives
+		if (isUpdatingFromInternal.value) return
+		
+		try {
+			isUpdatingFromInternal.value = true
+			
+			if (!newValue || newValue === '') {
+				selectedDates.value = null
+				textInputValue.value = ''
+				displayFormattedDate.value = ''
+			}
+			else {
+				// Initialiser les dates sélectionnées
+				selectedDates.value = initializeSelectedDates(newValue)
+				
+				// Mettre à jour l'affichage et le textInputValue
+				if (selectedDates.value) {
+					if (Array.isArray(selectedDates.value)) {
+						if (selectedDates.value.length > 0) {
+							textInputValue.value = formatDate(selectedDates.value[0], props.format)
+							displayFormattedDate.value = displayFormattedDateComputed.value || ''
+						}
+					} else {
+						textInputValue.value = formatDate(selectedDates.value, props.format)
+						displayFormattedDate.value = displayFormattedDateComputed.value || ''
+					}
+				}
+			}
+			
+			// Valider les dates
+			validateDates()
+		} finally {
+			setTimeout(() => {
+				isUpdatingFromInternal.value = false
+			}, 0)
 		}
 	}, { immediate: true })
 </script>

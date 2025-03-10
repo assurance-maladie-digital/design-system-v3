@@ -27,7 +27,7 @@ describe('DatePicker.vue', () => {
 			},
 			props: { placeholder },
 		})
-		
+
 		// Vérifier que le placeholder est affiché comme label
 		const label = wrapper.find('label')
 		expect(label.text()).toBe(placeholder)
