@@ -528,7 +528,6 @@ export const WithSuccess: Story = {
 						return false
 					},
 					fieldIdentifier: 'password',
-					isSuccess: true,
 				},
 			},
 		],
