@@ -6,6 +6,7 @@ import PeriodField from '../PeriodField/PeriodField.vue'
 import SearchListField from '../SearchListField/SearchListField.vue'
 import { ref } from 'vue'
 import FilterInline from '../FilterInline/FilterInline.vue'
+import RangeField from '../RangeField/RangeField.vue'
 
 const meta = {
 	title: 'Composants/Filtres/FiltersSideBar',
@@ -370,7 +371,7 @@ export const ChipFormat: Story = {
 		}),
 	],
 	render: args => ({
-		components: { FilterSideBar, VTextField, VSelect, PeriodField, SearchListField },
+		components: { FilterSideBar, RangeField },
 		setup() {
 			const filters = [
 				{
