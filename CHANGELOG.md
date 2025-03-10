@@ -1,3 +1,32 @@
+## v0.0.11-alpha (10-03-2025)
+
+### Composants
+
+- FilterInline [`#416`](https://github.com/assurance-maladie-digital/design-system-v3/pull/416)
+- PeriodField: fix display [`#422`](https://github.com/assurance-maladie-digital/design-system-v3/pull/422)
+- Fix build [`#414`](https://github.com/assurance-maladie-digital/design-system-v3/pull/414),  [`#415`](https://github.com/assurance-maladie-digital/design-system-v3/pull/415)
+- Fix btn global display [`#413`](https://github.com/assurance-maladie-digital/design-system-v3/pull/413)
+- Rules: add email [`#381`](https://github.com/assurance-maladie-digital/design-system-v3/pull/381)
+- NirField: add width props [`#409`](https://github.com/assurance-maladie-digital/design-system-v3/pull/409)
+- DatePicker: fix v-model [`#407`](https://github.com/assurance-maladie-digital/design-system-v3/pull/407)
+- ChipList [`#394`](https://github.com/assurance-maladie-digital/design-system-v3/pull/394)
+- SyTextField:  error handling [`#395`](https://github.com/assurance-maladie-digital/design-system-v3/pull/395)
+- DatePicker: add text input [`#386`](https://github.com/assurance-maladie-digital/design-system-v3/pull/386)
+- PaginatedTable [`#383`](https://github.com/assurance-maladie-digital/design-system-v3/pull/383)
+
+### Documentation
+
+- Add accessibility on components pages (package 6) [`#423`](https://github.com/assurance-maladie-digital/design-system-v3/pull/423)
+- Homepage + components page + templates page + fix nav [`#402`](https://github.com/assurance-maladie-digital/design-system-v3/pull/402)
+- Add migration page [`#393`](https://github.com/assurance-maladie-digital/design-system-v3/pull/393)
+- Add usages components pages [`#387`](https://github.com/assurance-maladie-digital/design-system-v3/pull/387)
+- Fix page Pré-audit [`#418`](https://github.com/assurance-maladie-digital/design-system-v3/pull/418)
+- Add content for accessibility [`#398`](https://github.com/assurance-maladie-digital/design-system-v3/pull/398)
+- Add content for kit de pré-audit [`#397`](https://github.com/assurance-maladie-digital/design-system-v3/pull/397)
+- Fix colors page [`#412`](https://github.com/assurance-maladie-digital/design-system-v3/pull/412)
+- Fix pages content [`#411`](https://github.com/assurance-maladie-digital/design-system-v3/pull/411)
+- Add content on typo page [`#396`](https://github.com/assurance-maladie-digital/design-system-v3/pull/396)
+
 ## v0.0.10-alpha (17-02-2025)
 
 ### Composants
