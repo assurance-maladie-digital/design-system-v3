@@ -19,7 +19,7 @@ describe('DatePicker.vue', () => {
 		})
 	})
 
-	it('displays the placeholder text', () => {
+	it('displays the placeholder text as label', () => {
 		const placeholder = 'Sélectionner une date'
 		const wrapper = mount(DatePicker, {
 			global: {
@@ -27,7 +27,10 @@ describe('DatePicker.vue', () => {
 			},
 			props: { placeholder },
 		})
-		expect(wrapper.find('input').attributes('placeholder')).toBe(undefined)
+
+		// Vérifier que le placeholder est affiché comme label
+		const label = wrapper.find('label')
+		expect(label.text()).toBe(placeholder)
 	})
 
 	it('emits update:modelValue event on date selection', async () => {
