@@ -189,7 +189,7 @@
 	const warningValidationRules = generateRules(customWarningRules.value)
 
 	// Déclaration de la fonction validateDates avant son utilisation
-	const validateDates = () => {
+	const validateDates = (forceValidation = false) => {
 		// Réinitialiser tous les messages
 		errorMessages.value = []
 		successMessages.value = []
@@ -200,8 +200,9 @@
 			return
 		}
 
-		// Vérifier si le champ est requis et vide, mais seulement après une interaction et pas au chargement initial
-		if (!isUpdatingFromInternal.value && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
+		// Vérifier si le champ est requis et vide
+		// Si forceValidation est true, on ignore les conditions de validation interactive
+		if ((forceValidation || !isUpdatingFromInternal.value) && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
 			errorMessages.value.push('La date est requise.')
 			return
 		}
@@ -569,7 +570,8 @@
 		if (props.noCalendar) {
 			return dateTextInputRef.value?.validateOnSubmit()
 		}
-		validateDates()
+		// Forcer la validation pour ignorer les conditions de validation interactive
+		validateDates(true)
 		return errorMessages.value.length === 0
 	}
 
