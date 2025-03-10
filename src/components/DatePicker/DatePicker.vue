@@ -69,22 +69,35 @@
 
 		if (parts.length !== dateParts.length) return null
 
-		let day = '', month = '', year = ''
+		let day = 0, month = 0, year = 0
 
 		// Extraire les valeurs selon leur position dans le format
 		parts.forEach((part, index) => {
-			const value = dateParts[index]
-			if (part.includes('DD')) day = value
-			else if (part.includes('MM')) month = value
+			const value = parseInt(dateParts[index], 10)
+			if (isNaN(value)) return
+
+			if (part.includes('DD') || part.includes('D')) day = value
+			else if (part.includes('MM') || part.includes('M')) month = value - 1 // Les mois en JS sont 0-indexés
 			else if (part.includes('YYYY')) year = value
-			else if (part.includes('YY')) year = '20' + value // Assumons que nous sommes au 21ème siècle
+			else if (part.includes('YY')) {
+				// Gestion intelligente des années à 2 chiffres
+				// Si l'année est < 50, on considère qu'elle est dans le 21ème siècle
+				// Sinon, elle est dans le 20ème siècle
+				year = value < 50 ? 2000 + value : 1900 + value
+			}
 		})
 
-		// Vérifier que nous avons toutes les parties nécessaires
-		if (!day || !month || !year) return null
+		// Vérifier que nous avons toutes les parties nécessaires et qu'elles sont dans des plages valides
+		if (day < 1 || day > 31 || month < 0 || month > 11 || year < 1000 || year > 9999) return null
 
-		const date = new Date(`${year}-${month}-${day}`)
-		return isNaN(date.getTime()) ? null : date
+		// Créer la date à midi (12:00) pour éviter les problèmes de décalage de fuseau horaire
+		// Cela garantit que la date reste la même lors de la conversion en UTC
+		const date = new Date(year, month, day, 12, 0, 0)
+
+		// Vérifier que la date est valide (par exemple, 31 février n'existe pas)
+		if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) return null
+
+		return date
 	}
 
 	function initializeSelectedDates(
@@ -92,24 +105,45 @@
 	): Date | Date[] | null {
 		if (!modelValue) return null
 
+		// Déterminer le format à utiliser pour l'analyse
+		const parseFormat = props.dateFormatReturn || props.format
+
 		if (Array.isArray(modelValue)) {
 			if (modelValue.length >= 2) {
-				const dates = [parseDate(modelValue[0]), parseDate(modelValue[1])]
-				// Vérifie si l'une des dates est invalide
+				// Essayer d'abord avec le format de retour, puis avec le format d'affichage
+				let dates = [parseDate(modelValue[0], parseFormat), parseDate(modelValue[1], parseFormat)]
+				
+				// Si l'une des dates est invalide avec le format de retour, essayer avec le format d'affichage
+				if (dates.some(date => date === null) && props.dateFormatReturn) {
+					dates = [parseDate(modelValue[0], props.format), parseDate(modelValue[1], props.format)]
+				}
+				
+				// Vérifie si l'une des dates est toujours invalide
 				if (dates.some(date => date === null)) {
 					return []
 				}
+				
 				// Vérifie si la première date est après la seconde
 				if (dates[0] && dates[1] && dates[0] > dates[1]) {
 					return []
 				}
+				
 				// Filtrer les dates nulles et convertir en tableau de Date
 				return dates.filter((date): date is Date => date !== null)
 			}
+			
 			if (modelValue.length === 1) {
-				const date = parseDate(modelValue[0])
+				// Essayer d'abord avec le format de retour, puis avec le format d'affichage
+				let date = parseDate(modelValue[0], parseFormat)
+				
+				// Si la date est invalide avec le format de retour, essayer avec le format d'affichage
+				if (date === null && props.dateFormatReturn) {
+					date = parseDate(modelValue[0], props.format)
+				}
+				
 				return date === null ? [] : [date]
 			}
+			
 			return []
 		}
 
@@ -118,7 +152,14 @@
 			return null
 		}
 
-		const date = parseDate(modelValue)
+		// Essayer d'abord avec le format de retour, puis avec le format d'affichage
+		let date = parseDate(modelValue, parseFormat)
+		
+		// Si la date est invalide avec le format de retour, essayer avec le format d'affichage
+		if (date === null && props.dateFormatReturn) {
+			date = parseDate(modelValue, props.format)
+		}
+		
 		return date === null ? null : date
 	}
 
@@ -135,15 +176,106 @@
 
 	const textInputValue = ref<string>('')
 
+	// Variable pour éviter les mises à jour récursives
+	const isUpdatingFromInternal = ref(false)
+	
+	// Déclaration des règles de validation
+	type Rule = { type: string, options: RuleOptions }
+	const customRules = ref<Rule[]>(props.customRules || [])
+	const customWarningRules = ref<Rule[]>(props.customWarningRules || [])
+
+	const { generateRules } = useFieldValidation()
+	const validationRules = generateRules(customRules.value)
+	const warningValidationRules = generateRules(customWarningRules.value)
+	
+	// Déclaration de la fonction validateDates avant son utilisation
+	const validateDates = () => {
+		// Réinitialiser tous les messages
+		errorMessages.value = []
+		successMessages.value = []
+		warningMessages.value = []
+
+		if (props.noCalendar) {
+			// En mode no-calendar, on délègue la validation au DateTextInput
+			return
+		}
+
+		// Vérifier si le champ est requis et vide
+		if (props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
+			errorMessages.value.push('La date est requise.')
+			return
+		}
+
+		if (!selectedDates.value) return
+
+		// Préparer les dates à valider
+		const datesToValidate = Array.isArray(selectedDates.value) 
+			? selectedDates.value 
+			: [selectedDates.value]
+
+		// Collecter tous les messages
+		const allErrors: string[] = []
+		const allWarnings: string[] = []
+		const allSuccess: string[] = []
+
+		// Appliquer les règles de validation
+		datesToValidate.forEach(date => {
+			// Appliquer d'abord les règles de validation standard
+			validationRules.forEach(rule => {
+				const result = rule(date)
+				if (result?.error) allErrors.push(result.error)
+				else if (result?.success) allSuccess.push(result.success)
+			})
+
+			// Ensuite appliquer les règles d'avertissement
+			warningValidationRules.forEach(rule => {
+				const result = rule(date)
+				if (result?.warning) allWarnings.push(result.warning)
+				else if (result?.success && !allErrors.length) allSuccess.push(result.success)
+			})
+		})
+
+		// Dédoublonner et assigner les messages
+		errorMessages.value = [...new Set(allErrors)]
+		warningMessages.value = [...new Set(allWarnings)]
+		successMessages.value = [...new Set(allSuccess)]
+	}
+
+	// Fonction centralisée pour mettre à jour le modèle
+	const updateModel = (value: DateValue) => {
+		// Éviter les mises à jour inutiles
+		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
+		
+		try {
+			isUpdatingFromInternal.value = true
+			emit('update:modelValue', value)
+		} finally {
+			// S'assurer que le flag est toujours réinitialisé
+			setTimeout(() => {
+				isUpdatingFromInternal.value = false
+			}, 0)
+		}
+	}
+
+	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
 	watch(selectedDates, (newValue) => {
+		// Valider les dates
 		validateDates()
+		
+		// Mettre à jour le modèle si nécessaire
+		if (newValue !== null) {
+			updateModel(formattedDate.value)
+		} else {
+			updateModel(null)
+		}
+		
+		// Gérer la visibilité du date picker
 		if (props.displayRange) {
 			if (Array.isArray(newValue) && newValue.length >= 2) {
 				isDatePickerVisible.value = false
 				emit('closed')
 			}
-		}
-		else {
+		} else {
 			isDatePickerVisible.value = false
 			emit('closed')
 		}
@@ -163,11 +295,27 @@
 	// Formate une date unique au format spécifié
 	const formatDate = (date: Date, format: string): string => {
 		if (!date) return ''
+		
+		// Formats de base
 		const day = date.getDate().toString().padStart(2, '0')
 		const month = (date.getMonth() + 1).toString().padStart(2, '0')
 		const year = date.getFullYear().toString()
 		const shortYear = year.slice(-2)
-		return format.replace('YYYY', year).replace('YY', shortYear).replace('MM', month).replace('DD', day)
+		
+		// Formats sans padding
+		const dayNoPad = date.getDate().toString()
+		const monthNoPad = (date.getMonth() + 1).toString()
+		
+		// Remplacer les tokens dans l'ordre correct (du plus spécifique au moins spécifique)
+		let result = format
+			.replace(/YYYY/g, year)
+			.replace(/YY/g, shortYear)
+			.replace(/MM/g, month)
+			.replace(/M/g, monthNoPad)
+			.replace(/DD/g, day)
+			.replace(/D/g, dayNoPad)
+		
+		return result
 	}
 
 	// Date(s) formatée(s) en chaîne de caractères pour la valeur de retour
@@ -208,6 +356,9 @@
 	}, { immediate: true })
 
 	watch(textInputValue, (newValue) => {
+		// Éviter les mises à jour récursives
+		if (isUpdatingFromInternal.value) return
+		
 		// Parse la date avec le format d'affichage
 		const date = parseDate(newValue, props.format)
 		if (date) {
@@ -215,12 +366,24 @@
 			const formattedValue = props.dateFormatReturn
 				? formatDate(date, props.dateFormatReturn)
 				: formatDate(date, props.format)
-			emit('update:modelValue', formattedValue)
+			updateModel(formattedValue)
 		}
-		else {
-			emit('update:modelValue', newValue || null)
+		else if (newValue) {
+			// Ne mettre à jour que si la valeur n'est pas vide
+			updateModel(newValue)
+		} else {
+			updateModel(null)
 		}
-		updateSelectedDates(newValue)
+		
+		// Mettre à jour les dates sélectionnées sans déclencher de watchers supplémentaires
+		try {
+			isUpdatingFromInternal.value = true
+			updateSelectedDates(newValue)
+		} finally {
+			setTimeout(() => {
+				isUpdatingFromInternal.value = false
+			}, 0)
+		}
 	})
 
 	// Date(s) formatée(s) en chaîne de caractères pour l'affichage
@@ -299,19 +462,48 @@
 		})).replace(/\b\w/g, l => l.toUpperCase())
 	})
 
+	// Watcher pour le modelValue pour synchroniser les dates sélectionnées
+	watch(() => props.modelValue, (newValue) => {
+		// Éviter les mises à jour récursives
+		if (isUpdatingFromInternal.value) return
+		
+		try {
+			isUpdatingFromInternal.value = true
+			
+			if (!newValue || newValue === '') {
+				// Réinitialiser les valeurs
+				selectedDates.value = null
+				textInputValue.value = ''
+				displayFormattedDate.value = ''
+			} else {
+				// Initialiser les dates sélectionnées
+				selectedDates.value = initializeSelectedDates(newValue)
+				
+				// Mettre à jour l'affichage
+				if (selectedDates.value) {
+					displayFormattedDate.value = displayFormattedDateComputed.value || ''
+				}
+			}
+			
+			// Valider les dates
+			validateDates()
+		} finally {
+			setTimeout(() => {
+				isUpdatingFromInternal.value = false
+			}, 0)
+		}
+	}, { immediate: true })
+
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
-		if (props.modelValue) {
-			validateDates()
-		}
-		if (selectedDates.value !== null) {
-			validateDates()
-			// Force format application on mount
-			emit('update:modelValue', formattedDate.value)
-		}
+		
+		// Initialiser l'affichage formaté
 		if (displayFormattedDateComputed.value) {
 			displayFormattedDate.value = displayFormattedDateComputed.value
 		}
+		
+		// Valider les dates au montage
+		validateDates()
 	})
 
 	onBeforeUnmount(() => {
@@ -337,25 +529,67 @@
 		initializeSelectedDates,
 	})
 
-	// les btns du date picker ne sont pas accessibles, on les rend accessibles
+	// Fonction pour améliorer l'accessibilité du DatePicker
+	const updateAccessibility = async () => {
+		await nextTick()
+		
+		// Utiliser des attributs data pour sélectionner les éléments, ce qui est plus stable que les classes CSS
+		const datePickerEl = document.querySelector('.v-date-picker')
+		if (!datePickerEl) return
+		
+		// Ajouter un attribut role="application" au conteneur principal
+		datePickerEl.setAttribute('role', 'application')
+		datePickerEl.setAttribute('aria-label', 'Sélecteur de date')
+		
+		// Sélectionner tous les boutons de navigation
+		const navigationButtons = datePickerEl.querySelectorAll('button')
+		
+		// Attribuer des labels significatifs basés sur la position ou l'icône
+		navigationButtons.forEach(button => {
+			const iconEl = button.querySelector('.v-icon')
+			if (!iconEl) return
+			
+			// Utiliser le contenu de l'icône pour déterminer sa fonction
+			const iconContent = iconEl.textContent || ''
+			const iconClasses = iconEl.className || ''
+			
+			if (iconClasses.includes('mdi-chevron-left') || iconContent.includes('chevron-left')) {
+				button.setAttribute('aria-label', 'Mois précédent')
+			} else if (iconClasses.includes('mdi-chevron-right') || iconContent.includes('chevron-right')) {
+				button.setAttribute('aria-label', 'Mois suivant')
+			} else if (iconClasses.includes('mdi-chevron-down') || iconContent.includes('chevron-down') || 
+						 iconClasses.includes('mdi-menu-down') || iconContent.includes('menu-down')) {
+				button.setAttribute('aria-label', 'Changer de vue')
+			}
+		})
+		
+		// Ajouter des instructions pour les lecteurs d'écran
+		let srOnlyEl = datePickerEl.querySelector('.sr-only-instructions')
+		if (!srOnlyEl) {
+			srOnlyEl = document.createElement('span')
+			srOnlyEl.className = 'sr-only-instructions'
+			srOnlyEl.setAttribute('aria-live', 'polite')
+			// Utiliser HTMLElement pour accéder aux propriétés de style
+			const srOnlyHtmlEl = srOnlyEl as HTMLElement
+			srOnlyHtmlEl.style.position = 'absolute'
+			srOnlyHtmlEl.style.width = '1px'
+			srOnlyHtmlEl.style.height = '1px'
+			srOnlyHtmlEl.style.padding = '0'
+			srOnlyHtmlEl.style.margin = '-1px'
+			srOnlyHtmlEl.style.overflow = 'hidden'
+			srOnlyHtmlEl.style.clip = 'rect(0, 0, 0, 0)'
+			srOnlyHtmlEl.style.whiteSpace = 'nowrap'
+			srOnlyHtmlEl.style.border = '0'
+			srOnlyEl.textContent = 'Utilisez les flèches pour naviguer entre les dates et Entrée pour sélectionner une date'
+			
+			datePickerEl.prepend(srOnlyEl)
+		}
+	}
+
+	// Appliquer les améliorations d'accessibilité quand le DatePicker devient visible
 	watch(isDatePickerVisible, async (newValue) => {
 		if (newValue) {
-			await nextTick()
-			const arrowDown = document.querySelector('.v-btn.v-btn--icon.v-theme--light.v-btn--density-comfortable.v-btn--size-default.v-btn--variant-text.v-date-picker-controls__mode-btn')
-			const arrowLeftButtons = document.querySelectorAll('.v-btn.v-btn--icon.v-theme--light.v-btn--density-default.v-btn--size-default.v-btn--variant-text')
-
-			if (arrowDown) {
-				arrowDown.setAttribute('aria-label', 'Fleche vers le bas')
-			}
-
-			arrowLeftButtons.forEach((button, index) => {
-				if (index === 0) {
-					button.setAttribute('aria-label', 'Fleche vers la gauche')
-				}
-				else if (index === 1) {
-					button.setAttribute('aria-label', 'Fleche vers la droite')
-				}
-			})
+			await updateAccessibility()
 		}
 	})
 
@@ -367,71 +601,7 @@
 		isDatePickerVisible.value = true
 	}
 
-	type Rule = { type: string, options: RuleOptions }
-
-	const customRules = ref<Rule[]>(props.customRules || [])
-	const customWarningRules = ref<Rule[]>(props.customWarningRules || [])
-
-	const { generateRules } = useFieldValidation()
-	const validationRules = generateRules(customRules.value)
-	const warningValidationRules = generateRules(customWarningRules.value)
-
-	const validateDates = () => {
-		errorMessages.value = []
-		successMessages.value = []
-		warningMessages.value = []
-
-		if (props.noCalendar) {
-			// En mode no-calendar, on délègue la validation au DateTextInput
-			return
-		}
-
-		const addMessages = (dates, rules) => {
-			dates.forEach((date) => {
-				rules.forEach((rule) => {
-					const result = rule(date)
-					if (result?.error) {
-						errorMessages.value.push(result.error)
-						errorMessages.value = [...new Set(errorMessages.value)]
-					}
-					else if (result?.warning) {
-						warningMessages.value.push(result.warning)
-						warningMessages.value = [...new Set(warningMessages.value)]
-					}
-					else if (result?.success) {
-						successMessages.value.push(result.success)
-						successMessages.value = [...new Set(successMessages.value)]
-					}
-				})
-			})
-		}
-
-		const handleValidation = (dates) => {
-			if (Array.isArray(dates) && dates.length > 1) {
-				// Pour une plage, on ne vérifie que le premier et le dernier jour
-				const [firstDate, ...rest] = dates
-				const lastDate = rest[rest.length - 1]
-				const datesToValidate = [firstDate, lastDate]
-
-				// Validation des règles
-				addMessages(datesToValidate, validationRules)
-				addMessages(datesToValidate, warningValidationRules)
-			}
-			else {
-				// Pour une date unique, on valide normalement
-				const datesToValidate = Array.isArray(dates) ? dates : [dates]
-				addMessages(datesToValidate, validationRules)
-				addMessages(datesToValidate, warningValidationRules)
-			}
-		}
-
-		if (props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
-			errorMessages.value.push('La date est requise.')
-		}
-		else if (selectedDates.value) {
-			handleValidation(Array.isArray(selectedDates.value) ? selectedDates.value : [selectedDates.value])
-		}
-	}
+	// Fonctions et constantes déjà déclarées plus haut dans le code
 
 	const getIcon = () => {
 		if (props.noCalendar) {
