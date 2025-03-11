@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 	import { computed, ref, watch } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
-	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
-	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
+	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import {
 		mdiAlertOutline,
 		mdiCheck,
@@ -19,6 +18,9 @@
 			appendIcon?: IconType
 			prependInnerIcon?: IconType
 			appendInnerIcon?: IconType
+			prependTooltip?: string
+			appendTooltip?: string
+			tooltipLocation?: 'top' | 'bottom' | 'start' | 'end'
 			variantStyle?: VariantStyle
 			color?: ColorType
 			isClearable?: boolean
@@ -70,9 +72,11 @@
 			width?: string | number
 			displayAsterisk?: boolean
 			noIcon?: boolean
-			customRules?: { type: string, options: RuleOptions }[]
-			customWarningRules?: { type: string, options: RuleOptions }[]
+			customRules?: ValidationRule[]
+			customWarningRules?: ValidationRule[]
+			customSuccessRules?: ValidationRule[]
 			showSuccessMessages?: boolean
+			isValidateOnBlur?: boolean
 		}>(),
 		{
 			modelValue: undefined,
@@ -80,6 +84,9 @@
 			appendIcon: undefined,
 			appendInnerIcon: undefined,
 			prependInnerIcon: undefined,
+			prependTooltip: undefined,
+			appendTooltip: undefined,
+			tooltipLocation: 'top',
 			variantStyle: 'outlined',
 			color: 'primary',
 			label: 'custom label',
@@ -106,7 +113,7 @@
 			hint: undefined,
 			id: undefined,
 			loading: false,
-			maxErrors: 2,
+			maxErrors: undefined,
 			maxWidth: undefined,
 			messages: undefined,
 			minWidth: undefined,
@@ -130,7 +137,9 @@
 			noIcon: false,
 			customRules: () => [],
 			customWarningRules: () => [],
+			customSuccessRules: () => [],
 			showSuccessMessages: true,
+			isValidateOnBlur: true,
 		},
 	)
 
@@ -143,136 +152,117 @@
 		calendar: mdiCalendar,
 	}
 
+	const emit = defineEmits([
+		'update:modelValue',
+		'clear',
+		'prepend-icon-click',
+		'append-icon-click',
+	])
+
 	const model = computed({
-		get: () => props.modelValue,
-		set: (value) => {
-			emit('update:model-value', value)
+		get() {
+			return props.modelValue
+		},
+		set(value) {
+			emit('update:modelValue', value)
 		},
 	})
 
 	const isBlurred = ref(false)
-	const errors = ref<string[]>([])
-	const warnings = ref<string[]>([])
-	const successes = ref<string[]>([])
 
+	// Initialisation du composable de validation
+	const validation = useValidation({
+		customRules: props.customRules,
+		warningRules: props.customWarningRules,
+		successRules: props.customSuccessRules,
+		showSuccessMessages: props.showSuccessMessages,
+		fieldIdentifier: props.label,
+	})
+
+	// Synchronisation des messages externes
 	watch(() => props.errorMessages, (newVal) => {
-		errors.value = newVal || []
+		validation.errors.value = newVal || []
 	}, { immediate: true })
 
 	watch(() => props.warningMessages, (newVal) => {
-		warnings.value = newVal || []
+		validation.warnings.value = newVal || []
 	}, { immediate: true })
 
 	watch(() => props.successMessages, (newVal) => {
-		successes.value = newVal || []
+		validation.successes.value = newVal || []
 	}, { immediate: true })
 
-	type Rule = { type: string, options?: RuleOptions }
-
-	const customRules = ref<Rule[]>(props.customRules || [])
-	const customWarningRules = ref<Rule[]>(props.customWarningRules || [])
-
-	const { generateRules } = useFieldValidation()
-
-	const validationRules = computed(() => {
-		const defaultRules: Rule[] = props.required
-			? [{
-				type: 'required',
-				options: {
-					message: `Le champ ${props.label || 'ce champ'} est requis.`,
-					fieldIdentifier: props.label,
-				},
-			}]
-			: []
-
-		return generateRules([...defaultRules, ...customRules.value])
-	})
-
-	const warningValidationRules = computed(() => {
-		const rulesWithWarning = customWarningRules.value.map(rule => ({
-			type: rule.type,
-			options: { ...(rule.options || {}), isWarning: true },
-		}))
-		return generateRules(rulesWithWarning)
-	})
+	// Construction des règles de validation
+	const defaultRules = computed<ValidationRule[]>(() => props.required
+		? [{
+			type: 'required',
+			options: {
+				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				fieldIdentifier: props.label,
+			},
+		}]
+		: [],
+	)
 
 	const validateField = (value: string | number | null) => {
-		errors.value = []
-		warnings.value = []
-		successes.value = []
-
 		// Si le champ est vide et non requis, on ne fait pas de validation
 		if (!value && !props.required) {
+			validation.clearValidation()
 			return true
 		}
 
-		let hasSuccess = false
+		const result = validation.validateField(
+			value,
+			[...defaultRules.value, ...props.customRules],
+			props.customWarningRules,
+		)
 
-		// Validation des règles standard
-		validationRules.value.forEach((rule) => {
-			const result = rule(value)
-			if (result.error) {
-				errors.value.push(result.error)
-			}
-			else if (props.showSuccessMessages && result.success && !errors.value.length && !hasSuccess) {
-				successes.value = [result.success]
-				hasSuccess = true
-			}
-		})
-
-		// Si on a des erreurs, on n'affiche pas les warnings ni les succès
-		if (errors.value.length) {
-			warnings.value = []
-			successes.value = []
-			return false
-		}
-
-		// Validation des règles d'avertissement
-		warningValidationRules.value.forEach((rule) => {
-			const result = rule(value)
-			if (result.warning) {
-				warnings.value.push(result.warning)
-			}
-		})
-
-		// Si on a des warnings, on n'affiche pas les succès
-		if (warnings.value.length) {
-			successes.value = []
-		}
-
-		return true
+		return !result.hasError
 	}
 
 	const validateOnSubmit = () => {
 		isBlurred.value = true
-		// On s'assure que model.value n'est pas undefined
 		return validateField(model.value ?? null)
 	}
-
-	const hasError = computed(() => errors.value.length > 0)
-	const hasWarning = computed(() => warnings.value.length > 0)
-	const hasSuccess = computed(() => successes.value.length > 0 && !hasError.value && !hasWarning.value)
 
 	const checkErrorOnBlur = () => {
 		isBlurred.value = true
 		validateField(model.value ?? null)
+		emit('update:modelValue', model.value)
 	}
 
 	watch(model, (newValue) => {
-		validateField(newValue ?? null)
+		if (!props.isValidateOnBlur) {
+			validateField(newValue ?? null)
+		}
 		if (props.isClearable && newValue === '') {
 			emit('clear')
 		}
 	})
 
+	// Computed pour l'affichage des états
+	const hasError = computed(() => validation.hasError.value)
+	const hasWarning = computed(() => validation.hasWarning.value)
+	const hasSuccess = computed(() => validation.hasSuccess.value)
+
+	const errors = computed(() => validation.errors.value)
+	const warnings = computed(() => validation.warnings.value)
+	const successes = computed(() => validation.successes.value)
+
+	// Computed pour les icônes
 	const appendInnerIconColor = computed(() => {
-		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
-		return props.appendInnerIcon === 'error' || props.appendInnerIcon === 'success' || props.appendInnerIcon === 'warning'
-			? props.appendInnerIcon
-			: 'black'
+		if (props.appendInnerIcon === 'error') return 'error'
+		if (props.appendInnerIcon === 'success') return 'success'
+		return 'rgba(0, 0, 0, 1);'
 	})
+
+	const handlePrependIconClick = () => {
+		emit('prepend-icon-click')
+	}
+
+	const handleAppendIconClick = () => {
+		emit('append-icon-click')
+	}
 
 	const validationIcon = computed(() => {
 		if (hasError.value) return ICONS['error']
@@ -296,14 +286,10 @@
 		opacity: '1',
 	}
 
-	const emit = defineEmits(['update:model-value', 'clear', 'prepend-icon-click', 'append-icon-click'])
-
 	defineExpose({
-		appendInnerIconColor,
+		validation,
 		validateOnSubmit,
-		errors,
-		warnings,
-		successes,
+		checkErrorOnBlur,
 	})
 </script>
 
@@ -312,6 +298,7 @@
 		:id="props.id"
 		v-model="model"
 		:active="props.isActive"
+		:title="props.label"
 		:aria-label="props.label"
 		:base-color="props.baseColor"
 		:bg-color="props.bgColor"
@@ -336,7 +323,7 @@
 		:loading="props.loading"
 		:max-errors="props.maxErrors"
 		:max-width="props.maxWidth"
-		:messages="hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : [])"
+		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 		:min-width="props.minWidth"
 		:name="props.name"
 		:no-icon="props.noIcon"
@@ -360,35 +347,70 @@
 		:class="{
 			'error-field': hasError,
 			'warning-field': hasWarning,
-			'success-field': hasSuccess
+			'success-field': hasSuccess,
+			'basic-field': !hasError && !hasWarning && !hasSuccess
 		}"
 		@blur="checkErrorOnBlur"
 	>
 		<template
-			v-if="props.prependIcon && !props.noIcon"
+			v-if="props.prependIcon || props.prependTooltip"
 			#prepend
 		>
 			<slot name="prepend">
+				<template v-if="props.prependTooltip">
+					<VTooltip
+						:text="props.prependTooltip"
+						:location="props.tooltipLocation"
+					>
+						<template #activator="{ props: tooltipProps }">
+							<VIcon
+								v-bind="tooltipProps"
+								:aria-label="props.label ? `${props.label} - info` : 'Info'"
+								:color="appendInnerIconColor"
+								:icon="ICONS.info"
+								role="button"
+							/>
+						</template>
+					</VTooltip>
+				</template>
 				<VIcon
+					v-else-if="props.prependIcon"
 					:aria-label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.prependIcon]"
 					role="button"
-					@click="$emit('prepend-icon-click')"
+					@click="handlePrependIconClick"
 				/>
 			</slot>
 		</template>
 		<template
-			v-if="props.appendIcon && !props.noIcon"
+			v-if="props.appendIcon || props.appendTooltip"
 			#append
 		>
 			<slot name="append">
+				<template v-if="props.appendTooltip">
+					<VTooltip
+						:text="props.appendTooltip"
+						:location="props.tooltipLocation"
+					>
+						<template #activator="{ props: tooltipProps }">
+							<VIcon
+								v-bind="tooltipProps"
+								:aria-label="props.label ? `${props.label} - info` : 'Info'"
+								:color="appendInnerIconColor"
+								:icon="ICONS.info"
+								role="button"
+							/>
+						</template>
+					</VTooltip>
+				</template>
 				<VIcon
+					v-else-if="props.appendIcon"
 					:aria-label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.appendIcon]"
 					role="button"
-					@click="$emit('append-icon-click')"
+					@click="handleAppendIconClick"
 				/>
 			</slot>
 		</template>
@@ -492,6 +514,12 @@
 		.v-messages__message {
 			color: tokens.$colors-border-success !important;
 		}
+	}
+}
+
+.basic-field {
+	:deep(.v-icon__svg) {
+		fill: rgb(0 0 0 / 100%);
 	}
 }
 </style>

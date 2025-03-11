@@ -16,6 +16,7 @@ const meta: Meta<typeof SySelect> = {
 		items: { control: 'object' },
 		errorMessages: { control: 'object' },
 		required: { control: 'boolean' },
+		displayAsterisk: { control: 'boolean' },
 	},
 } as Meta<typeof SySelect>
 
@@ -123,6 +124,70 @@ export const Required: Story = {
 					<SySelect
 						v-bind="args"
 						:required="args.required"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const RequiredWithAsterisk: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Version du champ de sélection requis avec un astérisque visuel.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SySelect
+    v-model="value"
+    :items="items"
+    label="Sélectionnez une option"
+    required
+    display-asterisk
+  />
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import SySelect from '@cnamts/synapse'
+
+const value = ref('')
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+]
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		label: 'Sélectionnez une option',
+		required: true,
+		displayAsterisk: true,
+	},
+	render: (args) => {
+		return {
+			components: { SySelect },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<SySelect
+						v-bind="args"
+						:required="args.required"
+						:display-asterisk="args.displayAsterisk"
 					/>
 				</div>
 			`,

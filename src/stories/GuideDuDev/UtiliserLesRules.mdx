@@ -1,108 +1,351 @@
-import {Meta, Source} from '@storybook/addon-docs/blocks';
+import { Meta, Source } from '@storybook/addon-docs/blocks';
 
 <Meta title="Guide Du Dev/Utiliser les rules"/>
 
 # Utiliser les règles de validation
 
-Ce guide décrit comment utiliser le composable `useFieldValidation` pour créer des règles de validation flexibles et personnalisées dans votre projet Vue.js.
+Ce guide décrit comment utiliser le système de validation de formulaires du Design System pour créer des validations flexibles et intuitives.
 
 ## Introduction
 
-Le composable `useFieldValidation` vous permet de définir des règles de validation dynamiques pour différents champs dans vos formulaires. Ce composable est conçu pour être flexible, réutilisable et facilement intégrable avec des bibliothèques comme Vuetify.
+Le système de validation repose sur deux composables principaux :
+- `useFieldValidation` : Gère la création des règles de validation
+- `useValidation` : Gère l'état de validation et l'affichage des messages
 
-## Structure du composable
-#
+## Les 3 types de validation
+
+Notre système supporte trois types de retours de validation :
+
+1. **Erreurs** (rouge 🔴) : Bloquent la soumission du formulaire
+2. **Avertissements** (orange 🟠) : Informent l'utilisateur sans bloquer
+3. **Succès** (vert 🟢) : Confirment la validité du champ
+
+### Priorité des validations
+
+Les validations suivent un ordre de priorité :
+1. Si une erreur est présente, elle est affichée en priorité
+2. S'il n'y a pas d'erreur mais des avertissements, ils sont affichés
+3. S'il n'y a ni erreur ni avertissement, les messages de succès sont affichés
+
+## Structure des types
+
+### Type `ValidationOptions`
+
+Options de configuration pour la validation :
+
+<Source dark code={`
+interface ValidationOptions {
+  showSuccessMessages?: boolean;  // Activer/désactiver les messages de succès
+  fieldIdentifier?: string;       // Nom du champ pour les messages
+  customRules?: ValidationRule[]; // Règles personnalisées
+  warningRules?: ValidationRule[]; // Règles d'avertissement
+  successRules?: ValidationRule[]; // Règles de succès
+}
+`}/>
+
+### Type `ValidationRule`
+
+Structure d'une règle de validation :
+
+<Source dark code={`
+type ValidationRule = {
+  type: string;     // Type de règle (ex: 'required', 'email')
+  options: RuleOptions;
+}
+`}/>
+
 ### Type `RuleOptions`
 
+Options disponibles pour configurer une règle :
+
 <Source dark code={`
-type RuleOptions = {
-  fieldName?: string; // Nom du champ utilisé dans les messages d'erreur
-  message?: string; // Message personnalisé pour la règle
-  successMessage?: string; // Message personnalisé de validation réussie
-  length?: number; // Longueur minimale ou maximale
-  value?: number; // Valeur minimale ou maximale
-  pattern?: RegExp; // Motif à valider
-  ignoreSpace?: boolean; // Ignorer les espaces lors de la validation de longueur
+interface RuleOptions {
+  message?: string;         // Message d'erreur personnalisé
+  successMessage?: string;  // Message de succès personnalisé
+  warningMessage?: string;  // Message d'avertissement personnalisé
+  fieldName?: string;      // Nom du champ pour les messages
+  fieldIdentifier?: string; // Identifiant du champ
+  value?: any;             // Valeur pour les règles min/max
+  length?: number;         // Longueur pour minLength/maxLength
+  pattern?: RegExp;        // Expression régulière
+  ignoreSpace?: boolean;   // Ignorer les espaces
+  isWarning?: boolean;     // Traiter comme un avertissement
   validate?: (value: any) => boolean | string; // Validation personnalisée
-};
-`}
-/>
+}
+`}/>
 
-### Type `ValidationResult`
+## Exemple complet d'utilisation
 
-<Source dark code={`
-type ValidationResult = {
-  success?: string; // Message de validation réussie
-  error?: string; // Message d'erreur
-};
-`}
-/>
+### Avec un input simple
 
-## Exemple d'intégration
-
-### Script Vue.js
+Voici un exemple complet montrant les différentes possibilités de validation :
 
 <Source dark code={`
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useFieldValidation } from '@cnamts/synapse';
+import { ref } from 'vue'
+import { useValidation } from '@cnamts/synapse'
 
-const { generateRules } = useFieldValidation();
+const password = ref('')
 
-const firstName = ref('');
-const email = ref('');
-const age = ref('');
+const { validateField, hasError, hasWarning, hasSuccess, errors, warnings, successes } = useValidation({
+  fieldIdentifier: 'Mot de passe',
+  showSuccessMessages: true
+})
 
-const rules = {
-  firstName: generateRules([
-    { type: 'required', options: { message: 'Ce champ est requis.' } },
-    { type: 'minLength', options: { length: 3, ignoreSpace: true } },
-    { type: 'maxLength', options: { length: 20 } },
-  ]),
-  email: generateRules([
-    { type: 'required', options: { fieldName: 'Email' } },
-    { type: 'email' },
-  ]),
-  age: generateRules([
-    { type: 'min', options: { value: 18 } },
-    { type: 'max', options: { value: 99 } },
-  ]),
-};
-
-const validateField = (field: string) => {
-  return rules[field].every((rule) => rule(field));
-};
-
-const handleSubmit = () => {
-  if (validateField('firstName') && validateField('email') && validateField('age')) {
-    alert('Formulaire valide.');
-  } else {
-    alert('Merci de vérifier les champs.');
+// Règles d'erreur (bloquantes)
+const errorRules = [
+  { 
+    type: 'required',
+    options: { message: 'Le mot de passe est requis' }
+  },
+  { 
+    type: 'minLength',
+    options: { length: 6, message: 'Le mot de passe doit contenir au moins 6 caractères' }
   }
-};
+]
+
+// Règles d'avertissement (non-bloquantes)
+const warningRules = [
+  {
+    type: 'minLength',
+    options: { 
+      length: 8,
+      warningMessage: 'Un mot de passe de 8 caractères minimum est recommandé'
+    }
+  }
+]
+
+// Règles de succès (messages positifs)
+const successRules = [
+  {
+    type: 'minLength',
+    options: { 
+      length: 12,
+      successMessage: 'Excellent ! Votre mot de passe est très sécurisé'
+    }
+  }
+]
+
+const validate = () => {
+  const result = validateField(
+    password.value,
+    errorRules,
+    warningRules,
+    successRules
+  )
+  
+  // result contient :
+  // - hasError: boolean
+  // - hasWarning: boolean
+  // - hasSuccess: boolean
+  // - state: { errors, warnings, successes }
+}
 </script>
-`}
-/>
 
-Vous pouvez retrouver un exemple complet sur le [NirField](/docs/composants-formulaires-nirfield--docs).
+<template>
+  <div>
+    <input 
+      v-model="password"
+      @input="validate"
+      :class="{ 
+        'error': hasError,
+        'warning': hasWarning && !hasError,
+        'success': hasSuccess
+      }"
+    />
+    
+    <!-- Affichage des messages -->
+    <div v-if="hasError" class="error-messages">
+      <p v-for="error in errors" :key="error">{{ error }}</p>
+    </div>
+    
+    <div v-else-if="hasWarning" class="warning-messages">
+      <p v-for="warning in warnings" :key="warning">{{ warning }}</p>
+    </div>
+    
+    <div v-else-if="hasSuccess" class="success-messages">
+      <p v-for="success in successes" :key="success">{{ success }}</p>
+    </div>
+  </div>
+</template>
+`}/>
 
-## Fonctionnalités supportées
+### Avec SyTextField
 
-- **Validation requise** (`required`) : Assurez-vous qu'un champ est rempli.
-- **Longueur minimale** (`minLength`) : Validez un champ avec un nombre minimal de caractères.
-- **Longueur maximale** (`maxLength`) : Limitez un champ à un nombre maximal de caractères.
-- **Valeur minimale** (`min`) : Assurez-vous que la valeur est au moins égale à une valeur définie.
-- **Valeur maximale** (`max`) : Assurez-vous que la valeur ne dépasse pas une valeur définie.
-- **Validation par motif** (`matchPattern`) : Validez un champ à l'aide d'une expression régulière.
-- **Validation d'email** (`email`) : Assurez-vous que la valeur est une adresse email valide.
-- **Validation personnalisée** (`custom`) : Implémentez des règles spécifiques via une fonction.
+Le `SyTextField` intègre nativement notre système de validation. Voici un exemple complet :
+
+<Source dark code={`
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const password = ref('')
+
+// Règles d'erreur (bloquantes)
+const rules = [
+  { 
+    type: 'required',
+    options: { message: 'Le mot de passe est requis' }
+  },
+  { 
+    type: 'minLength',
+    options: { length: 6, message: 'Le mot de passe doit contenir au moins 6 caractères' }
+  }
+]
+
+// Règles d'avertissement (non-bloquantes)
+const warningRules = [
+  {
+    type: 'minLength',
+    options: { 
+      length: 8,
+      warningMessage: 'Un mot de passe de 8 caractères minimum est recommandé'
+    }
+  }
+]
+
+// Règles de succès (messages positifs)
+const successRules = [
+  {
+    type: 'minLength',
+    options: { 
+      length: 12,
+      successMessage: 'Excellent ! Votre mot de passe est très sécurisé'
+    }
+  }
+]
+</script>
+
+<template>
+  <SyTextField
+    v-model="password"
+    label="Mot de passe"
+    type="password"
+    :customRules="rules"
+    :customWarningRules="warningRules"
+    :customSuccessRules="successRules"
+    placeholder="Entrez votre mot de passe"
+  />
+</template>
+`}/>
+
+Le composant affichera automatiquement :
+- Une icône et un message d'erreur en rouge si le champ est vide ou contient moins de 6 caractères
+- Une icône et un message d'avertissement en orange si le mot de passe fait entre 6 et 8 caractères
+- Une icône et un message de succès en vert si le mot de passe fait 12 caractères ou plus
+
+### Validation personnalisée avec SyTextField
+
+Voici un exemple plus avancé avec une validation personnalisée :
+
+<Source dark code={`
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const email = ref('')
+
+// Règle personnalisée pour vérifier le domaine ameli.fr
+const rules = [
+  { 
+    type: 'required',
+    options: { message: 'L\'email est requis' }
+  },
+  { 
+    type: 'email',
+    options: { message: 'Format d\'email invalide' }
+  },
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        if (!value.endsWith('@ameli.fr')) {
+          return 'L\'email doit être un email ameli.fr'
+        }
+        return true
+      }
+    }
+  }
+]
+
+// Règle d'avertissement pour le format prénom.nom
+const warningRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        const [localPart] = value.split('@')
+        if (!/^[a-z]+\.[a-z]+$/.test(localPart)) {
+          return 'Format recommandé : prenom.nom@ameli.fr'
+        }
+        return true
+      },
+      isWarning: true
+    }
+  }
+]
+</script>
+
+<template>
+  <SyTextField
+    v-model="email"
+    label="Email professionnel"
+    :customRules="rules"
+    :customWarningRules="warningRules"
+    placeholder="prenom.nom@ameli.fr"
+  />
+</template>
+`}/>
+
+Dans cet exemple :
+- Le champ est invalide si l'email n'est pas au format @ameli.fr
+- Un avertissement s'affiche si l'email ne suit pas le format prenom.nom
+- La validation se fait automatiquement à la perte du focus
+- Les icônes et couleurs sont gérées automatiquement par le composant
+
+## Règles de validation disponibles
+
+- **required** : Vérifie qu'un champ est rempli
+- **email** : Valide le format d'une adresse email
+- **minLength** : Vérifie une longueur minimale
+- **maxLength** : Vérifie une longueur maximale
+- **min** : Vérifie une valeur minimale (nombre)
+- **max** : Vérifie une valeur maximale (nombre)
+- **pattern** : Valide avec une expression régulière
+- **custom** : Validation personnalisée via une fonction
 
 ## Bonnes pratiques
 
-- **Centralisation** : Centralisez la logique de validation pour garantir une maintenance facile.
-- **Accessibilité** : Vérifiez que les messages d'erreur sont clairs et concis pour tous les utilisateurs.
+1. **Messages clairs** : Utilisez des messages explicites qui guident l'utilisateur
+2. **Validation progressive** : Validez au fur et à mesure de la saisie
+3. **Avertissements utiles** : Utilisez les warnings pour des recommandations non-bloquantes
+4. **Messages de succès** : Encouragez les bonnes pratiques avec des messages positifs
+5. **Identifiants de champs** : Utilisez `fieldIdentifier` pour des messages contextuels
+
+## Exemple de validation personnalisée
+
+<Source dark code={`
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        const hasNumber = /\d/.test(value)
+        const hasUpper = /[A-Z]/.test(value)
+        const hasLower = /[a-z]/.test(value)
+        
+        if (!hasNumber || !hasUpper || !hasLower) {
+          return 'Le mot de passe doit contenir au moins un chiffre, une majuscule et une minuscule'
+        }
+        
+        return true
+      },
+      successMessage: 'Votre mot de passe respecte les critères de sécurité'
+    }
+  }
+]
+`}/>
 
 ## Conclusion
 
-Avec `useFieldValidation`, vous disposez d'un outil pour gérer les validations de vos formulaires dans Vue.js. Ce composable est idéal pour créer des validations personnalisées et intégrer des champs avec des bibliothèques comme Vuetify.
-
+Le système de validation du Design System offre une grande flexibilité tout en restant simple à utiliser. La combinaison des erreurs, avertissements et succès permet de créer une expérience utilisateur riche et intuitive.

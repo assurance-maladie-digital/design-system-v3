@@ -14,6 +14,7 @@
 		required?: boolean
 		errorMessages?: string | string[]
 		isHeaderToolbar?: boolean
+		displayAsterisk?: boolean
 	}>(), {
 		modelValue: null,
 		items: () => [],
@@ -24,6 +25,7 @@
 		required: false,
 		errorMessages: () => [],
 		isHeaderToolbar: false,
+		displayAsterisk: false,
 	})
 
 	const options = useCustomizableOptions(defaultOptions, props)
@@ -65,7 +67,15 @@
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			return (selectedItem.value as Record<string, any>)[props.textKey]
 		}
-		return props.label
+		return labelWithAsterisk.value
+	})
+
+	const isShouldDisplayAsterisk = computed(() => {
+		return props.displayAsterisk && props.required
+	})
+
+	const labelWithAsterisk = computed(() => {
+		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -144,8 +154,8 @@
 		:id="inputId"
 		v-model="selectedItem"
 		:error-messages="localErrorMessages"
-		:label="props.label"
-		:title="props.label"
+		:label="labelWithAsterisk"
+		:title="labelWithAsterisk"
 		role="menu"
 		@click="checkForErrors"
 	>

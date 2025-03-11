@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import { VIcon } from 'vuetify/components'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { mdiAccountBox } from '@mdi/js'
+import { VBtn } from 'vuetify/components'
 
 const meta = {
 	title: 'Composants/Formulaires/SyTextField',
@@ -14,7 +15,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['modelValue', 'appendInnerIconColor'] },
+		controls: { exclude: ['modelValue', 'appendInnerIconColor', 'errorMessages', 'warningMessages', 'successMessages'] },
 		docs: {
 			description: {
 				component: `SyTextField`,
@@ -22,54 +23,291 @@ const meta = {
 		},
 	},
 	argTypes: {
-		modelValue: { control: 'text' },
-		label: { control: 'text' },
-		prependIcon: {
+		'modelValue': { control: 'text' },
+		'label': {
+			description: 'Texte affiché comme label du champ',
+			control: 'text',
+		},
+		'prependIcon': {
 			control: 'select',
 			options: ['info', 'success', 'warning', 'error', 'close'],
 		},
-		appendIcon: {
+		'appendIcon': {
 			control: 'select',
 			options: ['info', 'success', 'warning', 'error', 'close'],
 		},
-		prependInnerIcon: {
+		'prependInnerIcon': {
 			control: 'select',
 			options: ['info', 'success', 'warning', 'error', 'close'],
 		},
-		appendInnerIcon: {
+		'appendInnerIcon': {
 			control: 'select',
 			options: ['info', 'success', 'warning', 'error', 'close'],
 		},
-		variantStyle: {
+		'variantStyle': {
 			control: 'select',
 			options: ['outlined', 'plain', 'underlined', 'filled', 'solo', 'solo-inverted', 'solo-filled'],
 		},
-		color: {
+		'color': {
 			control: 'select',
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
 			description: 'Couleur du champ',
 		},
-		density: {
+		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
 			description: 'Densité du champ',
 		},
-		direction: {
-			control: 'select',
-			options: ['horizontal', 'vertical'],
-			description: 'Direction d\'affichage',
-		},
-		customRules: {
+		'customRules': {
 			description: 'Règles de validation personnalisées',
 			control: 'object',
 		},
-		customWarningRules: {
+		'customWarningRules': {
 			description: 'Règles d\'avertissement personnalisées',
 			control: 'object',
 		},
-		showSuccessMessages: {
+		'showSuccessMessages': {
 			description: 'Afficher les messages de succès',
 			control: 'boolean',
+		},
+		'isValidateOnBlur': {
+			description: 'Vérifie la validité lors de la perte de focus',
+			control: 'boolean',
+			default: true,
+		},
+		'isActive': {
+			description: 'Force l\'état actif du champ (label flottant et styles visuels)',
+			control: 'boolean',
+			default: false,
+		},
+		'isClearable': {
+			description: 'Affiche un bouton pour effacer le contenu du champ',
+			control: 'boolean',
+			default: false,
+		},
+		'prependTooltip': {
+			description: 'Si le texte du prepend tooltip est renseigné alors l\'icône du  tooltip s\'affiche',
+			control: 'text',
+		},
+		'appendTooltip': {
+			description: 'Si le texte du append tooltip est renseigné alors l\'icône du  tooltip s\'affiche',
+			control: 'text',
+		},
+		'tooltipLocation': {
+			description: 'Position des tooltips',
+			control: 'select',
+			options: ['top', 'bottom', 'start', 'end'],
+			default: 'top',
+		},
+		'required': {
+			description: 'Indique si le champ est obligatoire',
+			control: 'boolean',
+			default: false,
+		},
+		'displayAsterisk': {
+			description: 'Affiche un astérisque à côté du label',
+			control: 'boolean',
+			default: false,
+		},
+		'isDisabled': {
+			description: 'Désactive le champ',
+			control: 'boolean',
+			default: false,
+		},
+		'isReadOnly': {
+			description: 'Rend le champ en lecture seule',
+			control: 'boolean',
+			default: false,
+		},
+		'baseColor': {
+			description: 'Couleur de base du champ (par défaut hérite de color)',
+			control: 'text',
+		},
+		'bgColor': {
+			description: 'Couleur de fond du champ',
+			control: 'text',
+		},
+		'centerAffix': {
+			description: 'Centre verticalement les éléments ajoutés avant/après le champ',
+			control: 'boolean',
+		},
+		'counter': {
+			description: 'Affiche un compteur de caractères',
+			control: 'boolean',
+		},
+		'counterValue': {
+			description: 'Fonction personnalisée pour calculer la valeur du compteur',
+			control: 'object',
+		},
+		'direction': {
+			description: 'Direction du champ (horizontal ou vertical)',
+			control: 'select',
+			options: ['horizontal', 'vertical'],
+		},
+		'isDirty': {
+			description: 'Indique si le champ a été modifié',
+			control: 'boolean',
+		},
+		'isFlat': {
+			description: 'Supprime l\'élévation du champ',
+			control: 'boolean',
+		},
+		'isFocused': {
+			description: 'Force l\'état focus du champ',
+			control: 'boolean',
+		},
+		'areDetailsHidden': {
+			description: 'Masque la section des détails (messages d\'erreur, compteur)',
+			control: 'boolean',
+		},
+		'areSpinButtonsHidden': {
+			description: 'Masque les boutons d\'incrémentation pour les champs numériques',
+			control: 'boolean',
+		},
+		'hint': {
+			description: 'Texte d\'aide affiché sous le champ',
+			control: 'text',
+		},
+		'loading': {
+			description: 'Affiche un indicateur de chargement',
+			control: 'boolean',
+		},
+		'maxErrors': {
+			description: 'Nombre maximum de messages d\'erreur à afficher',
+			control: { type: 'text' },
+		},
+		'maxWidth': {
+			description: 'Largeur maximale du champ',
+			control: { type: 'text' },
+		},
+		'minWidth': {
+			description: 'Largeur minimale du champ',
+			control: { type: 'text' },
+		},
+		'name': {
+			description: 'Nom du champ pour les formulaires',
+			control: 'text',
+		},
+		'displayPersistentClear': {
+			description: 'Affiche toujours le bouton de réinitialisation',
+			control: 'boolean',
+			default: false,
+		},
+		'displayPersistentCounter': {
+			description: 'Affiche toujours le compteur',
+			control: 'boolean',
+			default: false,
+		},
+		'displayPersistentHint': {
+			description: 'Affiche toujours le texte d\'aide',
+			control: 'boolean',
+			default: false,
+		},
+		'displayPersistentPlaceholder': {
+			description: 'Garde le placeholder visible même avec une valeur',
+			control: 'boolean',
+			default: false,
+		},
+		'placeholder': {
+			description: 'Texte affiché quand le champ est vide',
+			control: 'text',
+		},
+		'prefix': {
+			description: 'Texte affiché avant la valeur: prefix="€" : affichera "€" avant la valeur saisie',
+			control: 'text',
+		},
+		'isReversed': {
+			description: 'Inverse l\'ordre des éléments',
+			control: 'boolean',
+			default: false,
+		},
+		'role': {
+			description: 'Rôle ARIA du champ',
+			control: 'text',
+		},
+		'rounded': {
+			description: 'Arrondit les coins du champ',
+			control: { type: 'text' },
+		},
+		'isOnSingleLine': {
+			description: 'Force l\'affichage sur une seule ligne',
+			control: 'boolean',
+			default: false,
+		},
+		'suffix': {
+			description: 'Texte affiché après la valeur',
+			control: 'text',
+		},
+		'theme': {
+			description: 'Thème à appliquer au champ',
+			control: 'text',
+		},
+		'isTiled': {
+			description: 'Applique un style tuile',
+			control: 'boolean',
+			default: false,
+		},
+		'type': {
+			description: 'Type du champ de saisie',
+			control: 'select',
+			options: ['text', 'number', 'password', 'email', 'tel', 'url', 'search'],
+			default: 'text',
+		},
+		'width': {
+			description: 'Largeur du champ',
+			control: { type: 'text' },
+		},
+		'validation': {
+			description: 'Valide le champ avec la valeur donnée',
+			type: '(value: string | number | null) => void',
+		},
+		'validateOnSubmit': {
+			description: 'Valide le champ lors de la soumission du formulaire',
+			type: '() => void',
+		},
+		'checkErrorOnBlur': {
+			description: 'Vérifie les erreurs lors de la perte de focus',
+			type: '() => void',
+		},
+		'append': {
+			description: 'Slot pour ajouter du contenu à droite du champ',
+			control: false,
+			table: {
+				type: { summary: 'VNode' },
+				category: 'slots',
+			},
+		},
+		'prepend': {
+			description: 'Slot pour ajouter du contenu à gauche du champ',
+			control: false,
+			table: {
+				type: { summary: 'VNode' },
+				category: 'slots',
+			},
+		},
+		'append-inner': {
+			description: 'Slot pour ajouter du contenu à droite dans le champ',
+			control: false,
+			table: {
+				type: { summary: 'VNode' },
+				category: 'slots',
+			},
+		},
+		'prepend-inner': {
+			description: 'Slot pour ajouter du contenu à gauche dans le champ',
+			control: false,
+			table: {
+				type: { summary: 'VNode' },
+				category: 'slots',
+			},
+		},
+		'details': {
+			description: 'Slot pour personnaliser la section des détails (messages d\'erreur, compteur)',
+			control: false,
+			table: {
+				type: { summary: 'VNode' },
+				category: 'slots',
+			},
 		},
 	},
 } as Meta<typeof SyTextField>
@@ -110,7 +348,10 @@ export const Default: Story = {
 		return {
 			components: { SyTextField, VIcon },
 			setup() {
-				const value = ref('')
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
 				return { args, value }
 			},
 			template: `
@@ -123,50 +364,82 @@ export const Default: Story = {
 }
 
 export const Required: Story = {
+	args: {
+		...Default.args,
+		required: true,
+	},
 	parameters: {
+		docs: {
+			description: {
+				story: `
+### Champ requis sans astérisque
+
+Cette story montre un champ requis sans astérisque.
+Pour afficher l'astérisque sur un champ requis, il faut activer la prop \`displayAsterisk\`.`,
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<SyTextField 
-						v-model="value" 
-						required
-					/>
-				</template>
-				`,
+				code: `<template>
+	<SyTextField
+		v-model="value"
+		required
+		label="Champ requis sans astérisque"
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-				</script>
-				`,
+				code: `<script setup lang="ts">
+	import { SyTextField } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const value = ref('')
+</script>`,
 			},
 		],
 	},
+}
+
+export const RequiredWithAsterisk: Story = {
 	args: {
-		showDivider: false,
-		variantStyle: 'outlined',
-		color: 'primary',
-		isClearable: true,
-		label: 'Label',
+		...Default.args,
 		required: true,
-		modelValue: '',
+		displayAsterisk: true,
 	},
-	render: (args) => {
-		return {
-			components: { SyTextField, VIcon },
-			setup() {
-				return { args }
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Champ requis avec astérisque
+
+Cette story montre un champ requis avec astérisque.
+L'astérisque ne peut être affiché que sur un champ requis, en activant la prop \`displayAsterisk\`.`,
 			},
-			template: `
-				<div class="d-flex flex-wrap align-center">
-					<SyTextField v-bind="args" />
-				</div>
-			`,
-		}
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyTextField
+		v-model="value"
+		required
+		display-asterisk
+		label="Champ requis avec astérisque"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { SyTextField } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const value = ref('')
+</script>`,
+			},
+		],
 	},
 }
 
@@ -207,15 +480,15 @@ export const SlotPrepend: Story = {
 		return {
 			components: { SyTextField, VIcon },
 			setup() {
-				return { args }
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center">
-					<SyTextField
-						v-bind="args"
-						:label="args.label"
-						:prepend-icon="args.prependIcon"
-					/>
+					<SyTextField v-bind="args" v-model="value" />
 				</div>
 			`,
 		}
@@ -259,14 +532,15 @@ export const SlotAppend: Story = {
 		return {
 			components: { SyTextField, VIcon },
 			setup() {
-				return { args }
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center">
-					<SyTextField
-						v-bind="args"
-						:append-icon="args.appendIcon"
-					/>
+					<SyTextField v-bind="args" v-model="value" />
 				</div>
 			`,
 		}
@@ -310,14 +584,15 @@ export const SlotPrependInner: Story = {
 		return {
 			components: { SyTextField, VIcon },
 			setup() {
-				return { args }
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center">
-					<SyTextField
-						v-bind="args"
-						:prepend-inner-icon="args.prependInnerIcon"
-					/>
+					<SyTextField v-bind="args" v-model="value" />
 				</div>
 			`,
 		}
@@ -362,15 +637,15 @@ export const SlotPrependInnerDivider: Story = {
 		return {
 			components: { SyTextField, VIcon },
 			setup() {
-				return { args }
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center">
-					<SyTextField
-						v-bind="args"
-						:prepend-inner-icon="args.prependInnerIcon"
-						:show-divider="args.showDivider"
-					/>
+					<SyTextField v-bind="args" v-model="value" />
 				</div>
 			`,
 		}
@@ -414,14 +689,15 @@ export const SlotAppendInner: Story = {
 		return {
 			components: { SyTextField, VIcon },
 			setup() {
-				return { args }
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center">
-					<SyTextField
-						v-bind="args"
-						:append-inner-icon="args.appendInnerIcon"
-					/>
+					<SyTextField v-bind="args" v-model="value" />
 				</div>
 			`,
 		}
@@ -470,15 +746,17 @@ export const SlotCustomIcon: Story = {
 		return {
 			components: { SyTextField, VIcon },
 			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
 				const iconName = ref(mdiAccountBox)
 
-				return { args, iconName }
+				return { args, value, iconName }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center">
-					<SyTextField
-						v-bind="args"
-					>
+					<SyTextField v-bind="args" v-model="value">
 						<template #append-inner>
 							<VIcon>
 								{{ iconName }}
@@ -574,10 +852,10 @@ Cette story montre l'utilisation combinée des règles standard et d'avertisseme
 	required
 	:customWarningRules="[
 		{
-			type: 'maxLength',
+			type: 'minLength',
 			options: {
 				length: 10,
-				message: 'Le texte commence à être un peu long'
+				message: 'Le texte doit comporter plus de 10 caracteres'
 			}
 		}
 	]"
@@ -600,10 +878,10 @@ Cette story montre l'utilisation combinée des règles standard et d'avertisseme
 				required
 				:customWarningRules="[
 					{
-						type: 'maxLength',
+						type: 'minLength',
 						options: {
 							length: 10,
-							message: 'Le texte comporte plus de 10 caracteres'
+							message: 'Le texte doit comporter plus de 10 caracteres'
 						}
 					}
 				]"
@@ -739,6 +1017,169 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 	}),
 }
 
+export const WithTooltips: Story = {
+	args: {
+		modelValue: '',
+		label: 'Champ avec tooltips',
+		prependTooltip: 'Information à gauche du champ',
+		appendTooltip: 'Information à droite du champ',
+		tooltipLocation: 'top',
+	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref(args.modelValue)
+			return { args, value }
+		},
+		template: `
+			<div>
+				<p class="mb-4">
+					Des icônes d'information avec tooltips sont affichées de chaque côté du champ.
+					Survolez-les pour voir les messages d'aide qui apparaissent en haut grâce à la prop tooltipLocation="top".
+				</p>
+				<SyTextField
+					v-model="value"
+					v-bind="args"
+				/>
+			</div>
+		`,
+	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple de champ avec des tooltips d\'information. Les icônes d\'information apparaissent automatiquement lorsque les props prependTooltip et/ou appendTooltip sont renseignées. La position des tooltips peut être contrôlée avec la prop tooltipLocation.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTextField
+		v-model="value"
+		label="Champ avec tooltips"
+		prependTooltip="Information à gauche du champ"
+		appendTooltip="Information à droite du champ"
+		tooltipLocation="top"
+	/>
+</template>
+				`,
+			},
+		],
+	},
+}
+
+/**
+ * Story avec validation désactivée au blur
+ */
+export const ValidateOnBlur: Story = {
+	args: {
+		modelValue: '',
+		label: 'Champ texte',
+		required: true,
+		isValidateOnBlur: true,
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					message: 'Le champ doit contenir au moins 3 caractères',
+					validate: (value: string) => value.length >= 3,
+				},
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextField, VBtn },
+		setup() {
+			const value = ref(args.modelValue)
+			const fieldRef = ref()
+
+			function handleSubmit() {
+				const isValid = fieldRef.value?.validateOnSubmit()
+				alert(isValid ? 'Formulaire valide !' : 'Formulaire invalide, veuillez corriger les erreurs.')
+			}
+
+			return { args, value, fieldRef, handleSubmit }
+		},
+		template: `
+			<form @submit.prevent="handleSubmit">
+				<p class="mb-4">
+					La validation ne se déclenche  qu'à la perte de focus ou à la soumission du formulaire.
+				</p>
+				<SyTextField
+					ref="fieldRef"
+					v-model="value"
+					v-bind="args"
+					@update:model-value="args.modelValue = $event"
+				/>
+				<div class="mt-4">
+					<VBtn type="submit" color="primary">
+						Valider
+					</VBtn>
+				</div>
+			</form>
+		`,
+	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple de champ avec validation désactivée au blur. La validation ne se déclenche que lors de la soumission du formulaire.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<form @submit.prevent="handleSubmit">
+		<SyTextField
+			ref="fieldRef"
+			v-model="value"
+			label="Champ texte"
+			required
+			:is-validate-on-blur="true"
+			:custom-rules="[
+				{
+					type: 'custom',
+					options: {
+						message: 'Le champ doit contenir au moins 3 caractères',
+						validate: value => value.length >= 3
+					}
+				}
+			]"
+		/>
+		<button type="submit">
+			Valider
+		</button>
+	</form>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+const fieldRef = ref()
+
+function handleSubmit() {
+	const isValid = fieldRef.value?.validateOnSubmit()
+	if (!isValid) {
+		// Gérer l'erreur
+		return
+	}
+	// Continuer avec la soumission
+}
+</script>
+				`,
+			},
+		],
+	},
+}
+
 export const FormValidation: Story = {
 	render: args => ({
 		components: { SyTextField },
@@ -867,4 +1308,54 @@ export const FormValidation: Story = {
 			</div>
 		`,
 	}),
+}
+
+export const WithPrefixAndSuffix: Story = {
+	args: {
+		modelValue: '42',
+		label: 'Montant',
+		prefix: '€',
+		suffix: 'TTC',
+	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref(args.modelValue)
+			return { args, value }
+		},
+		template: `
+			<div>
+				<p class="mb-4">
+					Utilisation des props prefix et suffix pour ajouter des unités ou des informations complémentaires
+					directement dans le champ.
+				</p>
+				<SyTextField
+					v-model="value"
+					v-bind="args"
+				/>
+			</div>
+		`,
+	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple d\'utilisation des props prefix et suffix pour ajouter des informations complémentaires directement dans le champ de saisie.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTextField
+		v-model="value"
+		label="Montant"
+		prefix="€"
+		suffix="TTC"
+	/>
+</template>
+				`,
+			},
+		],
+	},
 }

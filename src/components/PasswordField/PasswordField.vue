@@ -2,26 +2,54 @@
 	import { ref, computed, watch } from 'vue'
 	import { config } from './config'
 	import { locales } from './locales'
-	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
-	import { mdiEye, mdiEyeOff } from '@mdi/js'
-	// import deepMerge from 'deepmerge'
+	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import {
+		mdiEye,
+		mdiEyeOff,
+		mdiAlertCircle,
+		mdiAlert,
+		mdiCheckCircle,
+	} from '@mdi/js'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
-
-	type Rule = (value: string | null) => { error?: string, success?: string }
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import type { ColorType } from '@/components/Customs/SyTextField/types'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | null
-		outlined?: boolean
+		variantStyle?: 'outlined' | 'underlined'
+		color?: ColorType
+		label?: string
 		required?: boolean
+		errorMessages?: string[] | null
+		warningMessages?: string[] | null
+		successMessages?: string[] | null
+		isReadOnly?: boolean
+		isDisabled?: boolean
+		placeholder?: string
+		customRules?: ValidationRule[]
+		customWarningRules?: ValidationRule[]
+		customSuccessRules?: ValidationRule[]
+		showSuccessMessages?: boolean
+		displayAsterisk?: boolean
 		isValidateOnBlur?: boolean
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		customRules?: any
 	} & CustomizableOptions>(), {
 		modelValue: null,
-		outlined: true,
+		variantStyle: 'outlined',
+		color: 'primary',
+		label: undefined,
 		required: false,
+		errorMessages: null,
+		warningMessages: null,
+		successMessages: null,
+		isReadOnly: false,
+		isDisabled: false,
+		placeholder: undefined,
+		customRules: () => [],
+		customWarningRules: () => [],
+		customSuccessRules: () => [],
+		showSuccessMessages: true,
+		displayAsterisk: false,
 		isValidateOnBlur: true,
-		customRules: [],
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -43,147 +71,229 @@
 		},
 	)
 
-	const { generateRules } = useFieldValidation()
+	// Construction des règles de validation
+	const defaultRules = computed<ValidationRule[]>(() => {
+		const rules: ValidationRule[] = []
 
-	const defaultRules = [
-		...(props.required
-			? [{
+		if (props.required) {
+			rules.push({
 				type: 'required',
-				options: { message: 'Le mot de passe est requis.', fieldIdentifier: 'password' },
-			}]
-			: []),
-	]
+				options: {
+					message: 'Le mot de passe est requis',
+					fieldIdentifier: props.label || 'password',
+				},
+			})
+		}
 
-	const rules = computed(() => {
-		const baseRules = (props.required ? defaultRules : [])
-		return props.customRules ? generateRules([...baseRules, ...props.customRules]) : generateRules(baseRules)
+		// Règle pour le message de succès
+		rules.push({
+			type: 'custom',
+			options: {
+				validate: (value: string) => value ? true : 'Ce champ est requis',
+				successMessage: 'Mot de passe fort',
+				fieldIdentifier: props.label || 'password',
+			},
+		})
+
+		return rules
 	})
 
-	const errors = ref<string[]>([])
-	const successes = ref<string[]>([])
+	// Initialisation du composable de validation
+	const { errors, warnings, successes, validateField } = useValidation({
+		customRules: defaultRules.value,
+		warningRules: props.customWarningRules || [],
+		successRules: props.customSuccessRules || [],
+		showSuccessMessages: props.showSuccessMessages,
+		fieldIdentifier: props.label || 'password',
+	})
 
-	const isValidating = ref(false)
+	// Computed pour les états de validation
+	const hasError = computed(() => errors.value.length > 0)
+	const hasWarning = computed(() => warnings.value.length > 0)
+	const hasSuccess = computed(() => successes.value.length > 0 && props.showSuccessMessages)
 
-	watch(() => password.value, () => {
-		validateFields()
+	const validationIcon = computed(() => {
+		if (hasError.value) return mdiAlertCircle
+		if (hasWarning.value) return mdiAlert
+		if (hasSuccess.value) return mdiCheckCircle
+		return undefined
+	})
+
+	const validationColor = computed(() => {
+		if (hasError.value) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
+		return 'rgb(0 0 0 / 100%)'
+	})
+
+	// Synchronisation des messages externes
+	watch(() => props.errorMessages, (newVal) => {
+		if (newVal) {
+			errors.value = newVal
+		}
 	}, { immediate: true })
 
-	watch(
-		() => props.isValidateOnBlur,
-		() => {
-			validateFields()
-		},
-		{ immediate: true },
-	)
+	watch(() => props.warningMessages, (newVal) => {
+		if (newVal) {
+			warnings.value = newVal
+		}
+	}, { immediate: true })
 
-	watch(
-		() => props.required,
-		() => {
-			validateFields()
-		},
-		{ immediate: true },
-	)
+	watch(() => props.successMessages, (newVal) => {
+		if (newVal) {
+			successes.value = newVal
+		}
+	}, { immediate: true })
 
-	function validateFieldSet(value: string | null, rules: Rule[]) {
-		rules.forEach((rule) => {
-			const { error, success } = rule(value)
-			if (error) errors.value.push(error)
-			if (success && success !== 'Le champ est valide.') successes.value.push(success)
-		})
-	}
-
-	function validateFields(onBlur = false): void {
-		errors.value = []
-		successes.value = []
-
-		const shouldValidate = onBlur || !props.isValidateOnBlur
-
-		if (!shouldValidate) return
-
-		validateFieldSet(password.value, rules.value)
-	}
-
-	function emitChangeEvent(value: string): void {
-		emit('update:modelValue', value)
-		validateFields()
-	}
+	watch(() => password.value, () => {
+		validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
+		emit('update:modelValue', password.value)
+	})
 
 	function handleKeydown(event: KeyboardEvent): void {
 		if (event.key === 'Enter') {
-			emit('submit')
+			validateOnSubmit()
 		}
 	}
 
-	function validateOnSubmit() {
-		isValidating.value = true
-		validateFields(true)
-		return errors.value.length === 0
+	const validateOnSubmit = () => {
+		validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
+		const isValid = errors.value.length === 0
+		if (isValid) {
+			emit('submit')
+		}
+		return isValid
 	}
 
 	defineExpose({
+		showEyeIcon,
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
 		validateOnSubmit,
 	})
 </script>
 
 <template>
-	<VTextField
+	<SyTextField
 		v-model="password"
-		:class="{
-			'v-messages__message--success': successes.length > 0
-		}"
+		v-bind="options"
+		:variant-style="props.variantStyle"
+		:color="props.color"
+		:label="props.label"
+		:required="props.required"
 		:error-messages="errors"
-		:messages="successes"
+		:warning-messages="warnings"
+		:success-messages="successes"
+		:is-read-only="props.isReadOnly"
+		:is-disabled="props.isDisabled"
+		:placeholder="props.placeholder"
 		:type="showEyeIcon ? 'text' : 'password'"
-		:variant="outlined ? 'outlined' : 'underlined'"
+		:display-asterisk="props.displayAsterisk"
+		:rules="[...defaultRules, ...props.customRules]"
 		class="vd-password"
-		color="primary"
-		title="password"
-		validate-on="blur lazy"
-		@blur="validateFields(true)"
+		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
+		@blur="props.isValidateOnBlur ? validateField(password, [...defaultRules, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || []) : () => {}"
 		@keydown="handleKeydown"
-		@update:model-value="emitChangeEvent"
 	>
 		<template #append-inner>
-			<VBtn
-				:aria-label="btnLabel"
-				class="mx-auto"
+			<div
+				class="d-flex align-center"
 				v-bind="options.btn"
-				@click="showEyeIcon = !showEyeIcon"
 			>
-				<VIcon v-bind="options.icon">
-					{{ showEyeIcon ? eyeIcon : eyeOffIcon }}
-				</VIcon>
-			</VBtn>
+				<VIcon
+					:icon="validationIcon"
+					:color="validationColor"
+					class="mr-2"
+				/>
+				<VIcon
+					:icon="showEyeIcon ? eyeIcon : eyeOffIcon"
+					color="rgb(0 0 0 / 70%)"
+					:aria-label="btnLabel"
+					role="button"
+					@click="showEyeIcon = !showEyeIcon"
+				/>
+			</div>
 		</template>
-	</VTextField>
+	</SyTextField>
 </template>
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
 .vd-password {
-	.v-btn--icon.v-btn--density-default {
-		width: var(--v-btn-height);
-		height: var(--v-btn-height);
-	}
-
-	:deep(.v-field.v-field--variant-underlined .v-field__append-inner) {
-		padding-top: 0;
-		padding-bottom: 0;
-		display: flex;
-		align-items: center;
-	}
-
-	:deep(.v-field.v-field--variant-underlined .v-field__input) {
-		padding-top: calc(var(--v-field-input-padding-top) - 15px);
+	:deep(.v-field) {
+		.v-field__input {
+			padding-right: 48px;
+		}
 	}
 }
 
-.v-messages__message--success {
-	color: tokens.$colors-border-success !important;
+.warning-field {
+	:deep(.v-input__details > .v-icon),
+	:deep(.v-input__prepend > .v-icon),
+	:deep(.v-input__append > .v-icon) {
+		opacity: 1 !important;
+	}
+
+	:deep(.v-field) {
+		color: tokens.$colors-border-warning !important;
+
+		.v-field__outline {
+			color: tokens.$colors-border-warning !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: tokens.$colors-border-warning !important;
+		}
+	}
+}
+
+.error-field {
+	:deep(.v-input__control),
+	:deep(.v-messages__message) {
+		color: tokens.$colors-text-error !important;
+	}
 
 	.v-field--active & {
+		color: tokens.$colors-border-error !important;
+	}
+}
+
+.success-field {
+	:deep(.v-input__details > .v-icon),
+	:deep(.v-input__prepend > .v-icon),
+	:deep(.v-input__append > .v-icon) {
+		opacity: 1 !important;
+	}
+
+	:deep(.v-field) {
 		color: tokens.$colors-border-success !important;
+
+		.v-field__outline {
+			color: tokens.$colors-border-success !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: tokens.$colors-border-success !important;
+		}
+	}
+}
+
+.basic-field {
+	:deep(.v-icon__svg) {
+		fill: rgb(0 0 0 / 70%);
 	}
 }
 </style>

@@ -1,5 +1,5 @@
 export const indicatifs = [
-	{ code: '+1', country: 'USA/Canada', abbreviation: 'US/CA', phoneLength: 10, mask: '###-###-####' },
+	{ code: '+1', country: 'USA/Canada', abbreviation: 'US/CA', phoneLength: 10, mask: '### ### ####' },
 	{ code: '+7', country: 'Russia/Kazakhstan', abbreviation: 'RU/KZ', phoneLength: 10, mask: '### ### ## ##' },
 	{ code: '+20', country: 'Egypt', abbreviation: 'EG', phoneLength: 9, mask: '### ### ####' },
 	{ code: '+27', country: 'South Africa', abbreviation: 'ZA', phoneLength: 9, mask: '### ### ####' },
