@@ -390,8 +390,6 @@
 				@blur="handleNumberBlur"
 			/>
 		</div>
-
-		{{ keyLabel }}
 		<div
 			v-if="displayKey"
 			class="key-field-container"
