@@ -12,3 +12,7 @@
 .v-btn.v-tab {
 	text-transform: uppercase !important;
 }
+
+.v-tooltip .v-overlay__content {
+  background-color: rgb(0 0 0 / 70%) !important;
+}
