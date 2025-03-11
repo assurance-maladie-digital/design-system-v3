@@ -207,7 +207,7 @@
 				<VIcon
 					:icon="validationIcon"
 					:color="validationColor"
-					class="me-2"
+					class="mr-2"
 				/>
 				<VIcon
 					:icon="showEyeIcon ? eyeIcon : eyeOffIcon"

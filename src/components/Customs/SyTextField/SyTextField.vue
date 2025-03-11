@@ -253,7 +253,7 @@
 	const appendInnerIconColor = computed(() => {
 		if (props.appendInnerIcon === 'error') return 'error'
 		if (props.appendInnerIcon === 'success') return 'success'
-		return '#5C5E61'
+		return 'rgba(0, 0, 0, 1);'
 	})
 
 	const handlePrependIconClick = () => {
@@ -519,7 +519,7 @@
 
 .basic-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(0 0 0 / 60%);
+		fill: rgb(0 0 0 / 100%);
 	}
 }
 </style>
