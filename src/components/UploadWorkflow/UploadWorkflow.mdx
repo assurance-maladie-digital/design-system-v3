@@ -1,4 +1,4 @@
-import { Controls, Canvas, Meta } from '@storybook/blocks';
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
 
 import * as UploadWorkflowStories from './UploadWorkflow.stories';
 
@@ -41,3 +41,35 @@ Vous pouvez permettre à l’utilisateur de prévisualiser le fichier qu’il vi
 
 <Canvas of={UploadWorkflowStories.WithPreviewStep} />
 
+
+## Exemple d'utilisation
+
+<Source
+    language="typescript"
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { UploadWorkflow } from '@cnamts/synapse'
+
+	const files = ref([])
+
+	const uploadList = [
+		{
+			id: '1',
+			title: 'Carte d\\'identité',
+		},
+		{
+			id: '2',
+			title: 'Facture de soin',
+		},
+	]
+</script>
+
+<template>
+	<UploadWorkflow
+		v-model="files"
+		:uploadList="uploadList"
+	/>
+</template>
+`}
+/>

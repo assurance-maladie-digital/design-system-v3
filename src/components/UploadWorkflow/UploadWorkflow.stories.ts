@@ -290,7 +290,7 @@ export const Default: Story = {
 	const uploadList = [
 		{
 			id: '1',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 		},
 		{
 			id: '2',
@@ -504,7 +504,7 @@ export const Events: Story = {
 					if (items.length === 0) {
 						return
 					}
-					snackbarText.value = `Le fichier '"${items.at(-1)!.fileName}"' a été ajouté avec succès.`
+					snackbarText.value = `Le fichier "${items.at(-1)!.fileName}" a été ajouté avec succès.`
 					snackbarColor.value = 'success'
 					snackbar.value = true
 				}
@@ -631,16 +631,16 @@ export const Slots: Story = {
 				:uploadList="args.uploadList"
 			>
 				<template #title>
-					<h2>’Title’ slot</h2>
+					<h2>Title slot</h2>
 				</template>
 				<template #modal-title>
-					<h2>’Modal Title’ slot</h2>
+					<h2>Modal Title slot</h2>
 				</template>
 				<template #modal-description>
-					<p>’Modal Description’ slot</p>
+					<p>Modal Description slot</p>
 				</template>
 				<template #preview-description>
-					<p>’Preview Description’ slot</p>
+					<p>Preview Description slot</p>
 				</template>
 			</UploadWorkflow>
 			`,
@@ -656,16 +656,16 @@ export const Slots: Story = {
 		:uploadList="uploadList"
 	>
 		<template #title>
-			<h2>’Title’ slot</h2>
+			<h2>Title slot</h2>
 		</template>
 		<template #modal-title>
-			<h2>’Modal Title’ slot</h2>
+			<h2>Modal Title slot</h2>
 		</template>
 		<template #modal-description>
-			<p>’Modal Description’ slot</p>
+			<p>Modal Description slot</p>
 		</template>
 		<template #preview-description>
-			<p>’Preview Description’ slot</p>
+			<p>Preview Description slot</p>
 		</template>
 	</UploadWorkflow>
 </template>`,
