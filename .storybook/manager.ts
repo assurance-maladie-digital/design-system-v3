@@ -2,8 +2,20 @@ import { addons } from '@storybook/manager-api'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 
+// Helper function to apply theme class to HTML root element
+const applyThemeClass = (theme) => {
+	const rootElement = document.documentElement // Always exists
+	rootElement.classList.remove('theme-cnam', 'theme-pa')
+	rootElement.classList.add(`theme-${theme}`)
+}
+
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
+
+// Apply initial theme
+if (typeof window !== 'undefined') {
+	applyThemeClass(storedTheme || 'cnam')
+}
 
 addons.setConfig({
 	theme: storedTheme === 'pa' ? paTheme : cnamTheme,
@@ -13,9 +25,15 @@ addons.setConfig({
 if (typeof window !== 'undefined') {
 	window.addEventListener('storage', (event) => {
 		if (event.key === 'storybook-theme') {
+			const newTheme = event.newValue || 'cnam'
+			
+			// Update Storybook theme
 			addons.setConfig({
-				theme: event.newValue === 'pa' ? paTheme : cnamTheme,
+				theme: newTheme === 'pa' ? paTheme : cnamTheme,
 			})
+			
+			// Apply theme class to HTML root
+			applyThemeClass(newTheme)
 		}
 	})
 }
