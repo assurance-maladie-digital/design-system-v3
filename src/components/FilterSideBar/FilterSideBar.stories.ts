@@ -119,7 +119,7 @@ export const Default: Story = {
 	render: args => ({
 		components: { FilterSideBar, VTextField, VSelect, PeriodField, SearchListField },
 		setup() {
-			const filters = [
+			const filters = ref([
 				{
 					name: 'name',
 					title: 'Identité',
@@ -136,7 +136,7 @@ export const Default: Story = {
 					name: 'profession',
 					title: 'Profession',
 				},
-			]
+			])
 
 			const folderTypes = [
 				{
@@ -184,8 +184,8 @@ export const Default: Story = {
 		},
 		template: `
 			<FilterSideBar
-				v-model="filters"
 				v-bind="args"
+				v-model="filters"
 			>
 				<template #name="{ props }">
 					<VTextField
@@ -373,7 +373,7 @@ export const ChipFormat: Story = {
 	render: args => ({
 		components: { FilterSideBar, RangeField },
 		setup() {
-			const filters = [
+			const filters = ref([
 				{
 					name: 'range-slider',
 					title: 'Intervalle',
@@ -385,7 +385,7 @@ export const ChipFormat: Story = {
 						},
 					],
 				},
-			]
+			])
 
 			return { args, filters }
 		},
