@@ -123,7 +123,7 @@
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
 		if (hasSuccess.value) return 'success'
-		return undefined
+		return 'rgb(0 0 0 / 100%)'
 	})
 
 	// Synchronisation des messages externes
@@ -211,6 +211,7 @@
 				/>
 				<VIcon
 					:icon="showEyeIcon ? eyeIcon : eyeOffIcon"
+					color="rgb(0 0 0 / 70%)"
 					:aria-label="btnLabel"
 					role="button"
 					@click="showEyeIcon = !showEyeIcon"
@@ -288,5 +289,11 @@
 			color: tokens.$colors-border-success !important;
 		}
 	}
+}
+
+.basic-field {
+  :deep(.v-icon__svg) {
+    fill: rgb(0 0 0 / 70%);
+  }
 }
 </style>
