@@ -292,8 +292,8 @@
 }
 
 .basic-field {
-  :deep(.v-icon__svg) {
-    fill: rgb(0 0 0 / 70%);
-  }
+	:deep(.v-icon__svg) {
+		fill: rgb(0 0 0 / 70%);
+	}
 }
 </style>
