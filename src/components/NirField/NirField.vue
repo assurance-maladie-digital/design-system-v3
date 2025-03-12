@@ -26,6 +26,7 @@
 		customNumberWarningRules?: ValidationRule[]
 		customKeyWarningRules?: ValidationRule[]
 		showSuccessMessages?: boolean
+		disableErrorHandling?: boolean
 		width?: string
 		bgColor?: string
 		isDisabled?: boolean
@@ -58,6 +59,7 @@
 		customNumberWarningRules: () => [],
 		customKeyWarningRules: () => [],
 		showSuccessMessages: true,
+		disableErrorHandling: false,
 		width: '100%',
 		bgColor: undefined,
 		isDisabled: false,
@@ -152,11 +154,13 @@
 	// Initialisation des validations
 	const numberValidation = useValidation({
 		showSuccessMessages: props.showSuccessMessages,
+		disableErrorHandling: props.disableErrorHandling,
 		fieldIdentifier: props.numberLabel,
 	})
 
 	const keyValidation = useValidation({
 		showSuccessMessages: props.showSuccessMessages,
+		disableErrorHandling: props.disableErrorHandling,
 		fieldIdentifier: props.keyLabel,
 	})
 

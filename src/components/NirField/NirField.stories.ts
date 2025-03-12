@@ -954,3 +954,52 @@ const onSubmit = async () => {
 		`,
 	}),
 }
+
+export const WithDisabledErrorHandling: Story = {
+	args: {
+		...Default.args,
+		required: true,
+		disableErrorHandling: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Désactivation de la gestion des erreurs
+
+Cette story démontre l'utilisation de l'option \`disableErrorHandling\` qui désactive complètement la validation des règles.
+Même si le champ est marqué comme requis, aucune erreur ne sera affichée et la validation sera toujours considérée comme réussie.
+Cette option est utile lorsque vous souhaitez utiliser le composant uniquement pour la saisie de données, sans validation.
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      :required="true"
+      :disableErrorHandling="true"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="true"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import NirField  from '@cnamts/synapse'
+     import { ref } from 'vue'
+     
+     const value = ref('')
+    </script>
+    `,
+			},
+		],
+	},
+}

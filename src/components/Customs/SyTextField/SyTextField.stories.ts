@@ -1359,3 +1359,135 @@ export const WithPrefixAndSuffix: Story = {
 		],
 	},
 }
+
+export const ValidationAsynchrone: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+## Validation asynchrone
+
+Cet exemple montre comment implémenter une validation asynchrone pour vérifier si un nom d'utilisateur est disponible.
+La validation est déclenchée après un délai de 500ms pour simuler une requête API.
+				`,
+			},
+			source: {
+				code: `
+<template>
+  <SyTextField
+    v-model="username"
+    label="Nom d'utilisateur"
+    :loading="isChecking"
+    :customRules="[
+      {
+        type: 'required',
+        options: {
+          message: 'Le nom d\\'utilisateur est requis'
+        }
+      },
+      {
+        type: 'custom',
+        options: {
+          validate: checkUsernameAvailability,
+          message: 'Ce nom d\\'utilisateur est déjà pris'
+        },
+        isAsync: true
+      }
+    ]"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const username = ref('')
+const isChecking = ref(false)
+
+// Simule une vérification asynchrone
+const checkUsernameAvailability = async (value) => {
+  if (!value) return true
+  
+  isChecking.value = true
+  
+  try {
+    // Simule un appel API
+    await new Promise(resolve => setTimeout(resolve, 500))
+    
+    // Liste des noms d'utilisateur déjà pris
+    const takenUsernames = ['admin', 'user', 'test', 'demo', 'system']
+    
+    return !takenUsernames.includes(value.toLowerCase())
+  } finally {
+    isChecking.value = false
+  }
+}
+</script>
+`,
+			},
+		},
+	},
+	render: () => ({
+		components: { SyTextField, VBtn },
+		setup() {
+			const username = ref('')
+			const isChecking = ref(false)
+
+			// Simule une vérification asynchrone
+			const checkUsernameAvailability = async (value: string) => {
+				if (!value) return true
+
+				isChecking.value = true
+
+				try {
+					// Simule un appel API
+					await new Promise(resolve => setTimeout(resolve, 500))
+
+					// Liste des noms d'utilisateur déjà pris
+					const takenUsernames = ['admin', 'user', 'test', 'demo', 'system']
+
+					return !takenUsernames.includes(value.toLowerCase())
+				}
+				finally {
+					isChecking.value = false
+				}
+			}
+
+			return {
+				username,
+				isChecking,
+				checkUsernameAvailability,
+			}
+		},
+		template: `
+			<div style="max-width: 500px;">
+				<h3>Validation asynchrone</h3>
+				<p class="text-body-2 mb-4">
+					Cette validation vérifie si le nom d'utilisateur est disponible.
+					Essayez d'entrer "admin", "user", "test", "demo" ou "system" pour voir le message d'erreur.
+				</p>
+				
+				<SyTextField
+					v-model="username"
+					label="Nom d'utilisateur"
+					:loading="isChecking"
+					:customRules="[
+						{
+							type: 'required',
+							options: {
+								message: 'Le nom d\\'utilisateur est requis'
+							}
+						},
+						{
+							type: 'custom',
+							options: {
+								validate: checkUsernameAvailability,
+								message: 'Ce nom d\\'utilisateur est déjà pris'
+							},
+							isAsync: true
+						}
+					]"
+				/>
+			</div>
+		`,
+	}),
+}
