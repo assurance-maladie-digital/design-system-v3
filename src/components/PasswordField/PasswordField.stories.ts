@@ -89,6 +89,10 @@ const meta = {
 			control: 'boolean',
 			description: 'Indique si la validation doit être effectuée lors de la perte de focus',
 		},
+		disableErrorHandling: {
+			control: 'boolean',
+			description: 'Désactive complètement la validation des règles et l\'affichage des erreurs',
+		},
 	},
 	args: {
 		modelValue: '',
@@ -108,6 +112,7 @@ const meta = {
 		showSuccessMessages: true,
 		displayAsterisk: false,
 		isValidateOnBlur: true,
+		disableErrorHandling: false,
 	},
 } satisfies Meta<typeof PasswordField>
 
@@ -171,6 +176,7 @@ export const Default: Story = {
 				:show-success-messages="args.showSuccessMessages"
 				:display-asterisk="args.displayAsterisk"
 				:is-validate-on-blur="args.isValidateOnBlur"
+				:disable-error-handling="args.disableErrorHandling"
 			/>
 		`,
 	}),
@@ -839,6 +845,7 @@ export const WithCustomRules: Story = {
 				:show-success-messages="args.showSuccessMessages"
 				:display-asterisk="args.displayAsterisk"
 				:is-validate-on-blur="args.isValidateOnBlur"
+				:disable-error-handling="args.disableErrorHandling"
 			/>
 		`,
 	}),
@@ -995,6 +1002,7 @@ export const WithFormValidation: Story = {
 						:custom-rules="customRules"
 						:display-asterisk="true"
 						:is-validate-on-blur="false"
+						:disable-error-handling="args.disableErrorHandling"
 					/>
 					<button 
 						type="submit" 
@@ -1014,4 +1022,199 @@ export const WithFormValidation: Story = {
 			</div>
 		`,
 	}),
+}
+
+/**
+ * Champ de mot de passe avec validation désactivée.
+ */
+export const WithDisabledErrorHandling: Story = {
+	args: {
+		...Default.args,
+		required: true,
+		disableErrorHandling: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Désactivation de la gestion des erreurs
+
+Cette story démontre l'utilisation de l'option \`disableErrorHandling\` qui désactive complètement la validation des règles.
+Même si le champ est marqué comme requis, aucune erreur ne sera affichée et la validation sera toujours considérée comme réussie.
+Cette option est utile lorsque vous souhaitez utiliser le composant uniquement pour la saisie de données, sans validation.
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:required="true"
+						:disable-error-handling="true"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+
+/**
+ * Champ de mot de passe avec validation personnalisée.
+ */
+export const WithCustomValidation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:custom-rules="customRules"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+					
+					// Règles personnalisées pour la validation du mot de passe
+					const customRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (!value || value.length < 8) {
+										return 'Le mot de passe doit contenir au moins 8 caractères'
+									}
+									return true
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value || value.length < 8) {
+							return 'Le mot de passe doit contenir au moins 8 caractères'
+						}
+						return true
+					},
+					fieldIdentifier: 'password',
+				},
+			},
+		],
+	},
+}
+
+/**
+ * Champ de mot de passe sans messages de succès.
+ */
+export const WithoutSuccessMessages: Story = {
+	args: {
+		...Default.args,
+		showSuccessMessages: false,
+		customSuccessRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (value && value.length >= 8) {
+							return 'Le mot de passe est suffisamment long'
+						}
+						return false
+					},
+					fieldIdentifier: 'password',
+				},
+			},
+		],
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Désactivation des messages de succès
+
+Cette story démontre l'utilisation de l'option \`showSuccessMessages\` qui désactive l'affichage des messages de succès.
+Même si des règles de succès sont définies et que la validation réussit, aucun message de succès ne sera affiché.
+Cette option est utile lorsque vous souhaitez utiliser uniquement les messages d'erreur et d'avertissement.
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:custom-success-rules="customSuccessRules"
+						:show-success-messages="false"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+					
+					// Règles de succès pour la validation du mot de passe
+					const customSuccessRules = [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => {
+									if (value && value.length >= 8) {
+										return 'Le mot de passe est suffisamment long'
+									}
+									return false
+								},
+								fieldIdentifier: 'password',
+							},
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
 }

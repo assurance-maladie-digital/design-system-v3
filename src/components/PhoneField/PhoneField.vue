@@ -33,6 +33,8 @@
 		useCustomIndicatifsOnly: { type: Boolean, default: false },
 		isValidatedOnBlur: { type: Boolean, default: true },
 		displayAsterisk: { type: Boolean, default: false },
+		disableErrorHandling: { type: Boolean, default: false },
+		showSuccessMessages: { type: Boolean, default: true },
 	})
 
 	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
@@ -96,6 +98,8 @@
 	}
 
 	const validationRules = computed(() => {
+				if (!props.isValidatedOnBlur || props.disableErrorHandling) return
+
 		const rules = [exactLength(counter.value, true)]
 		if (props.required) {
 			rules.unshift(RequiredRule)
@@ -104,7 +108,7 @@
 	})
 
 	function validateInputOnBlur() {
-		if (!props.isValidatedOnBlur) return
+		if (!props.isValidatedOnBlur || props.disableErrorHandling) return
 
 		hasError.value = false
 		const requiredValidation = !props.required || RequiredRule(phoneNumber.value) === true
@@ -149,6 +153,8 @@
 			:rules="validationRules"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:display-asterisk="props.displayAsterisk"
+			:disable-error-handling="props.disableErrorHandling"
+			:show-success-messages="props.showSuccessMessages"
 			class="phone-field"
 			color="primary"
 			@blur="validateInputOnBlur"
@@ -161,7 +167,7 @@
 				>
 					{{ mdiPhone }}
 				</VIcon>
-				<VIcon v-if="hasError">
+				<VIcon v-if="hasError && !props.disableErrorHandling">
 					{{ mdiInformation }}
 				</VIcon>
 			</template>
