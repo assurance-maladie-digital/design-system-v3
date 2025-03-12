@@ -276,65 +276,66 @@
 
 <template>
 	<div class="period-field">
-		<v-row>
-			<v-col
-				cols="12"
-				sm="6"
-			>
-				<DatePicker
-					ref="fromDateRef"
-					v-model="internalFromDate"
-					:custom-rules="fromDateRules"
-					:custom-warning-rules="props.customWarningRules"
-					:date-format-return="props.dateFormatReturn"
-					:display-append-icon="props.displayAppendIcon"
-					:display-icon="props.displayIcon"
-					:error-message="hasFromDateErrors"
-					:format="props.format"
-					:is-disabled="props.isDisabled"
-					:is-outlined="props.isOutlined"
-					:no-calendar="props.noCalendar"
-					:no-icon="props.noIcon"
-					:placeholder="props.placeholderFrom"
-					:required="props.required"
-					:show-week-number="props.showWeekNumber"
-					:success-message="hasFromDateSuccesses"
-					class="mr-2"
-					@closed="handleFromDateClosed"
-				/>
-			</v-col>
-			<v-col
-				cols="12"
-				sm="6"
-			>
-				<DatePicker
-					ref="toDateRef"
-					v-model="internalToDate"
-					:custom-rules="toDateRules"
-					:custom-warning-rules="props.customWarningRules"
-					:date-format-return="props.dateFormatReturn"
-					:display-append-icon="props.displayAppendIcon"
-					:display-icon="props.displayIcon"
-					:error-message="hasToDateErrors"
-					:format="props.format"
-					:is-disabled="props.isDisabled"
-					:is-outlined="props.isOutlined"
-					:no-calendar="props.noCalendar"
-					:no-icon="props.noIcon"
-					:placeholder="props.placeholderTo"
-					:required="props.required"
-					:show-week-number="props.showWeekNumber"
-					:success-message="hasToDateSuccesses"
-					@closed="handleToDateClosed"
-				/>
-			</v-col>
-		</v-row>
+		<div
+			class="period-field__col"
+		>
+			<DatePicker
+				ref="fromDateRef"
+				v-model="internalFromDate"
+				:custom-rules="fromDateRules"
+				:custom-warning-rules="props.customWarningRules"
+				:date-format-return="props.dateFormatReturn"
+				:display-append-icon="props.displayAppendIcon"
+				:display-icon="props.displayIcon"
+				:error-message="hasFromDateErrors"
+				:format="props.format"
+				:is-disabled="props.isDisabled"
+				:is-outlined="props.isOutlined"
+				:no-calendar="props.noCalendar"
+				:no-icon="props.noIcon"
+				:placeholder="props.placeholderFrom"
+				:required="props.required"
+				:show-week-number="props.showWeekNumber"
+				:success-message="hasFromDateSuccesses"
+				@closed="handleFromDateClosed"
+			/>
+		</div>
+		<div
+			class="period-field__col"
+		>
+			<DatePicker
+				ref="toDateRef"
+				v-model="internalToDate"
+				:custom-rules="toDateRules"
+				:custom-warning-rules="props.customWarningRules"
+				:date-format-return="props.dateFormatReturn"
+				:display-append-icon="props.displayAppendIcon"
+				:display-icon="props.displayIcon"
+				:error-message="hasToDateErrors"
+				:format="props.format"
+				:is-disabled="props.isDisabled"
+				:is-outlined="props.isOutlined"
+				:no-calendar="props.noCalendar"
+				:no-icon="props.noIcon"
+				:placeholder="props.placeholderTo"
+				:required="props.required"
+				:show-week-number="props.showWeekNumber"
+				:success-message="hasToDateSuccesses"
+				@closed="handleToDateClosed"
+			/>
+		</div>
 	</div>
 </template>
 
 <style scoped>
 .period-field {
 	display: flex;
-	gap: 10px;
+	gap: 24px;
+	flex-wrap: wrap;
+}
+
+.period-field__col {
+	flex: 1;
+	min-width: min(300px, 100%);
 }
 </style>
