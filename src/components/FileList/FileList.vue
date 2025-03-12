@@ -3,6 +3,7 @@
 	import { useWidthable, type Widthable } from '@/composables/widthable'
 	import { locales as defaultLocales } from './UploadItem/locales'
 
+	export type FileState = 'initial' | 'success' | 'error' | 'loading'
 	export interface Item {
 		id: string
 		title: string
@@ -43,7 +44,7 @@
 			:title="item.title"
 			:file-name="item.fileName"
 			:optional="item.optional"
-			:state="(item.state as 'initial' | 'success' | 'error' | 'loading')"
+			:state="(item.state as FileState)"
 			:progress="item.progress"
 			:show-upload-btn="item.showUploadBtn"
 			:show-preview-btn="item.showPreviewBtn"

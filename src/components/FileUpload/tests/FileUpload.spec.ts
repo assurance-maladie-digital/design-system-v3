@@ -141,7 +141,7 @@ describe('FileUpload', () => {
 			},
 		})
 
-		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[]])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(undefined)
 		expect(wrapper.emitted('error')?.[0]).toEqual([['Le fichier filename.jpg a une extension invalide. Extensions acceptées : pdf']])
 	})
 
@@ -166,7 +166,7 @@ describe('FileUpload', () => {
 			},
 		})
 
-		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[pdfFile]])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(undefined)
 		expect(wrapper.emitted('error')?.[0]).toEqual([['Le fichier filename.jpg a une extension invalide. Extensions acceptées : pdf']])
 
 		await wrapper.find('label').trigger('drop', {
@@ -176,7 +176,7 @@ describe('FileUpload', () => {
 		})
 
 		expect(wrapper.emitted('error')?.[1]).toBeFalsy()
-		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([[pdfFile, pdfFile]])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[pdfFile, pdfFile]])
 	})
 
 	it('rejects the drop of a file that is too big', async () => {
@@ -198,7 +198,7 @@ describe('FileUpload', () => {
 			},
 		})
 
-		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[]])
+		expect(wrapper.emitted('update:modelValue')).toBe(undefined)
 		expect(wrapper.emitted('error')?.[0]).toEqual([['Le fichier filename.jpg est trop volumineux. Taille max. : 1 o']])
 	})
 

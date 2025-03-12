@@ -6,6 +6,8 @@ import NotificationBar from '@/components/NotificationBar/NotificationBar.vue'
 import { useNotificationService } from '@/services/NotificationService'
 import { mdiCloudUpload } from '@mdi/js'
 import { VIcon } from 'vuetify/components'
+import { computed, ref } from 'vue'
+import FileList from '../FileList/FileList.vue'
 
 const meta = {
 	title: 'Composants/Formulaires/FileUpload',
@@ -421,6 +423,88 @@ export const Customization: Story = {
 	const files = ref([])
 
 	const uploadIcon = mdiCloudUpload
+</script>
+				`,
+			},
+		],
+	},
+}
+
+export const WithFileList: Story = {
+	args: {
+		'modelValue': [],
+		'onUpdate:modelValue': fn(),
+		'onError': fn(),
+		'multiple': true,
+	},
+	render: args => ({
+		components: { FileUpload, FileList },
+		setup() {
+			const model = ref<Array<File>>([])
+
+			const uploadList = computed(
+				() => model.value.map(item => ({
+					id: item.name,
+					title: item.name,
+					state: 'success',
+				})),
+			)
+
+			function removeFile(itemToRemove: { id: string }) {
+				model.value = model.value.filter(item => item.name !== itemToRemove.id)
+			}
+			return { args, uploadList, removeFile, model }
+		},
+		template: `<div style="max-width: 600px">
+			<FileUpload
+				v-bind="args"
+				v-model="model"
+			/>
+			<FileList
+				:uploadList="uploadList"
+				@delete="removeFile"
+			/>
+		</div>`,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<div style="max-width: 600px">
+		<FileUpload
+			v-model="model"
+			:multiple="true"
+		/>
+		{{ model }}
+		<FileList
+			:uploadList="uploadList"
+			@delete="removeFile"
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { FileUpload, FileList } from '@cnamts/synapse'
+	import { ref, computed } from 'vue'
+
+	const files = ref<Array<File>>([])
+	const uploadList = computed(
+		() => files.value.map(item => ({
+			id: item.name,
+			title: item.name,
+			state: 'success',
+		})),
+	)
+
+	function removeFile(itemToRemove: { id: string }) {
+		files.value = files.value.filter(file => file.name !== itemToRemove.id)
+	}
 </script>
 				`,
 			},

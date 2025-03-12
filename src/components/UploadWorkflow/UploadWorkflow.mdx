@@ -1,0 +1,75 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as UploadWorkflowStories from './UploadWorkflow.stories';
+
+<Meta of={UploadWorkflowStories} />
+
+# UploadWorkflow
+
+<Canvas of={UploadWorkflowStories.Default} />
+
+# API
+
+<Controls of={UploadWorkflowStories.Default} />
+
+# Exemple
+
+## Événements
+
+Vous pouvez réagir lorsque la liste des fichiers est mise à jour en utilisant l’événement `update:modelValue`, et réagir aux erreurs de validation en utilisant l’événement `error`.
+
+<Canvas of={UploadWorkflowStories.Events} />
+
+
+## Un seul fichier
+
+Lorsque que la liste ne contient qu’un seul fichier, la boîte de dialogue demandant à l’utilisateur de choisir quel fichier il a sélectionné ne sera pas affichée.
+
+<Canvas of={UploadWorkflowStories.OneFile} />
+
+
+## Fichiers optionnels
+
+Vous pouvez spécifier des fichiers optionnels en utilisant la propriété `optional`.
+
+<Canvas of={UploadWorkflowStories.OptionalDocument} />
+
+
+## Prévisualisation des fichiers
+
+Vous pouvez permettre à l’utilisateur de prévisualiser le fichier qu’il vient de sélectionner avant de valider en utilisant la prop `show-file-preview`.
+
+<Canvas of={UploadWorkflowStories.WithPreviewStep} />
+
+
+## Exemple d'utilisation
+
+<Source
+    language="typescript"
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { UploadWorkflow } from '@cnamts/synapse'
+
+	const files = ref([])
+
+	const uploadList = [
+		{
+			id: '1',
+			title: 'Carte d\\'identité',
+		},
+		{
+			id: '2',
+			title: 'Facture de soin',
+		},
+	]
+</script>
+
+<template>
+	<UploadWorkflow
+		v-model="files"
+		:uploadList="uploadList"
+	/>
+</template>
+`}
+/>
