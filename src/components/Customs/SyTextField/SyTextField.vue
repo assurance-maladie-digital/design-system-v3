@@ -424,9 +424,6 @@
 		<template #details>
 			<slot name="details" />
 		</template>
-		<template #default>
-			<slot />
-		</template>
 	</VTextField>
 </template>
 

@@ -29,8 +29,7 @@ exports[`SyTextField > matches snapshot 1`] = `
         <!----><label class="v-label v-field-label" for="input-0">
           <!---->custom label
         </label>
-        <!---->
-        <div class="v-field__input" data-no-activator=""><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" aria-label="custom label" display-asterisk="false" no-icon="false" value=""></div>
+        <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" aria-label="custom label" display-asterisk="false" no-icon="false" class="v-field__input" value="">
         <!---->
       </div>
       <!---->
