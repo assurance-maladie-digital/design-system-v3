@@ -31,7 +31,7 @@ const meta = {
 		},
 		isValidatedOnBlur: { control: 'boolean' },
 		displayAsterisk: { control: 'boolean' },
-		disableErrorHandling: { 
+		disableErrorHandling: {
 			control: 'boolean',
 			description: 'Désactive la gestion des erreurs de validation',
 		},

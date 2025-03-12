@@ -806,7 +806,7 @@ Cette story montre l'utilisation des règles de validation standard. Le champ :
 			},
 		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const value = ref('')
@@ -867,7 +867,7 @@ Cette story montre l'utilisation combinée des règles standard et d'avertisseme
 			},
 		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const value = ref('')
@@ -929,7 +929,7 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 			},
 		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const value = ref('')
@@ -992,7 +992,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 			},
 		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const value = ref('')
@@ -1028,7 +1028,7 @@ export const WithTooltips: Story = {
 		appendTooltip: 'Information à droite du champ',
 		tooltipLocation: 'top',
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue)
@@ -1091,7 +1091,7 @@ export const ValidateOnBlur: Story = {
 			},
 		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField, VBtn },
 		setup() {
 			const value = ref(args.modelValue)
@@ -1184,7 +1184,7 @@ function handleSubmit() {
 }
 
 export const FormValidation: Story = {
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const nomField = ref()
@@ -1320,7 +1320,7 @@ export const WithPrefixAndSuffix: Story = {
 		prefix: '€',
 		suffix: 'TTC',
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue)

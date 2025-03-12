@@ -1074,7 +1074,6 @@ Cette option est utile lorsque vous souhaitez utiliser le composant uniquement p
 	},
 }
 
-
 /**
  * Champ de mot de passe avec validation personnalisée.
  */

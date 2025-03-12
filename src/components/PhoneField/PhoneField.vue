@@ -98,7 +98,7 @@
 	}
 
 	const validationRules = computed(() => {
-				if (!props.isValidatedOnBlur || props.disableErrorHandling) return
+		if (!props.isValidatedOnBlur || props.disableErrorHandling) return
 
 		const rules = [exactLength(counter.value, true)]
 		if (props.required) {
