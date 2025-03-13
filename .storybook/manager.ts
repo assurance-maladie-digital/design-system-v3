@@ -10,21 +10,21 @@ const applyThemeClass = (theme) => {
 }
 
 const applyThemeSidebar = (theme) => {
-	console.log('applyThemeSidebar called with theme:', theme) // Ensure this is logged
-
 	const processSidebar = () => {
 		const sidebar = document.querySelector('.sidebar-container')
 
 		if (sidebar) {
-			console.log('Sidebar found, applying theme modifications')
 			const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
 			items.forEach((item) => {
 				if (theme === 'pa') {
-					console.log('theme pa')
-					if (item.querySelector('a[href="#démarrer-introduction--docs"]')) {
-						console.log('Hiding CNAM-specific item in PA theme')
+					if (item.querySelector('a#démarrer-introduction--docs')) {
 						item.style.display = 'none'
+					}
+				}
+				if (theme === 'cnam') {
+					if (item.querySelector('a#démarrer-introduction--docs')) {
+						item.style.display = 'block'
 					}
 				}
 			})
@@ -56,7 +56,6 @@ const applyThemeSidebar = (theme) => {
 
 		setTimeout(() => {
 			if (observer) {
-				console.log('Stopping sidebar observer after timeout')
 				observer.disconnect()
 			}
 		}, 10000)
@@ -73,10 +72,12 @@ const applyThemeSidebar = (theme) => {
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
 
-// Apply initial theme
+// Apply initial theme and sidebar
 if (typeof window !== 'undefined') {
 	applyThemeClass(storedTheme || 'cnam')
-	applyThemeSidebar(storedTheme || 'cnam')
+	setTimeout(() => {
+		applyThemeSidebar(storedTheme || 'cnam')
+	}, 100)
 }
 
 addons.setConfig({
