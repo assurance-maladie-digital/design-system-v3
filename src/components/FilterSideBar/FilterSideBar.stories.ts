@@ -1,16 +1,17 @@
-import { fn } from '@storybook/test'
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref } from 'vue'
+import FilterSideBar from './FilterSideBar.vue'
+import { fn } from '@storybook/test'
 import { VDivider, VSelect, VTextField } from 'vuetify/components'
-import FilterSideBar from '../FilterSideBar/FilterSideBar.vue'
 import PeriodField from '../PeriodField/PeriodField.vue'
-import RangeField from '../RangeField/RangeField.vue'
 import SearchListField from '../SearchListField/SearchListField.vue'
-import FilterInline from './FilterInline.vue'
+import { ref } from 'vue'
+import FilterInline from '../FilterInline/FilterInline.vue'
+import RangeField from '../RangeField/RangeField.vue'
 
 const meta = {
-	title: 'Composants/Filtres/FilterInline',
-	component: FilterInline,
+	title: 'Composants/Filtres/FiltersSideBar',
+	component: FilterSideBar,
+
 	argTypes: {
 		'modelValue': {
 			description: 'Valeur des filtres',
@@ -42,13 +43,17 @@ const meta = {
 			table: {
 				category: 'props',
 				type: {
-					summary: 'Record<string, Function>',
+					summary: 'Record<string, Function | string>',
 				},
 				defaultValue: {
 					summary: 'locales',
 					detail: `{
+	filterBtnLabel: 'Filtres',
 	badgeLabel: (count: number): string =>
 		\`\${count} filtre\${count > 1 ? 's' : ''}\`,
+	reset: 'Réinitialiser',
+	close: 'Fermer',
+	apply: 'Appliquer',
 }`,
 				},
 			},
@@ -75,7 +80,7 @@ const meta = {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore - storybook can't infer dynamic slot name
 		'${filterName}': {
-			description: 'Slot pour les filtre. <br>Le nom de chaque slot correspond au nom (`name`) du filtre. <br>Le paramètre du slot `props` est un objet contenant les props à passer du filtre.',
+			description: 'Slot pour les filtres. <br>Le nom de chaque slot correspond au nom (`name`) du filtre. <br>Le paramètre du slot `props` est un objet contenant les props à passer au filtre.',
 			table: {
 				category: 'slots',
 				type: {
@@ -85,24 +90,36 @@ const meta = {
 		},
 	},
 	parameters: {
+		layout: 'fullscreen',
 		controls: {
 			exclude: ['update:modelValue', '`${formatFilterName(filter.name)}`'],
 		},
 	},
-} satisfies Meta<typeof FilterInline>
+} satisfies Meta<typeof FilterSideBar>
 
 export default meta
 
-type Story = StoryObj<typeof FilterInline>
+type Story = StoryObj<typeof FilterSideBar>
 
 export const Default: Story = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
+	decorators: [
+		() => ({
+			template: `
+			<VApp style="height: 500px; overflow-y: hidden;">
+				<div class="pa-4">
+					<story />
+				</div>
+			</VApp>
+		`,
+		}),
+	],
 	render: args => ({
-		components: { FilterInline, VTextField, VSelect, PeriodField, SearchListField },
+		components: { FilterSideBar, VTextField, VSelect, PeriodField, SearchListField },
 		setup() {
-			const filters = [
+			const filters = ref([
 				{
 					name: 'name',
 					title: 'Identité',
@@ -119,12 +136,21 @@ export const Default: Story = {
 					name: 'profession',
 					title: 'Profession',
 				},
-			]
+			])
 
 			const folderTypes = [
-				{ title: 'Arrêt de Travail (AT)', value: 'AT' },
-				{ title: 'Maladie Professionnelle (MP)', value: 'MP' },
-				{ title: 'Autre', value: 'other' },
+				{
+					title: 'AT',
+					value: 'at',
+				},
+				{
+					title: 'MP',
+					value: 'mp',
+				},
+				{
+					title: 'Autre',
+					value: 'other',
+				},
 			]
 
 			const professionList = [
@@ -157,52 +183,51 @@ export const Default: Story = {
 			return { args, filters, folderTypes, professionList }
 		},
 		template: `
-<FilterInline
-	v-model="filters"
-	v-bind="args"
->
-	<template #name="{ props }">
-		<VTextField
-			v-bind="props"
-			label="Nom"
-			variant="outlined"
-			hide-details
-			color="primary"
-		/>
-	</template>
+			<FilterSideBar
+				v-bind="args"
+				v-model="filters"
+			>
+				<template #name="{ props }">
+					<VTextField
+						v-bind="props"
+						label="Nom"
+						variant="outlined"
+						hide-details
+						color="primary"
+					/>
+				</template>
 
-	<template #folder="{ props }">
-		<p class="text-secondary mb-4">
-			Vous pouvez filtrer entre les dossiers de type <b>Arrêt de Travail (AT)</b> et <b>Maladie Professionnelle (MP)</b> ou <b>Autre</b>.
-		</p>
+				<template #folder="{ props }">
+					<p class="text-secondary mb-4">
+						Vous pouvez filtrer entre les dossiers de type <b>Arrêt de Travail (AT)</b> et <b>Maladie Professionnelle (MP)</b> ou <b>Autre</b>.
+					</p>
 
-		<VSelect
-			v-bind="props"
-			:items="folderTypes"
-			label="Type de dossier"
-			multiple
-			variant="outlined"
-			return-object
-			hide-details
-			color="primary"
-		/>
-	</template>
+					<VSelect
+						v-bind="props"
+						:items="folderTypes"
+						label="Type de dossier"
+						multiple
+						variant="outlined"
+						return-object
+						hide-details
+						color="primary"
+					/>
+				</template>
 
-	<template #period="{ props }">
-		<PeriodField
-			v-bind="props"
-			variant="outlined"
-		/>
-	</template>
+				<template #period="{ props }">
+					<PeriodField
+						v-bind="props"
+						variant="outlined"
+					/>
+				</template>
 
-	<template #profession="{ props }">
-		<SearchListField
-			v-bind="props"
-			:items="professionList"
-			color="primary"
-		/>
-	</template>
-</FilterInline>
+				<template #profession="{ props }">
+					<SearchListField
+						v-bind="props"
+						:items="professionList"
+					/>
+				</template>
+			</FilterSideBar>
 		`,
 	}),
 	parameters: {
@@ -210,7 +235,7 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-<FilterInline
+<FilterSideBar
 	v-model="filters"
 >
 	<template #name="{ props }">
@@ -251,18 +276,17 @@ export const Default: Story = {
 		<SearchListField
 			v-bind="props"
 			:items="professionList"
-			color="primary"
 		/>
 	</template>
-</FilterInline>
-				`,
+</FilterSideBar>
+`,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { ref } from 'vue'
-import { FilterInline, PeriodField, SearchListField } from '@cnamts/synapse'
-import { VTextField, VSelect } from 'vuetify/components'
+import { FilterSideBar } from '@cnamts/synapse'
 
 const filters = ref([
 	{
@@ -284,9 +308,18 @@ const filters = ref([
 ])
 
 const folderTypes = [
-	{ title: 'Arrêt de Travail (AT)', value: 'AT' },
-	{ title: 'Maladie Professionnelle (MP)', value: 'MP' },
-	{ title: 'Autre', value: 'other' },
+	{
+		title: 'AT',
+		value: 'at',
+	},
+	{
+		title: 'MP',
+		value: 'mp',
+	},
+	{
+		title: 'Autre',
+		value: 'other',
+	},
 ]
 
 const professionList = [
@@ -315,7 +348,8 @@ const professionList = [
 		value: 'pharmacien',
 	},
 ]
-				`,
+	
+</script>`,
 			},
 		],
 	},
@@ -325,10 +359,21 @@ export const ChipFormat: Story = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
+	decorators: [
+		() => ({
+			template: `
+			<VApp style="height: 500px; overflow-y: hidden;">
+				<div class="pa-4">
+					<story />
+				</div>
+			</VApp>
+		`,
+		}),
+	],
 	render: args => ({
-		components: { FilterInline, RangeField },
+		components: { FilterSideBar, RangeField },
 		setup() {
-			const filters = [
+			const filters = ref([
 				{
 					name: 'range-slider',
 					title: 'Intervalle',
@@ -340,25 +385,22 @@ export const ChipFormat: Story = {
 						},
 					],
 				},
-			]
+			])
 
-			const folderTypes = [
-				'AT',
-				'MP',
-				'Autre',
-			]
-
-			return { args, filters, folderTypes }
+			return { args, filters }
 		},
 		template: `
-<FilterInline v-model="filters">
-	<template #range-slider="{ props }">
-		<RangeField
-			v-bind="props"	
-			label="Intervalle"
-		/>
-	</template>
-</FilterInline>
+			<FilterSideBar
+				v-model="filters"
+				v-bind="args"
+			>
+				<template #range-slider="{ props }">
+					<RangeField
+						v-bind="props"	
+						label="Intervalle"
+					/>
+				</template>
+			</FilterSideBar>
 		`,
 	}),
 	parameters: {
@@ -366,24 +408,24 @@ export const ChipFormat: Story = {
 			{
 				name: 'Template',
 				code: `
-<FiltersInline v-model="filters">
-	<template #range-slider="{ props }">
+<FilterSideBar
+	v-model="filters"
+>
+		<template #range-slider="{ props }">
 		<RangeField
-			v-bind="props"
+			v-bind="props"	
 			label="Intervalle"
-			max="50"
-			min="0"
 		/>
 	</template>
-</FiltersInline>
-				`,
+</FilterSideBar>
+`,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { ref } from 'vue'
-import { FilterInline, RangeField } from '@cnamts/synapse'
-import { VSelect } from 'vuetify/components'
+import { FilterSideBar, RangeField } from '@cnamts/synapse'
 
 const filters = ref([
 	{
@@ -397,13 +439,7 @@ const filters = ref([
 		],
 	},
 ])
-
-const folderTypes = [
-	'AT',
-	'MP',
-	'Autre',
-]
-				`,
+</script>`,
 			},
 		],
 	},
@@ -588,7 +624,6 @@ export const FilterCombination: Story = {
 		`,
 	}),
 	parameters: {
-		layout: 'fullscreen',
 		sourceCode: [
 			{
 				name: 'Template',

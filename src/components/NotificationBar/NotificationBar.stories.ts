@@ -150,7 +150,7 @@ Default.parameters = {
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@/services/NotificationService'
+				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
 				const showNotification = ref(false)
@@ -208,7 +208,7 @@ Success.parameters = {
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@/services/NotificationService'
+				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
 				const showNotification = ref(false)
@@ -266,7 +266,7 @@ Warning.parameters = {
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@/services/NotificationService'
+				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
 				const showNotification = ref(false)
@@ -324,7 +324,7 @@ Error.parameters = {
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@/services/NotificationService'
+				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
 				const showNotification = ref(false)
@@ -382,7 +382,7 @@ Bottom.parameters = {
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@/services/NotificationService'
+				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
 				const showNotification = ref(false)
@@ -440,7 +440,7 @@ CustomCloseBtnText.parameters = {
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@/services/NotificationService'
+				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
 				const showNotification = ref(false)
