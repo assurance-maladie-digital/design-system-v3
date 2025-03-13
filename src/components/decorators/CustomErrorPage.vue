@@ -28,60 +28,74 @@
 </script>
 
 <template>
-	<div class="custom-error-page">
-		<div class="error-container">
-			<div
-				class="error-code"
-				:style="{ color: primaryColor }"
-			>
-				{{ props.code }}
+	<div class="custom-error-page-overlay">
+		<div class="custom-error-page">
+			<div class="error-container">
+				<div
+					class="error-code"
+					:style="{ color: primaryColor }"
+				>
+					{{ props.code }}
+				</div>
+				<h2 class="error-title">
+					{{ props.pageTitle }}
+				</h2>
+				<p class="error-message">
+					{{ props.message }}
+				</p>
+				<v-btn
+					v-if="!props.hideBtn && props.btnText"
+					:to="props.btnLink"
+					:color="primaryColor"
+					class="mt-6"
+				>
+					{{ props.btnText }}
+				</v-btn>
 			</div>
-			<h2 class="error-title">
-				{{ props.pageTitle }}
-			</h2>
-			<p class="error-message">
-				{{ props.message }}
-			</p>
-			<v-btn
-				v-if="!props.hideBtn && props.btnText"
-				:to="props.btnLink"
-				:color="primaryColor"
-				class="mt-6"
-			>
-				{{ btnText }}
-			</v-btn>
 		</div>
 	</div>
 </template>
 
 <style scoped>
+.custom-error-page-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: white;
+	z-index: 9999;
+	overflow: hidden;
+}
+
 .custom-error-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
-  padding: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	padding: 2rem;
 }
 
 .error-container {
-  max-width: 600px;
-  text-align: center;
+	max-width: 600px;
+	text-align: center;
 }
 
 .error-code {
-  font-size: 6rem;
-  line-height: 6rem;
-  font-weight: 400;
-  margin-bottom: 1rem;
+	font-size: 6rem;
+	line-height: 6rem;
+	font-weight: 400;
+	margin-bottom: 1rem;
 }
 
 .error-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-bottom: 1rem;
 }
 
 .error-message {
-  margin-bottom: 2rem;
+	margin-bottom: 2rem;
 }
 </style>

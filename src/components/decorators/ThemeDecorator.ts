@@ -3,7 +3,7 @@ import { useTheme } from 'vuetify'
 import CustomErrorPage from './CustomErrorPage.vue'
 
 // Décorateur qui vérifie si le thème est CNAM
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
 export const withThemeCheck = (storyFn: any) => {
 	// Créer un wrapper component
 	const Wrapper = defineComponent({
@@ -39,8 +39,6 @@ export const withThemeCheck = (storyFn: any) => {
 					code: '403',
 					pageTitle: 'Accès non autorisé',
 					message: `Cette documentation n'est accessible qu'avec le thème CNAM. Thème actuel : ${this.currentThemeName}`,
-					btnText: 'Retour à l\'accueil',
-					btnLink: '/',
 				})
 			}
 		},
