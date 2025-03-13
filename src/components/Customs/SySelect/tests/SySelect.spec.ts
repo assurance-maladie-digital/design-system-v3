@@ -89,7 +89,11 @@ describe('SySelect.vue', () => {
 
 	it('returns the correct text when selectedItem is an object', async () => {
 		const wrapper = mount(SySelect, {
-			props: { modelValue: { text: 'Option 1', value: '1' }, textKey: 'text' },
+			props: {
+				modelValue: { text: 'Option 1', value: '1' },
+				textKey: 'text',
+				returnObject: true,
+			},
 			global: {
 				plugins: [vuetify],
 			},
@@ -98,6 +102,24 @@ describe('SySelect.vue', () => {
 		const instance = wrapper.vm as any
 		await wrapper.setProps({ modelValue: { text: 'Option 1', value: '1' } })
 		expect(instance.selectedItemText).toBe('Option 1')
+	})
+
+	it('returns the correct text when selectedItem is a value', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
+				modelValue: '1',
+				textKey: 'text',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+		const instance = wrapper.vm as any
+		await wrapper.setProps({ modelValue: '2' })
+		await wrapper.vm.$nextTick()
+		expect(instance.selectedItemText).toBe('Option 2')
 	})
 
 	it('formats items correctly', () => {
@@ -163,7 +185,7 @@ describe('SySelect.vue', () => {
 		const instance = wrapper.vm as any
 		instance.selectItem({ text: 'Option 1', value: '1' })
 		await wrapper.vm.$nextTick()
-		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([{ text: 'Option 1', value: '1' }])
+		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['1'])
 	})
 
 	it('closes the menu when v-click-outside directive is called', async () => {
@@ -189,5 +211,116 @@ describe('SySelect.vue', () => {
 		})
 		await wrapper.vm.closeList()
 		expect(wrapper.vm.isOpen).toBe(false)
+	})
+
+	it('emit the value when returnObject is false', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				returnObject: false,
+				items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		await wrapper.find('.sy-select').trigger('click')
+		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		await firstItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['1'])
+
+		await wrapper.find('.sy-select').trigger('click')
+		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		await secondItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][1]).toEqual(['2'])
+	})
+
+	it('emit the object when returnObject is true', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				returnObject: true,
+				items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('.sy-select').trigger('click')
+		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		await firstItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([{ text: 'Option 1', value: '1' }])
+
+		await wrapper.find('.sy-select').trigger('click')
+		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		await secondItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][1]).toEqual([{ text: 'Option 2', value: '2' }])
+	})
+
+	it('emit the value when returnObject is false with textKey and keyValue set', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				returnObject: false,
+				textKey: 'theText',
+				valueKey: 'theValue',
+				items: [{ theText: 'Option 1', theValue: '1' }, { theText: 'Option 2', theValue: '2' }],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		await wrapper.find('.sy-select').trigger('click')
+		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		await firstItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['1'])
+
+		await wrapper.find('.sy-select').trigger('click')
+		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		await secondItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][1]).toEqual(['2'])
+	})
+
+	it('emit the object when returnObject is true with textKey and keyValue set', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				returnObject: true,
+				textKey: 'theText',
+				valueKey: 'theValue',
+				items: [{ theText: 'Option 1', theValue: '1' }, { theText: 'Option 2', theValue: '2' }],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('.sy-select').trigger('click')
+		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		await firstItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([{ theText: 'Option 1', theValue: '1' }])
+
+		await wrapper.find('.sy-select').trigger('click')
+		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		await secondItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][1]).toEqual([{ theText: 'Option 2', theValue: '2' }])
+	})
+
+	it('emit the value when items is an array of string', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: ['Option 1', 'Option 2'],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('.sy-select').trigger('click')
+		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		await firstItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['Option 1'])
+
+		await wrapper.find('.sy-select').trigger('click')
+		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		await secondItem!.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][1]).toEqual(['Option 2'])
 	})
 })

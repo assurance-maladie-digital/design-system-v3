@@ -48,6 +48,10 @@
 			type: Boolean,
 			default: false,
 		},
+		returnObject: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -69,8 +73,14 @@
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
-		selectedItem.value = item
-		emit('update:modelValue', item)
+		if (props.returnObject) {
+			selectedItem.value = item
+			emit('update:modelValue', item)
+		}
+		else {
+			selectedItem.value = item[props.valueKey]
+			emit('update:modelValue', item[props.valueKey])
+		}
 		isOpen.value = false
 	}
 
@@ -80,9 +90,12 @@
 	}
 
 	const selectedItemText = computed(() => {
-		if (selectedItem.value && typeof selectedItem.value === 'object') {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			return (selectedItem.value as Record<string, any>)[props.textKey]
+		if (selectedItem.value) {
+			if (props.returnObject) {
+				return (selectedItem.value as Record<string, unknown>)[props.textKey]
+			}
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			return props.items.find((item: any) => item[props.valueKey] === selectedItem.value)?.[props.textKey]
 		}
 		return ''
 	})
