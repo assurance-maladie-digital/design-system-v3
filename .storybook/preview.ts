@@ -9,10 +9,15 @@ import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
 import { cnamLightTheme, cnamDarkTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
 import { createFlattenTheme } from '../src/designTokens/utils'
+import {fr} from 'vuetify/locale'
 
 const vuetify = createVuetify({
 	components,
 	directives,
+	locale: {
+		locale: 'fr',
+		messages: {fr},
+	},
 	theme: {
 		themes: {
 			light: {

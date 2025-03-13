@@ -499,8 +499,6 @@
 
 		// Si on clique dans le conteneur du DatePicker, on ne fait rien
 		if (container) return
-
-		isDatePickerVisible.value = false
 		emit('closed')
 		// Déclencher la validation à la fermeture
 		validateDates()
@@ -772,29 +770,42 @@
 				@append-icon-click="handleAppendIconClick"
 			/>
 		</template>
-		<transition name="fade">
-			<v-locale-provider locale="fr">
-				<VDatePicker
-					v-if="isDatePickerVisible && !props.noCalendar"
-					v-model="selectedDates"
-					:first-day-of-week="1"
-					:multiple="props.displayRange ? 'range' : false"
-					:show-adjacent-months="true"
-					:show-week="props.showWeekNumber"
-					:view-mode="props.isBirthDate ? 'year' : 'month'"
-					color="primary"
-				>
-					<template #title>
-						Sélectionnez une date
-					</template>
-					<template #header>
-						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ todayInString }}
-						</h3>
-					</template>
-				</VDatePicker>
-			</v-locale-provider>
-		</transition>
+		<div>
+			<VMenu
+				v-if="!props.noCalendar"
+				v-model="isDatePickerVisible"
+				activator="parent"
+				:min-width="0"
+				location="bottom"
+				:close-on-content-click="false"
+				:open-on-click="false"
+				transition="fade-transition"
+				attach="body"
+				:offset="[-20, 5]"
+			>
+				<transition name="fade">
+					<VDatePicker
+						v-if="isDatePickerVisible && !props.noCalendar"
+						v-model="selectedDates"
+						:first-day-of-week="1"
+						:multiple="props.displayRange ? 'range' : false"
+						:show-adjacent-months="true"
+						:show-week="props.showWeekNumber"
+						:view-mode="props.isBirthDate ? 'year' : 'month'"
+						color="primary"
+					>
+						<template #title>
+							Sélectionnez une date
+						</template>
+						<template #header>
+							<h3 class="mx-auto my-auto ml-5 mb-4">
+								{{ todayInString }}
+							</h3>
+						</template>
+					</VDatePicker>
+				</transition>
+			</VMenu>
+		</div>
 	</div>
 </template>
 

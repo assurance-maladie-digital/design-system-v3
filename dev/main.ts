@@ -9,6 +9,7 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 // import { cnamLightTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
 import { cnamLightTheme, cnamDarkTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
 import { createFlattenTheme } from '@/designTokens/utils'
+import {fr} from 'vuetify/locale'
 // import { paLightTheme } from '../designTokens/tokens/pa/paLightTheme'
 
 import { router } from './router'
@@ -16,6 +17,10 @@ import { router } from './router'
 const vuetify = createVuetify({
 	components,
 	directives,
+	locale: {
+		locale: 'fr',
+		messages: {fr},
+	},
 	theme: {
 		themes: {
 			light: {

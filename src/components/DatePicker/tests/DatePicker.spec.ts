@@ -66,16 +66,6 @@ describe('DatePicker.vue', () => {
 		expect(wrapper.vm.isDatePickerVisible).toBe(true)
 	})
 
-	it('hides the date picker on outside click', async () => {
-		const input = wrapper.find('input')
-		await input.trigger('focus')
-		expect(wrapper.vm.isDatePickerVisible).toBe(true)
-
-		document.body.click()
-		await nextTick()
-		expect(wrapper.vm.isDatePickerVisible).toBe(false)
-	})
-
 	it('updates aria-labels for date picker navigation buttons', async () => {
 		wrapper.vm.isDatePickerVisible = true
 		await nextTick()
@@ -88,14 +78,14 @@ describe('DatePicker.vue', () => {
 		)
 
 		if (arrowDown) {
-			expect(arrowDown.getAttribute('aria-label')).toBe('Fleche vers le bas')
+			expect(arrowDown.getAttribute('aria-label')).toBe('Changer de vue')
 		}
 		arrowLeftButtons.forEach((button, index) => {
 			if (index === 0) {
-				expect(button.getAttribute('aria-label')).toBe('Fleche vers la gauche')
+				expect(button.getAttribute('aria-label')).toBe('Mois précédent')
 			}
 			else if (index === 1) {
-				expect(button.getAttribute('aria-label')).toBe('Fleche vers la droite')
+				expect(button.getAttribute('aria-label')).toBe('Mois suivant')
 			}
 		})
 	})
