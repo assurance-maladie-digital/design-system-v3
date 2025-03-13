@@ -2,9 +2,11 @@ import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPane
 import type { StoryObj } from '@storybook/vue3'
 import { checkIcon, linkICon, croixIcon } from '@/constants/icons'
 import Usages from '@/components/Usages/Usages.vue'
+import { withThemeCheck } from '../decorators/ThemeDecorator'
 
 export default {
 	title: 'Composants/Boutons/BackBtn/Usages',
+	decorators: [withThemeCheck],
 }
 const itemsToDo = [
 	'Positionner le bouton de manière visible et intuitive (souvent en haut à gauche).',

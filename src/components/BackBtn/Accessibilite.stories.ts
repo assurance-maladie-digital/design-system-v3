@@ -2,6 +2,7 @@ import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPane
 import type { StoryObj } from '@storybook/vue3'
 import { AccessibiliteItemsIndeterminate, AccessibiliteItemsValidated } from './AccessibiliteItems'
 import { mdiCheckboxMarkedCircle, mdiLink, mdiEye } from '@mdi/js'
+import { withThemeCheck } from '../decorators/ThemeDecorator'
 
 const checkIcon = mdiCheckboxMarkedCircle
 const iconEye = mdiEye
@@ -9,6 +10,7 @@ const linkICon = mdiLink
 
 export default {
 	title: 'Composants/Boutons/BackBtn/Accessibilité',
+	decorators: [withThemeCheck],
 }
 
 export const AccessibilitePanel: StoryObj = {
