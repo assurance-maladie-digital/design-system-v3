@@ -3,6 +3,7 @@ import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
+import { fn } from '@storybook/test'
 
 const meta: Meta<typeof SySelect> = {
 	title: 'Composants/Formulaires/SySelect',
@@ -17,6 +18,18 @@ const meta: Meta<typeof SySelect> = {
 		errorMessages: { control: 'object' },
 		required: { control: 'boolean' },
 		displayAsterisk: { control: 'boolean' },
+		textKey: {
+			control: 'text',
+			description: 'Nom de la propriété qui contient le texte à afficher',
+		},
+		valueKey: {
+			control: 'text',
+			description: 'Nom de la propriété qui contient la valeur à retourner',
+		},
+		returnObject: {
+			control: 'boolean',
+			description: 'Retourne l\'objet complet sélectionné',
+		},
 	},
 } as Meta<typeof SySelect>
 
@@ -53,10 +66,11 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		items: [
+		'items': [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -107,11 +121,12 @@ export const Required: Story = {
 		],
 	},
 	args: {
-		items: [
+		'items': [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
-		required: true,
+		'required': true,
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -172,9 +187,10 @@ const items = [
 	},
 	args: {
 		...Default.args,
-		label: 'Sélectionnez une option',
-		required: true,
-		displayAsterisk: true,
+		'label': 'Sélectionnez une option',
+		'required': true,
+		'displayAsterisk': true,
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -236,10 +252,11 @@ export const withCustomError: Story = {
 		],
 	},
 	args: {
-		items: [
+		'items': [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -300,10 +317,11 @@ export const withCustomKey: Story = {
 		],
 	},
 	args: {
-		items: [
+		'items': [
 			{ customKey: 'Choix 1', value: '1' },
 			{ customKey: 'Choix 2', value: '2' },
 		],
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
