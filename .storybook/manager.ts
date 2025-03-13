@@ -9,25 +9,65 @@ const applyThemeClass = (theme) => {
 	rootElement.classList.add(`theme-${theme}`)
 }
 
-// TODO : FIX THIS
 const applyThemeSidebar = (theme) => {
-	document.addEventListener('DOMContentLoaded', () => {
-		console.log('loaded')
-		const sidebar = document.querySelector('.sidebar')
-		console.log(sidebar)
+	console.log('applyThemeSidebar called with theme:', theme) // Ensure this is logged
+
+	const processSidebar = () => {
+		const sidebar = document.querySelector('.sidebar-container')
+
 		if (sidebar) {
+			console.log('Sidebar found, applying theme modifications')
 			const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
-			console.log(theme)
+
 			items.forEach((item) => {
 				if (theme === 'pa') {
-					if (item.querySelector('a[href="#démarrer-accueil--docs"]')) {
-						console.log(item)
+					console.log('theme pa')
+					if (item.querySelector('a[href="#démarrer-introduction--docs"]')) {
+						console.log('Hiding CNAM-specific item in PA theme')
 						item.style.display = 'none'
 					}
 				}
 			})
+
+			if (observer) {
+				observer.disconnect()
+			}
 		}
-	})
+	}
+
+	let observer: MutationObserver | null = null
+
+	const startObserving = () => {
+		if (document.querySelector('.sidebar-container')) {
+			processSidebar()
+			return
+		}
+
+		observer = new MutationObserver(() => {
+			if (document.querySelector('.sidebar-container')) {
+				processSidebar()
+			}
+		})
+
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true,
+		})
+
+		setTimeout(() => {
+			if (observer) {
+				console.log('Stopping sidebar observer after timeout')
+				observer.disconnect()
+			}
+		}, 10000)
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', startObserving)
+	}
+	else {
+		startObserving()
+	}
 }
 
 // Get stored theme or default to CNAM
