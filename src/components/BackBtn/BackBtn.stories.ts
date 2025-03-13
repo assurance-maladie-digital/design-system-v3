@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-
 import BackBtn from './BackBtn.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
+import { withThemeCheck } from '../decorators/ThemeDecorator'
 
 import { VSheet } from 'vuetify/components'
 
@@ -19,6 +19,7 @@ const meta = {
 			control: 'boolean',
 		},
 	},
+	decorators: [withThemeCheck],
 } as Meta<typeof BackBtn>
 
 export default meta
