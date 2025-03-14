@@ -90,7 +90,7 @@ $pa-spacers: (
 
 // Mixin to generate padding and margin classes
 @mixin generate-spacing-classes($property, $prefix) {
-	@for $i from 1 through 14 {
+	@for $i from 0 through 64 {
 		.#{$prefix}-#{$i} {
 			#{$property}: var(--spacing-#{$i}) !important;
 		}
@@ -103,7 +103,7 @@ $pa-spacers: (
 
 // Mixin for X (left & right) and Y (top & bottom) spacing
 @mixin generate-axis-spacing-classes($property, $prefix, $side1, $side2) {
-	@for $i from 1 through 14 {
+	@for $i from 0 through 64 {
 		.#{$prefix}-#{$i} {
 			#{$property}-#{$side1}: var(--spacing-#{$i}) !important;
 			#{$property}-#{$side2}: var(--spacing-#{$i}) !important;
@@ -119,7 +119,7 @@ $pa-spacers: (
 
 // Mixin for individual side spacing classes
 @mixin generate-side-spacing-classes($property, $prefix, $side) {
-	@for $i from 1 through 14 {
+	@for $i from 0 through 64 {
 		.#{$prefix}-#{$i} {
 			#{$property}-#{$side}: var(--spacing-#{$i}) !important;
 		}
