@@ -1,6 +1,5 @@
-@use 'vuetify/settings' with (
-	$body-font-family: Arial,
-);
+@use 'fonts';
+@use 'spacers';
 
 .v-btn {
 	text-transform: inherit !important;

@@ -1,0 +1,139 @@
+// Define theme spacers separately
+$cnam-spacers: (
+	0: 0px,
+	1: 4px,
+	2: 8px,
+	3: 12px,
+	4: 16px,
+	5: 20px,
+	6: 24px,
+	7: 28px,
+	8: 32px,
+	9: 36px,
+	10: 40px,
+	11: 44px,
+	12: 48px,
+	13: 52px,
+	14: 56px,
+	15: 60px,
+	16: 64px,
+	17: 68px,
+	18: 72px,
+	19: 76px,
+	20: 80px,
+	24: 96px,
+	28: 112px,
+	32: 128px,
+	36: 144px,
+	40: 160px,
+	44: 176px,
+	48: 192px,
+	52: 208px,
+	56: 224px,
+	60: 240px,
+	64: 256px,
+);
+$pa-spacers: (
+	0: 0px,
+	1: 4px,
+	2: 8px,
+	3: 12px,
+	4: 16px,
+	5: 20px,
+	6: 24px,
+	7: 28px,
+	8: 32px,
+	9: 36px,
+	10: 40px,
+	11: 44px,
+	12: 48px,
+	13: 52px,
+	14: 56px,
+	15: 60px,
+	16: 64px,
+	17: 68px,
+	18: 72px,
+	19: 76px,
+	20: 80px,
+	24: 96px,
+	28: 112px,
+	32: 128px,
+	36: 144px,
+	40: 160px,
+	44: 176px,
+	48: 192px,
+	52: 208px,
+	56: 224px,
+	60: 240px,
+	64: 256px,
+);
+
+// Define CSS variables for spacers dynamically
+:root {
+	@each $key, $value in $cnam-spacers {
+		--spacing-#{$key}: #{$value};
+	}
+}
+
+// Apply theme-based spacing
+.theme-cnam {
+	@each $key, $value in $cnam-spacers {
+		--spacing-#{$key}: #{$value};
+	}
+}
+
+.theme-pa {
+	@each $key, $value in $pa-spacers {
+		--spacing-#{$key}: #{$value};
+	}
+}
+
+// Mixin to generate padding and margin classes
+@mixin generate-spacing-classes($property, $prefix) {
+	@for $i from 1 through 14 {
+		.#{$prefix}-#{$i} {
+			#{$property}: var(--spacing-#{$i}) !important;
+		}
+	}
+}
+
+// Apply spacing classes dynamically
+@include generate-spacing-classes(padding, pa);
+@include generate-spacing-classes(margin, ma);
+
+// Mixin for X (left & right) and Y (top & bottom) spacing
+@mixin generate-axis-spacing-classes($property, $prefix, $side1, $side2) {
+	@for $i from 1 through 14 {
+		.#{$prefix}-#{$i} {
+			#{$property}-#{$side1}: var(--spacing-#{$i}) !important;
+			#{$property}-#{$side2}: var(--spacing-#{$i}) !important;
+		}
+	}
+}
+
+// Generate px, py, mx, my spacing classes
+@include generate-axis-spacing-classes(padding, px, left, right);
+@include generate-axis-spacing-classes(padding, py, top, bottom);
+@include generate-axis-spacing-classes(margin, mx, left, right);
+@include generate-axis-spacing-classes(margin, my, top, bottom);
+
+// Mixin for individual side spacing classes
+@mixin generate-side-spacing-classes($property, $prefix, $side) {
+	@for $i from 1 through 14 {
+		.#{$prefix}-#{$i} {
+			#{$property}-#{$side}: var(--spacing-#{$i}) !important;
+		}
+	}
+}
+
+// Generate individual side padding classes
+@include generate-side-spacing-classes(padding, pt, top);
+@include generate-side-spacing-classes(padding, pr, right);
+@include generate-side-spacing-classes(padding, pb, bottom);
+@include generate-side-spacing-classes(padding, pl, left);
+
+// Generate individual side margin classes
+@include generate-side-spacing-classes(margin, mt, top);
+@include generate-side-spacing-classes(margin, mr, right);
+@include generate-side-spacing-classes(margin, mb, bottom);
+@include generate-side-spacing-classes(margin, ml, left);
