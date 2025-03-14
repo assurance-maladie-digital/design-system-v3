@@ -115,7 +115,7 @@ Default.args = {
 	closeBtnText: 'Fermer',
 	type: 'info',
 	bottom: false,
-	rounded: 'rounded',
+	rounded: '4',
 }
 
 Default.parameters = {
@@ -128,7 +128,6 @@ Default.parameters = {
 					v-model="showNotification"
 					:close-btn-text="closeBtnText"
 					:bottom="bottom"
-					:rounded="rounded"
 					:type="type"
 				>
 					<template #default>This is a {{ type }} notification</template>
@@ -174,6 +173,7 @@ Default.parameters = {
 export const Success: Story = Default.bind({})
 Success.args = {
 	...Default.args,
+	rounded: 'pill',
 	type: 'success',
 }
 Success.parameters = {
@@ -186,7 +186,7 @@ Success.parameters = {
 					v-model="showNotification"
 					:close-btn-text="closeBtnText"
 					:bottom="bottom"
-					:rounded="rounded"
+					:rounded="pill"
 					type="success"
 				>
 					<template #default>This is a success notification</template>
@@ -232,6 +232,7 @@ Success.parameters = {
 export const Warning: Story = Default.bind({})
 Warning.args = {
 	...Default.args,
+	rounded: 'pill',
 	type: 'warning',
 }
 Warning.parameters = {
@@ -244,7 +245,7 @@ Warning.parameters = {
 					v-model="showNotification"
 					:close-btn-text="closeBtnText"
 					:bottom="bottom"
-					:rounded="rounded"
+					:rounded="pill"
 					type="warning"
 				>
 					<template #default>This is a warning notification</template>
@@ -290,6 +291,7 @@ Warning.parameters = {
 export const Error: Story = Default.bind({})
 Error.args = {
 	...Default.args,
+	rounded: 'pill',
 	type: 'error',
 }
 Error.parameters = {
@@ -302,7 +304,7 @@ Error.parameters = {
 					v-model="showNotification"
 					:close-btn-text="closeBtnText"
 					:bottom="bottom"
-					:rounded="rounded"
+					:rounded="pill"
 					type="error"
 				>
 					<template #default>This is an error notification</template>
@@ -348,6 +350,7 @@ Error.parameters = {
 export const Bottom: Story = Default.bind({})
 Bottom.args = {
 	...Default.args,
+	rounded: 'pill',
 	bottom: true,
 }
 Bottom.parameters = {
@@ -360,7 +363,7 @@ Bottom.parameters = {
 					v-model="showNotification"
 					:close-btn-text="closeBtnText"
 					:bottom="true"
-					:rounded="rounded"
+					:rounded="pill"
 					:type="type"
 				>
 					<template #default>This is a bottom-positioned notification</template>
@@ -406,6 +409,7 @@ Bottom.parameters = {
 export const CustomCloseBtnText: Story = Default.bind({})
 CustomCloseBtnText.args = {
 	...Default.args,
+	rounded: 'pill',
 	closeBtnText: 'Masquer',
 }
 CustomCloseBtnText.parameters = {
@@ -418,7 +422,7 @@ CustomCloseBtnText.parameters = {
 					v-model="showNotification"
 					close-btn-text="Masquer"
 					:bottom="bottom"
-					:rounded="rounded"
+					:rounded="pill"
 					:type="type"
 				>
 					<template #default>This is a notification with custom close button text</template>
@@ -444,6 +448,7 @@ CustomCloseBtnText.parameters = {
 
 				const { addNotification } = useNotificationService()
 				const showNotification = ref(false)
+				const rounded = 'pill'
 
 				const envoyerNotification = (message: string) => {
 					const notification = {
