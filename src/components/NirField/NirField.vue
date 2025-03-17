@@ -27,6 +27,19 @@
 		customKeyWarningRules?: ValidationRule[]
 		showSuccessMessages?: boolean
 		width?: string
+		bgColor?: string
+		isDisabled?: boolean
+		density?: 'default' | 'comfortable' | 'compact'
+		hideDetails?: boolean | 'auto'
+		hideSpinButtons?: boolean
+		placeholder?: string
+		readonly?: boolean
+		variant?: 'filled' | 'outlined' | 'plain' | 'underlined' | 'solo'
+		clearable?: boolean
+		counter?: boolean | number | string
+		hint?: string
+		persistentHint?: boolean
+		persistentPlaceholder?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: undefined,
@@ -46,6 +59,19 @@
 		customKeyWarningRules: () => [],
 		showSuccessMessages: true,
 		width: '100%',
+		bgColor: undefined,
+		isDisabled: false,
+		density: 'default',
+		hideDetails: false,
+		hideSpinButtons: false,
+		placeholder: undefined,
+		readonly: false,
+		variant: 'outlined',
+		clearable: false,
+		counter: false,
+		hint: undefined,
+		persistentHint: false,
+		persistentPlaceholder: false,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -383,9 +409,21 @@
 				:messages="hasNumberErrors ? numberValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess ? numberValidation.successes.value : []))"
 				:has-error="hasNumberErrors"
 				:required="required"
+				:is-disabled="isDisabled"
+				:bg-color="bgColor"
+				:density="props.density"
+				:hide-details="props.hideDetails"
+				:hide-spin-buttons="props.hideSpinButtons"
+				:placeholder="props.placeholder"
+				:readonly="props.readonly"
+				:variant="props.variant"
+				:clearable="props.clearable"
+				:counter="props.counter"
+				:persistent-hint="props.persistentHint"
+				:persistent-placeholder="props.persistentPlaceholder"
+				:hint="props.hint || locales.numberHint"
 				class="number-field"
 				:display-asterisk="false"
-				:hint="locales.numberHint"
 				@input="handleNumberInput"
 				@blur="handleNumberBlur"
 			/>
@@ -410,9 +448,21 @@
 				:show-success-messages="showSuccessMessages"
 				:has-warning="hasKeyWarning"
 				:has-success="hasKeySuccess"
-				:hint="locales.keyHint"
+				:hint="props.hint || locales.keyHint"
 				:messages="hasKeyErrors ? keyValidation.errors.value : (hasKeyWarning ? keyValidation.warnings.value : (hasKeySuccess ? keyValidation.successes.value : []))"
 				:has-error="hasKeyErrors"
+				:is-disabled="isDisabled"
+				:bg-color="bgColor"
+				:density="props.density"
+				:hide-details="props.hideDetails"
+				:hide-spin-buttons="props.hideSpinButtons"
+				:placeholder="props.placeholder"
+				:readonly="props.readonly"
+				:variant="props.variant"
+				:clearable="props.clearable"
+				:counter="props.counter"
+				:persistent-hint="props.persistentHint"
+				:persistent-placeholder="props.persistentPlaceholder"
 				class="key-field"
 				:display-asterisk="false"
 				@input="handleKeyInput"

@@ -54,12 +54,16 @@ const meta: Meta<typeof NirField> = {
 			},
 		},
 		nirTooltipPosition: {
-			description: 'Position de l\'infobulle pour le champ NIR.',
+			description: 'Position de l\'infobulle pour le champ NIR, si le `nirTooltip` est renseigné',
 			control: 'select',
 			options: ['prepend', 'append'],
+			default: 'append',
 			table: {
 				type: {
 					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'append',
 				},
 			},
 		},
@@ -73,32 +77,42 @@ const meta: Meta<typeof NirField> = {
 			},
 		},
 		keyTooltipPosition: {
-			description: 'Position de l\'infobulle pour le champ clé.',
+			description: 'Position de l\'infobulle pour le champ clé, si le `keyTooltip` est renseigné',
 			control: 'select',
 			options: ['prepend', 'append'],
+			default: 'append',
 			table: {
 				type: {
 					summary: 'string',
 				},
+				defaultValue: {
+					summary: 'append',
+				},
 			},
 		},
 		numberLabel: {
-			description: 'Étiquette pour le champ numéro.',
+			description: 'Label pour le champ numéro.',
 			control: 'text',
 			default: 'Numéro de sécurité sociale',
 			table: {
 				type: {
 					summary: 'string',
 				},
+				defaultValue: {
+					summary: 'Numéro de sécurité sociale',
+				},
 			},
 		},
 		keyLabel: {
-			description: 'Étiquette pour le champ clé.',
+			description: 'Label pour le champ clé.',
 			control: 'text',
 			default: 'Clé',
 			table: {
 				type: {
 					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Clé',
 				},
 			},
 		},
@@ -140,6 +154,26 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
+		bgColor: {
+			description: 'Définit la couleur de fond du champ.',
+			control: 'color',
+			default: undefined,
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		isDisabled: {
+			description: 'Indique si le champ est désactivé.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
 		width: {
 			description: 'Définit la largeur du champ NIR. Accepte toute valeur CSS valide (%, px, rem, etc.). Le champ numéro occupera 80% de cette largeur et le champ clé 20%.',
 			control: 'text',
@@ -150,6 +184,144 @@ const meta: Meta<typeof NirField> = {
 				},
 				defaultValue: {
 					summary: '100%',
+				},
+			},
+		},
+		// Propriétés natives de Vuetify
+		density: {
+			description: 'Contrôle la densité du champ.',
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			default: 'default',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'default',
+				},
+			},
+		},
+		hideDetails: {
+			description: 'Masque les détails du champ (messages d\'erreur, compteur, etc.).',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean | "auto"',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		hideSpinButtons: {
+			description: 'Masque les boutons de spin pour les champs numériques.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		placeholder: {
+			description: 'Texte à afficher lorsque le champ est vide.',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		readonly: {
+			description: 'Rend le champ en lecture seule.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		variant: {
+			description: 'Style du champ.',
+			control: 'select',
+			options: ['filled', 'outlined', 'plain', 'underlined', 'solo'],
+			default: 'outlined',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'outlined',
+				},
+			},
+		},
+		clearable: {
+			description: 'Permet d\'afficher un bouton pour effacer le contenu.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		counter: {
+			description: 'Affiche un compteur de caractères.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean | number | string',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		hint: {
+			description: 'Texte d\'aide affiché sous le champ.',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		persistentHint: {
+			description: 'Affiche toujours l\'indice, même lorsque le champ n\'est pas en focus.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		persistentPlaceholder: {
+			description: 'Affiche toujours le placeholder, même lorsque le champ est en focus.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
 				},
 			},
 		},
@@ -414,7 +586,7 @@ export const CustomRules: Story = {
 export const WithNirTooltip: Story = {
 	args: {
 		...Default.args,
-		nirTooltip: 'Ceci est un tooltip pour le champs numéro de sécurité sociale',
+		nirTooltip: 'Ceci est un tooltip pour le champs numéro de sécurité sociale si le champs `nirTooltip` est saisi',
 		nirTooltipPosition: 'prepend',
 	},
 	parameters: {
