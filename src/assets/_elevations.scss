@@ -4,96 +4,86 @@ $elevation-pa: 2px;
 
 // Modify elevations to include $elevation-cnam and $elevation-pa dynamically
 $cnam-elevation: (
-        0: none,
-        1: 0 1px 3px rgba(0, 0, 0, 0.12),
-        2: 0 1px 5px rgba(0, 0, 0, 0.16),
-        3: 0 1px 8px rgba(0, 0, 0, 0.24),
-        4: 0 2px 4px rgba(0, 0, 0, 0.24),
-        5: 0 2px 6px rgba(0, 0, 0, 0.28),
-        6: 0 3px 6px rgba(0, 0, 0, 0.32),
-        7: 0 3px 8px rgba(0, 0, 0, 0.36),
-        8: 0 4px 8px rgba(0, 0, 0, 0.40),
-        9: 0 4px 10px rgba(0, 0, 0, 0.44),
-        10: 0 5px 10px rgba(0, 0, 0, 0.48),
-        11: 0 5px 12px rgba(0, 0, 0, 0.52),
-        12: 0 6px 12px rgba(0, 0, 0, 0.56),
-        13: 0 6px 14px rgba(0, 0, 0, 0.60),
-        14: 0 7px 14px rgba(0, 0, 0, 0.64),
-        15: 0 7px 16px rgba(0, 0, 0, 0.68),
-        16: 0 8px 16px rgba(0, 0, 0, 0.72),
-        17: 0 8px 18px rgba(0, 0, 0, 0.76),
-        18: 0 9px 18px rgba(0, 0, 0, 0.80),
-        19: 0 9px 20px rgba(0, 0, 0, 0.84),
-        20: 0 10px 20px rgba(0, 0, 0, 0.88),
-        24: 0 12px 24px rgba(0, 0, 0, 0.92),
-        28: 0 14px 28px rgba(0, 0, 0, 0.96),
-        32: 0 16px 32px rgba(0, 0, 0, 1.00)
+	0: none,
+	1: 0 1px calc(3px + #{$elevation-cnam}) rgb(0 0 0 / 12%),
+	2: 0 1px calc(5px + #{$elevation-cnam}) rgb(0 0 0 / 16%),
+	3: 0 1px calc(8px + #{$elevation-cnam}) rgb(0 0 0 / 24%),
+	4: 0 2px calc(4px + #{$elevation-cnam}) rgb(0 0 0 / 24%),
+	5: 0 2px calc(6px + #{$elevation-cnam}) rgb(0 0 0 / 28%),
+	6: 0 3px calc(6px + #{$elevation-cnam}) rgb(0 0 0 / 32%),
+	7: 0 3px calc(8px + #{$elevation-cnam}) rgb(0 0 0 / 36%),
+	8: 0 4px calc(8px + #{$elevation-cnam}) rgb(0 0 0 / 40%),
+	9: 0 4px calc(10px + #{$elevation-cnam}) rgb(0 0 0 / 44%),
+	10: 0 5px calc(10px + #{$elevation-cnam}) rgb(0 0 0 / 48%),
+	12: 0 6px calc(12px + #{$elevation-cnam}) rgb(0 0 0 / 52%),
+	14: 0 7px calc(14px + #{$elevation-cnam}) rgb(0 0 0 / 56%),
+	16: 0 8px calc(16px + #{$elevation-cnam}) rgb(0 0 0 / 60%),
+	18: 0 9px calc(18px + #{$elevation-cnam}) rgb(0 0 0 / 64%),
+	20: 0 10px calc(20px + #{$elevation-cnam}) rgb(0 0 0 / 68%),
+	24: 0 12px calc(24px + #{$elevation-cnam}) rgb(0 0 0 / 72%),
+	28: 0 14px calc(28px + #{$elevation-cnam}) rgb(0 0 0 / 76%),
+	32: 0 16px calc(32px + #{$elevation-cnam}) rgb(0 0 0 / 80%)
 );
-
 $pa-elevation: (
-        0: none,
-        1: 0 1px 3px rgba(0, 0, 0, 0.10),
-        2: 0 1px 5px rgba(0, 0, 0, 0.14),
-        3: 0 1px 8px rgba(0, 0, 0, 0.20),
-        4: 0 2px 4px rgba(0, 0, 0, 0.20),
-        5: 0 2px 6px rgba(0, 0, 0, 0.24),
-        6: 0 3px 6px rgba(0, 0, 0, 0.28),
-        7: 0 3px 8px rgba(0, 0, 0, 0.32),
-        8: 0 4px 8px rgba(0, 0, 0, 0.36),
-        9: 0 4px 10px rgba(0, 0, 0, 0.40),
-        10: 0 5px 10px rgba(0, 0, 0, 0.44),
-        11: 0 5px 12px rgba(0, 0, 0, 0.48),
-        12: 0 6px 12px rgba(0, 0, 0, 0.52),
-        13: 0 6px 14px rgba(0, 0, 0, 0.56),
-        14: 0 7px 14px rgba(0, 0, 0, 0.60),
-        15: 0 7px 16px rgba(0, 0, 0, 0.64),
-        16: 0 8px 16px rgba(0, 0, 0, 0.68),
-        17: 0 8px 18px rgba(0, 0, 0, 0.72),
-        18: 0 9px 18px rgba(0, 0, 0, 0.76),
-        19: 0 9px 20px rgba(0, 0, 0, 0.80),
-        20: 0 10px 20px rgba(0, 0, 0, 0.84),
-        24: 0 12px 24px rgba(0, 0, 0, 0.88),
-        28: 0 14px 28px rgba(0, 0, 0, 0.92),
-        32: 0 16px 32px rgba(0, 0, 0, 0.96)
+	0: none,
+	1: 0 1px calc(3px + #{$elevation-pa}) rgb(0 0 0 / 10%),
+	2: 0 1px calc(5px + #{$elevation-pa}) rgb(0 0 0 / 14%),
+	3: 0 1px calc(8px + #{$elevation-pa}) rgb(0 0 0 / 20%),
+	4: 0 2px calc(4px + #{$elevation-pa}) rgb(0 0 0 / 20%),
+	5: 0 2px calc(6px + #{$elevation-pa}) rgb(0 0 0 / 24%),
+	6: 0 3px calc(6px + #{$elevation-pa}) rgb(0 0 0 / 28%),
+	7: 0 3px calc(8px + #{$elevation-pa}) rgb(0 0 0 / 32%),
+	8: 0 4px calc(8px + #{$elevation-pa}) rgb(0 0 0 / 36%),
+	9: 0 4px calc(10px + #{$elevation-pa}) rgb(0 0 0 / 40%),
+	10: 0 5px calc(10px + #{$elevation-pa}) rgb(0 0 0 / 44%),
+	12: 0 6px calc(12px + #{$elevation-pa}) rgb(0 0 0 / 48%),
+	14: 0 7px calc(14px + #{$elevation-pa}) rgb(0 0 0 / 52%),
+	16: 0 8px calc(16px + #{$elevation-pa}) rgb(0 0 0 / 56%),
+	18: 0 9px calc(18px + #{$elevation-pa}) rgb(0 0 0 / 60%),
+	20: 0 10px calc(20px + #{$elevation-pa}) rgb(0 0 0 / 64%),
+	24: 0 12px calc(24px + #{$elevation-pa}) rgb(0 0 0 / 68%),
+	28: 0 14px calc(28px + #{$elevation-pa}) rgb(0 0 0 / 72%),
+	32: 0 16px calc(32px + #{$elevation-pa}) rgb(0 0 0 / 76%)
 );
 
 // Define CSS variables globally
 :root {
-  --elevation-cnam: #{$elevation-cnam};
-  --elevation-pa: #{$elevation-pa};
+	--elevation-cnam: #{$elevation-cnam};
+	--elevation-pa: #{$elevation-pa};
 
-  @each $key, $value in $cnam-elevation {
-    --elevation-#{$key}: #{$value};
-  }
+	@each $key, $value in $cnam-elevation {
+		--elevation-#{$key}: #{$value};
+	}
 }
 
 // Apply theme-based CNAM
 .theme-cnam {
-  @each $key, $value in $cnam-elevation {
-    --elevation-#{$key}: #{$value};
-  }
+	@each $key, $value in $cnam-elevation {
+		--elevation-#{$key}: #{$value};
+	}
 }
 
 // Apply theme-based PA
 .theme-pa {
-  @each $key, $value in $pa-elevation {
-    --elevation-#{$key}: #{$value};
-  }
+	@each $key, $value in $pa-elevation {
+		--elevation-#{$key}: #{$value};
+	}
 }
 
 // Mixin to generate elevation classes dynamically
 @mixin generate-elevation-classes($prefix) {
-  @each $key, $value in $cnam-elevation {
-    .#{$prefix}-#{$key} {
-      box-shadow: var(--elevation-#{$key}) !important;
-    }
-  }
+	@each $key, $value in $cnam-elevation {
+		.#{$prefix}-#{$key} {
+			box-shadow: var(--elevation-#{$key}) !important;
+		}
+	}
 }
 
 // Generate elevation classes
 @include generate-elevation-classes('elevation');
 
 // Ex of additional classes for specific shadow
-/*.v-btn {
+
+/* .v-btn {
   box-shadow: var(--elevation-2) !important;
-}*/
+} */
