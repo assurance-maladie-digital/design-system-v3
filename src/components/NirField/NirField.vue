@@ -290,7 +290,7 @@
 	// Validation des champs
 	const validateFields = async (onBlur = false) => {
 		// Valider le numéro
-		const numberResult = numberValidation.validateField(
+		const numberResult = await numberValidation.validateField(
 			unmaskedNumberValue.value,
 			defaultNumberRules.value,
 			// N'appliquer les warnings que si le numéro est complet
@@ -300,7 +300,7 @@
 		// Valider la clé si elle est affichée
 		let keyResult = { hasError: false }
 		if (props.displayKey) {
-			keyResult = keyValidation.validateField(
+			keyResult = await keyValidation.validateField(
 				keyValue.value,
 				defaultKeyRules.value,
 				// N'appliquer les warnings que si la clé est complète
@@ -322,8 +322,8 @@
 		return !numberResult.hasError && !keyResult.hasError
 	}
 
-	const validateOnSubmit = () => {
-		return validateFields(true)
+	const validateOnSubmit = async () => {
+		return await validateFields(true)
 	}
 
 	// Computed pour statut des champs
@@ -347,12 +347,12 @@
 	// Gestion des événements
 	const handleNumberInput = () => {
 		emitValue()
-		validateFields()
+		void validateFields() // Use void to ignore the promise
 	}
 
 	const handleKeyInput = () => {
 		emitValue()
-		validateFields()
+		void validateFields() // Use void to ignore the promise
 
 		// Si on supprime le contenu de la clé, on revient au champ NIR
 		if (unmaskedKeyValue.value.length === 0) {
@@ -363,11 +363,11 @@
 	}
 
 	const handleNumberBlur = () => {
-		validateFields(true)
+		void validateFields(true) // Use void to ignore the promise
 	}
 
 	const handleKeyBlur = () => {
-		validateFields(true)
+		void validateFields(true) // Use void to ignore the promise
 	}
 
 	defineExpose({
