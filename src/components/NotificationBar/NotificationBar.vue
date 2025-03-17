@@ -173,11 +173,12 @@
 </script>
 
 <template>
-	<div v-if="currentNotification">
+	<div v-show="currentNotification">
 		<VSnackbar
 			v-bind="options.snackbar"
 			v-model="isNotificationVisible"
 			role="status"
+			:eager="true"
 			:color="color"
 			:location="props.bottom ? 'bottom' : 'top'"
 			:vertical="hasLongContent"
@@ -195,7 +196,10 @@
 					size="24"
 					aria-hidden="true"
 				/>
-				<p :class="'text-' + contentStyle.contentColor">
+				<p
+					class="sy-notification-content"
+					:class="'text-' + contentStyle.contentColor"
+				>
 					{{ currentNotification?.message }}
 				</p>
 			</div>
@@ -230,52 +234,17 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
-.vd-notification-content {
-	display: flex;
-	align-items: center;
-}
-
-.vd-notification-bar :deep(.v-snack__wrapper) {
-	padding: 16px;
-	min-width: 0;
-	max-width: none;
+:deep(.v-overlay__content) {
+	max-width: 100%;
 }
 
 :deep(.v-snackbar__content) {
+	width: 100%;
 	padding: tokens.$padding-4 !important;
 }
 
 :deep(.v-snackbar__actions) {
 	margin-inline-end: 10px;
-}
-
-.vd-notification-bar.v-snackbar--vertical :deep() {
-	.v-snackbar--vertical .v-snackbar__wrapper .v-snackbar__actions {
-		width: 100% !important;
-		align-self: auto;
-	}
-
-	.v-snack__wrapper {
-		align-items: stretch;
-		flex-direction: row;
-	}
-
-	.v-snack__action {
-		align-self: stretch;
-		align-items: stretch;
-		flex-direction: column;
-	}
-
-	.v-snackbar__content {
-		margin: 0;
-		width: 100%;
-		display: flex;
-	}
-
-	.vd-notification-content {
-		flex-direction: column;
-		display: flex;
-	}
 }
 
 .long-text :deep(.v-snackbar__actions) {
@@ -292,5 +261,10 @@
 
 .action-section-short-text {
 	justify-content: end !important;
+}
+
+.sy-notification-content {
+	width: 100%;
+	word-wrap: break-word;
 }
 </style>
