@@ -40,7 +40,6 @@
 		hint?: string
 		persistentHint?: boolean
 		persistentPlaceholder?: boolean
-		maxLength?: string | number
 	}>(), {
 		modelValue: undefined,
 		label: undefined,
@@ -73,7 +72,6 @@
 		hint: undefined,
 		persistentHint: false,
 		persistentPlaceholder: false,
-		maxLength: undefined,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -423,7 +421,6 @@
 				:counter="props.counter"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
-				:max-length="props.maxLength"
 				:hint="props.hint || locales.numberHint"
 				class="number-field"
 				:display-asterisk="false"
@@ -466,7 +463,6 @@
 				:counter="props.counter"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
-				:max-length="props.maxLength"
 				class="key-field"
 				:display-asterisk="false"
 				@input="handleKeyInput"

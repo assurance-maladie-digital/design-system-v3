@@ -325,15 +325,6 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
-		maxLength: {
-			description: 'Nombre maximum de caractères autorisés.',
-			control: 'number',
-			table: {
-				type: {
-					summary: 'number | string',
-				},
-			},
-		},
 	},
 } satisfies Meta<typeof NirField>
 
