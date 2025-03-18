@@ -419,35 +419,36 @@ $spacing-horizontal-xx-large: 56px;
 $spacing-horizontal-xxx-large: 64px;
 $spacing-horizontal-huge: 80px;
 
-// Surcharger toutes les élévations pour utiliser uniquement l'élévation 02
-.elevation-1,
-.elevation-2,
-.elevation-3,
-.elevation-4,
-.elevation-5,
-.elevation-6,
-.elevation-7,
-.elevation-8,
-.elevation-9,
-.elevation-10,
-.elevation-11,
-.elevation-12,
-.elevation-13,
-.elevation-14,
-.elevation-15,
-.elevation-16,
-.elevation-17,
-.elevation-18,
-.elevation-19,
-.elevation-20,
-.elevation-21,
-.elevation-22,
-.elevation-23,
-.elevation-24 {
-	box-shadow:
-		0 3px 1px -2px rgb(0 0 0 / 20%),
+.theme-cnam {
+	// Surcharger toutes les élévations pour utiliser uniquement l'élévation 02
+	.elevation-1,
+	.elevation-2,
+	.elevation-3,
+	.elevation-4,
+	.elevation-5,
+	.elevation-6,
+	.elevation-7,
+	.elevation-8,
+	.elevation-9,
+	.elevation-10,
+	.elevation-11,
+	.elevation-12,
+	.elevation-13,
+	.elevation-14,
+	.elevation-15,
+	.elevation-16,
+	.elevation-17,
+	.elevation-18,
+	.elevation-19,
+	.elevation-20,
+	.elevation-21,
+	.elevation-22,
+	.elevation-23,
+	.elevation-24 {
+		box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%),
 		0 2px 2px 0 rgb(0 0 0 / 14%),
 		0 1px 5px 0 rgb(0 0 0 / 12%) !important;
+	}
 }
 
 // global.scss

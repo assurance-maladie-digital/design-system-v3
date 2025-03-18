@@ -19,12 +19,12 @@ const applyThemeSidebar = (theme) => {
 			items.forEach((item) => {
 				if (theme === 'pa') {
 					if (item.querySelector('a#démarrer-introduction--docs')) {
-						item.style.display = 'none'
+						// item.style.display = 'none'
 					}
 				}
 				if (theme === 'cnam') {
 					if (item.querySelector('a#démarrer-introduction--docs')) {
-						item.style.display = 'block'
+						// item.style.display = 'block'
 					}
 				}
 			})
