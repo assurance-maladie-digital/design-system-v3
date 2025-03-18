@@ -24,6 +24,7 @@
     "src/**/*.vue",
     "src/**/*.json",
     "tests/**/*",
-    "package.json"
+    "package.json",
+    "src/vuetifyConfig.ts"
   ]
 }

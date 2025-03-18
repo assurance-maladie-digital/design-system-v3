@@ -1,50 +1,81 @@
-import { createVuetify } from 'vuetify'
-import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import 'vuetify/styles'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-
+import { watch } from 'vue'
 import './storybook.css'
 import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
-import { cnamLightTheme, cnamDarkTheme, cnamContextualTokens, cnamColorsTokens } from '../src/designTokens'
-import { createFlattenTheme } from '../src/designTokens/utils'
+import { createVuetifyInstance } from '../src/vuetifyConfig'
 
-const vuetify = createVuetify({
-	components,
-	directives,
-	theme: {
-		themes: {
-			light: {
-				dark: false,
-				colors: {
-					...cnamLightTheme,
-					...cnamDarkTheme,
-					// ...paLightTheme,
-					// ...paDarkTheme,
-				},
-				variables: {
-					'border-color': cnamColorsTokens.grey.base,
-					...createFlattenTheme(cnamContextualTokens),
-				},
-			},
-		},
-	},
-	icons: {
-		defaultSet: 'mdi',
-		aliases,
-		sets: {
-			mdi,
-		},
-	},
-})
+const vuetify = createVuetifyInstance()
 
-setup((app) => {
+setup((app, { globals }) => {
 	app.use(vuetify)
-	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
+    app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
+
+	// Apply theme class to <html> (document.documentElement) instead of #root
+	const applyThemeClass = (theme) => {
+		const rootElement = document.documentElement // Always exists
+		rootElement.classList.remove('theme-cnam', 'theme-pa')
+		rootElement.classList.add(`theme-${theme}`)
+	}
+
+	// Apply theme immediately on load
+	if (typeof window !== 'undefined') {
+		applyThemeClass(globals.theme)
+	}
+
+	watch(
+		() => globals.theme,
+		(newTheme) => {
+			// Update Vuetify theme
+			vuetify.theme.global.name.value = newTheme
+
+			// Apply the new theme class
+			applyThemeClass(newTheme)
+
+			// Store theme in localStorage
+			localStorage.setItem('storybook-theme', newTheme)
+		},
+		{ immediate: true },
+	)
 })
+
+const globalTypes = {
+	theme: {
+		name: 'Theme',
+		description: 'Switch between CNAM and PA themes',
+		defaultValue: 'cnam',
+		toolbar: {
+			title: 'Thèmes',
+			icon: 'paintbrush',
+			items: [
+				{ value: 'cnam', title: 'Thème CNAM' },
+				{ value: 'pa', title: 'Thème PA' },
+			],
+			dynamicTitle: true,
+		},
+	},
+}
+
+// Get stored theme or default to CNAM
+const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
 
 const preview: Preview = {
+	globalTypes,
+	initialGlobals: {
+		theme: storedTheme || 'cnam',
+	},
+	decorators: [
+		(story, context) => {
+			// Handle theme changes
+			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
+				vuetify.theme.global.name.value = context.globals.theme
+				document.documentElement.classList.remove('theme-cnam', 'theme-pa')
+				document.documentElement.classList.add(`theme-${context.globals.theme}`)
+				localStorage.setItem('storybook-theme', context.globals.theme)
+			}
+			return story()
+		},
+	],
 	parameters: {
 		interactions: {
 			disable: true,
@@ -144,13 +175,6 @@ const preview: Preview = {
 					value: '#56c271',
 				},
 			],
-		},
-	},
-	initialGlobals: {
-		vueMdx: {
-			beforeVueAppMount(app): void {
-				app.use(vuetify)
-			},
 		},
 	},
 }

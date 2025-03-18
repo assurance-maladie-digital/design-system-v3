@@ -1,0 +1,149 @@
+// Define base spacer values
+$base-spacer-cnam: 4px;
+$base-spacer-pa: 4px;
+
+// Define theme spacers using base values
+$cnam-spacers: (
+	0: 0px,
+	1: $base-spacer-cnam,
+	2: $base-spacer-cnam * 2,
+	3: $base-spacer-cnam * 3,
+	4: $base-spacer-cnam * 4,
+	5: $base-spacer-cnam * 5,
+	6: $base-spacer-cnam * 6,
+	7: $base-spacer-cnam * 7,
+	8: $base-spacer-cnam * 8,
+	9: $base-spacer-cnam * 9,
+	10: $base-spacer-cnam * 10,
+	11: $base-spacer-cnam * 11,
+	12: $base-spacer-cnam * 12,
+	13: $base-spacer-cnam * 13,
+	14: $base-spacer-cnam * 14,
+	15: $base-spacer-cnam * 15,
+	16: $base-spacer-cnam * 16,
+	17: $base-spacer-cnam * 17,
+	18: $base-spacer-cnam * 18,
+	19: $base-spacer-cnam * 19,
+	20: $base-spacer-cnam * 20,
+	24: $base-spacer-cnam * 24,
+	28: $base-spacer-cnam * 28,
+	32: $base-spacer-cnam * 32,
+	36: $base-spacer-cnam * 36,
+	40: $base-spacer-cnam * 40,
+	44: $base-spacer-cnam * 44,
+	48: $base-spacer-cnam * 48,
+	52: $base-spacer-cnam * 52,
+	56: $base-spacer-cnam * 56,
+	60: $base-spacer-cnam * 60,
+	64: $base-spacer-cnam * 64,
+);
+$pa-spacers: (
+	0: 0px,
+	1: $base-spacer-pa,
+	2: $base-spacer-pa * 2,
+	3: $base-spacer-pa * 3,
+	4: $base-spacer-pa * 4,
+	5: $base-spacer-pa * 5,
+	6: $base-spacer-pa * 6,
+	7: $base-spacer-pa * 7,
+	8: $base-spacer-pa * 8,
+	9: $base-spacer-pa * 9,
+	10: $base-spacer-pa * 10,
+	11: $base-spacer-pa * 11,
+	12: $base-spacer-pa * 12,
+	13: $base-spacer-pa * 13,
+	14: $base-spacer-pa * 14,
+	15: $base-spacer-pa * 15,
+	16: $base-spacer-pa * 16,
+	17: $base-spacer-pa * 17,
+	18: $base-spacer-pa * 18,
+	19: $base-spacer-pa * 19,
+	20: $base-spacer-pa * 20,
+	24: $base-spacer-pa * 24,
+	28: $base-spacer-pa * 28,
+	32: $base-spacer-pa * 32,
+	36: $base-spacer-pa * 36,
+	40: $base-spacer-pa * 40,
+	44: $base-spacer-pa * 44,
+	48: $base-spacer-pa * 48,
+	52: $base-spacer-pa * 52,
+	56: $base-spacer-pa * 56,
+	60: $base-spacer-pa * 60,
+	64: $base-spacer-pa * 64,
+);
+
+// Define CSS variables for spacers dynamically
+:root {
+	@each $key, $value in $cnam-spacers {
+		--spacing-#{$key}: #{$value};
+	}
+}
+
+// Apply theme-based spacing
+.theme-cnam {
+	@each $key, $value in $cnam-spacers {
+		--spacing-#{$key}: #{$value};
+	}
+}
+
+.theme-pa {
+	@each $key, $value in $pa-spacers {
+		--spacing-#{$key}: #{$value};
+	}
+}
+
+// Mixin to generate padding and margin classes
+@mixin generate-spacing-classes($property, $prefix) {
+	@for $i from 0 through 64 {
+		.#{$prefix}-#{$i} {
+			#{$property}: var(--spacing-#{$i}) !important;
+		}
+	}
+}
+
+// Apply spacing classes dynamically
+@include generate-spacing-classes(padding, pa);
+@include generate-spacing-classes(margin, ma);
+
+// Mixin for X (left & right) and Y (top & bottom) spacing
+@mixin generate-axis-spacing-classes($property, $prefix, $side1, $side2) {
+	@for $i from 0 through 64 {
+		.#{$prefix}-#{$i} {
+			#{$property}-#{$side1}: var(--spacing-#{$i}) !important;
+			#{$property}-#{$side2}: var(--spacing-#{$i}) !important;
+		}
+	}
+}
+
+// Generate px, py, mx, my spacing classes
+@include generate-axis-spacing-classes(padding, px, left, right);
+@include generate-axis-spacing-classes(padding, py, top, bottom);
+@include generate-axis-spacing-classes(margin, mx, left, right);
+@include generate-axis-spacing-classes(margin, my, top, bottom);
+
+// Mixin for individual side spacing classes
+@mixin generate-side-spacing-classes($property, $prefix, $side) {
+	@for $i from 0 through 64 {
+		.#{$prefix}-#{$i} {
+			#{$property}-#{$side}: var(--spacing-#{$i}) !important;
+		}
+	}
+}
+
+// Generate individual side padding classes
+@include generate-side-spacing-classes(padding, pt, top);
+@include generate-side-spacing-classes(padding, pr, right);
+@include generate-side-spacing-classes(padding, pb, bottom);
+@include generate-side-spacing-classes(padding, pl, left);
+
+// Generate individual side margin classes
+@include generate-side-spacing-classes(margin, mt, top);
+@include generate-side-spacing-classes(margin, mr, right);
+@include generate-side-spacing-classes(margin, mb, bottom);
+@include generate-side-spacing-classes(margin, ml, left);
+
+// Additional classes for specific spacing
+
+.v-btn {
+	padding: 0 var(--spacing-4) !important;
+}

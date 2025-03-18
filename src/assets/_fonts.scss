@@ -1,0 +1,6 @@
+@use 'vuetify/settings' with (
+	$body-font-family: Arial
+);
+
+// Forward Vuetify settings
+@forward 'vuetify/settings';

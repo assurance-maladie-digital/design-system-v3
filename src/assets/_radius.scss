@@ -1,0 +1,86 @@
+// Define theme radius separately
+$border-radius-cnam: 4px;
+$border-radius-pa: 4px;
+$cnam-radius: (
+	0: 0px,
+	'sm': calc($border-radius-cnam / 2),
+	'md': $border-radius-cnam,
+	'lg': calc($border-radius-cnam * 2),
+	'xl': calc($border-radius-cnam * 4),
+	'pill': 9999px,
+	'circle': 50%
+);
+$pa-radius: (
+	0: 0px,
+	'sm': calc($border-radius-pa / 2),
+	'md': $border-radius-pa,
+	'lg': calc($border-radius-pa * 2),
+	'xl': calc($border-radius-pa * 4),
+	'pill': 9999px,
+	'circle': 50%
+);
+
+// Define all possible radius keys to ensure consistent class generation
+$radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
+
+// ✅ Define CSS variables globally
+:root {
+	@each $key, $value in $cnam-radius {
+		--radius-#{$key}: #{$value};
+	}
+}
+
+// ✅ Apply theme-based cnam
+.theme-cnam {
+	@each $key, $value in $cnam-radius {
+		--radius-#{$key}: #{$value};
+	}
+}
+
+// ✅ Apply theme-based pa
+.theme-pa {
+	@each $key, $value in $pa-radius {
+		--radius-#{$key}: #{$value};
+	}
+}
+
+// ✅ Mixin to generate border-radius classes
+@mixin generate-radius-classes($prefix) {
+	@each $key in $radius-keys {
+		.#{$prefix}-#{$key} {
+			border-radius: var(--radius-#{$key}) !important;
+		}
+	}
+}
+
+// ✅ Generate radius classes once, using CSS variables
+@include generate-radius-classes('rounded');
+
+// Additional classes for specific radius
+.v-btn {
+	border-radius: var(--radius-md) !important;
+}
+
+.v-btn--rounded-md {
+	border-radius: var(--radius-md) !important;
+}
+
+.v-btn--rounded-sm {
+	border-radius: var(--radius-sm) !important;
+}
+
+.v-btn--rounded-lg {
+	border-radius: var(--radius-lg) !important;
+}
+
+.v-btn--rounded-xl {
+	border-radius: var(--radius-xl) !important;
+}
+
+.v-btn--rounded-pill {
+	border-radius: var(--radius-pill) !important;
+}
+
+.v-btn--rounded-circle {
+	border-radius: var(--radius-circle) !important;
+}

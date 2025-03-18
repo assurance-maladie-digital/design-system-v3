@@ -4,44 +4,18 @@ import {Meta, Source} from '@storybook/addon-docs/blocks';
 
 # Thème Portail Agent
 
-Pour des raisons techniques, la documentation ne permet pas encore l'affichage des composants aux couleurs du Portail Agent.<br/>
-Cependant, il est possible de changer le thème du Design System pour qu'il corresponde aux couleurs du PA.
-#
-
 ## Étapes pour changer le thème du Design System aux couleurs Portail Agent
 
 ### 1. Modification du fichier nuxt.config.ts
 
 1.	Ouvrez le fichier nuxt.config.ts dans votre éditeur de code.
-2.	Remplacer les valeurs des thèmes `cnamLightTheme` et `cnamDarkTheme` par les valeurs de la charte PA : `paLightTheme` et `paDarkTheme`.
-
-<Source dark code={`
-import {paLightTheme} from '@cnamts/synapse/designTokens/tokens/pa/paLightTheme'
-import {paDarkTheme} from '@cnamts/synapse/designTokens/tokens/pa/paDarkTheme'
-`}
-/>
-
-3.	Localisez la configuration de base de Vuetify (ligne 31 dans le fichier `nuxt.config.ts`).
-4.	Mettez à jour le thème en configurant les couleurs selon la charte PA si nécessaire :
+2.	Remplacer la valeur du thème par défaut`defaultTheme` par le thème PA : `pa`.
 
 <Source dark code={`
 theme: {
-    defaultTheme: 'light',
-    themes: {
-        light: {
-            colors: {
-                ...paLightTheme,
-                // ...customLightTheme
-            },
-        },
-        dark: {
-            colors: {
-                ...paDarkTheme,
-                //...customDarkTheme,
-            },
-        },
-    },
-},
+	defaultTheme: 'pa',
+	...
+}
 `}
 />
 
