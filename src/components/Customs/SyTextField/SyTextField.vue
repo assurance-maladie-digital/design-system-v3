@@ -77,7 +77,7 @@
 			customSuccessRules?: ValidationRule[]
 			showSuccessMessages?: boolean
 			isValidateOnBlur?: boolean
-      disableErrorHandling?: boolean
+			disableErrorHandling?: boolean
 		}>(),
 		{
 			modelValue: undefined,
@@ -141,7 +141,7 @@
 			customSuccessRules: () => [],
 			showSuccessMessages: true,
 			isValidateOnBlur: true,
-      disableErrorHandling: false
+			disableErrorHandling: false,
 		},
 	)
 
@@ -179,7 +179,7 @@
 		successRules: props.customSuccessRules,
 		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.label,
-    disableErrorHandling: props.disableErrorHandling,
+		disableErrorHandling: props.disableErrorHandling,
 	})
 
 	// Synchronisation des messages externes

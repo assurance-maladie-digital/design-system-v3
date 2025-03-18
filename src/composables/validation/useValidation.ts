@@ -60,7 +60,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	): ValidationResult => {
 		clearValidation()
 
-		// Si la gestion des erreurs est désactivée, on retourne un résultat sans erreur
+		// Si la gestion des erreurs est désactivée, on retourne un résultat sans erreurs
 		if (options.disableErrorHandling) {
 			return {
 				hasError: false,
