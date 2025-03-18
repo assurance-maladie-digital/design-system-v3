@@ -13,10 +13,15 @@ import {
 	paDarkTheme,
 } from './designTokens'
 import { createFlattenTheme } from './designTokens/utils'
+import { fr } from 'vuetify/locale'
 
 export const createVuetifyInstance = () => createVuetify({
 	components,
 	directives,
+	locale: {
+		locale: 'fr',
+		messages: { fr },
+	},
 	theme: {
 		defaultTheme: 'cnam',
 		themes: {
