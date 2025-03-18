@@ -372,6 +372,23 @@ export const Required: Story = {
 		...Default.args,
 		required: true,
 	},
+	render: (args) => {
+		return {
+			components: { SyTextField, VIcon },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+    <div class="d-flex flex-wrap align-center">
+     <SyTextField v-bind="args" v-model="value" />
+    </div>
+   `,
+		}
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -411,6 +428,23 @@ export const RequiredWithAsterisk: Story = {
 		...Default.args,
 		required: true,
 		displayAsterisk: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField, VIcon },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+    <div class="d-flex flex-wrap align-center">
+     <SyTextField v-bind="args" v-model="value" />
+    </div>
+   `,
+		}
 	},
 	parameters: {
 		docs: {
