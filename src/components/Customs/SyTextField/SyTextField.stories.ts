@@ -1397,3 +1397,204 @@ export const WithPrefixAndSuffix: Story = {
 		],
 	},
 }
+
+export const DisabledErrorHandling: Story = {
+	args: {
+		label: 'Champ requis',
+		required: true,
+		customRules: [
+			{
+				type: 'required',
+				options: {
+					message: 'Ce champ est obligatoire.',
+				},
+			},
+		],
+	},
+	render: args => {
+		return {
+			components: { SyTextField },
+			setup() {
+				const value1 = ref('')
+				const value2 = ref('')
+
+				return { args, value1, value2 }
+			},
+			template: `
+        <div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
+            <div>
+              <p class="text-subtitle-2 mb-2">Validation normale</p>
+              <SyTextField
+                v-model="value1"
+                v-bind="args"
+                is-validate-on-blur
+              />
+            </div>
+            
+            <div>
+              <p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
+              <SyTextField
+                v-model="value2"
+                v-bind="args"
+                disableErrorHandling
+                is-validate-on-blur
+              />
+            </div>
+          </div>
+          
+          <div class="mt-4 text-body-2">
+            <p>Instructions :</p>
+            <ol>
+              <li>Cliquez dans un champ puis en dehors pour déclencher la validation</li>
+              <li>Observez que le champ de gauche affiche un message d'erreur</li>
+              <li>Le champ de droite n'affiche aucune erreur malgré les mêmes règles</li>
+            </ol>
+          </div>
+        </div>
+      `
+		}
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'La prop `disableErrorHandling` permet de désactiver complètement la gestion des erreurs de validation, même si des règles sont définies.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <!-- Champ avec validation normale -->
+  <SyTextField
+    v-model="value"
+    label="Champ obligatoire"
+    required
+    :custom-rules="[{
+      type: 'required',
+      options: { message: 'Ce champ est obligatoire.' }
+    }]"
+    is-validate-on-blur
+  />
+
+  <!-- Champ avec gestion d'erreur désactivée -->
+  <SyTextField
+    v-model="value"
+    label="Champ obligatoire"
+    required
+    :custom-rules="[{
+      type: 'required',
+      options: { message: 'Ce champ est obligatoire.' }
+    }]"
+    disableErrorHandling
+    is-validate-on-blur
+  />
+</template>`,
+			},
+		],
+	},
+}
+
+export const ShowSuccessMessages: Story = {
+	args: {
+		label: 'Email',
+		customRules: [
+			{
+				type: 'matchPattern',
+				options: {
+					pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+					message: 'Veuillez entrer une adresse email valide',
+					successMessage: 'Le format de l\'email est correct',
+					fieldIdentifier: 'Email',
+				},
+			},
+		],
+	},
+	render: args => {
+		return {
+			components: { SyTextField },
+			setup() {
+				const value1 = ref('user@example.com')
+				const value2 = ref('user@example.com')
+
+				return { args, value1, value2 }
+			},
+			template: `
+        <div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
+            <div>
+              <p class="text-subtitle-2 mb-2">Avec messages de succès (défaut)</p>
+              <SyTextField
+                v-model="value1"
+                v-bind="args"
+                showSuccessMessages
+              />
+            </div>
+            
+            <div>
+              <p class="text-subtitle-2 mb-2">Sans messages de succès</p>
+              <SyTextField
+                v-model="value2"
+                v-bind="args"
+                :showSuccessMessages="false"
+              />
+            </div>
+          </div>
+          
+          <div class="mt-4 text-body-2">
+            <p>Les deux champs ont la même valeur et passent la validation :</p>
+            <ul>
+              <li>Le champ de gauche affiche le message de succès</li>
+              <li>Le champ de droite n'affiche aucun message</li>
+            </ul>
+            <p class="mt-2">Essayez de modifier les valeurs pour voir le comportement.</p>
+          </div>
+        </div>
+      `
+		}
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'La prop `showSuccessMessages` (par défaut: `true`) permet de contrôler l\'affichage des messages de succès lors de la validation.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <!-- Champ avec messages de succès (défaut) -->
+  <SyTextField
+    v-model="email"
+    label="Email"
+    :custom-rules="[{
+      type: 'matchPattern',
+      options: {
+        pattern: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/,
+        message: 'Veuillez entrer une adresse email valide',
+        successMessage: 'Le format de l\\'email est correct',
+      }
+    }]"
+  />
+
+  <!-- Champ sans messages de succès -->
+  <SyTextField
+    v-model="email"
+    label="Email"
+    :custom-rules="[{
+      type: 'matchPattern',
+      options: {
+        pattern: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/,
+        message: 'Veuillez entrer une adresse email valide',
+        successMessage: 'Le format de l\\'email est correct',
+      }
+    }]"
+    :showSuccessMessages="false"
+  />
+</template>`,
+			},
+		],
+	},
+}
