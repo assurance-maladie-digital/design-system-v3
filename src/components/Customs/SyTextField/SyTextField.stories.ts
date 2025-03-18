@@ -1411,7 +1411,7 @@ export const DisabledErrorHandling: Story = {
 			},
 		],
 	},
-	render: args => {
+	render: (args) => {
 		return {
 			components: { SyTextField },
 			setup() {
@@ -1452,7 +1452,7 @@ export const DisabledErrorHandling: Story = {
             </ol>
           </div>
         </div>
-      `
+      `,
 		}
 	},
 	parameters: {
@@ -1511,7 +1511,7 @@ export const ShowSuccessMessages: Story = {
 			},
 		],
 	},
-	render: args => {
+	render: (args) => {
 		return {
 			components: { SyTextField },
 			setup() {
@@ -1551,7 +1551,7 @@ export const ShowSuccessMessages: Story = {
             <p class="mt-2">Essayez de modifier les valeurs pour voir le comportement.</p>
           </div>
         </div>
-      `
+      `,
 		}
 	},
 	parameters: {
