@@ -28,8 +28,6 @@
 	const currentNotification = ref<Notification>()
 	const isNotificationVisible = ref(false)
 
-	const isProcessingNotifications = ref(false) // Nouvelle variable pour suivre le traitement
-
 	const hasActionSlot = computed(() => !!instance?.slots.action)
 	const isMobileVersion = computed(() => display.name.value === 'xs')
 	const isTabletVersion = computed(() => display.name.value === 'sm')
@@ -73,91 +71,47 @@
 
 	const smallCloseBtn = computed(() => isMobileVersion.value && !hasLongContent.value && !hasActionSlot.value)
 
-	const setNotification = (notification: Notification) => {
-		currentNotification.value = { ...notification }
-	}
-
-	const processNotificationQueue = async () => {
-		isProcessingNotifications.value = true
-
-		while (notificationQueue.value.length > 0) {
-			const nextNotification = notificationQueue.value[0]
-			setNotification(nextNotification)
-			isNotificationVisible.value = true
-
-			let timeout = nextNotification.timeout ?? -1
-
-			if (timeout <= 0) {
-				// Attend que la notification soit fermée manuellement car pas de timeout
-				await new Promise<void>((resolve) => {
-					const stopWatch = watch(isNotificationVisible, (visible) => {
-						if (!visible) {
-							stopWatch()
-							resolve()
-						}
-					})
-				})
-			}
-			else {
-				// Attend la fin du délai du timeout avant de fermer la notification automatiquement
-				await new Promise<void>((resolve) => {
-					const timeoutId = setTimeout(() => {
-						handleClearNotification()
-						resolve()
-					}, timeout)
-
-					const stopWatch = watch(isNotificationVisible, (visible) => {
-						if (!visible) {
-							clearTimeout(timeoutId)
-							stopWatch()
-							resolve()
-						}
-					})
-				})
-			}
-
-			// Retire la notification de la file
-			removeNotification(nextNotification.id)
+	watch(() => notificationQueue.value.length, async (queueLength) => {
+		if (queueLength > 0 && currentNotification.value === undefined) {
+			openNotification(notificationQueue.value[0])
 		}
+	}, { immediate: true })
 
-		isProcessingNotifications.value = false
-	}
-
-	const handleClearNotification = () => {
-		isNotificationVisible.value = false
-		if (currentNotification.value) {
-			removeNotification(currentNotification.value.id)
-			currentNotification.value = undefined
-		}
-	}
-
-	const openNotification = (notification: Notification) => {
-		setNotification(notification)
+	let timeoutID: ReturnType<typeof setTimeout>
+	function openNotification(notification: Notification) {
+		currentNotification.value = notification
 		isNotificationVisible.value = true
-	}
 
-	const showNextNotification = () => {
-		if (notificationQueue.value.length > 0) {
-			const nextNotification = notificationQueue.value[0]
-			setNotification(nextNotification)
-			isNotificationVisible.value = true
+		if ((notification.timeout || 0) > 0) {
+			timeoutID = setTimeout(() => {
+				isNotificationVisible.value = false
+			}, notification.timeout)
 		}
 	}
 
-	watch(
-		() => notificationQueue.value.length,
-		(newLength) => {
-			if (newLength > 0 && !isProcessingNotifications.value) {
-				processNotificationQueue()
+	watch(isNotificationVisible, async (isVisible) => {
+		if (!isVisible) {
+			// wait for the snackbar close animation to finish
+			await new Promise(resolve => setTimeout(resolve, 100))
+			if (currentNotification.value) {
+				removeNotification(currentNotification.value.id)
 			}
-		},
-	)
+			currentNotification.value = undefined
+
+			if (notificationQueue.value.length > 0) {
+				openNotification(notificationQueue.value[0])
+			}
+		}
+	})
+
+	function showNextNotification() {
+		clearTimeout(timeoutID)
+		isNotificationVisible.value = false
+	}
 
 	defineExpose({
 		openNotification,
-		handleClearNotification,
 		showNextNotification,
-		processNotificationQueue,
 		currentNotification,
 		isNotificationVisible,
 		hasActionSlot,
@@ -173,62 +127,60 @@
 </script>
 
 <template>
-	<div v-show="currentNotification">
-		<VSnackbar
-			v-bind="options.snackbar"
-			v-model="isNotificationVisible"
-			role="status"
-			:eager="true"
-			:color="color"
-			:location="props.bottom ? 'bottom' : 'top'"
-			:vertical="hasLongContent"
-			:multi-line="hasLongContent"
-			:timeout="currentNotification?.timeout ?? -1"
-			:width="isMobileVersion || isTabletVersion ? 'auto' : '960px'"
-			:rounded="props.rounded"
-			:class="[{ 'long-text': hasLongContent }]"
-		>
-			<div class="d-flex align-center ga-2">
-				<VIcon
-					v-if="!isMobileVersion && icon"
-					v-bind="options.icon"
-					:icon="icon"
-					size="24"
-					aria-hidden="true"
-				/>
-				<p
-					class="sy-notification-content"
-					:class="'text-' + contentStyle.contentColor"
-				>
-					{{ currentNotification?.message }}
-				</p>
-			</div>
+	<VSnackbar
+		v-bind="options.snackbar"
+		v-model="isNotificationVisible"
+		role="status"
+		:eager="true"
+		:color="color"
+		:location="props.bottom ? 'bottom' : 'top'"
+		:vertical="hasLongContent"
+		:multi-line="hasLongContent"
+		:timeout="currentNotification?.timeout ?? -1"
+		:width="isMobileVersion || isTabletVersion ? 'auto' : '960px'"
+		:rounded="props.rounded"
+		:class="[{ 'long-text': hasLongContent }]"
+	>
+		<div class="d-flex align-center ga-2">
+			<VIcon
+				v-if="!isMobileVersion && icon"
+				v-bind="options.icon"
+				:icon="icon"
+				size="24"
+				aria-hidden="true"
+			/>
+			<p
+				class="sy-notification-content"
+				:class="'text-' + contentStyle.contentColor"
+			>
+				{{ currentNotification?.message }}
+			</p>
+		</div>
 
-			<template #actions>
-				<div
-					class="d-flex ga-2"
-					style="width: 100%;"
-					:class="hasLongContent ? 'action-section-long-text' : 'action-section-short-text'"
+		<template #actions>
+			<div
+				class="d-flex ga-2"
+				style="width: 100%;"
+				:class="hasLongContent ? 'action-section-long-text' : 'action-section-short-text'"
+			>
+				<slot name="action" />
+				<VBtn
+					class="notification-bar__close"
+					:class="{ 'ma-0': smallCloseBtn }"
+					aria-label="Fermer la notification"
+					v-bind="options.btn"
+					@click="isNotificationVisible = false"
 				>
-					<slot name="action" />
-					<VBtn
-						class="notification-bar__close"
-						:class="{ 'ma-0': smallCloseBtn }"
-						aria-label="Fermer la notification"
-						v-bind="options.btn"
-						@click="handleClearNotification"
-					>
-						<template v-if="!smallCloseBtn">
-							{{ closeBtnText }}
-						</template>
-						<template v-else>
-							<VIcon :icon="mdiClose" />
-						</template>
-					</VBtn>
-				</div>
-			</template>
-		</VSnackbar>
-	</div>
+					<template v-if="!smallCloseBtn">
+						{{ closeBtnText }}
+					</template>
+					<template v-else>
+						<VIcon :icon="mdiClose" />
+					</template>
+				</VBtn>
+			</div>
+		</template>
+	</VSnackbar>
 </template>
 
 <style lang="scss" scoped>
@@ -264,7 +216,7 @@
 }
 
 .sy-notification-content {
-	width: 100%;
+	min-width: 0;
 	word-wrap: break-word;
 }
 </style>
