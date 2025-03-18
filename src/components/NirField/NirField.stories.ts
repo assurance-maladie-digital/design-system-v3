@@ -954,3 +954,169 @@ const onSubmit = async () => {
 		`,
 	}),
 }
+
+export const DisableErrorHandling: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Désactivation de la gestion des erreurs
+
+Cette story illustre l'utilisation de la propriété \`disableErrorHandling\` qui permet de désactiver complètement
+la gestion et l'affichage des erreurs dans un champ, même si des règles de validation sont définies.
+
+Cela peut être utile dans des cas particuliers où vous souhaitez définir des règles de validation
+mais gérer leur affichage différemment, ou utiliser la validation uniquement au niveau du formulaire parent.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <!-- Champ avec validation normale -->
+  <NirField
+    v-model="value"
+    label="NIR avec validation"
+    required
+  />
+  
+  <!-- Champ avec gestion d'erreurs désactivée -->
+  <NirField
+    v-model="value"
+    label="NIR sans gestion d'erreurs"
+    required
+    disableErrorHandling
+  />
+</template>`,
+			},
+		],
+	},
+	render: () => ({
+		components: { NirField },
+		setup() {
+			const value1 = ref('')
+			const value2 = ref('')
+
+			return { value1, value2 }
+		},
+		template: `
+      <div>
+        <div>
+          <div>
+            <p class="text-subtitle-2 mb-2">Validation normale</p>
+            <NirField
+              v-model="value1"
+              label="NIR avec validation"
+              required
+            />
+          </div>
+          
+          <div>
+            <p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
+            <NirField
+              v-model="value2"
+              label="NIR sans gestion d'erreurs"
+              required
+              disableErrorHandling
+            />
+          </div>
+        </div>
+        
+        <div class="mt-4 text-body-2">
+          <p>Instructions :</p>
+          <ol>
+            <li>Cliquez dans un champ puis en dehors pour déclencher la validation</li>
+            <li>Essayez de saisir des valeurs invalides (moins de 13 chiffres)</li>
+            <li>Notez que le champ de gauche affiche des erreurs, mais pas celui de droite</li>
+          </ol>
+        </div>
+      </div>
+    `,
+	}),
+}
+
+export const ShowSuccessMessages: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Messages de succès
+
+Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
+l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`true\`.
+
+Cela peut être utile pour réduire la verbosité de l'interface lorsque les messages de succès
+ne sont pas nécessaires dans certains contextes.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <!-- Champ avec messages de succès (par défaut) -->
+  <NirField
+    v-model="value"
+    label="NIR avec messages de succès"
+    required
+  />
+
+  <!-- Champ sans messages de succès -->
+  <NirField
+    v-model="value"
+    label="NIR sans messages de succès"
+    required
+    :showSuccessMessages="false"
+  />
+</template>`,
+			},
+		],
+	},
+	render: () => ({
+		components: { NirField },
+		setup() {
+			const value1 = ref('123456789012345')
+			const value2 = ref('123456789012345')
+
+			return { value1, value2 }
+		},
+		template: `
+      <div>
+        <p class="mb-4">Cette démonstration compare un NirField avec <code>showSuccessMessages=true</code> (par défaut) et un avec <code>showSuccessMessages=false</code>.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
+          <div>
+            <p class="text-subtitle-2 mb-2">Avec messages de succès</p>
+            <NirField
+              v-model="value1"
+              label="NIR avec messages de succès"
+              required
+              showSuccessMessages
+            />
+          </div>
+
+          <div>
+            <p class="text-subtitle-2 mb-2">Sans messages de succès</p>
+            <NirField
+              v-model="value2"
+              label="NIR sans messages de succès"
+              required
+              :showSuccessMessages="false"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4 text-body-2">
+          <p>Observations :</p>
+          <ul>
+            <li>Les deux champs ont la même valeur valide</li>
+            <li>Le champ de gauche affiche un message de succès et un indicateur visuel vert</li>
+            <li>Le champ de droite n'affiche pas de message de succès, mais conserve l'indicateur visuel</li>
+            <li>Essayez de modifier les valeurs pour voir le comportement avec des données invalides puis valides</li>
+          </ul>
+        </div>
+      </div>
+    `,
+	}),
+}
