@@ -253,7 +253,7 @@
 	const appendInnerIconColor = computed(() => {
 		if (props.appendInnerIcon === 'error') return 'error'
 		if (props.appendInnerIcon === 'success') return 'success'
-		return 'rgba(0, 0, 0, 1);'
+		return 'rgba(0, 0, 0, 1)'
 	})
 
 	const handlePrependIconClick = () => {
