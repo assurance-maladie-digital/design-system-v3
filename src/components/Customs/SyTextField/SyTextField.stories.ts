@@ -75,6 +75,10 @@ const meta = {
 			control: 'boolean',
 			default: true,
 		},
+		'disableErrorHandling': {
+			control: 'boolean',
+			description: 'Désactive complètement la validation des règles et l\'affichage des erreurs',
+		},
 		'isActive': {
 			description: 'Force l\'état actif du champ (label flottant et styles visuels)',
 			control: 'boolean',
