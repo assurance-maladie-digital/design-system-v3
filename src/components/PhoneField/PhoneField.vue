@@ -136,6 +136,7 @@
 			:outlined="outlinedIndicatif"
 			:required="props.countryCodeRequired"
 			:display-asterisk="props.displayAsterisk"
+			:return-object="true"
 			class="custom-select"
 			text-key="displayText"
 			value-key="code"
