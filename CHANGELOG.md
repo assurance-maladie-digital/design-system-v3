@@ -1,3 +1,23 @@
+## v0.0.12-alpha (19-03-2025)
+
+### Composants
+
+- UploadWorkflow [`#403`](https://github.com/assurance-maladie-digital/design-system-v3/pull/403)
+- FilterSideBar [`#425`](https://github.com/assurance-maladie-digital/design-system-v3/pull/425)
+- Global improve of states on inputs [`#401`](https://github.com/assurance-maladie-digital/design-system-v3/pull/401)
+- DatePicker: fix display of the calendar  [`#439`](https://github.com/assurance-maladie-digital/design-system-v3/pull/439)
+- DatePicker: fix on date return [`#429`](https://github.com/assurance-maladie-digital/design-system-v3/pull/429)
+- NirField: add customisation options [`#444`](https://github.com/assurance-maladie-digital/design-system-v3/pull/444)
+- PeriodField: improve responsiveness and styling [`#432`](https://github.com/assurance-maladie-digital/design-system-v3/pull/432)
+- SySelect: improve select value [`#438`](https://github.com/assurance-maladie-digital/design-system-v3/pull/438)
+
+### Documentation
+
+- Add theming options [`#417`](https://github.com/assurance-maladie-digital/design-system-v3/pull/417)
+- Add NotificationBar accessibility file [`#446`](https://github.com/assurance-maladie-digital/design-system-v3/pull/446)
+- NotificationBar: fix rounded prop in exemples [`#443`](https://github.com/assurance-maladie-digital/design-system-v3/pull/443)
+- NotificationBar: improve documentation [`#437`](https://github.com/assurance-maladie-digital/design-system-v3/pull/437)
+
 ## v0.0.11-alpha (10-03-2025)
 
 ### Composants
