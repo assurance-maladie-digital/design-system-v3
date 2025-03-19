@@ -1125,6 +1125,7 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
     v-model="value1"
     label="Mot de passe avec validation"
     required
+    :custom-rules="customRules"
   />
 
   <!-- Champ avec gestion d'erreurs désactivée -->
@@ -1133,6 +1134,7 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
     label="Mot de passe sans gestion d'erreurs"
     required
     disableErrorHandling
+    :custom-rules="customRules"
   />
 </template>`,
 			},
@@ -1144,42 +1146,59 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
 			const value1 = ref('')
 			const value2 = ref('')
 
-			return { value1, value2 }
+			const customRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || value.length < 8) {
+								return 'Le mot de passe doit contenir au moins 8 caractères'
+							}
+							return true
+						},
+						fieldIdentifier: 'password',
+					},
+				},
+			]
+
+			return { value1, value2, customRules }
 		},
 		template: `
-      <div>
-        <p class="mb-4">Cette démonstration compare un PasswordField standard et un avec \`disableErrorHandling=true\`.</p>
+			<div>
+				<p class="mb-4">Cette démonstration compare un PasswordField standard et un avec \`disableErrorHandling=true\`.</p>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-          <div>
-            <p class="text-subtitle-2 mb-2">Validation normale</p>
-            <PasswordField
-              v-model="value1"
-              label="Mot de passe avec validation"
-              required
-            />
-          </div>
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
+					<div>
+						<p class="text-subtitle-2 mb-2">Validation normale</p>
+						<PasswordField
+							v-model="value1"
+							label="Mot de passe avec validation"
+							required
+							:custom-rules="customRules"
+						/>
+					</div>
 
-          <div>
-            <p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
-            <PasswordField
-              v-model="value2"
-              label="Mot de passe sans gestion d'erreurs"
-              required
-              disableErrorHandling
-            />
-          </div>
-        </div>
+					<div>
+						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
+						<PasswordField
+							v-model="value2"
+							label="Mot de passe sans gestion d'erreurs"
+							required
+							disableErrorHandling
+							:custom-rules="customRules"
+						/>
+					</div>
+				</div>
 
-        <div class="mt-4 text-body-2">
-          <p>Instructions :</p>
-          <ol>
-            <li>Cliquez dans un champ puis en dehors pour déclencher la validation</li>
-            <li>Le champ de gauche affichera une erreur requise, mais pas celui de droite</li>
-            <li>Vous pouvez également essayer de soumettre les deux champs pour voir la différence de comportement</li>
-          </ol>
-        </div>
-      </div>
-    `
-	})
+				<div class="mt-4 text-body-2">
+					<p>Instructions :</p>
+					<ol>
+						<li>Cliquez dans un champ puis en dehors pour déclencher la validation</li>
+						<li>Le champ de gauche affichera une erreur requise, mais pas celui de droite</li>
+						<li>Vous pouvez également essayer de soumettre les deux champs pour voir la différence de comportement</li>
+					</ol>
+				</div>
+			</div>
+		`,
+	}),
 }
