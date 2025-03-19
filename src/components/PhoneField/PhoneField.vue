@@ -184,6 +184,7 @@
 			:outlined="outlinedIndicatif"
 			:required="props.countryCodeRequired"
 			:display-asterisk="props.displayAsterisk"
+			:disable-error-handling="props.disableErrorHandling"
 			:return-object="true"
 			class="custom-select"
 			text-key="displayText"

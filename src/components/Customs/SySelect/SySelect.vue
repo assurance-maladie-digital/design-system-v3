@@ -52,6 +52,10 @@
 			type: Boolean,
 			default: false,
 		},
+		disableErrorHandling: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -118,6 +122,8 @@
 	})
 
 	const isRequired = computed(() => {
+		// Si la gestion des erreurs est désactivée, on ne considère jamais le champ comme requis
+		if (props.disableErrorHandling) return false
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
@@ -129,7 +135,13 @@
 
 	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
 		if (!newIsOpen) {
-			hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+			// Si la gestion des erreurs est désactivée, on ne met jamais hasError à true
+			if (props.disableErrorHandling) {
+				hasError.value = false
+			}
+			else {
+				hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+			}
 		}
 		else {
 			hasError.value = newHasError
@@ -137,7 +149,10 @@
 	})
 
 	watch(() => props.errorMessages, (newValue) => {
-		hasError.value = newValue.length > 0
+		// Si la gestion des erreurs est désactivée, on ne met jamais hasError à true
+		if (!props.disableErrorHandling) {
+			hasError.value = newValue.length > 0
+		}
 	})
 
 	onMounted(() => {
@@ -166,9 +181,9 @@
 			:disabled="disabled"
 			:label="labelWithAsterisk"
 			:aria-label="labelWithAsterisk"
-			:error-messages="errorMessages"
+			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
-			:rules="isRequired ? ['Le champ est requis.'] : []"
+			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			class="sy-select"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
