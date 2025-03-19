@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 	import { computed, ref, watch } from 'vue'
 	import type { PropType } from 'vue'
-	import { required as RequiredRule } from '@/utils/rules/required'
-	import { exactLength } from '@/utils/rules/exactLength'
-	import { mdiPhone, mdiInformation } from '@mdi/js'
+	import { mdiPhone } from '@mdi/js'
 	import { indicatifs } from './indicatifs'
 	import { vMaska } from 'maska/vue'
 	import { locales } from './locales'
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 
 	type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
 	type Indicatif = {
@@ -43,7 +42,6 @@
 	const dialCode = ref<string | Record<string, any>>(props.dialCodeModel || '')
 	const counter = ref(10)
 	const phoneMask = ref('## ## ## ## ##')
-	const hasError = ref(false)
 	const onBlur = ref(false)
 
 	function formatPhoneNumber(value: string): string {
@@ -96,24 +94,73 @@
 		return format[props.displayFormat] || ind.code
 	}
 
-	const validationRules = computed(() => {
-		const rules = [exactLength(counter.value, true)]
+	const validationRules = computed<ValidationRule[]>(() => {
+		const rules = [{
+			type: 'exactLength',
+			options: {
+				length: counter.value,
+				ignoreSpace: true, // Ignorer les espaces dans la validation
+				message: `Le numéro de téléphone doit contenir ${counter.value} chiffres.`,
+				fieldIdentifier: locales.label,
+			},
+		}]
 		if (props.required) {
-			rules.unshift(RequiredRule)
+			rules.unshift({
+				type: 'required',
+				options: {
+					length: counter.value,
+					ignoreSpace: true, // Ignorer les espaces dans la validation
+					message: `Le champ ${locales.label} est requis.`,
+					fieldIdentifier: locales.label,
+				},
+			})
 		}
 		return rules
 	})
 
+	// Initialisation du composable de validation
+	const validation = useValidation({
+		customRules: validationRules.value,
+		showSuccessMessages: true,
+		fieldIdentifier: locales.label,
+		disableErrorHandling: props.disableErrorHandling,
+	})
+
+	// Computed pour l'affichage des états
+	const hasError = computed(() => validation.hasError.value)
+	const hasWarning = computed(() => validation.hasWarning.value)
+	const hasSuccess = computed(() => validation.hasSuccess.value)
+
+	const errors = computed(() => validation.errors.value)
+	const warnings = computed(() => validation.warnings.value)
+	const successes = computed(() => validation.successes.value)
+
 	function validateInputOnBlur() {
 		if (!props.isValidatedOnBlur) return
 
-		hasError.value = false
-		const requiredValidation = !props.required || RequiredRule(phoneNumber.value) === true
-		const lengthValidation = exactLength(counter.value, true)(phoneNumber.value) === true
-
-		hasError.value = !(requiredValidation && lengthValidation)
 		onBlur.value = true
+		// On nettoie la valeur des espaces avant de la valider
+		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
+		validation.validateField(cleanedValue, validationRules.value)
 	}
+
+	// Mise à jour de la validation lorsque le numéro de téléphone change
+	watch(phoneNumber, (newValue) => {
+		if (!props.isValidatedOnBlur || onBlur.value) {
+			// On nettoie la valeur des espaces avant de la valider
+			const cleanedValue = newValue.replace(/\s/g, '')
+			validation.validateField(cleanedValue, validationRules.value)
+		}
+	})
+
+	// Mise à jour de la validation lorsque les règles changent
+	watch(validationRules, () => {
+		if (onBlur.value) {
+			// On nettoie la valeur des espaces avant de la valider
+			const cleanedValue = phoneNumber.value.replace(/\s/g, '')
+			validation.validateField(cleanedValue, validationRules.value)
+		}
+	})
 
 	defineExpose({
 		computedValue,
@@ -123,6 +170,7 @@
 		hasError,
 		phoneNumber,
 		mergedDialCodes,
+		validation,
 	})
 </script>
 
@@ -148,10 +196,18 @@
 			:counter-value="(value: string) => value.replace(/\s/g, '').length"
 			:label="locales.label"
 			:required="props.required"
-			:rules="validationRules"
+			:error="hasError"
+			:error-messages="errors"
+			:warning-messages="warnings"
+			:success-messages="successes"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:display-asterisk="props.displayAsterisk"
-			class="phone-field"
+			:class="{
+				'phone-field': true,
+				'error-field': hasError,
+				'warning-field': hasWarning,
+				'success-field': hasSuccess
+			}"
 			color="primary"
 			@blur="validateInputOnBlur"
 			@input="handlePhoneInput"
@@ -162,9 +218,6 @@
 					color="#222324"
 				>
 					{{ mdiPhone }}
-				</VIcon>
-				<VIcon v-if="hasError">
-					{{ mdiInformation }}
 				</VIcon>
 			</template>
 		</SyTextField>
