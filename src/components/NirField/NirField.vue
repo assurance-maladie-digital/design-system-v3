@@ -41,7 +41,6 @@
 		persistentHint?: boolean
 		persistentPlaceholder?: boolean
 		disableErrorHandling?: boolean
-		showSuccessMessages?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: undefined,

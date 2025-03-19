@@ -33,6 +33,7 @@
 		useCustomIndicatifsOnly: { type: Boolean, default: false },
 		isValidatedOnBlur: { type: Boolean, default: true },
 		displayAsterisk: { type: Boolean, default: false },
+		disableErrorHandling: { type: Boolean, default: false },
 	})
 
 	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
