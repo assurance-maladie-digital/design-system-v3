@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { vi } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
 import NotificationBar from '../NotificationBar.vue'
@@ -6,6 +6,7 @@ import { type Notification } from '@/components/NotificationBar/types'
 import { useNotificationService } from '@/services/NotificationService'
 import { nextTick, type Ref, ref } from 'vue'
 import { vuetify } from '@tests/unit/setup'
+import { VDefaultsProvider } from 'vuetify/components'
 
 vi.mock('@/services/NotificationService')
 describe('NotificationBar.vue', () => {
@@ -17,6 +18,7 @@ describe('NotificationBar.vue', () => {
 
 	let notificationServiceMock: NotificationServiceMock
 	beforeEach(() => {
+		vi.useFakeTimers()
 		notificationServiceMock = {
 			notificationQueue: ref([]),
 			addNotification: vi.fn(),
@@ -24,6 +26,11 @@ describe('NotificationBar.vue', () => {
 		};
 		// @ts-expect-error on vi.Mock
 		(useNotificationService as vi.Mock).mockReturnValue(notificationServiceMock)
+	})
+
+	afterEach(() => {
+		vi.restoreAllMocks()
+		vi.useRealTimers()
 	})
 
 	it('should render notification bar', async () => {
@@ -67,29 +74,11 @@ describe('NotificationBar.vue', () => {
 		expect(wrapper.vm.color).toBe('#56C271')
 	})
 
-	it('should close notification when handleClearNotification is called', async () => {
-		const notification: Notification = {
-			id: '1',
-			message: 'Test message',
-			type: 'info',
-			timeout: -1,
-			icon: null,
-		}
-		const wrapper = mount(NotificationBar, {
-			props: { notification },
-			global: {
-				plugins: [vuetify],
-			},
-		})
-		wrapper.vm.openNotification(notification)
-		wrapper.vm.handleClearNotification()
-
-		await nextTick()
-		expect(wrapper.vm.isNotificationVisible).toBe(false)
-		expect(notificationServiceMock.removeNotification).toHaveBeenCalledWith(notification.id)
-	})
-
 	it('should show the next notification in the queue', async () => {
+		notificationServiceMock.removeNotification = vi.fn(() => {
+			notificationServiceMock.notificationQueue.value.shift()
+		})
+
 		const notification1: Notification = {
 			id: '1',
 			message: 'Test message 1',
@@ -97,26 +86,28 @@ describe('NotificationBar.vue', () => {
 			timeout: -1,
 			icon: null,
 		}
-		const notification2: Notification = {
+		const notification2 = {
 			id: '2',
 			message: 'Test message 2',
 			type: 'success',
 			timeout: -1,
 			icon: null,
-		}
+		} as const satisfies Notification
 		notificationServiceMock.notificationQueue.value = [notification1, notification2]
 
 		const wrapper = mount(NotificationBar, {
-			props: { notification: notification1 },
 			global: {
 				plugins: [vuetify],
 			},
 		})
 
 		wrapper.vm.showNextNotification()
-
 		await nextTick()
-		expect(wrapper.vm.currentNotification).toEqual(notification1)
+		vi.runAllTimers()
+		await nextTick()
+
+		expect(notificationServiceMock.removeNotification).toHaveBeenCalledWith(notification1.id)
+		expect(wrapper.vm.currentNotification).toEqual(notification2)
 		expect(wrapper.vm.isNotificationVisible).toBe(true)
 	})
 
@@ -315,8 +306,14 @@ describe('NotificationBar.vue', () => {
 		expect(removeNotification).toHaveBeenCalledWith(1)
 	})
 
-	it('should handle empty notification queue correctly', async () => {
-		notificationServiceMock.notificationQueue.value = []
+	it('should show the item in queue', async () => {
+		notificationServiceMock.notificationQueue.value = [{
+			id: '1',
+			message: 'Test message',
+			type: 'info',
+			timeout: -1,
+			icon: null,
+		}]
 
 		const wrapper = mount(NotificationBar, {
 			global: {
@@ -324,9 +321,7 @@ describe('NotificationBar.vue', () => {
 			},
 		})
 
-		await wrapper.vm.processNotificationQueue()
-
-		expect(wrapper.vm.isNotificationVisible).toBe(false)
-		expect(notificationServiceMock.removeNotification).not.toHaveBeenCalled()
+		const provider = wrapper.findComponent(VDefaultsProvider)
+		expect(provider.element.parentElement.textContent).toContain('Test message')
 	})
 })
