@@ -2,17 +2,16 @@ import { ExpertiseLevelEnum } from './constants/ExpertiseLevelEnum'
 
 export const AccessibiliteItemsIndeterminate = [
 	{
-		title: 'Catégorie 10 : Présentation de l’information',
-		subtitle: '10.1 Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l’information ? ?',
+		title: 'Catégorie 3 : Couleurs',
+		subtitle: '3.1 Dans chaque page web, l’information ne doit pas être donnée uniquement par la couleur. Cette règle est-elle respectée ?',
 		items: [
-
 			{
-				precision: '10.1.1 Dans chaque page web, les balises servant à la présentation de l’information ne doivent pas être présentes dans le code source généré des pages. Cette règle est-elle respectée ? ',
-				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#10.1.1',
+				precision: '3.1.2 Pour chaque indication de couleur donnée par un texte, l’information ne doit pas être donnée uniquement par la couleur. Cette règle est-elle respectée ?',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#3.1.2',
 				solution: [{
-					info1: '1. Vérifier l’absence des éléments de présentation <basefont>, <big>, <blink>, <center>, <font>, <marquee>, <s>, <strike>, <tt> ; ',
-					info2: '2. Vérifier l’absence de l’élément <u> uniquement si le DOCTYPE du document ne correspond pas à HTML 5 ; ',
-					info3: '3. Si c’est le cas, le test est validé',
+					info1: '1. Retrouver dans le document les textes et les textes en image sans effet de graisse d’une taille restituée inférieure à 24px qui pourraient poser des problèmes de contraste ;',
+					info2: '2. Pour chacun de ces textes, vérifier que : Soit le rapport de contraste entre le texte et son arrière-plan est de 4.5:1, au moins; Soit un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 4.5:1, au moins.',
+					info3: '3. Si c’est le cas pour chaque texte, le test est validé',
 				}],
 				expertise: ExpertiseLevelEnum.DEV,
 
@@ -20,7 +19,48 @@ export const AccessibiliteItemsIndeterminate = [
 
 		],
 	},
+	{
+		title: 'Catégorie 11 : Formulaires',
+		subtitle: '11.2 Chaque étiquette associée à un champ de formulaire est-elle pertinente (hors cas particuliers) ? ',
 
+		items: [
+			{
+				precision: '11.2.1 Chaque balise <label> permet-elle de connaître la fonction exacte du champ de formulaire auquel elle est associée ?',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2.1',
+				solution: [{
+					info1: '1. Retrouver dans le document les champs de formulaire dont l’étiquette est fournie par un élément <label> ; ',
+					info2: '2. Pour chaque champ de formulaire, vérifier que le contenu de l’élément est pertinent ; ',
+					info3: '3. Si c’est le cas pour chaque champ de formulaire, le test est validé.',
+				}],
+				expertise: ExpertiseLevelEnum.DEV,
+
+			},
+		],
+
+	},
+	{
+		title: 'Catégorie 12 : Navigation',
+		subtitle: '12.9 Dans chaque page web, la navigation ne doit pas contenir de piège au clavier. Cette règle est-elle respectée ?',
+		items: [
+			{
+
+				precision: '12.9.1 Dans chaque page web, chaque élément recevant le focus vérifie-t-il une de ces conditions ? '
+					+ 'Il est possible d’atteindre l’élément suivant ou précédent pouvant recevoir le focus avec la touche de tabulation ;'
+					+ 'L’utilisateur est informé d’un mécanisme fonctionnel permettant d’atteindre au clavier l’élément suivant ou précédent pouvant recevoir le focus.',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#12.9.1',
+				solution: [{
+					info1: '1. Retrouver dans le document l’ensemble des éléments d’interface susceptibles de recevoir le focus (au moyen de la tabulation ou au moyen d’un script) ;',
+					info2: '2. Pour chaque élément d’interface, vérifier que l’utilisateur peut atteindre l’élément suivant ou précédent pouvant recevoir le focus : '
+						+ 'Soit au moyen de la touche de tabulation (Tab ou Maj+Tab) ;'
+						+ 'Soit au moyen d’une autre interaction clavier dont l’utilisateur est informé (par exemple, les flèches de direction).',
+					info3: '3. Si c’est le cas pour chaque élément d’interface, le test est validé.',
+				}],
+				expertise: ExpertiseLevelEnum.DEV,
+
+			},
+
+		],
+	},
 ]
 
 export const AccessibiliteItemsValidated = [
@@ -127,6 +167,26 @@ export const AccessibiliteItemsValidated = [
 			},
 
 		],
+	},
+	{
+		title: 'Catégorie 11 : Formulaires',
+		subtitle: '11.2  Chaque étiquette associée à un champ de formulaire est-elle pertinente (hors cas particuliers) ?   ',
+		items: [
+			{
+
+				precision: '11.2.2 Chaque attribut title permet-il de connaître la fonction exacte du champ de formulaire auquel il est associé ? ',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2.2',
+				solution: [{
+					info1: '1. Retrouver dans le document les champs de formulaire dont l’étiquette est fournie par un attribut title ; ',
+					info2: '2. Pour chaque champ de formulaire, vérifier que le contenu de l’attribut est pertinent ; ',
+					info3: '3. Si c’est le cas pour chaque champ de formulaire, le test est validé.',
+				}],
+				expertise: ExpertiseLevelEnum.DESIGN,
+
+			},
+
+		],
+
 	},
 
 ]
