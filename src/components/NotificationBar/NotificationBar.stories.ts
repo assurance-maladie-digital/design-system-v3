@@ -115,7 +115,6 @@ Default.args = {
 	closeBtnText: 'Fermer',
 	type: 'info',
 	bottom: false,
-	rounded: '4',
 }
 
 Default.parameters = {
@@ -173,7 +172,6 @@ Default.parameters = {
 export const Success: Story = Default.bind({})
 Success.args = {
 	...Default.args,
-	rounded: 'pill',
 	type: 'success',
 }
 Success.parameters = {
@@ -186,7 +184,6 @@ Success.parameters = {
 					v-model="showNotification"
 					:close-btn-text="closeBtnText"
 					:bottom="bottom"
-					:rounded="pill"
 					type="success"
 				>
 					<template #default>This is a success notification</template>
@@ -232,7 +229,6 @@ Success.parameters = {
 export const Warning: Story = Default.bind({})
 Warning.args = {
 	...Default.args,
-	rounded: 'pill',
 	type: 'warning',
 }
 Warning.parameters = {
@@ -245,7 +241,6 @@ Warning.parameters = {
 					v-model="showNotification"
 					:close-btn-text="closeBtnText"
 					:bottom="bottom"
-					:rounded="pill"
 					type="warning"
 				>
 					<template #default>This is a warning notification</template>
@@ -291,7 +286,6 @@ Warning.parameters = {
 export const Error: Story = Default.bind({})
 Error.args = {
 	...Default.args,
-	rounded: 'pill',
 	type: 'error',
 }
 Error.parameters = {
@@ -304,7 +298,6 @@ Error.parameters = {
 					v-model="showNotification"
 					:close-btn-text="closeBtnText"
 					:bottom="bottom"
-					:rounded="pill"
 					type="error"
 				>
 					<template #default>This is an error notification</template>
@@ -350,7 +343,6 @@ Error.parameters = {
 export const Bottom: Story = Default.bind({})
 Bottom.args = {
 	...Default.args,
-	rounded: 'pill',
 	bottom: true,
 }
 Bottom.parameters = {
@@ -363,7 +355,6 @@ Bottom.parameters = {
 					v-model="showNotification"
 					:close-btn-text="closeBtnText"
 					:bottom="true"
-					:rounded="pill"
 					:type="type"
 				>
 					<template #default>This is a bottom-positioned notification</template>
@@ -409,7 +400,6 @@ Bottom.parameters = {
 export const CustomCloseBtnText: Story = Default.bind({})
 CustomCloseBtnText.args = {
 	...Default.args,
-	rounded: 'pill',
 	closeBtnText: 'Masquer',
 }
 CustomCloseBtnText.parameters = {
@@ -448,13 +438,71 @@ CustomCloseBtnText.parameters = {
 
 				const { addNotification } = useNotificationService()
 				const showNotification = ref(false)
-				const rounded = 'pill'
 
 				const envoyerNotification = (message: string) => {
 					const notification = {
 						id: Date.now().toString(),
 						message,
 						type: 'info',
+						timeout: -1,
+					}
+					addNotification(notification)
+					showNotification.value = true
+				}
+			</script>
+			`,
+		},
+	],
+}
+
+export const Customization: Story = Default.bind({})
+Customization.args = {
+	...Default.args,
+	rounded: 'pill',
+	type: 'success',
+}
+Customization.parameters = {
+	sourceCode: [
+		{
+			name: 'Template',
+			code: `
+			<div class="d-flex flex-wrap align-center justify-center">
+				<NotificationBar
+					v-model="showNotification"
+					:close-btn-text="closeBtnText"
+					:bottom="bottom"
+					:rounded="pill"
+					type="success"
+				>
+					<template #default>This is a success notification</template>
+				</NotificationBar>
+				<VBtn
+					color="success"
+					@click="envoyerNotification('This is a success notification')"
+					class="ma-6"
+				>
+					Afficher la notification
+				</VBtn>
+			</div>
+			`,
+		},
+		{
+			name: 'Script',
+			code: `
+			<script setup lang="ts">
+				import { VBtn } from 'vuetify/components'
+				import { NotificationBar } from '@cnamts/synapse'
+				import { ref } from 'vue'
+				import { useNotificationService } from '@cnamts/synpase'
+
+				const { addNotification } = useNotificationService()
+				const showNotification = ref(false)
+
+				const envoyerNotification = (message: string) => {
+					const notification = {
+						id: Date.now().toString(),
+						message,
+						type: 'success',
 						timeout: -1,
 					}
 					addNotification(notification)

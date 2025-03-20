@@ -127,60 +127,62 @@
 </script>
 
 <template>
-	<VSnackbar
-		v-bind="options.snackbar"
-		v-model="isNotificationVisible"
-		role="status"
-		:eager="true"
-		:color="color"
-		:location="props.bottom ? 'bottom' : 'top'"
-		:vertical="hasLongContent"
-		:multi-line="hasLongContent"
-		:timeout="currentNotification?.timeout ?? -1"
-		:width="isMobileVersion || isTabletVersion ? 'auto' : '960px'"
-		:rounded="props.rounded"
-		:class="[{ 'long-text': hasLongContent }]"
-	>
-		<div class="d-flex align-center ga-2">
-			<VIcon
-				v-if="!isMobileVersion && icon"
-				v-bind="options.icon"
-				:icon="icon"
-				size="24"
-				aria-hidden="true"
-			/>
-			<p
-				class="sy-notification-content"
-				:class="'text-' + contentStyle.contentColor"
-			>
-				{{ currentNotification?.message }}
-			</p>
-		</div>
-
-		<template #actions>
-			<div
-				class="d-flex ga-2"
-				style="width: 100%;"
-				:class="hasLongContent ? 'action-section-long-text' : 'action-section-short-text'"
-			>
-				<slot name="action" />
-				<VBtn
-					class="notification-bar__close"
-					:class="{ 'ma-0': smallCloseBtn }"
-					aria-label="Fermer la notification"
-					v-bind="options.btn"
-					@click="isNotificationVisible = false"
+	<div>
+		<VSnackbar
+			v-bind="options.snackbar"
+			v-model="isNotificationVisible"
+			role="status"
+			:eager="true"
+			:color="color"
+			:location="props.bottom ? 'bottom' : 'top'"
+			:vertical="hasLongContent"
+			:multi-line="hasLongContent"
+			:timeout="currentNotification?.timeout ?? -1"
+			:width="isMobileVersion || isTabletVersion ? 'auto' : '960px'"
+			:rounded="props.rounded"
+			:class="[{ 'long-text': hasLongContent }]"
+		>
+			<div class="d-flex align-center ga-2">
+				<VIcon
+					v-if="!isMobileVersion && icon"
+					v-bind="options.icon"
+					:icon="icon"
+					size="24"
+					aria-hidden="true"
+				/>
+				<p
+					class="sy-notification-content"
+					:class="'text-' + contentStyle.contentColor"
 				>
-					<template v-if="!smallCloseBtn">
-						{{ closeBtnText }}
-					</template>
-					<template v-else>
-						<VIcon :icon="mdiClose" />
-					</template>
-				</VBtn>
+					{{ currentNotification?.message }}
+				</p>
 			</div>
-		</template>
-	</VSnackbar>
+
+			<template #actions>
+				<div
+					class="d-flex ga-2"
+					style="width: 100%;"
+					:class="hasLongContent ? 'action-section-long-text' : 'action-section-short-text'"
+				>
+					<slot name="action" />
+					<VBtn
+						class="notification-bar__close"
+						:class="{ 'ma-0': smallCloseBtn }"
+						aria-label="Fermer la notification"
+						v-bind="options.btn"
+						@click="isNotificationVisible = false"
+					>
+						<template v-if="!smallCloseBtn">
+							{{ closeBtnText }}
+						</template>
+						<template v-else>
+							<VIcon :icon="mdiClose" />
+						</template>
+					</VBtn>
+				</div>
+			</template>
+		</VSnackbar>
+	</div>
 </template>
 
 <style lang="scss" scoped>
