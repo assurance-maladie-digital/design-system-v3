@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	import AmeliproBtn from '@/components/AmeliPro/AmeliproBtn/AmeliproBtn.vue'
 	const handleClick = () => {
 		console.log('Button clicked')
 	}
