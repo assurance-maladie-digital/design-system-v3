@@ -2,6 +2,38 @@ import { ExpertiseLevelEnum } from './constants/ExpertiseLevelEnum'
 
 export const AccessibiliteItemsIndeterminate = [
 	{
+		title: 'Catégorie 3 : Couleurs',
+		subtitle: '3.2 Dans chaque page web, le contraste entre la couleur du texte et la couleur de son arrière-plan est-il suffisamment élevé?',
+		items: [
+			{
+				precision: '3.2.1 Dans chaque page web, le texte et le texte en image sans effet de graisse d’une taille restituée inférieure à 24px vérifient-ils une de ces conditions? Le rapport de contraste entre le texte et son arrière-plan est de 4.5:1, au moins; Un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 4.5:1, au moins.',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#3.2.1',
+				solution: [{
+					info1: '1. Retrouver dans le document les textes et les textes en image sans effet de graisse d’une taille restituée inférieure à 24px qui pourraient poser des problèmes de contraste ;',
+					info2: '2. Pour chacun de ces textes, vérifier que : Soit le rapport de contraste entre le texte et son arrière-plan est de 4.5:1, au moins; Soit un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 4.5:1, au moins.',
+					info3: '3. Si c’est le cas pour chaque texte, le test est validé',
+				}],
+				expertise: ExpertiseLevelEnum.DEV,
+
+			},
+			{
+				precision: ' 3.2.4 Dans chaque page web, le texte et le texte en image en gras d’une taille restituée supérieure ou égale à 18,5px vérifient-ils une de ces conditions (hors cas particuliers) ? '
+					+ 'Le rapport de contraste entre le texte et son arrière-plan est de 3:1, au moins ; '
+					+ 'Un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 3:1, au moins. ',
+				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#3.2.4',
+				solution: [{
+					info1: '1. Retrouver dans le document les textes et les textes en image en gras d’une taille restituée supérieure ou égale à 18,5px qui pourraient poser des problèmes de contraste ; ',
+					info2: '2. Pour chacun de ces textes, vérifier que :  Soit le rapport de contraste entre le texte et son arrière-plan est de 3:1, au moins ; Soit un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 3:1, au moins. ',
+					info3: '3. Si c’est le cas pour chaque texte, le test est validé',
+				}],
+				expertise: ExpertiseLevelEnum.DEV,
+
+			},
+
+		],
+	},
+
+	{
 		title: 'Catégorie 10 : Présentation de l’information',
 		subtitle: '10.1 Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l’information ? ?',
 		items: [
@@ -56,17 +88,6 @@ export const AccessibiliteItemsValidated = [
 		title: 'Catégorie 3 : Couleurs',
 		subtitle: '3.2 Dans chaque page web, le contraste entre la couleur du texte et la couleur de son arrière-plan est-il suffisamment élevé?',
 		items: [
-			{
-				precision: '3.2.1 Dans chaque page web, le texte et le texte en image sans effet de graisse d’une taille restituée inférieure à 24px vérifient-ils une de ces conditions? Le rapport de contraste entre le texte et son arrière-plan est de 4.5:1, au moins; Un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 4.5:1, au moins.',
-				link: 'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#3.2.1',
-				solution: [{
-					info1: '1. Retrouver dans le document les textes et les textes en image sans effet de graisse d’une taille restituée inférieure à 24px qui pourraient poser des problèmes de contraste ;',
-					info2: '2. Pour chacun de ces textes, vérifier que : Soit le rapport de contraste entre le texte et son arrière-plan est de 4.5:1, au moins; Soit un mécanisme permet à l’utilisateur d’afficher le texte avec un rapport de contraste de 4.5:1, au moins.',
-					info3: '3. Si c’est le cas pour chaque texte, le test est validé',
-				}],
-				expertise: ExpertiseLevelEnum.DESIGN,
-
-			},
 			{
 				precision: ' 3.2.4 Dans chaque page web, le texte et le texte en image en gras d’une taille restituée supérieure ou égale à 18,5px vérifient-ils une de ces conditions (hors cas particuliers) ? '
 					+ 'Le rapport de contraste entre le texte et son arrière-plan est de 3:1, au moins ; '
