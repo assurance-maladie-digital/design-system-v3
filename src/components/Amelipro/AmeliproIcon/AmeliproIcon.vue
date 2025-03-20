@@ -179,7 +179,7 @@ $default: 1.25rem;
 $small: 1rem;
 $medium: 1.25rem;
 $large: 1.5rem;
-$xLarge: 2rem;
+$xlarge: 2rem;
 
 .amelipro-custom-icon {
 	position: relative;
@@ -228,8 +228,8 @@ $xLarge: 2rem;
 	}
 
 	&.x-large {
-		width: $xLarge;
-		height: $xLarge;
+		width: $xlarge;
+		height: $xlarge;
 	}
 }
 
