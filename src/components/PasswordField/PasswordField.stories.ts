@@ -1090,10 +1090,10 @@ ne sont pas nécessaires dans certains contextes.
         <div class="mt-4 text-body-2">
           <p>Observations :</p>
           <ul>
-            <li>Les deux champs ont la même valeur valide</li>
-            <li>Le champ de gauche affiche un message de succès et un indicateur visuel vert</li>
-            <li>Le champ de droite n'affiche pas de message de succès, mais conserve l'indicateur visuel</li>
-            <li>Essayez de modifier les valeurs puis de les rendre à nouveau valides</li>
+            <li class="ml-4">Les deux champs ont la même valeur valide</li>
+            <li class="ml-4">Le champ de gauche affiche un message de succès et un indicateur visuel vert</li>
+            <li class="ml-4">Le champ de droite n'affiche pas de message de succès, mais conserve l'indicateur visuel</li>
+            <li class="ml-4">Essayez de modifier les valeurs puis de les rendre à nouveau valides</li>
           </ul>
         </div>
       </div>
@@ -1193,9 +1193,9 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
 				<div class="mt-4 text-body-2">
 					<p>Instructions :</p>
 					<ol>
-						<li>Cliquez dans un champ puis en dehors pour déclencher la validation</li>
-						<li>Le champ de gauche affichera une erreur requise, mais pas celui de droite</li>
-						<li>Vous pouvez également essayer de soumettre les deux champs pour voir la différence de comportement</li>
+						<li class="ml-4">Cliquez dans un champ puis en dehors pour déclencher la validation</li>
+						<li class="ml-4">Le champ de gauche affichera une erreur requise, mais pas celui de droite</li>
+						<li class="ml-4">Vous pouvez également essayer de soumettre les deux champs pour voir la différence de comportement</li>
 					</ol>
 				</div>
 			</div>

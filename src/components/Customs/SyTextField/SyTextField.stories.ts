@@ -1446,9 +1446,9 @@ export const DisabledErrorHandling: Story = {
           <div class="mt-4 text-body-2">
             <p>Instructions :</p>
             <ol>
-              <li>Cliquez dans un champ puis en dehors pour déclencher la validation</li>
-              <li>Observez que le champ de gauche affiche un message d'erreur</li>
-              <li>Le champ de droite n'affiche aucune erreur malgré les mêmes règles</li>
+              <li class="ml-4">Cliquez dans un champ puis en dehors pour déclencher la validation</li>
+              <li class="ml-4">Observez que le champ de gauche affiche un message d'erreur</li>
+              <li class="ml-4">Le champ de droite n'affiche aucune erreur malgré les mêmes règles</li>
             </ol>
           </div>
         </div>
@@ -1544,9 +1544,9 @@ export const ShowSuccessMessages: Story = {
           
           <div class="mt-4 text-body-2">
             <p>Les deux champs ont la même valeur et passent la validation :</p>
-            <ul>
-              <li>Le champ de gauche affiche le message de succès</li>
-              <li>Le champ de droite n'affiche aucun message</li>
+            <ul >
+              <li class="ml-4">Le champ de gauche affiche le message de succès</li>
+              <li class="ml-4">Le champ de droite n'affiche aucun message</li>
             </ul>
             <p class="mt-2">Essayez de modifier les valeurs pour voir le comportement.</p>
           </div>

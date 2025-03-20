@@ -1026,9 +1026,9 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
         <div class="mt-4 text-body-2">
           <p>Instructions :</p>
           <ol>
-            <li>Cliquez dans un champ puis en dehors pour déclencher la validation</li>
-            <li>Essayez de saisir des valeurs invalides (moins de 13 chiffres)</li>
-            <li>Notez que le champ de gauche affiche des erreurs, mais pas celui de droite</li>
+            <li class="ml-4">Cliquez dans un champ puis en dehors pour déclencher la validation</li>
+            <li class="ml-4">Essayez de saisir des valeurs invalides (moins de 13 chiffres)</li>
+            <li class="ml-4">Notez que le champ de gauche affiche des erreurs, mais pas celui de droite</li>
           </ol>
         </div>
       </div>
