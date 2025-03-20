@@ -230,7 +230,7 @@
 				class="amelipro-btn__badge__wrapper"
 				:class="iconClasses"
 			>
-				<span class="amelipro-btn__badge__wrapper__content">
+				<span class="amelipro-btn__badge__wrapper__content-inner">
 					<span
 						class="amelipro-btn__badge"
 						:style="badgeStyle"
@@ -339,7 +339,7 @@
 		vertical-align: unset;
 	}
 
-	&.amelipro-btn__badge__wrapper__content {
+	&.amelipro-btn__badge__wrapper__content-inner {
 		position: relative;
 		display: block;
 	}
