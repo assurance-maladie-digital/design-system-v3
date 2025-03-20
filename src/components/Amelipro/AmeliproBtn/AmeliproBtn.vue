@@ -230,7 +230,7 @@
 				class="amelipro-btn__badge__wrapper"
 				:class="iconClasses"
 			>
-				<span class="amelipro-btn__badge__wrapper__content-inner">
+				<span class="amelipro-btn__badge__wrapper__content">
 					<span
 						class="amelipro-btn__badge"
 						:style="badgeStyle"
@@ -294,22 +294,22 @@
 	font-weight: tokens.$ap-font-weight-semi-bold;
 	text-indent: unset;
 
-	& :deep(.v-btn__overlay),
-	& :deep(.v-btn__underlay) {
+	&:deep(.v-btn__overlay),
+	&:deep(.v-btn__underlay) {
 		display: none !important;
 	}
 
-	& :deep(.v-btn__content) {
+	&:deep(.v-btn__content) {
 		position: relative;
 		padding-left: v-bind(btnContentPaddingLeft) !important;
 		padding-right: v-bind(btnContentPaddingRight) !important;
 
-		& .amelipro-btn__icon--left {
+		&.amelipro-btn__icon--left {
 			position: absolute;
 			left: 0;
 		}
 
-		& .amelipro-btn__icon--right {
+		&.amelipro-btn__icon--right {
 			position: absolute;
 			right: 0;
 		}
@@ -339,29 +339,26 @@
 		vertical-align: unset;
 	}
 
-	& .amelipro-btn__badge__wrapper__content {
-		// Rename to follow BEM convention
-		&.amelipro-btn__badge__wrapper__content-inner {
-			position: relative;
-			display: block;
-		}
+	&.amelipro-btn__badge__wrapper__content {
+		position: relative;
+		display: block;
 	}
+}
 
-	& .amelipro-btn__badge {
-		position: absolute;
-		right: -0.6rem;
-		top: -0.9rem;
-		min-width: 1.25rem;
-		min-height: 1.25rem;
-		padding: 0 0.125rem;
-		border-radius: 50%;
-		font-size: tokens.$font-size-xxs;
-		z-index: 1;
+&.amelipro-btn__badge {
+	position: absolute;
+	right: -0.6rem;
+	top: -0.9rem;
+	min-width: 1.25rem;
+	min-height: 1.25rem;
+	padding: 0 0.125rem;
+	border-radius: 50%;
+	font-size: tokens.$font-size-xxs;
+	z-index: 1;
 
-		& span {
-			display: block;
-			margin-top: 2px;
-		}
+	&span {
+		display: block;
+		margin-top: 2px;
 	}
 }
 </style>
