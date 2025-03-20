@@ -230,7 +230,7 @@
 				class="amelipro-btn__badge__wrapper"
 				:class="iconClasses"
 			>
-				<span class="amelipro-btn__badge__wrapper__content">
+				<span class="amelipro-btn__badge__wrapper__content-inner">
 					<span
 						class="amelipro-btn__badge"
 						:style="badgeStyle"
@@ -340,8 +340,11 @@
 	}
 
 	& .amelipro-btn__badge__wrapper__content {
-		position: relative;
-		display: block;
+		// Rename to follow BEM convention
+		&.amelipro-btn__badge__wrapper__content-inner {
+			position: relative;
+			display: block;
+		}
 	}
 
 	& .amelipro-btn__badge {
