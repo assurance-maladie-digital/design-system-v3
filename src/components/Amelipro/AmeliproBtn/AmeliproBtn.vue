@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { computed, ref, useSlots } from 'vue'
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
-	import { IndexedObject } from '../types/types'
+	import type { IndexedObject } from '../types/types'
 	import { convertToHex } from '@/utils/functions/convertToHex'
 
 	const props = defineProps({
