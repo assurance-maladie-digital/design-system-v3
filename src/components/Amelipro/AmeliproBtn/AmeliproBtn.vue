@@ -216,6 +216,8 @@
 		v-bind="$attrs"
 		@mouseenter="hover = true"
 		@mouseleave="hover = false"
+		@blur="hover = false"
+		@focus="hover = true"
 	>
 		<span
 			class="d-flex align-center amelipro-custom-btn"
@@ -301,6 +303,7 @@
 		position: relative;
 		padding-left: v-bind(btnContentPaddingLeft) !important;
 		padding-right: v-bind(btnContentPaddingRight) !important;
+
 		& .amelipro-btn__icon--left {
 			position: absolute;
 			left: 0;

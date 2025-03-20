@@ -1,12 +1,11 @@
-/* eslint-disable sort-keys, max-lines */
 // use sgv omg to minify your svg before paste it here : https://jakearchibald.github.io/svgomg/
 // add classes on the circle and the shape to make them customizable : "circle-color" for the circle and "shape-color" for the shape
 
-const CIRCLE_COLOR = 'circle-color';
-const SHAPE_COLOR = 'shape-color';
+const CIRCLE_COLOR = 'circle-color'
+const SHAPE_COLOR = 'shape-color'
 
 interface Icons {
-	[key: string]: string;
+	[key: string]: string
 }
 
 export const icons: Icons = {
@@ -1057,4 +1056,4 @@ export const icons: Icons = {
 	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
 		<path class="${SHAPE_COLOR}" d="M12.8,23.2c-.4,0-.7-.1-1-.4-.6-.6-.6-1.5,0-2l7.3-7.3H1.5C.7,13.4,0,12.8,0,12s.6-1.4,1.4-1.4h17.6l-7.3-7.3c-.6-.6-.6-1.5,0-2s1.5-.6,2,0l9.7,9.7c.6.6.6,1.5,0,2l-9.7,9.7c-.3.3-.7.4-1,.4Z"/>
 	</svg>`,
-};
+}
