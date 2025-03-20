@@ -116,7 +116,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@cnamts/synapse'
+   import { ChipList } from '@cnamts/synapse'
    
 	const items = [
 		{
@@ -205,7 +205,7 @@ export const Success: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@cnamts/synapse'
+   import { ChipList } from '@cnamts/synapse'
    
 	const items = [
 		{
@@ -298,7 +298,7 @@ export const Info: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@cnamts/synapse'
+   import { ChipList } from '@cnamts/synapse'
    
 	const items = [
 		{
@@ -391,7 +391,7 @@ export const Warning: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@cnamts/synapse'
+   import { ChipList } from '@cnamts/synapse'
    
 	const items = [
 		{
@@ -484,7 +484,7 @@ export const Error: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@cnamts/synapse'
+   import { ChipList } from '@cnamts/synapse'
    
 	const items = [
 		{
@@ -578,7 +578,7 @@ export const ReadOnly: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@cnamts/synapse'
+   import { ChipList } from '@cnamts/synapse'
    
 	const items = [
 		{
@@ -659,7 +659,7 @@ export const CustomResetText: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@cnamts/synapse'
+   import { ChipList } from '@cnamts/synapse'
    
 	const items = [
 		{
@@ -728,7 +728,7 @@ export const WithOverflow: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@cnamts/synapse'
+   import { ChipList } from '@cnamts/synapse'
    
 	const items = [
 		{
@@ -822,7 +822,7 @@ export const WithEvents: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import ChipList from '@cnamts/synapse'
+import { ChipList } from '@cnamts/synapse'
 import type { ChipItem } from '@cnamts/synapse/src/components/ChipList/types'
 
 const items = [
@@ -933,7 +933,7 @@ export const WithPrependStateIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import ChipList from '@cnamts/synapse'
+import { ChipList } from '@cnamts/synapse'
 
 const items = [
 	{
@@ -1011,7 +1011,7 @@ export const WithAppendStateIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import ChipList from '@cnamts/synapse'
+import { ChipList } from '@cnamts/synapse'
 
 const items = [
 	{
@@ -1090,7 +1090,7 @@ export const WithCustomIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import ChipList from '@cnamts/synapse'
+import { ChipList } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const items = [
@@ -1172,7 +1172,7 @@ export const Customization: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-   import ChipList from '@/components/ChipList/ChipList.vue'
+   import { ChipList } from '@cnamts/synapse'
    
 	const items = [
 		{
