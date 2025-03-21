@@ -334,7 +334,6 @@
 
 	&.amelipro-btn--style {
 		padding: tokens.$btn-padding-y tokens.$btn-padding-x;
-
 		// border-radius: tokens.$btn-radius-ap;
 	}
 
