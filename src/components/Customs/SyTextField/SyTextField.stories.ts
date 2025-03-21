@@ -1496,7 +1496,7 @@ export const DisabledErrorHandling: Story = {
 	},
 }
 
-export const ShowSuccessMessages: Story = {
+export const WithoutSuccessMessages: Story = {
 	args: {
 		label: 'Email',
 		customRules: [

@@ -1016,7 +1016,7 @@ export const WithFormValidation: Story = {
 	}),
 }
 
-export const ShowSuccessMessages: Story = {
+export const WithoutSuccessMessages: Story = {
 	parameters: {
 		docs: {
 			description: {
