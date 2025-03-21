@@ -134,7 +134,10 @@
 </script>
 
 <template>
-	<div id="paginated-table">
+	<div
+		id="paginated-table"
+		class="sy-paginated-table"
+	>
 		<VDataTable
 			v-if="!serverItemsLength"
 			color="primary"
@@ -173,8 +176,7 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
-.vd-data-table,
-.v-data-table {
+.sy-paginated-table :deep() {
 	table thead tr {
 		white-space: nowrap;
 	}
