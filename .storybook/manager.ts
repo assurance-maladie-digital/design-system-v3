@@ -1,11 +1,12 @@
 import { addons } from '@storybook/manager-api'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
+import apTheme from './ApTheme'
 
 // Helper function to apply theme class to HTML root element
 const applyThemeClass = (theme) => {
 	const rootElement = document.documentElement // Always exists
-	rootElement.classList.remove('theme-cnam', 'theme-pa')
+	rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
 	rootElement.classList.add(`theme-${theme}`)
 }
 
@@ -23,6 +24,11 @@ const applyThemeSidebar = (theme) => {
 					}
 				}
 				if (theme === 'cnam') {
+					if (item.querySelector('a#démarrer-introduction--docs')) {
+						// item.style.display = 'block'
+					}
+				}
+				if (theme === 'amelipro') {
 					if (item.querySelector('a#démarrer-introduction--docs')) {
 						// item.style.display = 'block'
 					}
@@ -81,7 +87,7 @@ if (typeof window !== 'undefined') {
 }
 
 addons.setConfig({
-	theme: storedTheme === 'pa' ? paTheme : cnamTheme,
+	theme: storedTheme === 'pa' ? paTheme : storedTheme === 'amelipro' ? apTheme : cnamTheme,
 })
 
 // Listen for theme changes
