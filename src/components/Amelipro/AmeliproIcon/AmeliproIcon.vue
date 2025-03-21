@@ -49,6 +49,10 @@
 			type: Boolean,
 			default: false,
 		},
+		uniqueId: {
+			type: String,
+			default: undefined,
+		},
 		widthAuto: {
 			type: Boolean,
 			default: false,
@@ -129,7 +133,10 @@
 </script>
 
 <template>
-	<span class="amelipro-icon">
+	<span
+		:id="uniqueId"
+		class="amelipro-icon"
+	>
 		<span
 			v-if="!$slots.default"
 			aria-hidden="true"
