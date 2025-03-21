@@ -187,12 +187,6 @@
 		}
 	}
 
-	table :not(thead) tr {
-		&:hover {
-			background-color: rgb(12 65 154 / 10%);
-		}
-	}
-
 	&.row-clickable table tbody tr {
 		cursor: pointer;
 	}
