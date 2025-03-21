@@ -100,12 +100,13 @@ export const Badge: Story = {
 		default: 'My Button',
 		iconBordered: true,
 		iconName: 'notifications',
+		textColor: 'ap-blue-darken-1',
 	},
 	parameters: {
-		render: () => ({
+		render: args => ({
 			components: { AmeliproBtn },
 			setup() {
-				return {}
+				return { args }
 			},
 		}),
 		sourceCode: [
