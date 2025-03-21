@@ -54,10 +54,8 @@ type Story = StoryObj<typeof AmeliproBtn>
 
 export const Default: Story = {
 	args: {
-		bordered: true,
-		color: 'ap-white',
 		default: 'My Button',
-		hoverColor: 'ap-blue-lighten-3',
+		uniqueId: 'my-btn-id',
 		textColor: 'ap-blue-darken-1',
 	},
 	parameters: {
