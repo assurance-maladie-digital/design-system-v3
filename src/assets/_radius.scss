@@ -22,10 +22,10 @@ $pa-radius: (
 );
 $ap-radius: (
 	0: 0px,
-	'sm': calc($border-radius-pa / 2),
-	'md': $border-radius-pa,
-	'lg': calc($border-radius-pa * 2),
-	'xl': calc($border-radius-pa * 4),
+	'sm': calc($border-radius-ap / 2),
+	'md': $border-radius-ap,
+	'lg': calc($border-radius-ap * 2),
+	'xl': calc($border-radius-ap * 4),
 	'pill': 9999px,
 	'circle': 50%
 );

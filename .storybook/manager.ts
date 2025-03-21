@@ -87,7 +87,7 @@ if (typeof window !== 'undefined') {
 }
 
 addons.setConfig({
-	theme: storedTheme === 'pa' ? paTheme : storedTheme === 'amelipro' ? apTheme : cnamTheme,
+	theme: storedTheme === 'pa' ? paTheme : storedTheme === 'ap' ? apTheme : cnamTheme,
 })
 
 // Listen for theme changes
@@ -98,7 +98,7 @@ if (typeof window !== 'undefined') {
 
 			// Update Storybook theme
 			addons.setConfig({
-				theme: newTheme === 'pa' ? paTheme : cnamTheme,
+				theme: newTheme === 'pa' ? paTheme : newTheme === 'ap' ? apTheme : cnamTheme,
 			})
 
 			// Apply theme class to HTML root
