@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import type { IndexedObject } from '../types/types'
+	import type { IndexedObject } from '../types.ts'
 	import { computed } from 'vue'
 	import { convertToHex } from '@/utils/functions/convertToHex'
 	import { icons } from '@/assets/amelipro/icons'
