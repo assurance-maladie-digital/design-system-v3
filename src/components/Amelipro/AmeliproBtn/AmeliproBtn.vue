@@ -165,6 +165,7 @@
 		}
 		if (props.bordered) {
 			btnStyles.border = `2px solid ${convertToHex(currentTextColor.value)} !important`
+			btnStyles.backgroundColor = 'white'
 		}
 		if (props.disabled) {
 			btnStyles.opacity = '30%'

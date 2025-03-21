@@ -55,7 +55,6 @@ export const Default: Story = {
 	args: {
 		default: 'My Button',
 		uniqueId: 'my-btn-id',
-		textColor: 'ap-blue-darken-1',
 	},
 	parameters: {
 		render: args => ({
@@ -100,7 +99,7 @@ export const Badge: Story = {
 		default: 'My Button',
 		iconBordered: true,
 		iconName: 'notifications',
-		textColor: 'ap-blue-darken-1',
+		textColor: 'ap-white',
 	},
 	parameters: {
 		render: args => ({
