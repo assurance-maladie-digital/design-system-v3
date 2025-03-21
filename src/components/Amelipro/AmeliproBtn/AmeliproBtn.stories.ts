@@ -61,7 +61,7 @@ export const Default: Story = {
 		textColor: 'ap-blue-darken-1',
 	},
 	parameters: {
-		render: (args) => ({
+		render: args => ({
 			components: { AmeliproBtn },
 			setup() {
 				return { args }
