@@ -31,6 +31,7 @@ const meta = {
 		},
 		isValidatedOnBlur: { control: 'boolean' },
 		displayAsterisk: { control: 'boolean' },
+		disableErrorHandling: { control: 'boolean' },
 	},
 } satisfies Meta<typeof PhoneField>
 
@@ -891,6 +892,106 @@ export const DisplayModels: Story = {
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
 					/>
+				</div>
+			`,
+		}
+	},
+}
+
+/**
+ * Story qui montre le comportement du composant lorsque la gestion des erreurs est désactivée.
+ * Aucun message d'erreur ne sera affiché, même si le champ est requis et vide.
+ */
+export const DisabledErrorHandling: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:required="required"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:isValidatedOnBlur="isValidatedOnBlur"
+						:disableErrorHandling="disableErrorHandling"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { PhoneField } from '@cnamts/synapse'
+					
+					const modelValue = ref('')
+					const required = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('code')
+					const isValidatedOnBlur = ref(true)
+					const disableErrorHandling = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		required: true,
+		outlined: true,
+		outlinedIndicatif: true,
+		withCountryCode: true,
+		countryCodeRequired: true,
+		displayFormat: 'code',
+		customIndicatifs: [],
+		useCustomIndicatifsOnly: false,
+		isValidatedOnBlur: true,
+		disableErrorHandling: true,
+	},
+	render: (args) => {
+		return {
+			components: { PhoneField },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<h3>Gestion des erreurs désactivée</h3>
+					<p>Ce champ est requis mais n'affichera pas d'erreur même s'il est vide.</p>
+					<PhoneField
+						v-model="args.modelValue"
+						:required="args.required"
+						:outlined="args.outlined"
+						:outlinedIndicatif="args.outlinedIndicatif"
+						:withCountryCode="args.withCountryCode"
+						:countryCodeRequired="args.countryCodeRequired"
+						:displayFormat="args.displayFormat"
+						:customIndicatifs="args.customIndicatifs"
+						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
+						:isValidatedOnBlur="args.isValidatedOnBlur"
+						:disableErrorHandling="args.disableErrorHandling"
+					/>
+					<div class="mt-6">
+						<h3>Comparaison avec gestion des erreurs activée</h3>
+						<p>Ce champ est requis et affichera une erreur s'il est vide.</p>
+						<PhoneField
+							v-model="args.modelValue"
+							:required="args.required"
+							:outlined="args.outlined"
+							:outlinedIndicatif="args.outlinedIndicatif"
+							:withCountryCode="args.withCountryCode"
+							:countryCodeRequired="args.countryCodeRequired"
+							:displayFormat="args.displayFormat"
+							:customIndicatifs="args.customIndicatifs"
+							:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
+							:isValidatedOnBlur="args.isValidatedOnBlur"
+							:disableErrorHandling="false"
+						/>
+					</div>
 				</div>
 			`,
 		}

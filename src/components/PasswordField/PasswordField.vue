@@ -32,6 +32,7 @@
 		showSuccessMessages?: boolean
 		displayAsterisk?: boolean
 		isValidateOnBlur?: boolean
+		disableErrorHandling?: boolean
 	} & CustomizableOptions>(), {
 		modelValue: null,
 		variantStyle: 'outlined',
@@ -50,6 +51,7 @@
 		showSuccessMessages: true,
 		displayAsterisk: false,
 		isValidateOnBlur: true,
+		disableErrorHandling: false,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -105,6 +107,7 @@
 		successRules: props.customSuccessRules || [],
 		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.label || 'password',
+		disableErrorHandling: props.disableErrorHandling,
 	})
 
 	// Computed pour les états de validation

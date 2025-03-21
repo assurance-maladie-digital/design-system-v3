@@ -751,7 +751,7 @@ export const WithCustomRules: Story = {
 						{
 							type: 'custom',
 							options: {
-								validate: (value: string) => {
+								validate: (value) => {
 									if (!value || !/[A-Z]/.test(value)) {
 										return 'Le mot de passe doit contenir au moins une lettre majuscule'
 									}
@@ -763,7 +763,7 @@ export const WithCustomRules: Story = {
 						{
 							type: 'custom',
 							options: {
-								validate: (value: string) => {
+								validate: (value) => {
 									if (!value || !/[0-9]/.test(value)) {
 										return 'Le mot de passe doit contenir au moins un chiffre'
 									}
@@ -893,7 +893,7 @@ export const WithFormValidation: Story = {
 						{
 							type: 'custom',
 							options: {
-								validate: (value: string) => {
+								validate: (value) => {
 									if (!value || value.length < 8) {
 										return 'Le mot de passe doit contenir au moins 8 caractères'
 									}
@@ -905,7 +905,7 @@ export const WithFormValidation: Story = {
 						{
 							type: 'custom',
 							options: {
-								validate: (value: string) => {
+								validate: (value) => {
 									if (!value || !/[A-Z]/.test(value)) {
 										return 'Le mot de passe doit contenir au moins une lettre majuscule'
 									}
@@ -1010,6 +1010,193 @@ export const WithFormValidation: Story = {
 					<p><strong>Instructions :</strong></p>
 					<p>Ce formulaire utilise la méthode <code>validateOnSubmit()</code> pour valider le champ lors de la soumission.</p>
 					<p>La validation ne se fait pas à la perte de focus (<code>isValidateOnBlur="false"</code>) mais uniquement lors du clic sur le bouton.</p>
+				</div>
+			</div>
+		`,
+	}),
+}
+
+export const WithoutSuccessMessages: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Messages de succès
+
+Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
+l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`true\`.
+
+Cela peut être utile pour réduire la verbosité de l'interface lorsque les messages de succès
+ne sont pas nécessaires dans certains contextes.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <!-- Champ avec messages de succès (par défaut) -->
+  <PasswordField
+    v-model="value1"
+    label="Mot de passe avec messages de succès"
+    required
+  />
+
+  <!-- Champ sans messages de succès -->
+  <PasswordField
+    v-model="value2"
+    label="Mot de passe sans messages de succès"
+    required
+    :showSuccessMessages="false"
+  />
+</template>`,
+			},
+		],
+	},
+	render: () => ({
+		components: { PasswordField },
+		setup() {
+			const value1 = ref('P@ssw0rd123')
+			const value2 = ref('P@ssw0rd123')
+
+			return { value1, value2 }
+		},
+		template: `
+      <div>
+        <p class="mb-4">Cette démonstration compare un PasswordField avec <code>showSuccessMessages=true</code> (par défaut) et un avec <code>showSuccessMessages=false</code>.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
+          <div>
+            <p class="text-subtitle-2 mb-2">Avec messages de succès</p>
+            <PasswordField
+              v-model="value1"
+              label="Mot de passe avec messages de succès"
+              required
+              showSuccessMessages
+            />
+          </div>
+
+          <div>
+            <p class="text-subtitle-2 mb-2">Sans messages de succès</p>
+            <PasswordField
+              v-model="value2"
+              label="Mot de passe sans messages de succès"
+              required
+              :showSuccessMessages="false"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4 text-body-2">
+          <p>Observations :</p>
+          <ul>
+            <li class="ml-4">Les deux champs ont la même valeur valide</li>
+            <li class="ml-4">Le champ de gauche affiche un message de succès et un indicateur visuel vert</li>
+            <li class="ml-4">Le champ de droite n'affiche pas de message de succès, mais conserve l'indicateur visuel</li>
+            <li class="ml-4">Essayez de modifier les valeurs puis de les rendre à nouveau valides</li>
+          </ul>
+        </div>
+      </div>
+    `,
+	}),
+}
+
+export const DisableErrorHandling: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Désactivation de la gestion des erreurs
+
+Cette story illustre l'utilisation de la propriété \`disableErrorHandling\` qui permet de désactiver complètement
+la gestion et l'affichage des erreurs dans un champ, même si des règles de validation sont définies.
+
+Cela peut être utile dans des cas particuliers où vous souhaitez définir des règles de validation
+mais gérer leur affichage différemment, ou utiliser la validation uniquement au niveau du formulaire parent.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <!-- Champ avec validation normale -->
+  <PasswordField
+    v-model="value1"
+    label="Mot de passe avec validation"
+    required
+    :custom-rules="customRules"
+  />
+
+  <!-- Champ avec gestion d'erreurs désactivée -->
+  <PasswordField
+    v-model="value2"
+    label="Mot de passe sans gestion d'erreurs"
+    required
+    disableErrorHandling
+    :custom-rules="customRules"
+  />
+</template>`,
+			},
+		],
+	},
+	render: () => ({
+		components: { PasswordField },
+		setup() {
+			const value1 = ref('')
+			const value2 = ref('')
+
+			const customRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || value.length < 8) {
+								return 'Le mot de passe doit contenir au moins 8 caractères'
+							}
+							return true
+						},
+						fieldIdentifier: 'password',
+					},
+				},
+			]
+
+			return { value1, value2, customRules }
+		},
+		template: `
+			<div>
+				<p class="mb-4">Cette démonstration compare un PasswordField standard et un avec \`disableErrorHandling=true\`.</p>
+
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
+					<div>
+						<p class="text-subtitle-2 mb-2">Validation normale</p>
+						<PasswordField
+							v-model="value1"
+							label="Mot de passe avec validation"
+							required
+							:custom-rules="customRules"
+						/>
+					</div>
+
+					<div>
+						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
+						<PasswordField
+							v-model="value2"
+							label="Mot de passe sans gestion d'erreurs"
+							required
+							disableErrorHandling
+							:custom-rules="customRules"
+						/>
+					</div>
+				</div>
+
+				<div class="mt-4 text-body-2">
+					<p>Instructions :</p>
+					<ol>
+						<li class="ml-4">Cliquez dans un champ puis en dehors pour déclencher la validation</li>
+						<li class="ml-4">Le champ de gauche affichera une erreur requise, mais pas celui de droite</li>
+						<li class="ml-4">Vous pouvez également essayer de soumettre les deux champs pour voir la différence de comportement</li>
+					</ol>
 				</div>
 			</div>
 		`,

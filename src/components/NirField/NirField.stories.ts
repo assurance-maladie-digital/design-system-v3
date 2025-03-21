@@ -21,6 +21,7 @@ const meta: Meta<typeof NirField> = {
 			table: {
 				type: {
 					summary: 'string',
+					detail: 'ex: 1840275123456 74',
 				},
 			},
 		},
@@ -524,6 +525,89 @@ export const WithSuccessMessages: Story = {
 	},
 }
 
+export const WithoutSuccessMessages: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Messages de succès
+
+Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
+l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`true\`.
+
+Cela peut être utile pour réduire la verbosité de l'interface lorsque les messages de succès
+ne sont pas nécessaires dans certains contextes.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <!-- Champ avec messages de succès (par défaut) -->
+  <NirField
+    v-model="value"
+    label="NIR avec messages de succès"
+    required
+  />
+
+  <!-- Champ sans messages de succès -->
+  <NirField
+    v-model="value"
+    label="NIR sans messages de succès"
+    required
+    :showSuccessMessages="false"
+  />
+</template>`,
+			},
+		],
+	},
+	render: () => ({
+		components: { NirField },
+		setup() {
+			const value1 = ref('184027512345674')
+			const value2 = ref('184027512345674')
+
+			return { value1, value2 }
+		},
+		template: `
+      <div>
+        <div>
+          <div>
+            <p class="text-subtitle-2 mb-2">Avec messages de succès</p>
+            <NirField
+              v-model="value1"
+              label="NIR avec messages de succès"
+              required
+              showSuccessMessages
+            />
+          </div>
+
+          <div>
+            <p class="text-subtitle-2 mb-2">Sans messages de succès</p>
+            <NirField
+              v-model="value2"
+              label="NIR sans messages de succès"
+              required
+              :showSuccessMessages="false"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4 text-body-2">
+          <p>Observations :</p>
+          <ul>
+            <li>Les deux champs ont la même valeur valide</li>
+            <li>Le premier champ affiche un message de succès et un indicateur visuel vert au blur</li>
+            <li>Le second champ n'affiche pas de message de succès, au blur</li>
+            <li>Essayez de modifier les valeurs pour voir le comportement avec des données invalides puis valides</li>
+          </ul>
+        </div>
+      </div>
+    `,
+	}),
+}
+
 export const CustomRules: Story = {
 	args: {
 		...Default.args,
@@ -952,5 +1036,86 @@ const onSubmit = async () => {
 				</v-btn>
 			</form>
 		`,
+	}),
+}
+
+export const DisableErrorHandling: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Désactivation de la gestion des erreurs
+
+Cette story illustre l'utilisation de la propriété \`disableErrorHandling\` qui permet de désactiver complètement
+la gestion et l'affichage des erreurs dans un champ, même si des règles de validation sont définies.
+
+Cela peut être utile dans des cas particuliers où vous souhaitez définir des règles de validation
+mais gérer leur affichage différemment, ou utiliser la validation uniquement au niveau du formulaire parent.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <!-- Champ avec validation normale -->
+  <NirField
+    v-model="value"
+    label="NIR avec validation"
+    required
+  />
+  
+  <!-- Champ avec gestion d'erreurs désactivée -->
+  <NirField
+    v-model="value"
+    label="NIR sans gestion d'erreurs"
+    required
+    disableErrorHandling
+  />
+</template>`,
+			},
+		],
+	},
+	render: () => ({
+		components: { NirField },
+		setup() {
+			const value1 = ref('')
+			const value2 = ref('')
+
+			return { value1, value2 }
+		},
+		template: `
+      <div>
+        <div>
+          <div>
+            <p class="text-subtitle-2 mb-2">Validation normale</p>
+            <NirField
+              v-model="value1"
+              label="NIR avec validation"
+              required
+            />
+          </div>
+          
+          <div>
+            <p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
+            <NirField
+              v-model="value2"
+              label="NIR sans gestion d'erreurs"
+              required
+              disableErrorHandling
+            />
+          </div>
+        </div>
+        
+        <div class="mt-4 text-body-2">
+          <p>Instructions :</p>
+          <ol>
+            <li class="ml-4">Cliquez dans un champ puis en dehors pour déclencher la validation</li>
+            <li class="ml-4">Essayez de saisir des valeurs invalides (moins de 13 chiffres)</li>
+            <li class="ml-4">Notez que le premier champ affiche des erreurs, mais pas le second</li>
+          </ol>
+        </div>
+      </div>
+    `,
 	}),
 }

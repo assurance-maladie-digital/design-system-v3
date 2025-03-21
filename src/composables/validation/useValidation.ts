@@ -12,6 +12,7 @@ export interface ValidationOptions {
 	customRules?: ValidationRule[]
 	warningRules?: ValidationRule[]
 	successRules?: ValidationRule[]
+	disableErrorHandling?: boolean
 }
 
 export interface ValidationState {
@@ -58,6 +59,20 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		successRules: ValidationRule[] = [],
 	): ValidationResult => {
 		clearValidation()
+
+		// Si la gestion des erreurs est désactivée, on retourne un résultat sans erreurs
+		if (options.disableErrorHandling) {
+			return {
+				hasError: false,
+				hasWarning: false,
+				hasSuccess: false,
+				state: {
+					errors: [],
+					warnings: [],
+					successes: [],
+				},
+			}
+		}
 
 		// Validation des règles normales
 		const normalRules = rules.map(rule => ({

@@ -40,6 +40,7 @@
 		hint?: string
 		persistentHint?: boolean
 		persistentPlaceholder?: boolean
+		disableErrorHandling?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: undefined,
@@ -72,6 +73,7 @@
 		hint: undefined,
 		persistentHint: false,
 		persistentPlaceholder: false,
+		disableErrorHandling: false,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -153,11 +155,13 @@
 	const numberValidation = useValidation({
 		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.numberLabel,
+		disableErrorHandling: props.disableErrorHandling,
 	})
 
 	const keyValidation = useValidation({
 		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.keyLabel,
+		disableErrorHandling: props.disableErrorHandling,
 	})
 
 	// Règles de validation
@@ -406,7 +410,7 @@
 				:has-warning="hasNumberWarning"
 				:has-success="hasNumberSuccess"
 				:error="hasNumberErrors"
-				:messages="hasNumberErrors ? numberValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess ? numberValidation.successes.value : []))"
+				:messages="hasNumberErrors ? numberValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess && props.showSuccessMessages ? numberValidation.successes.value : []))"
 				:has-error="hasNumberErrors"
 				:required="required"
 				:is-disabled="isDisabled"
@@ -449,7 +453,7 @@
 				:has-warning="hasKeyWarning"
 				:has-success="hasKeySuccess"
 				:hint="props.hint || locales.keyHint"
-				:messages="hasKeyErrors ? keyValidation.errors.value : (hasKeyWarning ? keyValidation.warnings.value : (hasKeySuccess ? keyValidation.successes.value : []))"
+				:messages="hasKeyErrors ? keyValidation.errors.value : (hasKeyWarning ? keyValidation.warnings.value : (hasKeySuccess && props.showSuccessMessages ? keyValidation.successes.value : []))"
 				:has-error="hasKeyErrors"
 				:is-disabled="isDisabled"
 				:bg-color="bgColor"
