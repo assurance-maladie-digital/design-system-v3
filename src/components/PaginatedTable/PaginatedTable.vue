@@ -170,7 +170,7 @@
 	</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use '@/assets/tokens';
 
 .vd-data-table,
