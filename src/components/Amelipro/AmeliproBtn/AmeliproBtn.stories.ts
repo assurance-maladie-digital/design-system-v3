@@ -42,7 +42,6 @@ const meta = {
 			description: 'Ajoute une route au bouton',
 		},
 		underline: { description: 'Souligne le texte du bouton/lien.' },
-		uniqueId: { description: 'Ajoute un id au bouton' },
 	},
 	component: AmeliproBtn,
 	title: 'Composants/AmeliproBtn',
@@ -55,7 +54,6 @@ type Story = StoryObj<typeof AmeliproBtn>
 export const Default: Story = {
 	args: {
 		default: 'My Button',
-		uniqueId: 'my-btn-id',
 		textColor: 'ap-blue-darken-1',
 	},
 	parameters: {
