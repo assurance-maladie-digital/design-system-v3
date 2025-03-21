@@ -307,75 +307,75 @@
 @use '@/assets/amelipro/tokens';
 
 .v-btn {
-  letter-spacing: 0.64px;
-  font-weight: tokens.$ap-font-weight-semi-bold;
-  text-indent: unset;
+	letter-spacing: 0.64px;
+	font-weight: tokens.$ap-font-weight-semi-bold;
+	text-indent: unset;
 
-  & :deep(.v-btn__overlay),
-  & :deep(.v-btn__underlay) {
-    display: none !important;
-  }
+	& :deep(.v-btn__overlay),
+	& :deep(.v-btn__underlay) {
+		display: none !important;
+	}
 
-  & :deep(.v-btn__content) {
-    position: relative;
-    padding-left: v-bind(btnContentPaddingLeft) !important;
-    padding-right: v-bind(btnContentPaddingRight) !important;
+	& :deep(.v-btn__content) {
+		position: relative;
+		padding-left: v-bind(btnContentPaddingLeft) !important;
+		padding-right: v-bind(btnContentPaddingRight) !important;
 
-    & .amelipro-btn__icon--left {
-      position: absolute;
-      left: 0;
-    }
+		& .amelipro-btn__icon--left {
+			position: absolute;
+			left: 0;
+		}
 
-    & .amelipro-btn__icon--right {
-      position: absolute;
-      right: 0;
-    }
-  }
+		& .amelipro-btn__icon--right {
+			position: absolute;
+			right: 0;
+		}
+	}
 
-  &.amelipro-btn--style {
-    padding: tokens.$btn-padding-y tokens.$btn-padding-x;
-    border-radius: tokens.$btn-radius;
-  }
+	&.amelipro-btn--style {
+		padding: tokens.$btn-padding-y tokens.$btn-padding-x;
+		border-radius: tokens.$btn-radius;
+	}
 
-  &.v-btn--active::before,
-  &:focus::before,
-  &:hover::before {
-    content: unset !important;
-    opacity: 0 !important;
-  }
+	&.v-btn--active::before,
+	&:focus::before,
+	&:hover::before {
+		content: unset !important;
+		opacity: 0 !important;
+	}
 
-  &:focus {
-    outline: 1px dotted tokens.$ap-grey-darken1;
-  }
+	&:focus {
+		outline: 1px dotted tokens.$ap-grey-darken1;
+	}
 
-  &.v-btn--text {
-    letter-spacing: unset;
-    min-height: unset !important;
-    min-width: unset !important;
-    padding: 0 !important;
-    vertical-align: unset;
-  }
+	&.v-btn--text {
+		letter-spacing: unset;
+		min-height: unset !important;
+		min-width: unset !important;
+		padding: 0 !important;
+		vertical-align: unset;
+	}
 
-  & .amelipro-btn__badge-wrapper__content {
-    position: relative;
-    display: block;
-  }
+	& .amelipro-btn__badge-wrapper__content {
+		position: relative;
+		display: block;
+	}
 
-  & .amelipro-btn__badge {
-    position: absolute;
-    right: -0.6rem;
-    top: -0.9rem;
-    min-width: 1.25rem;
-    min-height: 1.25rem;
-    padding: 0 0.125rem;
-    border-radius: 50%;
-    font-size: tokens.$font-size-xxs;
-    z-index: 1;
+	& .amelipro-btn__badge {
+		position: absolute;
+		right: -0.6rem;
+		top: -0.9rem;
+		min-width: 1.25rem;
+		min-height: 1.25rem;
+		padding: 0 0.125rem;
+		border-radius: 50%;
+		font-size: tokens.$font-size-xxs;
+		z-index: 1;
 
-    & span {
-      display: block;
-      margin-top: 2px;
-    }
-  }
+		& span {
+			display: block;
+			margin-top: 2px;
+		}
+	}
 }
 </style>
