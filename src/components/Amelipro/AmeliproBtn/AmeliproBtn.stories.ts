@@ -53,23 +53,24 @@ export default meta
 type Story = StoryObj<typeof AmeliproBtn>
 
 export const Default: Story = {
-	args: { default: 'My Button' },
+	args: {
+		bordered: true,
+		color: 'ap-white',
+		default: 'My Button',
+		hoverColor: 'ap-blue-lighten-3',
+		textColor: 'ap-blue-darken-1',
+	},
 	parameters: {
-		args: {
-			default: 'My Button',
-			uniqueId: 'my-btn-id',
-		},
-		render: args => ({
+		render: (args) => ({
 			components: { AmeliproBtn },
 			setup() {
 				return { args }
 			},
 			template: `
 				<AmeliproBtn
-					:unique-id="args.id"
 					v-bind="args"
 				>
-					<template #default>{{ args.default }}</template>
+					{{ args.default }}
 				</AmeliproBtn>
 			`,
 		}),
