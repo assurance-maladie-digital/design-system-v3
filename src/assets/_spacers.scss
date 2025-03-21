@@ -1,6 +1,7 @@
 // Define base spacer values
 $base-spacer-cnam: 4px;
 $base-spacer-pa: 4px;
+$base-spacer-ap: 4px;
 
 // Define theme spacers using base values
 $cnam-spacers: (
@@ -71,6 +72,40 @@ $pa-spacers: (
 	60: $base-spacer-pa * 60,
 	64: $base-spacer-pa * 64,
 );
+$ap-spacers: (
+	0: 0px,
+	1: $base-spacer-ap,
+	2: $base-spacer-ap * 2,
+	3: $base-spacer-ap * 3,
+	4: $base-spacer-ap * 4,
+	5: $base-spacer-ap * 5,
+	6: $base-spacer-ap * 6,
+	7: $base-spacer-ap * 7,
+	8: $base-spacer-ap * 8,
+	9: $base-spacer-ap * 9,
+	10: $base-spacer-ap * 10,
+	11: $base-spacer-ap * 11,
+	12: $base-spacer-ap * 12,
+	13: $base-spacer-ap * 13,
+	14: $base-spacer-ap * 14,
+	15: $base-spacer-ap * 15,
+	16: $base-spacer-ap * 16,
+	17: $base-spacer-ap * 17,
+	18: $base-spacer-ap * 18,
+	19: $base-spacer-ap * 19,
+	20: $base-spacer-ap * 20,
+	24: $base-spacer-ap * 24,
+	28: $base-spacer-ap * 28,
+	32: $base-spacer-ap * 32,
+	36: $base-spacer-ap * 36,
+	40: $base-spacer-ap * 40,
+	44: $base-spacer-ap * 44,
+	48: $base-spacer-ap * 48,
+	52: $base-spacer-ap * 52,
+	56: $base-spacer-ap * 56,
+	60: $base-spacer-ap * 60,
+	64: $base-spacer-ap * 64,
+);
 
 // Define CSS variables for spacers dynamically
 :root {
@@ -88,6 +123,12 @@ $pa-spacers: (
 
 .theme-pa {
 	@each $key, $value in $pa-spacers {
+		--spacing-#{$key}: #{$value};
+	}
+}
+
+.theme-ap {
+	@each $key, $value in $ap-spacers {
 		--spacing-#{$key}: #{$value};
 	}
 }
