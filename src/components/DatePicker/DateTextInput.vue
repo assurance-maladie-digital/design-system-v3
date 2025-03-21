@@ -4,6 +4,9 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
+	import { useDateFormat } from '@/composables/date/useDateFormat'
+
+	const { parseDate } = useDateFormat()
 
 	type DateValue = string | null
 
@@ -53,55 +56,6 @@
 	const errorMessages = ref<string[]>([])
 	const warningMessages = ref<string[]>([])
 	const successMessages = ref<string[]>([])
-
-	// Fonction pour parser une date selon le format spécifié
-	const parseDate = (dateStr: string, format: string = props.format): Date | null => {
-		const parts = dateStr.split(/[-/.]/)
-		const formatParts = format.split(/[-/.]/)
-
-		if (parts.length !== formatParts.length) {
-			return null
-		}
-
-		let day = 1, month = 0, year = 1970
-
-		// Mapper les parties selon le format
-		for (let i = 0; i < formatParts.length; i++) {
-			const value = parseInt(parts[i], 10)
-			if (isNaN(value)) {
-				return null
-			}
-
-			switch (formatParts[i].toUpperCase()) {
-			case 'DD':
-				day = value
-				break
-			case 'MM':
-				month = value - 1 // JavaScript months are 0-based
-				break
-			case 'YY':
-				year = value + 2000 // Assuming 20xx for YY format
-				break
-			case 'YYYY':
-				year = value
-				break
-			}
-		}
-
-		// Valider les limites
-		if (month < 0 || month > 11) return null
-		if (day < 1 || day > 31) return null
-		if (year < 1000 || year > 9999) return null // Accepter une plage d'années plus large
-
-		const date = new Date(year, month, day)
-
-		// Vérifier si la date est valide (ex: 31/04 n'existe pas)
-		if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
-			return null
-		}
-
-		return date
-	}
 
 	// Fonction pour formater une date en chaîne selon le format spécifié
 	const formatDateToString = (date: Date, format: string): string => {
@@ -442,7 +396,7 @@
 				// Valider le format si la date est complète
 				const validation = validateDateFormat(formatted)
 				if (validation.isValid) {
-					const date = parseDate(formatted)
+					const date = parseDate(formatted, props.format)
 					if (date) {
 						const formattedDate = props.dateFormatReturn
 							? formatDateToString(date, props.dateFormatReturn)
@@ -476,13 +430,21 @@
 		}
 
 		// Formater la valeur selon le format d'affichage
-		const date = parseDate(newValue, props.dateFormatReturn)
+		const date = parseDate(newValue, props.format)
 		if (date) {
-			const formatted = formatDateToString(date, props.format)
-			inputValue.value = formatted
+			// Si un format de retour est spécifié, l'utiliser pour la valeur émise
+			if (props.dateFormatReturn && props.dateFormatReturn !== props.format) {
+				const formattedForReturn = formatDateToString(date, props.dateFormatReturn)
+				emit('update:model-value', formattedForReturn)
+			}
+
+			// Toujours afficher dans le format d'entrée
+			inputValue.value = formatDateToString(date, props.format)
+			validateRules(inputValue.value)
 		}
 		else {
 			inputValue.value = newValue
+			validateRules(newValue)
 		}
 	})
 
@@ -502,7 +464,7 @@
 		if (inputValue.value) {
 			const validation = validateDateFormat(inputValue.value)
 			if (validation.isValid) {
-				const date = parseDate(inputValue.value)
+				const date = parseDate(inputValue.value, props.format)
 				if (date) {
 					const formattedDate = props.dateFormatReturn
 						? formatDateToString(date, props.dateFormatReturn)
