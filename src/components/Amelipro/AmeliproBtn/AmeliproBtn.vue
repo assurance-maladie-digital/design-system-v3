@@ -245,7 +245,7 @@
 				class="amelipro-btn__badge__wrapper"
 				:class="iconClasses"
 			>
-				<span class="amelipro-btn__badge__wrapper__content">
+				<span class="amelipro-btn__badge-wrapper-content">
 					<span
 						class="amelipro-btn__badge"
 						:style="badgeStyle"
@@ -334,7 +334,8 @@
 
 	&.amelipro-btn--style {
 		padding: tokens.$btn-padding-y tokens.$btn-padding-x;
-		border-radius: tokens.$btn-radius;
+
+		// border-radius: tokens.$btn-radius-ap;
 	}
 
 	&.v-btn--active::before,
@@ -356,7 +357,7 @@
 		vertical-align: unset;
 	}
 
-	& .amelipro-btn__badge-wrapper__content {
+	& .amelipro-btn__badge-wrapper-content {
 		position: relative;
 		display: block;
 	}
