@@ -2,6 +2,7 @@
 @use 'spacers';
 @use 'radius';
 @use '@/assets/tokens';
+@use '@/assets/amelipro/tokens';
 
 .v-btn {
 	text-transform: inherit !important;
@@ -17,6 +18,7 @@
 .theme-ap {
 	.v-btn {
 		text-transform: uppercase !important;
+		background-color: tokens.$ap-blue-darken1;
 	}
 }
 
