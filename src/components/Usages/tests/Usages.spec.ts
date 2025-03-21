@@ -2,7 +2,6 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
 import Usages from '../Usages.vue'
-import { checkIcon, croixIcon } from '@/constants/icons'
 
 describe('Usages.vue', () => {
 	it('renders the component with default props', () => {
