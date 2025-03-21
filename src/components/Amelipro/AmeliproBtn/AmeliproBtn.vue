@@ -339,7 +339,7 @@
 		vertical-align: unset;
 	}
 
-	& .amelipro-btn__badge-wrapper__conten {
+	& .amelipro-btn__badge-wrapper__content {
 		position: relative;
 		display: block;
 	}
