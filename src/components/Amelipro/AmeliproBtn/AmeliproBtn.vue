@@ -230,6 +230,7 @@
 		:type="type"
 		:variant="variant"
 		v-bind="$attrs"
+		class="amelipro-btn"
 		@blur="focus = false"
 		@focus="focus = true"
 		@mouseenter="hover = true;"
