@@ -3,8 +3,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from './DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
-	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
-	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
+	import { useValidation } from '@/composables/validation/useValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormat'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitialization'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
@@ -25,14 +24,18 @@
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
 		displayPrependIcon?: boolean
-		customRules?: { type: string, options: RuleOptions }[]
-		customWarningRules?: { type: string, options: RuleOptions }[]
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+		customRules?: { type: string, options: any }[]
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+		customWarningRules?: { type: string, options: any }[]
 		isDisabled?: boolean
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
 		isReadOnly?: boolean
 		width?: string
+		disableErrorHandling?: boolean
+		showSuccessMessages?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -53,6 +56,8 @@
 		isOutlined: true,
 		isReadOnly: false,
 		width: '100%',
+		disableErrorHandling: false,
+		showSuccessMessages: true,
 	})
 
 	const emit = defineEmits<{
@@ -67,9 +72,18 @@
 	)
 
 	const isDatePickerVisible = ref(false)
-	const errorMessages = ref<string[]>([])
-	const successMessages = ref<string[]>([])
-	const warningMessages = ref<string[]>([])
+	const validation = useValidation({
+		showSuccessMessages: props.showSuccessMessages,
+		fieldIdentifier: 'Date',
+		customRules: props.customRules,
+		warningRules: props.customWarningRules,
+		disableErrorHandling: props.disableErrorHandling,
+	})
+	const { errors, warnings, successes, validateField, clearValidation } = validation
+
+	const errorMessages = errors
+	const warningMessages = warnings
+	const successMessages = successes
 	const displayFormattedDate = ref('')
 
 	const textInputValue = ref<string>('')
@@ -77,31 +91,25 @@
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
 
-	// Déclaration des règles de validation
-	type Rule = { type: string, options: RuleOptions }
-	const customRules = ref<Rule[]>(props.customRules || [])
-	const customWarningRules = ref<Rule[]>(props.customWarningRules || [])
-
-	const { generateRules } = useFieldValidation()
-	const validationRules = generateRules(customRules.value)
-	const warningValidationRules = generateRules(customWarningRules.value)
-
 	// Déclaration de la fonction validateDates avant son utilisation
 	const validateDates = (forceValidation = false) => {
-		// Réinitialiser tous les messages
-		errorMessages.value = []
-		successMessages.value = []
-		warningMessages.value = []
-
 		if (props.noCalendar) {
 			// En mode no-calendar, on délègue la validation au DateTextInput
 			return
 		}
 
+		// Réinitialiser la validation
+		clearValidation()
+
+		// Si la gestion des erreurs est désactivée, on effectue la validation interne
+		// mais on n'ajoute pas les messages d'erreur
+		const shouldDisplayErrors = !props.disableErrorHandling
+
 		// Vérifier si le champ est requis et vide
-		// Si forceValidation est true, on ignore les conditions de validation interactive
 		if ((forceValidation || !isUpdatingFromInternal.value) && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
-			errorMessages.value.push('La date est requise.')
+			if (shouldDisplayErrors) {
+				errors.value.push('La date est requise.')
+			}
 			return
 		}
 
@@ -112,32 +120,21 @@
 			? selectedDates.value
 			: [selectedDates.value]
 
-		// Collecter tous les messages
-		const allErrors: string[] = []
-		const allWarnings: string[] = []
-		const allSuccess: string[] = []
-
-		// Appliquer les règles de validation
-		datesToValidate.forEach((date) => {
-			// Appliquer d'abord les règles de validation standard
-			validationRules.forEach((rule) => {
-				const result = rule(date)
-				if (result?.error) allErrors.push(result.error)
-				else if (result?.success) allSuccess.push(result.success)
+		// Valider chaque date
+		if (shouldDisplayErrors) {
+			datesToValidate.forEach((date) => {
+				validateField(
+					date,
+					props.customRules,
+					props.customWarningRules,
+				)
 			})
 
-			// Ensuite appliquer les règles d'avertissement
-			warningValidationRules.forEach((rule) => {
-				const result = rule(date)
-				if (result?.warning) allWarnings.push(result.warning)
-				else if (result?.success && !allErrors.length) allSuccess.push(result.success)
-			})
-		})
-
-		// Dédoublonner et assigner les messages
-		errorMessages.value = [...new Set(allErrors)]
-		warningMessages.value = [...new Set(allWarnings)]
-		successMessages.value = [...new Set(allSuccess)]
+			// Dédoublonner les messages (au cas où plusieurs dates auraient les mêmes messages)
+			errors.value = [...new Set(errors.value)]
+			warnings.value = [...new Set(warnings.value)]
+			successes.value = [...new Set(successes.value)]
+		}
 	}
 
 	// Fonction centralisée pour mettre à jour le modèle
@@ -190,18 +187,6 @@
 			updateModel(null)
 			// Réinitialiser textInputValue
 			textInputValue.value = ''
-		}
-
-		// Gérer la visibilité du date picker
-		if (props.displayRange) {
-			if (Array.isArray(newValue) && newValue.length >= 2) {
-				isDatePickerVisible.value = false
-				emit('closed')
-			}
-		}
-		else {
-			isDatePickerVisible.value = false
-			emit('closed')
 		}
 	})
 
@@ -398,18 +383,9 @@
 		}
 		// Forcer la validation pour ignorer les conditions de validation interactive
 		validateDates(true)
-		return errorMessages.value.length === 0
+		// Retourner directement un booléen pour maintenir la compatibilité avec les tests existants
+		return errors.value.length === 0
 	}
-
-	defineExpose({
-		validateOnSubmit,
-		isDatePickerVisible,
-		selectedDates,
-		errorMessages,
-		handleClickOutside,
-		initializeSelectedDates,
-		updateAccessibility,
-	})
 
 	const showDatePicker = () => {
 		if (props.isDisabled || props.isReadOnly) return
@@ -422,11 +398,7 @@
 		})
 	}
 
-	const handlePrependIconClick = () => {
-		showDatePicker()
-	}
-
-	const handleAppendIconClick = () => {
+	const openDatePicker = () => {
 		showDatePicker()
 	}
 
@@ -456,8 +428,15 @@
 		}
 	}
 
+	watch(isDatePickerVisible, (isVisible) => {
+		if (!isVisible && props.isBirthDate) {
+			// Réinitialiser le mode d'affichage au type birthdate
+			currentViewMode.value = 'year'
+		}
+	})
+
 	const getIcon = () => {
-		if (props.noCalendar) {
+		if (props.noCalendar || props.disableErrorHandling) {
 			return
 		}
 		switch (true) {
@@ -496,7 +475,19 @@
 	}
 
 	watch(() => props.modelValue, (newValue) => {
-		if (isUpdatingFromInternal.value) return
+		if (isUpdatingFromInternal.value) {
+			if (props.displayRange) {
+				if (Array.isArray(newValue) && newValue.length >= 2) {
+					isDatePickerVisible.value = false
+					emit('closed')
+				}
+			}
+			else {
+				isDatePickerVisible.value = false
+				emit('closed')
+			}
+			return
+		}
 
 		try {
 			isUpdatingFromInternal.value = true
@@ -509,6 +500,16 @@
 		}
 	}, { immediate: true })
 
+	defineExpose({
+		validateOnSubmit,
+		isDatePickerVisible,
+		selectedDates,
+		errorMessages,
+		handleClickOutside,
+		initializeSelectedDates,
+		updateAccessibility,
+		openDatePicker,
+	})
 </script>
 
 <template>
@@ -535,6 +536,8 @@
 				:display-append-icon="props.displayAppendIcon"
 				:display-prepend-icon="props.displayPrependIcon"
 				:no-icon="props.noIcon"
+				:disable-error-handling="props.disableErrorHandling"
+				:show-success-messages="props.showSuccessMessages"
 				title="Date text input"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -548,7 +551,7 @@
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:error-messages="errorMessages"
 				:warning-messages="warningMessages"
-				:success-messages="successMessages"
+				:success-messages="props.showSuccessMessages ? successMessages : []"
 				:is-disabled="props.isDisabled"
 				:is-read-only="true"
 				:label="props.placeholder"
@@ -558,10 +561,10 @@
 				color="primary"
 				is-clearable
 				title="Date Picker"
-				@focus="isDatePickerVisible = true"
+				@focus="openDatePicker"
 				@update:model-value="updateSelectedDates"
-				@prepend-icon-click="handlePrependIconClick"
-				@append-icon-click="handleAppendIconClick"
+				@prepend-icon-click="openDatePicker"
+				@append-icon-click="openDatePicker"
 			/>
 		</template>
 		<div>
