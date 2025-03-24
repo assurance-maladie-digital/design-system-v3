@@ -5,9 +5,13 @@
 	import { VDatePicker } from 'vuetify/components'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import type { RuleOptions } from '@/composables/rules/useFieldValidation'
+	import { useDateFormat } from '@/composables/date/useDateFormat'
+	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitialization'
+	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 
-	type DateValue = string | [string, string] | null
-	type DateInput = string | string[] | null | object
+	const { parseDate, formatDate } = useDateFormat()
+	const { initializeSelectedDates } = useDateInitialization()
+	const { updateAccessibility } = useDatePickerAccessibility()
 
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
@@ -58,114 +62,8 @@
 		(e: 'blur'): void
 	}>()
 
-	// Fonction pour parser les dates selon le format spécifié
-	const parseDate = (dateString: string, format: string = props.format): Date | null => {
-		if (!dateString) return null
-
-		// Créer un mapping des positions des éléments de date selon le format
-		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
-		const parts = format.split(separator)
-		const dateParts = dateString.split(separator)
-
-		if (parts.length !== dateParts.length) return null
-
-		let day = 0, month = 0, year = 0
-
-		// Extraire les valeurs selon leur position dans le format
-		parts.forEach((part, index) => {
-			const value = parseInt(dateParts[index], 10)
-			if (isNaN(value)) return
-
-			if (part.includes('DD') || part.includes('D')) day = value
-			else if (part.includes('MM') || part.includes('M')) month = value - 1 // Les mois en JS sont 0-indexés
-			else if (part.includes('YYYY')) year = value
-			else if (part.includes('YY')) {
-				// Gestion intelligente des années à 2 chiffres
-				// Si l'année est < 50, on considère qu'elle est dans le 21ème siècle
-				// Sinon, elle est dans le 20ème siècle
-				year = value < 50 ? 2000 + value : 1900 + value
-			}
-		})
-
-		// Vérifier que nous avons toutes les parties nécessaires et qu'elles sont dans des plages valides
-		if (day < 1 || day > 31 || month < 0 || month > 11 || year < 1000 || year > 9999) return null
-
-		// Créer la date à midi (12:00) pour éviter les problèmes de décalage de fuseau horaire
-		// Cela garantit que la date reste la même lors de la conversion en UTC
-		const date = new Date(year, month, day, 12, 0, 0)
-
-		// Vérifier que la date est valide (par exemple, 31 février n'existe pas)
-		if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) return null
-
-		return date
-	}
-
-	function initializeSelectedDates(
-		modelValue: DateInput | null,
-	): Date | Date[] | null {
-		if (!modelValue) return null
-
-		// Déterminer le format à utiliser pour l'analyse
-		const parseFormat = props.dateFormatReturn || props.format
-
-		if (Array.isArray(modelValue)) {
-			if (modelValue.length >= 2) {
-				// Essayer d'abord avec le format de retour, puis avec le format d'affichage
-				let dates = [parseDate(modelValue[0], parseFormat), parseDate(modelValue[1], parseFormat)]
-
-				// Si l'une des dates est invalide avec le format de retour, essayer avec le format d'affichage
-				if (dates.some(date => date === null) && props.dateFormatReturn) {
-					dates = [parseDate(modelValue[0], props.format), parseDate(modelValue[1], props.format)]
-				}
-
-				// Vérifie si l'une des dates est toujours invalide
-				if (dates.some(date => date === null)) {
-					return []
-				}
-
-				// Vérifie si la première date est après la seconde
-				if (dates[0] && dates[1] && dates[0] > dates[1]) {
-					return []
-				}
-
-				// Filtrer les dates nulles et convertir en tableau de Date
-				return dates.filter((date): date is Date => date !== null)
-			}
-
-			if (modelValue.length === 1) {
-				// Essayer d'abord avec le format de retour, puis avec le format d'affichage
-				let date = parseDate(modelValue[0], parseFormat)
-
-				// Si la date est invalide avec le format de retour, essayer avec le format d'affichage
-				if (date === null && props.dateFormatReturn) {
-					date = parseDate(modelValue[0], props.format)
-				}
-
-				return date === null ? [] : [date]
-			}
-
-			return []
-		}
-
-		// Si modelValue est un objet, on le convertit en chaîne
-		if (typeof modelValue === 'object') {
-			return null
-		}
-
-		// Essayer d'abord avec le format de retour, puis avec le format d'affichage
-		let date = parseDate(modelValue, parseFormat)
-
-		// Si la date est invalide avec le format de retour, essayer avec le format d'affichage
-		if (date === null && props.dateFormatReturn) {
-			date = parseDate(modelValue, props.format)
-		}
-
-		return date === null ? null : date
-	}
-
-	// Utilisation de la fonction pour initialiser `selectedDates`
 	const selectedDates = ref<Date | Date[] | null>(
-		initializeSelectedDates(props.modelValue as DateInput | null),
+		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
 
 	const isDatePickerVisible = ref(false)
@@ -318,32 +216,6 @@
 		'min-width': '100%',
 	}))
 
-	// Formate une date unique au format spécifié
-	const formatDate = (date: Date, format: string): string => {
-		if (!date) return ''
-
-		// Formats de base
-		const day = date.getDate().toString().padStart(2, '0')
-		const month = (date.getMonth() + 1).toString().padStart(2, '0')
-		const year = date.getFullYear().toString()
-		const shortYear = year.slice(-2)
-
-		// Formats sans padding
-		const dayNoPad = date.getDate().toString()
-		const monthNoPad = (date.getMonth() + 1).toString()
-
-		// Remplacer les tokens dans l'ordre correct (du plus spécifique au moins spécifique)
-		let result = format
-			.replace(/YYYY/g, year)
-			.replace(/YY/g, shortYear)
-			.replace(/MM/g, month)
-			.replace(/M/g, monthNoPad)
-			.replace(/DD/g, day)
-			.replace(/D/g, dayNoPad)
-
-		return result
-	}
-
 	// Date(s) formatée(s) en chaîne de caractères pour la valeur de retour
 	const formattedDate = computed<DateValue>(() => {
 		if (!selectedDates.value) return ''
@@ -455,16 +327,6 @@
 		return formatDate(selectedDates.value, props.format)
 	})
 
-	// const validateDateValue = (value: DateValue): DateValue => {
-	// 	if (Array.isArray(value)) {
-	// 		if (value.length >= 2) {
-	// 			return [value[0], value[1]] as [string, string]
-	// 		}
-	// 		return value[0] || ''
-	// 	}
-	// 	return value
-	// }
-
 	watch(displayFormattedDateComputed, (newValue) => {
 		if (!props.noCalendar && newValue) {
 			displayFormattedDate.value = newValue
@@ -474,7 +336,7 @@
 	const updateSelectedDates = (input: DateValue) => {
 		if (Array.isArray(input)) {
 			const dates = input
-				.map(date => (date ? parseDate(date) : null))
+				.map(date => (date ? parseDate(date, props.format) : null))
 				.filter((date): date is Date => date !== null)
 
 			if (dates.length === 0) {
@@ -486,7 +348,7 @@
 			return
 		}
 
-		const date = input ? parseDate(input) : null
+		const date = input ? parseDate(input, props.format) : null
 		selectedDates.value = date === null ? null : date
 	}
 
@@ -511,40 +373,6 @@
 			day: 'numeric',
 		})).replace(/\b\w/g, l => l.toUpperCase())
 	})
-
-	// Watcher pour le modelValue pour synchroniser les dates sélectionnées
-	watch(() => props.modelValue, (newValue) => {
-		// Éviter les mises à jour récursives
-		if (isUpdatingFromInternal.value) return
-
-		try {
-			isUpdatingFromInternal.value = true
-
-			if (!newValue || newValue === '') {
-				// Réinitialiser les valeurs
-				selectedDates.value = null
-				textInputValue.value = ''
-				displayFormattedDate.value = ''
-			}
-			else {
-				// Initialiser les dates sélectionnées
-				selectedDates.value = initializeSelectedDates(newValue)
-
-				// Mettre à jour l'affichage
-				if (selectedDates.value) {
-					displayFormattedDate.value = displayFormattedDateComputed.value || ''
-				}
-			}
-
-			// Valider les dates
-			validateDates()
-		}
-		finally {
-			setTimeout(() => {
-				isUpdatingFromInternal.value = false
-			}, 0)
-		}
-	}, { immediate: true })
 
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
@@ -580,83 +408,53 @@
 		errorMessages,
 		handleClickOutside,
 		initializeSelectedDates,
+		updateAccessibility,
 	})
 
-	// Fonction pour améliorer l'accessibilité du DatePicker
-	const updateAccessibility = async () => {
-		await nextTick()
+	const showDatePicker = () => {
+		if (props.isDisabled || props.isReadOnly) return
 
-		// Utiliser des attributs data pour sélectionner les éléments, ce qui est plus stable que les classes CSS
-		const datePickerEl = document.querySelector('.v-date-picker')
-		if (!datePickerEl) return
+		isDatePickerVisible.value = true
 
-		// Ajouter un attribut role="application" au conteneur principal
-		datePickerEl.setAttribute('role', 'application')
-		datePickerEl.setAttribute('aria-label', 'Sélecteur de date')
-
-		// Sélectionner tous les boutons de navigation
-		const navigationButtons = datePickerEl.querySelectorAll('button')
-
-		// Attribuer des labels significatifs basés sur la position ou l'icône
-		navigationButtons.forEach((button) => {
-			const iconEl = button.querySelector('.v-icon')
-			if (!iconEl) return
-
-			// Utiliser le contenu de l'icône pour déterminer sa fonction
-			const iconContent = iconEl.textContent || ''
-			const iconClasses = iconEl.className || ''
-
-			if (iconClasses.includes('mdi-chevron-left') || iconContent.includes('chevron-left')) {
-				button.setAttribute('aria-label', 'Mois précédent')
-			}
-			else if (iconClasses.includes('mdi-chevron-right') || iconContent.includes('chevron-right')) {
-				button.setAttribute('aria-label', 'Mois suivant')
-			}
-			else if (iconClasses.includes('mdi-chevron-down') || iconContent.includes('chevron-down')
-				|| iconClasses.includes('mdi-menu-down') || iconContent.includes('menu-down')) {
-				button.setAttribute('aria-label', 'Changer de vue')
-			}
+		// Mettre à jour l'accessibilité après l'ouverture du DatePicker
+		nextTick(() => {
+			updateAccessibility()
 		})
-
-		// Ajouter des instructions pour les lecteurs d'écran
-		let srOnlyEl = datePickerEl.querySelector('.sr-only-instructions')
-		if (!srOnlyEl) {
-			srOnlyEl = document.createElement('span')
-			srOnlyEl.className = 'sr-only-instructions'
-			srOnlyEl.setAttribute('aria-live', 'polite')
-			// Utiliser HTMLElement pour accéder aux propriétés de style
-			const srOnlyHtmlEl = srOnlyEl as HTMLElement
-			srOnlyHtmlEl.style.position = 'absolute'
-			srOnlyHtmlEl.style.width = '1px'
-			srOnlyHtmlEl.style.height = '1px'
-			srOnlyHtmlEl.style.padding = '0'
-			srOnlyHtmlEl.style.margin = '-1px'
-			srOnlyHtmlEl.style.overflow = 'hidden'
-			srOnlyHtmlEl.style.clip = 'rect(0, 0, 0, 0)'
-			srOnlyHtmlEl.style.whiteSpace = 'nowrap'
-			srOnlyHtmlEl.style.border = '0'
-			srOnlyEl.textContent = 'Utilisez les flèches pour naviguer entre les dates et Entrée pour sélectionner une date'
-
-			datePickerEl.prepend(srOnlyEl)
-		}
 	}
 
-	// Appliquer les améliorations d'accessibilité quand le DatePicker devient visible
-	watch(isDatePickerVisible, async (newValue) => {
-		if (newValue) {
-			await updateAccessibility()
-		}
-	})
-
 	const handlePrependIconClick = () => {
-		isDatePickerVisible.value = true
+		showDatePicker()
 	}
 
 	const handleAppendIconClick = () => {
-		isDatePickerVisible.value = true
+		showDatePicker()
 	}
 
-	// Fonctions et constantes déjà déclarées plus haut dans le code
+	type ViewMode = 'month' | 'year' | 'months' | undefined
+
+	// Variable pour suivre le mode d'affichage actuel du DatePicker
+	const currentViewMode = ref<ViewMode>(props.isBirthDate ? 'year' : 'month')
+
+	// Fonction pour gérer le changement de mode d'affichage
+	const handleViewModeUpdate = (newMode: ViewMode) => {
+		currentViewMode.value = newMode
+	}
+
+	// Fonction pour gérer la sélection de l'année quand isBirthDate est true
+	const handleYearUpdate = () => {
+		if (props.isBirthDate) {
+			// Après la sélection de l'année, passer automatiquement à la sélection du mois
+			currentViewMode.value = 'months'
+		}
+	}
+
+	// Fonction pour gérer la sélection du mois quand isBirthDate est true
+	const handleMonthUpdate = () => {
+		if (props.isBirthDate) {
+			// Après la sélection du mois, passer automatiquement à la sélection du jour
+			currentViewMode.value = undefined
+		}
+	}
 
 	const getIcon = () => {
 		if (props.noCalendar) {
@@ -674,40 +472,35 @@
 		}
 	}
 
-	// Watch sur modelValue pour gérer les changements externes
+	const syncFromModelValue = (newValue: DateInput | undefined) => {
+		if (!newValue || newValue === '') {
+			selectedDates.value = null
+			textInputValue.value = ''
+			displayFormattedDate.value = ''
+			validateDates()
+			return
+		}
+
+		selectedDates.value = initializeSelectedDates(newValue, props.format, props.dateFormatReturn)
+
+		if (selectedDates.value) {
+			const firstDate = Array.isArray(selectedDates.value)
+				? selectedDates.value[0]
+				: selectedDates.value
+
+			textInputValue.value = formatDate(firstDate, props.format)
+			displayFormattedDate.value = displayFormattedDateComputed.value || ''
+		}
+
+		validateDates()
+	}
+
 	watch(() => props.modelValue, (newValue) => {
-		// Éviter les mises à jour récursives
 		if (isUpdatingFromInternal.value) return
 
 		try {
 			isUpdatingFromInternal.value = true
-
-			if (!newValue || newValue === '') {
-				selectedDates.value = null
-				textInputValue.value = ''
-				displayFormattedDate.value = ''
-			}
-			else {
-				// Initialiser les dates sélectionnées
-				selectedDates.value = initializeSelectedDates(newValue)
-
-				// Mettre à jour l'affichage et le textInputValue
-				if (selectedDates.value) {
-					if (Array.isArray(selectedDates.value)) {
-						if (selectedDates.value.length > 0) {
-							textInputValue.value = formatDate(selectedDates.value[0], props.format)
-							displayFormattedDate.value = displayFormattedDateComputed.value || ''
-						}
-					}
-					else {
-						textInputValue.value = formatDate(selectedDates.value, props.format)
-						displayFormattedDate.value = displayFormattedDateComputed.value || ''
-					}
-				}
-			}
-
-			// Valider les dates
-			validateDates()
+			syncFromModelValue(newValue)
 		}
 		finally {
 			setTimeout(() => {
@@ -715,6 +508,7 @@
 			}, 0)
 		}
 	}, { immediate: true })
+
 </script>
 
 <template>
@@ -787,12 +581,15 @@
 					<VDatePicker
 						v-if="isDatePickerVisible && !props.noCalendar"
 						v-model="selectedDates"
+						color="primary"
 						:first-day-of-week="1"
 						:multiple="props.displayRange ? 'range' : false"
 						:show-adjacent-months="true"
 						:show-week="props.showWeekNumber"
-						:view-mode="props.isBirthDate ? 'year' : 'month'"
-						color="primary"
+						:view-mode="currentViewMode"
+						@update:view-mode="handleViewModeUpdate"
+						@update:year="handleYearUpdate"
+						@update:month="handleMonthUpdate"
 					>
 						<template #title>
 							Sélectionnez une date

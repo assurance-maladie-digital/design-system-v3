@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
 import DateTextInput from '../DateTextInput.vue'
 import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
@@ -176,7 +176,7 @@ describe('DateTextInput.vue', () => {
 
 		// Puis on la supprime
 		await input.setValue('')
-		await input.trigger('input') // Déclencher l'événement input
+		await input.trigger('input') // Déclencher l'événement inpu
 		await input.trigger('blur') // Et le blur pour la validation
 		await wrapper.vm.$nextTick()
 
@@ -278,5 +278,174 @@ describe('DateTextInput.vue', () => {
 		await wrapper.vm.$nextTick()
 
 		expect(input.element.value).toBe('01/01/2025')
+	})
+
+	it('handles keydown events correctly', async () => {
+		const input = wrapper.find('input')
+		await input.trigger('keydown', {
+			key: 'Tab',
+		})
+		// Vérifier que le composant n'empêche pas la navigation par tab
+		expect(wrapper.emitted('update:model-value')).toBeFalsy()
+
+		// Tester le comportement avec Ctrl+V (coller)
+		await input.trigger('keydown', {
+			key: 'v',
+			ctrlKey: true,
+		})
+		// Le comportement par défaut devrait être préservé
+		expect(wrapper.emitted('update:model-value')).toBeFalsy()
+	})
+
+	it('validates on submit correctly', async () => {
+		const input = wrapper.find('input')
+
+		// Cas 1: Champ vide avec required=true
+		expect(wrapper.vm.validateOnSubmit()).toBe(false)
+
+		// Cas 2: Date valide
+		await input.setValue('01/01/2025')
+		await input.trigger('blur')
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.vm.validateOnSubmit()).toBe(true)
+	})
+
+	it('handles focus and blur methods correctly', async () => {
+		// Simuler un querySelector global
+		const originalQuerySelector = document.querySelector
+		const mockInput = { focus: vi.fn(), blur: vi.fn() }
+
+		// Remplacer document.querySelector
+		document.querySelector = vi.fn().mockReturnValue(mockInput)
+
+		// Appeler les méthodes exposées
+		wrapper.vm.focus()
+		wrapper.vm.blur()
+
+		// Vérifier que les méthodes ont été appelées
+		expect(mockInput.focus).toHaveBeenCalled()
+		expect(mockInput.blur).toHaveBeenCalled()
+
+		// Restaurer document.querySelector
+		document.querySelector = originalQuerySelector
+	})
+
+	it('initializes with model value correctly', async () => {
+		const customWrapper = mount(DateTextInput, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '01/01/2025',
+				format: 'DD/MM/YYYY',
+			},
+		})
+
+		await customWrapper.vm.$nextTick()
+		const input = customWrapper.find('input')
+		expect(input.element.value).toBe('01/01/2025')
+	})
+
+	it('handles different date separators correctly', async () => {
+		const customWrapper = mount(DateTextInput, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: null,
+				format: 'DD.MM.YYYY',
+			},
+		})
+
+		const input = customWrapper.find('input')
+		await input.setValue('01.01.2025')
+		await input.trigger('blur')
+		await customWrapper.vm.$nextTick()
+
+		expect(customWrapper.emitted('update:model-value')?.[0]).toEqual(['01.01.2025'])
+	})
+
+	it('handles partial date input correctly', async () => {
+		const input = wrapper.find('input')
+
+		// Saisir seulement le jour
+		await input.setValue('01')
+		await wrapper.vm.$nextTick()
+		expect(input.element.value).toBe('01/__/____')
+
+		// Ajouter le mois
+		await input.setValue('01/02')
+		await wrapper.vm.$nextTick()
+		expect(input.element.value).toBe('01/02/____')
+
+		// Compléter la date
+		await input.setValue('01/02/2025')
+		await wrapper.vm.$nextTick()
+		expect(input.element.value).toBe('01/02/2025')
+	})
+
+	it('handles success messages correctly', async () => {
+		const customWrapper = mount(DateTextInput, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '01/01/2025',
+				format: 'DD/MM/YYYY',
+				customRules: [{
+					type: 'custom',
+					options: {
+						validate: () => true,
+						message: 'Date valide',
+						fieldIdentifier: 'date',
+						isSuccess: true,
+					},
+				}],
+			},
+		})
+
+		await customWrapper.vm.$nextTick()
+		const textField = customWrapper.findComponent(SyTextField)
+		expect(textField.props('successMessages')).toContain('Date valide')
+	})
+
+	it('handles multiple validation rules correctly', async () => {
+		const customWrapper = mount(DateTextInput, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: null,
+				format: 'DD/MM/YYYY',
+				required: true,
+				customRules: [
+					{
+						type: 'custom',
+						options: {
+							validate: (value: string) => value.includes('2025'),
+							message: 'La date doit être en 2025',
+							fieldIdentifier: 'date',
+						},
+					},
+					{
+						type: 'custom',
+						options: {
+							validate: (value: string) => value.includes('01/'),
+							message: 'Le mois doit être janvier',
+							fieldIdentifier: 'date',
+						},
+					},
+				],
+			},
+		})
+
+		const input = customWrapper.find('input')
+		await input.setValue('15/02/2025')
+		await input.trigger('blur')
+		await customWrapper.vm.$nextTick()
+
+		const textField = customWrapper.findComponent(SyTextField)
+		expect(textField.props('errorMessages')).toContain('Le mois doit être janvier')
 	})
 })

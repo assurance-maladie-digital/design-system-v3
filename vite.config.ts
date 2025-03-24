@@ -73,7 +73,7 @@ export default defineConfig({
 			insertTypesEntry: true,
 			copyDtsFiles: true,
 			cleanVueFileName: true,
-			aliasesExclude: [/vuetify/]
+			aliasesExclude: [/vuetify/],
 		}),
 		vue({
 			template: {
