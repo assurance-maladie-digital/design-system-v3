@@ -244,7 +244,7 @@
 
 			<span
 				v-if="badge"
-				class="amelipro-btn__badge__wrapper"
+				class="amelipro-btn__badge-wrapper"
 				:class="iconClasses"
 			>
 				<span class="amelipro-btn__badge-wrapper-content">
