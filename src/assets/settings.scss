@@ -15,11 +15,9 @@
 	text-transform: uppercase !important;
 }
 
-.theme-ap {
-	.v-btn {
-		text-transform: uppercase !important;
-		background-color: tokens.$ap-blue-darken1;
-	}
+.v-btn.amelipro-btn {
+	text-transform: uppercase !important;
+	background-color: tokens.$ap-blue-darken1;
 }
 
 .v-tooltip .v-overlay__content {
