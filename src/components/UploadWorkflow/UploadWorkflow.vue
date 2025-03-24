@@ -3,7 +3,7 @@
 		type CustomizableOptions,
 	} from '@/composables/useCustomizableOptions'
 	import { useWidthable, type Widthable } from '@/composables/widthable'
-	import { required } from '@/utils/rules/required'
+	import { required } from '@/utils/rules/isRequired'
 	import { computed, reactive, ref, toRef, watch } from 'vue'
 	import DialogBox from '../DialogBox/DialogBox.vue'
 	import FileList from '../FileList/FileList.vue'

@@ -1,21 +1,21 @@
-import { email, emailFn } from '../'
+import { isValidEmail, isValidEmailFn } from '..'
 import { describe, it, expect } from 'vitest'
 
 describe('email', () => {
 	it('returns an error when the email is invalid', () => {
-		expect(typeof email('test')).toBe('string')
+		expect(typeof isValidEmail('test')).toBe('string')
 	})
 
 	it('returns true when the email is valid', () => {
-		expect(email('test@example.com')).toBe(true)
+		expect(isValidEmail('test@example.com')).toBe(true)
 	})
 
 	it('returns true if the value is falsy', () => {
-		expect(email('')).toBe(true)
+		expect(isValidEmail('')).toBe(true)
 	})
 
 	it('works with custom error messages', () => {
-		const rule = emailFn({
+		const rule = isValidEmailFn({
 			default: 'test',
 		})
 

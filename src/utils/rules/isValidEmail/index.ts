@@ -5,13 +5,11 @@ import type {
 	ErrorMessages,
 	Value,
 } from '@/utils/rules/types'
-
-import { isEmailValid } from '../../functions/isEmailValid'
-
 import { defaultErrorMessages } from './locales'
+import { isEmailValid } from '@/utils/functions/validation/isEmailValid'
 
 /** Check that the value is a valid email */
-export function emailFn(
+export function isValidEmailFn(
 	errorMessages: ErrorMessages = defaultErrorMessages,
 ): ValidationRule {
 	return (value: Value): ValidationResult => {
@@ -23,4 +21,4 @@ export function emailFn(
 	}
 }
 
-export const email = emailFn()
+export const isValidEmail = isValidEmailFn()

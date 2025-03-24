@@ -1,0 +1,81 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as IsValidEmailStories from './IsValidEmail.stories';
+
+<Meta of={IsValidEmailStories} />
+
+# Règle de validation `isValidEmail`
+
+La règle de validation `isValidEmail` permet de vérifier si une chaîne de caractère est une adresse email valide.
+
+## Usage
+
+Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isValidEmailFn` depuis le package `@cnamts/synapse`.
+
+```javascript
+import { isValidEmailFn } from '@cnamts/synapse';
+```
+
+Vous devez ensuite faire appel à cette fonction pour obtenir la règle de validation.
+
+```javascript
+const isValidEmail = isValidEmailFn(/* optionals options */);
+```
+
+Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
+
+```javascript
+<script setup lang="ts">
+import { isValidEmailFn } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+
+const isValidEmail = isValidEmailFn();
+</script>
+
+<template>
+	<VTextField
+		:rules="[isValidEmail]"
+		label="Email"
+	/>
+</template>
+
+```
+
+Si vous n'utilisez cette règle sans options, vous pouvez faire appel à la fonction `isValidEmail`.
+
+```javascript
+<script setup lang="ts">
+import { isValidEmail } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+</script>
+
+<template>
+	<VTextField
+		:rules="[isValidEmail]"
+		label="Email"
+	/>
+</template>
+
+```
+
+## API
+
+```typescript
+isValidEmailFn(
+	errorMessages?: {
+		default: string;
+	}
+): (value: string) => true | string;
+```
+
+### Arguments
+
+- `errorMessages` : objet optionnel permettant de personnaliser les messages d'erreur. Les clés disponibles sont :
+	- `default` : message d'erreur par défaut.
+
+### Valeurs de retour
+
+Retourne une fonction pouvant être utilisée comme règle de validation pour un champs de formulaire Vuetify.
+
+## Exemples
+
+<Canvas of={IsValidEmailStories.Default} />

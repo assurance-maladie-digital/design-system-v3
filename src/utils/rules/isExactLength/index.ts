@@ -1,4 +1,4 @@
-import { ruleMessage } from '../required/ruleMessageHelper'
+import { ruleMessage } from '@/utils/ruleMessage'
 import type {
 	ValidationRule,
 	ValidationResult,
@@ -9,7 +9,7 @@ import type {
 import { defaultErrorMessages } from './locales'
 
 /** Check that the value does not exceeds the specified length */
-export function exactLengthFn(
+export function isExactLengthFn(
 	lengthValue: number,
 	ignoreSpaces = false,
 	errorMessages: ErrorMessages<number> = defaultErrorMessages,
@@ -29,5 +29,3 @@ export function exactLengthFn(
 		)
 	}
 }
-
-export const exactLength = exactLengthFn

@@ -1,11 +1,11 @@
-import { ruleMessage } from './ruleMessageHelper'
+import { ruleMessage } from '../../ruleMessage'
 import type { ValidationRule, ValidationResult, ErrorMessages } from '../types'
 
 import { defaultErrorMessages } from './locales'
 
 export type Value = string | string[] | null
 
-export function requiredFn(
+export function isRequiredFn(
 	errorMessages: ErrorMessages = defaultErrorMessages,
 ): ValidationRule<Value> {
 	return (value: Value): ValidationResult => {
@@ -22,4 +22,4 @@ export function requiredFn(
 	}
 }
 
-export const required = requiredFn()
+export const isRequired = isRequiredFn()
