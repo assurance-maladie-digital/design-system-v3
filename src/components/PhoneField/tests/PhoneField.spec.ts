@@ -161,4 +161,44 @@ describe('PhoneField', () => {
 		const textField = wrapper.findComponent({ name: 'VTextField' })
 		expect(textField.props('variant')).toBe('underlined')
 	})
+
+	it('passes dialCode object to SyTextField when dialCode is set', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				withCountryCode: true,
+				dialCodeModel: { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' },
+			},
+		})
+
+		// Vérifier que le dialCode est bien un objet
+		expect(typeof wrapper.vm.dialCode).toBe('object')
+
+		// Trouver le composant SyTextField
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		expect(textField.exists()).toBe(true)
+
+		// Vérifier que les propriétés du SyTextField sont correctement définies en fonction du dialCode
+		expect(wrapper.vm.phoneMask).toBe('## ## ## ## ##')
+		expect(wrapper.vm.counter).toBe(10)
+
+		// Vérifier que le SyTextField reçoit les bonnes propriétés
+		expect(textField.props('counter')).toBe(10)
+
+		// Vérifier que le SySelect est présent et reçoit l'objet dialCode
+		const select = wrapper.findComponent({ name: 'SySelect' })
+		expect(select.exists()).toBe(true)
+		expect(select.props('returnObject')).toBe(true)
+
+		// Vérifier que l'objet dialCode est correctement passé au SySelect via v-model
+		expect(wrapper.vm.dialCode).toEqual({
+			code: '+33',
+			abbreviation: 'FR',
+			country: 'France',
+			phoneLength: 10,
+			mask: '## ## ## ## ##',
+		})
+	})
 })
