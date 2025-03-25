@@ -34,9 +34,10 @@ export const Header: StoryObj = {
 						<VCol md="6" sm="12">
 							<h1 class="font-weight-bold text-h4 mb-2">Synapse</h1>
 							<img alt="line" src="/home-line.svg" width="120" height="5" class="mb-5"/>
-							<h2 class="text-h4 mb-5">Documentation d'aide<br/> à la fabrication des IHM<br/><span
-								v-if="theme === 'ap'">d'AmeliPro</span><span
-								v-if="theme === 'pa'">de Portail Agent</span><span v-else>de la CNAM</span></h2>
+							<h2 class="text-h4 mb-5">Documentation d'aide<br/> à la fabrication des IHM<br/>
+								<span v-if="theme === 'ap'">d'AmeliPro</span>
+								<span v-if="theme === 'pa'">de Portail Agent</span>
+								<span v-if="theme === 'cnam'">de la CNAM</span></h2>
 							<VBtn color="primary" href="/?path=/docs/d%C3%A9marrer-introduction--docs">
 								Démarrer
 								<VIcon size="small" class="ml-2" right>{{ arrowRight }}</VIcon>
@@ -85,7 +86,7 @@ export const Welcome: StoryObj = {
 			},
 			template: `
 				<div class="mt-12 mb-12">
-					<p>Bienvenue dans notre guide d'aide à la conception, pensé par et pour les équipes <span v-if="theme === 'ap'">d'AmeliPro</span><span v-if="theme === 'pa'">de Portail Agent</span><span v-else>de la CNAM</span>.</p>
+					<p>Bienvenue dans notre guide d'aide à la conception, pensé par et pour les équipes <span v-if="theme === 'ap'">d'AmeliPro</span><span v-if="theme === 'pa'">de Portail Agent</span><span v-if="theme === 'cnam'">de la CNAM</span>.</p>
 					<p class="mt-4">Ce guide a été conçu pour accompagner chaque membre de l'équipe dans la création de
 						plateformes web de qualité, alignées avec nos standards et nos valeurs.</p>
 					<p v-if="theme !== 'ap'" class="mt-4">Vous y trouverez toutes les ressources essentielles pour vous
