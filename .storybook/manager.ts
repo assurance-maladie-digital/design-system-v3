@@ -28,7 +28,7 @@ const applyThemeSidebar = (theme) => {
 						item.style.display = 'block'
 					}
 				}
-				if (theme === 'amelipro') {
+				if (theme === 'ap') {
 					if (item.querySelector('a#démarrer-introduction--docs')) {
 						// item.style.display = 'block'
 					}
