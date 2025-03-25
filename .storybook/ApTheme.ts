@@ -8,7 +8,7 @@ export default create({
 	brandTarget: '_self',
 
 	colorPrimary: 'rgba(0, 81, 109, 0.7)',
-	colorSecondary: 'rgba(0, 81, 109, 1)',
+	colorSecondary: '#163043',
 
 	// UI
 	appBg: 'rgba(0, 81, 109, 0.08)',
