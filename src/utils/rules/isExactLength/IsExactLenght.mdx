@@ -18,7 +18,7 @@ import { isExactLengthFn } from '@cnamts/synapse';
 Vous devez ensuite faire appel à cette fonction en lui passant en paramètre la longueur exacte que vous souhaitez imposer.
 
 ```javascript
-const max15 = isExactLengthFn(15);
+const length15 = isExactLengthFn(15);
 ```
 
 Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
@@ -28,13 +28,13 @@ Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de 
 import { isExactLengthFn } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
 
-const max15 = isExactLengthFn(15);
+const length15 = isExactLengthFn(15);
 
 </script>
 
 <template>
 	<VTextField
-		:rules="[max15]"
+		:rules="[length15]"
 		label="Max 15 characters"
 	/>
 </template>
@@ -65,4 +65,4 @@ Retourne une fonction pouvant être utilisée comme règle de validation pour un
 
 ## Exemples
 
-<Canvas of={IsExactLengthStories.Default} />.
+<Canvas of={IsExactLengthStories.Default} />

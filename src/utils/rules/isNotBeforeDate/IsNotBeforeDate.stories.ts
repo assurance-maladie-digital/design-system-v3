@@ -1,10 +1,12 @@
 import type { StoryObj } from '@storybook/vue3'
 import { VTextField } from 'vuetify/components'
-import { isValidEmail, isValidEmailFn } from './index'
+
+import { isNotBeforeDateFn } from './index'
+import { ref } from 'vue'
 
 export default {
-	title: 'Règles De Validation/isValidEmail',
-	component: isValidEmailFn,
+	title: 'Règles De Validation/isNotBeforeDate',
+	component: isNotBeforeDateFn,
 }
 
 export const Default: StoryObj<unknown> = {
@@ -12,13 +14,18 @@ export const Default: StoryObj<unknown> = {
 		return {
 			components: { VTextField },
 			setup() {
-				return { isValidEmail }
+				const date = isNotBeforeDateFn('01/01/2022')
+				const model = ref('12/12/2021')
+
+				return { date, model }
 			},
 			template: `
 				<VTextField
-					:rules="[isValidEmail]"
-					label="Email"
+					v-model="model"
+					:rules="[date]"
+					label="Date"
 					variant="outlined"
+					validate-on="eager blur"
 				/>
 			`,
 		}
@@ -30,7 +37,9 @@ export const Default: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
-					import { isValidEmail } from '@cnamts/synapse'
+					import { isNotBeforeDateFn } from '@cnamts/synapse'
+
+					const date = isNotBeforeDateFn('01/01/2022')
 				</script>
 				`,
 			},
@@ -39,8 +48,8 @@ export const Default: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
-						:rules="[isValidEmail]"
-						label="Email"
+						:rules="[date]"
+						label="Date"
 						variant="outlined"
 					/>
 				</template>
@@ -50,21 +59,25 @@ export const Default: StoryObj<unknown> = {
 	},
 }
 
-export const CustomMessage: StoryObj<unknown> = {
+export const WithCustomMessage: StoryObj<unknown> = {
 	render: () => {
 		return {
 			components: { VTextField },
 			setup() {
-				const email = isValidEmailFn({
-					default: '请输入有效的电子邮件地址。',
+				const date = isNotBeforeDateFn('01/01/2022', {
+					default: (date: string) => `the date must not be before ${date}`,
 				})
-				return { email }
+				const model = ref('12/12/2021')
+
+				return { date, model }
 			},
 			template: `
 				<VTextField
-					:rules="[email]"
-					label="电子邮件"
+					v-model="model"
+					:rules="[date]"
+					label="Date after 2022"
 					variant="outlined"
+					validate-on="eager blur"
 				/>
 			`,
 		}
@@ -76,10 +89,10 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
-					import { isValidEmailFn } from '@cnamts/synapse'
+					import { isNotBeforeDateFn } from '@cnamts/synapse'
 
-					const email = isValidEmailFn({
-						default: '请输入有效的电子邮件地址。',
+					const date = isNotBeforeDateFn('01/01/2022', {
+						default: (date: string) => \`the date must not be before \${date}\`,
 					})
 				</script>
 				`,
@@ -89,8 +102,8 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
-						:rules="[email]"
-						label="电子邮件"
+						:rules="[date]"
+						label="Date after 2022"
 						variant="outlined"
 					/>
 				</template>

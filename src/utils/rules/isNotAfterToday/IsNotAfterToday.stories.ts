@@ -1,10 +1,11 @@
 import type { StoryObj } from '@storybook/vue3'
 import { VTextField } from 'vuetify/components'
-import { isValidEmail, isValidEmailFn } from './index'
+import { isNotAfterToday, isNotAfterTodayFn } from './index'
+import { ref } from 'vue'
 
 export default {
-	title: 'Règles De Validation/isValidEmail',
-	component: isValidEmailFn,
+	title: 'Règles De Validation/isNotAfterToday',
+	component: isNotAfterTodayFn,
 }
 
 export const Default: StoryObj<unknown> = {
@@ -12,13 +13,17 @@ export const Default: StoryObj<unknown> = {
 		return {
 			components: { VTextField },
 			setup() {
-				return { isValidEmail }
+				const model = ref('12/12/2050')
+
+				return { model, isNotAfterToday }
 			},
 			template: `
 				<VTextField
-					:rules="[isValidEmail]"
-					label="Email"
+					v-model="model"
+					:rules="[isNotAfterToday]"
+					label="Date"
 					variant="outlined"
+					validate-on="eager blur"
 				/>
 			`,
 		}
@@ -30,7 +35,7 @@ export const Default: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
-					import { isValidEmail } from '@cnamts/synapse'
+					import { isNotAfterToday } from '@cnamts/synapse'
 				</script>
 				`,
 			},
@@ -39,8 +44,8 @@ export const Default: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
-						:rules="[isValidEmail]"
-						label="Email"
+						:rules="[isNotAfterToday]"
+						label="Date"
 						variant="outlined"
 					/>
 				</template>
@@ -55,16 +60,19 @@ export const CustomMessage: StoryObj<unknown> = {
 		return {
 			components: { VTextField },
 			setup() {
-				const email = isValidEmailFn({
-					default: '请输入有效的电子邮件地址。',
-				})
-				return { email }
+				const messages = {
+					default: 'The date must not be after today.',
+				}
+				const dateRule = isNotAfterTodayFn(messages)
+
+				return { dateRule }
 			},
 			template: `
 				<VTextField
-					:rules="[email]"
-					label="电子邮件"
+					:rules="[dateRule]"
+					label="Date"
 					variant="outlined"
+					validate-on="eager blur"
 				/>
 			`,
 		}
@@ -76,11 +84,12 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
-					import { isValidEmailFn } from '@cnamts/synapse'
-
-					const email = isValidEmailFn({
-						default: '请输入有效的电子邮件地址。',
-					})
+					import { isNotAfterTodayFn } from '@cnamts/synapse'
+				
+					const messages = {
+						default: 'The date must not be after today.',
+					}
+					const dateRule = isNotAfterTodayFn(messages)
 				</script>
 				`,
 			},
@@ -89,8 +98,8 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
-						:rules="[email]"
-						label="电子邮件"
+						:rules="[dateRule]"
+						label="Date"
 						variant="outlined"
 					/>
 				</template>

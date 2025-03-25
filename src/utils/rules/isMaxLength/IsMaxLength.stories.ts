@@ -1,10 +1,10 @@
 import type { StoryObj } from '@storybook/vue3'
 import { VTextField } from 'vuetify/components'
-import { isExactLengthFn } from './index'
+import { isMaxLengthFn } from './index'
 
 export default {
-	title: 'Règles De Validation/isExactLength',
-	component: isExactLengthFn,
+	title: 'Règles De Validation/isMaxLength',
+	component: isMaxLengthFn,
 }
 
 export const Default: StoryObj<unknown> = {
@@ -12,13 +12,13 @@ export const Default: StoryObj<unknown> = {
 		return {
 			components: { VTextField },
 			setup() {
-				const length10 = isExactLengthFn(10)
-				return { length10 }
+				const max5 = isMaxLengthFn(5)
+				return { max5 }
 			},
 			template: `
 				<VTextField
-					:rules="[length10]"
-					label="Max 10 characters"
+					:rules="[max5]"
+					label="Max 5 caractères"
 					variant="outlined"
 				/>
 			`,
@@ -31,9 +31,9 @@ export const Default: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
-					import { isExactLengthFn } from '@cnamts/synapse'
+					import { isMaxLengthFn } from '@cnamts/synapse'
 
-					const length10 = isExactLengthFn(10)
+					const max5 = isMaxLengthFn(5)
 				</script>
 				`,
 			},
@@ -42,8 +42,8 @@ export const Default: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
-						:rules="[length10]"
-						label="Max 10 characters"
+						:rules="[max5]"
+						label="Max 5 caractères"
 						variant="outlined"
 					/>
 				</template>
@@ -53,18 +53,18 @@ export const Default: StoryObj<unknown> = {
 	},
 }
 
-export const DoNotCountSpaces: StoryObj<unknown> = {
+export const ignoreSpaces: StoryObj<unknown> = {
 	render: () => {
 		return {
 			components: { VTextField },
 			setup() {
-				const length10 = isExactLengthFn(10, true)
-				return { length10 }
+				const max5 = isMaxLengthFn(5, true)
+				return { max5 }
 			},
 			template: `
 				<VTextField
-					:rules="[length10]"
-					label="Max 10 characters"
+					:rules="[max5]"
+					label="Max 5 caractères, ignore les espaces"
 					variant="outlined"
 				/>
 			`,
@@ -77,9 +77,9 @@ export const DoNotCountSpaces: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
-					import { isExactLengthFn } from '@cnamts/synapse'
+					import { isMaxLengthFn } from '@cnamts/synapse'
 
-					const length10 = isExactLengthFn(10, true)
+					const max5 = isMaxLengthFn(5, true)
 				</script>
 				`,
 			},
@@ -88,8 +88,8 @@ export const DoNotCountSpaces: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
-						:rules="[length10]"
-						label="Max 10 characters"
+						:rules="[max5]"
+						label="Max 5 caractères, ignore les espaces"
 						variant="outlined"
 					/>
 				</template>
@@ -105,15 +105,16 @@ export const CustomMessage: StoryObj<unknown> = {
 			components: { VTextField },
 			setup() {
 				const messages = {
-					default: (length: number) => `此字段的长度必须正好为 ${length} 个字符。`,
+					default: max => `The text entered is too long, it must be ${max} characters or less`,
 				}
-				const length10 = isExactLengthFn(10, false, messages)
-				return { length10 }
+				const max5 = isMaxLengthFn(5, false, messages)
+				return { max5 }
 			},
 			template: `
 				<VTextField
-					:rules="[length10]"
-					label="此字段必须为 10 个字符。"
+					:rules="[max5]"
+					label="Max 5 characters"
+					variant="outlined"
 				/>
 			`,
 		}
@@ -125,12 +126,12 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
-					import { isExactLengthFn } from '@cnamts/synapse'
+					import { isMaxLengthFn } from '@cnamts/synapse'
 
 					const messages = {
-						default: (length: number) => \`此字段的长度必须正好为 \${length} 个字符。\`,
+						default: max => \`The text entered is too long, it must be \${max} characters or less\`,
 					}
-					const length10 = isExactLengthFn(10, false, messages)
+					const max5 = isMaxLengthFn(5, false, messages)
 				</script>
 				`,
 			},
@@ -139,8 +140,8 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
-						:rules="[length10]"
-						label="此字段必须为 10 个字符。"
+						:rules="[max5]"
+						label="Max 5 characters"
 						variant="outlined"
 					/>
 				</template>

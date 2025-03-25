@@ -1,0 +1,16 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="Règles De Validation/Les règles de validation" />
+
+# Les règles de validation
+
+Les règles de validation permettent de vérifier la validité des données saisies dans un formulaire. Elles peuvent être utilisées en combinaison d'autres règles de `synapse` ou de personnalisées.
+
+Pour plus d'informations sur les règles de validation, consultez la [documentation de `Vuetify`](https://vuetifyjs.com/en/components/forms/#rules).
+
+## Détails d'utilisation
+
+Les règles de validation sont des fonctions qui prennent en paramètre la valeur du champ de formulaire à valider. Elles retournent un `boolean` ou une `string` en fonction de la validité de la valeur.
+
+Ce package fournie des fonctions d'ordre supérieur pour faciliter la création de règles de validation personnalisées. le nom de ces fonctions se termine par `Fn`.
+Elles prennent en paramètre des données de configuration et retournent une fonction de validation. Cette fonction de validation peut être utilisée comme règle d'un champ de formulaire.

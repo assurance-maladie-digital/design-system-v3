@@ -1,10 +1,10 @@
 import type { StoryObj } from '@storybook/vue3'
 import { VTextField } from 'vuetify/components'
-import { isValidEmail, isValidEmailFn } from './index'
+import { doMatchPatternFn } from './index'
 
 export default {
-	title: 'Règles De Validation/isValidEmail',
-	component: isValidEmailFn,
+	title: 'Règles De Validation/doMatchPattern',
+	component: doMatchPatternFn,
 }
 
 export const Default: StoryObj<unknown> = {
@@ -12,12 +12,13 @@ export const Default: StoryObj<unknown> = {
 		return {
 			components: { VTextField },
 			setup() {
-				return { isValidEmail }
+				const matchTwoDigits = doMatchPatternFn(/^[0-9]{2}$/)
+				return { matchTwoDigits }
 			},
 			template: `
 				<VTextField
-					:rules="[isValidEmail]"
-					label="Email"
+					:rules="[matchTwoDigits]"
+					label="Deux chiffres"
 					variant="outlined"
 				/>
 			`,
@@ -30,7 +31,9 @@ export const Default: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
-					import { isValidEmail } from '@cnamts/synapse'
+					import { doMatchPatternFn } from '@cnamts/synapse'
+
+					const matchTwoDigits = doMatchPatternFn(/^[0-9]{2}$/)
 				</script>
 				`,
 			},
@@ -39,8 +42,8 @@ export const Default: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
-						:rules="[isValidEmail]"
-						label="Email"
+						:rules="[matchTwoDigits]"
+						label="Deux chiffres"
 						variant="outlined"
 					/>
 				</template>
@@ -55,15 +58,16 @@ export const CustomMessage: StoryObj<unknown> = {
 		return {
 			components: { VTextField },
 			setup() {
-				const email = isValidEmailFn({
-					default: '请输入有效的电子邮件地址。',
-				})
-				return { email }
+				const twoDigits = doMatchPatternFn(
+					/^[0-9]{2}$/,
+					{ default: 'Veuillez saisir deux chiffres.' },
+				)
+				return { twoDigits }
 			},
 			template: `
 				<VTextField
-					:rules="[email]"
-					label="电子邮件"
+					:rules="[twoDigits]"
+					label="Deux chiffres"
 					variant="outlined"
 				/>
 			`,
@@ -76,11 +80,12 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
-					import { isValidEmailFn } from '@cnamts/synapse'
+					import { doMatchPatternFn } from '@cnamts/synapse'
 
-					const email = isValidEmailFn({
-						default: '请输入有效的电子邮件地址。',
-					})
+					const twoDigits = doMatchPatternFn(
+						/^[0-9]{2}$/,
+						{ default: 'Veuillez saisir deux chiffres.' },
+					)
 				</script>
 				`,
 			},
@@ -89,8 +94,8 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
-						:rules="[email]"
-						label="电子邮件"
+						:rules="[twoDigits]"
+						label="Deux chiffres"
 						variant="outlined"
 					/>
 				</template>

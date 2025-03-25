@@ -1,0 +1,83 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as IsNotBeforeTodayStories from './IsNotBeforeToday.stories';
+
+<Meta of={IsNotBeforeTodayStories} />
+
+# Règle de validation `isNotBeforeToday`
+
+La règle de validation `isNotBeforeToday` permet de vérifier qu'une date n'est pas antérieur à la date du jour.
+
+## Usage
+
+Pour utiliser cette règle de validation, vous devez importer la règle depuis le package `@cnamts/synapse`.
+
+```javascript
+import { isNotBeforeToday } from '@cnamts/synapse';
+```
+
+
+Vous pouvez ensuite utiliser la fonction comme règle d'un champs de formulaire.
+
+```javascript
+<script setup lang="ts">
+import { isNotBeforeToday } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+
+</script>
+
+<template>
+	<VTextField
+		:rules="[isNotBeforeToday]"
+		label="Date"
+	/>
+</template>
+```
+
+## Customisation des messages d'erreur
+
+Vous pouvez personnaliser les messages d'erreur en passant un objet `errorMessages` en paramètre de la fonction `isNotBeforeTodayFn`.
+Puis en utilisant la fonction retournée comme règle d'un champs de formulaire.
+
+```javascript
+<script setup lang="ts">
+import { isNotBeforeTodayFn } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+
+const notBeforeToday = isNotBeforeTodayFn({
+	default: `The date must not be Before today`,
+});
+
+</script>
+
+<template>
+	<VTextField
+		:rules="[notBeforeToday]"
+		label="Date"
+	/>
+</template>
+```
+
+## API
+
+```typescript
+
+isNotBeforeTodayFn(
+	errorMessages?: {
+		default: string;
+	}
+): (value: string) => true | string;
+
+```
+
+### Arguments
+
+- `errorMessages` : objet optionnel permettant de personnaliser les messages d'erreur. Les clés disponibles sont :
+	- `default` : message d'erreur par défaut.
+
+### Valeurs de retour
+
+Retourne une fonction qui prend en paramètre une chaîne de caractères représentant une date et retourne `true` si la date n'est pas antérieur à la date du jour, sinon retourne un message d'erreur.
+
+## Exemples
+
+<Canvas of={IsNotBeforeTodayStories.Default} />

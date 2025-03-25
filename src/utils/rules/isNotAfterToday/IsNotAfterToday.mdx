@@ -1,0 +1,83 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as IsNotAfterTodayStories from './IsNotAfterToday.stories';
+
+<Meta of={IsNotAfterTodayStories} />
+
+# Règle de validation `isNotAfterToday`
+
+La règle de validation `isNotAfterToday` permet de vérifier qu'une date n'est pas postérieure à la date du jour.
+
+## Usage
+
+Pour utiliser cette règle de validation, vous devez importer la règle `isNotAfterToday` depuis le package `@cnamts/synapse`.
+
+```javascript
+import { isNotAfterToday } from '@cnamts/synapse';
+```
+
+
+Vous pouvez ensuite utiliser la fonction comme règle d'un champs de formulaire.
+
+```javascript
+<script setup lang="ts">
+import { isNotAfterToday } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+
+</script>
+
+<template>
+	<VTextField
+		:rules="[isNotAfterToday]"
+		label="Date"
+	/>
+</template>
+```
+
+## Customisation des messages d'erreur
+
+Vous pouvez personnaliser les messages d'erreur en passant un objet `errorMessages` en paramètre de la fonction `isNotAfterTodayFn`.
+Puis en utilisant la fonction retournée comme règle d'un champs de formulaire.
+
+```javascript
+<script setup lang="ts">
+import { isNotAfterTodayFn } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+
+const notAfterToday = isNotAfterTodayFn({
+	default: `The date must not be after today`,
+});
+
+</script>
+
+<template>
+	<VTextField
+		:rules="[notAfterToday]"
+		label="Date"
+	/>
+</template>
+```
+
+## API
+
+```typescript
+
+isNotAfterTodayFn(
+	errorMessages?: {
+		default: string;
+	}
+): (value: string) => true | string;
+
+```
+
+### Arguments
+
+- `errorMessages` : objet optionnel permettant de personnaliser les messages d'erreur. Les clés disponibles sont :
+	- `default` : message d'erreur par défaut.
+
+### Valeurs de retour
+
+Retourne une fonction qui prend en paramètre une chaîne de caractères représentant une date et retourne `true` si la date n'est pas postérieure à la date du jour, sinon retourne un message d'erreur.
+
+## Exemples
+
+<Canvas of={IsNotAfterTodayStories.Default} />

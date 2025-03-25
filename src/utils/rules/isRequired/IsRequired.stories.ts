@@ -3,7 +3,7 @@ import { VTextField } from 'vuetify/components'
 import { isRequired, isRequiredFn } from '.'
 
 export default {
-	title: 'RèglesDeValidation/isRequired',
+	title: 'Règles De Validation/isRequired',
 	component: isRequiredFn,
 }
 
@@ -18,6 +18,7 @@ export const Default: StoryObj<unknown> = {
 				<VTextField
 					:rules="[isRequired]"
 					label="Champ requis"
+					variant="outlined"
 				/>
 			`,
 		}
@@ -40,6 +41,7 @@ export const Default: StoryObj<unknown> = {
 					<VTextField
 						:rules="[isRequired]"
 						label="Champ requis"
+						variant="outlined"
 					/>
 				</template>
 				`,
@@ -62,6 +64,7 @@ export const CustomMessage: StoryObj<unknown> = {
 				<VTextField
 					:rules="[isRequiredCustom]"
 					label="Required"
+					variant="outlined"
 				/>
 			`,
 		}
@@ -88,6 +91,7 @@ export const CustomMessage: StoryObj<unknown> = {
 					<VTextField
 						:rules="[required]"
 						label="Required"
+						variant="outlined"
 					/>
 				</template>
 				`,
