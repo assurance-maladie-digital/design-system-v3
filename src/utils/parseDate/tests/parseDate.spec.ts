@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { describe, it, expect } from 'vitest'
 
-import { parseDate } from '../index.ts'
+import { parseDate } from '../index'
 
 const RESULT_DATE_FORMAT = 'YYYY-MM-DD'
 
