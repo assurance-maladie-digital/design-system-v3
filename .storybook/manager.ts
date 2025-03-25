@@ -19,18 +19,27 @@ const applyThemeSidebar = (theme) => {
 
 			items.forEach((item) => {
 				if (theme === 'pa') {
-					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
+					if (item.querySelector('button#composants-ameliprobtn')) {
+						item.style.display = 'none'
+					}
+					if (item.querySelector('button#composants-ameliproicon')) {
 						item.style.display = 'none'
 					}
 				}
 				if (theme === 'cnam') {
-					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
-						item.style.display = 'block'
+					if (item.querySelector('button#composants-ameliprobtn')) {
+						item.style.display = 'none'
+					}
+					if (item.querySelector('button#composants-ameliproicon')) {
+						item.style.display = 'none'
 					}
 				}
 				if (theme === 'ap') {
-					if (item.querySelector('a#démarrer-introduction--docs')) {
-						// item.style.display = 'block'
+					if (item.querySelector('button#composants-ameliprobtn')) {
+						item.style.display = 'block'
+					}
+					if (item.querySelector('button#composants-ameliproicon')) {
+						item.style.display = 'block'
 					}
 				}
 			})
