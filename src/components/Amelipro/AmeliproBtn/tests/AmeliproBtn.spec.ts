@@ -1,15 +1,17 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproBtn from '../AmeliproBtn.vue'
+import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproBtn, {
+			global: {
+				plugins: [vuetify],
+			},
 			props: {
-				color: 'ap-blue',
 				default: 'My Button',
-				hoverColor: 'ap-blue-lighten-3',
-				textColor: 'ap-white',
+				uniqueId: 'my-btn-id',
 			},
 		})
 
