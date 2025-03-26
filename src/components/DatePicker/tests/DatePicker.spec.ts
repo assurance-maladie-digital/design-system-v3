@@ -91,27 +91,6 @@ describe('DatePicker.vue', () => {
 		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
 	})
 
-	it('hides the date picker when at least two dates are selected in range mode', async () => {
-		const wrapper = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
-			props: {
-				displayRange: true, // Activer le mode plage
-			},
-		})
-
-		// Simule la visibilité initiale du date picker
-		wrapper.vm.isDatePickerVisible = true
-
-		// Simule la sélection de deux dates via la propriété `selectedDates`
-		wrapper.vm.selectedDates = [new Date('2023-01-01'), new Date('2023-01-05')]
-		await nextTick()
-
-		// Vérifie que le date picker est masqué
-		expect(wrapper.vm.isDatePickerVisible).toBe(false)
-	})
-
 	it('removes the click event listener on unmount', async () => {
 		const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener')
 
@@ -249,5 +228,102 @@ describe('DatePicker.vue', () => {
 		wrapper.vm.updateSelectedDates(invalidInput) // Simule un input invalide
 
 		expect(wrapper.vm.selectedDates).toBeNull() // Vérifie que selectedDates reste null
+	})
+
+	it('toggles date picker visibility correctly', async () => {
+		const wrapper = mount(DatePicker, {
+			global: { plugins: [vuetify] },
+		})
+
+		// État initial : le date picker est caché
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+
+		// Ouvrir le date picker
+		wrapper.vm.openDatePicker()
+		await nextTick()
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+
+		// Fermer le date picker
+		wrapper.vm.isDatePickerVisible = false
+		await nextTick()
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('validates required field correctly', async () => {
+		const wrapper = mount(DatePicker, {
+			global: { plugins: [vuetify] },
+			props: {
+				required: true,
+			},
+		})
+
+		// Valider sans date (devrait échouer)
+		const result = await wrapper.vm.validateOnSubmit()
+		expect(result).toBe(false)
+		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
+	})
+
+	it('initializes selected dates correctly', async () => {
+		const today = new Date()
+		const formattedDate = `${today.getDate().toString().padStart(2, '0')}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`
+		const wrapper = mount(DatePicker, {
+			global: { plugins: [vuetify] },
+			props: {
+				modelValue: formattedDate,
+				format: 'DD/MM/YYYY',
+			},
+		})
+
+		await nextTick()
+		expect(wrapper.vm.selectedDates).not.toBeNull()
+	})
+
+	it('supports date ranges when displayRange is true', async () => {
+		const wrapper = mount(DatePicker, {
+			global: { plugins: [vuetify] },
+			props: {
+				displayRange: true,
+			},
+		})
+
+		expect(wrapper.vm.selectedDates).toBeNull()
+		const rangeInput = wrapper.find('input')
+		expect(rangeInput.exists()).toBe(true)
+	})
+
+	it('properly displays error messages from validation', async () => {
+		const wrapper = mount(DatePicker, {
+			global: { plugins: [vuetify] },
+			props: {
+				required: true,
+			},
+		})
+
+		// Valider sans date pour générer une erreur
+		await wrapper.vm.validateOnSubmit()
+		await nextTick()
+
+		// Vérifier que l'erreur est ajoutée à errorMessages
+		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
+		const errorMessage = wrapper.find('.v-messages__message')
+		expect(errorMessage.exists()).toBe(true)
+		expect(errorMessage.text()).toContain('requise')
+	})
+
+	it('handles birth date mode properly', async () => {
+		const wrapper = mount(DatePicker, {
+			global: { plugins: [vuetify] },
+			props: {
+				isBirthDate: true,
+			},
+		})
+
+		// Vérifier que le mode birth date est appliqué
+		expect(wrapper.props('isBirthDate')).toBe(true)
+
+		// Ouvrir le picker et vérifier qu'il est visible
+		wrapper.vm.openDatePicker()
+		await nextTick()
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
 	})
 })

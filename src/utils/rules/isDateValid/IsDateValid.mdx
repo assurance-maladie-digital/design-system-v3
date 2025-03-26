@@ -1,0 +1,87 @@
+import { Meta, Canvas, Source } from '@storybook/blocks';
+import * as IsDateValidStories from './IsDateValid.stories';
+
+<Meta of={IsDateValidStories} />
+
+# Règle de validation `isDateValid`
+
+La règle de validation `isDateValid` permet de vérifier si une chaîne de caractères est une date au format *DD/MM/YYYY*.
+
+## Usage
+
+Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isDateValidFn` depuis le package `@cnamts/synapse`.
+
+<Source dark code={`
+import { isDateValidFn } from '@cnamts/synapse';
+`} />
+
+Vous devez ensuite faire appel à cette fonction pour obtenir la règle de validation.
+
+<Source dark code={`
+const isDateValid = isDateValidFn(/* options */);
+`} />
+
+Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
+
+<Source dark code={`
+<script setup lang="ts">
+import { isDateValidFn } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+
+const dateValid = isDateValidFn(/* options */);
+
+</script>
+
+<template>
+	<VTextField
+		:rules="[dateValid]"
+		label="Date"
+	/>
+</template>
+`} />
+
+Si vous n'utilisez cette règle sans options, vous pouvez faire appel à la fonction `isDateValid`.
+
+<Source dark code={`
+<script setup lang="ts">
+import { isDateValid } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+</script>
+
+<template>
+	<VTextField
+		:rules="[isDateValid]"
+		label="Date"
+	/>
+</template>
+
+`} />
+
+## API
+
+<Source dark code={`
+isDateValidFn(
+	errorMessages?: {
+		default: string;
+		wrongFormat: string;
+		monthNotMatch: string;
+		notALeapYear: string;
+	}
+): (value: string) => true | string;
+`} />
+
+### Arguments
+
+- `errorMessages` : objet optionnel permettant de personnaliser les messages d'erreur. Les clés disponibles sont :
+	- `default` : message d'erreur par défaut.
+	- `wrongFormat` : message d'erreur si le format de la date n'est pas respecté.
+	- `monthNotMatch` : message d'erreur si le mois n'est pas valide.
+	- `notALeapYear` : message d'erreur si l'année n'est pas bissextile.
+
+### Valeurs de retour
+
+Retourne une fonction pouvant être utilisée comme règle de validation pour un champs de formulaire Vuetify.
+
+## Exemples
+
+<Canvas of={IsDateValidStories.Default} />.

@@ -1,0 +1,66 @@
+import { Meta, Canvas, Source } from '@storybook/blocks';
+import * as DoMatchPatternStories from './DoMatchPattern.stories';
+
+<Meta of={DoMatchPatternStories} />
+
+# Règle de validation `doMatchPattern`
+
+La règle de validation `doMatchPattern` permet de vérifier qu'une chaîne de caractères correspond à un motif donné.
+
+## Usage
+
+Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `doMatchPatternFn` depuis le package `@cnamts/synapse`.
+
+<Source dark code={`
+import { doMatchPatternFn } from '@cnamts/synapse';
+`} />
+
+Vous devez ensuite faire appel à cette fonction en lui passant en paramètre le motif que vous souhaitez vérifier.
+
+<Source dark code={`
+const isEmail = doMatchPatternFn(/^[\w-]+@([\w-]+\.)+[\w-]+$/);
+`} />
+
+Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
+
+<Source dark code={`
+<script setup lang="ts">
+import { doMatchPatternFn } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+
+const isEmail = doMatchPatternFn(/^[\w-]+@([\w-]+\.)+[\w-]+$/);
+</script>
+
+<template>
+	<VTextField
+		:rules="[isEmail]"
+		label="Email"
+	/>
+</template>
+`} />
+
+## API
+
+<Source dark code={`
+doMatchPatternFn(
+	pattern: RegExp,
+	errorMessages?: {
+		default: string;
+	}
+): (value: string) => true | string;
+`} />
+
+### Arguments
+
+- `pattern` : expression régulière à utiliser pour vérifier la chaîne de caractères.
+- `errorMessages` : objet optionnel permettant de personnaliser les messages d'erreur. Les clés disponibles sont :
+	- `default` : message d'erreur par défaut.
+
+### Valeurs de retour
+
+Retourne une fonction pouvant être utilisée comme règle de validation pour un champs de formulaire Vuetify.
+
+## Exemples
+
+<Canvas of={DoMatchPatternStories.Default} />
+

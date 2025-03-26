@@ -1,0 +1,68 @@
+import { Meta, Canvas, Source } from '@storybook/blocks';
+import * as IsNotBeforeDateStories from './IsNotBeforeDate.stories';
+
+<Meta of={IsNotBeforeDateStories} />
+
+# Règle de validation `isNotBeforeDate`
+
+La règle de validation `isNotBeforeDate` permet de vérifier qu'une date n'est pas antérieure à une date de référence.
+
+## Usage
+
+Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isNotBeforeDateFn` depuis le package `@cnamts/synapse`.
+
+<Source dark code={`
+import { isNotBeforeDateFn } from '@cnamts/synapse';
+`} />
+
+Vous devez ensuite faire appel à cette fonction en lui passant en paramètre la date de référence.
+
+<Source dark code={`
+const notBeforeToday = isNotBeforeDateFn('01/01/2022');
+`} />
+
+Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
+
+<Source dark code={`
+<script setup lang="ts">
+import { isNotBeforeDateFn } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+
+const notBefore = isNotBeforeDateFn('01/01/2022');
+
+</script>
+
+<template>
+	<VTextField
+		:rules="[notBefore]"
+		label="Date"
+	/>
+</template>
+`} />
+
+## API
+
+<Source dark code={`
+
+isNotBeforeDateFn(
+	date: string,
+	errorMessages?: {
+		default?: (date: string) => string;
+	}
+): (value: string) => true | string;
+
+`} />
+
+### Arguments
+
+- `date` : chaîne de caractères représentant la date de référence. La date doit être au format `JJ/MM/AAAA`.
+- `errorMessages` : objet optionnel permettant de personnaliser les messages d'erreur. Les clés disponibles sont :
+	- `default` : message d'erreur par défaut. Vous pouvez utiliser la variable `{{ date }}` pour afficher la date de référence.
+
+### Valeurs de retour
+
+Retourne une fonction de validation utilisable dans un champs de formulaire Vuetify qui permet de vérifier si la date passée en paramètre n'est pas antérieure à la date de référence.
+
+## Exemples
+
+<Canvas of={IsNotBeforeDateStories.Default} />

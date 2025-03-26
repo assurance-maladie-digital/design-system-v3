@@ -254,6 +254,152 @@ describe('PeriodField.vue', () => {
 			await wrapper.vm.$nextTick()
 			expect(wrapper.vm.isValid).toBe(true)
 		})
+
+		it('validates correctly the required rule when fields are empty or partially filled', async () => {
+			// Cas 1: Tester la validation quand les deux champs sont vides
+			const wrapper1 = mount(PeriodField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: {
+						from: null,
+						to: null,
+					},
+				},
+			})
+
+			await wrapper1.vm.validateOnSubmit()
+			await wrapper1.vm.$nextTick()
+
+			// Vérifier que la fonction de validation renvoie false quand les deux champs sont vides
+			const fromDatePicker1 = wrapper1.findAllComponents({ name: 'DatePicker' })[0]
+			const requiredRule1 = fromDatePicker1.props('customRules').find(rule => rule.type === 'required')
+			expect(requiredRule1.options.validate(null)).toBe(false)
+			expect(wrapper1.vm.isValid).toBe(false)
+
+			// Cas 2: Tester la validation quand un champ est rempli mais l'autre est vide
+			const wrapper2 = mount(PeriodField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: {
+						from: null,
+						to: '20/12/2023',
+					},
+				},
+			})
+
+			await wrapper2.vm.validateOnSubmit()
+			await wrapper2.vm.$nextTick()
+
+			// Vérifier que la fonction de validation renvoie false quand from est vide mais to est rempli
+			const fromDatePicker2 = wrapper2.findAllComponents({ name: 'DatePicker' })[0]
+			const requiredRule2 = fromDatePicker2.props('customRules').find(rule => rule.type === 'required')
+			// Simuler le scénario où parsedToDate.value est non-null
+			expect(requiredRule2.options.validate(null)).toBe(false)
+			expect(wrapper2.vm.isValid).toBe(false)
+
+			// Cas 3: Tester que la validation renvoie true quand le champ n'est pas vide
+			const wrapper3 = mount(PeriodField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: {
+						from: '15/12/2023',
+						to: '20/12/2023',
+					},
+				},
+			})
+
+			await wrapper3.vm.validateOnSubmit()
+			await wrapper3.vm.$nextTick()
+
+			// Vérifier que la fonction de validation renvoie true quand le champ a une valeur
+			const fromDatePicker3 = wrapper3.findAllComponents({ name: 'DatePicker' })[0]
+			const requiredRule3 = fromDatePicker3.props('customRules').find(rule => rule.type === 'required')
+			const mockDate = new Date('2023-12-15')
+			expect(requiredRule3.options.validate(mockDate)).toBe(true)
+			expect(wrapper3.vm.isValid).toBe(true)
+		})
+
+		it('validates correctly the to-date required rule when fields are empty or partially filled', async () => {
+			// Cas 1: Tester la validation quand les deux champs sont vides
+			const wrapper1 = mount(PeriodField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: {
+						from: null,
+						to: null,
+					},
+				},
+			})
+
+			await wrapper1.vm.validateOnSubmit()
+			await wrapper1.vm.$nextTick()
+
+			// Vérifier que la fonction de validation renvoie false quand les deux champs sont vides
+			const toDatePicker1 = wrapper1.findAllComponents({ name: 'DatePicker' })[1]
+			const requiredRule1 = toDatePicker1.props('customRules').find(rule => rule.type === 'required')
+			expect(requiredRule1.options.validate(null)).toBe(false)
+			expect(wrapper1.vm.isValid).toBe(false)
+
+			// Cas 2: Tester la validation quand un champ est rempli mais l'autre est vide
+			const wrapper2 = mount(PeriodField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: {
+						from: '15/12/2023',
+						to: null,
+					},
+				},
+			})
+
+			await wrapper2.vm.validateOnSubmit()
+			await wrapper2.vm.$nextTick()
+
+			// Vérifier que la fonction de validation renvoie false quand to est vide mais from est rempli
+			const toDatePicker2 = wrapper2.findAllComponents({ name: 'DatePicker' })[1]
+			const requiredRule2 = toDatePicker2.props('customRules').find(rule => rule.type === 'required')
+			// Simuler le scénario où parsedFromDate.value est non-null
+			expect(requiredRule2.options.validate(null)).toBe(false)
+			expect(wrapper2.vm.isValid).toBe(false)
+
+			// Cas 3: Tester que la validation renvoie true quand le champ n'est pas vide
+			const wrapper3 = mount(PeriodField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: {
+						from: '15/12/2023',
+						to: '20/12/2023',
+					},
+				},
+			})
+
+			await wrapper3.vm.validateOnSubmit()
+			await wrapper3.vm.$nextTick()
+
+			// Vérifier que la fonction de validation renvoie true quand le champ a une valeur
+			const toDatePicker3 = wrapper3.findAllComponents({ name: 'DatePicker' })[1]
+			const requiredRule3 = toDatePicker3.props('customRules').find(rule => rule.type === 'required')
+			const mockDate = new Date('2023-12-20')
+			expect(requiredRule3.options.validate(mockDate)).toBe(true)
+			expect(wrapper3.vm.isValid).toBe(true)
+		})
 	})
 
 	describe('Utils', () => {
