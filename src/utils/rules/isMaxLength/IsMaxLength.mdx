@@ -1,0 +1,68 @@
+import { Meta, Canvas, Source } from '@storybook/blocks';
+import * as IsMaxLengthStories from './IsMaxLength.stories';
+
+<Meta of={IsMaxLengthStories} />
+
+# Règle de validation `isMaxLength`
+
+La règle de validation `isMaxLength` permet de limiter la longueur d'une chaîne de caractères dans un champs de formulaire.
+
+## Usage
+
+Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isMaxLengthFn` depuis le package `@cnamts/synapse`.
+
+<Source dark code={`
+import { isMaxLengthFn } from '@cnamts/synapse';
+`} />
+
+Vous devez ensuite faire appel à cette fonction en lui passant en paramètre la longueur maximale que vous souhaitez imposer.
+
+<Source dark code={`
+const max10 = isMaxLengthFn(10);
+`} />
+
+Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
+
+<Source dark code={`
+<script setup lang="ts">
+import { isMaxLengthFn } from '@cnamts/synapse';
+import { VTextField } from 'vuetify/components';
+
+const max10 = isMaxLengthFn(10);
+
+</script>
+
+<template>
+	<VTextField
+		:rules="[max10]"
+		label="Max 10 characters"
+	/>
+</template>
+`} />
+
+## API
+
+<Source dark code={`
+isMaxLengthFn(
+	maxLength: number,
+	ignoreSpaces?: boolean,
+	errorMessages?: {
+		default?: (length: number) => string;
+	}
+): (value: string) => true | string;
+`} />
+
+### Arguments
+
+- `maxLength` : nombre entier positif représentant la longueur maximale à imposer.
+- `ignoreSpaces` : booléen optionnel permettant d'ignorer les espaces dans le calcul de la longueur. Par défaut, la valeur est `false`.
+- `errorMessages` : objet optionnel permettant de personnaliser les messages d'erreur. Les clés disponibles sont :
+	- `default` : message d'erreur par défaut. Vous pouvez utiliser la variable `{{ length }}` pour afficher la longueur maximale attendue.
+
+### Valeurs de retour
+
+Retourne une fonction pouvant être utilisée comme règle de validation pour un champs de formulaire Vuetify.
+
+## Exemples
+
+<Canvas of={IsMaxLengthStories.Default} />

@@ -9,7 +9,7 @@ const vuetify = createVuetifyInstance()
 
 setup((app, { globals }) => {
 	app.use(vuetify)
-    app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
+	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
 	// Apply theme class to <html> (document.documentElement) instead of #root
 	const applyThemeClass = (theme) => {
@@ -112,7 +112,7 @@ const preview: Preview = {
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
 					],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
-					'Guide du dev', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
+					'Guide Du Dev', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Règles De Validation', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
 				],
 			},
 		},

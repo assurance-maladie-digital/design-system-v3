@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { required } from '@/utils/rules/required'
+	import { isRequired } from '@/utils/rules/isRequired'
 	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 	import { computed, ref } from 'vue'
 	import CookiesTable from '../CookiesTable/CookiesTable.vue'
@@ -70,7 +70,7 @@
 		<VRadioGroup
 			v-if="type !== 'essentials'"
 			:model-value="parsedValue"
-			:rules="[required]"
+			:rules="[isRequired]"
 			data-test-id="radio-group"
 			inline
 			:label="locales.fieldLabel(locales[type].title)"
