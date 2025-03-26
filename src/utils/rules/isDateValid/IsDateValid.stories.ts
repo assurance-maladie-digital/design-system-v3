@@ -60,17 +60,17 @@ export const CustomMessage: StoryObj<unknown> = {
 			components: { VTextField },
 			setup() {
 				const dateValid = isDateValidFn({
-					default: 'التاريخ الذي أدخلته غير صالح',
-					wrongFormat: 'التنسيق الذي أدخلته غير صالح',
-					monthNotMatch: 'اليوم الذي أدخلته يتجاوز عدد الأيام في الشهر المقابل',
-					notALeapYear: 'اليوم الذي أدخلته غير صالح لأن السنة المقابلة ليست سنة كبيسة',
+					default: 'The date you entered is invalid',
+					wrongFormat: 'The format you entered is invalid',
+					monthNotMatch: 'The day you entered exceeds the number of days in the corresponding month',
+					notALeapYear: 'The day you entered is invalid because the corresponding year is not a leap year',
 				})
 				return { dateValid }
 			},
 			template: `
 				<VTextField
 					:rules="[dateValid]"
-					label="تاريخ الصلاحية"
+					label="Date"
 					validate-on="blur"
 					variant="outlined"
 				/>
@@ -87,10 +87,10 @@ export const CustomMessage: StoryObj<unknown> = {
 					import { isDateValidFn } from '@cnamts/synapse'
 					
 					const isDateValidCustom = isDateValid({
-						default: 'التاريخ الذي أدخلته غير صالح',
-						wrongFormat: 'التنسيق الذي أدخلته غير صالح',
-						monthNotMatch: 'اليوم الذي أدخلته يتجاوز عدد الأيام في الشهر المقابل',
-						notALeapYear: 'اليوم الذي أدخلته غير صالح لأن السنة المقابلة ليست سنة كبيسة',
+						default: 'The date you entered is invalid',
+						wrongFormat: 'The format you entered is invalid',
+						monthNotMatch: 'The day you entered exceeds the number of days in the corresponding month',
+						notALeapYear: 'The day you entered is invalid because the corresponding year is not a leap year',
 					})
 				</script>
 				`,
@@ -101,7 +101,7 @@ export const CustomMessage: StoryObj<unknown> = {
 				<template>
 					<VTextField
 						:rules="[isDateValidCustom]"
-						label="تاريخ الصلاحية"
+						label="Date"
 						validate-on="blur"
 						variant="outlined"
 					/>

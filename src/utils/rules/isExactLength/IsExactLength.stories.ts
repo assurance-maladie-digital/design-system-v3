@@ -105,7 +105,7 @@ export const CustomMessage: StoryObj<unknown> = {
 			components: { VTextField },
 			setup() {
 				const messages = {
-					default: (length: number) => `此字段的长度必须正好为 ${length} 个字符。`,
+					default: (length: number) => `The length of this field must be exactly ${length} characters.`,
 				}
 				const length10 = isExactLengthFn(10, false, messages)
 				return { length10 }
@@ -113,7 +113,7 @@ export const CustomMessage: StoryObj<unknown> = {
 			template: `
 				<VTextField
 					:rules="[length10]"
-					label="此字段必须为 10 个字符。"
+					label="This field must be 10 characters long."
 				/>
 			`,
 		}
@@ -128,7 +128,7 @@ export const CustomMessage: StoryObj<unknown> = {
 					import { isExactLengthFn } from '@cnamts/synapse'
 
 					const messages = {
-						default: (length: number) => \`此字段的长度必须正好为 \${length} 个字符。\`,
+						default: (length: number) => \`The length of this field must be exactly \${length} characters.\`,
 					}
 					const length10 = isExactLengthFn(10, false, messages)
 				</script>
@@ -140,7 +140,7 @@ export const CustomMessage: StoryObj<unknown> = {
 				<template>
 					<VTextField
 						:rules="[length10]"
-						label="此字段必须为 10 个字符。"
+						label="This field must be 10 characters long."
 						variant="outlined"
 					/>
 				</template>
