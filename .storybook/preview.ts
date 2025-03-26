@@ -112,7 +112,7 @@ const preview: Preview = {
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
 					],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
-					'Guide Du Dev', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Règles De Validation', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
+					'Guide Du Dev', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes', 'Règles De Validation', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
 				],
 			},
 		},
