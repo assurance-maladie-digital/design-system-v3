@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Guide du dev/Breaking changes"/>
+
+# Les breaking changes
+
+## Stores
+
+Les librairies `vue-dot` et `synapse-bridge` utilisaient en interne la librairie `vuex`. Cette dépendance a été supprimée dans `synapse`. Plus aucune librairie de gestion d'état n'est donc imposée par le design system.
+
+## Form builder
+
+Le form builder n'est plus maintenu par le design system dans sa version synapse. Vous pouvez trouvez le code source dans sa version vue2 [ici](https://github.com/assurance-maladie-digital/design-system/tree/v2/packages/form-builder) et sa version vue3 [ici](https://github.com/assurance-maladie-digital/design-system/tree/v2/packages/form-builder).
+
+## Les composants
+
+### CustomIcon
+
+Du fait que le design system est distribué en tant que package uniquement et non plus en tant que plugin vue, Le composant `CustomIcon` a été retiré du design system.
+
+Vous devez désormais utiliser le composant [VIcon](https://vuetifyjs.com/en/components/icons/) de Vuetify avec les icons material du package[ @mdi/js](https://www.npmjs.com/package/@mdi/js). Pour des icons personnalisés, importez les sous forme de composant.
+
+```javascript
+<script setup>
+	import { VIcon } from 'vuetify/components'
+	import { mdiAccount } from '@mdi/js'
+</script>
+
+<template>
+	<VIcon> {{ mdiAccount }} </VIcon>
+</template>
+```
+
+### FilterModule
+
+Le composant `FilterModule` n'était pas optimisé du point de vue expérience utilisateur, le nombre de clics pour accéder à un filtre était trop important. Il a été remplacé par le composant [FilterInline](/docs/composants-filtres-filterssidebar--docs) et [FilterSideBar](/docs/composants-filtres-filterinline--docs).
