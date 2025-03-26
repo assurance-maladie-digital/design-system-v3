@@ -114,6 +114,12 @@ export { default as MaintenancePage } from './MaintenancePage/MaintenancePage.vu
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 
 // ===========================
+// Amelipro
+// ===========================
+export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
+export { default as AmeliproIcon } from './Amelipro/AmeliproIcon/AmeliproIcon.vue'
+
+// ===========================
 // Composables and services
 // ===========================
 export { useDateFormat } from '../composables/date/useDateFormatDayjs'
