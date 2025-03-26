@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproBtn > render correctly 1`] = `
+"<button data-v-3f1d247a="" type="button" class="v-btn v-btn--flat v-theme--light bg-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-flat amelipro-btn--style amelipro-btn" style="height: auto; min-height: 3rem; color: #FFFFFF !important;" id="my-btn-id" default="My Button"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+  <!----><span class="v-btn__content" data-no-activator=""><span data-v-3f1d247a="" class="d-flex align-center amelipro-custom-btn flex-row"><!--v-if--><!--v-if--></span></span>
+  <!---->
+  <!---->
+</button>"
+`;
