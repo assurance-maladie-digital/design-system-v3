@@ -3,7 +3,7 @@ import { VTextField } from 'vuetify/components'
 import { isValidEmail, isValidEmailFn } from './index'
 
 export default {
-	title: 'Règles De Validation/isValidEmail',
+	title: 'Guide du dev/Règles De Validation/isValidEmail',
 	component: isValidEmailFn,
 }
 

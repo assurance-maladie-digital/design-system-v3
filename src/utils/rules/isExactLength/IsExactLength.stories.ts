@@ -3,7 +3,7 @@ import { VTextField } from 'vuetify/components'
 import { isExactLengthFn } from './index'
 
 export default {
-	title: 'Règles De Validation/isExactLength',
+	title: 'Guide du dev/Règles De Validation/isExactLength',
 	component: isExactLengthFn,
 }
 

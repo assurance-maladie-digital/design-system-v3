@@ -3,7 +3,7 @@ import { VTextField } from 'vuetify/components'
 import { isRequired, isRequiredFn } from '.'
 
 export default {
-	title: 'Règles De Validation/isRequired',
+	title: 'Guide du dev/Règles De Validation/isRequired',
 	component: isRequiredFn,
 }
 

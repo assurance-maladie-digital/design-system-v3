@@ -4,7 +4,7 @@ import { isDateValid, isDateValidFn } from './index'
 import { ref } from 'vue'
 
 export default {
-	title: 'Règles De Validation/isDateValid',
+	title: 'Guide du dev/Règles De Validation/isDateValid',
 	component: isDateValid,
 }
 
