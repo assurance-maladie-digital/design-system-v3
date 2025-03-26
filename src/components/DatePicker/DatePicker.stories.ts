@@ -664,26 +664,31 @@ export const DifferentFormats: Story = {
                     v-model="value1"
                     placeholder="Format DD/MM/YYYY"
                     format="DD/MM/YYYY"
+                    class="py-4"
                 />
                 <DatePicker
                     v-model="value2"
                     placeholder="Format MM/DD/YYYY"
                     format="MM/DD/YYYY"
+					class="py-4"
                 />
                 <DatePicker
                     v-model="value3"
                     placeholder="Format YYYY-MM-DD"
                     format="YYYY-MM-DD"
+					class="py-4"
                 />
                 <DatePicker
                     v-model="value4"
                     placeholder="Format DD-MM-YY"
                     format="DD-MM-YY"
+					class="py-4"
                 />
                 <DatePicker
                     v-model="value5"
                     placeholder="Format DD.MM.YYYY"
                     format="DD.MM.YYYY"
+					class="py-4"
                 />
               </div>
             `,
