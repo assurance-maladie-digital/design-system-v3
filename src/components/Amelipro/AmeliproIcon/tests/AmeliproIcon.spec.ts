@@ -6,9 +6,11 @@ describe('AmeliproIcon', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproIcon, {
 			props: {
-				icon: 'ap-icone-ajouter',
-				size: 24,
-				color: 'ap-blue',
+				icon: 'utilisateur',
+				iconBgColor: 'ap-blue-darken-1',
+				iconColor: 'ap-white',
+				uniqueId: 'amelipro-icon-id',
+				xLarge: true,
 			},
 		})
 
