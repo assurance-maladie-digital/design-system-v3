@@ -78,6 +78,14 @@ const meta: Meta<typeof PeriodField> = {
 			control: 'object',
 			description: 'Règles d\'avertissement',
 		},
+		disableErrorHandling: {
+			control: 'boolean',
+			description: 'Désactive la gestion des erreurs',
+		},
+		showSuccessMessages: {
+			control: 'boolean',
+			description: 'Affiche les messages de succès',
+		},
 	},
 } as Meta<typeof PeriodField>
 
@@ -122,21 +130,19 @@ export const Default: Story = {
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value = ref({ from: null, to: null })
-				return { args, value }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value = ref({ from: null, to: null })
+			return { args, value }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
                 <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const CustomPlaceholders: Story = {
@@ -180,21 +186,19 @@ export const CustomPlaceholders: Story = {
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value = ref({ from: null, to: null })
-				return { args, value }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value = ref({ from: null, to: null })
+			return { args, value }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
                 <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const Disabled: Story = {
@@ -236,20 +240,18 @@ export const Disabled: Story = {
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value = ref({ from: null, to: null })
-				return { args, value }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value = ref({ from: null, to: null })
+			return { args, value }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const Required: Story = {
@@ -292,21 +294,19 @@ export const Required: Story = {
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value = ref({ from: null, to: null })
-				return { args, value }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value = ref({ from: null, to: null })
+			return { args, value }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
                 <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const AppendIcon: Story = {
@@ -348,21 +348,19 @@ export const AppendIcon: Story = {
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value = ref({ from: null, to: null })
-				return { args, value }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value = ref({ from: null, to: null })
+			return { args, value }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
                 <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const WithoutIcon: Story = {
@@ -405,21 +403,19 @@ export const WithoutIcon: Story = {
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value = ref({ from: null, to: null })
-				return { args, value }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value = ref({ from: null, to: null })
+			return { args, value }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
                 <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const WithError: Story = {
@@ -467,21 +463,19 @@ export const WithError: Story = {
 			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
 		],
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value = ref({ from: '01/01/2100', to: '05/01/2100' })
-				return { args, value }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value = ref({ from: '01/01/2100', to: '05/01/2100' })
+			return { args, value }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
                 <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const WithWarning: Story = {
@@ -540,21 +534,19 @@ export const WithWarning: Story = {
 			},
 		],
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value = ref({ from: '20/12/2023', to: '21/12/2023' })
-				return { args, value }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value = ref({ from: '20/12/2023', to: '21/12/2023' })
+			return { args, value }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
                 <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const WithSuccess: Story = {
@@ -607,21 +599,19 @@ export const WithSuccess: Story = {
 			},
 		],
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value = ref({ from: '22/01/2024', to: '23/01/2024' })
-				return { args, value }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value = ref({ from: '22/01/2024', to: '23/01/2024' })
+			return { args, value }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value"/>
                 <p>Période sélectionnée : {{ value }}</p>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const DifferentFormats: Story = {
@@ -683,18 +673,17 @@ export const DifferentFormats: Story = {
 		noIcon: false,
 		modelValue: { from: '12/10/2023', to: '15/10/2023' },
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value1 = ref({ from: '12/10/2023', to: '15/10/2023' })
-				const value2 = ref({ from: '10/12/2023', to: '10/15/2023' })
-				const value3 = ref({ from: '2023-10-12', to: '2023-10-15' })
-				const value4 = ref({ from: '12-10-23', to: '15-10-23' })
-				const value5 = ref({ from: '12.10.2023', to: '15.10.2023' })
-				return { args, value1, value2, value3, value4, value5 }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value1 = ref({ from: '12/10/2023', to: '15/10/2023' })
+			const value2 = ref({ from: '10/12/2023', to: '10/15/2023' })
+			const value3 = ref({ from: '2023-10-12', to: '2023-10-15' })
+			const value4 = ref({ from: '12-10-23', to: '15-10-23' })
+			const value5 = ref({ from: '12.10.2023', to: '15.10.2023' })
+			return { args, value1, value2, value3, value4, value5 }
+		},
+		template: `
               <div class="pa-4">
                 <PeriodField v-bind="args" v-model="value1" format="DD/MM/YYYY" class="mb-4" />
                 <PeriodField v-bind="args" v-model="value2" format="MM/DD/YYYY" class="mb-4" />
@@ -703,8 +692,7 @@ export const DifferentFormats: Story = {
                 <PeriodField v-bind="args" v-model="value5" format="DD.MM.YYYY"/>
               </div>
             `,
-		}
-	},
+	}),
 }
 
 export const WithDateFormatReturn: Story = {
@@ -763,19 +751,18 @@ export const WithDateFormatReturn: Story = {
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
-	render: (args) => {
-		return {
-			components: { PeriodField: PeriodField },
-			setup() {
-				const value1 = ref({ from: '12/10/2023', to: '15/10/2023' })
-				const value2 = ref({ from: '12/10/2023', to: '15/10/2023' })
-				const value3 = ref({ from: '12/10/2023', to: '15/10/2023' })
-				const valueReturn1 = ref({ from: '12/10/2023', to: '15/10/2023' })
-				const valueReturn2 = ref({ from: '10/12/2023', to: '10/15/2023' })
-				const valueReturn3 = ref({ from: '2023/12/10', to: '2023/15/10' })
-				return { args, value1, value2, value3, valueReturn1, valueReturn2, valueReturn3 }
-			},
-			template: `
+	render: args => ({
+		components: { PeriodField: PeriodField },
+		setup() {
+			const value1 = ref({ from: '12/10/2023', to: '15/10/2023' })
+			const value2 = ref({ from: '12/10/2023', to: '15/10/2023' })
+			const value3 = ref({ from: '12/10/2023', to: '15/10/2023' })
+			const valueReturn1 = ref({ from: '12/10/2023', to: '15/10/2023' })
+			const valueReturn2 = ref({ from: '10/12/2023', to: '10/15/2023' })
+			const valueReturn3 = ref({ from: '2023/12/10', to: '2023/15/10' })
+			return { args, value1, value2, value3, valueReturn1, valueReturn2, valueReturn3 }
+		},
+		template: `
               <div class="pa-4">
                 <span>Période de retour : {{ valueReturn1 }}<br/><br/></span>
                 <PeriodField
@@ -802,6 +789,115 @@ export const WithDateFormatReturn: Story = {
                 />
               </div>
             `,
-		}
+	}),
+}
+
+export const ValidationBehaviors: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				code: `<template>
+	<div class="mb-8">
+		<h3 class="mb-4">Par défaut (avec validation)</h3>
+		<PeriodField
+			v-model="periodDefault"
+			required
+		/>
+	</div>
+
+	<div class="mb-8">
+		<h3 class="mb-4">Validation désactivée (disableErrorHandling=true)</h3>
+		<PeriodField
+			v-model="periodNoErrors"
+			required
+			:disable-error-handling="true"
+		/>
+	</div>
+
+	<div class="mb-8">
+		<h3 class="mb-4">Messages de succès désactivés (showSuccessMessages=false)</h3>
+		<PeriodField
+			v-model="periodNoSuccess"
+			required
+			:show-success-messages="false"
+		/>
+	</div>
+
+	<div class="mb-8">
+		<h3 class="mb-4">Validation et messages de succès désactivés</h3>
+		<PeriodField
+			v-model="periodNoValidation"
+			required
+			:disable-error-handling="true"
+			:show-success-messages="false"
+		/>
+	</div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import PeriodField from '../PeriodField.vue'
+
+const periodDefault = ref({ from: null, to: null })
+const periodNoErrors = ref({ from: null, to: null })
+const periodNoSuccess = ref({ from: null, to: null })
+const periodNoValidation = ref({ from: null, to: null })
+</script>`,
+			},
+		],
 	},
+	render: args => ({
+		components: { PeriodField },
+		setup() {
+			const periodDefault = ref({ from: null, to: null })
+			const periodNoErrors = ref({ from: null, to: null })
+			const periodNoSuccess = ref({ from: null, to: null })
+			const periodNoValidation = ref({ from: null, to: null })
+
+			return {
+				args,
+				periodDefault,
+				periodNoErrors,
+				periodNoSuccess,
+				periodNoValidation,
+			}
+		},
+		template: `
+			<div class="mb-8">
+				<h3 class="mb-4">Par défaut (avec validation)</h3>
+				<PeriodField
+					v-model="periodDefault"
+					required
+				/>
+			</div>
+
+			<div class="mb-8">
+				<h3 class="mb-4">Validation désactivée (disableErrorHandling=true)</h3>
+				<PeriodField
+					v-model="periodNoErrors"
+					required
+					:disable-error-handling="true"
+				/>
+			</div>
+
+			<div class="mb-8">
+				<h3 class="mb-4">Messages de succès désactivés (showSuccessMessages=false)</h3>
+				<PeriodField
+					v-model="periodNoSuccess"
+					required
+					:show-success-messages="false"
+				/>
+			</div>
+
+			<div class="mb-8">
+				<h3 class="mb-4">Validation et messages de succès désactivés</h3>
+				<PeriodField
+					v-model="periodNoValidation"
+					required
+					:disable-error-handling="true"
+					:show-success-messages="false"
+				/>
+			</div>
+		`,
+	}),
 }

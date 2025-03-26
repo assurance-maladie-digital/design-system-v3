@@ -84,6 +84,10 @@ const meta = {
 			control: 'object',
 			description: 'Règles d\'avertissement',
 		},
+		disableErrorHandling: {
+			control: 'boolean',
+			description: 'Désactive la gestion des erreurs par le composant',
+		},
 	},
 } as Meta<typeof DatePicker>
 
@@ -660,26 +664,31 @@ export const DifferentFormats: Story = {
                     v-model="value1"
                     placeholder="Format DD/MM/YYYY"
                     format="DD/MM/YYYY"
+                    class="py-4"
                 />
                 <DatePicker
                     v-model="value2"
                     placeholder="Format MM/DD/YYYY"
                     format="MM/DD/YYYY"
+					class="py-4"
                 />
                 <DatePicker
                     v-model="value3"
                     placeholder="Format YYYY-MM-DD"
                     format="YYYY-MM-DD"
+					class="py-4"
                 />
                 <DatePicker
                     v-model="value4"
                     placeholder="Format DD-MM-YY"
                     format="DD-MM-YY"
+					class="py-4"
                 />
                 <DatePicker
                     v-model="value5"
                     placeholder="Format DD.MM.YYYY"
                     format="DD.MM.YYYY"
+					class="py-4"
                 />
               </div>
             `,
@@ -853,8 +862,8 @@ export const NoCalendarCustomRules: Story = {
 					<DatePicker
 						v-model="date"
 						date-format-return="DD/MM/YYYY"
-						format="YYYY-MM-DD"
-						placeholder="YYYY-MM-DD"
+						format="DD/MM/YYYY"
+						placeholder="DD/MM/YYYY"
 						required
 						no-calendar
 						:custom-rules="[{
@@ -874,9 +883,9 @@ export const NoCalendarCustomRules: Story = {
 	},
 	args: {
 		noCalendar: true,
-		format: 'YYYY-MM-DD',
+		format: 'DD/MM/YYYY',
 		dateFormatReturn: 'DD/MM/YYYY',
-		placeholder: 'YYYY-MM-DD',
+		placeholder: 'DD/MM/YYYY',
 		required: true,
 		customRules: [{
 			type: 'custom',
@@ -889,7 +898,7 @@ export const NoCalendarCustomRules: Story = {
 		}],
 	},
 	render(args) {
-		const date = ref<string | null>('2024-12-21')
+		const date = ref<string | null>('21/12/2024')
 		return {
 			components: { DatePicker },
 			setup() {
@@ -979,6 +988,79 @@ export const NoCalendarWarningRules: Story = {
 	},
 }
 
+export const WithErrorDisabled: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Sélectionner une date"
+						format="DD/MM/YYYY"
+						:required="true"
+						:disableErrorHandling="true"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const date = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'Date requise sans affichage d\'erreur',
+		format: 'DD/MM/YYYY',
+		isBirthDate: false,
+		showWeekNumber: false,
+		required: true,
+		displayRange: false,
+		displayIcon: true,
+		displayAppendIcon: false,
+		isDisabled: false,
+		noIcon: false,
+		noCalendar: false,
+		disableErrorHandling: true,
+		modelValue: '',
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker: DatePicker },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-column pa-4">
+                <div class="mb-5">
+                  <p class="mb-3">Ce champ est requis mais n'affiche pas de message d'erreur grâce à <code>disableErrorHandling</code>:</p>
+                  <DatePicker v-bind="args" v-model="value"/>
+                </div>
+                <div>
+                  <p class="mb-3">Comparaison avec un champ requis standard:</p>
+                  <DatePicker
+                    placeholder="Date requise avec erreur"
+                    format="DD/MM/YYYY"
+                    :required="true"
+                    v-model="value"
+                  />
+                </div>
+              </div>
+            `,
+		}
+	},
+}
+
 export const NoCalendarWithAppendIcon: Story = {
 	parameters: {
 		sourceCode: [
@@ -1020,6 +1102,96 @@ export const NoCalendarWithAppendIcon: Story = {
 					/>
 					<div style="margin-top: 10px; font-family: monospace; color: #666;">
 						Valeur : {{ date }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const NoCalendarWithErrorDisabled: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div class="d-flex">
+						<div class="mr-4" style="width: 300px;">
+							<p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
+							<DatePicker
+								v-model="date1"
+								format="DD/MM/YYYY"
+								placeholder="Date requise sans erreur"
+								required
+								no-icon
+								no-calendar
+								:disableErrorHandling="true"
+							/>
+						</div>
+						<div style="width: 300px;">
+							<p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
+							<DatePicker
+								v-model="date2"
+								format="DD/MM/YYYY"
+								placeholder="Date requise avec erreur"
+								required
+								no-icon
+								no-calendar
+							/>
+						</div>
+					</div>
+				</template>
+				`,
+			},
+		],
+	},
+	args: {
+		noCalendar: true,
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: 'YYYY/MM/DD',
+		placeholder: 'Date requise sans erreur',
+		required: true,
+		noIcon: true,
+		disableErrorHandling: true,
+	},
+	render(args) {
+		const date1 = ref<string | null>(null)
+		const date2 = ref<string | null>(null)
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date1, date2 }
+			},
+			template: `
+				<div style="padding: 20px;">
+					<h4 class="mb-4">DateTextInput avec désactivation des erreurs</h4>
+					<div class="d-flex mb-4">
+						<div class="mr-4" style="width: 300px;">
+							<p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
+							<DatePicker
+								v-model="date1"
+								v-bind="args"
+							/>
+							<div style="margin-top: 10px; font-family: monospace; color: #666;">
+								Valeur : {{ date1 }}
+							</div>
+						</div>
+						
+						<div style="width: 300px;">
+							<p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
+							<DatePicker
+								v-model="date2"
+								format="DD/MM/YYYY"
+								placeholder="Date requise avec erreur"
+								required
+								no-icon
+								no-calendar
+							/>
+							<div style="margin-top: 10px; font-family: monospace; color: #666;">
+								Valeur : {{ date2 }}
+							</div>
+						</div>
 					</div>
 				</div>
 			`,
