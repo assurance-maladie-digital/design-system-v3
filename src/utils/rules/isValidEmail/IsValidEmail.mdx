@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Source } from '@storybook/blocks';
 import * as IsValidEmailStories from './IsValidEmail.stories';
 
 <Meta of={IsValidEmailStories} />
@@ -11,19 +11,19 @@ La règle de validation `isValidEmail` permet de vérifier si une chaîne de car
 
 Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isValidEmailFn` depuis le package `@cnamts/synapse`.
 
-```javascript
+<Source dark code={`
 import { isValidEmailFn } from '@cnamts/synapse';
-```
+`} />
 
 Vous devez ensuite faire appel à cette fonction pour obtenir la règle de validation.
 
-```javascript
+<Source dark code={`
 const isValidEmail = isValidEmailFn(/* optionals options */);
-```
+`} />
 
 Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isValidEmailFn } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -38,11 +38,11 @@ const isValidEmail = isValidEmailFn();
 	/>
 </template>
 
-```
+`} />
 
 Si vous n'utilisez cette règle sans options, vous pouvez faire appel à la fonction `isValidEmail`.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isValidEmail } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -55,17 +55,17 @@ import { VTextField } from 'vuetify/components';
 	/>
 </template>
 
-```
+`} />
 
 ## API
 
-```typescript
+<Source dark code={`
 isValidEmailFn(
 	errorMessages?: {
 		default: string;
 	}
 ): (value: string) => true | string;
-```
+`} />
 
 ### Arguments
 

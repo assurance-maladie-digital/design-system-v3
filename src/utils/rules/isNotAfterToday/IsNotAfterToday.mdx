@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Source } from '@storybook/blocks';
 import * as IsNotAfterTodayStories from './IsNotAfterToday.stories';
 
 <Meta of={IsNotAfterTodayStories} />
@@ -11,14 +11,14 @@ La règle de validation `isNotAfterToday` permet de vérifier qu'une date n'est 
 
 Pour utiliser cette règle de validation, vous devez importer la règle `isNotAfterToday` depuis le package `@cnamts/synapse`.
 
-```javascript
+<Source dark code={`
 import { isNotAfterToday } from '@cnamts/synapse';
-```
+`} />
 
 
 Vous pouvez ensuite utiliser la fonction comme règle d'un champs de formulaire.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isNotAfterToday } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -31,20 +31,20 @@ import { VTextField } from 'vuetify/components';
 		label="Date"
 	/>
 </template>
-```
+`} />
 
 ## Customisation des messages d'erreur
 
 Vous pouvez personnaliser les messages d'erreur en passant un objet `errorMessages` en paramètre de la fonction `isNotAfterTodayFn`.
 Puis en utilisant la fonction retournée comme règle d'un champs de formulaire.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isNotAfterTodayFn } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
 
 const notAfterToday = isNotAfterTodayFn({
-	default: `The date must not be after today`,
+	default: \`The date must not be after today\`,
 });
 
 </script>
@@ -55,11 +55,11 @@ const notAfterToday = isNotAfterTodayFn({
 		label="Date"
 	/>
 </template>
-```
+`} />
 
 ## API
 
-```typescript
+<Source dark code={`
 
 isNotAfterTodayFn(
 	errorMessages?: {
@@ -67,7 +67,7 @@ isNotAfterTodayFn(
 	}
 ): (value: string) => true | string;
 
-```
+`} />
 
 ### Arguments
 

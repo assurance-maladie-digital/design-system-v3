@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Source } from '@storybook/blocks';
 import * as IsMinLengthStories from './IsMinLength.stories';
 
 <Meta of={IsMinLengthStories} />
@@ -11,19 +11,19 @@ La règle de validation `isMinLength` permet de limiter la longueur d'une chaîn
 
 Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isMinLengthFn` depuis le package `@cnamts/synapse`.
 
-```javascript
+<Source dark code={`
 import { isMinLengthFn } from '@cnamts/synapse';
-```
+`} />
 
 Vous devez ensuite faire appel à cette fonction en lui passant en paramètre la longueur minimale que vous souhaitez imposer.
 
-```javascript
+<Source dark code={`
 const min10 = isMinLengthFn(10);
-```
+`} />
 
 Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isMinLengthFn } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -38,11 +38,11 @@ const min10 = isMinLengthFn(10);
 		label="Min 10 characters"
 	/>
 </template>
-```
+`} />
 
 ## API
 
-```typescript
+<Source dark code={`
 isMinLengthFn(
 	minLength: number,
 	ignoreSpaces?: boolean,
@@ -50,7 +50,7 @@ isMinLengthFn(
 		default?: (length: number) => string;
 	}
 ): (value: string) => true | string;
-```
+`} />
 
 ### Arguments
 

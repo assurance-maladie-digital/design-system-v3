@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Source } from '@storybook/blocks';
 import * as IsRequiredStories from './IsRequired.stories';
 
 <Meta of={IsRequiredStories} />
@@ -11,19 +11,19 @@ La règle de validation `isRequired` permet de vérifier qu'un champ de formulai
 
 Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isRequiredFn` depuis le package `@cnamts/synapse`.
 
-```javascript
+<Source dark code={`
 import { isRequiredFn } from '@cnamts/synapse';
-```
+`} />
 
 Vous devez ensuite faire appel à cette fonction pour obtenir la règle de validation.
 
-```javascript
+<Source dark code={`
 const isRequired = isRequiredFn(/* options */);
-```
+`} />
 
 Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isRequiredFn } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -38,11 +38,11 @@ const isRequired = isRequiredFn(/* options */);
 		label="Required field"
 	/>
 </template>
-```
+`} />
 
 Si vous utilisez cette règle sans options, vous pouvez faire appel à la fonction `isRequired`.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isRequired } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -55,17 +55,17 @@ import { VTextField } from 'vuetify/components';
 	/>
 </template>
 
-```
+`} />
 
 ## API
 
-```typescript
+<Source dark code={`
 isRequiredFn(
 	errorMessages?: {
 		default?: string;
 	}
 ): (value: string) => true | string;
-```
+`} />
 
 ### Arguments
 

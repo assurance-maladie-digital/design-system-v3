@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Source } from '@storybook/blocks';
 import * as DoMatchPatternStories from './DoMatchPattern.stories';
 
 <Meta of={DoMatchPatternStories} />
@@ -11,19 +11,19 @@ La règle de validation `doMatchPattern` permet de vérifier qu'une chaîne de c
 
 Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `doMatchPatternFn` depuis le package `@cnamts/synapse`.
 
-```javascript
+<Source dark code={`
 import { doMatchPatternFn } from '@cnamts/synapse';
-```
+`} />
 
 Vous devez ensuite faire appel à cette fonction en lui passant en paramètre le motif que vous souhaitez vérifier.
 
-```javascript
+<Source dark code={`
 const isEmail = doMatchPatternFn(/^[\w-]+@([\w-]+\.)+[\w-]+$/);
-```
+`} />
 
 Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { doMatchPatternFn } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -37,18 +37,18 @@ const isEmail = doMatchPatternFn(/^[\w-]+@([\w-]+\.)+[\w-]+$/);
 		label="Email"
 	/>
 </template>
-```
+`} />
 
 ## API
 
-```typescript
+<Source dark code={`
 doMatchPatternFn(
 	pattern: RegExp,
 	errorMessages?: {
 		default: string;
 	}
 ): (value: string) => true | string;
-```
+`} />
 
 ### Arguments
 

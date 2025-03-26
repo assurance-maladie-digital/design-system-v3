@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Source } from '@storybook/blocks';
 import * as IsMaxLengthStories from './IsMaxLength.stories';
 
 <Meta of={IsMaxLengthStories} />
@@ -11,19 +11,19 @@ La règle de validation `isMaxLength` permet de limiter la longueur d'une chaîn
 
 Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isMaxLengthFn` depuis le package `@cnamts/synapse`.
 
-```javascript
+<Source dark code={`
 import { isMaxLengthFn } from '@cnamts/synapse';
-```
+`} />
 
 Vous devez ensuite faire appel à cette fonction en lui passant en paramètre la longueur maximale que vous souhaitez imposer.
 
-```javascript
+<Source dark code={`
 const max10 = isMaxLengthFn(10);
-```
+`} />
 
 Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isMaxLengthFn } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -38,11 +38,11 @@ const max10 = isMaxLengthFn(10);
 		label="Max 10 characters"
 	/>
 </template>
-```
+`} />
 
 ## API
 
-```typescript
+<Source dark code={`
 isMaxLengthFn(
 	maxLength: number,
 	ignoreSpaces?: boolean,
@@ -50,7 +50,7 @@ isMaxLengthFn(
 		default?: (length: number) => string;
 	}
 ): (value: string) => true | string;
-```
+`} />
 
 ### Arguments
 

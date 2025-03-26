@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Source } from '@storybook/blocks';
 import * as IsDateValidStories from './IsDateValid.stories';
 
 <Meta of={IsDateValidStories} />
@@ -11,19 +11,19 @@ La règle de validation `isDateValid` permet de vérifier si une chaîne de cara
 
 Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isDateValidFn` depuis le package `@cnamts/synapse`.
 
-```javascript
+<Source dark code={`
 import { isDateValidFn } from '@cnamts/synapse';
-```
+`} />
 
 Vous devez ensuite faire appel à cette fonction pour obtenir la règle de validation.
 
-```javascript
+<Source dark code={`
 const isDateValid = isDateValidFn(/* options */);
-```
+`} />
 
 Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isDateValidFn } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -38,11 +38,11 @@ const dateValid = isDateValidFn(/* options */);
 		label="Date"
 	/>
 </template>
-```
+`} />
 
 Si vous n'utilisez cette règle sans options, vous pouvez faire appel à la fonction `isDateValid`.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isDateValid } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -55,11 +55,11 @@ import { VTextField } from 'vuetify/components';
 	/>
 </template>
 
-```
+`} />
 
 ## API
 
-```typescript
+<Source dark code={`
 isDateValidFn(
 	errorMessages?: {
 		default: string;
@@ -68,7 +68,7 @@ isDateValidFn(
 		notALeapYear: string;
 	}
 ): (value: string) => true | string;
-```
+`} />
 
 ### Arguments
 

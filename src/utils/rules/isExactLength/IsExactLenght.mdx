@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Source } from '@storybook/blocks';
 import * as IsExactLengthStories from './IsExactLength.stories';
 
 <Meta of={IsExactLengthStories} />
@@ -11,19 +11,19 @@ La règle de validation `isExactLength` permet d'imposer une longueur exacte à 
 
 Pour utiliser cette règle de validation, vous devez importer la fonction d'ordre supérieur `isExactLengthFn` depuis le package `@cnamts/synapse`.
 
-```javascript
+<Source dark code={`
 import { isExactLengthFn } from '@cnamts/synapse';
-```
+`} />
 
 Vous devez ensuite faire appel à cette fonction en lui passant en paramètre la longueur exacte que vous souhaitez imposer.
 
-```javascript
+<Source dark code={`
 const length15 = isExactLengthFn(15);
-```
+`} />
 
 Vous pouvez ensuite utiliser la fonction retournée comme règle d'un champs de formulaire.
 
-```javascript
+<Source dark code={`
 <script setup lang="ts">
 import { isExactLengthFn } from '@cnamts/synapse';
 import { VTextField } from 'vuetify/components';
@@ -38,11 +38,11 @@ const length15 = isExactLengthFn(15);
 		label="Max 15 characters"
 	/>
 </template>
-```
+`} />
 
 ## API
 
-```typescript
+`} />typescript
 isExactLengthFn(
 	lengthValue: number,
 	ignoreSpaces?: boolean
@@ -50,7 +50,7 @@ isExactLengthFn(
 		default?: (length: number) => string;
 	}
 ): (value: string) => true | string;
-```
+`} />
 
 ### Arguments
 
