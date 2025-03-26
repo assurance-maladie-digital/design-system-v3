@@ -559,6 +559,7 @@
 				:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 				:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
 				color="primary"
+				:show-success-messages="props.showSuccessMessages"
 				is-clearable
 				title="Date Picker"
 				@focus="openDatePicker"
