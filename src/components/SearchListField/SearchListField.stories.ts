@@ -88,7 +88,7 @@ export const Default: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SearchListField from '@cnamts/synapse'
+import { SearchListField } from '@cnamts/synapse'
 
 const modelValue = ref('')
 

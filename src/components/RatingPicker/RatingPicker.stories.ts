@@ -141,7 +141,7 @@ export const Default: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import RatingPicker from '@cnamts/synapse'
+import { RatingPicker } from '@cnamts/synapse'
 
 const ratingEmotion = ref(-1)
 </script>
@@ -192,7 +192,7 @@ export const TwoEmotions: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import RatingPicker from '@cnamts/synapse'
+import { RatingPicker } from '@cnamts/synapse'
 
 const ratingEmotion = ref(-1)
 </script>
@@ -241,7 +241,7 @@ export const Numbers: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import RatingPicker from '@cnamts/synapse'
+import { RatingPicker } from '@cnamts/synapse'
 
 const ratingNumber = ref(-1)
 </script>
@@ -290,7 +290,7 @@ export const Stars: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import RatingPicker from '@cnamts/synapse'
+import { RatingPicker } from '@cnamts/synapse'
 
 const ratingStar = ref(-1)
 </script>
@@ -341,7 +341,7 @@ export const ReadOnly: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import RatingPicker from '@cnamts/synapse'
+import { RatingPicker } from '@cnamts/synapse'
 
 const ratingEmotion = ref(-1)
 </script>
@@ -392,7 +392,7 @@ export const HideAlert: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import RatingPicker from '@cnamts/synapse'
+import { RatingPicker } from '@cnamts/synapse'
 
 const ratingEmotion = ref(-1)
 </script>
@@ -488,7 +488,7 @@ export const DefaultSlot: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import {RatingPicker, SySelect} from '@cnamts/synapse'
+import { RatingPicker, SySelect } from '@cnamts/synapse'
 import { VBtn, VSpacer } from 'vuetify/components'
 
 const ratingEmotion = ref(-1)
