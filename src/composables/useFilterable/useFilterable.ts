@@ -28,8 +28,8 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 		return slugify(name, { lower: true })
 	}
 
-	function getChips(toto: FilterItem): ChipItem[] {
-		const { value, formatChip } = toto
+	function getChips(filter: FilterItem): ChipItem[] {
+		const { value, formatChip } = filter
 
 		if (value !== undefined && formatChip) {
 			return formatChip(value)
@@ -63,7 +63,7 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 				}
 
 				return {
-					text: item.text || item.value.toString(),
+					text: item.title || item.text || item.value.toString(),
 					value: item,
 				}
 			})
@@ -92,7 +92,8 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 			return Object.keys(typedValue).map((key) => {
 				// Use text property if it exists, else use value property or default to key value
 				const text
-					= typedValue[key].text
+					= typedValue[key].title
+						|| typedValue[key].text
 						|| typedValue[key].value?.toString()
 						|| typedValue[key].toString()
 
