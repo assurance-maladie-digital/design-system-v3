@@ -95,7 +95,7 @@ pre.prismjs {
 		margin-top: 2rem;
 	}
 
-	div > div > h2 {
+	div > div > div > h2 {
 		display: none;
 	}
 

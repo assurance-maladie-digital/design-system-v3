@@ -13,10 +13,17 @@ export const List = {
 			components: { SyAlert },
 			setup() {
 				const releases = ref([])
+				const errorMessage = ref('')
 
 				const fetchReleases = async () => {
-					const { data } = await axios.get('https://api.github.com/repos/assurance-maladie-digital/design-system-v3/releases')
-					releases.value = data
+					try {
+						const { data } = await axios.get('https://api.github.com/repos/assurance-maladie-digital/design-system-v3/releases')
+						releases.value = data
+					}
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					catch (error) {
+						errorMessage.value = 'Une erreur est survenue lors de la récupération des releases.'
+					}
 				}
 
 				const formatDate = (date: string | number | Date) => {
@@ -33,6 +40,7 @@ export const List = {
 
 				return {
 					releases,
+					errorMessage,
 					formatDate,
 					formatMarkdown,
 				}
@@ -42,10 +50,13 @@ export const List = {
 					<SyAlert type="info" variant="tonal" :closable="false">
 						<template #default>Nous faisons des nouvelles release (correction de bugs ou nouvelles fonctionnalités) régulièrement. Vous pouvez retrouver la liste des dernières releases ci-dessous.</template>
 					</SyAlert>
-					<div v-for="release in releases" :key="release.id">
-						<h2>{{ release.name }} ({{ formatDate(release.published_at) }})</h2>
-						<div v-html="formatMarkdown(release.body)"></div>
-						<hr>
+					<div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+					<div v-else>
+						<div v-for="release in releases" :key="release.id">
+							<h2>{{ release.name }} ({{ formatDate(release.published_at) }})</h2>
+							<div v-html="formatMarkdown(release.body)"></div>
+							<hr>
+						</div>
 					</div>
 				</div>
 			`,
