@@ -61,26 +61,32 @@ $radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
 	border-radius: var(--radius-md) !important;
 }
 
-.v-btn--rounded-md {
+.v-btn.rounded-md {
 	border-radius: var(--radius-md) !important;
 }
 
-.v-btn--rounded-sm {
+.v-btn.rounded-sm {
 	border-radius: var(--radius-sm) !important;
 }
 
-.v-btn--rounded-lg {
+.v-btn.rounded-lg {
 	border-radius: var(--radius-lg) !important;
 }
 
-.v-btn--rounded-xl {
+.v-btn.rounded-xl {
 	border-radius: var(--radius-xl) !important;
 }
 
-.v-btn--rounded-pill {
+.v-btn.rounded-pill {
 	border-radius: var(--radius-pill) !important;
 }
 
-.v-btn--rounded-circle {
+.v-btn.rounded-circle {
 	border-radius: var(--radius-circle) !important;
+}
+
+.v-date-picker {
+	.v-btn {
+		border-radius: var(--radius-pill) !important;
+	}
 }

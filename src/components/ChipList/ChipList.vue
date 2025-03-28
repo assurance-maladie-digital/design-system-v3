@@ -203,7 +203,7 @@
 				color="primary"
 				size="small"
 				data-test-id="reset-btn"
-				class="overflow-btn px-1 ml-0 my-1"
+				class="overflow-btn px-1 ml-1 my-1"
 				@click="emitResetEvent"
 			>
 				{{ resetButtonText }}
@@ -242,5 +242,9 @@
 // Disable overflow button hover state
 .overflow-btn :deep(.v-btn__overlay) {
 	display: none;
+}
+
+.remove-chip {
+	padding: 0 !important;
 }
 </style>
