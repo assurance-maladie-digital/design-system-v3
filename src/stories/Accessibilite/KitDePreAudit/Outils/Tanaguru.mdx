@@ -2,7 +2,13 @@ import {Meta} from '@storybook/addon-docs/blocks';
 
 <Meta title="Accessibilité/Kit de pré-audit/Outils/Tanaguru"/>
 
-# Utilisation de Tanaguru
+# Tanaguru
+
+## Qu'est-ce que Tanaguru ?
+
+Appelée [**Tanaguru webext RGAA (Extension Firefox)**](https://addons.mozilla.org/fr/firefox/addon/tanaguru-webext/), il s'agit d'une extension de navigateur conçue pour faciliter l'audit d'accessibilité des sites web selon le **Référentiel Général d'Amélioration de l'Accessibilité (RGAA)**. Elle permet aux utilisateurs de vérifier, directement depuis leur navigateur, la conformité de pages web aux critères d'accessibilité du RGAA, en offrant une évaluation rapide des problèmes d'accessibilité tels que les contrastes, les alternatives textuelles manquantes, la structure des balises HTML, etc. Cette extension fonctionne comme un outil d'audit instantané pour les développeurs et les testeurs d'accessibilité, en affichant directement les erreurs et en proposant des suggestions pour améliorer l'accessibilité du site. **Attention, ce service ne permet pas d’évaluer l’ensemble des 106 critères du RGAA, uniquement ceux qui sont automatisable**. Un audit d'accessibilité ne peut pas se reposer uniquement sur des outils automatisés car ces derniers ne détectent qu'un nombre limité de problèmes techniques. De nombreux critères d'accessibilité nécessitent une évaluation manuelle, tenant compte de la perception humaine et du contexte d’utilisation. Sur les 258 tests du RGAA, Tanaguru estime qu’environ 100 tests ne sont pas automatisés.
+
+## Utilisation de Tanaguru
 
 **1. Analyse d’une page d’ameli.fr , [https://www.ameli.fr/assure/adresses-et-contacts/l-obtention-d-un-document/obtenir-une-attestation](https://www.ameli.fr/assure/adresses-et-contacts/l-obtention-d-un-document/obtenir-une-attestation)**
 
@@ -20,13 +26,13 @@ Cliquez ensuite sur **Analyser cette page**
 
 <img alt="UtilisationTanaguruEtape3" src={'/tanaguruetape3.png'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
 
-**5. Les éléments sur la gauche, correspondent aux thématiques du RGAA**
+**5. Les éléments sur la gauche, correspondent aux thématiques du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>**
 
 <img alt="UtilisationTanaguruEtape4" src={'/tanaguruetape4.png'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
 
 **6. Exemple: **Eléments obligatoires** 3 erreurs qui correspondent a plusieurs éléments dans notre page. Dont l’erreur est “**propriété ARIA non autorisées sur leur élément**”.**
 
-On va chercher dans la thématique **Eléments obligatoires** du RGAA, les critères qui pourraient correspondre à l’erreur de Tanaguru.
+On va chercher dans la thématique **Eléments obligatoires** du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>, les critères qui pourraient correspondre à l’erreur de Tanaguru.
 
 <img alt="UtilisationTanaguruEtape5" src={'/tanaguruetape5.png'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
 1. La loupe permet de localiser le problème dans le code ( /!\ cet élément n’est pas toujours accessible).

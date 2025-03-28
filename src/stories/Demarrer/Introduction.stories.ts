@@ -104,7 +104,7 @@ export const Panels: StoryObj = {
 			template: `
               <div>
                <v-expansion-panels>
-                    <v-expansion-panel>     
+                    <v-expansion-panel>
                       <v-expansion-panel-title style="display: inline-grid;">
                       <p style="font-weight:bold;"><VIcon :icon="arrowIcon"/>Le design system CNAM</p> 
                       <p>Un référentiel centralisé de nos styles et composants pour garantir une expérience utilisateur cohérente et harmonieuse sur toutes nos plateformes.</p>
@@ -120,12 +120,12 @@ export const Panels: StoryObj = {
 						<p style="margin-bottom:10px;">Lorsqu'une nouvelle fonctionnalité ou un nouveau produit est ajouté, l'équipe produit peut facilement l'intégrer au système existant, en utilisant les composants et règles déjà en place. Cela garantit une croissance rapide sans sacrifier la qualité ou la cohérence.</p>
 						<p style="margin-bottom:5px;font-weight:bold;">→ Profiter de standards de qualité et d’accessibilité.</p>
 						<p style="margin-bottom:10px;">Standards de qualité : Avec ses composants validés et testés, le design system vous assure que la qualité soit maintenue à travers toutes les interfaces, qu'il s'agisse d'éléments visuels, d'interactions ou de fonctionnalités.</p>
-						<p style="margin-bottom:20px;">Standards d’accessibilité : </p>
+						<p style="margin-bottom:20px;">Standards d’accessibilité : Grâce à des audits et à des bonnes pratiques intégrées, le design system garantit que chaque composant respecte les critères d'accessibilité, offrant ainsi une expérience inclusive pour tous les utilisateurs, y compris ceux en situation de handicap.</p>
         				 </v-expansion-panel-text>
                     </v-expansion-panel>
 			   </v-expansion-panels>
 				<v-expansion-panels style="margin-top:20px;">
-                    <v-expansion-panel>     
+                    <v-expansion-panel>
                       <v-expansion-panel-title>
                       <p style="font-weight:bold;"><VIcon :icon="arrowIcon"/>Pour aller plus loin sur le fonctionnement et l’utilisation du design system</p>
                       </v-expansion-panel-title>
