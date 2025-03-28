@@ -84,3 +84,9 @@ $radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
 .v-btn.rounded-circle {
 	border-radius: var(--radius-circle) !important;
 }
+
+.v-date-picker {
+	.v-btn {
+		border-radius: var(--radius-pill) !important;
+	}
+}
