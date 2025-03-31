@@ -1,7 +1,9 @@
 import { apColorsTokens } from './apColors'
 // import { apSemanticTokens } from '../amelipro/apSemantic'
+import { apColorClasses } from './apColors'
 
 export const apLightTheme = {
+	...apColorClasses,
 	error: apColorsTokens.apRed.base,
 	info: apColorsTokens.apParme.darken1 as string,
 	primary: apColorsTokens.apBlue.darken1 as string,
