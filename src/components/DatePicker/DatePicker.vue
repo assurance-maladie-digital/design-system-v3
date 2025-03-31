@@ -37,6 +37,7 @@
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
 		displayTodayButton?: boolean
+		displayWeekendDays?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -60,6 +61,7 @@
 		disableErrorHandling: false,
 		showSuccessMessages: true,
 		displayTodayButton: false,
+		displayWeekendDays: false,
 	})
 
 	const emit = defineEmits<{
@@ -313,6 +315,8 @@
 
 		return formatDate(selectedDates.value, props.format)
 	})
+
+	const displayWeekendDays = computed(() => props.displayWeekendDays)
 
 	watch(displayFormattedDateComputed, (newValue) => {
 		if (!props.noCalendar && newValue) {
@@ -616,6 +620,7 @@
 						:show-week="props.showWeekNumber"
 						:view-mode="currentViewMode"
 						:events="isWeekend"
+						:class="displayWeekendDays ? 'weekend' : ''"
 						event-color="error"
 						@update:view-mode="handleViewModeUpdate"
 						@update:year="handleYearUpdate"
@@ -748,4 +753,13 @@
 .fade-leave-to {
 	opacity: 0;
 }
+
+:deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
+    background-color: rgb(255, 0, 0);
+  }
+
+  /* div avant la class .v-date-picker-month__day--week-end */
+  :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
+    background-color: rgb(232, 12, 177);
+  }
 </style>
