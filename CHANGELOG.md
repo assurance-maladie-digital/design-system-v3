@@ -1,3 +1,33 @@
+## v0.0.13-alpha (31-03-2025)
+
+### Composants
+
+- Fix some bugs display on Chiplist and DatePicker [`#476`](https://github.com/assurance-maladie-digital/design-system-v3/pull/476)
+- Fix messages display on inputs [`#472`](https://github.com/assurance-maladie-digital/design-system-v3/pull/472)
+- ChipList: improve variable naming and enhance chip label handling [`#470`](https://github.com/assurance-maladie-digital/design-system-v3/pull/470)
+- DatePicker: add forgotten props [`#468`](https://github.com/assurance-maladie-digital/design-system-v3/pull/468)
+- DatePicker: improve date inputs [`#460`](https://github.com/assurance-maladie-digital/design-system-v3/pull/460)
+- DatePicker: Reduce duplicate watches to improve performance + improve display [`#457`](https://github.com/assurance-maladie-digital/design-system-v3/pull/457)
+- Add global validation rules [`#461`](https://github.com/assurance-maladie-digital/design-system-v3/pull/461)
+- SearchListField: add missing export [`#464`](https://github.com/assurance-maladie-digital/design-system-v3/pull/464)
+- TableToolBar: add missing export [`#452`](https://github.com/assurance-maladie-digital/design-system-v3/pull/452)
+- NirField / PhoneField: improve tests coverage [`#456`](https://github.com/assurance-maladie-digital/design-system-v3/pull/456)
+- useFieldValidation: Improve tests coverage [`#455`](https://github.com/assurance-maladie-digital/design-system-v3/pull/455)
+- SyTextField / SySelect / PasswordField / NirField / PhoneField: make error handling optional  [`#448`](https://github.com/assurance-maladie-digital/design-system-v3/pull/448)
+- PaginatedTable: fix style [`#453`](https://github.com/assurance-maladie-digital/design-system-v3/pull/453)
+- NotificationBar: fix accessibility [`#445`](https://github.com/assurance-maladie-digital/design-system-v3/pull/445)
+
+### Documentation
+
+- Enhance accessibility pages [`#473`](https://github.com/assurance-maladie-digital/design-system-v3/pull/473), [`#450`](https://github.com/assurance-maladie-digital/design-system-v3/pull/450)
+- FileUpload fix type [`#475`](https://github.com/assurance-maladie-digital/design-system-v3/pull/475)
+- ChipList: fix documentation and type [`#474`](https://github.com/assurance-maladie-digital/design-system-v3/pull/474), [`#449`](https://github.com/assurance-maladie-digital/design-system-v3/pull/449)
+- Add releases page [`#469`](https://github.com/assurance-maladie-digital/design-system-v3/pull/469)
+- Add breaking changes page [`#462`](https://github.com/assurance-maladie-digital/design-system-v3/pull/462)
+- Fix some imports components exemples [`#471`](https://github.com/assurance-maladie-digital/design-system-v3/pull/471)
+- Improve rules documentation [`#467`](https://github.com/assurance-maladie-digital/design-system-v3/pull/467)
+- Add tests to usages component [`#454`](https://github.com/assurance-maladie-digital/design-system-v3/pull/454)
+
 ## v0.0.12-alpha (19-03-2025)
 
 ### Composants
