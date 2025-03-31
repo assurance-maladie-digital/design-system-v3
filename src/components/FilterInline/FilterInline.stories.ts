@@ -210,6 +210,7 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
+				<template>
 <FilterInline
 	v-model="filters"
 >
@@ -255,11 +256,13 @@ export const Default: Story = {
 		/>
 	</template>
 </FilterInline>
+</template>
 				`,
 			},
 			{
 				name: 'Script',
 				code: `
+				<script lang='ts setup>
 import { ref } from 'vue'
 import { FilterInline, PeriodField, SearchListField } from '@cnamts/synapse'
 import { VTextField, VSelect } from 'vuetify/components'
@@ -315,6 +318,7 @@ const professionList = [
 		value: 'pharmacien',
 	},
 ]
+	</script>
 				`,
 			},
 		],
