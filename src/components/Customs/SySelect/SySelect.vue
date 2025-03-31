@@ -211,6 +211,7 @@
 			v-if="isOpen"
 			class="v-list"
 			:style="`min-width: ${input?.$el.offsetWidth}px`"
+			bg-color="white"
 			@keydown.esc.prevent="isOpen = false"
 		>
 			<VListItem
@@ -253,7 +254,6 @@
 	position: absolute;
 	left: inherit !important;
 	margin-top: -22px;
-	background-color: white;
 	max-height: 300px;
 	padding: 0;
 	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
