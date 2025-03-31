@@ -34,7 +34,7 @@ export const Desktop: StoryObj = {
 						  max width = 1600 px
 					  </VCol>
 				  </VRow>
-				  <img src="/.storybook/public/conteneur-desktop.svg" alt="Tablet" class="w-100 mt-4" />
+				  <img src="/conteneur-desktop.svg" alt="Tablet" class="w-100 mt-4" />
               </div>
             `,
 		}
@@ -62,7 +62,7 @@ export const Tablet: StoryObj = {
 						  Gutter : 24px
 					  </VCol>
 					  <VCol md="6" sm="12">
-						  <img src="/.storybook/public/conteneur-tablet.svg" alt="Tablet" class="w-100" />
+						  <img src="/conteneur-tablet.svg" alt="Tablet" class="w-100" />
 					  </VCol>
 				  </VRow>
               </div>
@@ -92,7 +92,7 @@ export const Mobile: StoryObj = {
 						  Gutter : 24px
 					  </VCol>
 					  <VCol md="6" sm="12">
-						  <img src="/.storybook/public/conteneur-mobile.svg" alt="Mobile" class="w-50" />
+						  <img src="/conteneur-mobile.svg" alt="Mobile" class="w-50" />
 					  </VCol>
 				  </VRow>
               </div>
