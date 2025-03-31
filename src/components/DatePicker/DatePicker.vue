@@ -36,6 +36,7 @@
 		width?: string
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
+		displayTodayButton?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -58,6 +59,7 @@
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
+		displayTodayButton: false,
 	})
 
 	const emit = defineEmits<{
@@ -451,6 +453,28 @@
 		}
 	}
 
+	// Fonction pour détecter si une date est un weekend (samedi ou dimanche)
+	const isWeekend = (date: string | number | Date) => {
+		const day = new Date(date).getDay()
+		// 0 = dimanche, 6 = samedi
+		return day === 0 || day === 6
+	}
+
+	// Fonction pour sélectionner la date d'aujourd'hui
+	const selectToday = () => {
+		const today = new Date()
+		if (props.displayRange) {
+			// Si c'est une plage de dates, on définit le même jour pour début et fin
+			selectedDates.value = [today, today]
+		}
+		else {
+			// Sinon, on sélectionne simplement aujourd'hui
+			selectedDates.value = today
+		}
+		// Le watcher sur selectedDates se chargera de mettre à jour l'affichage
+		// et d'émettre l'événement update:modelValue
+	}
+
 	const syncFromModelValue = (newValue: DateInput | undefined) => {
 		if (!newValue || newValue === '') {
 			selectedDates.value = null
@@ -591,6 +615,8 @@
 						:show-adjacent-months="true"
 						:show-week="props.showWeekNumber"
 						:view-mode="currentViewMode"
+						:events="isWeekend"
+						event-color="error"
 						@update:view-mode="handleViewModeUpdate"
 						@update:year="handleYearUpdate"
 						@update:month="handleMonthUpdate"
@@ -602,6 +628,16 @@
 							<h3 class="mx-auto my-auto ml-5 mb-4">
 								{{ todayInString }}
 							</h3>
+						</template>
+						<template #actions>
+							<v-btn
+								v-if="props.displayTodayButton"
+								color="primary"
+								variant="outlined"
+								@click="selectToday"
+							>
+								Aujourd'hui
+							</v-btn>
 						</template>
 					</VDatePicker>
 				</transition>
