@@ -1,0 +1,77 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="Accessibilité/Kit de pré-audit/Outils/Lecteurs d'écran"/>
+
+# Guide lecteurs d'écran
+
+Ce guide ne vise pas à vous former à l'utilisation quotidienne d'un lecteur d'écran, mais à vous fournir les informations nécessaires pour évaluer l'accessibilité des composants intégrés dans votre service.
+
+## Qu’est-ce qu’un lecteur d’écran ?
+
+Un lecteur d'écran est un logiciel d’assistance technique destiné aux personnes « empêchées de lire » (aveugles, malvoyantes, dyslexiques, dyspraxiques…) en transformant le contenu affiché à l'écran en synthèse vocale ou braille. Il permet de naviguer dans le système d'exploitation et les applications en restituant le contenu textuel et sa structure, à condition que cette information soit correctement fournie par le logiciel (par exemple, le navigateur web). Il ne peut pas interpréter des éléments non textuels comme des images ou des graphiques. C’est pourquoi le respect des normes d’accessibilité est important afin que la restitution puisse se faire correctement (ex : ajout d’un texte alternatif à une image).
+
+Le lecteur d'écran bureau se pilote principalement au clavier tandis que c’est essentiellement avec des gestes pour la version mobile.
+
+Il n'existe pas de lecteur d'écran unique et ils different en fonction du système d’exploitation. Ce guide se concentrera sur NVDA pour Windows et TalkBack pour Android.
+
+## Utilité d’un lecteur d’écran
+
+Un lecteur d'écran est essentiel pour un audit d'accessibilité car il permet de simuler l'expérience d'un utilisateur aveugle ou malvoyant. Il aide à :
+
+1. **Vérifier la structure** : Tester la logique de navigation (titres, sections, éléments interactifs).
+2. **Tester l'interactivité** : S'assurer que les éléments sont accessibles via le clavier et correctement annoncés.
+3. **Vérifier les mises à jour dynamiques** : S'assurer que les changements de contenu sont bien signalés.
+4. **Contrôler le balisage** : Vérifier l'utilisation correcte des balises HTML et ARIA pour une navigation fluide.
+5. **Accessibilité multimédia** : Vérifier que les images et vidéos sont correctement décrites.
+
+Cela garantit que l'interface est réellement accessible, permettant une navigation autonome pour les utilisateurs en situation de handicap visuel. N'oubliez pas de consulter les manuels officiels pour des informations détaillées sur l'utilisation de chaque outil.
+
+## NVDA (Windows)
+
+NVDA est un lecteur d'écran pour Windows, principalement utilisé pour l'audit d'accessibilité de sites web et d'applications bureautiques.
+
+Il restitue l’information sous 2 modes : le mode navigation et le mode formulaire.
+
+### Mode navigation
+
+Le mode de navigation permet de se déplacer dans le contenu d'une page (titres, liens, paragraphes, etc.)
+
+Il fournit des informations supplémentaires lors de la vocalisation. Par exemple, il annoncera "liste de x éléments" pour une liste à puces ou encore le niveau des titres, comme "titre de niveau 2", suivi de leur intitulé.
+
+### Mode formulaire
+
+Le mode formulaire est utilisé pour interagir avec des éléments de formulaire (champs de texte, cases à cocher, boutons, etc.) et y entrer des données. Le lecteur d’écran passe sur ce mode automatiquement lorsqu’il se trouve être sur un composant interactif. Les “raccourcis lettre” ne fonctionnent alors plus puisqu’ils servent à insérer du texte.
+
+Principaux raccourcis :
+
+- CTRL + ALT + n : Activer NVDA
+- NVDA + q : Quitter NVDA
+- CTRL : Arrêt de la parole
+- Flèche bas : Élément suivant
+- Flèche haut : Élément précédent
+- Tab : Élément focusable suivant
+- Maj + Tab : Élément focusable précédent
+- h : Titre suivant
+- f : Champ de formulaire suivant
+- k : Lien suivant
+- d : Région suivante
+- MAJ + lettre : Revenir en arrière
+
+Pour plus de détails, consultez [le manuel officiel NVDA](https://www.nvda.fr/doc.php) ainsi que [le guide de Tanaguru](https://www.tanaguru.com/guide-et-raccourcis-nvda-pour-les-tests-daccessibilite/).
+
+## TalkBack (Android)
+
+TalkBack est un lecteur d'écran pour Android, directement embarqué.
+
+Pour l’activer ou le désactiver, il suffit de se rendre dans les paramètres de votre appareil puis dans le menu “Accessibilité”. Un tutoriel d’utilisation vous sera alors proposé au démarrage. C’est à cet endroit que vous pouvez personnaliser l’outil tel que la vitesse de la parole, la tonalité, les gestes, etc.
+
+Ce lecteur d’écran utilise des gestes spécifiques pour naviguer dans l’interface. Voici les principaux gestes :
+
+- **Déplacer le focus** : Faites glisser un doigt vers la gauche ou vers la droite pour déplacer le focus entre les éléments à l'écran.
+- **Sélectionner un élément** : Touchez un élément à l'écran avec un seul doigt pour entendre sa description, puis double-tapez pour l'activer.
+- **Faire défiler** : Balayez deux doigts vers le haut ou vers le bas pour faire défiler l'écran.
+- **Retour** : Faites glisser trois doigts vers la gauche pour revenir en arrière.
+- **Accéder au menu d'options** : Touchez deux fois et maintenez pour ouvrir le menu contextuel des options (comme le copier, coller, etc.).
+- **Suspendre ou reprendre la lecture :** Appuyez avec deux doigts
+
+Pour plus de détails, consultez [le manuel officiel TalkBack](https://support.google.com/accessibility/android/answer/6283677?hl=fr).

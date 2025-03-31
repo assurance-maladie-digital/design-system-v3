@@ -20,6 +20,7 @@ export const config: ComponentConfig = {
 		size: 'small',
 		density: 'compact',
 		variant: 'text' as VuetifyVariant,
+		rounded: 'pill',
 	},
 	icon: {
 		size: 'medium',

@@ -1,0 +1,28 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="Accessibilité/Aculturation/Audit du Design System"/>
+
+# Audit du Design System
+
+## Objectifs
+
+Le Design System Synapse offre de nombreux avantages en matière d'accessibilité pour les services qui l'adoptent. En veillant à ce que les composants respectent les normes d'accessibilité, il assure une conformité optimale avec les critères du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> pour les produits. Cela simplifie la mise en œuvre de l'accessibilité à grande échelle sur les services numériques, réduisant ainsi les erreurs humaines et améliorant l'expérience utilisateur pour tous, et pas seulement pour les personnes en situation de handicap.
+
+Nous réalisons actuellement un audit d'accessibilité du Design System afin d’évaluer sa conformité au <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>. Cet audit vise à identifier les points d'amélioration pour garantir que tous les composants sont accessibles.
+
+## Couverture des critères
+
+Le Design System ne garantit pas à lui seul l'accessibilité des services qui l'implémente, car il ne couvre pas l'ensemble des critères du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>. En effet, le Design System se concentre sur l'aspect visuel et interactif des composants (comme les couleurs, la typographie, les interactions avec l'interface, etc.), tandis que le service doit respecter des critères plus larges. Par exemple, il doit veiller à la structure sémantique des contenus, aux alternatives textuelles, à la gestion des erreurs de formulaire, à l'accessibilité des contenus multimédia, etc. Le Design System facilite l'intégration des bonnes pratiques d’accessibilité, mais pour une conformité totale, des ajustements et une validation supplémentaires sont nécessaires au niveau du design, du contenu et de la mise en œuvre technique.
+
+## Documentation et rapports
+
+Chaque composant possède une page "Accessibilité" qui vous renseignera sur les critères du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> remontées par l'audit Tanaguru ainsi qu'un rapport complet d'un audit manuel. Vous pourrez ainsi suivre les correctifs réalisés et identifier la méthodologie appliquée.
+
+<figure>
+  <img
+    src={"/capture-page-accessibilite-composant.png"}
+    aria-labelledby="capture-page-accessibilite-alt"
+    style={{ marginTop: '20px', padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}}
+  />
+  <figcaption id="capture-page-accessibilite-alt" class={'text-caption text-center'}>Capture d'écran de la page Accessibilité du composant NotificationBar.<br/>Celle-ci donne des éléments sur les audits Tanaguru et manuels.</figcaption>
+</figure>

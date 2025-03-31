@@ -245,12 +245,14 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<FileUpload
-		v-model="modelValue"
-	/>
-	<ul class="ma-2">
-		<li v-for="file in modelValue" :key="file.name">{{ file.name }}</li>
-	</ul>
+	<main>
+		<FileUpload
+			v-model="modelValue"
+		/>
+		<ul class="ma-2">
+			<li v-for="file in modelValue" :key="file.name">{{ file.name }}</li>
+		</ul>
+	</main>
 </template>
 				`,
 			},
@@ -261,7 +263,7 @@ export const Default: Story = {
 	import { FileUpload } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
-	const modelValue = ref([])
+	const modelValue = ref<File[]>([])
 
 </script>
 				`,
