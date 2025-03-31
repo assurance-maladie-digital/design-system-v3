@@ -266,7 +266,7 @@ export const Default: Story = {
 	</template>
 
 	<template #period="{ props }">
-		<PeriodField
+		<PeriodFieldß
 			v-bind="props"
 			variant="outlined"
 		/>
@@ -286,7 +286,7 @@ export const Default: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { FilterSideBar } from '@cnamts/synapse'
+import { FilterSideBar, PeriodField, SearchListField } from '@cnamts/synapse'
 
 const filters = ref([
 	{
