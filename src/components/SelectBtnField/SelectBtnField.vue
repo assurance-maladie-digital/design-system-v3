@@ -113,7 +113,6 @@
 		class="select-btn-field"
 	>
 		<VBtnToggle
-			v-bind="options.btnToggle"
 			tag="ul"
 			:model-value="internalValue"
 			:multiple="multiple"
@@ -138,6 +137,7 @@
 						'text-error': error && !isSelected(item.value),
 						'justify-start': !isSelected(item.value),
 						'justify-space-between': isSelected(item.value),
+						'mr-2': inline,
 					}"
 					:label="isSelected(item.value) ? 'Sélectionné' : ''"
 					@click="toggleItem(item)"
@@ -182,7 +182,6 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
-
 :deep(.v-btn-group) {
 	height: auto !important;
 
@@ -195,18 +194,10 @@
 	.v-btn:not(:first-child) {
 		border-inline-start: inherit;
 	}
+}
 
-	.v-btn:last-child {
-		border-end-end-radius: 4px;
-		border-start-end-radius: 4px;
-		margin-right: 0;
-	}
-
-	.v-btn:first-child {
-		border-start-start-radius: 4px;
-		border-end-start-radius: 4px;
-		margin-right: 8px;
-	}
+.v-btn-group .v-btn:first-child {
+  margin-right: 0 !important;
 }
 
 .select-btn-field-toggle {
