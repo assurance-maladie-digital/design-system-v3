@@ -862,11 +862,11 @@
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-    background-color: #AFB1B1;
-  }
+	background-color: #afb1b1;
+}
 
-  /* div avant la class .v-date-picker-month__day--week-end */
-  :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-    background-color: #AFB1B1;
-  }
+/* div avant la class .v-date-picker-month__day--week-end */
+:deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
+	background-color: #afb1b1;
+}
 </style>
