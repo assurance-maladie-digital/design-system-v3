@@ -33,11 +33,48 @@
 		noCalendar?: boolean
 		isOutlined?: boolean
 		isReadOnly?: boolean
-		width?: string
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
 		displayTodayButton?: boolean
 		displayWeekendDays?: boolean
+		allowedDates?: unknown[] | ((date: unknown) => boolean)
+		max?: unknown
+		min?: unknown
+		month?: string | number
+		year?: number
+		bgColor?: string
+		border?: string | number | boolean
+		color?: string
+		disabled?: boolean
+		elevation?: string | number
+		firstDayOfWeek?: string | number
+		header?: string
+		height?: string | number
+		hideHeader?: boolean
+		hideWeekdays?: boolean
+		landscape?: boolean
+		location?: string
+		maxHeight?: string | number
+		maxWidth?: string | number
+		minHeight?: string | number
+		minWidth?: string | number
+		position?: 'fixed' | 'relative' | 'static' | 'absolute' | 'sticky'
+		rounded?: string | number | boolean
+		tag?: string
+		text?: string
+		theme?: string
+		tile?: boolean
+		title?: string
+		width?: string | number
+		modeIcon?: string | (string | [string, number])[] | any
+		nextIcon?: string | (string | [string, number])[] | any
+		prevIcon?: string | (string | [string, number])[] | any
+		showAdjacentMonths?: boolean
+		weeksInMonth?: 'static' | 'dynamic'
+		weekdays?: number[]
+		transition?: string
+		reverseTransition?: string
+
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -62,6 +99,42 @@
 		showSuccessMessages: true,
 		displayTodayButton: false,
 		displayWeekendDays: false,
+		allowedDates: undefined,
+		bgColor: undefined,
+		border: false,
+		color: undefined,
+		disabled: false,
+		elevation: undefined,
+		firstDayOfWeek: '1',
+		header: undefined,
+		height: undefined,
+		hideHeader: false,
+		hideWeekdays: false,
+		landscape: false,
+		location: undefined,
+		max: undefined,
+		maxHeight: undefined,
+		maxWidth: undefined,
+		min: undefined,
+		minHeight: undefined,
+		minWidth: undefined,
+		month: undefined,
+		position: undefined,
+		rounded: false,
+		tag: undefined,
+		text: undefined,
+		theme: undefined,
+		tile: false,
+		title: undefined,
+		modeIcon: undefined,
+		nextIcon: undefined,
+		prevIcon: undefined,
+		showAdjacentMonths: true,
+		weeksInMonth: 'static',
+		weekdays: undefined,
+		transition: undefined,
+		reverseTransition: undefined,
+		year: undefined,
 	})
 
 	const emit = defineEmits<{
@@ -614,14 +687,45 @@
 						v-if="isDatePickerVisible && !props.noCalendar"
 						v-model="selectedDates"
 						color="primary"
-						:first-day-of-week="1"
+						:first-day-of-week="props.firstDayOfWeek"
 						:multiple="props.displayRange ? 'range' : false"
-						:show-adjacent-months="true"
+						:show-adjacent-months="props.showAdjacentMonths"
 						:show-week="props.showWeekNumber"
 						:view-mode="currentViewMode"
 						:events="isWeekend"
+						:allowed-dates="props.allowedDates"
+						:bg-color="props.bgColor"
 						:class="displayWeekendDays ? 'weekend' : ''"
 						event-color="error"
+						:max="props.max"
+						:min="props.min"
+						:month="props.month"
+						:year="props.year"
+						:header="props.header"
+						:height="props.height"
+						:hide-header="props.hideHeader"
+						:hide-weekdays="props.hideWeekdays"
+						:landscape="props.landscape"
+						:location="props.location"
+						:max-height="props.maxHeight"
+						:max-width="props.maxWidth"
+						:min-height="props.minHeight"
+						:min-width="props.minWidth"
+						:position="props.position"
+						:rounded="props.rounded"
+						:tag="props.tag"
+						:text="props.text"
+						:theme="props.theme"
+						:tile="props.tile"
+						:title="props.title"
+						:width="props.width"
+						:mode-icon="props.modeIcon"
+						:next-icon="props.nextIcon"
+						:prev-icon="props.prevIcon"
+						:weeks-in-month="props.weeksInMonth"
+						:weekdays="props.weekdays"
+						:transition="props.transition"
+						:reverse-transition="props.reverseTransition"
 						@update:view-mode="handleViewModeUpdate"
 						@update:year="handleYearUpdate"
 						@update:month="handleMonthUpdate"
@@ -755,11 +859,11 @@
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-    background-color: rgb(255, 0, 0);
+    background-color: #AFB1B1;
   }
 
   /* div avant la class .v-date-picker-month__day--week-end */
   :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-    background-color: rgb(232, 12, 177);
+    background-color: #AFB1B1;
   }
 </style>

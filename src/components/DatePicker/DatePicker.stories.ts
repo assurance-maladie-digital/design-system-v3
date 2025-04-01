@@ -88,6 +88,77 @@ const meta = {
 			control: 'boolean',
 			description: 'Désactive la gestion des erreurs par le composant',
 		},
+		displayTodayButton: {
+			control: 'boolean',
+			description: 'Affiche un bouton permettant de sélectionner la date du jour',
+		},
+		displayWeekendDays: {
+			control: 'boolean',
+			description: 'Met en évidence les jours de week-end (samedi et dimanche) dans le calendrier',
+		},
+		allowedDates: {
+			control: 'object',
+			description: 'Fonction ou tableau de dates permettant de définir les dates sélectionnables',
+		},
+		bgColor: {
+			control: 'color',
+			description: 'Couleur de fond du DatePicker',
+		},
+		border: {
+			control: 'boolean',
+			description: 'Ajoute une bordure au DatePicker',
+		},
+		color: {
+			control: 'color',
+			description: 'Couleur principale du DatePicker (utilisée pour les éléments actifs)',
+		},
+		elevation: {
+			control: 'select',
+			options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'],
+			description: 'Niveau d\'élévation du DatePicker (ombre portée)',
+		},
+		max: {
+			control: 'text',
+			description: 'Date maximale sélectionnable (format ISO 8601)',
+		},
+		min: {
+			control: 'text',
+			description: 'Date minimale sélectionnable (format ISO 8601)',
+		},
+		month: {
+			control: 'text',
+			description: 'Mois initial à afficher dans le calendrier',
+		},
+		year: {
+			control: 'number',
+			description: 'Année initiale à afficher dans le calendrier',
+		},
+		firstDayOfWeek: {
+			control: 'select',
+			options: ['0', '1', '2', '3', '4', '5', '6'],
+			description: 'Premier jour de la semaine (0 = dimanche, 1 = lundi, etc.)',
+		},
+		hideHeader: {
+			control: 'boolean',
+			description: 'Masque l\'en-tête du calendrier',
+		},
+		hideWeekdays: {
+			control: 'boolean',
+			description: 'Masque les noms des jours de la semaine',
+		},
+		landscape: {
+			control: 'boolean',
+			description: 'Affiche le calendrier en mode paysage',
+		},
+		showAdjacentMonths: {
+			control: 'boolean',
+			description: 'Affiche les jours des mois adjacents',
+		},
+		weeksInMonth: {
+			control: 'select',
+			options: ['static', 'dynamic'],
+			description: 'Détermine si le nombre de semaines affichées est statique ou dynamique',
+		},
 	},
 } as Meta<typeof DatePicker>
 
@@ -1120,10 +1191,11 @@ export const NoCalendarWithErrorDisabled: Story = {
 						<div class="mr-4" style="width: 300px;">
 							<p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
 							<DatePicker
+								ref="datePicker1"
 								v-model="date1"
+								required
 								format="DD/MM/YYYY"
 								placeholder="Date requise sans erreur"
-								required
 								no-icon
 								no-calendar
 								:disableErrorHandling="true"
@@ -1132,10 +1204,11 @@ export const NoCalendarWithErrorDisabled: Story = {
 						<div style="width: 300px;">
 							<p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
 							<DatePicker
+								ref="datePicker2"
 								v-model="date2"
+								required
 								format="DD/MM/YYYY"
 								placeholder="Date requise avec erreur"
-								required
 								no-icon
 								no-calendar
 							/>
