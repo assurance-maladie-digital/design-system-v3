@@ -24,9 +24,9 @@
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
 		displayPrependIcon?: boolean
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- any
 		customRules?: { type: string, options: any }[]
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- any
 		customWarningRules?: { type: string, options: any }[]
 		isDisabled?: boolean
 		noIcon?: boolean
@@ -66,8 +66,11 @@
 		tile?: boolean
 		title?: string
 		width?: string | number
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- any
 		modeIcon?: string | (string | [string, number])[] | any
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- any
 		nextIcon?: string | (string | [string, number])[] | any
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- any
 		prevIcon?: string | (string | [string, number])[] | any
 		showAdjacentMonths?: boolean
 		weeksInMonth?: 'static' | 'dynamic'
