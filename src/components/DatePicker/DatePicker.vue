@@ -12,6 +12,9 @@
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility } = useDatePickerAccessibility()
 
+	// Définition du type Anchor qui correspond à ce que Vuetify utilise en interne
+	type Anchor = 'top' | 'left' | 'bottom' | 'right'
+
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
 		placeholder?: string
@@ -53,7 +56,7 @@
 		hideHeader?: boolean
 		hideWeekdays?: boolean
 		landscape?: boolean
-		location?: string
+		location?: Anchor | null | undefined
 		maxHeight?: string | number
 		maxWidth?: string | number
 		minHeight?: string | number
@@ -709,7 +712,7 @@
 						:hide-header="props.hideHeader"
 						:hide-weekdays="props.hideWeekdays"
 						:landscape="props.landscape"
-						:location="props.location"
+						:location="props.location as any"
 						:max-height="props.maxHeight"
 						:max-width="props.maxWidth"
 						:min-height="props.minHeight"
