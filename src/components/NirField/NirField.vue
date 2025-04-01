@@ -480,7 +480,7 @@
 .nir-field {
 	display: flex;
 	gap: 16px;
-	width: v-bind('props.width');
+	width: calc(v-bind('props.width') - 16px);
 	align-items: flex-start;
 }
 
