@@ -60,6 +60,7 @@ const meta = {
 				type: {
 					summary: 'object',
 					detail: `{
+	btnToggle: 'VBtnToggle',
 	btn: 'VBtn',
 	spacer: 'VSpacer',
 	icon: 'VIcon'

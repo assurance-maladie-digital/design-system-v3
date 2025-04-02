@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { mdiCheck } from '@mdi/js'
-	import { ref, computed, watch } from 'vue'
+	import { ref, computed, onMounted, watch } from 'vue'
 	import { useTheme } from 'vuetify'
 	import { config } from './config'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
@@ -33,7 +33,14 @@
 	const emits = defineEmits(['update:modelValue', 'update:error', 'update:error-messages'])
 	const checkIcon = ref(mdiCheck)
 	const internalValue = ref<SelectBtnValue>(null)
-	const darktheme = ref<boolean>(useTheme().current.value.dark)
+	const darktheme = ref<boolean>(false)
+
+	onMounted(() => {
+		const theme = useTheme().current
+		if (theme && theme.value) {
+			darktheme.value = theme.value.dark
+		}
+	})
 
 	watch(() => props.modelValue, (value) => {
 		if (value === null && props.multiple) {
