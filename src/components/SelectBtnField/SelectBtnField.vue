@@ -145,6 +145,7 @@
 						'justify-start': !isSelected(item.value),
 						'justify-space-between': isSelected(item.value),
 						'mr-2': inline,
+						'mr-0': !inline,
 					}"
 					:label="isSelected(item.value) ? 'Sélectionné' : ''"
 					@click="toggleItem(item)"
@@ -189,6 +190,7 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+
 :deep(.v-btn-group) {
 	height: auto !important;
 
@@ -201,10 +203,6 @@
 	.v-btn:not(:first-child) {
 		border-inline-start: inherit;
 	}
-}
-
-.v-btn-group .v-btn:first-child {
-  margin-right: 0 !important;
 }
 
 .select-btn-field-toggle {
