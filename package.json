@@ -10,7 +10,7 @@
   ],
   "main": "./dist/design-system-v3.umd.cjs",
   "module": "./dist/design-system-v3.js",
-  "types": "./dist/src/main.d.ts",
+  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "import": "./dist/design-system-v3.js",
