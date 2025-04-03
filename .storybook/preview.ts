@@ -4,10 +4,11 @@ import './storybook.css'
 import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
 import { createVuetifyInstance } from '../src/vuetifyConfig'
+import LoginDecorator from './components/LoginDecorator.vue'
 
 const vuetify = createVuetifyInstance()
 
-setup((app, { globals }) => {
+setup((app, { globals }: any) => {
 	app.use(vuetify)
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
@@ -65,6 +66,21 @@ const preview: Preview = {
 		theme: storedTheme || 'cnam',
 	},
 	decorators: [
+		// Login decorator - wraps all stories with authentication
+		(story, context) => {
+			return {
+				components: { LoginDecorator },
+				setup() {
+					return { story, context }
+				},
+				template: `
+					<LoginDecorator>
+						<story />
+					</LoginDecorator>
+				`
+			}
+		},
+		// Theme decorator - handles theme changes
 		(story, context) => {
 			// Handle theme changes
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
