@@ -56,6 +56,10 @@
 			type: Boolean,
 			default: false,
 		},
+		bgColor: {
+			type: String,
+			default: undefined,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -185,6 +189,7 @@
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
+			:bg-color="props.bgColor"
 			class="sy-select"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"
