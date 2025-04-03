@@ -16,8 +16,8 @@
 		dateFormatReturn?: string
 		label?: string
 		required?: boolean
-		isDisabled?: boolean
-		isReadOnly?: boolean
+		disabled?: boolean
+		readOnly?: boolean
 		isOutlined?: boolean
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
@@ -34,8 +34,8 @@
 		dateFormatReturn: undefined,
 		label: undefined,
 		required: false,
-		isDisabled: false,
-		isReadOnly: false,
+		disabled: false,
+		readOnly: false,
 		isOutlined: true,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -454,8 +454,8 @@
 		:warning-messages="warningMessages"
 		:success-messages="showSuccessMessages ? successMessages : []"
 		:is-on-error="isOnError"
-		:is-disabled="isDisabled"
-		:is-read-only="isReadOnly"
+		:disabled="disabled"
+		:read-only="readOnly"
 		:display-icon="displayIcon"
 		:display-append-icon="displayAppendIcon"
 		:no-icon="noIcon"

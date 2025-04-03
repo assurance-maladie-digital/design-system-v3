@@ -34,6 +34,8 @@
 		displayAsterisk: { type: Boolean, default: false },
 		disableErrorHandling: { type: Boolean, default: false },
 		bgColor: { type: String, default: undefined },
+		readOnly: { type: Boolean, default: false },
+		disabled: { type: Boolean, default: false },
 	})
 
 	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
@@ -188,6 +190,8 @@
 			:disable-error-handling="props.disableErrorHandling"
 			:return-object="true"
 			:bg-color="props.bgColor"
+			:read-only="props.readOnly"
+			:disabled="props.disabled"
 			class="custom-select"
 			text-key="displayText"
 			value-key="code"
@@ -206,6 +210,7 @@
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:display-asterisk="props.displayAsterisk"
 			:bg-color="props.bgColor"
+			:disabled="props.disabled"
 			:class="{
 				'phone-field': true,
 				'error-field': hasError,

@@ -60,6 +60,10 @@
 			type: String,
 			default: undefined,
 		},
+		readOnly: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -72,6 +76,7 @@
 	const labelRef = ref<HTMLElement | null>(null)
 
 	const toggleMenu = () => {
+		if (props.readOnly) return
 		isOpen.value = !isOpen.value
 	}
 	const closeList = () => {
@@ -181,7 +186,6 @@
 			:title="labelWithAsterisk"
 			color="primary"
 			tabindex="0"
-			readonly
 			:disabled="disabled"
 			:label="labelWithAsterisk"
 			:aria-label="labelWithAsterisk"
@@ -190,6 +194,7 @@
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
+			:readonly="props.readOnly"
 			class="sy-select"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"

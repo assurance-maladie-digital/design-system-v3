@@ -20,7 +20,7 @@
 		required?: boolean
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
-		isDisabled?: boolean
+		disabled?: boolean
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
@@ -28,6 +28,7 @@
 		customRules?: ValidationRule[]
 		customWarningRules?: ValidationRule[]
 		disableErrorHandling?: boolean
+		readOnly?: boolean
 	}>(), {
 		modelValue: () => ({ from: null, to: null }),
 		placeholderFrom: 'Début',
@@ -38,7 +39,7 @@
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		noCalendar: false,
 		isOutlined: true,
@@ -46,6 +47,7 @@
 		customRules: () => [],
 		customWarningRules: () => [],
 		disableErrorHandling: false,
+		readOnly: false,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -336,7 +338,7 @@
 				:display-icon="props.displayIcon"
 				:error-message="fromDateValidation.hasError"
 				:format="props.format"
-				:is-disabled="props.isDisabled"
+				:disabled="props.disabled"
 				:is-outlined="props.isOutlined"
 				:no-calendar="props.noCalendar"
 				:no-icon="props.noIcon"
@@ -345,6 +347,7 @@
 				:show-week-number="props.showWeekNumber"
 				:show-success-messages="showSuccessMessagesActual"
 				:success-message="fromDateValidation.hasSuccess"
+				:read-only="props.readOnly"
 				@closed="handleFromDateClosed"
 			/>
 		</div>
@@ -359,7 +362,7 @@
 				:display-icon="props.displayIcon"
 				:error-message="toDateValidation.hasError"
 				:format="props.format"
-				:is-disabled="props.isDisabled"
+				:disabled="props.disabled"
 				:is-outlined="props.isOutlined"
 				:no-calendar="props.noCalendar"
 				:no-icon="props.noIcon"
@@ -368,6 +371,7 @@
 				:show-week-number="props.showWeekNumber"
 				:show-success-messages="showSuccessMessagesActual"
 				:success-message="toDateValidation.hasSuccess"
+				:read-only="props.readOnly"
 				@closed="handleToDateClosed"
 			/>
 		</div>

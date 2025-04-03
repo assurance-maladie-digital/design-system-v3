@@ -165,7 +165,7 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
-		isDisabled: {
+		disabled: {
 			description: 'Indique si le champ est désactivé.',
 			control: 'boolean',
 			default: false,

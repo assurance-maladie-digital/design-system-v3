@@ -28,11 +28,11 @@
 		customRules?: { type: string, options: any }[]
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
 		customWarningRules?: { type: string, options: any }[]
-		isDisabled?: boolean
+		disabled?: boolean
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
-		isReadOnly?: boolean
+		readOnly?: boolean
 		width?: string
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
@@ -51,11 +51,11 @@
 		displayPrependIcon: true,
 		customRules: () => [],
 		customWarningRules: () => [],
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		noCalendar: false,
 		isOutlined: true,
-		isReadOnly: false,
+		readOnly: false,
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
@@ -390,7 +390,7 @@
 	}
 
 	const showDatePicker = () => {
-		if (props.isDisabled || props.isReadOnly) return
+		if (props.disabled || props.readOnly) return
 
 		isDatePickerVisible.value = true
 
@@ -531,8 +531,8 @@
 				:required="props.required"
 				:custom-rules="props.customRules"
 				:custom-warning-rules="props.customWarningRules"
-				:is-disabled="props.isDisabled"
-				:is-read-only="props.isReadOnly"
+				:disabled="props.disabled"
+				:read-only="props.readOnly"
 				:is-outlined="props.isOutlined"
 				:display-icon="props.displayIcon"
 				:display-append-icon="props.displayAppendIcon"
@@ -555,8 +555,8 @@
 				:error-messages="errorMessages"
 				:warning-messages="warningMessages"
 				:success-messages="props.showSuccessMessages ? successMessages : []"
-				:is-disabled="props.isDisabled"
-				:is-read-only="true"
+				:disabled="props.disabled"
+				:read-only="true"
 				:label="props.placeholder"
 				:no-icon="props.noIcon"
 				:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"

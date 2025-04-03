@@ -58,7 +58,7 @@ const meta: Meta<typeof PeriodField> = {
 			control: 'boolean',
 			description: 'Icône à la fin du champ',
 		},
-		isDisabled: {
+		disabled: {
 			control: 'boolean',
 			description: 'Désactive le champ',
 		},
@@ -126,7 +126,7 @@ export const Default: Story = {
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
@@ -182,7 +182,7 @@ export const CustomPlaceholders: Story = {
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
@@ -210,7 +210,7 @@ export const Disabled: Story = {
 				<template>
 					<PeriodField 
 						v-model="selectedPeriod" 
-						is-disabled
+						disabled
 					/>
 				</template>
 				`,
@@ -236,7 +236,7 @@ export const Disabled: Story = {
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
-		isDisabled: true,
+		disabled: true,
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
@@ -290,7 +290,7 @@ export const Required: Story = {
 		required: true,
 		displayIcon: true,
 		displayAppendIcon: false,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
@@ -344,7 +344,7 @@ export const AppendIcon: Story = {
 		required: true,
 		displayIcon: true,
 		displayAppendIcon: true,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
@@ -399,7 +399,7 @@ export const WithoutIcon: Story = {
 		required: true,
 		displayIcon: false,
 		displayAppendIcon: true,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},
@@ -456,7 +456,7 @@ export const WithError: Story = {
 		required: true,
 		displayIcon: false,
 		displayAppendIcon: true,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: '01/01/2100', to: '05/01/2100' },
 		customRules: [
@@ -521,7 +521,7 @@ export const WithWarning: Story = {
 		required: true,
 		displayIcon: false,
 		displayAppendIcon: true,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: '20/12/2023', to: '21/12/2023' },
 		customWarningRules: [
@@ -586,7 +586,7 @@ export const WithSuccess: Story = {
 		dateFormatReturn: '',
 		displayIcon: false,
 		displayAppendIcon: true,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: '22/01/2024', to: '23/01/2024' },
 		customRules: [
@@ -669,7 +669,7 @@ export const DifferentFormats: Story = {
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: '12/10/2023', to: '15/10/2023' },
 	},
@@ -747,7 +747,7 @@ export const WithDateFormatReturn: Story = {
 		required: false,
 		displayIcon: true,
 		displayAppendIcon: false,
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		modelValue: { from: null, to: null },
 	},

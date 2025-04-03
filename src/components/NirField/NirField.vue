@@ -28,7 +28,7 @@
 		showSuccessMessages?: boolean
 		width?: string
 		bgColor?: string
-		isDisabled?: boolean
+		disabled?: boolean
 		density?: 'default' | 'comfortable' | 'compact'
 		hideDetails?: boolean | 'auto'
 		hideSpinButtons?: boolean
@@ -61,7 +61,7 @@
 		showSuccessMessages: true,
 		width: '100%',
 		bgColor: undefined,
-		isDisabled: false,
+		disabled: false,
 		density: 'default',
 		hideDetails: false,
 		hideSpinButtons: false,
@@ -413,7 +413,7 @@
 				:messages="hasNumberErrors ? numberValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess && props.showSuccessMessages ? numberValidation.successes.value : []))"
 				:has-error="hasNumberErrors"
 				:required="required"
-				:is-disabled="isDisabled"
+				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
@@ -455,7 +455,7 @@
 				:hint="props.hint || locales.keyHint"
 				:messages="hasKeyErrors ? keyValidation.errors.value : (hasKeyWarning ? keyValidation.warnings.value : (hasKeySuccess && props.showSuccessMessages ? keyValidation.successes.value : []))"
 				:has-error="hasKeyErrors"
-				:is-disabled="isDisabled"
+				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"

@@ -113,12 +113,12 @@ const meta = {
 			control: 'boolean',
 			default: false,
 		},
-		'isDisabled': {
+		'disabled': {
 			description: 'Désactive le champ',
 			control: 'boolean',
 			default: false,
 		},
-		'isReadOnly': {
+		'readOnly': {
 			description: 'Rend le champ en lecture seule',
 			control: 'boolean',
 			default: false,
