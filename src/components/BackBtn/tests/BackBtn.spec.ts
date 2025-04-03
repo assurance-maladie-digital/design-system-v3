@@ -1,5 +1,4 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
 import BackBtn from '../BackBtn.vue'
 import { vuetify } from '@tests/unit/setup'
 import { VIcon, VBtn } from 'vuetify/components'
