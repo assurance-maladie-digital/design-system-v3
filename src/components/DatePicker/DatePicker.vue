@@ -30,7 +30,6 @@
 		customWarningRules?: { type: string, options: any }[]
 		isDisabled?: boolean
 		noIcon?: boolean
-		color?: string
 		noCalendar?: boolean
 		isOutlined?: boolean
 		isReadOnly?: boolean
@@ -60,7 +59,6 @@
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
-		color: undefined,
 		bgColor: undefined,
 	})
 
