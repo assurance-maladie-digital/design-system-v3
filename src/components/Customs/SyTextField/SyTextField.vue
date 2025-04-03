@@ -30,7 +30,7 @@
 			errorMessages?: string[] | null
 			warningMessages?: string[] | null
 			successMessages?: string[] | null
-			isReadOnly?: boolean
+			readOnly?: boolean
 			isActive?: boolean
 			baseColor?: string
 			bgColor?: string
@@ -41,7 +41,7 @@
 			density?: 'default' | 'comfortable' | 'compact'
 			direction?: 'horizontal' | 'vertical'
 			isDirty?: boolean
-			isDisabled?: boolean
+			disabled?: boolean
 			isOnError?: boolean
 			isFlat?: boolean
 			isFocused?: boolean
@@ -94,7 +94,7 @@
 			errorMessages: null,
 			warningMessages: null,
 			successMessages: null,
-			isReadOnly: false,
+			readOnly: false,
 			isClearable: false,
 			isActive: false,
 			baseColor: undefined,
@@ -105,7 +105,7 @@
 			density: 'default',
 			direction: 'horizontal',
 			isDirty: false,
-			isDisabled: false,
+			disabled: false,
 			isOnError: false,
 			isFlat: false,
 			isFocused: false,
@@ -313,7 +313,7 @@
 		:density="props.density"
 		:direction="props.direction"
 		:dirty="props.isDirty"
-		:disabled="props.isDisabled"
+		:disabled="props.disabled"
 		:display-asterisk="isShouldDisplayAsterisk"
 		:error="hasError"
 		:error-messages="errors"
@@ -336,7 +336,7 @@
 		:persistent-placeholder="displayPersistentPlaceholder"
 		:placeholder="props.placeholder"
 		:prefix="props.prefix"
-		:readonly="props.isReadOnly"
+		:readonly="props.readOnly"
 		:reverse="props.isReversed"
 		:role="props.role"
 		:rounded="props.rounded"

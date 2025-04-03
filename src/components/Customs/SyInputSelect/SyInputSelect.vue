@@ -15,6 +15,7 @@
 		errorMessages?: string | string[]
 		isHeaderToolbar?: boolean
 		displayAsterisk?: boolean
+		readOnly?: boolean
 	}>(), {
 		modelValue: null,
 		items: () => [],
@@ -26,6 +27,7 @@
 		errorMessages: () => [],
 		isHeaderToolbar: false,
 		displayAsterisk: false,
+		readOnly: false,
 	})
 
 	const options = useCustomizableOptions(defaultOptions, props)
@@ -37,6 +39,7 @@
 	const hasError = ref(false)
 
 	const toggleMenu = () => {
+		if (props.readOnly) return
 		isOpen.value = !isOpen.value
 	}
 
@@ -157,6 +160,7 @@
 		:label="labelWithAsterisk"
 		:title="labelWithAsterisk"
 		role="menu"
+		:read-only="props.readOnly"
 		@click="checkForErrors"
 	>
 		<div

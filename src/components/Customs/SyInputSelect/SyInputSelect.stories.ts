@@ -21,6 +21,7 @@ const meta = {
 		valueKey: { control: 'text' },
 		vuetifyOptions: { control: 'object' },
 		displayAsterisk: { control: 'boolean' },
+		readOnly: { control: 'boolean' },
 	},
 } as Meta<typeof SyInputSelect>
 
@@ -72,6 +73,7 @@ export const Default: Story = {
 				color: 'primary',
 			},
 		},
+		readOnly: false,
 	},
 	render: (args) => {
 		return {
@@ -84,6 +86,7 @@ export const Default: Story = {
 					<SyInputSelect
 						v-bind="args"
 						:vuetify-options="args.vuetifyOptions"
+						:read-only="args.readOnly"
 					/>
 				</div>
 				<br/><br/><br/><br/>

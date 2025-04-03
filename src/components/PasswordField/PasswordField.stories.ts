@@ -53,11 +53,11 @@ const meta = {
 			control: 'object',
 			description: 'Messages de succès à afficher',
 		},
-		isReadOnly: {
+		readOnly: {
 			control: 'boolean',
 			description: 'Indique si le champ est en lecture seule',
 		},
-		isDisabled: {
+		disabled: {
 			control: 'boolean',
 			description: 'Indique si le champ est désactivé',
 		},
@@ -99,8 +99,8 @@ const meta = {
 		errorMessages: null,
 		warningMessages: null,
 		successMessages: null,
-		isReadOnly: false,
-		isDisabled: false,
+		readOnly: false,
+		disabled: false,
 		placeholder: 'Entrez votre mot de passe',
 		customRules: [],
 		customWarningRules: [],
@@ -162,8 +162,8 @@ export const Default: Story = {
 				:error-messages="args.errorMessages"
 				:warning-messages="args.warningMessages"
 				:success-messages="args.successMessages"
-				:is-read-only="args.isReadOnly"
-				:is-disabled="args.isDisabled"
+				:read-only="args.readOnly"
+				:disabled="args.disabled"
 				:placeholder="args.placeholder"
 				:custom-rules="args.customRules"
 				:custom-warning-rules="args.customWarningRules"
@@ -264,7 +264,7 @@ export const Disabled: Story = {
 					<PasswordField
 						v-model="password"
 						label="Mot de passe"
-						:is-disabled="true"
+						:disabled="true"
 					/>
 				</template>
 				`,
@@ -283,7 +283,7 @@ export const Disabled: Story = {
 		],
 	},
 	args: {
-		isDisabled: true,
+		disabled: true,
 		modelValue: 'MonMotDePasse123',
 	},
 }
@@ -301,7 +301,7 @@ export const ReadOnly: Story = {
 					<PasswordField
 						v-model="password"
 						label="Mot de passe"
-						:is-read-only="true"
+						:read-only="true"
 					/>
 				</template>
 				`,
@@ -320,7 +320,7 @@ export const ReadOnly: Story = {
 		],
 	},
 	args: {
-		isReadOnly: true,
+		readOnly: true,
 		modelValue: 'MonMotDePasse123',
 	},
 }
@@ -832,8 +832,8 @@ export const WithCustomRules: Story = {
 				:color="args.color"
 				:label="args.label"
 				:required="args.required"
-				:is-read-only="args.isReadOnly"
-				:is-disabled="args.isDisabled"
+				:read-only="args.readOnly"
+				:disabled="args.disabled"
 				:placeholder="args.placeholder"
 				:custom-rules="customRules"
 				:show-success-messages="args.showSuccessMessages"
