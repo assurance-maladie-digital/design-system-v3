@@ -38,6 +38,9 @@ dependencies:
   slugify:
     specifier: ^1.6.6
     version: 1.6.6
+  staticrypt:
+    specifier: ^3.5.3
+    version: 3.5.3
   vuetify:
     specifier: ^3.6.13
     version: 3.7.16(typescript@5.4.2)(vite-plugin-vuetify@2.1.0)(vue@3.5.13)
@@ -3487,6 +3490,11 @@ packages:
       is-obj: 2.0.0
     dev: false
 
+  /dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+    engines: {node: '>=12'}
+    dev: false
+
   /dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
@@ -6406,6 +6414,15 @@ packages:
   /stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
     dev: true
+
+  /staticrypt@3.5.3:
+    resolution: {integrity: sha512-d+LUrUDmqQ61kNXgWIs0XUeiPibzfk2Xj9dyaw6LwR6SqM1BGxMibdcGggOYe4KM+gsnqpm8EjmBouHxWEEO5Q==}
+    engines: {node: '>=16.0.0'}
+    hasBin: true
+    dependencies:
+      dotenv: 16.4.7
+      yargs: 17.7.2
+    dev: false
 
   /std-env@3.8.1:
     resolution: {integrity: sha512-vj5lIj3Mwf9D79hBkltk5qmkFI+biIKWS2IBxEyEU3AX1tUf7AoL8nSazCOiiqQsGKIq01SClsKEzweu34uwvA==}
