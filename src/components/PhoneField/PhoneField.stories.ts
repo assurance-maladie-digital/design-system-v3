@@ -89,6 +89,7 @@ export const Default: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -109,6 +110,7 @@ export const Default: Story = {
 					:customIndicatifs="args.customIndicatifs"
 					:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 					:isValidatedOnBlur="args.isValidatedOnBlur"
+					:bg-color="args.bgColor"
 				/>
 				</div>
 				<br><br><br><br><br>
@@ -167,6 +169,7 @@ export const Required: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -187,6 +190,7 @@ export const Required: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
+     :bg-color="args.bgColor"
     />
 				</div>
    `,
@@ -202,6 +206,7 @@ export const RequiredWithAsterisk: Story = {
 		...Default.args,
 		required: true,
 		displayAsterisk: true,
+		bgColor: undefined,
 	},
 	parameters: {
 		docs: {
@@ -255,6 +260,7 @@ const phoneNumber = ref('')
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
 						:display-asterisk="args.displayAsterisk"
+						:bg-color="args.bgColor"
 					/>
 				</div>
 			`,
@@ -322,6 +328,7 @@ export const CustomIndicatifs: Story = {
 		],
 		useCustomIndicatifsOnly: true,
 		isValidatedOnBlur: true,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -342,6 +349,7 @@ export const CustomIndicatifs: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
+     :bg-color="args.bgColor"
     />
 				</div>
    `,
@@ -399,6 +407,7 @@ export const NotValidatedOnBlur: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -419,6 +428,7 @@ export const NotValidatedOnBlur: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
+     :bg-color="args.bgColor"
     />
 				</div>
    `,
@@ -476,6 +486,7 @@ export const DisplayFormatCode: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -496,6 +507,7 @@ export const DisplayFormatCode: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
+     :bg-color="args.bgColor"
     />
 				</div>
    `,
@@ -553,6 +565,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -573,6 +586,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
+     :bg-color="args.bgColor"
     />
 				</div>
    `,
@@ -630,6 +644,7 @@ export const DisplayFormatCodeCountry: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -650,6 +665,7 @@ export const DisplayFormatCodeCountry: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
+     :bg-color="args.bgColor"
     />
 				</div>
    `,
@@ -707,6 +723,7 @@ export const DisplayFormatCountry: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -727,6 +744,7 @@ export const DisplayFormatCountry: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
+     :bg-color="args.bgColor"
     />
 				</div>
    `,
@@ -784,6 +802,7 @@ export const DisplayFormatAbbreviation: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -804,6 +823,7 @@ export const DisplayFormatAbbreviation: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
+     :bg-color="args.bgColor"
     />
 							</div>
    `,
@@ -867,6 +887,7 @@ export const DisplayModels: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -891,6 +912,7 @@ export const DisplayModels: Story = {
 						:customIndicatifs="args.customIndicatifs"
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
+						:bg-color="args.bgColor"
 					/>
 				</div>
 			`,
@@ -951,6 +973,7 @@ export const DisabledErrorHandling: Story = {
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
 		disableErrorHandling: true,
+		bgColor: undefined,
 	},
 	render: (args) => {
 		return {
@@ -974,6 +997,7 @@ export const DisabledErrorHandling: Story = {
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
 						:disableErrorHandling="args.disableErrorHandling"
+						:bg-color="args.bgColor"
 					/>
 					<div class="mt-6">
 						<h3>Comparaison avec gestion des erreurs activée</h3>
@@ -990,6 +1014,7 @@ export const DisabledErrorHandling: Story = {
 							:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 							:isValidatedOnBlur="args.isValidatedOnBlur"
 							:disableErrorHandling="false"
+							:bg-color="args.bgColor"
 						/>
 					</div>
 				</div>

@@ -30,12 +30,14 @@
 		customWarningRules?: { type: string, options: any }[]
 		isDisabled?: boolean
 		noIcon?: boolean
+		color?: string
 		noCalendar?: boolean
 		isOutlined?: boolean
 		isReadOnly?: boolean
 		width?: string
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
+		bgColor?: string
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -58,6 +60,8 @@
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
+		color: undefined,
+		bgColor: undefined,
 	})
 
 	const emit = defineEmits<{
@@ -538,6 +542,7 @@
 				:no-icon="props.noIcon"
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
+				:bg-color="props.bgColor"
 				title="Date text input"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -560,6 +565,7 @@
 				:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
 				color="primary"
 				:show-success-messages="props.showSuccessMessages"
+				:bg-color="props.bgColor"
 				is-clearable
 				title="Date Picker"
 				@focus="openDatePicker"
