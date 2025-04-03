@@ -60,6 +60,12 @@ const globalTypes = {
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
 
+const applyThemeClass = (theme) => {
+	const rootElement = document.documentElement
+	rootElement.classList.remove('theme-cnam', 'theme-pa')
+	rootElement.classList.add(`theme-${theme}`)
+}
+
 const preview: Preview = {
 	globalTypes,
 	initialGlobals: {
@@ -85,8 +91,7 @@ const preview: Preview = {
 			// Handle theme changes
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
 				vuetify.theme.global.name.value = context.globals.theme
-				document.documentElement.classList.remove('theme-cnam', 'theme-pa')
-				document.documentElement.classList.add(`theme-${context.globals.theme}`)
+				applyThemeClass(context.globals.theme)
 				localStorage.setItem('storybook-theme', context.globals.theme)
 			}
 			return story()
