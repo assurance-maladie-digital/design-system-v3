@@ -1,0 +1,30 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as AmeliproDialogStories from './AmeliproDialog.stories';
+
+<Meta of={AmeliproDialogStories} />
+
+# AmeliproDialog
+
+L’élément `AmeliproDialog` est utilisé pour afficher les fenêtres de dialogue.
+
+<Canvas of={AmeliproDialogStories.Default} />
+
+## API
+
+<Controls of={AmeliproDialogStories.Default} />
+
+Utilisez les pop-ins, également connues par “fenêtre modale” ou boîte de dialogue, lorsque vous avez besoin d’attirer l’attention de l’utilisateur pour obtenir une confirmation, pour afficher la validation d’une action, ou présenter des informations supplémentaires sans quitter la page dans laquelle l’utilisateur se trouve.
+
+## Règles d’usage
+
+La pop-in est considérée ennuyeuse au niveaux de l’expérience utilisateur, car elle ressemble à la Pop-up publicitaire que les utilisateurs ont pris l’habitude de rejeter instinctivement. Pour cette raison, il est recommandé de les utiliser toujours à bon escient. Une pop-in ne doit jamais être utilisée lorsqu’une action obligatoire et requise dans le cadre de la finalisation d’un processus, par exemple : _Imprimer un volet employeur après la transmission d’un formulaire_.
+
+## Structure
+
+1. __Header__ : contient un titre adapté et l’action "fermer modale"
+2. __Le corps de la modale__ : propose un contenu simplifié, sans entasser trop d’informations. Si beaucoup d’informations sont nécessaires, envisager plutôt d’utiliser une page entière.
+3. __Footer__ : contient une action primaire et la possibilité d’annuler et de fermer la modale. Utilisez des verbes d’action auto-descriptifs ("Ajouter", "Transmettre", etc.)
+4. __Couverture__ : couvre la page sous la modale afin de mettre l’accent sur le contenu qu’elle intègre
+
+

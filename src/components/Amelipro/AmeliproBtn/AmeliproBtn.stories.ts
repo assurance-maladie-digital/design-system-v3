@@ -28,6 +28,7 @@ const meta = {
 		iconBgColor: { description: 'Applique une couleur de fond à l’icône' },
 		iconBordered: { description: 'Applique une bordure de 1px autour de l’icône' },
 		iconColor: { description: 'Applique une couleur à l’icône si la propriété infoBlock est activée' },
+		iconFocusColor: { description: 'Applique une couleur de focus à l’icône' },
 		iconHoverColor: { description: 'Applique une couleur de survol à l’icône si la propriété infoBlock est activée' },
 		iconLeft: { description: 'S’il y a un icône le place à gauche.' },
 		iconName: { description: 'Nom de l’icône à rajouter au bouton/lien à droite du texte.' },
@@ -36,6 +37,7 @@ const meta = {
 		size: { description: 'Change la taille de l’icône pour l’affichage `bloc d’information`.' },
 		text: { description: 'Supprime la couleur de fond du bouton pour l’appliquer directement au texte.' },
 		textColor: { description: 'La couleur du texte si la propriété `text` est désactivée.' },
+		textFocusColor: { description: 'La couleur du texte au focus si la propriété `text` est désactivée.' },
 		textHoverColor: { description: 'La couleur du texte au survol si la propriété `text` est désactivée.' },
 		to: {
 			table: { category: 'props' },

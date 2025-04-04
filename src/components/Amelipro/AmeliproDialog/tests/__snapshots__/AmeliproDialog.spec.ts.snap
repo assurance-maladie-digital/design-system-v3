@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproDialog > render correctly 1`] = `
+"<div data-v-72109f91="" modelvalue="true" class="dialog-radius" fullscreen="false" persistent="false" width="800px">
+  <div data-v-72109f91="" id="amelipro-dialog-id" class="bg-ap-white dialog">
+    <div data-v-72109f91="" id="amelipro-dialog-id-header" class="mb-0 w-100 d-flex align-center flex-nowrap dialog__header">
+      <div data-v-72109f91="" class="dialog__title">
+        <!--v-if-->
+      </div><button data-v-cd24dd67="" data-v-72109f91="" type="button" class="v-btn v-btn--elevated v-btn--icon v-theme--light v-btn--density-default elevation-0 rounded-0 v-btn--size-default v-btn--variant-elevated btn--icon ml-auto dialog__close-btn" style="height: auto; width: auto;" id="amelipro-dialog-id-close-btn" plain=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+        <!----><span class="v-btn__content" data-no-activator=""><span data-v-cd24dd67="" id="amelipro-dialog-id-close-btn-btn-label" class="d-sr-only">Fermer la fenêtre modale</span><span data-v-0d784079="" data-v-cd24dd67="" id="amelipro-dialog-id-close-btn-icon" class="amelipro-icon icon-custom"><span data-v-0d784079="" aria-hidden="true" class="amelipro-custom-icon custom-color" focusable="false" role="img" style="color: #00749C; height: 40px; width: 40px;"><span data-v-0d784079="">
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+			<circle class="circle-color" cx="12" cy="12" r="12"></circle>
+			<polygon class="shape-color" points="15.3,16.7 12,13.4 8.7,16.7 7.3,15.3 10.6,12 7.3,8.7 8.7,7.3 12,10.6 15.3,7.3 16.7,8.7 13.4,12 16.7,15.3 "></polygon>
+		</svg></span></span></span></span>
+        <!---->
+        <!---->
+      </button>
+    </div>
+    <div data-v-72109f91="" id="amelipro-dialog-id-content" class="w-100 mt-4 dialog__content" style="min-height: 150px;"></div>
+    <!--v-if-->
+  </div>
+</div>"
+`;

@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproIconBtn > render correctly 1`] = `
+"<button data-v-cd24dd67="" type="button" class="v-btn v-btn--elevated v-btn--icon v-theme--light v-btn--density-default elevation-0 rounded-0 v-btn--size-default v-btn--variant-elevated btn--icon" style="height: auto; width: auto;" id="amelipro-icon-id" plain=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+  <!----><span class="v-btn__content" data-no-activator=""><span data-v-cd24dd67="" id="amelipro-icon-id-btn-label" class="d-sr-only">Libellé du bouton</span><span data-v-0d784079="" data-v-cd24dd67="" id="amelipro-icon-id-icon" class="amelipro-icon icon-custom"><span data-v-0d784079="" aria-hidden="true" class="amelipro-custom-icon custom-color x-large" focusable="false" role="img" style="color: #FFFFFF;"><span data-v-0d784079="">
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 1823 1823" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd">
+			<circle class="circle-color" cx="912" cy="912" r="912"></circle>
+			<path class="shape-color" d="M962 454c117 0 125 154 125 154v145s1 111-73 152c-2 10-3 20-1 30 4-2-21 146 106 165 92 15 178 57 247 120 23 23 40 186 40 186H418s-2-132 40-186c73-62 162-104 257-120 128-19 85-160 89-158 2-10 1-21-1-31 0 0-69-89-68-169 1-81 0-134 0-134s-4-190 126-190l101 36z"></path>
+		</svg></span></span></span></span>
+  <!---->
+  <!---->
+</button>"
+`;
