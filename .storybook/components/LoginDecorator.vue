@@ -112,7 +112,7 @@
 						required
 					/>
 				</div>
-				<div class="form-group mb-3">
+				<div class="form-group">
 					<PasswordField
 						id="password"
 						v-model="password"
@@ -120,6 +120,13 @@
 						placeholder="Saisissez votre mot de passe"
 						:show-success-messages="false"
 						required
+					/>
+				</div>
+				<div class="form-group remember-me">
+					<VCheckbox
+						v-model="rememberMe"
+						label="Se souvenir de moi"
+						color="primary"
 					/>
 				</div>
 				<div
@@ -217,5 +224,11 @@
 
 .theme-pa > h2 {
   color: #000091;
+}
+
+.logout-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 </style>

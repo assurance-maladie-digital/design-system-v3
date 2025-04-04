@@ -12,14 +12,12 @@ setup((app, { globals }: any) => {
 	app.use(vuetify)
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
-	// Apply theme class to <html> (document.documentElement) instead of #root
 	const applyThemeClass = (theme) => {
-		const rootElement = document.documentElement // Always exists
+		const rootElement = document.documentElement
 		rootElement.classList.remove('theme-cnam', 'theme-pa')
 		rootElement.classList.add(`theme-${theme}`)
 	}
 
-	// Apply theme immediately on load
 	if (typeof window !== 'undefined') {
 		applyThemeClass(globals.theme)
 	}
@@ -27,13 +25,8 @@ setup((app, { globals }: any) => {
 	watch(
 		() => globals.theme,
 		(newTheme) => {
-			// Update Vuetify theme
 			vuetify.theme.global.name.value = newTheme
-
-			// Apply the new theme class
 			applyThemeClass(newTheme)
-
-			// Store theme in localStorage
 			localStorage.setItem('storybook-theme', newTheme)
 		},
 		{ immediate: true },
@@ -57,7 +50,6 @@ const globalTypes = {
 	},
 }
 
-// Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
 
 const applyThemeClass = (theme) => {
@@ -72,27 +64,28 @@ const preview: Preview = {
 		theme: storedTheme || 'cnam',
 	},
 	decorators: [
-		// Login decorator - wraps all stories with authentication
 		(story, context) => {
-			return {
-				components: { LoginDecorator },
-				setup() {
-					return { story, context }
-				},
-				template: `
-					<LoginDecorator>
-						<story />
-					</LoginDecorator>
-				`
-			}
-		},
-		// Theme decorator - handles theme changes
-		(story, context) => {
-			// Handle theme changes
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
 				vuetify.theme.global.name.value = context.globals.theme
 				applyThemeClass(context.globals.theme)
 				localStorage.setItem('storybook-theme', context.globals.theme)
+			}
+			return story()
+		},
+		(story, context) => {
+			if (!context.decoratorsApplied) {
+				context.decoratorsApplied = true
+				return {
+					components: { LoginDecorator },
+					setup() {
+						return { story, context }
+					},
+					template: `
+      <LoginDecorator>
+       <story />
+      </LoginDecorator>
+     `,
+				}
 			}
 			return story()
 		},
