@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import PasswordField from './PasswordField.vue'
 
 const meta = {
-	title: 'Composants/Formulaires/Passwordfield',
+	title: 'Composants/Formulaires/PasswordField',
 	component: PasswordField,
 	decorators: [
 		() => ({
