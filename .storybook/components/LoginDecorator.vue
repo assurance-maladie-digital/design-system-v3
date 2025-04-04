@@ -1,6 +1,7 @@
 <script setup>
 	import { ref, computed, onMounted } from 'vue'
 	import { SyTextField, PasswordField } from '@/components'
+	import { useLoginManager } from '../composables/useLoginManager'
 
 	const credentials = {
 		admin: 'admin123',
@@ -17,6 +18,8 @@
 	const title = computed(() => isPaTheme.value ? 'Login Portail Agent' : 'Login CNAM')
 
 	onMounted(() => {
+		useLoginManager().ensureLoggedIn()
+
 		// Check if user is already authenticated
 		const authStatus = localStorage.getItem('storybook-auth')
 		const savedUsername = localStorage.getItem('storybook-username')
@@ -86,7 +89,7 @@
 
 <template>
 	<div
-		v-if="!isAuthenticated"
+		v-if="!isAuthenticated && useLoginManager().isLoggedIn"
 		class="login-overlay"
 	>
 		<div

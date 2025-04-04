@@ -5,14 +5,16 @@ import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
 import { createVuetifyInstance } from '../src/vuetifyConfig'
 import LoginDecorator from './components/LoginDecorator.vue'
+import { useLoginManager } from './composables/useLoginManager'
 
 const vuetify = createVuetifyInstance()
+const { ensureLoggedIn, isLoggedIn } = useLoginManager()
 
 setup((app, { globals }: any) => {
 	app.use(vuetify)
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
-	const applyThemeClass = (theme) => {
+	const applyThemeClass = (theme: string) => {
 		const rootElement = document.documentElement
 		rootElement.classList.remove('theme-cnam', 'theme-pa')
 		rootElement.classList.add(`theme-${theme}`)
@@ -52,10 +54,28 @@ const globalTypes = {
 
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
 
-const applyThemeClass = (theme) => {
+const applyThemeClass = (theme: string) => {
 	const rootElement = document.documentElement
 	rootElement.classList.remove('theme-cnam', 'theme-pa')
 	rootElement.classList.add(`theme-${theme}`)
+}
+
+const withLoginDecorator = (storyFn) => {
+	ensureLoggedIn()
+	if (!isLoggedIn.value) {
+		return {
+			components: { LoginDecorator, storyFn },
+			setup() {
+				return { storyFn }
+			},
+			template: `
+        <LoginDecorator>
+          <storyFn />
+        </LoginDecorator>
+      `,
+		}
+	}
+	return storyFn()
 }
 
 const preview: Preview = {
@@ -72,23 +92,7 @@ const preview: Preview = {
 			}
 			return story()
 		},
-		(story, context) => {
-			if (!context.decoratorsApplied) {
-				context.decoratorsApplied = true
-				return {
-					components: { LoginDecorator },
-					setup() {
-						return { story, context }
-					},
-					template: `
-      <LoginDecorator>
-       <story />
-      </LoginDecorator>
-     `,
-				}
-			}
-			return story()
-		},
+		withLoginDecorator,
 	],
 	parameters: {
 		interactions: {
@@ -194,3 +198,8 @@ const preview: Preview = {
 }
 
 export default preview
+
+// Appliquez la classe du thème immédiatement après avoir défini le thème initial
+if (typeof window !== 'undefined') {
+	applyThemeClass(storedTheme || 'cnam')
+}
