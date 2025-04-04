@@ -178,7 +178,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(tokens.$primary-base, 0.05);
+  background-color: rgb(236 236 236);
   display: flex;
   align-items: center;
   justify-content: center;
