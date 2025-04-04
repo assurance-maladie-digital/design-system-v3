@@ -2,12 +2,10 @@
 	import { ref, computed, onMounted } from 'vue'
 	import { SyTextField, PasswordField } from '@/components'
 
-	// Customizable credentials - in a real app, these would be managed securely
 	const credentials = {
 		admin: 'admin123',
 	}
 
-	// State variables
 	const username = ref('')
 	const password = ref('')
 	const isAuthenticated = ref(false)
@@ -16,7 +14,6 @@
 	const rememberMe = ref(false)
 	const isPaTheme = ref(false)
 
-	// Computed properties
 	const title = computed(() => isPaTheme.value ? 'Login Portail Agent' : 'Login CNAM')
 
 	onMounted(() => {
