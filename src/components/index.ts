@@ -118,6 +118,8 @@ export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 // ===========================
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
 export { default as AmeliproIcon } from './Amelipro/AmeliproIcon/AmeliproIcon.vue'
+export { default as AmeliproIconBtn } from './Amelipro/AmeliproIconBtn/AmeliproIconBtn.vue'
+export { default as StructureMenu } from './Amelipro/StructureMenu/StructureMenu.vue'
 
 // ===========================
 // Composables and services
