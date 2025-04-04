@@ -2,14 +2,12 @@
 	import { ref, watch, computed, nextTick, toRef } from 'vue'
 	import { vMaska } from 'maska/vue'
 	import { checkNIR, isNIRKeyValid } from './nirValidation'
-	// import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
-	import { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 	import { locales } from './locales'
-	// import defaultOptions from './config'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
-	const props = withDefaults(defineProps<CustomizableOptions & {
-		modelValue?: string | undefined
+
+	const props = withDefaults(defineProps<{
+		modelValue?: string | undefined | null
 		label?: string
 		numberLabel?: string
 		keyLabel?: string
@@ -250,7 +248,7 @@
 
 	// Synchronisation avec modelValue
 	watch(modelValueRef, (newValue) => {
-		if (newValue === undefined) {
+		if (newValue === undefined || newValue === null) {
 			numberValue.value = ''
 			keyValue.value = ''
 			return
@@ -267,7 +265,7 @@
 			numberValue.value = number
 			keyValue.value = key
 		}
-		if (newValue.length === 13) {
+		if (newValue.length <= 13) {
 			const number = newValue
 			numberValue.value = number
 			keyValue.value = ''
