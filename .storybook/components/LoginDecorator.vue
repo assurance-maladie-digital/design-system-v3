@@ -98,7 +98,7 @@
 		>
 			<div class="login-header">
 				<h2>{{ title }}</h2>
-				<p>Veuillez vous connecter pour accéder au design system</p>
+				<p>Veuillez vous connecter pour accéder au Design System</p>
 			</div>
 			<form
 				class="login-form"
@@ -111,39 +111,37 @@
 						type="text"
 						label="Identifiant"
 						placeholder="Saisissez votre identifiant"
+						:show-success-messages="false"
 						required
 					/>
 				</div>
-				<div class="form-group">
+				<div class="form-group mb-3">
 					<PasswordField
 						id="password"
 						v-model="password"
 						label="Mot de passe"
 						placeholder="Saisissez votre mot de passe"
+						:show-success-messages="false"
 						required
-					/>
-				</div>
-				<div class="form-group remember-me">
-					<VCheckbox
-						v-model="rememberMe"
-						label="Se souvenir de moi"
 					/>
 				</div>
 				<div
 					v-if="errorMessage"
-					class="error-message"
+					class="error-message mb-3 d-flex justify-center text-error"
 				>
 					{{ errorMessage }}
 				</div>
-				<VBtn
-					type="submit"
-					color="primary"
-					class="login-button"
-					:disabled="isLoading"
-					:loading="isLoading"
-				>
-					Se connecter
-				</VBtn>
+				<div class="d-flex justify-center">
+					<VBtn
+						type="submit"
+						color="primary"
+						class="login-button"
+						:disabled="isLoading"
+						:loading="isLoading"
+					>
+						Se connecter
+					</VBtn>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -205,6 +203,12 @@
   text-align: center;
 }
 
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .login-header h2 {
   margin-bottom: 8px;
   font-size: 24px;
@@ -216,11 +220,5 @@
 
 .theme-pa > h2 {
   color: #000091;
-}
-
-.login-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>
