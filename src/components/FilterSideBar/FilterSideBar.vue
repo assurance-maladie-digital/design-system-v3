@@ -121,7 +121,7 @@
 						<slot
 							:name="`${formatFilterName(filter.name)}`"
 							:props="{
-								modelValue: filter.value,
+								modelValue: filter.value as any,
 								'onUpdate:modelValue': (value: unknown) =>
 									(filter.value = value),
 							}"
