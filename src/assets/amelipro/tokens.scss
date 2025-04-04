@@ -1,7 +1,106 @@
+// MEDIA QUERIES
+$xs: 599.99;
+$sm: 959.99;
+$md: 1263.99;
+$lg: 1903.99;
+$media-up-sm: '(min-width: #{$xs + 0.01}px)'; // >=600px
+$media-up-md: '(min-width: #{$sm + 0.01}px)'; // >=960px
+$media-up-lg: '(min-width: #{$md + 0.01}px)'; // >=1264px
+$media-up-xl: '(min-width: #{$lg + 0.01}px)'; // >=1904px
+
+$media-down-xl: '(max-width: #{$lg}px)'; // 0px - 1903px
+$media-down-lg: '(max-width: #{$md}px)'; // 0px - 1263px
+$media-down-md: '(max-width: #{$sm}px)'; // 0px - 959px
+$media-down-sm: '(max-width: #{$xs}px)'; // 0px - 599px
+
+$media-only-xs: '(max-width: #{$xs}px)'; // 0px - 599px
+$media-only-sm: '(min-width: #{$xs + 0.01}px) and (max-width: #{$sm}px)'; // 600px - 959px
+$media-only-md: '(min-width: #{$sm + 0.01}px) and (max-width: #{$md}px)'; // 600px - 1263px
+$media-only-lg: '(min-width: #{$md + 0.01}px) and (max-width: #{$lg}px)'; // 1264px - 1903px
+$media-only-xl: '(min-width: #{$lg + 0.01}px)'; // >= 1904px
+
 // AMELIPRO COLORS
+$ap-primary: #00749c; // bleu-4
+$ap-secondary: #00516d; // bleu-1
+$ap-error: #b33f2e; // rouge-3
+$ap-informations: #4d547d; // parme-1
+$ap-succes: #007863; // turquoise-3
+$ap-warning: #906c16; // ocre-1
+$ap-black: #000; // noir
+$ap-white: #fff; // blanc
+$ap-grey: #545859; // gris-2
+$ap-blue: #0c419a; // bleu-9
+$ap-yellow: #f0b323; // jaune-2
+$ap-green: #56c271; // vert-3
+$ap-red: #b33f2e; // rouge-3
+$ap-turquoise: #33bca5; // turquoise-4
+$ap-parme: #dde6fb; // parme-2
+$ap-pink: #d00063; // rose-1
+
+// AMELIPRO GREY VARIANT
+// DARKEN
 $ap-grey-darken1: #1a1b1b; // gris-1 app text color
+// LIGHTEN
+$ap-grey-lighten1: #cccdce; // gris-3
+$ap-grey-lighten2: #dddede; // gris-4
+$ap-grey-lighten3: #eee; // gris-5
+$ap-grey-lighten4: #f3f4f4; // gris-6
+$ap-grey-lighten5: #fafafa; // gris-7
+$ap-grey-lighten6: #f4f8f9; // gris-8 app background
+
+// AMELIPRO BLUE VARIANT
+// DARKEN
 $ap-blue-darken1: #00749c; // bleu-4
 $ap-blue-darken2: #00516d; // bleu-1
+// LIGHTEN
+$ap-blue-lighten1: #99dbf2; // bleu-6
+$ap-blue-lighten2: #ccedf9; // bleu-7
+$ap-blue-lighten3: #e6f6fc; // bleu-8
+$ap-blue-lighten4: #f3fbfe; // bleu-9
+
+// AMELIPRO YELLOW VARIANT
+// DARKEN
+$ap-yellow-darken1: #d8a120; // jaune-1
+$ap-yellow-darken2: #c08f1c; // ocre-3
+$ap-yellow-darken3: #a87d19; // ocre-2
+$ap-yellow-darken4: #906c16; // ocre-1
+// LIGHTEN
+$ap-yellow-lighten1: #f3c24f; // jaune-3
+$ap-yellow-lighten2: #fed66d; // jaune-4
+$ap-yellow-lighten3: #f7d990; // ocre-4
+$ap-yellow-lighten4: #f9e1a7; // ocre-5
+$ap-yellow-lighten5: #fcf0d3; // jaune-5
+
+// AMELIPRO GREEN VARIANT
+// DARKEN
+$ap-green-darken1: #459b5a; // vert-2
+$ap-green-darken2: #337343; // vert-1
+// LIGHTEN
+$ap-green-lighten1: #78ce8d; // vert-4
+$ap-green-lighten2: #ddf3e3; // vert-5
+
+// AMELIPRO RED VARIANT
+// DARKEN
+$ap-red-darken1: #9d3728; // rouge-2
+$ap-red-darken2: #70281c; // rouge-1
+// LIGHTEN
+$ap-red-lighten1: #e67261; // rouge-4
+$ap-red-lighten2: #ec9588; // rouge-5
+$ap-red-lighten3: #f9dcd7; // rouge-6
+$ap-red-lighten4: #fdf0ee; // rouge-7
+
+// AMELIPRO TURQUOISE VARIANT
+// DARKEN
+$ap-turquoise-darken1: #007863; // turquoise-3
+$ap-turquoise-darken2: #006654; // turquoise-2
+$ap-turquoise-darken3: #005647; // turquoise-1
+// LIGHTEN
+$ap-turquoise-lighten1: #cceee8; // turquoise-5
+$ap-turquoise-lighten2: #e6f7f4; // turquoise-6
+
+// AMELIPRO PARME VARIANT
+// DARKEN
+$ap-parme-darken1: #4d547d; // parme-1
 
 // font-weight global values
 $ap-font-weight-light: 300; // light
@@ -24,5 +123,23 @@ $btn-padding-x: 1.5rem;
 $btn-padding-y: 0.75rem;
 $btn-min-height: 3rem;
 
+// card default styles values (also valid for card like component as accordion)
+$card-radius: 0.75rem;
+$card-padding-desktop: 2rem;
+$card-padding-tablet: 1.5rem;
+$card-padding-mobile: 1rem;
+
+// set switch style
+$switch-track-height: 2rem;
+$switch-track-width: 3.5rem;
+$switch-track-top: 0;
+$switch-thumb-height: 1.5rem;
+$switch-thumb-width: 1.5rem;
+$switch-thumb-top: 0.25rem;
+$switch-thumb-elevation: 0;
+$switch-width: 3.5rem;
+$switch-track-opacity: 1;
+
 // set filters and pills styles
 $filter-font-weight: $ap-font-weight-semi-bold;
+$tooltip-background-color: #fff;
