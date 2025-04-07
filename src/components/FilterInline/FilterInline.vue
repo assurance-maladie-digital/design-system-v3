@@ -4,7 +4,6 @@
 	import { toRef } from 'vue'
 	import ChipList from '../ChipList/ChipList.vue'
 	import { locales as defaultLocales } from './locales'
-	import type { ChipItem } from '../ChipList/types'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: FilterProp
@@ -40,6 +39,7 @@
 			width="400px"
 			offset="12"
 			nudge-bottom="10px"
+			z-index="1000"
 		>
 			<template #activator="{ props: menuProps }">
 				<VBtn
@@ -83,8 +83,8 @@
 				/>
 				<slot
 					:props="{
-						modelValue: filter.value,
-						'onUpdate:modelValue': (value: ChipItem) => {
+						modelValue: filter.value as any,
+						'onUpdate:modelValue': (value: unknown) => {
 							if (value !== filter.value) {
 								filter.value = value
 								updateValue()
