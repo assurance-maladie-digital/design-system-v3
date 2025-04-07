@@ -136,6 +136,7 @@
 			location="bottom end"
 			transition="fade-transition"
 			v-bind="props.options['menu']"
+			scroll-strategy="none"
 			z-index="9999"
 		>
 			<template #activator="{ props: menuProps }">

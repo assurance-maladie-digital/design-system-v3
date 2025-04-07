@@ -581,6 +581,7 @@
 				location="bottom"
 				:close-on-content-click="false"
 				:open-on-click="false"
+				scroll-strategy="none"
 				transition="fade-transition"
 				attach="body"
 				:offset="[-20, 5]"

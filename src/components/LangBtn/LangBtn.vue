@@ -103,6 +103,7 @@
 			v-bind="options.menu"
 			:id="isMenuOpen ? 'lang-menu' : menuId "
 			v-model="menu"
+			scroll-strategy="none"
 			role="menu"
 			location="bottom"
 		>
