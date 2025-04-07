@@ -90,7 +90,7 @@ export const Default: Story = {
 import { ref } from 'vue'
 import { SearchListField } from '@cnamts/synapse'
 
-const modelValue = ref('')
+const modelValue = ref([])
 
 const items = [
   {
