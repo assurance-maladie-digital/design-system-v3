@@ -20,11 +20,12 @@
 			<VCol
 				v-for="(color, name) in displayColors"
 				:key="name"
-				cols="12"
+				cols="6"
 				md="3"
+				sm="4"
 			>
 				<VCard color="grey-lighten-4">
-					<VCardTitle style="font-size: medium">
+					<VCardTitle style="font-size: medium;">
 						{{ name }}
 					</VCardTitle>
 					<VCardSubtitle>{{ color }}</VCardSubtitle>

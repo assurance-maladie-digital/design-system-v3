@@ -9,6 +9,7 @@ export const paLightTheme = {
 	info: '#0062AC',
 	success: '#73A839',
 	warning: '#FD7E14',
+	avatar: '#0062AC',
 	blue: '#007bff',
 	blueBase: '#007bff',
 	indigo: '#6610f2',

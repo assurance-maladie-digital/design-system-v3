@@ -15,7 +15,6 @@ export const Base: StoryObj = {
 				const cnamColors = {
 					primary: cnamLightTheme.primary,
 					secondary: cnamLightTheme.secondary,
-					accent: cnamLightTheme.accent,
 					error: cnamLightTheme.error,
 					info: cnamLightTheme.info,
 					success: cnamLightTheme.success,
@@ -25,12 +24,45 @@ export const Base: StoryObj = {
 				const paColors = {
 					primary: paLightTheme.primary,
 					secondary: paLightTheme.secondary,
-					accent: paLightTheme.accent,
 					error: paLightTheme.error,
 					info: paLightTheme.info,
 					success: paLightTheme.success,
 					warning: paLightTheme.warning,
 					risquePro: paLightTheme.risquePro,
+				}
+				return {
+					cnamColors,
+					paColors,
+				}
+			},
+			template: `
+				<ColorDisplay 
+					colorCategory="base" 
+					:cnamColors="cnamColors" 
+					:paColors="paColors" 
+				/>
+			`,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const Others: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const cnamColors = {
+					accent: cnamLightTheme.accent,
+					avatar: cnamLightTheme.avatar,
+					light: cnamLightTheme.light,
+					dark: cnamLightTheme.dark,
+				}
+				const paColors = {
+					avatar: paLightTheme.avatar,
+					accent: paLightTheme.accent,
+					light: paLightTheme.light,
+					dark: paLightTheme.dark,
 				}
 				return {
 					cnamColors,
@@ -246,12 +278,12 @@ export const MainBackgrounds: StoryObj = {
 				const cnamColors = {
 					backgroundMain: cnamLightTheme.backgroundMain,
 					backgroundSurface: cnamLightTheme.backgroundSurface,
-					backgroundSurfaceAlt: cnamLightTheme.backgroundSurfaceAlt
+					backgroundSurfaceAlt: cnamLightTheme.backgroundSurfaceAlt,
 				}
 				const paColors = {
 					backgroundMain: paLightTheme.backgroundMain,
 					backgroundSurface: paLightTheme.backgroundSurface,
-					backgroundSurfaceAlt: paLightTheme.backgroundSurfaceAlt
+					backgroundSurfaceAlt: paLightTheme.backgroundSurfaceAlt,
 				}
 				return {
 					cnamColors,
@@ -314,12 +346,12 @@ export const InformationalBackgrounds: StoryObj = {
 				const cnamColors = {
 					backgroundInfo: cnamLightTheme.backgroundInfo,
 					backgroundInfoSubdued: cnamLightTheme.backgroundInfoSubdued,
-					backgroundInfoContrasted: cnamLightTheme.backgroundInfoContrasted
+					backgroundInfoContrasted: cnamLightTheme.backgroundInfoContrasted,
 				}
 				const paColors = {
 					backgroundInfo: paLightTheme.backgroundInfo,
 					backgroundInfoSubdued: paLightTheme.backgroundInfoSubdued,
-					backgroundInfoContrasted: paLightTheme.backgroundInfoContrasted
+					backgroundInfoContrasted: paLightTheme.backgroundInfoContrasted,
 				}
 				return {
 					cnamColors,
