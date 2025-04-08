@@ -1,4 +1,4 @@
-import { ColorPalette, ColorItem } from '@storybook/addon-docs'
+import { ColorPalette, ColorItem } from '@storybook/blocks'
 
 import { cnamColorsTokens } from '@/designTokens/tokens/cnam/cnamColors'
 import { paColorsTokens } from '@/designTokens/tokens/pa/paColors'
