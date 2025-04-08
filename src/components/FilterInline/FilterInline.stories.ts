@@ -1,7 +1,8 @@
+/* eslint-disable vue/one-component-per-file */
 import { fn } from '@storybook/test'
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref } from 'vue'
-import { VDivider, VSelect, VTextField } from 'vuetify/components'
+import { defineComponent, ref, watch, type PropType } from 'vue'
+import { VCheckbox, VDivider, VSelect, VTextField } from 'vuetify/components'
 import FilterSideBar from '../FilterSideBar/FilterSideBar.vue'
 import PeriodField from '../PeriodField/PeriodField.vue'
 import RangeField from '../RangeField/RangeField.vue'
@@ -761,6 +762,307 @@ const professionList = [
 ]
 	
 </script>`,
+			},
+		],
+	},
+}
+
+const BooleanFilter = defineComponent({
+	components: {
+		VCheckbox,
+	},
+	props: {
+		modelValue: {
+			type: String,
+			default: null,
+		},
+		title: {
+			required: true,
+			type: String,
+		},
+		label: {
+			required: true,
+			type: String,
+		},
+	},
+	template: `
+	<VCheckbox
+		:model-value="modelValue === title"
+		:label="label"
+		color="primary"
+		@update:model-value="(value) => $emit('update:modelValue', value ? title : null)"
+	/>
+	`,
+})
+
+export const Boolean: Story = {
+	args: {
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { FilterInline, BooleanFilter },
+		setup() {
+			const filters = ref([
+				{
+					name: 'eligibility',
+					title: 'Éligibilité',
+				},
+			])
+
+			return { args, filters }
+		},
+		template: `
+<FilterInline v-model="filters" v-bind="args">
+	<template #eligibility="{ props }">
+		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+		<BooleanFilter
+			v-bind="props"
+			label="Eligible RQTH"
+			title="RQTH"
+			@update:model-value="value => bool = value === 'eligibility'"
+		/>
+	</template>
+</FilterInline>
+		`,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<FilterInline v-model="filters">
+	<template #eligibility="{ props }">
+		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+		<BooleanFilter
+			v-bind="props"
+			label="Eligible RQTH"
+			title="RQTH"
+			@update:model-value="value => bool = value === 'eligibility'"
+		/>
+	</template>
+</FilterInline>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { FilterInline } from '@cnamts/synapse'
+	import BooleanFilter from './BooleanFilter.vue'
+
+	const filters = ref([
+		{
+			name: 'eligibility',
+			title: 'Éligibilité',
+		},
+	])
+
+	const bool = ref(false)
+</script>`,
+			},
+			{
+				name: 'BooleanFilter.vue',
+				code: `
+<script setup lang="ts">
+	const props = defineProps<{
+		title: string
+		label: string
+	}>()
+
+	const modelValue = defineModel<string | null>()
+</script>
+
+<template>
+	<VCheckbox
+		:model-value="modelValue === title"
+		:label
+		color="primary"
+		@update:model-value="value => modelValue = value ? props.title : undefined"
+	/>
+</template>
+`,
+			},
+		],
+	},
+}
+
+const ManyFilters = defineComponent({
+	components: {
+		VCheckbox,
+	},
+	props: {
+		modelValue: {
+			type: Object as PropType<string[] | null | undefined>,
+			default: undefined,
+		},
+	},
+	emits: ['update:modelValue'],
+	setup(args, ctx) {
+		const rqth = ref(false)
+		const pch = ref(false)
+		const aeeh = ref(false)
+
+		watch(() => args.modelValue, (value) => {
+			rqth.value = !!value?.includes('RQTH')
+			pch.value = !!value?.includes('PCH')
+			aeeh.value = !!value?.includes('AEEH')
+		}, { immediate: true, deep: true })
+
+		watch([rqth, pch, aeeh], () => {
+			const values: string[] = []
+			if (rqth.value) values.push('RQTH')
+			if (pch.value) values.push('PCH')
+			if (aeeh.value) values.push('AEEH')
+			ctx.emit('update:modelValue', values.length ? values : undefined)
+		})
+
+		return { rqth, pch, aeeh }
+	},
+	template: `
+		<div>
+			<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+			<VCheckbox
+				v-model="rqth"
+				label="Eligible RQTH"
+				color="primary"
+			/>
+			<hr>
+			<p class="mt-6">
+				Est ce que le patient est éligible à <em class="text-primary">Prestation de Compensation du Handicap</em>&nbsp;?
+			</p>
+			<VCheckbox
+				v-model="pch"
+				label="Eligible PCH"
+				color="primary"
+			/>
+			<hr>
+			<p class="mt-6">
+				Est ce que le patient est éligible à <em class="text-primary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
+			</p>
+			<VCheckbox
+				v-model="aeeh"
+				label="Eligible AEEH"
+				color="primary"
+			/>
+		</div>
+	`,
+})
+
+export const ManyFields: Story = {
+	args: {
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { FilterInline, ManyFilters },
+		setup() {
+			const filters = ref([
+				{
+					name: 'eligibilities',
+					title: 'Éligibilités',
+				},
+			])
+
+			return { args, filters }
+		},
+		template: `
+<FilterInline v-model="filters" v-bind="args">
+	<template #eligibilities="{ props }">
+		<ManyFilters
+			v-bind="props"
+		/>
+	</template>
+</FilterInline>
+		`,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<FilterInline v-model="filters">
+	<template #eligibilities="{ props }">
+		<ManyFilters
+			v-bind="props"
+		/>
+	</template>
+</FilterInline>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { FilterInline } from '@cnamts/synapse'
+	import ManyFilters from './ManyFilters.vue'
+
+	const filters = ref([
+		{
+			name: 'eligibilities',
+			title: 'Éligibilités',
+		},
+	])
+</script>`,
+
+			},
+			{
+				name: 'ManyFilters.vue',
+				code: `
+<script setup lang="ts">
+	import { ref, watch } from 'vue'
+
+	const modelValue = defineModel<Array<string> | null>()
+
+	const rqth = ref(false)
+	const pch = ref(false)
+	const aeeh = ref(false)
+
+	watch(modelValue, (value) => {
+		rqth.value = !!value?.includes('RQTH')
+		pch.value = !!value?.includes('PCH')
+		aeeh.value = !!value?.includes('AEEH')
+	}, { immediate: true, deep: true })
+
+	watch([rqth, pch, aeeh], () => {
+		const values: string[] = []
+		if (rqth.value) values.push('RQTH')
+		if (pch.value) values.push('PCH')
+		if (aeeh.value) values.push('AEEH')
+		modelValue.value = values.length ? values : undefined
+	})
+
+</script>
+
+<template>
+	<div>
+		<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+		<VCheckbox
+			v-model="rqth"
+			label="Eligible RQTH"
+			color="primary"
+		/>
+		<hr>
+		<p class="mt-6">
+			Est ce que le patient est éligible à <em class="text-primary">Prestation de Compensation du Handicap</em>&nbsp;?
+		</p>
+		<VCheckbox
+			v-model="pch"
+			label="Eligible PCH"
+			color="primary"
+		/>
+		<hr>
+		<p class="mt-6">
+			Est ce que le patient est éligible à <em class="text-primary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
+		</p>
+		<VCheckbox
+			v-model="aeeh"
+			label="Eligible AEEH"
+			color="primary"
+		/>
+	</div>
+</template>
+`,
 			},
 		],
 	},
