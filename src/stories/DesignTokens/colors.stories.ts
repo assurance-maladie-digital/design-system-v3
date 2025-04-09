@@ -5,7 +5,7 @@ import { paColorsTokens } from '@/designTokens/tokens/pa/paColors'
 import ColorDisplay from './ColorDisplay.vue'
 
 import type { StoryObj } from '@storybook/vue3'
-import {computed} from "vue";
+import { computed } from 'vue'
 export default {
 	title: 'Design Tokens/Couleurs',
 }
