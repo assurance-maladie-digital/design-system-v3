@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-	import { ref, computed } from 'vue'
 	import { mdiArrowLeft } from '@mdi/js'
+	import { computed } from 'vue'
 	import { locales } from './locales'
 
 	const props = defineProps<{
@@ -8,7 +8,6 @@
 		dark?: boolean
 	}>()
 
-	const backIcon = ref(mdiArrowLeft)
 	const isDark = computed(() => props.dark ?? false)
 	const iconColor = computed(() => isDark.value ? 'white' : 'primary')
 	const buttonVariant = computed(() => isDark.value ? 'outlined' : 'text')
@@ -28,8 +27,7 @@
 		:variant="buttonVariant"
 		:theme="buttonTheme"
 		:color="buttonColor"
-		:outlined="isDark"
-		:class="['vd-back-btn', 'text-none', buttonClasses]"
+		:class="['sy-back-btn', 'text-none', buttonClasses]"
 	>
 		<slot name="icon">
 			<VIcon
@@ -38,7 +36,7 @@
 				:class="{ 'ml-n1': isDark }"
 				class="mr-1"
 			>
-				{{ backIcon }}
+				{{ mdiArrowLeft }}
 			</VIcon>
 		</slot>
 
@@ -50,10 +48,18 @@
 
 <style lang="scss" scoped>
 // Désactiver l'état de hover sur le thème clair
-.v-btn.v-theme--light:deep() {
+.v-btn:deep() {
 	.v-btn__underlay,
 	.v-btn__overlay {
 		display: none;
 	}
+}
+
+.sy-back-btn:focus-visible {
+	outline: 0;
+}
+
+.sy-back-btn:focus-visible::after {
+	opacity: 1;
 }
 </style>
