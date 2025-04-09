@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`FranceConnectBtn > renders correctly 1`] = `
-"<div data-v-dc72de41="" class="sy-france-connect-btn d-flex flex-column align-start"><a data-v-dc72de41="" href="https://app.franceconnect.gouv.fr/" aria-label="S’identifier avec FranceConnect" class="sy-france-connect-link d-inline-flex"><svg data-v-dc72de41="" viewBox="0 0 209 56" width="209px" height="56" xmlns="http://www.w3.org/2000/svg" role="presentation">
+"<div data-v-dc72de41="" class="sy-france-connect-btn d-flex flex-column align-start"><a data-v-dc72de41="" href="https://app.franceconnect.gouv.fr/" aria-label="S’identifier avec FranceConnect" class="sy-france-connect-link d-inline-flex"><svg data-v-dc72de41="" viewBox="0 0 209 56" width="209px" height="56" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
       <path data-v-dc72de41="" fill="#000091" d="m47 19.1-15-8.68-15 8.76a.6.6 0 0 0-.3.53v16.94a.67.67 0 0 0 .3.53l15 8.6 14.99-8.7a.67.67 0 0 0 .3-.53V19.63a.6.6 0 0 0-.3-.53Z"></path>
       <path data-v-dc72de41="" fill="#e1000f" d="m26.64 19.6-5.03 8.63-4.55-9.18 5.39-3.11 4.48 3.16-.29.5ZM47.3 36.58V19.62a.6.6 0 0 0-.3-.52l-15-8.68"></path>
       <path data-v-dc72de41="" fill="#0063cb" d="M16.7 36.58 32 10.42v35.36l-15-8.6a.67.67 0 0 1-.3-.53V19.71v16.87Zm24.67-20.74L46.83 19l-4.5 9.15-5.38-9.24 4.42-3.07Z"></path>
@@ -13,7 +13,7 @@ exports[`FranceConnectBtn > renders correctly 1`] = `
 
 exports[`FranceConnectBtn > renders correctly in black 1`] = `
 "<div class="v-theme-provider v-theme--dark">
-  <div data-v-dc72de41="" class="sy-france-connect-btn d-flex flex-column align-start sy-france-connect-btn--dark"><a data-v-dc72de41="" href="https://app.franceconnect.gouv.fr/" aria-label="S’identifier avec FranceConnect+" class="sy-france-connect-link d-inline-flex"><svg data-v-dc72de41="" viewBox="0 0 245 56" width="245px" height="56" xmlns="http://www.w3.org/2000/svg" role="presentation">
+  <div data-v-dc72de41="" class="sy-france-connect-btn d-flex flex-column align-start sy-france-connect-btn--dark"><a data-v-dc72de41="" href="https://app.franceconnect.gouv.fr/" aria-label="S’identifier avec FranceConnect+" class="sy-france-connect-link d-inline-flex"><svg data-v-dc72de41="" viewBox="0 0 245 56" width="245px" height="56" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
         <path data-v-dc72de41="" fill="#000091" d="m47 19.1-15-8.68-15 8.76a.6.6 0 0 0-.3.53v16.94a.67.67 0 0 0 .3.53l15 8.6 14.99-8.7a.67.67 0 0 0 .3-.53V19.63a.6.6 0 0 0-.3-.53Z"></path>
         <path data-v-dc72de41="" fill="#e1000f" d="m26.64 19.6-5.03 8.63-4.55-9.18 5.39-3.11 4.48 3.16-.29.5ZM47.3 36.58V19.62a.6.6 0 0 0-.3-.52l-15-8.68"></path>
         <path data-v-dc72de41="" fill="#0063cb" d="M16.7 36.58 32 10.42v35.36l-15-8.6a.67.67 0 0 1-.3-.53V19.71v16.87Zm24.67-20.74L46.83 19l-4.5 9.15-5.38-9.24 4.42-3.07Z"></path>
@@ -25,7 +25,7 @@ exports[`FranceConnectBtn > renders correctly in black 1`] = `
 `;
 
 exports[`FranceConnectBtn > renders correctly with connect-plus 1`] = `
-"<div data-v-dc72de41="" class="sy-france-connect-btn d-flex flex-column align-start"><a data-v-dc72de41="" href="https://app.franceconnect.gouv.fr/" aria-label="S’identifier avec FranceConnect+" class="sy-france-connect-link d-inline-flex"><svg data-v-dc72de41="" viewBox="0 0 245 56" width="245px" height="56" xmlns="http://www.w3.org/2000/svg" role="presentation">
+"<div data-v-dc72de41="" class="sy-france-connect-btn d-flex flex-column align-start"><a data-v-dc72de41="" href="https://app.franceconnect.gouv.fr/" aria-label="S’identifier avec FranceConnect+" class="sy-france-connect-link d-inline-flex"><svg data-v-dc72de41="" viewBox="0 0 245 56" width="245px" height="56" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
       <path data-v-dc72de41="" fill="#000091" d="m47 19.1-15-8.68-15 8.76a.6.6 0 0 0-.3.53v16.94a.67.67 0 0 0 .3.53l15 8.6 14.99-8.7a.67.67 0 0 0 .3-.53V19.63a.6.6 0 0 0-.3-.53Z"></path>
       <path data-v-dc72de41="" fill="#e1000f" d="m26.64 19.6-5.03 8.63-4.55-9.18 5.39-3.11 4.48 3.16-.29.5ZM47.3 36.58V19.62a.6.6 0 0 0-.3-.52l-15-8.68"></path>
       <path data-v-dc72de41="" fill="#0063cb" d="M16.7 36.58 32 10.42v35.36l-15-8.6a.67.67 0 0 1-.3-.53V19.71v16.87Zm24.67-20.74L46.83 19l-4.5 9.15-5.38-9.24 4.42-3.07Z"></path>
