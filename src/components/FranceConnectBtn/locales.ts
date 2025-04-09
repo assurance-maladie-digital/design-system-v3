@@ -3,4 +3,6 @@ export const locales = {
 		`S’identifier avec FranceConnect${connectPlus ? '+' : ''}`,
 	infoLinkLabel: (connectPlus: boolean) =>
 		`Qu’est-ce que FranceConnect${connectPlus ? '+' : ''} ?`,
+	infoLinkAriaLabel: (connectPlus: boolean) =>
+		`Qu’est-ce que FranceConnect${connectPlus ? '+' : ''} ? (nouvelle fenêtre)`,
 }
