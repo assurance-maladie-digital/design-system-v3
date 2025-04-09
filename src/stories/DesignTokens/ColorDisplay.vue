@@ -29,10 +29,7 @@
 						{{ name }}
 					</VCardTitle>
 					<VCardSubtitle>{{ color }}</VCardSubtitle>
-					<VCard
-						color="white"
-						height="70px"
-					>
+					<VCard height="70px" class="color">
 						<div :style="{ backgroundColor: color, height: '100%', width: '100%' }" />
 					</VCard>
 				</VCard>
@@ -40,3 +37,9 @@
 		</VRow>
 	</VContainer>
 </template>
+
+<style lang="scss" scoped>
+  .v-card--variant-elevated.color {
+    background: transparent !important;
+  }
+</style>
