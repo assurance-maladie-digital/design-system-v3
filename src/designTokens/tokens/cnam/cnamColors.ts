@@ -156,16 +156,11 @@ export const cnamColorsTokens = {
 		lighten97: '#fafafa',
 	},
 	white: {
-		20: 'rgba(255, 255, 255, 0.2000)',
-		38: 'rgba(255, 255, 255, 0.3800)',
-		40: 'rgba(255, 255, 255, 0.4000)',
-		70: 'rgba(255, 255, 255, 0.7000)',
-		8: 'rgba(255, 255, 255, 0.0800)',
-		0: 'rgba(255, 255, 255, 0.0000)',
+		lighten20: 'rgba(255, 255, 255, 0.20)',
+		lighten38: 'rgba(255, 255, 255, 0.38)',
+		lighten40: 'rgba(255, 255, 255, 0.40)',
+		lighten70: 'rgba(255, 255, 255, 0.70)',
+		lighten8: 'rgba(255, 255, 255, 0.080)',
 		base: '#ffffff',
-	},
-	transparentBlue: {
-		transparentBlue18: '#a6d4eb',
-		transparentBlue8: '#ebf0f7',
 	},
 }
