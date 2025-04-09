@@ -16,7 +16,7 @@ describe('FranceConnectBtn', () => {
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
-		expect(wrapper.find('.vd-france-connect-link').attributes('href')).toBe('https://app.franceconnect.gouv.fr/')
+		expect(wrapper.find('.sy-france-connect-link').attributes('href')).toBe('https://app.franceconnect.gouv.fr/')
 	})
 
 	it('renders correctly with connect-plus', () => {
