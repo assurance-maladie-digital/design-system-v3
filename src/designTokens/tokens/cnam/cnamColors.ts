@@ -163,8 +163,4 @@ export const cnamColorsTokens = {
 		lighten8: 'rgba(255, 255, 255, 0.080)',
 		base: '#ffffff',
 	},
-	transparentBlue: {
-		transparentBlue18: '#a6d4eb',
-		transparentBlue8: '#ebf0f7',
-	},
 }

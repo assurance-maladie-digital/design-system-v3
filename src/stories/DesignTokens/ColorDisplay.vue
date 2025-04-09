@@ -12,11 +12,15 @@
 
 	const theme = computed(() => typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam')
 	const displayColors = computed(() => theme.value === 'cnam' ? props.cnamColors : props.paColors)
+
+	const isEmptyObject = (obj: Record<string, string>) => {
+		return Object.keys(obj).length === 0
+	}
 </script>
 
 <template>
 	<VContainer>
-		<VRow>
+		<VRow v-if="!isEmptyObject(displayColors)">
 			<VCol
 				v-for="(color, name) in displayColors"
 				:key="name"
@@ -29,17 +33,26 @@
 						{{ name }}
 					</VCardTitle>
 					<VCardSubtitle>{{ color }}</VCardSubtitle>
-					<VCard height="70px" class="color">
+					<VCard
+						height="70px"
+						class="color"
+					>
 						<div :style="{ backgroundColor: color, height: '100%', width: '100%' }" />
 					</VCard>
 				</VCard>
 			</VCol>
 		</VRow>
+		<div
+			v-else
+			class="text-grey"
+		>
+			Couleurs en cours définition.
+		</div>
 	</VContainer>
 </template>
 
 <style lang="scss" scoped>
-  .v-card--variant-elevated.color {
-    background: transparent !important;
-  }
+	.v-card--variant-elevated.color {
+		background: transparent !important;
+	}
 </style>

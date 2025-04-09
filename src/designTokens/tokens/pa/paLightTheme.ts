@@ -119,6 +119,4 @@ export const paLightTheme = {
 	iconOnDark: paSemanticTokens.colors.icon.onDark,
 	iconDisabled: paSemanticTokens.colors.icon.disabled,
 	iconDisabledOnDark: paSemanticTokens.colors.icon.disabledOnDark,
-	transparentBlue18: paColorsTokens.blue.base,
-	transparentBlue8: paColorsTokens.transparentBlue.transparentBlue8,
 }

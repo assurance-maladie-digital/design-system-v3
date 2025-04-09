@@ -68,8 +68,10 @@ Les couleurs contribuent à l’identification de nos applications ou services e
 
 ## Background
 
+<div v-if={"ColorsStories.MainBackgrounds"}>
 ### Main
 <Story of={ColorsStories.MainBackgrounds} />
+</div>
 
 ### Alternative
 <Story of={ColorsStories.AlternativeBackgrounds} />
@@ -88,9 +90,3 @@ Les couleurs contribuent à l’identification de nos applications ou services e
 
 ### Other
 <Story of={ColorsStories.OtherBackgrounds} />
-
-
-## Transparent Background
-
-### Transparent Blues
-<Story of={ColorsStories.TransparentBlues} />

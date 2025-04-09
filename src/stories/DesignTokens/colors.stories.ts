@@ -727,14 +727,7 @@ export const Interactive: StoryObj = {
 					'interactive-disabled': cnamLightTheme.interactiveDisabled,
 					'interactive-hover-on-selected': cnamLightTheme.interactiveHoverOnSelected,
 				}
-				const paColors = {
-					'interactive-default': paLightTheme.interactiveDefault,
-					'interactive-hover': paLightTheme.interactiveHover,
-					'interactive-pressed': paLightTheme.interactivePressed,
-					'interactive-focus': paLightTheme.interactiveFocus,
-					'interactive-disabled': paLightTheme.interactiveDisabled,
-					'interactive-hover-on-selected': paLightTheme.interactiveHoverOnSelected,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -772,21 +765,7 @@ export const Border: StoryObj = {
 					'border-disabled': cnamLightTheme.borderDisabled,
 					'border-disabled-on-dark': cnamLightTheme.borderDisabledOnDark,
 				}
-				const paColors = {
-					'border-darker': paLightTheme.borderDarker,
-					'border-base': paLightTheme.borderBase,
-					'border-subdued': paLightTheme.borderSubdued,
-					'border-accent': paLightTheme.borderAccent,
-					'border-accent-contrasted': paLightTheme.borderAccentContrasted,
-					'border-accent-on-dark': paLightTheme.borderAccentOnDark,
-					'border-info': paLightTheme.borderInfo,
-					'border-success': paLightTheme.borderSuccess,
-					'border-warning': paLightTheme.borderWarning,
-					'border-error': paLightTheme.borderError,
-					'border-on-dark': paLightTheme.borderOnDark,
-					'border-disabled': paLightTheme.borderDisabled,
-					'border-disabled-on-dark': paLightTheme.borderDisabledOnDark,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -823,20 +802,7 @@ export const Text: StoryObj = {
 					'text-subdued-on-dark': cnamLightTheme.textSubduedOnDark,
 					'text-disabled-on-dark': cnamLightTheme.textDisabledOnDark,
 				}
-				const paColors = {
-					'text-base': paLightTheme.textBase,
-					'text-accent': paLightTheme.textAccent,
-					'text-accent-contrasted': paLightTheme.textAccentContrasted,
-					'text-subdued': paLightTheme.textSubdued,
-					'text-info': paLightTheme.textInfo,
-					'text-success': paLightTheme.textSuccess,
-					'text-warning': paLightTheme.textWarning,
-					'text-error': paLightTheme.textError,
-					'text-disabled': paLightTheme.textDisabled,
-					'text-on-dark': paLightTheme.textOnDark,
-					'text-subdued-on-dark': paLightTheme.textSubduedOnDark,
-					'text-disabled-on-dark': paLightTheme.textDisabledOnDark,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -872,20 +838,7 @@ export const Icons: StoryObj = {
 					'icon-disabled': cnamLightTheme.iconDisabled,
 					'icon-disabled-on-dark': cnamLightTheme.iconDisabledOnDark,
 				}
-				const paColors = {
-					'icon-base': paLightTheme.iconBase,
-					'icon-subdued': paLightTheme.iconSubdued,
-					'icon-subdued-on-dark': paLightTheme.iconSubduedOnDark,
-					'icon-accent': paLightTheme.iconAccent,
-					'icon-accent-contrasted': paLightTheme.iconAccentContrasted,
-					'icon-info': paLightTheme.iconInfo,
-					'icon-success': paLightTheme.iconSuccess,
-					'icon-warning': paLightTheme.iconWarning,
-					'icon-error': paLightTheme.iconError,
-					'icon-on-dark': paLightTheme.iconOnDark,
-					'icon-disabled': paLightTheme.iconDisabled,
-					'icon-disabled-on-dark': paLightTheme.iconDisabledOnDark,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -913,11 +866,7 @@ export const MainBackgrounds: StoryObj = {
 					'background-surface': cnamLightTheme.backgroundSurface,
 					'background-surface-alt': cnamLightTheme.backgroundSurfaceAlt,
 				}
-				const paColors = {
-					'background-main': paLightTheme.backgroundMain,
-					'background-surface': paLightTheme.backgroundSurface,
-					'background-surface-alt': paLightTheme.backgroundSurfaceAlt,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -947,13 +896,7 @@ export const AlternativeBackgrounds: StoryObj = {
 					'background-accent-contrasted': cnamLightTheme.backgroundAccentContrasted,
 					'background-accent-alt': cnamLightTheme.backgroundAccentAlt,
 				}
-				const paColors = {
-					'background-mainAlt': paLightTheme.backgroundMainAlt,
-					'background-raised': paLightTheme.backgroundRaised,
-					'background-accent': paLightTheme.backgroundAccent,
-					'background-accent-contrasted': paLightTheme.backgroundAccentContrasted,
-					'background-accent-alt': paLightTheme.backgroundAccentAlt,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -981,11 +924,7 @@ export const InformationalBackgrounds: StoryObj = {
 					'background-info-subdued': cnamLightTheme.backgroundInfoSubdued,
 					'background-info-contrasted': cnamLightTheme.backgroundInfoContrasted,
 				}
-				const paColors = {
-					'background-info': paLightTheme.backgroundInfo,
-					'background-info-subdued': paLightTheme.backgroundInfoSubdued,
-					'background-info-contrasted': paLightTheme.backgroundInfoContrasted,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -1013,11 +952,7 @@ export const SuccessBackgrounds: StoryObj = {
 					'background-success-subdued': cnamLightTheme.backgroundSuccessSubdued,
 					'background-success-contrasted': cnamLightTheme.backgroundSuccessContrasted,
 				}
-				const paColors = {
-					'background-success': paLightTheme.backgroundSuccess,
-					'background-success-subdued': paLightTheme.backgroundSuccessSubdued,
-					'background-success-contrasted': paLightTheme.backgroundSuccessContrasted,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -1045,11 +980,7 @@ export const WarningBackgrounds: StoryObj = {
 					'background-warning-subdued': cnamLightTheme.backgroundWarningSubdued,
 					'background-warning-contrasted': cnamLightTheme.backgroundWarningContrasted,
 				}
-				const paColors = {
-					'background-warning': paLightTheme.backgroundWarning,
-					'background-warning-subdued': paLightTheme.backgroundWarningSubdued,
-					'background-warning-contrasted': paLightTheme.backgroundWarningContrasted,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -1077,11 +1008,7 @@ export const ErrorBackgrounds: StoryObj = {
 					'background-error-subdued': cnamLightTheme.backgroundErrorSubdued,
 					'background-error-contrasted': cnamLightTheme.backgroundErrorContrasted,
 				}
-				const paColors = {
-					'background-error': paLightTheme.backgroundError,
-					'background-error-subdued': paLightTheme.backgroundErrorSubdued,
-					'background-error-contrasted': paLightTheme.backgroundErrorContrasted,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -1111,13 +1038,7 @@ export const OtherBackgrounds: StoryObj = {
 					'background-professionnel': cnamLightTheme.backgroundProfessionnel,
 					'background-entreprise': cnamLightTheme.backgroundEntreprise,
 				}
-				const paColors = {
-					'background-disabled': paLightTheme.backgroundDisabled,
-					'background-disabled-on-dark': paLightTheme.backgroundDisabledOnDark,
-					'background-assure': paLightTheme.backgroundAssure,
-					'background-professionnel': paLightTheme.backgroundProfessionnel,
-					'background-entreprise': paLightTheme.backgroundEntreprise,
-				}
+				const paColors = {}
 				return {
 					cnamColors,
 					paColors,
@@ -1128,36 +1049,6 @@ export const OtherBackgrounds: StoryObj = {
 					colorCategory="otherBackgrounds" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
-				/>
-			`,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const TransparentBlues: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const cnamColors = {
-					'transparent-blue-18': cnamLightTheme.transparentBlue18,
-					'transparent-blue-8': cnamLightTheme.transparentBlue8,
-				}
-				const paColors = {
-					'transparent-blue-18': paLightTheme.transparentBlue18,
-					'transparent-blue-8': paLightTheme.transparentBlue8,
-				}
-				return {
-					cnamColors,
-					paColors,
-				}
-			},
-			template: `
-				<ColorDisplay
-					colorCategory="transparentBlues"
-					:cnamColors="cnamColors"
-					:paColors="paColors"
 				/>
 			`,
 		}
