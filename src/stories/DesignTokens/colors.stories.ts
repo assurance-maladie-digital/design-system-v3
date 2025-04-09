@@ -5,8 +5,29 @@ import { paColorsTokens } from '@/designTokens/tokens/pa/paColors'
 import ColorDisplay from './ColorDisplay.vue'
 
 import type { StoryObj } from '@storybook/vue3'
+import {computed} from "vue";
 export default {
 	title: 'Design Tokens/Couleurs',
+}
+
+export const Theme: StoryObj = {
+	render: () => {
+		return {
+			setup() {
+				const theme = computed(() => typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam')
+				return {
+					theme,
+				}
+			},
+			template: `
+				<p style="font-size: 14px;  margin: 16px 0; line-height: 24px; color: rgb(46, 52, 56);">
+					Les couleurs contribuent à l’identification de nos applications ou services et font partie intégrante de la marque <span v-if="theme === 'cnam'"><b>Assurance Maladie</b></span><span v-if="theme === 'pa'"><b>Portail Agent</b></span>. 
+					Elles assurent l’homogénéité graphique des interfaces.
+				</p>
+			`,
+		}
+	},
+	tags: ['!dev'],
 }
 
 export const Base: StoryObj = {

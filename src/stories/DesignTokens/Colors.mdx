@@ -4,8 +4,7 @@ import * as ColorsStories from './colors.stories';
 <Meta title="Design Tokens/Couleurs" />
 
 # Couleurs
-
-Les couleurs contribuent à l’identification de nos applications ou services et font partie intégrante de la marque Assurance Maladie. Elles assurent l’homogénéité graphique des interfaces.
+<Story of={ColorsStories.Theme} />
 
 ## Couleurs de base
 <Story of={ColorsStories.Base} />
@@ -68,10 +67,8 @@ Les couleurs contribuent à l’identification de nos applications ou services e
 
 ## Background
 
-<div v-if={"ColorsStories.MainBackgrounds"}>
 ### Main
 <Story of={ColorsStories.MainBackgrounds} />
-</div>
 
 ### Alternative
 <Story of={ColorsStories.AlternativeBackgrounds} />
