@@ -26,21 +26,22 @@
 
 <template>
 	<div
-		class="vd-france-connect-btn d-flex flex-column align-start"
+		class="sy-france-connect-btn d-flex flex-column align-start"
 		:class="{
-			'vd-france-connect-btn--dark': isDark,
+			'sy-france-connect-btn--dark': isDark,
 		}"
 	>
 		<a
 			:href="href"
 			:aria-label="locales.btnLabel(isConnectPlus)"
-			class="vd-france-connect-link d-inline-flex"
+			class="sy-france-connect-link d-inline-flex"
 		>
 			<svg
 				:viewBox="`0 0 ${props.isConnectPlus ? '245' : '209'} 56`"
 				:width="btnWidth"
 				height="56"
 				xmlns="http://www.w3.org/2000/svg"
+				role="presentation"
 			>
 				<path
 					fill="#000091"
@@ -79,13 +80,14 @@
 			:href="infoUrl"
 			target="_blank"
 			rel="noopener noreferrer"
-			class="vd-france-connect-info-link text-decoration-none mt-3"
+			class="sy-france-connect-info-link text-decoration-none mt-3"
+			:aria-label="locales.infoLinkAriaLabel(isConnectPlus)"
 		>
 			{{ locales.infoLinkLabel(isConnectPlus) }}
 
 			<VIcon
 				size="1em"
-				class="ml-1 mb-1"
+				class="sy-france-connect-info-link-icon"
 			>
 				{{ mdiOpenInNew }}
 			</VIcon>
@@ -94,15 +96,17 @@
 </template>
 
 <style lang="scss" scoped>
-.vd-france-connect-btn a {
+.sy-france-connect-btn a {
 	color: #000091;
 
-	&:focus {
-		outline-offset: 3px;
+	&:focus-visible {
+		outline: solid #0a76f6;
+		outline-width: 2px;
+		outline-offset: 2px;
 	}
 }
 
-.vd-france-connect-link {
+.sy-france-connect-link {
 	background: #000091;
 
 	&:hover {
@@ -110,35 +114,27 @@
 		transition: all 0.2s ease-in-out;
 	}
 
-	&:active {
-		background: #2323ff;
-	}
-
 	&:focus {
 		outline-offset: 3px;
 	}
 }
 
-.vd-france-connect-btn--dark {
-	.vd-france-connect-link {
+.sy-france-connect-btn--dark {
+	.sy-france-connect-link {
 		color: #fff;
 		background-color: #8585f6;
 
 		&:hover {
 			background-color: #b1b1f9;
 		}
-
-		&:active {
-			background-color: #c6c6fb;
-		}
 	}
 
-	.vd-france-connect-info-link {
+	.sy-france-connect-info-link {
 		color: #8585f6;
 	}
 }
 
-.vd-france-connect-info-link {
+.sy-france-connect-info-link {
 	background-image: linear-gradient(currentcolor, currentcolor);
 	background-position: 0% 100%;
 	background-repeat: no-repeat;
