@@ -18,6 +18,22 @@ const meta = {
 		hideBackIcon: {
 			control: 'boolean',
 		},
+		locales: {
+			description: 'Traductions',
+			control: false,
+			table: {
+				category: 'props',
+				type: {
+					summary: undefined,
+				},
+				defaultValue: {
+					summary: `Locales`,
+					detail: `{
+	label: 'Retour',
+}`,
+				},
+			},
+		},
 	},
 } as Meta<typeof BackBtn>
 
@@ -61,12 +77,12 @@ export const Default: Story = {
 					color="primary"
 					class="pa-4"
 				>
-				<BackBtn v-bind="args" />
-				</VSheet>
-				<VSheet
-					v-else
-					class="pa-4"
-				>
+					<BackBtn v-bind="args" />
+					</VSheet>
+					<VSheet
+						v-else
+						class="pa-4"
+					>
 					<BackBtn v-bind="args" />
 				</VSheet>
 			`,
