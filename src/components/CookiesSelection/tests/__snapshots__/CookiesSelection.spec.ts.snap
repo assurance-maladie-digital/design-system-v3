@@ -96,24 +96,24 @@ exports[`CookiesSelection > renders correctly 1`] = `
       </details>
       <div data-v-2ca04413="" class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-radio-group vd-cookies-information__radio-group" data-test-id="radio-group">
         <!---->
-        <div class="v-input__control"><label class="v-label" id="radio-group-2">
+        <div class="v-input__control"><label class="v-label" id="radio-group-v-2">
             <!---->Accepter les cookies de type Cookies fonctionnels, ce champ est requis.
           </label>
-          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" label="Accepter les cookies de type Cookies fonctionnels, ce champ est requis." aria-describedby="radio-group-2-messages" aria-labelledby="radio-group-2">
+          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" label="Accepter les cookies de type Cookies fonctionnels, ce champ est requis." aria-describedby="radio-group-v-2-messages" aria-labelledby="radio-group-v-2">
             <div data-v-2ca04413="" class="v-spacer"></div>
             <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio">
               <div class="v-selection-control__wrapper">
                 <!---->
-                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-5" aria-disabled="false" aria-label="Refuser" type="radio" name="radio-group-2" value="reject"></div>
-              </div><label class="v-label v-label--clickable" for="input-5">
+                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-v-5" aria-disabled="false" aria-label="Refuser" type="radio" name="radio-group-v-2" value="reject"></div>
+              </div><label class="v-label v-label--clickable" for="input-v-5">
                 <!---->Refuser
               </label>
             </div>
             <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio mr-0">
               <div class="v-selection-control__wrapper">
                 <!---->
-                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-6" aria-disabled="false" aria-label="Accepter" type="radio" name="radio-group-2" value="accept"></div>
-              </div><label class="v-label v-label--clickable" for="input-6">
+                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-v-6" aria-disabled="false" aria-label="Accepter" type="radio" name="radio-group-v-2" value="accept"></div>
+              </div><label class="v-label v-label--clickable" for="input-v-6">
                 <!---->Accepter
               </label>
             </div>
@@ -153,24 +153,24 @@ exports[`CookiesSelection > renders correctly 1`] = `
       </details>
       <div data-v-2ca04413="" class="v-input v-input--horizontal v-input--center-affix v-input--density-default v-theme--light v-locale--is-ltr v-radio-group vd-cookies-information__radio-group" data-test-id="radio-group">
         <!---->
-        <div class="v-input__control"><label class="v-label" id="radio-group-7">
+        <div class="v-input__control"><label class="v-label" id="radio-group-v-7">
             <!---->Accepter les cookies de type Cookies d’analyse, ce champ est requis.
           </label>
-          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" label="Accepter les cookies de type Cookies d’analyse, ce champ est requis." aria-describedby="radio-group-7-messages" aria-labelledby="radio-group-7">
+          <div class="v-selection-control-group v-selection-control-group--inline" role="radiogroup" label="Accepter les cookies de type Cookies d’analyse, ce champ est requis." aria-describedby="radio-group-v-7-messages" aria-labelledby="radio-group-v-7">
             <div data-v-2ca04413="" class="v-spacer"></div>
             <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio">
               <div class="v-selection-control__wrapper">
                 <!---->
-                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-10" aria-disabled="false" aria-label="Refuser" type="radio" name="radio-group-7" value="reject"></div>
-              </div><label class="v-label v-label--clickable" for="input-10">
+                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-v-10" aria-disabled="false" aria-label="Refuser" type="radio" name="radio-group-v-7" value="reject"></div>
+              </div><label class="v-label v-label--clickable" for="input-v-10">
                 <!---->Refuser
               </label>
             </div>
             <div data-v-2ca04413="" class="v-selection-control v-selection-control--inline v-selection-control--density-default v-radio mr-0">
               <div class="v-selection-control__wrapper">
                 <!---->
-                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-11" aria-disabled="false" aria-label="Accepter" type="radio" name="radio-group-7" value="accept"></div>
-              </div><label class="v-label v-label--clickable" for="input-11">
+                <div class="v-selection-control__input"><i class="mdi-radiobox-blank mdi v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i><input id="input-v-11" aria-disabled="false" aria-label="Accepter" type="radio" name="radio-group-v-7" value="accept"></div>
+              </div><label class="v-label v-label--clickable" for="input-v-11">
                 <!---->Accepter
               </label>
             </div>

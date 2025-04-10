@@ -49,17 +49,17 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
           </div>
           <!---->
           <div class="v-field__field" data-no-activator="">
-            <!----><label class="v-label v-field-label" for="input-0">
+            <!----><label class="v-label v-field-label" for="input-v-0">
               <!---->Valeur min
             </label>
-            <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" aria-label="Valeur min" inputmode="numeric" title="Valeur min" class="v-field__input" value="0">
+            <!----><input size="1" type="text" id="input-v-0" aria-describedby="input-v-0-messages" aria-label="Valeur min" inputmode="numeric" title="Valeur min" class="v-field__input" value="0">
             <!---->
           </div>
           <!---->
           <!---->
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
-            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-0">
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-v-0">
                 <!---->Valeur min
               </label></div>
             <div class="v-field__outline__end"></div>
@@ -68,7 +68,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
         </div>
       </div>
       <!---->
-      <div id="input-0-messages" class="v-input__details" role="alert" aria-live="polite">
+      <div id="input-v-0-messages" class="v-input__details" role="alert" aria-live="polite">
         <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
@@ -96,17 +96,17 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
           </div>
           <!---->
           <div class="v-field__field" data-no-activator="">
-            <!----><label class="v-label v-field-label" for="input-2">
+            <!----><label class="v-label v-field-label" for="input-v-2">
               <!---->Valeur max
             </label>
-            <!----><input size="1" type="text" id="input-2" aria-describedby="input-2-messages" aria-label="Valeur max" inputmode="numeric" title="Valeur max" class="v-field__input" value="100">
+            <!----><input size="1" type="text" id="input-v-2" aria-describedby="input-v-2-messages" aria-label="Valeur max" inputmode="numeric" title="Valeur max" class="v-field__input" value="100">
             <!---->
           </div>
           <!---->
           <!---->
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
-            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-2">
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-v-2">
                 <!---->Valeur max
               </label></div>
             <div class="v-field__outline__end"></div>
@@ -115,7 +115,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
         </div>
       </div>
       <!---->
-      <div id="input-2-messages" class="v-input__details" role="alert" aria-live="polite">
+      <div id="input-v-2-messages" class="v-input__details" role="alert" aria-live="polite">
         <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
@@ -175,17 +175,17 @@ exports[`RangeField > renders correctly 1`] = `
           </div>
           <!---->
           <div class="v-field__field" data-no-activator="">
-            <!----><label class="v-label v-field-label" for="input-0">
+            <!----><label class="v-label v-field-label" for="input-v-0">
               <!---->Valeur min
             </label>
-            <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" aria-label="Valeur min" inputmode="numeric" title="Valeur min" class="v-field__input" value="50">
+            <!----><input size="1" type="text" id="input-v-0" aria-describedby="input-v-0-messages" aria-label="Valeur min" inputmode="numeric" title="Valeur min" class="v-field__input" value="50">
             <!---->
           </div>
           <!---->
           <!---->
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
-            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-0">
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-v-0">
                 <!---->Valeur min
               </label></div>
             <div class="v-field__outline__end"></div>
@@ -194,7 +194,7 @@ exports[`RangeField > renders correctly 1`] = `
         </div>
       </div>
       <!---->
-      <div id="input-0-messages" class="v-input__details" role="alert" aria-live="polite">
+      <div id="input-v-0-messages" class="v-input__details" role="alert" aria-live="polite">
         <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
@@ -222,17 +222,17 @@ exports[`RangeField > renders correctly 1`] = `
           </div>
           <!---->
           <div class="v-field__field" data-no-activator="">
-            <!----><label class="v-label v-field-label" for="input-2">
+            <!----><label class="v-label v-field-label" for="input-v-2">
               <!---->Valeur max
             </label>
-            <!----><input size="1" type="text" id="input-2" aria-describedby="input-2-messages" aria-label="Valeur max" inputmode="numeric" title="Valeur max" class="v-field__input" value="80">
+            <!----><input size="1" type="text" id="input-v-2" aria-describedby="input-v-2-messages" aria-label="Valeur max" inputmode="numeric" title="Valeur max" class="v-field__input" value="80">
             <!---->
           </div>
           <!---->
           <!---->
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
-            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-2">
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-v-2">
                 <!---->Valeur max
               </label></div>
             <div class="v-field__outline__end"></div>
@@ -241,7 +241,7 @@ exports[`RangeField > renders correctly 1`] = `
         </div>
       </div>
       <!---->
-      <div id="input-2-messages" class="v-input__details" role="alert" aria-live="polite">
+      <div id="input-v-2-messages" class="v-input__details" role="alert" aria-live="polite">
         <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
@@ -301,17 +301,17 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
           </div>
           <!---->
           <div class="v-field__field" data-no-activator="">
-            <!----><label class="v-label v-field-label" for="input-0">
+            <!----><label class="v-label v-field-label" for="input-v-0">
               <!---->Valeur min
             </label>
-            <!----><input size="1" type="text" id="input-0" aria-describedby="input-0-messages" aria-label="Valeur min" inputmode="numeric" title="Valeur min" class="v-field__input" value="0">
+            <!----><input size="1" type="text" id="input-v-0" aria-describedby="input-v-0-messages" aria-label="Valeur min" inputmode="numeric" title="Valeur min" class="v-field__input" value="0">
             <!---->
           </div>
           <!---->
           <!---->
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
-            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-0">
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-v-0">
                 <!---->Valeur min
               </label></div>
             <div class="v-field__outline__end"></div>
@@ -320,7 +320,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
         </div>
       </div>
       <!---->
-      <div id="input-0-messages" class="v-input__details" role="alert" aria-live="polite">
+      <div id="input-v-0-messages" class="v-input__details" role="alert" aria-live="polite">
         <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>
@@ -348,17 +348,17 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
           </div>
           <!---->
           <div class="v-field__field" data-no-activator="">
-            <!----><label class="v-label v-field-label" for="input-2">
+            <!----><label class="v-label v-field-label" for="input-v-2">
               <!---->Valeur max
             </label>
-            <!----><input size="1" type="text" id="input-2" aria-describedby="input-2-messages" aria-label="Valeur max" inputmode="numeric" title="Valeur max" class="v-field__input" value="0">
+            <!----><input size="1" type="text" id="input-v-2" aria-describedby="input-v-2-messages" aria-label="Valeur max" inputmode="numeric" title="Valeur max" class="v-field__input" value="0">
             <!---->
           </div>
           <!---->
           <!---->
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
-            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-2">
+            <div class="v-field__outline__notch"><label class="v-label v-field-label v-field-label--floating" aria-hidden="true" for="input-v-2">
                 <!---->Valeur max
               </label></div>
             <div class="v-field__outline__end"></div>
@@ -367,7 +367,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
         </div>
       </div>
       <!---->
-      <div id="input-2-messages" class="v-input__details" role="alert" aria-live="polite">
+      <div id="input-v-2-messages" class="v-input__details" role="alert" aria-live="polite">
         <transition-group-stub name="slide-y-transition" tag="div" appear="false" persisted="false" css="true" class="v-messages">
           <!---->
         </transition-group-stub>

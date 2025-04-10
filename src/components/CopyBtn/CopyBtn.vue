@@ -88,11 +88,21 @@
 <style lang="scss">
 @use '@/assets/tokens';
 
-.vd-copy-tooltip-menu {
+.v-btn:deep() {
+  .v-btn__underlay,
+  .v-btn__overlay {
+    display: none;
+  }
+}
+.v-btn {
+  outline: 0;
+}
+
+.sy-copy-tooltip-menu {
 	padding: 6px 16px;
 	box-shadow: none;
 	margin-top: 2px;
-	background: rgb(84 88 89 / 95%);
+  background: rgb(84 88 89 / 95%);
 	color: white;
 }
 
