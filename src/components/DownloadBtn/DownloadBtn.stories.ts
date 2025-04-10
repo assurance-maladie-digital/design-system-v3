@@ -68,6 +68,18 @@ const meta = {
 				category: 'props',
 			},
 		},
+		backgroundColor: {
+			control: { type: 'text' },
+			description: 'Couleur de fond du bouton parmi la palette du thème.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'white',
+				},
+			},
+		},
 	},
 	args: {
 		vuetifyOptions: {

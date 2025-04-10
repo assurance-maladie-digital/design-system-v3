@@ -18,6 +18,7 @@
 	export interface Props {
 		filePromise: () => Promise<AxiosResponse<Blob>>
 		fallbackFilename?: string
+		backgroundColor?: string
 		locales?: typeof defaultLocales
 	}
 
@@ -27,6 +28,7 @@
 
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
 		fallbackFilename: undefined,
+		backgroundColor: 'white',
 		locales: () => defaultLocales,
 	})
 	const emits = defineEmits(['error', 'success'])
@@ -85,8 +87,8 @@
 	<VBtn
 		v-bind="btnOptions"
 		:loading="state === 'loading'"
-		:class="btnOptions.variant === 'outlined' ? 'outlined-style' : ''"
 		class="sy-download-btn"
+		:class="[`bg-${backgroundColor}`, btnOptions.variant === 'outlined' ? 'outlined-style' : '']"
 		data-testid="download-btn"
 		@click="download"
 	>
