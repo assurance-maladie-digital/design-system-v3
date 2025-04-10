@@ -11,6 +11,7 @@ export const config = {
 		icon: true,
 		variant: 'text' as VariantType,
 		density: 'comfortable' as DensityType,
+		rounded: 'pill',
 	},
 	icon: {
 		// TODO refactor to use our theme color
