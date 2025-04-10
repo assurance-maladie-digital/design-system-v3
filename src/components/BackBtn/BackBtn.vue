@@ -3,10 +3,13 @@
 	import { computed } from 'vue'
 	import { locales } from './locales'
 
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		hideBackIcon?: boolean
 		dark?: boolean
-	}>()
+		backgroundColor?: string
+	}>(), {
+		backgroundColor: 'white',
+	})
 
 	const isDark = computed(() => props.dark ?? false)
 	const iconColor = computed(() => isDark.value ? 'white' : 'primary')
@@ -27,7 +30,7 @@
 		:variant="buttonVariant"
 		:theme="buttonTheme"
 		:color="buttonColor"
-		:class="['sy-back-btn', 'text-none', buttonClasses]"
+		:class="['sy-back-btn', 'text-none', buttonClasses, `bg-${props.backgroundColor}`]"
 	>
 		<slot name="icon">
 			<VIcon

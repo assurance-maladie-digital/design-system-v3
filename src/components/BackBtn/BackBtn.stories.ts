@@ -18,6 +18,18 @@ const meta = {
 		hideBackIcon: {
 			control: 'boolean',
 		},
+		backgroundColor: {
+			control: { type: 'text' },
+			description: 'Couleur de fond du bouton parmi la palette du thème.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'white',
+				},
+			},
+		},
 	},
 } as Meta<typeof BackBtn>
 
