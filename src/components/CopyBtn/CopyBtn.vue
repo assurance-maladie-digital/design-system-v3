@@ -55,16 +55,15 @@
 		:id="props.ariaOwns"
 		class="vd-copy-btn"
 	>
-		<VMenu
-			v-bind="options.menu"
-			:id="props.ariaOwns"
+		<VTooltip
 			v-model="tooltip"
-			:disabled="props.hideTooltip"
-			transition="fade-transition"
+			location="right"
+			:open-on-click="true"
+			:open-on-hover="false"
 		>
-			<template #activator="{ props: menuProps }">
+			<template #activator="{ props: tooltipProps }">
 				<VBtn
-					v-bind="{ ...menuProps, ...options.btn }"
+					v-bind="{...tooltipProps,...options.btn}"
 					:aria-label="props.ariaLabel"
 					:aria-owns="props.ariaOwns"
 					:data-test-id="props.ariaOwns"
@@ -77,17 +76,10 @@
 					</slot>
 				</VBtn>
 			</template>
-
-			<slot name="tooltip">
-				{{ locales.tooltip }}
-				<span
-					class="d-sr-only"
-					role="status"
-				>
-					{{ locales.tooltip }}
-				</span>
-			</slot>
-		</VMenu>
+			<span
+				aria-live="polite"
+			>{{ locales.tooltip }}</span>
+		</VTooltip>
 	</div>
 </template>
 
