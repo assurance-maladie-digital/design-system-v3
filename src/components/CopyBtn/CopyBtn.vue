@@ -88,7 +88,7 @@
 <style lang="scss">
 @use '@/assets/tokens';
 
-.vd-copy-tooltip-menu {
+.sy-copy-tooltip-menu {
 	padding: 6px 16px;
 	box-shadow: none;
 	margin-top: 2px;
