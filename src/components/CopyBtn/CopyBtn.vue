@@ -60,6 +60,7 @@
 			location="right"
 			:open-on-click="true"
 			:open-on-hover="false"
+      :disabled="hideTooltip"
 		>
 			<template #activator="{ props: tooltipProps }">
 				<VBtn
@@ -101,7 +102,7 @@
 	background: rgb(84 88 89 / 7%);
 }
 
-:deep(.sy-copy-tooltip-menu) {
+.sy-copy-tooltip-menu{
 	padding: 6px 16px;
 	box-shadow: none;
 	margin-top: 2px;
