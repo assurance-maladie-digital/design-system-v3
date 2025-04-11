@@ -77,7 +77,7 @@
 				</VBtn>
 			</template>
 			<span
-				aria-live="polite"
+				role="status"
 			>{{ locales.tooltip }}</span>
 		</VTooltip>
 	</div>
