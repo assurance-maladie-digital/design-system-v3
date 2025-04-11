@@ -1,7 +1,32 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`CopyBtn > renders correctly 1`] = `
-"<div data-v-ce8a81b3="" id="copy-btn" class="sy-copy-btn" label="test">
-  <v-tooltip-stub data-v-ce8a81b3="" attach="false" closeonback="false" contained="false" disabled="false" noclickanimation="false" modelvalue="false" scrim="false" zindex="2000" activatorprops="[object Object]" openonclick="true" openonhover="false" closeoncontentclick="false" minwidth="0" eager="true" locationstrategy="connected" location="right" origin="auto" offset="10" scrollstrategy="reposition" transition="false"></v-tooltip-stub>
-</div>"
+<div
+  class="sy-copy-btn"
+  id="copy-btn"
+  label="test"
+>
+  <v-tooltip-stub
+    activatorprops="[object Object]"
+    attach="false"
+    closeonback="false"
+    closeoncontentclick="false"
+    contained="false"
+    disabled="false"
+    eager="true"
+    location="right"
+    locationstrategy="connected"
+    minwidth="0"
+    modelvalue="false"
+    noclickanimation="false"
+    offset="10"
+    openonclick="true"
+    openonhover="false"
+    origin="auto"
+    scrim="false"
+    scrollstrategy="reposition"
+    transition="false"
+    zindex="2000"
+  ></v-tooltip-stub>
+</div>
 `;

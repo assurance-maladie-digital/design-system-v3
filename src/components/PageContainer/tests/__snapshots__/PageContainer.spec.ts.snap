@@ -1,7 +1,20 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`PageContainer > render correctly 1`] = `
-"<div data-v-fb0b02fd="" class="py-10 px-14 vd-page-container d-flex justify-center">
-  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 800px;"></div>
-</div>"
+<div class="
+  d-flex
+  justify-center
+  px-14
+  py-10
+  vd-page-container
+">
+  <div
+    class="
+      bg-transparent
+      v-sheet
+      v-theme--light
+    "
+    style="width: 800px;"
+  ></div>
+</div>
 `;

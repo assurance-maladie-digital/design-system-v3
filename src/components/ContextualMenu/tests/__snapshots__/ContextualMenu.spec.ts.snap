@@ -1,10 +1,36 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ContextualMenu > renders correctly with items 1`] = `
-"<ul data-v-b65f24a2="" class="vd-contextual-menu">
-  <li data-v-b65f24a2=""><a data-v-b65f24a2="" href="#example-1" class="text-medium-emphasis d-flex align-center text-decoration-none text-body-1 px-4 py-2">Titre 1</a></li>
-  <li data-v-b65f24a2=""><a data-v-b65f24a2="" href="#example-2" class="text-medium-emphasis d-flex align-center text-decoration-none text-body-1 px-4 py-2">Titre 2</a></li>
-</ul>"
+<ul class="vd-contextual-menu">
+  <li>
+    <a
+      class="
+        align-center
+        d-flex
+        px-4
+        py-2
+        text-body-1
+        text-decoration-none
+        text-medium-emphasis
+      "
+      href="#example-1"
+    >Titre 1</a>
+  </li>
+  <li>
+    <a
+      class="
+        align-center
+        d-flex
+        px-4
+        py-2
+        text-body-1
+        text-decoration-none
+        text-medium-emphasis
+      "
+      href="#example-2"
+    >Titre 2</a>
+  </li>
+</ul>
 `;
 
-exports[`ContextualMenu > renders correctly without items 1`] = `"<!--v-if-->"`;
+exports[`ContextualMenu > renders correctly without items 1`] = `<!-- v-if -->`;

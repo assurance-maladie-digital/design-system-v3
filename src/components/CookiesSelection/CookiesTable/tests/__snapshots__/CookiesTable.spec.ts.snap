@@ -1,3 +1,15 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CookiesTable > renders correctly 1`] = `"<v-table-stub data-v-d0e8c396="" class="vd-cookie-table bg-transparent" fixedheader="false" fixedfooter="false" hover="false" density="default" tag="div"></v-table-stub>"`;
+exports[`CookiesTable > renders correctly 1`] = `
+<v-table-stub
+  class="
+    bg-transparent
+    vd-cookie-table
+  "
+  density="default"
+  fixedfooter="false"
+  fixedheader="false"
+  hover="false"
+  tag="div"
+></v-table-stub>
+`;

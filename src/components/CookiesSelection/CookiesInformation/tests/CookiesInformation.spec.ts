@@ -67,7 +67,20 @@ describe('CookiesInformation', () => {
 		expect(wrapper.find('thead').isVisible()).toBe(false)
 		const details = wrapper.find('details')
 		const chevronClosed = wrapper.find('[data-test="chevron"]').html()
-		expect(chevronClosed).toMatchInlineSnapshot(`"<i data-v-2ca04413="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-default mr-2" aria-hidden="true" data-test="chevron"></i>"`)
+		expect(chevronClosed).toMatchInlineSnapshot(`
+			<i
+			  aria-hidden="true"
+			  class="
+			    M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z
+			    mdi
+			    mr-2
+			    notranslate
+			    v-icon
+			    v-icon--size-default
+			    v-theme--light
+			  "
+			></i>
+		`)
 
 		details.element.open = true
 		await details.trigger('toggle', { newState: 'open' })
@@ -75,7 +88,20 @@ describe('CookiesInformation', () => {
 		expect(wrapper.find('thead').isVisible()).toBe(true)
 		const chevronOpen = wrapper.find('[data-test="chevron"]').html()
 		expect(chevronOpen).not.toEqual(chevronClosed)
-		expect(chevronOpen).toMatchInlineSnapshot(`"<i data-v-2ca04413="" class="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z mdi v-icon notranslate v-theme--light v-icon--size-default mr-2" aria-hidden="true" data-test="chevron"></i>"`)
+		expect(chevronOpen).toMatchInlineSnapshot(`
+			<i
+			  aria-hidden="true"
+			  class="
+			    M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z
+			    mdi
+			    mr-2
+			    notranslate
+			    v-icon
+			    v-icon--size-default
+			    v-theme--light
+			  "
+			></i>
+		`)
 	})
 
 	it('update the radio when the modelValue change', async () => {
