@@ -15,11 +15,11 @@
 		hideTooltip?: boolean
 		tooltipDuration?: number
 	}>(), {
-		ariaLabel: 'copy-btn',
+		ariaLabel: 'bouton de copie',
 		ariaOwns: 'copy-btn',
 		textToCopy: '',
 		hideTooltip: false,
-		tooltipDuration: 2500,
+		tooltipDuration: 5000,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -80,15 +80,36 @@
 
 			<slot name="tooltip">
 				{{ locales.tooltip }}
+				<span
+					class="d-sr-only"
+					role="status"
+				>
+					{{ locales.tooltip }}
+				</span>
 			</slot>
 		</VMenu>
 	</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use '@/assets/tokens';
 
-.sy-copy-tooltip-menu {
+.v-btn:deep() {
+	.v-btn__underlay,
+	.v-btn__overlay {
+		display: none;
+	}
+}
+
+.v-btn {
+	outline: 0;
+}
+
+.v-btn:focus-visible {
+  background: rgb(84 88 89 / 7%);
+}
+
+:deep(.sy-copy-tooltip-menu) {
 	padding: 6px 16px;
 	box-shadow: none;
 	margin-top: 2px;
