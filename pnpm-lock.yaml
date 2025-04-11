@@ -11,6 +11,9 @@ dependencies:
   '@mdi/js':
     specifier: ^7.4.47
     version: 7.4.47
+  chart.js:
+    specifier: ^4.4.8
+    version: 4.4.8
   dayjs:
     specifier: ^1.11.13
     version: 1.11.13
@@ -38,6 +41,9 @@ dependencies:
   slugify:
     specifier: ^1.6.6
     version: 1.6.6
+  vue-chartjs:
+    specifier: ^5.3.2
+    version: 5.3.2(chart.js@4.4.8)(vue@3.5.13)
   vuetify:
     specifier: ^3.6.13
     version: 3.7.16(typescript@5.4.2)(vite-plugin-vuetify@2.1.0)(vue@3.5.13)
@@ -1030,6 +1036,10 @@ packages:
     dependencies:
       buffer: 6.0.3
     dev: true
+
+  /@kurkle/color@0.3.4:
+    resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
+    dev: false
 
   /@mdi/js@7.4.47:
     resolution: {integrity: sha512-KPnNOtm5i2pMabqZxpUz7iQf+mfrYZyKCZ8QNz85czgEt7cuHcGorWfdzUMWYA0SD+a6Hn4FmJ+YhzzzjkTZrQ==}
@@ -3118,6 +3128,13 @@ packages:
     dependencies:
       is-regex: 1.2.1
     dev: true
+
+  /chart.js@4.4.8:
+    resolution: {integrity: sha512-IkGZlVpXP+83QpMm4uxEiGqSI7jFizwVtF3+n5Pc3k7sMO+tkd0qxh2OzLhenM0K80xtmAONWGBn082EiBQSDA==}
+    engines: {pnpm: '>=8'}
+    dependencies:
+      '@kurkle/color': 0.3.4
+    dev: false
 
   /check-error@2.1.1:
     resolution: {integrity: sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw==}
@@ -7225,6 +7242,16 @@ packages:
   /vscode-uri@3.1.0:
     resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
     dev: true
+
+  /vue-chartjs@5.3.2(chart.js@4.4.8)(vue@3.5.13):
+    resolution: {integrity: sha512-NrkbRRoYshbXbWqJkTN6InoDVwVb90C0R7eAVgMWcB9dPikbruaOoTFjFYHE/+tNPdIe6qdLCDjfjPHQ0fw4jw==}
+    peerDependencies:
+      chart.js: ^4.1.1
+      vue: ^3.0.0-0 || ^2.7.0
+    dependencies:
+      chart.js: 4.4.8
+      vue: 3.5.13(typescript@5.4.2)
+    dev: false
 
   /vue-component-meta@2.2.8(typescript@5.8.2):
     resolution: {integrity: sha512-fgcP61P45AA1DacW+/532mivO5j48EEpmI7To8PK3gCVgL023QuEAPzfTA9hB6lW2hgdqiMf4gLON972pYC2+g==}
