@@ -1,3 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MaintenancePage > renders correctly 1`] = `"<error-page-stub data-v-25a0ed68="" pagetitle="Maintenance en cours" message="L’application n’est pas disponible pour le moment, veuillez nous excuser pour la gêne occasionnée." codeerrortext="Code d'erreur&nbsp;: " btnlink="/" hidebtn="false" no-btn=""></error-page-stub>"`;
+exports[`MaintenancePage > renders correctly 1`] = `
+<error-page-stub
+  btnlink="/"
+  codeerrortext="Code d'erreur : "
+  hidebtn="false"
+  message="L’application n’est pas disponible pour le moment, veuillez nous excuser pour la gêne occasionnée."
+  no-btn=""
+  pagetitle="Maintenance en cours"
+></error-page-stub>
+`;

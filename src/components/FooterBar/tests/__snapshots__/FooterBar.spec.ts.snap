@@ -1,29 +1,103 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`FooterBar > renders correctly 1`] = `
-"<footer data-v-a13c4e60="" class="v-footer v-theme--light bg-backgroundSurface elevation-3 vd-footer-bar flex-column align-stretch pa-3 w-100 v-theme--dark" style="height: auto;" role="contentinfo">
-  <div data-v-a13c4e60="" class="container">
-    <!--v-if-->
-    <!--v-if-->
-    <!--v-if-->
-    <ul data-v-a13c4e60="" class="py-2 py-sm-0 vd-footer-bar-links text-sm-center d-flex flex-column flex-sm-row flex-wrap align-start justify-center max-width-none mx-n3 my-n3">
-      <li data-v-a13c4e60="">
-        <routerlink data-v-a13c4e60="" to="[object Object]" tabindex="0" class="my-3 mx-4">Plan du site</routerlink>
+<footer
+  class="
+    align-stretch
+    bg-backgroundSurface
+    elevation-3
+    flex-column
+    pa-3
+    v-footer
+    v-theme--dark
+    v-theme--light
+    vd-footer-bar
+    w-100
+  "
+  role="contentinfo"
+  style="height: auto;"
+>
+  <div class="container">
+    <!-- v-if -->
+    <!-- v-if -->
+    <!-- v-if -->
+    <ul class="
+      align-start
+      d-flex
+      flex-column
+      flex-sm-row
+      flex-wrap
+      justify-center
+      max-width-none
+      mx-n3
+      my-n3
+      py-2
+      py-sm-0
+      text-sm-center
+      vd-footer-bar-links
+    ">
+      <li>
+        <routerlink
+          class="
+            mx-4
+            my-3
+          "
+          tabindex="0"
+          to="[object Object]"
+        >
+          Plan du site
+        </routerlink>
       </li>
-      <li data-v-a13c4e60="">
-        <routerlink data-v-a13c4e60="" to="[object Object]" tabindex="1" class="my-3 mx-4">Conditions générales d’utilisation</routerlink>
+      <li>
+        <routerlink
+          class="
+            mx-4
+            my-3
+          "
+          tabindex="1"
+          to="[object Object]"
+        >
+          Conditions générales d’utilisation
+        </routerlink>
       </li>
-      <li data-v-a13c4e60="">
-        <routerlink data-v-a13c4e60="" to="[object Object]" tabindex="2" class="my-3 mx-4">Gestion des cookies</routerlink>
+      <li>
+        <routerlink
+          class="
+            mx-4
+            my-3
+          "
+          tabindex="2"
+          to="[object Object]"
+        >
+          Gestion des cookies
+        </routerlink>
       </li>
-      <li data-v-a13c4e60="">
-        <routerlink data-v-a13c4e60="" to="[object Object]" tabindex="3" class="my-3 mx-4">Mentions légales</routerlink>
+      <li>
+        <routerlink
+          class="
+            mx-4
+            my-3
+          "
+          tabindex="3"
+          to="[object Object]"
+        >
+          Mentions légales
+        </routerlink>
       </li>
-      <li data-v-a13c4e60="">
-        <routerlink data-v-a13c4e60="" to="[object Object]" tabindex="4" class="my-3 mx-4">Accessibilité&nbsp;: non conforme</routerlink>
+      <li>
+        <routerlink
+          class="
+            mx-4
+            my-3
+          "
+          tabindex="4"
+          to="[object Object]"
+        >
+          Accessibilité&nbsp;: non conforme
+        </routerlink>
       </li>
-      <!--v-if-->
+      <!-- v-if -->
     </ul>
   </div>
-</footer>"
+</footer>
 `;

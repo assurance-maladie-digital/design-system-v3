@@ -1,35 +1,249 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`FilterInline > renders correctly with an active filter 1`] = `
-"<div data-v-12532412="" class="sy-filters-inline d-flex flex-wrap max-width-none ma-n2"><button data-v-12532412="" type="button" class="v-btn v-btn--elevated v-theme--light bg-secondary v-btn--density-default v-btn--rounded v-btn--size-default v-btn--variant-elevated sy-filter-name ma-2" aria-haspopup="menu" aria-expanded="false" aria-controls="v-menu-0"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-    <!----><span class="v-btn__content" data-no-activator=""><div data-v-12532412="" class="v-badge v-badge--inline ml-n1 mr-1"><div class="v-badge__wrapper"><!----><transition-stub name="scale-rotate-transition" appear="false" persisted="false" css="true"><span class="v-badge__badge v-theme--light" aria-atomic="true" aria-label="1 filtre" aria-live="polite" role="status">1</span></transition-stub>
+<div class="
+  d-flex
+  flex-wrap
+  ma-n2
+  max-width-none
+  sy-filters-inline
+">
+  <button
+    aria-controls="v-menu-0"
+    aria-expanded="false"
+    aria-haspopup="menu"
+    class="
+      bg-secondary
+      ma-2
+      sy-filter-name
+      v-btn
+      v-btn--density-default
+      v-btn--elevated
+      v-btn--rounded
+      v-btn--size-default
+      v-btn--variant-elevated
+      v-theme--light
+    "
+    type="button"
+  >
+    <span class="v-btn__overlay"></span>
+    <span class="v-btn__underlay"></span>
+    <!---->
+    <span
+      class="v-btn__content"
+      data-no-activator=""
+    >
+      <div class="
+        ml-n1
+        mr-1
+        v-badge
+        v-badge--inline
+      ">
+        <div class="v-badge__wrapper">
+          <!---->
+          <transition-stub
+            appear="false"
+            css="true"
+            name="scale-rotate-transition"
+            persisted="false"
+          >
+            <span
+              aria-atomic="true"
+              aria-label="1 filtre"
+              aria-live="polite"
+              class="
+                v-badge__badge
+                v-theme--light
+              "
+              role="status"
+            >
+              1
+            </span>
+          </transition-stub>
+        </div>
+      </div>
+      <i
+        aria-hidden="true"
+        class="
+          M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z
+          mdi
+          ml-1
+          notranslate
+          v-icon
+          v-icon--size-small
+          v-theme--light
+        "
+      ></i>
+    </span>
+    <!---->
+    <!---->
+  </button>
+  <!---->
 </div>
-</div> <i data-v-12532412="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-small ml-1" aria-hidden="true"></i></span>
-<!---->
-<!----></button>
-<!---->
-</div>"
 `;
 
 exports[`FilterInline > renders correctly with multiple active filters 1`] = `
-"<div data-v-12532412="" class="sy-filters-inline d-flex flex-wrap max-width-none ma-n2"><button data-v-12532412="" type="button" class="v-btn v-btn--elevated v-theme--light bg-secondary v-btn--density-default v-btn--rounded v-btn--size-default v-btn--variant-elevated sy-filter-name ma-2" aria-haspopup="menu" aria-expanded="false" aria-controls="v-menu-0"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-    <!----><span class="v-btn__content" data-no-activator=""><div data-v-12532412="" class="v-badge v-badge--inline ml-n1 mr-1"><div class="v-badge__wrapper"><!----><transition-stub name="scale-rotate-transition" appear="false" persisted="false" css="true"><span class="v-badge__badge v-theme--light" aria-atomic="true" aria-label="1 filtre" aria-live="polite" role="status">1</span></transition-stub>
+<div class="
+  d-flex
+  flex-wrap
+  ma-n2
+  max-width-none
+  sy-filters-inline
+">
+  <button
+    aria-controls="v-menu-0"
+    aria-expanded="false"
+    aria-haspopup="menu"
+    class="
+      bg-secondary
+      ma-2
+      sy-filter-name
+      v-btn
+      v-btn--density-default
+      v-btn--elevated
+      v-btn--rounded
+      v-btn--size-default
+      v-btn--variant-elevated
+      v-theme--light
+    "
+    type="button"
+  >
+    <span class="v-btn__overlay"></span>
+    <span class="v-btn__underlay"></span>
+    <!---->
+    <span
+      class="v-btn__content"
+      data-no-activator=""
+    >
+      <div class="
+        ml-n1
+        mr-1
+        v-badge
+        v-badge--inline
+      ">
+        <div class="v-badge__wrapper">
+          <!---->
+          <transition-stub
+            appear="false"
+            css="true"
+            name="scale-rotate-transition"
+            persisted="false"
+          >
+            <span
+              aria-atomic="true"
+              aria-label="1 filtre"
+              aria-live="polite"
+              class="
+                v-badge__badge
+                v-theme--light
+              "
+              role="status"
+            >
+              1
+            </span>
+          </transition-stub>
+        </div>
+      </div>
+      <i
+        aria-hidden="true"
+        class="
+          M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z
+          mdi
+          ml-1
+          notranslate
+          v-icon
+          v-icon--size-small
+          v-theme--light
+        "
+      ></i>
+    </span>
+    <!---->
+    <!---->
+  </button>
+  <!---->
+  <button
+    aria-controls="v-menu-2"
+    aria-expanded="false"
+    aria-haspopup="menu"
+    class="
+      bg-secondary
+      ma-2
+      sy-filter-profession
+      v-btn
+      v-btn--density-default
+      v-btn--elevated
+      v-btn--rounded
+      v-btn--size-default
+      v-btn--variant-elevated
+      v-theme--light
+    "
+    type="button"
+  >
+    <span class="v-btn__overlay"></span>
+    <span class="v-btn__underlay"></span>
+    <!---->
+    <span
+      class="v-btn__content"
+      data-no-activator=""
+    >
+      <div class="
+        ml-n1
+        mr-1
+        v-badge
+        v-badge--inline
+      ">
+        <div class="v-badge__wrapper">
+          <!---->
+          <transition-stub
+            appear="false"
+            css="true"
+            name="scale-rotate-transition"
+            persisted="false"
+          >
+            <span
+              aria-atomic="true"
+              aria-label="2 filtres"
+              aria-live="polite"
+              class="
+                v-badge__badge
+                v-theme--light
+              "
+              role="status"
+            >
+              2
+            </span>
+          </transition-stub>
+        </div>
+      </div>
+      <i
+        aria-hidden="true"
+        class="
+          M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z
+          mdi
+          ml-1
+          notranslate
+          v-icon
+          v-icon--size-small
+          v-theme--light
+        "
+      ></i>
+    </span>
+    <!---->
+    <!---->
+  </button>
+  <!---->
 </div>
-</div> <i data-v-12532412="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-small ml-1" aria-hidden="true"></i></span>
-<!---->
-<!----></button>
-<!----><button data-v-12532412="" type="button" class="v-btn v-btn--elevated v-theme--light bg-secondary v-btn--density-default v-btn--rounded v-btn--size-default v-btn--variant-elevated sy-filter-profession ma-2" aria-haspopup="menu" aria-expanded="false" aria-controls="v-menu-2"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-  <!----><span class="v-btn__content" data-no-activator=""><div data-v-12532412="" class="v-badge v-badge--inline ml-n1 mr-1"><div class="v-badge__wrapper"><!----><transition-stub name="scale-rotate-transition" appear="false" persisted="false" css="true"><span class="v-badge__badge v-theme--light" aria-atomic="true" aria-label="2 filtres" aria-live="polite" role="status">2</span></transition-stub>
-  </div>
-  </div> <i data-v-12532412="" class="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z mdi v-icon notranslate v-theme--light v-icon--size-small ml-1" aria-hidden="true"></i></span>
-  <!---->
-  <!---->
-</button>
-<!---->
-</div>"
 `;
 
-exports[`FilterInline > should render correctly 1`] = `"<div data-v-12532412="" class="sy-filters-inline d-flex flex-wrap max-width-none ma-n2"></div>"`;
+exports[`FilterInline > should render correctly 1`] = `
+<div class="
+  d-flex
+  flex-wrap
+  ma-n2
+  max-width-none
+  sy-filters-inline
+"></div>
+`;
 
 exports[`FiltersInline locales > should return the correct locale 1`] = `"0 filtre"`;
 
