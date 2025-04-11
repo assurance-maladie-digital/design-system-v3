@@ -1,7 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`CopyBtn > renders correctly 1`] = `
-"<div id="copy-btn" class="vd-copy-btn" label="test">
-  <v-menu-stub offset="16" contentclass="vd-copy-tooltip-menu text-white text-body-2 ml-2" id="copy-btn" submenu="false" attach="false" closeonback="true" contained="false" disabled="false" noclickanimation="false" modelvalue="false" persistent="false" scrim="false" zindex="8" activatorprops="[object Object]" openonhover="false" closeoncontentclick="true" closedelay="250" opendelay="300" eager="false" locationstrategy="connected" location="end center" origin="auto" scrollstrategy="reposition" transition="fade-transition"></v-menu-stub>
-</div>"
-`;
