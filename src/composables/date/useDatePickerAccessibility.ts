@@ -92,7 +92,6 @@ export function useDatePickerAccessibility() {
 			srOnlyHtmlEl.style.whiteSpace = 'nowrap'
 			srOnlyHtmlEl.style.border = '0'
 			srOnlyEl.textContent = 'Utilisez tab pour naviguer entre les dates et Entrée pour sélectionner une date'
-
 			datePickerEl.prepend(srOnlyEl)
 		}
 
