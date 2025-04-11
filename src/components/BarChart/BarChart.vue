@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+	import { ref, onMounted } from 'vue'
 	import { Bar } from 'vue-chartjs'
 	import {
 		Chart as ChartJS,
@@ -9,6 +10,9 @@
 		CategoryScale,
 		LinearScale,
 	} from 'chart.js'
+  import type { ComponentPublicInstance } from 'vue'
+
+  const chartRef = ref<ComponentPublicInstance<typeof Bar> | null>(null)
 
 	// Enregistrement des composants Chart.js
 	ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
@@ -38,10 +42,19 @@
 			},
 		},
 	}
+
+	onMounted(() => {
+		const canvas = chartRef.value?.$el?.querySelector('canvas')
+		if (canvas) {
+			canvas.setAttribute('role', 'img')
+			canvas.setAttribute('aria-label', 'Graphique représentant les ventes par mois pour 2024')
+		}
+	})
 </script>
 <template>
 	<Bar
 		id="my-chart-id"
+		ref="chartRef"
 		:options="chartOptions"
 		:data="chartData"
 	/>
