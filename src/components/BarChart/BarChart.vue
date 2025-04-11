@@ -10,9 +10,9 @@
 		CategoryScale,
 		LinearScale,
 	} from 'chart.js'
-  import type { ComponentPublicInstance } from 'vue'
+	import type { ComponentPublicInstance } from 'vue'
 
-  const chartRef = ref<ComponentPublicInstance<typeof Bar> | null>(null)
+	const chartRef = ref<ComponentPublicInstance<typeof Bar> | null>(null)
 
 	// Enregistrement des composants Chart.js
 	ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
