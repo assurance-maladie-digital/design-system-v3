@@ -79,7 +79,7 @@
 			</template>
 			<span
 				role="status"
-			>{{ locales.tooltip }}</span>
+			><slot name="tooltip">{{ locales.tooltip }}</slot></span>
 		</VTooltip>
 	</div>
 </template>
