@@ -53,7 +53,7 @@
 <template>
 	<div
 		:id="props.ariaOwns"
-		class="vd-copy-btn"
+		class="sy-copy-btn"
 	>
 		<VMenu
 			v-bind="options.menu"
