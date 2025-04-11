@@ -106,7 +106,7 @@
 }
 
 .v-btn:focus-visible {
-  background: rgb(84 88 89 / 7%);
+	background: rgb(84 88 89 / 7%);
 }
 
 :deep(.sy-copy-tooltip-menu) {
