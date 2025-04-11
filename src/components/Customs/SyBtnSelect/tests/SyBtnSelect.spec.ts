@@ -47,7 +47,7 @@ describe('SyBtnSelect', () => {
 			},
 		})
 
-		const button = wrapper.find('.vd-user-menu-btn')
+		const button = wrapper.find('.sy-user-menu-btn')
 		await button.trigger('click')
 
 		expect(wrapper.vm.isOpen).toBe(true)
@@ -72,7 +72,7 @@ describe('SyBtnSelect', () => {
 			},
 		})
 
-		const button = wrapper.find('.vd-user-menu-btn')
+		const button = wrapper.find('.sy-user-menu-btn')
 		expect(wrapper.vm.isOpen).toBe(false)
 
 		await button.trigger('click')

@@ -87,7 +87,7 @@
 		:persistent="props.persistent"
 		:retain-focus="false"
 		aria-modal="true"
-		class="vd-dialog-box"
+		class="sy-dialog-box"
 		@keydown.tab="handleFocus"
 	>
 		<VCard
@@ -124,7 +124,7 @@
 			<div
 				v-if="!props.hideActions"
 				v-bind="options.actionsCtn"
-				class="vd-dialog-box-actions-ctn"
+				class="sy-dialog-box-actions-ctn"
 			>
 				<VSpacer v-bind="options.actionsSpacer" />
 
@@ -167,7 +167,7 @@ h2 {
 	text-wrap: balance;
 }
 
-.vd-dialog-box-actions-ctn {
+.sy-dialog-box-actions-ctn {
 	display: flex;
 	flex-direction: column-reverse;
 	justify-content: stretch;
@@ -175,7 +175,7 @@ h2 {
 }
 
 @media screen and (min-width: $container-mobile-max-width) {
-	.vd-dialog-box-actions-ctn {
+	.sy-dialog-box-actions-ctn {
 		flex-direction: row;
 	}
 }

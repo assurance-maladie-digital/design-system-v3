@@ -66,7 +66,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		const elValue = wrapper.find('.vd-data-list-item-value span')
+		const elValue = wrapper.find('.sy-data-list-item-value span')
 
 		expect(elValue.text()).toBe('<span>Custom Value</span>')
 	})
@@ -83,7 +83,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		const elValue = wrapper.find('.vd-data-list-item-value span')
+		const elValue = wrapper.find('.sy-data-list-item-value span')
 
 		expect(elValue.text()).toBe('Paul Dupont')
 	})
@@ -115,7 +115,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		const elAction = wrapper.find('.vd-data-list-item-action-btn')
+		const elAction = wrapper.find('.sy-data-list-item-action-btn')
 		expect(elAction.text()).toBe('Click Me')
 	})
 
@@ -130,7 +130,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		const button = wrapper.find('.vd-data-list-item-action-btn')
+		const button = wrapper.find('.sy-data-list-item-action-btn')
 		await button.trigger('click')
 
 		expect(wrapper.emitted('click:action')).toBeTruthy()
@@ -150,7 +150,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		const elRow = wrapper.find('.vd-row')
+		const elRow = wrapper.find('.sy-row')
 		expect(elRow.exists()).toBe(true)
 	})
 })
