@@ -44,7 +44,7 @@ describe('BackBtn', () => {
 			},
 			props: { dark: false, hideBackIcon: false },
 		})
-		expect(wrapper.find('.vd-back-btn').classes()).toContain('pr-1')
+		expect(wrapper.find('.sy-back-btn').classes()).toContain('pr-1')
 	})
 
 	it('applies correct button classes when dark is true and hideBackIcon is false', () => {
@@ -58,7 +58,7 @@ describe('BackBtn', () => {
 			},
 			props: { dark: true, hideBackIcon: false },
 		})
-		expect(wrapper.find('.vd-back-btn').classes()).not.toContain('pr-1')
+		expect(wrapper.find('.sy-back-btn').classes()).not.toContain('pr-1')
 	})
 	it('returns false when dark prop is not provided', () => {
 		const wrapper = mount(BackBtn, {
