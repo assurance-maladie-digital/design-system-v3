@@ -2,6 +2,6 @@
 
 exports[`CopyBtn > renders correctly 1`] = `
 "<div data-v-ce8a81b3="" id="copy-btn" class="sy-copy-btn" label="test">
-  <v-menu-stub data-v-ce8a81b3="" offset="16" contentclass="sy-copy-tooltip-menu text-white text-body-2 ml-2" id="copy-btn" submenu="false" attach="false" closeonback="true" contained="false" disabled="false" noclickanimation="false" modelvalue="false" persistent="false" scrim="false" zindex="8" activatorprops="[object Object]" openonhover="false" closeoncontentclick="true" closedelay="250" opendelay="300" eager="false" locationstrategy="connected" location="end center" origin="auto" scrollstrategy="reposition" transition="fade-transition"></v-menu-stub>
+  <v-tooltip-stub data-v-ce8a81b3="" attach="false" closeonback="false" contained="false" disabled="false" noclickanimation="false" modelvalue="false" scrim="false" zindex="2000" activatorprops="[object Object]" openonclick="true" openonhover="false" closeoncontentclick="false" minwidth="0" eager="true" locationstrategy="connected" location="right" origin="auto" offset="10" scrollstrategy="reposition" transition="false"></v-tooltip-stub>
 </div>"
 `;
