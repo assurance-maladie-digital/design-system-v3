@@ -60,7 +60,7 @@
 			location="right"
 			:open-on-click="true"
 			:open-on-hover="false"
-      :disabled="hideTooltip"
+			:disabled="hideTooltip"
 		>
 			<template #activator="{ props: tooltipProps }">
 				<VBtn
@@ -100,14 +100,6 @@
 
 .v-btn:focus-visible {
 	background: rgb(84 88 89 / 7%);
-}
-
-.sy-copy-tooltip-menu{
-	padding: 6px 16px;
-	box-shadow: none;
-	margin-top: 2px;
-	background: rgb(84 88 89 / 95%);
-	color: white;
 }
 
 .v-btn--icon .v-icon {
