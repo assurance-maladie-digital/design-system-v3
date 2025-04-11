@@ -10,12 +10,11 @@
 		CategoryScale,
 		LinearScale,
 	} from 'chart.js'
-	import type { ComponentPublicInstance } from 'vue'
+	import type { Chart } from 'chart.js'
 
-	const chartRef = ref<ComponentPublicInstance<typeof Bar> | null>(null)
-
-	// Enregistrement des composants Chart.js
 	ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
+	const chartInstance = ref<Chart | null>(null)
 
 	// Données du graphique
 	const chartData = {
@@ -44,18 +43,21 @@
 	}
 
 	onMounted(() => {
-		const canvas = chartRef.value?.$el?.querySelector('canvas')
-		if (canvas) {
-			canvas.setAttribute('role', 'img')
-			canvas.setAttribute('aria-label', 'Graphique représentant les ventes par mois pour 2024')
+		if (chartInstance.value) {
+			const canvas = chartInstance.value.canvas
+			if (canvas) {
+				canvas.setAttribute('role', 'img')
+				canvas.setAttribute('aria-label', 'Graphique représentant les ventes par mois pour 2024')
+			}
 		}
 	})
 </script>
+
 <template>
 	<Bar
 		id="my-chart-id"
-		ref="chartRef"
 		:options="chartOptions"
 		:data="chartData"
+		v-bind="{ chartInstance }"
 	/>
 </template>
