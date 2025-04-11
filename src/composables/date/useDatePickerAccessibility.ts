@@ -8,14 +8,20 @@ import { nextTick } from 'vue'
  * @returns Des fonctions pour mettre à jour l'accessibilité du DatePicker et gérer les événements clavier
  */
 export function useDatePickerAccessibility() {
+	// Référence pour suivre si l'événement a déjà été traité
+	let isProcessingEnterKey = false
+
 	/**
 	 * Gestionnaire d'événements clavier pour simuler le comportement de la touche espace avec la touche entrée
 	 * @param event L'événement clavier
 	 */
 	const handleKeyDown = (event: Event): void => {
 		const keyboardEvent = event as KeyboardEvent
-		// Si la touche entrée est pressée
-		if (keyboardEvent.key === 'Enter') {
+		// Si la touche entrée est pressée et que nous ne sommes pas déjà en train de traiter un événement
+		if (keyboardEvent.key === 'Enter' && !isProcessingEnterKey) {
+			// Marquer que nous sommes en train de traiter l'événement pour éviter les doublons
+			isProcessingEnterKey = true
+
 			// Empêcher le comportement par défaut de la touche entrée
 			keyboardEvent.preventDefault()
 
@@ -30,8 +36,15 @@ export function useDatePickerAccessibility() {
 					cancelable: true,
 					view: window,
 				})
+
+				// Déclencher un seul événement de clic
 				focusedElement.dispatchEvent(clickEvent)
 			}
+
+			// Réinitialiser l'état après un délai pour permettre le traitement des autres événements
+			setTimeout(() => {
+				isProcessingEnterKey = false
+			}, 100)
 		}
 	}
 
@@ -91,7 +104,7 @@ export function useDatePickerAccessibility() {
 			srOnlyHtmlEl.style.clip = 'rect(0, 0, 0, 0)'
 			srOnlyHtmlEl.style.whiteSpace = 'nowrap'
 			srOnlyHtmlEl.style.border = '0'
-			srOnlyEl.textContent = 'Utilisez tab pour naviguer entre les dates et Entrée pour sélectionner une date'
+			srOnlyEl.textContent = 'Utilisez tab pour naviguer entre les dates et Entrée ou Espace pour sélectionner une date'
 			datePickerEl.prepend(srOnlyEl)
 		}
 
