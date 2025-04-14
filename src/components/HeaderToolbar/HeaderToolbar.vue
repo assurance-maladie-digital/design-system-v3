@@ -1,7 +1,12 @@
 <script lang="ts" setup>
-	import { ref, type PropType } from 'vue'
+	import { VMenu, VList, VListItem, VIcon } from 'vuetify/components'
+	import { mdiChevronDown, mdiChevronRight } from '@mdi/js'
+	import { ref, type PropType, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
 	import type { MenuItem, SelectItem } from './types'
-	import SyInputSelect from '@/components/Customs/SyInputSelect/SyInputSelect.vue'
+	import { useDisplay } from 'vuetify'
+
+	const elementWidth = ref(0)
+	const menuOpen = ref(false)
 
 	const props = defineProps({
 		leftMenu: {
@@ -158,6 +163,8 @@
 		},
 	})
 
+	const { smAndDown } = useDisplay()
+
 	const getLinkComponent = (item: MenuItem): string => {
 		if (item.href) {
 			return 'a'
@@ -180,6 +187,7 @@
 			highlightMenu.value = false
 		}
 		showOverlay.value = false
+		menuOpen.value = false // S'assurer que le menu se ferme aussi
 	}
 	const handleLink = (index: number) => {
 		if (index === 1) {
@@ -197,6 +205,69 @@
 		activeIndex.value = null
 	}
 
+	const handleKeyboardEnter = (item: MenuItem, index: number) => {
+		if (index === 1) {
+			// Pour le menu déroulant, basculer l'état du menu
+			menuOpen.value = !menuOpen.value
+		}
+		else if (item.href) {
+			// Pour les liens, naviguer vers la destination
+			checkActiveLink(index)
+			if (item.openInNewTab) {
+				window.open(item.href, '_blank', 'noopener,noreferrer')
+			}
+			else {
+				window.location.href = item.href
+			}
+		}
+		else if (item.to) {
+			// Pour les liens RouterLink, on ne fait que mettre à jour l'activeIndex
+			// car Vue Router gérera la navigation
+			checkActiveLink(index)
+		}
+	}
+
+	const dropdownMenuTitle = ref(props.leftMenu.find((_, i) => i === 1)?.title || 'Menu')
+	const selectedSubItemText = ref(dropdownMenuTitle.value)
+
+	const handleSubMenuItemClick = (subItem: SelectItem) => {
+		dropdownMenuTitle.value = subItem.text
+		activeIndex.value = 1
+		selectedSubItemText.value = subItem.text // Update selected sub-item tracker
+
+		if (subItem.href) {
+			if (subItem.openInNewTab) {
+				window.open(subItem.href, '_blank', 'noopener,noreferrer')
+			}
+			else {
+				window.location.href = subItem.href
+			}
+		}
+	}
+
+	const updateWidth = async () => {
+		await nextTick()
+		const element = document.querySelector('.toolbar #left-menu li:nth-child(2)') as HTMLElement
+		if (element) {
+			elementWidth.value = element.offsetWidth
+		}
+	}
+
+	onMounted(() => {
+		updateWidth()
+		// Pour mettre à jour en temps réel, vous pouvez utiliser:
+		window.addEventListener('resize', updateWidth)
+	})
+
+	watch(selectedSubItemText, () => {
+		updateWidth()
+	})
+
+	// N'oubliez pas de nettoyer l'event listener
+	onBeforeUnmount(() => {
+		window.removeEventListener('resize', updateWidth)
+	})
+
 	defineExpose({
 		hideOverlay,
 		handleLink,
@@ -206,6 +277,8 @@
 		highlightMenu,
 		showOverlay,
 		getLinkComponent,
+		handleSubMenuItemClick,
+		handleKeyboardEnter,
 	})
 </script>
 
@@ -226,11 +299,13 @@
 					:aria-labelledby="props.ariaLeftMenu"
 					role="navigation"
 				>
-					<ul>
+					<ul ref="secondLiRef">
 						<li
 							v-for="(item, index) in props.leftMenu"
 							:key="index"
-							:class="{ 'active': activeIndex === index, 'highlight': highlightMenu }"
+							:value="index"
+							:class="{ active: activeIndex === index && selectedSubItemText !== 'Professionnel de santé', 'menu-open': index === 1 && menuOpen }"
+							:aria-current="activeIndex === index ? 'page' : undefined"
 						>
 							<component
 								:is="getLinkComponent(item as MenuItem)"
@@ -241,19 +316,68 @@
 								:target="item.openInNewTab ? '_blank' : undefined"
 								:title="item.title"
 								:to="item.to"
+								:aria-current="activeIndex === index ? 'page' : undefined"
 								@click="checkActiveLink(index)"
 								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
+								@keydown.enter.prevent="handleKeyboardEnter(item, index)"
 							>
-								<span v-if="itemsSelectMenu && index === 1">
-									<SyInputSelect
-										:items="itemsSelectMenu as unknown as string[]"
-										:label="item.title"
-										:outlined="false"
-										is-header-toolbar
-										@click="handleLink(index)"
-									/>
-								</span>
+								<v-menu
+									v-if="itemsSelectMenu && index === 1"
+									v-model="menuOpen"
+									location="bottom"
+									attach="body"
+									scroll-strategy="none"
+									:offset="[-2,16]"
+									:close-on-content-click="true"
+									containment
+									@update:model-value="(val) => val === false && hideOverlay()"
+								>
+									<template #activator="{ props: activatorProps }">
+										<button
+											v-bind="activatorProps"
+											:aria-label="dropdownMenuTitle + ', Menu déroulant'"
+											:class="{ 'link-active': activeIndex === index, 'menu-open': menuOpen }"
+											:style="smAndDown ? {minWidth: '136px'} : {minWidth: '236px'}"
+											:aria-expanded="menuOpen ? 'true' : 'false'"
+											:aria-haspopup="'true'"
+											class="sy-header-button d-flex justify-space-between"
+											@click="handleLink(index); checkActiveLink(index)"
+										>
+											{{ dropdownMenuTitle }}
+											<v-icon
+												:icon="mdiChevronDown"
+												size="small"
+												class="ml-1"
+											/>
+										</button>
+									</template>
+									<v-list
+										dense
+										:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
+										:style="smAndDown ? {width: '110vh'} : {width: elementWidth >= 260 ? elementWidth + 'px' : '236px'}"
+									>
+										<v-list-item
+											v-for="(subItem, subIndex) in itemsSelectMenu"
+											:key="subIndex"
+											:value="subIndex"
+											:aria-current="subItem.text === selectedSubItemText ? 'true' : undefined"
+											:class="{ 'subitem-selected': subItem.text === selectedSubItemText }"
+											@click="handleSubMenuItemClick(subItem)"
+										>
+											<v-list-item-title class="text-primary">
+												<v-icon
+													:icon="mdiChevronRight"
+													size="small"
+													class="ml-1"
+												/>
+												<span>
+													{{ subItem.text }}
+												</span>
+											</v-list-item-title>
+										</v-list-item>
+									</v-list>
+								</v-menu>
 								<span
 									v-else
 									class="link"
@@ -282,6 +406,7 @@
 								:href="item.href"
 								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 								:tabindex="0"
+								:aria-current="activeIndex === index ? 'page' : undefined"
 								:target="item.openInNewTab ? '_blank' : undefined"
 								:title="item.title"
 								:to="item.to"
@@ -301,144 +426,191 @@
 @use '@/assets/tokens';
 @use '../HeaderBar/consts' as *;
 
+$header-max-width: 1200px;
+$header-breakpoint-sm: 768px;
+$header-breakpoint-md: 1000px;
+$font-sm: 12px;
+$menu-padding: 10px 16px;
+$menu-padding-mobile: 10px 12px;
+$std-radius: 0;
+$blue-lighten-90: tokens.$blue-lighten-90;
+$blue-darken-40: tokens.$blue-darken-40;
+$blue-darken-60: tokens.$blue-darken-60;
+$user-assure: tokens.$user-assure;
+$user-professionnel: tokens.$user-professionnel;
+$user-entreprise: tokens.$user-entreprise;
+$first-item-width: 95px;
+$first-item-width-mobile: 32px;
+$second-item-max-height: 44px;
+$second-item-max-height-mobile: 38px;
+$second-item-min-width-mobile: 152px;
+$select-min-width: auto;
+$container-max-height: 45px;
+$container-max-height-mobile: 41px;
+$mobile-text-max-width: 182px;
+$z-toolbar: 2; // Réduit pour permettre à l'overlay de couvrir la barre
+$z-menu-item: 10; // Augmenté pour garantir la visibilité du deuxième élément
+$z-button: 10; // Augmenté aussi
+$z-overlay: 5; // Sans !important pour éviter des problèmes
+
+// --------------------------------
+// Main toolbar layout
+// --------------------------------
 .toolbar {
-	background: tokens.$blue-lighten-90;
+	background: $blue-lighten-90;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	z-index: 100;
+	z-index: $z-toolbar; // Réduit pour permettre à l'overlay de couvrir la barre
 
+	// Container for toolbar content
 	.container {
 		width: 100%;
-		max-height: 45px;
+		max-height: $container-max-height;
 		max-width: $header-max-width;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 
-		@media (width <= 768px) {
-			max-height: 41px;
+		@media (width <= $header-breakpoint-sm) {
+			max-height: $container-max-height-mobile;
 		}
 
+		// Common list styling
 		:deep(ul) {
 			display: flex;
 			align-items: center;
 			justify-content: flex-start;
 			list-style: none;
 			text-decoration: none;
-
-			li {
-				text-align: center;
-			}
 		}
 
+		// Common link styling
 		:deep(ul > li > a) {
 			display: block;
-			color: tokens.$blue-darken-40;
+			color: $blue-darken-40;
 			text-decoration: none;
-			padding: 10px 16px;
+			padding: $menu-padding;
 			cursor: pointer;
 
 			&:hover {
 				text-decoration: underline;
 			}
 
-			@media (width <= 768px) {
-				font-size: 12px;
-			}
-		}
-
-		:deep(.sy-input-select) {
-			width: 100%;
-			display: flex;
-			justify-content: space-between;
-
-			@media (width <= 768px) {
-				font-size: 12px;
-
-				span {
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-				}
+			@media (width <= $header-breakpoint-sm) {
+				font-size: $font-sm;
+				padding: $menu-padding-mobile;
 			}
 		}
 	}
 
+	// --------------------------------
+	// Left menu styling
+	// --------------------------------
 	#left-menu {
 		ul > li > a {
 			font-weight: 700;
-			color: tokens.$blue-darken-40;
+			color: $blue-darken-40;
+			display: flex;
 
 			&:hover {
-				text-decoration: none;
+				text-decoration: underline;
 			}
 		}
 
+		// Premier élément (Assuré)
 		li:first-child {
-			min-width: 95px;
+			min-width: $first-item-width;
 			background: transparent;
+			text-align: center;
+			z-index: 1; // Position basse pour passer sous l'overlay
 
-			@media (max-width: $header-breakpoint) {
-				min-width: 82px;
+			@media (max-width: $header-breakpoint-sm) {
+				min-width: $first-item-width-mobile;
+			}
+
+			&.active,
+			a:hover {
+				background: $user-assure;
 			}
 		}
 
+		// Deuxième élément (Professionnel de santé)
 		li:nth-child(2) {
-			z-index: 2;
-			max-height: 44px;
-			min-width: 260px;
+			z-index: $z-menu-item; // Augmenté pour rester au-dessus de l'overlay
+			max-height: $second-item-max-height;
+			position: relative; // Ajout pour garantir l'effet du z-index
 
-			@media (width <= 768px) {
-				max-height: 38px;
-				min-width: 152px;
+			@media (width <= $header-breakpoint-sm) {
+				max-height: $second-item-max-height-mobile;
 			}
 
 			a {
-				max-height: 44px;
+				max-height: $second-item-max-height;
+				position: relative; // Garantit l'application du z-index
+				z-index: $z-button; // S'assure que le lien reste visible
 
-				@media (width <= 768px) {
-					max-height: 38px;
+				@media (width <= $header-breakpoint-sm) {
+					max-height: $second-item-max-height-mobile;
+				}
+			}
+
+			&.active {
+				a,
+				button,
+				.sy-header-button {
+					text-align: left;
+					text-decoration: underline;
+					white-space: nowrap;
+				}
+			}
+
+			a:hover,
+			&.highlight,
+			&.active {
+				background: $user-professionnel;
+
+				.sy-header-button {
+					text-decoration: underline;
 				}
 			}
 		}
 
+		// Troisième élément (Entreprise)
 		li:nth-child(3) {
 			background: transparent;
-		}
+			text-align: center;
+			z-index: 1; // Position basse pour passer sous l'overlay
 
-		li:first-child a:hover,
-		li:first-child.active {
-			background: tokens.$user-assure;
-		}
-
-		li:nth-child(2) a:hover,
-		.highlight {
-			background: tokens.$user-professionnel;
-		}
-
-		li:nth-child(3) a:hover,
-		li:nth-child(3).active {
-			background: tokens.$user-entreprise;
+			&.active,
+			a:hover {
+				background: $user-entreprise;
+			}
 		}
 	}
 
+	// --------------------------------
+	// Right menu styling
+	// --------------------------------
 	#right-menu {
-		@media (width <= 1000px) {
+		@media (width <= $header-breakpoint-md) {
 			display: none;
 		}
+
+		ul {
+			white-space: nowrap;
+			overflow: hidden;
+
+			li {
+				display: inline-block;
+			}
+		}
 	}
 
-	#right-menu ul {
-		white-space: nowrap;
-		overflow: hidden;
-	}
-
-	#right-menu ul li {
-		display: inline-block;
-	}
-
+	// --------------------------------
+	// Vuetify input components styling
+	// --------------------------------
 	:deep(.v-input) {
 		.v-input__details {
 			display: none;
@@ -448,7 +620,7 @@
 			font-weight: 700;
 
 			.text-color {
-				color: tokens.$blue-darken-60 !important;
+				color: $blue-darken-60;
 			}
 
 			.v-icon {
@@ -461,63 +633,120 @@
 				width: 100%;
 
 				span {
-					max-width: 260px;
 					white-space: nowrap;
 					overflow: hidden;
 					text-overflow: ellipsis;
 
-					@media (width <= 768px) {
-						max-width: 182px;
+					@media (width <= $header-breakpoint-sm) {
+						max-width: $mobile-text-max-width;
 					}
 				}
 			}
 
-			@media (width <= 768px) {
-				font-size: 12px;
+			@media (width <= $header-breakpoint-sm) {
+				font-size: $font-sm;
 			}
-		}
-
-		.v-list {
-			top: 34px !important;
-			left: -16px !important;
-			text-align: left;
-			min-width: 260px;
-			max-width: fit-content !important;
-			border-radius: 0;
-
-			@media (width <= 768px) {
-				position: fixed;
-				top: 38px !important;
-				left: 0 !important;
-				min-width: 100% !important;
-				box-shadow: none !important;
-			}
-
-			.v-list-item--density-default.v-list-item--one-line {
-				min-height: 40px;
-			}
-		}
-	}
-
-	.overlay {
-		position: fixed;
-		display: block;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgb(3 16 37 / 50%);
-		cursor: default;
-		backdrop-filter: blur(2px);
-		z-index: 1;
-
-		@media (width <= 768px) {
-			display: none;
 		}
 	}
 }
 
+// --------------------------------
+// Menu elements styling
+// --------------------------------
 .right-menu-item {
-	color: tokens.$blue-darken-60;
+	color: $blue-darken-60;
+}
+
+.sy-header-button {
+	min-width: $select-min-width;
+}
+
+// Selected state for dropdown items
+.v-list-item {
+	&.subitem-selected {
+		.v-list-item-title {
+			font-weight: bold;
+		}
+	}
+
+	&.v-list-item--link:hover {
+		background-color: transparent;
+	}
+}
+
+.v-list-item-title {
+	white-space: wrap;
+	overflow: hidden;
+	display: flex;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+// --------------------------------
+// Dropdown menu open state
+// --------------------------------
+.menu-open {
+	.sy-header-button {
+		background: $user-professionnel;
+		text-decoration: underline;
+		border-bottom-left-radius: $std-radius;
+		border-bottom-right-radius: $std-radius;
+		position: relative;
+		z-index: $z-button;
+	}
+
+	a {
+		background: $user-professionnel;
+		position: relative;
+		z-index: 0;
+	}
+
+	// Le deuxième élément doit rester visible même quand le menu est ouvert
+	&:nth-child(2) {
+		position: relative;
+		z-index: $z-menu-item;
+
+		a,
+		button,
+		.sy-header-button {
+			z-index: $z-button;
+			position: relative;
+		}
+	}
+}
+
+// --------------------------------
+// Overlay styling
+// --------------------------------
+.v-overlay__content .v-list {
+	border-top-left-radius: $std-radius;
+	border-top-right-radius: $std-radius;
+	border-top: 2px solid $user-professionnel;
+	overflow: auto;
+	max-height: 70vh;
+}
+
+:deep(.v-overlay__content) {
+	@media (width <= $header-breakpoint-sm) {
+		left: 0 !important;
+	}
+}
+
+.v-overlay--active {
+	z-index: $z-overlay;
+}
+
+// Bouton overlay qui couvre la page
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgb(0 0 0 / 60%);
+	border: none;
+	z-index: 3;
 }
 </style>

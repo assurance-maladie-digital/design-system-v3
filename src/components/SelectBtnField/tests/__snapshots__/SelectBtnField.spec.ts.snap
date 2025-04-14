@@ -1,125 +1,941 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`SelectBtnField > display correctly in dark mode with an error 1`] = `
-"<div class="v-application v-theme--light v-layout v-layout--full-height v-locale--is-ltr">
+<div class="
+  v-application
+  v-layout
+  v-layout--full-height
+  v-locale--is-ltr
+  v-theme--light
+">
   <div class="v-application__wrap">
     <div>
-      <div data-v-b3dd75c6="" class="select-btn-field">
-        <ul data-v-b3dd75c6="" class="v-btn-group v-theme--dark v-btn-group--density-default v-btn-toggle select-btn-field-toggle d-flex flex-wrap text-primary" aria-label="Test">
-          <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--dark v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center text-error justify-start mr-2" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test1"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-              <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 1</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--dark v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+      <div class="select-btn-field">
+        <ul
+          aria-label="Test"
+          class="
+            d-flex
+            flex-wrap
+            select-btn-field-toggle
+            text-primary
+            v-btn-group
+            v-btn-group--density-default
+            v-btn-toggle
+            v-theme--dark
+          "
+        >
+          <li class="select-list-item">
+            <button
+              activeclass="text-white"
+              aria-expanded="true"
+              class="
+                align-items-center
+                d-flex
+                elevation-0
+                justify-start
+                mr-0
+                mr-2
+                py-2
+                text-error
+                v-btn
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-default
+                v-btn--variant-outlined
+                v-theme--dark
+              "
+              label=""
+              style="height: auto; min-height: 40px;"
+              type="button"
+              value="test1"
+            >
+              <span class="v-btn__overlay"></span>
+              <span class="v-btn__underlay"></span>
+              <!---->
+              <span
+                class="v-btn__content"
+                data-no-activator=""
+              >
+                <span class="text-body-1">
+                  Test 1
+                </span>
+                <i
+                  aria-hidden="true"
+                  aria-label="Sélectionné"
+                  class="
+                    M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+                    flex-shrink-0
+                    mdi
+                    ml-1
+                    notranslate
+                    text-white
+                    v-icon
+                    v-icon--size-default
+                    v-theme--dark
+                  "
+                  role="img"
+                  style="visibility: hidden;"
+                ></i>
+              </span>
               <!---->
               <!---->
-            </button></li>
-          <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--dark v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center text-error justify-start mr-2" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test2"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-              <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 2</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--dark v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+            </button>
+          </li>
+          <li class="select-list-item">
+            <button
+              activeclass="text-white"
+              aria-expanded="true"
+              class="
+                align-items-center
+                d-flex
+                elevation-0
+                justify-start
+                mr-0
+                mr-2
+                py-2
+                text-error
+                v-btn
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-default
+                v-btn--variant-outlined
+                v-theme--dark
+              "
+              label=""
+              style="height: auto; min-height: 40px;"
+              type="button"
+              value="test2"
+            >
+              <span class="v-btn__overlay"></span>
+              <span class="v-btn__underlay"></span>
+              <!---->
+              <span
+                class="v-btn__content"
+                data-no-activator=""
+              >
+                <span class="text-body-1">
+                  Test 2
+                </span>
+                <i
+                  aria-hidden="true"
+                  aria-label="Sélectionné"
+                  class="
+                    M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+                    flex-shrink-0
+                    mdi
+                    ml-1
+                    notranslate
+                    text-white
+                    v-icon
+                    v-icon--size-default
+                    v-theme--dark
+                  "
+                  role="img"
+                  style="visibility: hidden;"
+                ></i>
+              </span>
               <!---->
               <!---->
-            </button></li>
+            </button>
+          </li>
         </ul>
-        <p data-v-b3dd75c6="" class="theme--light v-messages text-error px-3 mt-2 mb-0 opacity-100">Test</p>
+        <p class="
+          mb-0
+          mt-2
+          opacity-100
+          px-3
+          text-error
+          theme--light
+          v-messages
+        ">
+          Test
+        </p>
       </div>
     </div>
   </div>
-</div>"
+</div>
 `;
 
 exports[`SelectBtnField > display correctly with an error 1`] = `
-"<div data-v-b3dd75c6="" class="form-input select-btn-field">
-  <ul data-v-b3dd75c6="" class="v-btn-group v-theme--light v-btn-group--density-default v-btn-toggle d-flex flex-column select-btn-field-toggle d-flex flex-wrap text-primary" aria-label="Test">
-    <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--light v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center text-error justify-start mr-0" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+<div class="
+  form-input
+  select-btn-field
+">
+  <ul
+    aria-label="Test"
+    class="
+      d-flex
+      d-flex
+      flex-column
+      flex-wrap
+      select-btn-field-toggle
+      text-primary
+      v-btn-group
+      v-btn-group--density-default
+      v-btn-toggle
+      v-theme--light
+    "
+  >
+    <li class="select-list-item">
+      <button
+        activeclass="text-white"
+        aria-expanded="true"
+        class="
+          align-items-center
+          d-flex
+          elevation-0
+          justify-start
+          mr-0
+          mr-0
+          py-2
+          text-error
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-outlined
+          v-theme--light
+        "
+        label=""
+        style="height: auto; min-height: 40px;"
+        type="button"
+        value="test"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="text-body-1">
+            Test
+          </span>
+          <i
+            aria-hidden="true"
+            aria-label="Sélectionné"
+            class="
+              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+              flex-shrink-0
+              mdi
+              ml-1
+              notranslate
+              text-white
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+            role="img"
+            style="visibility: hidden;"
+          ></i>
+        </span>
         <!---->
         <!---->
-      </button></li>
-    <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--light v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center text-error justify-start mr-0" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test2"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 2</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+      </button>
+    </li>
+    <li class="select-list-item">
+      <button
+        activeclass="text-white"
+        aria-expanded="true"
+        class="
+          align-items-center
+          d-flex
+          elevation-0
+          justify-start
+          mr-0
+          mr-0
+          py-2
+          text-error
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-outlined
+          v-theme--light
+        "
+        label=""
+        style="height: auto; min-height: 40px;"
+        type="button"
+        value="test2"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="text-body-1">
+            Test 2
+          </span>
+          <i
+            aria-hidden="true"
+            aria-label="Sélectionné"
+            class="
+              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+              flex-shrink-0
+              mdi
+              ml-1
+              notranslate
+              text-white
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+            role="img"
+            style="visibility: hidden;"
+          ></i>
+        </span>
         <!---->
         <!---->
-      </button></li>
-    <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--light v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center text-error justify-start mr-0" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test3"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 3</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+      </button>
+    </li>
+    <li class="select-list-item">
+      <button
+        activeclass="text-white"
+        aria-expanded="true"
+        class="
+          align-items-center
+          d-flex
+          elevation-0
+          justify-start
+          mr-0
+          mr-0
+          py-2
+          text-error
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-outlined
+          v-theme--light
+        "
+        label=""
+        style="height: auto; min-height: 40px;"
+        type="button"
+        value="test3"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="text-body-1">
+            Test 3
+          </span>
+          <i
+            aria-hidden="true"
+            aria-label="Sélectionné"
+            class="
+              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+              flex-shrink-0
+              mdi
+              ml-1
+              notranslate
+              text-white
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+            role="img"
+            style="visibility: hidden;"
+          ></i>
+        </span>
         <!---->
         <!---->
-      </button></li>
+      </button>
+    </li>
   </ul>
-  <p data-v-b3dd75c6="" class="theme--light v-messages text-error px-3 mt-2 mb-0 opacity-100">Test</p>
-</div>"
+  <p class="
+    mb-0
+    mt-2
+    opacity-100
+    px-3
+    text-error
+    theme--light
+    v-messages
+  ">
+    Test
+  </p>
+</div>
 `;
 
 exports[`SelectBtnField > display correctly with in dark mode with an hint 1`] = `
-"<div class="v-application v-theme--light v-layout v-layout--full-height v-locale--is-ltr">
+<div class="
+  v-application
+  v-layout
+  v-layout--full-height
+  v-locale--is-ltr
+  v-theme--light
+">
   <div class="v-application__wrap">
     <div>
-      <div data-v-b3dd75c6="" class="select-btn-field">
-        <ul data-v-b3dd75c6="" class="v-btn-group v-theme--dark v-btn-group--density-default v-btn-toggle select-btn-field-toggle d-flex flex-wrap text-primary" aria-label="Test">
-          <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--dark v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center justify-start mr-2" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test1"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-              <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 1</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--dark v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+      <div class="select-btn-field">
+        <ul
+          aria-label="Test"
+          class="
+            d-flex
+            flex-wrap
+            select-btn-field-toggle
+            text-primary
+            v-btn-group
+            v-btn-group--density-default
+            v-btn-toggle
+            v-theme--dark
+          "
+        >
+          <li class="select-list-item">
+            <button
+              activeclass="text-white"
+              aria-expanded="true"
+              class="
+                align-items-center
+                d-flex
+                elevation-0
+                justify-start
+                mr-0
+                mr-2
+                py-2
+                v-btn
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-default
+                v-btn--variant-outlined
+                v-theme--dark
+              "
+              label=""
+              style="height: auto; min-height: 40px;"
+              type="button"
+              value="test1"
+            >
+              <span class="v-btn__overlay"></span>
+              <span class="v-btn__underlay"></span>
+              <!---->
+              <span
+                class="v-btn__content"
+                data-no-activator=""
+              >
+                <span class="text-body-1">
+                  Test 1
+                </span>
+                <i
+                  aria-hidden="true"
+                  aria-label="Sélectionné"
+                  class="
+                    M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+                    flex-shrink-0
+                    mdi
+                    ml-1
+                    notranslate
+                    text-white
+                    v-icon
+                    v-icon--size-default
+                    v-theme--dark
+                  "
+                  role="img"
+                  style="visibility: hidden;"
+                ></i>
+              </span>
               <!---->
               <!---->
-            </button></li>
-          <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--dark v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center justify-start mr-2" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test2"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-              <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 2</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--dark v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+            </button>
+          </li>
+          <li class="select-list-item">
+            <button
+              activeclass="text-white"
+              aria-expanded="true"
+              class="
+                align-items-center
+                d-flex
+                elevation-0
+                justify-start
+                mr-0
+                mr-2
+                py-2
+                v-btn
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-default
+                v-btn--variant-outlined
+                v-theme--dark
+              "
+              label=""
+              style="height: auto; min-height: 40px;"
+              type="button"
+              value="test2"
+            >
+              <span class="v-btn__overlay"></span>
+              <span class="v-btn__underlay"></span>
+              <!---->
+              <span
+                class="v-btn__content"
+                data-no-activator=""
+              >
+                <span class="text-body-1">
+                  Test 2
+                </span>
+                <i
+                  aria-hidden="true"
+                  aria-label="Sélectionné"
+                  class="
+                    M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+                    flex-shrink-0
+                    mdi
+                    ml-1
+                    notranslate
+                    text-white
+                    v-icon
+                    v-icon--size-default
+                    v-theme--dark
+                  "
+                  role="img"
+                  style="visibility: hidden;"
+                ></i>
+              </span>
               <!---->
               <!---->
-            </button></li>
+            </button>
+          </li>
         </ul>
-        <p data-v-b3dd75c6="" class="theme--light v-messages px-3 mt-2 mb-0 opacity-100">Test</p>
+        <p class="
+          mb-0
+          mt-2
+          opacity-100
+          px-3
+          theme--light
+          v-messages
+        ">
+          Test
+        </p>
       </div>
     </div>
   </div>
-</div>"
+</div>
 `;
 
 exports[`SelectBtnField > render correctly in multiple mode 1`] = `
-"<div data-v-b3dd75c6="" class="form-input select-btn-field">
-  <ul data-v-b3dd75c6="" class="v-btn-group v-theme--light v-btn-group--density-default v-btn-toggle d-flex flex-column select-btn-field-toggle d-flex flex-wrap text-primary" aria-label="Test">
-    <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--light v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center justify-start mr-0" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+<div class="
+  form-input
+  select-btn-field
+">
+  <ul
+    aria-label="Test"
+    class="
+      d-flex
+      d-flex
+      flex-column
+      flex-wrap
+      select-btn-field-toggle
+      text-primary
+      v-btn-group
+      v-btn-group--density-default
+      v-btn-toggle
+      v-theme--light
+    "
+  >
+    <li class="select-list-item">
+      <button
+        activeclass="text-white"
+        aria-expanded="true"
+        class="
+          align-items-center
+          d-flex
+          elevation-0
+          justify-start
+          mr-0
+          mr-0
+          py-2
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-outlined
+          v-theme--light
+        "
+        label=""
+        style="height: auto; min-height: 40px;"
+        type="button"
+        value="test"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="text-body-1">
+            Test
+          </span>
+          <i
+            aria-hidden="true"
+            aria-label="Sélectionné"
+            class="
+              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+              flex-shrink-0
+              mdi
+              ml-1
+              notranslate
+              text-white
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+            role="img"
+            style="visibility: hidden;"
+          ></i>
+        </span>
         <!---->
         <!---->
-      </button></li>
-    <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--light v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center justify-start mr-0" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 2</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+      </button>
+    </li>
+    <li class="select-list-item">
+      <button
+        activeclass="text-white"
+        aria-expanded="true"
+        class="
+          align-items-center
+          d-flex
+          elevation-0
+          justify-start
+          mr-0
+          mr-0
+          py-2
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-outlined
+          v-theme--light
+        "
+        label=""
+        style="height: auto; min-height: 40px;"
+        type="button"
+        value=""
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="text-body-1">
+            Test 2
+          </span>
+          <i
+            aria-hidden="true"
+            aria-label="Sélectionné"
+            class="
+              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+              flex-shrink-0
+              mdi
+              ml-1
+              notranslate
+              text-white
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+            role="img"
+            style="visibility: hidden;"
+          ></i>
+        </span>
         <!---->
         <!---->
-      </button></li>
-    <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--light v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center justify-start mr-0" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test3"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 3</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+      </button>
+    </li>
+    <li class="select-list-item">
+      <button
+        activeclass="text-white"
+        aria-expanded="true"
+        class="
+          align-items-center
+          d-flex
+          elevation-0
+          justify-start
+          mr-0
+          mr-0
+          py-2
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-outlined
+          v-theme--light
+        "
+        label=""
+        style="height: auto; min-height: 40px;"
+        type="button"
+        value="test3"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="text-body-1">
+            Test 3
+          </span>
+          <i
+            aria-hidden="true"
+            aria-label="Sélectionné"
+            class="
+              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+              flex-shrink-0
+              mdi
+              ml-1
+              notranslate
+              text-white
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+            role="img"
+            style="visibility: hidden;"
+          ></i>
+        </span>
         <!---->
         <!---->
-      </button></li>
+      </button>
+    </li>
   </ul>
-  <p data-v-b3dd75c6="" class="theme--light v-messages px-3 mt-2 mb-0 opacity-100">Test</p>
-</div>"
+  <p class="
+    mb-0
+    mt-2
+    opacity-100
+    px-3
+    theme--light
+    v-messages
+  ">
+    Test
+  </p>
+</div>
 `;
 
 exports[`SelectBtnField > renders correctly 1`] = `
-"<div data-v-b3dd75c6="" class="form-input select-btn-field">
-  <ul data-v-b3dd75c6="" class="v-btn-group v-theme--light v-btn-group--density-default v-btn-toggle d-flex flex-column select-btn-field-toggle d-flex flex-wrap text-primary"></ul>
-  <!--v-if-->
-</div>"
+<div class="
+  form-input
+  select-btn-field
+">
+  <ul class="
+    d-flex
+    d-flex
+    flex-column
+    flex-wrap
+    select-btn-field-toggle
+    text-primary
+    v-btn-group
+    v-btn-group--density-default
+    v-btn-toggle
+    v-theme--light
+  "></ul>
+  <!-- v-if -->
+</div>
 `;
 
 exports[`SelectBtnField > renders correctly with props 1`] = `
-"<div data-v-b3dd75c6="" class="form-input select-btn-field">
-  <ul data-v-b3dd75c6="" class="v-btn-group v-theme--light v-btn-group--density-default v-btn-toggle d-flex flex-column select-btn-field-toggle d-flex flex-wrap text-primary" aria-label="Test">
-    <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--light v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center justify-start mr-0" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+<div class="
+  form-input
+  select-btn-field
+">
+  <ul
+    aria-label="Test"
+    class="
+      d-flex
+      d-flex
+      flex-column
+      flex-wrap
+      select-btn-field-toggle
+      text-primary
+      v-btn-group
+      v-btn-group--density-default
+      v-btn-toggle
+      v-theme--light
+    "
+  >
+    <li class="select-list-item">
+      <button
+        activeclass="text-white"
+        aria-expanded="true"
+        class="
+          align-items-center
+          d-flex
+          elevation-0
+          justify-start
+          mr-0
+          mr-0
+          py-2
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-outlined
+          v-theme--light
+        "
+        label=""
+        style="height: auto; min-height: 40px;"
+        type="button"
+        value="test"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="text-body-1">
+            Test
+          </span>
+          <i
+            aria-hidden="true"
+            aria-label="Sélectionné"
+            class="
+              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+              flex-shrink-0
+              mdi
+              ml-1
+              notranslate
+              text-white
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+            role="img"
+            style="visibility: hidden;"
+          ></i>
+        </span>
         <!---->
         <!---->
-      </button></li>
-    <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--light v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center justify-start mr-0" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 2</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+      </button>
+    </li>
+    <li class="select-list-item">
+      <button
+        activeclass="text-white"
+        aria-expanded="true"
+        class="
+          align-items-center
+          d-flex
+          elevation-0
+          justify-start
+          mr-0
+          mr-0
+          py-2
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-outlined
+          v-theme--light
+        "
+        label=""
+        style="height: auto; min-height: 40px;"
+        type="button"
+        value=""
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="text-body-1">
+            Test 2
+          </span>
+          <i
+            aria-hidden="true"
+            aria-label="Sélectionné"
+            class="
+              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+              flex-shrink-0
+              mdi
+              ml-1
+              notranslate
+              text-white
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+            role="img"
+            style="visibility: hidden;"
+          ></i>
+        </span>
         <!---->
         <!---->
-      </button></li>
-    <li data-v-b3dd75c6="" class="select-list-item"><button data-v-b3dd75c6="" type="button" class="v-btn v-btn--flat v-theme--light v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-outlined py-2 mr-0 d-flex align-items-center justify-start mr-0" style="height: auto; min-height: 40px;" activeclass="text-white" aria-expanded="true" label="" value="test3"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><span data-v-b3dd75c6="" class="text-body-1">Test 3</span><i data-v-b3dd75c6="" class="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white flex-shrink-0 ml-1" style="visibility: hidden;" role="img" aria-hidden="true" aria-label="Sélectionné"></i></span>
+      </button>
+    </li>
+    <li class="select-list-item">
+      <button
+        activeclass="text-white"
+        aria-expanded="true"
+        class="
+          align-items-center
+          d-flex
+          elevation-0
+          justify-start
+          mr-0
+          mr-0
+          py-2
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-outlined
+          v-theme--light
+        "
+        label=""
+        style="height: auto; min-height: 40px;"
+        type="button"
+        value="test3"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="text-body-1">
+            Test 3
+          </span>
+          <i
+            aria-hidden="true"
+            aria-label="Sélectionné"
+            class="
+              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+              flex-shrink-0
+              mdi
+              ml-1
+              notranslate
+              text-white
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+            role="img"
+            style="visibility: hidden;"
+          ></i>
+        </span>
         <!---->
         <!---->
-      </button></li>
+      </button>
+    </li>
   </ul>
-  <p data-v-b3dd75c6="" class="theme--light v-messages px-3 mt-2 mb-0 opacity-100">Test</p>
-</div>"
+  <p class="
+    mb-0
+    mt-2
+    opacity-100
+    px-3
+    theme--light
+    v-messages
+  ">
+    Test
+  </p>
+</div>
 `;
