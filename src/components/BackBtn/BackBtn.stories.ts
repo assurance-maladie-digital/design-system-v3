@@ -18,6 +18,22 @@ const meta = {
 		hideBackIcon: {
 			control: 'boolean',
 		},
+		locales: {
+			description: 'Traductions',
+			control: false,
+			table: {
+				category: 'props',
+				type: {
+					summary: undefined,
+				},
+				defaultValue: {
+					summary: `Locales`,
+					detail: `{
+	label: 'Retour',
+}`,
+				},
+			},
+		},
 		backgroundColor: {
 			control: { type: 'text' },
 			description: 'Couleur de fond du bouton parmi la palette du thème.',
@@ -73,12 +89,12 @@ export const Default: Story = {
 					color="primary"
 					class="pa-4"
 				>
-				<BackBtn v-bind="args" />
-				</VSheet>
-				<VSheet
-					v-else
-					class="pa-4"
-				>
+					<BackBtn v-bind="args" />
+					</VSheet>
+					<VSheet
+						v-else
+						class="pa-4"
+					>
 					<BackBtn v-bind="args" />
 				</VSheet>
 			`,

@@ -3,7 +3,9 @@
 exports[`DownloadBtn > renders correctly 1`] = `
 <button
   class="
+    bg-white
     outlined-style
+    sy-download-btn
     text-primary
     text-wrap
     v-btn
@@ -11,7 +13,6 @@ exports[`DownloadBtn > renders correctly 1`] = `
     v-btn--size-default
     v-btn--variant-outlined
     v-theme--light
-    vd-download-btn
   "
   style="height: auto; min-height: 36px;"
   type="button"
@@ -45,7 +46,9 @@ exports[`DownloadBtn > renders correctly 1`] = `
 exports[`DownloadBtn > with slots 1`] = `
 <button
   class="
+    bg-white
     outlined-style
+    sy-download-btn
     text-primary
     text-wrap
     v-btn
@@ -53,7 +56,6 @@ exports[`DownloadBtn > with slots 1`] = `
     v-btn--size-default
     v-btn--variant-outlined
     v-theme--light
-    vd-download-btn
   "
   style="height: auto; min-height: 36px;"
   type="button"

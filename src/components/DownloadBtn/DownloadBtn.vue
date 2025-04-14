@@ -6,6 +6,7 @@
 	import deepmerge from 'deepmerge'
 	import { computed, ref, useAttrs } from 'vue'
 	import { config } from './config'
+	import { locales as defaultLocales } from './locales'
 
 	type State = 'idle' | 'loading' | 'success' | 'error'
 
@@ -17,6 +18,8 @@
 	export interface Props {
 		filePromise: () => Promise<AxiosResponse<Blob>>
 		fallbackFilename?: string
+		backgroundColor?: string
+		locales?: typeof defaultLocales
 	}
 
 	defineOptions({
@@ -25,6 +28,8 @@
 
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
 		fallbackFilename: undefined,
+		backgroundColor: 'white',
+		locales: () => defaultLocales,
 	})
 	const emits = defineEmits(['error', 'success'])
 	const attrs = useAttrs()
@@ -82,8 +87,8 @@
 	<VBtn
 		v-bind="btnOptions"
 		:loading="state === 'loading'"
-		:class="btnOptions.variant === 'outlined' ? 'outlined-style' : ''"
-		class="vd-download-btn"
+		class="sy-download-btn"
+		:class="[`bg-${backgroundColor}`, btnOptions.variant === 'outlined' ? 'outlined-style' : '']"
 		data-testid="download-btn"
 		@click="download"
 	>
@@ -94,11 +99,25 @@
 		</slot>
 
 		<slot />
+
+		<template #loader>
+			<p
+				class="d-sr-only"
+				aria-live="polite"
+			>
+				{{ locales.loader }}
+			</p>
+			<VProgressCircular
+				color="currentColor"
+				indeterminate
+				width="2"
+			/>
+		</template>
 	</VBtn>
 </template>
 
 <style lang="scss" scoped>
-.vd-download-btn :deep() {
+.sy-download-btn :deep() {
 	.v-btn__content {
 		flex-wrap: wrap;
 	}
@@ -106,6 +125,21 @@
 	.v-icon {
 		flex: none;
 	}
+}
+
+.v-btn:deep() {
+	.v-btn__underlay,
+	.v-btn__overlay {
+		display: none;
+	}
+}
+
+.sy-download-btn:focus-visible {
+	outline: 0;
+}
+
+.sy-download-btn:focus-visible::after {
+	opacity: 1;
 }
 
 .outlined-style {
