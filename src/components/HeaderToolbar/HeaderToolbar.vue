@@ -304,7 +304,7 @@
 							v-for="(item, index) in props.leftMenu"
 							:key="index"
 							:value="index"
-							:class="{ active: activeIndex === index && selectedSubItemText != 'Professionnel de santé', 'menu-open': index === 1 && menuOpen }"
+							:class="{ active: activeIndex === index && selectedSubItemText !== 'Professionnel de santé', 'menu-open': index === 1 && menuOpen }"
 							:aria-current="activeIndex === index ? 'page' : undefined"
 						>
 							<component
