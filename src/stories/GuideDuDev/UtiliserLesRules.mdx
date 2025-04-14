@@ -40,6 +40,7 @@ interface ValidationOptions {
   customRules?: ValidationRule[]; // Règles personnalisées
   warningRules?: ValidationRule[]; // Règles d'avertissement
   successRules?: ValidationRule[]; // Règles de succès
+  disableErrorHandling?: boolean; // Désactiver complètement la gestion des erreurs
 }
 `}/>
 
@@ -71,6 +72,7 @@ interface RuleOptions {
   ignoreSpace?: boolean;   // Ignorer les espaces
   isWarning?: boolean;     // Traiter comme un avertissement
   validate?: (value: any) => boolean | string; // Validation personnalisée
+  date?: string | Date;    // Date de référence pour les règles de dates
 }
 `}/>
 
@@ -305,14 +307,34 @@ Dans cet exemple :
 
 ## Règles de validation disponibles
 
-- **required** : Vérifie qu'un champ est rempli
-- **email** : Valide le format d'une adresse email
-- **minLength** : Vérifie une longueur minimale
-- **maxLength** : Vérifie une longueur maximale
-- **min** : Vérifie une valeur minimale (nombre)
-- **max** : Vérifie une valeur maximale (nombre)
-- **pattern** : Valide avec une expression régulière
-- **custom** : Validation personnalisée via une fonction
+### Règles basiques
+- `required` : Vérifie qu'une valeur est présente
+- `min` : Vérifie qu'une valeur numérique est supérieure ou égale à un minimum
+- `max` : Vérifie qu'une valeur numérique est inférieure ou égale à un maximum
+- `minLength` : Vérifie qu'une chaîne a une longueur minimale
+- `maxLength` : Vérifie qu'une chaîne a une longueur maximale
+- `exactLength` : Vérifie qu'une chaîne a une longueur exacte
+- `email` : Vérifie qu'une chaîne est un email valide
+- `matchPattern` : Vérifie qu'une chaîne correspond à une expression régulière
+
+### Règles de validation de dates
+- `notWeekend` : Vérifie qu'une date n'est pas un jour de week-end
+- `notBeforeToday` : Vérifie qu'une date n'est pas antérieure à aujourd'hui
+- `notAfterToday` : Vérifie qu'une date n'est pas postérieure à aujourd'hui
+- `notBeforeDate` : Vérifie qu'une date n'est pas antérieure à une date de référence
+- `notAfterDate` : Vérifie qu'une date n'est pas postérieure à une date de référence
+- `dateExact` : Vérifie qu'une date est exactement égale à une date de référence
+
+### Règle personnalisée
+- `custom` : Permet de définir une validation personnalisée via la fonction `validate`
+
+## Méthodes disponibles
+
+Le composable `useValidation` retourne plusieurs méthodes utiles :
+
+- `validateField` : Valide une valeur selon les règles définies
+- `validateOnSubmit` : Vérifie si le formulaire peut être soumis (retourne `true` si aucune erreur)
+- `clearValidation` : Réinitialise l'état de validation (efface erreurs, avertissements et succès)
 
 ## Bonnes pratiques
 

@@ -290,7 +290,7 @@ describe('DialogBox', () => {
 
 			const modal = wrapper.getComponent(VCard)
 
-			const cancelBtn = modal.find('.vd-dialog-box-actions-ctn button')
+			const cancelBtn = modal.find('.sy-dialog-box-actions-ctn button')
 			await cancelBtn.trigger('click')
 
 			expect(wrapper.emitted('cancel')).toBeTruthy()

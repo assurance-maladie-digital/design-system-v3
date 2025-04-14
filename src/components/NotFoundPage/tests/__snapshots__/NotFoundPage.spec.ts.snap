@@ -1,19 +1,68 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
-"<div data-v-fb0b02fd="" data-v-8f2b5bad="" data-v-c9c5b952="" class="py-10 px-14 vd-page-container d-flex justify-center">
-  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 800px;">
-    <div data-v-8f2b5bad="" class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated pa-6 pa-sm-16">
+<div class="
+  d-flex
+  justify-center
+  px-14
+  py-10
+  vd-page-container
+">
+  <div
+    class="
+      bg-transparent
+      v-sheet
+      v-theme--light
+    "
+    style="width: 800px;"
+  >
+    <div class="
+      elevation-0
+      pa-6
+      pa-sm-16
+      v-card
+      v-card--density-default
+      v-card--variant-elevated
+      v-theme--light
+    ">
       <!---->
       <div class="v-card__loader">
-        <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+        <div
+          aria-hidden="true"
+          aria-valuemax="100"
+          aria-valuemin="0"
+          class="
+            v-locale--is-ltr
+            v-progress-linear
+            v-theme--light
+          "
+          role="progressbar"
+          style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+        >
           <!---->
-          <div class="v-progress-linear__background" style="opacity: NaN;"></div>
-          <div class="v-progress-linear__buffer" style="opacity: NaN; width: 0%;"></div>
-          <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+          <div
+            class="v-progress-linear__background"
+            style="opacity: NaN;"
+          ></div>
+          <div
+            class="v-progress-linear__buffer"
+            style="opacity: NaN; width: 0%;"
+          ></div>
+          <transition-stub
+            appear="false"
+            css="true"
+            name="fade-transition"
+            persisted="false"
+          >
             <div class="v-progress-linear__indeterminate">
-              <div class="v-progress-linear__indeterminate long"></div>
-              <div class="v-progress-linear__indeterminate short"></div>
+              <div class="
+                long
+                v-progress-linear__indeterminate
+              "></div>
+              <div class="
+                short
+                v-progress-linear__indeterminate
+              "></div>
             </div>
           </transition-stub>
           <!---->
@@ -21,37 +70,136 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
       </div>
       <!---->
       <!---->
-      <div data-v-8f2b5bad="" class="v-row max-width-none">
-        <div data-v-8f2b5bad="" class="v-col-sm-6 v-col-12 order-last order-sm-first text-center text-sm-left d-flex flex-column justify-center align-sm-start">
-          <div data-v-8f2b5bad="" class="vd-code text-primary mb-4"><span data-v-8f2b5bad="" class="d-sr-only">Code d'erreur&nbsp;: </span> 404</div>
-          <h2 data-v-8f2b5bad="" class="mb-2 font-weight-bold text-h5 mb-4">Page non trouvée</h2>
-          <p data-v-8f2b5bad="">Cette page n’existe pas ou a été déplacée.</p>
-          <p data-v-c9c5b952="" class="mt-4">Votre identifiant de support est <b data-v-c9c5b952="">1234 5678 9012 3456 789</b> . </p>
-          <!--v-if-->
+      <div class="
+        max-width-none
+        v-row
+      ">
+        <div class="
+          align-sm-start
+          d-flex
+          flex-column
+          justify-center
+          order-last
+          order-sm-first
+          text-center
+          text-sm-left
+          v-col-12
+          v-col-sm-6
+        ">
+          <div class="
+            mb-4
+            sy-code
+            text-primary
+          ">
+            <span class="d-sr-only">
+              Code d'erreur&nbsp;:
+            </span>
+            404
+          </div>
+          <h2 class="
+            font-weight-bold
+            mb-2
+            mb-4
+            text-h5
+          ">
+            Page non trouvée
+          </h2>
+          <p>
+            Cette page n’existe pas ou a été déplacée.
+          </p>
+          <p class="mt-4">
+            Votre identifiant de support est
+            <b>
+              1234 5678 9012 3456 789
+            </b>
+            .
+          </p>
+          <!-- v-if -->
         </div>
-        <div data-v-8f2b5bad="" class="v-col-sm-6 v-col-12 d-flex align-center justify-center"><img data-v-c9c5b952="" src="/src/components/NotFoundPage/assets/not-found.svg" alt="Page non trouvée"></div>
+        <div class="
+          align-center
+          d-flex
+          justify-center
+          v-col-12
+          v-col-sm-6
+        ">
+          <img
+            alt="Page non trouvée"
+            src="/src/components/NotFoundPage/assets/not-found.svg"
+          />
+        </div>
       </div>
       <!---->
-      <!----><span class="v-card__underlay"></span>
+      <!---->
+      <span class="v-card__underlay"></span>
     </div>
   </div>
-</div>"
+</div>
 `;
 
 exports[`NotFoundPage > renders correctly 1`] = `
-"<div data-v-fb0b02fd="" data-v-8f2b5bad="" data-v-c9c5b952="" class="py-10 px-14 vd-page-container d-flex justify-center">
-  <div data-v-fb0b02fd="" class="v-sheet v-theme--light bg-transparent" style="width: 800px;">
-    <div data-v-8f2b5bad="" class="v-card v-theme--light v-card--density-default elevation-0 v-card--variant-elevated pa-6 pa-sm-16">
+<div class="
+  d-flex
+  justify-center
+  px-14
+  py-10
+  vd-page-container
+">
+  <div
+    class="
+      bg-transparent
+      v-sheet
+      v-theme--light
+    "
+    style="width: 800px;"
+  >
+    <div class="
+      elevation-0
+      pa-6
+      pa-sm-16
+      v-card
+      v-card--density-default
+      v-card--variant-elevated
+      v-theme--light
+    ">
       <!---->
       <div class="v-card__loader">
-        <div class="v-progress-linear v-theme--light v-locale--is-ltr" style="top: 0px; height: 0px; --v-progress-linear-height: 2px;" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100">
+        <div
+          aria-hidden="true"
+          aria-valuemax="100"
+          aria-valuemin="0"
+          class="
+            v-locale--is-ltr
+            v-progress-linear
+            v-theme--light
+          "
+          role="progressbar"
+          style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+        >
           <!---->
-          <div class="v-progress-linear__background" style="opacity: NaN;"></div>
-          <div class="v-progress-linear__buffer" style="opacity: NaN; width: 0%;"></div>
-          <transition-stub name="fade-transition" appear="false" persisted="false" css="true">
+          <div
+            class="v-progress-linear__background"
+            style="opacity: NaN;"
+          ></div>
+          <div
+            class="v-progress-linear__buffer"
+            style="opacity: NaN; width: 0%;"
+          ></div>
+          <transition-stub
+            appear="false"
+            css="true"
+            name="fade-transition"
+            persisted="false"
+          >
             <div class="v-progress-linear__indeterminate">
-              <div class="v-progress-linear__indeterminate long"></div>
-              <div class="v-progress-linear__indeterminate short"></div>
+              <div class="
+                long
+                v-progress-linear__indeterminate
+              "></div>
+              <div class="
+                short
+                v-progress-linear__indeterminate
+              "></div>
             </div>
           </transition-stub>
           <!---->
@@ -59,18 +207,62 @@ exports[`NotFoundPage > renders correctly 1`] = `
       </div>
       <!---->
       <!---->
-      <div data-v-8f2b5bad="" class="v-row max-width-none">
-        <div data-v-8f2b5bad="" class="v-col-sm-6 v-col-12 order-last order-sm-first text-center text-sm-left d-flex flex-column justify-center align-sm-start">
-          <div data-v-8f2b5bad="" class="vd-code text-primary mb-4"><span data-v-8f2b5bad="" class="d-sr-only">Code d'erreur&nbsp;: </span> 404</div>
-          <h2 data-v-8f2b5bad="" class="mb-2 font-weight-bold text-h5 mb-4">Page non trouvée</h2>
-          <p data-v-8f2b5bad="">Cette page n’existe pas ou a été déplacée.</p>
-          <!--v-if-->
+      <div class="
+        max-width-none
+        v-row
+      ">
+        <div class="
+          align-sm-start
+          d-flex
+          flex-column
+          justify-center
+          order-last
+          order-sm-first
+          text-center
+          text-sm-left
+          v-col-12
+          v-col-sm-6
+        ">
+          <div class="
+            mb-4
+            sy-code
+            text-primary
+          ">
+            <span class="d-sr-only">
+              Code d'erreur&nbsp;:
+            </span>
+            404
+          </div>
+          <h2 class="
+            font-weight-bold
+            mb-2
+            mb-4
+            text-h5
+          ">
+            Page non trouvée
+          </h2>
+          <p>
+            Cette page n’existe pas ou a été déplacée.
+          </p>
+          <!-- v-if -->
         </div>
-        <div data-v-8f2b5bad="" class="v-col-sm-6 v-col-12 d-flex align-center justify-center"><img data-v-c9c5b952="" src="/src/components/NotFoundPage/assets/not-found.svg" alt="Page non trouvée"></div>
+        <div class="
+          align-center
+          d-flex
+          justify-center
+          v-col-12
+          v-col-sm-6
+        ">
+          <img
+            alt="Page non trouvée"
+            src="/src/components/NotFoundPage/assets/not-found.svg"
+          />
+        </div>
       </div>
       <!---->
-      <!----><span class="v-card__underlay"></span>
+      <!---->
+      <span class="v-card__underlay"></span>
     </div>
   </div>
-</div>"
+</div>
 `;

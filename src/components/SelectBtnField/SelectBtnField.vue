@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { mdiCheck } from '@mdi/js'
-	import { ref, computed, watch } from 'vue'
+	import { ref, computed, onMounted, watch } from 'vue'
 	import { useTheme } from 'vuetify'
 	import { config } from './config'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
@@ -33,7 +33,14 @@
 	const emits = defineEmits(['update:modelValue', 'update:error', 'update:error-messages'])
 	const checkIcon = ref(mdiCheck)
 	const internalValue = ref<SelectBtnValue>(null)
-	const darktheme = ref<boolean>(useTheme().current.value.dark)
+	const darktheme = ref<boolean>(false)
+
+	onMounted(() => {
+		const theme = useTheme().current
+		if (theme && theme.value) {
+			darktheme.value = theme.value.dark
+		}
+	})
 
 	watch(() => props.modelValue, (value) => {
 		if (value === null && props.multiple) {
@@ -113,7 +120,6 @@
 		class="select-btn-field"
 	>
 		<VBtnToggle
-			v-bind="options.btnToggle"
 			tag="ul"
 			:model-value="internalValue"
 			:multiple="multiple"
@@ -138,6 +144,8 @@
 						'text-error': error && !isSelected(item.value),
 						'justify-start': !isSelected(item.value),
 						'justify-space-between': isSelected(item.value),
+						'mr-2': inline,
+						'mr-0': !inline,
 					}"
 					:label="isSelected(item.value) ? 'Sélectionné' : ''"
 					@click="toggleItem(item)"
@@ -194,18 +202,6 @@
 
 	.v-btn:not(:first-child) {
 		border-inline-start: inherit;
-	}
-
-	.v-btn:last-child {
-		border-end-end-radius: 4px;
-		border-start-end-radius: 4px;
-		margin-right: 0;
-	}
-
-	.v-btn:first-child {
-		border-start-start-radius: 4px;
-		border-end-start-radius: 4px;
-		margin-right: 8px;
 	}
 }
 

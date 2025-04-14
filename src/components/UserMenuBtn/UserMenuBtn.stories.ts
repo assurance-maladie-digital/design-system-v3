@@ -135,7 +135,7 @@ export const Default: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :menuItems="menuItems"
+  :menu-items="menuItems"
 />
 </template>`,
 			},
@@ -188,7 +188,7 @@ export const HideLogoutButton: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :menuItems="menuItems"
+  :menu-items="menuItems"
   :hide-logout-btn="hideLogOut"
 />
 </template>`,
@@ -237,7 +237,7 @@ export const HideUserIcon: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :menuItems="menuItems"
+  :menu-items="menuItems"
   :hide-user-icon="hideUserIcon"
 />
 </template>`,
@@ -286,7 +286,7 @@ export const MobileVersion: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :menuItems="menuItems"
+  :menu-items="menuItems"
   :is-mobile-view="isMobileVersion"
 />
 </template>`,
@@ -335,7 +335,7 @@ export const CustomFullName: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :menuItems="menuItems"
+  :menu-items="menuItems"
   :fullName="fullName"
 />
 </template>`,
@@ -384,7 +384,7 @@ export const CustomAdditionalInformation: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :menuItems="menuItems"
+  :menu-items="menuItems"
   :additionalInformation="additionalInformation"
 />
 </template>`,
@@ -433,7 +433,7 @@ export const WithVuetifyOptions: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :menuItems="menuItems"
+  :menu-items="menuItems"
   :vuetify-options="vuetifyOptions"
 />
 </template>`,
@@ -494,7 +494,7 @@ export const LogoutEvent: Story = {
 				code: `<template>
  <UserMenuBtn
   v-model="selected"
-  :menuItems="menuItems"
+  :menu-items="menuItems"
   @logout="handleLogout"
 />
 </template>`,

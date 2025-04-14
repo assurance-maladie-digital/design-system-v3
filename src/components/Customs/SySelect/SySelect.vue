@@ -56,6 +56,14 @@
 			type: Boolean,
 			default: false,
 		},
+		bgColor: {
+			type: String,
+			default: undefined,
+		},
+		readOnly: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -68,6 +76,7 @@
 	const labelRef = ref<HTMLElement | null>(null)
 
 	const toggleMenu = () => {
+		if (props.readOnly) return
 		isOpen.value = !isOpen.value
 	}
 	const closeList = () => {
@@ -177,7 +186,6 @@
 			:title="labelWithAsterisk"
 			color="primary"
 			tabindex="0"
-			readonly
 			:disabled="disabled"
 			:label="labelWithAsterisk"
 			:aria-label="labelWithAsterisk"
@@ -185,6 +193,8 @@
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
+			:bg-color="props.bgColor"
+			:readonly="props.readOnly"
 			class="sy-select"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"
@@ -211,6 +221,7 @@
 			v-if="isOpen"
 			class="v-list"
 			:style="`min-width: ${input?.$el.offsetWidth}px`"
+			bg-color="white"
 			@keydown.esc.prevent="isOpen = false"
 		>
 			<VListItem
@@ -253,7 +264,6 @@
 	position: absolute;
 	left: inherit !important;
 	margin-top: -22px;
-	background-color: white;
 	max-height: 300px;
 	padding: 0;
 	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);

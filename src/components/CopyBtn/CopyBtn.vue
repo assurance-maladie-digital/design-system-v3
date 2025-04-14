@@ -15,11 +15,11 @@
 		hideTooltip?: boolean
 		tooltipDuration?: number
 	}>(), {
-		ariaLabel: 'copy-btn',
+		ariaLabel: 'bouton de copie',
 		ariaOwns: 'copy-btn',
 		textToCopy: '',
 		hideTooltip: false,
-		tooltipDuration: 2500,
+		tooltipDuration: 5000,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -53,18 +53,18 @@
 <template>
 	<div
 		:id="props.ariaOwns"
-		class="vd-copy-btn"
+		class="sy-copy-btn"
 	>
-		<VMenu
-			v-bind="options.menu"
-			:id="props.ariaOwns"
+		<VTooltip
 			v-model="tooltip"
-			:disabled="props.hideTooltip"
-			transition="fade-transition"
+			location="right"
+			:open-on-click="true"
+			:open-on-hover="false"
+			:disabled="hideTooltip"
 		>
-			<template #activator="{ props: menuProps }">
+			<template #activator="{ props: tooltipProps }">
 				<VBtn
-					v-bind="{ ...menuProps, ...options.btn }"
+					v-bind="{...tooltipProps,...options.btn}"
 					:aria-label="props.ariaLabel"
 					:aria-owns="props.ariaOwns"
 					:data-test-id="props.ariaOwns"
@@ -77,23 +77,29 @@
 					</slot>
 				</VBtn>
 			</template>
-
-			<slot name="tooltip">
-				{{ locales.tooltip }}
-			</slot>
-		</VMenu>
+			<span
+				role="status"
+			><slot name="tooltip">{{ locales.tooltip }}</slot></span>
+		</VTooltip>
 	</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use '@/assets/tokens';
 
-.vd-copy-tooltip-menu {
-	padding: 6px 16px;
-	box-shadow: none;
-	margin-top: 2px;
-	background: rgb(84 88 89 / 95%);
-	color: white;
+.v-btn:deep() {
+	.v-btn__underlay,
+	.v-btn__overlay {
+		display: none;
+	}
+}
+
+.v-btn {
+	outline: 0;
+}
+
+.v-btn:focus-visible {
+	background: rgb(84 88 89 / 7%);
 }
 
 .v-btn--icon .v-icon {

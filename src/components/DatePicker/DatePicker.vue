@@ -28,14 +28,15 @@
 		customRules?: { type: string, options: any }[]
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
 		customWarningRules?: { type: string, options: any }[]
-		isDisabled?: boolean
+		disabled?: boolean
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
-		isReadOnly?: boolean
+		readOnly?: boolean
 		width?: string
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
+		bgColor?: string
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -50,14 +51,15 @@
 		displayPrependIcon: true,
 		customRules: () => [],
 		customWarningRules: () => [],
-		isDisabled: false,
+		disabled: false,
 		noIcon: false,
 		noCalendar: false,
 		isOutlined: true,
-		isReadOnly: false,
+		readOnly: false,
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
+		bgColor: undefined,
 	})
 
 	const emit = defineEmits<{
@@ -388,7 +390,7 @@
 	}
 
 	const showDatePicker = () => {
-		if (props.isDisabled || props.isReadOnly) return
+		if (props.disabled || props.readOnly) return
 
 		isDatePickerVisible.value = true
 
@@ -529,8 +531,8 @@
 				:required="props.required"
 				:custom-rules="props.customRules"
 				:custom-warning-rules="props.customWarningRules"
-				:is-disabled="props.isDisabled"
-				:is-read-only="props.isReadOnly"
+				:disabled="props.disabled"
+				:read-only="props.readOnly"
 				:is-outlined="props.isOutlined"
 				:display-icon="props.displayIcon"
 				:display-append-icon="props.displayAppendIcon"
@@ -538,6 +540,7 @@
 				:no-icon="props.noIcon"
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
+				:bg-color="props.bgColor"
 				title="Date text input"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -552,14 +555,15 @@
 				:error-messages="errorMessages"
 				:warning-messages="warningMessages"
 				:success-messages="props.showSuccessMessages ? successMessages : []"
-				:is-disabled="props.isDisabled"
-				:is-read-only="true"
+				:disabled="props.disabled"
+				:read-only="true"
 				:label="props.placeholder"
 				:no-icon="props.noIcon"
 				:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 				:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
 				color="primary"
 				:show-success-messages="props.showSuccessMessages"
+				:bg-color="props.bgColor"
 				is-clearable
 				title="Date Picker"
 				@focus="openDatePicker"
@@ -577,6 +581,7 @@
 				location="bottom"
 				:close-on-content-click="false"
 				:open-on-click="false"
+				scroll-strategy="none"
 				transition="fade-transition"
 				attach="body"
 				:offset="[-20, 5]"

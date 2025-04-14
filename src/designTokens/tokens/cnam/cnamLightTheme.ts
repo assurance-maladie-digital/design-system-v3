@@ -88,6 +88,4 @@ export const cnamLightTheme = {
 	iconOnDark: cnamSemanticTokens.colors.icon.onDark,
 	iconDisabled: cnamSemanticTokens.colors.icon.disabled,
 	iconDisabledOnDark: cnamSemanticTokens.colors.icon.disabledOnDark,
-	transparentBlue18: cnamColorsTokens.blue.base,
-	transparentBlue8: cnamColorsTokens.transparentBlue.transparentBlue8,
 }

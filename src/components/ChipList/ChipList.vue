@@ -177,6 +177,7 @@
 						<VIcon
 							v-bind="options.icon"
 							:icon="deleteIcon"
+							:color="item.state"
 						/>
 					</VBtn>
 				</div>

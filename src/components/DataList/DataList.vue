@@ -89,7 +89,7 @@
 	<div
 		:aria-label="label"
 		:style="widthStyles"
-		class="vd-data-list"
+		class="sy-data-list"
 	>
 		<VFadeTransition mode="out-in">
 			<DataListLoading
@@ -124,7 +124,7 @@
 						:placeholder="placeholder"
 						:vuetify-options="item.options"
 						:class="getItemClass(index, item.class)"
-						class="vd-data-list-item text-body-1"
+						class="sy-data-list-item text-body-1"
 						@click:action="emit('click:item-action', index)"
 					/>
 				</ul>

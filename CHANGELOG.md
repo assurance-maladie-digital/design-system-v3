@@ -1,3 +1,39 @@
+## v0.0.14-alpha (14-04-2025)
+
+### Composants
+
+- DownloadBtn: fix accessibility [`#522`](https://github.com/assurance-maladie-digital/design-system-v3/pull/522)
+- HeaderToolbar: improve display [`#519`](https://github.com/assurance-maladie-digital/design-system-v3/pull/519)
+- Remove old `vd` classes prefix and replace with `sy` [`#532`](https://github.com/assurance-maladie-digital/design-system-v3/pull/532)
+- DatePicker: fix accessibility [`#529`](https://github.com/assurance-maladie-digital/design-system-v3/pull/529)
+- CopyBtn: fix accessibility [`#527`](https://github.com/assurance-maladie-digital/design-system-v3/pull/527)
+- BackBtn: fix accessibility [`#521`](https://github.com/assurance-maladie-digital/design-system-v3/pull/521)
+- FranceConnectBtn: fix accessibility [`#520`](https://github.com/assurance-maladie-digital/design-system-v3/pull/520)
+- ChipList: fix clear icon color [`#517`](https://github.com/assurance-maladie-digital/design-system-v3/pull/517)
+- SySelect: fix transparent background color [`#482`](https://github.com/assurance-maladie-digital/design-system-v3/pull/482)
+- SelectBtnField: fix margins [`#490`](https://github.com/assurance-maladie-digital/design-system-v3/pull/490)
+- NirField: add null support [`#501`](https://github.com/assurance-maladie-digital/design-system-v3/pull/501)
+- NirField: fix width issue [`#489`](https://github.com/assurance-maladie-digital/design-system-v3/pull/489)
+- Improve vitest tests [`#525`](https://github.com/assurance-maladie-digital/design-system-v3/pull/525)
+- Update dependencies for `marked` and `semantic-release` [`#531`](https://github.com/assurance-maladie-digital/design-system-v3/pull/531)
+- Fix scroll bug with `VMenu` [`#513`](https://github.com/assurance-maladie-digital/design-system-v3/pull/513)
+- Fix types and interaction with internal `VMenu` [`#512`](https://github.com/assurance-maladie-digital/design-system-v3/pull/512)
+- Fix types export [`#499`](https://github.com/assurance-maladie-digital/design-system-v3/pull/499)
+- Fix readOnly attribute on some components [`#496`](https://github.com/assurance-maladie-digital/design-system-v3/pull/496)
+- Fix bgColor attribute on some components [`#497`](https://github.com/assurance-maladie-digital/design-system-v3/pull/497)
+- Fix linter issue on windows [`#488`](https://github.com/assurance-maladie-digital/design-system-v3/pull/488)
+- Add forgotten hyphenations [`#485`](https://github.com/assurance-maladie-digital/design-system-v3/pull/485)
+
+### Documentation
+
+- Add Portail Agent colors + refacto color page [`#516`](https://github.com/assurance-maladie-digital/design-system-v3/pull/516)
+- FilterInline: improve stories [`#518`](https://github.com/assurance-maladie-digital/design-system-v3/pull/518)
+- SearchListField: fix modelValue [`#514`](https://github.com/assurance-maladie-digital/design-system-v3/pull/514)
+- PasswordField: fix title [`#500`](https://github.com/assurance-maladie-digital/design-system-v3/pull/500)
+- improve useValidation documentation [`#486`](https://github.com/assurance-maladie-digital/design-system-v3/pull/486)
+- UserMenuBtn: fix documentation [`#483`](https://github.com/assurance-maladie-digital/design-system-v3/pull/483)
+- NirField: fix import statement [`7228851`](https://github.com/assurance-maladie-digital/design-system-v3/commit/7228851ecd89bebf7804f7a385ec474b7987cf22)
+
 ## v0.0.13-alpha (31-03-2025)
 
 ### Composants

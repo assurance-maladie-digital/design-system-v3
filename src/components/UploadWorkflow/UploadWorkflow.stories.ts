@@ -275,7 +275,7 @@ export const Default: Story = {
 				code: `<template>
 	<UploadWorkflow
 		v-model="files"
-		:uploadList="uploadList"
+		:upload-list="uploadList"
 	/>
 </template>`,
 			},
@@ -332,7 +332,7 @@ export const OptionalDocument: Story = {
 				code: `<template>
 	<UploadWorkflow
 		v-model="files"
-		:uploadList="uploadList"
+		:upload-list="uploadList"
 	/>
 </template>`,
 			},
@@ -389,7 +389,7 @@ export const WithPreviewStep: Story = {
 				code: `<template>
 	<UploadWorkflow
 		v-model="files"
-		:uploadList="uploadList"
+		:upload-list="uploadList"
 		:showFilePreview="true"
 	/>
 </template>`,
@@ -437,7 +437,7 @@ export const OneFile: Story = {
 				code: `<template>
 	<UploadWorkflow
 		v-model="files"
-		:uploadList="uploadList"
+		:upload-list="uploadList"
 	/>
 </template>`,
 			},
@@ -514,7 +514,7 @@ export const Events: Story = {
 			<div>
 				<UploadWorkflow
 					v-model="args.modelValue"
-					:uploadList="args.uploadList"
+					:upload-list="args.uploadList"
 					:vuetify-options="options"
 					@error="[showError, args.onError]"
 					@update:modelValue="[valueUpdated, args['onUpdate:modelValue']]"
@@ -546,7 +546,7 @@ export const Events: Story = {
 				code: `<template>
 	<UploadWorkflow
 		v-model="files"
-		:uploadList="uploadList"
+		:upload-list="uploadList"
 		vuetify-options="options"
 		@onError="showError"
 		@onUpdate:modelValue="valueUpdated"
@@ -628,7 +628,7 @@ export const Slots: Story = {
 			template: `
 			<UploadWorkflow
 				v-model="args.modelValue"
-				:uploadList="args.uploadList"
+				:upload-list="args.uploadList"
 			>
 				<template #title>
 					<h2>Title slot</h2>
@@ -653,7 +653,7 @@ export const Slots: Story = {
 				code: `<template>
 	<UploadWorkflow
 		v-model="files"
-		:uploadList="uploadList"
+		:upload-list="uploadList"
 	>
 		<template #title>
 			<h2>Title slot</h2>
@@ -729,7 +729,7 @@ export const Customization: Story = {
 				code: `<template>
 	<UploadWorkflow
 		v-model="files"
-		:uploadList="uploadList"
+		:upload-list="uploadList"
 		:vuetify-options="options"
 	/>
 </template>`,
@@ -814,7 +814,7 @@ export const ManuallySetFile: Story = {
 				code: `<template>
 	<UploadWorkflow
 		v-model="files"
-		:uploadList="uploadList"
+		:upload-list="uploadList"
 	/>
 </template>`,
 			},
@@ -904,7 +904,7 @@ export const ManuallySetStates: Story = {
 				code: `<template>
 	<UploadWorkflow
 		v-model="files"
-		:uploadList="uploadList"
+		:upload-list="uploadList"
 	/>
 </template>`,
 			},

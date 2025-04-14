@@ -2,14 +2,12 @@
 	import { ref, watch, computed, nextTick, toRef } from 'vue'
 	import { vMaska } from 'maska/vue'
 	import { checkNIR, isNIRKeyValid } from './nirValidation'
-	// import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
-	import { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 	import { locales } from './locales'
-	// import defaultOptions from './config'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
-	const props = withDefaults(defineProps<CustomizableOptions & {
-		modelValue?: string | undefined
+
+	const props = withDefaults(defineProps<{
+		modelValue?: string | undefined | null
 		label?: string
 		numberLabel?: string
 		keyLabel?: string
@@ -28,7 +26,7 @@
 		showSuccessMessages?: boolean
 		width?: string
 		bgColor?: string
-		isDisabled?: boolean
+		disabled?: boolean
 		density?: 'default' | 'comfortable' | 'compact'
 		hideDetails?: boolean | 'auto'
 		hideSpinButtons?: boolean
@@ -61,7 +59,7 @@
 		showSuccessMessages: true,
 		width: '100%',
 		bgColor: undefined,
-		isDisabled: false,
+		disabled: false,
 		density: 'default',
 		hideDetails: false,
 		hideSpinButtons: false,
@@ -250,7 +248,7 @@
 
 	// Synchronisation avec modelValue
 	watch(modelValueRef, (newValue) => {
-		if (newValue === undefined) {
+		if (newValue === undefined || newValue === null) {
 			numberValue.value = ''
 			keyValue.value = ''
 			return
@@ -267,7 +265,7 @@
 			numberValue.value = number
 			keyValue.value = key
 		}
-		if (newValue.length === 13) {
+		if (newValue.length <= 13) {
 			const number = newValue
 			numberValue.value = number
 			keyValue.value = ''
@@ -413,7 +411,7 @@
 				:messages="hasNumberErrors ? numberValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess && props.showSuccessMessages ? numberValidation.successes.value : []))"
 				:has-error="hasNumberErrors"
 				:required="required"
-				:is-disabled="isDisabled"
+				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
@@ -455,7 +453,7 @@
 				:hint="props.hint || locales.keyHint"
 				:messages="hasKeyErrors ? keyValidation.errors.value : (hasKeyWarning ? keyValidation.warnings.value : (hasKeySuccess && props.showSuccessMessages ? keyValidation.successes.value : []))"
 				:has-error="hasKeyErrors"
-				:is-disabled="isDisabled"
+				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
@@ -480,7 +478,7 @@
 .nir-field {
 	display: flex;
 	gap: 16px;
-	width: v-bind('props.width');
+	width: calc(v-bind('props.width') - 16px);
 	align-items: flex-start;
 }
 

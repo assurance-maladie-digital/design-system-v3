@@ -117,7 +117,7 @@ describe('FilePreview', async () => {
 			file: null,
 		})
 
-		expect(wrapper.html()).toMatchInlineSnapshot(`"<!--v-if-->"`)
+		expect(wrapper.html()).toMatchInlineSnapshot(`<!-- v-if -->`)
 
 		wrapper.unmount()
 	})

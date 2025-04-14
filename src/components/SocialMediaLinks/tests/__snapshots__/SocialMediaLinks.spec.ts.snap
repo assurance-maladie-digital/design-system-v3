@@ -1,24 +1,118 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`SocialMediaLinks > renders correctly with default props 1`] = `
-"<div data-v-9d3df26f="" class="d-flex flex-column"><span data-v-9d3df26f="" class="vd-social-media-links-label text-subtitle-2 text--primary">Suivez-nous :</span>
-  <ul data-v-9d3df26f="" class="vd-social-media-links-content d-flex max-width-none"></ul>
-</div>"
+<div class="
+  d-flex
+  flex-column
+">
+  <span class="
+    text--primary
+    text-subtitle-2
+    vd-social-media-links-label
+  ">
+    Suivez-nous :
+  </span>
+  <ul class="
+    d-flex
+    max-width-none
+    vd-social-media-links-content
+  "></ul>
+</div>
 `;
 
 exports[`SocialMediaLinks > renders correctly with provided links 1`] = `
-"<div data-v-9d3df26f="" class="d-flex flex-column"><span data-v-9d3df26f="" class="vd-social-media-links-label text-subtitle-2 text--primary">Suivez-nous :</span>
-  <ul data-v-9d3df26f="" class="vd-social-media-links-content d-flex max-width-none">
-    <li data-v-9d3df26f=""><a data-v-9d3df26f="" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-default v-btn--variant-text" href="https://twitter.com" id="social-btn-0" target="_blank" rel="noopener noreferrer" aria-label="Lien vers Twitter"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><i data-v-9d3df26f="" class="mdi-twitter mdi v-icon notranslate v-theme--light vd-social-media-links-icon" style="font-size: 30px; height: 30px; width: 30px;" aria-hidden="true"></i></span>
-        <!---->
-        <!---->
-      </a></li>
-    <li data-v-9d3df26f=""><a data-v-9d3df26f="" class="v-btn v-btn--icon v-theme--light v-btn--density-default v-btn--size-default v-btn--variant-text" href="https://facebook.com" id="social-btn-1" target="_blank" rel="noopener noreferrer" aria-label="Lien vers Facebook"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-        <!----><span class="v-btn__content" data-no-activator=""><i data-v-9d3df26f="" class="mdi-facebook mdi v-icon notranslate v-theme--light vd-social-media-links-icon" style="font-size: 30px; height: 30px; width: 30px;" aria-hidden="true"></i></span>
-        <!---->
-        <!---->
-      </a></li>
+<div class="
+  d-flex
+  flex-column
+">
+  <span class="
+    text--primary
+    text-subtitle-2
+    vd-social-media-links-label
+  ">
+    Suivez-nous :
+  </span>
+  <ul class="
+    d-flex
+    max-width-none
+    vd-social-media-links-content
+  ">
+    <li>
+      <a
+        aria-label="Lien vers Twitter"
+        class="
+          v-btn
+          v-btn--density-default
+          v-btn--icon
+          v-btn--size-default
+          v-btn--variant-text
+          v-theme--light
+        "
+        href="https://twitter.com"
+        id="social-btn-0"
+        rel="noopener noreferrer"
+        target="_blank"
+      ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+        
+      <!----><span
+        class="v-btn__content"
+        data-no-activator=""
+      ><i
+        aria-hidden="true"
+        class="
+          mdi
+          mdi-twitter
+          notranslate
+          v-icon
+          v-theme--light
+          vd-social-media-links-icon
+        "
+        style="font-size: 30px; height: 30px; width: 30px;"
+      ></i></span>
+        
+      <!---->
+        
+      <!---->
+      </a>
+    </li>
+    <li>
+      <a
+        aria-label="Lien vers Facebook"
+        class="
+          v-btn
+          v-btn--density-default
+          v-btn--icon
+          v-btn--size-default
+          v-btn--variant-text
+          v-theme--light
+        "
+        href="https://facebook.com"
+        id="social-btn-1"
+        rel="noopener noreferrer"
+        target="_blank"
+      ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+        
+      <!----><span
+        class="v-btn__content"
+        data-no-activator=""
+      ><i
+        aria-hidden="true"
+        class="
+          mdi
+          mdi-facebook
+          notranslate
+          v-icon
+          v-theme--light
+          vd-social-media-links-icon
+        "
+        style="font-size: 30px; height: 30px; width: 30px;"
+      ></i></span>
+        
+      <!---->
+        
+      <!---->
+      </a>
+    </li>
   </ul>
-</div>"
+</div>
 `;

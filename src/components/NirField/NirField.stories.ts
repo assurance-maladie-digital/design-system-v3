@@ -165,7 +165,7 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
-		isDisabled: {
+		disabled: {
 			description: 'Indique si le champ est désactivé.',
 			control: 'boolean',
 			default: false,
@@ -362,7 +362,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField  from '@cnamts/synapse'
+     import { NirField } from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -477,7 +477,7 @@ export const WithoutKey: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField  from '@cnamts/synapse'
+     import { NirField } from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -514,7 +514,7 @@ export const WithSuccessMessages: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField  from '@cnamts/synapse'
+     import { NirField } from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -656,7 +656,7 @@ export const CustomRules: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField  from '@cnamts/synapse'
+     import { NirField } from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -704,7 +704,7 @@ L'infobulle est positionnée avant le champ et s'affiche au survol de l'icône d
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField  from '@cnamts/synapse'
+     import { NirField } from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')
@@ -752,7 +752,7 @@ L'infobulle est positionnée après le champ et s'affiche au survol de l'icône 
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import NirField  from '@cnamts/synapse'
+     import { NirField } from '@cnamts/synapse'
      import { ref } from 'vue'
      
      const value = ref('')

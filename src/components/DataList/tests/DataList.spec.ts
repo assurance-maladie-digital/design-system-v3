@@ -31,11 +31,11 @@ describe('DataList', () => {
 			},
 		})
 
-		const elExists = wrapper.find('.vd-data-list').exists()
+		const elExists = wrapper.find('.sy-data-list').exists()
 		expect(elExists).toBe(true)
 
 		// Check items exists
-		const itemsExists = wrapper.find('.vd-data-list-item').exists()
+		const itemsExists = wrapper.find('.sy-data-list-item').exists()
 		expect(itemsExists).toBe(true)
 
 		const titleExists = wrapper.find('h4').exists()
@@ -68,7 +68,7 @@ describe('DataList', () => {
 		})
 
 		// Check items does not exist
-		const itemsExists = wrapper.find('.vd-data-list-item').exists()
+		const itemsExists = wrapper.find('.sy-data-list-item').exists()
 		expect(itemsExists).toBe(false)
 	})
 
@@ -91,7 +91,7 @@ describe('DataList', () => {
 		})
 
 		// Check items does not exist
-		const itemsExists = wrapper.find('.vd-data-list-item .v-icon').exists()
+		const itemsExists = wrapper.find('.sy-data-list-item .v-icon').exists()
 		expect(itemsExists).toBe(true)
 	})
 
@@ -112,7 +112,7 @@ describe('DataList', () => {
 
 		// Check that items now exist
 		const itemsExists = wrapper
-			.find('.vd-data-list-item.custom-class')
+			.find('.sy-data-list-item.custom-class')
 			.exists()
 
 		expect(itemsExists).toBe(true)
@@ -132,7 +132,7 @@ describe('DataList', () => {
 		})
 
 		// Check that items does not exist
-		let itemsExists = wrapper.find('.vd-data-list-item').exists()
+		let itemsExists = wrapper.find('.sy-data-list-item').exists()
 		expect(itemsExists).toBe(false)
 
 		await wrapper.setProps({
@@ -140,7 +140,7 @@ describe('DataList', () => {
 		})
 
 		// Check that items now exist
-		itemsExists = wrapper.find('.vd-data-list-item').exists()
+		itemsExists = wrapper.find('.sy-data-list-item').exists()
 		expect(itemsExists).toBe(true)
 	})
 
@@ -159,7 +159,7 @@ describe('DataList', () => {
 			},
 		})
 
-		const itemWithAction = wrapper.findAll('.vd-data-list-item').at(1)
+		const itemWithAction = wrapper.findAll('.sy-data-list-item').at(1)
 		expect(itemWithAction?.exists()).toBe(true)
 	})
 
@@ -179,11 +179,11 @@ describe('DataList', () => {
 		})
 
 		// Find the second item element
-		const itemWithAction = wrapper.findAll('.vd-data-list-item').at(2)
+		const itemWithAction = wrapper.findAll('.sy-data-list-item').at(2)
 		expect(itemWithAction?.exists()).toBe(true)
 
 		const actionBtn = (itemWithAction as DOMWrapper<Element>).find(
-			'.vd-data-list-item-action-btn',
+			'.sy-data-list-item-action-btn',
 		)
 		expect(actionBtn.exists()).toBe(true)
 
