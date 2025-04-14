@@ -49,7 +49,7 @@
 </script>
 
 <template>
-	<li class="vd-data-list-item d-flex flex-wrap">
+	<li class="sy-data-list-item d-flex flex-wrap">
 		<slot name="icon">
 			<VIcon
 				v-if="icon"
@@ -59,16 +59,16 @@
 			</VIcon>
 		</slot>
 
-		<div class="vd-data-list-item-content">
-			<div :class="{ 'vd-row': row }">
+		<div class="sy-data-list-item-content">
+			<div :class="{ 'sy-row': row }">
 				<div
-					class="vd-data-list-item-label text-caption"
+					class="sy-data-list-item-label text-caption"
 					:style="{ color: labelColor }"
 				>
 					{{ label }}
 				</div>
 
-				<div class="vd-data-list-item-value">
+				<div class="sy-data-list-item-value">
 					<slot
 						name="value"
 						v-bind="{ itemValue }"
@@ -99,7 +99,7 @@
 				<VBtn
 					v-if="action"
 					v-bind="options.actionBtn"
-					class="vd-data-list-item-action-btn"
+					class="sy-data-list-item-action-btn"
 					@click="emits('click:action')"
 				>
 					{{ action }}
@@ -110,11 +110,11 @@
 </template>
 
 <style lang="scss" scoped>
-.vd-row {
+.sy-row {
 	display: flex;
 	flex-wrap: wrap;
 
-	.vd-data-list-item-label {
+	.sy-data-list-item-label {
 		align-self: center;
 
 		&::after {
@@ -124,7 +124,7 @@
 	}
 }
 
-.vd-data-list-item-action-btn.v-btn {
+.sy-data-list-item-action-btn.v-btn {
 	min-width: 0;
 	margin: 0 -1px;
 }

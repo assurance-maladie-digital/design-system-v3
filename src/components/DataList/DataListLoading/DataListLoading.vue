@@ -24,7 +24,7 @@
 <template>
 	<div
 		aria-hidden="true"
-		class="vd-data-list-loading"
+		class="sy-data-list-loading"
 	>
 		<HeaderLoading
 			v-if="heading"
@@ -38,7 +38,7 @@
 				v-for="index in itemsNumber"
 				:key="index + '-loading-item'"
 				:class="{ 'mb-4': index !== itemsNumber }"
-				class="vd-data-list-loading-item"
+				class="sy-data-list-loading-item"
 			>
 				<HeaderLoading
 					v-if="!row"

@@ -3,7 +3,7 @@
 exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
 <div
   aria-modal="true"
-  class="vd-dialog-box"
+  class="sy-dialog-box"
   modelvalue="true"
   persistent="false"
   retain-focus="false"
@@ -126,7 +126,7 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
       d-flex
       flex-wrap
       mt-6
-      vd-dialog-box-actions-ctn
+      sy-dialog-box-actions-ctn
     ">
       <div class="v-spacer"></div>
       <button
