@@ -38,7 +38,7 @@
 				>
 					<div
 						v-if="code"
-						class="vd-code text-primary mb-4"
+						class="sy-code text-primary mb-4"
 					>
 						<span class="d-sr-only">{{ codeErrorText }}</span>
 						{{ code }}
@@ -85,7 +85,7 @@
 </template>
 
 <style lang="scss" scoped>
-.vd-code {
+.sy-code {
 	font-size: 6rem;
 	line-height: 6rem;
 	font-weight: 400;

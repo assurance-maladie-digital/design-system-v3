@@ -60,7 +60,7 @@ exports[`ErrorPage > renders correctly with undefined route 1`] = `
       <!---->
       <div data-v-8f2b5bad="" class="v-row max-width-none">
         <div data-v-8f2b5bad="" class="v-col-sm-12 v-col-12 order-last order-sm-first text-center text-sm-left d-flex flex-column justify-center align-sm-start">
-          <div data-v-8f2b5bad="" class="vd-code text-primary mb-4"><span data-v-8f2b5bad="" class="d-sr-only">Code d'erreur&nbsp;: </span> 501</div>
+          <div data-v-8f2b5bad="" class="sy-code text-primary mb-4"><span data-v-8f2b5bad="" class="d-sr-only">Code d'erreur&nbsp;: </span> 501</div>
           <h2 data-v-8f2b5bad="" class="mb-2 font-weight-bold text-h5 mb-4">Error</h2>
           <p data-v-8f2b5bad="">Error message</p><a data-v-8f2b5bad="" class="v-btn v-btn--elevated v-theme--light bg-primary v-btn--density-default v-btn--size-default v-btn--variant-elevated mt-6" href="https://google.com"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
             <!----><span class="v-btn__content" data-no-activator="">Go to...</span>

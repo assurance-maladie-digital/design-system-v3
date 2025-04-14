@@ -31,7 +31,7 @@ describe('DataListGroup', () => {
 			},
 		})
 
-		expect(wrapper.find('.vd-data-list-loading').exists()).toBe(true)
+		expect(wrapper.find('.sy-data-list-loading').exists()).toBe(true)
 	})
 
 	it('emit the right event when clicking on a item button', async () => {
