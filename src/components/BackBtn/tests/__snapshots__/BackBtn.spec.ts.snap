@@ -1,9 +1,45 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`BackBtn > render correctly 1`] = `
-"<button data-v-efb74141="" type="button" class="v-btn v-theme--light text-primary v-btn--density-default v-btn--size-default v-btn--variant-text sy-back-btn text-none px-0 pr-1 bg-white"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-  <!----><span class="v-btn__content" data-no-activator=""><i data-v-efb74141="" class="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z mdi v-icon notranslate v-theme--light v-icon--size-default text-primary mr-1" aria-hidden="true"></i>Retour</span>
+<button
+  class="
+    bg-white
+    pr-1
+    px-0
+    sy-back-btn
+    text-none
+    text-primary
+    v-btn
+    v-btn--density-default
+    v-btn--size-default
+    v-btn--variant-text
+    v-theme--light
+  "
+  type="button"
+>
+  <span class="v-btn__overlay"></span>
+  <span class="v-btn__underlay"></span>
+  <!---->
+  <span
+    class="v-btn__content"
+    data-no-activator=""
+  >
+    <i
+      aria-hidden="true"
+      class="
+        M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z
+        mdi
+        mr-1
+        notranslate
+        text-primary
+        v-icon
+        v-icon--size-default
+        v-theme--light
+      "
+    ></i>
+    Retour
+  </span>
   <!---->
   <!---->
-</button>"
+</button>
 `;

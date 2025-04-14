@@ -1,11 +1,33 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`FilePreview > renders correctly with a pdf 1`] = `
-"<div class="sy-file-preview"><object height="556px" width="100%" type="application/pdf">
-    <p class="mb-0">Impossible de prévisualiser le fichier.</p>
-  </object></div>"
+<div class="sy-file-preview">
+  <object
+    height="556px"
+    type="application/pdf"
+    width="100%"
+  >
+    <p class="mb-0">
+      Impossible de prévisualiser le fichier.
+    </p>
+  </object>
+</div>
 `;
 
-exports[`FilePreview > renders correctly with an image 1`] = `"<div class="sy-file-preview"><img alt="" style="width: 100%;"></div>"`;
+exports[`FilePreview > renders correctly with an image 1`] = `
+<div class="sy-file-preview">
+  <img
+    alt=""
+    style="width: 100%;"
+  />
+</div>
+`;
 
-exports[`FilePreview > with options 1`] = `"<div class="sy-file-preview"><img alt="Photo de paysage montagneux." style="width: 100%;"></div>"`;
+exports[`FilePreview > with options 1`] = `
+<div class="sy-file-preview">
+  <img
+    alt="Photo de paysage montagneux."
+    style="width: 100%;"
+  />
+</div>
+`;

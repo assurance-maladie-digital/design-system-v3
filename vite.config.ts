@@ -127,6 +127,9 @@ export default defineConfig({
 				inline: ['vuetify'],
 			},
 		},
+		snapshotSerializers: [
+			'./node_modules/vue3-snapshot-serializer/index.js',
+		],
 		coverage: {
 			enabled: true,
 			provider: 'v8',
