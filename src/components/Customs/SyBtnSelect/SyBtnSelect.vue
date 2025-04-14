@@ -128,7 +128,7 @@
 <template>
 	<div
 		ref="buttonRef"
-		class="vd-user-menu-btn-ctn d-inline-block"
+		class="sy-user-menu-btn-ctn d-inline-block"
 	>
 		<VMenu
 			:id="generatedId"
@@ -147,7 +147,7 @@
 					:icon="iconOnly"
 					:size="iconOnly ? 'x-large' : 'default'"
 					:width="iconOnly ? 'auto' : undefined"
-					class="vd-user-menu-btn"
+					class="sy-user-menu-btn"
 					v-bind="{
 						...menuProps,
 						...props.options['btn'],
@@ -217,7 +217,7 @@
 @use '@/assets/tokens';
 @use '@/assets/tokens' as *;
 
-.vd-user-menu-btn-ctn {
+.sy-user-menu-btn-ctn {
 	position: relative;
 	z-index: 1;
 
@@ -230,7 +230,7 @@
 	}
 }
 
-.vd-user-menu-btn {
+.sy-user-menu-btn {
 	outline: none;
 	padding: 12px !important;
 
@@ -249,7 +249,7 @@
 	}
 }
 
-:deep(.vd-user-menu-btn:focus > .v-btn__overlay) {
+:deep(.sy-user-menu-btn:focus > .v-btn__overlay) {
 	opacity: 0 !important;
 }
 </style>

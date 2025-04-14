@@ -17,7 +17,7 @@ describe('DataListLoading', () => {
 			},
 		})
 
-		const elExists = wrapper.find('.vd-data-list-loading-item').exists()
+		const elExists = wrapper.find('.sy-data-list-loading-item').exists()
 		expect(elExists).toBe(true)
 	})
 })

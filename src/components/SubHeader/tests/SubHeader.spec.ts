@@ -111,7 +111,7 @@ describe('SubHeader', () => {
 			},
 		})
 
-		const btn = wrapper.find('.vd-data-list-item-action-btn')
+		const btn = wrapper.find('.sy-data-list-item-action-btn')
 		await btn.trigger('click')
 
 		await wrapper.vm.$nextTick()

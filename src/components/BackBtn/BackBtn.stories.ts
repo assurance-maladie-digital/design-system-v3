@@ -18,6 +18,7 @@ const meta = {
 		hideBackIcon: {
 			control: 'boolean',
 		},
+<<<<<<< HEAD
 		locales: {
 			description: 'Traductions',
 			control: false,
@@ -31,6 +32,17 @@ const meta = {
 					detail: `{
 	label: 'Retour',
 }`,
+=======
+		backgroundColor: {
+			control: { type: 'text' },
+			description: 'Couleur de fond du bouton parmi la palette du thème.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'white',
+>>>>>>> origin/dev
 				},
 			},
 		},
