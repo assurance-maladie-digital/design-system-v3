@@ -234,6 +234,7 @@ export const Dark: Story = {
 	<VThemeProvider theme="dark" with-background class="pa-4">
 		<DownloadBtn
 			:file-promise="download"
+			background-color="black"
 			@error="console.log('error')"
 			@success="console.log('success')"
 		>
@@ -271,6 +272,7 @@ export const Dark: Story = {
 	args: {
 		filePromise: () => axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f'),
 		default: 'Télécharger',
+		backgroundColor: 'black',
 		onError: fn(),
 		onSuccess: fn(),
 	},
@@ -393,13 +395,13 @@ export const Customization: Story = {
     
     const vuetifyOptions = {
 		btn: {
-			variant: 'plain',
+			variant: 'flat',
 			ripple: true,
 			color: 'secondary',
 		},
 		icon: {
 			class: 'ml-2 mr-2',
-			color: 'secondary',
+			color: 'white',
 		},
 	}
 </script>
@@ -414,13 +416,13 @@ export const Customization: Story = {
 		onSuccess: fn(),
 		vuetifyOptions: {
 			btn: {
-				variant: 'plain',
+				variant: 'flat',
 				ripple: true,
 				color: 'secondary',
 			},
 			icon: {
 				class: 'ml-2 mr-2',
-				color: 'secondary',
+				color: 'white',
 			},
 		},
 	},
