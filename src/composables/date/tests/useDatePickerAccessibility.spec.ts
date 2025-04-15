@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useDatePickerAccessibility } from '../useDatePickerAccessibility'
+import { ref } from 'vue'
 import type { ComponentPublicInstance, Ref } from 'vue'
 
 describe('useDatePickerAccessibility', () => {

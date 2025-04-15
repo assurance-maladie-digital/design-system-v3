@@ -58,6 +58,32 @@ export function useDatePickerAccessibility() {
 		const datePickerEl = datePickerRef.value?.$el as HTMLElement | null
 		if (!datePickerEl || !(datePickerEl instanceof HTMLElement)) return
 
+		// Récupérer les éléments interactifs dans le DatePicker
+		const getFocusableElements = (): HTMLElement[] => {
+			const focusableElements = datePickerEl.querySelectorAll<HTMLElement>(
+				'button, [href], [tabindex]:not([tabindex="-1"]), input, select, textarea, [contenteditable]'
+			)
+			return Array.from(focusableElements).filter(el => el.offsetParent !== null)
+		}
+
+		// Gérer le focus cyclique avec Tab
+		const handleFocus = (e: KeyboardEvent): void => {
+			if (e.key !== 'Tab') return
+
+			const focusableElements = getFocusableElements()
+			const focusedIndex = focusableElements.findIndex(el => el === document.activeElement)
+			const lastIndex = focusableElements.length - 1
+
+			if (!e.shiftKey && (focusedIndex === -1 || focusedIndex === lastIndex)) {
+				e.preventDefault()
+				focusableElements[0]?.focus()
+			}
+			else if (e.shiftKey && (focusedIndex === -1 || focusedIndex === 0)) {
+				e.preventDefault()
+				focusableElements[lastIndex]?.focus()
+			}
+		}
+
 		// Ajouter un attribut role="application" au conteneur principal
 		datePickerEl.setAttribute('role', 'application')
 		datePickerEl.setAttribute('aria-label', 'Sélecteur de date')
@@ -110,7 +136,9 @@ export function useDatePickerAccessibility() {
 		// Ajouter un gestionnaire d'événements clavier pour la touche entrée
 		// Utiliser des casts explicites pour rassurer TypeScript sur les types
 		datePickerEl.removeEventListener('keydown', handleKeyDown as EventListener) // Supprimer d'abord pour éviter les doublons
+		datePickerEl.removeEventListener('keydown', handleFocus)
 		datePickerEl.addEventListener('keydown', handleKeyDown as EventListener)
+		datePickerEl.addEventListener('keydown', handleFocus)
 	}
 
 	return {
