@@ -1,0 +1,166 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ServiceMenu > render correctly 1`] = `
+"<div data-v-b13e526c="" id="service-menu-id-container" class="service-menu"><button data-v-cd24dd67="" data-v-b13e526c="" type="button" class="v-btn v-btn--elevated v-btn--icon v-theme--light v-btn--density-default elevation-0 rounded-0 v-btn--size-default v-btn--variant-elevated btn--icon service-menu__btn" style="height: auto; width: auto;" id="service-menu-id-service-menu-btn" plain=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+    <!----><span class="v-btn__content" data-no-activator=""><span data-v-cd24dd67="" id="service-menu-id-service-menu-btn-btn-label" class="d-sr-only">Bouquet de services</span><span data-v-0d784079="" data-v-cd24dd67="" id="service-menu-id-service-menu-btn-icon" class="amelipro-icon icon-custom"><span data-v-0d784079="" aria-hidden="true" class="amelipro-custom-icon custom-color" focusable="false" role="img" style="color: #FFFFFF; height: 2rem; width: 2rem;"><span data-v-0d784079="">
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+			<path class="circle-color" d="M34,17c0-4.7-1.9-8.9-5-12C26,1.9,21.7,0,17,0S8,1.9,5,5C1.9,8,0,12.3,0,17s1.9,8.9,5,12c3.1,3.1,7.3,5,12,5 s8.9-1.9,12-5C32.1,25.9,34,21.7,34,17z"></path>
+			<g class="shape-color">
+				<path d="M10.2,8L10.2,8c1.4,0,2.5,1.1,2.5,2.4l0,0c0,1.4-1.1,2.4-2.5,2.4l0,0c-1.3,0-2.4-1.1-2.4-2.4l0,0 C7.7,9.1,8.8,8,10.2,8z"></path>
+				<path d="M17,8L17,8c1.3,0,2.4,1.1,2.4,2.4l0,0c0,1.4-1.1,2.4-2.4,2.4l0,0c-1.4,0-2.5-1.1-2.5-2.4l0,0 C14.5,9.1,15.6,8,17,8z"></path>
+				<path d="M23.8,8L23.8,8c1.4,0,2.4,1.1,2.4,2.4l0,0c0,1.4-1.1,2.4-2.4,2.4l0,0c-1.3,0-2.4-1.1-2.4-2.4l0,0 C21.4,9.1,22.5,8,23.8,8z"></path>
+				<path d="M10.2,14.8L10.2,14.8c1.4,0,2.5,1.1,2.5,2.4l0,0c0,1.4-1.1,2.5-2.5,2.5l0,0c-1.3,0-2.4-1.1-2.4-2.5l0,0 C7.7,15.9,8.8,14.8,10.2,14.8z"></path>
+				<path d="M17,14.8L17,14.8c1.3,0,2.4,1.1,2.4,2.4l0,0c0,1.4-1.1,2.5-2.4,2.5l0,0c-1.4,0-2.5-1.1-2.5-2.5l0,0 C14.5,15.9,15.6,14.8,17,14.8z"></path>
+				<path d="M23.8,14.8L23.8,14.8c1.4,0,2.4,1.1,2.4,2.4l0,0c0,1.4-1.1,2.5-2.4,2.5l0,0c-1.3,0-2.4-1.1-2.4-2.5l0,0 C21.4,15.9,22.5,14.8,23.8,14.8z"></path>
+				<path d="M10.2,21.5L10.2,21.5c1.4,0,2.5,1.1,2.5,2.4l0,0c0,1.4-1.1,2.5-2.5,2.5l0,0c-1.3,0-2.4-1.1-2.4-2.5l0,0 C7.7,22.6,8.8,21.5,10.2,21.5z"></path>
+				<path d="M17,21.5L17,21.5c1.3,0,2.4,1.1,2.4,2.4l0,0c0,1.4-1.1,2.5-2.4,2.5l0,0c-1.4,0-2.5-1.1-2.5-2.5l0,0 C14.5,22.6,15.6,21.5,17,21.5z"></path>
+				<path d="M23.8,21.5L23.8,21.5c1.4,0,2.4,1.1,2.4,2.4l0,0c0,1.4-1.1,2.5-2.4,2.5l0,0c-1.3,0-2.4-1.1-2.4-2.5l0,0 C21.4,22.6,22.5,21.5,23.8,21.5z"></path>
+			</g>
+		</svg></span></span></span></span>
+    <!---->
+    <!---->
+  </button>
+  <div data-v-b13e526c="" id="service-menu-id-service-menu" class="service-menu__wrapper">
+    <!---->
+    <!--teleport start-->
+    <div class="v-overlay v-overlay--absolute v-overlay--active v-theme--light v-locale--is-ltr v-menu" style="z-index: 2000;" id="v-menu-1" data-v-b13e526c="">
+      <transition-stub name="fade-transition" appear="true" persisted="false" css="true">
+        <!---->
+      </transition-stub>
+      <transition-stub name="slide-y-transition" appear="true" persisted="true" css="true">
+        <div class="v-overlay__content" style="max-height: 520px; max-width: 900px; min-width: 900px;">
+          <nav data-v-b13e526c="" id="service-menu-id-content-desktop" aria-label="Bouquet de services" class="service-menu__nav">
+            <div class="d-flex flex-column flex-md-row">
+              <div id="service-menu-id-content-desktop-service-menu-ps" class="py-2 bg-ap-blue-lighten-3 service-menu__ps" style="flex-basis: 50%; max-width: 50%; width: 50%;">
+                <ul id="service-menu-id-content-desktop-ps-service-list" class="d-flex flex-wrap list-style-none service-list">
+                  <li id="service-menu-id-content-desktop-ps-service-list-item-0" class="mx-1 my-2 service-item" style="max-width: calc((100% / 3) - 8px);">
+                    <div data-v-8e318807=""><button data-v-cd24dd67="" data-v-8e318807="" type="button" class="v-btn v-btn--elevated v-btn--icon v-theme--light v-btn--density-default elevation-0 rounded-0 v-btn--size-default v-btn--variant-elevated btn--icon d-flex text-none text-center service-btn" style="height: auto; width: auto;" id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-0" plain=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+                        <!----><span class="v-btn__content" data-no-activator=""><!--v-if--><span data-v-0d784079="" data-v-cd24dd67="" id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-0-icon" class="amelipro-icon icon-custom mr-2"><span data-v-0d784079="" aria-hidden="true" class="amelipro-custom-icon custom-color" focusable="false" role="img" style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"><span data-v-0d784079="">
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34.1;" xml:space="preserve">
+			<path class="circle-color" d="M17,0L17,0c9.4,0,17,7.7,17,17l0,0c0,9.4-7.6,17-17,17.1l0,0C7.6,34.1,0,26.4,0,17l0,0C0,7.7,7.6,0,17,0z"></path>
+			<g class="shape-color">
+				<path d="M17.8,6.9c-0.7,0-1.4,0.1-2,0.5c-0.3,0.2-0.6,0.5-0.9,0.8c-0.2,0.3-0.4,0.7-0.5,1.1h4.8l-0.2,0.8h-4.7 c0,0.1,0,0.2,0,0.2c0,0.2,0,0.4,0,0.6h4.5l-0.2,0.8h-4.2c0.1,0.9,0.7,1.6,1.4,2c0.5,0.3,1.1,0.4,1.8,0.4c0.7,0,1.5-0.2,2.1-0.6V15 c-0.6,0.3-1.3,0.4-1.9,0.4c-2.1,0-3.6-0.8-4.3-2.4c-0.2-0.4-0.3-0.8-0.4-1.2H12l0.2-0.8h0.7c0-0.2,0-0.4,0-0.6v-0.3H12l0.2-0.8H13 c0.2-1.3,1.1-2.4,2.3-2.9c0.8-0.4,1.6-0.6,2.5-0.5c0.8,0,1.5,0.1,2.2,0.5l-0.3,1.2C19.2,7.1,18.5,6.9,17.8,6.9L17.8,6.9z"></path>
+				<path d="M30.7,10.5l-0.5-0.9l-1.9,1.1c-0.4-0.4-1-0.7-1.6-0.7c-1.2,0-2.2,1-2.2,2.2c0,0.5,0.2,1,0.4,1.3l-3.1,3.7 c-0.3-0.2-0.7-0.3-1.1-0.3c-1.2,0-2.2,1-2.2,2.2c0,0.4,0.1,0.7,0.2,1l-3,2.3c-0.4-0.3-0.9-0.5-1.4-0.5c-0.9,0-1.7,0.6-2.1,1.4 l-2.2-1c0-0.1,0-0.1,0-0.2C10,21,9,20,7.8,20c-1.2,0-2.2,1-2.2,2.2c0,0.2,0,0.3,0.1,0.5L3.7,24l0.6,0.8L6,23.6 c0.4,0.5,0.9,0.8,1.5,0.8V29H8v-4.5c0.7-0.1,1.3-0.5,1.7-1.1l2.3,1c0.1,1.1,0.9,1.9,2,2V29h0.5v-2.5c1.1-0.1,2-1.1,2-2.2 c0-0.3-0.1-0.6-0.2-0.9l3.1-2.3c0.3,0.3,0.7,0.4,1.1,0.5V29H21v-7.5c1.1-0.1,2-1.1,2-2.2c0-0.5-0.2-1-0.4-1.3l3.1-3.7 c0.2,0.1,0.5,0.2,0.8,0.3V29H27V14.5c1.1-0.1,2-1.1,2-2.2c0-0.3-0.1-0.5-0.1-0.7L30.7,10.5z"></path>
+			</g>
+		</svg></span></span></span><span data-v-8e318807="" id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-0-text" class="text-caption service-btn__text">relevé honoraires</span></span>
+                        <!---->
+                        <!---->
+                      </button>
+                      <!--v-if-->
+                    </div>
+                  </li>
+                  <li id="service-menu-id-content-desktop-ps-service-list-item-1" class="mx-1 my-2 service-item" style="max-width: calc((100% / 3) - 8px);">
+                    <div data-v-8e318807=""><button data-v-cd24dd67="" data-v-8e318807="" type="button" class="v-btn v-btn--elevated v-btn--icon v-theme--light v-btn--density-default elevation-0 rounded-0 v-btn--size-default v-btn--variant-elevated btn--icon d-flex text-none text-center service-btn" style="height: auto; width: auto;" id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-1" plain=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+                        <!----><span class="v-btn__content" data-no-activator=""><!--v-if--><span data-v-0d784079="" data-v-cd24dd67="" id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-1-icon" class="amelipro-icon icon-custom mr-2"><span data-v-0d784079="" aria-hidden="true" class="amelipro-custom-icon custom-color" focusable="false" role="img" style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"><span data-v-0d784079="">
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+			<path class="circle-color" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"></path>
+			<g class="shape-color">
+				<path d="M17.8,16.2V9.2c0-0.7-0.6-1.2-1.2-1.2c-0.7,0-1.2,0.6-1.2,1.2c0,0,0,0,0,0v7.5c0,0,0,0,0,0c0,0.1,0,0.2,0,0.2c0,0,0,0.1,0,0.1c0,0,0,0.1,0,0.1c0,0,0,0.1,0.1,0.1s0,0.1,0,0.1c0,0.1,0.1,0.1,0.2,0.2l3.5,3.5c0.5,0.5,1.3,0.5,1.8,0c0.5-0.5,0.5-1.3,0-1.8c0,0,0,0,0,0L17.8,16.2z"></path>
+				<circle cx="17" cy="2.3" r="1"></circle>
+				<circle cx="17" cy="32.3" r="1"></circle>
+				<circle cx="32.3" cy="17" r="1"></circle>
+				<circle cx="1.7" cy="17" r="1"></circle>
+			</g>
+		</svg>
+	</span></span></span><span data-v-8e318807="" id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-1-text" class="text-caption service-btn__text">horaires cabinet</span></span>
+                        <!---->
+                        <!---->
+                      </button>
+                      <!--v-if-->
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div id="service-menu-id-content-desktop-service-menu-patient" class="py-2 bg-ap-white service-menu__patient" style="flex-basis: 50%; max-width: 50%; width: 50%;">
+                <div>
+                  <ul id="service-menu-id-content-desktop-patient-service-list" class="d-flex flex-wrap list-style-none service-list">
+                    <li id="service-menu-id-content-desktop-patient-service-list-item-0" class="mx-1 my-2 service-item" style="max-width: calc((100% / 3) - 8px);">
+                      <div data-v-8e318807=""><button data-v-cd24dd67="" data-v-8e318807="" type="button" class="v-btn v-btn--elevated v-btn--icon v-theme--light v-btn--density-default elevation-0 rounded-0 v-btn--size-default v-btn--variant-elevated btn--icon d-flex text-none text-center service-btn" style="height: auto; width: auto;" id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-0" plain=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+                          <!----><span class="v-btn__content" data-no-activator=""><!--v-if--><span data-v-0d784079="" data-v-cd24dd67="" id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-0-icon" class="amelipro-icon icon-custom mr-2"><span data-v-0d784079="" aria-hidden="true" class="amelipro-custom-icon custom-color" focusable="false" role="img" style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"><span data-v-0d784079="">
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34.1;" xml:space="preserve">
+			<path class="circle-color" d="M17,0L17,0c9.4,0,17,7.7,17,17l0,0c0,9.4-7.6,17-17,17.1l0,0C7.6,34.1,0,26.4,0,17l0,0C0,7.7,7.6,0,17,0z"></path>
+			<g class="shape-color">
+				<path d="M17.8,6.9c-0.7,0-1.4,0.1-2,0.5c-0.3,0.2-0.6,0.5-0.9,0.8c-0.2,0.3-0.4,0.7-0.5,1.1h4.8l-0.2,0.8h-4.7 c0,0.1,0,0.2,0,0.2c0,0.2,0,0.4,0,0.6h4.5l-0.2,0.8h-4.2c0.1,0.9,0.7,1.6,1.4,2c0.5,0.3,1.1,0.4,1.8,0.4c0.7,0,1.5-0.2,2.1-0.6V15 c-0.6,0.3-1.3,0.4-1.9,0.4c-2.1,0-3.6-0.8-4.3-2.4c-0.2-0.4-0.3-0.8-0.4-1.2H12l0.2-0.8h0.7c0-0.2,0-0.4,0-0.6v-0.3H12l0.2-0.8H13 c0.2-1.3,1.1-2.4,2.3-2.9c0.8-0.4,1.6-0.6,2.5-0.5c0.8,0,1.5,0.1,2.2,0.5l-0.3,1.2C19.2,7.1,18.5,6.9,17.8,6.9L17.8,6.9z"></path>
+				<path d="M30.7,10.5l-0.5-0.9l-1.9,1.1c-0.4-0.4-1-0.7-1.6-0.7c-1.2,0-2.2,1-2.2,2.2c0,0.5,0.2,1,0.4,1.3l-3.1,3.7 c-0.3-0.2-0.7-0.3-1.1-0.3c-1.2,0-2.2,1-2.2,2.2c0,0.4,0.1,0.7,0.2,1l-3,2.3c-0.4-0.3-0.9-0.5-1.4-0.5c-0.9,0-1.7,0.6-2.1,1.4 l-2.2-1c0-0.1,0-0.1,0-0.2C10,21,9,20,7.8,20c-1.2,0-2.2,1-2.2,2.2c0,0.2,0,0.3,0.1,0.5L3.7,24l0.6,0.8L6,23.6 c0.4,0.5,0.9,0.8,1.5,0.8V29H8v-4.5c0.7-0.1,1.3-0.5,1.7-1.1l2.3,1c0.1,1.1,0.9,1.9,2,2V29h0.5v-2.5c1.1-0.1,2-1.1,2-2.2 c0-0.3-0.1-0.6-0.2-0.9l3.1-2.3c0.3,0.3,0.7,0.4,1.1,0.5V29H21v-7.5c1.1-0.1,2-1.1,2-2.2c0-0.5-0.2-1-0.4-1.3l3.1-3.7 c0.2,0.1,0.5,0.2,0.8,0.3V29H27V14.5c1.1-0.1,2-1.1,2-2.2c0-0.3-0.1-0.5-0.1-0.7L30.7,10.5z"></path>
+			</g>
+		</svg></span></span></span><span data-v-8e318807="" id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-0-text" class="text-caption service-btn__text">relevé honoraires Patient</span></span>
+                          <!---->
+                          <!---->
+                        </button>
+                        <!--v-if-->
+                      </div>
+                    </li>
+                    <li id="service-menu-id-content-desktop-patient-service-list-item-1" class="mx-1 my-2 service-item" style="max-width: calc((100% / 3) - 8px);">
+                      <div data-v-8e318807=""><button data-v-cd24dd67="" data-v-8e318807="" type="button" class="v-btn v-btn--elevated v-btn--icon v-theme--light v-btn--density-default elevation-0 rounded-0 v-btn--size-default v-btn--variant-elevated btn--icon d-flex text-none text-center service-btn" style="height: auto; width: auto;" id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-1" plain=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+                          <!----><span class="v-btn__content" data-no-activator=""><!--v-if--><span data-v-0d784079="" data-v-cd24dd67="" id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-1-icon" class="amelipro-icon icon-custom mr-2"><span data-v-0d784079="" aria-hidden="true" class="amelipro-custom-icon custom-color" focusable="false" role="img" style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"><span data-v-0d784079="">
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+			<path class="circle-color" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"></path>
+			<g class="shape-color">
+				<path d="M17.8,16.2V9.2c0-0.7-0.6-1.2-1.2-1.2c-0.7,0-1.2,0.6-1.2,1.2c0,0,0,0,0,0v7.5c0,0,0,0,0,0c0,0.1,0,0.2,0,0.2c0,0,0,0.1,0,0.1c0,0,0,0.1,0,0.1c0,0,0,0.1,0.1,0.1s0,0.1,0,0.1c0,0.1,0.1,0.1,0.2,0.2l3.5,3.5c0.5,0.5,1.3,0.5,1.8,0c0.5-0.5,0.5-1.3,0-1.8c0,0,0,0,0,0L17.8,16.2z"></path>
+				<circle cx="17" cy="2.3" r="1"></circle>
+				<circle cx="17" cy="32.3" r="1"></circle>
+				<circle cx="32.3" cy="17" r="1"></circle>
+				<circle cx="1.7" cy="17" r="1"></circle>
+			</g>
+		</svg>
+	</span></span></span><span data-v-8e318807="" id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-1-text" class="text-caption service-btn__text">horaires cabinet Patient</span></span>
+                          <!---->
+                          <!---->
+                        </button>
+                        <!--v-if-->
+                      </div>
+                    </li>
+                  </ul>
+                  <!--v-if-->
+                </div>
+              </div>
+              <div id="service-menu-id-content-desktop-service-menu-contact" class="py-2 bg-ap-white service-menu__contact" style="flex-basis: 50%; max-width: 50%; width: 50%;">
+                <ul id="service-menu-id-content-desktop-contact-service-list" class="d-flex flex-wrap list-style-none service-list">
+                  <li id="service-menu-id-content-desktop-contact-service-list-item-0" class="mx-1 my-2 service-item" style="max-width: calc((100% / 3) - 8px);">
+                    <div data-v-8e318807=""><button data-v-cd24dd67="" data-v-8e318807="" type="button" class="v-btn v-btn--elevated v-btn--icon v-theme--light v-btn--density-default elevation-0 rounded-0 v-btn--size-default v-btn--variant-elevated btn--icon d-flex text-none text-center service-btn" style="height: auto; width: auto;" id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-0" plain=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+                        <!----><span class="v-btn__content" data-no-activator=""><!--v-if--><span data-v-0d784079="" data-v-cd24dd67="" id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-0-icon" class="amelipro-icon icon-custom mr-2"><span data-v-0d784079="" aria-hidden="true" class="amelipro-custom-icon custom-color" focusable="false" role="img" style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"><span data-v-0d784079="">
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34.1;" xml:space="preserve">
+			<path class="circle-color" d="M17,0L17,0c9.4,0,17,7.7,17,17l0,0c0,9.4-7.6,17-17,17.1l0,0C7.6,34.1,0,26.4,0,17l0,0C0,7.7,7.6,0,17,0z"></path>
+			<g class="shape-color">
+				<path d="M17.8,6.9c-0.7,0-1.4,0.1-2,0.5c-0.3,0.2-0.6,0.5-0.9,0.8c-0.2,0.3-0.4,0.7-0.5,1.1h4.8l-0.2,0.8h-4.7 c0,0.1,0,0.2,0,0.2c0,0.2,0,0.4,0,0.6h4.5l-0.2,0.8h-4.2c0.1,0.9,0.7,1.6,1.4,2c0.5,0.3,1.1,0.4,1.8,0.4c0.7,0,1.5-0.2,2.1-0.6V15 c-0.6,0.3-1.3,0.4-1.9,0.4c-2.1,0-3.6-0.8-4.3-2.4c-0.2-0.4-0.3-0.8-0.4-1.2H12l0.2-0.8h0.7c0-0.2,0-0.4,0-0.6v-0.3H12l0.2-0.8H13 c0.2-1.3,1.1-2.4,2.3-2.9c0.8-0.4,1.6-0.6,2.5-0.5c0.8,0,1.5,0.1,2.2,0.5l-0.3,1.2C19.2,7.1,18.5,6.9,17.8,6.9L17.8,6.9z"></path>
+				<path d="M30.7,10.5l-0.5-0.9l-1.9,1.1c-0.4-0.4-1-0.7-1.6-0.7c-1.2,0-2.2,1-2.2,2.2c0,0.5,0.2,1,0.4,1.3l-3.1,3.7 c-0.3-0.2-0.7-0.3-1.1-0.3c-1.2,0-2.2,1-2.2,2.2c0,0.4,0.1,0.7,0.2,1l-3,2.3c-0.4-0.3-0.9-0.5-1.4-0.5c-0.9,0-1.7,0.6-2.1,1.4 l-2.2-1c0-0.1,0-0.1,0-0.2C10,21,9,20,7.8,20c-1.2,0-2.2,1-2.2,2.2c0,0.2,0,0.3,0.1,0.5L3.7,24l0.6,0.8L6,23.6 c0.4,0.5,0.9,0.8,1.5,0.8V29H8v-4.5c0.7-0.1,1.3-0.5,1.7-1.1l2.3,1c0.1,1.1,0.9,1.9,2,2V29h0.5v-2.5c1.1-0.1,2-1.1,2-2.2 c0-0.3-0.1-0.6-0.2-0.9l3.1-2.3c0.3,0.3,0.7,0.4,1.1,0.5V29H21v-7.5c1.1-0.1,2-1.1,2-2.2c0-0.5-0.2-1-0.4-1.3l3.1-3.7 c0.2,0.1,0.5,0.2,0.8,0.3V29H27V14.5c1.1-0.1,2-1.1,2-2.2c0-0.3-0.1-0.5-0.1-0.7L30.7,10.5z"></path>
+			</g>
+		</svg></span></span></span><span data-v-8e318807="" id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-0-text" class="text-caption service-btn__text">relevé honoraires Contact</span></span>
+                        <!---->
+                        <!---->
+                      </button>
+                      <!--v-if-->
+                    </div>
+                  </li>
+                  <li id="service-menu-id-content-desktop-contact-service-list-item-1" class="mx-1 my-2 service-item" style="max-width: calc((100% / 3) - 8px);">
+                    <div data-v-8e318807=""><button data-v-cd24dd67="" data-v-8e318807="" type="button" class="v-btn v-btn--elevated v-btn--icon v-theme--light v-btn--density-default elevation-0 rounded-0 v-btn--size-default v-btn--variant-elevated btn--icon d-flex text-none text-center service-btn" style="height: auto; width: auto;" id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-1" plain=""><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+                        <!----><span class="v-btn__content" data-no-activator=""><!--v-if--><span data-v-0d784079="" data-v-cd24dd67="" id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-1-icon" class="amelipro-icon icon-custom mr-2"><span data-v-0d784079="" aria-hidden="true" class="amelipro-custom-icon custom-color" focusable="false" role="img" style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"><span data-v-0d784079="">
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+			<path class="circle-color" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"></path>
+			<g class="shape-color">
+				<path d="M17.8,16.2V9.2c0-0.7-0.6-1.2-1.2-1.2c-0.7,0-1.2,0.6-1.2,1.2c0,0,0,0,0,0v7.5c0,0,0,0,0,0c0,0.1,0,0.2,0,0.2c0,0,0,0.1,0,0.1c0,0,0,0.1,0,0.1c0,0,0,0.1,0.1,0.1s0,0.1,0,0.1c0,0.1,0.1,0.1,0.2,0.2l3.5,3.5c0.5,0.5,1.3,0.5,1.8,0c0.5-0.5,0.5-1.3,0-1.8c0,0,0,0,0,0L17.8,16.2z"></path>
+				<circle cx="17" cy="2.3" r="1"></circle>
+				<circle cx="17" cy="32.3" r="1"></circle>
+				<circle cx="32.3" cy="17" r="1"></circle>
+				<circle cx="1.7" cy="17" r="1"></circle>
+			</g>
+		</svg>
+	</span></span></span><span data-v-8e318807="" id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-1-text" class="text-caption service-btn__text">horaires cabinet Contact</span></span>
+                        <!---->
+                        <!---->
+                      </button>
+                      <!--v-if-->
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </transition-stub>
+    </div>
+    <!--teleport end-->
+  </div>
+  <!--v-if-->
+</div>"
+`;

@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UserInformationSummary > render correctly 1`] = `
+"<div id="user-information-summary-id-container" class="user-information-summary">
+  <p id="user-information-summary-id-user-name" class="mb-0 text-body-2 font-weight-semibold user-information-summary__name">nom utilisateur</p>
+  <p id="user-information-summary-id-denomination" class="mb-0 text-body-2 user-information-summary__denomination">dénomination</p>
+  <p id="user-information-summary-id-specialty" class="mb-0 text-body-2 user-information-summary__specialty">catégorie spécialité</p>
+  <p id="user-information-summary-id-profil" class="mb-0 text-body-2 user-information-summary__profil">profil</p>
+  <p id="user-information-summary-id-office" class="mb-0 text-body-2 user-information-summary__office">nom cabinet</p>
+  <p id="user-information-summary-id-address-line-1" class="mb-0 text-body-2 user-information-summary__address-1">adresse ligne 1</p>
+  <p id="user-information-summary-id-address-line-2" class="mb-0 text-body-2 user-information-summary__address-2">adresse ligne 2</p>
+</div>"
+`;

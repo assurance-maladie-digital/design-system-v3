@@ -6,6 +6,10 @@
 	import { useDisplay } from 'vuetify'
 
 	const props = defineProps({
+		attach: {
+			type: Boolean,
+			default: false,
+		},
 		cancelBtnLabel: {
 			type: String,
 			default: 'Annuler',
@@ -193,7 +197,9 @@
 <template>
 	<VDialog
 		v-model="dialog"
+		:attach="attach"
 		:class="fullscreen ? undefined : 'dialog-radius'"
+		:eager="eager"
 		:fullscreen="fullscreen"
 		:persistent="persistent || noClickOutside"
 		:width="width"

@@ -5,6 +5,7 @@ import AmeliproDialog from './AmeliproDialog.vue'
 
 const meta = {
 	argTypes: {
+		attach: { description: 'attache le contenu de la boite de dialogue et son overlay à l\'intérieur de v-app' },
 		cancelBtnLabel: { description: 'Label du bouton annuler' },
 		change: { description: 'Événement émis au click sur les boutons annuler et fermer' },
 		confirm: { description: 'Événement émis au click sur le bouton valider' },
