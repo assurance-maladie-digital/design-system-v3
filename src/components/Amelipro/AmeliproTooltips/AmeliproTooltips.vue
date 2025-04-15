@@ -105,11 +105,6 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/tokens';
 
-.v-tooltip .v-overlay__content {
-	background-color: tokens.$ap-white !important;
-	border: 1px solid tokens.$ap-parme-darken1 !important;
-}
-
 .v-btn {
 	&.tooltip-btn {
 		width: 1.85em !important;

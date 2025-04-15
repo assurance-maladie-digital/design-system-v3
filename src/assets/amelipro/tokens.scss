@@ -118,7 +118,7 @@ $font-size-lg: 1.25rem; // 20px
 $font-size-xl: 1.375rem; // 22px
 $font-size-xxl: 1.5rem; // 24px
 
-// button style values (used for AmeliproBtn and all similar shaped clickable elements like filters)
+// button style values (used for AmeliproBtn and all similar shaped clickable elements)
 $btn-padding-x: 1.5rem;
 $btn-padding-y: 0.75rem;
 $btn-min-height: 3rem;
@@ -143,3 +143,63 @@ $switch-track-opacity: 1;
 // set filters and pills styles
 $filter-font-weight: $ap-font-weight-semi-bold;
 $tooltip-background-color: #fff;
+
+.relative {
+	position: relative;
+}
+
+.list-style-none {
+	margin: 0;
+	padding: 0 !important;
+	list-style: none !important;
+}
+
+.border-0 {
+	border: 0;
+}
+
+.font-size-xs {
+	font-size: $font-size-xs;
+}
+
+.font-size-sm {
+	font-size: $font-size-sm;
+}
+
+.font-size-md {
+	font-size: $font-size-md;
+}
+
+.font-size-lg {
+	font-size: $font-size-lg;
+}
+
+.font-size-xl {
+	font-size: $font-size-xl;
+}
+
+.font-size-xxl {
+	font-size: $font-size-xxl;
+}
+
+.theme-ap a {
+	font-size: $font-size-xs;
+	color: $ap-blue-darken1;
+
+	&:hover {
+		color: $ap-blue-darken2;
+		text-decoration: underline;
+	}
+}
+
+.w-100 {
+	width: 100%;
+}
+
+.h-100 {
+	height: 100%;
+}
+
+.pointer {
+	cursor: pointer;
+}
