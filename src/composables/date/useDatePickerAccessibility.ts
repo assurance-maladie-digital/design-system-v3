@@ -61,7 +61,7 @@ export function useDatePickerAccessibility() {
 		// Récupérer les éléments interactifs dans le DatePicker
 		const getFocusableElements = (): HTMLElement[] => {
 			const focusableElements = datePickerEl.querySelectorAll<HTMLElement>(
-				'button, [href], [tabindex]:not([tabindex="-1"]), input, select, textarea, [contenteditable]'
+				'button, [href], [tabindex]:not([tabindex="-1"]), input, select, textarea, [contenteditable]',
 			)
 			return Array.from(focusableElements).filter(el => el.offsetParent !== null)
 		}
