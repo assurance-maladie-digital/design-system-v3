@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useDatePickerAccessibility } from '../useDatePickerAccessibility'
 import type { ComponentPublicInstance, Ref } from 'vue'
-import {nextTick, ref} from 'vue'
 
 describe('useDatePickerAccessibility', () => {
 	let { updateAccessibility, handleKeyDown } = useDatePickerAccessibility()
