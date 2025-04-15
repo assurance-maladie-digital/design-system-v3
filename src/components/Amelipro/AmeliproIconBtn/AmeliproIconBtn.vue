@@ -53,7 +53,7 @@
 		},
 		iconFocusBgColor: {
 			type: String,
-			default: 'transparent',
+			default: undefined,
 		},
 		iconFocusBorderColor: {
 			type: String,
@@ -109,7 +109,7 @@
 	const focus = ref(false)
 
 	const currentIconColor = computed<string>(() => {
-		if (hover.value) {
+		if (hover.value || (focus.value && !props.iconFocusColor)) {
 			return props.iconHoverColor
 		}
 		if (focus.value && props.iconFocusColor) {
@@ -119,10 +119,10 @@
 	})
 
 	const currentIconBgColor = computed<string>(() => {
-		if (hover.value) {
+		if (hover.value || (focus.value && !props.iconFocusBgColor)) {
 			return props.iconHoverBgColor
 		}
-		if (focus.value) {
+		if (focus.value && props.iconFocusBgColor) {
 			return props.iconFocusBgColor
 		}
 		return props.iconBgColor
@@ -133,10 +133,10 @@
 	const badgeStyle = computed<IndexedObject>(() => ({ backgroundColor: convertToHex(props.badgeBgColor), color: convertToHex(props.badgeColor) }))
 
 	const iconBorderStyle = computed<string | undefined>(() => {
-		if (hover.value) {
+		if (hover.value || (focus.value && !props.iconFocusBorderColor)) {
 			return props.iconHoverBorderColor
 		}
-		if (focus.value) {
+		if (focus.value && props.iconFocusBorderColor) {
 			return props.iconFocusBorderColor
 		}
 		return props.iconBorderColor
@@ -207,7 +207,7 @@
 		<span
 			v-if="badge"
 			:id="uniqueId ? `${uniqueId}-badge` : undefined"
-			class="amelipro-btn__badge__wrapper"
+			class="amelipro-btn__badge-wrapper"
 		>
 			<AmeliproIcon
 				ref="ameliproIcon"
@@ -296,7 +296,7 @@
 	}
 }
 
-.amelipro-btn__badge__wrapper {
+.amelipro-btn__badge-wrapper {
 	position: relative;
 }
 

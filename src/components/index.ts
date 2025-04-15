@@ -117,9 +117,18 @@ export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 // Amelipro
 // ===========================
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
+export { default as AmeliproCheckbox } from './Amelipro/AmeliproCheckbox/AmeliproCheckbox.vue'
+export { default as AmeliproDialog } from './Amelipro/AmeliproDialog/AmeliproDialog.vue'
+export { default as AmeliproHeader } from './Amelipro/AmeliproHeader/AmeliproHeader.vue'
 export { default as AmeliproIcon } from './Amelipro/AmeliproIcon/AmeliproIcon.vue'
 export { default as AmeliproIconBtn } from './Amelipro/AmeliproIconBtn/AmeliproIconBtn.vue'
+export { default as AmeliproMenu } from './Amelipro/AmeliproMenu/AmeliproMenu.vue'
+export { default as AmeliproMessage } from './Amelipro/AmeliproMessage/AmeliproMessage.vue'
+export { default as AmeliproTooltips } from './Amelipro/AmeliproTooltips/AmeliproTooltips.vue'
 export { default as StructureMenu } from './Amelipro/StructureMenu/StructureMenu.vue'
+export { default as ServiceMenu } from './Amelipro/ServiceMenu/ServiceMenu.vue'
+export { default as UserInformationSummary } from './Amelipro/UserInformationSummary/UserInformationSummary.vue'
+export { default as UserMenu } from './Amelipro/UserMenu/UserMenu.vue'
 
 // ===========================
 // Composables and services
