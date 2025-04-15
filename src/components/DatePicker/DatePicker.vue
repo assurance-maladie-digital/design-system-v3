@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
+	import type { Ref, ComponentPublicInstance } from 'vue'
+
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from './DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
@@ -62,7 +64,7 @@
 		bgColor: undefined,
 	})
 
-	const datePickerRef = ref<HTMLElement | null>(null)
+	const datePickerRef: Ref<ComponentPublicInstance | null> = ref(null)
 
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: DateValue): void

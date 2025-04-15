@@ -2,7 +2,7 @@
  * Composable pour améliorer l'accessibilité du DatePicker
  */
 import { nextTick } from 'vue'
-import type { Ref } from 'vue'
+import type { Ref, ComponentPublicInstance } from 'vue'
 
 /**
  * Améliore l'accessibilité du DatePicker en ajoutant des attributs ARIA et des instructions pour les lecteurs d'écran
@@ -19,11 +19,8 @@ export function useDatePickerAccessibility() {
 	const handleKeyDown = (event: Event): void => {
 		const keyboardEvent = event as KeyboardEvent
 
-		console.log('keyboardEvent', keyboardEvent)
-
 		// Si la touche entrée est pressée et que nous ne sommes pas déjà en train de traiter un événement
 		if (keyboardEvent.key === 'Enter' && !isProcessingEnterKey) {
-			console.log('Enter key pressed')
 			isProcessingEnterKey = true
 
 			// Empêcher le comportement par défaut de la touche entrée
@@ -54,14 +51,12 @@ export function useDatePickerAccessibility() {
 	 * Met à jour les attributs d'accessibilité du DatePicker
 	 * Ajoute des attributs ARIA et des instructions pour les lecteurs d'écran
 	 */
-	const updateAccessibility = async (datePickerRef: Ref<HTMLElement | null>): Promise<void> => {
+	const updateAccessibility = async (datePickerRef: Ref<ComponentPublicInstance | null>): Promise<void> => {
 		await nextTick()
 
 		// Utiliser des attributs data pour sélectionner les éléments, ce qui est plus stable que les classes CSS
-		const datePickerEl = datePickerRef.value
-		if (!datePickerEl) return
-
-		console.log(datePickerEl)
+		const datePickerEl = datePickerRef.value?.$el as HTMLElement | null
+		if (!datePickerEl || !(datePickerEl instanceof HTMLElement)) return
 
 		// Ajouter un attribut role="application" au conteneur principal
 		datePickerEl.setAttribute('role', 'application')

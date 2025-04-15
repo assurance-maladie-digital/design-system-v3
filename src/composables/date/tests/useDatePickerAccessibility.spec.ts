@@ -1,5 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useDatePickerAccessibility } from '../useDatePickerAccessibility'
+import type { ComponentPublicInstance, Ref } from 'vue'
+import {nextTick, ref} from 'vue'
 
 describe('useDatePickerAccessibility', () => {
 	let { updateAccessibility, handleKeyDown } = useDatePickerAccessibility()
@@ -35,8 +37,10 @@ describe('useDatePickerAccessibility', () => {
 	})
 
 	it('sets correct aria-label attributes on navigation buttons', async () => {
+		const datePickerRef: Ref<ComponentPublicInstance | null> = ref(null)
+
 		// Appeler la fonction updateAccessibility
-		await updateAccessibility()
+		await updateAccessibility(datePickerRef)
 
 		// Récupérer les boutons
 		const buttons = document.querySelectorAll('.v-date-picker-header button')
@@ -48,14 +52,18 @@ describe('useDatePickerAccessibility', () => {
 	})
 
 	it('handles missing elements gracefully', async () => {
+		const datePickerRef: Ref<ComponentPublicInstance | null> = ref(null)
+
 		// Supprimer les éléments du DOM
 		document.body.innerHTML = ''
 
 		// La fonction ne devrait pas générer d'erreur même si les éléments n'existent pas
-		await expect(updateAccessibility()).resolves.not.toThrow()
+		await expect(updateAccessibility(datePickerRef)).resolves.not.toThrow()
 	})
 
 	it('handles different icons correctly', async () => {
+		const datePickerRef: Ref<ComponentPublicInstance | null> = ref(null)
+
 		// Modifier les icônes
 		document.body.innerHTML = `
 			<div class="v-date-picker">
@@ -80,7 +88,7 @@ describe('useDatePickerAccessibility', () => {
 		`
 
 		// Appeler la fonction updateAccessibility
-		await updateAccessibility()
+		await updateAccessibility(datePickerRef)
 
 		// Récupérer les boutons
 		const buttons = document.querySelectorAll('.v-date-picker-header button')
@@ -92,11 +100,14 @@ describe('useDatePickerAccessibility', () => {
 	})
 
 	it('adds sr-only instructions to the DatePicker', async () => {
+		const datePickerRef: Ref<ComponentPublicInstance | null> = ref(null)
+
 		// Appeler updateAccessibility
-		await updateAccessibility()
+		await updateAccessibility(datePickerRef)
 
 		// Vérifier que les instructions pour les lecteurs d'écran ont été ajoutées
 		const srOnlyEl = document.querySelector('.sr-only-instructions')
+
 		expect(srOnlyEl).not.toBeNull()
 		expect(srOnlyEl?.textContent).toBe('Utilisez tab pour naviguer entre les dates et Entrée ou Espace pour sélectionner une date')
 	})
