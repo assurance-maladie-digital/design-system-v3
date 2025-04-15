@@ -2,6 +2,7 @@
  * Composable pour améliorer l'accessibilité du DatePicker
  */
 import { nextTick } from 'vue'
+import type { Ref } from 'vue'
 
 /**
  * Améliore l'accessibilité du DatePicker en ajoutant des attributs ARIA et des instructions pour les lecteurs d'écran
@@ -17,9 +18,12 @@ export function useDatePickerAccessibility() {
 	 */
 	const handleKeyDown = (event: Event): void => {
 		const keyboardEvent = event as KeyboardEvent
+
+		console.log('keyboardEvent', keyboardEvent)
+
 		// Si la touche entrée est pressée et que nous ne sommes pas déjà en train de traiter un événement
 		if (keyboardEvent.key === 'Enter' && !isProcessingEnterKey) {
-			// Marquer que nous sommes en train de traiter l'événement pour éviter les doublons
+			console.log('Enter key pressed')
 			isProcessingEnterKey = true
 
 			// Empêcher le comportement par défaut de la touche entrée
@@ -28,16 +32,14 @@ export function useDatePickerAccessibility() {
 			// Récupérer l'élément actuellement focalisé
 			const focusedElement = document.activeElement
 
-			// Simuler un événement de touche espace
+			// Vérifiez si l'élément focalisé est interactif
 			if (focusedElement && focusedElement instanceof HTMLElement) {
-				// Créer et déclencher un événement de clic qui simule le comportement de l'espace
+				// Simuler un clic sur l'élément focalisé
 				const clickEvent = new MouseEvent('click', {
 					bubbles: true,
 					cancelable: true,
 					view: window,
 				})
-
-				// Déclencher un seul événement de clic
 				focusedElement.dispatchEvent(clickEvent)
 			}
 
@@ -52,12 +54,14 @@ export function useDatePickerAccessibility() {
 	 * Met à jour les attributs d'accessibilité du DatePicker
 	 * Ajoute des attributs ARIA et des instructions pour les lecteurs d'écran
 	 */
-	const updateAccessibility = async (): Promise<void> => {
+	const updateAccessibility = async (datePickerRef: Ref<HTMLElement | null>): Promise<void> => {
 		await nextTick()
 
 		// Utiliser des attributs data pour sélectionner les éléments, ce qui est plus stable que les classes CSS
-		const datePickerEl = document.querySelector('.v-date-picker')
+		const datePickerEl = datePickerRef.value
 		if (!datePickerEl) return
+
+		console.log(datePickerEl)
 
 		// Ajouter un attribut role="application" au conteneur principal
 		datePickerEl.setAttribute('role', 'application')

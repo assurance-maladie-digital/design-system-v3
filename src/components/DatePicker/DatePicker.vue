@@ -62,6 +62,8 @@
 		bgColor: undefined,
 	})
 
+	const datePickerRef = ref<HTMLElement | null>(null)
+
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: DateValue): void
 		(e: 'closed'): void
@@ -396,7 +398,7 @@
 
 		// Mettre à jour l'accessibilité après l'ouverture du DatePicker
 		nextTick(() => {
-			updateAccessibility()
+			updateAccessibility(datePickerRef)
 		})
 	}
 
@@ -589,6 +591,7 @@
 				<transition name="fade">
 					<VDatePicker
 						v-if="isDatePickerVisible && !props.noCalendar"
+						ref="datePickerRef"
 						v-model="selectedDates"
 						color="primary"
 						:first-day-of-week="1"
