@@ -31,6 +31,27 @@
 
 	// Exemple 10: Combinaison de plusieurs règles
 	const date10 = ref('')
+
+	const today = new Date().toLocaleDateString('fr-FR', {
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	})
+	const tomorrow = new Date(Date.now() + 86400000).toLocaleDateString('fr-FR', {
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	})
+	const yesterday = new Date(Date.now() - 86400000).toLocaleDateString('fr-FR', {
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	})
+	const nextYear = new Date(Date.now() + 31536000000).toLocaleDateString('fr-FR', {
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	})
 </script>
 
 <template>
@@ -61,7 +82,7 @@
 			<v-btn
 				size="small"
 				class="ml-2"
-				@click="date1 = '15/04/2025'"
+				@click="date1 = today"
 			>
 				Remplir le champ
 			</v-btn>
@@ -136,21 +157,21 @@
 			<v-btn
 				size="small"
 				color="primary"
-				@click="date3 = '15/04/2025'"
+				@click="date3 = today"
 			>
 				Aujourd'hui
 			</v-btn>
 			<v-btn
 				size="small"
 				class="ml-2"
-				@click="date3 = '16/04/2025'"
+				@click="date3 = tomorrow"
 			>
 				Demain
 			</v-btn>
 			<v-btn
 				size="small"
 				class="ml-2"
-				@click="date3 = '14/04/2025'"
+				@click="date3 = yesterday"
 			>
 				Hier
 			</v-btn>
@@ -184,21 +205,21 @@
 			<v-btn
 				size="small"
 				color="primary"
-				@click="date4 = '15/04/2025'"
+				@click="date4 = today"
 			>
 				Aujourd'hui
 			</v-btn>
 			<v-btn
 				size="small"
 				class="ml-2"
-				@click="date4 = '16/04/2025'"
+				@click="date4 = tomorrow"
 			>
 				Demain
 			</v-btn>
 			<v-btn
 				size="small"
 				class="ml-2"
-				@click="date4 = '14/04/2025'"
+				@click="date4 = yesterday"
 			>
 				Hier
 			</v-btn>
@@ -474,7 +495,7 @@
 			<v-btn
 				size="small"
 				color="primary"
-				@click="date10 = '15/04/2025'"
+				@click="date10 = today"
 			>
 				Aujourd'hui
 			</v-btn>
@@ -488,7 +509,7 @@
 			<v-btn
 				size="small"
 				class="ml-2"
-				@click="date10 = '16/04/2025'"
+				@click="date10 = nextYear"
 			>
 				Futur
 			</v-btn>
