@@ -454,7 +454,7 @@
 					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
 					if (inputElement) {
 						inputElement.focus()
-						// console.log('focused element:', document.activeElement)
+						isDatePickerVisible.value = false
 					}
 				})
 			}, 0)
