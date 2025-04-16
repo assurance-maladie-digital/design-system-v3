@@ -15,7 +15,8 @@ Le composant DatePicker prend en charge plusieurs types de règles de validation
 
 Les règles de validation sont définies avec la structure suivante :
 
-```ts
+<Source
+    dark code={`
 {
   type: string, // Type de la règle (ex: 'notAfterToday')
   options: {
@@ -26,7 +27,7 @@ Les règles de validation sont définies avec la structure suivante :
     // Autres options spécifiques au type de règle
   }
 }
-```
+`}/>
 
 Ces règles peuvent être passées au DatePicker via les props `customRules` (pour les erreurs) ou `customWarningRules` (pour les avertissements).
 
