@@ -4,7 +4,6 @@ exports[`DownloadBtn > renders correctly 1`] = `
 <button
   class="
     bg-white
-    outlined-style
     sy-download-btn
     text-primary
     text-wrap
@@ -47,7 +46,6 @@ exports[`DownloadBtn > with slots 1`] = `
 <button
   class="
     bg-white
-    outlined-style
     sy-download-btn
     text-primary
     text-wrap
