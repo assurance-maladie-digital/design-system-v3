@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
+	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from './DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
@@ -377,7 +377,9 @@
 		document.removeEventListener('click', handleClickOutside)
 	})
 
-	const dateTextInputRef = ref()
+	const dateTextInputRef = ref<null | ComponentPublicInstance< typeof DateTextInput>>()
+	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
+	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 
 	const validateOnSubmit = () => {
 		if (props.noCalendar) {
@@ -430,10 +432,27 @@
 		}
 	}
 
-	watch(isDatePickerVisible, (isVisible) => {
+	watch(isDatePickerVisible, async (isVisible) => {
 		if (!isVisible && props.isBirthDate) {
 			// Réinitialiser le mode d'affichage au type birthdate
 			currentViewMode.value = 'year'
+		}
+
+		if (isVisible) {
+			// set the focus on the date picker
+			await nextTick()
+
+			console.log(datePickerRef.value)
+
+			datePickerRef.value?.$el.querySelector('button')?.focus()
+			//	.querySelector<HTMLElement>('button')?.focus()
+		}
+		else {
+			// set the focus on the text input
+			await nextTick()
+			dateCalendarTextInputRef.value?.$el.focus()
+			console.log('firld', dateCalendarTextInputRef.value?.$el)
+			console.log('focused element is : ', document.activeElement)
 		}
 	})
 
@@ -547,32 +566,6 @@
 			/>
 		</template>
 		<template v-else>
-			<SyTextField
-				v-model="displayFormattedDate"
-				:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
-				:append-inner-icon="getIcon()"
-				:class="[getMessageClasses(), 'label-hidden-on-focus']"
-				:error-messages="errorMessages"
-				:warning-messages="warningMessages"
-				:success-messages="props.showSuccessMessages ? successMessages : []"
-				:disabled="props.disabled"
-				:read-only="true"
-				:label="props.placeholder"
-				:no-icon="props.noIcon"
-				:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
-				:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
-				color="primary"
-				:show-success-messages="props.showSuccessMessages"
-				:bg-color="props.bgColor"
-				is-clearable
-				title="Date Picker"
-				@focus="openDatePicker"
-				@update:model-value="updateSelectedDates"
-				@prepend-icon-click="openDatePicker"
-				@append-icon-click="openDatePicker"
-			/>
-		</template>
-		<div>
 			<VMenu
 				v-if="!props.noCalendar"
 				v-model="isDatePickerVisible"
@@ -586,32 +579,59 @@
 				attach="body"
 				:offset="[-20, 5]"
 			>
-				<transition name="fade">
-					<VDatePicker
-						v-if="isDatePickerVisible && !props.noCalendar"
-						v-model="selectedDates"
+				<template #activator="{ props: menuProps }">
+					<SyTextField
+						v-bind="menuProps"
+						ref="dateCalendarTextInputRef"
+						v-model="displayFormattedDate"
+						:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
+						:append-inner-icon="getIcon()"
+						:class="[getMessageClasses(), 'label-hidden-on-focus']"
+						:error-messages="errorMessages"
+						:warning-messages="warningMessages"
+						:success-messages="props.showSuccessMessages ? successMessages : []"
+						:disabled="props.disabled"
+						:read-only="true"
+						:label="props.placeholder"
+						:no-icon="props.noIcon"
+						:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
+						:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
 						color="primary"
-						:first-day-of-week="1"
-						:multiple="props.displayRange ? 'range' : false"
-						:show-adjacent-months="true"
-						:show-week="props.showWeekNumber"
-						:view-mode="currentViewMode"
-						@update:view-mode="handleViewModeUpdate"
-						@update:year="handleYearUpdate"
-						@update:month="handleMonthUpdate"
-					>
-						<template #title>
-							Sélectionnez une date
-						</template>
-						<template #header>
-							<h3 class="mx-auto my-auto ml-5 mb-4">
-								{{ todayInString }}
-							</h3>
-						</template>
-					</VDatePicker>
-				</transition>
+						:show-success-messages="props.showSuccessMessages"
+						:bg-color="props.bgColor"
+						is-clearable
+						title="Date Picker"
+						@focus="openDatePicker"
+						@update:model-value="updateSelectedDates"
+						@prepend-icon-click="openDatePicker"
+						@append-icon-click="openDatePicker"
+					/>
+				</template>
+				<VDatePicker
+					v-if="isDatePickerVisible && !props.noCalendar"
+					ref="datePickerRef"
+					v-model="selectedDates"
+					color="primary"
+					:first-day-of-week="1"
+					:multiple="props.displayRange ? 'range' : false"
+					:show-adjacent-months="true"
+					:show-week="props.showWeekNumber"
+					:view-mode="currentViewMode"
+					@update:view-mode="handleViewModeUpdate"
+					@update:year="handleYearUpdate"
+					@update:month="handleMonthUpdate"
+				>
+					<template #title>
+						Sélectionnez une date
+					</template>
+					<template #header>
+						<h3 class="mx-auto my-auto ml-5 mb-4">
+							{{ todayInString }}
+						</h3>
+					</template>
+				</VDatePicker>
 			</VMenu>
-		</div>
+		</template>
 	</div>
 </template>
 
