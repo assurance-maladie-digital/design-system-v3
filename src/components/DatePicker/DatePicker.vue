@@ -441,18 +441,23 @@
 		if (isVisible) {
 			// set the focus on the date picker
 			await nextTick()
-
-			console.log(datePickerRef.value)
-
-			datePickerRef.value?.$el.querySelector('button')?.focus()
-			//	.querySelector<HTMLElement>('button')?.focus()
+			const firstButton = datePickerRef.value?.$el.querySelector('button')
+			if (firstButton) {
+				firstButton.focus()
+			}
 		}
 		else {
 			// set the focus on the text input
-			await nextTick()
-			dateCalendarTextInputRef.value?.$el.focus()
-			console.log('firld', dateCalendarTextInputRef.value?.$el)
-			console.log('focused element is : ', document.activeElement)
+			// wait for VMenu to finish DOM updates & transition
+			setTimeout(() => {
+				requestAnimationFrame(() => {
+					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
+					if (inputElement) {
+						inputElement.focus()
+						// console.log('focused element:', document.activeElement)
+					}
+				})
+			}, 0)
 		}
 	})
 
