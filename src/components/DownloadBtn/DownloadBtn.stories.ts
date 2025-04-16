@@ -1,7 +1,7 @@
 import { fn, userEvent, within } from '@storybook/test'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import axios from 'axios'
-import { VThemeProvider } from 'vuetify/components'
+import { VSheet } from 'vuetify/components'
 import DownloadBtn from './DownloadBtn.vue'
 import NotificationBar from '../NotificationBar/NotificationBar.vue'
 import { useNotificationService } from '@/services/NotificationService'
@@ -20,6 +20,15 @@ const meta = {
 			control: { type: 'text' },
 			table: {
 				category: 'slots',
+			},
+		},
+		dark: {
+			control: 'boolean',
+			description: 'Applique le thème sombre.',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
 			},
 		},
 		filePromise: {
@@ -231,16 +240,16 @@ export const Dark: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<VThemeProvider theme="dark" with-background class="pa-4">
+	<VSheet color="primary" class="pa-4">
 		<DownloadBtn
+			dark
 			:file-promise="download"
-			background-color="black"
 			@error="console.log('error')"
 			@success="console.log('success')"
 		>
 			Télécharger
 		</DownloadBtn>
-	</VThemeProvider>
+	</VSheet>
 </template>
 				`,
 			},
@@ -259,20 +268,20 @@ export const Dark: Story = {
 		],
 	},
 	render: args => ({
-		components: { VThemeProvider, DownloadBtn },
+		components: { VSheet, DownloadBtn },
 		setup() {
 			return { args }
 		},
 		template: `
-			<VThemeProvider theme="dark" with-background class="pa-4">
+			<VSheet color="primary" class="pa-4">
 				<DownloadBtn v-bind="args">{{ args.default }}</DownloadBtn>
-			</VThemeProvider>
+			</VSheet>
 		`,
 	}),
 	args: {
+		dark: true,
 		filePromise: () => axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f'),
 		default: 'Télécharger',
-		backgroundColor: 'black',
 		onError: fn(),
 		onSuccess: fn(),
 	},
