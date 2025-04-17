@@ -939,7 +939,7 @@ export const DefaultDialCode: Story = {
 		useCustomIndicatifsOnly: true,
 		isValidatedOnBlur: true,
 		bgColor: undefined,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 	},
 	render: (args) => {
@@ -964,7 +964,7 @@ export const DefaultDialCode: Story = {
 						:customIndicatifs="args.customIndicatifs"
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
-						:readOnly="args.readOnly"
+						:readonly="args.readonly"
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
@@ -1024,7 +1024,7 @@ export const DefaultDialCodeStandard: Story = {
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
 		bgColor: undefined,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 	},
 	render: (args) => {
@@ -1052,7 +1052,7 @@ export const DefaultDialCodeStandard: Story = {
 						:customIndicatifs="args.customIndicatifs"
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
-						:readOnly="args.readOnly"
+						:readonly="args.readonly"
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
