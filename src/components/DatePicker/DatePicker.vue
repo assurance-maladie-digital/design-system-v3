@@ -32,7 +32,7 @@
 		noIcon?: boolean
 		noCalendar?: boolean
 		isOutlined?: boolean
-		readOnly?: boolean
+		readonly?: boolean
 		width?: string
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
@@ -55,7 +55,7 @@
 		noIcon: false,
 		noCalendar: false,
 		isOutlined: true,
-		readOnly: false,
+		readonly: false,
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
@@ -392,7 +392,7 @@
 	}
 
 	const showDatePicker = () => {
-		if (props.disabled || props.readOnly) return
+		if (props.disabled || props.readonly) return
 
 		isDatePickerVisible.value = true
 
@@ -556,7 +556,7 @@
 				:custom-rules="props.customRules"
 				:custom-warning-rules="props.customWarningRules"
 				:disabled="props.disabled"
-				:read-only="props.readOnly"
+				:readonly="props.readonly"
 				:is-outlined="props.isOutlined"
 				:display-icon="props.displayIcon"
 				:display-append-icon="props.displayAppendIcon"
@@ -596,7 +596,7 @@
 						:warning-messages="warningMessages"
 						:success-messages="props.showSuccessMessages ? successMessages : []"
 						:disabled="props.disabled"
-						:read-only="true"
+						:readonly="true"
 						:label="props.placeholder"
 						:no-icon="props.noIcon"
 						:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"

@@ -227,9 +227,9 @@ describe('DateTextInput.vue', () => {
 	})
 
 	it('handles readonly state', async () => {
-		await wrapper.setProps({ readOnly: true })
+		await wrapper.setProps({ readonly: true })
 		const textField = wrapper.findComponent(SyTextField)
-		expect(textField.props('readOnly')).toBe(true)
+		expect(textField.props('readonly')).toBe(true)
 	})
 
 	it('emits focus and blur events', async () => {

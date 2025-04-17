@@ -28,7 +28,7 @@
 		customRules?: ValidationRule[]
 		customWarningRules?: ValidationRule[]
 		disableErrorHandling?: boolean
-		readOnly?: boolean
+		readonly?: boolean
 	}>(), {
 		modelValue: () => ({ from: null, to: null }),
 		placeholderFrom: 'Début',
@@ -47,7 +47,7 @@
 		customRules: () => [],
 		customWarningRules: () => [],
 		disableErrorHandling: false,
-		readOnly: false,
+		readonly: false,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -347,7 +347,7 @@
 				:show-week-number="props.showWeekNumber"
 				:show-success-messages="showSuccessMessagesActual"
 				:success-message="fromDateValidation.hasSuccess"
-				:read-only="props.readOnly"
+				:readonly="props.readonly"
 				@closed="handleFromDateClosed"
 			/>
 		</div>
@@ -371,7 +371,7 @@
 				:show-week-number="props.showWeekNumber"
 				:show-success-messages="showSuccessMessagesActual"
 				:success-message="toDateValidation.hasSuccess"
-				:read-only="props.readOnly"
+				:readonly="props.readonly"
 				@closed="handleToDateClosed"
 			/>
 		</div>
