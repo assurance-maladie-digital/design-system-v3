@@ -34,7 +34,7 @@
 		displayAsterisk: { type: Boolean, default: false },
 		disableErrorHandling: { type: Boolean, default: false },
 		bgColor: { type: String, default: undefined },
-		readOnly: { type: Boolean, default: false },
+		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
 	})
 
@@ -190,7 +190,7 @@
 			:disable-error-handling="props.disableErrorHandling"
 			:return-object="true"
 			:bg-color="props.bgColor"
-			:read-only="props.readOnly"
+			:readonly="props.readonly"
 			:disabled="props.disabled"
 			class="custom-select"
 			text-key="displayText"
@@ -209,6 +209,7 @@
 			:success-messages="successes"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:display-asterisk="props.displayAsterisk"
+			:readonly="props.readonly"
 			:bg-color="props.bgColor"
 			:disabled="props.disabled"
 			:class="{

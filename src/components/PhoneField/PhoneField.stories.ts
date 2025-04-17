@@ -91,7 +91,7 @@ export const Default: Story = {
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
 		bgColor: undefined,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 	},
 	render: (args) => {
@@ -114,7 +114,7 @@ export const Default: Story = {
 					:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 					:isValidatedOnBlur="args.isValidatedOnBlur"
 					:bg-color="args.bgColor"
-					:readOnly="args.readOnly"
+					:readonly="args.readonly"
 					:disabled="args.disabled"
 				/>
 				</div>
@@ -175,7 +175,7 @@ export const Required: Story = {
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
 		bgColor: undefined,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 	},
 	render: (args) => {
@@ -198,7 +198,7 @@ export const Required: Story = {
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
      :bg-color="args.bgColor"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
     />
 				</div>
@@ -269,7 +269,7 @@ const phoneNumber = ref('')
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
 						:display-asterisk="args.displayAsterisk"
-						:readOnly="args.readOnly"
+						:readonly="args.readonly"
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
@@ -340,7 +340,7 @@ export const CustomIndicatifs: Story = {
 		useCustomIndicatifsOnly: true,
 		isValidatedOnBlur: true,
 		bgColor: undefined,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 	},
 	render: (args) => {
@@ -362,7 +362,7 @@ export const CustomIndicatifs: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -422,7 +422,7 @@ export const NotValidatedOnBlur: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -445,7 +445,7 @@ export const NotValidatedOnBlur: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -505,7 +505,7 @@ export const DisplayFormatCode: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -528,7 +528,7 @@ export const DisplayFormatCode: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -588,7 +588,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -611,7 +611,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -671,7 +671,7 @@ export const DisplayFormatCodeCountry: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -694,7 +694,7 @@ export const DisplayFormatCodeCountry: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -754,7 +754,7 @@ export const DisplayFormatCountry: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -777,7 +777,7 @@ export const DisplayFormatCountry: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -837,7 +837,7 @@ export const DisplayFormatAbbreviation: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -860,7 +860,7 @@ export const DisplayFormatAbbreviation: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -926,7 +926,7 @@ export const DisplayModels: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		bgColor: undefined,
 	},
 	render: (args) => {
@@ -952,7 +952,7 @@ export const DisplayModels: Story = {
 						:customIndicatifs="args.customIndicatifs"
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
-						:readOnly="args.readOnly"
+						:readonly="args.readonly"
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
@@ -1015,7 +1015,7 @@ export const DisabledErrorHandling: Story = {
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
 		disableErrorHandling: true,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -1041,7 +1041,7 @@ export const DisabledErrorHandling: Story = {
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
 						:disableErrorHandling="args.disableErrorHandling"
-						:readOnly="args.readOnly"
+						:readonly="args.readonly"
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
@@ -1060,7 +1060,7 @@ export const DisabledErrorHandling: Story = {
 							:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 							:isValidatedOnBlur="args.isValidatedOnBlur"
 							:disableErrorHandling="false"
-							:readOnly="args.readOnly"
+							:readonly="args.readonly"
 							:disabled="args.disabled"
 							:bg-color="args.bgColor"
 						/>

@@ -60,7 +60,7 @@
 			type: String,
 			default: undefined,
 		},
-		readOnly: {
+		readonly: {
 			type: Boolean,
 			default: false,
 		},
@@ -76,7 +76,7 @@
 	const labelRef = ref<HTMLElement | null>(null)
 
 	const toggleMenu = () => {
-		if (props.readOnly) return
+		if (props.readonly) return
 		isOpen.value = !isOpen.value
 	}
 	const closeList = () => {
@@ -194,7 +194,7 @@
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
-			:readonly="props.readOnly"
+			:readonly="props.readonly"
 			class="sy-select"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"

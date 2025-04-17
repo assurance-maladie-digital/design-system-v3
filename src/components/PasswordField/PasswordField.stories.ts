@@ -53,7 +53,7 @@ const meta = {
 			control: 'object',
 			description: 'Messages de succès à afficher',
 		},
-		readOnly: {
+		readonly: {
 			control: 'boolean',
 			description: 'Indique si le champ est en lecture seule',
 		},
@@ -99,7 +99,7 @@ const meta = {
 		errorMessages: null,
 		warningMessages: null,
 		successMessages: null,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		placeholder: 'Entrez votre mot de passe',
 		customRules: [],
@@ -162,7 +162,7 @@ export const Default: Story = {
 				:error-messages="args.errorMessages"
 				:warning-messages="args.warningMessages"
 				:success-messages="args.successMessages"
-				:read-only="args.readOnly"
+				:readonly="args.readonly"
 				:disabled="args.disabled"
 				:placeholder="args.placeholder"
 				:custom-rules="args.customRules"
@@ -301,7 +301,7 @@ export const ReadOnly: Story = {
 					<PasswordField
 						v-model="password"
 						label="Mot de passe"
-						:read-only="true"
+						:readonly="true"
 					/>
 				</template>
 				`,
@@ -320,7 +320,7 @@ export const ReadOnly: Story = {
 		],
 	},
 	args: {
-		readOnly: true,
+		readonly: true,
 		modelValue: 'MonMotDePasse123',
 	},
 }
@@ -832,7 +832,7 @@ export const WithCustomRules: Story = {
 				:color="args.color"
 				:label="args.label"
 				:required="args.required"
-				:read-only="args.readOnly"
+				:readonly="args.readonly"
 				:disabled="args.disabled"
 				:placeholder="args.placeholder"
 				:custom-rules="customRules"

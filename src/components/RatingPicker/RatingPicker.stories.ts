@@ -331,7 +331,7 @@ export const ReadOnly: Story = {
 		v-model="ratingEmotion"
 		label="Êtes-vous satisfait de ce service ?"
 		type="emotion"
-		read-only
+		readonly
 	/>
 </template>
         `,
