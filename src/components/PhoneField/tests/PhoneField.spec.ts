@@ -163,42 +163,53 @@ describe('PhoneField', () => {
 	})
 
 	it('passes dialCode object to SyTextField when dialCode is set', async () => {
+		const dialCodeModelValue = { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' }
+
 		const wrapper = mount(PhoneField, {
 			global: {
 				plugins: [vuetify],
 			},
 			props: {
 				withCountryCode: true,
-				dialCodeModel: { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' },
+				dialCodeModel: dialCodeModelValue,
 			},
 		})
 
-		// Vérifier que le dialCode est bien un objet
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.vm.dialCode).toBeDefined()
 		expect(typeof wrapper.vm.dialCode).toBe('object')
 
-		// Trouver le composant SyTextField
-		const textField = wrapper.findComponent({ name: 'SyTextField' })
-		expect(textField.exists()).toBe(true)
+		type Indicatif = {
+			code: string
+			country: string
+			abbreviation: string
+			phoneLength: number
+			mask: string
+			displayText?: string
+		}
+		const dialCode = wrapper.vm.dialCode as Indicatif
 
-		// Vérifier que les propriétés du SyTextField sont correctement définies en fonction du dialCode
+		expect(dialCode.code).toBe('+33')
+		expect(dialCode.country).toBe('France')
+		expect(dialCode.phoneLength).toBe(10)
+		expect(dialCode.abbreviation).toBe('FR')
+		expect(dialCode.mask).toBe('## ## ## ## ##')
+
+		expect(dialCode).toHaveProperty('displayText')
+		expect(typeof dialCode.displayText).toBe('string')
+
 		expect(wrapper.vm.phoneMask).toBe('## ## ## ## ##')
 		expect(wrapper.vm.counter).toBe(10)
 
-		// Vérifier que le SyTextField reçoit les bonnes propriétés
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		expect(textField.exists()).toBe(true)
 		expect(textField.props('counter')).toBe(10)
 
-		// Vérifier que le SySelect est présent et reçoit l'objet dialCode
 		const select = wrapper.findComponent({ name: 'SySelect' })
 		expect(select.exists()).toBe(true)
 		expect(select.props('returnObject')).toBe(true)
 
-		// Vérifier que l'objet dialCode est correctement passé au SySelect via v-model
-		expect(wrapper.vm.dialCode).toEqual({
-			code: '+33',
-			abbreviation: 'FR',
-			country: 'France',
-			phoneLength: 10,
-			mask: '## ## ## ## ##',
-		})
+		expect(select.props('modelValue')).toEqual(wrapper.vm.dialCode)
 	})
 })
