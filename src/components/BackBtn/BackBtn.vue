@@ -16,6 +16,7 @@
 	const buttonVariant = computed(() => isDark.value ? 'outlined' : 'text')
 	const buttonTheme = computed(() => isDark.value ? 'dark' : 'light')
 	const buttonColor = computed(() => isDark.value ? 'white' : 'primary')
+	const buttonBgColor = computed(() => isDark.value ? 'transparent' : props.backgroundColor)
 
 	const buttonClasses = computed(() => ({
 		'px-0': !isDark.value,
@@ -30,7 +31,7 @@
 		:variant="buttonVariant"
 		:theme="buttonTheme"
 		:color="buttonColor"
-		:class="['sy-back-btn', 'text-none', buttonClasses, `bg-${props.backgroundColor}`]"
+		:class="['sy-back-btn', 'text-none', buttonClasses, `bg-${buttonBgColor}`]"
 	>
 		<slot name="icon">
 			<VIcon
