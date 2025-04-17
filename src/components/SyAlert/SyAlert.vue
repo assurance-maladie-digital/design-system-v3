@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, ref, onMounted } from 'vue'
 	import { locales } from './locales'
 	import {
 		mdiAlertOutline,
@@ -8,6 +8,7 @@
 		mdiInformationOutline,
 		mdiClose,
 	} from '@mdi/js'
+	import type { VIcon } from 'vuetify/components'
 
 	const show = defineModel<boolean>({
 		default: true,
@@ -43,6 +44,11 @@
 		prependIcon,
 		dismissAlert,
 	})
+
+	const alertIcon = ref<typeof VIcon | null>(null)
+	onMounted(() => {
+		alertIcon.value?.$el?.querySelector('svg')?.setAttribute('role', 'presentation')
+	})
 </script>
 
 <template>
@@ -57,8 +63,10 @@
 	>
 		<template #prepend>
 			<VIcon
+				ref="alertIcon"
 				class="alert-icon"
 				size="1.5rem"
+				role="presentation"
 			>
 				<slot name="icon">
 					{{ prependIcon }}
@@ -128,17 +136,24 @@
 .alert-close-btn {
 	cursor: pointer;
 	line-height: 0;
-
-	.v-btn__overlay {
-		display: none;
-	}
-}
-
-.v-btn {
 	text-transform: none;
 	font-weight: bold;
 	font-size: 0.75rem;
 	letter-spacing: normal;
+
+	&:focus-visible {
+		outline: solid 2px black !important;
+		outline-color: var(--v-primary-base) !important;
+		outline-offset: 2px !important;
+
+		&::after {
+			visibility: hidden;
+		}
+	}
+
+	.v-btn__overlay {
+		display: none;
+	}
 }
 
 @media screen and (width <= 440px) {
@@ -253,5 +268,19 @@
 			'icon-bg': tokens.$colors-background-info-subdued,
 		)
 	);
+}
+
+.v-alert.v-theme--dark {
+	&.v-alert--variant-outlined {
+		background-color: tokens.$white-base !important;
+	}
+
+	.alert-close-btn {
+		color: black !important;
+
+		&:focus-visible {
+			outline-color: black !important;
+		}
+	}
 }
 </style>
