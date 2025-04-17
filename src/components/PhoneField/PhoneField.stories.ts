@@ -1,5 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
+import { indicatifs } from './indicatifs'
 
 const meta = {
 	title: 'Composants/Formulaires/PhoneField',
@@ -951,6 +952,94 @@ export const DefaultDialCode: Story = {
 				<div class="pa-4">
 					<h3>PhoneField avec indicatif pré-rempli</h3>
 					<p>Cette story montre comment pré-remplir l'indicatif téléphonique avec des indicatifs personnalisés.</p>
+					<PhoneField
+						v-model="args.modelValue"
+						:dial-code-model="args.dialCodeModel"
+						:required="args.required"
+						:outlined="args.outlined"
+						:outlinedIndicatif="args.outlinedIndicatif"
+						:withCountryCode="args.withCountryCode"
+						:countryCodeRequired="args.countryCodeRequired"
+						:displayFormat="args.displayFormat"
+						:customIndicatifs="args.customIndicatifs"
+						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
+						:isValidatedOnBlur="args.isValidatedOnBlur"
+						:readOnly="args.readOnly"
+						:disabled="args.disabled"
+						:bg-color="args.bgColor"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const DefaultDialCodeStandard: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="phone"
+						:dial-code-model="dialCodeModel"
+						:with-country-code="true"
+						:country-code-required="true"
+						display-format="code-country"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField, indicatifs } from '@cnamts/synapse'
+					
+					// Modèle pour le numéro de téléphone
+					const phone = ref('')
+					
+					// Recherche de l'indicatif France dans les indicatifs standards
+					const franceIndicatif = indicatifs.find(ind => ind.country === 'France')
+					
+					// Pré-remplissage avec l'indicatif France
+					const dialCodeModel = ref(franceIndicatif)
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		dialCodeModel: indicatifs.find(ind => ind.country === 'France'),
+		required: false,
+		outlined: true,
+		outlinedIndicatif: true,
+		withCountryCode: true,
+		countryCodeRequired: true,
+		displayFormat: 'code-country',
+		customIndicatifs: [],
+		useCustomIndicatifsOnly: false,
+		isValidatedOnBlur: true,
+		bgColor: undefined,
+		readOnly: false,
+		disabled: false,
+	},
+	render: (args) => {
+		return {
+			components: { PhoneField },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<h3>PhoneField avec indicatif standard pré-rempli</h3>
+					<p>Cette story montre comment pré-remplir l'indicatif téléphonique avec les indicatifs standards.</p>
+					<div class="mb-4">
+						<strong>Indicatif sélectionné :</strong> {{ args.dialCodeModel ? args.dialCodeModel.code + ' ' + args.dialCodeModel.country : 'Aucun' }}
+					</div>
 					<PhoneField
 						v-model="args.modelValue"
 						:dial-code-model="args.dialCodeModel"
