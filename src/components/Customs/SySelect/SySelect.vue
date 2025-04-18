@@ -4,7 +4,7 @@
 	import type { VTextField } from 'vuetify/components'
 	import { locales } from './locales'
 
-	type ItemType = {
+	export type ItemType = {
 		[key: string]: unknown
 	}
 
