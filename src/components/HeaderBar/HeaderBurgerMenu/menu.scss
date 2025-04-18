@@ -1,0 +1,19 @@
+@use 'sass:color';
+@use '@/assets/tokens';
+
+$red: color.channel(tokens.$primary-base, 'red');
+$green: color.channel(tokens.$primary-base, 'green');
+$blue: color.channel(tokens.$primary-base, 'blue');
+$primary: $red, $green, $blue;
+
+@mixin item-focused() {
+	border-top: 2px solid transparent;
+	border-bottom: 2px solid transparent;
+	transition: border-color 0.1s ease;
+
+	&:focus-visible {
+		outline: 0;
+		border-top: 2px solid rgb(var(--v-theme-primary, $primary));
+		border-bottom: 2px solid rgb(var(--v-theme-primary, $primary));
+	}
+}
