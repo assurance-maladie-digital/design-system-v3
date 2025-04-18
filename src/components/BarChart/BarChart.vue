@@ -11,49 +11,55 @@
 		LinearScale,
 	} from 'chart.js'
 	import type { ChartComponentRef } from 'vue-chartjs'
+	import type { ChartData } from 'chart.js'
 
 	// Enregistrement des composants nécessaires de Chart.js
 	ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
+	// Définition des props pour accepter les données et options dynamiques
+	const props = defineProps({
+		chartData: {
+			type: Object as () => ChartData<'bar'>,
+			required: true,
+			default: () => ({
+				labels: ['Default Label 1', 'Default Label 2'],
+				datasets: [
+					{
+						label: 'Default Dataset',
+						data: [10, 20],
+						backgroundColor: '#0c419a',
+					},
+				],
+			}),
+		},
+		chartOptions: {
+			type: Object,
+			required: true,
+			default: () => ({
+				responsive: true,
+				plugins: {
+					legend: {
+						display: true,
+					},
+					title: {
+						display: true,
+						text: 'Default Chart Title',
+					},
+				},
+			}),
+		},
+	})
+
 	// Référence au composant Bar chart
 	const chartRef = ref<ChartComponentRef | null>(null)
 
-	// Données du graphique
-	const chartData = {
-		labels: ['January', 'February', 'March'],
-		datasets: [
-			{
-				label: 'Ventes',
-				data: [40, 20, 12],
-				backgroundColor: '#0070f3',
-			},
-		],
-	}
-
-	// Options du graphique
-	const chartOptions = {
-		responsive: true,
-		plugins: {
-			legend: {
-				display: true,
-			},
-			title: {
-				display: true,
-				text: 'Graphique des ventes mensuelles',
-			},
-		},
-	}
-
 	// Ajout des attributs d'accessibilité après le rendu
 	onMounted(async () => {
-		await nextTick() // Attendre que le DOM soit mis à jour
+		await nextTick()
 		if (chartRef.value?.chart?.canvas) {
 			const canvasEl = chartRef.value.chart.canvas as HTMLCanvasElement
 			canvasEl.setAttribute('role', 'img')
-			canvasEl.setAttribute(
-				'aria-label',
-				'Ventes mensuelles pour 2024',
-			)
+			canvasEl.setAttribute('aria-label', props.chartOptions.plugins.title.text)
 			canvasEl.setAttribute('aria-describedby', 'chart-desc')
 		}
 	})
@@ -62,13 +68,13 @@
 <template>
 	<Bar
 		ref="chartRef"
-		:options="chartOptions"
-		:data="chartData"
+		:options="props.chartOptions"
+		:data="props.chartData"
 	/>
 	<p
 		id="chart-desc"
 		class="d-sr-only"
 	>
-		Graphique représentant les ventes par mois pour 2024. Janvier : 40. Février : 20. Mars : 12.
+		{{ props.chartOptions.plugins.title.text }}
 	</p>
 </template>
