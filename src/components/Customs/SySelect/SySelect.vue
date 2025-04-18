@@ -1,7 +1,8 @@
 <script setup lang="ts">
-	import { mdiInformation, mdiMenuDown } from '@mdi/js'
+	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
 	import { ref, watch, onMounted, computed, type PropType } from 'vue'
 	import type { VTextField } from 'vuetify/components'
+	import { locales } from './locales'
 
 	const props = defineProps({
 		modelValue: {
@@ -64,6 +65,10 @@
 			type: Boolean,
 			default: false,
 		},
+		clearable: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -86,7 +91,11 @@
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
-		if (props.returnObject) {
+		if (item === null) {
+			selectedItem.value = null
+			emit('update:modelValue', null)
+		}
+		else if (props.returnObject) {
 			selectedItem.value = item
 			emit('update:modelValue', item)
 		}
@@ -208,6 +217,15 @@
 				>
 					{{ mdiInformation }}
 				</VIcon>
+				<VIcon
+					v-if="props.clearable && selectedItemText"
+					class="sy-select__clear-icon"
+					:class="hasError ? 'mr-14' : 'mr-8'"
+					:aria-label="locales.clear"
+					@click.stop.prevent="selectItem(null)"
+				>
+					{{ mdiCloseCircle }}
+				</VIcon>
 				<VIcon class="arrow">
 					{{ mdiMenuDown }}
 				</VIcon>
@@ -284,6 +302,11 @@
 	position: absolute;
 	right: 10px;
 	color: tokens.$grey-darken-20;
+}
+
+.sy-select__clear-icon {
+	color: tokens.$grey-darken-20 !important;
+	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
 :deep(.v-field__input) {

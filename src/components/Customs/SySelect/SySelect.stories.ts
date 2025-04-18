@@ -30,6 +30,10 @@ const meta: Meta<typeof SySelect> = {
 			control: 'boolean',
 			description: 'Retourne l\'objet complet sélectionné',
 		},
+		clearable: {
+			control: 'boolean',
+			description: 'Permet de vider la sélection',
+		},
 	},
 } as Meta<typeof SySelect>
 
