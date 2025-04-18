@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, onMounted } from 'vue'
+	import { ref, onMounted, nextTick } from 'vue'
 	import { Bar } from 'vue-chartjs'
 	import {
 		Chart as ChartJS,
@@ -10,25 +10,27 @@
 		CategoryScale,
 		LinearScale,
 	} from 'chart.js'
-	import type { Chart } from 'chart.js'
+	import type { ChartComponentRef } from 'vue-chartjs'
 
+	// Enregistrement des composants nécessaires de Chart.js
 	ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-	const chartInstance = ref<Chart | null>(null)
+	// Référence au composant Bar chart
+	const chartRef = ref<ChartComponentRef | null>(null)
 
 	// Données du graphique
 	const chartData = {
 		labels: ['January', 'February', 'March'],
 		datasets: [
 			{
+				label: 'Ventes',
 				data: [40, 20, 12],
-				label: 'Sales',
 				backgroundColor: '#0070f3',
 			},
 		],
 	}
 
-	// Options de configuration du graphique
+	// Options du graphique
 	const chartOptions = {
 		responsive: true,
 		plugins: {
@@ -37,27 +39,36 @@
 			},
 			title: {
 				display: true,
-				text: 'Bar Chart',
+				text: 'Graphique des ventes mensuelles',
 			},
 		},
 	}
 
-	onMounted(() => {
-		if (chartInstance.value) {
-			const canvas = chartInstance.value.canvas
-			if (canvas) {
-				canvas.setAttribute('role', 'img')
-				canvas.setAttribute('aria-label', 'Graphique représentant les ventes par mois pour 2024')
-			}
+	// Ajout des attributs d'accessibilité après le rendu
+	onMounted(async () => {
+		await nextTick() // Attendre que le DOM soit mis à jour
+		if (chartRef.value?.chart?.canvas) {
+			const canvasEl = chartRef.value.chart.canvas as HTMLCanvasElement
+			canvasEl.setAttribute('role', 'img')
+			canvasEl.setAttribute(
+				'aria-label',
+				'Ventes mensuelles pour 2024',
+			)
+			canvasEl.setAttribute('aria-describedby', 'chart-desc')
 		}
 	})
 </script>
 
 <template>
 	<Bar
-		id="my-chart-id"
+		ref="chartRef"
 		:options="chartOptions"
 		:data="chartData"
-		v-bind="{ chartInstance }"
 	/>
+	<p
+		id="chart-desc"
+		class="d-sr-only"
+	>
+		Graphique représentant les ventes par mois pour 2024. Janvier : 40. Février : 20. Mars : 12.
+	</p>
 </template>
