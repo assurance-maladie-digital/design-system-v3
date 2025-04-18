@@ -4,13 +4,17 @@
 	import type { VTextField } from 'vuetify/components'
 	import { locales } from './locales'
 
+	type ItemType = {
+		[key: string]: unknown
+	}
+
 	const props = defineProps({
 		modelValue: {
 			type: [Object, String, Number],
 			default: null,
 		},
 		items: {
-			type: Array,
+			type: Array as PropType<ItemType[]>,
 			default: () => [],
 		},
 		label: {
@@ -132,9 +136,9 @@
 
 	const formattedItems = computed(() => {
 		return props.items.map((item) => {
-			if (typeof item === 'string') {
-				return { [props.textKey]: item, [props.valueKey]: item }
-			}
+      if (typeof item === 'string') {
+        return { [props.textKey]: item, [props.valueKey]: item }
+      }
 			return item
 		})
 	})
@@ -248,8 +252,14 @@
 				:ref="'options-' + index"
 				role="option"
 				class="v-list-item"
-				:aria-selected="selectedItem === item"
+				:aria-selected="props.returnObject
+					? selectedItem && selectedItem[props.valueKey] === item[props.valueKey]
+					: selectedItem === item[props.valueKey]"
 				:tabindex="index + 1"
+				:class="{ active: props.returnObject
+					? selectedItem && selectedItem[props.valueKey] === item[props.valueKey]
+					: selectedItem === item[props.valueKey]
+				}"
 				@click="selectItem(item)"
 			>
 				<VListItemTitle>
@@ -296,6 +306,10 @@
 
 .v-list-item[aria-selected='true'] {
 	background-color: rgb(0 0 0 / 8%);
+}
+
+.v-list-item.active {
+  background-color: rgb(0 0 0 / 8%);
 }
 
 .v-icon {
