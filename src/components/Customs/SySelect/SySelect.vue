@@ -136,9 +136,9 @@
 
 	const formattedItems = computed(() => {
 		return props.items.map((item) => {
-      if (typeof item === 'string') {
-        return { [props.textKey]: item, [props.valueKey]: item }
-      }
+			if (typeof item === 'string') {
+				return { [props.textKey]: item, [props.valueKey]: item }
+			}
 			return item
 		})
 	})
@@ -309,7 +309,7 @@
 }
 
 .v-list-item.active {
-  background-color: rgb(0 0 0 / 8%);
+	background-color: rgb(0 0 0 / 8%);
 }
 
 .v-icon {
