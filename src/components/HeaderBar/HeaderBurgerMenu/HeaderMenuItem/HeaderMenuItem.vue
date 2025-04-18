@@ -10,6 +10,7 @@
 
 <style lang="scss" scoped>
 	@use '@/assets/tokens.scss' as *;
+	@use '../menu';
 
 	.header-menu-item {
 		color: rgb(var(--v-theme-primary));
@@ -37,6 +38,8 @@
 			&::first-letter {
 				text-transform: uppercase;
 			}
+
+			@include menu.item-focused;
 		}
 	}
 
