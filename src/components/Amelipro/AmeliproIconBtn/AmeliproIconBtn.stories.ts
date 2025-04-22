@@ -25,7 +25,7 @@ const meta = {
 		uniqueId: { description: 'Ajoute un id au bouton' },
 	},
 	component: AmeliproIconBtn,
-	title: 'Composants/AmeliproIconBtn',
+	title: 'Composants/Amelipro/AmeliproIconBtn',
 } as Meta<typeof AmeliproIconBtn>
 export default meta
 

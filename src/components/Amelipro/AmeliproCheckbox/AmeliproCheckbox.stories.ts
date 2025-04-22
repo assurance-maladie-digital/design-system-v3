@@ -30,7 +30,7 @@ const meta = {
 		'update:model-value': { description: 'Événement émit au changement de la valeur de la checkbox' },
 	},
 	component: AmeliproCheckbox,
-	title: 'Composants/Formulaires/AmeliproCheckbox',
+	title: 'Composants/Amelipro/Formulaires/AmeliproCheckbox',
 } as Meta<typeof AmeliproCheckbox>
 
 export default meta

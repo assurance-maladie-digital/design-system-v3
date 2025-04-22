@@ -46,7 +46,7 @@ const meta = {
 		underline: { description: 'Souligne le texte du bouton/lien.' },
 	},
 	component: AmeliproBtn,
-	title: 'Composants/AmeliproBtn',
+	title: 'Composants/Amelipro/AmeliproBtn',
 } as Meta<typeof AmeliproBtn>
 
 export default meta

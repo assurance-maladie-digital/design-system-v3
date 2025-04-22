@@ -28,7 +28,7 @@ const meta = {
 		width: { description: 'Largeur de la fenêtre de dialogue' },
 	},
 	component: AmeliproDialog,
-	title: 'Composants/AmeliproDialog',
+	title: 'Composants/Amelipro/AmeliproDialog',
 } as Meta<typeof AmeliproDialog>
 
 export default meta

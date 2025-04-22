@@ -64,7 +64,7 @@
 			:close-on-content-click="false"
 			:max-width="currentWidth"
 			:min-width="currentWidth"
-			:offset="[4, 250]"
+			scroll-strategy="reposition"
 			transition="slide-y-transition"
 			:width="currentWidth"
 		>
@@ -134,6 +134,14 @@
 
 	.v-btn :deep(.v-btn__content) {
 		opacity: 1 !important;
+	}
+
+	:deep(.v-overlay__content) {
+		top: 40px;
+		left: -200px;
+		transform-origin: left top 0;
+		z-index: 8;
+		border-radius: 4px;
 	}
 
 	.user-menu {

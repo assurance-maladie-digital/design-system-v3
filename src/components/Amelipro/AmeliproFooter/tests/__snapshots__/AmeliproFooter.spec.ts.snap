@@ -1,0 +1,403 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproFooter > render correctly 1`] = `
+<footer
+  class="
+    amelipro-footer
+    bg-ap-blue-darken-2
+    d-block
+    justify-center
+    pa-8
+    w-100
+  "
+  id="my-footer-id-container"
+  role="contentinfo"
+  style="position: relative;"
+>
+  <div
+    class="
+      align-center
+      amelipro-footer__content
+      d-flex
+      flex-row
+      justify-space-between
+    "
+    id="my-footer-id-content"
+    style="width: 100%;"
+  >
+    <p
+      class="
+        font-weight-semibold
+        footer-version
+        mb-0
+        mr-4
+        text-ap-white
+        text-caption
+      "
+      id="my-footer-id-version"
+    >
+      X.X.X
+    </p>
+    <div
+      class="
+        amelipro-footer__contact
+        mr-4
+        mt-1
+      "
+      id="my-footer-id-contact"
+    >
+      <a
+        class="
+          amelipro-btn
+          amelipro-footer__contact__link
+          amelipro-footer__contact__link
+          elevation-0
+          text-ap-blue-darken-1
+          text-ap-white
+          text-ap-white
+          text-decoration-none
+          text-decoration-none
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-text
+          v-theme--light
+        "
+        href="tel:3608"
+        id="my-footer-id-contact-link"
+        style="height: auto; min-height: auto; padding: 0px;"
+        type="button"
+      ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+        
+      <!----><span
+        class="v-btn__content"
+        data-no-activator=""
+      ><span class="
+        align-center
+        amelipro-custom-btn
+        d-flex
+        flex-row
+      "><span
+        class="
+          d-sr-only
+          text-button
+          text-uppercase
+        "
+        id="my-footer-id-contact-link-text"
+      >Nous contacter</span><img
+        alt="au 3608 : Service gratuit + prix appel"
+        id="my-footer-id-contact-link-img"
+        src="/src/assets/amelipro/img/cartouche_nouveauTEL.svg"
+      />
+        
+      <!-- v-if -->
+        
+      <!-- v-if --></span></span>
+        
+      <!---->
+        
+      <!---->
+      </a>
+    </div>
+    <ul
+      class="
+        align-center
+        amelipro-footer__list
+        d-flex
+        flex-wrap
+        justify-end
+        list-style-none
+        mt-2
+        mt-sm-0
+      "
+      id="my-footer-id-list"
+    >
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <button
+          class="
+            amelipro-btn
+            elevation-0
+            text-ap-white
+            text-none
+            text-none
+            v-btn
+            v-btn--density-default
+            v-btn--flat
+            v-btn--size-default
+            v-btn--variant-text
+            v-theme--light
+          "
+          id="my-footer-id-site-map-btn"
+          style="height: auto; min-height: auto; padding: 0px;"
+          type="button"
+        >
+          <span class="v-btn__overlay"></span>
+          <span class="v-btn__underlay"></span>
+          <!---->
+          <span
+            class="v-btn__content"
+            data-no-activator=""
+          >
+            <span class="
+              align-center
+              amelipro-custom-btn
+              d-flex
+              flex-row
+            ">
+              Plan de site
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </span>
+          <!---->
+          <!---->
+        </button>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <button
+          class="
+            amelipro-btn
+            elevation-0
+            text-ap-white
+            text-none
+            text-none
+            v-btn
+            v-btn--density-default
+            v-btn--flat
+            v-btn--size-default
+            v-btn--variant-text
+            v-theme--light
+          "
+          id="my-footer-id-about-btn"
+          style="height: auto; min-height: auto; padding: 0px;"
+          type="button"
+        >
+          <span class="v-btn__overlay"></span>
+          <span class="v-btn__underlay"></span>
+          <!---->
+          <span
+            class="v-btn__content"
+            data-no-activator=""
+          >
+            <span class="
+              align-center
+              amelipro-custom-btn
+              d-flex
+              flex-row
+            ">
+              À propos
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </span>
+          <!---->
+          <!---->
+        </button>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <button
+          class="
+            amelipro-btn
+            elevation-0
+            text-ap-white
+            text-none
+            text-none
+            v-btn
+            v-btn--density-default
+            v-btn--flat
+            v-btn--size-default
+            v-btn--variant-text
+            v-theme--light
+          "
+          id="my-footer-id-config-btn"
+          style="height: auto; min-height: auto; padding: 0px;"
+          type="button"
+        >
+          <span class="v-btn__overlay"></span>
+          <span class="v-btn__underlay"></span>
+          <!---->
+          <span
+            class="v-btn__content"
+            data-no-activator=""
+          >
+            <span class="
+              align-center
+              amelipro-custom-btn
+              d-flex
+              flex-row
+            ">
+              Configuration
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </span>
+          <!---->
+          <!---->
+        </button>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <button
+          class="
+            amelipro-btn
+            elevation-0
+            text-ap-white
+            text-none
+            text-none
+            v-btn
+            v-btn--density-default
+            v-btn--flat
+            v-btn--size-default
+            v-btn--variant-text
+            v-theme--light
+          "
+          id="my-footer-id-legal-notice-btn"
+          style="height: auto; min-height: auto; padding: 0px;"
+          type="button"
+        >
+          <span class="v-btn__overlay"></span>
+          <span class="v-btn__underlay"></span>
+          <!---->
+          <span
+            class="v-btn__content"
+            data-no-activator=""
+          >
+            <span class="
+              align-center
+              amelipro-custom-btn
+              d-flex
+              flex-row
+            ">
+              Mentions légales
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </span>
+          <!---->
+          <!---->
+        </button>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <button
+          class="
+            amelipro-btn
+            elevation-0
+            text-ap-white
+            text-none
+            text-none
+            v-btn
+            v-btn--density-default
+            v-btn--flat
+            v-btn--size-default
+            v-btn--variant-text
+            v-theme--light
+          "
+          id="my-footer-id-cgu-btn"
+          style="height: auto; min-height: auto; padding: 0px;"
+          type="button"
+        >
+          <span class="v-btn__overlay"></span>
+          <span class="v-btn__underlay"></span>
+          <!---->
+          <span
+            class="v-btn__content"
+            data-no-activator=""
+          >
+            <span class="
+              align-center
+              amelipro-custom-btn
+              d-flex
+              flex-row
+            ">
+              CGU
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </span>
+          <!---->
+          <!---->
+        </button>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <button
+          class="
+            amelipro-btn
+            elevation-0
+            text-ap-white
+            text-none
+            text-none
+            v-btn
+            v-btn--density-default
+            v-btn--flat
+            v-btn--size-default
+            v-btn--variant-text
+            v-theme--light
+          "
+          id="my-footer-id-a11y-btn"
+          style="height: auto; min-height: auto; padding: 0px;"
+          type="button"
+        >
+          <span class="v-btn__overlay"></span>
+          <span class="v-btn__underlay"></span>
+          <!---->
+          <span
+            class="v-btn__content"
+            data-no-activator=""
+          >
+            <span class="
+              align-center
+              amelipro-custom-btn
+              d-flex
+              flex-row
+            ">
+              Accessibilité&nbsp;: non conforme
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </span>
+          <!---->
+          <!---->
+        </button>
+      </li>
+    </ul>
+    <!-- v-if -->
+  </div>
+  <div class="
+    align-center
+    d-none
+    flex-column
+    footer-version--mobile
+  ">
+    <p
+      class="
+        font-weight-semibold
+        mb-0
+        mt-2
+        text-ap-white
+        text-caption
+      "
+      id="my-footer-id-version-mobile"
+    >
+      X.X.X
+    </p>
+  </div>
+</footer>
+`;
