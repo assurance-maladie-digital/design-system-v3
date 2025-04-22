@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
-	import { ref, watch, onMounted, computed, type PropType } from 'vue'
+	import { ref, watch, onMounted, onUnmounted, computed, type PropType } from 'vue'
 	import type { VTextField } from 'vuetify/components'
 	import { locales } from './locales'
 
@@ -87,11 +87,26 @@
 	const toggleMenu = () => {
 		if (props.readonly) return
 		isOpen.value = !isOpen.value
+		if (isOpen.value) updateListPosition()
 	}
 	const closeList = () => {
 		isOpen.value = false
 	}
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
+
+	const listStyles = ref<Record<string, string>>({})
+	const updateListPosition = () => {
+		if (input.value?.$el) {
+			const rect = input.value.$el.getBoundingClientRect()
+			listStyles.value = {
+				position: 'fixed',
+				top: `${rect.bottom}px`,
+				left: `${rect.left}px`,
+				width: `${rect.width}px`,
+				zIndex: '999',
+			}
+		}
+	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
@@ -177,10 +192,21 @@
 		}
 	})
 
+	watch(isOpen, (open) => {
+		if (open) updateListPosition()
+	})
+
 	onMounted(() => {
 		if (labelRef.value) {
 			labelWidth.value = labelRef.value.offsetWidth + 64
 		}
+		window.addEventListener('scroll', updateListPosition, true)
+		window.addEventListener('resize', updateListPosition)
+	})
+
+	onUnmounted(() => {
+		window.removeEventListener('scroll', updateListPosition, true)
+		window.removeEventListener('resize', updateListPosition)
 	})
 
 	defineExpose({
@@ -242,7 +268,10 @@
 		<VList
 			v-if="isOpen"
 			class="v-list"
-			:style="`min-width: ${input?.$el.offsetWidth}px`"
+			:style="{
+				minWidth: `${input?.$el.offsetWidth}px`,
+				...listStyles
+			}"
 			bg-color="white"
 			@keydown.esc.prevent="isOpen = false"
 		>
