@@ -28,7 +28,7 @@ const meta = {
 		uniqueId: { description: 'Identifiant unique du menu' },
 	},
 	component: AmeliproMenu,
-	title: 'Composants/Mise en page/Sous-composants du header/AmeliproMenu',
+	title: 'Composants/Amelipro/Mise en page/Sous-composants du header/AmeliproMenu',
 } as Meta<typeof AmeliproMenu>
 export default meta
 

@@ -29,7 +29,7 @@ const meta = {
 		'width': { description: 'Largeur du message' },
 	},
 	component: AmeliproMessage,
-	title: 'Composants/AmeliproMessage',
+	title: 'Composants/Amelipro/AmeliproMessage',
 } as Meta<typeof AmeliproMessage>
 export default meta
 

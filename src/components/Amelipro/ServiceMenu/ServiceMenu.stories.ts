@@ -51,7 +51,7 @@ const meta = {
 		'update:model-value': { description: 'Événement émis au changement d’état de la valeur d’affichage de la fenêtre de menu. Retourne la nouvelle valeur.', type: 'boolean' },
 	},
 	component: ServiceMenu,
-	title: 'Composants/Mise en page/Sous-composants du header/ServiceMenu',
+	title: 'Composants/Amelipro/Mise en page/Sous-composants du header/ServiceMenu',
 } as Meta<typeof ServiceMenu>
 export default meta
 

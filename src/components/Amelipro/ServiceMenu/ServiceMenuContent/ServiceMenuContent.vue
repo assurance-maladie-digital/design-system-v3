@@ -75,7 +75,7 @@
 		aria-label="Bouquet de services"
 		class="service-menu__nav"
 	>
-		<div class="d-flex flex-column flex-md-row">
+		<div class="d-flex flex-column flex-sm-row flex-nowrap flex-sm-wrap flex-md-nowrap">
 			<div
 				:id="`${uniqueId}-service-menu-ps`"
 				class="py-2 bg-ap-blue-lighten-3 service-menu__ps"

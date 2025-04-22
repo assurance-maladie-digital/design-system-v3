@@ -156,7 +156,7 @@ const meta: Meta<typeof AmeliproHeader> = {
 		'userMenu': { description: 'Slot pour ajouter le menu utilisateur.' },
 	},
 	component: AmeliproHeader,
-	title: 'Composants/Mise en page/AmeliproHeader',
+	title: 'Composants/Amelipro/Mise en page/AmeliproHeader',
 } as Meta<typeof AmeliproHeader>
 export default meta
 

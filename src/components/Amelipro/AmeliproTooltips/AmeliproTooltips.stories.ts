@@ -15,7 +15,7 @@ const meta = {
 		uniqueId: { description: 'Défini l’id du tooltip dans le DOM' },
 	},
 	component: AmeliproTooltips,
-	title: 'Composants/AmeliproTooltips',
+	title: 'Composants/Amelipro/AmeliproTooltips',
 } as Meta<typeof AmeliproTooltips>
 export default meta
 

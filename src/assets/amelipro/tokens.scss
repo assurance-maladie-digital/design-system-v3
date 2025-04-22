@@ -141,21 +141,102 @@ $switch-width: 3.5rem;
 $switch-track-opacity: 1;
 
 // set filters and pills styles
+$filter-padding-x: 2.5rem;
+$filter-padding-y: 0.75rem;
+$filter-radius: 0.75rem;
 $filter-font-weight: $ap-font-weight-semi-bold;
+
+// default styles for form inputs
+$input-radius: 0.5rem;
+$text-field-border-radius: $input-radius;
+$label-font-weight: $ap-font-weight-semi-bold;
+$input-min-height: 2.625rem;
 $tooltip-background-color: #fff;
-
-.relative {
-	position: relative;
-}
-
-.list-style-none {
-	margin: 0;
-	padding: 0 !important;
-	list-style: none !important;
-}
 
 .border-0 {
 	border: 0;
+}
+
+// Font Styles
+.theme--ap.v-sheet {
+	color: $ap-grey-darken1;
+}
+
+.theme-ap {
+	p {
+		font-size: $font-size-xs;
+	}
+
+	[class*='text-'] {
+		font-family: Arial, Helvetica, sans-serif !important;
+		font-weight: $ap-font-weight-regular;
+		line-height: 1.4 !important;
+	}
+
+	// sets the service title text style
+	[class*='text-service-title'] {
+		font-family: Arial, Helvetica, sans-serif !important;
+		font-size: $font-size-xl !important;
+		font-weight: $ap-font-weight-bold !important;
+		text-transform: uppercase !important;
+		letter-spacing: -0.44px !important;
+
+		@media #{$media-down-md} {
+			font-size: $font-size-md !important;
+		}
+	}
+
+	// sets classes font sizes
+	[class*='text-'][class*='-h1'],
+	[class*='text-'][class*='-h2'] {
+		font-size: $font-size-lg !important;
+		font-weight: $ap-font-weight-bold;
+		letter-spacing: -0.44px !important;
+	}
+
+	[class*='text-'][class*='-h3'],
+	[class*='text-'][class*='-h4'] {
+		font-size: $font-size-md !important;
+	}
+
+	[class*='text-'][class*='-h5'],
+	[class*='text-'][class*='-h6'] {
+		font-size: $font-size-sm !important;
+	}
+
+	[class*='text-'][class*='-subtitle-1'],
+	[class*='text-'][class*='-subtitle-2'],
+	[class*='text-'][class*='-body-1'],
+	[class*='text-'][class*='-body-2'],
+	[class*='text-'][class*='-button'],
+	[class*='text-'][class*='-overline'] {
+		font-size: $font-size-xs !important;
+	}
+
+	[class*='text-'][class*='-caption'] {
+		font-size: $font-size-xs !important;
+	}
+
+	// sets font styles
+	[class*='text-'][class*='-h4'] {
+		font-style: italic;
+	}
+
+	// sets font weight
+	[class*='text-'][class*='-h3'],
+	[class*='text-'][class*='-h5'],
+	[class*='text-'][class*='-subtitle-1'],
+	[class*='text-'][class*='-subtitle-2'] {
+		font-weight: $ap-font-weight-semi-bold;
+	}
+
+	[class*='font-weight-semibold'] {
+		font-weight: $ap-font-weight-semi-bold !important;
+	}
+
+	[class*='high-letter-spacing'] {
+		letter-spacing: 0.64px !important;
+	}
 }
 
 .font-size-xs {
@@ -190,6 +271,18 @@ $tooltip-background-color: #fff;
 		color: $ap-blue-darken2;
 		text-decoration: underline;
 	}
+}
+
+// utils
+
+.relative {
+	position: relative;
+}
+
+.list-style-none {
+	margin: 0;
+	padding: 0 !important;
+	list-style: none !important;
 }
 
 .w-100 {
