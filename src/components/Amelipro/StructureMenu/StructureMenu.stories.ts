@@ -51,7 +51,7 @@ const meta = {
 
 	},
 	component: StructureMenu,
-	title: 'Composants/Mise en page/Sous-composants du header/StructureMenu',
+	title: 'Composants/Amelipro/Mise en page/Sous-composants du header/StructureMenu',
 } as Meta<typeof StructureMenu>
 export default meta
 

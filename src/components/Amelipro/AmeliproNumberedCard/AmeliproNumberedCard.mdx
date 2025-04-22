@@ -1,0 +1,22 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as AmeliproNumberedCardStories from './AmeliproNumberedCard.stories';
+
+<Meta of={AmeliproNumberedCardStories} />
+
+# AmeliproNumberedCard
+
+L’élément `AmeliproNumberedCard` est utilisé pour afficher les éléments de type liste de cartes numérotées dans la charte Amelipro
+
+<Canvas of={AmeliproNumberedCardStories.Default} />
+
+## API
+
+<Controls of={AmeliproNumberedCardStories.Default} />
+
+## Règles d’usage
+
+Les cartes numérotées sont utilisées pour signifier une liste d'étapes sur un même écran, contrairement au `AmeliproStepper` qui lui propose une étape par page.
+
+Pour utiliser ce composant il faut au minimum une liste de deux cartes numérotées. S'il n'y a qu'une carte, inutile de la numéroter, il faudra donc préférer un `AmeliproCard` à ce moment là.
+

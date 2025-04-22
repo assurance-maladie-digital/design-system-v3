@@ -22,10 +22,7 @@ const applyThemeSidebar = (theme) => {
 					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
 						item.style.display = 'none'
 					}
-					if (item.querySelector('button#composants-ameliprobtn')) {
-						item.style.display = 'none'
-					}
-					if (item.querySelector('button#composants-ameliproicon')) {
+					if (item.getAttribute('data-item-id') === 'composants-amelipro') {
 						item.style.display = 'none'
 					}
 				}
@@ -33,10 +30,7 @@ const applyThemeSidebar = (theme) => {
 					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
 						item.style.display = 'block'
 					}
-					if (item.querySelector('button#composants-ameliprobtn')) {
-						item.style.display = 'none'
-					}
-					if (item.querySelector('button#composants-ameliproicon')) {
+					if (item.getAttribute('data-item-id') === 'composants-amelipro') {
 						item.style.display = 'none'
 					}
 				}
@@ -44,10 +38,7 @@ const applyThemeSidebar = (theme) => {
 					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
 						item.style.display = 'none'
 					}
-					if (item.querySelector('button#composants-ameliprobtn')) {
-						item.style.display = 'block'
-					}
-					if (item.querySelector('button#composants-ameliproicon')) {
+					if (item.getAttribute('data-item-id') === 'composants-amelipro') {
 						item.style.display = 'block'
 					}
 				}

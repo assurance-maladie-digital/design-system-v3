@@ -130,6 +130,7 @@
 			:labelledby="modalId"
 			main-content-max-height="100%"
 			:unique-id="`${uniqueId}-service-menu-dialog`"
+			width="100%"
 			@change="emitChangeEvent"
 		>
 			<template #header>
@@ -172,7 +173,7 @@
 		border-radius: 4px;
 
 		@media #{tokens.$media-up-md} {
-			left: -850px;
+			left: -800px;
 		}
 	}
 

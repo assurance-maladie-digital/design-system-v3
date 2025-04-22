@@ -21,7 +21,7 @@ const meta = {
 		xLarge: { description: 'Pour avoir une icône de très grande taille' },
 	},
 	component: AmeliproIcon,
-	title: 'Composants/AmeliproIcon',
+	title: 'Composants/Amelipro/AmeliproIcon',
 } as Meta<typeof AmeliproIcon>
 export default meta
 
