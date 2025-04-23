@@ -39,7 +39,8 @@
 				if (fail) return
 				if (to.path === from.path) return
 				nextTick(() => {
-					skipLinkSpan.value?.focus()
+					const link = document.querySelector('a.sy-skip-link') as HTMLAnchorElement
+					if (link) link.focus()
 				})
 			})
 		}
@@ -47,25 +48,27 @@
 </script>
 
 <template>
-	<div class="vd-skip-link-container">
-		<span
-			ref="skipLinkSpan"
-			tabindex="-1"
-		/>
+	<!--  améliorer la structure sémantique-->
+	<nav
+		aria-label="Liens d'évitement"
+		class="sy-skip-link-container"
+	>
+		<div ref="skipLinkSpan" />
 
 		<a
+			ref="skipLink"
 			:href="target"
-			class="vd-skip-link text-primary d-block d-sr-only-focusable px-2"
+			class="sy-skip-link text-primary d-block d-sr-only-focusable px-2"
 		>
 			<slot>{{ label }}</slot>
 		</a>
-	</div>
+	</nav>
 </template>
 
 <style lang="scss" scoped>
 @use '/src/assets/tokens';
 
-.vd-skip-link {
+.sy-skip-link {
 	z-index: 150;
 	position: fixed;
 	top: 0;

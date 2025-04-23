@@ -1,17 +1,21 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`SkipLink > renders correctly 1`] = `
-<div class="vd-skip-link-container">
-  <span tabindex="-1"></span>
+<!-- améliorer la structure sémantique -->
+<nav
+  aria-label="Liens d'évitement"
+  class="sy-skip-link-container"
+>
+  <div></div>
   <a
     class="
       d-block
       d-sr-only-focusable
       px-2
+      sy-skip-link
       text-primary
-      vd-skip-link
     "
     href="#main"
   >Aller au contenu principal</a>
-</div>
+</nav>
 `;
