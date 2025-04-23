@@ -319,7 +319,7 @@
 
 .v-list {
 	left: inherit !important;
-  top: inherit !important;
+	top: 0;
 	margin-top: -22px;
 	max-height: 300px;
 	padding: 0;
