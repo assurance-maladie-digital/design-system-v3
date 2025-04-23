@@ -318,8 +318,8 @@
 }
 
 .v-list {
-	position: absolute;
 	left: inherit !important;
+  top: inherit !important;
 	margin-top: -22px;
 	max-height: 300px;
 	padding: 0;

@@ -83,7 +83,7 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-				<div class="pa-4">
+				<div class="pa-4" style="transform: none">
 					<SySelect
 						v-bind="args"
 					/>
