@@ -432,7 +432,6 @@ export const CustomLogoutText: Story = {
 	},
 }
 
-
 export const CustomAdditionalInformation: Story = {
 	parameters: {
 		sourceCode: [
