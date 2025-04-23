@@ -159,7 +159,6 @@
 			</template>
 			<VList
 				v-bind="options.list"
-				activatable
 				aria-labelledby="lang-menu-btn"
 				color="secondary"
 				:aria-activedescendant="`lang-item-${selectedLanguage}`"
