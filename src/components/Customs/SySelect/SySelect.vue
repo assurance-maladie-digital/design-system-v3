@@ -207,7 +207,7 @@
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
-			:readonly="props.readonly"
+			readonly
 			class="sy-select"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"
