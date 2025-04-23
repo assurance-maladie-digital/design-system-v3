@@ -122,4 +122,45 @@ describe('UserMenuBtn', () => {
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')![0]).toEqual(['test-value'])
 	})
+
+	it('possède la prop logoutText  custom', async () => {
+		const customLogoutText = 'Déconnexion'
+		const wrapper = mount(UserMenuBtn, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: null,
+				logoutText: customLogoutText,
+				hideLogoutBtn: false,
+				menuItems: [{ text: 'Item 1', value: 'item1' }],
+				fullName: 'John Doe',
+				isMobileView: false,
+				hideUserIcon: false,
+			},
+		})
+
+		// Vérifier directement que la prop est correctement passée au composant
+		expect(wrapper.props('logoutText')).toBe(customLogoutText)
+	})
+
+	it('possède la prop logoutText  par défaut', async () => {
+		const defaultLogoutText = 'Logout'
+		const wrapper = mount(UserMenuBtn, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: null,
+				hideLogoutBtn: false,
+				menuItems: [{ text: 'Item 1', value: 'item1' }],
+				fullName: 'John Doe',
+				isMobileView: false,
+				hideUserIcon: false,
+			},
+		})
+
+		// Vérifier directement que la prop est correctement passée au composant
+		expect(wrapper.props('logoutText')).toBe(defaultLogoutText)
+	})
 })

@@ -44,6 +44,13 @@ const meta = {
 				type: { summary: 'string' },
 			},
 		},
+		'logoutText': {
+			control: 'text',
+			description: 'Texte dans le bouton de déconnexion',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
 		'additionalInformation': {
 			control: 'text',
 			description: 'Informations supplémentaires sur l\'utilisateur (ex: rôle, service, etc.)',
@@ -375,6 +382,56 @@ export const CustomFullName: Story = {
 		}
 	},
 }
+
+export const CustomLogoutText: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+ <UserMenuBtn
+  v-model="selected"
+  :menu-items="menuItems"
+  :logout-text="Déconnexion"
+/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+ import { ref } from 'vue'
+ import { UserMenuBtn } from '@cnamts/synapse'
+
+ const selected = ref(null)
+ const menuItems = ref([
+  { text: 'Administration', value: 'Administration' },
+  { text: 'Profil', value: 'Profil' },
+  { text: 'Paramètres', value: 'Paramètres' },
+ ])
+
+ const logoutText = ref('Déconnexion')
+</script>`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		logoutText: 'Déconnexion',
+	},
+	render: (args) => {
+		return {
+			components: { UserMenuBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+<div class="pa-4">
+	<UserMenuBtn v-bind="args"/>
+</div>`,
+		}
+	},
+}
+
 
 export const CustomAdditionalInformation: Story = {
 	parameters: {
