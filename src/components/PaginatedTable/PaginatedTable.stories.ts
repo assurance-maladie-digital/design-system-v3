@@ -56,7 +56,7 @@ const meta = {
 			control: { type: 'number' },
 		},
 		suffix: {
-			description: 'Suffixe pour la pagination',
+			description: 'Suffixe permettant de gérer de façon individuelle le stockage des options du tableau d\'une page à l\'autre. Si non renseigné, le stockage se fait de façon globale pour tout les tableaux.',
 			control: { type: 'text' },
 		},
 		itemsPerPage: {
