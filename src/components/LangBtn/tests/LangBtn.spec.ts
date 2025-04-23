@@ -78,6 +78,28 @@ describe('LangBtn', () => {
 	})
 
 	it('updates language when a language is selected', async () => {
+		wrapper = mount(LangBtn, {
+			props: {
+				availableLanguages: ['fr', 'co', 'es'],
+				modelValue: 'es',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const activatorButton = wrapper.find('.vd-lang-btn')
+		await activatorButton.trigger('click')
+		await wrapper.vm.$nextTick()
+
+		const languageItem = document.body.querySelectorAll('.v-list-item')[1] as HTMLElement
+		languageItem.click()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.find('.vd-lang-btn').text()).toBe('corsu')
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['co'])
 	})
 
 	it('opens the menu when clicked', async () => {
@@ -103,7 +125,10 @@ describe('LangBtn', () => {
 
 	it('hides down arrow when hideDownArrow is true', () => {
 		wrapper = mount(LangBtn, {
-			props: { hideDownArrow: true },
+			props: {
+				hideDownArrow: true,
+				availableLanguages: ['fr', 'co', 'es'],
+			},
 			global: {
 				plugins: [vuetify],
 			},
@@ -113,7 +138,10 @@ describe('LangBtn', () => {
 
 	it('shows down arrow when hideDownArrow is false', () => {
 		wrapper = mount(LangBtn, {
-			props: { hideDownArrow: false },
+			props: {
+				hideDownArrow: false,
+				availableLanguages: ['fr', 'co', 'es'],
+			},
 			global: {
 				plugins: [vuetify],
 			},
