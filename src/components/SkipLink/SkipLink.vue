@@ -48,7 +48,6 @@
 </script>
 
 <template>
-	<!--  améliorer la structure sémantique-->
 	<nav
 		aria-label="Liens d'évitement"
 		class="sy-skip-link-container"

@@ -1,7 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`SkipLink > renders correctly 1`] = `
-<!-- améliorer la structure sémantique -->
 <nav
   aria-label="Liens d'évitement"
   class="sy-skip-link-container"
