@@ -59,8 +59,8 @@ const meta = {
 				},
 				icon: {
 					color: 'primary',
-					size: 'small',
-					class: 'ml-0 ml-md-1',
+					size: 'medium',
+					class: 'ml-0 ml-md-2',
 				},
 			}),
 			table: {
@@ -137,8 +137,8 @@ export const Default: Story = {
 			},
 			icon: {
 				color: 'primary',
-				size: 'small',
-				class: 'ml-0 ml-md-1',
+				size: 'medium',
+				class: 'ml-0 ml-md-2',
 			},
 		},
 	},
@@ -150,16 +150,20 @@ export const Default: Story = {
 				VSheet,
 			},
 			setup() {
-				return { args }
+				const { default: defaultSlot, ...props } = args
+				return {
+					defaultSlot,
+					props,
+				}
 			},
 			template: `
-				<VCard
-					id="target"
-					width="100%"
-					max-height="200px"
-					class="overflow-y-auto"
-					style="scroll-behavior: smooth"
-				>
+			<VCard
+				id="target"
+				width="100%"
+				max-height="200px"
+				class="overflow-y-auto"
+				style="scroll-behavior: smooth"
+			>
 					<VSheet
 						height="600px"
 						class="d-flex flex-column align-center"
@@ -168,8 +172,8 @@ export const Default: Story = {
 							Haut de la section.
 						</p>
 					</VSheet>
-					<BackToTopBtn v-bind="args" :vuetify-options="args.vuetifyOptions">
-						{{args.default}}
+					<BackToTopBtn v-bind="props" :vuetify-options="props.vuetifyOptions">
+						{{ defaultSlot }}
 					</BackToTopBtn>
 				</VCard>
 			`,
@@ -253,7 +257,11 @@ export const Customization: Story = {
 				BackToTopBtn,
 			},
 			setup() {
-				return { args }
+				const { default: defaultSlot, ...props } = args
+				return {
+					defaultSlot,
+					props,
+				}
 			},
 			template: `
 				<VCard
@@ -271,8 +279,8 @@ export const Customization: Story = {
 							Haut de la section.
 						</p>
 					</VSheet>
-					<BackToTopBtn v-bind="args" :vuetify-options="args.vuetifyOptions">
-						{{args.default}}
+					<BackToTopBtn v-bind="props" :vuetify-options="props.vuetifyOptions">
+						{{defaultSlot}}
 					</BackToTopBtn>
 				</VCard>
 			`,
@@ -356,7 +364,11 @@ export const CustomPosition: Story = {
 				BackToTopBtn,
 			},
 			setup() {
-				return { args }
+				const { default: defaultSlot, ...props } = args
+				return {
+					defaultSlot,
+					props,
+				}
 			},
 			template: `
 				<VCard
@@ -375,12 +387,12 @@ export const CustomPosition: Story = {
 						</p>
 					</VSheet>
 					<BackToTopBtn 
-						v-bind="args" 
-						:nudge-right="args.nudgeRight"
-						:nudge-bottom="args.nudgeBottom"
-						:vuetify-options="args.vuetifyOptions"
+						v-bind="props" 
+						:nudge-right="props.nudgeRight"
+						:nudge-bottom="props.nudgeBottom"
+						:vuetify-options="props.vuetifyOptions"
 					>
-						{{args.default}}
+						{{defaultSlot}}
 					</BackToTopBtn>
 				</VCard>
 			`,
