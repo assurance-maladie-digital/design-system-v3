@@ -6,7 +6,7 @@ export const config = {
 	},
 	icon: {
 		color: 'primary',
-		size: 'small',
-		class: 'ml-0 ml-md-1',
+		size: 'medium',
+		class: 'ml-0 ml-md-2',
 	},
 }
