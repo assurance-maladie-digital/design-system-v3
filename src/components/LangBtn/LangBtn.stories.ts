@@ -13,13 +13,11 @@ const meta: Meta<typeof LangBtn> = {
 		modelValue: { control: 'text' },
 		hideDownArrow: { control: 'boolean' },
 		ariaLabel: { control: 'text' },
-		// @ts-expect-error Type '"array"' is not assignable to type 'Control | undefined'.
-		availableLanguages: { control: { type: 'array' } },
+		availableLanguages: { control: { type: 'object' } },
 		vuetifyOptions: {
 			control: { type: 'object' },
 			default: () => ({
 				menu: {
-					offsetY: true,
 				},
 				btn: {
 					color: 'primary',
@@ -73,7 +71,6 @@ export const Default: Story = {
 		availableLanguages: ['fr', 'en', 'es'],
 		vuetifyOptions: {
 			menu: {
-				offsetY: true,
 			},
 			btn: {
 				color: 'primary',
