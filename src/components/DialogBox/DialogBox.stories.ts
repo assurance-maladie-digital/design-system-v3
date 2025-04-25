@@ -121,7 +121,7 @@ const meta: Meta<typeof DialogBox> = {
 							height: '32px',
 							class: 'mt-n2 mr-n2 ml-4',
 						},
-						actionsCtn: {
+						cardActions: {
 							class: 'd-flex flex-wrap mt-6',
 						},
 						cancelBtn: {
@@ -139,8 +139,11 @@ const meta: Meta<typeof DialogBox> = {
 					{
 	card?: Record<string, any>,
 	cardTitle?: Record<string, any>,
+	spacer?: Record<string, any>,
 	closeBtn?: Record<string, any>,
-	actionsCtn?: Record<string, any>,
+	icon?: Record<string, any>,
+	actionsBtn?: Record<string, any>,
+	actionsSpacer?: Record<string, any>,
 	cancelBtn?: Record<string, any>,
 	confirmBtn?: Record<string, any>,
 }
