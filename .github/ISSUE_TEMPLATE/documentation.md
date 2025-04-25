@@ -1,6 +1,8 @@
 ---
 name: Documentation
 about: Proposez des améliorations ou signalez des erreurs dans la documentation
+labels:
+  - type: documentation
 ---
 
 ## Type d'issue
