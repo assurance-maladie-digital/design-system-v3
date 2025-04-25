@@ -2,7 +2,6 @@ import type { VariantType } from '@/types/vuetifyTypes'
 
 const defaultOptions = {
 	menu: {
-		offsetY: true,
 	},
 	btn: {
 		color: 'primary',

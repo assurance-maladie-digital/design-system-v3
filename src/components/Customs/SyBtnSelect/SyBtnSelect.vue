@@ -215,7 +215,6 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
-@use '@/assets/tokens' as *;
 
 .sy-user-menu-btn-ctn {
 	position: relative;

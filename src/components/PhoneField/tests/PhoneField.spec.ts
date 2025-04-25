@@ -163,42 +163,189 @@ describe('PhoneField', () => {
 	})
 
 	it('passes dialCode object to SyTextField when dialCode is set', async () => {
+		const dialCodeModelValue = { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' }
+
 		const wrapper = mount(PhoneField, {
 			global: {
 				plugins: [vuetify],
 			},
 			props: {
 				withCountryCode: true,
-				dialCodeModel: { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' },
+				dialCodeModel: dialCodeModelValue,
 			},
 		})
 
-		// Vérifier que le dialCode est bien un objet
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.vm.dialCode).toBeDefined()
 		expect(typeof wrapper.vm.dialCode).toBe('object')
 
-		// Trouver le composant SyTextField
-		const textField = wrapper.findComponent({ name: 'SyTextField' })
-		expect(textField.exists()).toBe(true)
+		type Indicatif = {
+			code: string
+			country: string
+			abbreviation: string
+			phoneLength: number
+			mask: string
+			displayText?: string
+		}
+		const dialCode = wrapper.vm.dialCode as Indicatif
 
-		// Vérifier que les propriétés du SyTextField sont correctement définies en fonction du dialCode
+		expect(dialCode.code).toBe('+33')
+		expect(dialCode.country).toBe('France')
+		expect(dialCode.phoneLength).toBe(10)
+		expect(dialCode.abbreviation).toBe('FR')
+		expect(dialCode.mask).toBe('## ## ## ## ##')
+
+		expect(dialCode).toHaveProperty('displayText')
+		expect(typeof dialCode.displayText).toBe('string')
+
 		expect(wrapper.vm.phoneMask).toBe('## ## ## ## ##')
 		expect(wrapper.vm.counter).toBe(10)
 
-		// Vérifier que le SyTextField reçoit les bonnes propriétés
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		expect(textField.exists()).toBe(true)
 		expect(textField.props('counter')).toBe(10)
 
-		// Vérifier que le SySelect est présent et reçoit l'objet dialCode
 		const select = wrapper.findComponent({ name: 'SySelect' })
 		expect(select.exists()).toBe(true)
 		expect(select.props('returnObject')).toBe(true)
 
-		// Vérifier que l'objet dialCode est correctement passé au SySelect via v-model
-		expect(wrapper.vm.dialCode).toEqual({
-			code: '+33',
-			abbreviation: 'FR',
-			country: 'France',
-			phoneLength: 10,
-			mask: '## ## ## ## ##',
+		expect(select.props('modelValue')).toEqual(wrapper.vm.dialCode)
+	})
+
+	// Test du watcher pour dialCodeModel
+	it('updates dialCode when dialCodeModel changes after mount', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				withCountryCode: true,
+				// Pas de dialCodeModel initial
+			},
 		})
+
+		// Vérifier que dialCode est initialisé avec une chaîne vide
+		// Dans le composant: const dialCode = ref<string | Record<string, any>>(props.dialCodeModel || '')
+		expect(wrapper.vm.dialCode).toBe('')
+
+		// Définir un dialCodeModel après le montage
+		await wrapper.setProps({
+			dialCodeModel: { code: '+1', country: 'USA', abbreviation: 'US', phoneLength: 10, mask: '###-###-####' },
+		})
+
+		// Attendre que le watcher s'exécute
+		await wrapper.vm.$nextTick()
+
+		// Vérifier que dialCode a été mis à jour
+		expect(wrapper.vm.dialCode).toBeDefined()
+		expect(typeof wrapper.vm.dialCode).toBe('object')
+
+		// Utiliser une assertion de type pour indiquer à TypeScript que dialCode est un objet
+		type Indicatif = {
+			code: string
+			country: string
+			abbreviation: string
+			phoneLength: number
+			mask: string
+			displayText?: string
+		}
+		const dialCode = wrapper.vm.dialCode as Indicatif
+
+		expect(dialCode.code).toBe('+1')
+		expect(dialCode.country).toBe('USA/Canada')
+		expect(wrapper.vm.phoneMask).toBe('### ### ####')
+		expect(wrapper.vm.counter).toBe(10)
+	})
+
+	// Test pour les objets sans displayText
+	it('handles dialCodeModel objects without displayText property', async () => {
+		// Objet indicatif sans propriété displayText
+		const indicatifSansDisplayText = {
+			code: '+44',
+			country: 'United Kingdom',
+			abbreviation: 'GB',
+			phoneLength: 10,
+			mask: '#### ### ####',
+		}
+
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				withCountryCode: true,
+				dialCodeModel: indicatifSansDisplayText,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Vérifier que dialCode a été correctement initialisé
+		expect(wrapper.vm.dialCode).toBeDefined()
+
+		// Utiliser une assertion de type pour indiquer à TypeScript que dialCode est un objet
+		type Indicatif = {
+			code: string
+			country: string
+			abbreviation: string
+			phoneLength: number
+			mask: string
+			displayText?: string
+		}
+		const dialCode = wrapper.vm.dialCode as Indicatif
+
+		expect(dialCode.code).toBe('+44')
+		expect(dialCode.country).toBe('United Kingdom')
+
+		// Vérifier que la propriété displayText a été ajoutée
+		expect(dialCode).toHaveProperty('displayText')
+		expect(typeof dialCode.displayText).toBe('string')
+		// Le format exact dépend de la fonction generateDisplayText, mais on peut vérifier qu'il contient le code
+		expect(dialCode.displayText).toContain('+44')
+	})
+
+	// Test avec les indicatifs standards importés
+	it('works correctly with standard indicatifs imported from indicatifs.ts', async () => {
+		// Importer les indicatifs standards
+		const { indicatifs } = await import('../indicatifs')
+
+		// Trouver l'indicatif pour la France
+		const franceIndicatif = indicatifs.find(ind => ind.country === 'France')
+		expect(franceIndicatif).toBeDefined()
+
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				withCountryCode: true,
+				dialCodeModel: franceIndicatif,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Vérifier que l'indicatif a été correctement appliqué
+		expect(wrapper.vm.dialCode).toBeDefined()
+
+		// Utiliser une assertion de type pour indiquer à TypeScript que dialCode est un objet
+		type Indicatif = {
+			code: string
+			country: string
+			abbreviation: string
+			phoneLength: number
+			mask: string
+			displayText?: string
+		}
+		const dialCode = wrapper.vm.dialCode as Indicatif
+
+		expect(dialCode.code).toBe('+33')
+		expect(dialCode.country).toBe('France')
+
+		// Vérifier que le SySelect affiche la bonne valeur
+		const select = wrapper.findComponent({ name: 'SySelect' })
+		expect(select.exists()).toBe(true)
+		expect(select.props('modelValue')).toEqual(wrapper.vm.dialCode)
 	})
 })

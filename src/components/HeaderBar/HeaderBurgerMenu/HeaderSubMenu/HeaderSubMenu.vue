@@ -63,6 +63,7 @@
 <style lang="scss" scoped>
 	@use '@/assets/tokens.scss' as *;
 	@use '../../consts' as *;
+	@use '../menu';
 
 	.sub-menu-btn {
 		display: flex;
@@ -82,6 +83,8 @@
 				color: $neutral-white !important;
 			}
 		}
+
+		@include menu.item-focused;
 
 		&::first-letter {
 			text-transform: uppercase;

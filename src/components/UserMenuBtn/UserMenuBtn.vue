@@ -15,6 +15,7 @@
 		hideLogoutBtn?: boolean
 		isMobileView?: boolean
 		hideUserIcon?: boolean
+		logoutText?: string
 	}>(), {
 		menuItems: () => [],
 		additionalInformation: 'Information supplémentaire',
@@ -22,6 +23,7 @@
 		hideLogoutBtn: false,
 		isMobileView: false,
 		hideUserIcon: false,
+		logoutText: 'Logout',
 	})
 
 	const modelValue = defineModel<MenuItem | null>({
@@ -74,8 +76,8 @@
 						class="mr-4"
 						v-bind="options['logoutIcon']"
 					/>
-					<VListItemTitle>
-						Logout
+					<VListItemTitle class="logout">
+						{{ props.logoutText }}
 					</VListItemTitle>
 				</div>
 			</VListItem>

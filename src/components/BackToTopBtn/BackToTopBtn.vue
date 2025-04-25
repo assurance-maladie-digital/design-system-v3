@@ -135,4 +135,19 @@
 .v-btn--variant-outlined {
 	background: white;
 }
+
+.vd-back-to-top-btn:deep() {
+	.v-btn__underlay,
+	.v-btn__overlay {
+		display: none;
+	}
+}
+
+.vd-back-to-top-btn:focus-visible {
+	outline: 0;
+}
+
+.vd-back-to-top-btn:focus-visible::after {
+	opacity: 1;
+}
 </style>

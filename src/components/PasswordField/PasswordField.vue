@@ -23,7 +23,7 @@
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
 		successMessages?: string[] | null
-		readOnly?: boolean
+		readonly?: boolean
 		disabled?: boolean
 		placeholder?: string
 		customRules?: ValidationRule[]
@@ -42,7 +42,7 @@
 		errorMessages: null,
 		warningMessages: null,
 		successMessages: null,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		placeholder: undefined,
 		customRules: () => [],
@@ -191,7 +191,7 @@
 		:error-messages="errors"
 		:warning-messages="warnings"
 		:success-messages="successes"
-		:read-only="props.readOnly"
+		:readonly="props.readonly"
 		:disabled="props.disabled"
 		:placeholder="props.placeholder"
 		:type="showEyeIcon ? 'text' : 'password'"

@@ -1,7 +1,12 @@
 <script setup lang="ts">
-	import { mdiInformation, mdiMenuDown } from '@mdi/js'
-	import { ref, watch, onMounted, computed, type PropType } from 'vue'
+	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
+	import { ref, watch, onMounted, onUnmounted, computed, type PropType } from 'vue'
 	import type { VTextField } from 'vuetify/components'
+	import { locales } from './locales'
+
+	export type ItemType = {
+		[key: string]: unknown
+	}
 
 	const props = defineProps({
 		modelValue: {
@@ -9,7 +14,7 @@
 			default: null,
 		},
 		items: {
-			type: Array,
+			type: Array as PropType<ItemType[]>,
 			default: () => [],
 		},
 		label: {
@@ -60,7 +65,11 @@
 			type: String,
 			default: undefined,
 		},
-		readOnly: {
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		clearable: {
 			type: Boolean,
 			default: false,
 		},
@@ -76,17 +85,36 @@
 	const labelRef = ref<HTMLElement | null>(null)
 
 	const toggleMenu = () => {
-		if (props.readOnly) return
+		if (props.readonly) return
 		isOpen.value = !isOpen.value
+		if (isOpen.value) updateListPosition()
 	}
 	const closeList = () => {
 		isOpen.value = false
 	}
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
 
+	const listStyles = ref<Record<string, string>>({})
+	const updateListPosition = () => {
+		if (input.value?.$el) {
+			const rect = input.value.$el.getBoundingClientRect()
+			listStyles.value = {
+				position: 'fixed',
+				top: `${rect.bottom}px`,
+				left: `${rect.left}px`,
+				width: `${rect.width}px`,
+				zIndex: '999',
+			}
+		}
+	}
+
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = (item: any) => {
-		if (props.returnObject) {
+		if (item === null) {
+			selectedItem.value = null
+			emit('update:modelValue', null)
+		}
+		else if (props.returnObject) {
 			selectedItem.value = item
 			emit('update:modelValue', item)
 		}
@@ -164,10 +192,21 @@
 		}
 	})
 
+	watch(isOpen, (open) => {
+		if (open) updateListPosition()
+	})
+
 	onMounted(() => {
 		if (labelRef.value) {
 			labelWidth.value = labelRef.value.offsetWidth + 64
 		}
+		window.addEventListener('scroll', updateListPosition, true)
+		window.addEventListener('resize', updateListPosition)
+	})
+
+	onUnmounted(() => {
+		window.removeEventListener('scroll', updateListPosition, true)
+		window.removeEventListener('resize', updateListPosition)
 	})
 
 	defineExpose({
@@ -194,7 +233,7 @@
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
-			:readonly="props.readOnly"
+			readonly
 			class="sy-select"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"
@@ -208,6 +247,15 @@
 				>
 					{{ mdiInformation }}
 				</VIcon>
+				<VIcon
+					v-if="props.clearable && selectedItemText"
+					class="sy-select__clear-icon"
+					:class="hasError ? 'mr-14' : 'mr-8'"
+					:aria-label="locales.clear"
+					@click.stop.prevent="selectItem(null)"
+				>
+					{{ mdiCloseCircle }}
+				</VIcon>
 				<VIcon class="arrow">
 					{{ mdiMenuDown }}
 				</VIcon>
@@ -220,7 +268,10 @@
 		<VList
 			v-if="isOpen"
 			class="v-list"
-			:style="`min-width: ${input?.$el.offsetWidth}px`"
+			:style="{
+				minWidth: `${input?.$el.offsetWidth}px`,
+				...listStyles
+			}"
 			bg-color="white"
 			@keydown.esc.prevent="isOpen = false"
 		>
@@ -230,8 +281,14 @@
 				:ref="'options-' + index"
 				role="option"
 				class="v-list-item"
-				:aria-selected="selectedItem === item"
+				:aria-selected="props.returnObject
+					? selectedItem && selectedItem[props.valueKey] === item[props.valueKey]
+					: selectedItem === item[props.valueKey]"
 				:tabindex="index + 1"
+				:class="{ active: props.returnObject
+					? selectedItem && selectedItem[props.valueKey] === item[props.valueKey]
+					: selectedItem === item[props.valueKey]
+				}"
 				@click="selectItem(item)"
 			>
 				<VListItemTitle>
@@ -261,7 +318,6 @@
 }
 
 .v-list {
-	position: absolute;
 	left: inherit !important;
 	margin-top: -22px;
 	max-height: 300px;
@@ -280,10 +336,19 @@
 	background-color: rgb(0 0 0 / 8%);
 }
 
+.v-list-item.active {
+	background-color: rgb(0 0 0 / 8%);
+}
+
 .v-icon {
 	position: absolute;
 	right: 10px;
 	color: tokens.$grey-darken-20;
+}
+
+.sy-select__clear-icon {
+	color: tokens.$grey-darken-20 !important;
+	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
 :deep(.v-field__input) {

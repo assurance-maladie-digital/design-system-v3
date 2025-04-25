@@ -30,7 +30,7 @@
 			errorMessages?: string[] | null
 			warningMessages?: string[] | null
 			successMessages?: string[] | null
-			readOnly?: boolean
+			readonly?: boolean
 			isActive?: boolean
 			baseColor?: string
 			bgColor?: string
@@ -94,7 +94,7 @@
 			errorMessages: null,
 			warningMessages: null,
 			successMessages: null,
-			readOnly: false,
+			readonly: false,
 			isClearable: false,
 			isActive: false,
 			baseColor: undefined,
@@ -336,7 +336,7 @@
 		:persistent-placeholder="displayPersistentPlaceholder"
 		:placeholder="props.placeholder"
 		:prefix="props.prefix"
-		:readonly="props.readOnly"
+		:readonly="props.readonly"
 		:reverse="props.isReversed"
 		:role="props.role"
 		:rounded="props.rounded"

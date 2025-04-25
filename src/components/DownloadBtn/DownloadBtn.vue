@@ -19,6 +19,7 @@
 		filePromise: () => Promise<AxiosResponse<Blob>>
 		fallbackFilename?: string
 		backgroundColor?: string
+		dark?: boolean
 		locales?: typeof defaultLocales
 	}
 
@@ -29,13 +30,19 @@
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
 		fallbackFilename: undefined,
 		backgroundColor: 'white',
+		dark: false,
 		locales: () => defaultLocales,
 	})
+
 	const emits = defineEmits(['error', 'success'])
 	const attrs = useAttrs()
 	const state = ref<State>('idle')
 	const options = useCustomizableOptions(config, props)
 	const btnOptions = computed(() => deepmerge(options.value.btn, attrs))
+	const isDark = computed(() => props.dark ?? false)
+	const buttonColor = computed(() => isDark.value ? 'white' : options.value.btn.color)
+	const buttonBgColor = computed(() => isDark.value ? 'transparent' : props.backgroundColor)
+	const iconColor = computed(() => isDark.value ? 'white' : options.value.icon.color)
 
 	/**
 	 * Get filename and content type from headers
@@ -88,12 +95,16 @@
 		v-bind="btnOptions"
 		:loading="state === 'loading'"
 		class="sy-download-btn"
-		:class="[`bg-${backgroundColor}`, btnOptions.variant === 'outlined' ? 'outlined-style' : '']"
+		:color="buttonColor"
+		:class="`bg-${buttonBgColor}`"
 		data-testid="download-btn"
 		@click="download"
 	>
 		<slot name="icon">
-			<VIcon v-bind="options.icon">
+			<VIcon
+				v-bind="options.icon"
+				:color="iconColor"
+			>
 				{{ mdiDownload }}
 			</VIcon>
 		</slot>
@@ -140,9 +151,5 @@
 
 .sy-download-btn:focus-visible::after {
 	opacity: 1;
-}
-
-.outlined-style {
-	border: 1px solid currentcolor;
 }
 </style>

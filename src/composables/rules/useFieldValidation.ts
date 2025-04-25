@@ -177,16 +177,30 @@ export function useFieldValidation() {
 
 				case 'notBeforeToday': {
 					const dateValue = new Date(value)
+					// Réinitialiser l'heure à minuit pour ne comparer que les dates
+					dateValue.setHours(0, 0, 0, 0)
+
+					// Créer une date aujourd'hui à minuit pour comparaison
+					const today = new Date()
+					today.setHours(0, 0, 0, 0)
+
 					return createValidationResult(
-						dateValue >= new Date(),
+						dateValue >= today,
 						options.message || options.warningMessage || `${identifier} ne peut pas être antérieur à aujourd'hui.`,
 					)
 				}
 
 				case 'notAfterToday': {
 					const dateValue = new Date(value)
+					// Réinitialiser l'heure à minuit pour ne comparer que les dates
+					dateValue.setHours(0, 0, 0, 0)
+
+					// Créer une date aujourd'hui à minuit pour comparaison
+					const today = new Date()
+					today.setHours(0, 0, 0, 0)
+
 					return createValidationResult(
-						dateValue <= new Date(),
+						dateValue <= today,
 						options.message || options.warningMessage || `${identifier} ne peut pas être postérieur à aujourd'hui.`,
 					)
 				}
@@ -262,8 +276,17 @@ export function useFieldValidation() {
 						return { error: 'Date de référence invalide' }
 					}
 
+					// Normaliser les deux dates en réinitialisant les heures/minutes/secondes
+					dateValue.setHours(0, 0, 0, 0)
+					referenceDate.setHours(0, 0, 0, 0)
+
+					// Comparer les dates normalisées
+					const isSameDate = dateValue.getFullYear() === referenceDate.getFullYear()
+						&& dateValue.getMonth() === referenceDate.getMonth()
+						&& dateValue.getDate() === referenceDate.getDate()
+
 					return createValidationResult(
-						dateValue.getTime() === referenceDate.getTime(),
+						isSameDate,
 						options.message || options.warningMessage || `${identifier} doit être exactement le ${options.date}.`,
 					)
 				}

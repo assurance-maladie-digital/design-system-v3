@@ -56,7 +56,7 @@ const meta = {
 			control: { type: 'number' },
 		},
 		suffix: {
-			description: 'Suffixe pour la pagination',
+			description: 'Suffixe permettant de gérer individuellement le stockage des options d’un tableau d’une page à l’autre. S’il n’est pas renseigné, le stockage s’effectue globalement pour tous les tableaux.',
 			control: { type: 'text' },
 		},
 		itemsPerPage: {
@@ -133,12 +133,12 @@ export const Default: Story = {
 							email: 'thierry.bobu@example.com',
 						},
 						{
-                            firstname: 'Bernadette',
+							firstname: 'Bernadette',
 							lastname: 'Langelier',
 							email: 'bernadette.langelier@exemple.com'
 						},
 						{
-                            firstname: 'Agate',
+							firstname: 'Agate',
 							lastname: 'Roy',
 							email: 'agate.roy@exemple.com'
 						}
@@ -207,14 +207,14 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-              <div class="pa-4">
-                <PaginatedTable
+				<div class="pa-4">
+				<PaginatedTable
 					v-model:options="args.options"
 					:items="args.items"
 					:headers="args.headers"
 				/>
-              </div>
-            `,
+				</div>
+			`,
 		}
 	},
 }
@@ -255,7 +255,7 @@ export const SortBy: Story = {
 							key: 'firstname',
 						},
 						{
-                            title: 'Email',
+							title: 'Email',
 							value: 'email',
 						},
 					])
@@ -282,12 +282,12 @@ export const SortBy: Story = {
 							email: 'thierry.bobu@example.com',
 						},
 						{
-                            firstname: 'Bernadette',
+							firstname: 'Bernadette',
 							lastname: 'Langelier',
 							email: 'bernadette.langelier@exemple.com'
 						},
 						{
-                            firstname: 'Agate',
+							firstname: 'Agate',
 							lastname: 'Roy',
 							email: 'agate.roy@exemple.com'
 						}
@@ -356,14 +356,14 @@ export const SortBy: Story = {
 				return { args }
 			},
 			template: `
-              <div class="pa-4">
-                <PaginatedTable
+			<div class="pa-4">
+				<PaginatedTable
 					v-model:options="args.options"
 					:items="args.items"
 					:headers="args.headers"
 				/>
-              </div>
-            `,
+			</div>
+			`,
 		}
 	},
 }
@@ -574,8 +574,8 @@ export const TableServer: Story = {
 				return { args, headers, users, options, state, fetchData, totalUsers, StateEnum }
 			},
 			template: `
-              <div class="pa-4">
-                <PaginatedTable
+			<div class="pa-4">
+				<PaginatedTable
 					v-model:options="options"
 					:items="users"
 					:headers="headers"
@@ -584,8 +584,134 @@ export const TableServer: Story = {
 					suffix="api-example"
 					@update:options="fetchData"
 				/>
-              </div>
-            `,
+			</div>
+			`,
+		}
+	},
+}
+
+export const ManyTables: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div class="pa-4">
+						<PaginatedTable
+							suffix="table1"
+							:items="itemsTable1"
+						/>
+						<hr class="my-4">
+						<PaginatedTable
+							suffix="table2"
+							:items="itemsTable2"
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { PaginatedTable } from '@cnamts/synapse'
+
+	const itemsTable1 = ref([
+		{
+			id: 1,
+			lastname: 'Doe',
+			firstname: 'John',
+		},
+		{
+			id: 2,
+			lastname: 'Smith',
+			firstname: 'Jane',
+		},
+		{
+			id: 3,
+			lastname: 'Brown',
+			firstname: 'Charlie',
+		},
+	])
+
+	const itemsTable2 = ref([
+		{
+			id: 1,
+			lastname: 'Smith',
+			firstname: 'Jane',
+		},
+		{
+			id: 2,
+			lastname: 'Doe',
+			firstname: 'John',
+		},
+		{
+			id: 3,
+			lastname: 'Brown',
+			firstname: 'Charlie',
+		},
+	])
+</script>
+				`,
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { PaginatedTable },
+			setup() {
+				const itemsTable1 = ref([
+					{
+						id: 1,
+						lastname: 'Doe',
+						firstname: 'John',
+					},
+					{
+						id: 2,
+						lastname: 'Smith',
+						firstname: 'Jane',
+					},
+					{
+						id: 3,
+						lastname: 'Brown',
+						firstname: 'Charlie',
+					},
+				])
+
+				const itemsTable2 = ref([
+					{
+						id: 1,
+						lastname: 'Smith',
+						firstname: 'Jane',
+					},
+					{
+						id: 2,
+						lastname: 'Doe',
+						firstname: 'John',
+					},
+					{
+						id: 3,
+						lastname: 'Brown',
+						firstname: 'Charlie',
+					},
+				])
+				return { args, itemsTable1, itemsTable2 }
+			},
+			template: `
+			<div class="pa-4">
+				<PaginatedTable
+					suffix="table1"
+					:items="itemsTable1"
+				/>
+				<hr class="my-4">
+				<PaginatedTable
+					suffix="table2"
+					:items="itemsTable2"
+				/>
+			</div>
+			`,
 		}
 	},
 }
