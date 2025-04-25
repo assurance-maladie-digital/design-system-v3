@@ -1,6 +1,8 @@
 ---
 name: Demande de fonctionnalité
 about: Proposez une nouvelle fonctionnalité pour notre Design System
+labels:
+  - type: feature
 ---
 
 ## Type d'issue
