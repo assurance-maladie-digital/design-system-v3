@@ -17,7 +17,7 @@
 		label?: string
 		required?: boolean
 		disabled?: boolean
-		readOnly?: boolean
+		readonly?: boolean
 		isOutlined?: boolean
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
@@ -35,7 +35,7 @@
 		label: undefined,
 		required: false,
 		disabled: false,
-		readOnly: false,
+		readonly: false,
 		isOutlined: true,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -455,7 +455,7 @@
 		:success-messages="showSuccessMessages ? successMessages : []"
 		:is-on-error="isOnError"
 		:disabled="disabled"
-		:read-only="readOnly"
+		:readonly="readonly"
 		:display-icon="displayIcon"
 		:display-append-icon="displayAppendIcon"
 		:no-icon="noIcon"

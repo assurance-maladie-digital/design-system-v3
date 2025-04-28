@@ -118,7 +118,7 @@ const meta = {
 			control: 'boolean',
 			default: false,
 		},
-		'readOnly': {
+		'readonly': {
 			description: 'Rend le champ en lecture seule',
 			control: 'boolean',
 			default: false,

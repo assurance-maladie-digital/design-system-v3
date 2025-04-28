@@ -123,7 +123,7 @@
 
 			<div
 				v-if="!props.hideActions"
-				v-bind="options.actionsCtn"
+				v-bind="options.cardActions"
 				class="sy-dialog-box-actions-ctn"
 			>
 				<VSpacer v-bind="options.actionsSpacer" />

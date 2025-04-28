@@ -1,3 +1,31 @@
+## v0.0.15-alpha (28-04-2025)
+
+### Composants
+
+- BackToTopBtn: fix accessibility issues [`#560`](https://github.com/assurance-maladie-digital/design-system-v3/pull/560)
+- SkipLink: fix accessibility issues [`#555`](https://github.com/assurance-maladie-digital/design-system-v3/pull/555)
+- LangBtn: fix accessibility issues [`#553`](https://github.com/assurance-maladie-digital/design-system-v3/pull/553)
+- PageContainer: fix accessibility issues [`#557`](https://github.com/assurance-maladie-digital/design-system-v3/pull/557)
+- UserMenuBtn: fix button logout text [`#559`](https://github.com/assurance-maladie-digital/design-system-v3/pull/559)
+- HeaderBar: fix focus menus [`#547`](https://github.com/assurance-maladie-digital/design-system-v3/pull/547)
+- DatePicker: fix focus accessibility [`#542`](https://github.com/assurance-maladie-digital/design-system-v3/pull/542)
+- PhoneField: display default country code [`#545`](https://github.com/assurance-maladie-digital/design-system-v3/pull/545)
+- BackBtn / DownloadBtn: fix dark exemples [`#541`](https://github.com/assurance-maladie-digital/design-system-v3/pull/541)
+- SySelect: add clearable functionality [`#548`](https://github.com/assurance-maladie-digital/design-system-v3/pull/548)
+- SySelect: add state active on selected menu [`#549`](https://github.com/assurance-maladie-digital/design-system-v3/pull/549)
+- SySelect: fix editable input [`#552`](https://github.com/assurance-maladie-digital/design-system-v3/pull/552)
+- SySelect: fix list position [`#551`](https://github.com/assurance-maladie-digital/design-system-v3/pull/551)
+- Pass read-only prop to readonly to be conformed to Vuetify [`#543`](https://github.com/assurance-maladie-digital/design-system-v3/pull/543)
+- Add types on issues templates [`#563`](https://github.com/assurance-maladie-digital/design-system-v3/pull/563)
+
+### Documentation
+
+- Improve RGAA pre-audit checklist [`#562`](https://github.com/assurance-maladie-digital/design-system-v3/pull/562)
+- DatePicker: improve documentation [`#540`](https://github.com/assurance-maladie-digital/design-system-v3/pull/540)
+- PaginatedTable: improve documentation  [`#554`](https://github.com/assurance-maladie-digital/design-system-v3/pull/554)
+- Add accessibility issues fixes  [`#546`](https://github.com/assurance-maladie-digital/design-system-v3/pull/546)
+- Add breaking changes components details [`#564`](https://github.com/assurance-maladie-digital/design-system-v3/pull/564)
+
 ## v0.0.14-alpha (14-04-2025)
 
 ### Composants
@@ -32,7 +60,7 @@
 - PasswordField: fix title [`#500`](https://github.com/assurance-maladie-digital/design-system-v3/pull/500)
 - improve useValidation documentation [`#486`](https://github.com/assurance-maladie-digital/design-system-v3/pull/486)
 - UserMenuBtn: fix documentation [`#483`](https://github.com/assurance-maladie-digital/design-system-v3/pull/483)
-- NirField: fix import statement [`7228851`](https://github.com/assurance-maladie-digital/design-system-v3/commit/7228851ecd89bebf7804f7a385ec474b7987cf22)
+- NirField: fix import statement [`commit 7228851`](https://github.com/assurance-maladie-digital/design-system-v3/commit/7228851ecd89bebf7804f7a385ec474b7987cf22)
 
 ## v0.0.13-alpha (31-03-2025)
 

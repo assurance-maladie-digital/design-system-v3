@@ -121,3 +121,8 @@ pre.prismjs {
 		display: none;
 	}
 }
+
+/* Fix for SySelect doc */
+.css-d25wp2 {
+	transform: none !important;
+}

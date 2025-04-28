@@ -1,6 +1,8 @@
 ---
 name: Problème d'accessibilité
 about: Signalez un problème d'accessibilité ou proposez une amélioration
+labels:
+  - type: accessibility
 ---
 
 ## Type d'issue

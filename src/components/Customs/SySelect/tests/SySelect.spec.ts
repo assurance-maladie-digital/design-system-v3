@@ -3,6 +3,10 @@ import { expect, describe, it } from 'vitest'
 import SySelect from '../SySelect.vue'
 import { vuetify } from '@tests/unit/setup'
 
+type ItemType = {
+	[key: string]: unknown
+}
+
 describe('SySelect.vue', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(SySelect, {
@@ -123,7 +127,7 @@ describe('SySelect.vue', () => {
 	})
 
 	it('formats items correctly', () => {
-		const items = ['Option 1', 'Option 2']
+		const items = ['Option 1', 'Option 2'] as unknown as ItemType[]
 		const wrapper = mount(SySelect, {
 			props: { items, textKey: 'text', valueKey: 'value' },
 			global: {
@@ -306,7 +310,7 @@ describe('SySelect.vue', () => {
 	it('emit the value when items is an array of string', async () => {
 		const wrapper = mount(SySelect, {
 			props: {
-				items: ['Option 1', 'Option 2'],
+				items: ['Option 1', 'Option 2'] as unknown as ItemType[],
 			},
 			global: {
 				plugins: [vuetify],
@@ -322,5 +326,23 @@ describe('SySelect.vue', () => {
 		const secondItem = wrapper.findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][1]).toEqual(['Option 2'])
+	})
+
+	it('is clearable when clearable is true', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				modelValue: '1',
+				clearable: true,
+				items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		const clearBtn = wrapper.find('.sy-select__clear-icon')
+		expect(clearBtn.exists()).toBe(true)
+		await clearBtn.trigger('click')
+		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([null])
 	})
 })

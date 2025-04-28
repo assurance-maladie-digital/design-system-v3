@@ -34,7 +34,7 @@
 		displayAsterisk: { type: Boolean, default: false },
 		disableErrorHandling: { type: Boolean, default: false },
 		bgColor: { type: String, default: undefined },
-		readOnly: { type: Boolean, default: false },
+		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
 	})
 
@@ -85,6 +85,35 @@
 			displayText: generateDisplayText(ind),
 		})),
 	)
+
+	// Watcher pour initialiser dialCode à partir de props.dialCodeModel
+	// Placé après la définition de dialCodeOptions pour éviter l'erreur d'accès avant initialisation
+	watch(() => props.dialCodeModel, (newVal) => {
+		if (!newVal) {
+			dialCode.value = ''
+			return
+		}
+
+		// Si c'est un objet, on cherche l'indicatif correspondant dans la liste des options
+		if (typeof newVal === 'object') {
+			// On cherche l'indicatif avec le même code
+			const matchingOption = dialCodeOptions.value.find((opt) => {
+				return opt.code === newVal.code
+			})
+
+			if (matchingOption) {
+				// On utilise directement l'objet de la liste pour éviter les problèmes de référence
+				dialCode.value = matchingOption
+			}
+			else {
+				dialCode.value = newVal
+			}
+		}
+		else {
+			// Si c'est une chaîne ou autre chose, on l'utilise directement
+			dialCode.value = newVal
+		}
+	}, { immediate: true })
 
 	function generateDisplayText(ind: Indicatif): string {
 		const format = {
@@ -190,7 +219,7 @@
 			:disable-error-handling="props.disableErrorHandling"
 			:return-object="true"
 			:bg-color="props.bgColor"
-			:read-only="props.readOnly"
+			:readonly="props.readonly"
 			:disabled="props.disabled"
 			class="custom-select"
 			text-key="displayText"
@@ -209,6 +238,7 @@
 			:success-messages="successes"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:display-asterisk="props.displayAsterisk"
+			:readonly="props.readonly"
 			:bg-color="props.bgColor"
 			:disabled="props.disabled"
 			:class="{

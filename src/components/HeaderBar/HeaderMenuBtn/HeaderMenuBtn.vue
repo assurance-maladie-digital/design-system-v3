@@ -48,12 +48,22 @@
 	font-weight: 700;
 	background-color: rgb(var(--v-theme-primary));
 	color: tokens.$neutral-white;
-	border-bottom: solid 1px tokens.$blue-lighten-80;
-	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border-bottom 0.15s 0.1s;
+	border: 2px solid transparent;
+	border-bottom:
+		solid 2px linear-gradient(
+			180deg,
+			transparent 0%,
+			transparent 50%,
+			tokens.$blue-lighten-80 50%,
+			tokens.$blue-lighten-80 100%
+		);
+	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border 0.15s 0.1s;
 
 	&:focus-visible {
 		background-color: tokens.$neutral-white;
 		color: rgb(var(--v-theme-primary));
+		outline: none;
+		border: 2px solid rgb(var(--v-theme-primary));
 	}
 }
 

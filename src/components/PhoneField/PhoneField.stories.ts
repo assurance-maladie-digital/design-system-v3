@@ -1,5 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
+import { indicatifs } from './indicatifs'
 
 const meta = {
 	title: 'Composants/Formulaires/PhoneField',
@@ -91,7 +92,7 @@ export const Default: Story = {
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
 		bgColor: undefined,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 	},
 	render: (args) => {
@@ -114,7 +115,7 @@ export const Default: Story = {
 					:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 					:isValidatedOnBlur="args.isValidatedOnBlur"
 					:bg-color="args.bgColor"
-					:readOnly="args.readOnly"
+					:readonly="args.readonly"
 					:disabled="args.disabled"
 				/>
 				</div>
@@ -175,7 +176,7 @@ export const Required: Story = {
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
 		bgColor: undefined,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 	},
 	render: (args) => {
@@ -198,7 +199,7 @@ export const Required: Story = {
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
      :bg-color="args.bgColor"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
     />
 				</div>
@@ -269,7 +270,7 @@ const phoneNumber = ref('')
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
 						:display-asterisk="args.displayAsterisk"
-						:readOnly="args.readOnly"
+						:readonly="args.readonly"
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
@@ -340,7 +341,7 @@ export const CustomIndicatifs: Story = {
 		useCustomIndicatifsOnly: true,
 		isValidatedOnBlur: true,
 		bgColor: undefined,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 	},
 	render: (args) => {
@@ -362,7 +363,7 @@ export const CustomIndicatifs: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -422,7 +423,7 @@ export const NotValidatedOnBlur: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -445,7 +446,7 @@ export const NotValidatedOnBlur: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -505,7 +506,7 @@ export const DisplayFormatCode: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -528,7 +529,7 @@ export const DisplayFormatCode: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -588,7 +589,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -611,7 +612,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -671,7 +672,7 @@ export const DisplayFormatCodeCountry: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -694,7 +695,7 @@ export const DisplayFormatCodeCountry: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -754,7 +755,7 @@ export const DisplayFormatCountry: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -777,7 +778,7 @@ export const DisplayFormatCountry: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
@@ -837,7 +838,7 @@ export const DisplayFormatAbbreviation: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -860,12 +861,203 @@ export const DisplayFormatAbbreviation: Story = {
      :customIndicatifs="args.customIndicatifs"
      :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
      :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readOnly="args.readOnly"
+	 :readonly="args.readonly"
 	 :disabled="args.disabled"
      :bg-color="args.bgColor"
     />
 							</div>
    `,
+		}
+	},
+}
+
+export const DefaultDialCode: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						:dial-code-model="dialCodeModel"
+						:required="required"
+						:withCountryCode="withCountryCode"
+						:countryCodeRequired="countryCodeRequired"
+						:displayFormat="displayFormat"
+						:customIndicatifs="customIndicatifs"
+						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+						:isValidatedOnBlur="isValidatedOnBlur"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField } from '@cnamts/synapse'
+					
+					const modelValue = ref('')
+					
+					// Indicatifs personnalisés
+					const customIndicatifs = [
+						{ code: '+3433', country: 'Exemple', abbreviation: 'EX', phoneLength: 10, mask: '## ## ## ## ##' },
+						{ code: '+34', country: 'Espagne', abbreviation: 'ES', phoneLength: 9, mask: '### ### ###' },
+						{ code: '+41', country: 'Suisse', abbreviation: 'CH', phoneLength: 9, mask: '### ### ###' },
+					]
+					
+					// Pré-sélection de l'indicatif Exemple
+					const dialCodeModel = ref(customIndicatifs.find(ind => ind.country === 'Exemple'))
+					
+					const required = ref(true)
+					const withCountryCode = ref(true)
+					const countryCodeRequired = ref(true)
+					const displayFormat = ref('code-country')
+					const useCustomIndicatifsOnly = ref(true)
+					const isValidatedOnBlur = ref(true)
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		dialCodeModel: { code: '+3433', country: 'Exemple', abbreviation: 'EX', phoneLength: 10, mask: '## ## ## ## ##' },
+		required: true,
+		outlined: true,
+		outlinedIndicatif: true,
+		withCountryCode: true,
+		countryCodeRequired: true,
+		displayFormat: 'code-country',
+		customIndicatifs: [
+			{ code: '+3433', country: 'Exemple', abbreviation: 'EX', phoneLength: 10, mask: '## ## ## ## ##' },
+			{ code: '+34', country: 'Espagne', abbreviation: 'ES', phoneLength: 9, mask: '### ### ###' },
+			{ code: '+41', country: 'Suisse', abbreviation: 'CH', phoneLength: 9, mask: '### ### ###' },
+		],
+		useCustomIndicatifsOnly: true,
+		isValidatedOnBlur: true,
+		bgColor: undefined,
+		readonly: false,
+		disabled: false,
+	},
+	render: (args) => {
+		return {
+			components: { PhoneField },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<h3>PhoneField avec indicatif pré-rempli</h3>
+					<p>Cette story montre comment pré-remplir l'indicatif téléphonique avec des indicatifs personnalisés.</p>
+					<PhoneField
+						v-model="args.modelValue"
+						:dial-code-model="args.dialCodeModel"
+						:required="args.required"
+						:outlined="args.outlined"
+						:outlinedIndicatif="args.outlinedIndicatif"
+						:withCountryCode="args.withCountryCode"
+						:countryCodeRequired="args.countryCodeRequired"
+						:displayFormat="args.displayFormat"
+						:customIndicatifs="args.customIndicatifs"
+						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
+						:isValidatedOnBlur="args.isValidatedOnBlur"
+						:readonly="args.readonly"
+						:disabled="args.disabled"
+						:bg-color="args.bgColor"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const DefaultDialCodeStandard: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="phone"
+						:dial-code-model="dialCodeModel"
+						:with-country-code="true"
+						:country-code-required="true"
+						display-format="code-country"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField, indicatifs } from '@cnamts/synapse'
+					
+					// Modèle pour le numéro de téléphone
+					const phone = ref('')
+					
+					// Recherche de l'indicatif France dans les indicatifs standards
+					const franceIndicatif = indicatifs.find(ind => ind.country === 'France')
+					
+					// Pré-remplissage avec l'indicatif France
+					const dialCodeModel = ref(franceIndicatif)
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		dialCodeModel: indicatifs.find(ind => ind.country === 'France'),
+		required: false,
+		outlined: true,
+		outlinedIndicatif: true,
+		withCountryCode: true,
+		countryCodeRequired: true,
+		displayFormat: 'code-country',
+		customIndicatifs: [],
+		useCustomIndicatifsOnly: false,
+		isValidatedOnBlur: true,
+		bgColor: undefined,
+		readonly: false,
+		disabled: false,
+	},
+	render: (args) => {
+		return {
+			components: { PhoneField },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<h3>PhoneField avec indicatif standard pré-rempli</h3>
+					<p>Cette story montre comment pré-remplir l'indicatif téléphonique avec les indicatifs standards.</p>
+					<div class="mb-4">
+						<strong>Indicatif sélectionné :</strong> {{ args.dialCodeModel ? args.dialCodeModel.code + ' ' + args.dialCodeModel.country : 'Aucun' }}
+					</div>
+					<PhoneField
+						v-model="args.modelValue"
+						:dial-code-model="args.dialCodeModel"
+						:required="args.required"
+						:outlined="args.outlined"
+						:outlinedIndicatif="args.outlinedIndicatif"
+						:withCountryCode="args.withCountryCode"
+						:countryCodeRequired="args.countryCodeRequired"
+						:displayFormat="args.displayFormat"
+						:customIndicatifs="args.customIndicatifs"
+						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
+						:isValidatedOnBlur="args.isValidatedOnBlur"
+						:readonly="args.readonly"
+						:disabled="args.disabled"
+						:bg-color="args.bgColor"
+					/>
+				</div>
+			`,
 		}
 	},
 }
@@ -926,7 +1118,7 @@ export const DisplayModels: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		readOnly: false,
+		readonly: false,
 		bgColor: undefined,
 	},
 	render: (args) => {
@@ -952,7 +1144,7 @@ export const DisplayModels: Story = {
 						:customIndicatifs="args.customIndicatifs"
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
-						:readOnly="args.readOnly"
+						:readonly="args.readonly"
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
@@ -1015,7 +1207,7 @@ export const DisabledErrorHandling: Story = {
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
 		disableErrorHandling: true,
-		readOnly: false,
+		readonly: false,
 		disabled: false,
 		bgColor: undefined,
 	},
@@ -1041,7 +1233,7 @@ export const DisabledErrorHandling: Story = {
 						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 						:isValidatedOnBlur="args.isValidatedOnBlur"
 						:disableErrorHandling="args.disableErrorHandling"
-						:readOnly="args.readOnly"
+						:readonly="args.readonly"
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
@@ -1060,7 +1252,7 @@ export const DisabledErrorHandling: Story = {
 							:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
 							:isValidatedOnBlur="args.isValidatedOnBlur"
 							:disableErrorHandling="false"
-							:readOnly="args.readOnly"
+							:readonly="args.readonly"
 							:disabled="args.disabled"
 							:bg-color="args.bgColor"
 						/>

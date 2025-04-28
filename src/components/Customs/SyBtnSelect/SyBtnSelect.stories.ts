@@ -506,7 +506,7 @@ export const WithCustomStyles: Story = {
       <VIcon 
       	:icon="mdiAccount" 
       	class="mr-2"
-      	color="red" 
+      	color="secondary" 
       />
     </template>
   </SyBtnSelect>
@@ -544,7 +544,7 @@ const items = ['Option 1', 'Option 2']
                     <VIcon
                         :icon="mdiAccount"
                         class="mr-2"
-                        color="red"
+                        color="secondary"
                     />
                   </template>
                 </SyBtnSelect>

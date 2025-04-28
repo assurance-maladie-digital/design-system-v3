@@ -1,11 +1,12 @@
 <script setup lang="ts">
-	import { computed, ref, watch } from 'vue'
+	import { computed, nextTick, ref, watch } from 'vue'
 	import type { AllLanguagesChar } from '@/components/LangBtn/types'
 	import { mdiMenuDown } from '@mdi/js'
 	import { locales } from './locales'
 	import ISO6391 from 'iso-639-1'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import defaultOptions from './config'
+	import type { VBtn, VListItem } from 'vuetify/components'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: string
@@ -90,6 +91,30 @@
 		}
 	})
 
+	const itemRef = ref<Array<VListItem>>([])
+	const btnRef = ref<VBtn | null>(null)
+	watch(
+		menu,
+		(newVal) => {
+			setTimeout(async () => {
+				if (newVal) {
+					setTimeout(() => {
+						requestAnimationFrame(() => {
+							const inputElement = itemRef.value[0]?.$el
+							if (inputElement) {
+								inputElement.focus()
+							}
+						})
+					}, 0)
+				}
+				else {
+					await nextTick()
+					btnRef.value?.$el.focus()
+				}
+			}, 0)
+		},
+	)
+
 	defineExpose({
 		currentLangData,
 		updateLang,
@@ -101,7 +126,7 @@
 	<div :id="menuId">
 		<VMenu
 			v-bind="options.menu"
-			:id="isMenuOpen ? 'lang-menu' : menuId "
+			id="lang-menu"
 			v-model="menu"
 			scroll-strategy="none"
 			role="menu"
@@ -110,15 +135,16 @@
 			<template #activator="{ props: activatorProps }">
 				<VBtn
 					id="lang-menu-btn"
+					v-bind="{
+						...options.btn,
+						...activatorProps,
+					}"
+					ref="btnRef"
 					:aria-label="`${props.ariaLabel} ${currentLangData.name}`"
 					aria-haspopup="menu"
 					:aria-controls="menuId"
 					:aria-owns="menuId"
 					:aria-expanded="isMenuOpen"
-					v-bind="{
-						...options.btn,
-						...activatorProps,
-					}"
 					class="vd-lang-btn"
 				>
 					{{ currentLangData.name }}
@@ -134,15 +160,22 @@
 			<VList
 				v-bind="options.list"
 				aria-labelledby="lang-menu-btn"
+				color="secondary"
+				:aria-activedescendant="`lang-item-${selectedLanguage}`"
+				role="menu"
 			>
 				<VListItem
-					v-for="(langData, code, index) in languagesData"
+					v-for="(langData, code) in languagesData"
 					v-bind="options.listTile"
+					:id="`lang-item-${code}`"
 					:key="code"
+					ref="itemRef"
+					:active="selectedLanguage === code"
 					role="menuitem"
-					:tabindex="index + 1"
+					:lang="code"
+					color="primary"
+					tabindex="0"
 					:aria-label="`${props.ariaLabel} ${langData.nativeName}`"
-					:aria-labelledby="`${menuId} ${langData.nativeName}`"
 					@click="updateLang(code)"
 				>
 					<VListItemTitle v-bind="options.listTileTitle">
@@ -160,6 +193,17 @@
 	background-color: rgba(tokens.$colors-overlay, 0.005);
 }
 
+.v-list-item:focus-visible {
+	&::after {
+		color: rgb(var(--v-theme-primary));
+		opacity: 1;
+	}
+
+	:deep(.v-list-item__overlay) {
+		display: none;
+	}
+}
+
 .vd-lang-btn {
 	font-size: 16px;
 
@@ -167,5 +211,20 @@
 
 	text-transform: none;
 	letter-spacing: inherit;
+
+	&:deep() {
+		.v-btn__underlay,
+		.v-btn__overlay {
+			display: none;
+		}
+	}
+}
+
+.vd-lang-btn:focus-visible {
+	outline: 0;
+}
+
+.vd-lang-btn:focus-visible::after {
+	opacity: 1;
 }
 </style>
