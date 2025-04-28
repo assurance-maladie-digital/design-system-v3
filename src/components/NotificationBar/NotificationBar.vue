@@ -4,7 +4,7 @@
 	import { mdiAlertCircleOutline, mdiAlertOctagonOutline, mdiCheckCircleOutline, mdiClose, mdiInformationOutline } from '@mdi/js'
 	import { computed, getCurrentInstance, ref, watch } from 'vue'
 	import { useDisplay } from 'vuetify'
-	import defaultOptions from './options'
+	import defaultOptions from './config'
 	import { type Notification } from './types'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
