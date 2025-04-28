@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref, onMounted } from 'vue'
+	import { computed, ref, onMounted, useAttrs } from 'vue'
 	import { locales } from './locales'
 	import {
 		mdiAlertOutline,
@@ -23,6 +23,8 @@
 		closable: false,
 		variant: 'tonal',
 	})
+
+	const attrs = useAttrs()
 
 	const prependIcon = computed(() => {
 		return {
@@ -52,57 +54,63 @@
 </script>
 
 <template>
-	<VAlert
-		v-model="show"
-		:type="props.type"
-		:closable="props.closable"
-		:variant="props.variant"
-		:class="`alert alert--${props.type}`"
-		:color="props.type"
-		:border="props.variant === 'tonal' ? 'start' : false"
+	<div
+		class="sy-alert"
+		role="alert"
 	>
-		<template #prepend>
-			<VIcon
-				ref="alertIcon"
-				class="alert-icon"
-				size="1.5rem"
-				role="presentation"
-			>
-				<slot name="icon">
-					{{ prependIcon }}
-				</slot>
-			</VIcon>
-		</template>
-
-		<template #default>
-			<slot />
-		</template>
-
-		<template
-			v-if="props.closable"
-			#close
+		<VAlert
+			v-model="show"
+			v-bind="attrs"
+			:type="props.type"
+			:closable="props.closable"
+			:variant="props.variant"
+			:class="`alert alert--${props.type}`"
+			:color="props.type"
+			:border="props.variant === 'tonal' ? 'start' : false"
 		>
-			<VBtn
-				:color="props.variant === 'outlined' ? undefined : 'primary'"
-				:ripple="false"
-				variant="text"
-				width="auto"
-				height="100%"
-				class="alert-close-btn"
-				@click="dismissAlert"
-			>
+			<template #prepend>
 				<VIcon
-					size="small"
+					ref="alertIcon"
+					class="alert-icon"
+					size="1.5rem"
+					role="presentation"
 				>
-					{{ mdiClose }}
+					<slot name="icon">
+						{{ prependIcon }}
+					</slot>
 				</VIcon>
+			</template>
 
-				<span>
-					{{ locales.close }}
-				</span>
-			</VBtn>
-		</template>
-	</VAlert>
+			<template #default>
+				<slot />
+			</template>
+
+			<template
+				v-if="props.closable"
+				#close
+			>
+				<VBtn
+					:color="props.variant === 'outlined' ? undefined : 'primary'"
+					:ripple="false"
+					variant="text"
+					width="auto"
+					height="100%"
+					class="alert-close-btn"
+					@click="dismissAlert"
+				>
+					<VIcon
+						size="small"
+					>
+						{{ mdiClose }}
+					</VIcon>
+
+					<span>
+						{{ locales.close }}
+					</span>
+				</VBtn>
+			</template>
+		</VAlert>
+	</div>
 </template>
 
 <style lang="scss" scoped>

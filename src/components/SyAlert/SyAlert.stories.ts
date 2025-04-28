@@ -13,6 +13,13 @@ const meta = {
 		modelValue: true,
 	},
 	argTypes: {
+		modelValue: {
+			control: { type: 'boolean' },
+			description: 'Contrôle l\'affichage de l\'alerte',
+			table: {
+				category: 'props',
+			},
+		},
 		type: {
 			options: ['info', 'warning', 'success', 'error'],
 			control: { type: 'select' },
@@ -37,7 +44,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 	<div class="d-flex flex-wrap align-center justify-center">
-		<SyAlert v-model="showAlert" type="success" variant="tonal" :closable="true">
+		<SyAlert v-model="showAlert" type="success" variant="tonal" :closable="true" style="width: 100%">
 			<template #default>Contenu de l'alerte</template>
 		</SyAlert>
 
@@ -75,7 +82,7 @@ export const Default: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" style="width: 100%">
 						<template #default>{{ args.default }}</template>
 					</SyAlert>
 					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
@@ -94,7 +101,7 @@ export const Outlined: Story = {
 				name: 'Template',
 				code: `<template>
 	<div class="d-flex flex-wrap align-center justify-center">
-		<SyAlert v-model="showAlert" type="warning" variant="outlined" :closable="true">
+		<SyAlert v-model="showAlert" type="warning" variant="outlined" :closable="true" style="width: 100%">
 			<template #default>Contenu de l'alerte</template>
 		</SyAlert>
 
@@ -131,7 +138,7 @@ export const Outlined: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" style="width: 100%">
 						<template #default>{{ args.default }}</template>
 					</SyAlert>
 					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
@@ -150,7 +157,7 @@ export const SlotIcon: Story = {
 				name: 'Template',
 				code: `<template>
 	<div class="d-flex flex-wrap align-center justify-center">
-		<SyAlert v-model="showAlert" type="success" variant="tonal" :closable="true">
+		<SyAlert v-model="showAlert" type="success" variant="tonal" :closable="true" style="width: 100%">
 			<template #default>Contenu de l'alerte</template>
 			<template #icon>{{ icon }}</template>
 		</SyAlert>
@@ -191,7 +198,7 @@ export const SlotIcon: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" style="width: 100%">
 						<template #default>{{ args.default }}</template>
 						<template #icon>{{ args.icon }}</template>
 					</SyAlert>

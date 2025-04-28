@@ -46,7 +46,16 @@ describe('Alert', () => {
 			modelValue: false,
 		})
 
-		expect(wrapper.html()).toBeFalsy()
+		expect(wrapper.html()).toMatchInlineSnapshot(`
+			<div
+			  class="sy-alert"
+			  message="message"
+			  role="alert"
+			  title="title"
+			>
+			  <!---->
+			</div>
+		`)
 
 		await wrapper.setProps({
 			modelValue: true,
@@ -79,7 +88,16 @@ describe('Alert', () => {
 
 		await closeBtn.element.click()
 
-		expect(wrapper.html()).toBeFalsy()
+		expect(wrapper.html()).toMatchInlineSnapshot(`
+			<div
+			  class="sy-alert"
+			  message="message"
+			  role="alert"
+			  title="title"
+			>
+			  <!---->
+			</div>
+		`)
 		expect(wrapper.emitted('update:modelValue')![0]![0]).toBe(false)
 	})
 
