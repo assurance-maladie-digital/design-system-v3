@@ -12,7 +12,7 @@ Les librairies `vue-dot` et `synapse-bridge` utilisaient en interne la librairie
 
 Le form builder n'est plus maintenu par le design system dans sa version synapse. Vous pouvez trouvez le code source dans sa version vue2 [ici](https://github.com/assurance-maladie-digital/design-system/tree/v2/packages/form-builder) et sa version vue3 [ici](https://github.com/assurance-maladie-digital/design-system/tree/v2/packages/form-builder).
 
-## Les composants
+## Les composants Synapse
 
 ### CustomIcon
 
@@ -33,4 +33,33 @@ Vous devez désormais utiliser le composant [VIcon](https://vuetifyjs.com/en/com
 
 ### FilterModule
 
-Le composant `FilterModule` n'était pas optimisé du point de vue expérience utilisateur, le nombre de clics pour accéder à un filtre était trop important. Il a été remplacé par le composant [FilterInline](/docs/composants-filtres-filterssidebar--docs) et [FilterSideBar](/docs/composants-filtres-filterinline--docs).
+Le composant `FilterModule` n'était pas optimisé du point de vue expérience utilisateur, le nombre de clics pour accéder à un filtre était trop important. Il a été remplacé par le composant [FilterSideBar](/docs/composants-filtres-filterssidebar--docs) et [FilterInline](/docs/composants-filtres-filterinline--docs).
+
+### FilePreview
+
+La props `locales` a été ajoutée afin de gérer la localisation des messages d'erreurs.
+
+[Voir l'API du composant](https://cnam-design-system.netlify.app/?path=/docs/composants-donn%C3%A9es-filepreview--docs)
+
+### NirField
+
+ - Le variant utilisé par défaut est maintenant 'outlined'.
+ - La props `nir-length` a été renomée en `displayKey`.
+ - La props `tooltip` a été supprimée au profit des props `nirTooltip` et `keyTooltip`, ainsi que `nirTooltipPosition` et `keyTooltipPosition`.
+ - Ajout de nouvelles props pour la gestion des erreurs: `disableErrorHandling`, `customNumberRules` et `customKeyRules`
+
+
+[Voir l'API du composant](https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-nirfield--docs#api)
+
+### DatePicker
+
+Des changements sont encore susceptibles d'avoir lieu sur ce composant.
+
+ - Le variant utilisé par défaut est maintenant 'outlined'.
+ - Le composant en mode calendrier ne permet plus la saisie manuelle de la date.
+ - Les props `no-prepend-icon` et `append-icon` ont été remplacés par les props `displayIcon` et `displayAppendIcon`.
+ - La props `mask` a été retirée.
+ - Les modes `birthdate` et `picker-date` ont été retirés.
+ - Les slots `prepend` et `append` ont été retirées.
+
+[Voir l'API du composant](https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-nirfield--docs#api)
