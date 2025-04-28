@@ -24,6 +24,7 @@
 - DatePicker: improve documentation [`#540`](https://github.com/assurance-maladie-digital/design-system-v3/pull/540)
 - PaginatedTable: improve documentation  [`#554`](https://github.com/assurance-maladie-digital/design-system-v3/pull/554)
 - Add accessibility issues fixes  [`#546`](https://github.com/assurance-maladie-digital/design-system-v3/pull/546)
+- Add breaking changes components details [`#564`](https://github.com/assurance-maladie-digital/design-system-v3/pull/564)
 
 ## v0.0.14-alpha (14-04-2025)
 
