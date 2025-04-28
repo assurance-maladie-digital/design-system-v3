@@ -25,12 +25,8 @@ const showAlert = ref(true);
 </script>
 
 <template>
-  <div class="d-flex flex-wrap align-center justify-center">
-    <SyAlert v-model="showAlert" type="warning" variant="tonal" :closable="true">
-      <template #default>This is a warning alert</template>
-    </SyAlert>
-
-    <VBtn v-if="!showAlert" color="primary" @click="showAlert = true" class="ma-6">Réinitialiser</VBtn>
-  </div>
+  <SyAlert v-model="showAlert" type="warning" variant="tonal" :closable="true">
+    Ceci est une alerte de type "warning".
+  </SyAlert>
 </template>
 `} />
