@@ -12,7 +12,7 @@ export const config = {
 		height: '32px',
 		class: 'mt-n2 mr-n2 ml-4',
 	},
-	actionsCtn: {
+	cardActions: {
 		class: 'd-flex flex-wrap mt-6',
 	},
 	cancelBtn: {
