@@ -144,6 +144,7 @@
 			:min-width="isMobileVersion || isTabletVersion ? 'auto' : undefined"
 			:rounded="props.rounded"
 			:class="[{ 'long-text': hasLongContent }]"
+			@keyup.esc="showNextNotification"
 		>
 			<div class="d-flex align-center ga-2">
 				<VIcon
