@@ -606,6 +606,7 @@
 						:bg-color="props.bgColor"
 						is-clearable
 						title="Date Picker"
+						@click="openDatePicker"
 						@focus="openDatePicker"
 						@update:model-value="updateSelectedDates"
 						@prepend-icon-click="openDatePicker"
