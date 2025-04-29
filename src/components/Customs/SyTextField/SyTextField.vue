@@ -79,7 +79,7 @@
 			isValidateOnBlur?: boolean
 			disableErrorHandling?: boolean
 			disableClickButton?: boolean
-      autocomplete?: string
+			autocomplete?: string
 		}>(),
 		{
 			modelValue: undefined,
@@ -145,6 +145,7 @@
 			isValidateOnBlur: true,
 			disableErrorHandling: false,
 			disableClickButton: true,
+      autocomplete: 'off',
 		},
 	)
 
@@ -317,15 +318,15 @@
 			}
 		}
 
-    const removeInputSizeAttr = () => {
-      const inputElement = document.querySelector('input[size]')
-      if (inputElement) {
-        inputElement.removeAttribute('size')
-      }
-    }
+		const removeInputSizeAttr = () => {
+			const inputElement = document.querySelector('input[size]')
+			if (inputElement) {
+				inputElement.removeAttribute('size')
+			}
+		}
 
 		removeSvgRole()
-    removeInputSizeAttr()
+		removeInputSizeAttr()
 		setAriaHidden('.v-text-field__prefix')
 		setAriaHidden('.v-text-field__suffix')
 		addSrOnlySpan('.v-text-field__prefix')
@@ -343,7 +344,7 @@
 	<VTextField
 		:id="props.id"
 		v-model="model"
-    :autocomplete="props.autocomplete"
+		:autocomplete="props.autocomplete"
 		:active="props.isActive"
 		:title="props.label"
 		:aria-label="props.label"
