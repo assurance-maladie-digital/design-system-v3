@@ -79,6 +79,7 @@
 			isValidateOnBlur?: boolean
 			disableErrorHandling?: boolean
 			disableClickButton?: boolean
+      autocomplete?: string
 		}>(),
 		{
 			modelValue: undefined,
@@ -316,7 +317,15 @@
 			}
 		}
 
+    const removeInputSizeAttr = () => {
+      const inputElement = document.querySelector('input[size]')
+      if (inputElement) {
+        inputElement.removeAttribute('size')
+      }
+    }
+
 		removeSvgRole()
+    removeInputSizeAttr()
 		setAriaHidden('.v-text-field__prefix')
 		setAriaHidden('.v-text-field__suffix')
 		addSrOnlySpan('.v-text-field__prefix')
@@ -334,6 +343,7 @@
 	<VTextField
 		:id="props.id"
 		v-model="model"
+    :autocomplete="props.autocomplete"
 		:active="props.isActive"
 		:title="props.label"
 		:aria-label="props.label"
