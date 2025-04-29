@@ -2,7 +2,7 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useNotificationService } from '@/services/NotificationService'
 	import { mdiAlertCircleOutline, mdiAlertOctagonOutline, mdiCheckCircleOutline, mdiClose, mdiInformationOutline } from '@mdi/js'
-	import { computed, getCurrentInstance, ref, watch } from 'vue'
+	import { computed, getCurrentInstance, ref, useAttrs, watch } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import defaultOptions from './config'
 	import { type Notification } from './types'
@@ -16,6 +16,8 @@
 		rounded: 4,
 		bottom: false,
 	})
+
+	const attrs = useAttrs()
 
 	const options = useCustomizableOptions(defaultOptions, props)
 
@@ -131,7 +133,7 @@
 		<VSnackbar
 			v-bind="options.snackbar"
 			v-model="isNotificationVisible"
-			role="status"
+			:role="attrs?.type === 'error' ? 'alert' : 'status'"
 			:eager="true"
 			:color="color"
 			:location="props.bottom ? 'bottom' : 'top'"
@@ -139,6 +141,7 @@
 			:multi-line="hasLongContent"
 			:timeout="currentNotification?.timeout ?? -1"
 			:width="isMobileVersion || isTabletVersion ? 'auto' : '960px'"
+			:min-width="isMobileVersion || isTabletVersion ? 'auto' : undefined"
 			:rounded="props.rounded"
 			:class="[{ 'long-text': hasLongContent }]"
 		>
@@ -220,5 +223,11 @@
 .sy-notification-content {
 	min-width: 0;
 	word-wrap: break-word;
+	overflow-y: auto;
+}
+
+:deep(.v-snackbar__wrapper) {
+	max-height: 100%;
+	overflow-y: auto;
 }
 </style>
