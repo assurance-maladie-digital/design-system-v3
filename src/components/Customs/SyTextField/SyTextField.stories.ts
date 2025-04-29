@@ -118,6 +118,11 @@ const meta = {
 			control: 'boolean',
 			default: false,
 		},
+		'disableClickButton': {
+			description: 'Désactive le click sur les icônes append et prepend',
+			control: 'boolean',
+			default: true,
+		},
 		'readonly': {
 			description: 'Rend le champ en lecture seule',
 			control: 'boolean',

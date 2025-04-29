@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, watch } from 'vue'
+	import { computed, onMounted, ref, watch } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import {
@@ -78,6 +78,7 @@
 			showSuccessMessages?: boolean
 			isValidateOnBlur?: boolean
 			disableErrorHandling?: boolean
+			disableClickButton?: boolean
 		}>(),
 		{
 			modelValue: undefined,
@@ -142,6 +143,7 @@
 			showSuccessMessages: true,
 			isValidateOnBlur: true,
 			disableErrorHandling: false,
+			disableClickButton: true,
 		},
 	)
 
@@ -289,6 +291,38 @@
 		opacity: '1',
 	}
 
+	onMounted(() => {
+		const removeSvgRole = () => {
+			const svgElement = document.querySelector('svg[role="img"]')
+			if (svgElement) {
+				svgElement.removeAttribute('role')
+			}
+		}
+
+		const setAriaHidden = (selector) => {
+			const element = document.querySelector(`${selector} span`)
+			if (element) {
+				element.setAttribute('aria-hidden', 'true')
+			}
+		}
+
+		const addSrOnlySpan = (selector) => {
+			const element = document.querySelector(selector)
+			if (element && element.textContent) {
+				const srSpan = document.createElement('span')
+				srSpan.className = 'd-sr-only'
+				srSpan.textContent = element.textContent
+				element.appendChild(srSpan)
+			}
+		}
+
+		removeSvgRole()
+		setAriaHidden('.v-text-field__prefix')
+		setAriaHidden('.v-text-field__suffix')
+		addSrOnlySpan('.v-text-field__prefix')
+		addSrOnlySpan('.v-text-field__suffix')
+	})
+
 	defineExpose({
 		validation,
 		validateOnSubmit,
@@ -314,7 +348,6 @@
 		:direction="props.direction"
 		:dirty="props.isDirty"
 		:disabled="props.disabled"
-		:display-asterisk="isShouldDisplayAsterisk"
 		:error="hasError"
 		:error-messages="errors"
 		:flat="props.isFlat"
@@ -329,11 +362,10 @@
 		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 		:min-width="props.minWidth"
 		:name="props.name"
-		:no-icon="props.noIcon"
 		:persistent-clear="props.displayPersistentClear"
 		:persistent-counter="props.displayPersistentCounter"
 		:persistent-hint="props.displayPersistentHint"
-		:persistent-placeholder="displayPersistentPlaceholder"
+		:persistent-placeholder="props.displayPersistentPlaceholder"
 		:placeholder="props.placeholder"
 		:prefix="props.prefix"
 		:readonly="props.readonly"
@@ -355,6 +387,7 @@
 		}"
 		@blur="checkErrorOnBlur"
 	>
+		<!-- Prepend -->
 		<template
 			v-if="props.prependIcon || props.prependTooltip"
 			#prepend
@@ -377,15 +410,18 @@
 					</VTooltip>
 				</template>
 				<VIcon
-					v-else-if="props.prependIcon"
+					v-else-if="props.prependIcon && !props.noIcon"
 					:aria-label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.prependIcon]"
-					role="button"
+					:role="disableClickButton ? 'presentation' : 'button'"
+					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
 					@click="handlePrependIconClick"
 				/>
 			</slot>
 		</template>
+
+		<!-- Append -->
 		<template
 			v-if="props.appendIcon || props.appendTooltip"
 			#append
@@ -408,44 +444,52 @@
 					</VTooltip>
 				</template>
 				<VIcon
-					v-else-if="props.appendIcon"
+					v-else-if="props.appendIcon && !props.noIcon"
 					:aria-label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.appendIcon]"
-					role="button"
+					:role="disableClickButton ? 'presentation' : 'button'"
+					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
 					@click="handleAppendIconClick"
 				/>
 			</slot>
 		</template>
+
+		<!-- Prepend inner -->
 		<template #prepend-inner>
 			<slot name="prepend-inner">
 				<VIcon
 					v-if="props.prependInnerIcon && !props.noIcon"
-					:aria-label="props.label ? `${props.label} - bouton ${props.prependInnerIcon}` : `Bouton ${props.prependInnerIcon}`"
 					:icon="ICONS[props.prependInnerIcon]"
+					role="presentation"
+				/>
+				<VDivider
+					v-if="props.showDivider"
+					class="mt-4 pa-1"
+					v-bind="dividerProps"
+					vertical
 				/>
 			</slot>
-			<VDivider
-				v-if="props.showDivider"
-				class="mt-4 pa-1"
-				v-bind="dividerProps"
-				vertical
-			/>
 		</template>
+
+		<!-- Append inner -->
 		<template #append-inner>
 			<slot name="append-inner">
 				<VIcon
 					v-if="validationIcon && !props.appendInnerIcon"
 					:icon="validationIcon"
+					role="presentation"
 				/>
 				<VIcon
 					v-if="props.appendInnerIcon && !props.noIcon"
 					:color="appendInnerIconColor"
+					role="presentation"
 				>
 					{{ ICONS[props.appendInnerIcon] }}
 				</VIcon>
 			</slot>
 		</template>
+
 		<template #details>
 			<slot name="details" />
 		</template>
@@ -506,6 +550,8 @@
 	:deep(.v-field) {
 		color: tokens.$colors-border-success !important;
 
+		--v-medium-emphasis-opacity: 1;
+
 		.v-field__outline {
 			color: tokens.$colors-border-success !important;
 		}
@@ -525,4 +571,5 @@
 		fill: rgb(0 0 0 / 100%);
 	}
 }
+
 </style>
