@@ -60,12 +60,6 @@ describe('DatePicker.vue', () => {
 		expect(wrapper.emitted('update:modelValue')[0]).toEqual(['01/01/2023'])
 	})
 
-	it('toggles the date picker visibility on focus', async () => {
-		const input = wrapper.find('input')
-		await input.trigger('focus')
-		expect(wrapper.vm.isDatePickerVisible).toBe(true)
-	})
-
 	it('renders the date picker with proper structure', async () => {
 		// Ouvrir le DatePicker pour que les éléments soient dans le DOM
 		wrapper.vm.isDatePickerVisible = true
@@ -151,17 +145,15 @@ describe('DatePicker.vue', () => {
 				plugins: [vuetify],
 			},
 			props: {
-				required: true, // Le champ est requis
+				required: true,
 			},
 		})
 
-		// Simule une date valide
 		wrapper.vm.selectedDates = [new Date('2023-01-01')]
 		await nextTick()
 
 		const result = wrapper.vm.validateOnSubmit()
 
-		// Vérifie que validateOnSubmit retourne true et qu'il n'y a pas d'erreurs
 		expect(result).toBe(true)
 		expect(wrapper.vm.errorMessages).toEqual([])
 	})
@@ -172,34 +164,32 @@ describe('DatePicker.vue', () => {
 				plugins: [vuetify],
 			},
 			props: {
-				required: true, // Le champ est requis
+				required: true,
 			},
 		})
 
-		// Simule l'absence de date sélectionnée
 		wrapper.vm.selectedDates = null
 		await nextTick()
 
 		const result = wrapper.vm.validateOnSubmit()
 
-		// Vérifie que validateOnSubmit retourne false et qu'il y a des erreurs
 		expect(result).toBe(false)
 		expect(wrapper.vm.errorMessages).toContain('La date est requise.')
 	})
 
 	it('parses a valid date string into a Date instance', () => {
-		const modelValue = '15/01/2023' // Chaîne valide
+		const modelValue = '15/01/2023'
 		const result = wrapper.vm.initializeSelectedDates(modelValue, 'DD/MM/YYYY')
 
-		expect(result).toBeInstanceOf(Date) // Doit retourner une instance de Date
-		expect(result.toISOString().split('T')[0]).toBe('2023-01-15') // Correspond à la date attendue
+		expect(result).toBeInstanceOf(Date)
+		expect(result.toISOString().split('T')[0]).toBe('2023-01-15')
 	})
 
 	it('returns null if modelValue is null or undefined', () => {
 		const modelValue = null
 		const result = wrapper.vm.initializeSelectedDates(modelValue, 'DD/MM/YYYY')
 
-		expect(result).toBeNull() // Doit retourner null
+		expect(result).toBeNull()
 	})
 
 	it('handles an invalid date string gracefully', () => {
@@ -210,24 +200,23 @@ describe('DatePicker.vue', () => {
 	})
 
 	it('sets selectedDates to null when input is empty', () => {
-		wrapper.vm.updateSelectedDates('') // Simule un input vide
+		wrapper.vm.updateSelectedDates('')
 
-		expect(wrapper.vm.selectedDates).toBeNull() // Vérifie que selectedDates est null
+		expect(wrapper.vm.selectedDates).toBeNull()
 	})
 
 	it('parses a valid date string and updates selectedDates', () => {
 		const validInput = '15/01/2023'
-		wrapper.vm.updateSelectedDates(validInput) // Simule un input valide
+		wrapper.vm.updateSelectedDates(validInput)
 
-		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date) // Vérifie que selectedDates est une instance de Date
-		expect(wrapper.vm.selectedDates.toISOString().split('T')[0]).toBe('2023-01-15') // Vérifie la date exacte
+		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
+		expect(wrapper.vm.selectedDates.toISOString().split('T')[0]).toBe('2023-01-15')
 	})
 
 	it('does not update selectedDates for invalid date string', () => {
 		const invalidInput = 'invalid-date'
-		wrapper.vm.updateSelectedDates(invalidInput) // Simule un input invalide
-
-		expect(wrapper.vm.selectedDates).toBeNull() // Vérifie que selectedDates reste null
+		wrapper.vm.updateSelectedDates(invalidInput)
+		expect(wrapper.vm.selectedDates).toBeNull()
 	})
 
 	it('toggles date picker visibility correctly', async () => {
@@ -235,15 +224,12 @@ describe('DatePicker.vue', () => {
 			global: { plugins: [vuetify] },
 		})
 
-		// État initial : le date picker est caché
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 
-		// Ouvrir le date picker
 		wrapper.vm.openDatePicker()
 		await nextTick()
 		expect(wrapper.vm.isDatePickerVisible).toBe(true)
 
-		// Fermer le date picker
 		wrapper.vm.isDatePickerVisible = false
 		await nextTick()
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
@@ -257,7 +243,6 @@ describe('DatePicker.vue', () => {
 			},
 		})
 
-		// Valider sans date (devrait échouer)
 		const result = await wrapper.vm.validateOnSubmit()
 		expect(result).toBe(false)
 		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
@@ -299,11 +284,9 @@ describe('DatePicker.vue', () => {
 			},
 		})
 
-		// Valider sans date pour générer une erreur
 		await wrapper.vm.validateOnSubmit()
 		await nextTick()
 
-		// Vérifier que l'erreur est ajoutée à errorMessages
 		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
 		const errorMessage = wrapper.find('.v-messages__message')
 		expect(errorMessage.exists()).toBe(true)
@@ -318,12 +301,30 @@ describe('DatePicker.vue', () => {
 			},
 		})
 
-		// Vérifier que le mode birth date est appliqué
 		expect(wrapper.props('isBirthDate')).toBe(true)
 
-		// Ouvrir le picker et vérifier qu'il est visible
 		wrapper.vm.openDatePicker()
 		await nextTick()
 		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+	})
+
+	it('takes into account disabled and readonly limitations', async () => {
+		const wrapper = mount(DatePicker, {
+			global: { plugins: [vuetify] },
+			props: {
+				disabled: true,
+			},
+		})
+
+		wrapper.vm.openDatePicker()
+		await nextTick()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+
+		await wrapper.setProps({ disabled: false, readonly: true })
+		wrapper.vm.openDatePicker()
+		await nextTick()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 	})
 })

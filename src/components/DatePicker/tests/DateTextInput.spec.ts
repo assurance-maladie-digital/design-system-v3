@@ -116,20 +116,20 @@ describe('DateTextInput.vue', () => {
 			},
 		})
 
-		// Force la validation en déclenchant un événement de perte de focus
+		// Force validation by triggering a blur event
 		const input = wrapper.find('input')
 		await input.trigger('focus')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick() // Double nextTick pour s'assurer que les mises à jour sont terminées
-		// On peut également forcer la validation manuellement
+		await wrapper.vm.$nextTick() // Double nextTick to ensure updates are completed
+		// We can also force validation manually
 		await wrapper.vm.validateOnSubmit()
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
 		const warningMessages = textField.props('warningMessages') || []
-		// Vérifier que le message d'avertissement est bien présent
+		// Check that the warning message is present
 		expect(warningMessages.length).toBeGreaterThan(0)
-		// Le message réel commence par "Attention :"
+		// The actual message starts with "Attention:"
 		expect(warningMessages[0]).toContain('Attention :')
 	})
 
@@ -180,13 +180,13 @@ describe('DateTextInput.vue', () => {
 	})
 
 	it('handles date deletion', async () => {
-		// D'abord on met une date valide
+		// First set a valid date
 		const input = wrapper.find('input')
 		await input.setValue('01/01/2025')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 
-		// Puis on la supprime
+		// Then delete it
 		await input.setValue('')
 		await input.trigger('input')
 		await input.trigger('blur')
@@ -266,12 +266,12 @@ describe('DateTextInput.vue', () => {
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/__/____')
 
-		// Simuler une position de curseur après le "01"
+		// Simulate cursor position after "01"
 		input.element.setSelectionRange(2, 2)
 		await input.trigger('input')
 		await wrapper.vm.$nextTick()
 
-		// La position du curseur devrait rester après le "01"
+		// The cursor position should remain after "01"
 		expect(input.element.selectionStart).toBe(2)
 	})
 
@@ -320,7 +320,7 @@ describe('DateTextInput.vue', () => {
 	it('handles paste event with valid date', async () => {
 		const input = wrapper.find('input')
 
-		// Créer un événement de collage avec les données
+		// Create a paste event with data
 		const clipboardData = {
 			getData: () => '01/01/2025',
 		}
@@ -339,26 +339,26 @@ describe('DateTextInput.vue', () => {
 		await input.trigger('keydown', {
 			key: 'Tab',
 		})
-		// Vérifier que le composant n'empêche pas la navigation par tab
+		// Check that the component doesn't prevent tab navigation
 		expect(wrapper.emitted('update:model-value')).toBeFalsy()
 
-		// Tester le comportement avec Ctrl+V (coller)
+		// Test behavior with Ctrl+V (paste)
 		await input.trigger('keydown', {
 			key: 'v',
 			ctrlKey: true,
 		})
-		// Le comportement par défaut devrait être préservé
+		// Default behavior should be preserved
 		expect(wrapper.emitted('update:model-value')).toBeFalsy()
 	})
 
 	it('validates on submit correctly', async () => {
 		const input = wrapper.find('input')
 
-		// Cas 1: Champ vide avec required=true
+		// Case 1: Empty field with required=true
 		const emptyResult = await wrapper.vm.validateOnSubmit()
 		expect(emptyResult).toBe(false)
 
-		// Cas 2: Date valide
+		// Case 2: Valid date
 		await input.setValue('01/01/2025')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
@@ -368,23 +368,29 @@ describe('DateTextInput.vue', () => {
 	})
 
 	it('handles focus and blur methods correctly', async () => {
-		// Simuler un querySelector global
-		const originalQuerySelector = document.querySelector
+		// Create a mock for the input element
 		const mockInput = { focus: vi.fn(), blur: vi.fn() }
 
-		// Remplacer document.querySelector
-		document.querySelector = vi.fn().mockReturnValue(mockInput)
+		// Mock the component's querySelector method
+		const mockQuerySelector = vi.fn().mockReturnValue(mockInput)
 
-		// Appeler les méthodes exposées
+		// Replace the element reference and its querySelector method
+		wrapper.vm.inputRef = {
+			$el: {
+				querySelector: mockQuerySelector,
+			},
+		}
+
+		// Call the exposed methods
 		wrapper.vm.focus()
 		wrapper.vm.blur()
 
-		// Vérifier que les méthodes ont été appelées
+		// Check that querySelector was called with the right selector
+		expect(mockQuerySelector).toHaveBeenCalledWith('input:not([type="hidden"])')
+
+		// Check that the methods were called
 		expect(mockInput.focus).toHaveBeenCalled()
 		expect(mockInput.blur).toHaveBeenCalled()
-
-		// Restaurer document.querySelector
-		document.querySelector = originalQuerySelector
 	})
 
 	it('initializes with model value correctly', async () => {
@@ -425,17 +431,17 @@ describe('DateTextInput.vue', () => {
 	it('handles partial date input correctly', async () => {
 		const input = wrapper.find('input')
 
-		// Saisir seulement le jour
+		// Enter only the day
 		await input.setValue('01')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/__/____')
 
-		// Ajouter le mois
+		// Add the month
 		await input.setValue('01/02')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/02/____')
 
-		// Compléter la date
+		// Complete the date
 		await input.setValue('01/02/2025')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/02/2025')
@@ -465,16 +471,16 @@ describe('DateTextInput.vue', () => {
 		await input.trigger('focus')
 		await input.trigger('blur')
 		await customWrapper.vm.$nextTick()
-		await customWrapper.vm.$nextTick() // Double nextTick pour fiabilité
+		await customWrapper.vm.$nextTick() // Double nextTick for reliability
 
-		// Force validation manuelle
+		// Force manual validation
 		await customWrapper.vm.validateOnSubmit()
 		await customWrapper.vm.$nextTick()
 
 		const textField = customWrapper.findComponent(SyTextField)
 		const successMessages = textField.props('successMessages') || []
 
-		// Vérification assouplie
+		// Flexible verification
 		expect(successMessages.length).toBeGreaterThan(0)
 		expect(successMessages[0]).toContain('valide')
 	})
