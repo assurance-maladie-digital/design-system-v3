@@ -59,7 +59,13 @@ exports[`FilterSideBar > renders correctly 1`] = `
           v-navigation-drawer--temporary
           v-theme--light
         "
-        style="right: 0px; z-index: 1004; transform: translateX(395px); position: fixed; transition: none !important;"
+        style="
+          right: 0px;
+          z-index: 1004;
+          transform: translateX(395px);
+          position: fixed;
+          transition: none !important;
+        "
       >
         <!---->
         <!---->

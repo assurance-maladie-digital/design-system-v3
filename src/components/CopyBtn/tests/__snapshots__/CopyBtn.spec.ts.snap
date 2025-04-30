@@ -14,6 +14,7 @@ exports[`CopyBtn > renders correctly 1`] = `
     contained="false"
     disabled="false"
     eager="true"
+    interactive="false"
     location="right"
     locationstrategy="connected"
     minwidth="0"

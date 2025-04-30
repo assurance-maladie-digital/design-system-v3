@@ -41,7 +41,11 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 24px; height: 24px; width: 24px;"
+              style="
+                font-size: 24px;
+                height: 24px;
+                width: 24px;
+              "
             ></i>
           </span>
           <div>
@@ -144,7 +148,11 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 24px; height: 24px; width: 24px;"
+              style="
+                font-size: 24px;
+                height: 24px;
+                width: 24px;
+              "
             ></i>
           </span>
           <div>
@@ -237,13 +245,13 @@ exports[`UploadWorkflow > render the upload list 1`] = `
         pa-4
         sy-file-upload
       "
-      for="file-upload-v-0"
+      for="file-upload-v-2"
       style="width: 100%;"
     >
       <input
         accept=".pdf, .jpg, .jpeg, .png"
         class="sy-file-upload-input"
-        id="file-upload-v-0"
+        id="file-upload-v-2"
         type="file"
       />
       <span class="sy-file-upload-placeholder">
@@ -311,7 +319,11 @@ exports[`UploadWorkflow > render the upload list 1`] = `
             v-icon
             v-theme--light
           "
-          style="font-size: 40px; height: 40px; width: 40px;"
+          style="
+            font-size: 40px;
+            height: 40px;
+            width: 40px;
+          "
         ></i>
         <span class="
           font-weight-medium

@@ -92,7 +92,11 @@ exports[`PaginatedTable > render correctly in server mode 1`] = `
                     v-theme--light
                   "
                   role="progressbar"
-                  style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+                  style="
+                    top: 0px;
+                    height: 0px;
+                    --v-progress-linear-height: 2px;
+                  "
                 >
                   <!---->
                   <div
@@ -101,7 +105,10 @@ exports[`PaginatedTable > render correctly in server mode 1`] = `
                   ></div>
                   <div
                     class="v-progress-linear__buffer"
-                    style="opacity: NaN; width: 0%;"
+                    style="
+                      opacity: NaN;
+                      width: 0%;
+                    "
                   ></div>
                   <transition-stub
                     appear="false"
@@ -144,9 +151,9 @@ exports[`PaginatedTable > render correctly in server mode 1`] = `
                     </span>
                   </div>
                   <input
-                    aria-describedby="input-0-messages"
+                    aria-describedby="input-v-0-messages"
                     aria-label="Open"
-                    id="input-0"
+                    id="input-v-0"
                     inputmode="none"
                     size="1"
                     title="Open"
@@ -609,7 +616,11 @@ exports[`PaginatedTable > renders correctly in local mode 1`] = `
                     v-theme--light
                   "
                   role="progressbar"
-                  style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+                  style="
+                    top: 0px;
+                    height: 0px;
+                    --v-progress-linear-height: 2px;
+                  "
                 >
                   <!---->
                   <div
@@ -618,7 +629,10 @@ exports[`PaginatedTable > renders correctly in local mode 1`] = `
                   ></div>
                   <div
                     class="v-progress-linear__buffer"
-                    style="opacity: NaN; width: 0%;"
+                    style="
+                      opacity: NaN;
+                      width: 0%;
+                    "
                   ></div>
                   <transition-stub
                     appear="false"
@@ -661,9 +675,9 @@ exports[`PaginatedTable > renders correctly in local mode 1`] = `
                     </span>
                   </div>
                   <input
-                    aria-describedby="input-0-messages"
+                    aria-describedby="input-v-0-messages"
                     aria-label="Open"
-                    id="input-0"
+                    id="input-v-0"
                     inputmode="none"
                     size="1"
                     title="Open"
