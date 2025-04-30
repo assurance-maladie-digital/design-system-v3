@@ -298,8 +298,8 @@
 			const svgElements = document.querySelectorAll('#icon > svg[role="img"]')
 			if (svgElements) {
 				svgElements.forEach((svg) => {
-          svg.removeAttribute('role')
-        })
+					svg.removeAttribute('role')
+				})
 			}
 		}
 
