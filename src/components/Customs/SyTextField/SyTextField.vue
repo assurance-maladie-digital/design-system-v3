@@ -293,9 +293,11 @@
 		opacity: '1',
 	}
 
+	const syTextFieldRef = ref<HTMLElement | null>(null)
+
 	onMounted(() => {
 		const removeSvgRole = () => {
-			const svgElements = document.querySelectorAll('#icon > svg[role="img"]')
+			const svgElements = syTextFieldRef.value?.querySelectorAll('svg[role="img"]')
 			if (svgElements) {
 				svgElements.forEach((svg) => {
 					svg.removeAttribute('role')
@@ -303,15 +305,15 @@
 			}
 		}
 
-		const setAriaHidden = (selector) => {
-			const element = document.querySelector(`${selector} span`)
+		const setAriaHidden = (selector: string) => {
+			const element = syTextFieldRef.value?.querySelector(`${selector} span`)
 			if (element) {
 				element.setAttribute('aria-hidden', 'true')
 			}
 		}
 
-		const addSrOnlySpan = (selector) => {
-			const element = document.querySelector(selector)
+		const addSrOnlySpan = (selector: string) => {
+			const element = syTextFieldRef.value?.querySelector(selector)
 			if (element && element.textContent) {
 				const srSpan = document.createElement('span')
 				srSpan.className = 'd-sr-only'
@@ -321,18 +323,20 @@
 		}
 
 		const removeInputSizeAttr = () => {
-			const inputElement = document.querySelector('input[size]')
+			const inputElement = syTextFieldRef.value?.querySelector('input[size]')
 			if (inputElement) {
 				inputElement.removeAttribute('size')
 			}
 		}
 
-		removeSvgRole()
-		removeInputSizeAttr()
-		setAriaHidden('.v-text-field__prefix')
-		setAriaHidden('.v-text-field__suffix')
-		addSrOnlySpan('.v-text-field__prefix')
-		addSrOnlySpan('.v-text-field__suffix')
+		setTimeout(() => {
+			removeSvgRole()
+			removeInputSizeAttr()
+			setAriaHidden('.v-text-field__prefix')
+			setAriaHidden('.v-text-field__suffix')
+			addSrOnlySpan('.v-text-field__prefix')
+			addSrOnlySpan('.v-text-field__suffix')
+		}, 0)
 	})
 
 	defineExpose({
@@ -343,177 +347,175 @@
 </script>
 
 <template>
-	<VTextField
-		:id="props.id"
-		v-model="model"
-		:autocomplete="props.autocomplete"
-		:active="props.isActive"
-		:title="props.label"
-		:aria-label="props.label"
-		:base-color="props.baseColor"
-		:bg-color="props.bgColor"
-		:center-affix="props.centerAffix"
-		:clear-icon="ICONS.close"
-		:clearable="props.isClearable"
-		:color="props.color"
-		:counter-value="props.counterValue"
-		:density="props.density"
-		:direction="props.direction"
-		:dirty="props.isDirty"
-		:disabled="props.disabled"
-		:error="hasError"
-		:error-messages="errors"
-		:flat="props.isFlat"
-		:focused="props.isFocused"
-		:hide-details="props.areDetailsHidden"
-		:hide-spin-buttons="props.areSpinButtonsHidden"
-		:hint="props.hint"
-		:label="labelWithAsterisk"
-		:loading="props.loading"
-		:max-errors="props.maxErrors"
-		:max-width="props.maxWidth"
-		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
-		:min-width="props.minWidth"
-		:name="props.name"
-		:persistent-clear="props.displayPersistentClear"
-		:persistent-counter="props.displayPersistentCounter"
-		:persistent-hint="props.displayPersistentHint"
-		:persistent-placeholder="props.displayPersistentPlaceholder"
-		:placeholder="props.placeholder"
-		:prefix="props.prefix"
-		:readonly="props.readonly"
-		:reverse="props.isReversed"
-		:role="props.role"
-		:rounded="props.rounded"
-		:single-line="props.isOnSingleLine"
-		:suffix="props.suffix"
-		:theme="props.theme"
-		:tile="props.isTiled"
-		:type="props.type"
-		:variant="props.variantStyle"
-		:width="props.width"
-		:class="{
-			'error-field': hasError,
-			'warning-field': hasWarning,
-			'success-field': hasSuccess,
-			'basic-field': !hasError && !hasWarning && !hasSuccess
-		}"
-		@blur="checkErrorOnBlur"
+	<div
+		ref="syTextFieldRef"
+		class="w-100"
 	>
-		<!-- Prepend -->
-		<template
-			v-if="props.prependIcon || props.prependTooltip"
-			#prepend
+		<VTextField
+			:id="props.id"
+			v-model="model"
+			:autocomplete="props.autocomplete"
+			:active="props.isActive"
+			:title="props.label"
+			:aria-label="props.label"
+			:base-color="props.baseColor"
+			:bg-color="props.bgColor"
+			:center-affix="props.centerAffix"
+			:clear-icon="ICONS.close"
+			:clearable="props.isClearable"
+			:color="props.color"
+			:counter-value="props.counterValue"
+			:density="props.density"
+			:direction="props.direction"
+			:dirty="props.isDirty"
+			:disabled="props.disabled"
+			:error="hasError"
+			:error-messages="errors"
+			:flat="props.isFlat"
+			:focused="props.isFocused"
+			:hide-details="props.areDetailsHidden"
+			:hide-spin-buttons="props.areSpinButtonsHidden"
+			:hint="props.hint"
+			:label="labelWithAsterisk"
+			:loading="props.loading"
+			:max-errors="props.maxErrors"
+			:max-width="props.maxWidth"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+			:min-width="props.minWidth"
+			:name="props.name"
+			:persistent-clear="props.displayPersistentClear"
+			:persistent-counter="props.displayPersistentCounter"
+			:persistent-hint="props.displayPersistentHint"
+			:persistent-placeholder="props.displayPersistentPlaceholder"
+			:placeholder="props.placeholder"
+			:prefix="props.prefix"
+			:readonly="props.readonly"
+			:reverse="props.isReversed"
+			:role="props.role"
+			:rounded="props.rounded"
+			:single-line="props.isOnSingleLine"
+			:suffix="props.suffix"
+			:theme="props.theme"
+			:tile="props.isTiled"
+			:type="props.type"
+			:variant="props.variantStyle"
+			:width="props.width"
+			:class="{
+				'error-field': hasError,
+				'warning-field': hasWarning,
+				'success-field': hasSuccess,
+				'basic-field': !hasError && !hasWarning && !hasSuccess
+			}"
+			@blur="checkErrorOnBlur"
 		>
-			<slot name="prepend">
-				<template v-if="props.prependTooltip">
-					<VTooltip
-						:text="props.prependTooltip"
-						:location="props.tooltipLocation"
+			<!-- Prepend -->
+			<template
+				v-if="props.prependIcon || props.prependTooltip"
+				#prepend
+			>
+				<slot name="prepend">
+					<template v-if="props.prependTooltip">
+						<VTooltip
+							:text="props.prependTooltip"
+							:location="props.tooltipLocation"
+						>
+							<template #activator="{ props: tooltipProps }">
+								<VIcon
+									v-bind="tooltipProps"
+									:aria-label="props.label ? `${props.label} - info` : 'Info'"
+									:color="appendInnerIconColor"
+									:icon="ICONS.info"
+									role="button"
+								/>
+							</template>
+						</VTooltip>
+					</template>
+					<VIcon
+						v-else-if="props.prependIcon && !props.noIcon"
+						:aria-label="disableClickButton ? (props.label ? props.label : props.prependIcon) : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
+						:color="appendInnerIconColor"
+						:icon="ICONS[props.prependIcon]"
+						:role="disableClickButton ? 'presentation' : 'button'"
+						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
+						@click="handlePrependIconClick"
+					/>
+				</slot>
+			</template>
+
+			<!-- Append -->
+			<template
+				v-if="props.appendIcon || props.appendTooltip"
+				#append
+			>
+				<slot name="append">
+					<template v-if="props.appendTooltip">
+						<VTooltip
+							:text="props.appendTooltip"
+							:location="props.tooltipLocation"
+						>
+							<template #activator="{ props: tooltipProps }">
+								<VIcon
+									v-bind="tooltipProps"
+									:aria-label="props.label ? `${props.label} - info` : 'Info'"
+									:color="appendInnerIconColor"
+									:icon="ICONS.info"
+									role="button"
+								/>
+							</template>
+						</VTooltip>
+					</template>
+					<VIcon
+						v-else-if="props.appendIcon && !props.noIcon"
+						:aria-label="disableClickButton ? (props.label ? props.label : props.appendIcon) : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
+						:color="appendInnerIconColor"
+						:icon="ICONS[props.appendIcon]"
+						:role="disableClickButton ? 'presentation' : 'button'"
+						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
+						@click="handleAppendIconClick"
+					/>
+				</slot>
+			</template>
+
+			<!-- Prepend inner -->
+			<template #prepend-inner>
+				<slot name="prepend-inner">
+					<VIcon
+						v-if="props.prependInnerIcon && !props.noIcon"
+						:icon="ICONS[props.prependInnerIcon]"
+						role="presentation"
+					/>
+					<VDivider
+						v-if="props.showDivider"
+						class="mt-4 pa-1"
+						v-bind="dividerProps"
+						vertical
+					/>
+				</slot>
+			</template>
+
+			<!-- Append inner -->
+			<template #append-inner>
+				<slot name="append-inner">
+					<VIcon
+						v-if="validationIcon && !props.appendInnerIcon"
+						:icon="validationIcon"
+						role="presentation"
+					/>
+					<VIcon
+						v-if="props.appendInnerIcon && !props.noIcon"
+						:color="appendInnerIconColor"
+						role="presentation"
 					>
-						<template #activator="{ props: tooltipProps }">
-							<VIcon
-								v-bind="tooltipProps"
-								id="icon"
-								:aria-label="props.label ? `${props.label} - info` : 'Info'"
-								:color="appendInnerIconColor"
-								:icon="ICONS.info"
-								role="button"
-							/>
-						</template>
-					</VTooltip>
-				</template>
-				<VIcon
-					v-else-if="props.prependIcon && !props.noIcon"
-					id="icon"
-					:aria-label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
-					:color="appendInnerIconColor"
-					:icon="ICONS[props.prependIcon]"
-					:role="disableClickButton ? 'presentation' : 'button'"
-					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-					@click="handlePrependIconClick"
-				/>
-			</slot>
-		</template>
+						{{ ICONS[props.appendInnerIcon] }}
+					</VIcon>
+				</slot>
+			</template>
 
-		<!-- Append -->
-		<template
-			v-if="props.appendIcon || props.appendTooltip"
-			#append
-		>
-			<slot name="append">
-				<template v-if="props.appendTooltip">
-					<VTooltip
-						:text="props.appendTooltip"
-						:location="props.tooltipLocation"
-					>
-						<template #activator="{ props: tooltipProps }">
-							<VIcon
-								v-bind="tooltipProps"
-								id="icon"
-								:aria-label="props.label ? `${props.label} - info` : 'Info'"
-								:color="appendInnerIconColor"
-								:icon="ICONS.info"
-								role="button"
-							/>
-						</template>
-					</VTooltip>
-				</template>
-				<VIcon
-					v-else-if="props.appendIcon && !props.noIcon"
-					id="icon"
-					:aria-label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
-					:color="appendInnerIconColor"
-					:icon="ICONS[props.appendIcon]"
-					:role="disableClickButton ? 'presentation' : 'button'"
-					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-					@click="handleAppendIconClick"
-				/>
-			</slot>
-		</template>
-
-		<!-- Prepend inner -->
-		<template #prepend-inner>
-			<slot name="prepend-inner">
-				<VIcon
-					v-if="props.prependInnerIcon && !props.noIcon"
-					id="icon"
-					:icon="ICONS[props.prependInnerIcon]"
-					role="presentation"
-				/>
-				<VDivider
-					v-if="props.showDivider"
-					class="mt-4 pa-1"
-					v-bind="dividerProps"
-					vertical
-				/>
-			</slot>
-		</template>
-
-		<!-- Append inner -->
-		<template #append-inner>
-			<slot name="append-inner">
-				<VIcon
-					v-if="validationIcon && !props.appendInnerIcon"
-					id="icon"
-					:icon="validationIcon"
-					role="presentation"
-				/>
-				<VIcon
-					v-if="props.appendInnerIcon && !props.noIcon"
-					id="icon"
-					:color="appendInnerIconColor"
-					role="presentation"
-				>
-					{{ ICONS[props.appendInnerIcon] }}
-				</VIcon>
-			</slot>
-		</template>
-
-		<template #details>
-			<slot name="details" />
-		</template>
-	</VTextField>
+			<template #details>
+				<slot name="details" />
+			</template>
+		</VTextField>
+	</div>
 </template>
 
 <style lang="scss" scoped>
