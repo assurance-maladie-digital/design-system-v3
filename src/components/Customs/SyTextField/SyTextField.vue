@@ -295,9 +295,11 @@
 
 	onMounted(() => {
 		const removeSvgRole = () => {
-			const svgElement = document.querySelector('svg[role="img"]')
-			if (svgElement) {
-				svgElement.removeAttribute('role')
+			const svgElements = document.querySelectorAll('#icon > svg[role="img"]')
+			if (svgElements) {
+				svgElements.forEach((svg) => {
+          svg.removeAttribute('role')
+        })
 			}
 		}
 
@@ -412,6 +414,7 @@
 						<template #activator="{ props: tooltipProps }">
 							<VIcon
 								v-bind="tooltipProps"
+								id="icon"
 								:aria-label="props.label ? `${props.label} - info` : 'Info'"
 								:color="appendInnerIconColor"
 								:icon="ICONS.info"
@@ -422,6 +425,7 @@
 				</template>
 				<VIcon
 					v-else-if="props.prependIcon && !props.noIcon"
+					id="icon"
 					:aria-label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.prependIcon]"
@@ -446,6 +450,7 @@
 						<template #activator="{ props: tooltipProps }">
 							<VIcon
 								v-bind="tooltipProps"
+								id="icon"
 								:aria-label="props.label ? `${props.label} - info` : 'Info'"
 								:color="appendInnerIconColor"
 								:icon="ICONS.info"
@@ -456,6 +461,7 @@
 				</template>
 				<VIcon
 					v-else-if="props.appendIcon && !props.noIcon"
+					id="icon"
 					:aria-label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.appendIcon]"
@@ -471,6 +477,7 @@
 			<slot name="prepend-inner">
 				<VIcon
 					v-if="props.prependInnerIcon && !props.noIcon"
+					id="icon"
 					:icon="ICONS[props.prependInnerIcon]"
 					role="presentation"
 				/>
@@ -488,11 +495,13 @@
 			<slot name="append-inner">
 				<VIcon
 					v-if="validationIcon && !props.appendInnerIcon"
+					id="icon"
 					:icon="validationIcon"
 					role="presentation"
 				/>
 				<VIcon
 					v-if="props.appendInnerIcon && !props.noIcon"
+					id="icon"
 					:color="appendInnerIconColor"
 					role="presentation"
 				>
