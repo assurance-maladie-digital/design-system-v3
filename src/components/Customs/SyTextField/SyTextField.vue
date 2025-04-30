@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, watch } from 'vue'
+	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import {
@@ -78,6 +78,8 @@
 			showSuccessMessages?: boolean
 			isValidateOnBlur?: boolean
 			disableErrorHandling?: boolean
+			disableClickButton?: boolean
+			autocomplete?: string
 		}>(),
 		{
 			modelValue: undefined,
@@ -142,6 +144,8 @@
 			showSuccessMessages: true,
 			isValidateOnBlur: true,
 			disableErrorHandling: false,
+			disableClickButton: true,
+			autocomplete: 'off',
 		},
 	)
 
@@ -289,6 +293,52 @@
 		opacity: '1',
 	}
 
+	const syTextFieldRef = ref<ComponentPublicInstance | null>(null)
+
+	onMounted(() => {
+		nextTick(() => {
+			const removeSvgRole = () => {
+				const svgElements = syTextFieldRef.value?.$el?.querySelectorAll('svg[role="img"]')
+				if (svgElements) {
+					svgElements.forEach((svg) => {
+						svg.removeAttribute('role')
+					})
+				}
+			}
+
+			const setAriaHidden = (selector: string) => {
+				const element = syTextFieldRef.value?.$el?.querySelector(`${selector} span`)
+				if (element) {
+					element.setAttribute('aria-hidden', 'true')
+				}
+			}
+
+			const addSrOnlySpan = (selector: string) => {
+				const element = syTextFieldRef.value?.$el?.querySelector(selector)
+				if (element && element.textContent) {
+					const srSpan = document.createElement('span')
+					srSpan.className = 'd-sr-only'
+					srSpan.textContent = element.textContent
+					element.appendChild(srSpan)
+				}
+			}
+
+			const removeInputSizeAttr = () => {
+				const inputElement = syTextFieldRef.value?.$el?.querySelector('input[size]')
+				if (inputElement) {
+					inputElement.removeAttribute('size')
+				}
+			}
+
+			removeSvgRole()
+			removeInputSizeAttr()
+			setAriaHidden('.v-text-field__prefix')
+			setAriaHidden('.v-text-field__suffix')
+			addSrOnlySpan('.v-text-field__prefix')
+			addSrOnlySpan('.v-text-field__suffix')
+		})
+	})
+
 	defineExpose({
 		validation,
 		validateOnSubmit,
@@ -299,7 +349,9 @@
 <template>
 	<VTextField
 		:id="props.id"
+		ref="syTextFieldRef"
 		v-model="model"
+		:autocomplete="props.autocomplete"
 		:active="props.isActive"
 		:title="props.label"
 		:aria-label="props.label"
@@ -314,7 +366,6 @@
 		:direction="props.direction"
 		:dirty="props.isDirty"
 		:disabled="props.disabled"
-		:display-asterisk="isShouldDisplayAsterisk"
 		:error="hasError"
 		:error-messages="errors"
 		:flat="props.isFlat"
@@ -329,11 +380,10 @@
 		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 		:min-width="props.minWidth"
 		:name="props.name"
-		:no-icon="props.noIcon"
 		:persistent-clear="props.displayPersistentClear"
 		:persistent-counter="props.displayPersistentCounter"
 		:persistent-hint="props.displayPersistentHint"
-		:persistent-placeholder="displayPersistentPlaceholder"
+		:persistent-placeholder="props.displayPersistentPlaceholder"
 		:placeholder="props.placeholder"
 		:prefix="props.prefix"
 		:readonly="props.readonly"
@@ -355,6 +405,7 @@
 		}"
 		@blur="checkErrorOnBlur"
 	>
+		<!-- Prepend -->
 		<template
 			v-if="props.prependIcon || props.prependTooltip"
 			#prepend
@@ -377,15 +428,18 @@
 					</VTooltip>
 				</template>
 				<VIcon
-					v-else-if="props.prependIcon"
-					:aria-label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
+					v-else-if="props.prependIcon && !props.noIcon"
+					:aria-label="disableClickButton ? (props.label ? props.label : props.prependIcon) : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.prependIcon]"
-					role="button"
+					:role="disableClickButton ? 'presentation' : 'button'"
+					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
 					@click="handlePrependIconClick"
 				/>
 			</slot>
 		</template>
+
+		<!-- Append -->
 		<template
 			v-if="props.appendIcon || props.appendTooltip"
 			#append
@@ -408,44 +462,52 @@
 					</VTooltip>
 				</template>
 				<VIcon
-					v-else-if="props.appendIcon"
-					:aria-label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
+					v-else-if="props.appendIcon && !props.noIcon"
+					:aria-label="disableClickButton ? (props.label ? props.label : props.appendIcon) : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.appendIcon]"
-					role="button"
+					:role="disableClickButton ? 'presentation' : 'button'"
+					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
 					@click="handleAppendIconClick"
 				/>
 			</slot>
 		</template>
+
+		<!-- Prepend inner -->
 		<template #prepend-inner>
 			<slot name="prepend-inner">
 				<VIcon
 					v-if="props.prependInnerIcon && !props.noIcon"
-					:aria-label="props.label ? `${props.label} - bouton ${props.prependInnerIcon}` : `Bouton ${props.prependInnerIcon}`"
 					:icon="ICONS[props.prependInnerIcon]"
+					role="presentation"
+				/>
+				<VDivider
+					v-if="props.showDivider"
+					class="mt-4 pa-1"
+					v-bind="dividerProps"
+					vertical
 				/>
 			</slot>
-			<VDivider
-				v-if="props.showDivider"
-				class="mt-4 pa-1"
-				v-bind="dividerProps"
-				vertical
-			/>
 		</template>
+
+		<!-- Append inner -->
 		<template #append-inner>
 			<slot name="append-inner">
 				<VIcon
 					v-if="validationIcon && !props.appendInnerIcon"
 					:icon="validationIcon"
+					role="presentation"
 				/>
 				<VIcon
 					v-if="props.appendInnerIcon && !props.noIcon"
 					:color="appendInnerIconColor"
+					role="presentation"
 				>
 					{{ ICONS[props.appendInnerIcon] }}
 				</VIcon>
 			</slot>
 		</template>
+
 		<template #details>
 			<slot name="details" />
 		</template>
@@ -506,6 +568,8 @@
 	:deep(.v-field) {
 		color: tokens.$colors-border-success !important;
 
+		--v-medium-emphasis-opacity: 1;
+
 		.v-field__outline {
 			color: tokens.$colors-border-success !important;
 		}
@@ -525,4 +589,5 @@
 		fill: rgb(0 0 0 / 100%);
 	}
 }
+
 </style>

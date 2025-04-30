@@ -596,6 +596,7 @@
 						:warning-messages="warningMessages"
 						:success-messages="props.showSuccessMessages ? successMessages : []"
 						:disabled="props.disabled"
+						:disable-click-button="false"
 						:readonly="true"
 						:label="props.placeholder"
 						:no-icon="props.noIcon"
