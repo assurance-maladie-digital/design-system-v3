@@ -1,8 +1,8 @@
 import type { StoryObj } from '@storybook/vue3'
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 export default {
-	title: 'Components/Chip',
+	title: 'Accessibilité/Avancement',
 }
 
 export const PreAudit: StoryObj = {
