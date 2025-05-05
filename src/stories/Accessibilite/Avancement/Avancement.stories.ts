@@ -108,12 +108,18 @@ export const Manuel: StoryObj = {
 					class="elevation-1 mt-4"
 					item-value="composant"
 				>
+					<template #header.composant>
+						<span class="font-weight-bold">Composant</span>
+					</template>
+					<template #header.status>
+						<span class="font-weight-bold">Status</span>
+					</template>
 					<template #item.composant="{ item }">
 						{{ item.composant }}
 					</template>
 					<template #item.status="{ item }">
 						<v-chip
-							:color="item.status === 'Audité' ? 'warning' : 'error'"
+							:color="item.status === 'Audité' ? 'success' : 'warning'"
 							variant="flat"
 							small
 						>
