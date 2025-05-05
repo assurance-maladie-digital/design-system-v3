@@ -1,0 +1,52 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Guide du dev/Règles De Validation/isHolidayDay" />
+
+# isHolidayDay
+
+La règle `isHolidayDay` vérifie qu'une date n'est pas un jour férié en France.
+
+## Utilisation
+
+```ts
+import { isHolidayDay } from '@/utils/isHolidayDay'
+
+const rules = [
+  isHolidayDay,
+]
+```
+
+## Personnalisation des messages d'erreur
+
+Vous pouvez personnaliser le message d'erreur en utilisant la fonction `isHolidayDayFn` :
+
+```ts
+import { isHolidayDayFn } from '@/utils/isHolidayDay'
+
+const customRule = isHolidayDayFn({
+  default: 'Veuillez sélectionner une date qui n\'est pas un jour férié.',
+})
+```
+
+## Fonctionnement
+
+Cette règle utilise le composable `useHolidayDay` pour déterminer si une date est un jour férié en France. La règle retourne :
+
+- `true` si la valeur est vide ou si la date n'est pas un jour férié
+- Un message d'erreur si la date est un jour férié
+
+## Jours fériés pris en compte
+
+Les jours fériés suivants sont pris en compte :
+
+- 1er janvier (Jour de l'an)
+- Lundi de Pâques (date variable)
+- 1er mai (Fête du travail)
+- 8 mai (Victoire des alliés)
+- Ascension (date variable)
+- Lundi de Pentecôte (date variable)
+- 14 juillet (Fête Nationale)
+- 15 août (Assomption)
+- 1er novembre (Toussaint)
+- 11 novembre (Armistice)
+- 25 décembre (Noël)

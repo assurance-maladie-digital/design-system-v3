@@ -2,25 +2,24 @@
 	import { ref, computed } from 'vue'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import { useHolidayDay } from '@/composables/date/useHolidayDay'
-	import DatePicker from '@/components/DatePicker/DatePicker.vue'
 
 	const selectedDate = ref('')
+	const { generateRules } = useFieldValidation()
 	const { isHolidayDay, getJoursFeries } = useHolidayDay()
 
 	// Année courante pour afficher les jours fériés
 	const currentYear = new Date().getFullYear()
 
 	// Création de la règle qui vérifie qu'une date n'est pas un jour férié
-	const holidayRules = [
+	const holidayRules = generateRules([
 		{
 			type: 'isHolidayDay',
 			options: {
 				fieldName: 'La date',
 				message: 'Vous ne pouvez pas sélectionner un jour férié.',
-				successMessage: 'La date sélectionnée n\'est pas un jour férié.',
 			},
 		},
-	]
+	])
 
 	// Vérification si la date sélectionnée est un jour férié (pour l'affichage)
 	const isDateHoliday = computed(() => {
@@ -47,7 +46,7 @@
 			<DatePicker
 				v-model="selectedDate"
 				label="Date (pas de jour férié)"
-				:custom-rules="holidayRules"
+				:rules="holidayRules"
 				error-messages
 				placeholder="Sélectionnez une date non fériée"
 			/>
