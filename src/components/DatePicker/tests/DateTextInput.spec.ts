@@ -38,7 +38,7 @@ describe('DateTextInput.vue', () => {
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
-		expect(textField.props('errorMessages')).toContain('Format de date invalide')
+		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
 	})
 
 	it('accepts valid date format', async () => {
@@ -139,7 +139,7 @@ describe('DateTextInput.vue', () => {
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
-		expect(textField.props('errorMessages')).toContain('Format de date invalide')
+		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
 	})
 
 	it('formats input while typing', async () => {
@@ -169,7 +169,7 @@ describe('DateTextInput.vue', () => {
 		const input = wrapper.find('input')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
-		expect(textField.props('errorMessages')).toContain('Format de date invalide')
+		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
 	})
 
 	it('formats date during input', async () => {
@@ -273,6 +273,48 @@ describe('DateTextInput.vue', () => {
 
 		// La position du curseur devrait rester après le "01"
 		expect(input.element.selectionStart).toBe(2)
+	})
+
+	it('handles 2 digits year correctly', async () => {
+		const customWrapper = mount(DateTextInput, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: null,
+				format: 'DD/MM/YY',
+				dateFormatReturn: 'YYYY-MM-DD',
+			},
+		})
+
+		const input = customWrapper.find('input')
+		await input.setValue('0')
+		expect(input.element.value).toBe('0_/__/__')
+
+		await input.setValue('01/02/99')
+		expect(input.element.value).toBe('01/02/99')
+		expect(customWrapper.emitted('update:model-value')?.at(-1)).toEqual(['1999-02-01'])
+	})
+
+	it('handles ISO-8601 date format correctly', async () => {
+		const customWrapper = mount(DateTextInput, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: null,
+				format: 'YYYY-MM-DD',
+			},
+		})
+
+		const input = customWrapper.find('input')
+		await input.setValue('2025-')
+		expect(input.element.value).toBe('2025-__-__')
+		expect(customWrapper.emitted('update:model-value')).toBeFalsy()
+
+		await input.setValue('2025-01-01')
+		expect(input.element.value).toBe('2025-01-01')
+		expect(customWrapper.emitted('update:model-value')?.at(-1)).toEqual(['2025-01-01'])
 	})
 
 	it('handles paste event with valid date', async () => {

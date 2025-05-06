@@ -104,68 +104,34 @@
 	}
 
 	const formatDateInput = (input: string, cursorPosition?: number): { formatted: string, cursorPos: number } => {
-		const separator = props.format.includes('/') ? '/' : props.format.includes('-') ? '-' : '.'
+		const cleanedInput = input.replace(/[^\d]/g, '')
+		let cursor = cursorPosition || 0
+		let result = ''
 
-		const formatParts = props.format.split(/[/.-]/)
-		const dayIndex = formatParts.findIndex(part => part.toUpperCase().includes('D'))
-		const monthIndex = formatParts.findIndex(part => part.toUpperCase().includes('M'))
-		const yearIndex = formatParts.findIndex(part => part.toUpperCase().includes('Y'))
-
-		const parts = Array(3).fill('__')
-		parts[yearIndex] = '____'
-		const mask = parts.join(separator)
-
-		let result = mask
-		let pos = cursorPosition || 0
-
-		let cleanInput = input
-
-		if (input.includes(separator)) {
-			const parts = input.split(separator)
-			cleanInput = parts.map(part => part.replace(/\D/g, '')).join(separator)
-		}
-		else {
-			cleanInput = input.replace(/\D/g, '')
-		}
-
-		if (cleanInput.includes(separator)) {
-			const parts = cleanInput.split(separator)
-			const formattedParts = Array(3).fill('__')
-			formattedParts[yearIndex] = (parts[yearIndex] || '').padEnd(4, '_')
-			formattedParts[monthIndex] = (parts[monthIndex] || '').padEnd(2, '_')
-			formattedParts[dayIndex] = (parts[dayIndex] || '').padEnd(2, '_')
-
-			result = formattedParts.join(separator)
-		}
-		else {
-			const formatOrder = [dayIndex, monthIndex, yearIndex]
-			let currentDigit = 0
-
-			for (let partIndex = 0; currentDigit < Math.min(cleanInput.length, 8); partIndex++) {
-				const formatPartIndex = formatOrder[partIndex % 3]
-				const isYear = formatParts[formatPartIndex].toUpperCase().includes('Y')
-				const partLength = isYear ? 4 : 2
-				const targetStartPos = formatPartIndex * 3
-
-				for (let j = 0; j < partLength && currentDigit < cleanInput.length; j++) {
-					const digit = cleanInput[currentDigit]
-					const targetPos = targetStartPos + j
-					result = result.substring(0, targetPos) + digit + result.substring(targetPos + 1)
-					currentDigit++
+		let i = 0
+		for (const char of props.format) {
+			if (['D', 'M', 'Y'].includes(char.toUpperCase())) {
+				if (cleanedInput[i]) {
+					result += cleanedInput[i]
+					i++
+				}
+				else {
+					result += '_'
 				}
 			}
+			else {
+				result += char
+			}
 		}
 
-		if (cursorPosition !== undefined) {
-			pos = cursorPosition
-			if (mask[pos] === separator) {
-				pos++
-			}
+		const nextChartIsSeparator = props.format[cursor] === result[cursor]
+		if (nextChartIsSeparator) {
+			cursor++
 		}
 
 		return {
 			formatted: result,
-			cursorPos: pos,
+			cursorPos: cursor,
 		}
 	}
 
@@ -184,7 +150,7 @@
 		if (!/^[\d/.-]*$/.test(dateStr)) {
 			return {
 				isValid: props.disableErrorHandling,
-				message: props.disableErrorHandling ? '' : 'Format de date invalide',
+				message: props.disableErrorHandling ? '' : `Format de date invalide (${props.format})`,
 			}
 		}
 
@@ -197,7 +163,7 @@
 		if (!date) {
 			return {
 				isValid: props.disableErrorHandling,
-				message: props.disableErrorHandling ? '' : 'Format de date invalide',
+				message: props.disableErrorHandling ? '' : `Format de date invalide (${props.format})`,
 			}
 		}
 
@@ -253,9 +219,17 @@
 		return undefined
 	})
 
-	const handleKeydown = (event: KeyboardEvent) => {
-		if (event.ctrlKey || event.metaKey) {
-			return
+	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
+		// the cursor have to be set to the previous character if the user delete a non digit character
+		if (event.key === 'Backspace') {
+			const input = event.target
+			if (!input.selectionStart || input.selectionStart !== input.selectionEnd) {
+				return
+			}
+			const charBeforeCursor = input.value[input.selectionStart - 1]
+			if (!/\d/.test(charBeforeCursor)) {
+				input.setSelectionRange(input.selectionStart - 1, input.selectionStart - 1)
+			}
 		}
 	}
 
