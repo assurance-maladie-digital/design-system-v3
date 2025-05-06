@@ -21,7 +21,8 @@ export const parseDate = (dateString: string | Date | null, format: string): Dat
 	if (typeof dateString !== 'string') {
 		try {
 			dateString = String(dateString)
-		} catch {
+		}
+		catch {
 			return null
 		}
 	}
