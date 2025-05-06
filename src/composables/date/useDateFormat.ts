@@ -8,8 +8,23 @@
  * @param format - Le format de la date (ex: 'DD/MM/YYYY')
  * @returns Un objet Date ou null si la chaîne n'est pas valide
  */
-export const parseDate = (dateString: string, format: string): Date | null => {
+export const parseDate = (dateString: string | Date | null, format: string): Date | null => {
+	// Si dateString est null ou undefined, retourner null
 	if (!dateString) return null
+
+	// Si dateString est déjà un objet Date, le retourner directement
+	if (dateString instanceof Date) {
+		return dateString
+	}
+
+	// Si dateString n'est pas une chaîne de caractères, convertir en chaîne ou retourner null
+	if (typeof dateString !== 'string') {
+		try {
+			dateString = String(dateString)
+		} catch {
+			return null
+		}
+	}
 
 	// Créer un mapping des positions des éléments de date selon le format
 	const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
