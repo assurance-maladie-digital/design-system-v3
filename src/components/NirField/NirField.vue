@@ -165,7 +165,7 @@
 	// Règles de validation
 	const defaultNumberRules = computed(() => {
 		const rules: ValidationRule[] = []
-
+		if (props.readonly) return
 		if (props.required) {
 			rules.push({
 				type: 'required',
@@ -207,7 +207,7 @@
 
 	const defaultKeyRules = computed(() => {
 		const rules: ValidationRule[] = []
-
+		if (props.readonly) return
 		if (props.required) {
 			rules.push({
 				type: 'required',
@@ -324,7 +324,6 @@
 		return validateFields(true)
 	}
 
-	// Computed pour statut des champs
 	const hasNumberErrors = computed(() => numberValidation.hasError.value)
 	const hasNumberWarning = computed(() => !hasNumberErrors.value && numberValidation.hasWarning.value)
 	const hasNumberSuccess = computed(() => !hasNumberErrors.value && !hasNumberWarning.value && numberValidation.hasSuccess.value)
@@ -333,7 +332,6 @@
 	const hasKeyWarning = computed(() => !hasKeyErrors.value && keyValidation.hasWarning.value)
 	const hasKeySuccess = computed(() => !hasKeyErrors.value && !hasKeyWarning.value && keyValidation.hasSuccess.value)
 
-	// Labels avec astérisque si nécessaire
 	const numberLabelWithAsterisk = computed(() => {
 		return props.required && props.displayAsterisk ? `${props.numberLabel} *` : props.numberLabel
 	})
@@ -342,7 +340,6 @@
 		return props.required && props.displayAsterisk ? `${props.keyLabel} *` : props.keyLabel
 	})
 
-	// Gestion des événements
 	const handleNumberInput = () => {
 		emitValue()
 		validateFields()

@@ -1,5 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
+import { ref } from 'vue'
 import { indicatifs } from './indicatifs'
 
 const meta = {
@@ -34,6 +35,7 @@ const meta = {
 		displayAsterisk: { control: 'boolean' },
 		disableErrorHandling: { control: 'boolean' },
 		disabled: { control: 'boolean' },
+		readonly: { control: 'boolean' },
 	},
 } satisfies Meta<typeof PhoneField>
 
@@ -1256,6 +1258,147 @@ export const DisabledErrorHandling: Story = {
 							:disabled="args.disabled"
 							:bg-color="args.bgColor"
 						/>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const FormValidation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<form @submit.prevent="submitForm" class="d-flex flex-column">
+						<PhoneField
+							ref="phoneFieldRef"
+							v-model="phoneNumber"
+							:required="true"
+							:outlined="true"
+							:outlinedIndicatif="true"
+							:withCountryCode="true"
+							:country-code-required="true"
+							:isValidatedOnBlur="false"
+							:readonly="readonly"
+							:disabled="disabled"
+						/>
+						<v-btn type="submit" color="primary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
+						<div v-if="formSubmitted" class="mt-4 pa-2" :class="{ 'bg-success': formIsValid, 'bg-error': !formIsValid }" style="width: fit-content;">
+							<p v-if="formIsValid" class="text-white">Formulaire valide !</p>
+							<p v-else class="text-white">Formulaire invalide !</p>
+						</div>
+					</form>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField } from '@cnamts/synapse'
+					
+					const phoneFieldRef = ref(null)
+					const phoneNumber = ref('')
+					const formSubmitted = ref(false)
+					const formIsValid = ref(false)
+					const readonly = ref(false)
+					const disabled = ref(false)
+					
+					const submitForm = async () => {
+						formSubmitted.value = true
+						// Validation du champ téléphone
+						let isValid = false
+						if (phoneFieldRef.value) {
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à validateOnSubmit
+							isValid = await (phoneFieldRef.value as any).validateOnSubmit()
+						}
+						
+						formIsValid.value = isValid
+						
+						console.log(isValid ? 'Formulaire valide !' : 'Formulaire invalide !')
+					}
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		required: true,
+		outlined: true,
+		outlinedIndicatif: true,
+		withCountryCode: true,
+		countryCodeRequired: true,
+		displayFormat: 'code',
+		customIndicatifs: [],
+		useCustomIndicatifsOnly: false,
+		isValidatedOnBlur: false,
+		bgColor: undefined,
+		readonly: false,
+		disabled: false,
+	},
+	render: (args) => {
+		return {
+			components: { PhoneField },
+			setup() {
+				const phoneFieldRef = ref(null)
+				const phoneNumber = ref('')
+				const formSubmitted = ref(false)
+				const formIsValid = ref(false)
+
+				const submitForm = async () => {
+					formSubmitted.value = true
+					// Validation du champ téléphone
+					let isValid = false
+					if (phoneFieldRef.value) {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à validateOnSubmit
+						isValid = await (phoneFieldRef.value as any).validateOnSubmit()
+					}
+
+					formIsValid.value = isValid
+
+					console.log(isValid ? 'Formulaire valide !' : 'Formulaire invalide !')
+				}
+
+				return { phoneFieldRef, phoneNumber, formSubmitted, formIsValid, submitForm, args }
+			},
+			template: `
+				<div class="pa-4">
+					<form @submit.prevent="submitForm" class="d-flex flex-column">
+						<PhoneField
+							ref="phoneFieldRef"
+							v-model="phoneNumber"
+							:required="args.required"
+							:outlined="args.outlined"
+							:outlinedIndicatif="args.outlinedIndicatif"
+							:withCountryCode="args.withCountryCode"
+							:country-code-required="args.countryCodeRequired"
+							:isValidatedOnBlur="args.isValidatedOnBlur"
+							:readonly="args.readonly"
+							:disabled="args.disabled"
+							:bg-color="args.bgColor"
+							:display-format="args.displayFormat"
+							:custom-indicatifs="args.customIndicatifs"
+							:use-custom-indicatifs-only="args.useCustomIndicatifsOnly"
+							:display-asterisk="args.displayAsterisk"
+							:disable-error-handling="args.disableErrorHandling"
+						/>
+						<v-btn type="submit" color="primary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
+						<div v-if="formSubmitted" class="mt-4 pa-2" :class="{ 'bg-success': formIsValid, 'bg-error': !formIsValid }" style="width: fit-content;">
+							<p v-if="formIsValid" class="text-white">Formulaire valide !</p>
+							<p v-else class="text-white">Formulaire invalide !</p>
+						</div>
+					</form>
+					<div class="mt-8">
+						<h3>Comment utiliser la validation à la soumission</h3>
+						<p>1. Ajoutez une référence au composant PhoneField avec <code>ref="phoneFieldRef"</code></p>
+						<p>2. Désactivez la validation au blur si nécessaire avec <code>:isValidatedOnBlur="false"</code></p>
+						<p>3. Dans votre méthode de soumission, appelez <code>phoneFieldRef.value.validateOnSubmit()</code></p>
+						<p>4. Cette méthode retourne une Promise qui résout à <code>true</code> si le champ est valide, <code>false</code> sinon</p>
 					</div>
 				</div>
 			`,

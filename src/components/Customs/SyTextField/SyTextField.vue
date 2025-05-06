@@ -212,7 +212,11 @@
 	)
 
 	const validateField = (value: string | number | null) => {
-		// Si le champ est vide et non requis, on ne fait pas de validation
+		if (props.readonly) {
+			validation.clearValidation()
+			return true
+		}
+
 		if (!value && !props.required) {
 			validation.clearValidation()
 			return true
@@ -247,7 +251,6 @@
 		}
 	})
 
-	// Computed pour l'affichage des états
 	const hasError = computed(() => validation.hasError.value)
 	const hasWarning = computed(() => validation.hasWarning.value)
 	const hasSuccess = computed(() => validation.hasSuccess.value)
@@ -256,7 +259,6 @@
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
 
-	// Computed pour les icônes
 	const appendInnerIconColor = computed(() => {
 		if (props.appendInnerIcon === 'error') return 'error'
 		if (props.appendInnerIcon === 'success') return 'success'

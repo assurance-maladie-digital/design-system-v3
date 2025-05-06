@@ -192,14 +192,303 @@ describe('SySelect.vue', () => {
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['1'])
 	})
 
-	it('closes the menu when v-click-outside directive is called', async () => {
+	it('ferme le menu avec la méthode closeList', async () => {
 		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }],
+			},
 			global: {
 				plugins: [vuetify],
 			},
 		})
+
 		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.vm.$nextTick()
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+		const instance = wrapper.vm as any
+		expect(instance.isOpen).toBe(true)
+
+		instance.closeList()
+		await wrapper.vm.$nextTick()
+
+		expect(instance.isOpen).toBe(false)
+	})
+
+	describe('Affichage de l\'astérisque', () => {
+		it('affiche l\'astérisque quand displayAsterisk et required sont true', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					displayAsterisk: true,
+					required: true,
+					label: 'Test Label',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			const html = wrapper.html()
+			expect(html).toContain('Test Label *')
+		})
+
+		it('n\'affiche pas l\'astérisque quand displayAsterisk est false', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					displayAsterisk: false,
+					required: true,
+					label: 'Test Label',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			const html = wrapper.html()
+			expect(html).not.toContain('Test Label *')
+			expect(html).toContain('Test Label')
+		})
+
+		it('n\'affiche pas l\'astérisque quand required est false', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					displayAsterisk: true,
+					required: false,
+					label: 'Test Label',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			const html = wrapper.html()
+			expect(html).not.toContain('Test Label *')
+			expect(html).toContain('Test Label')
+		})
+	})
+
+	describe('Mode readonly', () => {
+		it('empêche l\'ouverture du menu en mode readonly', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					readonly: true,
+					items: [{ text: 'Option 1', value: '1' }],
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.find('.v-list').exists()).toBe(false)
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.isOpen).toBe(false)
+		})
+
+		it('affiche correctement le champ en mode readonly', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					readonly: true,
+					modelValue: { text: 'Option 1', value: '1' },
+					textKey: 'text',
+					returnObject: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			expect(wrapper.find('.v-input--readonly').exists()).toBe(true)
+
+			expect(wrapper.html()).toContain('Option 1')
+		})
+	})
+
+	describe('Option clearable', () => {
+		it('affiche l\'icône de suppression quand clearable est true et qu\'une valeur est sélectionnée', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					clearable: true,
+					modelValue: { text: 'Option 1', value: '1' },
+					returnObject: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			expect(wrapper.find('.sy-select__clear-icon').exists()).toBe(true)
+		})
+
+		it('n\'affiche pas l\'icône de suppression quand clearable est false', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					clearable: false,
+					modelValue: { text: 'Option 1', value: '1' },
+					returnObject: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			expect(wrapper.find('.v-icon.mdi-close-circle').exists()).toBe(false)
+		})
+
+		it('efface la valeur sélectionnée avec la méthode selectItem', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					clearable: true,
+					modelValue: { text: 'Option 1', value: '1' },
+					returnObject: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			instance.selectItem(null)
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.emitted()['update:modelValue'][0]).toEqual([null])
+		})
+	})
+
+	describe('Validation', () => {
+		it('affiche une erreur pour un champ requis sans valeur', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: undefined,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasError).toBe(true)
+		})
+
+		it('n\'affiche pas d\'erreur pour un champ requis avec une valeur', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: { text: 'Option 1', value: '1' },
+					returnObject: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasError).toBe(false)
+		})
+
+		it('n\'affiche pas d\'erreur quand disableErrorHandling est true', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: undefined,
+					disableErrorHandling: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasError).toBe(false)
+		})
+	})
+
+	describe('Comportement du menu', () => {
+		it('ouvre et ferme le menu au clic', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [{ text: 'Option 1', value: '1' }],
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			expect(wrapper.find('.v-list').exists()).toBe(false)
+
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.find('.v-list').exists()).toBe(true)
+
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.find('.v-list').exists()).toBe(false)
+		})
+
+		it('met à jour isOpen quand on ouvre le menu', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [{ text: 'Option 1', value: '1' }],
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.isOpen).toBe(false)
+
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			expect(instance.isOpen).toBe(true)
+		})
+	})
+
+	it('ferme le menu après un clic sur le sélecteur', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.vm.$nextTick()
 		expect(wrapper.find('.v-list').exists()).toBe(true)
+
 		await wrapper.find('.sy-select').trigger('mouseleave')
 		await wrapper.find('.sy-select').trigger('click')
 		await wrapper.vm.$nextTick()
