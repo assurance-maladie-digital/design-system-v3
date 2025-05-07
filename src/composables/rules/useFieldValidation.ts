@@ -300,7 +300,7 @@ export function useFieldValidation() {
 
 					return createValidationResult(
 						!isHolidayDay(dateValue),
-						options.message || options.warningMessage || `${identifier} n'est pas un jour férié.`,
+						options.message || options.warningMessage || `${identifier} est un jour férié.`,
 					)
 				}
 

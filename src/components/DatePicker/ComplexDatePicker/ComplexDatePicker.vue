@@ -1,12 +1,28 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance } from 'vue'
+	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance, type Ref } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
+	import { useInputHandler } from '../composables/useInputHandler'
 	import { useValidation } from '@/composables/validation/useValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
-	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
+	import { useDateInitialization, type DateInput, type DateValue } from '@/composables/date/useDateInitializationDayjs'
+	import type { DateObjectValue } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
+	import {
+		useWeekendDays,
+		useTodayButton,
+		useDatePickerViewMode,
+		useDateSelection,
+		useDateRangeValidation,
+		useDateFormatValidation,
+		useIconState,
+		useDateValidation,
+		useManualDateValidation,
+		useInputBlurHandler,
+		useDatePickerVisibility,
+	} from '../composables'
+
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 
@@ -23,6 +39,7 @@
 		format?: string
 		dateFormatReturn?: string
 		isBirthDate?: boolean
+		birthDate?: boolean // Alias pour isBirthDate pour compatibilité avec l'attribut kebab-case birth-date
 		showWeekNumber?: boolean
 		required?: boolean
 		displayRange?: boolean
@@ -43,12 +60,15 @@
 		showSuccessMessages?: boolean
 		bgColor?: string
 		textFieldActivator?: boolean
+		displayTodayButton?: boolean
+		displayWeekendDays?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: '',
 		isBirthDate: false,
+		birthDate: false,
 		showWeekNumber: false,
 		required: false,
 		displayRange: false,
@@ -67,6 +87,8 @@
 		showSuccessMessages: true,
 		bgColor: undefined,
 		textFieldActivator: false,
+		displayTodayButton: true,
+		displayWeekendDays: true,
 	})
 
 	const emit = defineEmits<{
@@ -74,11 +96,17 @@
 		(e: 'closed'): void
 		(e: 'focus'): void
 		(e: 'blur'): void
+		(e: 'input', value: string): void
+		(e: 'date-selected', value: DateValue): void
 	}>()
 
-	const selectedDates = ref<Date | Date[] | null>(
+	// Utilisation du composable pour la saisie manuelle des plages de dates
+	const selectedDates = ref<Date | (Date | null)[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
+
+	// Utilisation du composable pour la validation des plages de dates
+	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(selectedDates as Ref<DateObjectValue>, props.displayRange)
 
 	const isDatePickerVisible = ref(false)
 	const validation = useValidation({
@@ -90,61 +118,48 @@
 	})
 	const { errors, warnings, successes, validateField, clearValidation } = validation
 
-	const errorMessages = errors
-	const warningMessages = warnings
-	const successMessages = successes
+	const errorMessages = computed(() => errors.value)
+	const warningMessages = computed(() => warnings.value)
+	const successMessages = computed(() => successes.value)
 	const displayFormattedDate = ref('')
 
 	const textInputValue = ref<string>('')
 
+	// Variables pour la gestion de la saisie manuelle
+	const isManualInputActive = ref(false)
+	const isFormatting = ref(false)
+
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
+	// Variable pour suivre si l'utilisateur a interagi avec le champ
+	const hasInteracted = ref(false)
 
-	// Fonction pour valider les dates
-	const validateDates = (forceValidation = false) => {
-		if (props.noCalendar) {
-			// En mode no-calendar, on délègue la validation au DateTextInput
-			return
-		}
+	const { validateDateFormat, isDateComplete } = useDateFormatValidation({
+		format: props.format,
+		dateFormatReturn: props.dateFormatReturn,
+		required: props.required,
+		hasInteracted,
+		disableErrorHandling: props.disableErrorHandling,
+	})
 
-		// Réinitialiser la validation
-		clearValidation()
-
-		// Si la gestion des erreurs est désactivée, on effectue la validation interne
-		// mais on n'ajoute pas les messages d'erreur
-		const shouldDisplayErrors = !props.disableErrorHandling
-
-		// Vérifier si le champ est requis et vide
-		if ((forceValidation || !isUpdatingFromInternal.value) && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
-			if (shouldDisplayErrors) {
-				errors.value.push('La date est requise.')
-			}
-			return
-		}
-
-		if (!selectedDates.value) return
-
-		// Préparer les dates à valider
-		const datesToValidate = Array.isArray(selectedDates.value)
-			? selectedDates.value
-			: [selectedDates.value]
-
-		// Valider chaque date
-		if (shouldDisplayErrors) {
-			datesToValidate.forEach((date) => {
-				validateField(
-					date,
-					props.customRules,
-					props.customWarningRules,
-				)
-			})
-
-			// Dédoublonner les messages (au cas où plusieurs dates auraient les mêmes messages)
-			errors.value = [...new Set(errors.value)]
-			warnings.value = [...new Set(warnings.value)]
-			successes.value = [...new Set(successes.value)]
-		}
-	}
+	// pour valider les dates
+	const { validateDates, validateOnSubmit } = useDateValidation({
+		noCalendar: props.noCalendar,
+		required: props.required,
+		displayRange: props.displayRange,
+		disableErrorHandling: props.disableErrorHandling,
+		customRules: props.customRules,
+		customWarningRules: props.customWarningRules,
+		selectedDates,
+		isUpdatingFromInternal,
+		currentRangeIsValid,
+		getRangeValidationError,
+		clearValidation,
+		validateField,
+		errors,
+		warnings,
+		successes,
+	})
 
 	// Fonction centralisée pour mettre à jour le modèle
 	const updateModel = (value: DateValue) => {
@@ -210,17 +225,45 @@
 		'min-width': '100%',
 	}))
 
+	// Déclaration des variables qui seront initialisées par le composable useDateSelection
+	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
+	// Initialisation des variables après la déclaration de selectedDates
+	const dateSelectionResult = useDateSelection(
+		parseDate,
+		selectedDates,
+		props.format,
+		props.displayRange,
+	)
+
+	// Assignation des fonctions et variables retournées par le composable
+	// Utiliser une fonction pour wrapper updateSelectedDates afin de maintenir la compatibilité avec le template
+	const updateSelectedDates = (date: Date | null) => {
+		dateSelectionResult.updateSelectedDates(date)
+	}
+	// generateDateRange est maintenant utilisé via le composable useInputHandler
+	// Synchroniser notre référence locale avec celle du composable
+	watch(() => dateSelectionResult.rangeBoundaryDates.value, (newValue) => {
+		rangeBoundaryDates.value = newValue
+	}, { immediate: true })
+
 	// Date(s) formatée(s) en chaîne de caractères pour la valeur de retour
 	const formattedDate = computed<DateValue>(() => {
 		if (!selectedDates.value) return ''
 
 		const returnFormat = props.dateFormatReturn || props.format
 
-		if (Array.isArray(selectedDates.value)) {
+		// Pour les plages de dates, utiliser rangeBoundaryDates s'il est disponible
+		if (props.displayRange && rangeBoundaryDates.value) {
+			return [
+				formatDate(rangeBoundaryDates.value[0], returnFormat),
+				formatDate(rangeBoundaryDates.value[1], returnFormat),
+			] as [string, string]
+		}
+		else if (Array.isArray(selectedDates.value)) {
 			if (selectedDates.value.length >= 2) {
 				return [
 					formatDate(selectedDates.value[0], returnFormat),
-					formatDate(selectedDates.value[1], returnFormat),
+					formatDate(selectedDates.value[selectedDates.value.length - 1], returnFormat),
 				] as [string, string]
 			}
 			return ''
@@ -331,45 +374,27 @@
 	const updateDisplayFormattedDate = () => {
 		if (displayFormattedDateComputed.value) {
 			displayFormattedDate.value = displayFormattedDateComputed.value
-		}
-	}
+			// Émettre l'événement date-selected pour indiquer qu'une date a été sélectionnée dans le calendrier
+			emit('date-selected', formattedDate.value)
 
-	const updateSelectedDates = (input: DateValue) => {
-		if (Array.isArray(input)) {
-			const dates = input
-				.map(date => (date ? parseDate(date, props.format) : null))
-				.filter((date): date is Date => date !== null)
-
-			if (dates.length === 0) {
-				selectedDates.value = null
-				return
+			// En mode plage, ne pas fermer le DatePicker après la sélection de la première date
+			// Vérifier si nous sommes en mode plage et si les deux dates sont sélectionnées
+			if (!props.displayRange || (props.displayRange && rangeBoundaryDates.value && rangeBoundaryDates.value[0] && rangeBoundaryDates.value[1])) {
+				// Fermer le DatePicker seulement si nous ne sommes pas en mode plage
+				// ou si les deux dates de la plage sont déjà sélectionnées
+				isDatePickerVisible.value = false
+				emit('closed')
 			}
-
-			selectedDates.value = dates
-			return
+			validateDates()
 		}
-
-		const date = input ? parseDate(input, props.format) : null
-		selectedDates.value = date === null ? null : date
 	}
 
-	// Gestionnaire de clic en dehors
-	const handleClickOutside = (event: MouseEvent) => {
-		if (!isDatePickerVisible.value) return
+	// Les variables useDateSelection sont maintenant déclarées et initialisées plus haut dans le code
 
-		const target = event.target as HTMLElement
-		const container = target.closest('.date-picker-container')
-
-		// Si on clique dans le conteneur du DatePicker, on ne fait rien
-		if (container) return
-		emit('closed')
-		// Déclencher la validation à la fermeture
-		validateDates()
+	// Fonction pour émettre l'événement blur (utilisée pour les tests)
+	const emitBlurEvent = () => {
+		emit('blur')
 	}
-
-	const todayInString = computed(() => {
-		return dayjs().locale('fr').format('dddd D MMMM').replace(/\b\w/g, l => l.toUpperCase())
-	})
 
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
@@ -389,63 +414,85 @@
 
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
-	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 
-	const validateOnSubmit = () => {
-		if (props.noCalendar) {
-			return dateTextInputRef.value?.validateOnSubmit()
-		}
-		// Forcer la validation pour ignorer les conditions de validation interactive
-		validateDates(true)
-		// Retourner directement un booléen pour maintenir la compatibilité avec les tests existants
-		return errors.value.length === 0
-	}
-
-	const openDatePicker = () => {
-		if (!isDatePickerVisible.value) {
-			toggleDatePicker()
-		}
-	}
-
-	type ViewMode = 'month' | 'year' | 'months' | undefined
-
-	// Variable pour suivre le mode d'affichage actuel du DatePicker
-	const currentViewMode = ref<ViewMode>(props.isBirthDate ? 'year' : 'month')
-
-	watch(() => props.isBirthDate, (newValue) => {
-		currentViewMode.value = newValue ? 'year' : 'month'
+	// Initialiser le composable useInputHandler pour gérer la saisie des dates
+	const inputHandler = useInputHandler({
+		format: props.format,
+		displayRange: props.displayRange,
+		dateFormatReturn: props.dateFormatReturn,
+		disableErrorHandling: props.disableErrorHandling,
+		parseDate,
+		formatDate,
+		generateDateRange: dateSelectionResult.generateDateRange,
+		isDateComplete: isDateComplete.value,
+		displayFormattedDate,
+		selectedDates,
+		isFormatting,
+		isManualInputActive,
+		isUpdatingFromInternal,
+		clearValidation,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- validation rules
+		validateField: (value, rules, warningRules) => validateField(value, rules as any[], warningRules as any[]),
+		updateModel: value => updateModel(value as DateValue),
+		emitInput: value => emit('input', value),
+		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
 	})
 
-	// Fonction pour gérer le changement de mode d'affichage
-	const handleViewModeUpdate = (newMode: ViewMode) => {
-		currentViewMode.value = newMode
+	/**
+	 * Gère l'entrée utilisateur dans le champ de saisie de date
+	 * Délègue le traitement au composable useInputHandler
+	 */
+	const handleInput = (event: Event) => {
+		// Utiliser la fonction handleInput du composable
+		inputHandler.handleInput(event)
 	}
+	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 
-	// Fonction pour gérer la sélection de l'année quand isBirthDate est true
-	const handleYearUpdate = () => {
-		if (props.isBirthDate) {
-			// Après la sélection de l'année, passer automatiquement à la sélection du mois
-			currentViewMode.value = 'months'
-		}
-	}
+	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
+	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
+		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
+		() => props.isBirthDate || props.birthDate,
+	)
 
-	// Fonction pour gérer la sélection du mois quand isBirthDate est true
-	const handleMonthUpdate = () => {
-		if (props.isBirthDate) {
-			// Après la sélection du mois, passer automatiquement à la sélection du jour
-			currentViewMode.value = undefined
-		}
-	}
+	// La fonction isDateComplete est maintenant importée du composable useDateFormatValidation
 
-	const handleInputBlur = () => {
-		emit('blur')
-		validateDates(true)
-	}
+	// Fonction pour valider la saisie manuelle, similaire à validateRules dans DateTextInput
+	const { validateManualInput } = useManualDateValidation({
+		format: props.format,
+		required: props.required,
+		disableErrorHandling: props.disableErrorHandling,
+		customRules: props.customRules,
+		customWarningRules: props.customWarningRules,
+		hasInteracted,
+		errors,
+		clearValidation,
+		validateDateFormat,
+		isDateComplete: isDateComplete.value,
+		parseDate,
+		validateField,
+	})
+
+	const { handleInputBlur } = useInputBlurHandler({
+		format: props.format,
+		dateFormatReturn: props.dateFormatReturn,
+		required: props.required,
+		displayFormattedDate,
+		hasInteracted,
+		isManualInputActive,
+		isUpdatingFromInternal,
+		selectedDates,
+		validateDateFormat,
+		parseDate,
+		formatDate,
+		updateModel,
+		validateManualInput,
+		emitBlur: emitBlurEvent,
+	})
 
 	watch(isDatePickerVisible, async (isVisible) => {
 		if (!isVisible && props.isBirthDate) {
 			// Réinitialiser le mode d'affichage au type birthdate
-			currentViewMode.value = 'year'
+			resetViewMode()
 		}
 
 		if (isVisible) {
@@ -471,21 +518,14 @@
 		}
 	})
 
-	const getIcon = () => {
-		if (props.noCalendar || props.disableErrorHandling) {
-			return
-		}
-		switch (true) {
-		case errorMessages.value.length > 0:
-			return 'error'
-		case warningMessages.value.length > 0:
-			return 'warning'
-		case successMessages.value.length > 0:
-			return 'success'
-		default:
-			return
-		}
-	}
+	// Utilisation du composable useIconState pour déterminer l'icône à afficher
+	const { getIcon } = useIconState({
+		noCalendar: props.noCalendar,
+		disableErrorHandling: props.disableErrorHandling,
+		errorMessages,
+		warningMessages,
+		successMessages,
+	})
 
 	const syncFromModelValue = (newValue: DateInput | undefined) => {
 		if (!newValue || newValue === '') {
@@ -536,40 +576,214 @@
 		}
 	}, { immediate: true })
 
-	const toggleDatePicker = () => {
-		if (props.disabled || props.readonly) return
+	const {
+		toggleDatePicker,
+		openDatePicker,
+		openDatePickerOnClick,
+		openDatePickerOnFocus,
+		openDatePickerOnIconClick,
+		handleClickOutside,
+		handleKeyboardNavigation,
+	} = useDatePickerVisibility({
+		disabled: props.disabled,
+		readonly: props.readonly,
+		textFieldActivator: props.textFieldActivator,
+		isDatePickerVisible,
+		isManualInputActive,
+		hasInteracted,
+		updateAccessibility,
+		validateDates,
+		emitClosed: () => emit('closed'),
+		emitFocus: () => emit('focus'),
+	})
 
-		isDatePickerVisible.value = !isDatePickerVisible.value
+	// Fonctions pour la gestion de la saisie manuelle
+	const formatDateInput = (input: string, cursorPosition?: number): { formatted: string, cursorPos: number } => {
+		// Conserver uniquement les chiffres de l'entrée
+		const cleanedInput = input.replace(/[^\d]/g, '')
 
-		if (isDatePickerVisible.value) {
-			// Mettre à jour l'accessibilité après l'ouverture du DatePicker
-			nextTick(() => {
-				updateAccessibility()
-			})
+		// Déterminer le séparateur utilisé dans le format
+		const separator = props.format.match(/[^DMY]/)?.[0] || '/'
+
+		// Calculer la position du curseur dans l'entrée nettoyée (sans séparateurs)
+		// Pour cela, on compte combien de chiffres il y a avant la position du curseur
+		const inputBeforeCursor = input.substring(0, cursorPosition || 0)
+		const digitsBeforeCursor = inputBeforeCursor.replace(/[^\d]/g, '').length
+
+		// Construire la chaîne formatée
+		let result = ''
+		let digitIndex = 0
+
+		// Parcourir le format pour placer les chiffres et séparateurs
+		for (let i = 0; i < props.format.length && digitIndex < cleanedInput.length; i++) {
+			const formatChar = props.format[i].toUpperCase()
+
+			if (['D', 'M', 'Y'].includes(formatChar)) {
+				// Ajouter un chiffre
+				result += cleanedInput[digitIndex]
+				digitIndex++
+			}
+			else {
+				// Ajouter un séparateur
+				result += separator
+			}
+		}
+
+		// Calculer la nouvelle position du curseur
+		// Nombre de chiffres avant le curseur + nombre de séparateurs avant ces chiffres
+		let newCursorPos = digitsBeforeCursor
+
+		// Ajouter les séparateurs qui apparaissent avant la position du curseur
+		for (let i = 0, digitCount = 0; i < props.format.length && digitCount < digitsBeforeCursor; i++) {
+			if (!['D', 'M', 'Y'].includes(props.format[i].toUpperCase())) {
+				newCursorPos++
+			}
+			else {
+				digitCount++
+			}
+		}
+
+		return {
+			formatted: result,
+			cursorPos: Math.min(newCursorPos, result.length),
+		}
+	}
+
+	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
+		// Déléguer la gestion de l'ouverture du calendrier au composable
+		if (!props.noCalendar && handleKeyboardNavigation(event)) {
+			return
+		}
+
+		// Gérer la suppression des séparateurs
+		if (event.key === 'Backspace') {
+			const input = event.target
+			if (!input.selectionStart || input.selectionStart !== input.selectionEnd) {
+				return
+			}
+
+			const cursorPos = input.selectionStart
+			const charBeforeCursor = input.value[cursorPos - 1]
+
+			if (!/\d/.test(charBeforeCursor)) {
+				// Si le caractère avant le curseur n'est pas un chiffre, on le supprime aussi
+				// et on supprime le chiffre avant le séparateur
+				event.preventDefault() // Empêcher le comportement par défaut
+
+				const newValue = input.value.substring(0, cursorPos - 2)
+					+ input.value.substring(cursorPos)
+
+				// Mettre à jour la valeur
+				displayFormattedDate.value = newValue
+
+				// Positionner le curseur après un court délai
+				setTimeout(() => {
+					const newCursorPos = cursorPos - 2
+					input.setSelectionRange(newCursorPos, newCursorPos)
+				}, 0)
+			}
+		}
+
+		// Gérer les touches de direction pour éviter de se retrouver entre un séparateur et un chiffre
+		if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+			const input = event.target
+			const cursorPos = input.selectionStart || 0
+
+			// Déterminer le séparateur utilisé dans le format
+			const separator = props.format.match(/[^DMY]/)?.[0] || '/'
+
+			if (event.key === 'ArrowLeft' && cursorPos > 0) {
+				const charBeforeCursor = input.value[cursorPos - 1]
+
+				if (charBeforeCursor === separator) {
+					// Si on se déplace à gauche et qu'on rencontre un séparateur, sauter par-dessus
+					event.preventDefault()
+					input.setSelectionRange(cursorPos - 2, cursorPos - 2)
+				}
+			}
+			else if (event.key === 'ArrowRight' && cursorPos < input.value.length) {
+				const charAtCursor = input.value[cursorPos]
+
+				if (charAtCursor === separator) {
+					// Si on se déplace à droite et qu'on rencontre un séparateur, sauter par-dessus
+					event.preventDefault()
+					input.setSelectionRange(cursorPos + 2, cursorPos + 2)
+				}
+			}
+		}
+	}
+
+	// Variable pour l'accessibilité
+	const accessibilityDescription = ref('Date en cours de saisie')
+
+	// Fonction pour créer une description accessible de la date pour les lecteurs d'écran
+	const getDateDescription = (dateStr: string, format: string): string => {
+		// Si la chaîne est vide, retourner un message simple
+		if (!dateStr || !dateStr.trim()) {
+			return 'Aucune date saisie'
+		}
+
+		// Déterminer le séparateur utilisé dans le format
+		const separator = format.match(/[^DMY]/)?.[0] || '/'
+
+		// Extraire les parties de la date
+		const dateParts = dateStr.split(separator)
+		const formatParts = format.split(separator)
+
+		// Créer une description en fonction du format
+		let description = 'Date en cours de saisie: '
+
+		for (let i = 0; i < formatParts.length; i++) {
+			if (i >= dateParts.length) break
+
+			const part = dateParts[i].trim()
+			const formatPart = formatParts[i].charAt(0).toUpperCase()
+
+			// Ignorer les parties vides ou contenant uniquement des placeholders
+			if (!part || part.replace(/_/g, '').length === 0) {
+				continue
+			}
+
+			switch (formatPart) {
+			case 'D':
+				description += `jour ${part}, `
+				break
+			case 'M':
+				description += `mois ${part}, `
+				break
+			case 'Y':
+				description += `année ${part}, `
+				break
+			}
+		}
+
+		// Supprimer la virgule finale si elle existe
+		return description.endsWith(', ')
+			? description.slice(0, -2)
+			: description
+	}
+
+	// Mettre à jour la description accessible lorsque la valeur affichée change
+	watch(displayFormattedDate, (newValue) => {
+		if (newValue) {
+			// Créer une version accessible pour les lecteurs d'écran (sans les caractères de placeholder)
+			const accessibleValue = newValue.replace(/_/g, ' ')
+
+			// Créer un message descriptif pour le lecteur d'écran
+			accessibilityDescription.value = getDateDescription(accessibleValue, props.format)
 		}
 		else {
-			emit('closed')
-			validateDates()
+			accessibilityDescription.value = 'Aucune date saisie'
 		}
-	}
+	})
 
-	const openDatePickerOnClick = () => {
-		if (props.textFieldActivator) {
-			openDatePicker()
-		}
-	}
+	// Utilisation des composables pour les fonctionnalités du DatePicker
+	const { displayWeekendDays } = useWeekendDays(props)
+	const { todayInString, selectToday } = useTodayButton(props)
 
-	const openDatePickerOnFocus = () => {
-		// Only open the DatePicker if textFieldActivator is true
-		if (props.textFieldActivator) {
-			openDatePicker()
-		}
-		// Always emit the focus event
-		emit('focus')
-	}
-
-	const openDatePickerOnIconClick = () => {
-		toggleDatePicker()
+	// Wrapper pour la fonction selectToday du composable
+	const handleSelectToday = () => {
+		selectToday(selectedDates)
 	}
 
 	defineExpose({
@@ -579,8 +793,18 @@
 		errorMessages,
 		handleClickOutside,
 		initializeSelectedDates,
+		handleSelectToday,
 		updateAccessibility,
 		openDatePicker,
+		updateDisplayFormattedDate,
+		toggleDatePicker,
+		validateField,
+		clearValidation,
+		validateDates,
+		formatDateInput,
+		emitBlur: emitBlurEvent,
+		validateDateFormat,
+		displayFormattedDate,
 	})
 </script>
 
@@ -589,6 +813,13 @@
 		class="date-picker-container"
 		:style="inputStyle"
 	>
+		<!-- Variable pour stocker la description accessible -->
+		<span
+			v-if="false"
+			ref="accessibilityDescriptionRef"
+		>
+			{{ accessibilityDescription }}
+		</span>
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
@@ -636,14 +867,14 @@
 						ref="dateCalendarTextInputRef"
 						v-model="displayFormattedDate"
 						:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
-						:append-inner-icon="getIcon()"
+						:append-inner-icon="getIcon"
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
 						:error-messages="errorMessages"
 						:warning-messages="warningMessages"
 						:success-messages="props.showSuccessMessages ? successMessages : []"
 						:disabled="props.disabled"
 						:disable-click-button="false"
-						:readonly="true"
+						:readonly="props.readonly"
 						:label="props.placeholder"
 						:no-icon="props.noIcon"
 						:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
@@ -653,10 +884,13 @@
 						:bg-color="props.bgColor"
 						is-clearable
 						title="Date Picker"
+						:aria-label="accessibilityDescription"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
 						@update:model-value="updateSelectedDates"
+						@input="handleInput"
+						@keydown="handleKeydown"
 						@prepend-icon-click="openDatePickerOnIconClick"
 						@append-icon-click="openDatePickerOnIconClick"
 					/>
@@ -666,6 +900,7 @@
 					ref="datePickerRef"
 					v-model="selectedDates"
 					color="primary"
+					:class="displayWeekendDays ? 'weekend' : ''"
 					:first-day-of-week="1"
 					:multiple="props.displayRange ? 'range' : false"
 					:show-adjacent-months="true"
@@ -683,6 +918,16 @@
 						<h3 class="mx-auto my-auto ml-5 mb-4">
 							{{ todayInString }}
 						</h3>
+					</template>
+					<template #actions>
+						<v-btn
+							v-if="props.displayTodayButton"
+							variant="text"
+							class="today-button"
+							@click="handleSelectToday"
+						>
+							Aujourd'hui
+						</v-btn>
 					</template>
 				</VDatePicker>
 			</VMenu>
@@ -791,5 +1036,14 @@
 .fade-enter-from,
 .fade-leave-to {
 	opacity: 0;
+}
+
+:deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
+	background-color: #afb1b1;
+}
+
+/* div avant la class .v-date-picker-month__day--week-end */
+:deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
+	background-color: #afb1b1;
 }
 </style>
