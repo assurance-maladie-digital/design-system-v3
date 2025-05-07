@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import DateTextInput from './DateTextInput.vue'
+	import DateTextInput from '../DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useValidation } from '@/composables/validation/useValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
@@ -42,6 +42,7 @@
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
 		bgColor?: string
+		textFieldActivator?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -65,6 +66,7 @@
 		disableErrorHandling: false,
 		showSuccessMessages: true,
 		bgColor: undefined,
+		textFieldActivator: false,
 	})
 
 	const emit = defineEmits<{
@@ -552,11 +554,17 @@
 	}
 
 	const openDatePickerOnClick = () => {
-		openDatePicker()
+		if (props.textFieldActivator) {
+			openDatePicker()
+		}
 	}
 
 	const openDatePickerOnFocus = () => {
-		openDatePicker()
+		// Only open the DatePicker if textFieldActivator is true
+		if (props.textFieldActivator) {
+			openDatePicker()
+		}
+		// Always emit the focus event
 		emit('focus')
 	}
 
