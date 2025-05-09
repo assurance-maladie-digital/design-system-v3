@@ -6,4 +6,8 @@ export const config = {
 		class: 'ml-3',
 		ariaLabel: 'Caractères accentués',
 	},
+	dialog: {
+		width: 'auto',
+		maxWidth: '600px',
+	},
 }

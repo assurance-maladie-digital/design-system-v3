@@ -2,14 +2,25 @@
 	import { computed, nextTick, onMounted, ref } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
+	import { VBtn, VCard, VCardText, VCardTitle, VDialog } from 'vuetify/components'
 
 	const props = withDefaults(defineProps<{
 		btnTitle?: string
+		diacritics?: string[]
 	} & CustomizableOptions>(), {
-		btnTitle: 'Éé',
+		btnTitle: 'éÉ',
+		diacritics: () => [
+			'é', 'è', 'ê', 'ë',
+			'à', 'â', 'ä', 'æ',
+			'î', 'ï',
+			'ô', 'ö', 'œ',
+			'ù', 'û', 'ü',
+			'ÿ',
+			'ç',
+		],
 	})
 
-	const wrapperRef = ref(null)
+	const wrapperRef = ref<HTMLElement | null>(null)
 	const dialog = ref(false)
 
 	const options = useCustomizableOptions(config, props)
@@ -25,39 +36,40 @@
 	}))
 
 	function updateInputMessageHeight() {
-		const element = document.querySelector('#diacritique-input-messages')
+		const element = document.querySelector<HTMLElement>('#diacritique-input-messages')
 		if (element) {
 			inputMessageHeight.value = element.getBoundingClientRect().height
 		}
 	}
 
-	const diacriticsMap = {
-		e: ['e', 'é', 'è', 'ê', 'ë'],
-		a: ['a', 'à', 'â', 'ä', 'æ'],
-		i: ['i', 'î', 'ï'],
-		o: ['o', 'ô', 'ö', 'œ'],
-		u: ['u', 'ù', 'û', 'ü'],
-		y: ['y', 'ÿ'],
-		c: ['c', 'ç'],
+	const diacritics = computed(() => {
+		const grouped: Record<string, string[]> = {}
+
+		for (const char of props.diacritics) {
+			const baseChar = char.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+			if (!grouped[baseChar]) grouped[baseChar] = []
+			grouped[baseChar].push(char)
+		}
+
+		const all = Object.values(grouped).flat()
+		return {
+			lower: [...new Set(all)],
+			upper: [...new Set(all.map(c => c.toUpperCase()))],
+		}
+	})
+
+	function getNativeInput(): HTMLInputElement | HTMLTextAreaElement | null {
+		return wrapperRef.value?.querySelector('input, textarea') ?? null
 	}
 
-	const diacritics = {
-		lower: [...new Set(Object.values(diacriticsMap).flat())],
-		upper: [...new Set(Object.values(diacriticsMap).flat().map(c => c.toUpperCase()))],
-	}
-
-	function getNativeInput() {
-		return wrapperRef.value?.querySelector('input, textarea')
-	}
-
-	function insertChar(char) {
+	function insertChar(char: string) {
 		const el = getNativeInput()
 		if (!el) return
 
-		const pos = el.selectionStart
+		const pos = el.selectionStart ?? 0
 		const value = el.value
 		el.value = value.slice(0, pos) + char + value.slice(pos)
-		el.dispatchEvent(new Event('input')) // Synchronise avec v-model
+		el.dispatchEvent(new Event('input'))
 
 		nextTick(() => {
 			el.focus()
@@ -67,21 +79,24 @@
 		dialog.value = false
 	}
 
-	function handleKeydown(event) {
+	function handleKeydown(event: KeyboardEvent) {
 		if (event.key !== '=') return
 
 		const el = getNativeInput()
 		if (!el) return
 
-		const pos = el.selectionStart
+		const pos = el.selectionStart ?? 0
 		const value = el.value
 		const prevChar = value[pos - 1]
 		if (!prevChar) return
 
 		const isUpper = prevChar === prevChar.toUpperCase()
 		const baseChar = prevChar.toLowerCase()
-		const list = diacriticsMap[baseChar]
-		if (!list) return
+		const list = props.diacritics.filter(c =>
+			c.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === baseChar,
+		)
+
+		if (!list.length) return
 
 		const currentIndex = list.findIndex(c =>
 			isUpper ? c.toUpperCase() === prevChar : c === prevChar,
@@ -93,6 +108,7 @@
 			: list[(currentIndex + 1) % list.length]
 
 		el.value = value.slice(0, pos - 1) + nextChar + value.slice(pos)
+		el.dispatchEvent(new Event('input'))
 
 		nextTick(() => {
 			el.setSelectionRange(pos, pos)
@@ -129,6 +145,7 @@
 			:aria-haspopup="'dialog'"
 			:aria-expanded="dialog.toString()"
 			:style="dynamicStyles"
+			class="diacritic-btn"
 			@click="dialog = !dialog"
 		>
 			{{ props.btnTitle }}
@@ -136,10 +153,12 @@
 
 		<VDialog
 			v-model="dialog"
+			v-bind="options.dialog"
 			scrollable
 			:retain-focus="false"
 			aria-modal="true"
 			:aria-labelledby="buttonId"
+			class="diacritic-dialog"
 			role="dialog"
 		>
 			<VCard @click:outside="dialog = false">

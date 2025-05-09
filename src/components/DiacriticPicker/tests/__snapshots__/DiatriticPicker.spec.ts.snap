@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DiatriticPicker > rendering and props > renders correctly with props 1`] = `
+<div
+  class="diacritic-wrapper"
+  modelvalue="a"
+>
+  <div
+    class="
+      flex-grow-1
+      input-slot
+    "
+    id="diacritique-input"
+    role="textbox"
+    tabindex="0"
+  ></div>
+  <button
+    aria-controls="diacritique-dialog"
+    aria-expanded="false"
+    aria-haspopup="dialog"
+    arialabel="Caractères accentués"
+    class="
+      ml-3
+      text-primary
+      v-btn
+      v-btn--density-default
+      v-btn--icon
+      v-btn--size-small
+      v-btn--variant-tonal
+      v-theme--light
+    "
+    id="diacritique-button"
+    style="margin-top: 0px;"
+    type="button"
+  >
+    <span class="v-btn__overlay"></span>
+    <span class="v-btn__underlay"></span>
+    <!---->
+    <span
+      class="v-btn__content"
+      data-no-activator=""
+    >
+      éÉ
+    </span>
+    <!---->
+    <!---->
+  </button>
+  <!---->
+  <!---->
+</div>
+`;

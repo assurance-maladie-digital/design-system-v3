@@ -50,12 +50,10 @@
 			'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
 		))
 
-		const filteredElements = elements.filter(element => (
+		return elements.filter(element => (
 			!element.hasAttribute('disabled')
 			&& !element.getAttribute('aria-hidden')
 		))
-
-		return filteredElements
 	}
 
 	async function handleFocus(e: KeyboardEvent): Promise<void> {
