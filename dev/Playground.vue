@@ -17,9 +17,9 @@
 				variant="outlined"
 			/>
 		</DiacritiquePicker>
-    {{ nom }}
+		{{ nom }}
 
-    <br/><br/>
+		<br><br>
 
 		<DiacritiquePicker>
 			<v-textarea
@@ -31,6 +31,6 @@
 				auto-grow
 			/>
 		</DiacritiquePicker>
-    {{ adresse }}
+		{{ adresse }}
 	</div>
 </template>

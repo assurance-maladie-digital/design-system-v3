@@ -1,8 +1,18 @@
-<script setup>
-	import { ref, nextTick, computed, onMounted } from 'vue'
+<script setup lang="ts">
+	import { computed, nextTick, onMounted, ref } from 'vue'
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { config } from './config'
+
+	const props = withDefaults(defineProps<{
+		btnTitle?: string
+	} & CustomizableOptions>(), {
+		btnTitle: 'Éé',
+	})
 
 	const wrapperRef = ref(null)
 	const dialog = ref(false)
+
+	const options = useCustomizableOptions(config, props)
 
 	const inputId = 'diacritique-input'
 	const buttonId = 'diacritique-button'
@@ -46,9 +56,7 @@
 
 		const pos = el.selectionStart
 		const value = el.value
-		const newValue = value.slice(0, pos) + char + value.slice(pos)
-
-		el.value = newValue
+		el.value = value.slice(0, pos) + char + value.slice(pos)
 		el.dispatchEvent(new Event('input')) // Synchronise avec v-model
 
 		nextTick(() => {
@@ -115,19 +123,15 @@
 
 		<VBtn
 			:id="buttonId"
+			v-bind="options.btn"
 			icon
-			size="small"
-			variant="tonal"
-			color="primary"
 			:aria-controls="dialogId"
 			:aria-haspopup="'dialog'"
 			:aria-expanded="dialog.toString()"
-			aria-label="Caractères accentués"
-			class="ml-2"
 			:style="dynamicStyles"
 			@click="dialog = !dialog"
 		>
-			&Eacute;&eacute;
+			{{ props.btnTitle }}
 		</VBtn>
 
 		<VDialog
