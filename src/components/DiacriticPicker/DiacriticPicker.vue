@@ -103,8 +103,8 @@
 <template>
 	<div class="diacritic-wrapper">
 		<div
+			:id="inputId"
 			ref="wrapperRef"
-      :id="inputId"
 			class="input-slot flex-grow-1"
 			role="textbox"
 			tabindex="0"
@@ -179,8 +179,8 @@
 
 <style scoped>
 .diacritic-wrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
+	width: 100%;
+	display: flex;
+	align-items: center;
 }
 </style>
