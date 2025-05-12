@@ -66,13 +66,13 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/tokens';
 
-	.accordion-btn {
-		padding: 0;
-		background-color: transparent;
-		border: 0;
+.accordion-btn {
+	padding: 0;
+	background-color: transparent;
+	border: 0;
 
-		&:focus {
-			outline: 1px dotted tokens.$ap-grey-darken1;
-		}
+	&:focus {
+		outline: 1px dotted tokens.$ap-grey-darken1;
 	}
+}
 </style>

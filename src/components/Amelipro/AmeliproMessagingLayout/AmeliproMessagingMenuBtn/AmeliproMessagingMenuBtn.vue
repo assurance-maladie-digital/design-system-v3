@@ -46,7 +46,7 @@
 		:color="active ? 'ap-blue-darken-2' : 'ap-blue-darken-1'"
 		hover-color="ap-blue-darken-2"
 		:href="href"
-		style="min-height: 50px"
+		style="min-height: 50px;"
 		text-color="ap-white"
 		:to="to"
 		:unique-id="uniqueId"
