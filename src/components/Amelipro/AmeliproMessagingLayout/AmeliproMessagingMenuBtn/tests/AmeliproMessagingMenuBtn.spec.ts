@@ -1,19 +1,17 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproBtn from '../AmeliproBtn.vue'
+import AmeliproMessagingMenuBtn from '../AmeliproMessagingMenuBtn.vue'
 import { vuetify } from '@tests/unit/setup'
 
-describe('AmeliproBtn', () => {
+describe('AmeliproMessagingMenuBtn', () => {
 	it('render correctly', async () => {
-		const wrapper = mount(AmeliproBtn, {
+		const wrapper = mount(AmeliproMessagingMenuBtn, {
 			global: {
 				plugins: [vuetify],
 			},
 			props: {
-				uniqueId: 'my-btn-id',
-			},
-			slots: {
-				default: 'My Button',
+				label: 'label du bouton',
+				uniqueId: 'my-messaging-menu-btn-id',
 			},
 		})
 
