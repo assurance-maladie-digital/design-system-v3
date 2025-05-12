@@ -201,9 +201,9 @@
 .items-per-line-3 {
 	& > li {
 		@media #{tokens.$media-up-lg} {
-			width: calc((100% -20px) / 3);
-			min-width: calc((100% -20px) / 3);
-			max-width: calc((100% -20px) / 3);
+			width: calc((100% - 20px) / 3);
+			min-width: calc((100% - 20px) / 3);
+			max-width: calc((100% - 20px) / 3);
 		}
 
 		@media #{tokens.$media-only-md} {

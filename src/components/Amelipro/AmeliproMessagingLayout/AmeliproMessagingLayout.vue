@@ -147,7 +147,7 @@
 
 .messaging-menu {
 	@media #{tokens.$media-only-xs} {
-		padding: 0 10px 24px 10px;
+		padding: 0 10px 24px;
 	}
 
 	@media #{tokens.$media-only-sm} {
@@ -165,7 +165,7 @@
 
 	@media #{tokens.$media-only-xs} {
 		width: 100%;
-		margin: 24px 0 16px 0;
+		margin: 24px 0 16px;
 	}
 
 	@media #{tokens.$media-only-sm} {
