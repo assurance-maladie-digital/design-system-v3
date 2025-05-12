@@ -1,3 +1,17 @@
+## v0.0.16-alpha (12-05-2025)
+
+### Composants
+
+- SyAlert: fix accessibility issues [`#544`](https://github.com/assurance-maladie-digital/design-system-v3/pull/544)
+- SyTextField: fix accessibility issues [`#574`](https://github.com/assurance-maladie-digital/design-system-v3/pull/574)
+- DatePicker: fix open calendar when input is already focused [`#573`](https://github.com/assurance-maladie-digital/design-system-v3/pull/573)
+- DatePicker: fix text input format [`#577`](https://github.com/assurance-maladie-digital/design-system-v3/pull/577)
+- DatePicker: improve date format management [`#576`](https://github.com/assurance-maladie-digital/design-system-v3/pull/576)
+
+### Documentation
+
+- Add page on audits progress [`#575`](https://github.com/assurance-maladie-digital/design-system-v3/pull/575)
+
 ## v0.0.15-alpha (28-04-2025)
 
 ### Composants
