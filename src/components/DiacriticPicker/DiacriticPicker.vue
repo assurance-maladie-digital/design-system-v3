@@ -164,35 +164,37 @@
 			<VCard @click:outside="dialog = false">
 				<VCardTitle>Caractères diacritiques</VCardTitle>
 				<VCardText>
-					<div
-						class="d-flex flex-wrap"
-						role="group"
-						aria-label="Caractères minuscules"
-					>
-						<VBtn
-							v-for="char in diacritics.lower"
-							:key="'l-' + char"
-							size="small"
-							class="ma-1"
-							@click="insertChar(char)"
+					<div class="diacritic-dialog-content">
+						<div
+							class="d-flex flex-wrap"
+							role="group"
+							aria-label="Caractères minuscules"
 						>
-							{{ char }}
-						</VBtn>
-					</div>
-					<div
-						class="d-flex flex-wrap mt-2"
-						role="group"
-						aria-label="Caractères majuscules"
-					>
-						<VBtn
-							v-for="char in diacritics.upper"
-							:key="'u-' + char"
-							size="small"
-							class="ma-1"
-							@click="insertChar(char)"
+							<VBtn
+								v-for="char in diacritics.lower"
+								:key="'l-' + char"
+								size="small"
+								class="ma-1"
+								@click="insertChar(char)"
+							>
+								{{ char }}
+							</VBtn>
+						</div>
+						<div
+							class="d-flex flex-wrap mt-2"
+							role="group"
+							aria-label="Caractères majuscules"
 						>
-							{{ char }}
-						</VBtn>
+							<VBtn
+								v-for="char in diacritics.upper"
+								:key="'u-' + char"
+								size="small"
+								class="ma-1"
+								@click="insertChar(char)"
+							>
+								{{ char }}
+							</VBtn>
+						</div>
 					</div>
 				</VCardText>
 			</VCard>
@@ -200,10 +202,13 @@
 	</div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .diacritic-wrapper {
 	width: 100%;
 	display: flex;
 	align-items: center;
+}
+:deep(.v-card-text > .diacritic-dialog-content) {
+  padding: 0 !important;
 }
 </style>
