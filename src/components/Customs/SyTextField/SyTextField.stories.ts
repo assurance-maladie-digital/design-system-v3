@@ -28,6 +28,10 @@ const meta = {
 			description: 'Texte affiché comme label du champ',
 			control: 'text',
 		},
+		'autocomplete': {
+			description: 'Valeur de l\'attribut autocomplete',
+			control: 'text',
+		},
 		'prependIcon': {
 			control: 'select',
 			options: ['info', 'success', 'warning', 'error', 'close'],
@@ -117,6 +121,11 @@ const meta = {
 			description: 'Désactive le champ',
 			control: 'boolean',
 			default: false,
+		},
+		'disableClickButton': {
+			description: 'Désactive le click sur les icônes append et prepend',
+			control: 'boolean',
+			default: true,
 		},
 		'readonly': {
 			description: 'Rend le champ en lecture seule',
@@ -948,6 +957,7 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 				name: 'Template',
 				code: `<SyTextField
 	v-model="value"
+	autocomplete="email"
 	label="Email"
 	required
 	:customRules="[
@@ -975,6 +985,7 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 				v-model="value"
 				v-bind="args"
 				label="Email"
+				autocomplete="email"
 				required
 				:customRules="[
 					{
@@ -1011,6 +1022,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 				code: `<SyTextField
 	v-model="value"
 	label="Code postal"
+	autocomplete="postal-code"
 	required
 	:customRules="[
 		{
@@ -1038,6 +1050,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 				v-model="value"
 				v-bind="args"
 				label="Code postal"
+				autocomplete="postal-code"
 				required
 				:customRules="[
 					{

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, ref, onMounted, useAttrs } from 'vue'
 	import { locales } from './locales'
 	import {
 		mdiAlertOutline,
@@ -8,6 +8,7 @@
 		mdiInformationOutline,
 		mdiClose,
 	} from '@mdi/js'
+	import type { VIcon } from 'vuetify/components'
 
 	const show = defineModel<boolean>({
 		default: true,
@@ -22,6 +23,8 @@
 		closable: false,
 		variant: 'tonal',
 	})
+
+	const attrs = useAttrs()
 
 	const prependIcon = computed(() => {
 		return {
@@ -43,58 +46,71 @@
 		prependIcon,
 		dismissAlert,
 	})
+
+	const alertIcon = ref<typeof VIcon | null>(null)
+	onMounted(() => {
+		alertIcon.value?.$el?.querySelector('svg')?.setAttribute('role', 'presentation')
+	})
 </script>
 
 <template>
-	<VAlert
-		v-model="show"
-		:type="props.type"
-		:closable="props.closable"
-		:variant="props.variant"
-		:class="`alert alert--${props.type}`"
-		:color="props.type"
-		:border="props.variant === 'tonal' ? 'start' : false"
+	<div
+		class="sy-alert"
+		role="alert"
 	>
-		<template #prepend>
-			<VIcon
-				class="alert-icon"
-				size="1.5rem"
-			>
-				<slot name="icon">
-					{{ prependIcon }}
-				</slot>
-			</VIcon>
-		</template>
-
-		<template #default>
-			<slot />
-		</template>
-
-		<template
-			v-if="props.closable"
-			#close
+		<VAlert
+			v-model="show"
+			v-bind="attrs"
+			:type="props.type"
+			:closable="props.closable"
+			:variant="props.variant"
+			:class="`alert alert--${props.type}`"
+			:color="props.type"
+			:border="props.variant === 'tonal' ? 'start' : false"
 		>
-			<VBtn
-				:color="props.variant === 'outlined' ? undefined : 'primary'"
-				:ripple="false"
-				variant="text"
-				width="auto"
-				height="100%"
-				class="alert-close-btn"
-				@click="dismissAlert"
-			>
+			<template #prepend>
 				<VIcon
-					size="small"
+					ref="alertIcon"
+					class="alert-icon"
+					size="1.5rem"
+					role="presentation"
 				>
-					{{ mdiClose }}
+					<slot name="icon">
+						{{ prependIcon }}
+					</slot>
 				</VIcon>
+			</template>
 
-				<span>
-					{{ locales.close }}
-				</span>
-			</VBtn>
-		</template>
-	</VAlert>
+			<template #default>
+				<slot />
+			</template>
+
+			<template
+				v-if="props.closable"
+				#close
+			>
+				<VBtn
+					:color="props.variant === 'outlined' ? undefined : 'primary'"
+					:ripple="false"
+					variant="text"
+					width="auto"
+					height="100%"
+					class="alert-close-btn"
+					@click="dismissAlert"
+				>
+					<VIcon
+						size="small"
+					>
+						{{ mdiClose }}
+					</VIcon>
+
+					<span>
+						{{ locales.close }}
+					</span>
+				</VBtn>
+			</template>
+		</VAlert>
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -128,17 +144,24 @@
 .alert-close-btn {
 	cursor: pointer;
 	line-height: 0;
-
-	.v-btn__overlay {
-		display: none;
-	}
-}
-
-.v-btn {
 	text-transform: none;
 	font-weight: bold;
 	font-size: 0.75rem;
 	letter-spacing: normal;
+
+	&:focus-visible {
+		outline: solid 2px black !important;
+		outline-color: var(--v-primary-base) !important;
+		outline-offset: 2px !important;
+
+		&::after {
+			visibility: hidden;
+		}
+	}
+
+	.v-btn__overlay {
+		display: none;
+	}
 }
 
 @media screen and (width <= 440px) {
@@ -253,5 +276,19 @@
 			'icon-bg': tokens.$colors-background-info-subdued,
 		)
 	);
+}
+
+.v-alert.v-theme--dark {
+	&.v-alert--variant-outlined {
+		background-color: tokens.$white-base !important;
+	}
+
+	.alert-close-btn {
+		color: black !important;
+
+		&:focus-visible {
+			outline-color: black !important;
+		}
+	}
 }
 </style>

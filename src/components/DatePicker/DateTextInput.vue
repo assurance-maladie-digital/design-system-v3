@@ -2,10 +2,12 @@
 	import { ref, computed, watch, onMounted } from 'vue'
 	import { nextTick } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import { useDateFormat } from '@/composables/date/useDateFormat'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import dayjs from 'dayjs'
+	import customParseFormat from 'dayjs/plugin/customParseFormat'
 
-	const { parseDate } = useDateFormat()
+	// Initialiser les plugins dayjs
+	dayjs.extend(customParseFormat)
 
 	type DateValue = string | null
 
@@ -27,6 +29,7 @@
 		displayPrependIcon?: boolean
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
+		bgColor?: string
 	}>(), {
 		modelValue: null,
 		placeholder: 'Sélectionner une date',
@@ -45,6 +48,7 @@
 		displayPrependIcon: true,
 		disableErrorHandling: false,
 		showSuccessMessages: true,
+		bgColor: undefined,
 	})
 
 	const emit = defineEmits<{
@@ -74,101 +78,37 @@
 	const isFocused = ref(false)
 	const hasInteracted = ref(false)
 
-	const formatDateToString = (date: Date, format: string): string => {
-		const day = date.getDate().toString().padStart(2, '0')
-		const month = (date.getMonth() + 1).toString().padStart(2, '0')
-		const year = date.getFullYear()
-		const shortYear = (year % 100).toString().padStart(2, '0')
-
-		const separator = format.includes('/') ? '/' : format.includes('-') ? '-' : '.'
-		const parts: string[] = []
-
-		format.split(/[-/.]/).forEach((part) => {
-			switch (part.toUpperCase()) {
-			case 'DD':
-				parts.push(day)
-				break
-			case 'MM':
-				parts.push(month)
-				break
-			case 'YY':
-				parts.push(shortYear)
-				break
-			case 'YYYY':
-				parts.push(year.toString())
-				break
-			}
-		})
-
-		return parts.join(separator)
-	}
-
 	const formatDateInput = (input: string, cursorPosition?: number): { formatted: string, cursorPos: number } => {
-		const separator = props.format.includes('/') ? '/' : props.format.includes('-') ? '-' : '.'
+		const cleanedInput = input.replace(/[^\d]/g, '')
+		let cursor = cursorPosition || 0
+		let result = ''
 
-		const formatParts = props.format.split(/[/.-]/)
-		const dayIndex = formatParts.findIndex(part => part.toUpperCase().includes('D'))
-		const monthIndex = formatParts.findIndex(part => part.toUpperCase().includes('M'))
-		const yearIndex = formatParts.findIndex(part => part.toUpperCase().includes('Y'))
-
-		const parts = Array(3).fill('__')
-		parts[yearIndex] = '____'
-		const mask = parts.join(separator)
-
-		let result = mask
-		let pos = cursorPosition || 0
-
-		let cleanInput = input
-
-		if (input.includes(separator)) {
-			const parts = input.split(separator)
-			cleanInput = parts.map(part => part.replace(/\D/g, '')).join(separator)
-		}
-		else {
-			cleanInput = input.replace(/\D/g, '')
-		}
-
-		if (cleanInput.includes(separator)) {
-			const parts = cleanInput.split(separator)
-			const formattedParts = Array(3).fill('__')
-			formattedParts[yearIndex] = (parts[yearIndex] || '').padEnd(4, '_')
-			formattedParts[monthIndex] = (parts[monthIndex] || '').padEnd(2, '_')
-			formattedParts[dayIndex] = (parts[dayIndex] || '').padEnd(2, '_')
-
-			result = formattedParts.join(separator)
-		}
-		else {
-			const formatOrder = [dayIndex, monthIndex, yearIndex]
-			let currentDigit = 0
-
-			for (let partIndex = 0; currentDigit < Math.min(cleanInput.length, 8); partIndex++) {
-				const formatPartIndex = formatOrder[partIndex % 3]
-				const isYear = formatParts[formatPartIndex].toUpperCase().includes('Y')
-				const partLength = isYear ? 4 : 2
-				const targetStartPos = formatPartIndex * 3
-
-				for (let j = 0; j < partLength && currentDigit < cleanInput.length; j++) {
-					const digit = cleanInput[currentDigit]
-					const targetPos = targetStartPos + j
-					result = result.substring(0, targetPos) + digit + result.substring(targetPos + 1)
-					currentDigit++
+		let i = 0
+		for (const char of props.format) {
+			if (['D', 'M', 'Y'].includes(char.toUpperCase())) {
+				if (cleanedInput[i]) {
+					result += cleanedInput[i]
+					i++
+				}
+				else {
+					result += '_'
 				}
 			}
+			else {
+				result += char
+			}
 		}
 
-		if (cursorPosition !== undefined) {
-			pos = cursorPosition
-			if (mask[pos] === separator) {
-				pos++
-			}
+		const nextChartIsSeparator = props.format[cursor] === result[cursor]
+		if (nextChartIsSeparator) {
+			cursor++
 		}
 
 		return {
 			formatted: result,
-			cursorPos: pos,
+			cursorPos: cursor,
 		}
 	}
-
 	const cleanDateString = (input: string): string => {
 		return input.replace(/[^\d/.-]/g, '')
 	}
@@ -184,20 +124,17 @@
 		if (!/^[\d/.-]*$/.test(dateStr)) {
 			return {
 				isValid: props.disableErrorHandling,
-				message: props.disableErrorHandling ? '' : 'Format de date invalide',
+				message: props.disableErrorHandling ? '' : `Format de date invalide (${props.format})`,
 			}
 		}
 
-		let date = parseDate(dateStr, props.format)
+		const isValid = dayjs(dateStr, props.format, true).isValid()
+			|| (props.dateFormatReturn ? dayjs(dateStr, props.dateFormatReturn, true).isValid() : false)
 
-		if (!date && props.dateFormatReturn) {
-			date = parseDate(dateStr, props.dateFormatReturn)
-		}
-
-		if (!date) {
+		if (!isValid) {
 			return {
 				isValid: props.disableErrorHandling,
-				message: props.disableErrorHandling ? '' : 'Format de date invalide',
+				message: props.disableErrorHandling ? '' : `Format de date invalide (${props.format})`,
 			}
 		}
 
@@ -253,9 +190,17 @@
 		return undefined
 	})
 
-	const handleKeydown = (event: KeyboardEvent) => {
-		if (event.ctrlKey || event.metaKey) {
-			return
+	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
+		// the cursor have to be set to the previous character if the user delete a non digit character
+		if (event.key === 'Backspace') {
+			const input = event.target
+			if (!input.selectionStart || input.selectionStart !== input.selectionEnd) {
+				return
+			}
+			const charBeforeCursor = input.value[input.selectionStart - 1]
+			if (!/\d/.test(charBeforeCursor)) {
+				input.setSelectionRange(input.selectionStart - 1, input.selectionStart - 1)
+			}
 		}
 	}
 
@@ -305,10 +250,13 @@
 			if (isDateComplete) {
 				const validation = validateDateFormat(formatted)
 				if (validation.isValid) {
-					const date = parseDate(formatted, props.format)
+					const date = dayjs(formatted, props.format, true).isValid()
+						? dayjs(formatted, props.format).toDate()
+						: null
+
 					if (date) {
 						const formattedDate = props.dateFormatReturn
-							? formatDateToString(date, props.dateFormatReturn)
+							? dayjs(date).format(props.dateFormatReturn)
 							: formatted
 						await nextTick()
 						emit('update:model-value', formattedDate)
@@ -334,14 +282,17 @@
 			return
 		}
 
-		const date = parseDate(newValue, props.format)
+		const date = dayjs(newValue, props.format, true).isValid()
+			? dayjs(newValue, props.format).toDate()
+			: null
+
 		if (date) {
 			if (props.dateFormatReturn && props.dateFormatReturn !== props.format) {
-				const formattedForReturn = formatDateToString(date, props.dateFormatReturn)
+				const formattedForReturn = dayjs(date).format(props.dateFormatReturn)
 				emit('update:model-value', formattedForReturn)
 			}
 
-			inputValue.value = formatDateToString(date, props.format)
+			inputValue.value = dayjs(date).format(props.format)
 			validateRules(inputValue.value)
 		}
 		else {
@@ -363,10 +314,13 @@
 		if (inputValue.value) {
 			const validation = validateDateFormat(inputValue.value)
 			if (validation.isValid) {
-				const date = parseDate(inputValue.value, props.format)
+				const date = dayjs(inputValue.value, props.format, true).isValid()
+					? dayjs(inputValue.value, props.format).toDate()
+					: null
+
 				if (date) {
 					const formattedDate = props.dateFormatReturn
-						? formatDateToString(date, props.dateFormatReturn)
+						? dayjs(date).format(props.dateFormatReturn)
 						: inputValue.value
 					emit('update:model-value', formattedDate)
 				}
@@ -407,14 +361,17 @@
 
 	defineExpose({
 		validateOnSubmit,
-		focus: () => {
-			const input = document.querySelector('input')
+		focus() {
+			// Utiliser un sélecteur plus spécifique pour cibler l'input principal
+			// SyTextField peut contenir plusieurs inputs, donc on cible le premier qui n'est pas caché
+			const input = inputRef.value?.$el.querySelector('input:not([type="hidden"])')
 			if (input) {
 				input.focus()
 			}
 		},
-		blur: () => {
-			const input = document.querySelector('input')
+		blur() {
+			// Utiliser un sélecteur plus spécifique pour cibler l'input principal
+			const input = inputRef.value?.$el.querySelector('input:not([type="hidden"])')
 			if (input) {
 				input.blur()
 			}
@@ -426,51 +383,46 @@
 			return
 		}
 
-		const date = parseDate(props.modelValue, props.format)
-		if (date) {
-			if (props.dateFormatReturn && props.dateFormatReturn !== props.format) {
-				const formattedForReturn = formatDateToString(date, props.dateFormatReturn)
-				emit('update:model-value', formattedForReturn)
-			}
+		const date = dayjs(props.modelValue, props.format, true).isValid()
+			? dayjs(props.modelValue, props.format).toDate()
+			: null
 
-			inputValue.value = formatDateToString(date, props.format)
-			validateRules(inputValue.value)
+		if (date) {
+			inputValue.value = dayjs(date).format(props.format)
 		}
 		else {
 			inputValue.value = props.modelValue
-			validateRules(props.modelValue)
 		}
 	})
-
 </script>
 
 <template>
 	<SyTextField
 		ref="inputRef"
 		v-model="inputValue"
-		:placeholder="placeholder"
-		:label="label"
-		:error-messages="errorMessages"
-		:warning-messages="warningMessages"
-		:success-messages="showSuccessMessages ? successMessages : []"
-		:is-on-error="isOnError"
-		:disabled="disabled"
-		:readonly="readonly"
-		:display-icon="displayIcon"
-		:display-append-icon="displayAppendIcon"
-		:no-icon="noIcon"
-		:prepend-icon="props.displayPrependIcon && !props.displayAppendIcon ? 'calendar' : undefined"
-		:append-icon="props.displayAppendIcon ? 'calendar' : undefined"
+		:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
 		:append-inner-icon="getIcon"
-		:variant-style="isOutlined ? 'outlined' : 'filled'"
 		:class="{
 			'error-field': isOnError,
 			'warning-field': isOnWarning,
 			'success-field': isOnSuccess
 		}"
-		@keydown="handleKeydown"
+		:disabled="props.disabled"
+		:error-messages="errorMessages"
+		:label="props.label || props.placeholder"
+		:no-icon="props.noIcon"
+		:prepend-icon="displayIcon && displayPrependIcon ? 'calendar' : undefined"
+		:readonly="props.readonly"
+		:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
+		:warning-messages="warningMessages"
+		:success-messages="props.showSuccessMessages ? successMessages : []"
+		:bg-color="props.bgColor"
+		color="primary"
+		is-clearable
+		title="Date text input"
 		@focus="handleFocus"
 		@blur="handleBlur"
+		@keydown="handleKeydown"
 		@paste="handlePaste"
 	/>
 </template>
