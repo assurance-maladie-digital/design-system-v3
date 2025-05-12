@@ -208,7 +208,8 @@
 	display: flex;
 	align-items: center;
 }
+
 :deep(.v-card-text > .diacritic-dialog-content) {
-  padding: 0 !important;
+	padding: 0 !important;
 }
 </style>
