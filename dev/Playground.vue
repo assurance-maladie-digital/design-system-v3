@@ -1,5 +1,5 @@
 <script setup>
-	import DiacritiquePicker from '@/components/DiacriticPicker/DiacriticPicker.vue'
+	import DiacriticPicker from '@/components/DiacriticPicker/DiacriticPicker.vue'
 	import { ref } from 'vue'
 
 	const nom = ref('')
@@ -8,7 +8,7 @@
 
 <template>
 	<div class="pa-4">
-		<DiacritiquePicker>
+		<DiacriticPicker>
 			<v-text-field
 				id="diacritique-input"
 				v-model="nom"
@@ -16,12 +16,12 @@
 				color="primary"
 				variant="outlined"
 			/>
-		</DiacritiquePicker>
+		</DiacriticPicker>
 		{{ nom }}
 
 		<br><br>
 
-		<DiacritiquePicker>
+		<DiacriticPicker>
 			<v-textarea
 				id="diacritique-input"
 				v-model="adresse"
@@ -30,7 +30,7 @@
 				variant="outlined"
 				auto-grow
 			/>
-		</DiacritiquePicker>
+		</DiacriticPicker>
 		{{ adresse }}
 	</div>
 </template>

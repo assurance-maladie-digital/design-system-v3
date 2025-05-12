@@ -161,8 +161,13 @@
 			class="diacritic-dialog"
 			role="dialog"
 		>
-			<VCard @click:outside="dialog = false">
-				<VCardTitle>Caractères diacritiques</VCardTitle>
+			<VCard
+          color="grey-lighten-2"
+          @click:outside="dialog = false"
+      >
+				<VCardTitle class="pb-0 text-center">
+					Caractères diacritiques
+				</VCardTitle>
 				<VCardText>
 					<div class="diacritic-dialog-content">
 						<div
@@ -181,7 +186,7 @@
 							</VBtn>
 						</div>
 						<div
-							class="d-flex flex-wrap mt-2"
+							class="d-flex flex-wrap"
 							role="group"
 							aria-label="Caractères majuscules"
 						>
@@ -204,12 +209,23 @@
 
 <style scoped lang="scss">
 .diacritic-wrapper {
-	width: 100%;
-	display: flex;
-	align-items: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0;
 }
 
-:deep(.v-card-text > .diacritic-dialog-content) {
-	padding: 0 !important;
+:deep(.diacritic-dialog-content) {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+:deep(.diacritic-dialog-content > div[role="group"]) {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
