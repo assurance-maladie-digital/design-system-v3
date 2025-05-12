@@ -1,19 +1,17 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproBtn from '../AmeliproBtn.vue'
+import AmeliproDropdownMenuBtn from '../AmeliproDropdownMenuBtn.vue'
 import { vuetify } from '@tests/unit/setup'
 
-describe('AmeliproBtn', () => {
+describe('AmeliproDropdownMenuBtn', () => {
 	it('render correctly', async () => {
-		const wrapper = mount(AmeliproBtn, {
+		const wrapper = mount(AmeliproDropdownMenuBtn, {
 			global: {
 				plugins: [vuetify],
 			},
 			props: {
+				label: 'label du bouton',
 				uniqueId: 'my-btn-id',
-			},
-			slots: {
-				default: 'My Button',
 			},
 		})
 
