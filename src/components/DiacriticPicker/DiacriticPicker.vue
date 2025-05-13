@@ -47,7 +47,7 @@
 	}))
 
 	function updateInputMessageHeight() {
-		const element = document.querySelector<HTMLElement>('#input-messages')
+		const element = document.querySelector<HTMLElement>('.v-input__details')
 		if (element) {
 			inputMessageHeight.value = element.getBoundingClientRect().height
 		}

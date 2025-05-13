@@ -47,7 +47,6 @@ export const Default: Story = {
 				code: `<template>
   <DiacriticPicker v-model="nom">
     <v-text-field
-      id="diacritic-input"
       v-model="nom"
       label="Nom avec accents"
       color="primary"
@@ -107,7 +106,6 @@ export const Default: Story = {
 						:vuetify-options="args.vuetifyOptions"
 					>
 						<v-text-field
-							id="diacritic-input"
 							v-model="value"
 							label="Nom avec accents"
 							color="primary"
@@ -129,7 +127,6 @@ export const WithTextarea: Story = {
 				code: `<template>
   <DiacriticPicker v-model="adresse">
     <v-textarea
-      id="diacritic-input"
       v-model="adresse"
       label="Adresse"
       color="primary"
@@ -190,7 +187,6 @@ export const WithTextarea: Story = {
 						:vuetify-options="args.vuetifyOptions"
 					>
 						<v-textarea
-							id="diacritic-input"
 							v-model="value"
 							label="Adresse"
 							color="primary"
@@ -213,7 +209,6 @@ export const CustomDiacritics: Story = {
 				code: `<template>
   <DiacriticPicker v-model="text" :diacritics="caracteres">
     <v-text-field
-      id="diacritic-input"
       v-model="text"
       label="Texte avec accents personnalisés"
       color="primary"
@@ -266,7 +261,6 @@ export const CustomDiacritics: Story = {
 						:vuetify-options="args.vuetifyOptions"
 					>
 						<v-text-field
-							id="diacritic-input"
 							v-model="value"
 							label="Texte avec accents personnalisés"
 							color="primary"
@@ -288,7 +282,6 @@ export const CustomButtonTitle: Story = {
 				code: `<template>
   <DiacriticPicker v-model="text" btn-title="àéç">
     <v-text-field
-      id="diacritic-input"
       v-model="text"
       label="Texte avec bouton personnalisé"
       color="primary"
@@ -348,7 +341,6 @@ export const CustomButtonTitle: Story = {
 						:vuetify-options="args.vuetifyOptions"
 					>
 						<v-text-field
-							id="diacritic-input"
 							v-model="value"
 							label="Texte avec bouton personnalisé"
 							color="primary"
@@ -383,7 +375,6 @@ export const Customization: Story = {
     }"
   >
     <v-text-field
-      id="diacritic-input"
       v-model="text"
       label="Options Vuetify personnalisées"
       color="secondary"
@@ -443,7 +434,6 @@ export const Customization: Story = {
 						:vuetify-options="args.vuetifyOptions"
 					>
 						<v-text-field
-							id="diacritic-input"
 							v-model="value"
 							label="Options Vuetify personnalisées"
 							color="secondary"
