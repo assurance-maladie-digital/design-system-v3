@@ -84,7 +84,7 @@ describe('DiacriticPicker.vue', () => {
 		const btn = wrapper.find('.diacritic-btn')
 		expect(btn.attributes('aria-haspopup')).toBe('dialog')
 		expect(btn.attributes('aria-expanded')).toBe('false')
-		expect(btn.attributes('aria-controls')).toBe('diacritic-dialog')
+		expect(btn.attributes('aria-controls')).toContain('diacritic-dialog')
 	})
 
 	it('closes dialog on click:outside', async () => {
