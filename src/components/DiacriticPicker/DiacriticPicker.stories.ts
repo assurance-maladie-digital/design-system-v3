@@ -68,6 +68,7 @@ export const Default: Story = {
 		],
 	},
 	args: {
+		modelValue: '',
 		btnTitle: 'éÉ',
 		diacritics: [
 			'é', 'è', 'ê', 'ë',
@@ -150,6 +151,7 @@ export const WithTextarea: Story = {
 		],
 	},
 	args: {
+		modelValue: '',
 		btnTitle: 'éÉ',
 		diacritics: [
 			'é', 'è', 'ê', 'ë',
@@ -233,6 +235,7 @@ export const CustomDiacritics: Story = {
 		],
 	},
 	args: {
+		modelValue: '',
 		btnTitle: 'éÉ',
 		diacritics: ['é', 'è', 'ê', 'à', 'ç', 'ù'],
 		vuetifyOptions: {
@@ -306,6 +309,7 @@ export const CustomButtonTitle: Story = {
 		],
 	},
 	args: {
+		modelValue: '',
 		btnTitle: 'àéç',
 		diacritics: [
 			'é', 'è', 'ê', 'ë',
@@ -400,6 +404,7 @@ export const CustomVuetifyOptions: Story = {
 		],
 	},
 	args: {
+		modelValue: '',
 		btnTitle: 'éÉ',
 		diacritics: [
 			'é', 'è', 'ê', 'ë',
