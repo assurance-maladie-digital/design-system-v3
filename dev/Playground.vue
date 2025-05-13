@@ -8,7 +8,7 @@
 
 <template>
 	<div class="pa-4">
-		<DiacriticPicker>
+		<DiacriticPicker v-model="nom">
 			<v-text-field
 				id="diacritique-input"
 				v-model="nom"
@@ -21,7 +21,7 @@
 
 		<br><br>
 
-		<DiacriticPicker>
+		<DiacriticPicker v-model="adresse">
 			<v-textarea
 				id="diacritique-input"
 				v-model="adresse"

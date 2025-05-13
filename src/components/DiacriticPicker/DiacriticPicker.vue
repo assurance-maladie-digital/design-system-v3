@@ -5,9 +5,11 @@
 	import { VBtn, VCard, VCardText, VCardTitle, VDialog } from 'vuetify/components'
 
 	const props = withDefaults(defineProps<{
+		modelValue: string
 		btnTitle?: string
 		diacritics?: string[]
 	} & CustomizableOptions>(), {
+		modelValue: '',
 		btnTitle: 'éÉ',
 		diacritics: () => [
 			'é', 'è', 'ê', 'ë',
@@ -19,6 +21,10 @@
 			'ç',
 		],
 	})
+
+	const emit = defineEmits<{
+		(e: 'update:modelValue', value: string): void
+	}>()
 
 	const wrapperRef = ref<HTMLElement | null>(null)
 	const dialog = ref(false)
@@ -66,10 +72,10 @@
 		const el = getNativeInput()
 		if (!el) return
 
-		const pos = el.selectionStart ?? 0
-		const value = el.value
-		el.value = value.slice(0, pos) + char + value.slice(pos)
-		el.dispatchEvent(new Event('input'))
+		const pos = el.selectionStart ?? props.modelValue.length
+		const newValue = props.modelValue.slice(0, pos) + char + props.modelValue.slice(pos)
+
+		emit('update:modelValue', newValue)
 
 		nextTick(() => {
 			el.focus()
@@ -86,12 +92,13 @@
 		if (!el) return
 
 		const pos = el.selectionStart ?? 0
-		const value = el.value
-		const prevChar = value[pos - 1]
+		const prevChar = props.modelValue[pos - 1]
 		if (!prevChar) return
 
 		const isUpper = prevChar === prevChar.toUpperCase()
 		const baseChar = prevChar.toLowerCase()
+
+		// Find all variants matching the base character
 		const list = props.diacritics.filter(c =>
 			c.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === baseChar,
 		)
@@ -107,9 +114,14 @@
 			? list[(currentIndex + 1) % list.length].toUpperCase()
 			: list[(currentIndex + 1) % list.length]
 
-		el.value = value.slice(0, pos - 1) + nextChar + value.slice(pos)
-		el.dispatchEvent(new Event('input'))
+		// Compose new string
+		const newValue
+			= props.modelValue.slice(0, pos - 1) + nextChar + props.modelValue.slice(pos)
 
+		// Emit value for v-model update
+		emit('update:modelValue', newValue)
+
+		// Set caret back to position
 		nextTick(() => {
 			el.setSelectionRange(pos, pos)
 		})
@@ -162,9 +174,9 @@
 			role="dialog"
 		>
 			<VCard
-          color="grey-lighten-2"
-          @click:outside="dialog = false"
-      >
+				color="grey-lighten-2"
+				@click:outside="dialog = false"
+			>
 				<VCardTitle class="pb-0 text-center">
 					Caractères diacritiques
 				</VCardTitle>
@@ -209,23 +221,23 @@
 
 <style scoped lang="scss">
 .diacritic-wrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding: 0;
 }
 
 :deep(.diacritic-dialog-content) {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
 }
 
-:deep(.diacritic-dialog-content > div[role="group"]) {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+:deep(.diacritic-dialog-content > div[role='group']) {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 </style>
