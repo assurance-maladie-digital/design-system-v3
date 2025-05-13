@@ -8,6 +8,7 @@
 		modelValue: string
 		btnTitle?: string
 		diacritics?: string[]
+		inputAriaLabel?: string
 	} & CustomizableOptions>(), {
 		modelValue: '',
 		btnTitle: 'éÉ',
@@ -20,6 +21,7 @@
 			'ÿ',
 			'ç',
 		],
+		inputAriaLabel: 'Champ de saisie avec diacritiques',
 	})
 
 	const emit = defineEmits<{
@@ -31,9 +33,12 @@
 
 	const options = useCustomizableOptions(config, props)
 
-	const inputId = 'diacritique-input'
-	const buttonId = 'diacritique-button'
-	const dialogId = 'diacritique-dialog'
+	const uniqueId = Math.random().toString(36).substr(2, 9)
+
+	const labelId = `diacritic-label-${uniqueId}`
+	const inputId = `diacritic-input-${uniqueId}`
+	const buttonId = `diacritic-button-${uniqueId}`
+	const dialogId = `diacritic-dialog-${uniqueId}`
 
 	const inputMessageHeight = ref(0)
 
@@ -42,7 +47,7 @@
 	}))
 
 	function updateInputMessageHeight() {
-		const element = document.querySelector<HTMLElement>('#diacritique-input-messages')
+		const element = document.querySelector<HTMLElement>('#input-messages')
 		if (element) {
 			inputMessageHeight.value = element.getBoundingClientRect().height
 		}
@@ -143,6 +148,8 @@
 			ref="wrapperRef"
 			class="input-slot flex-grow-1"
 			role="textbox"
+			:aria-label="inputAriaLabel"
+			:title="labelId"
 			tabindex="0"
 			@keydown="handleKeydown"
 		>
@@ -153,6 +160,7 @@
 			:id="buttonId"
 			v-bind="options.btn"
 			icon
+			:aria-label="`${props.btnTitle}, caractères accentués`"
 			:aria-controls="dialogId"
 			:aria-haspopup="'dialog'"
 			:aria-expanded="dialog.toString()"
@@ -164,12 +172,13 @@
 		</VBtn>
 
 		<VDialog
+			:id="dialogId"
 			v-model="dialog"
+			:aria-labelledby="buttonId"
 			v-bind="options.dialog"
 			scrollable
 			:retain-focus="false"
 			aria-modal="true"
-			:aria-labelledby="buttonId"
 			class="diacritic-dialog"
 			role="dialog"
 		>

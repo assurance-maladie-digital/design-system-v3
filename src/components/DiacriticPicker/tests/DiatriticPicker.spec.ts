@@ -17,7 +17,7 @@ describe('DiacriticPicker.vue', () => {
 		wrapper = mount(DiacriticPicker, {
 			props: defaultProps,
 			slots: {
-				default: `<input id="diacritique-input" type="text" value="a" />`,
+				default: `<input id="diacritic-input-${Math.random().toString(36).substr(2, 9)}" type="text" value="a" />`,
 			},
 			global: {
 				plugins: [vuetify],
@@ -59,7 +59,7 @@ describe('DiacriticPicker.vue', () => {
 				default: defineComponent({
 					setup() {
 						return () => h('input', {
-							id: 'diacritique-input',
+							id: 'diacritic-input',
 							value: model.value,
 						})
 					},
@@ -84,7 +84,7 @@ describe('DiacriticPicker.vue', () => {
 		const btn = wrapper.find('.diacritic-btn')
 		expect(btn.attributes('aria-haspopup')).toBe('dialog')
 		expect(btn.attributes('aria-expanded')).toBe('false')
-		expect(btn.attributes('aria-controls')).toBe('diacritique-dialog')
+		expect(btn.attributes('aria-controls')).toBe('diacritic-dialog')
 	})
 
 	it('closes dialog on click:outside', async () => {
