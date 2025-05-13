@@ -23,6 +23,7 @@
 		customKeyRules?: ValidationRule[]
 		customNumberWarningRules?: ValidationRule[]
 		customKeyWarningRules?: ValidationRule[]
+		customRulesPrecedence?: boolean
 		showSuccessMessages?: boolean
 		width?: string
 		bgColor?: string
@@ -56,6 +57,7 @@
 		customKeyRules: () => [],
 		customNumberWarningRules: () => [],
 		customKeyWarningRules: () => [],
+		customRulesPrecedence: false,
 		showSuccessMessages: true,
 		width: '100%',
 		bgColor: undefined,
@@ -176,6 +178,15 @@
 			})
 		}
 
+		// Ajout des règles personnalisées avec prévalence si demandé
+		if (props.customRulesPrecedence && props.customNumberRules && props.customNumberRules.length > 0) {
+			rules.push(...props.customNumberRules.map(rule => ({
+				...rule,
+				options: rule.options || {},
+			})))
+		}
+
+		// Règle de validation standard du NIR
 		rules.push({
 			type: 'custom',
 			options: {
@@ -194,8 +205,8 @@
 			},
 		})
 
-		// Ajout des règles personnalisées
-		if (props.customNumberRules) {
+		// Ajout des règles personnalisées sans prévalence (comportement par défaut)
+		if (!props.customRulesPrecedence && props.customNumberRules && props.customNumberRules.length > 0) {
 			rules.push(...props.customNumberRules.map(rule => ({
 				...rule,
 				options: rule.options || {},

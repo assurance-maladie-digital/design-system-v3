@@ -608,6 +608,177 @@ ne sont pas nécessaires dans certains contextes.
 	}),
 }
 
+export const CustomPatternRules: Story = {
+	args: {
+		...Default.args,
+		customRulesPrecedence: true,
+		customNumberRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return true
+
+						// Supprimer les espaces pour la validation
+						const valueWithoutSpaces = value.replace(/\s/g, '')
+
+						// Vérifier la longueur
+						if (valueWithoutSpaces.length !== 13) {
+							return 'Le numéro de sécurité sociale doit contenir 13 caractères.'
+						}
+
+						// Vérifier le pattern selon les règles spécifiques du NIR français
+						// Rang 1: sexe (1 pour homme, 2 pour femme)
+						if (!/^[12]/.test(valueWithoutSpaces)) {
+							return 'Le premier chiffre doit être 1 (homme) ou 2 (femme).'
+						}
+
+						// Rangs 2-3: deux derniers chiffres de l'année de naissance
+						const anneeNaissance = valueWithoutSpaces.substring(1, 3)
+						if (!/^[0-9]{2}$/.test(anneeNaissance)) {
+							return 'Les chiffres 2 et 3 doivent représenter l\'année de naissance.'
+						}
+
+						// Rangs 4-5: mois de naissance (01-12)
+						const moisNaissance = valueWithoutSpaces.substring(3, 5)
+						if (!/^(0[1-9]|1[0-2])$/.test(moisNaissance)) {
+							return 'Les chiffres 4 et 5 doivent représenter un mois valide (01-12).'
+						}
+
+						// Rangs 6-7: département de naissance
+						const departement = valueWithoutSpaces.substring(5, 7)
+						if (!((/^[0-9]{2}$/.test(departement) && departement !== '00')
+							|| departement === '2A' || departement === '2B' || departement === '99')) {
+							return 'Les chiffres 6 et 7 doivent représenter un département valide.'
+						}
+
+						// Rangs 8-10: code commune ou pays
+						const codeCommune = valueWithoutSpaces.substring(7, 10)
+						if (!/^[0-9]{3}$/.test(codeCommune)) {
+							return 'Les chiffres 8 à 10 doivent représenter un code commune ou pays valide.'
+						}
+
+						// Rangs 11-13: numéro d'ordre
+						const numeroOrdre = valueWithoutSpaces.substring(10, 13)
+						if (!/^[0-9]{3}$/.test(numeroOrdre)) {
+							return 'Les chiffres 11 à 13 doivent représenter un numéro d\'ordre valide.'
+						}
+
+						return true
+					},
+					message: 'Le numéro de sécurité sociale est invalide.',
+					successMessage: 'Le numéro de sécurité sociale est valide.',
+					fieldIdentifier: 'Numéro de sécurité sociale',
+				},
+			},
+		],
+	},
+	parameters: {
+		...Default.parameters,
+		docs: {
+			description: {
+				story: 'Exemple d\'utilisation avec une règle personnalisée qui prend la prévalence sur la validation standard. Cette règle valide le format du NIR selon les règles officielles françaises : 1er chiffre pour le sexe, 2 chiffres pour l\'année de naissance, 2 chiffres pour le mois, 5 chiffres pour le lieu de naissance et 3 chiffres pour le numéro d\'ordre.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="true"
+      :customRulesPrecedence="true"
+      :customNumberRules="[
+        {
+          type: 'custom',
+          options: {
+            validate: (value) => {
+              if (!value) return true;
+              
+              // Supprimer les espaces pour la validation
+              const valueWithoutSpaces = value.replace(/\\s/g, '');
+              
+              // Vérifier la longueur
+              if (valueWithoutSpaces.length !== 13) {
+                return 'Le numéro de sécurité sociale doit contenir 13 caractères.';
+              }
+              
+              // Vérification selon les règles spécifiques du NIR français
+              // Rang 1: sexe (1 pour homme, 2 pour femme)
+              if (!/^[12]/.test(valueWithoutSpaces)) {
+                return 'Le premier chiffre doit être 1 (homme) ou 2 (femme).';
+              }
+
+              // Rangs 2-3: deux derniers chiffres de l'année de naissance
+              if (!/^[12][0-9]{2}/.test(valueWithoutSpaces)) {
+                return 'Les chiffres 2 et 3 doivent représenter l'année de naissance.';
+              }
+
+              // Rangs 4-5: mois de naissance (01-12)
+              const moisNaissance = valueWithoutSpaces.substring(3, 5);
+              if (!/^(0[1-9]|1[0-2])$/.test(moisNaissance)) {
+                return 'Les chiffres 4 et 5 doivent représenter un mois valide (01-12).';
+              }
+
+              // Vérification complète du format
+              const formatComplet = /^[12][0-9]{2}(0[1-9]|1[0-2])[0-9]{8}$/;
+              if (!formatComplet.test(valueWithoutSpaces)) {
+                return 'Le format du numéro de sécurité sociale est invalide.';
+              }
+              
+              return true;
+            },
+            message: 'Le numéro de sécurité sociale est invalide.',
+            successMessage: 'Le numéro de sécurité sociale est valide.',
+            fieldIdentifier: 'Numéro de sécurité sociale',
+          }
+        }
+      ]"
+     />
+    </template>
+    `,
+			},
+		],
+	},
+	render: args => ({
+		components: { NirField },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `
+      <div>
+        <h3>Validation avec pattern personnalisé et prévalence</h3>
+        <p>Cette démonstration utilise une règle personnalisée qui valide le format du NIR selon le pattern suivant :</p>
+        <pre>X XX XX XXX XXX XXX</pre>
+        <p>Où :</p>
+        <ul>
+          <li><strong>X</strong> (rang 1) : sexe (1 pour les hommes, 2 pour les femmes)</li>
+          <li><strong>XX</strong> (rangs 2-3) : deux derniers chiffres de l'année de naissance</li>
+          <li><strong>XX</strong> (rangs 4-5) : mois de naissance (01-12)</li>
+          <li><strong>XXX</strong> (rangs 6-10) : lieu de naissance
+            <ul>
+              <li>Rangs 6-7 : département (99 si étranger, 2A/2B pour la Corse)</li>
+              <li>Rangs 8-10 : code commune ou pays</li>
+            </ul>
+          </li>
+          <li><strong>XXX</strong> (rangs 11-13) : numéro d’ordre</li>
+        </ul>
+        <p>La propriété <code>customRulesPrecedence</code> est définie à <code>true</code> pour que cette règle soit appliquée avant la validation standard.</p>
+        <NirField
+          v-model="value"
+          v-bind="args"
+        />
+        <div class="mt-4">Valeur actuelle : {{ value }}</div>
+      </div>
+    `,
+	}),
+}
+
 export const CustomRules: Story = {
 	args: {
 		...Default.args,
