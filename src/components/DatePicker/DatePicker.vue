@@ -347,8 +347,10 @@
 			return
 		}
 
-		const date = input ? parseDate(input, props.format) : null
-		selectedDates.value = date === null ? null : date
+		if (!props.displayRange) {
+			const date = input ? parseDate(input, props.format) : null
+			selectedDates.value = date === null ? null : date
+		}
 	}
 
 	// Gestionnaire de clic en dehors
