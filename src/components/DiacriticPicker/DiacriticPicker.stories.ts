@@ -83,7 +83,7 @@ export const Default: Story = {
 			btn: {
 				color: 'primary',
 				size: 'small',
-				variant: 'text',
+				variant: 'tonal',
 			},
 			dialog: {
 				maxWidth: 400,
@@ -166,7 +166,7 @@ export const WithTextarea: Story = {
 			btn: {
 				color: 'primary',
 				size: 'small',
-				variant: 'text',
+				variant: 'tonal',
 			},
 			dialog: {
 				maxWidth: 400,
@@ -242,7 +242,7 @@ export const CustomDiacritics: Story = {
 			btn: {
 				color: 'primary',
 				size: 'small',
-				variant: 'text',
+				variant: 'tonal',
 			},
 			dialog: {
 				maxWidth: 400,
@@ -324,7 +324,7 @@ export const CustomButtonTitle: Story = {
 			btn: {
 				color: 'primary',
 				size: 'small',
-				variant: 'text',
+				variant: 'tonal',
 			},
 			dialog: {
 				maxWidth: 400,
@@ -362,7 +362,7 @@ export const CustomButtonTitle: Story = {
 	},
 }
 
-export const CustomVuetifyOptions: Story = {
+export const Customization: Story = {
 	parameters: {
 		sourceCode: [
 			{
