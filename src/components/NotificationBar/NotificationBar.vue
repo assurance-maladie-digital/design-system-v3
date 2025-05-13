@@ -2,7 +2,7 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useNotificationService } from '@/services/NotificationService'
 	import { mdiAlertCircleOutline, mdiAlertOctagonOutline, mdiCheckCircleOutline, mdiClose, mdiInformationOutline } from '@mdi/js'
-	import { computed, getCurrentInstance, ref, useAttrs, watch } from 'vue'
+	import { computed, getCurrentInstance, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import defaultOptions from './config'
 	import { type Notification } from './types'
@@ -111,6 +111,20 @@
 		isNotificationVisible.value = false
 	}
 
+	function closeOnEscape(e: KeyboardEvent) {
+		if (e.key == 'Escape' && notificationQueue.value.length) {
+			showNextNotification()
+		}
+	}
+
+	onMounted(() => {
+		document.addEventListener('keyup', closeOnEscape)
+	})
+
+	onUnmounted(() => {
+		document.removeEventListener('keyup', closeOnEscape)
+	})
+
 	defineExpose({
 		openNotification,
 		showNextNotification,
@@ -144,7 +158,6 @@
 			:min-width="isMobileVersion || isTabletVersion ? 'auto' : undefined"
 			:rounded="props.rounded"
 			:class="[{ 'long-text': hasLongContent }]"
-			@keyup.esc="showNextNotification"
 		>
 			<div class="d-flex align-center ga-2">
 				<VIcon
