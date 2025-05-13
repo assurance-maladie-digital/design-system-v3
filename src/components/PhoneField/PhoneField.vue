@@ -8,6 +8,11 @@
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import {
+		mdiAlertOutline,
+		mdiCheck,
+		mdiInformation,
+	} from '@mdi/js'
 
 	type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
 	type Indicatif = {
@@ -86,8 +91,14 @@
 		})),
 	)
 
+	watch(() => props.readonly, () => {
+		if (onBlur.value && !shouldDisableErrorHandling.value) {
+			const cleanedValue = phoneNumber.value.replace(/\s/g, '')
+			validation.validateField(cleanedValue, validationRules.value)
+		}
+	})
+
 	// Watcher pour initialiser dialCode à partir de props.dialCodeModel
-	// Placé après la définition de dialCodeOptions pour éviter l'erreur d'accès avant initialisation
 	watch(() => props.dialCodeModel, (newVal) => {
 		if (!newVal) {
 			dialCode.value = ''
@@ -150,49 +161,73 @@
 		return rules
 	})
 
-	// Initialisation du composable de validation
+	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling || props.readonly)
+
 	const validation = useValidation({
 		customRules: validationRules.value,
 		showSuccessMessages: true,
 		fieldIdentifier: locales.label,
-		disableErrorHandling: props.disableErrorHandling,
+		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
-	// Computed pour l'affichage des états
 	const hasError = computed(() => validation.hasError.value)
 	const hasWarning = computed(() => validation.hasWarning.value)
 	const hasSuccess = computed(() => validation.hasSuccess.value)
+
+	const iconColor = computed(() => {
+		if (shouldDisableErrorHandling.value) return '#222324'
+		if (hasError.value) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
+		return '#222324'
+	})
 
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
 
 	function validateInputOnBlur() {
-		if (!props.isValidatedOnBlur) return
+		if (!props.isValidatedOnBlur || shouldDisableErrorHandling.value) return
 
 		onBlur.value = true
-		// On nettoie la valeur des espaces avant de la valider
 		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
 		validation.validateField(cleanedValue, validationRules.value)
 	}
 
-	// Mise à jour de la validation lorsque le numéro de téléphone change
 	watch(phoneNumber, (newValue) => {
-		if (!props.isValidatedOnBlur || onBlur.value) {
-			// On nettoie la valeur des espaces avant de la valider
+		if ((!props.isValidatedOnBlur || onBlur.value) && !shouldDisableErrorHandling.value) {
 			const cleanedValue = newValue.replace(/\s/g, '')
 			validation.validateField(cleanedValue, validationRules.value)
 		}
 	})
 
-	// Mise à jour de la validation lorsque les règles changent
 	watch(validationRules, () => {
-		if (onBlur.value) {
-			// On nettoie la valeur des espaces avant de la valider
+		if (onBlur.value && !shouldDisableErrorHandling.value) {
 			const cleanedValue = phoneNumber.value.replace(/\s/g, '')
 			validation.validateField(cleanedValue, validationRules.value)
 		}
 	})
+
+	/**
+	 * Valide le champ lors de la soumission d'un formulaire
+	 * @returns Promise<boolean> - true si le champ est valide, false sinon
+	 */
+	const validateOnSubmit = async (): Promise<boolean> => {
+		if (shouldDisableErrorHandling.value) {
+			return true
+		}
+
+		onBlur.value = true
+
+		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
+		validation.validateField(cleanedValue, validationRules.value)
+
+		if (props.withCountryCode && props.countryCodeRequired && !dialCode.value) {
+			validation.errors.value.push(`Le champ ${locales.indicatifLabel} est requis.`)
+		}
+
+		return !validation.hasError.value
+	}
 
 	defineExpose({
 		computedValue,
@@ -203,24 +238,27 @@
 		phoneNumber,
 		mergedDialCodes,
 		validation,
+		validateOnSubmit,
 	})
 </script>
 
 <template>
 	<div class="phone-field-container">
 		<SySelect
-			v-if="props.withCountryCode"
+			v-if="withCountryCode"
 			v-model="dialCode"
 			:items="dialCodeOptions"
 			:label="locales.indicatifLabel"
 			:outlined="outlinedIndicatif"
-			:required="props.countryCodeRequired"
-			:display-asterisk="props.displayAsterisk"
-			:disable-error-handling="props.disableErrorHandling"
+			:required="countryCodeRequired"
+			:error="hasError"
+			:error-messages="errors[1]"
+			:display-asterisk="displayAsterisk"
+			:disable-error-handling="shouldDisableErrorHandling"
 			:return-object="true"
-			:bg-color="props.bgColor"
-			:readonly="props.readonly"
-			:disabled="props.disabled"
+			:bg-color="bgColor"
+			:readonly="readonly"
+			:disabled="disabled"
 			class="custom-select"
 			text-key="displayText"
 			value-key="code"
@@ -231,16 +269,16 @@
 			:counter="counter"
 			:counter-value="(value: string) => value.replace(/\s/g, '').length"
 			:label="locales.label"
-			:required="props.required"
+			:required="required"
 			:error="hasError"
 			:error-messages="errors"
 			:warning-messages="warnings"
 			:success-messages="successes"
 			:variant="outlined ? 'outlined' : 'underlined'"
-			:display-asterisk="props.displayAsterisk"
-			:readonly="props.readonly"
-			:bg-color="props.bgColor"
-			:disabled="props.disabled"
+			:display-asterisk="displayAsterisk"
+			:readonly="readonly"
+			:bg-color="bgColor"
+			:disabled="disabled"
 			:class="{
 				'phone-field': true,
 				'error-field': hasError,
@@ -252,12 +290,32 @@
 			@input="handlePhoneInput"
 		>
 			<template #append-inner>
-				<VIcon
-					class="mr-2"
-					color="#222324"
-				>
-					{{ mdiPhone }}
-				</VIcon>
+				<div class="d-flex align-center">
+					<VIcon
+						v-if="hasError && !shouldDisableErrorHandling"
+						color="error"
+						:icon="mdiInformation"
+						role="presentation"
+					/>
+					<VIcon
+						v-else-if="hasWarning && !shouldDisableErrorHandling"
+						color="warning"
+						:icon="mdiAlertOutline"
+						role="presentation"
+					/>
+					<VIcon
+						v-else-if="hasSuccess && !shouldDisableErrorHandling"
+						color="success"
+						:icon="mdiCheck"
+						role="presentation"
+					/>
+					<VIcon
+						class="ml-2"
+						:color="iconColor"
+					>
+						{{ mdiPhone }}
+					</VIcon>
+				</div>
 			</template>
 		</SyTextField>
 	</div>

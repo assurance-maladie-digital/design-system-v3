@@ -159,8 +159,8 @@
 	})
 
 	const isRequired = computed(() => {
-		// Si la gestion des erreurs est désactivée, on ne considère jamais le champ comme requis
 		if (props.disableErrorHandling) return false
+		if (props.readonly) return
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
@@ -172,8 +172,7 @@
 
 	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
 		if (!newIsOpen) {
-			// Si la gestion des erreurs est désactivée, on ne met jamais hasError à true
-			if (props.disableErrorHandling) {
+			if (props.disableErrorHandling || props.readonly) {
 				hasError.value = false
 			}
 			else {
@@ -186,7 +185,6 @@
 	})
 
 	watch(() => props.errorMessages, (newValue) => {
-		// Si la gestion des erreurs est désactivée, on ne met jamais hasError à true
 		if (!props.disableErrorHandling) {
 			hasError.value = newValue.length > 0
 		}

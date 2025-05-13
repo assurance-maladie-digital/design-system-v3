@@ -86,7 +86,15 @@
 		warningRules: props.customWarningRules,
 		disableErrorHandling: props.disableErrorHandling,
 	})
-	const { errors, warnings, successes, validateField, clearValidation } = validation
+	const { errors, warnings, successes, validateField, clearValidation } = !props.readonly
+		? validation
+		: {
+			errors: ref<string[]>([]),
+			warnings: ref<string[]>([]),
+			successes: ref<string[]>([]),
+			validateField: () => {},
+			clearValidation: () => {},
+		}
 
 	const errorMessages = errors
 	const warningMessages = warnings
@@ -114,6 +122,9 @@
 
 		// Vérifier si le champ est requis et vide
 		if ((forceValidation || !isUpdatingFromInternal.value) && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
+			if (props.readonly) {
+				return
+			}
 			if (shouldDisplayErrors) {
 				errors.value.push('La date est requise.')
 			}

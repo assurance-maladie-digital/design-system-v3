@@ -94,7 +94,6 @@ describe('PasswordField.vue', () => {
 		expect(result).toBe(false)
 		expect(vm.errors).toContain('Le mot de passe est requis')
 
-		// Test avec un mot de passe valide
 		await wrapper.setProps({ modelValue: 'valid-password' })
 		const validResult = vm.validateOnSubmit()
 		expect(validResult).toBe(true)
@@ -114,10 +113,9 @@ describe('PasswordField.vue', () => {
 		})
 
 		const messages = wrapper.findAll('.v-messages__message')
-		expect(messages.length).toBe(1) // SyTextField affiche soit les warnings, soit les succès
+		expect(messages.length).toBe(1)
 		expect(messages[0].text()).toBe('Attention: mot de passe court')
 
-		// Simuler la suppression du warning pour voir le message de succès
 		await wrapper.setProps({ warningMessages: [] })
 		const successMessages = wrapper.findAll('.v-messages__message')
 		expect(successMessages.length).toBe(1)
@@ -157,17 +155,14 @@ describe('PasswordField.vue', () => {
 
 		const vm = wrapper.vm as unknown as PasswordFieldVM
 
-		// Forcer la validation initiale
 		await wrapper.find('input').trigger('blur')
 		expect(vm.errors).toContain('Le mot de passe doit contenir au moins 8 caractères')
 
-		// Mettons un mot de passe plus long mais sans majuscule -> warning
 		await wrapper.setProps({ modelValue: 'testpassword' })
 		await wrapper.find('input').trigger('blur')
 		const messages = wrapper.findAll('.v-messages__message')
 		expect(messages[0].text()).toBe('Le mot de passe pourrait être plus fort')
 
-		// Mettons un mot de passe fort -> succès
 		await wrapper.setProps({ modelValue: 'TestPassword123' })
 		await wrapper.find('input').trigger('blur')
 		const successMessages = wrapper.findAll('.v-messages__message')
@@ -205,19 +200,15 @@ describe('PasswordField.vue', () => {
 			},
 		})
 
-		// Forcer la validation initiale
 		await wrapper.find('input').trigger('blur')
 
-		// État d'erreur
 		const vm = wrapper.vm as unknown as PasswordFieldVM
 		expect(vm.hasError).toBe(true)
 
-		// État d'avertissement
 		await wrapper.setProps({ modelValue: 'testpassword' })
 		await wrapper.find('input').trigger('blur')
 		expect(vm.hasWarning).toBe(true)
 
-		// État de succès
 		await wrapper.setProps({ modelValue: 'TestPassword123' })
 		await wrapper.find('input').trigger('blur')
 		expect(vm.hasSuccess).toBe(true)

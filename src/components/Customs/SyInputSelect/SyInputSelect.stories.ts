@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyInputSelect from './SyInputSelect.vue'
-import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
+import { VBtn, VMenu, VList, VListItem, VListItemTitle, VForm } from 'vuetify/components'
 import { ref } from 'vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 
@@ -444,4 +444,158 @@ export const Info: Story = {
 		}
 	},
 	tags: ['!dev'],
+}
+
+export const FormValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple d\'utilisation du SyInputSelect dans un formulaire avec validation.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <VForm ref="form" @submit.prevent="validateForm">
+    <SyInputSelect
+      ref="selectField"
+      v-model="formData.option"
+      :items="options"
+      label="Option"
+      required
+      display-asterisk
+      :error-messages="errorMessages"
+      class="mb-1"
+    />
+    <VBtn
+      type="submit"
+      color="primary"
+      class="mt-1"
+    >
+      Valider
+    </VBtn>
+  </VForm>
+  <div v-if="formSubmitted" class="mt-1 success--text">
+    Formulaire validé avec succès !
+  </div>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import SyInputSelect from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
+
+const form = ref(null)
+const selectField = ref(null)
+const formData = ref({
+  option: ''
+})
+
+const errorMessages = ref([])
+const formSubmitted = ref(false)
+
+const options = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+]
+
+const validateForm = () => {
+  // Réinitialiser
+  formSubmitted.value = false
+  
+  // Valider le champ avec la méthode validateOnSubmit
+  const isValid = selectField.value.validateOnSubmit()
+  
+  if (!isValid) {
+    return
+  }
+  
+  // Si tout est valide
+  formSubmitted.value = true
+  console.log('Formulaire soumis:', formData.value)
+}
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		label: 'Option',
+		required: true,
+		displayAsterisk: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyInputSelect, VBtn, VForm },
+			setup() {
+				const form = ref(null)
+				const selectField = ref<InstanceType<typeof SyInputSelect> | null>(null)
+				const formData = ref({
+					option: '',
+				})
+
+				const errorMessages = ref([])
+				const formSubmitted = ref(false)
+
+				const validateForm = () => {
+					// Réinitialiser
+					formSubmitted.value = false
+
+					// Vérifier que selectField n'est pas null avant d'appeler validateOnSubmit
+					if (!selectField.value) {
+						console.error('La référence au champ de sélection est nulle')
+						return
+					}
+
+					// Valider le champ avec la méthode validateOnSubmit
+					const isValid = selectField.value.validateOnSubmit()
+
+					if (!isValid) {
+						return
+					}
+
+					// Si tout est valide
+					formSubmitted.value = true
+					console.log('Formulaire soumis:', formData.value)
+				}
+
+				return { args, form, selectField, formData, errorMessages, formSubmitted, validateForm }
+			},
+			template: `
+				<div class="pa-4">
+					<VForm ref="form" @submit.prevent="validateForm">
+						<SyInputSelect
+							ref="selectField"
+							v-model="formData.option"
+							v-bind="args"
+							:error-messages="errorMessages"
+							class="mb-1"
+						/>
+						<VBtn
+							type="submit"
+							color="primary"
+							class="mt-1"
+						>
+							Valider
+						</VBtn>
+					</VForm>
+					<div v-if="formSubmitted" class="mt-1 success--text">
+						Formulaire validé avec succès !
+					</div>
+				</div>
+			`,
+		}
+	},
 }
