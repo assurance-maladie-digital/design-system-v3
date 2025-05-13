@@ -14,12 +14,16 @@
 		textToCopy: (() => string) | string
 		hideTooltip?: boolean
 		tooltipDuration?: number
+		removeSpaces?: boolean
+		separatorsToRemove?: string | string[]
 	}>(), {
 		ariaLabel: 'bouton de copie',
 		ariaOwns: 'copy-btn',
 		textToCopy: '',
 		hideTooltip: false,
 		tooltipDuration: 5000,
+		removeSpaces: false,
+		separatorsToRemove: '',
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -28,10 +32,35 @@
 	const copyIcon = mdiContentCopy
 
 	function copy(): void {
-		const contentToCopy
+		let contentToCopy
 			= typeof props.textToCopy === 'function'
 				? props.textToCopy()
 				: props.textToCopy
+
+		if (props.removeSpaces && contentToCopy) {
+			// Supprimer les espaces
+			contentToCopy = contentToCopy.replace(/\s+/g, '')
+
+			// Supprimer les séparateurs supplémentaires
+			if (props.separatorsToRemove) {
+				if (Array.isArray(props.separatorsToRemove)) {
+					// Si c'est un tableau, créer une regex avec tous les séparateurs
+					const separatorsPattern = props.separatorsToRemove
+						.map(sep => sep.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) // Échapper les caractères spéciaux
+						.join('|')
+					if (separatorsPattern) {
+						const regex = new RegExp(separatorsPattern, 'g')
+						contentToCopy = contentToCopy.replace(regex, '')
+					}
+				}
+				else if (typeof props.separatorsToRemove === 'string' && props.separatorsToRemove !== '') {
+					// Si c'est une chaîne, remplacer directement
+					const escapedSeparator = props.separatorsToRemove.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+					const regex = new RegExp(escapedSeparator, 'g')
+					contentToCopy = contentToCopy.replace(regex, '')
+				}
+			}
+		}
 
 		copyToClipboard(contentToCopy)
 
@@ -68,6 +97,7 @@
 					:aria-label="props.ariaLabel"
 					:aria-owns="props.ariaOwns"
 					:data-test-id="props.ariaOwns"
+					aria-controls="copy-btn"
 					@click="copy"
 				>
 					<slot name="icon">
