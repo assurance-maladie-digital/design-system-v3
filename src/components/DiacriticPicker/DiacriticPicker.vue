@@ -2,6 +2,7 @@
 	import { computed, nextTick, onMounted, ref } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
+	import { locales } from './locales'
 	import { VBtn, VCard, VCardText, VCardTitle, VDialog } from 'vuetify/components'
 
 	const props = withDefaults(defineProps<{
@@ -21,7 +22,7 @@
 			'ÿ',
 			'ç',
 		],
-		inputAriaLabel: 'Champ de saisie avec diacritiques',
+		inputAriaLabel: locales.inputAriaLabel,
 	})
 
 	const emit = defineEmits<{
@@ -73,29 +74,29 @@
 		return wrapperRef.value?.querySelector('input, textarea') ?? null
 	}
 
-  function insertChar(char: string) {
-    const el = getNativeInput()
-    if (!el) return
+	function insertChar(char: string) {
+		const el = getNativeInput()
+		if (!el) return
 
-    const start = el.selectionStart ?? 0
-    const end = el.selectionEnd ?? 0
+		const start = el.selectionStart ?? 0
+		const end = el.selectionEnd ?? 0
 
-    // Remplace le texte sélectionné ou insère à la position du curseur
-    const newValue =
-        props.modelValue.slice(0, start) +
-        char +
-        props.modelValue.slice(end)
+		// Remplace le texte sélectionné ou insère à la position du curseur
+		const newValue
+			= props.modelValue.slice(0, start)
+				+ char
+				+ props.modelValue.slice(end)
 
-    emit('update:modelValue', newValue)
+		emit('update:modelValue', newValue)
 
-    nextTick(() => {
-      el.focus()
-      const newPos = start + char.length
-      el.setSelectionRange(newPos, newPos)
-    })
+		nextTick(() => {
+			el.focus()
+			const newPos = start + char.length
+			el.setSelectionRange(newPos, newPos)
+		})
 
-    dialog.value = false
-  }
+		dialog.value = false
+	}
 
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key !== '=') return
@@ -167,7 +168,8 @@
 			:id="buttonId"
 			v-bind="options.btn"
 			icon
-			:aria-label="`${props.btnTitle}, caractères accentués`"
+			:tiltle="locales.title"
+			:aria-label="`${props.btnTitle}, ${locales.title}`"
 			:aria-controls="dialogId"
 			:aria-haspopup="'dialog'"
 			:aria-expanded="dialog.toString()"
@@ -201,7 +203,7 @@
 						<div
 							class="d-flex flex-wrap"
 							role="group"
-							aria-label="Caractères minuscules"
+							:aria-label="locales.lowercaseChars"
 						>
 							<VBtn
 								v-for="char in diacritics.lower"
@@ -216,7 +218,7 @@
 						<div
 							class="d-flex flex-wrap"
 							role="group"
-							aria-label="Caractères majuscules"
+							:aria-label="locales.uppercaseChars"
 						>
 							<VBtn
 								v-for="char in diacritics.upper"
