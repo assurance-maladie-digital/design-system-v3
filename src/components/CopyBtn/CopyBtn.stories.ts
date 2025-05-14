@@ -33,10 +33,6 @@ const meta = {
 			control: { type: 'number' },
 			default: 2000,
 		},
-		removeSpaces: {
-			control: { type: 'boolean' },
-			default: false,
-		},
 		separatorsToRemove: {
 			control: { type: 'text' },
 			default: '',
@@ -284,7 +280,6 @@ export const RemoveSeparators: Story = {
 		<CopyBtn
 			label="Copier l'IBAN sans tirets"
 			text-to-copy="FR76-3000-4000-0300-0000-0000-000"
-			remove-spaces
 			separators-to-remove="-"
 		/>
 	</div>
@@ -306,7 +301,6 @@ export const RemoveSeparators: Story = {
 		textToCopy: 'FR76-3000-4000-0300-0000-0000-000',
 		hideTooltip: false,
 		tooltipDuration: 2000,
-		removeSpaces: true,
 		separatorsToRemove: '-',
 	},
 	render: (args) => {
@@ -324,7 +318,6 @@ export const RemoveSeparators: Story = {
 					<CopyBtn
 						label="Copier l'IBAN sans tirets"
 						:text-to-copy="args.textToCopy"
-						:remove-spaces="args.removeSpaces"
 						:separators-to-remove="args.separatorsToRemove"
 						:hide-tooltip="args.hideTooltip"
 						:aria-owns="args.ariaOwns"
@@ -349,7 +342,6 @@ export const MultiSeparators: Story = {
 		<CopyBtn
 			label="Copier le numéro sans séparateurs"
 			text-to-copy="+33 (0)6.12.34.56.78"
-			remove-spaces
 			:separators-to-remove="['+', '(', ')', '.']"
 		/>
 	</div>
@@ -371,7 +363,6 @@ export const MultiSeparators: Story = {
 		textToCopy: '+33 (0)6.12.34.56.78',
 		hideTooltip: false,
 		tooltipDuration: 2000,
-		removeSpaces: true,
 		separatorsToRemove: ['+', '(', ')', '.'],
 	},
 	render: (args) => {
@@ -389,7 +380,6 @@ export const MultiSeparators: Story = {
 					<CopyBtn
 						label="Copier le numéro sans séparateurs"
 						:text-to-copy="args.textToCopy"
-						:remove-spaces="args.removeSpaces"
 						:separators-to-remove="args.separatorsToRemove"
 						:hide-tooltip="args.hideTooltip"
 						:aria-owns="args.ariaOwns"
@@ -414,7 +404,7 @@ export const RemoveSpaces: Story = {
 		<CopyBtn
 			label="Copier le numéro de sécurité sociale sans espaces"
 			text-to-copy="1 97 07 56 541 123 45"
-			remove-spaces
+			separators-to-remove=" "
 		/>
 	</div>
 </template>
@@ -435,7 +425,6 @@ export const RemoveSpaces: Story = {
 		textToCopy: '1 97 07 56 541 123 45',
 		hideTooltip: false,
 		tooltipDuration: 2000,
-		removeSpaces: true,
 	},
 	render: (args) => {
 		return {
@@ -452,9 +441,9 @@ export const RemoveSpaces: Story = {
 					<CopyBtn
 						label="Copier le numéro de sécurité sociale sans espaces"
 						:text-to-copy="args.textToCopy"
-						:remove-spaces="args.removeSpaces"
 						:hide-tooltip="args.hideTooltip"
 						:aria-owns="args.ariaOwns"
+						separators-to-remove=" "
 					/>
               	</div>
 			`,

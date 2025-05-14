@@ -14,7 +14,6 @@
 		textToCopy: (() => string) | string
 		hideTooltip?: boolean
 		tooltipDuration?: number
-		removeSpaces?: boolean
 		separatorsToRemove?: string | string[]
 	}>(), {
 		ariaLabel: 'bouton de copie',
@@ -22,8 +21,7 @@
 		textToCopy: '',
 		hideTooltip: false,
 		tooltipDuration: 5000,
-		removeSpaces: false,
-		separatorsToRemove: '',
+		separatorsToRemove: undefined,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -37,7 +35,7 @@
 				? props.textToCopy()
 				: props.textToCopy
 
-		if (props.removeSpaces && contentToCopy) {
+		if (contentToCopy && props.separatorsToRemove?.length) {
 			// Supprimer les espaces
 			contentToCopy = contentToCopy.replace(/\s+/g, '')
 

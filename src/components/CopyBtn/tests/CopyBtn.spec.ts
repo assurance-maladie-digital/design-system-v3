@@ -97,12 +97,12 @@ describe('CopyBtn', () => {
 		expect(wrapper.vm.tooltip).toBeFalsy()
 	})
 
-	it('removes spaces from the text when removeSpaces is true', async () => {
+	it('removes spaces in the text', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
 				label: 'test',
 				textToCopy: 'text with spaces',
-				removeSpaces: true,
+				separatorsToRemove: ' ',
 			},
 			global: {
 				plugins: [vuetify],
@@ -114,29 +114,12 @@ describe('CopyBtn', () => {
 		expect(copy).toHaveBeenCalledWith('textwithspaces')
 	})
 
-	it('preserves spaces in the text when removeSpaces is false', async () => {
-		const wrapper = mount(CopyBtn, {
-			propsData: {
-				label: 'test',
-				textToCopy: 'text with spaces',
-				removeSpaces: false,
-			},
-			global: {
-				plugins: [vuetify],
-			},
-		})
-
-		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
-
-		expect(copy).toHaveBeenCalledWith('text with spaces')
-	})
-
-	it('removes all types of whitespace when removeSpaces is true', async () => {
+	it('removes all types of whitespace', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
 				label: 'test',
 				textToCopy: 'text with\tspaces\nand\rtabs',
-				removeSpaces: true,
+				separatorsToRemove: ' ',
 			},
 			global: {
 				plugins: [vuetify],
@@ -153,7 +136,6 @@ describe('CopyBtn', () => {
 			propsData: {
 				label: 'test',
 				textToCopy: 'FR76-3000-4000-0300',
-				removeSpaces: true,
 				separatorsToRemove: '-',
 			},
 			global: {
@@ -171,7 +153,6 @@ describe('CopyBtn', () => {
 			propsData: {
 				label: 'test',
 				textToCopy: '+33 (0)6.12.34.56',
-				removeSpaces: true,
 				separatorsToRemove: ['+', '(', ')', '.'],
 			},
 			global: {
@@ -189,7 +170,6 @@ describe('CopyBtn', () => {
 			propsData: {
 				label: 'test',
 				textToCopy: 'text.with*special[chars]',
-				removeSpaces: true,
 				separatorsToRemove: ['.', '*', '[', ']'],
 			},
 			global: {
@@ -202,12 +182,11 @@ describe('CopyBtn', () => {
 		expect(copy).toHaveBeenCalledWith('textwithspecialchars')
 	})
 
-	it('does not remove separators when removeSpaces is false', async () => {
+	it('removes separators', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
 				label: 'test',
 				textToCopy: 'FR76-3000-4000',
-				removeSpaces: false,
 				separatorsToRemove: '-',
 			},
 			global: {
@@ -217,6 +196,6 @@ describe('CopyBtn', () => {
 
 		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
 
-		expect(copy).toHaveBeenCalledWith('FR76-3000-4000')
+		expect(copy).toHaveBeenCalledWith('FR7630004000')
 	})
 })
