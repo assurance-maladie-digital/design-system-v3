@@ -73,22 +73,29 @@
 		return wrapperRef.value?.querySelector('input, textarea') ?? null
 	}
 
-	function insertChar(char: string) {
-		const el = getNativeInput()
-		if (!el) return
+  function insertChar(char: string) {
+    const el = getNativeInput()
+    if (!el) return
 
-		const pos = el.selectionStart ?? props.modelValue.length
-		const newValue = props.modelValue.slice(0, pos) + char + props.modelValue.slice(pos)
+    const start = el.selectionStart ?? 0
+    const end = el.selectionEnd ?? 0
 
-		emit('update:modelValue', newValue)
+    // Remplace le texte sélectionné ou insère à la position du curseur
+    const newValue =
+        props.modelValue.slice(0, start) +
+        char +
+        props.modelValue.slice(end)
 
-		nextTick(() => {
-			el.focus()
-			el.setSelectionRange(pos + 1, pos + 1)
-		})
+    emit('update:modelValue', newValue)
 
-		dialog.value = false
-	}
+    nextTick(() => {
+      el.focus()
+      const newPos = start + char.length
+      el.setSelectionRange(newPos, newPos)
+    })
+
+    dialog.value = false
+  }
 
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key !== '=') return
