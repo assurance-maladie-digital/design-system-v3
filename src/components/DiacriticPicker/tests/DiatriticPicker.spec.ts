@@ -99,14 +99,14 @@ describe('DiacriticPicker.vue', () => {
 	})
 
 	it('selects next diacritic on keydown', async () => {
-		const model = ref('a')
+		const model1 = ref('a')
 
 		const wrapper = mount(DiacriticPicker, {
 			global: { plugins: [vuetify] },
 			props: {
-				modelValue: model.value,
+				modelValue: model1.value,
 				onUpdateModelValue: (val: string) => {
-					model.value = val
+					model1.value = val
 				},
 				diacritics: ['á', 'à', 'â', 'ä'],
 			},
@@ -115,7 +115,7 @@ describe('DiacriticPicker.vue', () => {
 					setup() {
 						return () => h('input', {
 							id: 'sy-diacritic-input',
-							value: model.value,
+							value: model1.value,
 						})
 					},
 				}),
