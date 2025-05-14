@@ -27,17 +27,17 @@ describe('DiacriticPicker.vue', () => {
 	})
 
 	it('renders the diacritic button', () => {
-		const btn = wrapper.find('.diacritic-btn')
+		const btn = wrapper.find('.sy-diacritic-btn')
 		expect(btn.exists()).toBe(true)
 	})
 
 	it('initially hides the dialog', () => {
-		const dialog = wrapper.find('.diacritic-dialog')
+		const dialog = wrapper.find('.sy-diacritic-dialog')
 		expect(dialog.exists()).toBe(false)
 	})
 
 	it('shows dialog when button is clicked', async () => {
-		await wrapper.find('.diacritic-btn').trigger('click')
+		await wrapper.find('.sy-diacritic-btn').trigger('click')
 		await nextTick()
 
 		expect(wrapper.findComponent({ name: 'VDialog' }).vm.$props.modelValue).toBe(true)
@@ -59,7 +59,7 @@ describe('DiacriticPicker.vue', () => {
 				default: defineComponent({
 					setup() {
 						return () => h('input', {
-							id: 'diacritic-input',
+							id: 'sy-diacritic-input',
 							value: model.value,
 						})
 					},
@@ -67,7 +67,7 @@ describe('DiacriticPicker.vue', () => {
 			},
 		})
 
-		await wrapper.find('.diacritic-btn').trigger('click')
+		await wrapper.find('.sy-diacritic-btn').trigger('click')
 		await nextTick()
 
 		const buttons = wrapper.findAllComponents({ name: 'VBtn' })
@@ -81,14 +81,14 @@ describe('DiacriticPicker.vue', () => {
 	})
 
 	it('sets correct ARIA attributes', () => {
-		const btn = wrapper.find('.diacritic-btn')
+		const btn = wrapper.find('.sy-diacritic-btn')
 		expect(btn.attributes('aria-haspopup')).toBe('dialog')
 		expect(btn.attributes('aria-expanded')).toBe('false')
 		expect(btn.attributes('aria-controls')).toContain('diacritic-dialog')
 	})
 
 	it('closes dialog on click:outside', async () => {
-		await wrapper.find('.diacritic-btn').trigger('click')
+		await wrapper.find('.sy-diacritic-btn').trigger('click')
 		await nextTick()
 
 		const card = wrapper.findComponent({ name: 'VCard' })

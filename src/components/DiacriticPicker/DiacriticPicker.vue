@@ -142,11 +142,11 @@
 </script>
 
 <template>
-	<div class="diacritic-wrapper">
+	<div class="sy-diacritic-wrapper">
 		<div
 			:id="inputId"
 			ref="wrapperRef"
-			class="input-slot flex-grow-1"
+			class="sy-input-slot flex-grow-1"
 			role="textbox"
 			:aria-label="inputAriaLabel"
 			:title="labelId"
@@ -165,7 +165,7 @@
 			:aria-haspopup="'dialog'"
 			:aria-expanded="dialog.toString()"
 			:style="dynamicStyles"
-			class="diacritic-btn"
+			class="sy-diacritic-btn"
 			@click="dialog = !dialog"
 		>
 			{{ props.btnTitle }}
@@ -179,7 +179,7 @@
 			scrollable
 			:retain-focus="false"
 			aria-modal="true"
-			class="diacritic-dialog"
+			class="sy-diacritic-dialog"
 			role="dialog"
 		>
 			<VCard
@@ -190,7 +190,7 @@
 					Caractères diacritiques
 				</VCardTitle>
 				<VCardText>
-					<div class="diacritic-dialog-content">
+					<div class="sy-diacritic-dialog-content">
 						<div
 							class="d-flex flex-wrap"
 							role="group"
@@ -229,21 +229,21 @@
 </template>
 
 <style scoped lang="scss">
-.diacritic-wrapper {
+.sy-diacritic-wrapper {
 	width: 100%;
 	display: flex;
 	align-items: center;
 	padding: 0;
 }
 
-:deep(.diacritic-dialog-content) {
+:deep(.sy-diacritic-dialog-content) {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
 }
 
-:deep(.diacritic-dialog-content > div[role='group']) {
+:deep(.sy-diacritic-dialog-content > div[role='group']) {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
