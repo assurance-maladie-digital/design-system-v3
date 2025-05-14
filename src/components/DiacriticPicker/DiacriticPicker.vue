@@ -98,52 +98,50 @@
 		dialog.value = false
 	}
 
-	function handleKeydown(event: KeyboardEvent) {
-		// Si la touche = est pressée avec Shift, on n'active PAS le remplacement
-		if (event.key !== '=' || event.shiftKey) return
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.key !== '=' || event.shiftKey) return
 
-		const el = getNativeInput()
-		if (!el) return
+    const el = getNativeInput()
+    if (!el) return
 
-		const start = el.selectionStart ?? 0
-		const end = el.selectionEnd ?? 0
+    const start = el.selectionStart ?? 0
+    const end = el.selectionEnd ?? 0
 
-		// Si aucun caractère précédent, insérer =
-		if (start === 0) {
-			const newValue = props.modelValue.slice(0, start) + '=' + props.modelValue.slice(end)
-			emit('update:modelValue', newValue)
+    if (start === 0) {
+      const newValue = props.modelValue.slice(0, start) + '=' + props.modelValue.slice(end)
+      emit('update:modelValue', newValue)
 
-			nextTick(() => {
-				el.focus()
-				el.setSelectionRange(start + 1, start + 1)
-			})
+      nextTick(() => {
+        el.focus()
+        el.setSelectionRange(start + 1, start + 1)
+      })
 
-			event.preventDefault()
-			return
-		}
+      event.preventDefault()
+      return
+    }
 
-		// Remplacer le caractère précédent par le caractère diacritique suivant
-		const currentChar = props.modelValue.charAt(start - 1)
-		const diacriticChars = diacritics.value.lower.filter(c =>
-			c.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === currentChar.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
-		)
+    const currentChar = props.modelValue.charAt(start - 1)
+    const isUpper = currentChar === currentChar.toUpperCase()
+    const diacriticChars = (isUpper ? diacritics.value.upper : diacritics.value.lower).filter(c =>
+        c.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === currentChar.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
+    )
 
-		if (diacriticChars.length > 0) {
-			const currentIndex = diacriticChars.indexOf(currentChar)
-			const nextIndex = (currentIndex + 1) % diacriticChars.length
-			const newChar = diacriticChars[nextIndex]
+    if (diacriticChars.length > 0) {
+      const currentIndex = diacriticChars.indexOf(currentChar)
+      const nextIndex = (currentIndex + 1) % diacriticChars.length
+      const newChar = diacriticChars[nextIndex]
 
-			const newValue = props.modelValue.slice(0, start - 1) + newChar + props.modelValue.slice(end)
-			emit('update:modelValue', newValue)
+      const newValue = props.modelValue.slice(0, start - 1) + newChar + props.modelValue.slice(end)
+      emit('update:modelValue', newValue)
 
-			nextTick(() => {
-				el.focus()
-				el.setSelectionRange(start, start)
-			})
+      nextTick(() => {
+        el.focus()
+        el.setSelectionRange(start, start)
+      })
 
-			event.preventDefault()
-		}
-	}
+      event.preventDefault()
+    }
+  }
 
 	onMounted(() => {
 		nextTick(() => {
