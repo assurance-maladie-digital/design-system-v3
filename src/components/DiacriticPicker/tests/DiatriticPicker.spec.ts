@@ -1,3 +1,4 @@
+/* eslint-disable vue/one-component-per-file */
 import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
@@ -96,5 +97,36 @@ describe('DiacriticPicker.vue', () => {
 		await nextTick()
 
 		expect(wrapper.findComponent({ name: 'VDialog' }).vm.$props.modelValue).toBe(false)
+	})
+
+	it('selects next diacritic on keydown', async () => {
+		const model1 = ref('a')
+
+		const wrapper = mount(DiacriticPicker, {
+			global: { plugins: [vuetify] },
+			props: {
+				modelValue: model1.value,
+				onUpdateModelValue: (val: string) => {
+					model1.value = val
+				},
+				diacritics: ['á', 'à', 'â', 'ä'],
+			},
+			slots: {
+				default: defineComponent({
+					setup() {
+						return () => h('input', {
+							id: 'sy-diacritic-input',
+							value: model1.value,
+						})
+					},
+				}),
+			},
+		})
+
+		const input = wrapper.find('#sy-diacritic-input')
+		await input.trigger('keydown', { key: '=' })
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe('á')
 	})
 })

@@ -99,47 +99,48 @@
 	}
 
 	function handleKeydown(event: KeyboardEvent) {
-		if (event.key !== '=') return
+		if (event.key !== '=' || event.shiftKey) return
 
 		const el = getNativeInput()
 		if (!el) return
 
-		const pos = el.selectionStart ?? 0
-		const prevChar = props.modelValue[pos - 1]
-		if (!prevChar) return
+		const start = el.selectionStart ?? 0
+		const end = el.selectionEnd ?? 0
 
-		const isUpper = prevChar === prevChar.toUpperCase()
-		const baseChar = prevChar.toLowerCase()
+		if (start === 0) {
+			const newValue = props.modelValue.slice(0, start) + '=' + props.modelValue.slice(end)
+			emit('update:modelValue', newValue)
 
-		// Find all variants matching the base character
-		const list = props.diacritics.filter(c =>
-			c.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === baseChar,
+			nextTick(() => {
+				el.focus()
+				el.setSelectionRange(start + 1, start + 1)
+			})
+
+			event.preventDefault()
+			return
+		}
+
+		const currentChar = props.modelValue.charAt(start - 1)
+		const isUpper = currentChar === currentChar.toUpperCase()
+		const diacriticChars = (isUpper ? diacritics.value.upper : diacritics.value.lower).filter(c =>
+			c.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === currentChar.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
 		)
 
-		if (!list.length) return
+		if (diacriticChars.length > 0) {
+			const currentIndex = diacriticChars.indexOf(currentChar)
+			const nextIndex = (currentIndex + 1) % diacriticChars.length
+			const newChar = diacriticChars[nextIndex]
 
-		const currentIndex = list.findIndex(c =>
-			isUpper ? c.toUpperCase() === prevChar : c === prevChar,
-		)
-		if (currentIndex === -1) return
+			const newValue = props.modelValue.slice(0, start - 1) + newChar + props.modelValue.slice(end)
+			emit('update:modelValue', newValue)
 
-		const nextChar = isUpper
-			? list[(currentIndex + 1) % list.length].toUpperCase()
-			: list[(currentIndex + 1) % list.length]
+			nextTick(() => {
+				el.focus()
+				el.setSelectionRange(start, start)
+			})
 
-		// Compose new string
-		const newValue
-			= props.modelValue.slice(0, pos - 1) + nextChar + props.modelValue.slice(pos)
-
-		// Emit value for v-model update
-		emit('update:modelValue', newValue)
-
-		// Set caret back to position
-		nextTick(() => {
-			el.setSelectionRange(pos, pos)
-		})
-
-		event.preventDefault()
+			event.preventDefault()
+		}
 	}
 
 	onMounted(() => {
