@@ -1,3 +1,4 @@
+/* eslint-disable vue/one-component-per-file */
 import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
