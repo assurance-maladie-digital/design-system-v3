@@ -772,6 +772,7 @@ export const CustomPatternRules: Story = {
         <NirField
           v-model="value"
           v-bind="args"
+		  class="mt-4"
         />
         <div class="mt-4">Valeur actuelle : {{ value }}</div>
       </div>
