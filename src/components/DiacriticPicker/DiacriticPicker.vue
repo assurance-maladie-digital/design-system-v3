@@ -168,7 +168,7 @@
 			:id="buttonId"
 			v-bind="options.btn"
 			icon
-			:tiltle="locales.title"
+			:title="locales.title"
 			:aria-label="`${props.btnTitle}, ${locales.title}`"
 			:aria-controls="dialogId"
 			:aria-haspopup="'dialog'"
