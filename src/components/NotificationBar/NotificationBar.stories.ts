@@ -53,6 +53,20 @@ const meta: Meta<typeof NotificationBar> = {
 				},
 			},
 		},
+		// @ts-expect-error the prop is passed down
+		type: {
+			control: 'select',
+			options: ['info', 'success', 'warning', 'error'],
+			table: {
+				type: {
+					summary: 'info | success | warning | error',
+				},
+				defaultValue: {
+					summary: 'info',
+				},
+				category: 'props',
+			},
+		},
 	},
 }
 

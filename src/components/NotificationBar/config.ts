@@ -1,5 +1,4 @@
 type VariantType = 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
-// TODO rename file to config.ts
 
 const defaultOptions = {
 	snackBar: {
