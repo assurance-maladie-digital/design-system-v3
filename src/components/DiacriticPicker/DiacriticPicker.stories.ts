@@ -414,7 +414,6 @@ export const Customization: Story = {
 			},
 			dialog: {
 				maxWidth: 500,
-				persistent: true,
 			},
 		},
 	},
