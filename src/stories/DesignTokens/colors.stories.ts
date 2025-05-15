@@ -45,12 +45,12 @@ export const Base: StoryObj = {
 					'risque-pro': cnamLightTheme.risquePro,
 				}
 				const paColors = {
-					'primary': paLightTheme.primary,
-					'secondary': paLightTheme.secondary,
-					'error': paLightTheme.error,
-					'info': paLightTheme.info,
-					'success': paLightTheme.success,
-					'warning': paLightTheme.warning,
+					primary: paLightTheme.primary,
+					secondary: paLightTheme.secondary,
+					error: paLightTheme.error,
+					info: paLightTheme.info,
+					success: paLightTheme.success,
+					warning: paLightTheme.warning,
 				}
 				return {
 					cnamColors,
