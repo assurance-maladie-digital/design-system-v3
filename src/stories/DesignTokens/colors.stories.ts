@@ -51,7 +51,6 @@ export const Base: StoryObj = {
 					'info': paLightTheme.info,
 					'success': paLightTheme.success,
 					'warning': paLightTheme.warning,
-					'risque-pro': paLightTheme.risquePro,
 				}
 				return {
 					cnamColors,
@@ -82,29 +81,10 @@ export const Others: StoryObj = {
 					dark: cnamLightTheme.dark,
 				}
 				const paColors = {
-					'avatar': paLightTheme.avatar,
-					'accent': paLightTheme.accent,
-					'light': paLightTheme.light,
-					'dark': paLightTheme.dark,
-					'blue': paLightTheme.blue,
-					'indigo': paLightTheme.indigo,
-					'purple': paLightTheme.purple,
-					'pink': paLightTheme.pink,
-					'red': paLightTheme.red,
-					'orange': paLightTheme.orange,
-					'yellow': paLightTheme.yellow,
-					'green': paLightTheme.green,
-					'teal': paLightTheme.teal,
-					'cyan': paLightTheme.cyan,
-					'gray': paLightTheme.gray,
-					'grayDark': paLightTheme.grayDark,
-					'default': paLightTheme.default,
-					'brand': paLightTheme.brand,
-					'brand-secondary': paLightTheme.brandSecondary,
-					'brand-muted': paLightTheme.brandMuted,
-					'brand-mutedLite': paLightTheme.brandMutedLite,
-					'hilite-primary': paLightTheme.hilitePrimary,
-					'hilite-secondary': paLightTheme.hiliteSecondary,
+					accent: paLightTheme.accent,
+					avatar: paLightTheme.avatar,
+					light: paLightTheme.light,
+					dark: paLightTheme.dark,
 				}
 				return {
 					cnamColors,
@@ -748,7 +728,14 @@ export const Interactive: StoryObj = {
 					'interactive-disabled': cnamLightTheme.interactiveDisabled,
 					'interactive-hover-on-selected': cnamLightTheme.interactiveHoverOnSelected,
 				}
-				const paColors = {}
+				const paColors = {
+					'interactive-default': paLightTheme.interactiveDefault,
+					'interactive-hover': paLightTheme.interactiveHover,
+					'interactive-pressed': paLightTheme.interactivePressed,
+					'interactive-focus': paLightTheme.interactiveFocus,
+					'interactive-disabled': paLightTheme.interactiveDisabled,
+					'interactive-hover-on-selected': paLightTheme.interactiveHoverOnSelected,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -786,7 +773,21 @@ export const Border: StoryObj = {
 					'border-disabled': cnamLightTheme.borderDisabled,
 					'border-disabled-on-dark': cnamLightTheme.borderDisabledOnDark,
 				}
-				const paColors = {}
+				const paColors = {
+					'border-darker': paLightTheme.borderDarker,
+					'border-base': paLightTheme.borderBase,
+					'border-subdued': paLightTheme.borderSubdued,
+					'border-accent': paLightTheme.borderAccent,
+					'border-accent-contrasted': paLightTheme.borderAccentContrasted,
+					'border-accent-on-dark': paLightTheme.borderAccentOnDark,
+					'border-info': paLightTheme.borderInfo,
+					'border-success': paLightTheme.borderSuccess,
+					'border-warning': paLightTheme.borderWarning,
+					'border-error': paLightTheme.borderError,
+					'border-on-dark': paLightTheme.borderOnDark,
+					'border-disabled': paLightTheme.borderDisabled,
+					'border-disabled-on-dark': paLightTheme.borderDisabledOnDark,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -823,7 +824,20 @@ export const Text: StoryObj = {
 					'text-subdued-on-dark': cnamLightTheme.textSubduedOnDark,
 					'text-disabled-on-dark': cnamLightTheme.textDisabledOnDark,
 				}
-				const paColors = {}
+				const paColors = {
+					'text-base': paLightTheme.textBase,
+					'text-accent': paLightTheme.textAccent,
+					'text-accent-contrasted': paLightTheme.textAccentContrasted,
+					'text-subdued': paLightTheme.textSubdued,
+					'text-info': paLightTheme.textInfo,
+					'text-success': paLightTheme.textSuccess,
+					'text-warning': paLightTheme.textWarning,
+					'text-error': paLightTheme.textError,
+					'text-disabled': paLightTheme.textDisabled,
+					'text-on-dark': paLightTheme.textOnDark,
+					'text-subdued-on-dark': paLightTheme.textSubduedOnDark,
+					'text-disabled-on-dark': paLightTheme.textDisabledOnDark,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -859,7 +873,20 @@ export const Icons: StoryObj = {
 					'icon-disabled': cnamLightTheme.iconDisabled,
 					'icon-disabled-on-dark': cnamLightTheme.iconDisabledOnDark,
 				}
-				const paColors = {}
+				const paColors = {
+					'icon-base': paLightTheme.iconBase,
+					'icon-subdued': paLightTheme.iconSubdued,
+					'icon-subdued-on-dark': paLightTheme.iconSubduedOnDark,
+					'icon-accent': paLightTheme.iconAccent,
+					'icon-accent-contrasted': paLightTheme.iconAccentContrasted,
+					'icon-info': paLightTheme.iconInfo,
+					'icon-success': paLightTheme.iconSuccess,
+					'icon-warning': paLightTheme.iconWarning,
+					'icon-error': paLightTheme.iconError,
+					'icon-on-dark': paLightTheme.iconOnDark,
+					'icon-disabled': paLightTheme.iconDisabled,
+					'icon-disabled-on-dark': paLightTheme.iconDisabledOnDark,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -887,7 +914,11 @@ export const MainBackgrounds: StoryObj = {
 					'background-surface': cnamLightTheme.backgroundSurface,
 					'background-surface-alt': cnamLightTheme.backgroundSurfaceAlt,
 				}
-				const paColors = {}
+				const paColors = {
+					'background-main': paLightTheme.backgroundMain,
+					'background-surface': paLightTheme.backgroundSurface,
+					'background-surface-alt': paLightTheme.backgroundSurfaceAlt,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -917,7 +948,13 @@ export const AlternativeBackgrounds: StoryObj = {
 					'background-accent-contrasted': cnamLightTheme.backgroundAccentContrasted,
 					'background-accent-alt': cnamLightTheme.backgroundAccentAlt,
 				}
-				const paColors = {}
+				const paColors = {
+					'background-mainAlt': paLightTheme.backgroundMainAlt,
+					'background-raised': paLightTheme.backgroundRaised,
+					'background-accent': paLightTheme.backgroundAccent,
+					'background-accent-contrasted': paLightTheme.backgroundAccentContrasted,
+					'background-accent-alt': paLightTheme.backgroundAccentAlt,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -945,7 +982,11 @@ export const InformationalBackgrounds: StoryObj = {
 					'background-info-subdued': cnamLightTheme.backgroundInfoSubdued,
 					'background-info-contrasted': cnamLightTheme.backgroundInfoContrasted,
 				}
-				const paColors = {}
+				const paColors = {
+					'background-info': paLightTheme.backgroundInfo,
+					'background-info-subdued': paLightTheme.backgroundInfoSubdued,
+					'background-info-contrasted': paLightTheme.backgroundInfoContrasted,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -973,7 +1014,11 @@ export const SuccessBackgrounds: StoryObj = {
 					'background-success-subdued': cnamLightTheme.backgroundSuccessSubdued,
 					'background-success-contrasted': cnamLightTheme.backgroundSuccessContrasted,
 				}
-				const paColors = {}
+				const paColors = {
+					'background-success': paLightTheme.backgroundSuccess,
+					'background-success-subdued': paLightTheme.backgroundSuccessSubdued,
+					'background-success-contrasted': paLightTheme.backgroundSuccessContrasted,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -1001,7 +1046,11 @@ export const WarningBackgrounds: StoryObj = {
 					'background-warning-subdued': cnamLightTheme.backgroundWarningSubdued,
 					'background-warning-contrasted': cnamLightTheme.backgroundWarningContrasted,
 				}
-				const paColors = {}
+				const paColors = {
+					'background-warning': paLightTheme.backgroundWarning,
+					'background-warning-subdued': paLightTheme.backgroundWarningSubdued,
+					'background-warning-contrasted': paLightTheme.backgroundWarningContrasted,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -1029,7 +1078,11 @@ export const ErrorBackgrounds: StoryObj = {
 					'background-error-subdued': cnamLightTheme.backgroundErrorSubdued,
 					'background-error-contrasted': cnamLightTheme.backgroundErrorContrasted,
 				}
-				const paColors = {}
+				const paColors = {
+					'background-error': paLightTheme.backgroundError,
+					'background-error-subdued': paLightTheme.backgroundErrorSubdued,
+					'background-error-contrasted': paLightTheme.backgroundErrorContrasted,
+				}
 				return {
 					cnamColors,
 					paColors,
@@ -1059,7 +1112,13 @@ export const OtherBackgrounds: StoryObj = {
 					'background-professionnel': cnamLightTheme.backgroundProfessionnel,
 					'background-entreprise': cnamLightTheme.backgroundEntreprise,
 				}
-				const paColors = {}
+				const paColors = {
+					'background-disabled': paLightTheme.backgroundDisabled,
+					'background-disabled-on-dark': paLightTheme.backgroundDisabledOnDark,
+					'background-assure': paLightTheme.backgroundAssure,
+					'background-professionnel': paLightTheme.backgroundProfessionnel,
+					'background-entreprise': paLightTheme.backgroundEntreprise,
+				}
 				return {
 					cnamColors,
 					paColors,

@@ -4,33 +4,33 @@ export default create({
 	base: 'light',
 	brandTitle: 'PA-DS',
 	brandUrl: './',
-	brandImage: '/logos/logo-pa.png',
+	brandImage: '/logos/logo-assurance-maladie.svg',
 	brandTarget: '_self',
 
-	colorPrimary: 'rgba(74, 63, 89, 0.7)',
-	colorSecondary: 'rgba(74, 63, 89, 1)',
+	colorPrimary: '#0C419A',
+	colorSecondary: '#07275C',
 
 	// UI
-	appBg: 'rgba(74, 63, 89, 0.05)',
+	appBg: '#FFFFFF',
 	appContentBg: 'white',
 	appBorderColor: 'grey',
 	appBorderRadius: 4,
 
 	// Text colors
-	textColor: '#4A3F59',
+	textColor: '#0C419A',
 	textInverseColor: 'rgba(255,255,255,0.9)',
 
 	// Toolbar default and active colors
-	barTextColor: '#4A3F59',
-	barSelectedColor: '#4A3F59',
-	barBg: 'rgba(244, 245, 241, 0.7)',
+	barTextColor: '#0C419A',
+	barSelectedColor: '#0C419A',
+	barBg: '#FFFFFF',
 
 	// Form colors
 	inputBg: 'white',
-	inputBorder: 'rgba(74, 63, 89, 1)',
-	inputTextColor: 'rgba(74, 63, 89, 1)',
+	inputBorder: '#0C419A',
+	inputTextColor: '#0C419A',
 	inputBorderRadius: 4,
 
 	// Links colors
-	textMutedColor: 'rgba(74, 63, 89, 1)',
+	textMutedColor: '#0C419A',
 })
