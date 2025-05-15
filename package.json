@@ -14,7 +14,8 @@
   "exports": {
     ".": {
       "import": "./dist/design-system-v3.js",
-      "require": "./dist/design-system-v3.umd.cjs"
+      "require": "./dist/design-system-v3.umd.cjs",
+      "types": "./dist/main.d.ts"
     },
     "./style.css": "./dist/style.css",
     "./*": "./src/*"
