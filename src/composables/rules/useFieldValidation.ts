@@ -307,11 +307,11 @@ export function useFieldValidation() {
 				case 'custom': {
 					const result = options.validate?.(value)
 					if (result === true) {
-						return { success: baseMessages.success }
+						return { success: options.successMessage || baseMessages.success }
 					}
 					return options.isWarning
-						? { warning: typeof result === 'string' ? result : baseMessages.warning }
-						: { error: typeof result === 'string' ? result : baseMessages.error }
+						? { warning: typeof result === 'string' ? result : options.warningMessage || baseMessages.warning }
+						: { error: typeof result === 'string' ? result : options.message || baseMessages.error }
 				}
 
 				default:

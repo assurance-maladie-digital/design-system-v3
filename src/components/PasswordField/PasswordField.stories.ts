@@ -523,11 +523,11 @@ export const WithSuccess: Story = {
 						const isLongEnough = value.length >= 8
 
 						if (hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isLongEnough) {
-							return 'Mot de passe fort'
+							return true
 						}
 						return false
 					},
-					fieldIdentifier: 'password',
+					successMessage: 'Mot de passe fort',
 				},
 			},
 		],
@@ -807,6 +807,7 @@ export const WithCustomRules: Story = {
 							return true
 						},
 						fieldIdentifier: 'password',
+						successMessage: 'Le mot de passe est sécurisé',
 					},
 				},
 				{
