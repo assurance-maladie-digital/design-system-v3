@@ -312,7 +312,7 @@ export function useFieldValidation() {
 					}
 					return options.isWarning
 						? { warning: typeof result === 'string' ? result : options.warningMessage || baseMessages.warning }
-						: { error: typeof result === 'string' ? result : options.errorMessage || baseMessages.error }
+						: { error: typeof result === 'string' ? result : options.message || baseMessages.error }
 				}
 
 				default:
