@@ -153,7 +153,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	args: {
 		'nbFiltered': 1,
-		'nbTotal': 2,
 		'onUpdate:search': fn(),
 	},
 
@@ -282,7 +281,6 @@ export const Default: Story = {
 
 export const AddButton: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 	},
@@ -412,7 +410,6 @@ export const AddButton: Story = {
 
 export const Labels: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'showAddButton': true,
@@ -466,6 +463,7 @@ export const Labels: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							:nb-total="items.length"
 							@update:search="search = $event"
 						/>
 					</template>
@@ -490,9 +488,8 @@ export const Labels: Story = {
 								v-model="search"
 								:nb-total="items.length"
 								show-add-button
-								showAddButton
-								addButtonLabel="Ajouter un patient"
-								searchLabel="Rechercher un patient"
+								add-button-label="Ajouter un patient"
+								search-label="Rechercher un patient"
 								@update:search="search = $event"
 							/>
 						</template>
@@ -546,7 +543,6 @@ export const Labels: Story = {
 
 export const Loading: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'loading': true,
@@ -599,6 +595,7 @@ export const Loading: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							:nb-total="items.length"
 							@update:search="search = $event"
 						/>
 					</template>
@@ -606,11 +603,76 @@ export const Loading: Story = {
 			`,
 		}
 	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<VDataTable
+						:headers="headers"
+						:items="items"
+						:search="search"
+						loading
+						hide-default-footer
+					>
+						<template #top>
+							<TableToolbar
+								v-model="search"
+								:nb-total="items.length"
+								@update:search="search = $event"
+							/>
+						</template>
+					</VDataTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { TableToolbar } from '@cnamts/synapse'
+					import { VDataTable } from 'vuetify/components'
+					import { ref } from 'vue'
+
+					const headers = [
+						{
+							title: 'Nom',
+							value: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							value: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					]
+
+					const items = [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+					]
+
+					const search = ref('')
+				</script>
+				`,
+			},
+		],
+	},
 }
 
 export const NbFiltered: Story = {
 	args: {
-		'nbTotal': 10,
 		'nbFiltered': 5,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
@@ -662,6 +724,7 @@ export const NbFiltered: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							:nb-total="items.length"
 							@update:search="search = $event"
 						/>
 					</template>
@@ -684,8 +747,8 @@ export const NbFiltered: Story = {
 						<template #top>
 							<TableToolbar
 								v-model="search"
-								:nbTotal="10"
-								:nbFiltered="5"
+								:nb-filtered="5"
+								:nb-total="items.length"
 								@update:search="search = $event"
 							/>
 						</template>
@@ -739,7 +802,6 @@ export const NbFiltered: Story = {
 
 export const Customization: Story = {
 	args: {
-		'nbTotal': 10,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'showAddButton': true,
@@ -805,6 +867,7 @@ export const Customization: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							:nb-total="items.length"
 							@update:search="search = $event"
 						/>
 					</template>
@@ -827,8 +890,8 @@ export const Customization: Story = {
 						<template #top>
 							<TableToolbar
 								v-model="search"
-								:nb-total="10"
 								show-add-button
+								:nb-total="items.length"
 								:vuetifyOptions
 								@update:search="search = $event"
 							/>
@@ -900,7 +963,6 @@ export const Customization: Story = {
 
 export const Slots: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 	},
@@ -951,6 +1013,7 @@ export const Slots: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							:nb-total="items.length"
 							@update:search="search = $event"
 						>
 							<template #search-left>
@@ -984,7 +1047,7 @@ export const Slots: Story = {
 						<template #top>
 							<TableToolbar
 								v-model="search"
-								:nb-total="2"
+								:nb-total="items.length"
 								show-add-button
 								@update:search="search = $event"
 							>

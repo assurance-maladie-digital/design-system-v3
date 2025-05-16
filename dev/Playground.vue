@@ -43,6 +43,7 @@
 		<template #top>
 			<TableToolbar
 				v-model="search"
+        nb-filtered="1"
 				:nb-total="items.length"
 				show-add-button
         @update:search="search = $event"

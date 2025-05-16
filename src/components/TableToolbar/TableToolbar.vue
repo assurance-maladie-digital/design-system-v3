@@ -7,7 +7,7 @@
 	import { locales as defaultLocales } from './locales'
 
 	const props = withDefaults(defineProps<{
-		nbTotal: number
+		nbTotal?: number
 		nbFiltered?: number
 		search?: string
 		searchLabel?: string
@@ -16,6 +16,7 @@
 		loading?: boolean
 		locales?: typeof defaultLocales
 	} & CustomizableOptions>(), {
+    nbTotal: 0,
 		nbFiltered: undefined,
 		search: undefined,
 		searchLabel: defaultLocales.search,
