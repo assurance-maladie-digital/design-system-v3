@@ -16,7 +16,7 @@
 		loading?: boolean
 		locales?: typeof defaultLocales
 	} & CustomizableOptions>(), {
-    nbTotal: 0,
+		nbTotal: 0,
 		nbFiltered: undefined,
 		search: undefined,
 		searchLabel: defaultLocales.search,
