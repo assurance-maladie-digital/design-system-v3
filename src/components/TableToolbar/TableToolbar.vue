@@ -7,7 +7,7 @@
 	import { locales as defaultLocales } from './locales'
 
 	const props = withDefaults(defineProps<{
-		nbTotal: number
+		nbTotal?: number
 		nbFiltered?: number
 		search?: string
 		searchLabel?: string
