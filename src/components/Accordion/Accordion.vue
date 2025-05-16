@@ -220,7 +220,7 @@
 	border: none;
 	text-align: left;
 	cursor: pointer;
-	font-weight: 500; /* Supprime le contour par défaut du navigateur */
+	font-weight: 500;
 	transition: outline-color 0.3s ease;
 	outline: 2px solid transparent;
 	outline-offset: 2px;
@@ -261,17 +261,19 @@
 .sy-accordion-content {
 	max-height: 0;
 	overflow: hidden;
+	margin-top: 1px;
 	transition: max-height 0.3s ease;
 }
 
 .sy-accordion-content--open {
 	max-height: 500px;
-	border-top: 1px solid #e0e0e0;
 }
 
 .sy-accordion-content:focus-visible {
 	outline: 2px solid rgb(var(--accordion-focus-color));
+	border-top: 2px solid rgb(var(--accordion-focus-color));
 	outline-offset: 2px;
+	margin-top: 2px;
 }
 
 .sy-accordion-content-inner {

@@ -180,7 +180,7 @@ export const CustomColors: Story = {
 				
 				<div class="mt-8">
 					<h3>Guide des couleurs</h3>
-					<ul class="mt-2">
+					<ul class="mt-2 ml-4">
 						<li><strong>titleColor</strong> : Couleur du titre quand l'accordéon est fermé</li>
 						<li><strong>hoverColor</strong> : Couleur utilisée au survol</li>
 						<li><strong>focusColor</strong> : Couleur utilisée pour le focus (bordure)</li>
