@@ -807,6 +807,7 @@ export const WithCustomRules: Story = {
 							return true
 						},
 						fieldIdentifier: 'password',
+						successMessage: 'Le mot de passe est sécurisé',
 					},
 				},
 				{

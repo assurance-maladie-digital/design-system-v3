@@ -88,14 +88,14 @@
 		}
 
 		// Règle pour le message de succès
-		rules.push({
-			type: 'custom',
-			options: {
-				validate: (value: string) => value ? true : 'Ce champ est requis',
-				successMessage: 'Mot de passe fort',
-				fieldIdentifier: props.label || 'password',
-			},
-		})
+		// rules.push({
+		// 	type: 'custom',
+		// 	options: {
+		// 		validate: (value: string) => value ? true : 'Ce champ est requis',
+		// 		successMessage: 'Mot de passe fort',
+		// 		fieldIdentifier: props.label || 'password',
+		// 	},
+		// })
 
 		return rules
 	})
