@@ -1,0 +1,69 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as AccordionStories from './Accordion.stories';
+
+<Meta of={AccordionStories} />
+
+# Accordion
+
+Le composant `Accordion` permet d'afficher du contenu dans des sections pliables/dépliables. Il est conforme aux normes d'accessibilité ARIA.
+
+## Utilisation standard
+
+L'accordéon standard affiche une liste d'éléments avec un titre et un contenu simple.
+
+<Canvas of={AccordionStories.Default} />
+
+## Contenu avec objet
+
+L'accordéon peut également afficher un contenu structuré sous forme d'objet avec un titre et un contenu détaillé.
+
+<Canvas of={AccordionStories.WithObjectContent} />
+
+## Niveau de titre personnalisé
+
+Vous pouvez personnaliser le niveau de titre (h1-h6) utilisé pour les boutons de dévoilement.
+
+<Canvas of={AccordionStories.CustomHeadingLevel} />
+
+## Accessibilité
+
+Le composant Accordion respecte les normes d'accessibilité ARIA :
+
+- Chaque bouton de dévoilement est contenu dans un élément de titre (h1-h6)
+- Chaque bouton possède les attributs `aria-expanded` et `aria-controls`
+- Chaque section de contenu a l'attribut `role="region"` et `aria-labelledby` qui pointe vers l'ID du bouton
+
+## API
+
+<Controls of={AccordionStories.Default} />
+
+## Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+import { Accordion } from '@cnamts/synapse'
+
+const accordionItems = [
+  { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
+  { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' },
+  {
+    id: 'item3',
+    title: 'Section 3',
+    content: {
+      title: 'Sous-titre de la section 3',
+      content: 'Contenu détaillé de la section 3'
+    }
+  }
+]
+</script>
+
+<template>
+  <main>
+    <Accordion
+      :items="accordionItems"
+      :heading-level="3"
+    />
+  </main>
+</template>
+`} />
