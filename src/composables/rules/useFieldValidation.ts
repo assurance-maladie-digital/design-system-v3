@@ -307,7 +307,6 @@ export function useFieldValidation() {
 				case 'custom': {
 					const result = options.validate?.(value)
 					if (result === true) {
-						console.log('result', result)
 						return { success: options.successMessage || baseMessages.success }
 					}
 					return options.isWarning
