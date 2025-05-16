@@ -38,7 +38,6 @@
 		'sy-form-input--s': display.xs.value,
 		'flex-grow-0': display.xs.value,
 		'flex-grow-1': !display.xs.value,
-		'mr-6': props.showAddButton,
 		'loading': props.loading,
 	}))
 

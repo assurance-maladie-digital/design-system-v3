@@ -640,12 +640,10 @@ export const Customization: Story = {
 				class: 'py-2',
 			},
 			textField: {
-				variant: 'outlined',
 				density: 'compact',
 			},
 			addBtn: {
-				height: '40px',
-				color: '#663399',
+				color: 'secondary',
 			},
 			addIcon: {
 				class: 'd-none',

@@ -1,6 +1,7 @@
 @use 'fonts';
 @use 'spacers';
 @use 'radius';
+@use '@/assets/tokens';
 
 .v-btn {
 	text-transform: inherit !important;
@@ -22,5 +23,16 @@
 
 	.v-messages__message {
 		line-height: 16px !important;
+	}
+}
+
+.v-data-table-progress {
+	.v-progress-linear {
+		height: 4px !important;
+	}
+
+	.v-progress-linear__background,
+	.v-progress-linear__indeterminate {
+		background: tokens.$primary-base !important;
 	}
 }

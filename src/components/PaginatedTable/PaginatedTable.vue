@@ -209,17 +209,6 @@
 		}
 	}
 
-	.v-data-table-progress {
-		.v-progress-linear {
-			height: 4px !important;
-		}
-
-		.v-progress-linear__background,
-		.v-progress-linear__indeterminate {
-			background: tokens.$primary-base;
-		}
-	}
-
 	.v-field {
 		&--active {
 			.v-field__prepend-inner > .v-icon,
