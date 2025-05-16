@@ -26,10 +26,10 @@
 		locales: () => defaultLocales,
 	})
 
-  defineEmits<{
-    (e: 'update:search', value: string): void
-    (e: 'add'): void
-  }>()
+	defineEmits<{
+		(e: 'update:search', value: string): void
+		(e: 'add'): void
+	}>()
 
 	const options = useCustomizableOptions(config, props)
 	const display = useDisplay()
