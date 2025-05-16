@@ -166,7 +166,7 @@ describe('PasswordField.vue', () => {
 		await wrapper.setProps({ modelValue: 'TestPassword123' })
 		await wrapper.find('input').trigger('blur')
 		const successMessages = wrapper.findAll('.v-messages__message')
-		expect(successMessages[0].text()).toBe('Mot de passe fort')
+		expect(successMessages[0].text()).toBe('Le champ password est valide.')
 	})
 
 	it('displays validation states based on validation rules', async () => {
