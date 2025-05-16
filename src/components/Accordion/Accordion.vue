@@ -223,7 +223,7 @@
 	font-weight: 500; /* Supprime le contour par défaut du navigateur */
 	transition: outline-color 0.3s ease;
 	outline: 2px solid transparent;
-	outline-offset: -2px;
+	outline-offset: 2px;
 	position: relative;
 }
 
@@ -234,7 +234,7 @@
 .sy-accordion-button:hover,
 .sy-accordion-content--open + .sy-accordion-button,
 .sy-accordion-item:has(.sy-accordion-content--open) .sy-accordion-button {
-	background-color: rgba(var(--accordion-active-color), 0.1);
+	background-color: rgba(var(--accordion-active-color), 0.15);
 
 	.sy-accordion-title {
 		/* La couleur sera appliquée via la classe text-{color} dans le template */
@@ -244,7 +244,7 @@
 
 /* Style pour l'accordéon ouvert (focus programmatique) */
 .sy-accordion-button--focused:not(:focus-visible) {
-	background-color: rgba(var(--accordion-focus-color), 0.1);
+	background-color: rgba(var(--accordion-focus-color), 0.15);
 	border: 3px solid rgb(var(--accordion-focus-color));
 	z-index: 1;
 }
@@ -253,7 +253,7 @@
 .sy-accordion-button:focus-visible {
 	outline: none;
 	position: relative;
-	background-color: rgba(var(--accordion-focus-color), 0.1);
+	background-color: rgba(var(--accordion-focus-color), 0.15);
 	border: 3px solid rgb(var(--accordion-focus-color));
 	transition: background-color 0.2s ease;
 }
@@ -271,7 +271,7 @@
 
 .sy-accordion-content:focus-visible {
 	outline: 2px solid rgb(var(--accordion-focus-color));
-	outline-offset: -2px;
+	outline-offset: 2px;
 }
 
 .sy-accordion-content-inner {

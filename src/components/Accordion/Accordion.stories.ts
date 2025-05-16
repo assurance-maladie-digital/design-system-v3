@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import Accordion from './Accordion.vue'
 
 const meta = {
-	title: 'Composants/Accordion',
+	title: 'Composants/Données/Accordion',
 	component: Accordion,
 	parameters: {
 		layout: 'fullscreen',
