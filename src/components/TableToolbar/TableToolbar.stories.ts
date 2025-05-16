@@ -152,7 +152,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		'nbFiltered': 1,
 		'onUpdate:search': fn(),
 	},
 
@@ -673,7 +672,7 @@ export const Loading: Story = {
 
 export const NbFiltered: Story = {
 	args: {
-		'nbFiltered': 5,
+		'nbFiltered': 1,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 	},
@@ -717,6 +716,7 @@ export const NbFiltered: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:items-per-page="args.nbFiltered"
 					:search="search"
 					hide-default-footer
 				>
@@ -741,13 +741,14 @@ export const NbFiltered: Story = {
 					<VDataTable
 						:headers="headers"
 						:items="items"
+						:items-per-page="1"
 						:search="search"
 						hide-default-footer
 					>
 						<template #top>
 							<TableToolbar
 								v-model="search"
-								:nb-filtered="5"
+								:nb-filtered="1"
 								:nb-total="items.length"
 								@update:search="search = $event"
 							/>
