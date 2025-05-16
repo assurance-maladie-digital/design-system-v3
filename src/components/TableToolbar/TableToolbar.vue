@@ -69,7 +69,7 @@
 			<VTextField
 				v-bind="options.textField"
 				color="primary"
-				:model-value="search"
+				:v-model="search"
 				class="sy-form-input"
 				:class="textFieldClasses"
 				:disabled="loading"

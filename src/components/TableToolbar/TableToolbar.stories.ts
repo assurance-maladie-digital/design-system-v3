@@ -152,10 +152,65 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		'nbFiltered': 5,
-		'nbTotal': 10,
-		'onAdd': fn(),
+		'nbFiltered': 1,
+		'nbTotal': 2,
 		'onUpdate:search': fn(),
+	},
+
+	render: (args) => {
+		return {
+			components: { TableToolbar, VDataTable },
+			setup() {
+				const headers = [
+					{
+						title: 'Nom',
+						value: 'lastname',
+					},
+					{
+						title: 'Prénom',
+						value: 'firstname',
+					},
+					{
+						title: 'Email',
+						value: 'email',
+					},
+				]
+
+				const items = [
+					{
+						firstname: 'Virginie',
+						lastname: 'Beauchesne',
+						email: 'virginie.beauchesne@example.com',
+					},
+					{
+						firstname: 'Étienne',
+						lastname: 'Salois',
+						email: 'etienne.salois@example.com',
+					},
+				]
+
+				const search = ref('')
+
+				return { args, headers, items, search }
+			},
+			template: `
+				<VDataTable
+					:headers="headers"
+					:items="items"
+					:search="search"
+					hide-default-footer
+				>
+					<template #top>
+						<TableToolbar
+							v-bind="args"
+							v-model="search"
+							:nb-total="items.length"
+							@update:search="search = $event"
+						/>
+					</template>
+				</VDataTable>
+			`,
+		}
 	},
 	parameters: {
 		sourceCode: [
@@ -163,11 +218,21 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<TableToolbar
-						v-model="search"
-						:nb-total="10"
-						:nb-filtered="5"
-					/>
+					<VDataTable
+						:headers="headers"
+						:items="items"
+						:search="search"
+						hide-default-footer
+					>
+						<template #top>
+							<TableToolbar
+								v-model="search"
+								:nb-total="items.length"
+								show-add-button
+								@update:search="search = $event"
+							/>
+						</template>
+					</VDataTable>
 				</template>
 				`,
 			},
@@ -176,7 +241,36 @@ export const Default: Story = {
 				code: `
 				<script setup lang="ts">
 					import { TableToolbar } from '@cnamts/synapse'
+					import { VDataTable } from 'vuetify/components'
 					import { ref } from 'vue'
+
+					const headers = [
+						{
+							title: 'Nom',
+							value: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							value: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					]
+
+					const items = [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+					]
 
 					const search = ref('')
 				</script>
@@ -232,6 +326,7 @@ export const AddButton: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:search="search"
 					hide-default-footer
 				>
 					<template #top>
@@ -240,6 +335,7 @@ export const AddButton: Story = {
 							v-model="search"
 							:nb-total="items.length"
 							show-add-button
+							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -255,6 +351,7 @@ export const AddButton: Story = {
 					<VDataTable
 						:headers="headers"
 						:items="items"
+						:search="search"
 						hide-default-footer
 					>
 						<template #top>
@@ -262,6 +359,7 @@ export const AddButton: Story = {
 								v-model="search"
 								:nb-total="items.length"
 								show-add-button
+								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -361,12 +459,14 @@ export const Labels: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:search="search"
 					hide-default-footer
 				>
 					<template #top>
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -382,6 +482,7 @@ export const Labels: Story = {
 					<VDataTable
 						:headers="headers"
 						:items="items"
+						:search="search"
 						hide-default-footer
 					>
 						<template #top>
@@ -392,6 +493,7 @@ export const Labels: Story = {
 								showAddButton
 								addButtonLabel="Ajouter un patient"
 								searchLabel="Rechercher un patient"
+								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -489,6 +591,7 @@ export const Loading: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:search="search"
 					loading
 					hide-default-footer
 				>
@@ -496,6 +599,7 @@ export const Loading: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -551,12 +655,14 @@ export const NbFiltered: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:search="search"
 					hide-default-footer
 				>
 					<template #top>
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -572,6 +678,7 @@ export const NbFiltered: Story = {
 					<VDataTable
 						:headers="headers"
 						:items="items"
+						:search="search"
 						hide-default-footer
 					>
 						<template #top>
@@ -579,6 +686,7 @@ export const NbFiltered: Story = {
 								v-model="search"
 								:nbTotal="10"
 								:nbFiltered="5"
+								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -690,12 +798,14 @@ export const Customization: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:search="search"
 					hide-default-footer
 				>
 					<template #top>
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -711,6 +821,7 @@ export const Customization: Story = {
 					<VDataTable
 						:headers="headers"
 						:items="items"
+						:search="search"
 						hide-default-footer
 					>
 						<template #top>
@@ -719,6 +830,7 @@ export const Customization: Story = {
 								:nb-total="10"
 								show-add-button
 								:vuetifyOptions
+								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -832,12 +944,14 @@ export const Slots: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:search="search"
 					hide-default-footer
 				>
 					<template #top>
 						<TableToolbar
 							v-bind="args"
 							v-model="search"
+							@update:search="search = $event"
 						>
 							<template #search-left>
 								<VBtn
@@ -864,6 +978,7 @@ export const Slots: Story = {
 					<VDataTable
 						:headers="headers"
 						:items="items"
+						:search="search"
 						hide-default-footer
 					>
 						<template #top>
@@ -871,6 +986,7 @@ export const Slots: Story = {
 								v-model="search"
 								:nb-total="2"
 								show-add-button
+								@update:search="search = $event"
 							>
 								<template #search-left>
 									<VBtn
