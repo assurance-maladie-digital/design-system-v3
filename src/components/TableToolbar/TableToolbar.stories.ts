@@ -152,6 +152,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
+		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 	},
@@ -196,6 +197,7 @@ export const Default: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:items-per-page="args.nbFiltered"
 					:search="search"
 					hide-default-footer
 				>
@@ -203,7 +205,6 @@ export const Default: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model:search="search"
-							:nb-total="items.length"
 						/>
 					</template>
 				</VDataTable>
@@ -279,6 +280,7 @@ export const Default: Story = {
 
 export const AddButton: Story = {
 	args: {
+		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 	},
@@ -322,6 +324,7 @@ export const AddButton: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:items-per-page="args.nbFiltered"
 					:search="search"
 					hide-default-footer
 				>
@@ -329,7 +332,6 @@ export const AddButton: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model:search="search"
-							:nb-total="items.length"
 							show-add-button
 						/>
 					</template>
@@ -406,6 +408,7 @@ export const AddButton: Story = {
 
 export const Labels: Story = {
 	args: {
+		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'showAddButton': true,
@@ -452,6 +455,7 @@ export const Labels: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:items-per-page="args.nbFiltered"
 					:search="search"
 					hide-default-footer
 				>
@@ -459,7 +463,6 @@ export const Labels: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model:search="search"
-							:nb-total="items.length"
 						/>
 					</template>
 				</VDataTable>
@@ -537,6 +540,7 @@ export const Labels: Story = {
 
 export const Loading: Story = {
 	args: {
+		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'loading': true,
@@ -581,6 +585,7 @@ export const Loading: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:items-per-page="args.nbFiltered"
 					:search="search"
 					loading
 					hide-default-footer
@@ -589,7 +594,6 @@ export const Loading: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model:search="search"
-							:nb-total="items.length"
 						/>
 					</template>
 				</VDataTable>
@@ -665,6 +669,7 @@ export const Loading: Story = {
 
 export const NbFiltered: Story = {
 	args: {
+		'nbTotal': 2,
 		'nbFiltered': 1,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
@@ -717,7 +722,6 @@ export const NbFiltered: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model:search="search"
-							:nb-total="items.length"
 						/>
 					</template>
 				</VDataTable>
@@ -794,6 +798,7 @@ export const NbFiltered: Story = {
 
 export const Customization: Story = {
 	args: {
+		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'showAddButton': true,
@@ -852,6 +857,7 @@ export const Customization: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:items-per-page="args.nbFiltered"
 					:search="search"
 					hide-default-footer
 				>
@@ -859,7 +865,6 @@ export const Customization: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model:search="search"
-							:nb-total="items.length"
 						/>
 					</template>
 				</VDataTable>
@@ -953,6 +958,7 @@ export const Customization: Story = {
 
 export const Slots: Story = {
 	args: {
+		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 	},
@@ -996,6 +1002,7 @@ export const Slots: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
+					:items-per-page="args.nbFiltered"
 					:search="search"
 					hide-default-footer
 				>
@@ -1003,7 +1010,6 @@ export const Slots: Story = {
 						<TableToolbar
 							v-bind="args"
 							v-model:search="search"
-							:nb-total="items.length"
 						>
 							<template #search-left>
 								<VBtn
