@@ -70,7 +70,7 @@
 			<VTextField
 				v-bind="options.textField"
 				color="primary"
-				:v-model="search"
+				:model-value="search"
 				class="sy-form-input"
 				:class="textFieldClasses"
 				:disabled="loading"
