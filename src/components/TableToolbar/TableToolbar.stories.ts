@@ -201,9 +201,8 @@ export const Default: Story = {
 					<template #top>
 						<TableToolbar
 							v-bind="args"
-							v-model="search"
+							v-model:search="search"
 							:nb-total="items.length"
-							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -224,10 +223,9 @@ export const Default: Story = {
 					>
 						<template #top>
 							<TableToolbar
-								v-model="search"
+								v-model:search="search"
 								:nb-total="items.length"
 								show-add-button
-								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -329,10 +327,9 @@ export const AddButton: Story = {
 					<template #top>
 						<TableToolbar
 							v-bind="args"
-							v-model="search"
+							v-model:search="search"
 							:nb-total="items.length"
 							show-add-button
-							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -353,10 +350,9 @@ export const AddButton: Story = {
 					>
 						<template #top>
 							<TableToolbar
-								v-model="search"
+								v-model:search="search"
 								:nb-total="items.length"
 								show-add-button
-								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -461,9 +457,8 @@ export const Labels: Story = {
 					<template #top>
 						<TableToolbar
 							v-bind="args"
-							v-model="search"
+							v-model:search="search"
 							:nb-total="items.length"
-							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -484,12 +479,11 @@ export const Labels: Story = {
 					>
 						<template #top>
 							<TableToolbar
-								v-model="search"
+								v-model:search="search"
 								:nb-total="items.length"
 								show-add-button
 								add-button-label="Ajouter un patient"
 								search-label="Rechercher un patient"
-								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -593,9 +587,8 @@ export const Loading: Story = {
 					<template #top>
 						<TableToolbar
 							v-bind="args"
-							v-model="search"
+							v-model:search="search"
 							:nb-total="items.length"
-							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -617,9 +610,8 @@ export const Loading: Story = {
 					>
 						<template #top>
 							<TableToolbar
-								v-model="search"
+								v-model:search="search"
 								:nb-total="items.length"
-								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -723,9 +715,8 @@ export const NbFiltered: Story = {
 					<template #top>
 						<TableToolbar
 							v-bind="args"
-							v-model="search"
+							v-model:search="search"
 							:nb-total="items.length"
-							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -747,10 +738,9 @@ export const NbFiltered: Story = {
 					>
 						<template #top>
 							<TableToolbar
-								v-model="search"
+								v-model:search="search"
 								:nb-filtered="1"
 								:nb-total="items.length"
-								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -867,9 +857,8 @@ export const Customization: Story = {
 					<template #top>
 						<TableToolbar
 							v-bind="args"
-							v-model="search"
+							v-model:search="search"
 							:nb-total="items.length"
-							@update:search="search = $event"
 						/>
 					</template>
 				</VDataTable>
@@ -890,11 +879,10 @@ export const Customization: Story = {
 					>
 						<template #top>
 							<TableToolbar
-								v-model="search"
+								v-model:search="search"
 								show-add-button
 								:nb-total="items.length"
 								:vuetifyOptions
-								@update:search="search = $event"
 							/>
 						</template>
 					</VDataTable>
@@ -1013,9 +1001,8 @@ export const Slots: Story = {
 					<template #top>
 						<TableToolbar
 							v-bind="args"
-							v-model="search"
+							v-model:search="search"
 							:nb-total="items.length"
-							@update:search="search = $event"
 						>
 							<template #search-left>
 								<VBtn
@@ -1047,10 +1034,9 @@ export const Slots: Story = {
 					>
 						<template #top>
 							<TableToolbar
-								v-model="search"
+								v-model:search="search"
 								:nb-total="items.length"
 								show-add-button
-								@update:search="search = $event"
 							>
 								<template #search-left>
 									<VBtn
