@@ -36,9 +36,9 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
         flex-grow-1
         sy-form-input
         v-input
+        v-input--center-affix
         v-input--density-compact
         v-input--horizontal
-        v-input--plain-underlined
         v-locale--is-ltr
         v-text-field
         v-theme--light
@@ -48,8 +48,9 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
           <div class="
             v-field
             v-field--appended
+            v-field--center-affix
             v-field--single-line
-            v-field--variant-underlined
+            v-field--variant-outlined
             v-locale--is-ltr
             v-theme--light
           ">
@@ -193,7 +194,9 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
               ></i>
             </div>
             <div class="v-field__outline">
+              <div class="v-field__outline__start"></div>
               <!---->
+              <div class="v-field__outline__end"></div>
               <!---->
             </div>
           </div>
@@ -253,10 +256,10 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
         loading
         sy-form-input
         v-input
+        v-input--center-affix
         v-input--density-compact
         v-input--disabled
         v-input--horizontal
-        v-input--plain-underlined
         v-locale--is-ltr
         v-text-field
         v-theme--light
@@ -266,9 +269,10 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
           <div class="
             v-field
             v-field--appended
+            v-field--center-affix
             v-field--disabled
             v-field--single-line
-            v-field--variant-underlined
+            v-field--variant-outlined
             v-locale--is-ltr
             v-theme--light
           ">
@@ -387,7 +391,9 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
               ></i>
             </div>
             <div class="v-field__outline">
+              <div class="v-field__outline__start"></div>
               <!---->
+              <div class="v-field__outline__end"></div>
               <!---->
             </div>
           </div>
@@ -446,9 +452,9 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
         flex-grow-1
         sy-form-input
         v-input
+        v-input--center-affix
         v-input--density-compact
         v-input--horizontal
-        v-input--plain-underlined
         v-locale--is-ltr
         v-text-field
         v-theme--light
@@ -458,8 +464,9 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
           <div class="
             v-field
             v-field--appended
+            v-field--center-affix
             v-field--single-line
-            v-field--variant-underlined
+            v-field--variant-outlined
             v-locale--is-ltr
             v-theme--light
           ">
@@ -603,7 +610,9 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
               ></i>
             </div>
             <div class="v-field__outline">
+              <div class="v-field__outline__start"></div>
               <!---->
+              <div class="v-field__outline__end"></div>
               <!---->
             </div>
           </div>
@@ -662,9 +671,9 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
         flex-grow-1
         sy-form-input
         v-input
+        v-input--center-affix
         v-input--density-compact
         v-input--horizontal
-        v-input--plain-underlined
         v-locale--is-ltr
         v-text-field
         v-theme--light
@@ -674,8 +683,9 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
           <div class="
             v-field
             v-field--appended
+            v-field--center-affix
             v-field--single-line
-            v-field--variant-underlined
+            v-field--variant-outlined
             v-locale--is-ltr
             v-theme--light
           ">
@@ -819,7 +829,9 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
               ></i>
             </div>
             <div class="v-field__outline">
+              <div class="v-field__outline__start"></div>
               <!---->
+              <div class="v-field__outline__end"></div>
               <!---->
             </div>
           </div>
@@ -871,9 +883,9 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
         flex-grow-1
         sy-form-input
         v-input
+        v-input--center-affix
         v-input--density-compact
         v-input--horizontal
-        v-input--plain-underlined
         v-locale--is-ltr
         v-text-field
         v-theme--light
@@ -883,8 +895,9 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
           <div class="
             v-field
             v-field--appended
+            v-field--center-affix
             v-field--single-line
-            v-field--variant-underlined
+            v-field--variant-outlined
             v-locale--is-ltr
             v-theme--light
           ">
@@ -1028,7 +1041,9 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
               ></i>
             </div>
             <div class="v-field__outline">
+              <div class="v-field__outline__start"></div>
               <!---->
+              <div class="v-field__outline__end"></div>
               <!---->
             </div>
           </div>
@@ -1088,9 +1103,9 @@ exports[`TableToolbar > should render 1`] = `
         flex-grow-1
         sy-form-input
         v-input
+        v-input--center-affix
         v-input--density-compact
         v-input--horizontal
-        v-input--plain-underlined
         v-locale--is-ltr
         v-text-field
         v-theme--light
@@ -1100,8 +1115,9 @@ exports[`TableToolbar > should render 1`] = `
           <div class="
             v-field
             v-field--appended
+            v-field--center-affix
             v-field--single-line
-            v-field--variant-underlined
+            v-field--variant-outlined
             v-locale--is-ltr
             v-theme--light
           ">
@@ -1245,7 +1261,9 @@ exports[`TableToolbar > should render 1`] = `
               ></i>
             </div>
             <div class="v-field__outline">
+              <div class="v-field__outline__start"></div>
               <!---->
+              <div class="v-field__outline__end"></div>
               <!---->
             </div>
           </div>

@@ -7,7 +7,7 @@
 	import { locales as defaultLocales } from './locales'
 
 	const props = withDefaults(defineProps<{
-		nbTotal: number
+		nbTotal?: number
 		nbFiltered?: number
 		search?: string
 		searchLabel?: string
@@ -16,6 +16,7 @@
 		loading?: boolean
 		locales?: typeof defaultLocales
 	} & CustomizableOptions>(), {
+		nbTotal: 0,
 		nbFiltered: undefined,
 		search: undefined,
 		searchLabel: defaultLocales.search,
@@ -38,7 +39,6 @@
 		'sy-form-input--s': display.xs.value,
 		'flex-grow-0': display.xs.value,
 		'flex-grow-1': !display.xs.value,
-		'mr-6': props.showAddButton,
 		'loading': props.loading,
 	}))
 
