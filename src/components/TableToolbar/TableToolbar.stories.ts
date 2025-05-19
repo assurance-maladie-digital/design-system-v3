@@ -152,6 +152,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
+		'onAdd': fn(),
 		'onUpdate:search': fn(),
 	},
 
