@@ -9,11 +9,11 @@ const meta = {
 	parameters: {
 		docs: {
 			controls: {
-				exclude: ['modelValue', 'rules', 'variant', 'validateOn', 'update:modelValue', 'onUpdate:modelValue'],
+				exclude: ['modelValue', 'label', 'rules', 'variant', 'validateOn', 'update:modelValue', 'onUpdate:modelValue'],
 			},
 		},
 		controls: {
-			exclude: ['modelValue', 'rules', 'variant', 'validateOn', 'onUpdate:modelValue'],
+			exclude: ['modelValue', 'label', 'rules', 'variant', 'validateOn', 'onUpdate:modelValue'],
 		},
 	},
 	argTypes: {
@@ -61,10 +61,11 @@ const meta = {
 } satisfies Meta<typeof SyTextArea & typeof VTextarea>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<Meta<typeof SyTextArea & typeof VTextarea>>
 
 export const Default: Story = {
 	args: {
+		'label': 'Texte',
 		'onUpdate:modelValue': fn(),
 	},
 	parameters: {
@@ -95,6 +96,7 @@ const text = ref('')
 
 export const Trim: Story = {
 	args: {
+		'label': 'Trim text area',
 		'trim': true,
 		'onUpdate:modelValue': fn(),
 	},
@@ -134,6 +136,7 @@ const text = ref('')
 
 export const ReplaceTabs: Story = {
 	args: {
+		'label': 'Replace tabs text area',
 		'replaceTabs': 4,
 		'onUpdate:modelValue': fn(),
 	},
@@ -173,6 +176,7 @@ const text = ref('')
 
 export const MaxLines: Story = {
 	args: {
+		'label': 'Max lines text area',
 		'modelValue': 'Lorem ipsum dolor sit amet,\n consectetur adipiscing elit,\n sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n Ut enim ad minim veniam,\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n Excepteur sint occaecat cupidatat non proident,\n sunt in culpa qui officia deserunt mollit anim id est laborum.',
 		'maxLines': 5,
 		'onUpdate:modelValue': fn(),
@@ -213,6 +217,7 @@ const text = ref('')
 
 export const AutoWrap: Story = {
 	args: {
+		'label': 'Auto wrap text area',
 		'autoWrap': 50,
 		'onUpdate:modelValue': fn(),
 	},
@@ -252,6 +257,7 @@ const text = ref('')
 
 export const Normalize: Story = {
 	args: {
+		'label': 'Normalize text area',
 		'normalize': true,
 		'onUpdate:modelValue': fn(),
 	},
