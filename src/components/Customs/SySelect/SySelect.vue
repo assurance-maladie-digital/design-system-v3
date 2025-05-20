@@ -61,6 +61,10 @@
 			type: Boolean,
 			default: false,
 		},
+		density: {
+			type: String as PropType<'default' | 'comfortable' | 'compact' | undefined>,
+			default: 'default',
+		},
 		bgColor: {
 			type: String,
 			default: undefined,
@@ -70,6 +74,10 @@
 			default: false,
 		},
 		clearable: {
+			type: Boolean,
+			default: false,
+		},
+		hideMessage: {
 			type: Boolean,
 			default: false,
 		},
@@ -200,6 +208,13 @@
 		}
 		window.addEventListener('scroll', updateListPosition, true)
 		window.addEventListener('resize', updateListPosition)
+
+		if (props.hideMessage) {
+			const message = document.querySelector('.v-input__details')
+			if (message) {
+				message.classList.add('d-sr-only')
+			}
+		}
 	})
 
 	onUnmounted(() => {
@@ -231,6 +246,7 @@
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
+			:density="props.density"
 			readonly
 			class="sy-select"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"

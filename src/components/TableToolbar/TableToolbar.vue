@@ -65,6 +65,8 @@
 			{{ displayNbRows }}
 		</p>
 
+    <slot name="filters" />
+
 		<div class="sy-table-toolbar__search">
 			<slot name="search-left" />
 			<VTextField
