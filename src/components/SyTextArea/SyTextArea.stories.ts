@@ -26,14 +26,6 @@ const meta = {
 				category: 'props',
 			},
 		},
-		textAreaLabel: {
-			control: { type: 'text' },
-			description: 'Texte alternatif pour les lecteurs d\'écran',
-			table: {
-				type: { summary: 'string' },
-				defaultValue: { summary: 'texte' },
-			},
-		},
 		trim: {
 			control: { type: 'boolean' },
 			description: 'Supprime les espaces en début et fin de chaîne de caractères',

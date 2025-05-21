@@ -17,7 +17,7 @@
 		validateOn?: VTextarea['validateOn']
 		variant?: VTextarea['variant']
 		color?: string
-		textAreaLabel?: string
+		label: string
 	}>(), {
 		modelValue: '',
 		trim: false,
@@ -29,7 +29,6 @@
 		validateOn: 'eager input',
 		variant: 'outlined',
 		color: 'primary',
-		textAreaLabel: locales.textAreaLabel,
 	})
 
 	const emits = defineEmits<{
@@ -106,7 +105,8 @@
 		:color="color"
 		:validate-on="validateOn"
 		:rules="[...props.rules, ...internalRules]"
-		:aria-label="locales.textAreaLabel"
+    :label="label"
+		:aria-label="label"
 		@update:model-value="execValueChange"
 		@update:focused="(e: boolean) => !e ? execBlurChange() : null"
 	/>
