@@ -117,14 +117,16 @@
 
 .sy-table-toolbar {
 	min-height: 56px;
-  :deep(.v-toolbar__content) {
-    width: 100%;
-    flex-wrap: wrap;
-    flex-direction: row !important;
-    @media (max-width: 600px) {
-      flex-direction: column !important;
-    }
-  }
+
+	:deep(.v-toolbar__content) {
+		width: 100%;
+		flex-wrap: wrap;
+		flex-direction: row !important;
+
+		@media (width <= 600px) {
+			flex-direction: column !important;
+		}
+	}
 }
 
 .loading :deep(.v-field__append-inner) {
