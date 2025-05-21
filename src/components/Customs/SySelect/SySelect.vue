@@ -170,7 +170,7 @@
 	})
 
 	const isRequired = computed(() => {
-		if (props.disableErrorHandling) return false
+		if (props.disableErrorHandling || props.hideMessages) return false
 		if (props.readonly) return
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
