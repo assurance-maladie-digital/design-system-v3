@@ -872,6 +872,7 @@ export const SlotFilters: Story = {
 										:items="filterItems"
 										label="Nom"
 										density="compact"
+										width="100"
 										hide-messages
 										clearable
 									/>
@@ -907,6 +908,7 @@ export const SlotFilters: Story = {
 											:items="filterItems" 
 											label="Nom" 
 											density="compact" 
+											width="100"
 											hide-messages
 											clearable 
 										/>

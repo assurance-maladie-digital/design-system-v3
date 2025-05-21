@@ -34,6 +34,10 @@ const meta: Meta<typeof SySelect> = {
 			control: 'boolean',
 			description: 'Permet de vider la sélection',
 		},
+		width: {
+			control: 'text',
+			description: 'Permet de définir une largeur personnalisée pour le champ de sélection (en px)',
+		},
 	},
 } as Meta<typeof SySelect>
 

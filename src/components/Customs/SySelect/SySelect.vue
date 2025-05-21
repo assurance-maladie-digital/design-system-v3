@@ -81,6 +81,10 @@
 			type: Boolean,
 			default: false,
 		},
+		width: {
+			type: String,
+			default: 'undefined',
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -108,9 +112,8 @@
 			const rect = input.value.$el.getBoundingClientRect()
 			listStyles.value = {
 				position: 'fixed',
-				top: `${rect.bottom}px`,
+				top: props.density === 'compact' ? `${rect.bottom + 22}px` : `${rect.bottom}px`,
 				left: `${rect.left}px`,
-				width: `${rect.width}px`,
 				zIndex: '999',
 			}
 		}
@@ -173,6 +176,13 @@
 	})
 
 	const input = ref<InstanceType<typeof VTextField> | null>(null)
+
+	const calculatedWidth = computed(() => {
+		const baseWidth = props.width ? Number(props.width) : 0
+		const selectedText = selectedItemText.value || ''
+		const clearableAdjustment = props.clearable ? 4 : 0
+		return `${baseWidth + selectedText.length * (4 + clearableAdjustment)}px`
+	})
 
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
@@ -249,6 +259,7 @@
 			:density="props.density"
 			readonly
 			class="sy-select"
+			:width="calculatedWidth"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
