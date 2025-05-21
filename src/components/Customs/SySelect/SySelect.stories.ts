@@ -34,6 +34,15 @@ const meta: Meta<typeof SySelect> = {
 			control: 'boolean',
 			description: 'Permet de vider la sélection',
 		},
+		hideMessages: {
+			control: 'boolean',
+			description: 'Masque les messages d\'erreur',
+		},
+		density: {
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Définit la densité du champ de sélection',
+		},
 		width: {
 			control: 'text',
 			description: 'Permet de définir une largeur personnalisée pour le champ de sélection (en px)',
