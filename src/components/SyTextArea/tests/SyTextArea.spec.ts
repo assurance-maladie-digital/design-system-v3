@@ -26,6 +26,7 @@ describe('SyTextArea', () => {
 			props: {
 				modelValue: '',
 				trim: true,
+				label: 'Description des symptomes',
 			},
 		})
 		const textarea = wrapper.find('textarea')
@@ -43,6 +44,7 @@ describe('SyTextArea', () => {
 			props: {
 				modelValue: '',
 				trim: true,
+				label: 'Description des symptomes',
 			},
 		})
 		const textarea = wrapper.find('textarea')
@@ -60,6 +62,7 @@ describe('SyTextArea', () => {
 			props: {
 				modelValue: '',
 				trim: true,
+				label: 'Description des symptomes',
 			},
 		})
 		const textarea = wrapper.find('textarea')
@@ -79,6 +82,7 @@ describe('SyTextArea', () => {
 			props: {
 				modelValue: '',
 				replaceTabs: 2,
+				label: 'Description des symptomes',
 			},
 		})
 		const textarea = wrapper.find('textarea')
@@ -96,6 +100,7 @@ describe('SyTextArea', () => {
 			props: {
 				modelValue: '',
 				maxLines: 5,
+				label: 'Description des symptomes',
 			},
 		})
 		const textarea = wrapper.find('textarea')
@@ -114,6 +119,7 @@ describe('SyTextArea', () => {
 			props: {
 				modelValue: '',
 				autoWrap: 50,
+				label: 'Description des symptomes',
 			},
 		})
 		const textarea = wrapper.find('textarea')
@@ -136,6 +142,7 @@ describe('SyTextArea', () => {
 			props: {
 				modelValue: '',
 				autoWrap: 50,
+				label: 'Description des symptomes',
 			},
 		})
 		const textarea = wrapper.find('textarea')
@@ -157,6 +164,7 @@ describe('SyTextArea', () => {
 			props: {
 				modelValue: '',
 				normalize: true,
+				label: 'Description des symptomes',
 			},
 		})
 		const textarea = wrapper.find('textarea')
@@ -175,6 +183,7 @@ describe('SyTextArea', () => {
 				modelValue: '',
 				replaceTabs: 2,
 				trim: true,
+				label: 'Description des symptomes',
 			},
 		})
 		const textarea = wrapper.find('textarea')
