@@ -9,11 +9,11 @@ const meta = {
 	parameters: {
 		docs: {
 			controls: {
-				exclude: ['modelValue', 'label', 'rules', 'variant', 'validateOn', 'update:modelValue', 'onUpdate:modelValue'],
+				exclude: ['modelValue', 'label', 'rules', 'validateOn', 'update:modelValue', 'onUpdate:modelValue'],
 			},
 		},
 		controls: {
-			exclude: ['modelValue', 'label', 'rules', 'variant', 'validateOn', 'onUpdate:modelValue'],
+			exclude: ['modelValue', 'label', 'rules', 'validateOn', 'onUpdate:modelValue'],
 		},
 	},
 	argTypes: {
@@ -55,6 +55,23 @@ const meta = {
 			table: {
 				type: { summary: 'boolean' },
 				defaultValue: { summary: 'false' },
+			},
+		},
+		color: {
+			control: { type: 'text' },
+			description: 'Couleur du champ',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'primary' },
+			},
+		},
+		variant: {
+			control: { type: 'select' },
+			options: ['filled', 'outlined', 'underlined'],
+			description: 'Type de champ',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'outlined' },
 			},
 		},
 	},

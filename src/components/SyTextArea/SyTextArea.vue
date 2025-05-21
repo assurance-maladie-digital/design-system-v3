@@ -16,6 +16,7 @@
 		normalize?: boolean
 		validateOn?: VTextarea['validateOn']
 		variant?: VTextarea['variant']
+		color?: string
 	}>(), {
 		modelValue: '',
 		trim: false,
@@ -26,6 +27,7 @@
 		normalize: false,
 		validateOn: 'eager input',
 		variant: 'outlined',
+		color: 'primary',
 	})
 
 	const emits = defineEmits<{
@@ -81,15 +83,13 @@
 	const internalRules = computed<Rule[]>(() => {
 		const internalRules: Rule[] = []
 
-		if (typeof props.maxLines === 'number') {
-			internalRules.push((value: string) => {
-				const lines = value.split('\n').length
-				if (lines > (props.maxLines as number)) {
-					return locales.maxLines(props.maxLines as number)
-				}
-				return true
-			})
-		}
+		internalRules.push((value: string) => {
+			const lines = value.split('\n').length
+			if (lines > (props.maxLines as number)) {
+				return locales.maxLines(props.maxLines as number)
+			}
+			return true
+		})
 
 		return internalRules
 	})
@@ -101,9 +101,10 @@
 		ref="textAreaRef"
 		:model-value="internalValue"
 		:variant="variant"
+		:color="color"
 		:validate-on="validateOn"
 		:rules="[...props.rules, ...internalRules]"
 		@update:model-value="execValueChange"
-		@update:focused="(e: boolean) => (e === false) ? execBlurChange() : null"
+		@update:focused="(e: boolean) => !e ? execBlurChange() : null"
 	/>
 </template>
