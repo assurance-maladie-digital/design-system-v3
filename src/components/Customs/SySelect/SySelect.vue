@@ -177,12 +177,12 @@
 
 	const input = ref<InstanceType<typeof VTextField> | null>(null)
 
-	const calculatedWidth = computed(() => {
-		const baseWidth = props.width ? Number(props.width) : 0
-		const selectedText = selectedItemText.value || ''
-		const clearableAdjustment = props.clearable ? 4 : 0
-		return `${baseWidth + selectedText.length * (4 + clearableAdjustment)}px`
-	})
+  const calculatedWidth = computed(() => {
+    const baseWidth = props.width ? Number(props.width) : 0;
+    const selectedText = typeof selectedItemText.value === 'string' ? selectedItemText.value : '';
+    const clearableAdjustment = props.clearable ? 4 : 0;
+    return `${baseWidth + selectedText.length * (4 + clearableAdjustment)}px`;
+  });
 
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
