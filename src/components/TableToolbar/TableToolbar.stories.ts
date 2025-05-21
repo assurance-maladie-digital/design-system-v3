@@ -123,11 +123,11 @@ const meta = {
 			control: 'text',
 			description: 'Slot pour ajouter des filtres',
 		},
-		'search-left': {
+		'searchLeft': {
 			control: 'text',
 			description: 'Slot pour le contenu à gauche du champ de recherche',
 		},
-		'search-right': {
+		'searchRight': {
 			control: 'text',
 			description: 'Slot pour le contenu à droite du champ de recherche',
 		},

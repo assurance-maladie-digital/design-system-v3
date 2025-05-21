@@ -32,6 +32,8 @@
 	}>()
 
 	defineSlots<{
+		searchLeft?: () => undefined
+		searchRight?: () => undefined
 		filters?: () => undefined
 	}>()
 
