@@ -9,14 +9,23 @@ const meta = {
 	parameters: {
 		docs: {
 			controls: {
-				exclude: ['modelValue', 'label', 'rules', 'validateOn', 'update:modelValue', 'onUpdate:modelValue'],
+				exclude: ['rules', 'validateOn', 'update:modelValue', 'onUpdate:modelValue'],
 			},
 		},
 		controls: {
-			exclude: ['modelValue', 'label', 'rules', 'validateOn', 'onUpdate:modelValue'],
+			exclude: ['rules', 'validateOn', 'onUpdate:modelValue'],
 		},
 	},
 	argTypes: {
+		label: {
+			control: { type: 'text' },
+			description: 'Texte affiché au-dessus du champ',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined' },
+				category: 'props',
+			},
+		},
 		trim: {
 			control: { type: 'boolean' },
 			description: 'Supprime les espaces en début et fin de chaîne de caractères',
@@ -144,7 +153,7 @@ const text = ref('')
 		story => ({
 			components: { story },
 			template: `<div>
-	<p class="pb-5">Les espaces, tabulations et retours a la lignes seront retirés</p>
+	<p class="pb-5">Les espaces, tabulations et retours a la lignes de début et fin de champ seront retirés</p>
 	<story />
 </div>`,
 		}),
