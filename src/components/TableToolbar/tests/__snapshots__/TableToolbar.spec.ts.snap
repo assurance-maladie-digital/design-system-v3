@@ -27,6 +27,7 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
       font-weight-bold
       mb-0
       mr-4
+      mr-sm-0
       my-3
     ">
       5/5 lignes
@@ -246,6 +247,7 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
       font-weight-bold
       mb-0
       mr-4
+      mr-sm-0
       my-3
     ">
       1 ligne
@@ -443,6 +445,7 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
       font-weight-bold
       mb-0
       mr-4
+      mr-sm-0
       my-3
     ">
       1 ligne
@@ -662,6 +665,7 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
       font-weight-bold
       mb-0
       mr-4
+      mr-sm-0
       my-3
     ">
       1 ligne
@@ -1094,6 +1098,7 @@ exports[`TableToolbar > should render 1`] = `
       font-weight-bold
       mb-0
       mr-4
+      mr-sm-0
       my-3
     ">
       1/2 lignes
