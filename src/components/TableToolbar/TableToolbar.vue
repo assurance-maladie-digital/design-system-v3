@@ -31,6 +31,12 @@
 		(e: 'add'): void
 	}>()
 
+  defineSlots<{
+    searchLeft?: () => undefined
+    searchRight?: () => undefined
+    filters?: () => undefined
+  }>()
+
 	const options = useCustomizableOptions(config, props)
 	const display = useDisplay()
 	const theme = useTheme()
