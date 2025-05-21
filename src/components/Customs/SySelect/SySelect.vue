@@ -77,7 +77,7 @@
 			type: Boolean,
 			default: false,
 		},
-		hideMessage: {
+		hideMessages: {
 			type: Boolean,
 			default: false,
 		},
@@ -209,7 +209,7 @@
 		window.addEventListener('scroll', updateListPosition, true)
 		window.addEventListener('resize', updateListPosition)
 
-		if (props.hideMessage) {
+		if (props.hideMessages) {
 			const message = document.querySelector('.v-input__details')
 			if (message) {
 				message.classList.add('d-sr-only')

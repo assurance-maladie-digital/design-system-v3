@@ -34,7 +34,7 @@
 
 	const search = ref('')
 
-  const filterItems = ref<{ text: string; value: string }[]>([])
+	const filterItems = ref<{ text: string, value: string }[]>([])
 
 	items.forEach((item) => {
 		filterItems.value.push({
@@ -57,14 +57,16 @@
 				@update:search="search = $event"
 			>
 				<template #filters>
-					<SySelect
-						v-model="search"
-						:items="filterItems"
-						label="Nom"
-						density="compact"
-            hide-message
-            clearable
-					/>
+					<div class="py-4">
+						<SySelect
+							v-model="search"
+							:items="filterItems"
+							label="Nom"
+							density="compact"
+							hide-messages
+							clearable
+						/>
+					</div>
 				</template>
 			</tabletoolbar>
 		</template>
