@@ -253,7 +253,7 @@
 			:aria-label="labelWithAsterisk"
 			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
-      :rules="isRequired && !props.disableErrorHandling && !props.hideMessages ? ['Le champ est requis.'] : []"
+			:rules="isRequired && !props.disableErrorHandling && !props.hideMessages ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
 			:density="props.density"

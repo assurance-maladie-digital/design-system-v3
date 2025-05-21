@@ -31,11 +31,11 @@
 		(e: 'add'): void
 	}>()
 
-  defineSlots<{
-    searchLeft?: () => undefined
-    searchRight?: () => undefined
-    filters?: () => undefined
-  }>()
+	defineSlots<{
+		searchLeft?: () => undefined
+		searchRight?: () => undefined
+		filters?: () => undefined
+	}>()
 
 	const options = useCustomizableOptions(config, props)
 	const display = useDisplay()
@@ -117,6 +117,14 @@
 
 .sy-table-toolbar {
 	min-height: 56px;
+  :deep(.v-toolbar__content) {
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: row !important;
+    @media (max-width: 600px) {
+      flex-direction: column !important;
+    }
+  }
 }
 
 .loading :deep(.v-field__append-inner) {
@@ -142,11 +150,6 @@
 .sy-form-input--s {
 	z-index: 1; // Display content above the table on mobile
 	contain: none; // Allow fixed elements to be displayed properly
-
-	:deep(.v-toolbar__content) {
-		width: 100%;
-		flex-wrap: wrap;
-	}
 }
 
 .sy-table-toolbar.v-theme--dark :deep() {
