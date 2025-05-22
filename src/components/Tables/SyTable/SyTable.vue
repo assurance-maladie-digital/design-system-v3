@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref, computed, watch, useAttrs, onMounted } from 'vue'
-	import type { DataOptions, SortOption, GroupOption } from './types'
+	import type { DataOptions, SortOption, GroupOption } from '../common/types'
 	import { LocalStorageUtility } from '@/utils/localStorageUtility'
 
 	const props = defineProps({
@@ -149,55 +149,9 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
+@use '@/components/Tables/common/tableStyles' as *;
 
 .sy-table :deep() {
-	table thead tr {
-		white-space: nowrap;
-	}
-
-	table thead th {
-		.v-data-table-header__content {
-			opacity: 0.65;
-			font-size: 0.875rem;
-			font-weight: 700 !important;
-		}
-	}
-
-	&.row-clickable table tbody tr {
-		cursor: pointer;
-	}
-
-	&.fixed-min-height {
-		.v-data-table__wrapper {
-			min-height: 540px;
-		}
-	}
-
-	&.no-mobile-header {
-		.v-data-table-header-mobile {
-			display: none;
-		}
-
-		table {
-			border-top: 2px solid #eee;
-		}
-	}
-
-	.v-field {
-		&--active {
-			.v-field__prepend-inner > .v-icon,
-			.v-field__append-inner > .v-icon,
-			.v-field__clearable > .v-icon {
-				opacity: 1;
-				color: tokens.$primary-base;
-			}
-		}
-
-		&--focused {
-			border-color: tokens.$primary-base;
-			color: tokens.$primary-base;
-		}
-	}
+	@include tablestyles;
 }
 </style>

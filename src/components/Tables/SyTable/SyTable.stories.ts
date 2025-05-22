@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyTable from './SyTable.vue'
-import type { DataOptions } from './types'
+import type { DataOptions } from '../common/types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 
@@ -191,11 +191,9 @@ export const Default: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
-					:headers="headers"
-					:items="items"
-					:suffix="suffix"
-					:itemsPerPage="itemsPerPage"
+					v-model:options="args.options"
+					:headers="args.headers"
+					:items="args.items"
 				/>
 			`,
 		}
@@ -352,11 +350,9 @@ export const SortBy: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
-					:headers="headers"
-					:items="items"
-					:suffix="suffix"
-					:itemsPerPage="itemsPerPage"
+					v-model:options="args.options"
+					:headers="args.headers"
+					:items="args.items"
 				/>
 			`,
 		}
@@ -513,21 +509,21 @@ export const ManyTables: Story = {
 				const options2 = ref<Partial<DataOptions>>({
 					itemsPerPage: 2,
 				})
-				return { ...args, options1, options2 }
+				return { args, options1, options2 }
 			},
 			template: `
 				<div>
 					<SyTable
 						v-model:options="options1"
-						:headers="headers"
-						:items="items"
+						:headers="args.headers"
+						:items="args.items"
 						suffix="table1"
 						class="mb-10"
 					/>
 					<SyTable
 						v-model:options="options2"
-						:headers="headers"
-						:items="items"
+						:headers="args.headers"
+						:items="args.items"
 						suffix="table2"
 					/>
 				</div>

@@ -17,14 +17,21 @@ export interface DataOptions {
 	mustSort?: boolean
 }
 
+export type DataTableHeaders = {
+	title?: string
+	value?: string
+	key?: string
+}
+
+// Component-specific props interfaces
 export interface SyTableProps {
 	items: unknown[]
 	headers: DataTableHeaders
 	options: DataOptions
 }
 
-export type DataTableHeaders = {
-	title?: string
-	value?: string
-	key?: string
+export interface SyServerTableProps {
+	serverItemsLength: number
+	headers: DataTableHeaders
+	options: DataOptions
 }

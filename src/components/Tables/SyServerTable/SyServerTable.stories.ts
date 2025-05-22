@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyServerTable from './SyServerTable.vue'
-import { StateEnum } from './constants/StateEnum'
-import type { DataOptions } from './types'
+import { StateEnum } from '../common/constants/StateEnum'
+import type { DataOptions } from '../common/types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 
@@ -95,8 +95,8 @@ export const Default: Story = {
 				<script setup lang="ts">
 					import { ref, watch } from 'vue'
 					import { SyServerTable } from '@cnamts/synapse'
-					import { StateEnum } from '@cnamts/synapse/src/components/SyServerTable/constants/StateEnum'
-					import type { DataOptions } from '@cnamts/synapse/src/components/SyServerTable/types'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
 					
 					interface User {
 						[key: string]: string
@@ -318,8 +318,8 @@ export const ServerSortBy: Story = {
         <script setup lang="ts">
           import { ref } from 'vue'
           import { SyServerTable } from '@cnamts/synapse'
-          import { StateEnum } from '@cnamts/synapse/src/components/SyServerTable/constants/StateEnum'
-          import type { DataOptions } from '@cnamts/synapse/src/components/SyServerTable/types'
+          import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+          import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
 
           interface User {
             [key: string]: string
@@ -539,8 +539,8 @@ export const MultiServerTables: Story = {
         <script setup lang="ts">
           import { ref } from 'vue'
           import { SyServerTable } from '@cnamts/synapse'
-          import { StateEnum } from '@cnamts/synapse/src/components/SyServerTable/constants/StateEnum'
-          import type { DataOptions } from '@cnamts/synapse/src/components/SyServerTable/types'
+          import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+          import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
 
           interface User {
             [key: string]: string
