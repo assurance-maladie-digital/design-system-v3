@@ -193,6 +193,7 @@ export const Default: Story = {
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
+		serverItemsLength: 0,
 	},
 	render: (args) => {
 		return {
@@ -402,6 +403,14 @@ export const ServerSortBy: Story = {
         `,
 			},
 		],
+	},
+	args: {
+		options: {
+			itemsPerPage: 5,
+			sortBy: [{ key: 'lastname', order: 'asc' }],
+			page: 1,
+		},
+		serverItemsLength: 0,
 	},
 	render: (args) => {
 		return {
@@ -632,6 +641,14 @@ export const MultiServerTables: Story = {
         `,
 			},
 		],
+	},
+	args: {
+		options: {
+			itemsPerPage: 5,
+			sortBy: [{ key: 'lastname', order: 'asc' }],
+			page: 1,
+		},
+		serverItemsLength: 0,
 	},
 	render: (args) => {
 		return {

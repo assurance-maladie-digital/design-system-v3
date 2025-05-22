@@ -187,8 +187,7 @@ export const Default: Story = {
 		return {
 			components: { SyTable },
 			setup() {
-				const options = ref<Partial<DataOptions>>(args.options)
-				return { ...args, options }
+				return { args }
 			},
 			template: `
 				<SyTable
@@ -349,8 +348,7 @@ export const SortBy: Story = {
 		return {
 			components: { SyTable },
 			setup() {
-				const options = ref<Partial<DataOptions>>(args.options)
-				return { ...args, options }
+				return { args }
 			},
 			template: `
 				<SyTable
