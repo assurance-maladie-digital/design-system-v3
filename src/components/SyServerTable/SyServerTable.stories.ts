@@ -4,7 +4,6 @@ import { StateEnum } from './constants/StateEnum'
 import type { DataOptions } from './types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
-import PaginatedTable from "../PaginatedTable/PaginatedTable.vue";
 
 interface User {
 	[key: string]: string
@@ -65,7 +64,7 @@ const meta = {
 			control: { type: 'number' },
 		},
 	},
-} satisfies Meta<typeof PaginatedTable & typeof VDataTable>
+} satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
 export default meta
 
@@ -96,8 +95,8 @@ export const Default: Story = {
 				<script setup lang="ts">
 					import { ref, watch } from 'vue'
 					import { SyServerTable } from '@cnamts/synapse'
-					import { StateEnum } from '@cnamts/synapse/src/components/PaginatedTable/constants/StateEnum'
-					import type { DataOptions } from '@cnamts/synapse/src/components/PaginatedTable/types'
+					import { StateEnum } from '@cnamts/synapse/src/components/SyServerTable/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/SyServerTable/types'
 					
 					interface User {
 						[key: string]: string
@@ -318,8 +317,8 @@ export const ServerSortBy: Story = {
         <script setup lang="ts">
           import { ref } from 'vue'
           import { SyServerTable } from '@cnamts/synapse'
-          import { StateEnum } from '@cnamts/synapse/src/components/PaginatedTable/constants/StateEnum'
-          import type { DataOptions } from '@cnamts/synapse/src/components/PaginatedTable/types'
+          import { StateEnum } from '@cnamts/synapse/src/components/SyServerTable/constants/StateEnum'
+          import type { DataOptions } from '@cnamts/synapse/src/components/SyServerTable/types'
 
           interface User {
             [key: string]: string
@@ -531,8 +530,8 @@ export const MultiServerTables: Story = {
         <script setup lang="ts">
           import { ref } from 'vue'
           import { SyServerTable } from '@cnamts/synapse'
-          import { StateEnum } from '@cnamts/synapse/src/components/PaginatedTable/constants/StateEnum'
-          import type { DataOptions } from '@cnamts/synapse/src/components/PaginatedTable/types'
+          import { StateEnum } from '@cnamts/synapse/src/components/SyServerTable/constants/StateEnum'
+          import type { DataOptions } from '@cnamts/synapse/src/components/SyServerTable/types'
 
           interface User {
             [key: string]: string
