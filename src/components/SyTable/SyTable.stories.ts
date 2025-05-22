@@ -230,7 +230,7 @@ export const SortBy: Story = {
 						sortBy: [
 							{
 								key: 'lastname',
-								order: 'asc',
+								order: 'desc',
 							},
 						],
 					})
@@ -340,7 +340,7 @@ export const SortBy: Story = {
 			sortBy: [
 				{
 					key: 'lastname',
-					order: 'asc',
+					order: 'desc',
 				},
 			],
 		},
