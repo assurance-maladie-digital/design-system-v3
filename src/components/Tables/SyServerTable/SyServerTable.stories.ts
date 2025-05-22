@@ -631,11 +631,6 @@ export const MultiServerTables: Story = {
 		],
 	},
 	args: {
-		options: {
-			itemsPerPage: 5,
-			sortBy: [{ key: 'lastname', order: 'asc' }],
-			page: 1,
-		},
 		// @ts-expect-error - props of VDataTable
 		headers: [
 			{ title: 'Nom', key: 'lastname' },
@@ -653,8 +648,14 @@ export const MultiServerTables: Story = {
 				const usersTable1 = ref<User[]>([])
 				const stateTable1 = ref(StateEnum.IDLE)
 
+				const optionsTable1 = ref<DataOptions>({
+					itemsPerPage: 5,
+					sortBy: [{ key: 'lastname', order: 'asc' }],
+					page: 1,
+				})
+
 				const fetchDataTable1 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(args.options as DataOptions)
+					const { items, total } = await getDataFromApi(optionsTable1.value)
 					usersTable1.value = items
 					totalUsersTable1.value = total
 				}
@@ -664,8 +665,14 @@ export const MultiServerTables: Story = {
 				const usersTable2 = ref<User[]>([])
 				const stateTable2 = ref(StateEnum.IDLE)
 
+				const optionsTable2 = ref<DataOptions>({
+					itemsPerPage: 3,
+					sortBy: [{ key: 'firstname', order: 'asc' }],
+					page: 1,
+				})
+
 				const fetchDataTable2 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(args.options as DataOptions)
+					const { items, total } = await getDataFromApi(optionsTable2.value)
 					usersTable2.value = items
 					totalUsersTable2.value = total
 				}
@@ -720,10 +727,12 @@ export const MultiServerTables: Story = {
 					args,
 					usersTable1,
 					totalUsersTable1,
+					optionsTable1,
 					stateTable1,
 					fetchDataTable1,
 					usersTable2,
 					totalUsersTable2,
+					optionsTable2,
 					stateTable2,
 					fetchDataTable2,
 					StateEnum,
@@ -732,7 +741,7 @@ export const MultiServerTables: Story = {
 			template: `
       <div class="pa-4">
         <SyServerTable
-          v-model:options="args.options"
+          v-model:options="optionsTable1"
           :items="usersTable1"
           :headers="args.headers"
           :server-items-length="totalUsersTable1"
@@ -742,7 +751,7 @@ export const MultiServerTables: Story = {
         />
         <hr class="my-4">
         <SyServerTable
-          v-model:options="args.options"
+          v-model:options="optionsTable2"
           :items="usersTable2"
           :headers="args.headers"
           :server-items-length="totalUsersTable2"

@@ -67,7 +67,7 @@
 		<VDataTableServer
 			v-bind="propsFacade"
 			color="primary"
-      :items-length="props.serverItemsLength"
+			:items-length="props.serverItemsLength"
 			@update:options="updateOptions"
 		>
 			<template
