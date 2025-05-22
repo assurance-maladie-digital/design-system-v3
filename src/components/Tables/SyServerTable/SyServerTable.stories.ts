@@ -193,6 +193,12 @@ export const Default: Story = {
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
+		// @ts-expect-error - props of VDataTable
+		headers: [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
 		serverItemsLength: 0,
 	},
 	render: (args) => {
@@ -203,21 +209,9 @@ export const Default: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
-				const options = ref({
-					itemsPerPage: 5,
-					sortBy: [{ key: 'lastname', order: 'asc' }],
-					page: 1,
-				})
-
-				const headers = [
-					{ title: 'Nom', key: 'lastname' },
-					{ title: 'Prénom', key: 'firstname' },
-					{ title: 'Email', key: 'email' },
-				]
-
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(options.value)
+					const { items, total } = await getDataFromApi(args.options)
 					users.value = items
 					totalUsers.value = total
 
@@ -274,14 +268,14 @@ export const Default: Story = {
 					]
 				}
 
-				return { args, headers, users, options, state, fetchData, totalUsers, StateEnum }
+				return { args, users, state, fetchData, totalUsers, StateEnum }
 			},
 			template: `
 			<div class="pa-4">
 				<SyServerTable
-					v-model:options="options"
+					v-model:options="args.options"
 					:items="users"
-					:headers="headers"
+					:headers="args.headers"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
 					suffix="api-example"
@@ -407,9 +401,15 @@ export const ServerSortBy: Story = {
 	args: {
 		options: {
 			itemsPerPage: 5,
-			sortBy: [{ key: 'lastname', order: 'asc' }],
+			sortBy: [{ key: 'lastname', order: 'desc' }],
 			page: 1,
 		},
+		// @ts-expect-error - props of VDataTable
+		headers: [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
 		serverItemsLength: 0,
 	},
 	render: (args) => {
@@ -420,20 +420,8 @@ export const ServerSortBy: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
-				const options = ref<DataOptions>({
-					itemsPerPage: 5,
-					sortBy: [{ key: 'lastname', order: 'desc' }],
-					page: 1,
-				})
-
-				const headers = [
-					{ title: 'Nom', key: 'lastname' },
-					{ title: 'Prénom', key: 'firstname' },
-					{ title: 'Email', key: 'email' },
-				]
-
 				const fetchData = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(options.value)
+					const { items, total } = await getDataFromApi(args.options as DataOptions)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -483,14 +471,14 @@ export const ServerSortBy: Story = {
 					]
 				}
 
-				return { args, headers, users, options, state, fetchData, totalUsers, StateEnum }
+				return { args, users, state, fetchData, totalUsers, StateEnum }
 			},
 			template: `
       <div class="pa-4">
         <SyServerTable
-          v-model:options="options"
+          v-model:options="args.options"
           :items="users"
-          :headers="headers"
+          :headers="args.headers"
           :server-items-length="totalUsers"
           :loading="state === StateEnum.PENDING"
           suffix="server-sort"
@@ -648,30 +636,25 @@ export const MultiServerTables: Story = {
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
+		// @ts-expect-error - props of VDataTable
+		headers: [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
 		serverItemsLength: 0,
 	},
 	render: (args) => {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const headers = [
-					{ title: 'Nom', key: 'lastname' },
-					{ title: 'Prénom', key: 'firstname' },
-					{ title: 'Email', key: 'email' },
-				]
-
 				// Table 1
 				const totalUsersTable1 = ref(0)
 				const usersTable1 = ref<User[]>([])
 				const stateTable1 = ref(StateEnum.IDLE)
-				const optionsTable1 = ref<DataOptions>({
-					itemsPerPage: 5,
-					sortBy: [{ key: 'lastname', order: 'asc' }],
-					page: 1,
-				})
 
 				const fetchDataTable1 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(optionsTable1.value)
+					const { items, total } = await getDataFromApi(args.options as DataOptions)
 					usersTable1.value = items
 					totalUsersTable1.value = total
 				}
@@ -680,14 +663,9 @@ export const MultiServerTables: Story = {
 				const totalUsersTable2 = ref(0)
 				const usersTable2 = ref<User[]>([])
 				const stateTable2 = ref(StateEnum.IDLE)
-				const optionsTable2 = ref<DataOptions>({
-					itemsPerPage: 3,
-					sortBy: [{ key: 'firstname', order: 'asc' }],
-					page: 1,
-				})
 
 				const fetchDataTable2 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(optionsTable2.value)
+					const { items, total } = await getDataFromApi(args.options as DataOptions)
 					usersTable2.value = items
 					totalUsersTable2.value = total
 				}
@@ -740,16 +718,13 @@ export const MultiServerTables: Story = {
 
 				return {
 					args,
-					headers,
 					usersTable1,
 					totalUsersTable1,
 					stateTable1,
-					optionsTable1,
 					fetchDataTable1,
 					usersTable2,
 					totalUsersTable2,
 					stateTable2,
-					optionsTable2,
 					fetchDataTable2,
 					StateEnum,
 				}
@@ -757,9 +732,9 @@ export const MultiServerTables: Story = {
 			template: `
       <div class="pa-4">
         <SyServerTable
-          v-model:options="optionsTable1"
+          v-model:options="args.options"
           :items="usersTable1"
-          :headers="headers"
+          :headers="args.headers"
           :server-items-length="totalUsersTable1"
           :loading="stateTable1 === StateEnum.PENDING"
           suffix="table1"
@@ -767,9 +742,9 @@ export const MultiServerTables: Story = {
         />
         <hr class="my-4">
         <SyServerTable
-          v-model:options="optionsTable2"
+          v-model:options="args.options"
           :items="usersTable2"
-          :headers="headers"
+          :headers="args.headers"
           :server-items-length="totalUsersTable2"
           :loading="stateTable2 === StateEnum.PENDING"
           suffix="table2"
