@@ -1,5 +1,5 @@
 import { computed, onMounted, ref, type Ref } from 'vue'
-import type { DataOptions, SortOption, GroupOption } from './types'
+import type { DataOptions } from './types'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 
 /**
@@ -71,7 +71,7 @@ export function useTableUtils({
 		return props
 	})
 
-	function updateOptions(tableOptions: SortOption[] | GroupOption[]): void {
+	function updateOptions(tableOptions: Partial<DataOptions>): void {
 		options.value = {
 			...options.value,
 			...tableOptions,

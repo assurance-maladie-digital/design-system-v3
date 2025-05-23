@@ -271,7 +271,7 @@ export const Default: Story = {
 				return { args, users, state, fetchData, totalUsers, StateEnum }
 			},
 			template: `
-			<div class="pa-4">
+			<div>
 				<SyServerTable
 					v-model:options="args.options"
 					:items="users"
@@ -474,7 +474,7 @@ export const ServerSortBy: Story = {
 				return { args, users, state, fetchData, totalUsers, StateEnum }
 			},
 			template: `
-      <div class="pa-4">
+      <div>
         <SyServerTable
           v-model:options="args.options"
           :items="users"
@@ -497,7 +497,7 @@ export const MultiServerTables: Story = {
 				name: 'Template',
 				code: `
         <template>
-          <div class="pa-4">
+          <div>
             <SyServerTable
               v-model:options="optionsTable1"
               :items="usersTable1"
@@ -648,14 +648,14 @@ export const MultiServerTables: Story = {
 				const usersTable1 = ref<User[]>([])
 				const stateTable1 = ref(StateEnum.IDLE)
 
-				const optionsTable1 = ref<DataOptions>({
+				const optionsTable1 = ref<Partial<DataOptions>>({
 					itemsPerPage: 5,
 					sortBy: [{ key: 'lastname', order: 'asc' }],
 					page: 1,
 				})
 
 				const fetchDataTable1 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(optionsTable1.value)
+					const { items, total } = await getDataFromApi(optionsTable1.value as DataOptions)
 					usersTable1.value = items
 					totalUsersTable1.value = total
 				}
@@ -665,14 +665,14 @@ export const MultiServerTables: Story = {
 				const usersTable2 = ref<User[]>([])
 				const stateTable2 = ref(StateEnum.IDLE)
 
-				const optionsTable2 = ref<DataOptions>({
+				const optionsTable2 = ref<Partial<DataOptions>>({
 					itemsPerPage: 3,
 					sortBy: [{ key: 'firstname', order: 'asc' }],
 					page: 1,
 				})
 
 				const fetchDataTable2 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(optionsTable2.value)
+					const { items, total } = await getDataFromApi(optionsTable2.value as DataOptions)
 					usersTable2.value = items
 					totalUsersTable2.value = total
 				}
@@ -739,7 +739,7 @@ export const MultiServerTables: Story = {
 				}
 			},
 			template: `
-      <div class="pa-4">
+      <div>
         <SyServerTable
           v-model:options="optionsTable1"
           :items="usersTable1"
@@ -747,9 +747,9 @@ export const MultiServerTables: Story = {
           :server-items-length="totalUsersTable1"
           :loading="stateTable1 === StateEnum.PENDING"
           suffix="table1"
+		  class="mb-10"
           @update:options="fetchDataTable1"
         />
-        <hr class="my-4">
         <SyServerTable
           v-model:options="optionsTable2"
           :items="usersTable2"

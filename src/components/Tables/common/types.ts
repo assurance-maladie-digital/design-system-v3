@@ -1,9 +1,4 @@
-export type SortOption = {
-	key: string
-	order: 'desc' | 'asc'
-}
-
-export type GroupOption = {
+export type SortOptions = {
 	key: string
 	order: 'desc' | 'asc'
 }
@@ -11,8 +6,8 @@ export type GroupOption = {
 export interface DataOptions {
 	page: number
 	itemsPerPage: number
-	sortBy: SortOption[]
-	groupBy?: GroupOption[]
+	sortBy: SortOptions[]
+	groupBy?: SortOptions[]
 	multiSort?: boolean
 	mustSort?: boolean
 }
