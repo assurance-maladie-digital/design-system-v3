@@ -126,3 +126,24 @@ pre.prismjs {
 .css-d25wp2 {
 	transform: none !important;
 }
+
+/* Fix for Table doc */
+#story--démarrer-releases--list {
+	table {
+		width: 100%;
+		border: 1px solid var(--background-list-color);
+		border-collapse: collapse;
+	}
+
+	th {
+		background-color: var(--background-list-color);
+		color: var(--title-color);
+		padding: 8px;
+		text-align: left;
+		border-bottom: 1px solid var(--background-list-color);
+	}
+
+	td {
+		padding: 2px 8px;
+	}
+}
