@@ -523,11 +523,11 @@ export const WithSuccess: Story = {
 						const isLongEnough = value.length >= 8
 
 						if (hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isLongEnough) {
-							return 'Mot de passe fort'
+							return true
 						}
 						return false
 					},
-					fieldIdentifier: 'password',
+					successMessage: 'Mot de passe fort',
 				},
 			},
 		],
@@ -691,7 +691,7 @@ export const WithValidation: Story = {
 					:custom-success-rules="customSuccessRules"
 					:show-success-messages="true"
 					:display-asterisk="true"
-					:is-validate-on-blur="false"
+					:is-validate-on-blur="true"
 				/>
 				<div class="mt-4">
 					<p><strong>Conseils pour tester :</strong></p>
@@ -807,6 +807,7 @@ export const WithCustomRules: Story = {
 							return true
 						},
 						fieldIdentifier: 'password',
+						successMessage: 'Le mot de passe est sécurisé',
 					},
 				},
 				{

@@ -1,6 +1,9 @@
 // Regular expressions
 export const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
+// Import du composable pour les jours fériés
+import { useHolidayDay } from '@/composables/date/useHolidayDay'
+
 export type ValidationResult = {
 	success?: string
 	error?: string
@@ -291,14 +294,24 @@ export function useFieldValidation() {
 					)
 				}
 
+				case 'isHolidayDay': {
+					const { isHolidayDay } = useHolidayDay()
+					const dateValue = new Date(value)
+
+					return createValidationResult(
+						!isHolidayDay(dateValue),
+						options.message || options.warningMessage || `${identifier} n'est pas un jour férié.`,
+					)
+				}
+
 				case 'custom': {
 					const result = options.validate?.(value)
 					if (result === true) {
-						return { success: baseMessages.success }
+						return { success: options.successMessage || baseMessages.success }
 					}
 					return options.isWarning
-						? { warning: typeof result === 'string' ? result : baseMessages.warning }
-						: { error: typeof result === 'string' ? result : baseMessages.error }
+						? { warning: typeof result === 'string' ? result : options.warningMessage || baseMessages.warning }
+						: { error: typeof result === 'string' ? result : options.message || baseMessages.error }
 				}
 
 				default:

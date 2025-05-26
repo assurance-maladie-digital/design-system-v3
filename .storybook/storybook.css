@@ -11,13 +11,13 @@ html.theme-cnam {
 
 /* Theme-aware styles for PA */
 html.theme-pa {
-	--title-color: #0062ac;
-	--background-list-color: rgb(0 0 145 / 10%);
+	--title-color: #0c419a;
+	--background-list-color: rgb(12 65 154 / 10%);
 	--border-color: white;
-	--hover-color: rgb(0 0 145 / 5%);
-	--button-bg: #0062ac;
+	--hover-color: rgb(12 65 154 / 5%);
+	--button-bg: #0c419a;
 	--button-text: #fff;
-	--body-font-family: 'Roboto';
+	--body-font-family: 'Arial';
 }
 
 /* Base styles */

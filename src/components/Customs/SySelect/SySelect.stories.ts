@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
-import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
+import { VBtn, VMenu, VList, VListItem, VListItemTitle, VForm } from 'vuetify/components'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
 
@@ -33,6 +33,19 @@ const meta: Meta<typeof SySelect> = {
 		clearable: {
 			control: 'boolean',
 			description: 'Permet de vider la sélection',
+		},
+		hideMessages: {
+			control: 'boolean',
+			description: 'Masque les messages d\'erreur',
+		},
+		density: {
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Définit la densité du champ de sélection',
+		},
+		width: {
+			control: 'text',
+			description: 'Permet de définir une largeur personnalisée pour le champ de sélection (en px)',
 		},
 	},
 } as Meta<typeof SySelect>
@@ -361,9 +374,115 @@ export const Info: Story = {
 							<li>- Si les items sont un tableau de string, le composant les utilisera directement.</li>
 						</ul>
 					</template>
-				</SyAlert>
+					</SyAlert>
 			`,
 		}
 	},
 	tags: ['!dev'],
+}
+
+export const FormValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple d\'utilisation du SySelect dans un formulaire.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <VForm @submit.prevent="submitForm">
+    <SySelect
+      v-model="formData.option"
+      :items="options"
+      label="Option"
+      required
+      display-asterisk
+      class="mb-4"
+    />
+    <VBtn
+      type="submit"
+      color="primary"
+      class="mt-4"
+    >
+      Soumettre
+    </VBtn>
+  </VForm>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import SySelect from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
+
+const formData = ref({
+  option: ''
+})
+
+const options = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+]
+
+const submitForm = () => {
+  // Traitement du formulaire
+  console.log('Formulaire soumis:', formData.value)
+}
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		'label': 'Option',
+		'required': true,
+		'displayAsterisk': true,
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SySelect, VBtn, VForm },
+			setup() {
+				const formData = ref({
+					option: '',
+				})
+
+				const submitForm = () => {
+					console.log('Formulaire soumis:', formData.value)
+				}
+
+				return { args, formData, submitForm }
+			},
+			template: `
+				<div class="pa-4">
+					<VForm @submit.prevent="submitForm">
+						<SySelect
+							v-model="formData.option"
+							v-bind="args"
+							class="mb-4"
+						/>
+						<VBtn
+							type="submit"
+							color="primary"
+							class="mt-4"
+						>
+							Soumettre
+						</VBtn>
+					</VForm>
+				</div>
+			`,
+		}
+	},
 }

@@ -8,14 +8,15 @@ export const config = {
 	addBtn: {
 		variant: 'outlined',
 		color: 'primary',
-		class: 'my-1 px-2 px-md-4',
+		class: 'px-2 px-md-4',
 		minWidth: '44px',
+		height: '40px',
 	},
 	addIconLabel: {
 		class: 'mr-1',
 	},
 	textField: {
-		variant: 'underlined',
+		variant: 'outlined',
 		clearable: true,
 		singleLine: true,
 		hideDetails: true,

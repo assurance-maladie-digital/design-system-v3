@@ -61,6 +61,10 @@
 			type: Boolean,
 			default: false,
 		},
+		density: {
+			type: String as PropType<'default' | 'comfortable' | 'compact' | undefined>,
+			default: 'default',
+		},
 		bgColor: {
 			type: String,
 			default: undefined,
@@ -72,6 +76,14 @@
 		clearable: {
 			type: Boolean,
 			default: false,
+		},
+		hideMessages: {
+			type: Boolean,
+			default: false,
+		},
+		width: {
+			type: String,
+			default: 'undefined',
 		},
 	})
 
@@ -100,9 +112,8 @@
 			const rect = input.value.$el.getBoundingClientRect()
 			listStyles.value = {
 				position: 'fixed',
-				top: `${rect.bottom}px`,
+				top: props.density === 'compact' ? `${rect.bottom + 22}px` : `${rect.bottom}px`,
 				left: `${rect.left}px`,
-				width: `${rect.width}px`,
 				zIndex: '999',
 			}
 		}
@@ -159,12 +170,19 @@
 	})
 
 	const isRequired = computed(() => {
-		// Si la gestion des erreurs est désactivée, on ne considère jamais le champ comme requis
-		if (props.disableErrorHandling) return false
+		if (props.disableErrorHandling || props.hideMessages) return false
+		if (props.readonly) return
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
 	const input = ref<InstanceType<typeof VTextField> | null>(null)
+
+	const calculatedWidth = computed(() => {
+		const baseWidth = props.width ? Number(props.width) : 0
+		const selectedText = typeof selectedItemText.value === 'string' ? selectedItemText.value : ''
+		const clearableAdjustment = props.clearable ? 4 : 0
+		return `${baseWidth + selectedText.length * (4 + clearableAdjustment)}px`
+	})
 
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
@@ -172,8 +190,7 @@
 
 	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
 		if (!newIsOpen) {
-			// Si la gestion des erreurs est désactivée, on ne met jamais hasError à true
-			if (props.disableErrorHandling) {
+			if (props.disableErrorHandling || props.readonly) {
 				hasError.value = false
 			}
 			else {
@@ -186,7 +203,6 @@
 	})
 
 	watch(() => props.errorMessages, (newValue) => {
-		// Si la gestion des erreurs est désactivée, on ne met jamais hasError à true
 		if (!props.disableErrorHandling) {
 			hasError.value = newValue.length > 0
 		}
@@ -202,6 +218,13 @@
 		}
 		window.addEventListener('scroll', updateListPosition, true)
 		window.addEventListener('resize', updateListPosition)
+
+		if (props.hideMessages) {
+			const message = document.querySelector('.v-input__details')
+			if (message) {
+				message.classList.add('d-sr-only')
+			}
+		}
 	})
 
 	onUnmounted(() => {
@@ -230,11 +253,13 @@
 			:aria-label="labelWithAsterisk"
 			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
-			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
+			:rules="isRequired && !props.disableErrorHandling && !props.hideMessages ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
+			:density="props.density"
 			readonly
 			class="sy-select"
+			:width="calculatedWidth"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"

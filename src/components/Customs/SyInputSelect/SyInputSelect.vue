@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-	import { mdiChevronDown, mdiInformation } from '@mdi/js'
+	import { mdiChevronDown, mdiInformation, mdiCloseCircle } from '@mdi/js'
 	import { computed, onMounted, ref, watch } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import defaultOptions from './config'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
@@ -16,7 +17,11 @@
 		isHeaderToolbar?: boolean
 		displayAsterisk?: boolean
 		readonly?: boolean
+		clearable?: boolean
+		customRules?: ValidationRule[]
+		disableErrorHandling?: boolean
 	}>(), {
+
 		modelValue: null,
 		items: () => [],
 		textKey: 'text',
@@ -28,11 +33,38 @@
 		isHeaderToolbar: false,
 		displayAsterisk: false,
 		readonly: false,
+		clearable: false,
+		customRules: () => [],
+		disableErrorHandling: false,
 	})
 
 	const options = useCustomizableOptions(defaultOptions, props)
 
-	const emit = defineEmits(['update:modelValue'])
+	const emit = defineEmits(['update:modelValue', 'update:errorMessages'])
+
+	// Déclaration de localErrorMessages avant son utilisation
+	const localErrorMessages = ref<string | string[]>(props.errorMessages as string | string[])
+
+	// Initialisation du composable de validation
+	const validation = useValidation({
+		customRules: props.customRules,
+		fieldIdentifier: props.label,
+		disableErrorHandling: props.disableErrorHandling,
+	})
+
+	// Synchronisation des messages externes
+	watch(() => props.errorMessages, (newVal) => {
+		if (Array.isArray(newVal)) {
+			validation.errors.value = newVal
+		}
+		else if (newVal) {
+			validation.errors.value = [newVal]
+		}
+		else {
+			validation.errors.value = []
+		}
+		localErrorMessages.value = validation.errors.value
+	}, { immediate: true })
 
 	const isOpen = ref(false)
 	const selectedItem = ref<Record<string, unknown> | string | null>(props.modelValue)
@@ -48,6 +80,7 @@
 	}
 
 	const isRequired = computed(() => {
+		if (props.readonly) return
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
@@ -58,6 +91,8 @@
 		selectedItem.value = item
 		emit('update:modelValue', item)
 		isOpen.value = false
+		validateField(item)
+		emit('update:errorMessages', localErrorMessages.value)
 	}
 
 	const getItemText = (item: unknown) => {
@@ -83,6 +118,8 @@
 
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
+		validateField(newValue)
+		emit('update:errorMessages', localErrorMessages.value)
 	})
 
 	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
@@ -95,6 +132,7 @@
 	})
 
 	watch(() => props.errorMessages, (newValue) => {
+		if (props.readonly) return
 		localErrorMessages.value = newValue
 		hasError.value = newValue.length > 0
 	})
@@ -129,18 +167,48 @@
 		})
 	})
 
-	const localErrorMessages = ref<string | string[]>(props.errorMessages as string | string[])
+	// Construction des règles de validation
+	const defaultRules = computed<ValidationRule[]>(() => props.required
+		? [{
+			type: 'required',
+			options: {
+				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				fieldIdentifier: props.label,
+			},
+		}]
+		: [],
+	)
+
+	const validateField = (value: unknown) => {
+		if (props.readonly) {
+			validation.clearValidation()
+			localErrorMessages.value = []
+			return true
+		}
+
+		if (!value && !props.required) {
+			validation.clearValidation()
+			localErrorMessages.value = []
+			return true
+		}
+
+		const result = validation.validateField(
+			value,
+			[...defaultRules.value, ...(props.customRules || [])],
+		)
+
+		localErrorMessages.value = validation.errors.value
+		return !result.hasError
+	}
+
+	const validateOnSubmit = () => {
+		const isValid = validateField(selectedItem.value)
+		hasError.value = !isValid
+		return isValid
+	}
+
 	const checkForErrors = () => {
-		if (props.required && !selectedItem.value) {
-			localErrorMessages.value = ['Le champ est requis.']
-			return false
-		}
-		if (props.errorMessages.length > 0) {
-			localErrorMessages.value = props.errorMessages
-			return false
-		}
-		localErrorMessages.value = []
-		return true
+		return validateField(selectedItem.value)
 	}
 
 	defineExpose({
@@ -149,6 +217,9 @@
 		selectItem,
 		selectedItem,
 		getItemText,
+		validateOnSubmit,
+		validateField,
+		checkForErrors,
 	})
 </script>
 
@@ -166,14 +237,19 @@
 		<div
 			ref="menu"
 			v-click-outside="closeList"
-			:class="['sy-input-select', buttonClass, 'text-'+options.menu.color]"
+			:class="[
+				'sy-input-select',
+				buttonClass,
+				hasError ? 'text-error' : 'text-'+options.menu.color,
+				hasError ? 'error--text' : ''
+			]"
 			role="menu"
 			tabindex="0"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
 		>
-			<span>{{ selectedItemText }}</span>
+			<span :class="{ 'error--text': hasError }">{{ selectedItemText }}</span>
 			<VIcon
 				v-if="hasError"
 				class="ml-2"
@@ -182,6 +258,13 @@
 				{{ mdiInformation }}
 			</VIcon>
 			<VIcon> {{ mdiChevronDown }}</VIcon>
+			<VIcon
+				v-if="selectedItemText && props.clearable"
+				aria-label="Supprimer"
+				@click.stop.prevent="selectItem(null)"
+			>
+				{{ mdiCloseCircle }}
+			</VIcon>
 		</div>
 		<VList
 			v-if="isOpen"

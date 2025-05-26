@@ -23,6 +23,7 @@
 		customKeyRules?: ValidationRule[]
 		customNumberWarningRules?: ValidationRule[]
 		customKeyWarningRules?: ValidationRule[]
+		customRulesPrecedence?: boolean
 		showSuccessMessages?: boolean
 		width?: string
 		bgColor?: string
@@ -56,6 +57,7 @@
 		customKeyRules: () => [],
 		customNumberWarningRules: () => [],
 		customKeyWarningRules: () => [],
+		customRulesPrecedence: false,
 		showSuccessMessages: true,
 		width: '100%',
 		bgColor: undefined,
@@ -165,7 +167,7 @@
 	// Règles de validation
 	const defaultNumberRules = computed(() => {
 		const rules: ValidationRule[] = []
-
+		if (props.readonly) return
 		if (props.required) {
 			rules.push({
 				type: 'required',
@@ -176,6 +178,15 @@
 			})
 		}
 
+		// Ajout des règles personnalisées avec prévalence si demandé
+		if (props.customRulesPrecedence && props.customNumberRules && props.customNumberRules.length > 0) {
+			rules.push(...props.customNumberRules.map(rule => ({
+				...rule,
+				options: rule.options || {},
+			})))
+		}
+
+		// Règle de validation standard du NIR
 		rules.push({
 			type: 'custom',
 			options: {
@@ -194,8 +205,8 @@
 			},
 		})
 
-		// Ajout des règles personnalisées
-		if (props.customNumberRules) {
+		// Ajout des règles personnalisées sans prévalence (comportement par défaut)
+		if (!props.customRulesPrecedence && props.customNumberRules && props.customNumberRules.length > 0) {
 			rules.push(...props.customNumberRules.map(rule => ({
 				...rule,
 				options: rule.options || {},
@@ -207,7 +218,7 @@
 
 	const defaultKeyRules = computed(() => {
 		const rules: ValidationRule[] = []
-
+		if (props.readonly) return
 		if (props.required) {
 			rules.push({
 				type: 'required',
@@ -324,7 +335,6 @@
 		return validateFields(true)
 	}
 
-	// Computed pour statut des champs
 	const hasNumberErrors = computed(() => numberValidation.hasError.value)
 	const hasNumberWarning = computed(() => !hasNumberErrors.value && numberValidation.hasWarning.value)
 	const hasNumberSuccess = computed(() => !hasNumberErrors.value && !hasNumberWarning.value && numberValidation.hasSuccess.value)
@@ -333,7 +343,6 @@
 	const hasKeyWarning = computed(() => !hasKeyErrors.value && keyValidation.hasWarning.value)
 	const hasKeySuccess = computed(() => !hasKeyErrors.value && !hasKeyWarning.value && keyValidation.hasSuccess.value)
 
-	// Labels avec astérisque si nécessaire
 	const numberLabelWithAsterisk = computed(() => {
 		return props.required && props.displayAsterisk ? `${props.numberLabel} *` : props.numberLabel
 	})
@@ -342,7 +351,6 @@
 		return props.required && props.displayAsterisk ? `${props.keyLabel} *` : props.keyLabel
 	})
 
-	// Gestion des événements
 	const handleNumberInput = () => {
 		emitValue()
 		validateFields()

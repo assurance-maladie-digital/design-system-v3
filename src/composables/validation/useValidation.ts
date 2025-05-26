@@ -94,7 +94,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		})
 
 		// Si pas d'erreur, ajouter le message de succès ou un message par défaut
-		if (!hasValidationError && value && options.showSuccessMessages !== false) {
+		// Mais seulement si aucun customSuccessRules n'est défini pour éviter la duplication
+		if (!hasValidationError && value && options.showSuccessMessages !== false && (!successRules || successRules.length === 0)) {
 			const customSuccessMessage = rules.find(rule => rule.options.successMessage)?.options.successMessage
 			if (customSuccessMessage) {
 				successes.value.push(customSuccessMessage)

@@ -1,0 +1,104 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+
+import * as DiacriticPickerStories from './DiacriticPicker.stories';
+
+<Meta of={DiacriticPickerStories} />
+
+# DiacriticPicker
+
+Le composant `DiacriticPicker` permet d'ajouter facilement des caractères diacritiques (accents, cédilles, etc.) à un champ de texte ou un textarea. Il ajoute un bouton à côté du champ qui ouvre une boîte de dialogue avec des caractères diacritiques à insérer.
+
+<Canvas of={DiacriticPickerStories.Default} />
+
+# API
+
+<Controls of={DiacriticPickerStories.Default} />
+
+## Fonctionnalités
+
+### Insertion de caractères
+Cliquer sur un caractère dans la boîte de dialogue l'insère à la position actuelle du curseur dans le champ de texte.
+
+### Raccourci clavier
+Le composant offre un raccourci clavier pour changer rapidement entre les variantes d'un même caractère :
+- Tapez un caractère (par exemple "e")
+- Appuyez sur la touche `=` pour parcourir ses variantes diacritiques (é, è, ê, ë)
+
+## Personnalisation
+
+Le composant utilise le système de personnalisation Vuetify pour les éléments suivants :
+- `btn` : Style du bouton d'ouverture
+- `dialog` : Style de la boîte de dialogue
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup>
+  import { DiacriticPicker } from '@cnamts/synapse'
+  import { ref } from 'vue'
+  
+  const nom = ref('')
+</script>
+
+<template>
+  <DiacriticPicker v-model="nom">
+    <v-text-field
+      id="diacritic-input"
+      v-model="nom"
+      label="Nom avec accents"
+      color="primary"
+      variant="outlined"
+    />
+  </DiacriticPicker>
+</template>
+`} />
+
+## Utilisation avec un textarea
+
+Le composant fonctionne également avec un textarea pour les textes plus longs.
+
+<Source dark code={`
+<script setup>
+  import { DiacriticPicker } from '@cnamts/synapse'
+  import { ref } from 'vue'
+  
+  const adresse = ref('')
+</script>
+
+<template>
+  <DiacriticPicker v-model="adresse">
+    <v-textarea
+      id="diacritic-input"
+      v-model="adresse"
+      label="Adresse"
+      color="primary"
+      variant="outlined"
+      auto-grow
+    />
+  </DiacriticPicker>
+</template>
+`} />
+
+## Personnalisation des caractères diacritiques
+
+Vous pouvez personnaliser la liste des caractères diacritiques affichés dans la boîte de dialogue.
+
+<Source dark code={`
+<script setup>
+  import { DiacriticPicker } from '@cnamts/synapse'
+  import { ref } from 'vue'
+  
+  const text = ref('')
+  const caracteres = ['é', 'è', 'ê', 'à', 'ç', 'ù']
+</script>
+
+<template>
+  <DiacriticPicker v-model="text" :diacritics="caracteres">
+    <v-text-field
+      v-model="text"
+      label="Texte avec accents personnalisés"
+      variant="outlined"
+    />
+  </DiacriticPicker>
+</template>
+`} />

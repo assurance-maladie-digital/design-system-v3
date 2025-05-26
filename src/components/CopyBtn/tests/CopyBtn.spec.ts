@@ -96,4 +96,106 @@ describe('CopyBtn', () => {
 
 		expect(wrapper.vm.tooltip).toBeFalsy()
 	})
+
+	it('removes spaces in the text', async () => {
+		const wrapper = mount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: 'text with spaces',
+				separatorsToRemove: ' ',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+
+		expect(copy).toHaveBeenCalledWith('textwithspaces')
+	})
+
+	it('removes all types of whitespace', async () => {
+		const wrapper = mount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: 'text with\tspaces\nand\rtabs',
+				separatorsToRemove: ' ',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+
+		expect(copy).toHaveBeenCalledWith('textwithspacesandtabs')
+	})
+
+	it('removes specified separator when separatorsToRemove is a string', async () => {
+		const wrapper = mount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: 'FR76-3000-4000-0300',
+				separatorsToRemove: '-',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+
+		expect(copy).toHaveBeenCalledWith('FR76300040000300')
+	})
+
+	it('removes multiple separators when separatorsToRemove is an array', async () => {
+		const wrapper = mount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: '+33 (0)6.12.34.56',
+				separatorsToRemove: ['+', '(', ')', '.'],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+
+		expect(copy).toHaveBeenCalledWith('3306123456')
+	})
+
+	it('handles special regex characters in separators correctly', async () => {
+		const wrapper = mount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: 'text.with*special[chars]',
+				separatorsToRemove: ['.', '*', '[', ']'],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+
+		expect(copy).toHaveBeenCalledWith('textwithspecialchars')
+	})
+
+	it('removes separators', async () => {
+		const wrapper = mount(CopyBtn, {
+			propsData: {
+				label: 'test',
+				textToCopy: 'FR76-3000-4000',
+				separatorsToRemove: '-',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
+
+		expect(copy).toHaveBeenCalledWith('FR7630004000')
+	})
 })

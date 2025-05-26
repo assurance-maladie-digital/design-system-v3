@@ -1,0 +1,155 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Accordion > renders correctly 1`] = `
+<div
+  class="sy-accordion"
+  style="--accordion-hover-color: var(--v-theme-primary); --accordion-focus-color: var(--v-theme-primary); --accordion-active-color: var(--v-theme-primary);"
+>
+  <div class="
+    bg-white
+    sy-accordion-item
+  ">
+    <div
+      aria-controls="accordion-content-item1"
+      aria-expanded="false"
+      class="sy-accordion-button"
+      id="accordion-button-item1"
+      role="button"
+      tabindex="0"
+    >
+      <h2 class="sy-accordion-heading">
+        <div class="
+          sy-accordion-title
+          text-primary
+        ">
+          <span class="sy-accordion-icon">
+            <v-icon-stub
+              disabled="false"
+              end="false"
+              icon="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+              size="default"
+              start="false"
+              tag="i"
+            ></v-icon-stub>
+          </span>
+          <span>
+            Section 1
+          </span>
+        </div>
+      </h2>
+    </div>
+    <div
+      aria-labelledby="accordion-button-item1"
+      class="sy-accordion-content"
+      id="accordion-content-item1"
+      role="region"
+      tabindex="-1"
+    >
+      <div class="sy-accordion-content-inner">
+        <p class="sy-accordion-content-text">
+          Contenu de la section 1
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="
+    bg-white
+    sy-accordion-item
+  ">
+    <div
+      aria-controls="accordion-content-item2"
+      aria-expanded="false"
+      class="sy-accordion-button"
+      id="accordion-button-item2"
+      role="button"
+      tabindex="0"
+    >
+      <h2 class="sy-accordion-heading">
+        <div class="
+          sy-accordion-title
+          text-primary
+        ">
+          <span class="sy-accordion-icon">
+            <v-icon-stub
+              disabled="false"
+              end="false"
+              icon="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+              size="default"
+              start="false"
+              tag="i"
+            ></v-icon-stub>
+          </span>
+          <span>
+            Section 2
+          </span>
+        </div>
+      </h2>
+    </div>
+    <div
+      aria-labelledby="accordion-button-item2"
+      class="sy-accordion-content"
+      id="accordion-content-item2"
+      role="region"
+      tabindex="-1"
+    >
+      <div class="sy-accordion-content-inner">
+        <p class="sy-accordion-content-text">
+          Contenu de la section 2
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="
+    bg-white
+    sy-accordion-item
+  ">
+    <div
+      aria-controls="accordion-content-item3"
+      aria-expanded="false"
+      class="sy-accordion-button"
+      id="accordion-button-item3"
+      role="button"
+      tabindex="0"
+    >
+      <h2 class="sy-accordion-heading">
+        <div class="
+          sy-accordion-title
+          text-primary
+        ">
+          <span class="sy-accordion-icon">
+            <v-icon-stub
+              disabled="false"
+              end="false"
+              icon="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+              size="default"
+              start="false"
+              tag="i"
+            ></v-icon-stub>
+          </span>
+          <span>
+            Section 3
+          </span>
+        </div>
+      </h2>
+    </div>
+    <div
+      aria-labelledby="accordion-button-item3"
+      class="sy-accordion-content"
+      id="accordion-content-item3"
+      role="region"
+      tabindex="-1"
+    >
+      <div class="sy-accordion-content-inner">
+        <div class="sy-accordion-content-item">
+          <div class="sy-accordion-content-line">
+            <strong>
+              Sous-titre de la section 3
+            </strong>
+            : Contenu détaillé de la section 3
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

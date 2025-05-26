@@ -33,6 +33,10 @@ const meta = {
 			control: { type: 'number' },
 			default: 2000,
 		},
+		separatorsToRemove: {
+			control: { type: 'text' },
+			default: '',
+		},
 		vuetifyOptions: {
 			control: { type: 'object' },
 			default: () => ({
@@ -256,6 +260,191 @@ export const SlotIcon: Story = {
 							<VIcon :icon="args.icon" />
 						</template>
 					</CopyBtn>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const RemoveSeparators: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center pa-4">
+		<p class="mb-0 mr-1">
+		  IBAN : <b>FR76-3000-4000-0300-0000-0000-000</b>
+		</p>
+
+		<CopyBtn
+			label="Copier l'IBAN sans tirets"
+			text-to-copy="FR76-3000-4000-0300-0000-0000-000"
+			separators-to-remove="-"
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { CopyBtn } from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		ariaLabel: 'Copier l\'IBAN sans tirets',
+		ariaOwns: 'copy-btn-remove-separators',
+		textToCopy: 'FR76-3000-4000-0300-0000-0000-000',
+		hideTooltip: false,
+		tooltipDuration: 2000,
+		separatorsToRemove: '-',
+	},
+	render: (args) => {
+		return {
+			components: { CopyBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<p class="mb-0 mr-1">
+					  IBAN : <b>FR76-3000-4000-0300-0000-0000-000</b>
+					</p>
+	
+					<CopyBtn
+						label="Copier l'IBAN sans tirets"
+						:text-to-copy="args.textToCopy"
+						:separators-to-remove="args.separatorsToRemove"
+						:hide-tooltip="args.hideTooltip"
+						:aria-owns="args.ariaOwns"
+					/>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const MultiSeparators: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center pa-4">
+		<p class="mb-0 mr-1">
+		  Téléphone : <b>+33 (0)6.12.34.56.78</b>
+		</p>
+
+		<CopyBtn
+			label="Copier le numéro sans séparateurs"
+			text-to-copy="+33 (0)6.12.34.56.78"
+			:separators-to-remove="['+', '(', ')', '.']"
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { CopyBtn } from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		ariaLabel: 'Copier le numéro sans séparateurs',
+		ariaOwns: 'copy-btn-multi-separators',
+		textToCopy: '+33 (0)6.12.34.56.78',
+		hideTooltip: false,
+		tooltipDuration: 2000,
+		separatorsToRemove: ['+', '(', ')', '.'],
+	},
+	render: (args) => {
+		return {
+			components: { CopyBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<p class="mb-0 mr-1">
+					  Téléphone : <b>+33 (0)6.12.34.56.78</b>
+					</p>
+	
+					<CopyBtn
+						label="Copier le numéro sans séparateurs"
+						:text-to-copy="args.textToCopy"
+						:separators-to-remove="args.separatorsToRemove"
+						:hide-tooltip="args.hideTooltip"
+						:aria-owns="args.ariaOwns"
+					/>
+              	</div>
+			`,
+		}
+	},
+}
+
+export const RemoveSpaces: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-wrap align-center pa-4">
+		<p class="mb-0 mr-1">
+		  Numéro de sécurité sociale : <b>1 97 07 56 541 123 45</b>
+		</p>
+
+		<CopyBtn
+			label="Copier le numéro de sécurité sociale sans espaces"
+			text-to-copy="1 97 07 56 541 123 45"
+			separators-to-remove=" "
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { CopyBtn } from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		ariaLabel: 'Copier le numéro de sécurité sociale sans espaces',
+		ariaOwns: 'copy-btn-remove-spaces',
+		textToCopy: '1 97 07 56 541 123 45',
+		hideTooltip: false,
+		tooltipDuration: 2000,
+	},
+	render: (args) => {
+		return {
+			components: { CopyBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<p class="mb-0 mr-1">
+					  Numéro de sécurité sociale : <b>1 97 07 56 541 123 45</b>
+					</p>
+	
+					<CopyBtn
+						label="Copier le numéro de sécurité sociale sans espaces"
+						:text-to-copy="args.textToCopy"
+						:hide-tooltip="args.hideTooltip"
+						:aria-owns="args.ariaOwns"
+						separators-to-remove=" "
+					/>
               	</div>
 			`,
 		}

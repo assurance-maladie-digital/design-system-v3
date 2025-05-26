@@ -7,7 +7,7 @@
 	import { locales as defaultLocales } from './locales'
 
 	const props = withDefaults(defineProps<{
-		nbTotal: number
+		nbTotal?: number
 		nbFiltered?: number
 		search?: string
 		searchLabel?: string
@@ -16,6 +16,7 @@
 		loading?: boolean
 		locales?: typeof defaultLocales
 	} & CustomizableOptions>(), {
+		nbTotal: 0,
 		nbFiltered: undefined,
 		search: undefined,
 		searchLabel: defaultLocales.search,
@@ -30,6 +31,12 @@
 		(e: 'add'): void
 	}>()
 
+	defineSlots<{
+		searchLeft?: () => undefined
+		searchRight?: () => undefined
+		filters?: () => undefined
+	}>()
+
 	const options = useCustomizableOptions(config, props)
 	const display = useDisplay()
 	const theme = useTheme()
@@ -38,7 +45,6 @@
 		'sy-form-input--s': display.xs.value,
 		'flex-grow-0': display.xs.value,
 		'flex-grow-1': !display.xs.value,
-		'mr-6': props.showAddButton,
 		'loading': props.loading,
 	}))
 
@@ -59,11 +65,13 @@
 	>
 		<p
 			v-if="nbTotal > 0"
-			class="mb-0 font-weight-bold mr-4 my-3"
+			class="mb-0 font-weight-bold mr-4 mr-sm-0 my-3"
 			data-test-id="nb-rows"
 		>
 			{{ displayNbRows }}
 		</p>
+
+		<slot name="filters" />
 
 		<div class="sy-table-toolbar__search">
 			<slot name="search-left" />
@@ -109,6 +117,16 @@
 
 .sy-table-toolbar {
 	min-height: 56px;
+
+	:deep(.v-toolbar__content) {
+		width: 100%;
+		flex-wrap: wrap;
+		flex-direction: row !important;
+
+		@media (width <= 600px) {
+			flex-direction: column !important;
+		}
+	}
 }
 
 .loading :deep(.v-field__append-inner) {
@@ -125,6 +143,10 @@
 	grid-auto-flow: column;
 	margin-left: auto;
 	align-items: end;
+
+	@media (width <= 600px) {
+		margin-left: 0;
+	}
 }
 
 .sy-form-input {
@@ -134,11 +156,6 @@
 .sy-form-input--s {
 	z-index: 1; // Display content above the table on mobile
 	contain: none; // Allow fixed elements to be displayed properly
-
-	:deep(.v-toolbar__content) {
-		width: 100%;
-		flex-wrap: wrap;
-	}
 }
 
 .sy-table-toolbar.v-theme--dark :deep() {

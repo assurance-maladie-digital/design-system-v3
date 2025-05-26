@@ -88,29 +88,35 @@
 		}
 
 		// Règle pour le message de succès
-		rules.push({
-			type: 'custom',
-			options: {
-				validate: (value: string) => value ? true : 'Ce champ est requis',
-				successMessage: 'Mot de passe fort',
-				fieldIdentifier: props.label || 'password',
-			},
-		})
+		// rules.push({
+		// 	type: 'custom',
+		// 	options: {
+		// 		validate: (value: string) => value ? true : 'Ce champ est requis',
+		// 		successMessage: 'Mot de passe fort',
+		// 		fieldIdentifier: props.label || 'password',
+		// 	},
+		// })
 
 		return rules
 	})
 
 	// Initialisation du composable de validation
-	const { errors, warnings, successes, validateField } = useValidation({
-		customRules: defaultRules.value,
-		warningRules: props.customWarningRules || [],
-		successRules: props.customSuccessRules || [],
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: props.label || 'password',
-		disableErrorHandling: props.disableErrorHandling,
-	})
+	const { errors, warnings, successes, validateField } = !props.readonly
+		? useValidation({
+			customRules: defaultRules.value,
+			warningRules: props.customWarningRules || [],
+			successRules: props.customSuccessRules || [],
+			showSuccessMessages: props.showSuccessMessages,
+			fieldIdentifier: props.label || 'password',
+			disableErrorHandling: props.disableErrorHandling,
+		})
+		: {
+			errors: ref<string[]>([]),
+			warnings: ref<string[]>([]),
+			successes: ref<string[]>([]),
+			validateField: () => {},
+		}
 
-	// Computed pour les états de validation
 	const hasError = computed(() => errors.value.length > 0)
 	const hasWarning = computed(() => warnings.value.length > 0)
 	const hasSuccess = computed(() => successes.value.length > 0 && props.showSuccessMessages)
@@ -149,6 +155,7 @@
 	}, { immediate: true })
 
 	watch(() => password.value, () => {
+		if (props.readonly) return
 		validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
 		emit('update:modelValue', password.value)
 	})
@@ -160,6 +167,7 @@
 	}
 
 	const validateOnSubmit = () => {
+		if (props.readonly) return
 		validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
 		const isValid = errors.value.length === 0
 		if (isValid) {
@@ -199,7 +207,7 @@
 		:rules="[...defaultRules, ...props.customRules]"
 		class="vd-password"
 		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
-		@blur="props.isValidateOnBlur ? validateField(password, [...defaultRules, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || []) : () => {}"
+		@blur="props.isValidateOnBlur && !props.readonly ? validateField(password, [...defaultRules, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || []) : () => {}"
 		@keydown="handleKeydown"
 	>
 		<template #append-inner>

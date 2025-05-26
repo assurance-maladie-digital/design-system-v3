@@ -64,11 +64,20 @@
 		hasError,
 		clearValidation,
 		validateField,
-	} = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: props.label || props.placeholder,
-		disableErrorHandling: props.disableErrorHandling,
-	})
+	} = !props.readonly
+		? useValidation({
+			showSuccessMessages: props.showSuccessMessages,
+			fieldIdentifier: props.label || props.placeholder,
+			disableErrorHandling: props.disableErrorHandling,
+		})
+		: {
+			errors: ref<string[]>([]),
+			warnings: ref<string[]>([]),
+			successes: ref<string[]>([]),
+			hasError: ref(false),
+			clearValidation: () => {},
+			validateField: () => {},
+		}
 
 	const errorMessages = errors
 	const warningMessages = warnings
@@ -114,6 +123,7 @@
 	}
 
 	const validateDateFormat = (dateStr: string): { isValid: boolean, message: string } => {
+		if (props.readonly) return { isValid: true, message: '' }
 		if (!dateStr) {
 			return {
 				isValid: !props.required || !hasInteracted.value || props.disableErrorHandling,
@@ -145,6 +155,7 @@
 		clearValidation()
 
 		if (!value && props.required && hasInteracted.value) {
+			if (props.readonly) return true
 			if (!props.disableErrorHandling) {
 				errors.value.push('La date est requise')
 			}

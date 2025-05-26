@@ -4,6 +4,7 @@ import { describe, it, expect } from 'vitest'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import { indicatifs } from '../indicatifs'
 
 const vuetify = createVuetify({
 	components,
@@ -31,7 +32,42 @@ describe('PhoneField', () => {
 		expect(wrapper.emitted('change')).toBeTruthy()
 	})
 
+	it('cleans spaces from phone number before validation', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				required: true,
+				modelValue: '01 23 45 67 89',
+				isValidatedOnBlur: true,
+			},
+		})
+
+		await wrapper.vm.validateOnSubmit()
+
+		expect(wrapper.vm.hasError).toBe(false)
+	})
+
 	it('validates phone number and country code on blur', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				required: true,
+				modelValue: '',
+				isValidatedOnBlur: true,
+			},
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('123456')
+		await input.trigger('blur')
+
+		expect(wrapper.vm.hasError).toBe(true)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
+		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
 	})
 
 	it('applies default phone mask correctly', async () => {
@@ -55,6 +91,24 @@ describe('PhoneField', () => {
 	})
 
 	it('validates country code when countryCodeRequired is true', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				withCountryCode: true,
+				countryCodeRequired: true,
+				modelValue: '0123456789',
+			},
+		})
+
+		const result = await wrapper.vm.validateOnSubmit()
+
+		expect(result).toBe(false)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
+		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
+		expect((wrapper.vm as any).errors[0]).toContain('est requis')
 	})
 
 	it('updates phone mask and counter when dialCode changes', async () => {
@@ -70,7 +124,7 @@ describe('PhoneField', () => {
 		expect(wrapper.vm.counter).toBe(10)
 	})
 
-	it('validates phone number and country code on blur', async () => {
+	it('validates phone number with country code on blur', async () => {
 		const wrapper = mount(PhoneField, {
 			global: {
 				plugins: [vuetify],
@@ -84,15 +138,12 @@ describe('PhoneField', () => {
 			},
 		})
 
-		// Simulate selecting a country code
 		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
 		await wrapper.vm.$nextTick()
 
-		// Simulate blur event
 		const input = wrapper.find('input')
 		await input.trigger('blur')
 
-		// Check if validation was performed
 		expect(wrapper.vm.hasError).toBe(false)
 	})
 
@@ -111,7 +162,7 @@ describe('PhoneField', () => {
 		expect(wrapper.vm.mergedDialCodes).toEqual(customIndicatifs)
 	})
 
-	it('validates phone number and country code on blur', async () => {
+	it('validates phone number with valid country code on blur', async () => {
 		const wrapper = mount(PhoneField, {
 			global: {
 				plugins: [vuetify],
@@ -198,6 +249,161 @@ describe('PhoneField', () => {
 
 		expect(dialCode).toHaveProperty('displayText')
 		expect(typeof dialCode.displayText).toBe('string')
+	})
+
+	it('formats phone number correctly', () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '0123456789',
+			},
+		})
+
+		expect(wrapper.vm.computedValue).toBe('01 23 45 67 89')
+	})
+
+	it('emits update:selectedDialCode when dialCode changes', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				withCountryCode: true,
+			},
+		})
+
+		const dialCodeValue = { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' }
+		wrapper.vm.dialCode = dialCodeValue
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('update:selectedDialCode')).toBeTruthy()
+		const emittedEvents = wrapper.emitted('update:selectedDialCode')
+		expect(emittedEvents && emittedEvents[0][0]).toEqual(dialCodeValue)
+	})
+
+	it('validates phone number on submit', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				required: true,
+				modelValue: '',
+			},
+		})
+
+		const result = await wrapper.vm.validateOnSubmit()
+
+		expect(result).toBe(false)
+		expect(wrapper.vm.hasError).toBe(true)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
+		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
+	})
+
+	it('validates phone number successfully on submit with valid input', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				required: true,
+				modelValue: '0123456789',
+			},
+		})
+
+		const result = await wrapper.vm.validateOnSubmit()
+
+		expect(result).toBe(true)
+		expect(wrapper.vm.hasError).toBe(false)
+	})
+
+	it('exposes necessary properties and methods', () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		expect(wrapper.vm.computedValue).toBeDefined()
+		expect(wrapper.vm.dialCode).toBeDefined()
+		expect(wrapper.vm.phoneMask).toBeDefined()
+		expect(wrapper.vm.counter).toBeDefined()
+		expect(wrapper.vm.hasError).toBeDefined()
+		expect(wrapper.vm.phoneNumber).toBeDefined()
+		expect(wrapper.vm.mergedDialCodes).toBeDefined()
+		expect(wrapper.vm.validation).toBeDefined()
+		expect(wrapper.vm.validateOnSubmit).toBeDefined()
+	})
+
+	it('updates validation rules when counter changes', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				withCountryCode: true,
+				modelValue: '0123456789',
+			},
+		})
+
+		expect(wrapper.vm.counter).toBe(10)
+
+		wrapper.vm.dialCode = { code: '+44', abbreviation: 'UK', country: 'United Kingdom', phoneLength: 11, mask: '### ### #####' }
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.vm.counter).toBe(11)
+	})
+
+	it('handles disabled state correctly', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				disabled: true,
+				withCountryCode: true,
+			},
+		})
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		expect(textField.props('disabled')).toBe(true)
+
+		const select = wrapper.findComponent({ name: 'SySelect' })
+		expect(select.props('disabled')).toBe(true)
+	})
+
+	it('handles readonly state correctly', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				readonly: true,
+				withCountryCode: true,
+			},
+		})
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		expect(textField.props('readonly')).toBe(true)
+
+		const select = wrapper.findComponent({ name: 'SySelect' })
+		expect(select.props('readonly')).toBe(true)
+	})
+
+	it('verifies SyTextField and SySelect props are correctly passed', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				withCountryCode: true,
+				dialCodeModel: { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' },
+			},
+		})
+
+		await wrapper.vm.$nextTick()
 
 		expect(wrapper.vm.phoneMask).toBe('## ## ## ## ##')
 		expect(wrapper.vm.counter).toBe(10)
@@ -209,11 +415,9 @@ describe('PhoneField', () => {
 		const select = wrapper.findComponent({ name: 'SySelect' })
 		expect(select.exists()).toBe(true)
 		expect(select.props('returnObject')).toBe(true)
-
 		expect(select.props('modelValue')).toEqual(wrapper.vm.dialCode)
 	})
 
-	// Test du watcher pour dialCodeModel
 	it('updates dialCode when dialCodeModel changes after mount', async () => {
 		const wrapper = mount(PhoneField, {
 			global: {
@@ -221,27 +425,20 @@ describe('PhoneField', () => {
 			},
 			props: {
 				withCountryCode: true,
-				// Pas de dialCodeModel initial
 			},
 		})
 
-		// Vérifier que dialCode est initialisé avec une chaîne vide
-		// Dans le composant: const dialCode = ref<string | Record<string, any>>(props.dialCodeModel || '')
 		expect(wrapper.vm.dialCode).toBe('')
 
-		// Définir un dialCodeModel après le montage
 		await wrapper.setProps({
 			dialCodeModel: { code: '+1', country: 'USA', abbreviation: 'US', phoneLength: 10, mask: '###-###-####' },
 		})
 
-		// Attendre que le watcher s'exécute
 		await wrapper.vm.$nextTick()
 
-		// Vérifier que dialCode a été mis à jour
 		expect(wrapper.vm.dialCode).toBeDefined()
 		expect(typeof wrapper.vm.dialCode).toBe('object')
 
-		// Utiliser une assertion de type pour indiquer à TypeScript que dialCode est un objet
 		type Indicatif = {
 			code: string
 			country: string
@@ -258,9 +455,7 @@ describe('PhoneField', () => {
 		expect(wrapper.vm.counter).toBe(10)
 	})
 
-	// Test pour les objets sans displayText
 	it('handles dialCodeModel objects without displayText property', async () => {
-		// Objet indicatif sans propriété displayText
 		const indicatifSansDisplayText = {
 			code: '+44',
 			country: 'United Kingdom',
@@ -281,10 +476,8 @@ describe('PhoneField', () => {
 
 		await wrapper.vm.$nextTick()
 
-		// Vérifier que dialCode a été correctement initialisé
 		expect(wrapper.vm.dialCode).toBeDefined()
 
-		// Utiliser une assertion de type pour indiquer à TypeScript que dialCode est un objet
 		type Indicatif = {
 			code: string
 			country: string
@@ -298,19 +491,12 @@ describe('PhoneField', () => {
 		expect(dialCode.code).toBe('+44')
 		expect(dialCode.country).toBe('United Kingdom')
 
-		// Vérifier que la propriété displayText a été ajoutée
 		expect(dialCode).toHaveProperty('displayText')
 		expect(typeof dialCode.displayText).toBe('string')
-		// Le format exact dépend de la fonction generateDisplayText, mais on peut vérifier qu'il contient le code
 		expect(dialCode.displayText).toContain('+44')
 	})
 
-	// Test avec les indicatifs standards importés
 	it('works correctly with standard indicatifs imported from indicatifs.ts', async () => {
-		// Importer les indicatifs standards
-		const { indicatifs } = await import('../indicatifs')
-
-		// Trouver l'indicatif pour la France
 		const franceIndicatif = indicatifs.find(ind => ind.country === 'France')
 		expect(franceIndicatif).toBeDefined()
 
@@ -326,10 +512,8 @@ describe('PhoneField', () => {
 
 		await wrapper.vm.$nextTick()
 
-		// Vérifier que l'indicatif a été correctement appliqué
 		expect(wrapper.vm.dialCode).toBeDefined()
 
-		// Utiliser une assertion de type pour indiquer à TypeScript que dialCode est un objet
 		type Indicatif = {
 			code: string
 			country: string
@@ -343,9 +527,45 @@ describe('PhoneField', () => {
 		expect(dialCode.code).toBe('+33')
 		expect(dialCode.country).toBe('France')
 
-		// Vérifier que le SySelect affiche la bonne valeur
 		const select = wrapper.findComponent({ name: 'SySelect' })
 		expect(select.exists()).toBe(true)
 		expect(select.props('modelValue')).toEqual(wrapper.vm.dialCode)
+	})
+
+	it('disables error handling when readonly is true', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				required: true,
+				modelValue: '',
+				readonly: true,
+			},
+		})
+
+		expect(wrapper.props('readonly')).toBe(true)
+
+		const isValid = await wrapper.vm.validateOnSubmit()
+
+		expect(isValid).toBe(true)
+
+		expect(wrapper.vm.hasError).toBe(false)
+		const wrapperNotReadonly = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				required: true,
+				modelValue: '',
+				readonly: false,
+			},
+		})
+
+		const isValidNotReadonly = await wrapperNotReadonly.vm.validateOnSubmit()
+
+		expect(isValidNotReadonly).toBe(false)
+
+		expect(wrapperNotReadonly.vm.hasError).toBe(true)
 	})
 })
