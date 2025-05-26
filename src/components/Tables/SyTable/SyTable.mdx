@@ -1,0 +1,119 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as SyTable from './SyTable.stories';
+
+<Meta of={SyTable} />
+
+# SyTable
+
+Le composant `SyTable` est utilisé pour afficher des données tabulaires côté client. Il s'appuie sur le composant `VDataTable` de Vuetify et offre des fonctionnalités supplémentaires comme le stockage local des options de tableau et des améliorations d'accessibilité.
+
+<Canvas of={SyTable.Default} />
+
+## API
+
+<Controls of={SyTable.Default} />
+
+## Fonctionnalités
+
+### Stockage local des options
+
+Le composant `SyTable` enregistre automatiquement les options du tableau (tri, pagination, etc.) dans le localStorage du navigateur. Ces options sont restaurées lorsque l'utilisateur revient sur la page.
+
+Pour gérer individuellement le stockage des options pour différents tableaux, utilisez la prop `suffix`.
+
+### Tri des colonnes
+
+Le composant permet de trier les données par colonne en cliquant sur l'en-tête de la colonne.
+
+<Canvas of={SyTable.SortBy} />
+
+### Accessibilité
+
+Le composant améliore l'accessibilité en ajoutant automatiquement:
+- Une légende (caption) pour le tableau
+- Des attributs ARIA appropriés
+- Des attributs scope pour les en-têtes de colonnes
+
+## Exemples d'utilisation
+
+### Tableau simple
+
+<Source dark code={`
+<template>
+  <SyTable
+    v-model:options="options"
+    :headers="headers"
+    :items="items"
+  />
+</template>
+
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import { SyTable } from '@cnamts/synapse'
+  
+  const options = ref({
+    itemsPerPage: 4,
+  })
+  
+  const headers = ref([
+    {
+      title: 'Nom',
+      key: 'lastname',
+    },
+    {
+      title: 'Prénom',
+      key: 'firstname',
+    },
+    {
+      title: 'Email',
+      value: 'email',
+    },
+  ])
+    
+  const items = ref([
+    {
+      firstname: 'Virginie',
+      lastname: 'Beauchesne',
+      email: 'virginie.beauchesne@example.com',
+    },
+    {
+      firstname: 'Simone',
+      lastname: 'Bellefeuille',
+      email: 'simone.bellefeuille@example.com',
+    },
+    {
+      firstname: 'Étienne',
+      lastname: 'Salois',
+      email: 'etienne.salois@example.com',
+    },
+    {
+      firstname: 'Thierry',
+      lastname: 'Bobu',
+      email: 'thierry.bobu@example.com',
+    },
+    {
+      firstname: 'Bernadette',
+      lastname: 'Langelier',
+      email: 'bernadette.langelier@exemple.com'
+    },
+    {
+      firstname: 'Agate',
+      lastname: 'Roy',
+      email: 'agate.roy@exemple.com'
+    }
+  ])
+</script>
+`} />
+
+### Plusieurs tableaux sur une même page
+
+Pour utiliser plusieurs tableaux sur une même page avec des options indépendantes, utilisez la prop `suffix` pour chaque tableau.
+
+<Canvas of={SyTable.ManyTables} />
+
+## Bonnes pratiques
+
+- Utilisez des en-têtes clairs et descriptifs pour chaque colonne
+- Définissez un nombre d'éléments par page adapté à votre contenu
+- Utilisez la prop `suffix` lorsque vous avez plusieurs tableaux sur une même page
+- Ajoutez une légende explicite si le tableau contient des données complexes
