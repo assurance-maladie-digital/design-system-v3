@@ -10,6 +10,7 @@
 | - NotificationBar: fix accessibility [`#572`](https://github.com/assurance-maladie-digital/design-system-v3/pull/572)                               | - Add DiacriticPicker [`#595`](https://github.com/assurance-maladie-digital/design-system-v3/pull/595), [`#588`](https://github.com/assurance-maladie-digital/design-system-v3/pull/588) |
 | - Fix readonly prop on some components [`#579`](https://github.com/assurance-maladie-digital/design-system-v3/pull/579)                             | - NirField: add custom rules priority [`#586`](https://github.com/assurance-maladie-digital/design-system-v3/pull/586)                                                                   |
 | - DatePicker: fix display range selection [`#585`](https://github.com/assurance-maladie-digital/design-system-v3/pull/585)                          | - Rules: add holidays management [`#583`](https://github.com/assurance-maladie-digital/design-system-v3/pull/583)                                                                        |
+|                                                                                                                                                     | - CopyBtn: add PA functionnalities [`#587`](https://github.com/assurance-maladie-digital/design-system-v3/pull/587)                                                                      |
 
 ### Documentation
 - Fix accessibility introduction page [`#617`](https://github.com/assurance-maladie-digital/design-system-v3/pull/617)
