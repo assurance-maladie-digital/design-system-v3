@@ -3,6 +3,14 @@ export type SortOptions = {
 	order: 'desc' | 'asc'
 }
 
+export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select'
+
+export interface FilterOption {
+	key: string
+	value: string | number | Date | Array <string | number | Date>
+	type: FilterType
+}
+
 export interface DataOptions {
 	page: number
 	itemsPerPage: number
@@ -10,27 +18,30 @@ export interface DataOptions {
 	groupBy?: SortOptions[]
 	multiSort?: boolean
 	mustSort?: boolean
+	filters?: FilterOption[]
 }
 
 export type DataTableHeaders = {
 	title?: string
 	value?: string
 	key?: string
+	filterable?: boolean
+	filterType?: FilterType
+	filterOptions?: Array<{ text: string, value: null }>
 }
 
 // Component-specific props interfaces
 export interface SyTableProps {
-	items: Array<Record<string, unknown>>
-	headers: DataTableHeaders
-	options: DataOptions
 	suffix?: string
+	itemsPerPage?: number
+	caption?: string
+	showFilters?: boolean
 }
 
 export interface SyServerTableProps {
-	items: Array<Record<string, unknown>>
 	serverItemsLength: number
-	headers: DataTableHeaders
-	options: DataOptions
 	suffix?: string
-	loading?: boolean
+	itemsPerPage?: number
+	caption: string
+	showFilters: boolean
 }

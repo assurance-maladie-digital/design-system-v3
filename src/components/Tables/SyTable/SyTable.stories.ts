@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyTable from './SyTable.vue'
 import type { DataOptions } from '../common/types'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 
 const meta = {
@@ -45,6 +45,10 @@ const meta = {
 		itemsPerPage: {
 			description: 'Nombre d\'éléments par page',
 			control: { type: 'number' },
+		},
+		showFilters: {
+			description: 'Affiche les filtres au-dessus du tableau',
+			control: { type: 'boolean' },
 		},
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
@@ -211,6 +215,7 @@ export const SortBy: Story = {
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
+						show-filters
 					/>
 				</template>
 				`,
@@ -353,6 +358,213 @@ export const SortBy: Story = {
 					v-model:options="args.options"
 					:headers="args.headers"
 					:items="args.items"
+				/>
+			`,
+		}
+	},
+}
+
+export const FilterBy: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="filteredItems"
+						show-filters
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref, computed } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+						filters: []
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Email',
+							value: 'email',
+							filterable: true,
+							filterType: 'text'
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+					
+					// Filter items based on headers filters
+					const filteredItems = computed(() => {
+						// If no filters are set, return all items
+						if (!options.value.filters || options.value.filters.length === 0) {
+							return items.value
+						}
+
+						return items.value.filter(item => {
+							return options.value.filters.every(filter => {
+								if (!filter || !filter.key || !filter.value) return true
+
+								const itemValue = item[filter.key]
+								if (typeof itemValue === 'string') {
+									return itemValue.toLowerCase().includes(filter.value.toLowerCase())
+								}
+								return false
+							})
+						})
+					})
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		// @ts-expect-error - props of VDataTable
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+				filterable: true,
+				filterType: 'text',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+			filters: [],
+		},
+		showFilters: true,
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				// Create reactive references
+				const options = ref(args.options)
+				const items = ref(args.items)
+
+				// Filter items based on options.filters
+				const filteredItems = computed(() => {
+					return items.value.filter((item) => {
+						return options.value.filters?.every((filter) => {
+							if (!filter || !filter.key || !filter.value) return true
+
+							const itemValue = item[filter.key]
+							if (typeof itemValue === 'string' && typeof filter.value === 'string') {
+								return itemValue.toLowerCase().includes(filter.value.toLowerCase())
+							}
+							return false
+						}) ?? true
+					})
+				})
+
+				return {
+					args,
+					options,
+					filteredItems,
+				}
+			},
+			template: `
+				<SyTable
+					v-model:options="options"
+					:headers="args.headers"
+					:items="filteredItems"
+					:show-filters="args.showFilters"
 				/>
 			`,
 		}

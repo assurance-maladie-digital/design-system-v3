@@ -1,26 +1,30 @@
 <script setup lang="ts">
-	import { useAttrs, watch } from 'vue'
-	import type { DataOptions } from '../common/types'
+	import { useAttrs, watch, computed } from 'vue'
+	import type { DataOptions, FilterOption, SyTableProps } from '../common/types'
 	import { useTableUtils } from '../common/tableUtils'
+	import SyTableFilter from '../common/SyTableFilter.vue'
 
-	const props = defineProps({
-		suffix: {
-			type: String,
-			default: undefined,
-		},
-		itemsPerPage: {
-			type: Number,
-			default: undefined,
-		},
-		caption: {
-			type: String,
-			default: 'caption',
-		},
+	const props = withDefaults(defineProps<SyTableProps>(), {
+		suffix: undefined,
+		itemsPerPage: undefined,
+		caption: 'caption',
+		showFilters: false,
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
+	})
+
+	// Computed property for filters
+	const filters = computed({
+		get: () => options.value.filters || [],
+		set: (newFilters: FilterOption[]) => {
+			options.value = {
+				...options.value,
+				filters: newFilters,
+			}
+		},
 	})
 
 	const componentAttributes = useAttrs()
@@ -64,14 +68,69 @@
 			v-bind="propsFacade"
 			@update:options="updateOptions"
 		>
-			<template
-				v-for="slotName in Object.keys($slots)"
-				#[slotName]="slotProps"
-			>
-				<slot
-					:name="slotName"
-					v-bind="slotProps ?? {}"
-				/>
+			<template #headers="slotProps">
+				<!-- Add defensive check for columns property -->
+				<template v-if="slotProps && slotProps.columns">
+					<!-- Destructure slot props safely -->
+					<tr>
+						<template
+							v-for="column in slotProps.columns"
+							:key="column.key"
+						>
+							<th>
+								<div class="d-flex align-center">
+									<span
+										class="me-2 cursor-pointer"
+										role="button"
+										tabindex="0"
+										@click="slotProps.toggleSort(column)"
+										@keydown.enter="slotProps.toggleSort(column)"
+										v-text="column.title"
+									/>
+
+									<v-icon
+										v-if="slotProps.isSorted(column)"
+										:icon="slotProps.getSortIcon(column)"
+										color="medium-emphasis"
+									/>
+								</div>
+							</th>
+						</template>
+					</tr>
+					<tr v-if="props.showFilters">
+						<template
+							v-for="column in slotProps.columns"
+							:key="column.key"
+						>
+							<th>
+								<SyTableFilter
+									v-if="column.filterable"
+									:filters="filters"
+									:header="column"
+									@update:filters="filters = $event"
+								/>
+							</th>
+						</template>
+					</tr>
+				</template>
+				<!-- Fallback when columns is undefined -->
+				<template v-else>
+					<tr>
+						<th v-for="header in props.headers" :key="header.key || header.value">
+							{{ header.title }}
+						</th>
+					</tr>
+					<tr v-if="props.showFilters">
+						<th v-for="header in props.headers" :key="header.key || header.value">
+							<SyTableFilter
+								v-if="header.filterable"
+								:filters="filters"
+								:header="header"
+								@update:filters="filters = $event"
+							/>
+						</th>
+					</tr>
+				</template>
 			</template>
 		</VDataTable>
 	</div>
