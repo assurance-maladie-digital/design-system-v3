@@ -1,3 +1,20 @@
+## v1.0.0 (26-05-2025)
+
+### Composants
+
+| Synapse                                                                                                                                             | Portail Agent                                                                                                                                                                            |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| - TableToolbar: add filters slot and add missing props on SySelect [`#614`](https://github.com/assurance-maladie-digital/design-system-v3/pull/614) | - Add SyTextArea component [`#612`](https://github.com/assurance-maladie-digital/design-system-v3/pull/612)                                                                              |
+| - Fix PaginatedTable + TableToolbar components and stories [`#609`](https://github.com/assurance-maladie-digital/design-system-v3/pull/609)         | - Add Accordion componant [`#608`](https://github.com/assurance-maladie-digital/design-system-v3/pull/608)                                                                               |
+| - Improve success messages management [`#610`](https://github.com/assurance-maladie-digital/design-system-v3/pull/610)                              | - Fix tokens colors [`#607`](https://github.com/assurance-maladie-digital/design-system-v3/pull/607)                                                                                     |
+| - NotificationBar: fix accessibility [`#572`](https://github.com/assurance-maladie-digital/design-system-v3/pull/572)                               | - Add DiacriticPicker [`#595`](https://github.com/assurance-maladie-digital/design-system-v3/pull/595), [`#588`](https://github.com/assurance-maladie-digital/design-system-v3/pull/588) |
+| - Fix readonly prop on some components [`#579`](https://github.com/assurance-maladie-digital/design-system-v3/pull/579)                             | - NirField: add custom rules priority [`#586`](https://github.com/assurance-maladie-digital/design-system-v3/pull/586)                                                                   |
+| - DatePicker: fix display range selection [`#585`](https://github.com/assurance-maladie-digital/design-system-v3/pull/585)                          | - Rules: add holidays management [`#583`](https://github.com/assurance-maladie-digital/design-system-v3/pull/583)                                                                        |
+|                                                                                                                                                     | - CopyBtn: add PA functionnalities [`#587`](https://github.com/assurance-maladie-digital/design-system-v3/pull/587)                                                                      |
+
+### Documentation
+- Fix accessibility introduction page [`#617`](https://github.com/assurance-maladie-digital/design-system-v3/pull/617)
+
 ## v0.0.16-alpha (12-05-2025)
 
 ### Composants
