@@ -251,7 +251,7 @@
 			:bg-color="props.bgColor"
 			:density="props.density"
 			readonly
-			:hide-details="true"
+			:hide-details="props.hideMessages"
 			class="sy-select"
 			:width="calculatedWidth"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
