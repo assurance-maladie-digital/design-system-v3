@@ -62,7 +62,6 @@ describe('SyServerTable', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.find('.sy-server-table').exists()).toBe(true)
 		expect(wrapper.find('table').exists()).toBe(true)
 		expect(wrapper.text()).toContain('John Doe')

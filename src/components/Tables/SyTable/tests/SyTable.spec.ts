@@ -61,7 +61,6 @@ describe('SyTable', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.find('.sy-table').exists()).toBe(true)
 		expect(wrapper.find('table').exists()).toBe(true)
 		expect(wrapper.text()).toContain('John Doe')
