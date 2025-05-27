@@ -91,8 +91,8 @@
 		<VDataTableServer
 			v-bind="propsFacade"
 			color="primary"
-			:items="props.items"
-			:items-length="props.serverItemsLength"
+			:items="props.items.length > 0 ? props.items : [{}]"
+			:items-length="props.serverItemsLength || 0"
 			@update:options="updateOptions"
 		>
 			<template #headers="slotProps">
@@ -137,6 +137,27 @@
 								/>
 							</th>
 						</template>
+					</tr>
+					<!-- Reset filters button row -->
+					<tr v-if="props.showFilters && filters.length > 0">
+						<td
+							:colspan="slotProps.columns.length"
+							class="text-right pa-2"
+						>
+							<v-btn
+								size="small"
+								color="primary"
+								variant="outlined"
+								@click="filters = []"
+							>
+								<v-icon
+									class="mr-1"
+									icon="mdi-filter-remove"
+									size="small"
+								/>
+								Réinitialiser les filtres
+							</v-btn>
+						</td>
 					</tr>
 				</template>
 				<!-- Fallback when columns is undefined -->

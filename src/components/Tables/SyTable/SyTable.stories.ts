@@ -3,6 +3,7 @@ import SyTable from './SyTable.vue'
 import type { DataOptions } from '../common/types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
+import dayjs from 'dayjs'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable',
@@ -714,8 +715,81 @@ export const FilterBySelect: Story = {
 }
 
 export const FilterByDate: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						:show-filters="true"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					import dayjs from 'dayjs';
+					
+					const options = ref({
+						itemsPerPage: 5,
+						filters: [],
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'name',
+							filterable: true,
+							filterType: 'text',
+						},
+						{
+							title: 'Date d'embauche',
+							key: 'hireDate',
+							filterable: true,
+							filterType: 'date',
+							dateFormat: 'DD/MM/YYYY',
+						},
+						{
+							title: 'Période de congés',
+							key: 'vacationPeriod',
+							filterable: true,
+							filterType: 'period',
+							dateFormat: 'DD/MM/YYYY',
+						},
+					])
+					
+					const items = ref([
+						{
+							name: 'Jean Dupont',
+							hireDate: dayjs('2020-05-15').format('DD/MM/YYYY'),
+							vacationPeriod: { 
+							  from: dayjs('2023-07-01').format('DD/MM/YYYY'), 
+							  to: dayjs('2023-07-15').format('DD/MM/YYYY') 
+							},
+						},
+						{
+							name: 'Marie Martin',
+							hireDate: dayjs('2019-03-10').format('DD/MM/YYYY'),
+							vacationPeriod: {
+							  from: dayjs('2023-08-01').format('DD/MM/YYYY'),
+							  to: dayjs('2023-08-20').format('DD/MM/YYYY'),
+							},
+						},
+					])
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
-
 		headers: [
 			{
 				title: 'Nom',
@@ -728,39 +802,56 @@ export const FilterByDate: Story = {
 				key: 'hireDate',
 				filterable: true,
 				filterType: 'date',
+				dateFormat: 'DD/MM/YYYY',
 			},
 			{
 				title: 'Période de congés',
 				key: 'vacationPeriod',
 				filterable: true,
 				filterType: 'period',
+				dateFormat: 'DD/MM/YYYY',
 			},
 		],
 		items: [
 			{
 				name: 'Jean Dupont',
-				hireDate: new Date('2020-05-15'),
-				vacationPeriod: { from: new Date('2023-07-01'), to: new Date('2023-07-15') },
+				hireDate: dayjs('2025-05-15').format('DD/MM/YYYY'),
+				vacationPeriod: {
+					from: dayjs('2025-07-01').format('DD/MM/YYYY'),
+					to: dayjs('2025-07-15').format('DD/MM/YYYY'),
+				},
 			},
 			{
 				name: 'Marie Martin',
-				hireDate: new Date('2019-03-10'),
-				vacationPeriod: { from: new Date('2023-08-01'), to: new Date('2023-08-20') },
+				hireDate: dayjs('2019-03-10').format('DD/MM/YYYY'),
+				vacationPeriod: {
+					from: dayjs('2023-08-01').format('DD/MM/YYYY'),
+					to: dayjs('2023-08-20').format('DD/MM/YYYY'),
+				},
 			},
 			{
 				name: 'Pierre Durand',
-				hireDate: new Date('2015-11-22'),
-				vacationPeriod: { from: new Date('2023-06-15'), to: new Date('2023-07-05') },
+				hireDate: dayjs('2015-11-22').format('DD/MM/YYYY'),
+				vacationPeriod: {
+					from: dayjs('2023-06-15').format('DD/MM/YYYY'),
+					to: dayjs('2023-07-05').format('DD/MM/YYYY'),
+				},
 			},
 			{
 				name: 'Sophie Petit',
-				hireDate: new Date('2021-01-08'),
-				vacationPeriod: { from: new Date('2023-12-20'), to: new Date('2024-01-05') },
+				hireDate: dayjs('2021-01-08').format('DD/MM/YYYY'),
+				vacationPeriod: {
+					from: dayjs('2023-12-20').format('DD/MM/YYYY'),
+					to: dayjs('2024-01-05').format('DD/MM/YYYY'),
+				},
 			},
 			{
 				name: 'Thomas Leroy',
-				hireDate: new Date('2018-07-30'),
-				vacationPeriod: { from: new Date('2023-09-10'), to: new Date('2023-09-25') },
+				hireDate: dayjs('2018-07-30').format('DD/MM/YYYY'),
+				vacationPeriod: {
+					from: dayjs('2023-09-10').format('DD/MM/YYYY'),
+					to: dayjs('2023-09-25').format('DD/MM/YYYY'),
+				},
 			},
 		],
 		options: {

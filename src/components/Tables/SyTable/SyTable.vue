@@ -23,7 +23,14 @@
 
 	// Filtered items based on filters
 	const filteredItems = computed(() => {
-		return filterItems(props.items, filters.value)
+		// Create a deep copy of items to prevent mutations
+		const itemsCopy = props.items.map((item) => {
+			// Use structured clone for deep copying
+			return JSON.parse(JSON.stringify(item))
+		})
+
+		// Apply filters to the copied items
+		return filterItems(itemsCopy, filters.value)
 	})
 
 	// Computed property for filters
@@ -91,11 +98,10 @@
 		<VDataTable
 			color="primary"
 			v-bind="propsFacade"
-			:items="filteredItems"
+			:items="filteredItems.length > 0 ? filteredItems : [{}]"
 			@update:options="updateOptions"
 		>
 			<template #headers="slotProps">
-				<!-- Add defensive check for columns property -->
 				<template v-if="slotProps && slotProps.columns">
 					<!-- Destructure slot props safely -->
 					<tr>
@@ -138,6 +144,34 @@
 							</th>
 						</template>
 					</tr>
+					<!-- Reset filters button row -->
+					<tr v-if="props.showFilters && filters.length > 0">
+						<td
+							:colspan="slotProps.columns.length"
+							class="text-right pa-2"
+						>
+							<v-btn
+								size="small"
+								color="primary"
+								variant="outlined"
+								@click="filters = []"
+							>
+								<v-icon
+									class="mr-1"
+									icon="mdi-filter-remove"
+									size="small"
+								/>
+								Réinitialiser les filtres
+							</v-btn>
+						</td>
+					</tr>
+					<tr v-if="filteredItems.length === 0">
+						<td colspan="100%">
+							<div class="text-center text-grey">
+								Aucune donnée disponible
+							</div>
+						</td>
+					</tr>
 				</template>
 				<!-- Fallback when columns is undefined -->
 				<template v-else>
@@ -161,6 +195,13 @@
 								@update:filters="filters = $event"
 							/>
 						</th>
+					</tr>
+					<tr v-if="filteredItems.length === 0">
+						<td colspan="100%">
+							<div class="text-center text-grey">
+								Aucune donnée disponible
+							</div>
+						</td>
 					</tr>
 				</template>
 			</template>

@@ -29,6 +29,16 @@
 
 	// Initialize filters from props
 	watch(() => props.filters, (newFilters) => {
+		// Clear all filters if the filters array is empty
+		if (newFilters.length === 0) {
+			textFilters.value = {}
+			numberFilters.value = {}
+			dateFilters.value = {}
+			periodFilters.value = {}
+			selectFilters.value = {}
+			return
+		}
+
 		newFilters.forEach((filter) => {
 			const key = filter.key
 			const value = filter.value
@@ -45,7 +55,19 @@
 				break
 			case 'period':
 				if (value && typeof value === 'object' && 'from' in value && 'to' in value) {
-					periodFilters.value[key] = value as { from: string | null, to: string | null }
+					// Handle both Date objects and string dates in period values
+					const periodValue = value as { from: Date | string | null, to: Date | string | null }
+
+					// Convert Date objects to strings if needed
+					const from = periodValue.from instanceof Date
+						? periodValue.from.toLocaleDateString('fr-FR')
+						: periodValue.from
+
+					const to = periodValue.to instanceof Date
+						? periodValue.to.toLocaleDateString('fr-FR')
+						: periodValue.to
+
+					periodFilters.value[key] = { from, to }
 				}
 				break
 			case 'select':
@@ -64,6 +86,11 @@
 
 		// Find existing filter or create new one
 		const existingFilterIndex = newFilters.findIndex(f => f.key === key)
+
+		// Ensure filter objects are initialized
+		if (type === 'date' && !dateFilters.value[key]) {
+			dateFilters.value[key] = null
+		}
 
 		// Get the value based on filter type
 		const getValue = () => {
@@ -150,6 +177,13 @@
 				:hide-messages="true"
 				variant="outlined"
 				class="filter-input"
+				@update:model-value="(val) => {
+					const key = String(header.key || header.value || '')
+					if (val === null || val === undefined) {
+						// Clear all filters when any input is cleared
+						emit('update:filters', [])
+					}
+				}"
 			/>
 			<!-- Date component for date filter type -->
 			<DatePicker
@@ -162,12 +196,26 @@
 				:hide-messages="header.hideMessages"
 				variant="outlined"
 				class="filter-input"
-				@update:model-value="updateFilter(String(header.key || header.value || ''), 'date')"
+				:format="header.dateFormat"
+				@update:model-value="(val) => {
+					const key = String(header.key || header.value || '')
+					if (val === null) {
+						// Clear all filters when any input is cleared
+						emit('update:filters', [])
+					} else {
+						dateFilters.value[key] = val
+						updateFilter(key, 'date')
+					}
+				}"
+				@click:clear="() => {
+					// Clear all filters when any input is cleared
+					emit('update:filters', [])
+				}"
 			/>
 			<!-- Period component for period filter type -->
 			<PeriodField
 				v-else-if="header.filterType === 'period'"
-				v-model="periodFilters[String(header.key || header.value || '')]"
+				:model-value="periodFilters[String(header.key || header.value || '')] || { from: null, to: null }"
 				:label="header.title"
 				:clearable="true"
 				density="compact"
@@ -175,7 +223,56 @@
 				:hide-messages="header.hideMessages"
 				variant="outlined"
 				class="filter-input"
-				@update:model-value="updateFilter(String(header.key || header.value || ''), 'period')"
+				:format="header.dateFormat"
+				@update:model-value="(val) => {
+					try {
+						const key = String(header.key || header.value || '')
+
+						// Initialize the filters object for this key if it doesn't exist
+						if (!periodFilters.value[key]) {
+							periodFilters.value[key] = { from: null, to: null }
+						}
+
+						// Handle null/undefined case - clear all filters
+						if (!val) {
+							// Clear all filters when any input is cleared
+							emit('update:filters', [])
+							return
+						}
+
+						// Check if both from and to are null - clear all filters
+						if (typeof val === 'object' && val.from === null && val.to === null) {
+							// Clear all filters when period is completely empty
+							emit('update:filters', [])
+							return
+						}
+
+						// Ensure we're working with string values
+						if (typeof val === 'object') {
+							// Handle from date (could be Date, string, or null)
+							const from = val.from instanceof Date
+								? val.from.toLocaleDateString('fr-FR')
+								: val.from
+
+							// Handle to date (could be Date, string, or null)
+							const to = val.to instanceof Date
+								? val.to.toLocaleDateString('fr-FR')
+								: val.to
+
+							// Always create a new object to ensure reactivity
+							periodFilters.value[key] = { from, to }
+						}
+
+						// Update the filter
+						updateFilter(key, 'period')
+					} catch (error) {
+						console.error('Error in period filter update:', error)
+					}
+				}"
+				@click:clear="() => {
+					// Clear all filters when any input is cleared
+					emit('update:filters', [])
+				}"
 			/>
 			<!-- Number component for number filter type -->
 			<SyTextField
@@ -189,7 +286,20 @@
 				:hide-messages="header.hideMessages"
 				variant="outlined"
 				class="filter-input"
-				@update:model-value="updateFilter(String(header.key || header.value || ''), 'number')"
+				@input="(event) => {
+					const key = String(header.key || header.value || '')
+					if (event.target.value === '') {
+						// Clear all filters when input is emptied
+						emit('update:filters', [])
+					} else {
+						updateFilter(key, 'number')
+					}
+				}"
+				@change="() => updateFilter(String(header.key || header.value || ''), 'number')"
+				@click:clear="() => {
+					// Clear all filters when any input is cleared
+					emit('update:filters', [])
+				}"
 			/>
 			<!-- Default text component for other filter types -->
 			<SyTextField
@@ -203,7 +313,20 @@
 				:hide-messages="header.hideMessages"
 				variant="outlined"
 				class="filter-input"
-				@update:model-value="updateFilter(String(header.key || header.value || ''), 'text')"
+				@input="(event) => {
+					const key = String(header.key || header.value || '')
+					if (event.target.value === '') {
+						// Clear all filters when input is emptied
+						emit('update:filters', [])
+					} else {
+						updateFilter(key, 'text')
+					}
+				}"
+				@change="() => updateFilter(String(header.key || header.value || ''), 'text')"
+				@click:clear="() => {
+					// Clear all filters when any input is cleared
+					emit('update:filters', [])
+				}"
 			/>
 		</div>
 	</div>

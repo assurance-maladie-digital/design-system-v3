@@ -29,6 +29,7 @@ export type DataTableHeaders = {
 	filterType?: FilterType
 	filterOptions?: Array<{ text: string, value: unknown }>
 	hideMessages?: boolean
+	dateFormat?: string
 }
 
 // Type to handle both Vuetify internal headers and our custom headers
@@ -40,6 +41,7 @@ export type TableColumnHeader = {
 	filterType?: FilterType
 	filterOptions?: Array<{ text: string, value: unknown }>
 	hideMessages?: boolean
+	dateFormat?: string
 	sort?: unknown
 	filter?: unknown
 	width?: string | number
