@@ -218,13 +218,6 @@
 		}
 		window.addEventListener('scroll', updateListPosition, true)
 		window.addEventListener('resize', updateListPosition)
-
-		if (props.hideMessages) {
-			const message = document.querySelector('.v-input__details')
-			if (message) {
-				message.classList.add('d-sr-only')
-			}
-		}
 	})
 
 	onUnmounted(() => {
@@ -258,6 +251,7 @@
 			:bg-color="props.bgColor"
 			:density="props.density"
 			readonly
+			:hide-details="props.hideMessages"
 			class="sy-select"
 			:width="calculatedWidth"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
@@ -328,65 +322,61 @@
 @use '@/assets/tokens';
 
 .sy-select {
-	display: flex;
-	flex-direction: column;
-
-	:deep(input) {
-		caret-color: transparent;
-	}
+  display: flex;
+  flex-direction: column;
 }
 
 .v-field {
-	position: relative;
+  position: relative;
 }
 
 .v-field--focused {
-	.v-icon.arrow {
-		transform: rotateX(180deg);
-	}
+  .v-icon.arrow {
+    transform: rotateX(180deg);
+  }
 }
 
 .v-list {
-	left: inherit !important;
-	margin-top: -22px;
-	max-height: 300px;
-	padding: 0;
-	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
-	border-radius: 4px;
-	overflow-y: auto;
-	z-index: 2;
+  left: inherit !important;
+  margin-top: -22px;
+  max-height: 300px;
+  padding: 0;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
+  border-radius: 4px;
+  overflow-y: auto;
+  z-index: 2;
 }
 
 .v-list-item:hover {
-	background-color: rgb(0 0 0 / 4%);
+  background-color: rgb(0 0 0 / 4%);
 }
 
 .v-list-item[aria-selected='true'] {
-	background-color: rgb(0 0 0 / 8%);
+  background-color: rgb(0 0 0 / 8%);
 }
 
 .v-list-item.active {
-	background-color: rgb(0 0 0 / 8%);
+  background-color: rgb(0 0 0 / 8%);
 }
 
 .v-icon {
-	position: absolute;
-	right: 10px;
-	color: tokens.$grey-darken-20;
+  position: absolute;
+  right: 10px;
+  color: tokens.$grey-darken-20;
 }
 
 .sy-select__clear-icon {
-	color: tokens.$grey-darken-20 !important;
-	opacity: var(--v-medium-emphasis-opacity) !important;
+  color: tokens.$grey-darken-20 !important;
+  opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
 :deep(.v-field__input) {
-	color: tokens.$grey-darken-20;
+  color: tokens.$grey-darken-20;
 }
 
 .hidden-label {
-	visibility: hidden;
-	position: absolute;
-	white-space: nowrap;
+  visibility: hidden;
+  position: absolute;
+  white-space: nowrap;
 }
 </style>
