@@ -541,7 +541,7 @@ export const FilterBy: Story = {
 				// Filter items based on options.filters
 				const filteredItems = computed(() => {
 					return items.value.filter((item) => {
-						return options.value.filters?.every((filter) => {
+						return options.value?.filters?.every((filter) => {
 							if (!filter || !filter.key || !filter.value) return true
 
 							const itemValue = item[filter.key]

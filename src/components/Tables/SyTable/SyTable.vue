@@ -116,12 +116,18 @@
 				<!-- Fallback when columns is undefined -->
 				<template v-else>
 					<tr>
-						<th v-for="header in props.headers" :key="header.key || header.value">
+						<th
+							v-for="header in props.headers"
+							:key="header.key || header.value"
+						>
 							{{ header.title }}
 						</th>
 					</tr>
 					<tr v-if="props.showFilters">
-						<th v-for="header in props.headers" :key="header.key || header.value">
+						<th
+							v-for="header in props.headers"
+							:key="header.key || header.value"
+						>
 							<SyTableFilter
 								v-if="header.filterable"
 								:filters="filters"

@@ -5,11 +5,11 @@
 	import SyTableFilter from '../common/SyTableFilter.vue'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
-	suffix: undefined,
-	itemsPerPage: undefined,
-	caption: 'caption',
-	showFilters: false,
-})
+		suffix: undefined,
+		itemsPerPage: undefined,
+		caption: 'caption',
+		showFilters: false,
+	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
@@ -118,12 +118,18 @@
 				<!-- Fallback when columns is undefined -->
 				<template v-else>
 					<tr>
-						<th v-for="header in props.headers" :key="header.key || header.value">
+						<th
+							v-for="header in props.headers"
+							:key="header.key || header.value"
+						>
 							{{ header.title }}
 						</th>
 					</tr>
 					<tr v-if="props.showFilters">
-						<th v-for="header in props.headers" :key="header.key || header.value">
+						<th
+							v-for="header in props.headers"
+							:key="header.key || header.value"
+						>
 							<SyTableFilter
 								v-if="header.filterable"
 								:filters="filters"
