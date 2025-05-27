@@ -45,6 +45,6 @@ export interface SyServerTableProps {
 	items?: Record<string, unknown>[]
 	suffix?: string
 	itemsPerPage?: number
-	caption: string
-	showFilters: boolean
+	caption?: string
+	showFilters?: boolean
 }
