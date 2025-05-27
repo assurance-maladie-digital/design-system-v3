@@ -7,7 +7,7 @@ export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select'
 
 export interface FilterOption {
 	key: string
-	value: string | number | Date | Array <string | number | Date>
+	value: string | number | Date | Array<string | number | Date> | { from: string | null, to: string | null } | Record<string, unknown> | null | undefined
 	type: FilterType
 }
 
@@ -31,6 +31,23 @@ export type DataTableHeaders = {
 	hideMessages?: boolean
 }
 
+// Type to handle both Vuetify internal headers and our custom headers
+export type TableColumnHeader = {
+	title?: string
+	value?: unknown
+	key?: string | null
+	filterable?: boolean
+	filterType?: FilterType
+	filterOptions?: Array<{ text: string, value: unknown }>
+	hideMessages?: boolean
+	sort?: unknown
+	filter?: unknown
+	width?: string | number
+	align?: string
+	children?: unknown[]
+	[key: string]: unknown // Allow for any additional properties from Vuetify
+}
+
 // Component-specific props interfaces
 export interface SyTableProps {
 	items?: Record<string, unknown>[]
@@ -38,6 +55,7 @@ export interface SyTableProps {
 	itemsPerPage?: number
 	caption?: string
 	showFilters?: boolean
+	headers?: DataTableHeaders[]
 }
 
 export interface SyServerTableProps {
@@ -47,4 +65,5 @@ export interface SyServerTableProps {
 	itemsPerPage?: number
 	caption?: string
 	showFilters?: boolean
+	headers?: DataTableHeaders[]
 }

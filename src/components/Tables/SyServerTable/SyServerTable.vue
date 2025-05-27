@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { useAttrs, watch, computed } from 'vue'
-	import type { DataOptions, FilterOption, SyServerTableProps } from '../common/types'
+	import type { DataOptions, FilterOption, SyServerTableProps, TableColumnHeader } from '../common/types'
 	import { useTableUtils } from '../common/tableUtils'
 	import { useTableFilter } from '../common/useTableFilter'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -66,6 +66,21 @@
 		watchOptions,
 		{ deep: true },
 	)
+
+	// Function to enhance column headers with proper filter types
+	function getEnhancedHeader(column: TableColumnHeader): TableColumnHeader {
+		// Find matching header from props if available
+		const matchingHeader = props.headers?.find(h => h.key === column.key || h.value === column.value)
+
+		// Create enhanced header with proper types
+		return {
+			...column,
+			// Use column's filterType if available, otherwise use matching header's filterType
+			filterType: column.filterType || matchingHeader?.filterType,
+			// Use column's filterOptions if available, otherwise use matching header's filterOptions
+			filterOptions: column.filterOptions || matchingHeader?.filterOptions,
+		} as TableColumnHeader
+	}
 </script>
 
 <template>
@@ -115,9 +130,9 @@
 						>
 							<th>
 								<SyTableFilter
-									v-if="column.filterable"
+									v-if="(column as TableColumnHeader).filterable !== false"
 									:filters="filters"
-									:header="column"
+									:header="getEnhancedHeader(column)"
 									@update:filters="filters = $event"
 								/>
 							</th>
@@ -128,16 +143,16 @@
 				<template v-else>
 					<tr>
 						<th
-							v-for="header in props.headers"
-							:key="header.key || header.value"
+							v-for="header in props.headers || []"
+							:key="header.key || header.value || ''"
 						>
 							<span class="font-weight-bold">{{ header.title }}</span>
 						</th>
 					</tr>
 					<tr v-if="props.showFilters">
 						<th
-							v-for="header in props.headers"
-							:key="header.key || header.value"
+							v-for="header in props.headers || []"
+							:key="header.key || header.value || ''"
 						>
 							<SyTableFilter
 								v-if="header.filterable"

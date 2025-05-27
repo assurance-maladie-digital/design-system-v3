@@ -193,7 +193,7 @@ export const Default: Story = {
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
@@ -404,7 +404,7 @@ export const ServerSortBy: Story = {
 			sortBy: [{ key: 'lastname', order: 'desc' }],
 			page: 1,
 		},
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
@@ -631,7 +631,7 @@ export const MultiServerTables: Story = {
 		],
 	},
 	args: {
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },

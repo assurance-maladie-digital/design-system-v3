@@ -136,7 +136,7 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{
 				title: 'Nom',
@@ -290,7 +290,7 @@ export const SortBy: Story = {
 		],
 	},
 	args: {
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{
 				title: 'Nom',
@@ -451,7 +451,7 @@ export const FilterByText: Story = {
 		],
 	},
 	args: {
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{
 				title: 'Nom',
@@ -538,7 +538,7 @@ export const FilterByText: Story = {
 
 export const FilterByNumber: Story = {
 	args: {
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{
 				title: 'Nom',
@@ -620,7 +620,7 @@ export const FilterByNumber: Story = {
 
 export const FilterBySelect: Story = {
 	args: {
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{
 				title: 'Nom',
@@ -715,7 +715,7 @@ export const FilterBySelect: Story = {
 
 export const FilterByDate: Story = {
 	args: {
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{
 				title: 'Nom',
@@ -887,7 +887,7 @@ export const ManyTables: Story = {
 		],
 	},
 	args: {
-		// @ts-expect-error - props of VDataTable
+
 		headers: [
 			{
 				title: 'Nom',

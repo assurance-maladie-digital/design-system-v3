@@ -170,7 +170,7 @@
 	})
 
 	const isRequired = computed(() => {
-		if (props.disableErrorHandling || props.hideMessages) return false
+		if (props.disableErrorHandling) return false
 		if (props.readonly) return
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
@@ -246,12 +246,12 @@
 			:aria-label="labelWithAsterisk"
 			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
-			:rules="isRequired && !props.disableErrorHandling && !props.hideMessages ? ['Le champ est requis.'] : []"
+			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
 			:density="props.density"
 			readonly
-			:hide-details="props.hideMessages"
+			:hide-details="true"
 			class="sy-select"
 			:width="calculatedWidth"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
