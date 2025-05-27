@@ -126,7 +126,7 @@
 			const key = String(props.header.key || props.header.value || '')
 			selectFilters.value[key] = newValue
 			updateFilter(key, 'select')
-		}
+		},
 	})
 
 	// Export the filterItems function for direct import
