@@ -81,7 +81,6 @@
 			@update:options="updateOptions"
 		>
 			<template #headers="slotProps">
-				<!-- Add defensive check for columns property -->
 				<template v-if="slotProps && slotProps.columns">
 					<!-- Destructure slot props safely -->
 					<tr>
