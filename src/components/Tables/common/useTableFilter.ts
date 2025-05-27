@@ -10,7 +10,7 @@ import { filterItems as filterItemsUtil } from './tableFilterUtils'
 export function useTableFilter() {
 	// Get the filterItems function from the provide/inject pattern
 	const filterItems = inject<
-		<T>(items: T[], filters: FilterOption[]) => T[]
+		<T extends Record<string, unknown>>(items: T[], filters: FilterOption[]) => T[]
 	>('filterItems', filterItemsUtil)
 
 	return {

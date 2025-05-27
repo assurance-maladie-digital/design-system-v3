@@ -6,6 +6,7 @@
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 	import DatePicker from '@/components/DatePicker/DatePicker.vue'
 	import PeriodField from '@/components/PeriodField/PeriodField.vue'
+	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
 
 	const props = defineProps({
 		header: {
@@ -23,7 +24,7 @@
 	// Initialize local filters with separate refs for different types
 	const textFilters = ref<Record<string, string>>({})
 	const numberFilters = ref<Record<string, number>>({})
-	const dateFilters = ref<Record<string, Date | null>>({})
+	const dateFilters = ref<Record<string, DateValue>>({})
 	const periodFilters = ref<Record<string, { from: string | null, to: string | null }>>({})
 	const selectFilters = ref<Record<string, string | number | Record<string, unknown> | undefined>>({})
 
@@ -51,7 +52,13 @@
 				numberFilters.value[key] = value as number
 				break
 			case 'date':
-				dateFilters.value[key] = value as Date
+				// Convert Date objects to string format for DateValue compatibility
+				if (value instanceof Date) {
+					dateFilters.value[key] = value.toLocaleDateString('fr-FR')
+				}
+				else {
+					dateFilters.value[key] = value as DateValue
+				}
 				break
 			case 'period':
 				if (value && typeof value === 'object' && 'from' in value && 'to' in value) {
@@ -197,14 +204,17 @@
 				variant="outlined"
 				class="filter-input"
 				:format="header.dateFormat"
-				@update:model-value="(val) => {
+				@update:model-value="(val: DateValue) => {
 					const key = String(header.key || header.value || '')
 					if (val === null) {
 						// Clear all filters when any input is cleared
 						emit('update:filters', [])
 					} else {
-						dateFilters.value[key] = val
-						updateFilter(key, 'date')
+						// Ensure dateFilters.value is initialized
+						if (dateFilters.value) {
+							dateFilters.value[key] = val
+							updateFilter(key, 'date')
+						}
 					}
 				}"
 				@click:clear="() => {
