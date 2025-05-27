@@ -88,6 +88,33 @@
 			filterOptions: column.filterOptions || matchingHeader?.filterOptions,
 		} as TableColumnHeader
 	}
+
+	// Function to create an empty item that maintains the column structure
+	function createEmptyItemWithStructure(): Record<string, unknown>[] {
+		// If we have items, use the first item as a template
+		if (props.items.length > 0) {
+			// Create an empty object with the same keys as the first item
+			const template = Object.keys(props.items[0]).reduce((obj, key) => {
+				obj[key] = ''
+				return obj
+			}, {} as Record<string, unknown>)
+			return [template]
+		}
+
+		// If we have headers, use them to create a structure
+		if (props.headers && props.headers.length > 0) {
+			// Create an empty object with keys from headers
+			const template = props.headers.reduce((obj, header) => {
+				const key = header.key || header.value || ''
+				if (key) obj[key] = ''
+				return obj
+			}, {} as Record<string, unknown>)
+			return [template]
+		}
+
+		// Fallback to an empty object
+		return [{}]
+	}
 </script>
 
 <template>
@@ -98,7 +125,7 @@
 		<VDataTable
 			color="primary"
 			v-bind="propsFacade"
-			:items="filteredItems.length > 0 ? filteredItems : [{}]"
+			:items="filteredItems.length > 0 ? filteredItems : createEmptyItemWithStructure()"
 			@update:options="updateOptions"
 		>
 			<template #headers="slotProps">
