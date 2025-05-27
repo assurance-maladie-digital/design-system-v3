@@ -38,12 +38,25 @@ export function filterItems<T>(items: T[], filters: FilterOption[]): T[] {
 					}
 					break
 				case 'select':
+					// Handle null or undefined values
+					if (filter.value === null || filter.value === undefined) {
+						return true
+					}
+					// Handle array values
 					if (Array.isArray(filter.value)) {
 						return filter.value.includes(itemValue)
 					}
-					else {
-						return itemValue === filter.value
+					// Handle object values (for returnObject: true in SySelect)
+					if (typeof filter.value === 'object' && filter.value !== null && typeof itemValue === 'object' && itemValue !== null) {
+						// Try to compare by value property if it exists
+						if ('value' in filter.value && 'value' in itemValue) {
+							return filter.value.value === itemValue.value
+						}
+						// Otherwise do a strict equality check
+						return JSON.stringify(filter.value) === JSON.stringify(itemValue)
 					}
+					// Handle primitive values
+					return itemValue === filter.value
 				case 'date':
 					if (itemValue instanceof Date && filter.value instanceof Date) {
 						return itemValue.getTime() === filter.value.getTime()

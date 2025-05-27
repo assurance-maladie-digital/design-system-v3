@@ -117,9 +117,16 @@
 	provide('filterItems', filterItems)
 
 	// Create a computed property for the select filter value to handle type issues
-	const getSelectValue = computed(() => {
-		const key = String(props.header.key || props.header.value || '')
-		return key in selectFilters.value ? selectFilters.value[key] : undefined
+	const getSelectValue = computed({
+		get: () => {
+			const key = String(props.header.key || props.header.value || '')
+			return key in selectFilters.value ? selectFilters.value[key] : undefined
+		},
+		set: (newValue) => {
+			const key = String(props.header.key || props.header.value || '')
+			selectFilters.value[key] = newValue
+			updateFilter(key, 'select')
+		}
 	})
 
 	// Export the filterItems function for direct import
@@ -134,7 +141,7 @@
 			<!-- Select component for select filter type -->
 			<SySelect
 				v-if="header.filterType === 'select' || header.filterOptions"
-				:model-value="getSelectValue"
+				v-model="getSelectValue"
 				:label="header.title"
 				:items="header.filterOptions"
 				:clearable="true"
@@ -143,7 +150,6 @@
 				:hide-messages="true"
 				variant="outlined"
 				class="filter-input"
-				@update:model-value="updateFilter(String(header.key || header.value || ''), 'select')"
 			/>
 			<!-- Date component for date filter type -->
 			<DatePicker
