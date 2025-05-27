@@ -22,7 +22,6 @@ exports[`SyServerTable > renders correctly with default props 1`] = `
           class="v-data-table__thead"
           role="rowgroup"
         >
-          <!-- Add defensive check for columns property -->
           <!-- Destructure slot props safely -->
           <tr>
             <th>
