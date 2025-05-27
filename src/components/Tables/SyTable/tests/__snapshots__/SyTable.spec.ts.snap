@@ -5,7 +5,6 @@ exports[`SyTable > renders correctly with default props 1`] = `
   class="sy-table"
   headers="[object Object],[object Object],[object Object]"
   id="sy-table"
-  items="[object Object],[object Object],[object Object]"
 >
   <div class="
     v-data-table
@@ -20,95 +19,71 @@ exports[`SyTable > renders correctly with default props 1`] = `
       <table>
         <!---->
         <thead>
+          <!-- Add defensive check for columns property -->
+          <!-- Destructure slot props safely -->
           <tr>
-            <th
-              class="
-                v-data-table-column--align-start
-                v-data-table__td
-                v-data-table__th
-                v-data-table__th--sortable
-              "
-              colspan="1"
-              rowspan="1"
-            >
-              <div class="v-data-table-header__content">
-                <span>
+            <th>
+              <div class="
+                align-center
+                d-flex
+              ">
+                <span
+                  class="
+                    cursor-pointer
+                    font-weight-bold
+                    me-2
+                    text-grey-darken-1
+                  "
+                  role="button"
+                  tabindex="0"
+                >
                   ID
                 </span>
-                <i
-                  aria-hidden="true"
-                  class="
-                    mdi
-                    mdi-arrow-up
-                    notranslate
-                    v-data-table-header__sort-icon
-                    v-icon
-                    v-icon--size-default
-                    v-theme--light
-                  "
-                ></i>
-                <!---->
+                <!-- v-if -->
               </div>
             </th>
-            <th
-              class="
-                v-data-table-column--align-start
-                v-data-table__td
-                v-data-table__th
-                v-data-table__th--sortable
-              "
-              colspan="1"
-              rowspan="1"
-            >
-              <div class="v-data-table-header__content">
-                <span>
+            <th>
+              <div class="
+                align-center
+                d-flex
+              ">
+                <span
+                  class="
+                    cursor-pointer
+                    font-weight-bold
+                    me-2
+                    text-grey-darken-1
+                  "
+                  role="button"
+                  tabindex="0"
+                >
                   Name
                 </span>
-                <i
-                  aria-hidden="true"
-                  class="
-                    mdi
-                    mdi-arrow-up
-                    notranslate
-                    v-data-table-header__sort-icon
-                    v-icon
-                    v-icon--size-default
-                    v-theme--light
-                  "
-                ></i>
-                <!---->
+                <!-- v-if -->
               </div>
             </th>
-            <th
-              class="
-                v-data-table-column--align-start
-                v-data-table__td
-                v-data-table__th
-                v-data-table__th--sortable
-              "
-              colspan="1"
-              rowspan="1"
-            >
-              <div class="v-data-table-header__content">
-                <span>
+            <th>
+              <div class="
+                align-center
+                d-flex
+              ">
+                <span
+                  class="
+                    cursor-pointer
+                    font-weight-bold
+                    me-2
+                    text-grey-darken-1
+                  "
+                  role="button"
+                  tabindex="0"
+                >
                   Age
                 </span>
-                <i
-                  aria-hidden="true"
-                  class="
-                    mdi
-                    mdi-arrow-up
-                    notranslate
-                    v-data-table-header__sort-icon
-                    v-icon
-                    v-icon--size-default
-                    v-theme--light
-                  "
-                ></i>
-                <!---->
+                <!-- v-if -->
               </div>
             </th>
           </tr>
+          <!-- v-if -->
           <!---->
         </thead>
         <!---->
@@ -238,7 +213,11 @@ exports[`SyTable > renders correctly with default props 1`] = `
                     v-theme--light
                   "
                   role="progressbar"
-                  style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+                  style="
+                    top: 0px;
+                    height: 0px;
+                    --v-progress-linear-height: 2px;
+                  "
                 >
                   <!---->
                   <div
@@ -247,7 +226,10 @@ exports[`SyTable > renders correctly with default props 1`] = `
                   ></div>
                   <div
                     class="v-progress-linear__buffer"
-                    style="opacity: NaN; width: 0%;"
+                    style="
+                      opacity: NaN;
+                      width: 0%;
+                    "
                   ></div>
                   <transition-stub
                     appear="false"
@@ -290,9 +272,9 @@ exports[`SyTable > renders correctly with default props 1`] = `
                     </span>
                   </div>
                   <input
-                    aria-describedby="input-0-messages"
+                    aria-describedby="input-v-0-messages"
                     aria-label="Open"
-                    id="input-0"
+                    id="input-v-0"
                     inputmode="none"
                     size="1"
                     title="Open"
