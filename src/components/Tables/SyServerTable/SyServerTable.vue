@@ -2,6 +2,7 @@
 	import { useAttrs, watch, computed } from 'vue'
 	import type { DataOptions, FilterOption, SyServerTableProps } from '../common/types'
 	import { useTableUtils } from '../common/tableUtils'
+	import { useTableFilter } from '../common/useTableFilter'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
@@ -9,6 +10,7 @@
 		itemsPerPage: undefined,
 		caption: 'caption',
 		showFilters: false,
+		items: () => [],
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -26,6 +28,13 @@
 			}
 		},
 	})
+
+	// Get the filterItems function from the composable
+	// This can be used for client-side filtering preview or for testing
+	const { filterItems } = useTableFilter()
+
+	// Expose the filtering function for potential use in parent components
+	defineExpose({ filterItems })
 
 	const componentAttributes = useAttrs()
 

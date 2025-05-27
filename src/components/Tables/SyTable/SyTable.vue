@@ -2,6 +2,7 @@
 	import { useAttrs, watch, computed } from 'vue'
 	import type { DataOptions, FilterOption, SyTableProps } from '../common/types'
 	import { useTableUtils } from '../common/tableUtils'
+	import { useTableFilter } from '../common/useTableFilter'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
@@ -9,11 +10,20 @@
 		itemsPerPage: undefined,
 		caption: 'caption',
 		showFilters: false,
+		items: () => [],
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
+	})
+
+	// Get the filterItems function from the composable
+	const { filterItems } = useTableFilter()
+
+	// Filtered items based on filters
+	const filteredItems = computed(() => {
+		return filterItems(props.items, filters.value)
 	})
 
 	// Computed property for filters
@@ -66,6 +76,7 @@
 		<VDataTable
 			color="primary"
 			v-bind="propsFacade"
+			:items="filteredItems"
 			@update:options="updateOptions"
 		>
 			<template #headers="slotProps">

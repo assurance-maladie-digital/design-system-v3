@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyTable from './SyTable.vue'
 import type { DataOptions } from '../common/types'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 
 const meta = {
@@ -538,32 +538,17 @@ export const FilterBy: Story = {
 				const options = ref(args.options)
 				const items = ref(args.items)
 
-				// Filter items based on options.filters
-				const filteredItems = computed(() => {
-					return items.value.filter((item) => {
-						return options.value?.filters?.every((filter) => {
-							if (!filter || !filter.key || !filter.value) return true
-
-							const itemValue = item[filter.key]
-							if (typeof itemValue === 'string' && typeof filter.value === 'string') {
-								return itemValue.toLowerCase().includes(filter.value.toLowerCase())
-							}
-							return false
-						}) ?? true
-					})
-				})
-
 				return {
 					args,
 					options,
-					filteredItems,
+					items,
 				}
 			},
 			template: `
 				<SyTable
 					v-model:options="options"
 					:headers="args.headers"
-					:items="filteredItems"
+					:items="items"
 					:show-filters="args.showFilters"
 				/>
 			`,

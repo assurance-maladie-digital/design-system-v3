@@ -32,6 +32,7 @@ export type DataTableHeaders = {
 
 // Component-specific props interfaces
 export interface SyTableProps {
+	items?: Record<string, unknown>[]
 	suffix?: string
 	itemsPerPage?: number
 	caption?: string
@@ -40,6 +41,7 @@ export interface SyTableProps {
 
 export interface SyServerTableProps {
 	serverItemsLength: number
+	items?: Record<string, unknown>[]
 	suffix?: string
 	itemsPerPage?: number
 	caption: string
