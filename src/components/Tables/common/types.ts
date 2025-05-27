@@ -27,7 +27,8 @@ export type DataTableHeaders = {
 	key?: string
 	filterable?: boolean
 	filterType?: FilterType
-	filterOptions?: Array<{ text: string, value: null }>
+	filterOptions?: Array<{ text: string, value: unknown }>
+	hideMessages?: boolean
 }
 
 // Component-specific props interfaces

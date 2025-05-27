@@ -91,7 +91,7 @@
 							<th>
 								<div class="d-flex align-center">
 									<span
-										class="me-2 cursor-pointer"
+										class="me-2 cursor-pointer font-weight-bold text-grey-darken-1"
 										role="button"
 										tabindex="0"
 										@click="slotProps.toggleSort(column)"
@@ -131,7 +131,7 @@
 							v-for="header in props.headers"
 							:key="header.key || header.value"
 						>
-							{{ header.title }}
+							<span class="font-weight-bold">{{ header.title }}</span>
 						</th>
 					</tr>
 					<tr v-if="props.showFilters">

@@ -24,8 +24,17 @@ export function filterItems<T>(items: T[], filters: FilterOption[]): T[] {
 					}
 					break
 				case 'number':
-					if (typeof itemValue === 'number' && typeof filter.value === 'number') {
-						return itemValue === filter.value
+					// Handle number filtering
+					if (typeof itemValue === 'number') {
+						// If filter value is a number, do exact comparison
+						if (typeof filter.value === 'number') {
+							return itemValue === filter.value
+						}
+						// If filter value is a string, convert to string and check if includes
+						if (typeof filter.value === 'string') {
+							const itemValueStr = itemValue.toString()
+							return itemValueStr.includes(filter.value)
+						}
 					}
 					break
 				case 'select':

@@ -111,6 +111,7 @@
 				:clearable="true"
 				density="compact"
 				hide-details
+				:hide-messages="header.hideMessages"
 				variant="outlined"
 				class="filter-input"
 				@update:model-value="updateFilter(header.key || header.value || '', header.filterType || 'text')"
@@ -124,7 +125,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 16px;
-	padding: 16px;
+	padding: 16px 0;
 	background-color: var(--v-theme-surface);
 	border-bottom: 1px solid var(--v-border-color);
 

@@ -364,7 +364,7 @@ export const SortBy: Story = {
 	},
 }
 
-export const FilterBy: Story = {
+export const FilterByText: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -374,7 +374,7 @@ export const FilterBy: Story = {
 					<SyTable
 						v-model:options="options"
 						:headers="headers"
-						:items="filteredItems"
+						:items="items"
 						show-filters
 					/>
 				</template>
@@ -384,7 +384,7 @@ export const FilterBy: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { ref, computed } from 'vue'
+					import { ref } from 'vue'
 					import { SyTable } from '@cnamts/synapse'
 					
 					const options = ref({
@@ -445,26 +445,6 @@ export const FilterBy: Story = {
 							email: 'agate.roy@exemple.com'
 						}
 					])
-					
-					// Filter items based on headers filters
-					const filteredItems = computed(() => {
-						// If no filters are set, return all items
-						if (!options.value.filters || options.value.filters.length === 0) {
-							return items.value
-						}
-
-						return items.value.filter(item => {
-							return options.value.filters.every(filter => {
-								if (!filter || !filter.key || !filter.value) return true
-
-								const itemValue = item[filter.key]
-								if (typeof itemValue === 'string') {
-									return itemValue.toLowerCase().includes(filter.value.toLowerCase())
-								}
-								return false
-							})
-						})
-					})
 				</script>
 				`,
 			},
@@ -526,6 +506,265 @@ export const FilterBy: Story = {
 		],
 		options: {
 			itemsPerPage: 4,
+			filters: [],
+		},
+		showFilters: true,
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				// Create reactive references
+				const options = ref(args.options)
+				const items = ref(args.items)
+
+				return {
+					args,
+					options,
+					items,
+				}
+			},
+			template: `
+				<SyTable
+					v-model:options="options"
+					:headers="args.headers"
+					:items="items"
+					:show-filters="args.showFilters"
+				/>
+			`,
+		}
+	},
+}
+
+export const FilterByNumber: Story = {
+	args: {
+		// @ts-expect-error - props of VDataTable
+		headers: [
+			{
+				title: 'Nom',
+				key: 'name',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Âge',
+				key: 'age',
+				filterable: true,
+				filterType: 'number',
+			},
+			{
+				title: 'Salaire',
+				key: 'salary',
+				filterable: true,
+				filterType: 'number',
+			},
+		],
+		items: [
+			{
+				name: 'Jean Dupont',
+				age: 32,
+				salary: 45000,
+			},
+			{
+				name: 'Marie Martin',
+				age: 28,
+				salary: 52000,
+			},
+			{
+				name: 'Pierre Durand',
+				age: 45,
+				salary: 65000,
+			},
+			{
+				name: 'Sophie Petit',
+				age: 36,
+				salary: 48000,
+			},
+			{
+				name: 'Thomas Leroy',
+				age: 41,
+				salary: 58000,
+			},
+		],
+		options: {
+			itemsPerPage: 5,
+			filters: [],
+		},
+		showFilters: true,
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				// Create reactive references
+				const options = ref(args.options)
+				const items = ref(args.items)
+
+				return {
+					args,
+					options,
+					items,
+				}
+			},
+			template: `
+				<SyTable
+					v-model:options="options"
+					:headers="args.headers"
+					:items="items"
+					:show-filters="args.showFilters"
+				/>
+			`,
+		}
+	},
+}
+
+export const FilterBySelect: Story = {
+	args: {
+		// @ts-expect-error - props of VDataTable
+		headers: [
+			{
+				title: 'Nom',
+				key: 'name',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Département',
+				key: 'department',
+				filterable: true,
+				filterType: 'select',
+				hideMessages: true,
+				filterOptions: [
+					{ text: 'RH', value: 'RH' },
+					{ text: 'IT', value: 'IT' },
+					{ text: 'Finance', value: 'Finance' },
+					{ text: 'Marketing', value: 'Marketing' },
+				],
+			},
+			{
+				title: 'Statut',
+				key: 'status',
+				filterable: true,
+				filterType: 'select',
+				hideMessages: true,
+				filterOptions: [
+					{ text: 'Actif', value: 'Actif' },
+					{ text: 'En congé', value: 'En congé' },
+					{ text: 'Inactif', value: 'Inactif' },
+				],
+			},
+		],
+		items: [
+			{
+				name: 'Jean Dupont',
+				department: 'RH',
+				status: 'Actif',
+			},
+			{
+				name: 'Marie Martin',
+				department: 'IT',
+				status: 'En congé',
+			},
+			{
+				name: 'Pierre Durand',
+				department: 'Finance',
+				status: 'Actif',
+			},
+			{
+				name: 'Sophie Petit',
+				department: 'Marketing',
+				status: 'Actif',
+			},
+			{
+				name: 'Thomas Leroy',
+				department: 'IT',
+				status: 'Inactif',
+			},
+		],
+		options: {
+			itemsPerPage: 5,
+			filters: [],
+		},
+		showFilters: true,
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				// Create reactive references
+				const options = ref(args.options)
+				const items = ref(args.items)
+
+				return {
+					args,
+					options,
+					items,
+				}
+			},
+			template: `
+				<SyTable
+					v-model:options="options"
+					:headers="args.headers"
+					:items="items"
+					:show-filters="args.showFilters"
+				/>
+			`,
+		}
+	},
+}
+
+export const FilterByDate: Story = {
+	args: {
+		// @ts-expect-error - props of VDataTable
+		headers: [
+			{
+				title: 'Nom',
+				key: 'name',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Date d\'embauche',
+				key: 'hireDate',
+				filterable: true,
+				filterType: 'date',
+			},
+			{
+				title: 'Période de congés',
+				key: 'vacationPeriod',
+				filterable: true,
+				filterType: 'period',
+			},
+		],
+		items: [
+			{
+				name: 'Jean Dupont',
+				hireDate: new Date('2020-05-15'),
+				vacationPeriod: { from: new Date('2023-07-01'), to: new Date('2023-07-15') },
+			},
+			{
+				name: 'Marie Martin',
+				hireDate: new Date('2019-03-10'),
+				vacationPeriod: { from: new Date('2023-08-01'), to: new Date('2023-08-20') },
+			},
+			{
+				name: 'Pierre Durand',
+				hireDate: new Date('2015-11-22'),
+				vacationPeriod: { from: new Date('2023-06-15'), to: new Date('2023-07-05') },
+			},
+			{
+				name: 'Sophie Petit',
+				hireDate: new Date('2021-01-08'),
+				vacationPeriod: { from: new Date('2023-12-20'), to: new Date('2024-01-05') },
+			},
+			{
+				name: 'Thomas Leroy',
+				hireDate: new Date('2018-07-30'),
+				vacationPeriod: { from: new Date('2023-09-10'), to: new Date('2023-09-25') },
+			},
+		],
+		options: {
+			itemsPerPage: 5,
 			filters: [],
 		},
 		showFilters: true,
