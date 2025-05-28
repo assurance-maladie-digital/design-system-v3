@@ -103,16 +103,30 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 				&& 'to' in itemValue
 			) {
 				const { from, to } = filterValue as { from?: string | Date, to?: string | Date }
+
+				if (!from || !to) {
+					return true
+				}
+
 				const itemFrom = parseDate(itemValue.from)
 				const itemTo = parseDate(itemValue.to)
 				const fromDate = parseDate(from)
 				const toDate = parseDate(to)
 
-				if (!itemFrom || !itemTo) return false
+				if (!itemFrom || !itemTo || !fromDate || !toDate) {
+					return false
+				}
 
-				if (fromDate && toDate) return fromDate <= itemTo && toDate >= itemFrom
-				if (fromDate) return itemTo >= fromDate
-				if (toDate) return itemFrom <= toDate
+				const normalizeDate = (date: Date) =>
+					new Date(date.getFullYear(), date.getMonth(), date.getDate())
+
+				const itemFromDay = normalizeDate(itemFrom)
+				const itemToDay = normalizeDate(itemTo)
+				const fromDay = normalizeDate(fromDate)
+				const toDay = normalizeDate(toDate)
+
+				// Apply overlap check only if both dates are valid
+				return itemFromDay <= toDay && itemToDay >= fromDay
 			}
 			return false
 		}
