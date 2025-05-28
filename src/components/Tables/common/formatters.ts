@@ -52,14 +52,20 @@ export function processItems(items: Record<string, unknown>[]): Record<string, u
 
 		const newItem = { ...item } as Record<string, unknown>
 
-		// Format vacation period if it exists and is a period object
-		if (newItem.vacationPeriod
-			&& typeof newItem.vacationPeriod === 'object'
-			&& newItem.vacationPeriod !== null
-			&& 'from' in newItem.vacationPeriod
-			&& 'to' in newItem.vacationPeriod) {
-			newItem.vacationPeriod = formatPeriod(newItem.vacationPeriod)
-		}
+		// Process all fields in the item
+		Object.keys(newItem).forEach(key => {
+			const value = newItem[key]
+			
+			// Check if this field is a period-like object (has from and to properties)
+			if (value
+				&& typeof value === 'object'
+				&& value !== null
+				&& 'from' in value
+				&& 'to' in value) {
+				// Format the period and store it back
+				newItem[key] = formatPeriod(value)
+			}
+		})
 
 		return newItem
 	})
