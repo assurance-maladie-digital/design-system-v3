@@ -40,7 +40,7 @@ export function formatPeriod(value: unknown): string {
 
 /**
  * Process table items to format special fields like periods
- * 
+ *
  * @param items - The table items to process
  * @returns Processed items with formatted values
  */
