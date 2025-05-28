@@ -4,6 +4,7 @@
 	import { useTableUtils } from '../common/tableUtils'
 	import { useTableFilter } from '../common/useTableFilter'
 	import SyTableFilter from '../common/SyTableFilter.vue'
+	import { formatPeriod } from '../common/formatters'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		suffix: undefined,
@@ -11,7 +12,30 @@
 		caption: 'caption',
 		showFilters: false,
 		items: () => [],
+		serverItemsLength: 0,
 	})
+
+	// Process items to format period values
+	function processItems(items: Record<string, unknown>[]) {
+		if (!items || !Array.isArray(items)) return []
+
+		return items.map((item) => {
+			if (!item) return item
+
+			const newItem = { ...item } as Record<string, unknown>
+
+			// Format vacation period if it exists and is a period object
+			if (newItem.vacationPeriod
+				&& typeof newItem.vacationPeriod === 'object'
+				&& newItem.vacationPeriod !== null
+				&& 'from' in newItem.vacationPeriod
+				&& 'to' in newItem.vacationPeriod) {
+				newItem.vacationPeriod = formatPeriod(newItem.vacationPeriod)
+			}
+
+			return newItem
+		})
+	}
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
@@ -118,7 +142,7 @@
 		<VDataTableServer
 			v-bind="propsFacade"
 			color="primary"
-			:items="props.items.length > 0 ? props.items : createEmptyItemWithStructure()"
+			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
 			:items-length="props.serverItemsLength || 0"
 			@update:options="updateOptions"
 		>

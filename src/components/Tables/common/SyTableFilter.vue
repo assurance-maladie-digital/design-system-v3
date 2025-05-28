@@ -295,45 +295,61 @@
 				:format="header.dateFormat"
 				@update:model-value="(val) => {
 					try {
-						const key = String(header.key || header.value || '')
+						// Safely get the key with fallback
+						const key = String(header?.key || header?.value || '')
+						if (!key) return
 
-						// Initialize the filters object for this key if it doesn't exist
-						if (!periodFilters.value[key]) {
-							periodFilters.value[key] = { from: null, to: null }
+						// Ensure periodFilters.value is initialized
+						if (!periodFilters.value) {
+							periodFilters.value = {}
 						}
 
-						// Handle null/undefined case - clear all filters
+						// Handle null/undefined case - clear filter for this key
 						if (!val) {
-							// Clear all filters when any input is cleared
-							emit('update:filters', [])
+							// Find and remove the filter if it exists
+							const newFilters = props.filters.filter(f => f.key !== key)
+							emit('update:filters', newFilters)
 							return
 						}
 
-						// Check if both from and to are null - clear all filters
+						// Check if both from and to are null - clear filter for this key
 						if (typeof val === 'object' && val.from === null && val.to === null) {
-							// Clear all filters when period is completely empty
-							emit('update:filters', [])
+							// Find and remove the filter if it exists
+							const newFilters = props.filters.filter(f => f.key !== key)
+							emit('update:filters', newFilters)
 							return
 						}
 
-						// Ensure we're working with string values
+						// Process period value
 						if (typeof val === 'object') {
-							// Handle from date (could be Date, string, or null)
-							const from = val.from instanceof Date
-								? val.from.toLocaleDateString('fr-FR')
-								: val.from
+							// Create a new filter value object
+							const filterValue = {
+								from: val.from instanceof Date ? val.from : val.from,
+								to: val.to instanceof Date ? val.to : val.to
+							}
 
-							// Handle to date (could be Date, string, or null)
-							const to = val.to instanceof Date
-								? val.to.toLocaleDateString('fr-FR')
-								: val.to
+							// Store in periodFilters for UI display
+							periodFilters.value[key] = {
+								from: val.from instanceof Date ? val.from.toLocaleDateString('fr-FR') : val.from,
+								to: val.to instanceof Date ? val.to.toLocaleDateString('fr-FR') : val.to
+							}
 
-							// Always create a new object to ensure reactivity
-							periodFilters.value[key] = { from, to }
+							// Create or update the filter
+							const existingFilterIndex = props.filters.findIndex(f => f.key === key)
+							const newFilters = [...props.filters]
+
+							if (existingFilterIndex >= 0) {
+								newFilters[existingFilterIndex].value = filterValue
+							} else {
+								newFilters.push({
+									key,
+									value: filterValue,
+									type: 'period'
+								})
+							}
+
+							emit('update:filters', newFilters)
 						}
-
-						// Update the filter
-						updateFilter(key, 'period')
 					} catch (error) {
 						console.error('Error in period filter update:', error)
 					}

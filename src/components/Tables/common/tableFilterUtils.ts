@@ -236,28 +236,125 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 					return true
 				}
 
-				// Handle Date object in item
-				if (itemValue instanceof Date) {
-					const dateValue = itemValue.getTime()
-
-					if (from instanceof Date && to instanceof Date) {
-						return dateValue >= from.getTime() && dateValue <= to.getTime()
-					}
-					else if (from instanceof Date) {
-						return dateValue >= from.getTime()
-					}
-					else if (to instanceof Date) {
-						return dateValue <= to.getTime()
-					}
-				}
-
-				// Handle string date in item - with additional defensive checks
+				// Handle period object in item (like { from: '01/07/2025', to: '15/07/2025' })
 				if (typeof itemValue === 'object' && itemValue !== null && 'from' in itemValue && 'to' in itemValue) {
 					// Safely access from and to properties
 					const itemFrom = itemValue.from || null
 					const itemTo = itemValue.to || null
 
-					// Simple case: exact string match
+					// Convert filter dates to Date objects for comparison
+					let fromDate: Date | null = null
+					let toDate: Date | null = null
+
+					// Parse from date
+					if (from instanceof Date) {
+						fromDate = from
+					}
+					else if (typeof from === 'string' && from.trim() !== '') {
+						try {
+							// Try French format (DD/MM/YYYY)
+							if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(from)) {
+								const [day, month, year] = from.split('/').map(Number)
+								fromDate = new Date(year, month - 1, day)
+							}
+							else {
+								// Try standard date parsing
+								fromDate = new Date(from)
+							}
+						}
+						catch (e) {
+							console.error('Error parsing from date:', e)
+						}
+					}
+
+					// Parse to date
+					if (to instanceof Date) {
+						toDate = to
+					}
+					else if (typeof to === 'string' && to.trim() !== '') {
+						try {
+							// Try French format (DD/MM/YYYY)
+							if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(to)) {
+								const [day, month, year] = to.split('/').map(Number)
+								toDate = new Date(year, month - 1, day)
+							}
+							else {
+								// Try standard date parsing
+								toDate = new Date(to)
+							}
+						}
+						catch (e) {
+							console.error('Error parsing to date:', e)
+						}
+					}
+
+					// Convert item dates to Date objects
+					let itemFromDate: Date | null = null
+					let itemToDate: Date | null = null
+
+					// Parse item from date
+					if (typeof itemFrom === 'string' && itemFrom.trim() !== '') {
+						try {
+							// Try French format (DD/MM/YYYY)
+							if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(itemFrom)) {
+								const [day, month, year] = itemFrom.split('/').map(Number)
+								itemFromDate = new Date(year, month - 1, day)
+							}
+							else {
+								// Try standard date parsing
+								itemFromDate = new Date(itemFrom)
+							}
+						}
+						catch (e) {
+							console.error('Error parsing item from date:', e)
+						}
+					}
+
+					// Parse item to date
+					if (typeof itemTo === 'string' && itemTo.trim() !== '') {
+						try {
+							// Try French format (DD/MM/YYYY)
+							if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(itemTo)) {
+								const [day, month, year] = itemTo.split('/').map(Number)
+								itemToDate = new Date(year, month - 1, day)
+							}
+							else {
+								// Try standard date parsing
+								itemToDate = new Date(itemTo)
+							}
+						}
+						catch (e) {
+							console.error('Error parsing item to date:', e)
+						}
+					}
+
+					// Now check for period overlap
+					// If we have both filter dates
+					if (fromDate && toDate && !isNaN(fromDate.getTime()) && !isNaN(toDate.getTime())) {
+						// If we have both item dates
+						if (itemFromDate && itemToDate && !isNaN(itemFromDate.getTime()) && !isNaN(itemToDate.getTime())) {
+							// Check for period overlap
+							return (
+								(fromDate <= itemToDate && toDate >= itemFromDate)
+							)
+						}
+					}
+					// If only filter from date is provided
+					else if (fromDate && !isNaN(fromDate.getTime())) {
+						// Check if item period ends after filter from date
+						if (itemToDate && !isNaN(itemToDate.getTime())) {
+							return itemToDate >= fromDate
+						}
+					}
+					// If only filter to date is provided
+					else if (toDate && !isNaN(toDate.getTime())) {
+						// Check if item period starts before filter to date
+						if (itemFromDate && !isNaN(itemFromDate.getTime())) {
+							return itemFromDate <= toDate
+						}
+					}
+
+					// Fallback to string comparison if date parsing failed
 					if (typeof itemFrom === 'string' && typeof itemTo === 'string') {
 						// If both filter values are provided
 						if (from !== null && from !== undefined && to !== null && to !== undefined) {
@@ -283,8 +380,23 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 						}
 					}
 				}
+
+				// Handle Date object in item
+				if (itemValue instanceof Date) {
+					const dateValue = itemValue.getTime()
+
+					if (from instanceof Date && to instanceof Date) {
+						return dateValue >= from.getTime() && dateValue <= to.getTime()
+					}
+					else if (from instanceof Date) {
+						return dateValue >= from.getTime()
+					}
+					else if (to instanceof Date) {
+						return dateValue <= to.getTime()
+					}
+				}
 			}
-			break
+			return false
 		case 'date': {
 			// Implement date filtering here as well for consistency
 			if (itemValue === undefined || itemValue === null) return false
