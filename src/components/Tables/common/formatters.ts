@@ -37,3 +37,30 @@ export function formatPeriod(value: unknown): string {
 	// Fallback to string representation
 	return String(value)
 }
+
+/**
+ * Process table items to format special fields like periods
+ * 
+ * @param items - The table items to process
+ * @returns Processed items with formatted values
+ */
+export function processItems(items: Record<string, unknown>[]): Record<string, unknown>[] {
+	if (!items || !Array.isArray(items)) return []
+
+	return items.map((item) => {
+		if (!item) return item
+
+		const newItem = { ...item } as Record<string, unknown>
+
+		// Format vacation period if it exists and is a period object
+		if (newItem.vacationPeriod
+			&& typeof newItem.vacationPeriod === 'object'
+			&& newItem.vacationPeriod !== null
+			&& 'from' in newItem.vacationPeriod
+			&& 'to' in newItem.vacationPeriod) {
+			newItem.vacationPeriod = formatPeriod(newItem.vacationPeriod)
+		}
+
+		return newItem
+	})
+}
