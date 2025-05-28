@@ -248,17 +248,12 @@
 						const newFilters = [...props.filters]
 
 						// Ensure we're passing a Date object to the filter
+						// Keep dateValue as string for compatibility with the filter system
 						let dateValue = val
 						if (typeof val === 'string' && val.trim() !== '') {
-							try {
-								// Try French format (DD/MM/YYYY)
-								if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(val)) {
-									const [day, month, year] = val.split('/').map(Number)
-									dateValue = new Date(year, month - 1, day)
-								}
-							} catch (e) {
-								console.error('Error converting date string to Date object:', e)
-							}
+							// We'll use the string directly without converting to Date
+							// This prevents TypeScript errors with Date vs string type
+							dateValue = val
 						}
 
 						if (existingFilterIndex >= 0) {
@@ -299,9 +294,9 @@
 						const key = String(header?.key || header?.value || '')
 						if (!key) return
 
-						// Ensure periodFilters.value is initialized
+						// Ensure periodFilters.value is initialized with required properties
 						if (!periodFilters.value) {
-							periodFilters.value = {}
+							periodFilters.value = { from: null, to: null }
 						}
 
 						// Handle null/undefined case - clear filter for this key

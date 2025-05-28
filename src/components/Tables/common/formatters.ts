@@ -53,9 +53,9 @@ export function processItems(items: Record<string, unknown>[]): Record<string, u
 		const newItem = { ...item } as Record<string, unknown>
 
 		// Process all fields in the item
-		Object.keys(newItem).forEach(key => {
+		Object.keys(newItem).forEach((key) => {
 			const value = newItem[key]
-			
+
 			// Check if this field is a period-like object (has from and to properties)
 			if (value
 				&& typeof value === 'object'
