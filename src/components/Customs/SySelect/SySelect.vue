@@ -330,6 +330,10 @@
 .sy-select {
 	display: flex;
 	flex-direction: column;
+
+	:deep(input) {
+		caret-color: transparent;
+	}
 }
 
 .v-field {
