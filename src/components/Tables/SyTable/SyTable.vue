@@ -1,7 +1,9 @@
 <script setup lang="ts">
-	import { useAttrs, watch } from 'vue'
-	import type { DataOptions } from '../common/types'
+	import { ref, useAttrs, watch } from 'vue'
+	import type { VDataTable } from 'vuetify/components'
+	import TableHeader from '../common/TableHeader.vue'
 	import { useTableUtils } from '../common/tableUtils'
+	import type { DataOptions } from '../common/types'
 
 	const props = defineProps({
 		suffix: {
@@ -15,6 +17,10 @@
 		caption: {
 			type: String,
 			default: 'caption',
+		},
+		resizableColumns: {
+			type: Boolean,
+			default: false,
 		},
 	})
 
@@ -52,6 +58,8 @@
 		watchOptions,
 		{ deep: true },
 	)
+
+	const table = ref<VDataTable>()
 </script>
 
 <template>
@@ -60,6 +68,7 @@
 		class="sy-table"
 	>
 		<VDataTable
+			ref="table"
 			color="primary"
 			v-bind="propsFacade"
 			@update:options="updateOptions"
@@ -72,6 +81,21 @@
 					:name="slotName"
 					v-bind="slotProps ?? {}"
 				/>
+			</template>
+			<template #headers="headersProps">
+				<tr>
+					<th
+						v-for="column in headersProps.columns"
+						:key="(column.key as string)"
+					>
+						<TableHeader
+							:table="table"
+							:header-params="headersProps"
+							:column="column"
+							:resizable-columns="props.resizableColumns"
+						/>
+					</th>
+				</tr>
 			</template>
 		</VDataTable>
 	</div>

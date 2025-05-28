@@ -46,6 +46,10 @@ const meta = {
 			description: 'Nombre d\'éléments par page',
 			control: { type: 'number' },
 		},
+		resizableColumns: {
+			description: 'Permet de redimensionner les colonnes du tableau',
+			control: { type: 'boolean' },
+		},
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 
@@ -527,6 +531,156 @@ export const ManyTables: Story = {
 						suffix="table2"
 					/>
 				</div>
+			`,
+		}
+	},
+}
+
+export const ResizableColumns: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						resizableColumns
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		resizableColumns: true,
+		// @ts-expect-error - props of VDataTable
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+		},
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<SyTable
+					v-model:options="args.options"
+					:headers="args.headers"
+					:items="args.items"
+					:resizableColumns="args.resizableColumns"
+				/>
 			`,
 		}
 	},
