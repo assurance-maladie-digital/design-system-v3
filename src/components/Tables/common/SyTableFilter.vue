@@ -52,13 +52,9 @@
 				numberFilters.value[key] = value as number
 				break
 			case 'date':
-				// Convert Date objects to string format for DateValue compatibility
-				if (value instanceof Date) {
-					dateFilters.value[key] = value.toLocaleDateString('fr-FR')
-				}
-				else {
-					dateFilters.value[key] = value as DateValue
-				}
+				// Store the date value as is for DateValue compatibility
+				// The actual conversion will happen when updating the filter
+				dateFilters.value[key] = value as DateValue
 				break
 			case 'period':
 				if (value && typeof value === 'object' && 'from' in value && 'to' in value) {
@@ -104,7 +100,43 @@
 			switch (type) {
 			case 'text': return key in textFilters.value ? textFilters.value[key] : ''
 			case 'number': return key in numberFilters.value ? numberFilters.value[key] : null
-			case 'date': return key in dateFilters.value ? dateFilters.value[key] : null
+			case 'date': {
+				// For date filters, convert string dates to Date objects
+				if (key in dateFilters.value) {
+					const dateValue = dateFilters.value[key]
+					if (dateValue === null || dateValue === undefined || dateValue === '') {
+						return null
+					}
+
+					// If already a Date object, return as is
+					if (dateValue instanceof Date) {
+						return dateValue
+					}
+
+					// If it's a string, try to convert to a Date object
+					if (typeof dateValue === 'string') {
+						try {
+							// Try French format (DD/MM/YYYY)
+							if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateValue)) {
+								const [day, month, year] = dateValue.split('/').map(Number)
+								return new Date(year, month - 1, day)
+							}
+							else {
+								// Try standard date parsing
+								return new Date(dateValue)
+							}
+						}
+						catch (e) {
+							console.error('Error converting date string to Date object:', e)
+							return dateValue // Return as is if conversion fails
+						}
+					}
+
+					// Return as is for other types
+					return dateValue
+				}
+				return null
+			}
 			case 'period': return key in periodFilters.value ? periodFilters.value[key] : { from: null, to: null } as { from: string | null, to: string | null }
 			case 'select': return key in selectFilters.value ? selectFilters.value[key] : undefined
 			default: return key in textFilters.value ? textFilters.value[key] : ''
@@ -204,22 +236,49 @@
 				variant="outlined"
 				class="filter-input"
 				:format="header.dateFormat"
-				@update:model-value="(val: DateValue) => {
+				@update:model-value="(val) => {
 					const key = String(header.key || header.value || '')
 					if (val === null) {
-						// Clear all filters when any input is cleared
-						emit('update:filters', [])
+						// Find and remove the filter if it exists
+						const newFilters = props.filters.filter(f => f.key !== key)
+						emit('update:filters', newFilters)
 					} else {
-						// Ensure dateFilters.value is initialized
-						if (dateFilters.value) {
-							dateFilters.value[key] = val
-							updateFilter(key, 'date')
+						// Create or update the filter with a proper Date object
+						const existingFilterIndex = props.filters.findIndex(f => f.key === key)
+						const newFilters = [...props.filters]
+
+						// Ensure we're passing a Date object to the filter
+						let dateValue = val
+						if (typeof val === 'string' && val.trim() !== '') {
+							try {
+								// Try French format (DD/MM/YYYY)
+								if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(val)) {
+									const [day, month, year] = val.split('/').map(Number)
+									dateValue = new Date(year, month - 1, day)
+								}
+							} catch (e) {
+								console.error('Error converting date string to Date object:', e)
+							}
 						}
+
+						if (existingFilterIndex >= 0) {
+							newFilters[existingFilterIndex].value = dateValue
+						} else {
+							newFilters.push({
+								key,
+								value: dateValue,
+								type: 'date'
+							})
+						}
+
+						emit('update:filters', newFilters)
 					}
 				}"
 				@click:clear="() => {
-					// Clear all filters when any input is cleared
-					emit('update:filters', [])
+					const key = String(header.key || header.value || '')
+					// Find and remove the filter if it exists
+					const newFilters = props.filters.filter(f => f.key !== key)
+					emit('update:filters', newFilters)
 				}"
 			/>
 			<!-- Period component for period filter type -->

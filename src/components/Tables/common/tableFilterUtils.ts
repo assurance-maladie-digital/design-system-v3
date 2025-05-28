@@ -27,28 +27,69 @@ export function filterItems<T extends Record<string, unknown>>(items: T[], filte
 				if (!filter.key) return true
 				const itemValue = item[filter.key]
 				if (itemValue === undefined || itemValue === null) return false
+				if (filter.value === undefined || filter.value === null) return true
 
-				// Handle Date objects
-				if (itemValue instanceof Date && filter.value instanceof Date) {
-					// Compare dates by converting to same format (day only, ignoring time)
-					const itemDateStr = itemValue.toLocaleDateString('fr-FR')
-					const filterDateStr = filter.value.toLocaleDateString('fr-FR')
-					return itemDateStr === filterDateStr
+				// Convert both to Date objects for comparison if possible
+				let itemDate: Date | null = null
+				let filterDate: Date | null = null
+
+				// Handle item value
+				if (itemValue instanceof Date) {
+					itemDate = itemValue
 				}
-
-				// Handle string dates
-				if (typeof itemValue === 'string' && filter.value instanceof Date) {
+				else if (typeof itemValue === 'string') {
+					// Try to parse string date in various formats
 					try {
-						const filterDate = filter.value.toLocaleDateString('fr-FR')
-						return itemValue === filterDate || itemValue.includes(filterDate)
+						// Try DD/MM/YYYY format (French format)
+						if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(itemValue)) {
+							const [day, month, year] = itemValue.split('/').map(Number)
+							itemDate = new Date(year, month - 1, day)
+						}
+						else {
+							// Try standard date parsing
+							itemDate = new Date(itemValue)
+						}
 					}
 					catch (e) {
-						console.error('Error comparing dates:', e)
+						console.error('Error parsing item date:', e)
 						return false
 					}
 				}
 
-				// If filter value is a string
+				// Handle filter value
+				if (filter.value instanceof Date) {
+					filterDate = filter.value
+				}
+				else if (typeof filter.value === 'string') {
+					// Try to parse string date in various formats
+					try {
+						// Try DD/MM/YYYY format (French format)
+						if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(filter.value)) {
+							const [day, month, year] = filter.value.split('/').map(Number)
+							filterDate = new Date(year, month - 1, day)
+						}
+						else {
+							// Try standard date parsing
+							filterDate = new Date(filter.value)
+						}
+					}
+					catch (e) {
+						console.error('Error parsing filter date:', e)
+						return false
+					}
+				}
+
+				// If we have both dates as Date objects, compare them by day (ignoring time)
+				if (itemDate && filterDate && !isNaN(itemDate.getTime()) && !isNaN(filterDate.getTime())) {
+					// Compare dates by day, month, year only (ignore time)
+					return (
+						itemDate.getDate() === filterDate.getDate()
+						&& itemDate.getMonth() === filterDate.getMonth()
+						&& itemDate.getFullYear() === filterDate.getFullYear()
+					)
+				}
+
+				// String comparison fallback
 				if (typeof itemValue === 'string' && typeof filter.value === 'string') {
 					return itemValue === filter.value || itemValue.includes(filter.value)
 				}
@@ -57,7 +98,7 @@ export function filterItems<T extends Record<string, unknown>>(items: T[], filte
 			})
 		})
 
-		// If no items match the date filter, return all items
+		// If no items match the date filter, return empty array (changed behavior)
 		if (dateFilteredItems.length === 0) {
 			// If we have other filters, apply only those
 			if (nonDateFilters.length > 0) {
@@ -65,9 +106,8 @@ export function filterItems<T extends Record<string, unknown>>(items: T[], filte
 					return nonDateFilters.every(filter => applyFilter(item, filter))
 				})
 			}
-
-			// If we only had date filters, return all items
-			return itemsCopy
+			// If we only had date filters and no matches, return empty array
+			return []
 		}
 
 		// If we have date matches and other filters
@@ -245,9 +285,78 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 				}
 			}
 			break
-		case 'date':
-			// Date filtering is handled separately in the main filterItems function
-			return true
+		case 'date': {
+			// Implement date filtering here as well for consistency
+			if (itemValue === undefined || itemValue === null) return false
+			if (filter.value === undefined || filter.value === null) return true
+
+			// Convert both to Date objects for comparison if possible
+			let itemDate: Date | null = null
+			let filterDate: Date | null = null
+
+			// Handle item value
+			if (itemValue instanceof Date) {
+				itemDate = itemValue
+			}
+			else if (typeof itemValue === 'string') {
+				// Try to parse string date in various formats
+				try {
+					// Try DD/MM/YYYY format (French format)
+					if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(itemValue)) {
+						const [day, month, year] = itemValue.split('/').map(Number)
+						itemDate = new Date(year, month - 1, day)
+					}
+					else {
+						// Try standard date parsing
+						itemDate = new Date(itemValue)
+					}
+				}
+				catch (e) {
+					console.error('Error parsing item date:', e)
+					return false
+				}
+			}
+
+			// Handle filter value
+			if (filter.value instanceof Date) {
+				filterDate = filter.value
+			}
+			else if (typeof filter.value === 'string') {
+				// Try to parse string date in various formats
+				try {
+					// Try DD/MM/YYYY format (French format)
+					if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(filter.value)) {
+						const [day, month, year] = filter.value.split('/').map(Number)
+						filterDate = new Date(year, month - 1, day)
+					}
+					else {
+						// Try standard date parsing
+						filterDate = new Date(filter.value)
+					}
+				}
+				catch (e) {
+					console.error('Error parsing filter date:', e)
+					return false
+				}
+			}
+
+			// If we have both dates as Date objects, compare them by day (ignoring time)
+			if (itemDate && filterDate && !isNaN(itemDate.getTime()) && !isNaN(filterDate.getTime())) {
+				// Compare dates by day, month, year only (ignore time)
+				return (
+					itemDate.getDate() === filterDate.getDate()
+					&& itemDate.getMonth() === filterDate.getMonth()
+					&& itemDate.getFullYear() === filterDate.getFullYear()
+				)
+			}
+
+			// String comparison fallback
+			if (typeof itemValue === 'string' && typeof filter.value === 'string') {
+				return itemValue === filter.value || itemValue.includes(filter.value)
+			}
+
+			return false
+		}
 	}
 
 	// Default to true for unhandled cases
