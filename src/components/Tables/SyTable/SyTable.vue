@@ -145,7 +145,7 @@
 										tabindex="0"
 										@click="slotProps.toggleSort(column)"
 										@keydown.enter="slotProps.toggleSort(column)"
-										v-text="column.title"
+										v-text="props.headers?.find(h => h.key === column.key || h.value === column.key)?.title"
 									/>
 
 									<v-icon
