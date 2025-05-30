@@ -79,10 +79,10 @@
 	function getEnhancedHeader(column: TableColumnHeader): TableColumnHeader {
 		// Find matching header from props if available
 		const matchingHeader = props.headers?.find(h => h.key === column.key || h.value === column.value)
-
 		// Create enhanced header with proper types
 		return {
 			...column,
+			title: column.name || matchingHeader?.title,
 			// Use column's filterType if available, otherwise use matching header's filterType
 			filterType: column.filterType || matchingHeader?.filterType,
 			// Use column's filterOptions if available, otherwise use matching header's filterOptions
