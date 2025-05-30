@@ -541,27 +541,30 @@
 						// Émettre l'événement de normalisation
 						emit('normalized', originalDateStr.value, normalizedDateStr.value)
 
-						// Masquer le message après un délai
-						if (normalizationTimeout.value) {
-							clearTimeout(normalizationTimeout.value)
-						}
-						normalizationTimeout.value = window.setTimeout(() => {
-							wasNormalized.value = false
-						}, 5000) as unknown as number
+						// Stocker l'état actuel dans des variables pour pouvoir y accéder plus tard
+						const finalValue = newValue
+						const finalCursorPosition = newCursorPosition
 
-						// Utiliser requestAnimationFrame pour s'assurer que le DOM est mis à jour
-						requestAnimationFrame(() => {
-							// Attendre que Vue ait mis à jour le DOM avant de repositionner le curseur
-							setTimeout(() => {
-								// Accéder directement à l'input via le ref
-								const updatedInput = dateCalendarTextInputRef.value?.$el.querySelector('input')
-								if (updatedInput) {
-									// Repositionner le curseur et s'assurer que l'input a le focus
-									updatedInput.focus()
-									updatedInput.setSelectionRange(newCursorPosition, newCursorPosition)
-								}
-							}, 10)
-						})
+						// Mettre à jour la valeur affichée
+						displayFormattedDate.value = finalValue
+
+						// Utiliser un délai plus long pour s'assurer que le DOM est complètement mis à jour
+						setTimeout(() => {
+							// Accéder directement à l'input via le ref
+							const updatedInput = dateCalendarTextInputRef.value?.$el.querySelector('input')
+							if (updatedInput) {
+								// Forcer la valeur de l'input pour s'assurer qu'elle est correcte
+								updatedInput.value = finalValue
+
+								// Repositionner le curseur et s'assurer que l'input a le focus
+								updatedInput.focus()
+								updatedInput.setSelectionRange(finalCursorPosition, finalCursorPosition)
+
+								// Déclencher un événement input pour s'assurer que Vue est au courant des changements
+								const inputEvent = new Event('input', { bubbles: true })
+								updatedInput.dispatchEvent(inputEvent)
+							}
+						}, 50)
 					}
 				}
 			}
