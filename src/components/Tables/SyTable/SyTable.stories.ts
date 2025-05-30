@@ -783,6 +783,30 @@ export const FilterByDate: Story = {
 							  to: dayjs('2023-08-20').format('DD/MM/YYYY'),
 							},
 						},
+						{
+							name: 'Pierre Dupont',
+							hireDate: dayjs('2025-11-22').format('DD/MM/YYYY'),
+							vacationPeriod: {
+							  from: dayjs('2025-06-15').format('DD/MM/YYYY'),
+							  to: dayjs('2025-07-05').format('DD/MM/YYYY'),
+							},
+						},
+						{
+							name: 'Sophie Garnier',
+							hireDate: dayjs('2025-01-08').format('DD/MM/YYYY'),
+							vacationPeriod: {
+							  from: dayjs('2025-12-20').format('DD/MM/YYYY'),
+							  to: dayjs('2025-01-05').format('DD/MM/YYYY'),
+							},
+						},
+						{
+							name: 'Thomas Leroy',
+							hireDate: dayjs('2025-07-30').format('DD/MM/YYYY'),
+							vacationPeriod: {
+							  from: dayjs('2025-09-10').format('DD/MM/YYYY'),
+							  to: dayjs('2025-09-25').format('DD/MM/YYYY'),
+							},
+						},
 					])
 				</script>
 				`,
@@ -823,34 +847,34 @@ export const FilterByDate: Story = {
 			},
 			{
 				name: 'Marie Martin',
-				hireDate: dayjs('2019-03-10').format('DD/MM/YYYY'),
+				hireDate: dayjs('2025-03-10').format('DD/MM/YYYY'),
 				vacationPeriod: {
-					from: dayjs('2023-08-01').format('DD/MM/YYYY'),
-					to: dayjs('2023-08-20').format('DD/MM/YYYY'),
+					from: dayjs('2025-08-01').format('DD/MM/YYYY'),
+					to: dayjs('2025-08-20').format('DD/MM/YYYY'),
 				},
 			},
 			{
 				name: 'Pierre Durand',
-				hireDate: dayjs('2015-11-22').format('DD/MM/YYYY'),
+				hireDate: dayjs('2025-11-22').format('DD/MM/YYYY'),
 				vacationPeriod: {
-					from: dayjs('2023-06-15').format('DD/MM/YYYY'),
-					to: dayjs('2023-07-05').format('DD/MM/YYYY'),
+					from: dayjs('2025-06-15').format('DD/MM/YYYY'),
+					to: dayjs('2025-07-05').format('DD/MM/YYYY'),
 				},
 			},
 			{
 				name: 'Sophie Petit',
-				hireDate: dayjs('2021-01-08').format('DD/MM/YYYY'),
+				hireDate: dayjs('2025-01-08').format('DD/MM/YYYY'),
 				vacationPeriod: {
-					from: dayjs('2023-12-20').format('DD/MM/YYYY'),
-					to: dayjs('2024-01-05').format('DD/MM/YYYY'),
+					from: dayjs('2025-12-20').format('DD/MM/YYYY'),
+					to: dayjs('2025-01-05').format('DD/MM/YYYY'),
 				},
 			},
 			{
 				name: 'Thomas Leroy',
-				hireDate: dayjs('2018-07-30').format('DD/MM/YYYY'),
+				hireDate: dayjs('2025-07-30').format('DD/MM/YYYY'),
 				vacationPeriod: {
-					from: dayjs('2023-09-10').format('DD/MM/YYYY'),
-					to: dayjs('2023-09-25').format('DD/MM/YYYY'),
+					from: dayjs('2025-09-10').format('DD/MM/YYYY'),
+					to: dayjs('2025-09-25').format('DD/MM/YYYY'),
 				},
 			},
 		],

@@ -4,6 +4,7 @@ import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions } from '../common/types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
+import dayjs from 'dayjs'
 
 interface User {
 	[key: string]: string
@@ -1378,7 +1379,10 @@ export const ServerFilterByDate: Story = {
           interface User {
             name: string
             hireDate: string
-            birthDate: string
+            vacationPeriod: {
+              from: string
+              to: string
+            }
           }
 
           interface DataObj {
@@ -1411,10 +1415,10 @@ export const ServerFilterByDate: Story = {
               dateFormat: 'DD/MM/YYYY'
             },
             { 
-              title: 'Date de naissance', 
-              key: 'birthDate',
+              title: 'Période de congés', 
+              key: 'vacationPeriod',
               filterable: true,
-              filterType: 'date',
+              filterType: 'period',
               dateFormat: 'DD/MM/YYYY'
             }
           ]
@@ -1475,28 +1479,15 @@ export const ServerFilterByDate: Story = {
               resolve({ items, total })
               state.value = StateEnum.RESOLVED
             })
-          }
+          })
+        }
+        
+        // Update the displayed data
+        users.value = filteredData
+        totalUsers.value = filteredData.length
 
-          const getUsers = (): User[] => {
-            return [
-              { name: 'Jean Dupont', hireDate: '15/03/2020', birthDate: '05/07/1990' },
-              { name: 'Marie Martin', hireDate: '05/06/2021', birthDate: '12/09/1993' },
-              { name: 'Pierre Durand', hireDate: '10/01/2015', birthDate: '22/03/1978' },
-              { name: 'Sophie Petit', hireDate: '22/09/2019', birthDate: '18/11/1985' },
-              { name: 'Thomas Leroy', hireDate: '30/11/2017', birthDate: '07/02/1982' },
-              { name: 'Julie Bernard', hireDate: '18/04/2022', birthDate: '29/05/1994' },
-              { name: 'Nicolas Moreau', hireDate: '07/07/2018', birthDate: '14/12/1984' },
-              { name: 'Camille Dubois', hireDate: '12/02/2020', birthDate: '03/08/1988' },
-              { name: 'Alexandre Lefebvre', hireDate: '25/08/2016', birthDate: '19/10/1979' },
-              { name: 'Émilie Girard', hireDate: '03/10/2021', birthDate: '27/01/1992' },
-              { name: 'Lucas Roux', hireDate: '14/05/2017', birthDate: '08/04/1983' },
-              { name: 'Chloé Lambert', hireDate: '09/12/2022', birthDate: '16/06/1996' },
-              { name: 'Maxime Simon', hireDate: '21/03/2016', birthDate: '30/09/1980' },
-              { name: 'Laura Fournier', hireDate: '17/09/2019', birthDate: '11/03/1987' },
-              { name: 'Antoine Mercier', hireDate: '28/01/2018', birthDate: '25/12/1981' },
-            ]
-          }
-          
+        state.value = StateEnum.RESOLVED
+      }
           // Initialize data
           fetchData()
         </script>
@@ -1505,6 +1496,7 @@ export const ServerFilterByDate: Story = {
 		],
 	},
 	args: {
+		showFilters: true,
 		headers: [
 			{
 				title: 'Nom',
@@ -1513,34 +1505,17 @@ export const ServerFilterByDate: Story = {
 				filterType: 'text',
 			},
 			{
-				title: 'Âge',
-				key: 'age',
-				filterable: true,
-				filterType: 'number',
-			},
-			{
-				title: 'Salaire',
-				key: 'salary',
-				filterable: true,
-				filterType: 'number',
-			},
-			{
-				title: 'Département',
-				key: 'department',
-				filterable: true,
-				filterType: 'select',
-				filterOptions: [
-					{ text: 'IT', value: 'IT' },
-					{ text: 'RH', value: 'RH' },
-					{ text: 'Finance', value: 'Finance' },
-					{ text: 'Marketing', value: 'Marketing' },
-				],
-			},
-			{
 				title: 'Date d\'embauche',
 				key: 'hireDate',
 				filterable: true,
 				filterType: 'date',
+				dateFormat: 'DD/MM/YYYY',
+			},
+			{
+				title: 'Période de congés',
+				key: 'vacationPeriod',
+				filterable: true,
+				filterType: 'period',
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
@@ -1549,15 +1524,57 @@ export const ServerFilterByDate: Story = {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const totalUsers = ref(15)
-				const users = ref([
-					{ name: 'Jean Dupont', age: 32, salary: 45000, department: 'IT', hireDate: '15/03/2020' },
-					{ name: 'Marie Martin', age: 28, salary: 52000, department: 'Marketing', hireDate: '05/06/2021' },
-					{ name: 'Pierre Durand', age: 45, salary: 65000, department: 'Finance', hireDate: '10/01/2015' },
-					{ name: 'Sophie Petit', age: 36, salary: 48000, department: 'RH', hireDate: '22/09/2019' },
-					{ name: 'Thomas Leroy', age: 41, salary: 58000, department: 'IT', hireDate: '30/11/2017' },
-				])
-				const options = ref(args.options)
+				// Original data that never changes
+				const originalUsers = [
+					{
+						name: 'Jean-Pierre Dubois',
+						hireDate: dayjs('2025-05-15').format('DD/MM/YYYY'),
+						vacationPeriod: {
+							from: dayjs('2025-07-01').format('DD/MM/YYYY'),
+							to: dayjs('2025-07-15').format('DD/MM/YYYY'),
+						},
+					},
+					{
+						name: 'Marie-Claire Lefèvre',
+						hireDate: dayjs('2025-03-10').format('DD/MM/YYYY'),
+						vacationPeriod: {
+							from: dayjs('2025-08-01').format('DD/MM/YYYY'),
+							to: dayjs('2025-08-20').format('DD/MM/YYYY'),
+						},
+					},
+					{
+						name: 'François Moreau',
+						hireDate: dayjs('2025-11-22').format('DD/MM/YYYY'),
+						vacationPeriod: {
+							from: dayjs('2025-06-15').format('DD/MM/YYYY'),
+							to: dayjs('2025-07-05').format('DD/MM/YYYY'),
+						},
+					},
+					{
+						name: 'Céline Rousseau',
+						hireDate: dayjs('2025-01-08').format('DD/MM/YYYY'),
+						vacationPeriod: {
+							from: dayjs('2025-12-20').format('DD/MM/YYYY'),
+							to: dayjs('2026-01-05').format('DD/MM/YYYY'),
+						},
+					},
+					{
+						name: 'Thierry Bertrand',
+						hireDate: dayjs('2025-07-30').format('DD/MM/YYYY'),
+						vacationPeriod: {
+							from: dayjs('2025-09-10').format('DD/MM/YYYY'),
+							to: dayjs('2025-09-25').format('DD/MM/YYYY'),
+						},
+					},
+				]
+
+				const totalUsers = ref(originalUsers.length)
+				const users = ref([...originalUsers])
+				const options = ref({
+					itemsPerPage: 5,
+					page: 1,
+					filters: [],
+				})
 				const state = ref(StateEnum.IDLE)
 
 				const fetchData = async () => {
@@ -1565,6 +1582,50 @@ export const ServerFilterByDate: Story = {
 
 					// Simulate API delay
 					await new Promise(resolve => setTimeout(resolve, 1000))
+
+					// Start with original data
+					let filteredData = [...originalUsers]
+
+					// Apply filters if any
+					if (options.value.filters && options.value.filters.length > 0) {
+						filteredData = filteredData.filter((user) => {
+							return options.value.filters!.every((filter) => {
+								const { key, value, type } = filter
+								const itemValue = user[key as keyof typeof user]
+
+								if (!value) return true
+
+								if (type === 'date') {
+									// Simple date comparison for demo purposes
+									return itemValue === value
+								}
+								else if (type === 'period') {
+									// Handle period filter type
+									const period = itemValue as { from: string, to: string }
+									const filterPeriod = value as { from: string, to: string }
+
+									// Simple period comparison for demo purposes
+									if (filterPeriod.from && !filterPeriod.to) {
+										return period.from === filterPeriod.from
+									}
+									else if (!filterPeriod.from && filterPeriod.to) {
+										return period.to === filterPeriod.to
+									}
+									else if (filterPeriod.from && filterPeriod.to) {
+										return period.from === filterPeriod.from && period.to === filterPeriod.to
+									}
+									return true
+								}
+								else {
+									return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+								}
+							})
+						})
+					}
+
+					// Update the displayed data
+					users.value = filteredData
+					totalUsers.value = filteredData.length
 
 					state.value = StateEnum.RESOLVED
 				}
@@ -1587,8 +1648,8 @@ export const ServerFilterByDate: Story = {
 						:headers="args.headers"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						suffix="server-filters-demo"
+						:show-filters="true"
+						suffix="server-filter-date"
 						@update:options="fetchData"
 					/>
 				</div>
