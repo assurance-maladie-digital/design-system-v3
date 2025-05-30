@@ -628,7 +628,6 @@
 				// Émettre l'événement de normalisation
 				emit('normalized', originalDateStr.value, normalizedDateStr.value)
 
-
 				normalizationTimeout.value = window.setTimeout(() => {
 					wasNormalized.value = false
 				}, 5000) as unknown as number
