@@ -49,6 +49,7 @@
 		displayTodayButton?: boolean
 		useCombinedMode?: boolean
 		textFieldActivator?: boolean
+		enableNormalization?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -77,6 +78,7 @@
 		displayTodayButton: true,
 		useCombinedMode: false,
 		textFieldActivator: false,
+		enableNormalization: false,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -688,6 +690,7 @@
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
 				:display-range="props.displayRange"
+				:enable-normalization="props.enableNormalization"
 				title="Date text input"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -720,6 +723,7 @@
 				:is-birth-date="props.isBirthDate || props.birthDate"
 				:text-field-activator="props.textFieldActivator"
 				:title="'Date text input'"
+				:enable-normalization="props.enableNormalization"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"

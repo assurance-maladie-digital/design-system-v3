@@ -90,7 +90,7 @@
 		textFieldActivator: false,
 		displayTodayButton: true,
 		displayWeekendDays: true,
-		enableNormalization: true,
+		enableNormalization: false,
 	})
 
 	const emit = defineEmits<{
@@ -1119,6 +1119,7 @@
 					:no-icon="props.noIcon"
 					:disable-error-handling="props.disableErrorHandling"
 					:show-success-messages="props.showSuccessMessages"
+					:enable-normalization="props.enableNormalization"
 					:bg-color="props.bgColor"
 					title="Date text input"
 					@focus="emit('focus')"

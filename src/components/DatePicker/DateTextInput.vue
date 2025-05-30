@@ -5,7 +5,7 @@
 	import { useValidation, type ValidationRule, type ValidationResult } from '@/composables/validation/useValidation'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import { useDateRangeInput, useDateRangeValidation, useDateFormatValidation, useDateValidation, useDateInputEditing } from './composables'
+	import { useDateRangeInput, useDateRangeValidation, useDateFormatValidation, useDateValidation, useDateInputEditing, useDateNormalization, useInputBlurHandlerWithNormalization } from './composables'
 	import { type DateObjectValue } from './types'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { type DateValue } from '@/composables/date/useDateInitializationDayjs'
@@ -33,6 +33,7 @@
 		showSuccessMessages?: boolean
 		bgColor?: string
 		displayRange?: boolean
+		enableNormalization?: boolean
 	}>(), {
 		modelValue: null,
 		placeholder: 'Sélectionner une date',
@@ -53,6 +54,7 @@
 		showSuccessMessages: true,
 		bgColor: undefined,
 		displayRange: false,
+		enableNormalization: false,
 	})
 
 	const emit = defineEmits<{
@@ -61,6 +63,7 @@
 		(e: 'blur'): void
 		(e: 'input', value: string): void
 		(e: 'date-selected', value: DateValue): void
+		(e: 'date-normalized', originalDate: string, normalizedDate: string): void
 	}>()
 
 	const {
@@ -161,6 +164,14 @@
 		required: props.required,
 		hasInteracted,
 		disableErrorHandling: props.disableErrorHandling,
+		enableNormalization: props.enableNormalization,
+	})
+
+	// Utilisation du composable pour la normalisation des dates
+	const { normalizeDate } = useDateNormalization({
+		format: props.format,
+		parseDate,
+		formatDate,
 	})
 
 	// Utilisation du composable pour la validation des dates
@@ -569,106 +580,72 @@
 	}
 
 	const handleBlur = () => {
-		isFocused.value = false
-		hasInteracted.value = true
-		emit('blur')
+		// Utiliser le gestionnaire de perte de focus avec normalisation
+		handleInputBlur()
 
 		// Traitement spécifique pour les plages de dates
 		if (props.displayRange && inputValue.value) {
-			// Utiliser le composable pour analyser la plage de dates
-			const [startDate, endDate] = parseRangeInput(inputValue.value)
+			try {
+				isUpdatingFromInternal.value = true
 
-			// Si nous avons une plage complète (deux dates)
-			if (startDate && endDate) {
-				// Vérifier si la plage est valide (date de fin >= date de début)
-				if (!isValidRange(startDate, endDate)) {
-					// Plage invalide, conserver l'erreur et ne pas mettre à jour le modèle
-					clearValidation()
-					errors.value.push('La date de fin doit être postérieure ou égale à la date de début')
-					emit('update:model-value', props.modelValue)
-					return
+				const { startDate, endDate } = parseRangeInput(inputValue.value)
+
+				if (startDate && endDate) {
+					selectedDates.value = [startDate, endDate]
+
+					// Formater la plage pour le modèle
+					const formattedStart = props.dateFormatReturn
+						? formatDate(startDate, props.dateFormatReturn)
+						: formatDate(startDate, props.format)
+
+					const formattedEnd = props.dateFormatReturn
+						? formatDate(endDate, props.dateFormatReturn)
+						: formatDate(endDate, props.format)
+
+					emit('update:model-value', [formattedStart, formattedEnd])
 				}
+				else if (startDate) {
+					selectedDates.value = [startDate, null]
 
-				// Mettre à jour les dates sélectionnées
-				selectedDates.value = [startDate, endDate]
+					// Formater la date de début pour le modèle
+					const formattedStart = props.dateFormatReturn
+						? formatDate(startDate, props.dateFormatReturn)
+						: formatDate(startDate, props.format)
 
-				// Formater correctement l'affichage
-				inputValue.value = formatRangeForDisplay(startDate, endDate)
+					emit('update:model-value', [formattedStart, null])
+				}
+			}
+			finally {
+				setTimeout(() => {
+					isUpdatingFromInternal.value = false
+				}, 0)
 
-				// Plage valide, mettre à jour le modèle
-				const returnFormat = props.dateFormatReturn || props.format
-				const modelValue: [string, string] = [
-					formatDate(startDate, returnFormat),
-					formatDate(endDate, returnFormat),
-				]
-				emit('update:model-value', modelValue)
+				// Valider les règles personnalisées
 				validateRules(inputValue.value)
-				return
 			}
-			// Si nous avons seulement la première date
-			else if (startDate) {
-				// Mettre à jour les dates sélectionnées
-				selectedDates.value = [startDate]
-
-				// Valider les dates après la mise à jour
-				try {
-					isUpdatingFromInternal.value = true
-					validateDates()
-				}
-				finally {
-					setTimeout(() => {
-						isUpdatingFromInternal.value = false
-					}, 0)
-				}
-
-				// Formater correctement l'affichage
-				inputValue.value = formatRangeForDisplay(startDate, null)
-
-				// Mettre à jour l'affichage avec seulement la première date
-				const returnFormat = props.dateFormatReturn || props.format
-				const formattedDate = formatDate(startDate, returnFormat)
-
-				// Émettre l'événement date-selected pour la première date
-				emit('date-selected', formattedDate)
-
-				// Note: Nous n'émettons pas update:model-value avec un tableau contenant null
-				// car le type DateValue n'accepte que [string, string] pour les plages
-				validateRules(inputValue.value)
-				return
-			}
-		}
-
-		// Traitement standard pour les dates uniques ou les cas non couverts ci-dessus
-		if (inputValue.value) {
-			const validation = validateDateFormat(inputValue.value)
-			if (validation.isValid) {
-				const date = dayjs(inputValue.value, props.format, true).isValid()
-					? dayjs(inputValue.value, props.format).toDate()
-					: null
-
-				if (date) {
-					const formattedDate = props.dateFormatReturn
-						? dayjs(date).format(props.dateFormatReturn)
-						: inputValue.value
-					emit('update:model-value', formattedDate)
-				}
-			}
-			else {
-				emit('update:model-value', props.modelValue)
-			}
-		}
-		else if (props.required) {
-			emit('update:model-value', props.modelValue)
-		}
-		else {
-			emit('update:model-value', null)
-		}
-
-		// Appliquer la validation standard si elle n'a pas déjà été appliquée
-		if (errors.value.length === 0) {
-			validateRules(inputValue.value || '')
 		}
 	}
+
+	// Utilisation du composable pour gérer la perte de focus avec normalisation
+	const { handleInputBlur, wasNormalized, originalDateStr, normalizedDateStr } = useInputBlurHandlerWithNormalization({
+		format: props.format,
+		dateFormatReturn: props.dateFormatReturn,
+		required: props.required,
+		enableNormalization: props.enableNormalization,
+		displayFormattedDate: inputValue,
+		hasInteracted,
+		isManualInputActive: ref(false), // Pas utilisé dans ce composant, mais requis par le composable
+		isUpdatingFromInternal,
+		selectedDates,
+		validateDateFormat,
+		parseDate,
+		formatDate,
+		updateModel(value) { emit('update:model-value', value) },
+		validateManualInput: validateRules,
+		normalizeDate,
+		emitBlur: function () { emit('blur') },
+		emitNormalized: function (originalDate, normalizedDate) { emit('date-normalized', originalDate, normalizedDate) },
+	})
 
 	const isValidating = ref(false)
 
@@ -703,6 +680,9 @@
 
 	defineExpose({
 		validateOnSubmit,
+		wasNormalized,
+		originalDateStr,
+		normalizedDateStr,
 		focus() {
 			// Utiliser un sélecteur plus spécifique pour cibler l'input principal
 			// SyTextField peut contenir plusieurs inputs, donc on cible le premier qui n'est pas caché
@@ -782,6 +762,7 @@
 		:warning-messages="warningMessages"
 		:success-messages="props.showSuccessMessages ? successMessages : []"
 		:bg-color="props.bgColor"
+		:enable-normalization="props.enableNormalization"
 		color="primary"
 		is-clearable
 		:aria-label="ariaLabel || props.placeholder"

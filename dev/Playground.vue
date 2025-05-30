@@ -28,6 +28,7 @@
 				class="date-picker"
 				required
 				no-calendar
+				enable-normalization
 			/>
 			<h3>Calendar: </h3>
 			<DatePicker
@@ -44,6 +45,7 @@
 				placeholder="Date standard"
 				format="DD/MM/YYYY"
 				class="date-picker"
+				enable-normalization
 				required
 				use-combined-mode
 			/>
@@ -60,6 +62,7 @@
 				format="MM/DD/YYYY"
 				class="date-picker"
 				use-combined-mode
+				enable-normalization
 			/>
 			<div class="value-display">
 				Valeur: {{ americanDate || 'Non définie' }}
@@ -88,6 +91,7 @@
 				format="DD.MM.YYYY"
 				class="date-picker"
 				use-combined-mode
+				enable-normalization
 			/>
 			<div class="value-display">
 				Valeur: {{ dotDate || 'Non définie' }}

@@ -22,8 +22,9 @@ export const useDateFormatValidation = (options: {
 	required?: boolean
 	hasInteracted: Ref<boolean>
 	disableErrorHandling?: boolean
+	enableNormalization?: boolean
 }) => {
-	const { format, dateFormatReturn, required = false, hasInteracted, disableErrorHandling = false } = options
+	const { format, dateFormatReturn, required = false, hasInteracted, disableErrorHandling = false, enableNormalization = false } = options
 
 	/**
    * Valide le format d'une chaîne de date
@@ -52,7 +53,7 @@ export const useDateFormatValidation = (options: {
 		if (!isValid) {
 			return {
 				isValid: disableErrorHandling,
-				message: disableErrorHandling ? '' : `Format de date invalide (${format})`,
+				message: disableErrorHandling || enableNormalization ? '' : `Format de date invalide (${format})`,
 			}
 		}
 
