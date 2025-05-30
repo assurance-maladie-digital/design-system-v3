@@ -62,7 +62,6 @@
 				format="MM/DD/YYYY"
 				class="date-picker"
 				use-combined-mode
-				enable-normalization
 			/>
 			<div class="value-display">
 				Valeur: {{ americanDate || 'Non définie' }}
