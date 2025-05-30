@@ -10,6 +10,7 @@ export { useDateValidation } from './useDateValidation'
 export { useDateFormatValidation } from './useDateFormatValidation'
 export { useDateRangeValidation } from './useDateRangeValidation'
 export { useManualDateValidation } from './useManualDateValidation'
+export { useDateNormalization } from './useDateNormalization'
 
 // DatePicker UI and interaction
 export { useDatePickerViewMode } from './useDatePickerViewMode'

@@ -19,8 +19,8 @@
 		useIconState,
 		useDateValidation,
 		useManualDateValidation,
-		useInputBlurHandler,
 		useDatePickerVisibility,
+		useDateNormalization,
 	} from '../composables'
 
 	import dayjs from 'dayjs'
@@ -62,6 +62,7 @@
 		textFieldActivator?: boolean
 		displayTodayButton?: boolean
 		displayWeekendDays?: boolean
+		enableNormalization?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
@@ -89,6 +90,7 @@
 		textFieldActivator: false,
 		displayTodayButton: true,
 		displayWeekendDays: true,
+		enableNormalization: true,
 	})
 
 	const emit = defineEmits<{
@@ -98,6 +100,7 @@
 		(e: 'blur'): void
 		(e: 'input', value: string): void
 		(e: 'date-selected', value: DateValue): void
+		(e: 'normalized', originalDate: string, normalizedDate: string): void
 	}>()
 
 	// Utilisation du composable pour la saisie manuelle des plages de dates
@@ -107,6 +110,13 @@
 
 	// Utilisation du composable pour la validation des plages de dates
 	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(selectedDates as Ref<DateObjectValue>, props.displayRange)
+
+	// Utilisation du composable pour la normalisation des dates invalides
+	const { normalizeDate } = useDateNormalization({
+		format: props.format,
+		parseDate,
+		formatDate,
+	})
 
 	const isDatePickerVisible = ref(false)
 	const validation = useValidation({
@@ -122,6 +132,12 @@
 	const warningMessages = computed(() => warnings.value)
 	const successMessages = computed(() => successes.value)
 	const displayFormattedDate = ref('')
+
+	// Variables pour la normalisation des dates
+	const wasNormalized = ref(false)
+	const originalDateStr = ref('')
+	const normalizedDateStr = ref('')
+	const normalizationTimeout = ref<number | null>(null)
 
 	const textInputValue = ref<string>('')
 
@@ -441,10 +457,88 @@
 	/**
 	 * Gère l'entrée utilisateur dans le champ de saisie de date
 	 * Délègue le traitement au composable useInputHandler
+	 * et normalise la première date dès qu'elle est complète
 	 */
 	const handleInput = (event: Event) => {
 		// Utiliser la fonction handleInput du composable
 		inputHandler.handleInput(event)
+
+		// Vérifier si la normalisation est activée
+		if (!props.enableNormalization) return
+
+		// Récupérer la valeur actuelle et l'élément input
+		const inputElement = event.target as HTMLInputElement
+		const currentValue = inputElement.value
+		const cursorPosition = inputElement.selectionStart || 0
+
+		// Si nous sommes en mode plage de dates
+		if (props.displayRange) {
+			// Vérifier si nous avons une première date complète mais pas encore de séparateur de plage
+			const rangeSeparator = ' - '
+
+			// Détecter si l'utilisateur est en train de saisir la première date
+			// (la valeur ne contient pas le séparateur de plage ou le curseur est avant le séparateur)
+			const separatorIndex = currentValue.indexOf(rangeSeparator)
+			const isEditingFirstDate = separatorIndex === -1 || cursorPosition <= separatorIndex
+
+			// Si l'utilisateur est en train de saisir la première date
+			if (isEditingFirstDate) {
+				// Vérifier si la première date est complète
+				let firstDateStr = currentValue
+				if (separatorIndex !== -1) {
+					// Si le séparateur est déjà présent, extraire seulement la première date
+					firstDateStr = currentValue.substring(0, separatorIndex)
+				}
+
+				// Vérifier si la première date est complète (contient le bon nombre de chiffres)
+				const digits = firstDateStr.replace(/[^\d]/g, '')
+				const formatDigits = props.format.replace(/[^DMY]/g, '')
+
+				// Si la première date est complète (tous les chiffres sont saisis)
+				if (digits.length === formatDigits.length) {
+					// Normaliser la première date
+					const { normalizedDate, wasNormalized: dateWasNormalized } = normalizeDate(firstDateStr)
+
+					// Si la date a été normalisée
+					if (dateWasNormalized && normalizedDate) {
+						// Mettre à jour l'état de normalisation
+						wasNormalized.value = true
+						originalDateStr.value = firstDateStr
+						normalizedDateStr.value = formatDate(normalizedDate, props.format)
+
+						// Construire la nouvelle valeur en conservant la seconde date si elle existe
+						let newValue = normalizedDateStr.value
+						if (separatorIndex !== -1) {
+							// Conserver la seconde partie si elle existe déjà
+							const secondPart = currentValue.substring(separatorIndex)
+							newValue += secondPart
+						}
+
+						// Mettre à jour la valeur affichée en préservant la position du curseur
+						const newCursorPosition = cursorPosition + (newValue.length - currentValue.length)
+						displayFormattedDate.value = newValue
+
+						// Restaurer la position du curseur après la mise à jour
+						nextTick(() => {
+							if (inputElement) {
+								inputElement.setSelectionRange(newCursorPosition, newCursorPosition)
+							}
+						})
+
+						// Émettre l'événement de normalisation
+						emit('normalized', originalDateStr.value, normalizedDateStr.value)
+
+						// Masquer le message après un délai
+						if (normalizationTimeout.value) {
+							clearTimeout(normalizationTimeout.value)
+						}
+						normalizationTimeout.value = window.setTimeout(() => {
+							wasNormalized.value = false
+						}, 5000) as unknown as number
+					}
+				}
+			}
+		}
 	}
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 
@@ -472,22 +566,173 @@
 		validateField,
 	})
 
-	const { handleInputBlur } = useInputBlurHandler({
-		format: props.format,
-		dateFormatReturn: props.dateFormatReturn,
-		required: props.required,
-		displayFormattedDate,
-		hasInteracted,
-		isManualInputActive,
-		isUpdatingFromInternal,
-		selectedDates,
-		validateDateFormat,
-		parseDate,
-		formatDate,
-		updateModel,
-		validateManualInput,
-		emitBlur: emitBlurEvent,
-	})
+	// Fonction pour normaliser une date invalide ou une plage de dates
+	const normalizeInputDate = (inputValue: string) => {
+		// Si la valeur est vide, ne rien faire
+		if (!inputValue) return null
+
+		// Vérifier si c'est une plage de dates (contient le séparateur de plage)
+		const rangeSeparator = ' - '
+
+		if (inputValue.includes(rangeSeparator) && props.displayRange) {
+			// C'est une plage de dates, normaliser chaque date séparément
+			const [startDateStr, endDateStr] = inputValue.split(rangeSeparator)
+
+			// Normaliser les deux dates
+			const { normalizedDate: normalizedStartDate, wasNormalized: startWasNormalized } = normalizeDate(startDateStr)
+			const { normalizedDate: normalizedEndDate, wasNormalized: endWasNormalized } = normalizeDate(endDateStr)
+
+			// Si au moins une des dates a été normalisée
+			if ((startWasNormalized && normalizedStartDate) || (endWasNormalized && normalizedEndDate)) {
+				wasNormalized.value = true
+				originalDateStr.value = inputValue
+
+				// Construire la nouvelle plage normalisée
+				const formattedStartDate = normalizedStartDate
+					? formatDate(normalizedStartDate, props.format)
+					: startDateStr
+				const formattedEndDate = normalizedEndDate
+					? formatDate(normalizedEndDate, props.format)
+					: endDateStr
+
+				normalizedDateStr.value = `${formattedStartDate}${rangeSeparator}${formattedEndDate}`
+
+				// Émettre l'événement de normalisation
+				emit('normalized', originalDateStr.value, normalizedDateStr.value)
+
+				// Masquer le message après un délai
+				if (normalizationTimeout.value) {
+					clearTimeout(normalizationTimeout.value)
+				}
+				normalizationTimeout.value = window.setTimeout(() => {
+					wasNormalized.value = false
+				}, 5000) as unknown as number
+
+				// Retourner les dates normalisées sous forme de tableau pour les plages
+				if (normalizedStartDate && normalizedEndDate) {
+					return [normalizedStartDate, normalizedEndDate]
+				}
+				else if (normalizedStartDate) {
+					// Si seule la date de début a été normalisée
+					const endDate = parseDate(endDateStr, props.format)
+					return endDate ? [normalizedStartDate, endDate] : normalizedStartDate
+				}
+				else if (normalizedEndDate) {
+					// Si seule la date de fin a été normalisée
+					const startDate = parseDate(startDateStr, props.format)
+					return startDate ? [startDate, normalizedEndDate] : normalizedEndDate
+				}
+			}
+
+			wasNormalized.value = false
+			return null
+		}
+		else {
+			// C'est une date unique, utiliser la normalisation standard
+			const { normalizedDate, wasNormalized: dateWasNormalized } = normalizeDate(inputValue)
+
+			// Si la date a été normalisée, mettre à jour l'état
+			if (dateWasNormalized && normalizedDate) {
+				wasNormalized.value = true
+				originalDateStr.value = inputValue
+				normalizedDateStr.value = formatDate(normalizedDate, props.format)
+
+				// Émettre l'événement de normalisation
+				emit('normalized', originalDateStr.value, normalizedDateStr.value)
+
+				// Masquer le message après un délai
+				if (normalizationTimeout.value) {
+					clearTimeout(normalizationTimeout.value)
+				}
+				normalizationTimeout.value = window.setTimeout(() => {
+					wasNormalized.value = false
+				}, 5000) as unknown as number
+
+				return normalizedDate
+			}
+
+			wasNormalized.value = false
+			return null
+		}
+	}
+
+	// Fonction personnalisée pour gérer la perte de focus avec normalisation
+	const handleInputBlurWithNormalization = () => {
+		// Émettre l'événement blur
+		emitBlurEvent()
+
+		// Marquer que l'utilisateur a interagi avec le champ
+		hasInteracted.value = true
+
+		// Désactiver le mode de saisie manuelle
+		isManualInputActive.value = false
+
+		// Gérer la normalisation si elle est activée
+		if (props.enableNormalization && displayFormattedDate.value) {
+			const normalizedDate = normalizeInputDate(displayFormattedDate.value)
+			if (normalizedDate) {
+				// Mettre à jour le modèle avec la date normalisée
+				try {
+					isUpdatingFromInternal.value = true
+					selectedDates.value = normalizedDate
+
+					// Formater la date selon le format de retour si spécifié
+					const formattedValue = props.dateFormatReturn
+						? formatDate(normalizedDate, props.dateFormatReturn)
+						: formatDate(normalizedDate, props.format)
+
+					// Mettre à jour le modèle et l'affichage
+					updateModel(formattedValue)
+					displayFormattedDate.value = formatDate(normalizedDate, props.format)
+				}
+				finally {
+					setTimeout(() => {
+						isUpdatingFromInternal.value = false
+					}, 0)
+				}
+
+				// Valider la saisie
+				validateManualInput(displayFormattedDate.value)
+				return
+			}
+		}
+
+		// Comportement standard si pas de normalisation ou si la date n'a pas été normalisée
+		if (displayFormattedDate.value) {
+			const validation = validateDateFormat(displayFormattedDate.value)
+			if (validation.isValid) {
+				const date = parseDate(displayFormattedDate.value, props.format)
+				if (date) {
+					// Si la date est valide, mettre à jour selectedDates et le modèle
+					try {
+						isUpdatingFromInternal.value = true
+						selectedDates.value = date
+
+						// Si on a un format de retour, formater la date dans ce format
+						const formattedValue = props.dateFormatReturn
+							? formatDate(date, props.dateFormatReturn)
+							: formatDate(date, props.format)
+						updateModel(formattedValue)
+					}
+					finally {
+						setTimeout(() => {
+							isUpdatingFromInternal.value = false
+						}, 0)
+					}
+				}
+			}
+		}
+		else if (!props.required) {
+			// Si le champ est vide et non requis, réinitialiser le modèle
+			updateModel(null)
+		}
+
+		// Valider la saisie manuelle (affiche les messages d'erreur)
+		validateManualInput(displayFormattedDate.value || '')
+	}
+
+	// Utiliser notre fonction personnalisée ou la fonction standard selon que la normalisation est activée ou non
+	const handleInputBlur = handleInputBlurWithNormalization
 
 	watch(isDatePickerVisible, async (isVisible) => {
 		if (!isVisible && props.isBirthDate) {
@@ -790,6 +1035,9 @@
 		validateOnSubmit,
 		isDatePickerVisible,
 		selectedDates,
+		wasNormalized,
+		originalDateStr,
+		normalizedDateStr,
 		errorMessages,
 		handleClickOutside,
 		initializeSelectedDates,
@@ -809,134 +1057,141 @@
 </script>
 
 <template>
-	<div
-		class="date-picker-container"
-		:style="inputStyle"
-	>
-		<!-- Variable pour stocker la description accessible -->
-		<span
-			v-if="false"
-			ref="accessibilityDescriptionRef"
+	<div class="complex-date-picker-container">
+		<div
+			class="date-picker-container"
+			:style="inputStyle"
 		>
-			{{ accessibilityDescription }}
-		</span>
-		<template v-if="props.noCalendar">
-			<DateTextInput
-				ref="dateTextInputRef"
-				v-model="textInputValue"
-				:class="[getMessageClasses(), 'label-hidden-on-focus']"
-				:date-format-return="props.dateFormatReturn"
-				:format="props.format"
-				:label="props.placeholder"
-				:placeholder="props.placeholder"
-				:required="props.required"
-				:custom-rules="props.customRules"
-				:custom-warning-rules="props.customWarningRules"
-				:disabled="props.disabled"
-				:readonly="props.readonly"
-				:is-outlined="props.isOutlined"
-				:display-icon="props.displayIcon"
-				:display-append-icon="props.displayAppendIcon"
-				:display-prepend-icon="props.displayPrependIcon"
-				:no-icon="props.noIcon"
-				:disable-error-handling="props.disableErrorHandling"
-				:show-success-messages="props.showSuccessMessages"
-				:bg-color="props.bgColor"
-				title="Date text input"
-				@focus="emit('focus')"
-				@blur="emit('blur')"
-			/>
-		</template>
-		<template v-else>
-			<VMenu
-				v-if="!props.noCalendar"
-				v-model="isDatePickerVisible"
-				activator="parent"
-				:min-width="0"
-				location="bottom"
-				:close-on-content-click="false"
-				:open-on-click="false"
-				scroll-strategy="none"
-				transition="fade-transition"
-				attach="body"
-				:offset="[-20, 5]"
+			<!-- Variable pour stocker la description accessible -->
+			<span
+				v-if="false"
+				ref="accessibilityDescriptionRef"
 			>
-				<template #activator="{ props: menuProps }">
-					<SyTextField
-						v-bind="menuProps"
-						ref="dateCalendarTextInputRef"
-						v-model="displayFormattedDate"
-						:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
-						:append-inner-icon="getIcon"
-						:class="[getMessageClasses(), 'label-hidden-on-focus']"
-						:error-messages="errorMessages"
-						:warning-messages="warningMessages"
-						:success-messages="props.showSuccessMessages ? successMessages : []"
-						:disabled="props.disabled"
-						:disable-click-button="false"
-						:readonly="props.readonly"
-						:label="props.placeholder"
-						:no-icon="props.noIcon"
-						:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
-						:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
-						color="primary"
-						:show-success-messages="props.showSuccessMessages"
-						:bg-color="props.bgColor"
-						is-clearable
-						title="Date Picker"
-						:aria-label="accessibilityDescription"
-						@click="openDatePickerOnClick"
-						@focus="openDatePickerOnFocus"
-						@blur="handleInputBlur"
-						@update:model-value="updateSelectedDates"
-						@input="handleInput"
-						@keydown="handleKeydown"
-						@prepend-icon-click="openDatePickerOnIconClick"
-						@append-icon-click="openDatePickerOnIconClick"
-					/>
-				</template>
-				<VDatePicker
-					v-if="isDatePickerVisible && !props.noCalendar"
-					ref="datePickerRef"
-					v-model="selectedDates"
-					color="primary"
-					:class="displayWeekendDays ? 'weekend' : ''"
-					:first-day-of-week="1"
-					:multiple="props.displayRange ? 'range' : false"
-					:show-adjacent-months="true"
-					:show-week="props.showWeekNumber"
-					:view-mode="currentViewMode"
-					@update:view-mode="handleViewModeUpdate"
-					@update:year="handleYearUpdate"
-					@update:month="handleMonthUpdate"
-					@update:model-value="updateDisplayFormattedDate"
+				{{ accessibilityDescription }}
+			</span>
+			<template v-if="props.noCalendar">
+				<DateTextInput
+					ref="dateTextInputRef"
+					v-model="textInputValue"
+					:class="[getMessageClasses(), 'label-hidden-on-focus']"
+					:date-format-return="props.dateFormatReturn"
+					:format="props.format"
+					:label="props.placeholder"
+					:placeholder="props.placeholder"
+					:required="props.required"
+					:custom-rules="props.customRules"
+					:custom-warning-rules="props.customWarningRules"
+					:disabled="props.disabled"
+					:readonly="props.readonly"
+					:is-outlined="props.isOutlined"
+					:display-icon="props.displayIcon"
+					:display-append-icon="props.displayAppendIcon"
+					:display-prepend-icon="props.displayPrependIcon"
+					:no-icon="props.noIcon"
+					:disable-error-handling="props.disableErrorHandling"
+					:show-success-messages="props.showSuccessMessages"
+					:bg-color="props.bgColor"
+					title="Date text input"
+					@focus="emit('focus')"
+					@blur="emit('blur')"
+				/>
+			</template>
+			<template v-else>
+				<VMenu
+					v-if="!props.noCalendar"
+					v-model="isDatePickerVisible"
+					activator="parent"
+					:min-width="0"
+					location="bottom"
+					:close-on-content-click="false"
+					:open-on-click="false"
+					scroll-strategy="none"
+					transition="fade-transition"
+					attach="body"
+					:offset="[-20, 5]"
 				>
-					<template #title>
-						Sélectionnez une date
+					<template #activator="{ props: menuProps }">
+						<SyTextField
+							v-bind="menuProps"
+							ref="dateCalendarTextInputRef"
+							v-model="displayFormattedDate"
+							:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
+							:append-inner-icon="getIcon"
+							:class="[getMessageClasses(), 'label-hidden-on-focus']"
+							:error-messages="errorMessages"
+							:warning-messages="warningMessages"
+							:success-messages="props.showSuccessMessages ? successMessages : []"
+							:disabled="props.disabled"
+							:disable-click-button="false"
+							:readonly="props.readonly"
+							:label="props.placeholder"
+							:no-icon="props.noIcon"
+							:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
+							:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
+							color="primary"
+							:show-success-messages="props.showSuccessMessages"
+							:bg-color="props.bgColor"
+							is-clearable
+							title="Date Picker"
+							:aria-label="accessibilityDescription"
+							@click="openDatePickerOnClick"
+							@focus="openDatePickerOnFocus"
+							@blur="handleInputBlur"
+							@update:model-value="updateSelectedDates"
+							@input="handleInput"
+							@keydown="handleKeydown"
+							@prepend-icon-click="openDatePickerOnIconClick"
+							@append-icon-click="openDatePickerOnIconClick"
+						/>
 					</template>
-					<template #header>
-						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ todayInString }}
-						</h3>
-					</template>
-					<template #actions>
-						<v-btn
-							v-if="props.displayTodayButton"
-							variant="text"
-							class="today-button"
-							@click="handleSelectToday"
-						>
-							Aujourd'hui
-						</v-btn>
-					</template>
-				</VDatePicker>
-			</VMenu>
-		</template>
+					<VDatePicker
+						v-if="isDatePickerVisible && !props.noCalendar"
+						ref="datePickerRef"
+						v-model="selectedDates"
+						color="primary"
+						:class="displayWeekendDays ? 'weekend' : ''"
+						:first-day-of-week="1"
+						:multiple="props.displayRange ? 'range' : false"
+						:show-adjacent-months="true"
+						:show-week="props.showWeekNumber"
+						:view-mode="currentViewMode"
+						@update:view-mode="handleViewModeUpdate"
+						@update:year="handleYearUpdate"
+						@update:month="handleMonthUpdate"
+						@update:model-value="updateDisplayFormattedDate"
+					>
+						<template #title>
+							Sélectionnez une date
+						</template>
+						<template #header>
+							<h3 class="mx-auto my-auto ml-5 mb-4">
+								{{ todayInString }}
+							</h3>
+						</template>
+						<template #actions>
+							<v-btn
+								v-if="props.displayTodayButton"
+								variant="text"
+								class="today-button"
+								@click="handleSelectToday"
+							>
+								Aujourd'hui
+							</v-btn>
+						</template>
+					</VDatePicker>
+				</VMenu>
+			</template>
+		</div>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+
+.complex-date-picker-container {
+	position: relative;
+	width: 100%;
+}
 
 .label-hidden-on-focus:focus + label {
 	display: none;
