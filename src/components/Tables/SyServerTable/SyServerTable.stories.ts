@@ -193,13 +193,12 @@ export const Default: Story = {
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-
 		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		serverItemsLength: 0,
+		serverItemsLength: 15,
 	},
 	render: (args) => {
 		return {
@@ -402,7 +401,6 @@ export const ServerSortBy: Story = {
 			sortBy: [{ key: 'lastname', order: 'desc' }],
 			page: 1,
 		},
-
 		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
@@ -639,6 +637,7 @@ export const ServerFilterByText: Story = {
 		],
 	},
 	args: {
+		serverItemsLength: 15,
 		headers: [
 			{
 				title: 'Prénom',
@@ -664,7 +663,6 @@ export const ServerFilterByText: Story = {
 			page: 1,
 			filters: [],
 		},
-		serverItemsLength: 15,
 		showFilters: true,
 	},
 	render(args) {
@@ -673,7 +671,7 @@ export const ServerFilterByText: Story = {
 			setup() {
 				const options = ref(args.options)
 				const totalFilteredUsers = ref(0)
-				const filteredUsers = ref([])
+				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
 
 				const fetchData = async (): Promise<void> => {
@@ -702,7 +700,7 @@ export const ServerFilterByText: Story = {
 					]
 
 					// Apply filters on server side
-					if (options.value.filters && options.value.filters.length > 0) {
+					if (options.value?.filters && options.value.filters.length > 0) {
 						options.value.filters.forEach((filter) => {
 							const { key, value } = filter
 
@@ -716,12 +714,12 @@ export const ServerFilterByText: Story = {
 					const total = items.length
 
 					// Apply pagination
-					const { page, itemsPerPage } = options.value
+					const { page = 1, itemsPerPage = 10 } = options.value || {}
 					if (itemsPerPage > 0) {
 						items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
 					}
 
-					filteredUsers.value = items
+					filteredUsers.value = items as Record<string, unknown>[]
 					totalFilteredUsers.value = total
 					state.value = StateEnum.RESOLVED
 				}
@@ -951,7 +949,7 @@ export const ServerFilterByNumber: Story = {
 			setup() {
 				const options = ref(args.options)
 				const totalFilteredUsers = ref(0)
-				const filteredUsers = ref([])
+				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
 
 				const fetchData = async (): Promise<void> => {
@@ -980,7 +978,7 @@ export const ServerFilterByNumber: Story = {
 					]
 
 					// Apply filters on server side
-					if (options.value.filters && options.value.filters.length > 0) {
+					if (options.value?.filters && options.value.filters.length > 0) {
 						options.value.filters.forEach((filter) => {
 							const { key, value, type } = filter
 
@@ -1000,12 +998,12 @@ export const ServerFilterByNumber: Story = {
 					const total = items.length
 
 					// Apply pagination
-					const { page, itemsPerPage } = options.value
+					const { page = 1, itemsPerPage = 10 } = options.value || {}
 					if (itemsPerPage > 0) {
 						items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
 					}
 
-					filteredUsers.value = items
+					filteredUsers.value = items as Record<string, unknown>[]
 					totalFilteredUsers.value = total
 					state.value = StateEnum.RESOLVED
 				}
@@ -1257,7 +1255,7 @@ export const ServerFilterBySelect: Story = {
 			setup() {
 				const options = ref(args.options)
 				const totalFilteredUsers = ref(0)
-				const filteredUsers = ref([])
+				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
 
 				const fetchData = async (): Promise<void> => {
@@ -1286,7 +1284,7 @@ export const ServerFilterBySelect: Story = {
 					]
 
 					// Apply filters on server side
-					if (options.value.filters && options.value.filters.length > 0) {
+					if (options.value?.filters && options.value.filters.length > 0) {
 						options.value.filters.forEach((filter) => {
 							const { key, value, type } = filter
 
@@ -1306,12 +1304,12 @@ export const ServerFilterBySelect: Story = {
 					const total = items.length
 
 					// Apply pagination
-					const { page, itemsPerPage } = options.value
+					const { page = 1, itemsPerPage = 10 } = options.value || {}
 					if (itemsPerPage > 0) {
 						items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
 					}
 
-					filteredUsers.value = items
+					filteredUsers.value = items as Record<string, unknown>[]
 					totalFilteredUsers.value = total
 					state.value = StateEnum.RESOLVED
 				}
@@ -1496,6 +1494,7 @@ export const ServerFilterByDate: Story = {
 		],
 	},
 	args: {
+		serverItemsLength: 0,
 		showFilters: true,
 		headers: [
 			{
@@ -1799,13 +1798,12 @@ export const MultiServerTables: Story = {
 		],
 	},
 	args: {
-
+		serverItemsLength: 15,
 		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		serverItemsLength: 0,
 	},
 	render: (args) => {
 		return {
