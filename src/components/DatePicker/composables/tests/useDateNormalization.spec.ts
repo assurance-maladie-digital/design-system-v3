@@ -39,31 +39,31 @@ describe('useDateNormalization', () => {
 			expect(formatDate(result.normalizedDate, format)).toBe(validDate)
 		})
 
-		it('devrait normaliser une date avec un jour invalide (31/02/2024 -> 02/03/2024)', () => {
+		it('devrait normaliser une date avec un jour invalide (31/02/2024 -> 29/02/2024)', () => {
 			const invalidDate = '31/02/2024'
 			const result = normalizeDate(invalidDate)
 
 			expect(result.wasNormalized).toBe(true)
 			expect(result.normalizedDate).toBeInstanceOf(Date)
-			expect(formatDate(result.normalizedDate, format)).toBe('02/03/2024')
+			expect(formatDate(result.normalizedDate, format)).toBe('29/02/2024')
 		})
 
-		it('devrait normaliser une date avec un jour invalide (31/04/2024 -> 01/05/2024)', () => {
+		it('devrait normaliser une date avec un jour invalide (31/04/2024 -> 30/04/2024)', () => {
 			const invalidDate = '31/04/2024'
 			const result = normalizeDate(invalidDate)
 
 			expect(result.wasNormalized).toBe(true)
 			expect(result.normalizedDate).toBeInstanceOf(Date)
-			expect(formatDate(result.normalizedDate, format)).toBe('01/05/2024')
+			expect(formatDate(result.normalizedDate, format)).toBe('30/04/2024')
 		})
 
-		it('devrait normaliser une date avec un jour invalide (29/02/2023 -> 01/03/2023)', () => {
+		it('devrait normaliser une date avec un jour invalide (29/02/2023 -> 28/02/2023)', () => {
 			const invalidDate = '29/02/2023' // 2023 n'est pas une année bissextile
 			const result = normalizeDate(invalidDate)
 
 			expect(result.wasNormalized).toBe(true)
 			expect(result.normalizedDate).toBeInstanceOf(Date)
-			expect(formatDate(result.normalizedDate, format)).toBe('01/03/2023')
+			expect(formatDate(result.normalizedDate, format)).toBe('28/02/2023')
 		})
 
 		it('devrait retourner null pour une entrée complètement invalide', () => {
@@ -89,7 +89,7 @@ describe('useDateNormalization', () => {
 			const result = normalizeAndFormatDate(invalidDate)
 
 			expect(result.wasNormalized).toBe(true)
-			expect(result.formattedDate).toBe('02/03/2024')
+			expect(result.formattedDate).toBe('29/02/2024')
 		})
 	})
 
@@ -107,7 +107,7 @@ describe('useDateNormalization', () => {
 
 			expect(result.wasNormalized).toBe(true)
 			expect(result.normalizedValue).toBeInstanceOf(Date)
-			expect(formatDate(result.normalizedValue as Date, format)).toBe('02/03/2024')
+			expect(formatDate(result.normalizedValue as Date, format)).toBe('29/02/2024')
 		})
 
 		it('devrait normaliser un tableau de chaînes de dates', () => {
@@ -120,7 +120,7 @@ describe('useDateNormalization', () => {
 			const normalizedDates = result.normalizedValue as Date[]
 			expect(normalizedDates.length).toBe(2)
 			expect(formatDate(normalizedDates[0], format)).toBe('15/06/2024')
-			expect(formatDate(normalizedDates[1], format)).toBe('02/03/2024')
+			expect(formatDate(normalizedDates[1], format)).toBe('29/02/2024')
 		})
 
 		it('devrait retourner une Date telle quelle', () => {

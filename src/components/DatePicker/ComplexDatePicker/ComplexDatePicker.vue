@@ -704,13 +704,15 @@
 					selectedDates.value = normalizedDate
 
 					// Formater la date selon le format de retour si spécifié
+					// Vérifier si normalizedDate est un tableau ou une date unique
+					const dateToFormat = Array.isArray(normalizedDate) ? normalizedDate[0] : normalizedDate
 					const formattedValue = props.dateFormatReturn
-						? formatDate(normalizedDate, props.dateFormatReturn)
-						: formatDate(normalizedDate, props.format)
+						? formatDate(dateToFormat, props.dateFormatReturn)
+						: formatDate(dateToFormat, props.format)
 
 					// Mettre à jour le modèle et l'affichage
 					updateModel(formattedValue)
-					displayFormattedDate.value = formatDate(normalizedDate, props.format)
+					displayFormattedDate.value = formatDate(dateToFormat, props.format)
 				}
 				finally {
 					setTimeout(() => {
