@@ -89,6 +89,10 @@ const meta = {
 			control: 'boolean',
 			description: 'Désactive la gestion des erreurs par le composant',
 		},
+		period: {
+			control: 'object',
+			description: 'Période pendant laquelle les dates peuvent être sélectionnées (au format: MM/DD/YYYY)',
+		},
 	},
 } as Meta<typeof DatePicker>
 
@@ -200,6 +204,69 @@ export const DateRange: Story = {
 			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref(['', ''])
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithCustomPeriod: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Sélectionner une date"
+						format="DD/MM/YYYY"
+						:period="{
+							min: '01/01/2000',
+							max: '12/31/2025',
+						}"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePicker } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'Sélectionner une date',
+		format: 'DD/MM/YYYY',
+		isBirthDate: false,
+		showWeekNumber: false,
+		required: false,
+		displayRange: false,
+		displayIcon: true,
+		displayAppendIcon: false,
+		disabled: false,
+		noIcon: false,
+		noCalendar: false,
+		modelValue: '',
+		period: {
+			min: '01/01/1995',
+			max: '12/31/2005',
+		},
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker: DatePicker },
+			setup() {
+				const value = ref('')
 				return { args, value }
 			},
 			template: `

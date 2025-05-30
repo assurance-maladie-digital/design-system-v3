@@ -51,6 +51,10 @@
 		displayTodayButton?: boolean
 		useCombinedMode?: boolean
 		textFieldActivator?: boolean
+		period?: {
+			min?: string
+			max?: string
+		}
 	}>(), {
 		modelValue: undefined,
 		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
@@ -80,6 +84,10 @@
 		displayTodayButton: true,
 		useCombinedMode: false,
 		textFieldActivator: false,
+		period: () => ({
+			min: '',
+			max: '',
+		}),
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -722,6 +730,7 @@
 				:is-birth-date="props.isBirthDate || props.birthDate"
 				:text-field-activator="props.textFieldActivator"
 				:title="'Date text input'"
+				:period="period"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -783,6 +792,8 @@
 					:show-week="props.showWeekNumber"
 					:view-mode="currentViewMode"
 					:class="displayWeekendDays ? 'weekend' : ''"
+					:max="props.period?.max"
+					:min="props.period?.min"
 					@update:view-mode="handleViewModeUpdate"
 					@update:year="handleYearUpdate"
 					@update:month="handleMonthUpdate"

@@ -56,6 +56,10 @@ Le DatePicker utilise deux formats distincts :
 
 <Canvas of={DatePickerStories.DateRange}/>
 
+### Avec période personnalisée
+
+<Canvas of={DatePickerStories.WithCustomPeriod}/>
+
 ### Avec icône à la fin du champ
 
 <Canvas of={DatePickerStories.WithAppendIcon}/>
@@ -131,79 +135,42 @@ Le DatePicker utilise deux formats distincts :
 `}
 />
 
-## Propriétés
+### DatePicker avec période personnalisée
 
-### format
-- **Type** : `string`
-- **Description** : Format d'affichage et d'entrée de la date. Supporte les formats suivants :
-- `DD` : jour sur 2 chiffres
-- `MM` : mois sur 2 chiffres
-- `YYYY` : année sur 4 chiffres
-- `YY` : année sur 2 chiffres (assumé comme 20XX)
-Les séparateurs peuvent être `/`, `-` ou `.`
-- **Défaut** : `'DD/MM/YYYY'`
+<div
+    style={{
+        border: '2px solid #FF0000',
+        padding: '1rem',
+        borderRadius: '4px',
+        marginBottom: '1rem',
+    }}
+>
+    <strong>Note importante</strong>
+    <ul>
+        <li>La prop <code>period</code> permet de définir une période de dates valides. Les dates en dehors de cette période ne seront pas visibles dans le calendrier.</li>
+        <li>Le format de la prop <code>period</code> est <code>MM/DD/YYYY</code>.</li>
+    </ul>
+</div>
 
-### dateFormatReturn
-- **Type** : `string`
-- **Description** : Format de la date pour la valeur de retour. Utilise les mêmes tokens que la prop `format`. Si non spécifié, utilise le même format que `format`.
-- **Défaut** : `''`
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
 
-### required
-- **Type** : `boolean`
-- **Description** : Indique si le champ est obligatoire
-- **Défaut** : `false`
+	const date = ref('')
+</script>
 
-### disabled
-- **Type** : `boolean`
-- **Description** : Désactive le champ
-- **Défaut** : `false`
-
-### isBirthDate
-- **Type** : `boolean`
-- **Description** : Active le mode date de naissance (commence par la sélection de l'année)
-- **Défaut** : `false`
-
-### isOutlined
-- **Type** : `boolean`
-- **Description** : Active le style de champ de saisie "outlined" (bordure) plutôt que "underlined" (fond)
-- **Défaut** : `true`
-
-### showWeekNumber
-- **Type** : `boolean`
-- **Description** : Affiche les numéros de semaine dans le calendrier
-- **Défaut** : `false`
-
-### displayRange
-- **Type** : `boolean`
-- **Description** : Active la sélection d'une plage de dates
-- **Défaut** : `false`
-
-### noCalendar
-- **Type** : `boolean`
-- **Description** : Désactive l'affichage du calendrier (saisie manuelle uniquement), elle permet les copier coller et le passage de robots.
-- **Défaut** : `false`
-
-### displayIcon
-- **Type** : `boolean`
-- **Description** : Affiche l'icône de calendrier
-- **Défaut** : `false`
-
-### displayAppendIcon
-- **Type** : `boolean`
-- **Description** : Affiche l'icône à la fin du champ plutôt qu'au début
-- **Défaut** : `false`
-
-### noIcon
-- **Type** : `boolean`
-- **Description** : Masque toutes les icônes
-- **Défaut** : `false`
-
-### customRules
-- **Type** : `{ type: string, options: RuleOptions }[]`
-- **Description** : Règles de validation personnalisées
-- **Défaut** : `[]`
-
-### customWarningRules
-- **Type** : `{ type: string, options: RuleOptions }[]`
-- **Description** : Règles d'avertissement personnalisées
-- **Défaut** : `[]`
+<template>
+	<DatePicker
+		v-model="date"
+		placeholder="Sélectionner une date"
+		format="DD/MM/YYYY"
+		:period="{
+			min: '01/01/2000',
+			max: '31/12/2025'
+		}"
+	/>
+</template>
+`}
+/>

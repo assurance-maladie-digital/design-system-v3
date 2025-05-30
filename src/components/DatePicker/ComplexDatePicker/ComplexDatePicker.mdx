@@ -57,6 +57,26 @@ Le composant permet la sélection de plages de dates avec validation automatique
 
 <Canvas of={DatePickerStories.DateRange}/>
 
+### DatePicker avec période personnalisée
+
+
+<div
+    style={{
+        border: '2px solid #FF0000',
+        padding: '1rem',
+        borderRadius: '4px',
+        marginBottom: '1rem',
+    }}
+>
+    <strong>Note importante</strong>
+    <ul>
+        <li>La prop <code>period</code> permet de définir une période de dates valides. Les dates en dehors de cette période ne seront pas visibles dans le calendrier.</li>
+        <li>Le format de la prop <code>period</code> est <code>MM/DD/YYYY</code>.</li>
+    </ul>
+</div>
+
+<Canvas of={DatePickerStories.WithCustomPeriod}/>
+
 ## Personnalisation des icônes
 
 Vous pouvez personnaliser la position de l'icône du calendrier (au début ou à la fin du champ).
@@ -139,6 +159,32 @@ Le composant expose plusieurs méthodes qui peuvent être utilisées via une ré
 		/>
 		<button type="submit">Soumettre</button>
 	</form>
+</template>
+`}
+/>
+
+### Exemple avec période personnalisée
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const date = ref('')
+</script>
+
+<template>
+	<DatePicker
+		v-model="date"
+		placeholder="Sélectionner une date (1995-2005)"
+		format="DD/MM/YYYY"
+		useCombinedMode
+		:period="{
+			min: '01/01/1995',
+			max: '31/12/2005'
+		}"
+	/>
 </template>
 `}
 />

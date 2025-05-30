@@ -120,6 +120,10 @@ const meta = {
 			control: 'boolean',
 			description: 'Affiche les jours de week-end',
 		},
+		period: {
+			control: 'object',
+			description: 'Période pendant laquelle les dates peuvent être sélectionnées (au format: MM/DD/YYYY)',
+		},
 	},
 } as Meta<typeof DatePicker>
 
@@ -824,6 +828,118 @@ export const WithCustomIcons: Story = {
                 <div class="ml-4 mt-4">
                   <p>Valeur actuelle: {{ value }}</p>
                   <p>L'icône du calendrier est positionnée à la fin du champ.</p>
+                </div>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithCustomPeriod: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Date avec icône à la fin"
+						format="DD/MM/YYYY"
+						useCombinedMode
+						:period="{
+							min: '01/01/1995',
+							max: '12/31/2005',
+						}"
+						:customRules="customRules"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const date = ref('')
+
+					// Conversion des dates de la période au format Date
+					const minDate = new Date('1995-01-01')
+					const maxDate = new Date('2005-12-31')
+
+					const customRules = [
+						{
+							type: 'notBeforeDate',
+							options: {
+								date: '01/01/1995',
+								message: 'La date doit être postérieure ou égale au 01/01/1995',
+								fieldIdentifier: 'date',
+							},
+						},
+						{
+							type: 'notAfterDate',
+							options: {
+								date: '31/12/2005',
+								message: 'La date doit être antérieure ou égale au 31/12/2005',
+								fieldIdentifier: 'date',
+							},
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'Date avec icône à la fin',
+		format: 'DD/MM/YYYY',
+		useCombinedMode: true,
+		period: {
+			min: '01/01/1995',
+			max: '12/31/2005',
+		},
+		customRules: [
+			{
+				type: 'notBeforeDate',
+				options: {
+					date: '01/01/1995',
+					message: 'La date doit être postérieure ou égale au 01/01/1995',
+					fieldIdentifier: 'date',
+				},
+			},
+			{
+				type: 'notAfterDate',
+				options: {
+					date: '31/12/2005',
+					message: 'La date doit être antérieure ou égale au 31/12/2005',
+					fieldIdentifier: 'date',
+				},
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+			<div style="margin-bottom: 20px; padding: 15px; border: 2px solid #FF5252; border-radius: 8px; background-color: #FFEBEE;"> 
+				<h3 style="color: #D32F2F; margin-top: 0;">Note importante pour la validation manuelle</h3>
+				<p>
+					Pour valider les dates saisies manuellement en fonction de la période définie, <strong>il faut utiliser la propriété customRules</strong> comme dans l'exemple ci-dessous.
+				</p>
+				<p style="margin-bottom: 0;">
+					La propriété <code style="background-color: #F5F5F5; padding: 2px 4px; border-radius: 4px;">period</code> limite les dates sélectionnables dans le calendrier, mais les règles personnalisées sont nécessaires pour la validation des saisies manuelles.
+				</p>
+			</div>
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+                <div class="ml-4 mt-4">
+                  <p>Valeur actuelle: {{ value }}</p>
                 </div>
               </div>
             `,
