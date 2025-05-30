@@ -466,14 +466,14 @@
 		// Vérifier si la normalisation est activée
 		if (!props.enableNormalization) return
 
-		// Récupérer la valeur actuelle et l'élément input
-		const inputElement = event.target as HTMLInputElement
-		const currentValue = inputElement.value
-		const cursorPosition = inputElement.selectionStart || 0
-
-		// Si nous sommes en mode plage de dates
+		// Si nous sommes en mode plage de dates et que la normalisation est activée
 		if (props.displayRange) {
-			// Vérifier si nous avons une première date complète mais pas encore de séparateur de plage
+			// Récupérer l'élément input et sa valeur actuelle
+			const inputElement = event.target as HTMLInputElement
+			if (!inputElement) return
+
+			const currentValue = inputElement.value
+			const cursorPosition = inputElement.selectionStart || 0
 			const rangeSeparator = ' - '
 
 			// Détecter si l'utilisateur est en train de saisir la première date
@@ -508,22 +508,35 @@
 
 						// Construire la nouvelle valeur en conservant la seconde date si elle existe
 						let newValue = normalizedDateStr.value
+						let newCursorPosition = 0
+
 						if (separatorIndex !== -1) {
 							// Conserver la seconde partie si elle existe déjà
 							const secondPart = currentValue.substring(separatorIndex)
 							newValue += secondPart
+
+							// Calculer la nouvelle position du curseur
+							const lengthDiff = normalizedDateStr.value.length - firstDateStr.length
+
+							// Si le curseur est positionné après la première date, ajuster sa position
+							if (cursorPosition >= firstDateStr.length) {
+								newCursorPosition = cursorPosition + lengthDiff
+							}
+							else {
+								// Si le curseur est dans la première date, le placer à la fin de la première date
+								newCursorPosition = normalizedDateStr.value.length
+							}
+						}
+						else {
+							// Si pas de séparateur, ajouter automatiquement le séparateur de plage
+							newValue += rangeSeparator
+
+							// Positionner le curseur juste après le séparateur
+							newCursorPosition = newValue.length
 						}
 
-						// Mettre à jour la valeur affichée en préservant la position du curseur
-						const newCursorPosition = cursorPosition + (newValue.length - currentValue.length)
+						// Mettre à jour la valeur affichée
 						displayFormattedDate.value = newValue
-
-						// Restaurer la position du curseur après la mise à jour
-						nextTick(() => {
-							if (inputElement) {
-								inputElement.setSelectionRange(newCursorPosition, newCursorPosition)
-							}
-						})
 
 						// Émettre l'événement de normalisation
 						emit('normalized', originalDateStr.value, normalizedDateStr.value)
@@ -535,6 +548,20 @@
 						normalizationTimeout.value = window.setTimeout(() => {
 							wasNormalized.value = false
 						}, 5000) as unknown as number
+
+						// Utiliser requestAnimationFrame pour s'assurer que le DOM est mis à jour
+						requestAnimationFrame(() => {
+							// Attendre que Vue ait mis à jour le DOM avant de repositionner le curseur
+							setTimeout(() => {
+								// Accéder directement à l'input via le ref
+								const updatedInput = dateCalendarTextInputRef.value?.$el.querySelector('input')
+								if (updatedInput) {
+									// Repositionner le curseur et s'assurer que l'input a le focus
+									updatedInput.focus()
+									updatedInput.setSelectionRange(newCursorPosition, newCursorPosition)
+								}
+							}, 10)
+						})
 					}
 				}
 			}
@@ -572,6 +599,7 @@
 		if (!inputValue) return null
 
 		// Vérifier si c'est une plage de dates (contient le séparateur de plage)
+		// const separator = props.format.match(/[^DMY]/)?.[0] || '/'
 		const rangeSeparator = ' - '
 
 		if (inputValue.includes(rangeSeparator) && props.displayRange) {
@@ -600,10 +628,7 @@
 				// Émettre l'événement de normalisation
 				emit('normalized', originalDateStr.value, normalizedDateStr.value)
 
-				// Masquer le message après un délai
-				if (normalizationTimeout.value) {
-					clearTimeout(normalizationTimeout.value)
-				}
+
 				normalizationTimeout.value = window.setTimeout(() => {
 					wasNormalized.value = false
 				}, 5000) as unknown as number
