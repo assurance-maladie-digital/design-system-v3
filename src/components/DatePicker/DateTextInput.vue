@@ -588,7 +588,8 @@
 			try {
 				isUpdatingFromInternal.value = true
 
-				const { startDate, endDate } = parseRangeInput(inputValue.value)
+				// parseRangeInput retourne un tableau [startDate, endDate]
+				const [startDate, endDate] = parseRangeInput(inputValue.value)
 
 				if (startDate && endDate) {
 					selectedDates.value = [startDate, endDate]
@@ -612,7 +613,8 @@
 						? formatDate(startDate, props.dateFormatReturn)
 						: formatDate(startDate, props.format)
 
-					emit('update:model-value', [formattedStart, null])
+					// Pour éviter l'erreur TS2769, nous devons nous assurer que le type est correct
+					emit('update:model-value', [formattedStart, ''] as [string, string])
 				}
 			}
 			finally {
