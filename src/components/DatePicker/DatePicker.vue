@@ -797,8 +797,10 @@
 					<template #actions>
 						<v-btn
 							v-if="props.displayTodayButton"
+							size="x-small"
 							color="primary"
-							variant="outlined"
+							title="Aujourd'hui"
+							class="mb-2"
 							@click="handleSelectToday"
 						>
 							Aujourd'hui
