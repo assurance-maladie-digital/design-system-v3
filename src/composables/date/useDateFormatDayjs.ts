@@ -40,13 +40,18 @@ export const parseDate = (dateString: string | Date | null, format: string): Dat
 		}
 	}
 
-	// Utiliser dayjs pour parser la date
+	// Utiliser dayjs pour parser la date avec le mode strict
+	// Le mode strict garantit que le format est respecté exactement
 	const parsedDate = dayjs(dateString, format, true)
 
-	if (!parsedDate.isValid()) return null
+	if (!parsedDate.isValid()) {
+		// Si le parsing a échoué, retourner null
+		return null
+	}
 
 	// Extraire les composants de la date pour créer une date UTC
-	// Cela évite les problèmes de décalage de fuseau horaire
+	// Cela évite les problèmes de décalage de fuseau horaire et garantit
+	// que les dates au format dd/mm/yyyy sont correctement interprétées
 	return dayjs.utc()
 		.year(parsedDate.year())
 		.month(parsedDate.month())

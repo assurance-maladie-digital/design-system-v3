@@ -24,17 +24,17 @@ export type DateInput = string | string[] | null | object
  * @returns Une Date ou null si la date est invalide
  */
 const parseToUTCDate = (dateStr: string, format: string): Date | null => {
-	if (!dayjs(dateStr, format).isValid()) return null
+	// Utiliser le parsing strict pour s'assurer que le format est respecté
+	const parsedDate = dayjs(dateStr, format, true)
+	if (!parsedDate.isValid()) return null
 
 	// Extraire les composants de la date à partir de la chaîne
-	const dateParts = dayjs(dateStr, format)
-
 	// Créer une date UTC avec les composants exacts pour éviter les décalages de fuseau horaire
 	// Utiliser set pour définir explicitement l'année, le mois et le jour
 	return dayjs.utc()
-		.year(dateParts.year())
-		.month(dateParts.month())
-		.date(dateParts.date())
+		.year(parsedDate.year())
+		.month(parsedDate.month())
+		.date(parsedDate.date())
 		.hour(0)
 		.minute(0)
 		.second(0)
@@ -59,23 +59,28 @@ export const initializeSelectedDates = (
 	// Déterminer le format à utiliser pour l'analyse
 	const parseFormat = returnFormat || displayFormat
 
+	// Fonction utilitaire pour essayer de parser une date avec plusieurs formats
+	const tryParseWithFormats = (dateStr: string): Date | null => {
+		// Essayer d'abord avec le format spécifié
+		let date = parseToUTCDate(dateStr, parseFormat)
+
+		// Si la date est invalide et qu'on a un format de retour différent, essayer avec le format d'affichage
+		if (date === null && returnFormat && parseFormat !== displayFormat) {
+			date = parseToUTCDate(dateStr, displayFormat)
+		}
+
+		return date
+	}
+
 	if (Array.isArray(modelValue)) {
 		if (modelValue.length >= 2) {
-			// Essayer d'abord avec le format de retour, puis avec le format d'affichage
-			let dates = [
-				parseToUTCDate(modelValue[0], parseFormat),
-				parseToUTCDate(modelValue[1], parseFormat),
+			// Parser les deux dates de la plage
+			const dates = [
+				tryParseWithFormats(modelValue[0]),
+				tryParseWithFormats(modelValue[1]),
 			]
 
-			// Si l'une des dates est invalide avec le format de retour, essayer avec le format d'affichage
-			if (dates.some(date => date === null) && returnFormat) {
-				dates = [
-					parseToUTCDate(modelValue[0], displayFormat),
-					parseToUTCDate(modelValue[1], displayFormat),
-				]
-			}
-
-			// Vérifie si l'une des dates est toujours invalide
+			// Vérifie si l'une des dates est invalide
 			if (dates.some(date => date === null)) {
 				return []
 			}
@@ -90,14 +95,8 @@ export const initializeSelectedDates = (
 		}
 
 		if (modelValue.length === 1) {
-			// Essayer d'abord avec le format de retour, puis avec le format d'affichage
-			let date = parseToUTCDate(modelValue[0], parseFormat)
-
-			// Si la date est invalide avec le format de retour, essayer avec le format d'affichage
-			if (date === null && returnFormat) {
-				date = parseToUTCDate(modelValue[0], displayFormat)
-			}
-
+			// Parser une seule date
+			const date = tryParseWithFormats(modelValue[0])
 			return date === null ? [] : [date]
 		}
 
@@ -109,15 +108,8 @@ export const initializeSelectedDates = (
 		return null
 	}
 
-	// Essayer d'abord avec le format de retour, puis avec le format d'affichage
-	let date = parseToUTCDate(modelValue, parseFormat)
-
-	// Si la date est invalide avec le format de retour, essayer avec le format d'affichage
-	if (date === null && returnFormat) {
-		date = parseToUTCDate(modelValue, displayFormat)
-	}
-
-	return date
+	// Parser la date avec les formats disponibles
+	return tryParseWithFormats(modelValue)
 }
 
 /**

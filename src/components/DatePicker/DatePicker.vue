@@ -2,11 +2,13 @@
 	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from './DateTextInput.vue'
+	import ComplexDatePicker from './ComplexDatePicker/ComplexDatePicker.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useValidation } from '@/composables/validation/useValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
+	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection } from './composables'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 
@@ -23,6 +25,7 @@
 		format?: string
 		dateFormatReturn?: string
 		isBirthDate?: boolean
+		birthDate?: boolean // Alias pour isBirthDate pour compatibilité avec l'attribut kebab-case birth-date
 		showWeekNumber?: boolean
 		required?: boolean
 		displayRange?: boolean
@@ -42,12 +45,17 @@
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
 		bgColor?: string
+		displayWeekendDays?: boolean
+		displayTodayButton?: boolean
+		useCombinedMode?: boolean
+		textFieldActivator?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: '',
 		isBirthDate: false,
+		birthDate: false,
 		showWeekNumber: false,
 		required: false,
 		displayRange: false,
@@ -65,7 +73,22 @@
 		disableErrorHandling: false,
 		showSuccessMessages: true,
 		bgColor: undefined,
+		displayWeekendDays: true,
+		displayTodayButton: true,
+		useCombinedMode: false,
+		textFieldActivator: false,
 	})
+
+	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
+
+	// Utilisation des composables pour les fonctionnalités du DatePicker
+	const { displayWeekendDays } = useWeekendDays(props)
+	const { todayInString, selectToday } = useTodayButton(props)
+
+	// Wrapper pour la fonction selectToday du composable
+	const handleSelectToday = () => {
+		selectToday(selectedDates)
+	}
 
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: DateValue): void
@@ -105,6 +128,7 @@
 
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
+	const isInitialValidation = ref(true)
 
 	// Fonction pour valider les dates
 	const validateDates = (forceValidation = false) => {
@@ -125,12 +149,12 @@
 			if (props.readonly) {
 				return
 			}
-			if (shouldDisplayErrors) {
+			// Ne pas afficher d'erreur si on est dans le contexte du mounted initial
+			if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
 				errors.value.push('La date est requise.')
 			}
 			return
 		}
-
 		if (!selectedDates.value) return
 
 		// Préparer les dates à valider
@@ -163,6 +187,9 @@
 		try {
 			isUpdatingFromInternal.value = true
 			emit('update:modelValue', value)
+			isDatePickerVisible.value = false
+			emit('closed')
+			validateDates()
 		}
 		finally {
 			// S'assurer que le flag est toujours réinitialisé
@@ -219,17 +246,32 @@
 		'min-width': '100%',
 	}))
 
+	// Utilisation du composable pour gérer la sélection de dates
+	const { updateSelectedDates, rangeBoundaryDates } = useDateSelection(
+		parseDate,
+		selectedDates,
+		props.format,
+		props.displayRange,
+	)
+
 	// Date(s) formatée(s) en chaîne de caractères pour la valeur de retour
 	const formattedDate = computed<DateValue>(() => {
 		if (!selectedDates.value) return ''
 
 		const returnFormat = props.dateFormatReturn || props.format
 
-		if (Array.isArray(selectedDates.value)) {
+		// Pour les plages de dates, utiliser rangeBoundaryDates s'il est disponible
+		if (props.displayRange && rangeBoundaryDates.value) {
+			return [
+				formatDate(rangeBoundaryDates.value[0], returnFormat),
+				formatDate(rangeBoundaryDates.value[1], returnFormat),
+			] as [string, string]
+		}
+		else if (Array.isArray(selectedDates.value)) {
 			if (selectedDates.value.length >= 2) {
 				return [
 					formatDate(selectedDates.value[0], returnFormat),
-					formatDate(selectedDates.value[1], returnFormat),
+					formatDate(selectedDates.value[selectedDates.value.length - 1], returnFormat),
 				] as [string, string]
 			}
 			return ''
@@ -256,9 +298,59 @@
 		}
 	}, { immediate: true })
 
+	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
+	const handleDateTextInputUpdate = (value: DateValue) => {
+		if (isUpdatingFromInternal.value) return
+
+		try {
+			isUpdatingFromInternal.value = true
+
+			// Mettre à jour le modèle avec la valeur reçue du DateTextInput
+			updateModel(value)
+
+			// Mettre à jour selectedDates en fonction de la valeur reçue
+			if (!value) {
+				selectedDates.value = null
+				displayFormattedDate.value = ''
+			}
+			else if (Array.isArray(value) && props.displayRange) {
+				// Pour les plages de dates
+				const [startDateStr, endDateStr] = value
+				const startDate = parseDate(startDateStr, props.dateFormatReturn || props.format)
+				const endDate = parseDate(endDateStr, props.dateFormatReturn || props.format)
+
+				if (startDate && endDate) {
+					selectedDates.value = [startDate, endDate]
+					displayFormattedDate.value = `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
+				}
+			}
+			else if (typeof value === 'string') {
+				// Pour une date unique
+				const date = parseDate(value, props.dateFormatReturn || props.format)
+				if (date) {
+					selectedDates.value = date
+					displayFormattedDate.value = formatDate(date, props.format)
+				}
+			}
+		}
+		finally {
+			setTimeout(() => {
+				isUpdatingFromInternal.value = false
+			}, 0)
+		}
+	}
+
+	// Gestionnaire pour les événements date-selected du DateTextInput
+	const handleDateTextInputSelection = (value: DateValue) => {
+		if (isUpdatingFromInternal.value) return
+
+		// Mettre à jour le modèle avec la valeur sélectionnée
+		updateModel(value)
+	}
+
 	watch(textInputValue, (newValue) => {
 		// Éviter les mises à jour récursives
-		if (isUpdatingFromInternal.value) return
+		if (isUpdatingFromInternal.value || props.noCalendar) return
 
 		// Parse la date avec le format d'affichage
 		const date = parseDate(newValue, props.format)
@@ -343,26 +435,7 @@
 		}
 	}
 
-	const updateSelectedDates = (input: DateValue) => {
-		if (Array.isArray(input)) {
-			const dates = input
-				.map(date => (date ? parseDate(date, props.format) : null))
-				.filter((date): date is Date => date !== null)
-
-			if (dates.length === 0) {
-				selectedDates.value = null
-				return
-			}
-
-			selectedDates.value = dates
-			return
-		}
-
-		if (!props.displayRange) {
-			const date = input ? parseDate(input, props.format) : null
-			selectedDates.value = date === null ? null : date
-		}
-	}
+	// Le composable useDateSelection est déjà initialisé plus haut dans le code
 
 	// Gestionnaire de clic en dehors
 	const handleClickOutside = (event: MouseEvent) => {
@@ -378,9 +451,7 @@
 		validateDates()
 	}
 
-	const todayInString = computed(() => {
-		return dayjs().locale('fr').format('dddd D MMMM').replace(/\b\w/g, l => l.toUpperCase())
-	})
+	// todayInString est maintenant fourni par le composable useTodayButton
 
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
@@ -390,8 +461,13 @@
 			displayFormattedDate.value = displayFormattedDateComputed.value
 		}
 
-		// Valider les dates au montage
+		// Valider les dates au montage, mais sans afficher d'erreur pour le required
 		validateDates()
+
+		// Après la validation initiale, désactiver le flag
+		nextTick(() => {
+			isInitialValidation.value = false
+		})
 	})
 
 	onBeforeUnmount(() => {
@@ -418,35 +494,11 @@
 		}
 	}
 
-	type ViewMode = 'month' | 'year' | 'months' | undefined
-
-	// Variable pour suivre le mode d'affichage actuel du DatePicker
-	const currentViewMode = ref<ViewMode>(props.isBirthDate ? 'year' : 'month')
-
-	watch(() => props.isBirthDate, (newValue) => {
-		currentViewMode.value = newValue ? 'year' : 'month'
-	})
-
-	// Fonction pour gérer le changement de mode d'affichage
-	const handleViewModeUpdate = (newMode: ViewMode) => {
-		currentViewMode.value = newMode
-	}
-
-	// Fonction pour gérer la sélection de l'année quand isBirthDate est true
-	const handleYearUpdate = () => {
-		if (props.isBirthDate) {
-			// Après la sélection de l'année, passer automatiquement à la sélection du mois
-			currentViewMode.value = 'months'
-		}
-	}
-
-	// Fonction pour gérer la sélection du mois quand isBirthDate est true
-	const handleMonthUpdate = () => {
-		if (props.isBirthDate) {
-			// Après la sélection du mois, passer automatiquement à la sélection du jour
-			currentViewMode.value = undefined
-		}
-	}
+	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
+	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
+		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
+		() => props.isBirthDate || props.birthDate,
+	)
 
 	const handleInputBlur = () => {
 		emit('blur')
@@ -456,7 +508,7 @@
 	watch(isDatePickerVisible, async (isVisible) => {
 		if (!isVisible && props.isBirthDate) {
 			// Réinitialiser le mode d'affichage au type birthdate
-			currentViewMode.value = 'year'
+			resetViewMode()
 		}
 
 		if (isVisible) {
@@ -525,25 +577,44 @@
 		if (isUpdatingFromInternal.value) {
 			if (props.displayRange) {
 				if (Array.isArray(newValue) && newValue.length >= 2) {
-					isDatePickerVisible.value = false
-					emit('closed')
+					// Synchroniser les dates de plage avec le modèle
+					syncFromModelValue(newValue)
 				}
-			}
-			else {
-				isDatePickerVisible.value = false
-				emit('closed')
 			}
 			return
 		}
 
-		try {
-			isUpdatingFromInternal.value = true
-			syncFromModelValue(newValue)
-		}
-		finally {
-			setTimeout(() => {
-				isUpdatingFromInternal.value = false
-			}, 0)
+		// Synchroniser les dates sélectionnées avec le modèle
+		syncFromModelValue(newValue)
+
+		// Mettre à jour textInputValue pour le DateTextInput en mode no-calendar
+		if (props.noCalendar) {
+			try {
+				isUpdatingFromInternal.value = true
+
+				if (!newValue) {
+					textInputValue.value = ''
+				}
+				else if (Array.isArray(newValue) && props.displayRange) {
+					// Pour les plages de dates, on ne modifie pas directement textInputValue
+					// car le DateTextInput gère son propre formatage
+				}
+				else if (typeof newValue === 'string') {
+					// Pour une date unique
+					const date = parseDate(newValue, props.dateFormatReturn || props.format)
+					if (date) {
+						textInputValue.value = formatDate(date, props.format)
+					}
+					else {
+						textInputValue.value = newValue
+					}
+				}
+			}
+			finally {
+				setTimeout(() => {
+					isUpdatingFromInternal.value = false
+				}, 0)
+			}
 		}
 	}, { immediate: true })
 
@@ -616,7 +687,40 @@
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
+				:display-range="props.displayRange"
 				title="Date text input"
+				@focus="emit('focus')"
+				@blur="emit('blur')"
+				@date-selected="handleDateTextInputSelection"
+				@update:model-value="handleDateTextInputUpdate"
+			/>
+		</template>
+		<template v-else-if="props.useCombinedMode">
+			<ComplexDatePicker
+				:model-value="props.modelValue"
+				:format="props.format"
+				:date-format-return="props.dateFormatReturn"
+				:required="props.required"
+				:custom-rules="props.customRules"
+				:custom-warning-rules="props.customWarningRules"
+				:disabled="props.disabled"
+				:readonly="props.readonly"
+				:is-outlined="props.isOutlined"
+				:display-icon="props.displayIcon"
+				:display-append-icon="props.displayAppendIcon"
+				:display-prepend-icon="props.displayPrependIcon"
+				:no-icon="props.noIcon"
+				:disable-error-handling="props.disableErrorHandling"
+				:show-success-messages="props.showSuccessMessages"
+				:bg-color="props.bgColor"
+				:display-range="props.displayRange"
+				:display-weekend-days="props.displayWeekendDays"
+				:display-today-button="props.displayTodayButton"
+				:show-week-number="props.showWeekNumber"
+				:is-birth-date="props.isBirthDate || props.birthDate"
+				:text-field-activator="props.textFieldActivator"
+				:title="'Date text input'"
+				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
@@ -676,6 +780,7 @@
 					:show-adjacent-months="true"
 					:show-week="props.showWeekNumber"
 					:view-mode="currentViewMode"
+					:class="displayWeekendDays ? 'weekend' : ''"
 					@update:view-mode="handleViewModeUpdate"
 					@update:year="handleYearUpdate"
 					@update:month="handleMonthUpdate"
@@ -688,6 +793,18 @@
 						<h3 class="mx-auto my-auto ml-5 mb-4">
 							{{ todayInString }}
 						</h3>
+					</template>
+					<template #actions>
+						<v-btn
+							v-if="props.displayTodayButton"
+							size="x-small"
+							color="primary"
+							title="Aujourd'hui"
+							class="mb-2"
+							@click="handleSelectToday"
+						>
+							Aujourd'hui
+						</v-btn>
 					</template>
 				</VDatePicker>
 			</VMenu>
@@ -796,5 +913,14 @@
 .fade-enter-from,
 .fade-leave-to {
 	opacity: 0;
+}
+
+:deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
+	background-color: #afb1b1;
+}
+
+/* div avant la class .v-date-picker-month__day--week-end */
+:deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
+	background-color: #afb1b1;
 }
 </style>
