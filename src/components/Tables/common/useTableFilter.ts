@@ -3,12 +3,12 @@ import type { FilterOption } from './types'
 import { filterItems as filterItemsUtil } from './tableFilterUtils'
 
 /**
- * Composable for using table filtering functionality
+ * Composable pour utiliser les fonctionnalités de filtrage de tableau
  *
- * @returns Object containing filter utility functions
+ * @returns Objet contenant les fonctions utilitaires de filtrage
  */
 export function useTableFilter() {
-	// Get the filterItems function from the provide/inject pattern
+	// Récupère la fonction filterItems du modèle provide/inject
 	const filterItems = inject<
 		<T extends Record<string, unknown>>(items: T[], filters: FilterOption[]) => T[]
 	>('filterItems', filterItemsUtil)

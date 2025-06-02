@@ -21,7 +21,7 @@
 		default: () => ({}),
 	})
 
-	// Computed property for filters
+	// Propriété calculée pour les filtres
 	const filters = computed({
 		get: () => options.value.filters || [],
 		set: (newFilters: FilterOption[]) => {
@@ -32,11 +32,10 @@
 		},
 	})
 
-	// Get the filterItems function from the composable
-	// This can be used for client-side filtering preview or for testing
+	// Récupère la fonction filterItems du composable
+	// Cela peut être utilisé pour la prévisualisation du filtrage côté client ou pour les tests
 	const { filterItems } = useTableFilter()
 
-	// Expose the filtering function for potential use in parent components
 	defineExpose({ filterItems })
 
 	const componentAttributes = useAttrs()
@@ -57,39 +56,34 @@
 		options,
 	})
 
-	// Setup accessibility features
 	setupAccessibility()
 
-	// Setup local storage
 	const { watchOptions } = setupLocalStorage()
 
-	// Watch for options changes
 	watch(
 		() => options.value,
 		watchOptions,
 		{ deep: true },
 	)
 
-	// Function to enhance column headers with proper filter types
+	// Fonction pour améliorer les en-têtes de colonnes avec les types de filtres appropriés
 	function getEnhancedHeader(column: TableColumnHeader): TableColumnHeader {
-		// Find matching header from props if available
+		// Trouve l'en-tête correspondant dans les props si disponible
 		const matchingHeader = props.headers?.find(h => h.key === column.key || h.value === column.value)
 
-		// Create enhanced header with proper types
+		// Crée un en-tête amélioré avec les types appropriés
 		return {
 			...column,
-			// Use column's filterType if available, otherwise use matching header's filterType
 			filterType: column.filterType || matchingHeader?.filterType,
-			// Use column's filterOptions if available, otherwise use matching header's filterOptions
 			filterOptions: column.filterOptions || matchingHeader?.filterOptions,
 		} as TableColumnHeader
 	}
 
-	// Function to create an empty item that maintains the column structure
+	// Fonction pour créer un élément vide qui maintient la structure des colonnes
 	function createEmptyItemWithStructure(): Record<string, unknown>[] {
-		// If we have items, use the first item as a template
+		// Si nous avons des éléments, utilise le premier élément comme modèle
 		if (props.items.length > 0) {
-			// Create an empty object with the same keys as the first item
+			// Crée un objet vide avec les mêmes clés que le premier élément
 			const template = Object.keys(props.items[0]).reduce((obj, key) => {
 				obj[key] = ''
 				return obj
@@ -97,9 +91,9 @@
 			return [template]
 		}
 
-		// If we have headers, use them to create a structure
+		// Si nous avons des en-têtes, les utilise pour créer une structure
 		if (props.headers && props.headers.length > 0) {
-			// Create an empty object with keys from headers
+			// Crée un objet vide avec les clés des en-têtes
 			const template = props.headers.reduce((obj, header) => {
 				const key = header.key || header.value || ''
 				if (key) obj[key] = ''
@@ -108,7 +102,7 @@
 			return [template]
 		}
 
-		// Fallback to an empty object
+		// Repli vers un objet vide
 		return [{}]
 	}
 </script>
@@ -127,7 +121,6 @@
 		>
 			<template #headers="slotProps">
 				<template v-if="slotProps && slotProps.columns">
-					<!-- Destructure slot props safely -->
 					<tr>
 						<template
 							v-for="column in slotProps.columns"
@@ -168,7 +161,6 @@
 							</th>
 						</template>
 					</tr>
-					<!-- Reset filters button row -->
 					<tr v-if="props.showFilters && filters.length > 0">
 						<td
 							:colspan="slotProps.columns.length"
@@ -185,7 +177,7 @@
 						</td>
 					</tr>
 				</template>
-				<!-- Fallback when columns is undefined -->
+				<!-- Repli lorsque les colonnes ne sont pas définies -->
 				<template v-else>
 					<tr>
 						<th

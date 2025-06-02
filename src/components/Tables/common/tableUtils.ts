@@ -3,7 +3,7 @@ import type { DataOptions } from './types'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 
 /**
- * Creates and returns common table functionality
+ * Crée et renvoie des fonctionnalités communes pour les tableaux
  */
 export function useTableUtils({
 	tableId,
@@ -63,7 +63,7 @@ export function useTableUtils({
 			...(serverItemsLength !== undefined ? { itemsLength: serverItemsLength } : {}),
 		}
 
-		// Add itemsLength only for server tables
+		// Ajoute itemsLength uniquement pour les tableaux côté serveur
 		if (serverItemsLength !== undefined) {
 			props.itemsLength = serverItemsLength
 		}
@@ -118,16 +118,16 @@ export function useTableUtils({
 		})
 	}
 
-	// Setup local storage synchronization
+	// Configuration de la synchronisation du stockage local
 	function setupLocalStorage() {
-		// Watch for options changes and update local storage
+		// Surveille les changements d'options et met à jour le stockage local
 		const watchOptions = () => {
 			const storageData = {
 				...(optionsFacade.value as Record<string, unknown>),
 				itemsLength: serverItemsLength,
 			}
 
-			// Add itemsLength only for server tables
+			// Ajoute itemsLength uniquement pour les tableaux côté serveur
 			if (serverItemsLength !== undefined) {
 				storageData.itemsLength = serverItemsLength
 			}
@@ -136,7 +136,7 @@ export function useTableUtils({
 			localOptions.value = optionsFacade.value
 		}
 
-		// Initialize local options from storage or defaults
+		// Initialise les options locales à partir du stockage ou des valeurs par défaut
 		localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
 
 		return { watchOptions }

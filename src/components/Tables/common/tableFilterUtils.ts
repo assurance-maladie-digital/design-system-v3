@@ -15,12 +15,12 @@ function parseDate(value: unknown): Date | null {
 			return null
 		}
 	}
-	// Handle number type
+	// Traite le type nombre
 	if (typeof value === 'number') {
 		const parsed = new Date(value)
 		return isNaN(parsed.getTime()) ? null : parsed
 	}
-	// Skip empty objects
+	// Ignore les objets vides
 	if (value === null || value === undefined || (typeof value === 'object' && Object.keys(value as object).length === 0)) {
 		return null
 	}
@@ -36,7 +36,7 @@ export function filterItems<T extends Record<string, unknown>>(items: T[], filte
 
 	let result = items
 
-	// Apply date filters first if present
+	// Applique d'abord les filtres de date si présents
 	if (dateFilters.length > 0) {
 		result = result.filter(item =>
 			dateFilters.every((filter) => {
@@ -53,7 +53,7 @@ export function filterItems<T extends Record<string, unknown>>(items: T[], filte
 		)
 	}
 
-	// Apply other filters
+	// Applique les autres filtres
 	if (otherFilters.length > 0) {
 		result = result.filter(item =>
 			otherFilters.every(filter => applyFilter(item, filter)),
@@ -86,8 +86,8 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 		}
 		case 'select': {
 			if (Array.isArray(filterValue)) {
-				// Use type assertion to handle the includes method
-				// We need to cast to unknown first to avoid direct any usage
+				// Utilise l'assertion de type pour gérer la méthode includes
+				// Nous devons d'abord convertir en unknown pour éviter l'utilisation directe de any
 				return filterValue.includes(itemValue as unknown as typeof filterValue[0])
 			}
 			if (typeof filterValue === 'object' && filterValue != null) {
@@ -125,7 +125,7 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 				const fromDay = normalizeDate(fromDate)
 				const toDay = normalizeDate(toDate)
 
-				// Apply overlap check only if both dates are valid
+				// Applique la vérification de chevauchement uniquement si les deux dates sont valides
 				return itemFromDay <= toDay && itemToDay >= fromDay
 			}
 			return false

@@ -21,16 +21,16 @@
 
 	const emit = defineEmits(['update:filters'])
 
-	// Initialize local filters with separate refs for different types
+	// Initialise les filtres locaux avec des refs séparées pour différents types
 	const textFilters = ref<Record<string, string>>({})
 	const numberFilters = ref<Record<string, number>>({})
 	const dateFilters = ref<Record<string, DateValue>>({})
 	const periodFilters = ref<Record<string, { from: string | null, to: string | null }>>({})
 	const selectFilters = ref<Record<string, string | number | Record<string, unknown> | undefined>>({})
 
-	// Initialize filters from props
+	// Initialise les filtres à partir des props
 	watch(() => props.filters, (newFilters) => {
-		// Clear all filters if the filters array is empty
+		// Efface tous les filtres si le tableau de filtres est vide
 		if (newFilters.length === 0) {
 			textFilters.value = {}
 			numberFilters.value = {}
@@ -52,16 +52,16 @@
 				numberFilters.value[key] = value as number
 				break
 			case 'date':
-				// Store the date value as is for DateValue compatibility
-				// The actual conversion will happen when updating the filter
+				// Stocke la valeur de date telle quelle pour la compatibilité DateValue
+				// La conversion réelle se produira lors de la mise à jour du filtre
 				dateFilters.value[key] = value as DateValue
 				break
 			case 'period':
 				if (value && typeof value === 'object' && 'from' in value && 'to' in value) {
-					// Handle both Date objects and string dates in period values
+					// Gère à la fois les objets Date et les dates sous forme de chaînes dans les valeurs de période
 					const periodValue = value as { from: Date | string | null, to: Date | string | null }
 
-					// Convert Date objects to strings if needed
+					// Convertit les objets Date en chaînes si nécessaire
 					const from = periodValue.from instanceof Date
 						? periodValue.from.toLocaleDateString('fr-FR')
 						: periodValue.from
@@ -80,59 +80,59 @@
 		})
 	}, { immediate: true, deep: true })
 
-	// Update filter and emit changes
+	// Met à jour le filtre et émet les changements
 	function updateFilter(key: string, type: FilterType) {
 		if (!key) return
 
-		// Create new filters array
+		// Crée un nouveau tableau de filtres
 		const newFilters = [...props.filters]
 
-		// Find existing filter or create new one
+		// Trouve un filtre existant ou en crée un nouveau
 		const existingFilterIndex = newFilters.findIndex(f => f.key === key)
 
-		// Ensure filter objects are initialized
+		// S'assure que les objets de filtre sont initialisés
 		if (type === 'date' && !dateFilters.value[key]) {
 			dateFilters.value[key] = null
 		}
 
-		// Get the value based on filter type
+		// Obtient la valeur en fonction du type de filtre
 		const getValue = () => {
 			switch (type) {
 			case 'text': return key in textFilters.value ? textFilters.value[key] : ''
 			case 'number': return key in numberFilters.value ? numberFilters.value[key] : null
 			case 'date': {
-				// For date filters, convert string dates to Date objects
+				// Pour les filtres de date, convertit les dates sous forme de chaînes en objets Date
 				if (key in dateFilters.value) {
 					const dateValue = dateFilters.value[key]
 					if (dateValue === null || dateValue === undefined || dateValue === '') {
 						return null
 					}
 
-					// If already a Date object, return as is
+					// Si c'est déjà un objet Date, le renvoie tel quel
 					if (dateValue instanceof Date) {
 						return dateValue
 					}
 
-					// If it's a string, try to convert to a Date object
+					// Si c'est une chaîne, essaie de la convertir en objet Date
 					if (typeof dateValue === 'string') {
 						try {
-							// Try French format (DD/MM/YYYY)
+							// Essaie le format français (JJ/MM/AAAA)
 							if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateValue)) {
 								const [day, month, year] = dateValue.split('/').map(Number)
 								return new Date(year, month - 1, day)
 							}
 							else {
-								// Try standard date parsing
+								// Essaie l'analyse de date standard
 								return new Date(dateValue)
 							}
 						}
 						catch (e) {
 							console.error('Error converting date string to Date object:', e)
-							return dateValue // Return as is if conversion fails
+							return dateValue // Renvoie tel quel si la conversion échoue
 						}
 					}
 
-					// Return as is for other types
+					// Renvoie tel quel pour les autres types
 					return dateValue
 				}
 				return null
@@ -143,7 +143,7 @@
 			}
 		}
 
-		// Check if value is empty based on type
+		// Vérifie si la valeur est vide en fonction du type
 		const isEmpty = (value: unknown): boolean => {
 			if (value === null || value === undefined || value === '') return true
 			if (type === 'period' && typeof value === 'object' && value !== null) {
@@ -156,18 +156,18 @@
 		const currentValue = getValue()
 
 		if (existingFilterIndex >= 0) {
-			// Update existing filter
+			// Met à jour le filtre existant
 			if (isEmpty(currentValue)) {
-				// Remove filter if value is empty
+				// Supprime le filtre si la valeur est vide
 				newFilters.splice(existingFilterIndex, 1)
 			}
 			else {
-				// Update filter value
+				// Met à jour la valeur du filtre
 				newFilters[existingFilterIndex].value = currentValue
 			}
 		}
 		else if (!isEmpty(currentValue)) {
-			// Add new filter
+			// Ajoute un nouveau filtre
 			newFilters.push({
 				key,
 				value: currentValue,
@@ -175,14 +175,14 @@
 			})
 		}
 
-		// Emit updated filters
+		// Émet les filtres mis à jour
 		emit('update:filters', newFilters)
 	}
 
-	// Expose the filtering function via provide/inject pattern
+	// Expose la fonction de filtrage via le modèle provide/inject
 	provide('filterItems', filterItems)
 
-	// Create a computed property for the select filter value to handle type issues
+	// Crée une propriété calculée pour la valeur du filtre de sélection pour gérer les problèmes de type
 	const getSelectValue = computed({
 		get: () => {
 			const key = String(props.header.key || props.header.value || '')
@@ -195,7 +195,7 @@
 		},
 	})
 
-	// Export the filterItems function for direct import
+	// Exporte la fonction filterItems pour l'importation directe
 	defineExpose({ filterItems })
 </script>
 
@@ -204,7 +204,7 @@
 		<div
 			class="sy-table-filter-item"
 		>
-			<!-- Select component for select filter type -->
+			<!-- Composant Select pour le type de filtre de sélection -->
 			<SySelect
 				v-if="header.filterType === 'select' || header.filterOptions"
 				v-model="getSelectValue"
@@ -219,12 +219,12 @@
 				@update:model-value="(val) => {
 					const key = String(header.key || header.value || '')
 					if (val === null || val === undefined) {
-						// Clear all filters when any input is cleared
+						// Efface tous les filtres lorsqu'une entrée est vidée
 						emit('update:filters', [])
 					}
 				}"
 			/>
-			<!-- Date component for date filter type -->
+			<!-- Composant Date pour le type de filtre de date -->
 			<DatePicker
 				v-else-if="header.filterType === 'date'"
 				v-model="dateFilters[String(header.key || header.value || '')]"
@@ -243,16 +243,16 @@
 						const newFilters = props.filters.filter(f => f.key !== key)
 						emit('update:filters', newFilters)
 					} else {
-						// Create or update the filter with a proper Date object
+						// Crée ou met à jour le filtre avec un objet Date approprié
 						const existingFilterIndex = props.filters.findIndex(f => f.key === key)
 						const newFilters = [...props.filters]
 
-						// Ensure we're passing a Date object to the filter
-						// Keep dateValue as string for compatibility with the filter system
+						// S'assure que nous passons un objet Date au filtre
+						// Garde dateValue comme chaîne pour la compatibilité avec le système de filtre
 						let dateValue = val
 						if (typeof val === 'string' && val.trim() !== '') {
-							// We'll use the string directly without converting to Date
-							// This prevents TypeScript errors with Date vs string type
+							// Nous utiliserons la chaîne directement sans la convertir en Date
+							// Cela évite les erreurs TypeScript avec le type Date vs chaîne
 							dateValue = val
 						}
 
@@ -276,7 +276,7 @@
 					emit('update:filters', newFilters)
 				}"
 			/>
-			<!-- Period component for period filter type -->
+			<!-- Composant Période pour le type de filtre de période -->
 			<PeriodField
 				v-else-if="header.filterType === 'period'"
 				:model-value="periodFilters[String(header.key || header.value || '')] || { from: null, to: null }"
@@ -290,16 +290,16 @@
 				:format="header.dateFormat"
 				@update:model-value="(val) => {
 					try {
-						// Safely get the key with fallback
+						// Récupère la clé en toute sécurité avec une valeur par défaut
 						const key = String(header?.key || header?.value || '')
 						if (!key) return
 
-						// Ensure periodFilters.value is initialized with required properties
+						// S'assure que periodFilters.value est initialisé avec les propriétés requises
 						if (!periodFilters.value) {
 							periodFilters.value = { from: null, to: null }
 						}
 
-						// Handle null/undefined case - clear filter for this key
+						// Gère le cas null/undefined - efface le filtre pour cette clé
 						if (!val) {
 							// Find and remove the filter if it exists
 							const newFilters = props.filters.filter(f => f.key !== key)
@@ -307,7 +307,7 @@
 							return
 						}
 
-						// Check if both from and to are null - clear filter for this key
+						// Vérifie si from et to sont tous les deux null - efface le filtre pour cette clé
 						if (typeof val === 'object' && val.from === null && val.to === null) {
 							// Find and remove the filter if it exists
 							const newFilters = props.filters.filter(f => f.key !== key)
@@ -315,21 +315,21 @@
 							return
 						}
 
-						// Process period value
+						// Traite la valeur de période
 						if (typeof val === 'object') {
-							// Create a new filter value object
+							// Crée un nouvel objet de valeur de filtre
 							const filterValue = {
 								from: val.from instanceof Date ? val.from : val.from,
 								to: val.to instanceof Date ? val.to : val.to
 							}
 
-							// Store in periodFilters for UI display
+							// Stocke dans periodFilters pour l'affichage de l'interface utilisateur
 							periodFilters.value[key] = {
 								from: val.from instanceof Date ? val.from.toLocaleDateString('fr-FR') : val.from,
 								to: val.to instanceof Date ? val.to.toLocaleDateString('fr-FR') : val.to
 							}
 
-							// Create or update the filter
+							// Crée ou met à jour le filtre
 							const existingFilterIndex = props.filters.findIndex(f => f.key === key)
 							const newFilters = [...props.filters]
 
@@ -354,7 +354,7 @@
 					emit('update:filters', [])
 				}"
 			/>
-			<!-- Number component for number filter type -->
+			<!-- Composant Nombre pour le type de filtre numérique -->
 			<SyTextField
 				v-else-if="header.filterType === 'number'"
 				v-model="numberFilters[String(header.key || header.value || '')]"
@@ -381,7 +381,7 @@
 					emit('update:filters', [])
 				}"
 			/>
-			<!-- Default text component for other filter types -->
+			<!-- Composant texte par défaut pour les autres types de filtres -->
 			<SyTextField
 				v-else
 				v-model="textFilters[String(header.key || header.value || '')]"

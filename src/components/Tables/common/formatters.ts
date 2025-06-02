@@ -1,48 +1,48 @@
 /**
- * Utility functions for formatting data in tables
+ * Fonctions utilitaires pour formater les données dans les tableaux
  */
 
 /**
- * Format a period object for display
+ * Formate un objet période pour l'affichage
  *
- * @param value - The period value to format
- * @returns Formatted period string
+ * @param value - L'objet période à formater
+ * @returns Chaîne de période formatée
  */
 export function formatPeriod(value: unknown): string {
-	// Handle null or undefined
+	// Traite les valeurs null ou undefined
 	if (value === null || value === undefined) {
 		return ''
 	}
 
-	// Handle period objects
+	// Traite les objets période
 	if (typeof value === 'object' && value !== null && 'from' in value && 'to' in value) {
 		const periodValue = value as { from?: string | null, to?: string | null }
 		const from = periodValue.from || ''
 		const to = periodValue.to || ''
 
-		// Format as "du [date] au [date]"
+		// Formate comme "du [date] au [date]"
 		if (from && to) {
 			return `du ${from} au ${to}`
 		}
-		// If only from date is present
+		// Si seule la date de début est présente
 		else if (from) {
 			return `du ${from}`
 		}
-		// If only to date is present
+		// Si seule la date de fin est présente
 		else if (to) {
 			return `au ${to}`
 		}
 	}
 
-	// Fallback to string representation
+	// Repli sur la représentation en chaîne de caractères
 	return String(value)
 }
 
 /**
- * Process table items to format special fields like periods
+ * Traite les éléments du tableau pour formater les champs spéciaux comme les périodes
  *
- * @param items - The table items to process
- * @returns Processed items with formatted values
+ * @param items - Les éléments du tableau à traiter
+ * @returns Éléments traités avec des valeurs formatées
  */
 export function processItems(items: Record<string, unknown>[]): Record<string, unknown>[] {
 	if (!items || !Array.isArray(items)) return []
@@ -52,17 +52,17 @@ export function processItems(items: Record<string, unknown>[]): Record<string, u
 
 		const newItem = { ...item } as Record<string, unknown>
 
-		// Process all fields in the item
+		// Traite tous les champs de l'élément
 		Object.keys(newItem).forEach((key) => {
 			const value = newItem[key]
 
-			// Check if this field is a period-like object (has from and to properties)
+			// Vérifie si ce champ est un objet de type période (possède les propriétés from et to)
 			if (value
 				&& typeof value === 'object'
 				&& value !== null
 				&& 'from' in value
 				&& 'to' in value) {
-				// Format the period and store it back
+				// Formate la période et la stocke à nouveau
 				newItem[key] = formatPeriod(value)
 			}
 		})
