@@ -4,7 +4,7 @@
 	import { filterItems } from './tableFilterUtils'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
-	import DatePicker from '@/components/DatePicker/DatePicker.vue'
+	import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
 	import PeriodField from '@/components/PeriodField/PeriodField.vue'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
 
