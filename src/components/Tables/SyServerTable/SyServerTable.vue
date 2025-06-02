@@ -21,7 +21,7 @@
 		default: () => ({}),
 	})
 
-	// Propriété calculée pour les filtres
+	// Computed pour les filtres
 	const filters = computed({
 		get: () => options.value.filters || [],
 		set: (newFilters: FilterOption[]) => {

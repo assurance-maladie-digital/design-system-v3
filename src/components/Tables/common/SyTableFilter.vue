@@ -204,7 +204,7 @@
 		<div
 			class="sy-table-filter-item"
 		>
-			<!-- Composant Select pour le type de filtre de sélection -->
+			<!-- Composant SySelect pour le type de filtre de sélection -->
 			<SySelect
 				v-if="header.filterType === 'select' || header.filterOptions"
 				v-model="getSelectValue"
@@ -224,7 +224,7 @@
 					}
 				}"
 			/>
-			<!-- Composant Date pour le type de filtre de date -->
+			<!-- Composant DatePicker pour le type de filtre de date -->
 			<DatePicker
 				v-else-if="header.filterType === 'date'"
 				v-model="dateFilters[String(header.key || header.value || '')]"
@@ -239,7 +239,7 @@
 				@update:model-value="(val) => {
 					const key = String(header.key || header.value || '')
 					if (val === null) {
-						// Find and remove the filter if it exists
+						// Trouver et supprimer le filtre s'il existe
 						const newFilters = props.filters.filter(f => f.key !== key)
 						emit('update:filters', newFilters)
 					} else {
@@ -271,12 +271,12 @@
 				}"
 				@click:clear="() => {
 					const key = String(header.key || header.value || '')
-					// Find and remove the filter if it exists
+					// Trouver et supprimer le filtre s'il existe
 					const newFilters = props.filters.filter(f => f.key !== key)
 					emit('update:filters', newFilters)
 				}"
 			/>
-			<!-- Composant Période pour le type de filtre de période -->
+			<!-- Composant PeriodField pour le type de filtre de période -->
 			<PeriodField
 				v-else-if="header.filterType === 'period'"
 				:model-value="periodFilters[String(header.key || header.value || '')] || { from: null, to: null }"
@@ -301,7 +301,7 @@
 
 						// Gère le cas null/undefined - efface le filtre pour cette clé
 						if (!val) {
-							// Find and remove the filter if it exists
+							// Trouver et supprimer le filtre s'il existe
 							const newFilters = props.filters.filter(f => f.key !== key)
 							emit('update:filters', newFilters)
 							return
@@ -309,7 +309,7 @@
 
 						// Vérifie si from et to sont tous les deux null - efface le filtre pour cette clé
 						if (typeof val === 'object' && val.from === null && val.to === null) {
-							// Find and remove the filter if it exists
+							// Trouver et supprimer le filtre s'il existe
 							const newFilters = props.filters.filter(f => f.key !== key)
 							emit('update:filters', newFilters)
 							return
@@ -350,11 +350,11 @@
 					}
 				}"
 				@click:clear="() => {
-					// Clear all filters when any input is cleared
+					// Effacer tous les filtres
 					emit('update:filters', [])
 				}"
 			/>
-			<!-- Composant Nombre pour le type de filtre numérique -->
+			<!-- Composant SyTextField pour le type de filtre numérique -->
 			<SyTextField
 				v-else-if="header.filterType === 'number'"
 				v-model="numberFilters[String(header.key || header.value || '')]"
@@ -369,7 +369,7 @@
 				@input="(event) => {
 					const key = String(header.key || header.value || '')
 					if (event.target.value === '') {
-						// Clear all filters when input is emptied
+						// Effacer tous les filtres lorsque l'entrée est vidée
 						emit('update:filters', [])
 					} else {
 						updateFilter(key, 'number')
@@ -377,11 +377,11 @@
 				}"
 				@change="() => updateFilter(String(header.key || header.value || ''), 'number')"
 				@click:clear="() => {
-					// Clear all filters when any input is cleared
+					// Effacer tous les filtres lorsqu'une entrée est vidée
 					emit('update:filters', [])
 				}"
 			/>
-			<!-- Composant texte par défaut pour les autres types de filtres -->
+			<!-- Composant SyTextField par défaut pour les autres types de filtres -->
 			<SyTextField
 				v-else
 				v-model="textFilters[String(header.key || header.value || '')]"
