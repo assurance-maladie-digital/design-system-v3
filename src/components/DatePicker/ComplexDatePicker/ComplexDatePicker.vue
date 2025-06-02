@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance, type Ref } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import DateTextInput from '../DateTextInput.vue'
+	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useInputHandler } from '../composables/useInputHandler'
 	import { useValidation } from '@/composables/validation/useValidation'

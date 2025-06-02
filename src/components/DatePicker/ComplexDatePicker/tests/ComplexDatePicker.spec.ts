@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, VueWrapper, flushPromises } from '@vue/test-utils'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
-import DateTextInput from '../../DateTextInput.vue'
+import DateTextInput from '../../DateTextInput/DateTextInput.vue'
 
 // Mock des composables
 vi.mock('@/composables/date/useDateFormatDayjs', () => ({

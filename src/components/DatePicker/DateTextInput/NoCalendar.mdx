@@ -1,0 +1,64 @@
+import { Meta, Controls, Canvas, Story } from '@storybook/blocks';
+import * as NoCalendarStories from './NoCalendar.stories';
+import { ref } from 'vue';
+
+<Meta of={NoCalendarStories} />
+
+# DatePicker - Mode saisie manuelle uniquement
+
+Le DatePicker en mode saisie manuelle uniquement (`noCalendar: true`) permet d'utiliser le champ de saisie avec formatage automatique sans que le calendrier n'apparaisse au clic sur l'input ou sur l'icône.
+
+## Description
+
+Cette variante du DatePicker est particulièrement utile lorsque :
+- Vous souhaitez uniquement la saisie manuelle des dates
+- Vous avez besoin du formatage automatique intelligent des dates pendant la saisie
+- Vous voulez conserver les fonctionnalités de validation des dates
+
+Le formatage automatique intelligent ajoute les séparateurs (/, -, etc.) pendant la saisie en fonction du format spécifié.
+
+<Canvas of={NoCalendarStories.Default} />
+
+## Propriétés spécifiques
+
+Propriétés applicables pour le mode saisie manuelle uniquement :
+
+<Controls of={NoCalendarStories.Default} />
+
+## Exemples
+
+### Format européen (DD/MM/YYYY)
+
+<Canvas>
+  <Story of={NoCalendarStories.EuropeanFormat} />
+</Canvas>
+
+### Avec règles de validation personnalisées
+
+<Canvas>
+  <Story of={NoCalendarStories.CustomRules} />
+</Canvas>
+
+### Avec règles d'avertissement
+
+<Canvas>
+  <Story of={NoCalendarStories.WarningRules} />
+</Canvas>
+
+### Avec gestion d'erreurs désactivée
+
+<Canvas>
+  <Story of={NoCalendarStories.WithErrorDisabled} />
+</Canvas>
+
+### Avec icône à la fin du champ
+
+<Canvas>
+  <Story of={NoCalendarStories.NoCalendarWithAppendIcon} />
+</Canvas>
+
+### Avec gestion d'erreurs désactivée et autres options
+
+<Canvas>
+  <Story of={NoCalendarStories.WithErrorDisabled} />
+</Canvas>

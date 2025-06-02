@@ -1,4 +1,4 @@
-export { default as DatePicker } from '@/components/DatePicker/DatePicker.vue'
+export { default as DatePicker } from '@/components/DatePicker/DatePicker/DatePicker.vue'
 export { useFieldValidation } from '../composables/rules/useFieldValidation'
 export type { RuleOptions } from '../composables/rules/useFieldValidation'
 export { useNotificationService } from '../services/NotificationService'
