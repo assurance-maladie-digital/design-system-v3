@@ -217,10 +217,17 @@
 				variant="outlined"
 				class="filter-input"
 				@update:model-value="(val) => {
-					const key = String(header.key || header.value || '')
+					const key = String(header?.key || header?.value || '').trim()
+					if (!key) {
+						console.warn('Clé invalide pour le filtre.')
+						return
+					}
 					if (val === null || val === undefined) {
 						// Efface tous les filtres lorsqu'une entrée est vidée
 						emit('update:filters', [])
+					} else {
+						// Met à jour le filtre de sélection
+						updateFilter(key, 'select')
 					}
 				}"
 			/>
