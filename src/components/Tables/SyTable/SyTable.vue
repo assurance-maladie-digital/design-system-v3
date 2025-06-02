@@ -10,7 +10,7 @@
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		suffix: undefined,
 		itemsPerPage: undefined,
-		caption: 'caption',
+		caption: '',
 		showFilters: false,
 		items: () => [],
 	})

@@ -18,7 +18,7 @@
 		},
 		caption: {
 			type: String,
-			default: 'caption',
+			default: '',
 		},
 	})
 

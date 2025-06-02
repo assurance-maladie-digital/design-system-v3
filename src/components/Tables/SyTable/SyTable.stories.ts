@@ -47,6 +47,10 @@ const meta = {
 			description: 'Nombre d\'éléments par page',
 			control: { type: 'number' },
 		},
+		caption: {
+			description: 'Texte de la légende du tableau',
+			control: { type: 'text' },
+		},
 		showFilters: {
 			description: 'Affiche les filtres au-dessus du tableau',
 			control: { type: 'boolean' },
