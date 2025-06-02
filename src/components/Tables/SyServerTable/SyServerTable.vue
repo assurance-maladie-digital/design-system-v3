@@ -5,6 +5,7 @@
 	import { useTableFilter } from '../common/useTableFilter'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import { processItems } from '../common/formatters'
+	import { locales } from '../common/locales'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		suffix: undefined,
@@ -179,12 +180,7 @@
 								variant="outlined"
 								@click="filters = []"
 							>
-								<v-icon
-									class="mr-1"
-									icon="mdi-filter-remove"
-									size="small"
-								/>
-								Réinitialiser les filtres
+								{{ locales.resetFilters }}
 							</v-btn>
 						</td>
 					</tr>
