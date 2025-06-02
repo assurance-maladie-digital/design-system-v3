@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { useAttrs, watch, computed } from 'vue'
+	import { useAttrs, watch, computed, ref } from 'vue'
 	import type { DataOptions, FilterOption, SyTableProps, TableColumnHeader } from '../common/types'
 	import { useTableUtils } from '../common/tableUtils'
 	import { useTableFilter } from '../common/useTableFilter'
@@ -44,13 +44,16 @@
 
 	const componentAttributes = useAttrs()
 
+	// Generate a unique ID for this table instance
+	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substr(2, 9)}`)
+
 	const {
 		propsFacade,
 		updateOptions,
 		setupAccessibility,
 		setupLocalStorage,
 	} = useTableUtils({
-		tableId: 'sy-table',
+		tableId: uniqueTableId.value,
 		prefix: 'table',
 		suffix: props.suffix,
 		itemsPerPage: props.itemsPerPage,
@@ -114,7 +117,7 @@
 
 <template>
 	<div
-		id="sy-table"
+		:id="uniqueTableId"
 		class="sy-table"
 	>
 		<VDataTable
