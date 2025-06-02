@@ -1,4 +1,4 @@
-import { ExpertiseLevelEnum } from './constants/ExpertiseLevelEnum'
+import { ExpertiseLevelEnum } from '@/common/constants/ExpertiseLevelEnum'
 
 export const AccessibiliteItemsIndeterminate = [
 	{

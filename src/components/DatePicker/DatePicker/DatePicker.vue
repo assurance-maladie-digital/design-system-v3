@@ -9,6 +9,7 @@
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection } from '../composables'
+	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 
@@ -52,9 +53,9 @@
 		textFieldActivator?: boolean
 	}>(), {
 		modelValue: undefined,
-		label: 'Date',
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
+		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
+		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
+		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: '',
 		isBirthDate: false,
 		birthDate: false,
@@ -153,7 +154,7 @@
 			}
 			// Ne pas afficher d'erreur si on est dans le contexte du mounted initial
 			if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
-				errors.value.push('La date est requise.')
+				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
 			}
 			return
 		}
@@ -626,7 +627,6 @@
 		isDatePickerVisible.value = !isDatePickerVisible.value
 
 		if (isDatePickerVisible.value) {
-			// Mettre à jour l'accessibilité après l'ouverture du DatePicker
 			nextTick(() => {
 				updateAccessibility()
 			})

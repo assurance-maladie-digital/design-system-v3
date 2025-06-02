@@ -591,7 +591,7 @@ describe('ComplexDatePicker', () => {
 			// Maintenant hasInteracted.value devrait être true
 			const emptyResultAfterInteraction = validateDateFormat('')
 			expect(emptyResultAfterInteraction.isValid).toBe(false)
-			expect(emptyResultAfterInteraction.message).toBe('La date est requise')
+			expect(emptyResultAfterInteraction.message).toBe('La date est requise.')
 		}
 
 		// Tester avec une date invalide (caractères non autorisés)

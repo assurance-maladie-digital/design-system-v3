@@ -29,7 +29,7 @@ describe('DateTextInput.vue', () => {
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
-		expect(textField.props('errorMessages')).toContain('La date est requise')
+		expect(textField.props('errorMessages')).toContain('La date est requise.')
 	})
 
 	it('validates date format', async () => {
@@ -38,6 +38,7 @@ describe('DateTextInput.vue', () => {
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
+		console.log(textField.props('errorMessages'))
 		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
 	})
 
@@ -195,7 +196,7 @@ describe('DateTextInput.vue', () => {
 		const emitted = wrapper.emitted('update:model-value')
 		expect(emitted?.[emitted.length - 1]).toEqual([null])
 		const textField = wrapper.findComponent(SyTextField)
-		expect(textField.props('errorMessages')).toContain('La date est requise')
+		expect(textField.props('errorMessages')).toContain('La date est requise.')
 	})
 
 	it('supports different date formats', async () => {

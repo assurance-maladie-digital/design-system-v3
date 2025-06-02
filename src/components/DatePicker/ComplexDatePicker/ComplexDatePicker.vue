@@ -9,6 +9,7 @@
 	import { useDateInitialization, type DateInput, type DateValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
+	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import {
 		useWeekendDays,
 		useTodayButton,
@@ -64,8 +65,8 @@
 		displayWeekendDays?: boolean
 	}>(), {
 		modelValue: undefined,
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
+		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
+		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: '',
 		isBirthDate: false,
 		birthDate: false,
@@ -714,7 +715,7 @@
 	}
 
 	// Variable pour l'accessibilité
-	const accessibilityDescription = ref('Date en cours de saisie')
+	const accessibilityDescription = ref(DATE_PICKER_MESSAGES.ARIA_DATE_INPUT)
 
 	// Fonction pour créer une description accessible de la date pour les lecteurs d'écran
 	const getDateDescription = (dateStr: string, format: string): string => {
@@ -926,7 +927,7 @@
 							class="today-button"
 							@click="handleSelectToday"
 						>
-							Aujourd'hui
+							{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
 						</v-btn>
 					</template>
 				</VDatePicker>

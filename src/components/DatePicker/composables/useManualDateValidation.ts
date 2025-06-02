@@ -1,5 +1,6 @@
 import { type Ref } from 'vue'
 import { type ValidationResult } from '@/composables/validation/useValidation'
+import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
 /**
  * Composable pour la validation manuelle des dates saisies
@@ -57,7 +58,7 @@ export const useManualDateValidation = (options: {
 		// Vérifier si le champ est requis et vide
 		if (!value && required && hasInteracted.value) {
 			if (!disableErrorHandling) {
-				errors.value.push('La date est requise')
+				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
 			}
 			return false
 		}
