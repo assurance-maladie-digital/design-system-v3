@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	/* eslint-disable @typescript-eslint/no-explicit-any -- Nécessaire pour gérer différents types d'entrée */
 	import { ref, watch, computed, onMounted } from 'vue'
-	import DatePicker from '@/components/DatePicker/DatePicker.vue'
+	import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 

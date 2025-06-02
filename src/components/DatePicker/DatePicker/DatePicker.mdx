@@ -1,0 +1,209 @@
+import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
+import * as DatePickerStories from "./DatePicker.stories.ts";
+
+<Meta of={DatePickerStories}/>
+
+# DatePicker - Mode calendrier
+
+Le DatePicker en mode calendrier permet de sélectionner une date ou une plage de dates via un calendrier interactif.
+
+## Description
+
+Cette variante du DatePicker est particulièrement utile lorsque :
+- Vous souhaitez offrir une interface visuelle pour la sélection de dates
+- Vous avez besoin d'une sélection précise avec des contraintes de dates
+- Vous voulez permettre la sélection de plages de dates
+
+Le DatePicker offre de nombreuses options de personnalisation pour s'adapter à vos besoins spécifiques, comme le format d'affichage, les règles de validation, et les options d'interface utilisateur.
+
+## Exemple interactif
+
+<Canvas story={{height: '550px'}} of={DatePickerStories.Default}/>
+
+## Propriétés spécifiques
+
+<Controls of={DatePickerStories.Default}/>
+
+## Formats de date
+
+Le DatePicker utilise deux formats distincts :
+
+- **Format d'entrée/affichage** : défini par la prop `format`, il détermine à la fois le format dans lequel la date doit être fournie au composant et comment la date est affichée visuellement dans le champ.
+- **Format de retour** : défini par la prop `dateFormatReturn`, il détermine le format de la date émise.
+
+<div
+    style={{
+        border: '2px solid #FF0000',
+        padding: '1rem',
+        borderRadius: '4px',
+        marginBottom: '1rem',
+    }}
+>
+    <strong>Note importante sur les formats</strong>
+    <p>
+        Par exemple, avec <code>format="DD-MM-YY"</code> et <code>dateFormatReturn="YYYY/MM/DD"</code> :
+    </p>
+    <ul>
+        <li>Vous devez fournir la date au format : <code>24-12-25</code></li>
+        <li>Elle sera affichée comme : <code>24-12-25</code></li>
+        <li>Elle sera retournée comme : <code>2025/12/24</code></li>
+    </ul>
+</div>
+
+## Exemples
+
+### Sélection de plage de dates
+
+<Canvas of={DatePickerStories.DateRange}/>
+
+### Avec icône à la fin du champ
+
+<Canvas of={DatePickerStories.WithAppendIcon}/>
+
+### Sans icône
+
+<Canvas of={DatePickerStories.WithoutIcon}/>
+
+### Mode date de naissance
+
+<Canvas of={DatePickerStories.BirthDate}/>
+
+### Avec validation d'erreur
+
+<Canvas of={DatePickerStories.WithError}/>
+
+### Avec message d'avertissement
+
+<Canvas of={DatePickerStories.WithWarning}/>
+
+### Avec message de succès
+
+<Canvas of={DatePickerStories.WithSuccess}/>
+
+### Formats de date différents
+
+<Canvas of={DatePickerStories.DifferentFormats}/>
+
+## Exemple d'utilisation dans le code
+
+### DatePicker simple
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const date = ref('')
+</script>
+
+<template>
+	<DatePicker
+		v-model="date"
+		placeholder="Sélectionner une date"
+		format="DD/MM/YYYY"
+		required
+	/>
+</template>
+`}
+/>
+
+### DatePicker avec plage de dates
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const dateRange = ref(['', ''])
+</script>
+
+<template>
+	<DatePicker
+		v-model="dateRange"
+		placeholder="Sélectionner une plage de dates"
+		format="DD/MM/YYYY"
+		display-range
+		required
+	/>
+</template>
+`}
+/>
+
+## Propriétés
+
+### format
+- **Type** : `string`
+- **Description** : Format d'affichage et d'entrée de la date. Supporte les formats suivants :
+- `DD` : jour sur 2 chiffres
+- `MM` : mois sur 2 chiffres
+- `YYYY` : année sur 4 chiffres
+- `YY` : année sur 2 chiffres (assumé comme 20XX)
+Les séparateurs peuvent être `/`, `-` ou `.`
+- **Défaut** : `'DD/MM/YYYY'`
+
+### dateFormatReturn
+- **Type** : `string`
+- **Description** : Format de la date pour la valeur de retour. Utilise les mêmes tokens que la prop `format`. Si non spécifié, utilise le même format que `format`.
+- **Défaut** : `''`
+
+### required
+- **Type** : `boolean`
+- **Description** : Indique si le champ est obligatoire
+- **Défaut** : `false`
+
+### disabled
+- **Type** : `boolean`
+- **Description** : Désactive le champ
+- **Défaut** : `false`
+
+### isBirthDate
+- **Type** : `boolean`
+- **Description** : Active le mode date de naissance (commence par la sélection de l'année)
+- **Défaut** : `false`
+
+### isOutlined
+- **Type** : `boolean`
+- **Description** : Active le style de champ de saisie "outlined" (bordure) plutôt que "underlined" (fond)
+- **Défaut** : `true`
+
+### showWeekNumber
+- **Type** : `boolean`
+- **Description** : Affiche les numéros de semaine dans le calendrier
+- **Défaut** : `false`
+
+### displayRange
+- **Type** : `boolean`
+- **Description** : Active la sélection d'une plage de dates
+- **Défaut** : `false`
+
+### noCalendar
+- **Type** : `boolean`
+- **Description** : Désactive l'affichage du calendrier (saisie manuelle uniquement), elle permet les copier coller et le passage de robots.
+- **Défaut** : `false`
+
+### displayIcon
+- **Type** : `boolean`
+- **Description** : Affiche l'icône de calendrier
+- **Défaut** : `false`
+
+### displayAppendIcon
+- **Type** : `boolean`
+- **Description** : Affiche l'icône à la fin du champ plutôt qu'au début
+- **Défaut** : `false`
+
+### noIcon
+- **Type** : `boolean`
+- **Description** : Masque toutes les icônes
+- **Défaut** : `false`
+
+### customRules
+- **Type** : `{ type: string, options: RuleOptions }[]`
+- **Description** : Règles de validation personnalisées
+- **Défaut** : `[]`
+
+### customWarningRules
+- **Type** : `{ type: string, options: RuleOptions }[]`
+- **Description** : Règles d'avertissement personnalisées
+- **Défaut** : `[]`

@@ -3,14 +3,24 @@ import * as DatePickerStories from "./ComplexDatePicker.stories.ts";
 
 <Meta of={DatePickerStories}/>
 
-# DatePicker
+# DatePicker - Mode combiné
 
-La props `useCombinedMode` permet de combiner le calendrier et la saisie manuelle.
+Le DatePicker en mode combiné (`useCombinedMode: true`) permet d'utiliser à la fois le calendrier interactif et la saisie manuelle avec formatage automatique.
 
+## Description
+
+Cette variante du DatePicker est particulièrement utile lorsque :
+- Vous souhaitez offrir plusieurs méthodes de saisie de date aux utilisateurs
+- Vous avez besoin du formatage automatique intelligent des dates pendant la saisie
+- Vous voulez conserver l'interaction avec le calendrier pour une meilleure expérience utilisateur
+
+Le formatage automatique intelligent ajoute les séparateurs (/, -, etc.) pendant la saisie en fonction du format spécifié.
 
 <Canvas story={{height: '550px'}} of={DatePickerStories.Default}/>
 
-## Props, événements et méthodes exposées utilisables dans le mode combiné du DatePicker avec la props `useCombinedMode`:
+## Propriétés spécifiques
+
+Propriétés applicables pour le mode combiné :
 
 <Controls of={DatePickerStories.Default}/>
 

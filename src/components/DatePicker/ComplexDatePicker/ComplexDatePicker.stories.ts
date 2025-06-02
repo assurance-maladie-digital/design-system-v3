@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import DatePicker from '../DatePicker.vue'
+import DatePicker from '../DatePicker/DatePicker.vue'
 import { ref, onMounted } from 'vue'
 
 const meta = {
-	title: 'Composants/Formulaires/DatePicker/WithUseCombinedMode',
+	title: 'Composants/Formulaires/DatePicker/CombinedMode',
 	component: DatePicker,
 	decorators: [
 		() => ({
@@ -37,10 +37,6 @@ const meta = {
 			control: 'boolean',
 			description: 'Mode date de naissance',
 		},
-		isOutlined: {
-			control: 'boolean',
-			description: 'Affiche le champ en contour',
-		},
 		showWeekNumber: {
 			control: 'boolean',
 			description: 'Affiche les numéros de semaine',
@@ -65,6 +61,14 @@ const meta = {
 			control: 'boolean',
 			description: 'Icône au début du champ',
 		},
+		customRules: {
+			control: 'object',
+			description: 'Règles de validation personnalisées ({ type: string, options: any }[])',
+		},
+		customWarningRules: {
+			control: 'object',
+			description: 'Règles d\'avertissement personnalisées ({ type: string, options: any }[])',
+		},
 		disabled: {
 			control: 'boolean',
 			description: 'Désactive le champ',
@@ -80,13 +84,17 @@ const meta = {
 			control: 'boolean',
 			description: 'Désactive l\'affichage du calendrier (saisie manuelle uniquement)',
 		},
-		customRules: {
-			control: 'object',
-			description: 'Règles de validation',
+		isOutlined: {
+			control: 'boolean',
+			description: 'Utilise le style "outlined" pour le champ',
 		},
-		customWarningRules: {
-			control: 'object',
-			description: 'Règles d\'avertissement',
+		readonly: {
+			control: 'boolean',
+			description: 'Champ en lecture seule',
+		},
+		width: {
+			control: 'text',
+			description: 'Largeur du champ (par exemple, "300px" ou "100%")',
 		},
 		disableErrorHandling: {
 			control: 'boolean',
@@ -95,6 +103,10 @@ const meta = {
 		showSuccessMessages: {
 			control: 'boolean',
 			description: 'Affiche les messages de succès',
+		},
+		bgColor: {
+			control: 'text',
+			description: 'Couleur de fond du champ (par exemple, "white" ou "transparent")',
 		},
 		textFieldActivator: {
 			control: 'boolean',

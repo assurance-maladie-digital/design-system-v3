@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
-import DateTextInput from '../DateTextInput.vue'
+import DateTextInput from './DateTextInput.vue'
 import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 
 describe('DateTextInput.vue', () => {

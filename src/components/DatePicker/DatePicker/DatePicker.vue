@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance } from 'vue'
-	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import DateTextInput from './DateTextInput.vue'
-	import ComplexDatePicker from './ComplexDatePicker/ComplexDatePicker.vue'
+	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
+	import DateTextInput from '../DateTextInput/DateTextInput.vue'
+	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useValidation } from '@/composables/validation/useValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection } from './composables'
+	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection } from '../composables'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 
@@ -21,6 +21,7 @@
 
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
+		label?: string
 		placeholder?: string
 		format?: string
 		dateFormatReturn?: string
@@ -51,6 +52,7 @@
 		textFieldActivator?: boolean
 	}>(), {
 		modelValue: undefined,
+		label: 'Date',
 		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: '',

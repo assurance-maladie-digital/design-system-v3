@@ -1,6 +1,6 @@
 import { type Meta, type StoryFn } from '@storybook/vue3'
-import DatePickerValidationExamples from './docExamples/DatePickerValidationExamples.vue'
-import DatePickerBidirectionalValidation from './docExamples/DatePickerBidirectionalValidation.vue'
+import DatePickerValidationExamples from '../docExamples/DatePickerValidationExamples.vue'
+import DatePickerBidirectionalValidation from '../docExamples/DatePickerBidirectionalValidation.vue'
 
 export default {
 	title: 'Composants/Formulaires/DatePicker/Validation',
