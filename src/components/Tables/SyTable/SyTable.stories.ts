@@ -535,6 +535,86 @@ export const FilterByText: Story = {
 }
 
 export const FilterByNumber: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						show-filters
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 5,
+						filters: []
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'name',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Âge',
+							key: 'age',
+							filterable: true,
+							filterType: 'number'
+						},
+						{
+							title: 'Salaire',
+							key: 'salary',
+							filterable: true,
+							filterType: 'number'
+						},
+					])
+						
+					const items = ref([
+						{
+							name: 'Jean Dupont',
+							age: 32,
+							salary: 45000,
+						},
+						{
+							name: 'Marie Martin',
+							age: 28,
+							salary: 52000,
+						},
+						{
+							name: 'Pierre Durand',
+							age: 45,
+							salary: 65000,
+						},
+						{
+							name: 'Sophie Petit',
+							age: 36,
+							salary: 48000,
+						},
+						{
+							name: 'Thomas Leroy',
+							age: 41,
+							salary: 58000,
+						},
+					])
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		headers: [
 			{
@@ -616,6 +696,99 @@ export const FilterByNumber: Story = {
 }
 
 export const FilterBySelect: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						show-filters
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 5,
+						filters: []
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'name',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Département',
+							key: 'department',
+							filterable: true,
+							filterType: 'select',
+							hideMessages: true,
+							filterOptions: [
+								{ text: 'RH', value: 'RH' },
+								{ text: 'IT', value: 'IT' },
+								{ text: 'Finance', value: 'Finance' },
+								{ text: 'Marketing', value: 'Marketing' },
+							]
+						},
+						{
+							title: 'Statut',
+							key: 'status',
+							filterable: true,
+							filterType: 'select',
+							hideMessages: true,
+							filterOptions: [
+								{ text: 'Actif', value: 'Actif' },
+								{ text: 'En congé', value: 'En congé' },
+								{ text: 'Inactif', value: 'Inactif' },
+							]
+						},
+					])
+						
+					const items = ref([
+						{
+							name: 'Jean Dupont',
+							department: 'RH',
+							status: 'Actif',
+						},
+						{
+							name: 'Marie Martin',
+							department: 'IT',
+							status: 'En congé',
+						},
+						{
+							name: 'Pierre Durand',
+							department: 'Finance',
+							status: 'Actif',
+						},
+						{
+							name: 'Sophie Petit',
+							department: 'Marketing',
+							status: 'Actif',
+						},
+						{
+							name: 'Thomas Leroy',
+							department: 'IT',
+							status: 'Inactif',
+						},
+					])
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		headers: [
 			{
