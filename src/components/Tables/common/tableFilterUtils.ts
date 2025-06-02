@@ -31,7 +31,6 @@ export function filterItems<T extends Record<string, unknown>>(items: T[], filte
 	if (!Array.isArray(items) || items.length === 0) return []
 	if (!Array.isArray(filters) || filters.length === 0) return items
 
-	// Approche simplifiée : utilise applyFilter pour tous les types de filtres
 	return items.filter(item =>
 		filters.every(filter => applyFilter(item, filter)),
 	)
