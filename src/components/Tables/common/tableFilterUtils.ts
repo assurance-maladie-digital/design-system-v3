@@ -31,36 +31,10 @@ export function filterItems<T extends Record<string, unknown>>(items: T[], filte
 	if (!Array.isArray(items) || items.length === 0) return []
 	if (!Array.isArray(filters) || filters.length === 0) return items
 
-	const dateFilters = filters.filter(f => f.type === 'date' && f.value != null)
-	const otherFilters = filters.filter(f => f.type !== 'date')
-
-	let result = items
-
-	// Applique d'abord les filtres de date si présents
-	if (dateFilters.length > 0) {
-		result = result.filter(item =>
-			dateFilters.every((filter) => {
-				if (!filter.key) return true
-				const itemDate = parseDate(item[filter.key])
-				const filterDate = parseDate(filter.value)
-				if (!itemDate || !filterDate) return false
-				return (
-					itemDate.getDate() === filterDate.getDate()
-					&& itemDate.getMonth() === filterDate.getMonth()
-					&& itemDate.getFullYear() === filterDate.getFullYear()
-				)
-			}),
-		)
-	}
-
-	// Applique les autres filtres
-	if (otherFilters.length > 0) {
-		result = result.filter(item =>
-			otherFilters.every(filter => applyFilter(item, filter)),
-		)
-	}
-
-	return result
+	// Approche simplifiée : utilise applyFilter pour tous les types de filtres
+	return items.filter(item =>
+		filters.every(filter => applyFilter(item, filter)),
+	)
 }
 
 function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterOption): boolean {
