@@ -50,6 +50,7 @@ const meta = {
 			control: { type: 'object' },
 			table: {
 				category: 'props',
+				type: { summary: 'DataOptions', detail: '{ page: number, itemsPerPage: number, sortBy: SortOptions[], groupBy?: SortOptions[], multiSort?: boolean, mustSort?: boolean, filters?: FilterOption[] }' },
 			},
 		},
 		serverItemsLength: {
@@ -1678,7 +1679,6 @@ export const MultiServerTables: Story = {
               suffix="table1"
               @update:options="fetchDataTable1"
             />
-            <hr class="my-4">
             <SyServerTable
               v-model:options="optionsTable2"
               :items="usersTable2"

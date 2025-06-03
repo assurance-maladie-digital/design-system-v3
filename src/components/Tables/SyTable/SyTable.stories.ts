@@ -37,6 +37,7 @@ const meta = {
 			control: { type: 'object' },
 			table: {
 				category: 'props',
+				type: { summary: 'DataOptions', detail: '{ page: number, itemsPerPage: number, sortBy: SortOptions[], groupBy?: SortOptions[], multiSort?: boolean, mustSort?: boolean, filters?: FilterOption[] }' },
 			},
 		},
 		suffix: {
