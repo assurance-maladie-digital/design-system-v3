@@ -1,13 +1,15 @@
 <script setup lang="ts">
-	import { ref, watch, provide } from 'vue'
+	import { ref, watch, provide, defineAsyncComponent } from 'vue'
 	import type { FilterOption, TableColumnHeader } from './types'
 	import { filterItems } from './tableFilterUtils'
-	import TextFilter from './filters/TextFilter.vue'
-	import NumberFilter from './filters/NumberFilter.vue'
-	import DateFilter from './filters/DateFilter.vue'
-	import PeriodFilter from './filters/PeriodFilter.vue'
-	import SelectFilter from './filters/SelectFilter.vue'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
+
+	// Async components with lazy loading
+	const TextFilter = defineAsyncComponent(() => import('./filters/TextFilter.vue'))
+	const NumberFilter = defineAsyncComponent(() => import('./filters/NumberFilter.vue'))
+	const DateFilter = defineAsyncComponent(() => import('./filters/DateFilter.vue'))
+	const PeriodFilter = defineAsyncComponent(() => import('./filters/PeriodFilter.vue'))
+	const SelectFilter = defineAsyncComponent(() => import('./filters/SelectFilter.vue'))
 
 	const props = defineProps({
 		header: {
@@ -124,7 +126,6 @@
 <template>
 	<div class="sy-table-filter">
 		<div class="sy-table-filter-item">
-			<!-- Composant SelectFilter pour le type de filtre de sélection -->
 			<SelectFilter
 				v-if="header.filterType === 'select' || header.filterOptions"
 				:header="header"
@@ -138,7 +139,6 @@
 				:clearable="clearable"
 				@update:filters="updateFilters"
 			/>
-			<!-- Composant DateFilter pour le type de filtre de date -->
 			<DateFilter
 				v-else-if="header.filterType === 'date'"
 				:header="header"
@@ -152,7 +152,6 @@
 				:clearable="clearable"
 				@update:filters="updateFilters"
 			/>
-			<!-- Composant PeriodFilter pour le type de filtre de période -->
 			<PeriodFilter
 				v-else-if="header.filterType === 'period'"
 				:header="header"
@@ -166,7 +165,6 @@
 				:clearable="clearable"
 				@update:filters="updateFilters"
 			/>
-			<!-- Composant NumberFilter pour le type de filtre numérique -->
 			<NumberFilter
 				v-else-if="header.filterType === 'number'"
 				:header="header"
@@ -180,7 +178,6 @@
 				:clearable="clearable"
 				@update:filters="updateFilters"
 			/>
-			<!-- Composant TextFilter par défaut pour les autres types de filtres -->
 			<TextFilter
 				v-else
 				:header="header"
