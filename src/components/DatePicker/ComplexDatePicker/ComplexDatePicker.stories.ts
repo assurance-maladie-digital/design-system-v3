@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import DatePicker from '../DatePicker/DatePicker.vue'
+import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
 
 const meta = {
@@ -921,20 +922,20 @@ export const WithCustomPeriod: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePicker },
+			components: { DatePicker, SyAlert },
 			setup() {
 				const value = ref('')
 				return { args, value }
 			},
 			template: `
-			<div style="margin-bottom: 20px; padding: 15px; border: 2px solid #FF5252; border-radius: 8px; background-color: #FFEBEE;"> 
-				<h3 style="color: #D32F2F; margin-top: 0;">Note importante pour la validation manuelle</h3>
-				<p>
-					Pour valider les dates saisies manuellement en fonction de la période définie, <strong>il faut utiliser la propriété customRules</strong> comme dans l'exemple ci-dessous.
-				</p>
-				<p style="margin-bottom: 0;">
-					La propriété <code style="background-color: #F5F5F5; padding: 2px 4px; border-radius: 4px;">period</code> limite les dates sélectionnables dans le calendrier, mais les règles personnalisées sont nécessaires pour la validation des saisies manuelles.
-				</p>
+			<div style="margin-bottom: 20px; padding: 15px;"> 
+				<SyAlert :variant="tonal" :closable="false">
+					<template #default>
+					<h4>Note importante pour la validation manuelle</h4>
+					<p>Pour valider les dates saisies manuellement en fonction de la période définie, il faut utiliser la propriété customRules comme dans l'exemple ci-dessous.</p>
+					<p>La propriété period limite les dates sélectionnables dans le calendrier, mais les règles personnalisées sont nécessaires pour la validation des saisies manuelles.</p>
+					</template>
+				</SyAlert>
 			</div>
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
