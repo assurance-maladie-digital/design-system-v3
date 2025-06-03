@@ -1244,6 +1244,7 @@ export const ManyTables: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		suffix: 'multi-server',
 	},
 	render(args) {
 		return {

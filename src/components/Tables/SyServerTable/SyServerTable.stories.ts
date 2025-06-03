@@ -1819,6 +1819,7 @@ export const MultiServerTables: Story = {
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
+		suffix: 'multi',
 	},
 	render: (args) => {
 		return {

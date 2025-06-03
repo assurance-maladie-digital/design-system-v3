@@ -51,6 +51,7 @@ describe('SyTable', () => {
 		const wrapper = mount(SyTable, {
 			props: {
 				options: {} as DataOptions,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -70,6 +71,7 @@ describe('SyTable', () => {
 		const wrapper = mount(SyTable, {
 			props: {
 				options: {} as DataOptions,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -137,6 +139,7 @@ describe('SyTable', () => {
 		const wrapper = mount(SyTable, {
 			props: {
 				options: {} as DataOptions,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -161,6 +164,7 @@ describe('SyTable', () => {
 			props: {
 				options: {} as DataOptions,
 				itemsPerPage: 5,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -180,6 +184,7 @@ describe('SyTable', () => {
 			props: {
 				options: {} as DataOptions,
 				showFilters: true,
+				suffix: 'test',
 				headers: [
 					{
 						title: 'Name',
@@ -218,6 +223,7 @@ describe('SyTable', () => {
 			props: {
 				options: { filters },
 				showFilters: true,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -251,6 +257,7 @@ describe('SyTable', () => {
 					filters: [{ key: 'name', value: 'John', type: 'text' }],
 				},
 				showFilters: true,
+				suffix: 'test',
 				headers: [
 					{
 						title: 'Name',
@@ -279,6 +286,7 @@ describe('SyTable', () => {
 					filters: [{ key: 'name', value: 'John', type: 'text' }],
 				},
 				showFilters: true,
+				suffix: 'test',
 				headers: [
 					{
 						title: 'Name',
@@ -315,6 +323,7 @@ describe('SyTable', () => {
 					filters: [{ key: 'name', value: 'NonExistingName', type: 'text' as const }],
 				},
 				showFilters: true,
+				suffix: 'test',
 				headers: [
 					{
 						title: 'Name',

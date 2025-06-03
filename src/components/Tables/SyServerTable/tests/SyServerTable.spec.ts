@@ -53,6 +53,7 @@ describe('SyServerTable', () => {
 			props: {
 				options: {} as DataOptions,
 				serverItemsLength: 10,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -73,6 +74,7 @@ describe('SyServerTable', () => {
 			props: {
 				options: {} as DataOptions,
 				serverItemsLength: 10,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -143,6 +145,7 @@ describe('SyServerTable', () => {
 			props: {
 				options: {} as DataOptions,
 				serverItemsLength: 10,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -168,6 +171,7 @@ describe('SyServerTable', () => {
 				options: {} as DataOptions,
 				serverItemsLength: 10,
 				itemsPerPage: 5,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -187,6 +191,7 @@ describe('SyServerTable', () => {
 			props: {
 				options: {} as DataOptions,
 				serverItemsLength: 25,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -207,6 +212,7 @@ describe('SyServerTable', () => {
 				options: {} as DataOptions,
 				showFilters: true,
 				serverItemsLength: 10,
+				suffix: 'test',
 				headers: [
 					{
 						title: 'Name',
@@ -242,6 +248,7 @@ describe('SyServerTable', () => {
 				options: {} as DataOptions,
 				showFilters: true,
 				serverItemsLength: 10,
+				suffix: 'test',
 				headers: [
 					{
 						title: 'Name',
@@ -278,6 +285,7 @@ describe('SyServerTable', () => {
 				},
 				showFilters: true,
 				serverItemsLength: 10,
+				suffix: 'test',
 				headers: [
 					{
 						title: 'Name',
@@ -307,6 +315,7 @@ describe('SyServerTable', () => {
 				},
 				showFilters: true,
 				serverItemsLength: 10,
+				suffix: 'test',
 				headers: [
 					{
 						title: 'Name',
@@ -341,6 +350,7 @@ describe('SyServerTable', () => {
 			props: {
 				options: {} as DataOptions,
 				serverItemsLength: 10,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -361,6 +371,7 @@ describe('SyServerTable', () => {
 			props: {
 				options: {} as DataOptions,
 				serverItemsLength: 10,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
