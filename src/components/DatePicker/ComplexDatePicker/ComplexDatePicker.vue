@@ -63,6 +63,10 @@
 		textFieldActivator?: boolean
 		displayTodayButton?: boolean
 		displayWeekendDays?: boolean
+		period?: {
+			min?: string
+			max?: string
+		}
 	}>(), {
 		modelValue: undefined,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -90,6 +94,10 @@
 		textFieldActivator: false,
 		displayTodayButton: true,
 		displayWeekendDays: true,
+		period: () => ({
+			min: '',
+			max: '',
+		}),
 	})
 
 	const emit = defineEmits<{
@@ -780,6 +788,11 @@
 
 	// Utilisation des composables pour les fonctionnalités du DatePicker
 	const { displayWeekendDays } = useWeekendDays(props)
+
+	// Computed properties pour period
+	const minDate = computed(() => props.period?.min || '11/11/2020')
+	const maxDate = computed(() => props.period?.max || '11/11/2025')
+
 	const { todayInString, selectToday } = useTodayButton(props)
 
 	// Wrapper pour la fonction selectToday du composable
@@ -907,6 +920,8 @@
 					:show-adjacent-months="true"
 					:show-week="props.showWeekNumber"
 					:view-mode="currentViewMode"
+					:max="maxDate"
+					:min="minDate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:year="handleYearUpdate"
 					@update:month="handleMonthUpdate"
