@@ -53,9 +53,11 @@ Cela facilitera le traitement du rapport et le temps qu’il faudra pour identif
 - OS : <!-- Android, … -->
 - Navigateur : <!-- IE 11, Firefox, Safari, … -->
 
-## Projet
+## Projet et portail
 
 <!-- Nom du projet impacté par le bug. -->
+
+<!-- Nom du portail ou de la ligne de fabrication. -->
 
 ## Contacts
 
