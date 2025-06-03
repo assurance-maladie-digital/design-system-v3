@@ -17,6 +17,17 @@
 			type: Array as () => FilterOption[],
 			default: () => [],
 		},
+		// Propriétés customisables des champs de saisie
+		inputConfig: {
+			type: Object as () => {
+				disableErrorHandling?: boolean
+				variant?: string
+				hideDetails?: boolean
+				density?: 'default' | 'comfortable' | 'compact'
+				clearable?: boolean
+			},
+			default: () => ({}),
+		},
 		// Propriétés de configuration des champs de saisie
 		disableErrorHandling: {
 			type: Boolean,
@@ -229,12 +240,12 @@
 				v-model="getSelectValue"
 				:label="header.title"
 				:items="header.filterOptions"
-				:clearable="props.clearable"
-				:density="props.density"
-				:hide-details="props.hideDetails"
+				:clearable="props.inputConfig?.clearable ?? props.clearable"
+				:density="props.inputConfig?.density ?? props.density"
+				:hide-details="props.inputConfig?.hideDetails ?? props.hideDetails"
 				:hide-messages="true"
-				:variant="props.variant"
-				:disable-error-handling="props.disableErrorHandling"
+				:variant="props.inputConfig?.variant ?? props.variant"
+				:disable-error-handling="props.inputConfig?.disableErrorHandling ?? props.disableErrorHandling"
 				class="filter-input"
 				@update:model-value="(val) => {
 					const key = String(header?.key || header?.value || '').trim()
@@ -250,12 +261,12 @@
 				v-else-if="header.filterType === 'date'"
 				v-model="dateFilters[String(header.key || header.value || '')]"
 				:label="header.title"
-				:clearable="props.clearable"
-				:density="props.density"
-				:hide-details="props.hideDetails"
+				:clearable="props.inputConfig?.clearable ?? props.clearable"
+				:density="props.inputConfig?.density ?? props.density"
+				:hide-details="props.inputConfig?.hideDetails ?? props.hideDetails"
 				:hide-messages="header.hideMessages"
-				:variant="props.variant"
-				:disable-error-handling="props.disableErrorHandling"
+				:variant="props.inputConfig?.variant ?? props.variant"
+				:disable-error-handling="props.inputConfig?.disableErrorHandling ?? props.disableErrorHandling"
 				class="filter-input"
 				:format="header.dateFormat"
 				@update:model-value="(val) => {
@@ -303,12 +314,12 @@
 				v-else-if="header.filterType === 'period'"
 				:model-value="periodFilters[String(header.key || header.value || '')] || { from: null, to: null }"
 				:label="header.title"
-				:clearable="props.clearable"
-				:density="props.density"
-				:hide-details="props.hideDetails"
+				:clearable="props.inputConfig?.clearable ?? props.clearable"
+				:density="props.inputConfig?.density ?? props.density"
+				:hide-details="props.inputConfig?.hideDetails ?? props.hideDetails"
 				:hide-messages="header.hideMessages"
-				:variant="props.variant"
-				:disable-error-handling="props.disableErrorHandling"
+				:variant="props.inputConfig?.variant ?? props.variant"
+				:disable-error-handling="props.inputConfig?.disableErrorHandling ?? props.disableErrorHandling"
 				class="filter-input"
 				:format="header.dateFormat"
 				@update:model-value="(val) => {
@@ -383,12 +394,12 @@
 				v-model="numberFilters[String(header.key || header.value || '')]"
 				:label="header.title"
 				type="number"
-				:clearable="props.clearable"
-				:density="props.density"
-				:hide-details="props.hideDetails"
+				:clearable="props.inputConfig?.clearable ?? props.clearable"
+				:density="props.inputConfig?.density ?? props.density"
+				:hide-details="props.inputConfig?.hideDetails ?? props.hideDetails"
 				:hide-messages="header.hideMessages"
-				:disable-error-handling="props.disableErrorHandling"
-				:variant="props.variant"
+				:disable-error-handling="props.inputConfig?.disableErrorHandling ?? props.disableErrorHandling"
+				:variant="props.inputConfig?.variant ?? props.variant"
 				class="filter-input"
 				@input="(event) => {
 					const key = String(header.key || header.value || '')
@@ -410,12 +421,12 @@
 				v-else
 				v-model="textFilters[String(header.key || header.value || '')]"
 				:label="header.title"
-				:clearable="props.clearable"
-				:density="props.density"
-				:hide-details="props.hideDetails"
+				:clearable="props.inputConfig?.clearable ?? props.clearable"
+				:density="props.inputConfig?.density ?? props.density"
+				:hide-details="props.inputConfig?.hideDetails ?? props.hideDetails"
 				:hide-messages="header.hideMessages"
-				:disable-error-handling="props.disableErrorHandling"
-				:variant="props.variant"
+				:disable-error-handling="props.inputConfig?.disableErrorHandling ?? props.disableErrorHandling"
+				:variant="props.inputConfig?.variant ?? props.variant"
 				class="filter-input"
 				@input="(event) => {
 					const key = String(header.key || header.value || '')

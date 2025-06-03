@@ -58,6 +58,7 @@ export interface SyTableProps {
 	caption?: string
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
+	filterInputConfig?: Record<string, unknown>
 }
 
 export interface SyServerTableProps {
@@ -68,4 +69,5 @@ export interface SyServerTableProps {
 	caption?: string
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
+	filterInputConfig?: Record<string, unknown>
 }

@@ -1673,6 +1673,295 @@ export const ServerFilterByDate: Story = {
 	},
 }
 
+export const CustomFilterInputs: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+        <template>
+          <SyServerTable
+            v-model:options="options"
+            :items="filteredUsers"
+            :headers="headers"
+            :server-items-length="totalFilteredUsers"
+            :filter-input-config="filterInputConfig"
+            :loading="state === StateEnum.PENDING"
+            suffix="server-filter-text"
+            :show-filters="true"
+            @update:options="fetchData"
+          />
+        </template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+        <script setup lang="ts">
+          import { ref } from 'vue'
+          import { SyServerTable } from '@cnamts/synapse'
+          import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+          import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+
+          interface User {
+            firstname: string
+            lastname: string
+            email: string
+          }
+
+          interface DataObj {
+            items: User[]
+            total: number
+          }
+
+          const totalFilteredUsers = ref(0)
+          const filteredUsers = ref<User[]>([])
+          const state = ref(StateEnum.IDLE)
+
+          const options = ref<DataOptions>({
+            itemsPerPage: 5,
+            page: 1,
+            filters: [],
+          })
+
+          const headers = [
+            { 
+              title: 'Prénom', 
+              key: 'firstname',
+              filterable: true,
+              filterType: 'text'
+            },
+            { 
+              title: 'Nom', 
+              key: 'lastname',
+              filterable: true,
+              filterType: 'text'
+            },
+            { 
+              title: 'Email', 
+              key: 'email',
+              filterable: true,
+              filterType: 'text'
+            }
+          ]
+          
+          const filterInputConfig = {
+			filterInputConfig: {
+			variant: 'outlined',
+			density: 'comfortable',
+			hideDetails: true,
+			clearable: false,
+			disableErrorHandling: true,
+			},
+		  }
+
+          const fetchData = async (): Promise<void> => {
+            const { items, total } = await getDataFromApi(options.value)
+            filteredUsers.value = items
+            totalFilteredUsers.value = total
+          }
+
+          const wait = async (ms: number) => {
+            return new Promise(resolve => setTimeout(resolve, ms))
+          }
+
+          const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
+            state.value = StateEnum.PENDING
+            await wait(1000)
+
+            return new Promise((resolve) => {
+              // Get all users
+              let items: User[] = getUsers()
+              
+              // Apply filters on server side
+              if (filters && filters.length > 0) {
+                filters.forEach((filter: FilterOption) => {
+                  const { key, value } = filter
+                  
+                  items = items.filter(item => {
+                    const itemValue = item[key as keyof User]
+                    return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+                  })
+                })
+              }
+              
+              const total = items.length
+
+              // Apply sorting
+              if (sortBy && sortBy.length > 0) {
+                items = items.sort((a, b) => {
+                  const key = sortBy[0].key as keyof User
+                  const order = sortBy[0].order === 'asc' ? 1 : -1
+                  
+                  return String(a[key]) > String(b[key]) ? order : -order
+                })
+              }
+
+              // Apply pagination
+              if (itemsPerPage > 0) {
+                items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+              }
+
+              resolve({ items, total })
+              state.value = StateEnum.RESOLVED
+            })
+          }
+
+          const getUsers = (): User[] => {
+            return [
+              { firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+              { firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+              { firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+              { firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+              { firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+              { firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+              { firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+              { firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+              { firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+              { firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+              { firstname: 'Martin', lastname: 'Lavoie', email: 'martin.lavoie@example.com' },
+              { firstname: 'Céline', lastname: 'Tremblay', email: 'celine.tremblay@example.com' },
+              { firstname: 'Jacques', lastname: 'Gagnon', email: 'jacques.gagnon@example.com' },
+              { firstname: 'Isabelle', lastname: 'Côté', email: 'isabelle.cote@example.com' },
+              { firstname: 'Philippe', lastname: 'Bouchard', email: 'philippe.bouchard@example.com' },
+            ]
+          }
+          
+          // Initialize data
+          fetchData()
+        </script>
+        `,
+			},
+		],
+	},
+	args: {
+		serverItemsLength: 15,
+		headers: [
+			{
+				title: 'Prénom',
+				key: 'firstname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Nom',
+				key: 'lastname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Email',
+				key: 'email',
+				filterable: true,
+				filterType: 'text',
+			},
+		],
+		options: {
+			itemsPerPage: 5,
+			page: 1,
+			filters: [],
+		},
+		filterInputConfig: {
+			variant: 'outlined',
+			density: 'comfortable',
+			hideDetails: true,
+			clearable: false,
+			disableErrorHandling: true,
+		},
+		showFilters: true,
+		suffix: 'server-filter-text',
+	},
+	render(args) {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const options = ref(args.options)
+				const totalFilteredUsers = ref(0)
+				const filteredUsers = ref<Record<string, unknown>[]>([])
+				const state = ref(StateEnum.IDLE)
+
+				const fetchData = async (): Promise<void> => {
+					state.value = StateEnum.PENDING
+
+					// Simulate API call
+					await new Promise(resolve => setTimeout(resolve, 1000))
+
+					// Get all users
+					let items = [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+						{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+						{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+						{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+						{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+						{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+						{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+						{ firstname: 'Martin', lastname: 'Lavoie', email: 'martin.lavoie@example.com' },
+						{ firstname: 'Céline', lastname: 'Tremblay', email: 'celine.tremblay@example.com' },
+						{ firstname: 'Jacques', lastname: 'Gagnon', email: 'jacques.gagnon@example.com' },
+						{ firstname: 'Isabelle', lastname: 'Côté', email: 'isabelle.cote@example.com' },
+						{ firstname: 'Philippe', lastname: 'Bouchard', email: 'philippe.bouchard@example.com' },
+					]
+
+					// Apply filters on server side
+					if (options.value?.filters && options.value.filters.length > 0) {
+						options.value.filters.forEach((filter) => {
+							const { key, value } = filter
+
+							items = items.filter((item) => {
+								const itemValue = item[key]
+								return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+							})
+						})
+					}
+
+					const total = items.length
+
+					// Apply pagination
+					const { page = 1, itemsPerPage = 10 } = options.value || {}
+					if (itemsPerPage > 0) {
+						items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+					}
+
+					filteredUsers.value = items as Record<string, unknown>[]
+					totalFilteredUsers.value = total
+					state.value = StateEnum.RESOLVED
+				}
+
+				// Initialize data
+				fetchData()
+
+				return {
+					args,
+					options,
+					filteredUsers,
+					totalFilteredUsers,
+					state,
+					fetchData,
+					StateEnum,
+				}
+			},
+			template: `
+				<div>
+					<SyServerTable
+						v-model:options="options"
+						:items="filteredUsers"
+						:headers="args.headers"
+						:server-items-length="totalFilteredUsers"
+						:loading="state === StateEnum.PENDING"
+						:show-filters="args.showFilters"
+						:filter-input-config="args.filterInputConfig"
+						:suffix="args.suffix"
+						@update:options="fetchData"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const MultiServerTables: Story = {
 	parameters: {
 		sourceCode: [

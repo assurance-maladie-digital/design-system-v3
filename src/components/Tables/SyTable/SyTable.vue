@@ -12,6 +12,7 @@
 		caption: '',
 		showFilters: false,
 		items: () => [],
+		filterInputConfig: () => ({}),
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -162,6 +163,7 @@
 									v-if="(column as TableColumnHeader).filterable !== false"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
+									:input-config="props.filterInputConfig"
 									@update:filters="filters = $event"
 								/>
 							</th>
@@ -209,6 +211,7 @@
 								v-if="header.filterable"
 								:filters="filters"
 								:header="header"
+								:input-config="props.filterInputConfig"
 								@update:filters="filters = $event"
 							/>
 						</th>

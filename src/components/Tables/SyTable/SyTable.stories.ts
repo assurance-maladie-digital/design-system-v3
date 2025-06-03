@@ -1106,6 +1106,197 @@ export const FilterByDate: Story = {
 	},
 }
 
+export const CustomFilterInputs: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						:filter-input-config="filterInputConfig"
+						show-filters
+						suffix="filter-text-table"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+						filters: []
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Email',
+							value: 'email',
+							filterable: true,
+							filterType: 'text'
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+					
+					const filterInputConfig = ref({
+						variant: 'outlined',
+						density: 'comfortable',
+						hideDetails: true,
+						clearable: false,
+						disableErrorHandling: true,
+					})
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+				filterable: true,
+				filterType: 'text',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+			filters: [],
+		},
+		filterInputConfig: {
+			variant: 'outlined',
+			density: 'comfortable',
+			hideDetails: true,
+			clearable: false,
+			disableErrorHandling: true,
+		},
+		showFilters: true,
+		suffix: 'filter-text-table',
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				// Create reactive references
+				const options = ref(args.options)
+				const items = ref(args.items)
+
+				return {
+					args,
+					options,
+					items,
+				}
+			},
+			template: `
+				<SyTable
+					v-model:options="options"
+					:headers="args.headers"
+					:items="items"
+					:show-filters="args.showFilters"
+					:filter-input-config="args.filterInputConfig"
+					:suffix="args.suffix"
+				/>
+			`,
+		}
+	},
+}
+
 export const ManyTables: Story = {
 	parameters: {
 		sourceCode: [
