@@ -1,45 +1,10 @@
-import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, it, expect } from 'vitest'
+import { shallowMount, flushPromises } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
 import SyTableFilter from '../SyTableFilter.vue'
 import type { FilterOption, TableColumnHeader } from '../types'
 
-// Mock the components used in SyTableFilter
-vi.mock('@/components/Customs/SyTextField/SyTextField.vue', () => ({
-	default: {
-		name: 'VTextField',
-		props: ['modelValue', 'type', 'label'],
-		template: '<div class="v-text-field" :type="type">{{ modelValue }}</div>',
-		emits: ['update:modelValue'],
-	},
-}))
-
-vi.mock('@/components/Customs/SySelect/SySelect.vue', () => ({
-	default: {
-		name: 'VSelect',
-		props: ['modelValue', 'items', 'label'],
-		template: '<div class="v-select">{{ modelValue }}</div>',
-		emits: ['update:modelValue'],
-	},
-}))
-
-vi.mock('@/components/DatePicker/DatePicker.vue', () => ({
-	default: {
-		name: 'DatePicker',
-		props: ['modelValue', 'label'],
-		template: '<div class="v-date-picker">{{ modelValue }}</div>',
-		emits: ['update:modelValue'],
-	},
-}))
-
-vi.mock('@/components/PeriodField/PeriodField.vue', () => ({
-	default: {
-		name: 'PeriodField',
-		props: ['modelValue', 'label'],
-		template: '<div class="v-period-field">{{ modelValue }}</div>',
-		emits: ['update:modelValue'],
-	},
-}))
+// Using shallowMount will automatically stub all child components
 
 describe('SyTableFilter', () => {
 	it('renders text filter correctly', async () => {
@@ -51,7 +16,7 @@ describe('SyTableFilter', () => {
 			filterType: 'text',
 		}
 
-		const wrapper = mount(SyTableFilter, {
+		const wrapper = shallowMount(SyTableFilter, {
 			props: {
 				filters,
 				header,
@@ -61,9 +26,36 @@ describe('SyTableFilter', () => {
 			},
 		})
 
+		// Need to wait for async components to load
+		await flushPromises()
 		await wrapper.vm.$nextTick()
-		const textField = wrapper.findComponent({ name: 'VTextField' })
-		expect(textField.exists()).toBe(true)
+
+		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
+		expect(textFilter.exists()).toBe(true)
+	})
+
+	it('renders text filter by default', async () => {
+		const filters: FilterOption[] = []
+		const header: TableColumnHeader = {
+			title: 'Name',
+			key: 'name',
+			filterable: true,
+		}
+
+		const wrapper = shallowMount(SyTableFilter, {
+			props: {
+				filters,
+				header,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
+		expect(textFilter.exists()).toBe(true)
 	})
 
 	it('renders number filter correctly', async () => {
@@ -75,7 +67,7 @@ describe('SyTableFilter', () => {
 			filterType: 'number',
 		}
 
-		const wrapper = mount(SyTableFilter, {
+		const wrapper = shallowMount(SyTableFilter, {
 			props: {
 				filters,
 				header,
@@ -85,9 +77,10 @@ describe('SyTableFilter', () => {
 			},
 		})
 
+		await flushPromises()
 		await wrapper.vm.$nextTick()
-		const numberField = wrapper.findComponent({ name: 'VTextField' })
-		expect(numberField.exists()).toBe(true)
+		const numberFilter = wrapper.findComponent({ name: 'NumberFilter' })
+		expect(numberFilter.exists()).toBe(true)
 	})
 
 	it('renders select filter correctly', async () => {
@@ -100,10 +93,11 @@ describe('SyTableFilter', () => {
 			filterOptions: [
 				{ text: 'IT', value: 'IT' },
 				{ text: 'HR', value: 'HR' },
+				{ text: 'Finance', value: 'Finance' },
 			],
 		}
 
-		const wrapper = mount(SyTableFilter, {
+		const wrapper = shallowMount(SyTableFilter, {
 			props: {
 				filters,
 				header,
@@ -113,22 +107,23 @@ describe('SyTableFilter', () => {
 			},
 		})
 
+		await flushPromises()
 		await wrapper.vm.$nextTick()
-		const select = wrapper.findComponent({ name: 'VSelect' })
-		expect(select.exists()).toBe(true)
+		const selectFilter = wrapper.findComponent({ name: 'SelectFilter' })
+		expect(selectFilter.exists()).toBe(true)
 	})
 
 	it('renders date filter correctly', async () => {
 		const filters: FilterOption[] = []
 		const header: TableColumnHeader = {
-			title: 'Hire Date',
-			key: 'hireDate',
+			title: 'Birth Date',
+			key: 'birthDate',
 			filterable: true,
 			filterType: 'date',
 			dateFormat: 'DD/MM/YYYY',
 		}
 
-		const wrapper = mount(SyTableFilter, {
+		const wrapper = shallowMount(SyTableFilter, {
 			props: {
 				filters,
 				header,
@@ -138,9 +133,10 @@ describe('SyTableFilter', () => {
 			},
 		})
 
+		await flushPromises()
 		await wrapper.vm.$nextTick()
-		const datePicker = wrapper.findComponent({ name: 'DatePicker' })
-		expect(datePicker.exists()).toBe(true)
+		const dateFilter = wrapper.findComponent({ name: 'DateFilter' })
+		expect(dateFilter.exists()).toBe(true)
 	})
 
 	it('renders period filter correctly', async () => {
@@ -153,7 +149,7 @@ describe('SyTableFilter', () => {
 			dateFormat: 'DD/MM/YYYY',
 		}
 
-		const wrapper = mount(SyTableFilter, {
+		const wrapper = shallowMount(SyTableFilter, {
 			props: {
 				filters,
 				header,
@@ -163,9 +159,10 @@ describe('SyTableFilter', () => {
 			},
 		})
 
+		await flushPromises()
 		await wrapper.vm.$nextTick()
-		const periodField = wrapper.findComponent({ name: 'PeriodField' })
-		expect(periodField.exists()).toBe(true)
+		const periodFilter = wrapper.findComponent({ name: 'PeriodFilter' })
+		expect(periodFilter.exists()).toBe(true)
 	})
 
 	it('emits update:filters event when text filter changes', async () => {
@@ -177,7 +174,7 @@ describe('SyTableFilter', () => {
 			filterType: 'text',
 		}
 
-		const wrapper = mount(SyTableFilter, {
+		const wrapper = shallowMount(SyTableFilter, {
 			props: {
 				filters,
 				header,
@@ -187,18 +184,21 @@ describe('SyTableFilter', () => {
 			},
 		})
 
+		await flushPromises()
 		await wrapper.vm.$nextTick()
-		const textField = wrapper.findComponent({ name: 'VTextField' })
-		await textField.vm.$emit('update:modelValue', 'John')
 
-		// Emit the update:filters event directly
-		await wrapper.vm.$emit('update:filters', [{ key: 'name', value: 'John', type: 'text' as const }])
+		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
+		expect(textFilter.exists()).toBe(true)
 
-		const emitted = wrapper.emitted('update:filters')
-		expect(emitted).toBeTruthy()
-		if (emitted && Array.isArray(emitted[0])) {
-			expect(emitted[0][0]).toEqual([{ key: 'name', value: 'John', type: 'text' }])
-		}
+		// Emit the update:filters event from the TextFilter component
+		await textFilter.vm.$emit('update:filters', [
+			{ key: 'name', value: 'John', type: 'text' },
+		])
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'name', value: 'John', type: 'text' },
+		])
 	})
 
 	it('updates existing filter instead of creating duplicate', async () => {
@@ -212,7 +212,7 @@ describe('SyTableFilter', () => {
 			filterType: 'text',
 		}
 
-		const wrapper = mount(SyTableFilter, {
+		const wrapper = shallowMount(SyTableFilter, {
 			props: {
 				filters,
 				header,
@@ -222,14 +222,16 @@ describe('SyTableFilter', () => {
 			},
 		})
 
+		await flushPromises()
 		await wrapper.vm.$nextTick()
-		const textField = wrapper.findComponent({ name: 'VTextField' })
-		expect(textField.props('modelValue')).toBe('John')
 
-		await textField.vm.$emit('update:modelValue', 'Jane')
+		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
+		expect(textFilter.exists()).toBe(true)
 
-		// Emit the update:filters event directly with the updated value
-		await wrapper.vm.$emit('update:filters', [{ key: 'name', value: 'Jane', type: 'text' as const }])
+		// Emit the update:filters event from the TextFilter component
+		await textFilter.vm.$emit('update:filters', [
+			{ key: 'name', value: 'Jane', type: 'text' },
+		])
 
 		const emitted = wrapper.emitted('update:filters')
 		expect(emitted).toBeTruthy()
@@ -250,7 +252,7 @@ describe('SyTableFilter', () => {
 			filterType: 'text',
 		}
 
-		const wrapper = mount(SyTableFilter, {
+		const wrapper = shallowMount(SyTableFilter, {
 			props: {
 				filters,
 				header,
@@ -260,12 +262,14 @@ describe('SyTableFilter', () => {
 			},
 		})
 
+		await flushPromises()
 		await wrapper.vm.$nextTick()
-		const textField = wrapper.findComponent({ name: 'VTextField' })
-		await textField.vm.$emit('update:modelValue', '')
 
-		// Emit the update:filters event directly with empty array
-		await wrapper.vm.$emit('update:filters', [])
+		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
+		expect(textFilter.exists()).toBe(true)
+
+		// Emit the update:filters event from the TextFilter component
+		await textFilter.vm.$emit('update:filters', [])
 
 		const emitted = wrapper.emitted('update:filters')
 		expect(emitted).toBeTruthy()
