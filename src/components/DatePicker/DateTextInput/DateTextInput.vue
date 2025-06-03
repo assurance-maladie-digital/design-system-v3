@@ -5,7 +5,7 @@
 	import { useValidation, type ValidationRule, type ValidationResult } from '@/composables/validation/useValidation'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import { useDateRangeInput, useDateRangeValidation, useDateFormatValidation, useDateValidation, useDateInputEditing } from '../composables'
+	import { useDateRangeInput, useDateRangeValidation, useDateFormatValidation, useDateValidation, useDateInputEditing, useManualDateValidation } from '../composables'
 	import { type DateObjectValue } from '../types'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { type DateValue } from '@/composables/date/useDateInitializationDayjs'
@@ -83,7 +83,7 @@
 			successes: ref<string[]>([]),
 			hasError: ref(false),
 			clearValidation: () => {},
-			validateField: () => {},
+			validateField: () => ({ hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }),
 		}
 
 	const errorMessages = errors
@@ -105,9 +105,8 @@
 				},
 			}
 		}
-		// Sinon, appeler la fonction validateField normale
+
 		const result = validateField(value, rules, warningRules)
-		// S'assurer que le résultat est bien un ValidationResult et non void
 		if (!result) {
 			return {
 				hasError: false,
@@ -241,9 +240,26 @@
 		return validateDateFormatFn(dateStr)
 	}
 
+	// Initialiser le composable pour la validation manuelle des dates
+	const { validateManualInput } = useManualDateValidation({
+		format: props.format,
+		required: props.required,
+		disableErrorHandling: props.disableErrorHandling,
+		customRules: props.customRules,
+		customWarningRules: props.customWarningRules,
+		hasInteracted,
+		errors,
+		clearValidation,
+		validateDateFormat,
+		isDateComplete: (value: string) => value.length >= props.format.length,
+		parseDate,
+		validateField,
+	})
+
 	const validateRules = (value: string) => {
 		clearValidation()
 
+		// Cas spécial : champ vide
 		if (!value && props.required && hasInteracted.value) {
 			if (props.readonly) return true
 			if (!props.disableErrorHandling) {
@@ -256,20 +272,55 @@
 			return true
 		}
 
-		const formatValidation = validateDateFormat(value)
-		if (!formatValidation.isValid) {
-			if (!props.disableErrorHandling && formatValidation.message) {
-				errors.value.push(formatValidation.message)
-			}
-			return false
-		}
+		// Traitement spécifique pour les plages de dates
+		if (props.displayRange && value.includes(' - ')) {
+			// Extraire les deux dates de la plage
+			const [startDateStr, endDateStr] = value.split(' - ')
 
-		validateField(
-			value,
-			props.customRules,
-			props.customWarningRules,
-			[],
-		)
+			// Si la plage est incomplète (seulement la première date suivie du séparateur)
+			if (startDateStr && !endDateStr) {
+				// Utiliser le composable pour valider uniquement la première date
+				return validateManualInput(startDateStr)
+			}
+
+			// Si nous avons les deux dates (plage complète)
+			if (startDateStr && endDateStr) {
+				// Valider le format des deux dates
+				const formatValidation = validateDateFormat(value)
+				if (!formatValidation.isValid) {
+					if (!props.disableErrorHandling && formatValidation.message) {
+						errors.value.push(formatValidation.message)
+					}
+					return false
+				}
+
+				// Valider chaque date séparément
+				const startDate = parseDate(startDateStr, props.format)
+				const endDate = parseDate(endDateStr, props.format)
+
+				if (startDate && endDate) {
+					// Appliquer les règles à chaque date individuellement
+					validateField(
+						startDate,
+						props.customRules,
+						props.customWarningRules,
+					)
+
+					// Si pas d'erreur sur la première date, valider la seconde
+					if (errors.value.length === 0) {
+						validateField(
+							endDate,
+							props.customRules,
+							props.customWarningRules,
+						)
+					}
+				}
+			}
+		}
+		else {
+			// Utiliser le composable pour la validation standard d'une date unique
+			return validateManualInput(value)
+		}
 
 		return !hasError.value
 	}
@@ -295,7 +346,17 @@
 	})
 
 	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
-		// Utiliser l'implémentation du composable pour une meilleure gestion de l'édition
+		// Bloquer la saisie de caractères non numériques (sauf touches spéciales)
+		if (
+			!/^[0-9]$/.test(event.key) // Autoriser les chiffres
+			&& !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(event.key) // Autoriser les touches de navigation
+			&& !event.ctrlKey && !event.metaKey // Autoriser les combinaisons Ctrl/Cmd (pour copier/coller)
+		) {
+			event.preventDefault()
+			return
+		}
+
+		// Utiliser l'implémentation du composable pour une meilleure gestion des touches
 		handleKeydownFromComposable(event)
 	}
 
@@ -330,13 +391,12 @@
 
 			// Utiliser le composable de plage de dates si le mode plage est activé
 			if (props.displayRange) {
-				// Appliquer le formatage automatique aux dates saisies
-				const cleanedInput = newValue.replace(/[^\d]/g, '')
+				const cleanedInput = newValue.replace(/[^\d\s-]/g, '')
 				let formattedInput = ''
 
 				// Si l'entrée contient un séparateur de plage, traiter chaque partie séparément
-				if (newValue.includes(' - ')) {
-					const parts = newValue.split(' - ')
+				if (cleanedInput.includes(' - ')) {
+					const parts = cleanedInput.split(' - ')
 					const firstPart = parts[0]
 					const secondPart = parts[1] || ''
 
@@ -353,7 +413,7 @@
 				}
 				else if (cleanedInput.length > 0) {
 					// Appliquer le formatage automatique à une date unique
-					const { formatted } = formatDateInput(newValue)
+					const { formatted } = formatDateInput(cleanedInput)
 					formattedInput = formatted
 					newValue = formattedInput
 				}
@@ -396,8 +456,8 @@
 							// Émettre les événements
 							emit('update:model-value', modelValue)
 							emit('date-selected', modelValue)
-
-							// Valider les règles
+						}
+						else {
 							errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 						}
 					}
@@ -427,14 +487,16 @@
 				// Émettre l'événement input
 				emit('input', result.formattedValue)
 
-				// Mettre à jour la position du curseur si nécessaire
-				if (result.cursorPosition !== undefined) {
-					setTimeout(() => {
-						if (input) {
-							input.setSelectionRange(result.cursorPosition, result.cursorPosition)
-						}
-					}, 0)
-				}
+				const finalCursorPosition = result.cursorPosition !== undefined
+					? result.cursorPosition
+					: Math.min(cursorPos, result.formattedValue.length)
+
+				// Appliquer la position du curseur
+				setTimeout(() => {
+					if (input) {
+						input.setSelectionRange(finalCursorPosition, finalCursorPosition)
+					}
+				}, 0)
 			}
 			else {
 				// Mode date unique (comportement existant)

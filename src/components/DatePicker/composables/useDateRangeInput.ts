@@ -47,7 +47,7 @@ export function useDateRangeInput(
 	 */
 	const formatRangeForDisplay = (startDate: Date | null, endDate: Date | null): string => {
 		if (!startDate) return ''
-		if (!endDate) return formatDate(startDate, format)
+		if (!endDate) return `${formatDate(startDate, format)}${rangeSeparator}`
 		return `${formatDate(startDate, format)}${rangeSeparator}${formatDate(endDate, format)}`
 	}
 

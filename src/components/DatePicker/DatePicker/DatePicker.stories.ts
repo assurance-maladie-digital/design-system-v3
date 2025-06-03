@@ -231,7 +231,24 @@ export const WithCustomPeriod: Story = {
 							min: '01/01/1995',
 							max: '12/31/2005',
 						}"
-						:customRules="customRules"
+						:customRules="[
+							{
+								type: 'notBeforeDate',
+								options: {
+									date: '01/01/1995',
+									message: 'La date doit être postérieure ou égale au 01/01/1995',
+									fieldIdentifier: 'date',
+									},
+							},
+							{
+								type: 'notAfterDate',
+								options: {
+									date: '31/12/2005',
+									message: 'La date doit être antérieure ou égale au 31/12/2005',
+									fieldIdentifier: 'date',
+								},
+							},
+						],
 					/>
 				</template>
 				`,

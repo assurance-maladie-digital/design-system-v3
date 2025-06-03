@@ -125,9 +125,28 @@ export const useDateValidation = (options: {
 			}
 		}
 
+		// Détecter si nous sommes en train de saisir une plage incomplète
+		// (mode plage activé, avec une seule date sélectionnée)
+		if (displayRange && Array.isArray(selectedDates.value)
+			&& selectedDates.value.length === 2 && selectedDates.value[0] && !selectedDates.value[1]
+			&& !forceValidation) {
+			// Si nous sommes en train de saisir la première date d'une plage,
+			// ne pas appliquer les règles de validation pour éviter le message "Date invalide"
+			return {
+				hasError: false,
+				hasWarning: false,
+				hasSuccess: false,
+				state: {
+					errors: [],
+					warnings: [],
+					successes: [],
+				},
+			}
+		}
+
 		// Préparer les dates à valider
 		const datesToValidate = Array.isArray(selectedDates.value)
-			? selectedDates.value
+			? selectedDates.value.filter(Boolean) // Filtrer les valeurs null
 			: [selectedDates.value]
 
 		let isValid = true
@@ -135,6 +154,8 @@ export const useDateValidation = (options: {
 		// Valider chaque date
 		if (shouldDisplayErrors) {
 			datesToValidate.forEach((date) => {
+				if (!date) return // Ignorer les dates null
+
 				const result = validateField(
 					date,
 					customRules,
