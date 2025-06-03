@@ -94,7 +94,7 @@ export const Default: Story = {
 						:headers="headers"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
-						suffix="api-example"
+						suffix="server-default"
 						@update:options="fetchData"
 					/>
 				</template>
@@ -209,6 +209,7 @@ export const Default: Story = {
 			{ title: 'Email', key: 'email' },
 		],
 		serverItemsLength: 15,
+		suffix: 'server-default',
 	},
 	render: (args) => {
 		return {
@@ -285,7 +286,7 @@ export const Default: Story = {
 					:headers="args.headers"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
-					suffix="api-example"
+					:suffix="args.suffix"
 					@update:options="fetchData"
 				/>
 			</div>
@@ -417,6 +418,7 @@ export const ServerSortBy: Story = {
 			{ title: 'Email', key: 'email' },
 		],
 		serverItemsLength: 0,
+		suffix: 'server-sort',
 	},
 	render: (args) => {
 		return {
@@ -487,7 +489,7 @@ export const ServerSortBy: Story = {
           :headers="args.headers"
           :server-items-length="totalUsers"
           :loading="state === StateEnum.PENDING"
-          suffix="server-sort"
+          :suffix="args.suffix"
           @update:options="fetchData"
         />
       </div>
@@ -674,6 +676,7 @@ export const ServerFilterByText: Story = {
 			filters: [],
 		},
 		showFilters: true,
+		suffix: 'server-filter-text',
 	},
 	render(args) {
 		return {
@@ -756,7 +759,7 @@ export const ServerFilterByText: Story = {
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
-						suffix="server-filter-text-demo"
+						:suffix="args.suffix"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -952,6 +955,7 @@ export const ServerFilterByNumber: Story = {
 		},
 		serverItemsLength: 15,
 		showFilters: true,
+		suffix: 'server-filter-number',
 	},
 	render(args) {
 		return {
@@ -1040,7 +1044,7 @@ export const ServerFilterByNumber: Story = {
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
-						suffix="server-filter-number-demo"
+						:suffix="args.suffix"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1258,6 +1262,7 @@ export const ServerFilterBySelect: Story = {
 		},
 		serverItemsLength: 15,
 		showFilters: true,
+		suffix: 'server-filter-select',
 	},
 	render(args) {
 		return {
@@ -1346,7 +1351,7 @@ export const ServerFilterBySelect: Story = {
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
-						suffix="server-filter-select-demo"
+						:suffix="args.suffix"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1528,6 +1533,7 @@ export const ServerFilterByDate: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
+		suffix: 'server-filter-date',
 	},
 	render(args) {
 		return {
@@ -1658,7 +1664,7 @@ export const ServerFilterByDate: Story = {
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="true"
-						suffix="server-filter-date"
+						:suffix="args.suffix"
 						@update:options="fetchData"
 					/>
 				</div>

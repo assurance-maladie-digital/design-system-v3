@@ -197,6 +197,7 @@ export const Default: Story = {
 		options: {
 			itemsPerPage: 4,
 		},
+		suffix: 'default-table',
 	},
 	render(args) {
 		return {
@@ -209,6 +210,7 @@ export const Default: Story = {
 					v-model:options="args.options"
 					:headers="args.headers"
 					:items="args.items"
+					:suffix="args.suffix"
 				/>
 			`,
 		}
@@ -357,6 +359,7 @@ export const SortBy: Story = {
 				},
 			],
 		},
+		suffix: 'sort-table',
 	},
 	render(args) {
 		return {
@@ -369,6 +372,7 @@ export const SortBy: Story = {
 					v-model:options="args.options"
 					:headers="args.headers"
 					:items="args.items"
+					:suffix="args.suffix"
 				/>
 			`,
 		}
@@ -520,6 +524,7 @@ export const FilterByText: Story = {
 			filters: [],
 		},
 		showFilters: true,
+		suffix: 'filter-text-table',
 	},
 	render(args) {
 		return {
@@ -541,6 +546,7 @@ export const FilterByText: Story = {
 					:headers="args.headers"
 					:items="items"
 					:show-filters="args.showFilters"
+					:suffix="args.suffix"
 				/>
 			`,
 		}
@@ -682,6 +688,7 @@ export const FilterByNumber: Story = {
 			filters: [],
 		},
 		showFilters: true,
+		suffix: 'filter-number-table',
 	},
 	render(args) {
 		return {
@@ -703,6 +710,7 @@ export const FilterByNumber: Story = {
 					:headers="args.headers"
 					:items="items"
 					:show-filters="args.showFilters"
+					:suffix="args.suffix"
 				/>
 			`,
 		}
@@ -870,6 +878,7 @@ export const FilterBySelect: Story = {
 			filters: [],
 		},
 		showFilters: true,
+		suffix: 'filter-select-table',
 	},
 	render(args) {
 		return {
@@ -891,6 +900,7 @@ export const FilterBySelect: Story = {
 					:headers="args.headers"
 					:items="items"
 					:show-filters="args.showFilters"
+					:suffix="args.suffix"
 				/>
 			`,
 		}
@@ -1067,6 +1077,7 @@ export const FilterByDate: Story = {
 			filters: [],
 		},
 		showFilters: true,
+		suffix: 'filter-date-table',
 	},
 	render(args) {
 		return {
@@ -1088,7 +1099,7 @@ export const FilterByDate: Story = {
 					:headers="args.headers"
 					:items="items"
 					:show-filters="args.showFilters"
-					suffix="filter-date-table"
+					:suffix="args.suffix"
 				/>
 			`,
 		}
