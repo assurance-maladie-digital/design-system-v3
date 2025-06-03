@@ -8,7 +8,6 @@
 	import { locales } from '../common/locales'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
-		suffix: undefined,
 		itemsPerPage: undefined,
 		caption: '',
 		showFilters: false,

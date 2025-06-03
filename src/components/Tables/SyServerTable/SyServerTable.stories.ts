@@ -58,8 +58,13 @@ const meta = {
 			control: { type: 'number' },
 		},
 		suffix: {
-			description: 'Suffixe permettant de gérer individuellement le stockage des options d\'un tableau d\'une page à l\'autre. S\'il n\'est pas renseigné, le stockage s\'effectue globalement pour tous les tableaux.',
+			description: 'Suffixe permettant de gérer individuellement le stockage des options d\'un tableau d\'une page à l\'autre. Ce prop est obligatoire pour garantir un stockage unique pour chaque tableau.',
 			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+			},
+			required: true,
 		},
 		itemsPerPage: {
 			description: 'Nombre d\'éléments par page',

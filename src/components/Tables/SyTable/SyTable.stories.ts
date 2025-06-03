@@ -41,8 +41,13 @@ const meta = {
 			},
 		},
 		suffix: {
-			description: 'Suffixe permettant de gérer individuellement le stockage des options d\'un tableau d\'une page à l\'autre. S\'il n\'est pas renseigné, le stockage s\'effectue globalement pour tous les tableaux.',
+			description: 'Suffixe permettant de gérer individuellement le stockage des options d\'un tableau d\'une page à l\'autre. Ce prop est obligatoire pour garantir un stockage unique pour chaque tableau.',
 			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+			},
+			required: true,
 		},
 		itemsPerPage: {
 			description: 'Nombre d\'éléments par page',
@@ -74,6 +79,7 @@ export const Default: Story = {
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
+						suffix="default-table"
 					/>
 				</template>
 				`,
@@ -221,6 +227,7 @@ export const SortBy: Story = {
 						:headers="headers"
 						:items="items"
 						show-filters
+						suffix="sort-table"
 					/>
 				</template>
 				`,
@@ -380,6 +387,7 @@ export const FilterByText: Story = {
 						:headers="headers"
 						:items="items"
 						show-filters
+						suffix="filter-text-table"
 					/>
 				</template>
 				`,
@@ -551,6 +559,7 @@ export const FilterByNumber: Story = {
 						:headers="headers"
 						:items="items"
 						show-filters
+						suffix="filter-number-table"
 					/>
 				</template>
 				`,
@@ -712,6 +721,7 @@ export const FilterBySelect: Story = {
 						:headers="headers"
 						:items="items"
 						show-filters
+						suffix="filter-select-table"
 					/>
 				</template>
 				`,
@@ -899,6 +909,7 @@ export const FilterByDate: Story = {
 						:headers="headers"
 						:items="items"
 						:show-filters="true"
+						suffix="filter-date-table"
 					/>
 				</template>
 				`,
@@ -1077,6 +1088,7 @@ export const FilterByDate: Story = {
 					:headers="args.headers"
 					:items="items"
 					:show-filters="args.showFilters"
+					suffix="filter-date-table"
 				/>
 			`,
 		}
@@ -1090,18 +1102,18 @@ export const ManyTables: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<div>
+					<div class="d-flex flex-column gap-4">
 						<SyTable
 							v-model:options="options1"
-							:headers="headers"
-							:items="items"
-							suffix="table1"
+							:headers="args.headers"
+							:items="items1"
+							suffix="table-1"
 						/>
 						<SyTable
 							v-model:options="options2"
-							:headers="headers"
-							:items="items"
-							suffix="table2"
+							:headers="args.headers"
+							:items="items2"
+							suffix="table-2"
 						/>
 					</div>
 				</template>

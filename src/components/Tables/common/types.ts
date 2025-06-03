@@ -53,7 +53,7 @@ export type TableColumnHeader = {
 // Component-specific props interfaces
 export interface SyTableProps {
 	items?: Record<string, unknown>[]
-	suffix?: string
+	suffix: string
 	itemsPerPage?: number
 	caption?: string
 	showFilters?: boolean
@@ -63,7 +63,7 @@ export interface SyTableProps {
 export interface SyServerTableProps {
 	serverItemsLength: number
 	items?: Record<string, unknown>[]
-	suffix?: string
+	suffix: string
 	itemsPerPage?: number
 	caption?: string
 	showFilters?: boolean
