@@ -101,8 +101,9 @@
 		const table = document.querySelector(`#${uniqueTableId.value} table`)
 		const caption = document.createElement('caption')
 		caption.innerHTML = props.caption
-		if (props.caption === 'caption') {
+		if (props.caption === '') {
 			caption.classList.add('d-sr-only')
+			caption.setAttribute('aria-label', 'Table caption')
 		}
 		else {
 			caption.classList.add('text-subtitle-1')

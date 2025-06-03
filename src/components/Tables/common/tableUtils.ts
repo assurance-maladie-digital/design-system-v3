@@ -83,8 +83,9 @@ export function useTableUtils({
 			const table = document.querySelector(`#${tableId} table`)
 			const captionElement = document.createElement('caption')
 			captionElement.innerHTML = caption
-			if (caption === 'caption') {
+			if (caption === '') {
 				captionElement.classList.add('d-sr-only')
+				captionElement.setAttribute('aria-label', 'Table caption')
 			}
 			else {
 				captionElement.classList.add('text-subtitle-1')
