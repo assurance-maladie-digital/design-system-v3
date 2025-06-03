@@ -16,7 +16,7 @@ const vuetify = createVuetify({
 describe('DateFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof DateFilter>>
 	const header = { title: 'Test Date', key: 'test' }
-	const filters: { key: string; value: string | Date; type: FilterType }[] = []
+	const filters: { key: string, value: string | Date, type: FilterType }[] = []
 
 	beforeEach(() => {
 		wrapper = mount(DateFilter, {

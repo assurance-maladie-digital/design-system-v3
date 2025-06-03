@@ -23,7 +23,7 @@ describe('SelectFilter.vue', () => {
 			{ text: 'Option 2', value: 'option2' },
 		],
 	}
-	const filters: { key: string; value: string | number; type: FilterType }[] = []
+	const filters: { key: string, value: string | number, type: FilterType }[] = []
 
 	beforeEach(() => {
 		wrapper = mount(SelectFilter, {

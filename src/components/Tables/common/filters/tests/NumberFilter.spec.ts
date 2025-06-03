@@ -15,7 +15,7 @@ const vuetify = createVuetify({
 describe('NumberFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof NumberFilter>>
 	const header = { title: 'Test Number', key: 'test' }
-	const filters: { key: string; value: number; type: FilterType }[] = []
+	const filters: { key: string, value: number, type: FilterType }[] = []
 
 	beforeEach(() => {
 		wrapper = mount(NumberFilter, {

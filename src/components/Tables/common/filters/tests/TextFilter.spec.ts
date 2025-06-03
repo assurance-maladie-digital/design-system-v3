@@ -16,7 +16,7 @@ const vuetify = createVuetify({
 describe('TextFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof TextFilter>>
 	const header = { title: 'Test Column', key: 'test' }
-	const filters: { key: string; value: string; type: FilterType }[] = []
+	const filters: { key: string, value: string, type: FilterType }[] = []
 
 	beforeEach(() => {
 		wrapper = mount(TextFilter, {
