@@ -17,6 +17,27 @@
 			type: Array as () => FilterOption[],
 			default: () => [],
 		},
+		// Propriétés de configuration des champs de saisie
+		disableErrorHandling: {
+			type: Boolean,
+			default: false,
+		},
+		variant: {
+			type: String,
+			default: 'outlined',
+		},
+		hideDetails: {
+			type: Boolean,
+			default: true,
+		},
+		density: {
+			type: String as () => 'default' | 'comfortable' | 'compact',
+			default: 'compact',
+		},
+		clearable: {
+			type: Boolean,
+			default: true,
+		},
 	})
 
 	const emit = defineEmits(['update:filters'])
@@ -201,20 +222,19 @@
 
 <template>
 	<div class="sy-table-filter">
-		<div
-			class="sy-table-filter-item"
-		>
+		<div class="sy-table-filter-item">
 			<!-- Composant SySelect pour le type de filtre de sélection -->
 			<SySelect
 				v-if="header.filterType === 'select' || header.filterOptions"
 				v-model="getSelectValue"
 				:label="header.title"
 				:items="header.filterOptions"
-				:clearable="true"
-				density="compact"
-				hide-details
+				:clearable="props.clearable"
+				:density="props.density"
+				:hide-details="props.hideDetails"
 				:hide-messages="true"
-				variant="outlined"
+				:variant="props.variant"
+				:disable-error-handling="props.disableErrorHandling"
 				class="filter-input"
 				@update:model-value="(val) => {
 					const key = String(header?.key || header?.value || '').trim()
@@ -222,13 +242,7 @@
 						console.warn('Clé invalide pour le filtre.')
 						return
 					}
-					if (val === null || val === undefined) {
-						// Efface tous les filtres lorsqu'une entrée est vidée
-						emit('update:filters', [])
-					} else {
-						// Met à jour le filtre de sélection
-						updateFilter(key, 'select')
-					}
+					updateFilter(key, 'select')
 				}"
 			/>
 			<!-- Composant DatePicker pour le type de filtre de date -->
@@ -236,11 +250,12 @@
 				v-else-if="header.filterType === 'date'"
 				v-model="dateFilters[String(header.key || header.value || '')]"
 				:label="header.title"
-				:clearable="true"
-				density="compact"
-				hide-details
+				:clearable="props.clearable"
+				:density="props.density"
+				:hide-details="props.hideDetails"
 				:hide-messages="header.hideMessages"
-				variant="outlined"
+				:variant="props.variant"
+				:disable-error-handling="props.disableErrorHandling"
 				class="filter-input"
 				:format="header.dateFormat"
 				@update:model-value="(val) => {
@@ -288,11 +303,12 @@
 				v-else-if="header.filterType === 'period'"
 				:model-value="periodFilters[String(header.key || header.value || '')] || { from: null, to: null }"
 				:label="header.title"
-				:clearable="true"
-				density="compact"
-				hide-details
+				:clearable="props.clearable"
+				:density="props.density"
+				:hide-details="props.hideDetails"
 				:hide-messages="header.hideMessages"
-				variant="outlined"
+				:variant="props.variant"
+				:disable-error-handling="props.disableErrorHandling"
 				class="filter-input"
 				:format="header.dateFormat"
 				@update:model-value="(val) => {
@@ -367,11 +383,12 @@
 				v-model="numberFilters[String(header.key || header.value || '')]"
 				:label="header.title"
 				type="number"
-				:clearable="true"
-				density="compact"
-				hide-details
+				:clearable="props.clearable"
+				:density="props.density"
+				:hide-details="props.hideDetails"
 				:hide-messages="header.hideMessages"
-				variant="outlined"
+				:disable-error-handling="props.disableErrorHandling"
+				:variant="props.variant"
 				class="filter-input"
 				@input="(event) => {
 					const key = String(header.key || header.value || '')
@@ -393,12 +410,12 @@
 				v-else
 				v-model="textFilters[String(header.key || header.value || '')]"
 				:label="header.title"
-				type="text"
-				:clearable="true"
-				density="compact"
-				hide-details
+				:clearable="props.clearable"
+				:density="props.density"
+				:hide-details="props.hideDetails"
 				:hide-messages="header.hideMessages"
-				variant="outlined"
+				:disable-error-handling="props.disableErrorHandling"
+				:variant="props.variant"
 				class="filter-input"
 				@input="(event) => {
 					const key = String(header.key || header.value || '')
