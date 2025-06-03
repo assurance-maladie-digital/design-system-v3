@@ -1,6 +1,7 @@
 import { type Ref } from 'vue'
 import { type ValidationResult } from '@/composables/validation/useValidation'
 import { type DateObjectValue } from '../types'
+import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
 /**
  * Composable pour la validation des dates
@@ -85,13 +86,13 @@ export const useDateValidation = (options: {
 		if ((forceValidation || !isUpdatingFromInternal.value) && required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
 			if (shouldDisplayErrors) {
 				// Ajouter le message d'erreur dans le tableau errors.value
-				errors.value.push('La date est requise.')
+				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
 				return {
 					hasError: true,
 					hasWarning: false,
 					hasSuccess: false,
 					state: {
-						errors: ['La date est requise.'],
+						errors: [DATE_PICKER_MESSAGES.ERROR_REQUIRED],
 						warnings: [],
 						successes: [],
 					},
@@ -153,7 +154,7 @@ export const useDateValidation = (options: {
 				// Vérifier si les deux dates sont présentes et si la plage est valide
 				if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
 					// La date de fin est antérieure à la date de début
-					const rangeError = 'La date de fin doit être postérieure ou égale à la date de début'
+					const rangeError = DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START
 					if (!errors.value.includes(rangeError)) {
 						errors.value.push(rangeError)
 						isValid = false

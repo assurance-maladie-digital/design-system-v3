@@ -55,7 +55,7 @@ describe('useDateFormatValidation', () => {
 
 			const result = validateDateFormat('')
 			expect(result.isValid).toBe(false)
-			expect(result.message).toBe('La date est requise')
+			expect(result.message).toBe('La date est requise.')
 		})
 
 		it('devrait retourner isValid=true si disableErrorHandling=true même pour une date invalide', () => {

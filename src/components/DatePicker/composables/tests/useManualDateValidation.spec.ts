@@ -58,7 +58,7 @@ describe('useManualDateValidation', () => {
 		const result = validateManualInput('')
 
 		expect(result).toBe(false)
-		expect(errors.value).toContain('La date est requise')
+		expect(errors.value).toContain('La date est requise.')
 	})
 
 	it('devrait retourner true si le champ est vide et non requis', () => {

@@ -1,6 +1,7 @@
 import { computed, type Ref } from 'vue'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
 // Initialiser le plugin dayjs nécessaire pour la validation des formats de date
 dayjs.extend(customParseFormat)
@@ -35,7 +36,7 @@ export const useDateFormatValidation = (options: {
 		if (!dateStr) {
 			return {
 				isValid: !required || !hasInteracted.value || disableErrorHandling,
-				message: (required && hasInteracted.value && !disableErrorHandling) ? 'La date est requise' : '',
+				message: (required && hasInteracted.value && !disableErrorHandling) ? DATE_PICKER_MESSAGES.ERROR_REQUIRED : '',
 			}
 		}
 
@@ -66,7 +67,7 @@ export const useDateFormatValidation = (options: {
    * @param dateStr - Chaîne de date à vérifier
    * @returns Booléen indiquant si la date est complète
    */
-	const isDateComplete = computed(() => (dateStr: string): boolean => {
+	const isDateCompleteFunc = (dateStr: string): boolean => {
 		if (!dateStr) return false
 
 		// Compter le nombre de chiffres attendus en fonction du format
@@ -82,7 +83,10 @@ export const useDateFormatValidation = (options: {
 		const isValid = hasAllDigits
 
 		return isValid
-	})
+	}
+
+	// Créer une version réactive de la fonction isDateComplete
+	const isDateComplete = computed(() => (dateStr: string) => isDateCompleteFunc(dateStr))
 
 	return {
 		validateDateFormat,

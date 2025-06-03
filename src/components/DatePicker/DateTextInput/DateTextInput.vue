@@ -9,6 +9,7 @@
 	import { type DateObjectValue } from '../types'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { type DateValue } from '@/composables/date/useDateInitializationDayjs'
+	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -35,8 +36,8 @@
 		displayRange?: boolean
 	}>(), {
 		modelValue: null,
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
+		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
+		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: undefined,
 		label: undefined,
 		required: false,
@@ -223,7 +224,7 @@
 			if (!startValidation.isValid) {
 				return {
 					isValid: false,
-					message: `Format de date invalide pour la date de début (${props.format})`,
+					message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_START} (${props.format})`,
 				}
 			}
 
@@ -231,7 +232,7 @@
 			if (!endValidation.isValid) {
 				return {
 					isValid: false,
-					message: `Format de date invalide pour la date de fin (${props.format})`,
+					message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_END} (${props.format})`,
 				}
 			}
 		}
@@ -246,7 +247,7 @@
 		if (!value && props.required && hasInteracted.value) {
 			if (props.readonly) return true
 			if (!props.disableErrorHandling) {
-				errors.value.push('La date est requise')
+				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
 			}
 			return false
 		}
@@ -397,18 +398,7 @@
 							emit('date-selected', modelValue)
 
 							// Valider les règles
-							validateRules(result.formattedValue)
-
-							// Vérifier la validation de plage
-							if (!currentRangeIsValid.value) {
-								clearValidation()
-								errors.value.push(getRangeValidationError.value)
-							}
-						}
-						else {
-							// Plage invalide
-							clearValidation()
-							errors.value.push('La date de fin doit être postérieure ou égale à la date de début')
+							errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 						}
 					}
 					// Si nous venons juste de compléter la première date
@@ -584,7 +574,7 @@
 				if (!isValidRange(startDate, endDate)) {
 					// Plage invalide, conserver l'erreur et ne pas mettre à jour le modèle
 					clearValidation()
-					errors.value.push('La date de fin doit être postérieure ou égale à la date de début')
+					errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 					emit('update:model-value', props.modelValue)
 					return
 				}
@@ -691,7 +681,7 @@
 
 			// Ajouter des messages de succès si nécessaire
 			if (props.showSuccessMessages && inputValue.value && !hasError.value && !hasWarning.value) {
-				successMessages.value.push('La date est valide.')
+				successMessages.value.push(DATE_PICKER_MESSAGES.SUCCESS_VALID_DATE)
 			}
 
 			return !hasError.value
