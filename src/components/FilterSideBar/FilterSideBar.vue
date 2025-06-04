@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-	import { computed, ref, toRef } from 'vue'
+	import { computed, ref, toRef, watch } from 'vue'
 	import { locales as defaultLocales } from './locales'
 	import { mdiFilterVariant } from '@mdi/js'
 	import ChipList from '../ChipList/ChipList.vue'
 	import type { FilterProp } from '@/composables/useFilterable/useFilterable'
 	import useFilterable from '@/composables/useFilterable/useFilterable'
+	import { type VBtn, type VNavigationDrawer } from 'vuetify/components'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: FilterProp
@@ -37,6 +38,9 @@
 		}, 0)
 	})
 
+	const drawerRef = ref<VNavigationDrawer | null>(null)
+	const drawerBtnRef = ref<VBtn | null>(null)
+
 	function toggleDrawer(): void {
 		drawer.value = !drawer.value
 	}
@@ -46,11 +50,20 @@
 		drawer.value = false
 	}
 
+	watch(drawer, (e) => {
+		if (e) {
+			drawerRef!.value!.$el.nextElementSibling.focus()
+		}
+		else {
+			drawerBtnRef.value!.$el.focus()
+		}
+	})
 </script>
 
 <template>
 	<div class="sy-filters-side-bar">
 		<VBtn
+			ref="drawerBtnRef"
 			class="px-8 py-3"
 			:class="{ 'v-btn--active': drawer }"
 			color="primary"
@@ -76,100 +89,105 @@
 				{{ mdiFilterVariant }}
 			</VIcon>
 		</VBtn>
-
-		<VNavigationDrawer
-			:model-value="drawer"
-			sticky
-			temporary
-			location="right"
-			rounded="0"
-			:scrim="false"
-			rail
-			rail-width="395"
-			disable-resize-watcher
-			class="elevation-6"
+		<Teleport
+			to="body"
 		>
-			<VExpansionPanels variant="accordion">
-				<VExpansionPanel
-					v-for="filter in filters"
-					:key="filter.name"
-					:class="`vd-filter-${filter.name}`"
-					tile
-					elevation="0"
-				>
-					<VExpansionPanelTitle class="text-subtitle-2">
-						{{ filter.title }}
+			<VNavigationDrawer
+				ref="drawerRef"
+				:model-value="drawer"
+				sticky
+				temporary
+				location="right"
+				rounded="0"
+				:scrim="false"
+				rail
+				rail-width="395"
+				disable-resize-watcher
+				tabindex="0"
+				class="sy-filters-side-bar__content elevation-6 bg-white"
+			>
+				<VExpansionPanels variant="accordion">
+					<VExpansionPanel
+						v-for="filter in filters"
+						:key="filter.name"
+						:class="`vd-filter-${filter.name}`"
+						tile
+						elevation="0"
+					>
+						<VExpansionPanelTitle class="text-subtitle-2">
+							{{ filter.title }}
 
-						<span
-							v-if="getFilterCount(filter)"
-							class="ml-1"
-						>
-							({{ getFilterCount(filter) }})
-						</span>
-					</VExpansionPanelTitle>
+							<span
+								v-if="getFilterCount(filter)"
+								class="ml-1"
+							>
+								({{ getFilterCount(filter) }})
+							</span>
+						</VExpansionPanelTitle>
 
-					<VExpansionPanelText>
-						<ChipList
-							:items="getChips(filter)"
-							:overflow-limit="filter.chipOverflowLimit"
-							class="mb-5"
-							:vuetify-options="{ chip: { color: 'secondary' }, icon: { color: 'white'} }"
-							@remove="removeChip(filter, $event)"
-							@reset="resetFilter(filter)"
-						/>
+						<VExpansionPanelText>
+							<ChipList
+								:items="getChips(filter)"
+								:overflow-limit="filter.chipOverflowLimit"
+								class="mb-5"
+								:vuetify-options="{ chip: { color: 'secondary' }, icon: { color: 'white'} }"
+								@remove="removeChip(filter, $event)"
+								@reset="resetFilter(filter)"
+							/>
 
-						<slot
-							:name="`${formatFilterName(filter.name)}`"
-							:props="{
-								modelValue: filter.value as any,
-								'onUpdate:modelValue': (value: unknown) =>
-									(filter.value = value),
-							}"
-						/>
-					</VExpansionPanelText>
-				</VExpansionPanel>
-			</VExpansionPanels>
+							<slot
+								:name="`${formatFilterName(filter.name)}`"
+								:props="{
+									modelValue: filter.value as any,
+									'onUpdate:modelValue': (value: unknown) =>
+										(filter.value = value),
+								}"
+							/>
+						</VExpansionPanelText>
+					</VExpansionPanel>
+				</VExpansionPanels>
 
-			<VSpacer />
+				<VSpacer />
 
-			<div class="px-4 pb-4 pt-10">
-				<VBtn
-					color="primary"
-					block
-					size="large"
-					variant="outlined"
-					class="mb-4"
-					@click="drawer = false"
-				>
-					{{ locales.close }}
-				</VBtn>
+				<div class="px-4 pb-4 pt-10">
+					<VBtn
+						color="primary"
+						block
+						size="large"
+						variant="outlined"
+						class="mb-4"
+						@click="drawer = false"
+					>
+						{{ locales.close }}
+					</VBtn>
 
-				<VBtn
-					color="primary"
-					block
-					size="large"
-					variant="outlined"
-					class="mb-4"
-					@click.stop="resetAllFilters"
-				>
-					{{ locales.reset }}
-				</VBtn>
+					<VBtn
+						color="primary"
+						block
+						size="large"
+						variant="outlined"
+						class="mb-4"
+						@click.stop="resetAllFilters"
+					>
+						{{ locales.reset }}
+					</VBtn>
 
-				<VBtn
-					block
-					size="large"
-					color="primary"
-					@click.stop="applyFilters"
-				>
-					{{ locales.apply }}
-				</VBtn>
-			</div>
-		</VNavigationDrawer>
+					<VBtn
+						block
+						size="large"
+						color="primary"
+						@click.stop="applyFilters"
+					>
+						{{ locales.apply }}
+					</VBtn>
+				</div>
+			</VNavigationDrawer>
+		</Teleport>
 	</div>
 </template>
 
 <style lang="scss" scoped>
-.sy-filters-side-bar :deep() {
+.sy-filters-side-bar__content :deep() {
 	.v-navigation-drawer {
 		&__content {
 			display: flex;
