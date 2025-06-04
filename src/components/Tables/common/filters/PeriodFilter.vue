@@ -50,7 +50,6 @@
 
 	const emit = defineEmits(['update:filters'])
 
-	// Computed property for v-model
 	const modelValue = computed({
 		get: () => props.filterValue,
 		set: (val) => {
@@ -58,29 +57,29 @@
 				const key = String(props.header?.key || props.header?.value || '')
 				if (!key) return
 
-				// Handle null/undefined - clear the filter for this key
+				// Traiter null/undefined - effacer le filtre pour cette clé
 				if (!val) {
 					const newFilters = props.filters.filter(f => f.key !== key)
 					emit('update:filters', newFilters)
 					return
 				}
 
-				// Check if both from and to are null - clear the filter for this key
+				// Vérifier si from et to sont tous les deux null - effacer le filtre pour cette clé
 				if (typeof val === 'object' && val.from === null && val.to === null) {
 					const newFilters = props.filters.filter(f => f.key !== key)
 					emit('update:filters', newFilters)
 					return
 				}
 
-				// Process period value
+				// Traiter la valeur de période
 				if (typeof val === 'object') {
-					// Create a new filter value object
+					// Créer un nouvel objet de valeur de filtre
 					const filterValue = {
 						from: val.from,
 						to: val.to,
 					}
 
-					// Create or update the filter
+					// Créer ou mettre à jour le filtre
 					const existingFilterIndex = props.filters.findIndex(f => f.key === key)
 					const newFilters = [...props.filters]
 
@@ -99,12 +98,12 @@
 				}
 			}
 			catch (error) {
-				console.error('Error in period filter update:', error)
+				console.error('Erreur dans la mise à jour du filtre de période:', error)
 			}
 		},
 	})
 
-	// Handle clear event
+	// Gérer l'événement d'effacement
 	function handleClear() {
 		const key = String(props.header.key || props.header.value || '')
 		const newFilters = props.filters.filter(f => f.key !== key)

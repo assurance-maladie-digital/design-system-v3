@@ -50,40 +50,39 @@
 
 	const emit = defineEmits(['update:filters'])
 
-	// Computed property for v-model
 	const modelValue = computed({
 		get: () => props.filterValue,
 		set: (value: number | string | null | undefined) => {
 			const key = String(props.header.key || props.header.value || '')
 			if (!key) return
 
-			// Check for empty values to clear the filter
+			// Vérifier les valeurs vides pour effacer le filtre
 			if (value === null || value === undefined) {
-				// Clear the filter if value is empty
+				// Effacer le filtre si la valeur est vide
 				const newFilters = props.filters.filter(f => f.key !== key)
 				emit('update:filters', newFilters)
 				return
 			}
 
-			// Handle string values
+			// Traiter les valeurs de type chaîne
 			if (typeof value === 'string') {
 				if (value === '' || value === '0') {
-					// Clear the filter if value is empty string or '0'
+					// Effacer le filtre si la valeur est une chaîne vide ou '0'
 					const newFilters = props.filters.filter(f => f.key !== key)
 					emit('update:filters', newFilters)
 					return
 				}
 			}
 
-			// Handle number values
+			// Traiter les valeurs numériques
 			if (typeof value === 'number' && value === 0) {
-				// Clear the filter if value is 0
+				// Effacer le filtre si la valeur est 0
 				const newFilters = props.filters.filter(f => f.key !== key)
 				emit('update:filters', newFilters)
 				return
 			}
 
-			// Create or update the filter
+			// Créer ou mettre à jour le filtre
 			const existingFilterIndex = props.filters.findIndex(f => f.key === key)
 			const newFilters = [...props.filters]
 			const numValue = typeof value === 'string' ? parseFloat(value) : value
@@ -103,7 +102,7 @@
 		},
 	})
 
-	// Handle clear event
+	// Gérer l'événement d'effacement
 	function handleClear() {
 		const key = String(props.header.key || props.header.value || '')
 		const newFilters = props.filters.filter(f => f.key !== key)
