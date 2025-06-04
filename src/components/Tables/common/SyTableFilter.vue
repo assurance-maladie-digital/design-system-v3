@@ -1,15 +1,63 @@
 <script setup lang="ts">
-	import { ref, watch, provide, defineAsyncComponent } from 'vue'
+	import { ref, watch, provide, defineAsyncComponent, markRaw, shallowRef } from 'vue'
 	import type { FilterOption, TableColumnHeader } from './types'
 	import { filterItems } from './tableFilterUtils'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
 
-	// Async components with lazy loading
-	const TextFilter = defineAsyncComponent(() => import('./filters/TextFilter.vue'))
-	const NumberFilter = defineAsyncComponent(() => import('./filters/NumberFilter.vue'))
-	const DateFilter = defineAsyncComponent(() => import('./filters/DateFilter.vue'))
-	const PeriodFilter = defineAsyncComponent(() => import('./filters/PeriodFilter.vue'))
-	const SelectFilter = defineAsyncComponent(() => import('./filters/SelectFilter.vue'))
+	// Utilisation de shallowRef pour stocker les composants chargés dynamiquement
+	const loadedComponents = shallowRef<Record<string, unknown>>({})
+
+	// Fonction pour charger et récupérer un composant de filtre à la demande
+	function getFilterComponent(filterType?: string, filterOptions?: unknown) {
+		// Déterminer le type de composant à charger
+		let componentType = 'text'
+
+		if (filterType === 'select' || filterOptions) {
+			componentType = 'select'
+		}
+		else if (filterType === 'date') {
+			componentType = 'date'
+		}
+		else if (filterType === 'period') {
+			componentType = 'period'
+		}
+		else if (filterType === 'number') {
+			componentType = 'number'
+		}
+
+		// Si le composant est déjà chargé, le retourner
+		if (loadedComponents.value[componentType]) {
+			return loadedComponents.value[componentType]
+		}
+
+		// Sinon, charger le composant de manière asynchrone
+		let asyncComponent
+		switch (componentType) {
+		case 'select':
+			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/SelectFilter.vue')))
+			Object.defineProperty(asyncComponent, 'name', { value: 'SelectFilter' })
+			break
+		case 'date':
+			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/DateFilter.vue')))
+			Object.defineProperty(asyncComponent, 'name', { value: 'DateFilter' })
+			break
+		case 'period':
+			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/PeriodFilter.vue')))
+			Object.defineProperty(asyncComponent, 'name', { value: 'PeriodFilter' })
+			break
+		case 'number':
+			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/NumberFilter.vue')))
+			Object.defineProperty(asyncComponent, 'name', { value: 'NumberFilter' })
+			break
+		default:
+			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/TextFilter.vue')))
+			Object.defineProperty(asyncComponent, 'name', { value: 'TextFilter' })
+		}
+
+		// Stocker le composant pour éviter de le recharger
+		loadedComponents.value[componentType] = asyncComponent
+		return asyncComponent
+	}
 
 	const props = defineProps({
 		header: {
@@ -121,74 +169,43 @@
 	function updateFilters(newFilters: FilterOption[]) {
 		emit('update:filters', newFilters)
 	}
+
+	// Fonction pour obtenir la valeur du filtre en fonction du type de filtre
+	function getFilterValue(header: TableColumnHeader) {
+		const key = String(header.key || header.value || '')
+
+		if (header.filterType === 'select' || header.filterOptions) {
+			return selectFilters.value[key]
+		}
+		else if (header.filterType === 'date') {
+			return dateFilters.value[key]
+		}
+		else if (header.filterType === 'period') {
+			return periodFilters.value[key] || { from: null, to: null }
+		}
+		else if (header.filterType === 'number') {
+			return numberFilters.value[key]
+		}
+		else {
+			return textFilters.value[key]
+		}
+	}
 </script>
 
 <template>
 	<div class="sy-table-filter">
 		<div class="sy-table-filter-item">
-			<SelectFilter
-				v-if="header.filterType === 'select' || header.filterOptions"
-				:header="header"
-				:filters="filters"
-				:filter-value="selectFilters[String(header.key || header.value || '')]"
-				:input-config="inputConfig"
-				:disable-error-handling="disableErrorHandling"
-				:variant="variant"
-				:hide-details="hideDetails"
-				:density="density"
-				:clearable="clearable"
-				@update:filters="updateFilters"
-			/>
-			<DateFilter
-				v-else-if="header.filterType === 'date'"
-				:header="header"
-				:filters="filters"
-				:filter-value="dateFilters[String(header.key || header.value || '')]"
-				:input-config="inputConfig"
-				:disable-error-handling="disableErrorHandling"
-				:variant="variant"
-				:hide-details="hideDetails"
-				:density="density"
-				:clearable="clearable"
-				@update:filters="updateFilters"
-			/>
-			<PeriodFilter
-				v-else-if="header.filterType === 'period'"
-				:header="header"
-				:filters="filters"
-				:filter-value="periodFilters[String(header.key || header.value || '')] || { from: null, to: null }"
-				:input-config="inputConfig"
-				:disable-error-handling="disableErrorHandling"
-				:variant="variant"
-				:hide-details="hideDetails"
-				:density="density"
-				:clearable="clearable"
-				@update:filters="updateFilters"
-			/>
-			<NumberFilter
-				v-else-if="header.filterType === 'number'"
-				:header="header"
-				:filters="filters"
-				:filter-value="numberFilters[String(header.key || header.value || '')]"
-				:input-config="inputConfig"
-				:disable-error-handling="disableErrorHandling"
-				:variant="variant"
-				:hide-details="hideDetails"
-				:density="density"
-				:clearable="clearable"
-				@update:filters="updateFilters"
-			/>
-			<TextFilter
-				v-else
-				:header="header"
-				:filters="filters"
-				:filter-value="textFilters[String(header.key || header.value || '')]"
-				:input-config="inputConfig"
-				:disable-error-handling="disableErrorHandling"
-				:variant="variant"
-				:hide-details="hideDetails"
-				:density="density"
-				:clearable="clearable"
+			<component
+				:is="getFilterComponent(props.header.filterType, props.header.filterOptions)"
+				:header="props.header"
+				:filters="props.filters"
+				:filter-value="getFilterValue(props.header)"
+				:input-config="props.inputConfig"
+				:disable-error-handling="props.disableErrorHandling"
+				:variant="props.variant"
+				:hide-details="props.hideDetails"
+				:density="props.density"
+				:clearable="props.clearable"
 				@update:filters="updateFilters"
 			/>
 		</div>
