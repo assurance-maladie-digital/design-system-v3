@@ -139,6 +139,7 @@ export const Default: Story = {
 		noIcon: false,
 		noCalendar: false,
 		modelValue: '',
+		displayTodayButton: true,
 	},
 	render: (args) => {
 		return {

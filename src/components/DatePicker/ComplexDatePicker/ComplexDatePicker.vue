@@ -10,6 +10,8 @@
 	import type { DateObjectValue } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
+	import { useMonthButtonCustomization } from '../composables'
+	import { mdiCalendar } from '@mdi/js'
 	import {
 		useWeekendDays,
 		useTodayButton,
@@ -22,6 +24,7 @@
 		useManualDateValidation,
 		useInputBlurHandler,
 		useDatePickerVisibility,
+		useDisplayedDateString,
 	} from '../composables'
 
 	import dayjs from 'dayjs'
@@ -415,6 +418,9 @@
 
 		// Valider les dates au montage
 		validateDates()
+
+		// Configurer l'observateur pour le bouton du mois
+		setupMonthButtonObserver()
 	})
 
 	onBeforeUnmount(() => {
@@ -456,6 +462,11 @@
 		inputHandler.handleInput(event)
 	}
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+
+	// Utilisation du composable pour personnaliser le bouton du mois
+	const { customizeMonthButton, setupMonthButtonObserver } = useMonthButtonCustomization(
+		() => isDatePickerVisible.value,
+	)
 
 	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
@@ -505,6 +516,9 @@
 		}
 
 		if (isVisible) {
+			// Personnaliser le bouton du mois
+			customizeMonthButton()
+
 			// set the focus on the date picker
 			await nextTick()
 			const firstButton = datePickerRef.value?.$el.querySelector('button')
@@ -790,10 +804,16 @@
 	const { displayWeekendDays } = useWeekendDays(props)
 
 	// Computed properties pour period
-	const minDate = computed(() => props.period?.min || '11/11/2020')
-	const maxDate = computed(() => props.period?.max || '11/11/2025')
+	const minDate = computed(() => props.period?.min || dayjs().subtract(10, 'year').format(props.format))
+	const maxDate = computed(() => props.period?.max || dayjs().add(10, 'year').format(props.format))
 
 	const { todayInString, selectToday } = useTodayButton(props)
+
+	// Utilisation du composable pour l'affichage formaté des dates
+	const { displayedDateString } = useDisplayedDateString({
+		selectedDates,
+		todayInString,
+	})
 
 	// Wrapper pour la fonction selectToday du composable
 	const handleSelectToday = () => {
@@ -932,18 +952,27 @@
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ todayInString }}
+							{{ displayedDateString }}
 						</h3>
 					</template>
 					<template #actions>
-						<v-btn
-							v-if="props.displayTodayButton"
-							variant="text"
-							class="today-button"
-							@click="handleSelectToday"
-						>
-							{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
-						</v-btn>
+						<div class="d-flex justify-center w-100">
+							<v-btn
+								v-if="props.displayTodayButton"
+								size="x-small"
+								color="primary"
+								:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
+								class="mb-2"
+								@click="handleSelectToday"
+							>
+								<VIcon
+									class="mr-1"
+								>
+									{{ mdiCalendar }}
+								</VIcon>
+								{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+							</v-btn>
+						</div>
 					</template>
 				</VDatePicker>
 			</VMenu>
@@ -1061,5 +1090,9 @@
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
 	background-color: #afb1b1;
+}
+
+:deep(.v-date-picker-controls__mode-btn) {
+	transform: none !important;
 }
 </style>
