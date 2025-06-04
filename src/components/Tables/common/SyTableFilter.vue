@@ -34,7 +34,7 @@
 		// Propriétés de configuration des champs de saisie
 		disableErrorHandling: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		variant: {
 			type: String,
