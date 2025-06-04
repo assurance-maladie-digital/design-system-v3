@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch, provide, defineAsyncComponent, markRaw, shallowRef } from 'vue'
+	import { ref, watch, provide, defineAsyncComponent, markRaw, shallowRef, computed } from 'vue'
 	import type { FilterOption, TableColumnHeader } from './types'
 	import { filterItems } from './tableFilterUtils'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
@@ -104,60 +104,81 @@
 
 	const emit = defineEmits(['update:filters'])
 
-	// Initialise les filtres locaux avec des refs séparées pour différents types
-	const textFilters = ref<Record<string, string>>({})
-	const numberFilters = ref<Record<string, number>>({})
-	const dateFilters = ref<Record<string, DateValue>>({})
-	const periodFilters = ref<Record<string, { from: string | null, to: string | null }>>({})
-	const selectFilters = ref<Record<string, string | number | Record<string, unknown> | undefined>>({})
+	// Utilisation d'un seul ref pour stocker tous les filtres, organisés par type
+	const filtersMap = ref<{
+		text: Record<string, string>
+		number: Record<string, number>
+		date: Record<string, DateValue>
+		period: Record<string, { from: string | null, to: string | null }>
+		select: Record<string, string | number | Record<string, unknown> | undefined>
+	}>({
+		text: {},
+		number: {},
+		date: {},
+		period: {},
+		select: {},
+	})
 
-	// Initialise les filtres à partir des props
+	// Computed properties pour accéder aux différents types de filtres
+	const textFilters = computed(() => filtersMap.value.text)
+	const numberFilters = computed(() => filtersMap.value.number)
+	const dateFilters = computed(() => filtersMap.value.date)
+	const periodFilters = computed(() => filtersMap.value.period)
+	const selectFilters = computed(() => filtersMap.value.select)
+
+	// Fonction pour traiter un filtre individuel
+	function processFilter(filter: FilterOption) {
+		const key = filter.key
+		const value = filter.value
+
+		switch (filter.type) {
+		case 'text':
+			filtersMap.value.text[key] = value as string
+			break
+		case 'number':
+			filtersMap.value.number[key] = value as number
+			break
+		case 'date':
+			filtersMap.value.date[key] = value as DateValue
+			break
+		case 'period':
+			if (value && typeof value === 'object' && 'from' in value && 'to' in value) {
+				const periodValue = value as { from: Date | string | null, to: Date | string | null }
+
+				const from = periodValue.from instanceof Date
+					? periodValue.from.toLocaleDateString('fr-FR')
+					: periodValue.from
+
+				const to = periodValue.to instanceof Date
+					? periodValue.to.toLocaleDateString('fr-FR')
+					: periodValue.to
+
+				filtersMap.value.period[key] = { from, to }
+			}
+			break
+		case 'select':
+			filtersMap.value.select[key] = value !== null ? value as string | number | Record<string, unknown> : undefined
+			break
+		}
+	}
+
+	// Initialise les filtres à partir des props, sans deep watching
 	watch(() => props.filters, (newFilters) => {
 		// Efface tous les filtres si le tableau de filtres est vide
 		if (newFilters.length === 0) {
-			textFilters.value = {}
-			numberFilters.value = {}
-			dateFilters.value = {}
-			periodFilters.value = {}
-			selectFilters.value = {}
+			filtersMap.value = {
+				text: {},
+				number: {},
+				date: {},
+				period: {},
+				select: {},
+			}
 			return
 		}
 
-		newFilters.forEach((filter) => {
-			const key = filter.key
-			const value = filter.value
-
-			switch (filter.type) {
-			case 'text':
-				textFilters.value[key] = value as string
-				break
-			case 'number':
-				numberFilters.value[key] = value as number
-				break
-			case 'date':
-				dateFilters.value[key] = value as DateValue
-				break
-			case 'period':
-				if (value && typeof value === 'object' && 'from' in value && 'to' in value) {
-					const periodValue = value as { from: Date | string | null, to: Date | string | null }
-
-					const from = periodValue.from instanceof Date
-						? periodValue.from.toLocaleDateString('fr-FR')
-						: periodValue.from
-
-					const to = periodValue.to instanceof Date
-						? periodValue.to.toLocaleDateString('fr-FR')
-						: periodValue.to
-
-					periodFilters.value[key] = { from, to }
-				}
-				break
-			case 'select':
-				selectFilters.value[key] = value !== null ? value as string | number | Record<string, unknown> : undefined
-				break
-			}
-		})
-	}, { immediate: true, deep: true })
+		// Traiter uniquement les filtres qui ont changé
+		newFilters.forEach(processFilter)
+	}, { immediate: true })
 
 	// Expose la fonction de filtrage via le modèle provide/inject
 	provide('filterItems', filterItems)
