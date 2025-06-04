@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyServerTable from './SyServerTable.vue'
 import { StateEnum } from '../common/constants/StateEnum'
-import type { DataOptions } from '../common/types'
+import type { DataOptions, FilterType } from '../common/types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
@@ -1668,6 +1668,343 @@ export const ServerFilterByDate: Story = {
 						@update:options="fetchData"
 					/>
 				</div>
+			`,
+		}
+	},
+}
+
+export const CustomFilterSlot: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyServerTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						:server-items-length="serverItemsLength"
+						:loading="loading"
+						show-filters
+						suffix="server-custom-filter-slot"
+						@update:options="fetchData"
+					>
+						<template #filter.custom="{ header, value, updateFilter }">
+							<div class="custom-filter-container">
+								<div class="custom-filter-info mb-2">
+									Filtre personnalisé :
+								</div>
+								<v-select
+									v-model="customFilterValue"
+									:items="statusOptions"
+									label="Statut"
+									variant="outlined"
+									density="compact"
+									@update:model-value="(val) => {
+										// Utiliser la fonction updateFilter fournie par le slot
+										updateFilter(val)
+									}"
+								/>
+							</div>
+						</template>
+					</SyServerTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+					
+					const options = ref<Partial<DataOptions>>({
+						itemsPerPage: 4,
+						filters: []
+					})
+					
+					const customFilterValue = ref('')
+					const statusOptions = ['Actif', 'Inactif', 'En attente']
+					const loading = ref(false)
+					const serverItemsLength = ref(6)
+					
+					const headers = [
+						{
+							title: 'Nom',
+							key: 'lastname',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Statut',
+							key: 'status',
+							filterable: true,
+							filterType: 'custom' // Utilisation du type 'custom' pour activer le slot personnalisé
+						},
+					]
+					
+					const allItems = [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							status: 'Actif',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							status: 'Inactif',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							status: 'En attente',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							status: 'Actif',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							status: 'Inactif',
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							status: 'En attente',
+						},
+					]
+					
+					const items = ref(allItems)
+					
+					// Fonction pour simuler une requête API avec filtrage côté serveur
+					const fetchData = async () => {
+						loading.value = true
+						
+						// Simuler un délai réseau
+						await new Promise(resolve => setTimeout(resolve, 300))
+						
+						// Récupérer les filtres
+						const filters = options.value.filters || []
+						
+						// Filtrer les éléments côté "serveur"
+						let filteredItems = [...allItems]
+						
+						for (const filter of filters) {
+							if (filter.type === 'text') {
+								filteredItems = filteredItems.filter(item => 
+									String(item[filter.key]).toLowerCase().includes(String(filter.value).toLowerCase())
+								)
+							} else if (filter.type === 'select' || filter.type === 'custom') {
+								// Traiter les filtres de type 'select' et 'custom' de la même manière
+								filteredItems = filteredItems.filter(item => 
+									item[filter.key] === filter.value
+								)
+							}
+						}
+						
+						// Mettre à jour le nombre total d'éléments
+						serverItemsLength.value = filteredItems.length
+						
+						// Appliquer la pagination
+						const page = options.value.page || 1
+						const itemsPerPage = options.value.itemsPerPage || 4
+						const start = (page - 1) * itemsPerPage
+						const end = start + itemsPerPage
+						
+						items.value = filteredItems.slice(start, end)
+						loading.value = false
+					}
+					
+					// Charger les données initiales
+					fetchData()
+				</script>
+				`,
+			},
+			{
+				name: 'Style',
+				code: `
+				<style scoped>
+					.custom-filter-container {
+						display: flex;
+						flex-direction: column;
+						gap: 4px;
+					}
+					
+					.custom-filter-info {
+						font-size: 12px;
+						color: #666;
+						margin-top: 4px;
+					}
+				</style>
+				`,
+			},
+		],
+	},
+	args: {
+		serverItemsLength: 6,
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Statut',
+				key: 'status',
+				filterable: true,
+				filterType: 'custom' as FilterType,
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				status: 'Actif',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				status: 'Inactif',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				status: 'En attente',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				status: 'Actif',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				status: 'Inactif',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				status: 'En attente',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+			filters: [],
+		},
+		showFilters: true,
+		suffix: 'server-custom-filter-slot',
+	},
+	render(args) {
+		return {
+			components: { SyServerTable },
+			setup() {
+				// Create reactive references
+				const options = ref(args.options)
+				const items = ref(args.items)
+				const customFilterValue = ref('')
+				const statusOptions = ['Actif', 'Inactif', 'En attente']
+				const loading = ref(false)
+				const serverItemsLength = ref(args.serverItemsLength)
+
+				// Fonction pour simuler une requête API avec filtrage côté serveur
+				const fetchData = async () => {
+					loading.value = true
+
+					// Simuler un délai réseau
+					await new Promise(resolve => setTimeout(resolve, 300))
+
+					// Récupérer les filtres
+					const filters = options.value?.filters || []
+
+					// Filtrer les éléments côté "serveur"
+					let filteredItems = [...(args.items || [])]
+
+					for (const filter of filters) {
+						if (filter.type === 'text') {
+							filteredItems = filteredItems.filter(item =>
+								String(item[filter.key]).toLowerCase().includes(String(filter.value).toLowerCase()),
+							)
+						}
+						else if (filter.type === 'select' || filter.type === 'custom') {
+							// Traiter les filtres de type 'select' et 'custom' de la même manière
+							filteredItems = filteredItems.filter(item =>
+								item[filter.key] === filter.value,
+							)
+						}
+					}
+
+					// Mettre à jour le nombre total d'éléments
+					serverItemsLength.value = filteredItems.length
+
+					// Appliquer la pagination
+					const page = options.value?.page || 1
+					const itemsPerPage = options.value?.itemsPerPage || 4
+					const start = (page - 1) * itemsPerPage
+					const end = start + itemsPerPage
+
+					items.value = filteredItems.slice(start, end)
+					loading.value = false
+				}
+
+				return {
+					args,
+					options,
+					items,
+					customFilterValue,
+					statusOptions,
+					loading,
+					serverItemsLength,
+					fetchData,
+				}
+			},
+			template: `
+				<SyServerTable
+					v-model:options="options"
+					:headers="args.headers"
+					:items="items"
+					:server-items-length="serverItemsLength"
+					:loading="loading"
+					:show-filters="args.showFilters"
+					:suffix="args.suffix"
+					@update:options="fetchData"
+				>
+					<template #filter.custom="{ header, value, updateFilter }">
+						<div class="custom-filter-container">
+							<div class="custom-filter-info mb-2">
+								Filtre personnalisé :
+							</div>
+							<v-select
+								v-model="customFilterValue"
+								:items="statusOptions"
+								label="Statut"
+								variant="outlined"
+								density="compact"
+								@update:model-value="(val) => {
+									// Utiliser la fonction updateFilter fournie par le slot
+									updateFilter(val)
+								}"
+							/>
+						</div>
+					</template>
+				</SyServerTable>
 			`,
 		}
 	},

@@ -162,7 +162,16 @@
 									:header="getEnhancedHeader(column)"
 									:input-config="props.filterInputConfig"
 									@update:filters="filters = $event"
-								/>
+								>
+									<template #custom-filter="filterSlotProps">
+										<slot
+											name="filter.custom"
+											:header="filterSlotProps.header"
+											:value="filterSlotProps.value"
+											:update-filter="filterSlotProps.updateFilter"
+										/>
+									</template>
+								</SyTableFilter>
 							</th>
 						</template>
 					</tr>
@@ -201,8 +210,18 @@
 								v-if="header.filterable"
 								:filters="filters"
 								:header="header"
+								:input-config="props.filterInputConfig"
 								@update:filters="filters = $event"
-							/>
+							>
+								<template #custom-filter="customFilterSlotProps">
+									<slot
+										name="filter.custom"
+										:header="customFilterSlotProps.header"
+										:value="customFilterSlotProps.value"
+										:update-filter="customFilterSlotProps.updateFilter"
+									/>
+								</template>
+							</SyTableFilter>
 						</th>
 					</tr>
 				</template>

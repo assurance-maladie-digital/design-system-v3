@@ -229,8 +229,9 @@
 			filtersMap.value.number[key] = value as number
 		}
 		else if (header.filterType === 'custom') {
-			// Pour les filtres personnalisés, nous stockons la valeur dans textFilters par défaut
-			filtersMap.value.text[key] = value as string
+			// Pour les filtres personnalisés, nous stockons la valeur dans selectFilters
+			// car ils fonctionnent généralement comme des sélecteurs
+			filtersMap.value.select[key] = value as string | number | Record<string, unknown> | undefined
 		}
 		else {
 			filtersMap.value.text[key] = value as string
@@ -267,10 +268,13 @@
 			}
 		})
 
-		// Ajouter les filtres de sélection
+		// Ajouter les filtres de sélection et personnalisés
 		Object.entries(filtersMap.value.select).forEach(([filterKey, filterValue]) => {
 			if (filterValue !== undefined && filterValue !== null) {
-				newFilters.push({ key: filterKey, value: filterValue, type: 'select' })
+				// Déterminer si c'est un filtre personnalisé en vérifiant les en-têtes
+				const matchingHeader = props.header.key === filterKey || props.header.value === filterKey
+				const filterType = matchingHeader && props.header.filterType === 'custom' ? 'custom' : 'select'
+				newFilters.push({ key: filterKey, value: filterValue, type: filterType })
 			}
 		})
 

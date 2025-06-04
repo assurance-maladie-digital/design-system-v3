@@ -389,4 +389,62 @@ describe('SyServerTable', () => {
 		const dataTableServer = wrapper.findComponent({ name: 'VDataTableServer' })
 		expect(dataTableServer.props('itemsLength')).toBe(20)
 	})
+
+	it('forwards custom filter slot correctly', async () => {
+		// Define custom filter header
+		const customHeader = {
+			title: 'Status',
+			key: 'status',
+			filterable: true,
+			filterType: 'custom',
+		}
+
+		// Create test items with status
+		const itemsWithStatus = [
+			{
+				id: 1,
+				name: 'John Doe',
+				status: 'Actif',
+			},
+			{
+				id: 2,
+				name: 'Jane Doe',
+				status: 'Inactif',
+			},
+		]
+
+		// Custom slot content
+		const customSlotText = 'Custom Filter Content'
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				serverItemsLength: 2,
+				suffix: 'test-custom-filter',
+				showFilters: true,
+			},
+			attrs: {
+				items: itemsWithStatus,
+				headers: [customHeader],
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			slots: {
+				'filter.custom': `<div class="test-custom-filter">${customSlotText}</div>`,
+			},
+		})
+
+		// Wait for component to render
+		await wrapper.vm.$nextTick()
+
+		// Find SyTableFilter component
+		const tableFilter = wrapper.findComponent(SyTableFilter)
+		expect(tableFilter.exists()).toBe(true)
+
+		// Check if the custom filter slot is forwarded correctly
+		const customFilterSlot = wrapper.find('.test-custom-filter')
+		expect(customFilterSlot.exists()).toBe(true)
+		expect(customFilterSlot.text()).toBe(customSlotText)
+	})
 })
