@@ -50,10 +50,16 @@
 
 	const emit = defineEmits(['update:filters'])
 
+	// Fonction pour générer une clé unique à partir des propriétés du header
+	function generateUniqueKey() {
+		return String(props.header.key || props.header.value || (props.header.title ? `filter_${props.header.title}` : `filter_${Date.now()}`))
+	}
+
 	const modelValue = computed({
 		get: () => props.filterValue || '',
 		set: (value) => {
-			const key = String(props.header.key || props.header.value || '')
+			// Générer une clé unique en utilisant la fonction dédiée
+			const key = generateUniqueKey()
 			if (!key) return
 
 			if (value === '') {
@@ -84,7 +90,8 @@
 
 	// Gérer l'événement d'effacement
 	function handleClear() {
-		const key = String(props.header.key || props.header.value || '')
+		// Utiliser la fonction generateUniqueKey pour obtenir la clé
+		const key = generateUniqueKey()
 		const newFilters = props.filters.filter(f => f.key !== key)
 		emit('update:filters', newFilters)
 	}

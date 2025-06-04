@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -109,5 +109,79 @@ describe('DateFilter.vue', () => {
 
 		const datePicker = wrapper.findComponent(DatePicker)
 		expect(datePicker.props('format')).toBe('DD/MM/YYYY')
+	})
+
+	it('generates unique key when header.key and header.value are absent', async () => {
+		// Recréer le wrapper avec un header sans key ni value, seulement title
+		const headerWithoutKey = { title: 'Test Date' }
+		const newWrapper = mount(DateFilter, {
+			global: {
+				plugins: [vuetify],
+				stubs: {
+					DatePicker: {
+						template: '<div class="date-picker-stub" data-testid="date-picker"></div>',
+						props: ['modelValue', 'label', 'clearable', 'density', 'hideDetails', 'format'],
+					},
+				},
+			},
+			props: {
+				header: headerWithoutKey,
+				filters: [],
+				filterValue: null,
+			},
+		})
+
+		// Émettre une valeur pour déclencher la mise à jour du filtre
+		const datePicker = newWrapper.findComponent(DatePicker)
+		await datePicker.vm.$emit('update:modelValue', '01/01/2023')
+
+		// Vérifier que l'événement a été émis avec une clé générée basée sur le titre
+		expect(newWrapper.emitted('update:filters')).toBeTruthy()
+		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: string, type: string }>
+		expect(emittedFilters.length).toBe(1)
+		expect(emittedFilters[0].key).toBe('filter_Test Date')
+		expect(emittedFilters[0].value).toBe('01/01/2023')
+		expect(emittedFilters[0].type).toBe('date')
+	})
+
+	it('generates unique key with timestamp when all header properties are absent', async () => {
+		// Mock Date.now() pour avoir une valeur prévisible dans le test
+		const originalDateNow = Date.now
+		const mockTimestamp = 1622548800000 // 2021-06-01T12:00:00.000Z
+		global.Date.now = vi.fn(() => mockTimestamp)
+
+		// Recréer le wrapper avec un header complètement vide
+		const emptyHeader = {}
+		const newWrapper = mount(DateFilter, {
+			global: {
+				plugins: [vuetify],
+				stubs: {
+					DatePicker: {
+						template: '<div class="date-picker-stub" data-testid="date-picker"></div>',
+						props: ['modelValue', 'label', 'clearable', 'density', 'hideDetails', 'format'],
+					},
+				},
+			},
+			props: {
+				header: emptyHeader,
+				filters: [],
+				filterValue: null,
+			},
+		})
+
+		// Émettre une valeur pour déclencher la mise à jour du filtre
+		const datePicker = newWrapper.findComponent(DatePicker)
+		await datePicker.vm.$emit('update:modelValue', '01/01/2023')
+
+		// Vérifier que l'événement a été émis avec une clé générée basée sur le timestamp
+		expect(newWrapper.emitted('update:filters')).toBeTruthy()
+		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: string, type: string }>
+		expect(emittedFilters.length).toBe(1)
+		expect(emittedFilters[0].key).toBe(`filter_${mockTimestamp}`)
+		expect(emittedFilters[0].value).toBe('01/01/2023')
+		expect(emittedFilters[0].type).toBe('date')
+
+		// Restaurer Date.now
+		global.Date.now = originalDateNow
 	})
 })

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -114,5 +114,79 @@ describe('PeriodFilter.vue', () => {
 
 		const periodField = wrapper.findComponent(PeriodField)
 		expect(periodField.attributes('format')).toBe('DD/MM/YYYY')
+	})
+
+	it('generates unique key when header.key and header.value are absent', async () => {
+		// Recréer le wrapper avec un header sans key ni value, seulement title
+		const headerWithoutKey = { title: 'Test Period' }
+		const newWrapper = mount(PeriodFilter, {
+			global: {
+				plugins: [vuetify],
+				stubs: {
+					PeriodField: {
+						template: '<div class="period-field-stub" data-testid="period-field"></div>',
+						props: ['modelValue', 'label', 'clearable', 'density', 'hideDetails', 'format'],
+					},
+				},
+			},
+			props: {
+				header: headerWithoutKey,
+				filters: [],
+				filterValue: { from: null, to: null },
+			},
+		})
+
+		// Émettre une valeur pour déclencher la mise à jour du filtre
+		const periodField = newWrapper.findComponent(PeriodField)
+		await periodField.vm.$emit('update:modelValue', { from: '01/01/2023', to: '31/12/2023' })
+
+		// Vérifier que l'événement a été émis avec une clé générée basée sur le titre
+		expect(newWrapper.emitted('update:filters')).toBeTruthy()
+		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: { from: string, to: string }, type: string }>
+		expect(emittedFilters.length).toBe(1)
+		expect(emittedFilters[0].key).toBe('filter_Test Period')
+		expect(emittedFilters[0].value).toEqual({ from: '01/01/2023', to: '31/12/2023' })
+		expect(emittedFilters[0].type).toBe('period')
+	})
+
+	it('generates unique key with timestamp when all header properties are absent', async () => {
+		// Mock Date.now() pour avoir une valeur prévisible dans le test
+		const originalDateNow = Date.now
+		const mockTimestamp = 1622548800000 // 2021-06-01T12:00:00.000Z
+		global.Date.now = vi.fn(() => mockTimestamp)
+
+		// Recréer le wrapper avec un header complètement vide
+		const emptyHeader = {}
+		const newWrapper = mount(PeriodFilter, {
+			global: {
+				plugins: [vuetify],
+				stubs: {
+					PeriodField: {
+						template: '<div class="period-field-stub" data-testid="period-field"></div>',
+						props: ['modelValue', 'label', 'clearable', 'density', 'hideDetails', 'format'],
+					},
+				},
+			},
+			props: {
+				header: emptyHeader,
+				filters: [],
+				filterValue: { from: null, to: null },
+			},
+		})
+
+		// Émettre une valeur pour déclencher la mise à jour du filtre
+		const periodField = newWrapper.findComponent(PeriodField)
+		await periodField.vm.$emit('update:modelValue', { from: '01/01/2023', to: '31/12/2023' })
+
+		// Vérifier que l'événement a été émis avec une clé générée basée sur le timestamp
+		expect(newWrapper.emitted('update:filters')).toBeTruthy()
+		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: { from: string, to: string }, type: string }>
+		expect(emittedFilters.length).toBe(1)
+		expect(emittedFilters[0].key).toBe(`filter_${mockTimestamp}`)
+		expect(emittedFilters[0].value).toEqual({ from: '01/01/2023', to: '31/12/2023' })
+		expect(emittedFilters[0].type).toBe('period')
+
+		// Restaurer Date.now
+		global.Date.now = originalDateNow
 	})
 })
