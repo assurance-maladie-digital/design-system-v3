@@ -60,7 +60,6 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 		case 'select': {
 			if (Array.isArray(filterValue)) {
 				// Utilise l'assertion de type pour gérer la méthode includes
-				// Nous devons d'abord convertir en unknown pour éviter l'utilisation directe de any
 				return filterValue.includes(itemValue as unknown as typeof filterValue[0])
 			}
 			if (typeof filterValue === 'object' && filterValue != null) {
