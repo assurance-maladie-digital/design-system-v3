@@ -14,7 +14,7 @@
 		},
 		filterValue: {
 			type: String,
-			default: '',
+			default: undefined,
 		},
 		inputConfig: {
 			type: Object as () => {
