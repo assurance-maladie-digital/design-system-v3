@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { shallowMount, flushPromises } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
 import SyTableFilter from '../SyTableFilter.vue'
-import type { FilterOption, TableColumnHeader } from '../types'
+import type { FilterOption, TableColumnHeader, FilterType } from '../types'
 
 // Using shallowMount will automatically stub all child components
 
@@ -276,5 +276,37 @@ describe('SyTableFilter', () => {
 		if (emitted && Array.isArray(emitted[0])) {
 			expect(emitted[0][0]).toEqual([]) // Empty array, filter removed
 		}
+	})
+
+	it('renders custom filter slot correctly', async () => {
+		const filters: FilterOption[] = []
+		const header: TableColumnHeader = {
+			title: 'Custom',
+			key: 'custom',
+			filterable: true,
+			filterType: 'custom' as FilterType,
+		}
+
+		const customSlotText = 'Mon filtre personnalisé'
+		const wrapper = shallowMount(SyTableFilter, {
+			props: {
+				filters,
+				header,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			slots: {
+				'custom-filter': `<div class="test-custom-filter">${customSlotText}</div>`,
+			},
+		})
+
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		// Vérifier que le slot personnalisé est rendu
+		const customFilter = wrapper.find('.test-custom-filter')
+		expect(customFilter.exists()).toBe(true)
+		expect(customFilter.text()).toBe(customSlotText)
 	})
 })

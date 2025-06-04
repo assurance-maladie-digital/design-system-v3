@@ -3,7 +3,7 @@ export type SortOptions = {
 	order: 'desc' | 'asc'
 }
 
-export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select'
+export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select' | 'custom'
 
 export interface FilterOption {
 	key: string

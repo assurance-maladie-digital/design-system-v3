@@ -211,13 +211,93 @@
 			return textFilters.value[key]
 		}
 	}
+
+	// Fonction pour mettre à jour un filtre spécifique
+	function updateFilter(header: TableColumnHeader, value: unknown) {
+		const key = String(header.key || header.value || '')
+
+		if (header.filterType === 'select' || header.filterOptions) {
+			filtersMap.value.select[key] = value as string | number | Record<string, unknown> | undefined
+		}
+		else if (header.filterType === 'date') {
+			filtersMap.value.date[key] = value as DateValue
+		}
+		else if (header.filterType === 'period') {
+			filtersMap.value.period[key] = value as { from: string | null, to: string | null }
+		}
+		else if (header.filterType === 'number') {
+			filtersMap.value.number[key] = value as number
+		}
+		else if (header.filterType === 'custom') {
+			// Pour les filtres personnalisés, nous stockons la valeur dans textFilters par défaut
+			filtersMap.value.text[key] = value as string
+		}
+		else {
+			filtersMap.value.text[key] = value as string
+		}
+
+		// Créer un tableau de FilterOption à partir des données des filtres
+		const newFilters: FilterOption[] = []
+
+		// Ajouter les filtres de texte
+		Object.entries(filtersMap.value.text).forEach(([filterKey, filterValue]) => {
+			if (filterValue !== undefined && filterValue !== '') {
+				newFilters.push({ key: filterKey, value: filterValue, type: 'text' })
+			}
+		})
+
+		// Ajouter les filtres numériques
+		Object.entries(filtersMap.value.number).forEach(([filterKey, filterValue]) => {
+			if (filterValue !== undefined && filterValue !== null) {
+				newFilters.push({ key: filterKey, value: filterValue, type: 'number' })
+			}
+		})
+
+		// Ajouter les filtres de date
+		Object.entries(filtersMap.value.date).forEach(([filterKey, filterValue]) => {
+			if (filterValue !== undefined && filterValue !== null) {
+				newFilters.push({ key: filterKey, value: filterValue, type: 'date' })
+			}
+		})
+
+		// Ajouter les filtres de période
+		Object.entries(filtersMap.value.period).forEach(([filterKey, filterValue]) => {
+			if (filterValue && (filterValue.from || filterValue.to)) {
+				newFilters.push({ key: filterKey, value: filterValue, type: 'period' })
+			}
+		})
+
+		// Ajouter les filtres de sélection
+		Object.entries(filtersMap.value.select).forEach(([filterKey, filterValue]) => {
+			if (filterValue !== undefined && filterValue !== null) {
+				newFilters.push({ key: filterKey, value: filterValue, type: 'select' })
+			}
+		})
+
+		updateFilters(newFilters)
+	}
 </script>
 
 <template>
 	<div class="sy-table-filter">
 		<div class="sy-table-filter-item">
+			<!-- Utilise le slot personnalisé si filterType est 'custom', sinon utilise le composant dynamique -->
+			<template v-if="props.header.filterType === 'custom'">
+				<slot
+					name="custom-filter"
+					:header="props.header"
+					:value="getFilterValue(props.header)"
+					:update-filter="(value) => updateFilter(props.header, value)"
+				>
+					<!-- Contenu par défaut si aucun slot n'est fourni -->
+					<div class="custom-filter-placeholder">
+						Filtre personnalisé
+					</div>
+				</slot>
+			</template>
 			<component
 				:is="getFilterComponent(props.header.filterType, props.header.filterOptions)"
+				v-else
 				:header="props.header"
 				:filters="props.filters"
 				:filter-value="getFilterValue(props.header)"

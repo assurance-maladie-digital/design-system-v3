@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyTable from './SyTable.vue'
-import type { DataOptions } from '../common/types'
+import type { DataOptions, FilterType } from '../common/types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
@@ -1101,6 +1101,259 @@ export const FilterByDate: Story = {
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 				/>
+			`,
+		}
+	},
+}
+
+export const CustomFilterSlot: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						show-filters
+						suffix="custom-filter-slot-table"
+					>
+						<template #filter.custom="{ header, value, updateFilter }">
+							<div class="custom-filter-container">
+								<div class="custom-filter-info mb-2">
+									Filtre personnalisé :
+								</div>
+								<v-select
+									v-model="customFilterValue"
+									:items="statusOptions"
+									label="Statut"
+									variant="outlined"
+									density="compact"
+									@update:model-value="(val) => {
+										// Créer manuellement un filtre de sélection
+										const currentFilters = [...options.filters || []]
+										// Supprimer le filtre existant pour cette clé si nécessaire
+										const filteredFilters = currentFilters.filter(f => f.key !== 'status')
+										// Ajouter un nouveau filtre si la valeur n'est pas vide
+										if (val) {
+											filteredFilters.push({ key: 'status', value: val, type: 'select' })
+										}
+										// Mettre à jour les options avec les nouveaux filtres
+										options.filters = filteredFilters
+									}"
+								/>
+							</div>
+						</template>
+					</SyTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+						filters: []
+					})
+					
+					const customFilterValue = ref('')
+					const statusOptions = ['Actif', 'Inactif', 'En attente']
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Statut',
+							key: 'status',
+							filterable: true,
+							filterType: 'custom' // Utilisation du type 'custom' pour activer le slot personnalisé
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							status: 'Actif',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							status: 'Inactif',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							status: 'En attente',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							status: 'Actif',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							status: 'Inactif'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							status: 'En attente'
+						}
+					])
+				</script>
+				`,
+			},
+			{
+				name: 'Style',
+				code: `
+				<style scoped>
+					.custom-filter-container {
+						display: flex;
+						flex-direction: column;
+						gap: 4px;
+					}
+					
+					.custom-filter-info {
+						font-size: 12px;
+						color: #666;
+						margin-top: 4px;
+					}
+				</style>
+				`,
+			},
+		],
+	},
+	args: {
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Statut',
+				key: 'status',
+				filterable: true,
+				filterType: 'custom' as FilterType,
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				status: 'Actif',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				status: 'Inactif',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				status: 'En attente',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				status: 'Actif',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				status: 'Inactif',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				status: 'En attente',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+			filters: [],
+		},
+		showFilters: true,
+		suffix: 'custom-filter-slot-table',
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				// Create reactive references
+				const options = ref(args.options)
+				const items = ref(args.items)
+				const customFilterValue = ref('')
+				const statusOptions = ['Actif', 'Inactif', 'En attente']
+
+				return {
+					args,
+					options,
+					items,
+					customFilterValue,
+					statusOptions,
+				}
+			},
+			template: `
+				<SyTable
+					v-model:options="options"
+					:headers="args.headers"
+					:items="items"
+					:show-filters="args.showFilters"
+					:suffix="args.suffix"
+				>
+					<template #filter.custom="{ header, value, updateFilter }">
+						<div class="custom-filter-container">
+							<div class="custom-filter-info mb-2">
+								Filtre personnalisé :
+							</div>
+							<v-select
+								v-model="customFilterValue"
+								:items="statusOptions"
+								label="Statut"
+								variant="outlined"
+								density="compact"
+								@update:model-value="(val) => {
+									// Manually create a select filter
+									const currentFilters = [...options.filters || []]
+									// Remove existing filter for this key if any
+									const filteredFilters = currentFilters.filter(f => f.key !== 'status')
+									// Add new filter if value is not empty
+									if (val) {
+										filteredFilters.push({ key: 'status', value: val, type: 'select' })
+									}
+									// Update options with new filters
+									options.filters = filteredFilters
+								}"
+							/>
+						</div>
+					</template>
+				</SyTable>
 			`,
 		}
 	},
