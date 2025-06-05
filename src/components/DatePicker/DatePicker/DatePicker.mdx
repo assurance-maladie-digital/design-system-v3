@@ -1,0 +1,176 @@
+import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
+import * as DatePickerStories from "./DatePicker.stories.ts";
+
+<Meta of={DatePickerStories}/>
+
+# DatePicker - Mode calendrier
+
+Le DatePicker en mode calendrier permet de sélectionner une date ou une plage de dates via un calendrier interactif.
+
+## Description
+
+Cette variante du DatePicker est particulièrement utile lorsque :
+- Vous souhaitez offrir une interface visuelle pour la sélection de dates
+- Vous avez besoin d'une sélection précise avec des contraintes de dates
+- Vous voulez permettre la sélection de plages de dates
+
+Le DatePicker offre de nombreuses options de personnalisation pour s'adapter à vos besoins spécifiques, comme le format d'affichage, les règles de validation, et les options d'interface utilisateur.
+
+## Exemple interactif
+
+<Canvas story={{height: '550px'}} of={DatePickerStories.Default}/>
+
+## Propriétés spécifiques
+
+<Controls of={DatePickerStories.Default}/>
+
+## Formats de date
+
+Le DatePicker utilise deux formats distincts :
+
+- **Format d'entrée/affichage** : défini par la prop `format`, il détermine à la fois le format dans lequel la date doit être fournie au composant et comment la date est affichée visuellement dans le champ.
+- **Format de retour** : défini par la prop `dateFormatReturn`, il détermine le format de la date émise.
+
+<div
+    style={{
+        border: '2px solid #FF0000',
+        padding: '1rem',
+        borderRadius: '4px',
+        marginBottom: '1rem',
+    }}
+>
+    <strong>Note importante sur les formats</strong>
+    <p>
+        Par exemple, avec <code>format="DD-MM-YY"</code> et <code>dateFormatReturn="YYYY/MM/DD"</code> :
+    </p>
+    <ul>
+        <li>Vous devez fournir la date au format : <code>24-12-25</code></li>
+        <li>Elle sera affichée comme : <code>24-12-25</code></li>
+        <li>Elle sera retournée comme : <code>2025/12/24</code></li>
+    </ul>
+</div>
+
+## Exemples
+
+### Sélection de plage de dates
+
+<Canvas of={DatePickerStories.DateRange}/>
+
+### Avec période personnalisée
+
+<Canvas of={DatePickerStories.WithCustomPeriod}/>
+
+### Avec icône à la fin du champ
+
+<Canvas of={DatePickerStories.WithAppendIcon}/>
+
+### Sans icône
+
+<Canvas of={DatePickerStories.WithoutIcon}/>
+
+### Mode date de naissance
+
+<Canvas of={DatePickerStories.BirthDate}/>
+
+### Avec validation d'erreur
+
+<Canvas of={DatePickerStories.WithError}/>
+
+### Avec message d'avertissement
+
+<Canvas of={DatePickerStories.WithWarning}/>
+
+### Avec message de succès
+
+<Canvas of={DatePickerStories.WithSuccess}/>
+
+### Formats de date différents
+
+<Canvas of={DatePickerStories.DifferentFormats}/>
+
+## Exemple d'utilisation dans le code
+
+### DatePicker simple
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const date = ref('')
+</script>
+
+<template>
+	<DatePicker
+		v-model="date"
+		placeholder="Sélectionner une date"
+		format="DD/MM/YYYY"
+		required
+	/>
+</template>
+`}
+/>
+
+### DatePicker avec plage de dates
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const dateRange = ref(['', ''])
+</script>
+
+<template>
+	<DatePicker
+		v-model="dateRange"
+		placeholder="Sélectionner une plage de dates"
+		format="DD/MM/YYYY"
+		display-range
+		required
+	/>
+</template>
+`}
+/>
+
+### DatePicker avec période personnalisée
+
+<div
+    style={{
+        border: '2px solid #FF0000',
+        padding: '1rem',
+        borderRadius: '4px',
+        marginBottom: '1rem',
+    }}
+>
+    <strong>Note importante</strong>
+    <ul>
+        <li>La prop <code>period</code> permet de définir une période de dates valides. Les dates en dehors de cette période ne seront pas visibles dans le calendrier.</li>
+        <li>Le format de la prop <code>period</code> est <code>MM/DD/YYYY</code>.</li>
+    </ul>
+</div>
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const date = ref('')
+</script>
+
+<template>
+	<DatePicker
+		v-model="date"
+		placeholder="Sélectionner une date"
+		format="DD/MM/YYYY"
+		:period="{
+			min: '01/01/2000',
+			max: '31/12/2025'
+		}"
+	/>
+</template>
+`}
+/>

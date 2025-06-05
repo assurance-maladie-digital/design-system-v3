@@ -1,0 +1,212 @@
+import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
+import * as DatePickerStories from "./ComplexDatePicker.stories.ts";
+
+<Meta of={DatePickerStories}/>
+
+# DatePicker - Mode combiné
+
+Le DatePicker en mode combiné (`useCombinedMode: true`) permet d'utiliser à la fois le calendrier interactif et la saisie manuelle avec formatage automatique.
+
+## Description
+
+Cette variante du DatePicker est particulièrement utile lorsque :
+- Vous souhaitez offrir plusieurs méthodes de saisie de date aux utilisateurs
+- Vous avez besoin du formatage automatique intelligent des dates pendant la saisie
+- Vous voulez conserver l'interaction avec le calendrier pour une meilleure expérience utilisateur
+
+Le formatage automatique intelligent ajoute les séparateurs (/, -, etc.) pendant la saisie en fonction du format spécifié.
+
+<Canvas story={{height: '550px'}} of={DatePickerStories.Default}/>
+
+## Propriétés spécifiques
+
+Propriétés applicables pour le mode combiné :
+
+<Controls of={DatePickerStories.Default}/>
+
+
+# Fonctionnalités spécifiques
+
+## Formatage automatique des dates
+
+Le composant ComplexDatePicker offre un formatage automatique intelligent des dates pendant la saisie. Les séparateurs sont automatiquement ajoutés lors de la saisie des chiffres, en s'adaptant au format spécifié (DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD, etc.).
+
+<Canvas of={DatePickerStories.AutoFormattingInput}/>
+
+## Désactivation de l'interaction avec le calendrier
+
+La propriété `disablePickerInteraction` permet d'utiliser le champ de saisie avec formatage automatique sans que le calendrier n'apparaisse au clic sur l'input ou sur l'icône. Cette option est utile pour les cas où on souhaite uniquement la saisie manuelle.
+
+<Canvas of={DatePickerStories.DisablePickerInteraction}/>
+
+## Formats de date personnalisés
+
+Le composant supporte différents formats de date et détecte automatiquement le séparateur utilisé dans le format (/, -, ., etc.) pour l'appliquer lors de la saisie.
+
+<Canvas of={DatePickerStories.CustomDateFormat}/>
+
+## Mode lecture seule
+
+Le composant peut être configuré en mode lecture seule, ce qui empêche toute modification de la valeur.
+
+<Canvas of={DatePickerStories.ReadonlyMode}/>
+
+## Plages de dates
+
+Le composant permet la sélection de plages de dates avec validation automatique.
+
+<Canvas of={DatePickerStories.DateRange}/>
+
+### DatePicker avec période personnalisée
+
+
+<div
+    style={{
+        border: '2px solid #FF0000',
+        padding: '1rem',
+        borderRadius: '4px',
+        marginBottom: '1rem',
+    }}
+>
+    <strong>Note importante</strong>
+    <ul>
+        <li>La prop <code>period</code> permet de définir une période de dates valides. Les dates en dehors de cette période ne seront pas visibles dans le calendrier.</li>
+        <li>Le format de la prop <code>period</code> est <code>MM/DD/YYYY</code>.</li>
+    </ul>
+</div>
+
+<Canvas of={DatePickerStories.WithCustomPeriod}/>
+
+## Personnalisation des icônes
+
+Vous pouvez personnaliser la position de l'icône du calendrier (au début ou à la fin du champ).
+
+<Canvas of={DatePickerStories.WithCustomIcons}/>
+
+## Activation par le champ de texte
+
+La propriété `textFieldActivator` permet d'ouvrir le calendrier en cliquant n'importe où sur le champ de texte.
+
+<Canvas of={DatePickerStories.WithTextFieldActivator}/>
+
+
+# Validation et règles personnalisées
+
+Le composant prend en charge des règles de validation personnalisées pour vérifier les dates saisies.
+
+<Canvas of={DatePickerStories.WithValidation}/>
+
+## Formats de retour différents
+
+Vous pouvez spécifier un format différent pour la valeur de retour avec la propriété `dateFormatReturn`.
+
+<Canvas of={DatePickerStories.WithDateFormatReturn}/>
+
+## Intégration dans un formulaire
+
+Le composant s'intègre facilement dans un formulaire avec validation à la soumission.
+
+<Canvas of={DatePickerStories.WithFormSubmission}/>
+
+# Méthodes exposées
+
+Le composant expose plusieurs méthodes qui peuvent être utilisées via une référence :
+
+### validateOnSubmit
+- **Description** : Valide le champ lors de la soumission d'un formulaire
+- **Retour** : `boolean` - Indique si la validation a réussi
+
+### clearValidation
+- **Description** : Efface les messages de validation
+
+### validateDates
+- **Description** : Valide les dates sélectionnées
+
+### openDatePicker
+- **Description** : Ouvre le calendrier programmatiquement
+
+### toggleDatePicker
+- **Description** : Bascule l'état d'ouverture du calendrier
+
+### Exemple d'utilisation
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const date = ref('')
+	const datePicker = ref(null)
+
+	const submitForm = () => {
+		const isValid = datePicker.value.validateOnSubmit()
+		if (isValid) {
+			// Traitement du formulaire
+		}
+	}
+</script>
+
+<template>
+	<form @submit.prevent="submitForm">
+		<DatePicker
+			ref="datePicker"
+			v-model="date"
+			placeholder="Date requise"
+			format="DD/MM/YYYY"
+            useCombinedMode
+			required
+		/>
+		<button type="submit">Soumettre</button>
+	</form>
+</template>
+`}
+/>
+
+### Exemple avec période personnalisée
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const date = ref('')
+</script>
+
+<template>
+	<DatePicker
+		v-model="date"
+		placeholder="Sélectionner une date (1995-2005)"
+		format="DD/MM/YYYY"
+		useCombinedMode
+		:period="{
+			min: '01/01/1995',
+			max: '31/12/2005'
+		}"
+	/>
+</template>
+`}
+/>
+
+# Événements
+
+Le composant émet plusieurs événements :
+
+### update:modelValue
+- **Payload** : `string | string[]` - La nouvelle valeur du champ
+
+### closed
+- **Description** : Émis lorsque le calendrier est fermé
+
+### focus
+- **Description** : Émis lorsque le champ reçoit le focus
+
+### blur
+- **Description** : Émis lorsque le champ perd le focus
+
+### input
+- **Payload** : `string` - La valeur saisie dans le champ
+
+### date-selected
+- **Payload** : `Date | Date[] | null` - La date ou les dates sélectionnées

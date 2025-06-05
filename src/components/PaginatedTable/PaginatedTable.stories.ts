@@ -63,6 +63,10 @@ const meta = {
 			description: 'Nombre d\'éléments par page',
 			control: { type: 'number' },
 		},
+		caption: {
+			description: 'Texte de la légende du tableau',
+			control: { type: 'text' },
+		},
 	},
 } satisfies Meta<typeof PaginatedTable & typeof VDataTable>
 

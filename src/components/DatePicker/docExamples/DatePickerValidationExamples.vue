@@ -1,6 +1,6 @@
 <script setup>
 	import { ref } from 'vue'
-	import DatePicker from '@/components/DatePicker/DatePicker.vue'
+	import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
 
 	// Exemple 1: Validation de base (required)
 	const date1 = ref('')

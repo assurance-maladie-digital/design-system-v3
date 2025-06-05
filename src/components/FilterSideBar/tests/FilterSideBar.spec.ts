@@ -53,6 +53,9 @@ describe('FilterSideBar', () => {
 		const wrapper = mount(TestComponent, {
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 			props: {
 				modelValue: [],
@@ -75,6 +78,9 @@ describe('FilterSideBar', () => {
 			},
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -103,6 +109,9 @@ describe('FilterSideBar', () => {
 			},
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -122,6 +131,9 @@ describe('FilterSideBar', () => {
 			},
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -154,6 +166,9 @@ describe('FilterSideBar', () => {
 			},
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -172,6 +187,9 @@ describe('FilterSideBar', () => {
 			},
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -204,6 +222,9 @@ describe('FilterSideBar', () => {
 			},
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -247,6 +268,9 @@ describe('FilterSideBar', () => {
 			},
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 
@@ -290,6 +314,9 @@ describe('FilterSideBar', () => {
 			},
 			global: {
 				plugins: [vuetify],
+				stubs: {
+					Teleport: true,
+				},
 			},
 		})
 

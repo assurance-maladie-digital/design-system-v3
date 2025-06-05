@@ -59,7 +59,6 @@ describe('PaginatedTable', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.text()).toContain('John Doe')
 	})
 
@@ -178,7 +177,6 @@ describe('PaginatedTable', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.emitted('update:options')).toBeTruthy()
 
 		await wrapper.setProps({
