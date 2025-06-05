@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref } from 'vue'
+	import { computed, ref, watch } from 'vue'
 	import type { FilterOption, TableColumnHeader } from '../types'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
@@ -56,6 +56,32 @@
 	const emit = defineEmits(['update:filters'])
 	const inputValue = ref(props.filterValue || '')
 	const debounceTimer = ref<number | null>(null)
+	
+	// Observer les changements de la prop filterValue pour synchroniser inputValue
+	watch(() => props.filterValue, (newValue) => {
+		// Si filterValue devient undefined ou vide, réinitialiser inputValue
+		if (newValue === undefined || newValue === '') {
+			inputValue.value = ''
+		}
+	})
+	
+	// Observer les changements du tableau de filtres pour détecter les réinitialisations
+	watch(() => props.filters, (newFilters) => {
+		// Si le tableau de filtres est vide, réinitialiser inputValue et annuler le debounce
+		if (newFilters.length === 0) {
+			// Annuler le timer de debounce s'il existe
+			if (debounceTimer.value !== null) {
+				clearTimeout(debounceTimer.value)
+				debounceTimer.value = null
+			}
+			
+			// Réinitialiser la valeur d'entrée
+			inputValue.value = ''
+			
+			// Forcer la mise à jour du filtre immédiatement
+			updateFilter('')
+		}
+	})
 
 	// Fonction pour générer une clé unique à partir des propriétés du header
 	function generateUniqueKey() {
