@@ -64,6 +64,11 @@
 			type: Object as () => TableColumnHeader,
 			required: true,
 		},
+		// Propriété pour déterminer si le filtre doit être affiché
+		filterable: {
+			type: Boolean,
+			default: true,
+		},
 		filters: {
 			type: Array as () => FilterOption[],
 			default: () => [],
@@ -283,7 +288,10 @@
 </script>
 
 <template>
-	<div class="sy-table-filter">
+	<div
+		v-if="props.filterable"
+		class="sy-table-filter"
+	>
 		<div class="sy-table-filter-item">
 			<!-- Utilise le slot personnalisé si filterType est 'custom', sinon utilise le composant dynamique -->
 			<template v-if="props.header.filterType === 'custom'">

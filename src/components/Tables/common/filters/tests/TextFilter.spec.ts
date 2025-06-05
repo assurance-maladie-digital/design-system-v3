@@ -33,6 +33,7 @@ describe('TextFilter.vue', () => {
 				header,
 				filters,
 				filterValue: '',
+				debounceTime: 0, // Set debounce time to 0 for testing
 			},
 		})
 	})
@@ -109,6 +110,7 @@ describe('TextFilter.vue', () => {
 				header: headerWithoutKey,
 				filters: [],
 				filterValue: '',
+				debounceTime: 0, // Set debounce time to 0 for testing
 			},
 		})
 
@@ -147,6 +149,7 @@ describe('TextFilter.vue', () => {
 				header: emptyHeader,
 				filters: [],
 				filterValue: '',
+				debounceTime: 0, // Set debounce time to 0 for testing
 			},
 		})
 
