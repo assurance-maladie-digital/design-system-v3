@@ -27,9 +27,14 @@ Le composant permet de trier les données par colonne en cliquant sur l'en-tête
 
 <Canvas of={SyTable.SortBy} />
 
+### Filtres des colonnes
+
+Le composant permet d'appliquer des filtres sur les colonnes. Vous pouvez définir des filtres personnalisés pour chaque colonne en utilisant la prop `show-filters`. Voir d'autres exemples de filtres dans les stories.
+<Canvas of={SyTable.FilterByText} />
+
 ### Accessibilité
 
-Le composant améliore l'accessibilité en ajoutant automatiquement:
+Le composant améliore l'accessibilité en ajoutant automatiquement :
 - Une légende (caption) pour le tableau
 - Des attributs ARIA appropriés
 - Des attributs scope pour les en-têtes de colonnes

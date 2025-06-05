@@ -18,7 +18,7 @@
 		},
 		caption: {
 			type: String,
-			default: 'caption',
+			default: '',
 		},
 	})
 
@@ -29,6 +29,9 @@
 
 	const localStorageUtility = new LocalStorageUtility()
 	const localOptions = ref({})
+
+	// Generate a unique ID for this table instance
+	const uniqueTableId = ref(`paginated-table-${Math.random().toString(36).substr(2, 9)}`)
 
 	const storageKey = computed(() => {
 		const prefix = 'pagination'
@@ -95,38 +98,39 @@
 	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
 
 	onMounted(() => {
-		const table = document.querySelector('#paginated-table table')
+		const table = document.querySelector(`#${uniqueTableId.value} table`)
 		const caption = document.createElement('caption')
 		caption.innerHTML = props.caption
-		if (props.caption === 'caption') {
+		if (props.caption === '') {
 			caption.classList.add('d-sr-only')
+			caption.setAttribute('aria-label', 'Table caption')
 		}
 		else {
 			caption.classList.add('text-subtitle-1')
 		}
 		table?.prepend(caption)
 
-		const inputs = document.querySelectorAll('#paginated-table input')
+		const inputs = document.querySelectorAll(`#${uniqueTableId.value} input`)
 		inputs.forEach((input) => {
 			(input as HTMLElement).removeAttribute('aria-describedby')
 		})
 
-		const fields = document.querySelectorAll('#paginated-table .v-field')
+		const fields = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fields.forEach((field) => {
 			(field as HTMLElement).setAttribute('tabindex', '0')
 		})
 
-		const fieldLabels = document.querySelectorAll('#paginated-table .v-field')
+		const fieldLabels = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldLabels.forEach((fieldLabel) => {
 			(fieldLabel as HTMLElement).setAttribute('aria-label', 'items per page')
 		})
 
-		const fieldTitles = document.querySelectorAll('#paginated-table .v-field')
+		const fieldTitles = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldTitles.forEach((fieldTitle) => {
 			(fieldTitle as HTMLElement).setAttribute('title', 'items per page')
 		})
 
-		const th = document.querySelectorAll('#paginated-table th')
+		const th = document.querySelectorAll(`#${uniqueTableId.value} th`)
 		for (let i = 0; i < th.length; i++) {
 			th[i].setAttribute('scope', 'col')
 		}
@@ -135,7 +139,7 @@
 
 <template>
 	<div
-		id="paginated-table"
+		:id="uniqueTableId"
 		class="sy-paginated-table"
 	>
 		<VDataTable

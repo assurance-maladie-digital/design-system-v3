@@ -34,6 +34,11 @@ Le composant permet de trier les données par colonne en déléguant le tri au s
 
 <Canvas of={SyServerTable.ServerSortBy} />
 
+### Filtres des colonnes
+
+Le composant permet d'appliquer des filtres sur les colonnes. Vous pouvez définir des filtres personnalisés pour chaque colonne en utilisant la prop `show-filters`. Voir d'autres exemples de filtres dans les stories.
+<Canvas of={SyServerTable.ServerFilterByText} />
+
 ### Accessibilité
 
 Le composant améliore l'accessibilité en ajoutant automatiquement:
@@ -61,8 +66,8 @@ Le composant améliore l'accessibilité en ajoutant automatiquement:
 <script setup lang="ts">
   import { ref, watch } from 'vue'
   import { SyServerTable } from '@cnamts/synapse'
-  import { StateEnum } from '@cnamts/synapse/src/components/PaginatedTable/constants/StateEnum'
-  import type { DataOptions } from '@cnamts/synapse/src/components/PaginatedTable/types'
+  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+  import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
   
   interface User {
     [key: string]: string

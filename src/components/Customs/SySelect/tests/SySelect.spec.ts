@@ -50,12 +50,14 @@ describe('SySelect.vue', () => {
 	it('renders error messages when provided', () => {
 		const errorMessages = ['Error 1']
 		const wrapper = mount(SySelect, {
-			props: { errorMessages },
+			props: { errorMessages, hideMessages: false },
 			global: {
 				plugins: [vuetify],
 			},
 		})
-		expect(wrapper.find('.v-messages__message').text()).toContain('Error 1')
+		const message = wrapper.find('.v-messages__message')
+		expect(message.exists()).toBe(true)
+		expect(message.text()).toContain('Error 1')
 	})
 
 	it('does not render error messages when not provided', () => {

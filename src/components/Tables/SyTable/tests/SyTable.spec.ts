@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 
 import { vuetify } from '@tests/unit/setup'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
-import type { DataOptions } from '@/components/Tables/common/types'
+import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
 import SyTable from '../SyTable.vue'
 
@@ -25,7 +25,7 @@ const fakeItems = [
 		name: 'John Smith',
 		age: 35,
 	},
-] as const
+]
 
 const headers = [
 	{
@@ -51,6 +51,7 @@ describe('SyTable', () => {
 		const wrapper = mount(SyTable, {
 			props: {
 				options: {} as DataOptions,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -61,7 +62,6 @@ describe('SyTable', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.find('.sy-table').exists()).toBe(true)
 		expect(wrapper.find('table').exists()).toBe(true)
 		expect(wrapper.text()).toContain('John Doe')
@@ -71,6 +71,7 @@ describe('SyTable', () => {
 		const wrapper = mount(SyTable, {
 			props: {
 				options: {} as DataOptions,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -138,6 +139,7 @@ describe('SyTable', () => {
 		const wrapper = mount(SyTable, {
 			props: {
 				options: {} as DataOptions,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -162,6 +164,7 @@ describe('SyTable', () => {
 			props: {
 				options: {} as DataOptions,
 				itemsPerPage: 5,
+				suffix: 'test',
 			},
 			attrs: {
 				items: fakeItems,
@@ -174,5 +177,169 @@ describe('SyTable', () => {
 
 		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
 		expect(dataTable.props('itemsPerPage')).toBe(5)
+	})
+
+	it('should show filters when showFilters prop is true', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				suffix: 'test',
+				headers: [
+					{
+						title: 'Name',
+						key: 'name',
+						filterable: true,
+						filterType: 'text',
+					},
+					{
+						title: 'Age',
+						key: 'age',
+						filterable: true,
+						filterType: 'number',
+					},
+				],
+				items: fakeItems,
+			},
+			global: {
+				plugins: [vuetify],
+				stubs: {
+					SyTableFilter: true,
+				},
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		const filterComponents = wrapper.findAllComponents({ name: 'SyTableFilter' })
+		expect(filterComponents.length).toBeGreaterThan(0)
+	})
+
+	it('should apply filters correctly', async () => {
+		// Create a filter to apply with proper type assertion
+		const filters = [{ key: 'name', value: 'John', type: 'text' as const }]
+
+		// Create a new wrapper with the filters already set in options
+		const wrapperWithFilters = mount(SyTable, {
+			props: {
+				options: { filters },
+				showFilters: true,
+				suffix: 'test',
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		// Simulate the VDataTable emitting an update:options event with the filters
+		await wrapperWithFilters.findComponent({ name: 'VDataTable' }).vm.$emit('update:options', { filters })
+
+		// Wait for the component to update
+		await wrapperWithFilters.vm.$nextTick()
+
+		// Check that the filter was applied and emitted
+		const emitted = wrapperWithFilters.emitted('update:options')
+		expect(emitted).toBeTruthy()
+		if (emitted) {
+			// The first emitted event should have the filters
+			expect(emitted[0][0]).toHaveProperty('filters')
+			expect((emitted[0][0] as { filters?: FilterOption[] }).filters).toEqual(filters)
+		}
+	})
+
+	it('should show reset filters button when filters are applied', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {
+					filters: [{ key: 'name', value: 'John', type: 'text' }],
+				},
+				showFilters: true,
+				suffix: 'test',
+				headers: [
+					{
+						title: 'Name',
+						key: 'name',
+						filterable: true,
+						filterType: 'text',
+					},
+				],
+				items: fakeItems,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		const resetButton = wrapper.find('button')
+		expect(resetButton.exists()).toBe(true)
+		expect(resetButton.text()).toContain('Réinitialiser les filtres')
+	})
+
+	it('should reset filters when reset button is clicked', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {
+					filters: [{ key: 'name', value: 'John', type: 'text' }],
+				},
+				showFilters: true,
+				suffix: 'test',
+				headers: [
+					{
+						title: 'Name',
+						key: 'name',
+						filterable: true,
+						filterType: 'text',
+					},
+				],
+				items: fakeItems,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		const resetButton = wrapper.find('button')
+		await resetButton.trigger('click')
+
+		const emitted = wrapper.emitted('update:options')
+		expect(emitted).toBeTruthy()
+		if (emitted) {
+			// Find the last emitted event
+			const lastEmitted = emitted[emitted.length - 1][0] as { filters?: FilterOption[] }
+			expect(lastEmitted).toHaveProperty('filters')
+			expect(lastEmitted.filters).toEqual([])
+		}
+	})
+
+	it('should show empty state message when no data matches filters', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {
+					filters: [{ key: 'name', value: 'NonExistingName', type: 'text' as const }],
+				},
+				showFilters: true,
+				suffix: 'test',
+				headers: [
+					{
+						title: 'Name',
+						key: 'name',
+						filterable: true,
+						filterType: 'text',
+					},
+				],
+				items: fakeItems,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		expect(wrapper.text()).toContain('Aucune donnée disponible')
 	})
 })

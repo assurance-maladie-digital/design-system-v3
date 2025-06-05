@@ -61,5 +61,6 @@
 		v-model:options="options"
 		:items="items"
 		:headers="headers"
+		suffix="table"
 	/>
 </template>

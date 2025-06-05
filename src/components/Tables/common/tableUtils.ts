@@ -1,9 +1,10 @@
-import { computed, onMounted, ref, type Ref } from 'vue'
+import { computed, watch, type Ref } from 'vue'
 import type { DataOptions } from './types'
-import { LocalStorageUtility } from '@/utils/localStorageUtility'
+import { useTableAccessibility } from './tableAccessibilityUtils'
+import { useTableStorage } from './tableStorageUtils'
 
 /**
- * Creates and returns common table functionality
+ * Crée et renvoie des fonctionnalités communes pour les tableaux
  */
 export function useTableUtils({
 	tableId,
@@ -24,11 +25,18 @@ export function useTableUtils({
 	componentAttributes: Record<string, unknown>
 	options: Ref<Partial<DataOptions>>
 }) {
-	const localStorageUtility = new LocalStorageUtility()
-	const localOptions = ref({})
+	// Use the separated storage utility
+	const { localOptions, storageKey, setupLocalStorage } = useTableStorage({
+		prefix,
+		suffix,
+		serverItemsLength,
+		options,
+	})
 
-	const storageKey = computed(() => {
-		return suffix ? `${prefix}-${suffix}` : prefix
+	// Use the separated accessibility utility
+	const { setupAccessibility } = useTableAccessibility({
+		tableId,
+		caption,
 	})
 
 	const headers = computed(() => {
@@ -63,7 +71,7 @@ export function useTableUtils({
 			...(serverItemsLength !== undefined ? { itemsLength: serverItemsLength } : {}),
 		}
 
-		// Add itemsLength only for server tables
+		// Ajoute itemsLength uniquement pour les tableaux côté serveur
 		if (serverItemsLength !== undefined) {
 			props.itemsLength = serverItemsLength
 		}
@@ -78,69 +86,20 @@ export function useTableUtils({
 		}
 	}
 
-	function setupAccessibility() {
-		onMounted(() => {
-			const table = document.querySelector(`#${tableId} table`)
-			const captionElement = document.createElement('caption')
-			captionElement.innerHTML = caption
-			if (caption === 'caption') {
-				captionElement.classList.add('d-sr-only')
-			}
-			else {
-				captionElement.classList.add('text-subtitle-1')
-			}
-			table?.prepend(captionElement)
+	// Accessibility setup is now handled by the imported utility
 
-			const inputs = document.querySelectorAll(`#${tableId} input`)
-			inputs.forEach((input) => {
-				(input as HTMLElement).removeAttribute('aria-describedby')
-			})
+	// Storage setup is now handled by the imported utility
+	const { watchOptions, initFromStorage } = setupLocalStorage()
 
-			const fields = document.querySelectorAll(`#${tableId} .v-field`)
-			fields.forEach((field) => {
-				(field as HTMLElement).setAttribute('tabindex', '0')
-			})
+	// Initialize local options from storage or default values
+	initFromStorage(optionsFacade.value)
 
-			const fieldLabels = document.querySelectorAll(`#${tableId} .v-field`)
-			fieldLabels.forEach((fieldLabel) => {
-				(fieldLabel as HTMLElement).setAttribute('aria-label', 'items per page')
-			})
-
-			const fieldTitles = document.querySelectorAll(`#${tableId} .v-field`)
-			fieldTitles.forEach((fieldTitle) => {
-				(fieldTitle as HTMLElement).setAttribute('title', 'items per page')
-			})
-
-			const th = document.querySelectorAll(`#${tableId} th`)
-			for (let i = 0; i < th.length; i++) {
-				th[i].setAttribute('scope', 'col')
-			}
-		})
-	}
-
-	// Setup local storage synchronization
-	function setupLocalStorage() {
-		// Watch for options changes and update local storage
-		const watchOptions = () => {
-			const storageData = {
-				...(optionsFacade.value as Record<string, unknown>),
-				itemsLength: serverItemsLength,
-			}
-
-			// Add itemsLength only for server tables
-			if (serverItemsLength !== undefined) {
-				storageData.itemsLength = serverItemsLength
-			}
-
-			localStorageUtility.setItem(storageKey.value, storageData)
-			localOptions.value = optionsFacade.value
-		}
-
-		// Initialize local options from storage or defaults
-		localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
-
-		return { watchOptions }
-	}
+	// Watch for options changes
+	watch(
+		() => options.value,
+		watchOptions,
+		{ deep: true },
+	)
 
 	return {
 		localOptions,
