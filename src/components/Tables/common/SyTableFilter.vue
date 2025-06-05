@@ -288,7 +288,10 @@
 </script>
 
 <template>
-	<div class="sy-table-filter" v-if="props.filterable">
+	<div
+		v-if="props.filterable"
+		class="sy-table-filter"
+	>
 		<div class="sy-table-filter-item">
 			<!-- Utilise le slot personnalisé si filterType est 'custom', sinon utilise le composant dynamique -->
 			<template v-if="props.header.filterType === 'custom'">

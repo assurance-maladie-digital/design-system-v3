@@ -67,17 +67,24 @@
 		get: () => inputValue.value,
 		set: (value) => {
 			inputValue.value = value
-			
+
 			// Annuler le timer précédent s'il existe
 			if (debounceTimer.value !== null) {
 				clearTimeout(debounceTimer.value)
 			}
-			
+
 			// Configurer un nouveau timer de debounce
 			const debounceDelay = props.inputConfig?.debounceTime ?? props.debounceTime
-			debounceTimer.value = window.setTimeout(() => {
+
+			// If debounceTime is 0, update immediately (useful for testing)
+			if (debounceDelay === 0) {
 				updateFilter(value)
-			}, debounceDelay)
+			}
+			else {
+				debounceTimer.value = window.setTimeout(() => {
+					updateFilter(value)
+				}, debounceDelay)
+			}
 		},
 	})
 
@@ -135,7 +142,10 @@
 			class="filter-input"
 			@click:clear="handleClear"
 		/>
-		<div v-if="!hideDetails" class="text-filter-help text-caption text-grey mt-1">
+		<div
+			v-if="!hideDetails"
+			class="text-filter-help text-caption text-grey mt-1"
+		>
 			<div>* : Remplace n'importe quelle chaîne de caractères</div>
 			<div>? : Remplace n'importe quel caractère unique</div>
 			<div>"texte" : Recherche sensible à la casse et aux accents</div>
@@ -146,11 +156,11 @@
 <style lang="scss" scoped>
 .text-filter-container {
 	width: 100%;
-	
+
 	.filter-input {
 		width: 100%;
 	}
-	
+
 	.text-filter-help {
 		font-size: 0.75rem;
 		line-height: 1.2;

@@ -79,7 +79,7 @@ function convertFilterToRegex(filterStr: string): { regex: RegExp, caseSensitive
 	// Remplacer les caractères spéciaux de filtre par leurs équivalents regex
 	pattern = pattern.replace(/\*/g, '.*').replace(/\?/g, '.')
 
-	return { regex: new RegExp(`^${pattern}$`, 'i'), caseSensitive: false }
+	return { regex: new RegExp(pattern, 'i'), caseSensitive: false }
 }
 
 function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterOption): boolean {
@@ -113,13 +113,14 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 				// Recherche exacte sensible à la casse
 				return str.includes(caseSensitiveMatch[1])
 			}
-			
+
 			// Utiliser la fonction de conversion en regex pour les autres cas
 			const { regex, caseSensitive } = convertFilterToRegex(search)
-			
+
 			if (caseSensitive) {
 				return regex.test(str)
-			} else {
+			}
+			else {
 				return regex.test(str.toLowerCase())
 			}
 		}
