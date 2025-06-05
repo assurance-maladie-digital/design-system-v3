@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -15,7 +15,13 @@ const vuetify = createVuetify({
 describe('NumberFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof NumberFilter>>
 	const header = { title: 'Test Number', key: 'test' }
-	const filters: { key: string, value: number, type: FilterType }[] = []
+	const filters: { key: string, value: string | number, type: FilterType }[] = []
+	// Mock setTimeout and clearTimeout for debounce testing
+	vi.useFakeTimers()
+
+	afterEach(() => {
+		vi.clearAllTimers()
+	})
 
 	beforeEach(() => {
 		wrapper = mount(NumberFilter, {
@@ -32,6 +38,7 @@ describe('NumberFilter.vue', () => {
 				header,
 				filters,
 				filterValue: undefined,
+				debounceTime: 0, // Set debounce time to 0 for immediate updates in tests
 			},
 		})
 	})
@@ -45,7 +52,7 @@ describe('NumberFilter.vue', () => {
 		const syTextField = wrapper.findComponent(SyTextField)
 		// Use attributes for stubbed components
 		expect(syTextField.attributes('label')).toBe('Test Number')
-		expect(syTextField.attributes('type')).toBe('number')
+		expect(syTextField.attributes('type')).toBe('text')
 		expect(syTextField.attributes('clearable')).toBe('true')
 		expect(syTextField.attributes('density')).toBe('compact')
 		expect(syTextField.attributes('hidedetails')).toBe('true')
@@ -179,6 +186,7 @@ describe('NumberFilter.vue', () => {
 				header: emptyHeader,
 				filters: [],
 				filterValue: undefined,
+				debounceTime: 0,
 			},
 		})
 
@@ -197,4 +205,134 @@ describe('NumberFilter.vue', () => {
 		// Restaurer Date.now
 		global.Date.now = originalDateNow
 	})
+
+	// Tests for operator functionality
+	it('handles equal operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '=42')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '=42', type: 'number' as FilterType },
+		])
+	})
+
+	it('handles not equal operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '<>42')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '<>42', type: 'number' as FilterType },
+		])
+	})
+
+	it('handles less than operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '<42')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '<42', type: 'number' as FilterType },
+		])
+	})
+
+	it('handles less than or equal operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '<=42')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '<=42', type: 'number' as FilterType },
+		])
+	})
+
+	it('handles greater than operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '>42')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '>42', type: 'number' as FilterType },
+		])
+	})
+
+	it('handles greater than or equal operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '>=42')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '>=42', type: 'number' as FilterType },
+		])
+	})
+
+	// Tests for input validation
+	it('validates input to only allow digits, decimal separators, and operators', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		// Input with invalid characters
+		await syTextField.vm.$emit('update:modelValue', '>42abc')
+
+		// Should filter out invalid characters
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '>42', type: 'number' as FilterType },
+		])
+	})
+
+	it('allows decimal separator in input', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '42.5')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: 42.5, type: 'number' as FilterType },
+		])
+
+		// Test with comma as decimal separator
+		await syTextField.vm.$emit('update:modelValue', '42,5')
+
+		expect(wrapper.emitted('update:filters')![1][0]).toEqual([
+			{ key: 'test', value: 42.5, type: 'number' as FilterType },
+		])
+	})
+
+	it('handles debounce functionality correctly', async () => {
+		// Create a wrapper with actual debounce time
+		const debounceWrapper = mount(NumberFilter, {
+			global: {
+				plugins: [vuetify],
+				stubs: {
+					SyTextField: {
+						template: '<div class="sy-text-field-stub" data-testid="sy-text-field"></div>',
+						props: ['modelValue', 'label', 'type', 'clearable', 'density', 'hideDetails'],
+					},
+				},
+			},
+			props: {
+				header,
+				filters: [],
+				filterValue: undefined,
+				debounceTime: 300, // Set actual debounce time
+			},
+		})
+
+		const syTextField = debounceWrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '42')
+
+		// No immediate emission
+		expect(debounceWrapper.emitted('update:filters')).toBeFalsy()
+
+		// Advance timer by 299ms
+		vi.advanceTimersByTime(299)
+		expect(debounceWrapper.emitted('update:filters')).toBeFalsy()
+
+		// Advance timer by 1 more ms to reach 300ms
+		vi.advanceTimersByTime(1)
+		expect(debounceWrapper.emitted('update:filters')).toBeTruthy()
+		expect(debounceWrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: 42, type: 'number' as FilterType },
+		])
+	})
 })
+
