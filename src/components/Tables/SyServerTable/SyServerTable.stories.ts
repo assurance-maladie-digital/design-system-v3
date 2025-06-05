@@ -74,6 +74,9 @@ const meta = {
 			description: 'Texte de la légende du tableau',
 			control: { type: 'text' },
 		},
+		resizableColumns: {
+			description: 'Permet de redimensionner les colonnes du tableau',
+		},
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
@@ -287,6 +290,7 @@ export const Default: Story = {
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
 					:suffix="args.suffix"
+					:resizable-columns="args.resizableColumns"
 					@update:options="fetchData"
 				/>
 			</div>
@@ -490,6 +494,7 @@ export const ServerSortBy: Story = {
           :server-items-length="totalUsers"
           :loading="state === StateEnum.PENDING"
           :suffix="args.suffix"
+		  :resizable-columns="args.resizableColumns"
           @update:options="fetchData"
         />
       </div>
@@ -760,6 +765,7 @@ export const ServerFilterByText: Story = {
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
+						:resizable-columns="args.resizableColumns"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1045,6 +1051,7 @@ export const ServerFilterByNumber: Story = {
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
+						:resizable-columns="args.resizableColumns"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1352,6 +1359,7 @@ export const ServerFilterBySelect: Story = {
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
+						:resizable-columns="args.resizableColumns"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1663,6 +1671,7 @@ export const ServerFilterByDate: Story = {
 						:headers="args.headers"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
+						:resizable-columns="args.resizableColumns"
 						:show-filters="true"
 						:suffix="args.suffix"
 						@update:options="fetchData"
@@ -1984,6 +1993,7 @@ export const CustomFilterSlot: Story = {
 					:loading="loading"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:resizable-columns="args.resizableColumns"
 					@update:options="fetchData"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
@@ -2291,6 +2301,7 @@ export const CustomFilterInputs: Story = {
 						:show-filters="args.showFilters"
 						:filter-input-config="args.filterInputConfig"
 						:suffix="args.suffix"
+						:resizable-columns="args.resizableColumns"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2556,6 +2567,7 @@ export const MultiServerTables: Story = {
           :loading="stateTable1 === StateEnum.PENDING"
           suffix="table1"
 		  class="mb-10"
+		  :resizable-columns="args.resizableColumns"
           @update:options="fetchDataTable1"
         />
         <SyServerTable
@@ -2565,6 +2577,7 @@ export const MultiServerTables: Story = {
           :server-items-length="totalUsersTable2"
           :loading="stateTable2 === StateEnum.PENDING"
           suffix="table2"
+		  :resizable-columns="args.resizableColumns"
           @update:options="fetchDataTable2"
         />
       </div>

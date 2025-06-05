@@ -59,6 +59,7 @@ export interface SyTableProps {
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
+	resizableColumns?: boolean
 }
 
 export interface SyServerTableProps {
@@ -69,5 +70,6 @@ export interface SyServerTableProps {
 	caption?: string
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
+	resizableColumns?: boolean
 	filterInputConfig?: Record<string, unknown>
 }

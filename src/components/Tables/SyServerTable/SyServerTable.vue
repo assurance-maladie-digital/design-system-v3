@@ -1,11 +1,13 @@
 <script setup lang="ts">
-	import { useAttrs, watch, computed, ref } from 'vue'
-	import type { DataOptions, FilterOption, SyServerTableProps, TableColumnHeader } from '../common/types'
-	import { useTableUtils } from '../common/tableUtils'
-	import { useTableFilter } from '../common/useTableFilter'
+	import { computed, ref, useAttrs, watch } from 'vue'
+	import type { VDataTableServer } from 'vuetify/components'
 	import SyTableFilter from '../common/SyTableFilter.vue'
+	import TableHeader from '../common/TableHeader.vue'
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
+	import { useTableUtils } from '../common/tableUtils'
+	import type { DataOptions, FilterOption, SyServerTableProps, TableColumnHeader } from '../common/types'
+	import { useTableFilter } from '../common/useTableFilter'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		itemsPerPage: undefined,
@@ -13,6 +15,7 @@
 		showFilters: false,
 		items: () => [],
 		serverItemsLength: 0,
+		resizableColumns: false,
 		filterInputConfig: () => ({}),
 	})
 
@@ -20,6 +23,8 @@
 		required: false,
 		default: () => ({}),
 	})
+
+	const table = ref<VDataTableServer>()
 
 	// Computed pour les filtres
 	const filters = computed({
@@ -117,6 +122,7 @@
 		class="sy-server-table"
 	>
 		<VDataTableServer
+			ref="table"
 			v-bind="propsFacade"
 			color="primary"
 			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
@@ -131,22 +137,12 @@
 							:key="column.key"
 						>
 							<th>
-								<div class="d-flex align-center">
-									<span
-										class="me-2 cursor-pointer font-weight-bold text-grey-darken-1"
-										role="button"
-										tabindex="0"
-										@click="slotProps.toggleSort(column)"
-										@keydown.enter="slotProps.toggleSort(column)"
-										v-text="props.headers?.find(h => h.key === column.key || h.value === column.key)?.title"
-									/>
-
-									<v-icon
-										v-if="slotProps.isSorted(column)"
-										:icon="slotProps.getSortIcon(column)"
-										color="medium-emphasis"
-									/>
-								</div>
+								<TableHeader
+									:table="table"
+									:header-params="slotProps"
+									:column="column"
+									:resizable-columns="props.resizableColumns"
+								/>
 							</th>
 						</template>
 					</tr>
@@ -180,14 +176,14 @@
 							:colspan="slotProps.columns.length"
 							class="text-right pa-2"
 						>
-							<v-btn
+							<VBtn
 								size="small"
 								color="primary"
 								variant="outlined"
 								@click="filters = []"
 							>
 								{{ locales.resetFilters }}
-							</v-btn>
+							</VBtn>
 						</td>
 					</tr>
 				</template>

@@ -214,6 +214,7 @@ export const Default: Story = {
 					:headers="args.headers"
 					:items="args.items"
 					:suffix="args.suffix"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -376,6 +377,7 @@ export const SortBy: Story = {
 					:headers="args.headers"
 					:items="args.items"
 					:suffix="args.suffix"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -550,6 +552,7 @@ export const FilterByText: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -714,6 +717,7 @@ export const FilterByNumber: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -904,6 +908,7 @@ export const FilterBySelect: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -1103,6 +1108,7 @@ export const FilterByDate: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -1329,6 +1335,7 @@ export const CustomFilterSlot: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:resizable-columns="args.resizableColumns"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
 						<div class="custom-filter-container">
@@ -1546,6 +1553,7 @@ export const CustomFilterInputs: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:filter-input-config="args.filterInputConfig"
+					:resizable-columns="args.resizableColumns"
 					:suffix="args.suffix"
 				/>
 			`,
@@ -1709,6 +1717,7 @@ export const ManyTables: Story = {
 				<div>
 					<SyTable
 						v-model:options="options1"
+						:resizable-columns="args.resizableColumns"
 						:headers="args.headers"
 						:items="args.items"
 						suffix="table1"
@@ -1716,6 +1725,7 @@ export const ManyTables: Story = {
 					/>
 					<SyTable
 						v-model:options="options2"
+						:resizable-columns="args.resizableColumns"
 						:headers="args.headers"
 						:items="args.items"
 						suffix="table2"
@@ -1805,9 +1815,9 @@ export const ResizableColumns: Story = {
 			},
 		],
 	},
+	// @ts-expect-error - props of VDataTable
 	args: {
 		resizableColumns: true,
-		// @ts-expect-error - props of VDataTable
 		headers: [
 			{
 				title: 'Nom',
@@ -1870,6 +1880,7 @@ export const ResizableColumns: Story = {
 					:headers="args.headers"
 					:items="args.items"
 					:resizableColumns="args.resizableColumns"
+					suffix="table1"
 				/>
 			`,
 		}
