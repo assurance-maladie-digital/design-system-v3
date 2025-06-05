@@ -102,6 +102,5 @@ describe('tableFilterUtils', () => {
 			expect(result.map(item => item.id)).toContain(1) // John Doe
 			expect(result.map(item => item.id)).toContain(3) // Bob Johnson
 		})
-
 	})
 })
