@@ -13,6 +13,7 @@ describe('Resize columns functionality', () => {
 						{ name: 'col2', label: 'Column 2' },
 					],
 					resizableColumns: true,
+					suffix: 'resize-test',
 				},
 				global: {
 					plugins: [vuetify],
@@ -51,6 +52,7 @@ describe('Resize columns functionality', () => {
 						{ name: 'col2', label: 'Column 2' },
 					],
 					resizableColumns: true,
+					suffix: 'resize-test',
 				},
 				global: {
 					plugins: [vuetify],
@@ -91,6 +93,7 @@ describe('Resize columns functionality', () => {
 						{ name: 'col2', label: 'Column 2' },
 					],
 					resizableColumns: true,
+					suffix: 'resize-test',
 				},
 				global: {
 					plugins: [vuetify],
@@ -129,6 +132,7 @@ describe('Resize columns functionality', () => {
 						{ name: 'col2', label: 'Column 2' },
 					],
 					resizableColumns: true,
+					suffix: 'resize-test',
 				},
 				global: {
 					plugins: [vuetify],

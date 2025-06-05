@@ -20,6 +20,7 @@
 			:headers
 			:items
 			:resizable-columns="true"
+			:suffix="'.playground'"
 		/>
 	</div>
 </template>
