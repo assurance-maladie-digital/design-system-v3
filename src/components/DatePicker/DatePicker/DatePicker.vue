@@ -852,7 +852,7 @@
 								size="x-small"
 								color="primary"
 								:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
-								class="mb-2"
+								class="my-2 pa-2 mt-2"
 								@click="handleSelectToday"
 							>
 								<VIcon
@@ -984,5 +984,9 @@
 
 :deep(.v-date-picker-controls__mode-btn) {
 	transform: none !important;
+}
+
+:deep(.v-btn--variant-text .v-btn__overlay) {
+  padding: 13px;
 }
 </style>

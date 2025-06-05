@@ -955,14 +955,17 @@
 							{{ displayedDateString }}
 						</h3>
 					</template>
-					<template #actions>
+					<template
+						v-if="props.displayTodayButton"
+						#actions
+					>
 						<div class="d-flex justify-center w-100">
 							<v-btn
 								v-if="props.displayTodayButton"
 								size="x-small"
 								color="primary"
 								:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
-								class="mb-2"
+								class="my-2 pa-2 mt-2"
 								@click="handleSelectToday"
 							>
 								<VIcon
@@ -1073,15 +1076,15 @@
 	opacity: 1;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 0.5s ease;
-}
+// .fade-enter-active,
+// .fade-leave-active {
+// 	transition: opacity 0.5s ease;
+// }
 
-.fade-enter-from,
-.fade-leave-to {
-	opacity: 0;
-}
+// .fade-enter-from,
+// .fade-leave-to {
+// 	opacity: 0;
+// }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
 	background-color: #afb1b1;
@@ -1094,5 +1097,9 @@
 
 :deep(.v-date-picker-controls__mode-btn) {
 	transform: none !important;
+}
+
+:deep(.v-btn--variant-text .v-btn__overlay) {
+  padding: 13px;
 }
 </style>
