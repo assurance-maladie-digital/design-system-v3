@@ -981,4 +981,8 @@
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
 	background-color: #afb1b1;
 }
+
+:deep(.v-date-picker-controls__mode-btn) {
+	transform: none !important;
+}
 </style>
