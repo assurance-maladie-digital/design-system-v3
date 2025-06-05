@@ -156,7 +156,8 @@
 						>
 							<th>
 								<SyTableFilter
-									v-if="(column as TableColumnHeader).filterable !== false"
+									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
+									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
 									:input-config="props.filterInputConfig"

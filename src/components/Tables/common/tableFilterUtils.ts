@@ -36,6 +36,52 @@ export function filterItems<T extends Record<string, unknown>>(items: T[], filte
 	)
 }
 
+/**
+ * Convertit une chaîne de caractères de filtre avec des caractères spéciaux en expression régulière
+ * @param filterStr Chaîne de caractères de filtre
+ * @returns Expression régulière correspondante
+ */
+function convertFilterToRegex(filterStr: string): { regex: RegExp, caseSensitive: boolean } {
+	// Vérifier si la recherche est sensible à la casse (entre guillemets doubles)
+	const caseSensitiveMatch = /^"(.+)"$/.exec(filterStr)
+	if (caseSensitiveMatch) {
+		// Échapper les caractères spéciaux de regex sauf * et ?
+		let pattern = caseSensitiveMatch[1].replace(/[.+^${}()|[\]\\]/g, '\\$&')
+		// Remplacer les caractères spéciaux de filtre par leurs équivalents regex
+		pattern = pattern.replace(/\*/g, '.*').replace(/\?/g, '.')
+		// Ne pas ajouter ^ et $ pour permettre la recherche partielle dans la chaîne
+		return { regex: new RegExp(pattern), caseSensitive: true }
+	}
+
+	// Traiter les cas spéciaux
+	// Cas <>?* - Toutes les valeurs vides ou nulles
+	if (filterStr === '<>?*') {
+		return { regex: /^\s*$/, caseSensitive: false }
+	}
+
+	// Cas =???? - Tous les mots de 4 lettres exactement (ou autre longueur)
+	const exactLengthMatch = /^=(\?+)$/.exec(filterStr)
+	if (exactLengthMatch) {
+		const length = exactLengthMatch[1].length
+		return { regex: new RegExp(`^.{${length}}$`), caseSensitive: false }
+	}
+
+	// Cas >zu - Tous les mots classés après "zu" alphabétiquement
+	const greaterThanMatch = /^>(.+)$/.exec(filterStr)
+	if (greaterThanMatch) {
+		const compareValue = greaterThanMatch[1].toLowerCase()
+		// On ne peut pas utiliser une regex pour cette comparaison, on utilisera une fonction spéciale
+		return { regex: new RegExp(`^${compareValue}$`, 'i'), caseSensitive: false }
+	}
+
+	// Échapper les caractères spéciaux de regex sauf * et ?
+	let pattern = filterStr.replace(/[.+^${}()|[\]\\]/g, '\\$&')
+	// Remplacer les caractères spéciaux de filtre par leurs équivalents regex
+	pattern = pattern.replace(/\*/g, '.*').replace(/\?/g, '.')
+
+	return { regex: new RegExp(pattern, 'i'), caseSensitive: false }
+}
+
 function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterOption): boolean {
 	if (!filter.key) return true
 
@@ -46,9 +92,37 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 
 	switch (filter.type) {
 		case 'text': {
-			const str = String(itemValue).toLowerCase()
-			const search = String(filterValue).toLowerCase()
-			return str.includes(search)
+			const str = String(itemValue)
+			const search = String(filterValue)
+
+			// Cas spécial pour les valeurs vides ou nulles
+			if (search === '<>?*') {
+				return str.trim() === ''
+			}
+
+			// Cas spécial pour la comparaison alphabétique
+			const greaterThanMatch = /^>(.+)$/.exec(search)
+			if (greaterThanMatch) {
+				const compareValue = greaterThanMatch[1]
+				return str.localeCompare(compareValue) > 0
+			}
+
+			// Cas spécial pour la recherche sensible à la casse (entre guillemets doubles)
+			const caseSensitiveMatch = /^"(.+)"$/.exec(search)
+			if (caseSensitiveMatch) {
+				// Recherche exacte sensible à la casse
+				return str.includes(caseSensitiveMatch[1])
+			}
+
+			// Utiliser la fonction de conversion en regex pour les autres cas
+			const { regex, caseSensitive } = convertFilterToRegex(search)
+
+			if (caseSensitive) {
+				return regex.test(str)
+			}
+			else {
+				return regex.test(str.toLowerCase())
+			}
 		}
 		case 'number': {
 			if (typeof itemValue === 'number') {

@@ -85,6 +85,7 @@
 			title: column.name || matchingHeader?.title,
 			filterType: column.filterType || matchingHeader?.filterType,
 			filterOptions: column.filterOptions || matchingHeader?.filterOptions,
+			filterable: matchingHeader?.filterable !== undefined ? matchingHeader.filterable : column.filterable,
 		} as TableColumnHeader
 	}
 
@@ -152,8 +153,10 @@
 							:key="column.key"
 						>
 							<th>
+								<!-- Check if the column is filterable based on the headers prop -->
 								<SyTableFilter
-									v-if="(column as TableColumnHeader).filterable !== false"
+									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
+									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
 									:input-config="props.filterInputConfig"
