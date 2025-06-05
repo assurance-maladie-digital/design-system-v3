@@ -145,8 +145,8 @@ function convertFilterToRegex(filterStr: string): { regex: RegExp, caseSensitive
 		return { regex: new RegExp(`r`, 'i'), caseSensitive: false }
 	}
 
-	// Recherche insensible à la casse par défaut
-	return { regex: new RegExp(`^${filterStr}$`, 'i'), caseSensitive: false }
+	// Recherche insensible à la casse par défaut avec correspondance partielle
+	return { regex: new RegExp(filterStr, 'i'), caseSensitive: false }
 }
 
 function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterOption): boolean {
