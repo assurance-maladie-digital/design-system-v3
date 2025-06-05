@@ -1100,6 +1100,6 @@
 }
 
 :deep(.v-btn--variant-text .v-btn__overlay) {
-  padding: 13px;
+	padding: 13px;
 }
 </style>
