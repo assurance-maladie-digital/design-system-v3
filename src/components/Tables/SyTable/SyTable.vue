@@ -218,7 +218,10 @@
 							<span class="font-weight-bold">{{ header.title }}</span>
 						</th>
 					</tr>
-					<tr v-if="props.showFilters" class="filters">
+					<tr
+						v-if="props.showFilters"
+						class="filters"
+					>
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
