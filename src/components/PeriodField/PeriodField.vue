@@ -30,6 +30,7 @@
 		disableErrorHandling?: boolean
 		readonly?: boolean
 		bgColor?: string
+		density?: 'default' | 'comfortable' | 'compact'
 	}>(), {
 		modelValue: () => ({ from: null, to: null }),
 		placeholderFrom: 'Début',
@@ -50,6 +51,7 @@
 		disableErrorHandling: false,
 		readonly: false,
 		bgColor: 'white',
+		density: 'default',
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -351,6 +353,7 @@
 				:success-message="fromDateValidation.hasSuccess"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
+				:density="props.density"
 				@closed="handleFromDateClosed"
 			/>
 		</div>
@@ -376,6 +379,7 @@
 				:success-message="toDateValidation.hasSuccess"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
+				:density="props.density"
 				@closed="handleToDateClosed"
 			/>
 		</div>

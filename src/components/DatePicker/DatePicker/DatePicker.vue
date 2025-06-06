@@ -47,6 +47,7 @@
 		disableErrorHandling?: boolean
 		showSuccessMessages?: boolean
 		bgColor?: string
+		density?: 'default' | 'comfortable' | 'compact'
 		displayWeekendDays?: boolean
 		displayTodayButton?: boolean
 		useCombinedMode?: boolean
@@ -80,6 +81,7 @@
 		disableErrorHandling: false,
 		showSuccessMessages: true,
 		bgColor: undefined,
+		density: 'default',
 		displayWeekendDays: true,
 		displayTodayButton: true,
 		useCombinedMode: false,
@@ -723,6 +725,7 @@
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
+				:density="props.density"
 				:display-range="props.displayRange"
 				:display-weekend-days="props.displayWeekendDays"
 				:display-today-button="props.displayTodayButton"
@@ -771,6 +774,7 @@
 						color="primary"
 						:show-success-messages="props.showSuccessMessages"
 						:bg-color="props.bgColor"
+						:density="props.density"
 						is-clearable
 						title="Date Picker"
 						@click="openDatePickerOnClick"

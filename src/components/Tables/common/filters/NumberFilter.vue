@@ -22,7 +22,7 @@
 				variant?: string
 				hideDetails?: boolean
 				density?: 'default' | 'comfortable' | 'compact'
-        backgroundColor?: string
+				backgroundColor?: string
 				clearable?: boolean
 				debounceTime?: number
 			},
@@ -44,10 +44,10 @@
 			type: String as () => 'default' | 'comfortable' | 'compact',
 			default: 'compact',
 		},
-    backgroundColor: {
-      type: String,
-      default: 'white',
-    },
+		backgroundColor: {
+			type: String,
+			default: 'white',
+		},
 		clearable: {
 			type: Boolean,
 			default: true,
@@ -211,7 +211,7 @@
 			:hide-messages="header.hideMessages"
 			:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
 			:variant="inputConfig?.variant ?? variant"
-      :bg-color="inputConfig?.backgroundColor ?? backgroundColor"
+			:bg-color="inputConfig?.backgroundColor ?? backgroundColor"
 			class="filter-input"
 			@click:clear="handleClear"
 		/>
