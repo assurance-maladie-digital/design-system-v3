@@ -31,6 +31,7 @@
 		readonly?: boolean
 		bgColor?: string
 		density?: 'default' | 'comfortable' | 'compact'
+		hideDetails?: boolean | 'auto'
 	}>(), {
 		modelValue: () => ({ from: null, to: null }),
 		placeholderFrom: 'Début',
@@ -52,6 +53,7 @@
 		readonly: false,
 		bgColor: 'white',
 		density: 'default',
+		hideDetails: false,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -354,6 +356,7 @@
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
 				:density="props.density"
+				:hide-details="props.hideDetails"
 				@closed="handleFromDateClosed"
 			/>
 		</div>
@@ -380,6 +383,7 @@
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
 				:density="props.density"
+				:hide-details="props.hideDetails"
 				@closed="handleToDateClosed"
 			/>
 		</div>

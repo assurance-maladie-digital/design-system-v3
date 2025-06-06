@@ -48,6 +48,7 @@
 		showSuccessMessages?: boolean
 		bgColor?: string
 		density?: 'default' | 'comfortable' | 'compact'
+		hideDetails?: boolean | 'auto'
 		displayWeekendDays?: boolean
 		displayTodayButton?: boolean
 		useCombinedMode?: boolean
@@ -82,6 +83,7 @@
 		showSuccessMessages: true,
 		bgColor: undefined,
 		density: 'default',
+		hideDetails: false,
 		displayWeekendDays: true,
 		displayTodayButton: true,
 		useCombinedMode: false,
@@ -699,6 +701,7 @@
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
+				:hide-details="props.hideDetails"
 				:display-range="props.displayRange"
 				title="Date text input"
 				@focus="emit('focus')"
@@ -726,6 +729,7 @@
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
 				:density="props.density"
+				:hide-details="props.hideDetails"
 				:display-range="props.displayRange"
 				:display-weekend-days="props.displayWeekendDays"
 				:display-today-button="props.displayTodayButton"
@@ -775,6 +779,7 @@
 						:show-success-messages="props.showSuccessMessages"
 						:bg-color="props.bgColor"
 						:density="props.density"
+						:hide-details="props.hideDetails"
 						is-clearable
 						title="Date Picker"
 						@click="openDatePickerOnClick"
