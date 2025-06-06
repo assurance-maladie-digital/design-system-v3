@@ -1131,6 +1131,7 @@ export const CustomFilterSlot: Story = {
 									label="Statut"
 									variant="outlined"
 									density="compact"
+									bg-color="white"
 									@update:model-value="(val) => {
 										// Créer manuellement un filtre de sélection
 										const currentFilters = [...options.filters || []]
@@ -1338,6 +1339,7 @@ export const CustomFilterSlot: Story = {
 								label="Statut"
 								variant="outlined"
 								density="compact"
+								bg-color="white"
 								@update:model-value="(val) => {
 									// Manually create a select filter
 									const currentFilters = [...options.filters || []]

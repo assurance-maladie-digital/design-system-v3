@@ -153,7 +153,7 @@
 							</th>
 						</template>
 					</tr>
-					<tr v-if="props.showFilters">
+					<tr v-if="props.showFilters" class="filters">
 						<template
 							v-for="column in slotProps.columns"
 							:key="column.key"

@@ -22,6 +22,7 @@
 				variant?: string
 				hideDetails?: boolean
 				density?: 'default' | 'comfortable' | 'compact'
+        backgroundColor?: string
 				clearable?: boolean
 				debounceTime?: number
 			},
@@ -43,6 +44,10 @@
 			type: String as () => 'default' | 'comfortable' | 'compact',
 			default: 'compact',
 		},
+    backgroundColor: {
+      type: String,
+      default: 'white',
+    },
 		clearable: {
 			type: Boolean,
 			default: true,
@@ -206,20 +211,10 @@
 			:hide-messages="header.hideMessages"
 			:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
 			:variant="inputConfig?.variant ?? variant"
+      :bg-color="inputConfig?.backgroundColor ?? backgroundColor"
 			class="filter-input"
 			@click:clear="handleClear"
 		/>
-		<div
-			v-if="!hideDetails"
-			class="number-filter-help text-caption text-grey mt-1"
-		>
-			<div>= : Égal strictement</div>
-			<div>&lt;&gt; : Différent de</div>
-			<div>&lt; : Inférieur à</div>
-			<div>&lt;= : Inférieur ou égal à</div>
-			<div>&gt; : Supérieur à</div>
-			<div>&gt;= : Supérieur ou égal à</div>
-		</div>
 	</div>
 </template>
 

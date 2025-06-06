@@ -29,6 +29,7 @@
 		customWarningRules?: ValidationRule[]
 		disableErrorHandling?: boolean
 		readonly?: boolean
+		bgColor?: string
 	}>(), {
 		modelValue: () => ({ from: null, to: null }),
 		placeholderFrom: 'Début',
@@ -48,6 +49,7 @@
 		customWarningRules: () => [],
 		disableErrorHandling: false,
 		readonly: false,
+		bgColor: 'white',
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -348,6 +350,7 @@
 				:show-success-messages="showSuccessMessagesActual"
 				:success-message="fromDateValidation.hasSuccess"
 				:readonly="props.readonly"
+				:bg-color="props.bgColor"
 				@closed="handleFromDateClosed"
 			/>
 		</div>
@@ -372,6 +375,7 @@
 				:show-success-messages="showSuccessMessagesActual"
 				:success-message="toDateValidation.hasSuccess"
 				:readonly="props.readonly"
+				:bg-color="props.bgColor"
 				@closed="handleToDateClosed"
 			/>
 		</div>
