@@ -1701,6 +1701,7 @@ export const CustomFilterSlot: Story = {
 									label="Statut"
 									variant="outlined"
 									density="compact"
+									bg-color="white"
 									@update:model-value="(val) => {
 										// Utiliser la fonction updateFilter fournie par le slot
 										updateFilter(val)
@@ -1997,6 +1998,7 @@ export const CustomFilterSlot: Story = {
 								label="Statut"
 								variant="outlined"
 								density="compact"
+								bg-color="white"
 								@update:model-value="(val) => {
 									// Utiliser la fonction updateFilter fournie par le slot
 									updateFilter(val)

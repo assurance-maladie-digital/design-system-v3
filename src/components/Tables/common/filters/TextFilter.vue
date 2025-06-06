@@ -22,6 +22,7 @@
 				variant?: string
 				hideDetails?: boolean
 				density?: 'default' | 'comfortable' | 'compact'
+				backgroundColor?: string
 				clearable?: boolean
 				debounceTime?: number
 			},
@@ -42,6 +43,10 @@
 		density: {
 			type: String as () => 'default' | 'comfortable' | 'compact',
 			default: 'compact',
+		},
+		backgroundColor: {
+			type: String,
+			default: 'white',
 		},
 		clearable: {
 			type: Boolean,
@@ -163,17 +168,10 @@
 			:hide-messages="header.hideMessages"
 			:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
 			:variant="inputConfig?.variant ?? variant"
+			:bg-color="inputConfig?.backgroundColor ?? backgroundColor"
 			class="filter-input"
 			@click:clear="handleClear"
 		/>
-		<div
-			v-if="!hideDetails"
-			class="text-filter-help text-caption text-grey mt-1"
-		>
-			<div>* : Remplace n'importe quelle chaîne de caractères</div>
-			<div>? : Remplace n'importe quel caractère unique</div>
-			<div>"texte" : Recherche sensible à la casse et aux accents</div>
-		</div>
 	</div>
 </template>
 

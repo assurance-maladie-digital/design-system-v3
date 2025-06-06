@@ -29,6 +29,9 @@
 		customWarningRules?: ValidationRule[]
 		disableErrorHandling?: boolean
 		readonly?: boolean
+		bgColor?: string
+		density?: 'default' | 'comfortable' | 'compact'
+		hideDetails?: boolean | 'auto'
 	}>(), {
 		modelValue: () => ({ from: null, to: null }),
 		placeholderFrom: 'Début',
@@ -48,6 +51,9 @@
 		customWarningRules: () => [],
 		disableErrorHandling: false,
 		readonly: false,
+		bgColor: 'white',
+		density: 'default',
+		hideDetails: false,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -348,6 +354,9 @@
 				:show-success-messages="showSuccessMessagesActual"
 				:success-message="fromDateValidation.hasSuccess"
 				:readonly="props.readonly"
+				:bg-color="props.bgColor"
+				:density="props.density"
+				:hide-details="props.hideDetails"
 				@closed="handleFromDateClosed"
 			/>
 		</div>
@@ -372,6 +381,9 @@
 				:show-success-messages="showSuccessMessagesActual"
 				:success-message="toDateValidation.hasSuccess"
 				:readonly="props.readonly"
+				:bg-color="props.bgColor"
+				:density="props.density"
+				:hide-details="props.hideDetails"
 				@closed="handleToDateClosed"
 			/>
 		</div>
