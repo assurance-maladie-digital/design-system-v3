@@ -14,6 +14,7 @@
 		items: () => [],
 		serverItemsLength: 0,
 		filterInputConfig: () => ({}),
+		density: 'default',
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -57,6 +58,7 @@
 		serverItemsLength: props.serverItemsLength,
 		componentAttributes,
 		options,
+		density: props.density,
 	})
 
 	setupAccessibility()
@@ -122,8 +124,17 @@
 			color="primary"
 			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
 			:items-length="props.serverItemsLength || 0"
+			:density="props.density"
 			@update:options="updateOptions"
 		>
+			<template #top>
+				<caption
+					v-if="props.caption"
+					class="text-subtitle-1 text-left pa-4"
+				>
+					{{ props.caption }}
+				</caption>
+			</template>
 			<template #headers="slotProps">
 				<template v-if="slotProps && slotProps.columns">
 					<tr class="headers">

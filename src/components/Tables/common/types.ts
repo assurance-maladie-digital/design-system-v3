@@ -59,6 +59,7 @@ export interface SyTableProps {
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
+	density?: 'default' | 'comfortable' | 'compact'
 }
 
 export interface SyServerTableProps {
@@ -70,4 +71,5 @@ export interface SyServerTableProps {
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
+	density?: 'default' | 'comfortable' | 'compact'
 }

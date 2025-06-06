@@ -31,6 +31,15 @@ const meta = {
 				category: 'props',
 			},
 		},
+		density: {
+			description: 'Définit la densité du tableau',
+			control: { type: 'select' },
+			options: ['default', 'comfortable', 'compact'],
+			table: {
+				category: 'props',
+				type: { summary: 'string', detail: `'default' | 'comfortable' | 'compact'` },
+			},
+		},
 		options: {
 			description: 'Options de configuration du tableau',
 			name: 'v-model:options',
@@ -198,6 +207,7 @@ export const Default: Story = {
 			itemsPerPage: 4,
 		},
 		suffix: 'default-table',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -211,6 +221,7 @@ export const Default: Story = {
 					:headers="args.headers"
 					:items="args.items"
 					:suffix="args.suffix"
+					:density="args.density"
 				/>
 			`,
 		}
@@ -360,6 +371,7 @@ export const SortBy: Story = {
 			],
 		},
 		suffix: 'sort-table',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -373,6 +385,7 @@ export const SortBy: Story = {
 					:headers="args.headers"
 					:items="args.items"
 					:suffix="args.suffix"
+					:density="args.density"
 				/>
 			`,
 		}
@@ -525,6 +538,7 @@ export const FilterByText: Story = {
 		},
 		showFilters: true,
 		suffix: 'filter-text-table',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -547,6 +561,7 @@ export const FilterByText: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
 				/>
 			`,
 		}
@@ -689,6 +704,7 @@ export const FilterByNumber: Story = {
 		},
 		showFilters: true,
 		suffix: 'filter-number-table',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -711,6 +727,7 @@ export const FilterByNumber: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
 				/>
 			`,
 		}
@@ -879,6 +896,7 @@ export const FilterBySelect: Story = {
 		},
 		showFilters: true,
 		suffix: 'filter-select-table',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -901,6 +919,7 @@ export const FilterBySelect: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
 				/>
 			`,
 		}
@@ -1078,6 +1097,7 @@ export const FilterByDate: Story = {
 		},
 		showFilters: true,
 		suffix: 'filter-date-table',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -1100,6 +1120,7 @@ export const FilterByDate: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
 				/>
 			`,
 		}
@@ -1131,6 +1152,7 @@ export const CustomFilterSlot: Story = {
 									label="Statut"
 									variant="outlined"
 									density="compact"
+									color="primary"
 									bg-color="white"
 									@update:model-value="(val) => {
 										// Créer manuellement un filtre de sélection
@@ -1301,6 +1323,7 @@ export const CustomFilterSlot: Story = {
 		},
 		showFilters: true,
 		suffix: 'custom-filter-slot-table',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -1327,6 +1350,7 @@ export const CustomFilterSlot: Story = {
 					:items="items"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
 						<div class="custom-filter-container">
@@ -1339,6 +1363,7 @@ export const CustomFilterSlot: Story = {
 								label="Statut"
 								variant="outlined"
 								density="compact"
+								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
 									// Manually create a select filter
@@ -1523,6 +1548,7 @@ export const CustomFilterInputs: Story = {
 		},
 		showFilters: true,
 		suffix: 'filter-text-table',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -1546,6 +1572,7 @@ export const CustomFilterInputs: Story = {
 					:show-filters="args.showFilters"
 					:filter-input-config="args.filterInputConfig"
 					:suffix="args.suffix"
+					:density="args.density"
 				/>
 			`,
 		}
@@ -1691,6 +1718,7 @@ export const ManyTables: Story = {
 			},
 		],
 		suffix: 'multi-server',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -1710,6 +1738,7 @@ export const ManyTables: Story = {
 						v-model:options="options1"
 						:headers="args.headers"
 						:items="args.items"
+						:density="args.density"
 						suffix="table1"
 						class="mb-10"
 					/>
@@ -1717,6 +1746,7 @@ export const ManyTables: Story = {
 						v-model:options="options2"
 						:headers="args.headers"
 						:items="args.items"
+						:density="args.density"
 						suffix="table2"
 					/>
 				</div>

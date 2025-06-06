@@ -24,6 +24,7 @@ export function useTableUtils({
 	serverItemsLength?: number
 	componentAttributes: Record<string, unknown>
 	options: Ref<Partial<DataOptions>>
+	density?: 'default' | 'comfortable' | 'compact'
 }) {
 	// Use the separated storage utility
 	const { localOptions, storageKey, setupLocalStorage } = useTableStorage({

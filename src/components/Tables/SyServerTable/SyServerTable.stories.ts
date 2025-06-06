@@ -44,6 +44,15 @@ const meta = {
 				category: 'props',
 			},
 		},
+		density: {
+			description: 'Définit la densité du tableau',
+			control: { type: 'select' },
+			options: ['default', 'comfortable', 'compact'],
+			table: {
+				category: 'props',
+				type: { summary: 'string', detail: `'default' | 'comfortable' | 'compact'` },
+			},
+		},
 		options: {
 			description: 'Options de configuration du tableau',
 			name: 'v-model:options',
@@ -210,6 +219,7 @@ export const Default: Story = {
 		],
 		serverItemsLength: 15,
 		suffix: 'server-default',
+		density: 'default',
 	},
 	render: (args) => {
 		return {
@@ -287,6 +297,7 @@ export const Default: Story = {
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
 					:suffix="args.suffix"
+					:density="args.density"
 					@update:options="fetchData"
 				/>
 			</div>
@@ -419,6 +430,7 @@ export const ServerSortBy: Story = {
 		],
 		serverItemsLength: 0,
 		suffix: 'server-sort',
+		density: 'default',
 	},
 	render: (args) => {
 		return {
@@ -490,6 +502,7 @@ export const ServerSortBy: Story = {
           :server-items-length="totalUsers"
           :loading="state === StateEnum.PENDING"
           :suffix="args.suffix"
+		  :density="args.density"
           @update:options="fetchData"
         />
       </div>
@@ -677,6 +690,7 @@ export const ServerFilterByText: Story = {
 		},
 		showFilters: true,
 		suffix: 'server-filter-text',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -760,6 +774,7 @@ export const ServerFilterByText: Story = {
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
+						:density="args.density"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -956,6 +971,7 @@ export const ServerFilterByNumber: Story = {
 		serverItemsLength: 15,
 		showFilters: true,
 		suffix: 'server-filter-number',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -1045,6 +1061,7 @@ export const ServerFilterByNumber: Story = {
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
+						:density="args.density"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1263,6 +1280,7 @@ export const ServerFilterBySelect: Story = {
 		serverItemsLength: 15,
 		showFilters: true,
 		suffix: 'server-filter-select',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -1352,6 +1370,7 @@ export const ServerFilterBySelect: Story = {
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
+						:density="args.density"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1534,6 +1553,7 @@ export const ServerFilterByDate: Story = {
 			},
 		],
 		suffix: 'server-filter-date',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -1665,6 +1685,7 @@ export const ServerFilterByDate: Story = {
 						:loading="state === StateEnum.PENDING"
 						:show-filters="true"
 						:suffix="args.suffix"
+						:density="args.density"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1701,6 +1722,7 @@ export const CustomFilterSlot: Story = {
 									label="Statut"
 									variant="outlined"
 									density="compact"
+									color="primary"
 									bg-color="white"
 									@update:model-value="(val) => {
 										// Utiliser la fonction updateFilter fournie par le slot
@@ -1912,6 +1934,7 @@ export const CustomFilterSlot: Story = {
 		},
 		showFilters: true,
 		suffix: 'server-custom-filter-slot',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -1985,6 +2008,7 @@ export const CustomFilterSlot: Story = {
 					:loading="loading"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
 					@update:options="fetchData"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
@@ -1998,6 +2022,7 @@ export const CustomFilterSlot: Story = {
 								label="Statut"
 								variant="outlined"
 								density="compact"
+								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
 									// Utiliser la fonction updateFilter fournie par le slot
@@ -2209,6 +2234,7 @@ export const CustomFilterInputs: Story = {
 		},
 		showFilters: true,
 		suffix: 'server-filter-text',
+		density: 'default',
 	},
 	render(args) {
 		return {
@@ -2293,6 +2319,7 @@ export const CustomFilterInputs: Story = {
 						:show-filters="args.showFilters"
 						:filter-input-config="args.filterInputConfig"
 						:suffix="args.suffix"
+						:density="args.density"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2448,6 +2475,7 @@ export const MultiServerTables: Story = {
 			{ title: 'Email', key: 'email' },
 		],
 		suffix: 'multi',
+		density: 'default',
 	},
 	render: (args) => {
 		return {
@@ -2556,6 +2584,7 @@ export const MultiServerTables: Story = {
           :headers="args.headers"
           :server-items-length="totalUsersTable1"
           :loading="stateTable1 === StateEnum.PENDING"
+		  :density="args.density"
           suffix="table1"
 		  class="mb-10"
           @update:options="fetchDataTable1"
@@ -2566,6 +2595,7 @@ export const MultiServerTables: Story = {
           :headers="args.headers"
           :server-items-length="totalUsersTable2"
           :loading="stateTable2 === StateEnum.PENDING"
+		  :density="args.density"
           suffix="table2"
           @update:options="fetchDataTable2"
         />
