@@ -151,7 +151,10 @@
 							</th>
 						</template>
 					</tr>
-					<tr v-if="props.showFilters">
+					<tr
+						v-if="props.showFilters"
+						class="filters"
+					>
 						<template
 							v-for="column in slotProps.columns"
 							:key="column.key"
@@ -178,10 +181,13 @@
 							</th>
 						</template>
 					</tr>
-					<tr v-if="props.showFilters && filters.length > 0">
+					<tr
+						v-if="props.showFilters && filters.length > 0"
+						class="reset"
+					>
 						<td
 							:colspan="slotProps.columns.length"
-							class="text-right pa-2"
+							class="text-right px-4 py-2"
 						>
 							<v-btn
 								size="small"
