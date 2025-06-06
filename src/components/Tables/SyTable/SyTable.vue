@@ -128,7 +128,7 @@
 		>
 			<template #headers="slotProps">
 				<template v-if="slotProps && slotProps.columns">
-					<tr>
+					<tr class="headers">
 						<template
 							v-for="column in slotProps.columns"
 							:key="column.key"
@@ -210,7 +210,7 @@
 				</template>
 				<!-- Repli lorsque les colonnes ne sont pas définies -->
 				<template v-else>
-					<tr>
+					<tr class="headers">
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
@@ -218,7 +218,7 @@
 							<span class="font-weight-bold">{{ header.title }}</span>
 						</th>
 					</tr>
-					<tr v-if="props.showFilters">
+					<tr v-if="props.showFilters" class="filters">
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"

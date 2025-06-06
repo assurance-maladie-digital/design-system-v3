@@ -18,10 +18,11 @@
 	}
 
 	table thead tr.filters,
- table thead tr.reset {
+	table thead tr.reset {
 		background-color: tokens.$blue-lighten-90;
 	}
 
+	table thead tr.headers,
 	table thead tr.reset {
 		background-color: rgba(tokens.$blue-lighten-80, 0.2);
 	}
