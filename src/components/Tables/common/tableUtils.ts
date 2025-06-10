@@ -11,6 +11,7 @@ export function useTableUtils({
 	prefix,
 	suffix,
 	itemsPerPage,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	caption,
 	serverItemsLength,
 	componentAttributes,
@@ -20,7 +21,7 @@ export function useTableUtils({
 	prefix: string
 	suffix?: string
 	itemsPerPage?: number
-	caption: string
+	caption?: string
 	serverItemsLength?: number
 	componentAttributes: Record<string, unknown>
 	options: Ref<Partial<DataOptions>>
@@ -37,7 +38,6 @@ export function useTableUtils({
 	// Use the separated accessibility utility
 	const { setupAccessibility } = useTableAccessibility({
 		tableId,
-		caption,
 	})
 
 	const headers = computed(() => {
