@@ -214,6 +214,7 @@ export const Default: Story = {
 		options: {
 			itemsPerPage: 4,
 		},
+		caption: '',
 		suffix: 'default-table',
 		density: 'default',
 		striped: false,
@@ -229,6 +230,7 @@ export const Default: Story = {
 					v-model:options="args.options"
 					:headers="args.headers"
 					:items="args.items"
+					:caption="args.caption"
 					:suffix="args.suffix"
 					:density="args.density"
 					:striped="args.striped"
@@ -371,6 +373,7 @@ export const SortBy: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			sortBy: [
@@ -395,6 +398,7 @@ export const SortBy: Story = {
 					v-model:options="args.options"
 					:headers="args.headers"
 					:items="args.items"
+					:caption="args.caption"
 					:suffix="args.suffix"
 					:density="args.density"
 					:striped="args.striped"
@@ -544,6 +548,7 @@ export const FilterByText: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			filters: [],
@@ -572,6 +577,7 @@ export const FilterByText: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
@@ -712,6 +718,7 @@ export const FilterByNumber: Story = {
 				salary: 58000,
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			filters: [],
@@ -740,6 +747,7 @@ export const FilterByNumber: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
@@ -906,6 +914,7 @@ export const FilterBySelect: Story = {
 				status: 'Inactif',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			filters: [],
@@ -934,6 +943,7 @@ export const FilterBySelect: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
@@ -1109,6 +1119,7 @@ export const FilterByDate: Story = {
 				},
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			filters: [],
@@ -1137,6 +1148,7 @@ export const FilterByDate: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
@@ -1337,6 +1349,7 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			filters: [],
@@ -1369,6 +1382,7 @@ export const CustomFilterSlot: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
@@ -1557,6 +1571,7 @@ export const CustomFilterInputs: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			filters: [],
@@ -1592,6 +1607,7 @@ export const CustomFilterInputs: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:filter-input-config="args.filterInputConfig"
 					:suffix="args.suffix"
@@ -1740,6 +1756,7 @@ export const ManyTables: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		suffix: 'multi-server',
 		density: 'default',
 		striped: false,
@@ -1762,6 +1779,7 @@ export const ManyTables: Story = {
 						v-model:options="options1"
 						:headers="args.headers"
 						:items="args.items"
+						:caption="args.caption"
 						:density="args.density"
 						:striped="args.striped"
 						suffix="table1"
@@ -1771,6 +1789,7 @@ export const ManyTables: Story = {
 						v-model:options="options2"
 						:headers="args.headers"
 						:items="args.items"
+						:caption="args.caption"
 						:density="args.density"
 						:striped="args.striped"
 						suffix="table2"

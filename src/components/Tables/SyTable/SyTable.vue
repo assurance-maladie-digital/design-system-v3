@@ -132,8 +132,9 @@
 		>
 			<template #top>
 				<caption
-					v-if="props.caption"
-					class="text-subtitle-1 text-left pa-4"
+					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.caption === '' }"
+					:aria-label="props.caption"
 				>
 					{{ props.caption }}
 				</caption>
@@ -148,7 +149,7 @@
 							<th>
 								<div class="d-flex align-center">
 									<span
-										class="me-2 cursor-pointer font-weight-bold text-grey-darken-1"
+										class="me-2 cursor-pointer font-weight-bold text-grey-darken-2"
 										role="button"
 										tabindex="0"
 										@click="slotProps.toggleSort(column)"

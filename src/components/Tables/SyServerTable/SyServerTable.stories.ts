@@ -225,6 +225,7 @@ export const Default: Story = {
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
+		caption: '',
 		serverItemsLength: 15,
 		suffix: 'server-default',
 		density: 'default',
@@ -303,6 +304,7 @@ export const Default: Story = {
 					v-model:options="args.options"
 					:items="users"
 					:headers="args.headers"
+					:caption="args.caption"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
 					:suffix="args.suffix"
@@ -438,6 +440,7 @@ export const ServerSortBy: Story = {
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
+		caption: '',
 		serverItemsLength: 0,
 		suffix: 'server-sort',
 		density: 'default',
@@ -510,6 +513,7 @@ export const ServerSortBy: Story = {
           v-model:options="args.options"
           :items="users"
           :headers="args.headers"
+		  :caption="args.caption"
           :server-items-length="totalUsers"
           :loading="state === StateEnum.PENDING"
           :suffix="args.suffix"
@@ -695,6 +699,7 @@ export const ServerFilterByText: Story = {
 				filterType: 'text',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -783,6 +788,7 @@ export const ServerFilterByText: Story = {
 						v-model:options="options"
 						:items="filteredUsers"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
@@ -977,6 +983,7 @@ export const ServerFilterByNumber: Story = {
 				filterType: 'number',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -1072,6 +1079,7 @@ export const ServerFilterByNumber: Story = {
 						v-model:options="options"
 						:items="filteredUsers"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
@@ -1288,6 +1296,7 @@ export const ServerFilterBySelect: Story = {
 				],
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -1383,6 +1392,7 @@ export const ServerFilterBySelect: Story = {
 						v-model:options="options"
 						:items="filteredUsers"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
@@ -1570,6 +1580,7 @@ export const ServerFilterByDate: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
+		caption: '',
 		suffix: 'server-filter-date',
 		density: 'default',
 		striped: false,
@@ -1700,6 +1711,7 @@ export const ServerFilterByDate: Story = {
 						v-model:options="options"
 						:items="users"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="true"
@@ -1948,6 +1960,7 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			filters: [],
@@ -2025,6 +2038,7 @@ export const CustomFilterSlot: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:server-items-length="serverItemsLength"
 					:loading="loading"
 					:show-filters="args.showFilters"
@@ -2242,6 +2256,7 @@ export const CustomFilterInputs: Story = {
 				filterType: 'text',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -2337,6 +2352,7 @@ export const CustomFilterInputs: Story = {
 						v-model:options="options"
 						:items="filteredUsers"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
@@ -2498,6 +2514,7 @@ export const MultiServerTables: Story = {
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
+		caption: '',
 		suffix: 'multi',
 		density: 'default',
 		striped: false,
@@ -2607,6 +2624,7 @@ export const MultiServerTables: Story = {
           v-model:options="optionsTable1"
           :items="usersTable1"
           :headers="args.headers"
+		  :caption="args.caption"
           :server-items-length="totalUsersTable1"
           :loading="stateTable1 === StateEnum.PENDING"
 		  :density="args.density"
@@ -2619,6 +2637,7 @@ export const MultiServerTables: Story = {
           v-model:options="optionsTable2"
           :items="usersTable2"
           :headers="args.headers"
+		  :caption="args.caption"
           :server-items-length="totalUsersTable2"
           :loading="stateTable2 === StateEnum.PENDING"
 		  :density="args.density"
