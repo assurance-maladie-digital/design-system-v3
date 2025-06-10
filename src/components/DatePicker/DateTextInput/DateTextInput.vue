@@ -346,17 +346,7 @@
 	})
 
 	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
-		// Bloquer la saisie de caractères non numériques (sauf touches spéciales)
-		if (
-			!/^[0-9]$/.test(event.key) // Autoriser les chiffres
-			&& !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(event.key) // Autoriser les touches de navigation
-			&& !event.ctrlKey && !event.metaKey // Autoriser les combinaisons Ctrl/Cmd (pour copier/coller)
-		) {
-			event.preventDefault()
-			return
-		}
-
-		// Utiliser l'implémentation du composable pour une meilleure gestion des touches
+		// Utiliser l'implémentation du composable pour une meilleure gestion de l'édition
 		handleKeydownFromComposable(event)
 	}
 
@@ -391,12 +381,13 @@
 
 			// Utiliser le composable de plage de dates si le mode plage est activé
 			if (props.displayRange) {
-				const cleanedInput = newValue.replace(/[^\d\s-]/g, '')
+				// Appliquer le formatage automatique aux dates saisies
+				const cleanedInput = newValue.replace(/[^\d]/g, '')
 				let formattedInput = ''
 
 				// Si l'entrée contient un séparateur de plage, traiter chaque partie séparément
-				if (cleanedInput.includes(' - ')) {
-					const parts = cleanedInput.split(' - ')
+				if (newValue.includes(' - ')) {
+					const parts = newValue.split(' - ')
 					const firstPart = parts[0]
 					const secondPart = parts[1] || ''
 
@@ -413,7 +404,7 @@
 				}
 				else if (cleanedInput.length > 0) {
 					// Appliquer le formatage automatique à une date unique
-					const { formatted } = formatDateInput(cleanedInput)
+					const { formatted } = formatDateInput(newValue)
 					formattedInput = formatted
 					newValue = formattedInput
 				}
@@ -487,16 +478,14 @@
 				// Émettre l'événement input
 				emit('input', result.formattedValue)
 
-				const finalCursorPosition = result.cursorPosition !== undefined
-					? result.cursorPosition
-					: Math.min(cursorPos, result.formattedValue.length)
-
-				// Appliquer la position du curseur
-				setTimeout(() => {
-					if (input) {
-						input.setSelectionRange(finalCursorPosition, finalCursorPosition)
-					}
-				}, 0)
+				// Mettre à jour la position du curseur si nécessaire
+				if (result.cursorPosition !== undefined) {
+					setTimeout(() => {
+						if (input) {
+							input.setSelectionRange(result.cursorPosition, result.cursorPosition)
+						}
+					}, 0)
+				}
 			}
 			else {
 				// Mode date unique (comportement existant)
