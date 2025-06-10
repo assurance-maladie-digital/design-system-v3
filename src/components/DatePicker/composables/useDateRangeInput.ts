@@ -243,6 +243,118 @@ export function useDateRangeInput(
 		return isValidRange(firstDate.value, secondDate.value)
 	})
 
+	/**
+	 * Gère l'événement keydown pour filtrer les caractères non numériques
+	 *
+	 * @param event - Événement keydown
+	 */
+	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }): void => {
+		// Bloquer la saisie de caractères non numériques
+		// Autoriser uniquement : chiffres, touches de navigation, touches de modification et touches de contrôle
+		if (
+			// Si la touche n'est pas un chiffre
+			!/^\d$/.test(event.key)
+			// Et n'est pas une touche spéciale autorisée
+			&& ![
+				'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
+				'Home', 'End', 'Tab', 'Escape', 'Enter',
+				'Control', 'Alt', 'Shift', 'Meta',
+			].includes(event.key)
+			// Et n'est pas une combinaison de touches (Ctrl+A, Ctrl+C, Ctrl+V, etc.)
+			&& !(event.ctrlKey || event.metaKey)
+		) {
+			// Empêcher la saisie de caractères non numériques
+			event.preventDefault()
+			return
+		}
+
+		// Gérer les touches spéciales pour le mode plage
+		if (isRangeMode) {
+			// Gérer la suppression des séparateurs de plage
+			if (event.key === 'Backspace') {
+				const input = event.target
+				if (!input.selectionStart || input.selectionStart !== input.selectionEnd) {
+					return
+				}
+
+				const cursorPos = input.selectionStart
+
+				// Si on est juste après un séparateur de plage
+				if (cursorPos >= rangeSeparator.length
+					&& input.value.substring(cursorPos - rangeSeparator.length, cursorPos) === rangeSeparator) {
+					// Empêcher le comportement par défaut
+					event.preventDefault()
+
+					// Supprimer le séparateur complet
+					const newValue = input.value.substring(0, cursorPos - rangeSeparator.length)
+						+ input.value.substring(cursorPos)
+
+					// Mettre à jour la valeur (via l'événement input)
+					const inputEvent = new InputEvent('input', { bubbles: true, cancelable: true, data: newValue })
+					Object.defineProperty(inputEvent, 'target', { value: input, enumerable: true })
+					input.value = newValue
+					input.dispatchEvent(inputEvent)
+
+					// Positionner le curseur
+					setTimeout(() => {
+						const newCursorPos = cursorPos - rangeSeparator.length
+						input.setSelectionRange(newCursorPos, newCursorPos)
+					}, 0)
+				}
+			}
+		}
+	}
+
+	/**
+	 * Gère l'événement paste pour filtrer les caractères non numériques
+	 *
+	 * @param event - Événement paste
+	 */
+	const handlePaste = (event: ClipboardEvent): void => {
+		// Récupérer le contenu du presse-papiers
+		const clipboardData = event.clipboardData
+		if (!clipboardData) return
+
+		// Extraire le texte
+		const pastedText = clipboardData.getData('text')
+
+		// Filtrer pour ne garder que les chiffres
+		const cleanedText = pastedText.replace(/[^0-9]/g, '')
+
+		// Si le texte collé ne contient pas de chiffres, annuler l'opération
+		if (cleanedText.length === 0) {
+			event.preventDefault()
+			return
+		}
+
+		// Si le texte a été modifié (des caractères non numériques ont été supprimés)
+		if (cleanedText !== pastedText) {
+			event.preventDefault()
+
+			// Insérer manuellement le texte nettoyé
+			const input = event.target as HTMLInputElement
+			if (!input) return
+
+			const start = input.selectionStart || 0
+			const end = input.selectionEnd || 0
+
+			// Construire la nouvelle valeur
+			const newValue = input.value.substring(0, start) + cleanedText + input.value.substring(end)
+
+			// Mettre à jour la valeur (via l'événement input)
+			const inputEvent = new InputEvent('input', { bubbles: true, cancelable: true, data: newValue })
+			Object.defineProperty(inputEvent, 'target', { value: input, enumerable: true })
+			input.value = newValue
+			input.dispatchEvent(inputEvent)
+
+			// Positionner le curseur après le texte collé
+			setTimeout(() => {
+				const newCursorPos = start + cleanedText.length
+				input.setSelectionRange(newCursorPos, newCursorPos)
+			}, 0)
+		}
+	}
+
 	return {
 		isEditingSecondDate,
 		firstDate,
@@ -257,5 +369,7 @@ export function useDateRangeInput(
 		resetState,
 		isValidRange,
 		currentRangeIsValid,
+		handleKeydown,
+		handlePaste,
 	}
 }

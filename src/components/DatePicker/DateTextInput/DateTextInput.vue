@@ -138,6 +138,8 @@
 		initializeWithDates,
 		formatRangeForDisplay,
 		parseRangeInput,
+		handleKeydown: handleKeydownRangeDate,
+		handlePaste: handlePasteRangeDate,
 	} = useDateRangeInput(
 		props.format,
 		props.displayRange,
@@ -193,7 +195,7 @@
 		ariaLabel.value = value
 	}
 
-	const { formatDateInput, handleKeydown: handleKeydownFromComposable, handlePaste: handlePasteFromComposable } = useDateInputEditing({
+	const { formatDateInput, handleKeydown: handleKeydownSingleDate, handlePaste: handlePasteSingleDate } = useDateInputEditing({
 		format: props.format,
 		updateDisplayValue,
 		updateAriaLabel,
@@ -346,13 +348,23 @@
 	})
 
 	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
-		// Utiliser l'implémentation du composable pour une meilleure gestion de l'édition
-		handleKeydownFromComposable(event)
+		// Utiliser l'implémentation du composable approprié en fonction du mode
+		if (props.displayRange) {
+			handleKeydownRangeDate(event)
+		}
+		else {
+			handleKeydownSingleDate(event)
+		}
 	}
 
 	const handlePaste = (event: ClipboardEvent) => {
-		// Utiliser l'implémentation du composable pour une meilleure gestion du collage
-		handlePasteFromComposable(event)
+		// Utiliser l'implémentation du composable approprié en fonction du mode
+		if (props.displayRange) {
+			handlePasteRangeDate(event)
+		}
+		else {
+			handlePasteSingleDate(event)
+		}
 	}
 
 	const inputRef = ref<InstanceType<typeof SyTextField> | null>(null)
