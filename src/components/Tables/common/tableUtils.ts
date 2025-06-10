@@ -11,8 +11,6 @@ export function useTableUtils({
 	prefix,
 	suffix,
 	itemsPerPage,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	caption,
 	serverItemsLength,
 	componentAttributes,
 	options,
