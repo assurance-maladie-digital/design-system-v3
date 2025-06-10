@@ -40,6 +40,14 @@ const meta = {
 				type: { summary: 'string', detail: `'default' | 'comfortable' | 'compact'` },
 			},
 		},
+		striped: {
+			description: 'Affiche les lignes du tableau avec un fond rayé',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
 		options: {
 			description: 'Options de configuration du tableau',
 			name: 'v-model:options',
@@ -208,6 +216,7 @@ export const Default: Story = {
 		},
 		suffix: 'default-table',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -222,6 +231,7 @@ export const Default: Story = {
 					:items="args.items"
 					:suffix="args.suffix"
 					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -372,6 +382,7 @@ export const SortBy: Story = {
 		},
 		suffix: 'sort-table',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -386,6 +397,7 @@ export const SortBy: Story = {
 					:items="args.items"
 					:suffix="args.suffix"
 					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -539,6 +551,7 @@ export const FilterByText: Story = {
 		showFilters: true,
 		suffix: 'filter-text-table',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -562,6 +575,7 @@ export const FilterByText: Story = {
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -705,6 +719,7 @@ export const FilterByNumber: Story = {
 		showFilters: true,
 		suffix: 'filter-number-table',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -728,6 +743,7 @@ export const FilterByNumber: Story = {
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -897,6 +913,7 @@ export const FilterBySelect: Story = {
 		showFilters: true,
 		suffix: 'filter-select-table',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -920,6 +937,7 @@ export const FilterBySelect: Story = {
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -1098,6 +1116,7 @@ export const FilterByDate: Story = {
 		showFilters: true,
 		suffix: 'filter-date-table',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1121,6 +1140,7 @@ export const FilterByDate: Story = {
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -1324,6 +1344,7 @@ export const CustomFilterSlot: Story = {
 		showFilters: true,
 		suffix: 'custom-filter-slot-table',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1351,6 +1372,7 @@ export const CustomFilterSlot: Story = {
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
+					:striped="args.striped"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
 						<div class="custom-filter-container">
@@ -1549,6 +1571,7 @@ export const CustomFilterInputs: Story = {
 		showFilters: true,
 		suffix: 'filter-text-table',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1589,13 +1612,13 @@ export const ManyTables: Story = {
 					<div class="d-flex flex-column gap-4">
 						<SyTable
 							v-model:options="options1"
-							:headers="args.headers"
+							:headers="headers"
 							:items="items1"
 							suffix="table-1"
 						/>
 						<SyTable
 							v-model:options="options2"
-							:headers="args.headers"
+							:headers="headers"
 							:items="items2"
 							suffix="table-2"
 						/>
@@ -1719,6 +1742,7 @@ export const ManyTables: Story = {
 		],
 		suffix: 'multi-server',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1739,6 +1763,7 @@ export const ManyTables: Story = {
 						:headers="args.headers"
 						:items="args.items"
 						:density="args.density"
+						:striped="args.striped"
 						suffix="table1"
 						class="mb-10"
 					/>
@@ -1747,6 +1772,7 @@ export const ManyTables: Story = {
 						:headers="args.headers"
 						:items="args.items"
 						:density="args.density"
+						:striped="args.striped"
 						suffix="table2"
 					/>
 				</div>

@@ -15,6 +15,7 @@
 		serverItemsLength: 0,
 		filterInputConfig: () => ({}),
 		density: 'default',
+		striped: false,
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -117,7 +118,7 @@
 <template>
 	<div
 		:id="uniqueTableId"
-		class="sy-server-table"
+		:class="['sy-server-table', { 'sy-server-table--striped': props.striped }]"
 	>
 		<VDataTableServer
 			v-bind="propsFacade"
@@ -255,8 +256,19 @@
 
 <style lang="scss" scoped>
 @use '@/components/Tables/common/tableStyles' as *;
+@use '@/assets/tokens';
 
 .sy-server-table :deep() {
 	@include tablestyles;
+}
+
+@mixin striped-rows {
+	.v-table tbody tr:nth-child(even) {
+		background-color: rgba(tokens.$primary-base, 0.05);
+	}
+}
+
+.sy-server-table--striped :deep() {
+	@include striped-rows;
 }
 </style>

@@ -60,6 +60,7 @@ export interface SyTableProps {
 	headers?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
 	density?: 'default' | 'comfortable' | 'compact'
+	striped?: boolean
 }
 
 export interface SyServerTableProps {
@@ -72,4 +73,5 @@ export interface SyServerTableProps {
 	headers?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
 	density?: 'default' | 'comfortable' | 'compact'
+	striped?: boolean
 }

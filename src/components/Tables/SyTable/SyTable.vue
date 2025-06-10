@@ -14,6 +14,7 @@
 		items: () => [],
 		filterInputConfig: () => ({}),
 		density: 'default',
+		striped: false,
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -120,7 +121,7 @@
 <template>
 	<div
 		:id="uniqueTableId"
-		class="sy-table"
+		:class="['sy-table', { 'sy-table--striped': props.striped }]"
 	>
 		<VDataTable
 			color="primary"
@@ -270,8 +271,19 @@
 
 <style lang="scss" scoped>
 @use '@/components/Tables/common/tableStyles' as *;
+@use '@/assets/tokens';
 
 .sy-table :deep() {
 	@include tablestyles;
+}
+
+@mixin striped-rows {
+	.v-table tbody tr:nth-child(even) {
+		background-color: rgba(tokens.$primary-base, 0.05);
+	}
+}
+
+.sy-table--striped :deep() {
+	@include striped-rows;
 }
 </style>

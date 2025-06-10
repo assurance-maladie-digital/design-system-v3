@@ -53,6 +53,14 @@ const meta = {
 				type: { summary: 'string', detail: `'default' | 'comfortable' | 'compact'` },
 			},
 		},
+		striped: {
+			description: 'Affiche les lignes du tableau avec un fond rayé',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
 		options: {
 			description: 'Options de configuration du tableau',
 			name: 'v-model:options',
@@ -220,6 +228,7 @@ export const Default: Story = {
 		serverItemsLength: 15,
 		suffix: 'server-default',
 		density: 'default',
+		striped: false,
 	},
 	render: (args) => {
 		return {
@@ -298,6 +307,7 @@ export const Default: Story = {
 					:loading="state === StateEnum.PENDING"
 					:suffix="args.suffix"
 					:density="args.density"
+					:striped="args.striped"
 					@update:options="fetchData"
 				/>
 			</div>
@@ -431,6 +441,7 @@ export const ServerSortBy: Story = {
 		serverItemsLength: 0,
 		suffix: 'server-sort',
 		density: 'default',
+		striped: false,
 	},
 	render: (args) => {
 		return {
@@ -503,6 +514,7 @@ export const ServerSortBy: Story = {
           :loading="state === StateEnum.PENDING"
           :suffix="args.suffix"
 		  :density="args.density"
+		  :striped="args.striped"
           @update:options="fetchData"
         />
       </div>
@@ -691,6 +703,7 @@ export const ServerFilterByText: Story = {
 		showFilters: true,
 		suffix: 'server-filter-text',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -775,6 +788,7 @@ export const ServerFilterByText: Story = {
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
 						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -972,6 +986,7 @@ export const ServerFilterByNumber: Story = {
 		showFilters: true,
 		suffix: 'server-filter-number',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1062,6 +1077,7 @@ export const ServerFilterByNumber: Story = {
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
 						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1281,6 +1297,7 @@ export const ServerFilterBySelect: Story = {
 		showFilters: true,
 		suffix: 'server-filter-select',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1371,6 +1388,7 @@ export const ServerFilterBySelect: Story = {
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
 						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1554,6 +1572,7 @@ export const ServerFilterByDate: Story = {
 		],
 		suffix: 'server-filter-date',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1686,6 +1705,7 @@ export const ServerFilterByDate: Story = {
 						:show-filters="true"
 						:suffix="args.suffix"
 						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1935,6 +1955,7 @@ export const CustomFilterSlot: Story = {
 		showFilters: true,
 		suffix: 'server-custom-filter-slot',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -2009,6 +2030,7 @@ export const CustomFilterSlot: Story = {
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
 					:density="args.density"
+					:striped="args.striped"
 					@update:options="fetchData"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
@@ -2235,6 +2257,7 @@ export const CustomFilterInputs: Story = {
 		showFilters: true,
 		suffix: 'server-filter-text',
 		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -2320,6 +2343,7 @@ export const CustomFilterInputs: Story = {
 						:filter-input-config="args.filterInputConfig"
 						:suffix="args.suffix"
 						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2476,6 +2500,7 @@ export const MultiServerTables: Story = {
 		],
 		suffix: 'multi',
 		density: 'default',
+		striped: false,
 	},
 	render: (args) => {
 		return {
@@ -2585,6 +2610,7 @@ export const MultiServerTables: Story = {
           :server-items-length="totalUsersTable1"
           :loading="stateTable1 === StateEnum.PENDING"
 		  :density="args.density"
+		  :striped="args.striped"
           suffix="table1"
 		  class="mb-10"
           @update:options="fetchDataTable1"
@@ -2596,6 +2622,7 @@ export const MultiServerTables: Story = {
           :server-items-length="totalUsersTable2"
           :loading="stateTable2 === StateEnum.PENDING"
 		  :density="args.density"
+		  :striped="args.striped"
           suffix="table2"
           @update:options="fetchDataTable2"
         />
