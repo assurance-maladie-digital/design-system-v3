@@ -100,13 +100,14 @@
 	onMounted(() => {
 		const table = document.querySelector(`#${uniqueTableId.value} table`)
 		const caption = document.createElement('caption')
-		caption.innerHTML = props.caption
+		caption.classList.add('d-sr-only')
 		if (props.caption === '') {
-			caption.classList.add('d-sr-only')
 			caption.setAttribute('aria-label', 'Table caption')
+			caption.innerHTML = 'Table caption'
 		}
 		else {
-			caption.classList.add('text-subtitle-1')
+			caption.setAttribute('aria-label', props.caption)
+			caption.innerHTML = props.caption
 		}
 		table?.prepend(caption)
 
@@ -117,7 +118,20 @@
 
 		const fields = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fields.forEach((field) => {
-			(field as HTMLElement).setAttribute('tabindex', '0')
+			const element = field as HTMLElement
+			element.setAttribute('tabindex', '0')
+
+			// Remove immediately if it exists
+			if (element.hasAttribute('aria-controls')) {
+				element.removeAttribute('aria-controls')
+			}
+
+			// Check again after a delay
+			setTimeout(() => {
+				if (element.hasAttribute('aria-controls')) {
+					element.removeAttribute('aria-controls')
+				}
+			}, 500)
 		})
 
 		const fieldLabels = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
@@ -148,6 +162,16 @@
 			v-bind="propsFacade"
 			@update:options="updateOptions"
 		>
+			<template #top>
+				<div
+					v-if="props.caption"
+					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.caption === '' }"
+					:aria-label="props.caption"
+				>
+					{{ props.caption }}
+				</div>
+			</template>
 			<template
 				v-for="slotName in Object.keys($slots)"
 				#[slotName]="slotProps"
@@ -164,6 +188,16 @@
 			color="primary"
 			@update:options="updateOptions"
 		>
+			<template #top>
+				<div
+					v-if="props.caption"
+					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.caption === '' }"
+					:aria-label="props.caption"
+				>
+					{{ props.caption }}
+				</div>
+			</template>
 			<template
 				v-for="slotName in Object.keys($slots)"
 				#[slotName]="slotProps"

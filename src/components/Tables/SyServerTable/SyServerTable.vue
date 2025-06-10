@@ -17,6 +17,8 @@
 		serverItemsLength: 0,
 		resizableColumns: false,
 		filterInputConfig: () => ({}),
+		density: 'default',
+		striped: false,
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -62,6 +64,7 @@
 		serverItemsLength: props.serverItemsLength,
 		componentAttributes,
 		options,
+		density: props.density,
 	})
 
 	setupAccessibility()
@@ -120,7 +123,7 @@
 <template>
 	<div
 		:id="uniqueTableId"
-		class="sy-server-table"
+		:class="['sy-server-table', { 'sy-server-table--striped': props.striped }]"
 	>
 		<VDataTableServer
 			ref="table"
@@ -128,11 +131,21 @@
 			color="primary"
 			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
 			:items-length="props.serverItemsLength || 0"
+			:density="props.density"
 			@update:options="updateOptions"
 		>
+			<template #top>
+				<caption
+					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.caption === '' }"
+					:aria-label="props.caption"
+				>
+					{{ props.caption }}
+				</caption>
+			</template>
 			<template #headers="slotProps">
 				<template v-if="slotProps && slotProps.columns">
-					<tr>
+					<tr class="headers">
 						<template
 							v-for="column in slotProps.columns"
 							:key="column.key"
@@ -147,7 +160,10 @@
 							</th>
 						</template>
 					</tr>
-					<tr v-if="props.showFilters">
+					<tr
+						v-if="props.showFilters"
+						class="filters"
+					>
 						<template
 							v-for="column in slotProps.columns"
 							:key="column.key"
@@ -174,10 +190,13 @@
 							</th>
 						</template>
 					</tr>
-					<tr v-if="props.showFilters && filters.length > 0">
+					<tr
+						v-if="props.showFilters && filters.length > 0"
+						class="reset"
+					>
 						<td
 							:colspan="slotProps.columns.length"
-							class="text-right pa-2"
+							class="text-right px-4 py-2"
 						>
 							<VBtn
 								size="small"
@@ -192,7 +211,7 @@
 				</template>
 				<!-- Repli lorsque les colonnes ne sont pas définies -->
 				<template v-else>
-					<tr>
+					<tr class="headers">
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
@@ -200,7 +219,10 @@
 							<span class="font-weight-bold">{{ header.title }}</span>
 						</th>
 					</tr>
-					<tr v-if="props.showFilters">
+					<tr
+						v-if="props.showFilters"
+						class="filters"
+					>
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
@@ -231,8 +253,19 @@
 
 <style lang="scss" scoped>
 @use '@/components/Tables/common/tableStyles' as *;
+@use '@/assets/tokens';
 
 .sy-server-table :deep() {
 	@include tablestyles;
+}
+
+@mixin striped-rows {
+	.v-table tbody tr:nth-child(even) {
+		background-color: rgba(tokens.$primary-base, 0.05);
+	}
+}
+
+.sy-server-table--striped :deep() {
+	@include striped-rows;
 }
 </style>

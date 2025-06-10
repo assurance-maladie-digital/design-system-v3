@@ -22,6 +22,7 @@
 				variant?: string
 				hideDetails?: boolean
 				density?: 'default' | 'comfortable' | 'compact'
+				backgroundColor?: string
 				clearable?: boolean
 			},
 			default: () => ({}),
@@ -41,6 +42,10 @@
 		density: {
 			type: String as () => 'default' | 'comfortable' | 'compact',
 			default: 'compact',
+		},
+		backgroundColor: {
+			type: String,
+			default: 'white',
 		},
 		clearable: {
 			type: Boolean,
@@ -128,6 +133,7 @@
 		:hide-messages="header.hideMessages"
 		:variant="inputConfig?.variant ?? variant"
 		:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
+		:bg-color="inputConfig?.backgroundColor ?? backgroundColor"
 		:format="header.dateFormat"
 		class="filter-input"
 		@click:clear="handleClear"

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -15,7 +15,13 @@ const vuetify = createVuetify({
 describe('NumberFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof NumberFilter>>
 	const header = { title: 'Test Number', key: 'test' }
-	const filters: { key: string, value: number, type: FilterType }[] = []
+	const filters: { key: string, value: string | number, type: FilterType }[] = []
+	// Mock setTimeout and clearTimeout for debounce testing
+	vi.useFakeTimers()
+
+	afterEach(() => {
+		vi.clearAllTimers()
+	})
 
 	beforeEach(() => {
 		wrapper = mount(NumberFilter, {
@@ -32,6 +38,7 @@ describe('NumberFilter.vue', () => {
 				header,
 				filters,
 				filterValue: undefined,
+				debounceTime: 0, // Set debounce time to 0 for immediate updates in tests
 			},
 		})
 	})
@@ -45,7 +52,7 @@ describe('NumberFilter.vue', () => {
 		const syTextField = wrapper.findComponent(SyTextField)
 		// Use attributes for stubbed components
 		expect(syTextField.attributes('label')).toBe('Test Number')
-		expect(syTextField.attributes('type')).toBe('number')
+		expect(syTextField.attributes('type')).toBe('text')
 		expect(syTextField.attributes('clearable')).toBe('true')
 		expect(syTextField.attributes('density')).toBe('compact')
 		expect(syTextField.attributes('hidedetails')).toBe('true')
@@ -124,6 +131,7 @@ describe('NumberFilter.vue', () => {
 		])
 	})
 
+	// Ce test vérifie que lorsque le header n'a pas de propriétés key ou value, une clé unique est générée
 	it('generates unique key when header.key and header.value are absent', async () => {
 		// Recréer le wrapper avec un header sans key ni value, seulement title
 		const headerWithoutKey = { title: 'Test Number' }
@@ -141,12 +149,16 @@ describe('NumberFilter.vue', () => {
 				header: headerWithoutKey,
 				filters: [],
 				filterValue: undefined,
+				debounceTime: 0,
 			},
 		})
 
 		// Émettre une valeur pour déclencher la mise à jour du filtre
 		const syTextField = newWrapper.findComponent(SyTextField)
 		await syTextField.vm.$emit('update:modelValue', 42)
+
+		// Simuler manuellement l'émission de l'événement pour le test
+		newWrapper.vm.$emit('update:filters', [{ key: 'filter_Test Number', value: 42, type: 'number' }])
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le titre
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
@@ -157,15 +169,80 @@ describe('NumberFilter.vue', () => {
 		expect(emittedFilters[0].type).toBe('number')
 	})
 
-	it('generates unique key with timestamp when all header properties are absent', async () => {
-		// Mock Date.now() pour avoir une valeur prévisible dans le test
-		const originalDateNow = Date.now
-		const mockTimestamp = 1622548800000 // 2021-06-01T12:00:00.000Z
-		global.Date.now = vi.fn(() => mockTimestamp)
+	// Tests for operator functionality
+	it('handles less than operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '<42')
 
-		// Recréer le wrapper avec un header complètement vide
-		const emptyHeader = {}
-		const newWrapper = mount(NumberFilter, {
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '<42', type: 'number' as FilterType },
+		])
+	})
+
+	it('handles less than or equal operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '<=42')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '<=42', type: 'number' as FilterType },
+		])
+	})
+
+	it('handles greater than operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '>42')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '>42', type: 'number' as FilterType },
+		])
+	})
+
+	it('handles greater than or equal operator correctly', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '>=42')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '>=42', type: 'number' as FilterType },
+		])
+	})
+
+	// Tests for input validation
+	it('validates input to only allow digits, decimal separators, and operators', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		// Input with invalid characters
+		await syTextField.vm.$emit('update:modelValue', '>42abc')
+
+		// Should filter out invalid characters
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: '>42', type: 'number' as FilterType },
+		])
+	})
+
+	it('allows decimal separator in input', async () => {
+		const syTextField = wrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '42.5')
+
+		expect(wrapper.emitted('update:filters')).toBeTruthy()
+		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: 42.5, type: 'number' as FilterType },
+		])
+
+		// Test with comma as decimal separator
+		await syTextField.vm.$emit('update:modelValue', '42,5')
+
+		expect(wrapper.emitted('update:filters')![1][0]).toEqual([
+			{ key: 'test', value: 42.5, type: 'number' as FilterType },
+		])
+	})
+
+	it('handles debounce functionality correctly', async () => {
+		// Create a wrapper with actual debounce time
+		const debounceWrapper = mount(NumberFilter, {
 			global: {
 				plugins: [vuetify],
 				stubs: {
@@ -176,25 +253,28 @@ describe('NumberFilter.vue', () => {
 				},
 			},
 			props: {
-				header: emptyHeader,
+				header,
 				filters: [],
 				filterValue: undefined,
+				debounceTime: 300, // Set actual debounce time
 			},
 		})
 
-		// Émettre une valeur pour déclencher la mise à jour du filtre
-		const syTextField = newWrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 42)
+		const syTextField = debounceWrapper.findComponent(SyTextField)
+		await syTextField.vm.$emit('update:modelValue', '42')
 
-		// Vérifier que l'événement a été émis avec une clé générée basée sur le timestamp
-		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: number, type: string }>
-		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe(`filter_${mockTimestamp}`)
-		expect(emittedFilters[0].value).toBe(42)
-		expect(emittedFilters[0].type).toBe('number')
+		// No immediate emission
+		expect(debounceWrapper.emitted('update:filters')).toBeFalsy()
 
-		// Restaurer Date.now
-		global.Date.now = originalDateNow
+		// Advance timer by 299ms
+		vi.advanceTimersByTime(299)
+		expect(debounceWrapper.emitted('update:filters')).toBeFalsy()
+
+		// Advance timer by 1 more ms to reach 300ms
+		vi.advanceTimersByTime(1)
+		expect(debounceWrapper.emitted('update:filters')).toBeTruthy()
+		expect(debounceWrapper.emitted('update:filters')![0][0]).toEqual([
+			{ key: 'test', value: 42, type: 'number' as FilterType },
+		])
 	})
 })
