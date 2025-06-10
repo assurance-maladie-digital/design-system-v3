@@ -75,9 +75,10 @@ export function useDateRangeInput(
 	 * Gère la saisie manuelle d'une plage de dates
 	 * @param inputValue Valeur actuelle du champ de saisie
 	 * @param newValue Nouvelle valeur saisie
+	 * @param cursorPosition Position actuelle du curseur (optionnel)
 	 * @returns Objet contenant les informations sur la plage de dates
 	 */
-	const handleRangeInput = (inputValue: string, newValue: string): {
+	const handleRangeInput = (inputValue: string, newValue: string, cursorPosition?: number): {
 		formattedValue: string
 		dates: [Date | null, Date | null]
 		isComplete: boolean
@@ -91,6 +92,7 @@ export function useDateRangeInput(
 				formattedValue: date ? formatDate(date, format) : newValue,
 				dates: [date, null],
 				isComplete: !!date,
+				cursorPosition: cursorPosition,
 			}
 		}
 
@@ -136,10 +138,33 @@ export function useDateRangeInput(
 			const formattedStart = startDate ? formatDate(startDate, format) : startStr
 			const formattedValue = `${formattedStart}${rangeSeparator}${endStr}`
 
+			// Calculer la nouvelle position du curseur en fonction de la position actuelle
+			let newCursorPosition = cursorPosition
+
+			// Si la position du curseur est dans la première partie de la date
+			if (cursorPosition !== undefined) {
+				const separatorPos = inputValue.indexOf(rangeSeparator)
+				if (separatorPos !== -1 && cursorPosition <= separatorPos) {
+					// Ajuster la position si la première partie a été formatée
+					if (startStr !== formattedStart) {
+						// Conserver la position relative dans la première partie
+						const relativePos = Math.min(cursorPosition, startStr.length)
+						newCursorPosition = Math.min(relativePos, formattedStart.length)
+					}
+				}
+				else if (separatorPos !== -1) {
+					// Le curseur est dans la seconde partie
+					// Conserver la position relative après le séparateur
+					const posAfterSeparator = cursorPosition - (separatorPos + rangeSeparator.length)
+					newCursorPosition = formattedStart.length + rangeSeparator.length + Math.min(posAfterSeparator, endStr.length)
+				}
+			}
+
 			return {
 				formattedValue,
 				dates: [startDate, endDate],
 				isComplete: !!startDate && !!endDate,
+				cursorPosition: newCursorPosition,
 			}
 		}
 
@@ -155,6 +180,7 @@ export function useDateRangeInput(
 				formattedValue,
 				dates: [firstDate.value, secondDateParsed],
 				isComplete: !!firstDate.value && !!secondDateParsed,
+				cursorPosition: cursorPosition !== undefined ? formatDate(firstDate.value, format).length + rangeSeparator.length + Math.min(cursorPosition, newValue.length) : undefined,
 			}
 		}
 
@@ -180,6 +206,7 @@ export function useDateRangeInput(
 			formattedValue: newValue,
 			dates: [date, null],
 			isComplete: false,
+			cursorPosition: cursorPosition,
 		}
 	}
 

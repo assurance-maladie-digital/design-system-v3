@@ -410,7 +410,11 @@
 				}
 
 				// Gérer la saisie de plage de dates avec le newValue formaté
-				const result = handleRangeInput(oldValue || '', newValue)
+				// Lors de la première saisie (oldValue vide), ne pas envoyer la position du curseur
+				// car cela peut causer des problèmes avec le formatage initial
+				const result = !oldValue
+					? handleRangeInput('', newValue)
+					: handleRangeInput(oldValue, newValue, cursorPos)
 
 				// Mettre à jour la valeur affichée
 				inputValue.value = result.formattedValue
