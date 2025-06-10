@@ -200,6 +200,7 @@ export const Default: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 		},
@@ -216,6 +217,7 @@ export const Default: Story = {
 					v-model:options="args.options"
 					:items="args.items"
 					:headers="args.headers"
+					:caption="args.caption"
 				/>
 				</div>
 			`,
@@ -349,6 +351,7 @@ export const SortBy: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		options: {
 			sortBy: [{ key: 'lastname', order: 'desc' }],
 		},
@@ -365,6 +368,7 @@ export const SortBy: Story = {
 					v-model:options="args.options"
 					:items="args.items"
 					:headers="args.headers"
+					:caption="args.caption"
 				/>
 			</div>
 			`,
@@ -495,6 +499,7 @@ export const TableServer: Story = {
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
+		caption: '',
 	},
 	render: (args) => {
 		return {
@@ -583,6 +588,7 @@ export const TableServer: Story = {
 					v-model:options="options"
 					:items="users"
 					:headers="headers"
+					:caption="args.caption"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
 					suffix="api-example"
@@ -662,6 +668,13 @@ export const ManyTables: Story = {
 			},
 		],
 	},
+	args: {
+		options: {
+			itemsPerPage: 5,
+			page: 1,
+		},
+		caption: '',
+	},
 	render: (args) => {
 		return {
 			components: { PaginatedTable },
@@ -708,11 +721,13 @@ export const ManyTables: Story = {
 				<PaginatedTable
 					suffix="table1"
 					:items="itemsTable1"
+					:caption="args.caption"
 				/>
 				<hr class="my-4">
 				<PaginatedTable
 					suffix="table2"
 					:items="itemsTable2"
+					:caption="args.caption"
 				/>
 			</div>
 			`,
