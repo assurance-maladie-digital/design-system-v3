@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { computed, nextTick, onMounted, ref } from 'vue'
 	import type { VDataTable, VDataTableServer } from 'vuetify/components'
+	import { locales } from './locales'
 
 	type TableColumn = {
 		key: string | null
@@ -93,25 +94,25 @@
 		ref="wrapper"
 		class="v-data-table-header__content d-flex align-center h-100"
 	>
+		<div class="col-title">
+			{{ column.title }}
+		</div>
 		<VIcon
 			v-if="header!.sortable"
 			class="v-data-table-header__sort-icon"
 			:class="`mr-2 ${column.sortBy ? 'text-primary' : ''}`"
 			:icon="headerParams.getSortIcon(column)"
-			:title="`Trier par ${column.title}`"
-			aria-label="Trier par colonne"
+			:title="locales.columnOrder(column.title!)"
+			:aria-label="locales.columnOrder(column.title!)"
 			@click="headerParams.toggleSort(column)"
 		/>
-		<div class="col-title">
-			{{ column.title }}
-		</div>
 		<div
 			v-if="resizableColumns && !isLastColumn"
 			class="resizer"
 			role="slider"
 			tabindex="0"
-			title="Redimensionner la colonne"
-			aria-label="Redimensionner la colonne"
+			:title="locales.resizeColumn(column.title!)"
+			:aria-label="locales.ResizableColumn"
 			aria-orientation="horizontal"
 			:aria-valuenow="(column.width as number)"
 			aria-valuemin="0"
@@ -124,11 +125,8 @@
 </template>
 
 <style lang="scss" scoped>
-	.col-title {
-		flex: 1;
-	}
-
 	.resizer {
+		margin-left: auto;
 		flex: 0 0 auto;
 		cursor: col-resize;
 		background-color: #f0f0f0;
