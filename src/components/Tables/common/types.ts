@@ -5,6 +5,8 @@ export type SortOptions = {
 
 export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select' | 'custom'
 
+export type TableDensityType = 'default' | 'comfortable' | 'compact'
+
 export interface FilterOption {
 	key: string
 	value: string | number | Date | Array<string | number | Date> | { from: string | null, to: string | null } | Record<string, unknown> | null | undefined
@@ -59,7 +61,7 @@ export interface SyTableProps {
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
-	density?: 'default' | 'comfortable' | 'compact'
+	density?: TableDensityType
 	striped?: boolean
 }
 
@@ -72,6 +74,6 @@ export interface SyServerTableProps {
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
-	density?: 'default' | 'comfortable' | 'compact'
+	density?: TableDensityType
 	striped?: boolean
 }
