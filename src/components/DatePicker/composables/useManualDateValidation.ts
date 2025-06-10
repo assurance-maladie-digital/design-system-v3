@@ -95,12 +95,41 @@ export const useManualDateValidation = (options: {
 
 		// Valider les règles personnalisées
 		if (!disableErrorHandling) {
-			const result = validateField(
-				date,
-				customRules,
-				customWarningRules,
-			)
-			return !result.hasError
+			// Séparer les règles personnalisées des règles standard
+			const customTypeRules = customRules.filter(rule => rule.type === 'custom')
+			const standardRules = customRules.filter(rule => rule.type !== 'custom')
+
+			const customTypeWarningRules = customWarningRules.filter(rule => rule.type === 'custom')
+			const standardWarningRules = customWarningRules.filter(rule => rule.type !== 'custom')
+
+			// Valider les règles personnalisées avec la chaîne de caractères
+			if (customTypeRules.length > 0 || customTypeWarningRules.length > 0) {
+				const stringResult = validateField(
+					value,
+					customTypeRules,
+					customTypeWarningRules,
+				)
+
+				if (stringResult.hasError) {
+					return false
+				}
+			}
+
+			// Valider les règles standard avec l'objet Date
+			if (standardRules.length > 0 || standardWarningRules.length > 0) {
+				const dateResult = validateField(
+					date,
+					standardRules,
+					standardWarningRules,
+				)
+
+				if (dateResult.hasError) {
+					return false
+				}
+			}
+
+			// Si aucune erreur n'a été détectée, la validation est réussie
+			return true
 		}
 
 		return errors.value.length === 0
