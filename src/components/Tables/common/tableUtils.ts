@@ -1,5 +1,5 @@
 import { computed, watch, type Ref } from 'vue'
-import type { DataOptions } from './types'
+import type { DataOptions, TableDensityType } from './types'
 import { useTableAccessibility } from './tableAccessibilityUtils'
 import { useTableStorage } from './tableStorageUtils'
 
@@ -11,7 +11,6 @@ export function useTableUtils({
 	prefix,
 	suffix,
 	itemsPerPage,
-	caption,
 	serverItemsLength,
 	componentAttributes,
 	options,
@@ -20,10 +19,11 @@ export function useTableUtils({
 	prefix: string
 	suffix?: string
 	itemsPerPage?: number
-	caption: string
+	caption?: string
 	serverItemsLength?: number
 	componentAttributes: Record<string, unknown>
 	options: Ref<Partial<DataOptions>>
+	density?: TableDensityType
 }) {
 	// Use the separated storage utility
 	const { localOptions, storageKey, setupLocalStorage } = useTableStorage({
@@ -36,7 +36,6 @@ export function useTableUtils({
 	// Use the separated accessibility utility
 	const { setupAccessibility } = useTableAccessibility({
 		tableId,
-		caption,
 	})
 
 	const headers = computed(() => {

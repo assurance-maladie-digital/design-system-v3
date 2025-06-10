@@ -14,6 +14,8 @@
 		items: () => [],
 		serverItemsLength: 0,
 		filterInputConfig: () => ({}),
+		density: 'default',
+		striped: false,
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -57,6 +59,7 @@
 		serverItemsLength: props.serverItemsLength,
 		componentAttributes,
 		options,
+		density: props.density,
 	})
 
 	setupAccessibility()
@@ -115,15 +118,25 @@
 <template>
 	<div
 		:id="uniqueTableId"
-		class="sy-server-table"
+		:class="['sy-server-table', { 'sy-server-table--striped': props.striped }]"
 	>
 		<VDataTableServer
 			v-bind="propsFacade"
 			color="primary"
 			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
 			:items-length="props.serverItemsLength || 0"
+			:density="props.density"
 			@update:options="updateOptions"
 		>
+			<template #top>
+				<caption
+					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.caption === '' }"
+					:aria-label="props.caption"
+				>
+					{{ props.caption }}
+				</caption>
+			</template>
 			<template #headers="slotProps">
 				<template v-if="slotProps && slotProps.columns">
 					<tr class="headers">
@@ -134,7 +147,7 @@
 							<th>
 								<div class="d-flex align-center">
 									<span
-										class="me-2 cursor-pointer font-weight-bold text-grey-darken-1"
+										class="me-2 cursor-pointer font-weight-bold text-grey-darken-2"
 										role="button"
 										tabindex="0"
 										@click="slotProps.toggleSort(column)"
@@ -244,8 +257,19 @@
 
 <style lang="scss" scoped>
 @use '@/components/Tables/common/tableStyles' as *;
+@use '@/assets/tokens';
 
 .sy-server-table :deep() {
 	@include tablestyles;
+}
+
+@mixin striped-rows {
+	.v-table tbody tr:nth-child(even) {
+		background-color: rgba(tokens.$primary-base, 0.05);
+	}
+}
+
+.sy-server-table--striped :deep() {
+	@include striped-rows;
 }
 </style>

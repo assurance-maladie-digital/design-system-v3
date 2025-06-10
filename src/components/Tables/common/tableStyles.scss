@@ -9,19 +9,12 @@
 		white-space: nowrap;
 	}
 
-	table thead th {
-		.v-data-table-header__content {
-			opacity: 0.65;
-			font-size: 0.875rem;
-			font-weight: 700 !important;
-		}
-	}
-
 	table thead tr.filters,
 	table thead tr.reset {
 		background-color: tokens.$blue-lighten-90;
 	}
 
+	caption,
 	table thead tr.headers,
 	table thead tr.reset {
 		background-color: rgba(tokens.$blue-lighten-80, 0.2);

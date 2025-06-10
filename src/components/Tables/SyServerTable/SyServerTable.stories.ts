@@ -44,6 +44,23 @@ const meta = {
 				category: 'props',
 			},
 		},
+		density: {
+			description: 'Définit la densité du tableau',
+			control: { type: 'select' },
+			options: ['default', 'comfortable', 'compact'],
+			table: {
+				category: 'props',
+				type: { summary: 'string', detail: `'default' | 'comfortable' | 'compact'` },
+			},
+		},
+		striped: {
+			description: 'Affiche les lignes du tableau avec un fond rayé',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
 		options: {
 			description: 'Options de configuration du tableau',
 			name: 'v-model:options',
@@ -208,8 +225,11 @@ export const Default: Story = {
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
+		caption: '',
 		serverItemsLength: 15,
 		suffix: 'server-default',
+		density: 'default',
+		striped: false,
 	},
 	render: (args) => {
 		return {
@@ -284,9 +304,12 @@ export const Default: Story = {
 					v-model:options="args.options"
 					:items="users"
 					:headers="args.headers"
+					:caption="args.caption"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
 					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
 					@update:options="fetchData"
 				/>
 			</div>
@@ -417,8 +440,11 @@ export const ServerSortBy: Story = {
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
+		caption: '',
 		serverItemsLength: 0,
 		suffix: 'server-sort',
+		density: 'default',
+		striped: false,
 	},
 	render: (args) => {
 		return {
@@ -487,9 +513,12 @@ export const ServerSortBy: Story = {
           v-model:options="args.options"
           :items="users"
           :headers="args.headers"
+		  :caption="args.caption"
           :server-items-length="totalUsers"
           :loading="state === StateEnum.PENDING"
           :suffix="args.suffix"
+		  :density="args.density"
+		  :striped="args.striped"
           @update:options="fetchData"
         />
       </div>
@@ -670,6 +699,7 @@ export const ServerFilterByText: Story = {
 				filterType: 'text',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -677,6 +707,8 @@ export const ServerFilterByText: Story = {
 		},
 		showFilters: true,
 		suffix: 'server-filter-text',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -756,10 +788,13 @@ export const ServerFilterByText: Story = {
 						v-model:options="options"
 						:items="filteredUsers"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
+						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -948,6 +983,7 @@ export const ServerFilterByNumber: Story = {
 				filterType: 'number',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -956,6 +992,8 @@ export const ServerFilterByNumber: Story = {
 		serverItemsLength: 15,
 		showFilters: true,
 		suffix: 'server-filter-number',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1041,10 +1079,13 @@ export const ServerFilterByNumber: Story = {
 						v-model:options="options"
 						:items="filteredUsers"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
+						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1255,6 +1296,7 @@ export const ServerFilterBySelect: Story = {
 				],
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -1263,6 +1305,8 @@ export const ServerFilterBySelect: Story = {
 		serverItemsLength: 15,
 		showFilters: true,
 		suffix: 'server-filter-select',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1348,10 +1392,13 @@ export const ServerFilterBySelect: Story = {
 						v-model:options="options"
 						:items="filteredUsers"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:suffix="args.suffix"
+						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1533,7 +1580,10 @@ export const ServerFilterByDate: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
+		caption: '',
 		suffix: 'server-filter-date',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1661,10 +1711,13 @@ export const ServerFilterByDate: Story = {
 						v-model:options="options"
 						:items="users"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="true"
 						:suffix="args.suffix"
+						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1701,6 +1754,7 @@ export const CustomFilterSlot: Story = {
 									label="Statut"
 									variant="outlined"
 									density="compact"
+									color="primary"
 									bg-color="white"
 									@update:model-value="(val) => {
 										// Utiliser la fonction updateFilter fournie par le slot
@@ -1906,12 +1960,15 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			filters: [],
 		},
 		showFilters: true,
 		suffix: 'server-custom-filter-slot',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1981,10 +2038,13 @@ export const CustomFilterSlot: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:server-items-length="serverItemsLength"
 					:loading="loading"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
 					@update:options="fetchData"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
@@ -1998,6 +2058,7 @@ export const CustomFilterSlot: Story = {
 								label="Statut"
 								variant="outlined"
 								density="compact"
+								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
 									// Utiliser la fonction updateFilter fournie par le slot
@@ -2195,6 +2256,7 @@ export const CustomFilterInputs: Story = {
 				filterType: 'text',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -2209,6 +2271,8 @@ export const CustomFilterInputs: Story = {
 		},
 		showFilters: true,
 		suffix: 'server-filter-text',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -2288,11 +2352,14 @@ export const CustomFilterInputs: Story = {
 						v-model:options="options"
 						:items="filteredUsers"
 						:headers="args.headers"
+						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
 						:show-filters="args.showFilters"
 						:filter-input-config="args.filterInputConfig"
 						:suffix="args.suffix"
+						:density="args.density"
+						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2447,7 +2514,10 @@ export const MultiServerTables: Story = {
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
+		caption: '',
 		suffix: 'multi',
+		density: 'default',
+		striped: false,
 	},
 	render: (args) => {
 		return {
@@ -2554,8 +2624,11 @@ export const MultiServerTables: Story = {
           v-model:options="optionsTable1"
           :items="usersTable1"
           :headers="args.headers"
+		  :caption="args.caption"
           :server-items-length="totalUsersTable1"
           :loading="stateTable1 === StateEnum.PENDING"
+		  :density="args.density"
+		  :striped="args.striped"
           suffix="table1"
 		  class="mb-10"
           @update:options="fetchDataTable1"
@@ -2564,8 +2637,11 @@ export const MultiServerTables: Story = {
           v-model:options="optionsTable2"
           :items="usersTable2"
           :headers="args.headers"
+		  :caption="args.caption"
           :server-items-length="totalUsersTable2"
           :loading="stateTable2 === StateEnum.PENDING"
+		  :density="args.density"
+		  :striped="args.striped"
           suffix="table2"
           @update:options="fetchDataTable2"
         />

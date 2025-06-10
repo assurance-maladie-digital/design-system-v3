@@ -31,6 +31,23 @@ const meta = {
 				category: 'props',
 			},
 		},
+		density: {
+			description: 'Définit la densité du tableau',
+			control: { type: 'select' },
+			options: ['default', 'comfortable', 'compact'],
+			table: {
+				category: 'props',
+				type: { summary: 'string', detail: `'default' | 'comfortable' | 'compact'` },
+			},
+		},
+		striped: {
+			description: 'Affiche les lignes du tableau avec un fond rayé',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
 		options: {
 			description: 'Options de configuration du tableau',
 			name: 'v-model:options',
@@ -197,7 +214,10 @@ export const Default: Story = {
 		options: {
 			itemsPerPage: 4,
 		},
+		caption: '',
 		suffix: 'default-table',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -210,7 +230,10 @@ export const Default: Story = {
 					v-model:options="args.options"
 					:headers="args.headers"
 					:items="args.items"
+					:caption="args.caption"
 					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -350,6 +373,7 @@ export const SortBy: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			sortBy: [
@@ -360,6 +384,8 @@ export const SortBy: Story = {
 			],
 		},
 		suffix: 'sort-table',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -372,7 +398,10 @@ export const SortBy: Story = {
 					v-model:options="args.options"
 					:headers="args.headers"
 					:items="args.items"
+					:caption="args.caption"
 					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -519,12 +548,15 @@ export const FilterByText: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			filters: [],
 		},
 		showFilters: true,
 		suffix: 'filter-text-table',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -545,8 +577,11 @@ export const FilterByText: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -683,12 +718,15 @@ export const FilterByNumber: Story = {
 				salary: 58000,
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			filters: [],
 		},
 		showFilters: true,
 		suffix: 'filter-number-table',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -709,8 +747,11 @@ export const FilterByNumber: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -873,12 +914,15 @@ export const FilterBySelect: Story = {
 				status: 'Inactif',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			filters: [],
 		},
 		showFilters: true,
 		suffix: 'filter-select-table',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -899,8 +943,11 @@ export const FilterBySelect: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -1072,12 +1119,15 @@ export const FilterByDate: Story = {
 				},
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 5,
 			filters: [],
 		},
 		showFilters: true,
 		suffix: 'filter-date-table',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1098,8 +1148,11 @@ export const FilterByDate: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
 				/>
 			`,
 		}
@@ -1131,6 +1184,7 @@ export const CustomFilterSlot: Story = {
 									label="Statut"
 									variant="outlined"
 									density="compact"
+									color="primary"
 									bg-color="white"
 									@update:model-value="(val) => {
 										// Créer manuellement un filtre de sélection
@@ -1295,12 +1349,15 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			filters: [],
 		},
 		showFilters: true,
 		suffix: 'custom-filter-slot-table',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1325,8 +1382,11 @@ export const CustomFilterSlot: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
 						<div class="custom-filter-container">
@@ -1339,6 +1399,7 @@ export const CustomFilterSlot: Story = {
 								label="Statut"
 								variant="outlined"
 								density="compact"
+								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
 									// Manually create a select filter
@@ -1510,6 +1571,7 @@ export const CustomFilterInputs: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		options: {
 			itemsPerPage: 4,
 			filters: [],
@@ -1523,6 +1585,8 @@ export const CustomFilterInputs: Story = {
 		},
 		showFilters: true,
 		suffix: 'filter-text-table',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1543,9 +1607,11 @@ export const CustomFilterInputs: Story = {
 					v-model:options="options"
 					:headers="args.headers"
 					:items="items"
+					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:filter-input-config="args.filterInputConfig"
 					:suffix="args.suffix"
+					:density="args.density"
 				/>
 			`,
 		}
@@ -1562,13 +1628,13 @@ export const ManyTables: Story = {
 					<div class="d-flex flex-column gap-4">
 						<SyTable
 							v-model:options="options1"
-							:headers="args.headers"
+							:headers="headers"
 							:items="items1"
 							suffix="table-1"
 						/>
 						<SyTable
 							v-model:options="options2"
-							:headers="args.headers"
+							:headers="headers"
 							:items="items2"
 							suffix="table-2"
 						/>
@@ -1690,7 +1756,10 @@ export const ManyTables: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
+		caption: '',
 		suffix: 'multi-server',
+		density: 'default',
+		striped: false,
 	},
 	render(args) {
 		return {
@@ -1710,6 +1779,9 @@ export const ManyTables: Story = {
 						v-model:options="options1"
 						:headers="args.headers"
 						:items="args.items"
+						:caption="args.caption"
+						:density="args.density"
+						:striped="args.striped"
 						suffix="table1"
 						class="mb-10"
 					/>
@@ -1717,6 +1789,9 @@ export const ManyTables: Story = {
 						v-model:options="options2"
 						:headers="args.headers"
 						:items="args.items"
+						:caption="args.caption"
+						:density="args.density"
+						:striped="args.striped"
 						suffix="table2"
 					/>
 				</div>

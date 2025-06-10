@@ -5,24 +5,15 @@ import { onMounted } from 'vue'
  */
 export function useTableAccessibility({
 	tableId,
-	caption,
 }: {
 	tableId: string
-	caption: string
 }) {
 	function setupAccessibility() {
 		onMounted(() => {
-			const table = document.querySelector(`#${tableId} table`)
-			const captionElement = document.createElement('caption')
-			captionElement.innerHTML = caption
-			if (caption === '') {
-				captionElement.classList.add('d-sr-only')
+			const captionElement = document.querySelector(`#${tableId} caption`)
+			if (captionElement && captionElement.textContent?.trim() === '') {
 				captionElement.setAttribute('aria-label', 'Table caption')
 			}
-			else {
-				captionElement.classList.add('text-subtitle-1')
-			}
-			table?.prepend(captionElement)
 
 			const inputs = document.querySelectorAll(`#${tableId} input`)
 			inputs.forEach((input) => {
@@ -31,7 +22,20 @@ export function useTableAccessibility({
 
 			const fields = document.querySelectorAll(`#${tableId} .v-field`)
 			fields.forEach((field) => {
-				(field as HTMLElement).setAttribute('tabindex', '0')
+				const element = field as HTMLElement
+				element.setAttribute('tabindex', '0')
+
+				// Remove immediately if it exists
+				if (element.hasAttribute('aria-controls')) {
+					element.removeAttribute('aria-controls')
+				}
+
+				// Check again after a delay
+				setTimeout(() => {
+					if (element.hasAttribute('aria-controls')) {
+						element.removeAttribute('aria-controls')
+					}
+				}, 500)
 			})
 
 			const fieldLabels = document.querySelectorAll(`#${tableId} .v-field`)
