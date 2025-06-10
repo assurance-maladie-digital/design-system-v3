@@ -11,7 +11,6 @@ export function useTableAccessibility({
 	function setupAccessibility() {
 		onMounted(() => {
 			const captionElement = document.querySelector(`#${tableId} caption`)
-			console.log(captionElement)
 			if (captionElement && captionElement.textContent?.trim() === '') {
 				captionElement.setAttribute('aria-label', 'Table caption')
 			}
@@ -23,7 +22,20 @@ export function useTableAccessibility({
 
 			const fields = document.querySelectorAll(`#${tableId} .v-field`)
 			fields.forEach((field) => {
-				(field as HTMLElement).setAttribute('tabindex', '0')
+				const element = field as HTMLElement
+				element.setAttribute('tabindex', '0')
+
+				// Remove immediately if it exists
+				if (element.hasAttribute('aria-controls')) {
+					element.removeAttribute('aria-controls')
+				}
+
+				// Check again after a delay
+				setTimeout(() => {
+					if (element.hasAttribute('aria-controls')) {
+						element.removeAttribute('aria-controls')
+					}
+				}, 500)
 			})
 
 			const fieldLabels = document.querySelectorAll(`#${tableId} .v-field`)
