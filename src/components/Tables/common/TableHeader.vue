@@ -3,6 +3,7 @@
 	import type { VDataTable, VDataTableServer } from 'vuetify/components'
 	import { locales } from './locales'
 
+	// Define a type for our column structure
 	type TableColumn = {
 		key: string | null
 		title?: string
@@ -14,15 +15,14 @@
 		sortBy?: string
 	}
 
-	type TableData = {
+	// Define a type for the header parameters
+	interface TableData {
 		columns: TableColumn[]
-		sortBy: unknown
-		someSelected: boolean
-		allSelected: boolean
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		getSortIcon: (column: any) => string | any
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		toggleSort: (column: any) => void
+		sortBy?: unknown
+		someSelected?: boolean
+		allSelected?: boolean
+		getSortIcon: (column: unknown) => string | undefined
+		toggleSort: (column: unknown) => void
 	}
 
 	const props = withDefaults(defineProps<{
@@ -45,10 +45,19 @@
 
 	const wrapper = ref<HTMLElement | null>(null)
 
+	const initialWidth = ref<number | undefined>()
+
+	onMounted(() => {
+		nextTick(() => {
+			if (wrapper.value) {
+				initialWidth.value = wrapper.value.offsetWidth + 24 + 1 / 2 * 16
+			}
+		})
+	})
+
 	function resetColumnWidth() {
-		if (header.value) {
-			// Reset the column width to undefined (use default width)
-			header.value.width = undefined
+		if (header.value && initialWidth.value) {
+			header.value.width = initialWidth.value
 		}
 	}
 
@@ -72,7 +81,6 @@
 		document.addEventListener('mouseup', onMouseUp)
 	}
 
-	// Get table width for aria-valuemax attributes in resizers
 	const tableWidth = ref(0)
 	onMounted(async () => {
 		await nextTick()
@@ -132,32 +140,32 @@
 </template>
 
 <style lang="scss" scoped>
-	.resizer {
-		margin-left: auto;
-		flex: 0 0 auto;
-		cursor: col-resize;
-		background-color: #f0f0f0;
-		position: relative;
-		width: 1rem;
-		height: 100%;
-		left: calc(24px - 1rem / 2);
+.resizer {
+  margin-left: auto;
+  flex: 0 0 auto;
+  cursor: col-resize;
+  background-color: #f0f0f0;
+  position: relative;
+  width: 1rem;
+  height: 100%;
+  left: calc(24px - 1rem / 2);
 
-		&::after {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 0.1rem;
-			height: 100%;
-			background:
-				repeating-linear-gradient(
-					transparent,
-					#a7a7a7 0,
-					#a7a7a7 5px,
-					transparent 5px,
-					transparent 7px
-				);
-		}
-	}
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.1rem;
+    height: 100%;
+    background:
+        repeating-linear-gradient(
+                transparent,
+                #a7a7a7 0,
+                #a7a7a7 5px,
+                transparent 5px,
+                transparent 7px
+        );
+  }
+}
 </style>

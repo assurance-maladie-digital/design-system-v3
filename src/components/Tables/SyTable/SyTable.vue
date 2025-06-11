@@ -155,7 +155,7 @@
 							<th>
 								<TableHeader
 									:table="table"
-									:header-params="slotProps"
+									:header-params="slotProps as any"
 									:column="column"
 									:resizable-columns="props.resizableColumns"
 								/>
