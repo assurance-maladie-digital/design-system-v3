@@ -45,6 +45,13 @@
 
 	const wrapper = ref<HTMLElement | null>(null)
 
+	function resetColumnWidth() {
+		if (header.value) {
+			// Reset the column width to undefined (use default width)
+			header.value.width = undefined
+		}
+	}
+
 	function startResize(event: MouseEvent) {
 		const startX = event.clientX
 		const startWidth = wrapper.value!.offsetWidth + 24 + 1 / 2 * 16
@@ -106,20 +113,20 @@
 			:aria-label="locales.columnOrder(column.title!)"
 			@click="headerParams.toggleSort(column)"
 		/>
-		<div
-			v-if="resizableColumns && !isLastColumn"
+		<button
+			v-if="props.resizableColumns && !isLastColumn"
+			type="button"
 			class="resizer"
-			role="slider"
 			tabindex="0"
-			:title="locales.resizeColumn(column.title!)"
-			:aria-label="locales.ResizableColumn"
-			aria-orientation="horizontal"
-			:aria-valuenow="(column.width as number)"
-			aria-valuemin="0"
+			role="separator"
+      :aria-valuenow="(column.width as number)"
+			:aria-valuemin="0"
 			:aria-valuemax="tableWidth"
+      :aria-label="locales.ResizableColumn"
 			@mousedown="startResize"
-			@keydown.left="resizeKeyboardColumn(-10)"
-			@keydown.right="resizeKeyboardColumn(10)"
+			@dblclick="resetColumnWidth"
+			@keydown.right.prevent="resizeKeyboardColumn(10)"
+			@keydown.left.prevent="resizeKeyboardColumn(-10)"
 		/>
 	</div>
 </template>
