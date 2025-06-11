@@ -141,31 +141,31 @@
 
 <style lang="scss" scoped>
 .resizer {
-  margin-left: auto;
-  flex: 0 0 auto;
-  cursor: col-resize;
-  background-color: #f0f0f0;
-  position: relative;
-  width: 1rem;
-  height: 100%;
-  left: calc(24px - 1rem / 2);
+	margin-left: auto;
+	flex: 0 0 auto;
+	cursor: col-resize;
+	background-color: #f0f0f0;
+	position: relative;
+	width: 1rem;
+	height: 100%;
+	left: calc(24px - 1rem / 2);
 
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0.1rem;
-    height: 100%;
-    background:
-        repeating-linear-gradient(
-                transparent,
-                #a7a7a7 0,
-                #a7a7a7 5px,
-                transparent 5px,
-                transparent 7px
-        );
-  }
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 0.1rem;
+		height: 100%;
+		background:
+			repeating-linear-gradient(
+				transparent,
+				#a7a7a7 0,
+				#a7a7a7 5px,
+				transparent 5px,
+				transparent 7px
+			);
+	}
 }
 </style>
