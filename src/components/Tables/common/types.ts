@@ -63,6 +63,7 @@ export interface SyTableProps {
 	filterInputConfig?: Record<string, unknown>
 	density?: TableDensityType
 	striped?: boolean
+	resizableColumns?: boolean
 }
 
 export interface SyServerTableProps {
@@ -73,6 +74,7 @@ export interface SyServerTableProps {
 	caption?: string
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
+	resizableColumns?: boolean
 	filterInputConfig?: Record<string, unknown>
 	density?: TableDensityType
 	striped?: boolean

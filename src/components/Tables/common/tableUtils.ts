@@ -26,7 +26,7 @@ export function useTableUtils({
 	density?: TableDensityType
 }) {
 	// Use the separated storage utility
-	const { localOptions, storageKey, setupLocalStorage } = useTableStorage({
+	const { localOptions, columnWidths, storageKey, setupLocalStorage, updateColumnWidth } = useTableStorage({
 		prefix,
 		suffix,
 		serverItemsLength,
@@ -102,6 +102,7 @@ export function useTableUtils({
 
 	return {
 		localOptions,
+		columnWidths,
 		storageKey,
 		headers,
 		optionsFacade,
@@ -109,5 +110,6 @@ export function useTableUtils({
 		updateOptions,
 		setupAccessibility,
 		setupLocalStorage,
+		updateColumnWidth,
 	}
 }

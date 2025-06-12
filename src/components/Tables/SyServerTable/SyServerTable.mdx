@@ -39,6 +39,11 @@ Le composant permet de trier les données par colonne en déléguant le tri au s
 Le composant permet d'appliquer des filtres sur les colonnes. Vous pouvez définir des filtres personnalisés pour chaque colonne en utilisant la prop `show-filters`. Voir d'autres exemples de filtres dans les stories.
 <Canvas of={SyServerTable.ServerFilterByText} />
 
+### Resize des colonnes
+
+Le composant peut permettre de redimensionner les colonnes en utilisant la prop `resizable-columns`. Vous pouvez activer ou désactiver cette fonctionnalité selon vos besoins.
+<Canvas of={SyServerTable.ResizableColumns} />
+
 ### Accessibilité
 
 Le composant améliore l'accessibilité en ajoutant automatiquement:
@@ -144,7 +149,7 @@ Le composant améliore l'accessibilité en ajoutant automatiquement:
 
 Pour utiliser plusieurs tableaux serveur sur une même page avec des options indépendantes, utilisez la prop `suffix` pour chaque tableau.
 
-<Canvas of={SyServerTable.MultiServerTables} />
+<Canvas of={SyServerTable.ManyServerTables} />
 
 ## Bonnes pratiques
 

@@ -70,6 +70,9 @@ const meta = {
 			description: 'Nombre d\'éléments par page',
 			control: { type: 'number' },
 		},
+		resizableColumns: {
+			description: 'Permet de redimensionner les colonnes du tableau',
+		},
 		caption: {
 			description: 'Texte de la légende du tableau',
 			control: { type: 'text' },
@@ -234,6 +237,7 @@ export const Default: Story = {
 					:suffix="args.suffix"
 					:density="args.density"
 					:striped="args.striped"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -402,6 +406,7 @@ export const SortBy: Story = {
 					:suffix="args.suffix"
 					:density="args.density"
 					:striped="args.striped"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -582,6 +587,7 @@ export const FilterByText: Story = {
 					:suffix="args.suffix"
 					:density="args.density"
 					:striped="args.striped"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -752,6 +758,7 @@ export const FilterByNumber: Story = {
 					:suffix="args.suffix"
 					:density="args.density"
 					:striped="args.striped"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -948,6 +955,7 @@ export const FilterBySelect: Story = {
 					:suffix="args.suffix"
 					:density="args.density"
 					:striped="args.striped"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -1153,6 +1161,7 @@ export const FilterByDate: Story = {
 					:suffix="args.suffix"
 					:density="args.density"
 					:striped="args.striped"
+					:resizable-columns="args.resizableColumns"
 				/>
 			`,
 		}
@@ -1387,6 +1396,7 @@ export const CustomFilterSlot: Story = {
 					:suffix="args.suffix"
 					:density="args.density"
 					:striped="args.striped"
+					:resizable-columns="args.resizableColumns"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
 						<div class="custom-filter-container">
@@ -1610,6 +1620,7 @@ export const CustomFilterInputs: Story = {
 					:caption="args.caption"
 					:show-filters="args.showFilters"
 					:filter-input-config="args.filterInputConfig"
+					:resizable-columns="args.resizableColumns"
 					:suffix="args.suffix"
 					:density="args.density"
 				/>
@@ -1777,6 +1788,7 @@ export const ManyTables: Story = {
 				<div>
 					<SyTable
 						v-model:options="options1"
+						:resizable-columns="args.resizableColumns"
 						:headers="args.headers"
 						:items="args.items"
 						:caption="args.caption"
@@ -1787,6 +1799,7 @@ export const ManyTables: Story = {
 					/>
 					<SyTable
 						v-model:options="options2"
+						:resizable-columns="args.resizableColumns"
 						:headers="args.headers"
 						:items="args.items"
 						:caption="args.caption"
@@ -1795,6 +1808,158 @@ export const ManyTables: Story = {
 						suffix="table2"
 					/>
 				</div>
+			`,
+		}
+	},
+}
+
+export const ResizableColumns: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						:resizable-columns="true"
+						suffix="resizable-columns"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		resizableColumns: true,
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+		},
+		suffix: 'resizable-columns',
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<SyTable
+					v-model:options="args.options"
+					:headers="args.headers"
+					:items="args.items"
+					:resizableColumns="args.resizableColumns"
+					:suffix="args.suffix"
+				/>
 			`,
 		}
 	},

@@ -21,91 +21,97 @@ exports[`SyTable > renders correctly with default props 1`] = `
         <!---->
         <thead>
           <tr>
-            <th
-              class="
-                v-data-table-column--align-start
-                v-data-table__td
-                v-data-table__th
-                v-data-table__th--sortable
-              "
-              colspan="1"
-              rowspan="1"
-            >
-              <div class="v-data-table-header__content">
-                <span>
+            <th>
+              <div class="
+                align-center
+                d-flex
+                h-100
+                v-data-table-header__content
+              ">
+                <i
+                  aria-hidden="false"
+                  aria-label="Trier par colonne"
+                  class="
+                    mdi
+                    mdi-arrow-up
+                    mr-2
+                    notranslate
+                    v-data-table-header__sort-icon
+                    v-icon
+                    v-icon--clickable
+                    v-icon--size-default
+                    v-theme--light
+                  "
+                  role="button"
+                  tabindex="0"
+                  title="Trier par ID"
+                ></i>
+                <div class="col-title">
                   ID
-                </span>
+                </div>
+                <!-- v-if -->
+              </div>
+            </th>
+            <th>
+              <div class="
+                align-center
+                d-flex
+                h-100
+                v-data-table-header__content
+              ">
                 <i
-                  aria-hidden="true"
+                  aria-hidden="false"
+                  aria-label="Trier par colonne"
                   class="
                     mdi
                     mdi-arrow-up
+                    mr-2
                     notranslate
                     v-data-table-header__sort-icon
                     v-icon
+                    v-icon--clickable
                     v-icon--size-default
                     v-theme--light
                   "
+                  role="button"
+                  tabindex="0"
+                  title="Trier par Name"
                 ></i>
-                <!---->
-              </div>
-            </th>
-            <th
-              class="
-                v-data-table-column--align-start
-                v-data-table__td
-                v-data-table__th
-                v-data-table__th--sortable
-              "
-              colspan="1"
-              rowspan="1"
-            >
-              <div class="v-data-table-header__content">
-                <span>
+                <div class="col-title">
                   Name
-                </span>
-                <i
-                  aria-hidden="true"
-                  class="
-                    mdi
-                    mdi-arrow-up
-                    notranslate
-                    v-data-table-header__sort-icon
-                    v-icon
-                    v-icon--size-default
-                    v-theme--light
-                  "
-                ></i>
-                <!---->
+                </div>
+                <!-- v-if -->
               </div>
             </th>
-            <th
-              class="
-                v-data-table-column--align-start
-                v-data-table__td
-                v-data-table__th
-                v-data-table__th--sortable
-              "
-              colspan="1"
-              rowspan="1"
-            >
-              <div class="v-data-table-header__content">
-                <span>
-                  Age
-                </span>
+            <th>
+              <div class="
+                align-center
+                d-flex
+                h-100
+                v-data-table-header__content
+              ">
                 <i
-                  aria-hidden="true"
+                  aria-hidden="false"
+                  aria-label="Trier par colonne"
                   class="
                     mdi
                     mdi-arrow-up
+                    mr-2
                     notranslate
                     v-data-table-header__sort-icon
                     v-icon
+                    v-icon--clickable
                     v-icon--size-default
                     v-theme--light
                   "
+                  role="button"
+                  tabindex="0"
+                  title="Trier par Age"
                 ></i>
-                <!---->
+                <div class="col-title">
+                  Age
+                </div>
+                <!-- v-if -->
               </div>
             </th>
           </tr>

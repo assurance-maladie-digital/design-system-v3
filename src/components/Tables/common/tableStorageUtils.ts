@@ -3,6 +3,13 @@ import type { DataOptions } from './types'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 
 /**
+ * Interface for column width storage
+ */
+export interface ColumnWidthsStorage {
+	[key: string]: number | string
+}
+
+/**
  * Utility function to manage table state persistence in local storage
  */
 export function useTableStorage({
@@ -22,6 +29,14 @@ export function useTableStorage({
 	const storageKey = computed(() => {
 		return suffix ? `${prefix}-${suffix}` : prefix
 	})
+
+	// Separate key for column widths
+	const columnWidthsKey = computed(() => {
+		return `${storageKey.value}-column-widths`
+	})
+
+	// Column widths storage
+	const columnWidths = ref<ColumnWidthsStorage>({})
 
 	// Configuration of local storage synchronization
 	function setupLocalStorage() {
@@ -43,14 +58,45 @@ export function useTableStorage({
 		// Initialize local options from storage or default values
 		const initFromStorage = (defaultOptions: Record<string, unknown>) => {
 			localOptions.value = localStorageUtility.getItem(storageKey.value) ?? defaultOptions
+
+			// Load column widths from storage
+			const storedColumnWidths = localStorageUtility.getItem<ColumnWidthsStorage>(columnWidthsKey.value)
+			if (storedColumnWidths) {
+				columnWidths.value = storedColumnWidths
+			}
 		}
 
-		return { watchOptions, initFromStorage }
+		// Save column widths to localStorage
+		const saveColumnWidths = (widths: ColumnWidthsStorage) => {
+			columnWidths.value = widths
+			localStorageUtility.setItem(columnWidthsKey.value, widths)
+		}
+
+		// Update a single column width
+		const updateColumnWidth = (columnKey: string, width: number | string) => {
+			const updatedWidths = {
+				...columnWidths.value,
+				[columnKey]: width,
+			}
+			saveColumnWidths(updatedWidths)
+		}
+
+		return { watchOptions, initFromStorage, saveColumnWidths, updateColumnWidth }
 	}
 
 	return {
 		localOptions,
+		columnWidths,
 		storageKey,
+		columnWidthsKey,
 		setupLocalStorage,
+		updateColumnWidth: (key: string, width: number | string) => {
+			const updatedWidths = {
+				...columnWidths.value,
+				[key]: width,
+			}
+			columnWidths.value = updatedWidths
+			localStorageUtility.setItem(columnWidthsKey.value, updatedWidths)
+		},
 	}
 }
