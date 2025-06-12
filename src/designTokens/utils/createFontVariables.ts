@@ -83,7 +83,7 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 	['caption', 'overline'].forEach((category) => {
 		if (fontTokens[category]) {
 			const value = fontTokens[category]
-			if (typeof value === 'object' && !Array.isArray(value)) {
+			if (value && typeof value === 'object' && !Array.isArray(value)) {
 				if ('fontSize' in value) {
 					// Direct property object
 					// Add variables in the format Vuetify expects (without -- prefix)
@@ -99,7 +99,7 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 				}
 				else {
 					// Nested object with key matching category name
-					const nestedValue = (value as Record<string, FontProperty>)[category]
+					const nestedValue = (value as Record<string, FontProperty | undefined>)[category]
 					if (nestedValue) {
 						// Add variables in the format Vuetify expects (without -- prefix)
 						variables[`typography-${category}-font-size`] = nestedValue.fontSize || ''
@@ -119,12 +119,12 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 
 	// Process display styles with display1 and display2 properties
 	if (fontTokens.display) {
-		const display = fontTokens.display as Record<string, FontProperty>
+		const display = fontTokens.display as Record<string, FontProperty | undefined>
 
 		// Process each display size (display1, display2)
 		['display1', 'display2'].forEach((key) => {
-			if (display[key]) {
-				const value = display[key]
+			const value = display[key]
+			if (value) {
 				// Add variables in the format Vuetify expects (without -- prefix)
 				variables[`typography-${key}-font-size`] = value.fontSize || ''
 				variables[`typography-${key}-font-weight`] = value.fontWeight?.toString() || ''
