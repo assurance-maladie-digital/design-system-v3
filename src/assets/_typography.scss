@@ -2,99 +2,148 @@
 
 /* Theme Typography */
 .v-theme--cnam,
- .v-theme--pa {
-	/* Headings */
+.v-theme--pa {
+	/* Headings with Vuetify classes */
 	.text-h1 {
-		font-size: var(--v-theme-typography-h1-font-size) !important;
-		font-weight: var(--v-theme-typography-h1-font-weight) !important;
-		line-height: var(--v-theme-typography-h1-line-height) !important;
-		letter-spacing: var(--v-theme-typography-h1-letter-spacing) !important;
+		font-size: var(--v-typography-h1-font-size) !important;
+		font-weight: var(--v-typography-h1-font-weight) !important;
+		line-height: var(--v-typography-h1-line-height) !important;
+		letter-spacing: var(--v-typography-h1-letter-spacing) !important;
 	}
 
 	.text-h2 {
-		font-size: var(--v-theme-typography-h2-font-size) !important;
-		font-weight: var(--v-theme-typography-h2-font-weight) !important;
-		line-height: var(--v-theme-typography-h2-line-height) !important;
-		letter-spacing: var(--v-theme-typography-h2-letter-spacing) !important;
+		font-size: var(--v-typography-h2-font-size) !important;
+		font-weight: var(--v-typography-h2-font-weight) !important;
+		line-height: var(--v-typography-h2-line-height) !important;
+		letter-spacing: var(--v-typography-h2-letter-spacing) !important;
 	}
 
 	.text-h3 {
-		font-size: var(--v-theme-typography-h3-font-size) !important;
-		font-weight: var(--v-theme-typography-h3-font-weight) !important;
-		line-height: var(--v-theme-typography-h3-line-height) !important;
-		letter-spacing: var(--v-theme-typography-h3-letter-spacing) !important;
+		font-size: var(--v-typography-h3-font-size) !important;
+		font-weight: var(--v-typography-h3-font-weight) !important;
+		line-height: var(--v-typography-h3-line-height) !important;
+		letter-spacing: var(--v-typography-h3-letter-spacing) !important;
 	}
 
 	.text-h4 {
-		font-size: var(--v-theme-typography-h4-font-size) !important;
-		font-weight: var(--v-theme-typography-h4-font-weight) !important;
-		line-height: var(--v-theme-typography-h4-line-height) !important;
-		letter-spacing: var(--v-theme-typography-h4-letter-spacing) !important;
+		font-size: var(--v-typography-h4-font-size) !important;
+		font-weight: var(--v-typography-h4-font-weight) !important;
+		line-height: var(--v-typography-h4-line-height) !important;
+		letter-spacing: var(--v-typography-h4-letter-spacing) !important;
 	}
 
 	.text-h5 {
-		font-size: var(--v-theme-typography-h5-font-size) !important;
-		font-weight: var(--v-theme-typography-h5-font-weight) !important;
-		line-height: var(--v-theme-typography-h5-line-height) !important;
-		letter-spacing: var(--v-theme-typography-h5-letter-spacing) !important;
+		font-size: var(--v-typography-h5-font-size) !important;
+		font-weight: var(--v-typography-h5-font-weight) !important;
+		line-height: var(--v-typography-h5-line-height) !important;
+		letter-spacing: var(--v-typography-h5-letter-spacing) !important;
 	}
 
 	.text-h6 {
-		font-size: var(--v-theme-typography-h6-font-size) !important;
-		font-weight: var(--v-theme-typography-h6-font-weight) !important;
-		line-height: var(--v-theme-typography-h6-line-height) !important;
-		letter-spacing: var(--v-theme-typography-h6-letter-spacing) !important;
+		font-size: var(--v-typography-h6-font-size) !important;
+		font-weight: var(--v-typography-h6-font-weight) !important;
+		line-height: var(--v-typography-h6-line-height) !important;
+		letter-spacing: var(--v-typography-h6-letter-spacing) !important;
+	}
+	
+	/* Native HTML heading elements */
+	h1 {
+		font-size: var(--v-typography-h1-font-size);
+		font-weight: var(--v-typography-h1-font-weight);
+		line-height: var(--v-typography-h1-line-height);
+		letter-spacing: var(--v-typography-h1-letter-spacing);
+		margin-bottom: 0.5rem;
+	}
+
+	h2 {
+		font-size: var(--v-typography-h2-font-size);
+		font-weight: var(--v-typography-h2-font-weight);
+		line-height: var(--v-typography-h2-line-height);
+		letter-spacing: var(--v-typography-h2-letter-spacing);
+		margin-bottom: 0.5rem;
+	}
+
+	h3 {
+		font-size: var(--v-typography-h3-font-size);
+		font-weight: var(--v-typography-h3-font-weight);
+		line-height: var(--v-typography-h3-line-height);
+		letter-spacing: var(--v-typography-h3-letter-spacing);
+		margin-bottom: 0.5rem;
+	}
+
+	h4 {
+		font-size: var(--v-typography-h4-font-size);
+		font-weight: var(--v-typography-h4-font-weight);
+		line-height: var(--v-typography-h4-line-height);
+		letter-spacing: var(--v-typography-h4-letter-spacing);
+		margin-bottom: 0.5rem;
+	}
+
+	h5 {
+		font-size: var(--v-typography-h5-font-size);
+		font-weight: var(--v-typography-h5-font-weight);
+		line-height: var(--v-typography-h5-line-height);
+		letter-spacing: var(--v-typography-h5-letter-spacing);
+		margin-bottom: 0.5rem;
+	}
+
+	h6 {
+		font-size: var(--v-typography-h6-font-size);
+		font-weight: var(--v-typography-h6-font-weight);
+		line-height: var(--v-typography-h6-line-height);
+		letter-spacing: var(--v-typography-h6-letter-spacing);
+		margin-bottom: 0.5rem;
 	}
 
 	/* Body text */
 	.text-body-1 {
-		font-size: var(--v-theme-typography-body1-font-size) !important;
-		font-weight: var(--v-theme-typography-body1-font-weight) !important;
-		line-height: var(--v-theme-typography-body1-line-height) !important;
-		letter-spacing: var(--v-theme-typography-body1-letter-spacing) !important;
+		font-size: var(--v-typography-body1-font-size) !important;
+		font-weight: var(--v-typography-body1-font-weight) !important;
+		line-height: var(--v-typography-body1-line-height) !important;
+		letter-spacing: var(--v-typography-body1-letter-spacing) !important;
 	}
 
 	.text-body-2 {
-		font-size: var(--v-theme-typography-body2-font-size) !important;
-		font-weight: var(--v-theme-typography-body2-font-weight) !important;
-		line-height: var(--v-theme-typography-body2-line-height) !important;
-		letter-spacing: var(--v-theme-typography-body2-letter-spacing) !important;
+		font-size: var(--v-typography-body2-font-size) !important;
+		font-weight: var(--v-typography-body2-font-weight) !important;
+		line-height: var(--v-typography-body2-line-height) !important;
+		letter-spacing: var(--v-typography-body2-letter-spacing) !important;
 	}
 
-	/* Subtitles */
+	/* Subtitle text */
 	.text-subtitle-1 {
-		font-size: var(--v-theme-typography-subtitle1-font-size) !important;
-		font-weight: var(--v-theme-typography-subtitle1-font-weight) !important;
-		line-height: var(--v-theme-typography-subtitle1-line-height) !important;
-		letter-spacing: var(--v-theme-typography-subtitle1-letter-spacing) !important;
+		font-size: var(--v-typography-subtitle1-font-size) !important;
+		font-weight: var(--v-typography-subtitle1-font-weight) !important;
+		line-height: var(--v-typography-subtitle1-line-height) !important;
+		letter-spacing: var(--v-typography-subtitle1-letter-spacing) !important;
 	}
 
 	.text-subtitle-2 {
-		font-size: var(--v-theme-typography-subtitle2-font-size) !important;
-		font-weight: var(--v-theme-typography-subtitle2-font-weight) !important;
-		line-height: var(--v-theme-typography-subtitle2-line-height) !important;
-		letter-spacing: var(--v-theme-typography-subtitle2-letter-spacing) !important;
+		font-size: var(--v-typography-subtitle2-font-size) !important;
+		font-weight: var(--v-typography-subtitle2-font-weight) !important;
+		line-height: var(--v-typography-subtitle2-line-height) !important;
+		letter-spacing: var(--v-typography-subtitle2-letter-spacing) !important;
 	}
 
 	/* Other typography */
 	.text-caption {
-		font-size: var(--v-theme-typography-caption-font-size) !important;
-		font-weight: var(--v-theme-typography-caption-font-weight) !important;
-		line-height: var(--v-theme-typography-caption-line-height) !important;
-		letter-spacing: var(--v-theme-typography-caption-letter-spacing) !important;
+		font-size: var(--v-typography-caption-font-size) !important;
+		font-weight: var(--v-typography-caption-font-weight) !important;
+		line-height: var(--v-typography-caption-line-height) !important;
+		letter-spacing: var(--v-typography-caption-letter-spacing) !important;
 	}
 
 	.text-overline {
-		font-size: var(--v-theme-typography-overline-font-size) !important;
-		font-weight: var(--v-theme-typography-overline-font-weight) !important;
-		line-height: var(--v-theme-typography-overline-line-height) !important;
-		letter-spacing: var(--v-theme-typography-overline-letter-spacing) !important;
+		font-size: var(--v-typography-overline-font-size) !important;
+		font-weight: var(--v-typography-overline-font-weight) !important;
+		line-height: var(--v-typography-overline-line-height) !important;
+		letter-spacing: var(--v-typography-overline-letter-spacing) !important;
 	}
 
 	.v-btn {
-		font-size: var(--v-theme-typography-button-font-size) !important;
-		font-weight: var(--v-theme-typography-button-font-weight) !important;
-		line-height: var(--v-theme-typography-button-line-height) !important;
-		letter-spacing: var(--v-theme-typography-button-letter-spacing) !important;
+		font-size: var(--v-typography-button-font-size) !important;
+		font-weight: var(--v-typography-button-font-weight) !important;
+		line-height: var(--v-typography-button-line-height) !important;
+		letter-spacing: var(--v-typography-button-letter-spacing) !important;
 	}
 }
