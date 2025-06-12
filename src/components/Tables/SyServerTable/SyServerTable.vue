@@ -101,8 +101,8 @@
 
 			// We need to use nextTick to ensure the table has re-rendered
 			nextTick(() => {
-				// Re-provide column widths to ensure they're available after re-render
-				provide('columnWidths', reactiveColumnWidths)
+				// Update the reactive reference directly, which will update the provided value
+				reactiveColumnWidths.value = { ...columnWidths.value }
 			})
 		},
 		{ deep: true },
