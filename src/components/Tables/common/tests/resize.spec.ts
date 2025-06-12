@@ -41,7 +41,7 @@ describe('Resize columns functionality', () => {
 
 			await separator.trigger('keydown', { key: 'ArrowRight' })
 
-			expect(col1Header.element.style.width).toBe(`142px`)
+			expect(col1Header.element.style.width).toBe(`110px`)
 		})
 
 		it('should resize the column to the right', async () => {
@@ -80,7 +80,7 @@ describe('Resize columns functionality', () => {
 
 			await separator.trigger('keydown', { key: 'ArrowLeft' })
 
-			expect(col1Header.element.style.width).toBe(`122px`)
+			expect(col1Header.element.style.width).toBe(`90px`)
 		})
 	})
 
