@@ -91,7 +91,8 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 					variables[`typography-${category}-font-weight`] = (value as FontProperty).fontWeight?.toString() || ''
 					variables[`typography-${category}-line-height`] = (value as FontProperty).lineHeight?.toString() || ''
 					variables[`typography-${category}-letter-spacing`] = (value as FontProperty).letterSpacing || ''
-				} else {
+				}
+				else {
 					// Nested object with key matching category name
 					const nestedValue = (value as Record<string, FontProperty>)[category]
 					if (nestedValue) {
