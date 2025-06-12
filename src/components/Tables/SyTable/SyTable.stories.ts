@@ -1824,7 +1824,8 @@ export const ResizableColumns: Story = {
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
-						resizableColumns
+						:resizable-columns="true"
+						suffix="resizable-columns"
 					/>
 				</template>
 				`,
@@ -1944,6 +1945,7 @@ export const ResizableColumns: Story = {
 		options: {
 			itemsPerPage: 4,
 		},
+		suffix: 'resizable-columns',
 	},
 	render(args) {
 		return {
@@ -1957,7 +1959,7 @@ export const ResizableColumns: Story = {
 					:headers="args.headers"
 					:items="args.items"
 					:resizableColumns="args.resizableColumns"
-					suffix="table1"
+					:suffix="args.suffix"
 				/>
 			`,
 		}

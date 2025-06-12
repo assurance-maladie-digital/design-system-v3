@@ -2677,7 +2677,7 @@ export const ResizableColumns: Story = {
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
 						:resizable-columns="true"
-						suffix="server-default"
+						suffix="server-resizable-columns"
 						@update:options="fetchData"
 					/>
 				</template>
@@ -2793,7 +2793,7 @@ export const ResizableColumns: Story = {
 		],
 		caption: '',
 		serverItemsLength: 15,
-		suffix: 'server-default',
+		suffix: 'server-resizable-columns',
 		density: 'default',
 		striped: false,
 		resizableColumns: true,
