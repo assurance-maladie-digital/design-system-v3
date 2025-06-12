@@ -125,16 +125,16 @@ export const paFontsTokens = {
 		display1: {
 			fontFamily: '"Arial", sans-serif',
 			fontWeight: 300,
-			fontSize: '3.75rem', // 60px
-			lineHeight: 1.2,
-			letterSpacing: '-0.05em',
+			fontSize: '2rem', // 32px
+			lineHeight: 1.15,
+			letterSpacing: '-0.006em',
 		},
 		display2: {
 			fontFamily: '"Arial", sans-serif',
 			fontWeight: 300,
-			fontSize: '3rem', // 48px
-			lineHeight: 1.2,
-			letterSpacing: '-0.025em',
+			fontSize: '1.75rem', // 28px
+			lineHeight: 1.1,
+			letterSpacing: '-0.003em',
 		},
 	},
 }

@@ -79,8 +79,8 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 		})
 	}
 
-	// Process caption, overline, display, and button styles with proper Vuetify theme variable format
-	['caption', 'overline', 'display'].forEach((category) => {
+	// Process caption and overline styles with proper Vuetify theme variable format
+	['caption', 'overline'].forEach((category) => {
 		if (fontTokens[category]) {
 			const value = fontTokens[category]
 			if (typeof value === 'object' && !Array.isArray(value)) {
@@ -91,6 +91,11 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 					variables[`typography-${category}-font-weight`] = (value as FontProperty).fontWeight?.toString() || ''
 					variables[`typography-${category}-line-height`] = (value as FontProperty).lineHeight?.toString() || ''
 					variables[`typography-${category}-letter-spacing`] = (value as FontProperty).letterSpacing || ''
+					
+					// Add text-transform if present
+					if ((value as FontProperty).textTransform) {
+						variables[`typography-${category}-text-transform`] = (value as FontProperty).textTransform || ''
+					}
 				}
 				else {
 					// Nested object with key matching category name
@@ -101,11 +106,38 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 						variables[`typography-${category}-font-weight`] = nestedValue.fontWeight?.toString() || ''
 						variables[`typography-${category}-line-height`] = nestedValue.lineHeight?.toString() || ''
 						variables[`typography-${category}-letter-spacing`] = nestedValue.letterSpacing || ''
+						
+						// Add text-transform if present
+						if (nestedValue.textTransform) {
+							variables[`typography-${category}-text-transform`] = nestedValue.textTransform || ''
+						}
 					}
 				}
 			}
 		}
 	})
+	
+	// Process display styles with display1 and display2 properties
+	if (fontTokens.display) {
+		const display = fontTokens.display as Record<string, FontProperty>
+		
+		// Process each display size (display1, display2)
+		['display1', 'display2'].forEach(key => {
+			if (display[key]) {
+				const value = display[key]
+				// Add variables in the format Vuetify expects (without -- prefix)
+				variables[`typography-${key}-font-size`] = value.fontSize || ''
+				variables[`typography-${key}-font-weight`] = value.fontWeight?.toString() || ''
+				variables[`typography-${key}-line-height`] = value.lineHeight?.toString() || ''
+				variables[`typography-${key}-letter-spacing`] = value.letterSpacing || ''
+				
+				// Add text-transform if present
+				if (value.textTransform) {
+					variables[`typography-${key}-text-transform`] = value.textTransform || ''
+				}
+			}
+		})
+	}
 
 	return variables
 }

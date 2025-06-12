@@ -138,5 +138,21 @@
 		font-weight: var(--v-typography-overline-font-weight) !important;
 		line-height: var(--v-typography-overline-line-height) !important;
 		letter-spacing: var(--v-typography-overline-letter-spacing) !important;
+		text-transform: var(--v-typography-overline-text-transform, uppercase) !important;
+	}
+
+	/* Display text */
+	.text-display-1 {
+		font-size: var(--v-typography-display1-font-size) !important;
+		font-weight: var(--v-typography-display1-font-weight) !important;
+		line-height: var(--v-typography-display1-line-height) !important;
+		letter-spacing: var(--v-typography-display1-letter-spacing) !important;
+	}
+
+	.text-display-2 {
+		font-size: var(--v-typography-display2-font-size) !important;
+		font-weight: var(--v-typography-display2-font-weight) !important;
+		line-height: var(--v-typography-display2-line-height) !important;
+		letter-spacing: var(--v-typography-display2-letter-spacing) !important;
 	}
 }

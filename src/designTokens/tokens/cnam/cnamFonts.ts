@@ -115,7 +115,7 @@ export const cnamFontsTokens = {
 	},
 	overline: {
 		fontFamily: '"Arial", sans-serif',
-		fontWeight: 500,
+		fontWeight: 400,
 		fontSize: '0.875rem', // 14px
 		lineHeight: 1.5,
 		letterSpacing: '0.1em',
@@ -125,16 +125,16 @@ export const cnamFontsTokens = {
 		display1: {
 			fontFamily: '"Arial", sans-serif',
 			fontWeight: 300,
-			fontSize: '3.75rem', // 60px
-			lineHeight: 1.2,
-			letterSpacing: '-0.05em',
+			fontSize: '2.5rem', // 40px
+			lineHeight: 1.15,
+			letterSpacing: '-0.0075em',
 		},
 		display2: {
 			fontFamily: '"Arial", sans-serif',
 			fontWeight: 300,
-			fontSize: '3rem', // 48px
-			lineHeight: 1.2,
-			letterSpacing: '-0.025em',
+			fontSize: '1.875rem', // 30px
+			lineHeight: 1.1,
+			letterSpacing: '-0.00375em',
 		},
 	},
 }
