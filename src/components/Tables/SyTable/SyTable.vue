@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref, useAttrs, watch } from 'vue'
+	import { computed, ref, useAttrs, watch, provide, nextTick } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
@@ -59,6 +59,8 @@
 		updateOptions,
 		setupAccessibility,
 		setupLocalStorage,
+		columnWidths,
+		updateColumnWidth,
 	} = useTableUtils({
 		tableId: uniqueTableId.value,
 		prefix: 'table',
@@ -74,9 +76,38 @@
 
 	const { watchOptions } = setupLocalStorage()
 
+	// Create a reactive reference to column widths that will be provided to children
+	const reactiveColumnWidths = ref(columnWidths.value)
+
+	// Provide column widths and update function to child components
+	provide('columnWidths', reactiveColumnWidths)
+	provide('updateColumnWidth', (key: string, width: number | string) => {
+		// Update both the local reactive reference and call the storage utility
+		reactiveColumnWidths.value[key] = width
+		updateColumnWidth(key, width)
+	})
+
+	// Watch for changes to columnWidths from storage and update the reactive reference
+	watch(
+		() => columnWidths.value,
+		(newWidths) => {
+			reactiveColumnWidths.value = { ...newWidths }
+		},
+		{ deep: true, immediate: true },
+	)
+
 	watch(
 		() => options.value,
-		watchOptions,
+		() => {
+			// Call watchOptions to update localStorage
+			watchOptions()
+
+			// We need to use nextTick to ensure the table has re-rendered
+			nextTick(() => {
+				// Re-provide column widths to ensure they're available after re-render
+				provide('columnWidths', reactiveColumnWidths)
+			})
+		},
 		{ deep: true },
 	)
 

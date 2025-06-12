@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref } from 'vue'
+	import { computed, nextTick, onMounted, ref, inject, watch, type Ref } from 'vue'
 	import type { VDataTable, VDataTableServer } from 'vuetify/components'
 	import { locales } from './locales'
 
@@ -30,8 +30,10 @@
 		headerParams: TableData
 		table: VDataTable | VDataTableServer | null | undefined
 		resizableColumns?: boolean
+		storageKey?: string
 	}>(), {
 		resizableColumns: false,
+		storageKey: undefined,
 	})
 
 	const header = computed(() => {
@@ -45,19 +47,58 @@
 
 	const wrapper = ref<HTMLElement | null>(null)
 
-	const initialWidth = ref<number | undefined>()
+	const initialWidth = ref<number | null>(null)
+
+	// Inject stored column widths if available
+	const storedColumnWidths = inject<Ref<Record<string, number | string>>>('columnWidths', ref({}))
 
 	onMounted(() => {
 		nextTick(() => {
 			if (wrapper.value) {
-				initialWidth.value = wrapper.value.offsetWidth + 24 + 1 / 2 * 16
+				initialWidth.value = wrapper.value.offsetWidth
+
+				// Apply stored width if available for this column
+				if (header.value?.key && storedColumnWidths?.value?.[header.value.key]) {
+					header.value.width = storedColumnWidths.value[header.value.key]
+				}
 			}
 		})
 	})
 
+	// Re-apply column width on header changes (ex when table re-renders due to pagination)
+	watch(
+		() => props.column,
+		() => {
+			nextTick(() => {
+				if (header.value?.key && storedColumnWidths?.value?.[header.value.key]) {
+					header.value.width = storedColumnWidths.value[header.value.key]
+				}
+			})
+		},
+		{ immediate: true },
+	)
+
+	// Watch for changes to column widths and apply them
+	watch(
+		() => storedColumnWidths?.value,
+		(newWidths) => {
+			if (newWidths && header.value?.key && newWidths[header.value.key]) {
+				header.value.width = newWidths[header.value.key]
+			}
+		},
+		{ deep: true },
+	)
+
+	const updateColumnWidth = inject<(key: string, width: number | string) => void>('updateColumnWidth', () => {})
+
 	function resetColumnWidth() {
 		if (header.value && initialWidth.value) {
 			header.value.width = initialWidth.value
+
+			// Save the reset width to localStorage if column key exists
+			if (header.value.key) {
+				updateColumnWidth(header.value.key, initialWidth.value)
+			}
 		}
 	}
 
@@ -75,6 +116,11 @@
 		function onMouseUp() {
 			document.removeEventListener('mousemove', onMouseMove)
 			document.removeEventListener('mouseup', onMouseUp)
+
+			// Save column width to localStorage if column key exists
+			if (header.value?.key) {
+				updateColumnWidth(header.value.key, header.value.width || initialWidth.value || 0)
+			}
 		}
 
 		document.addEventListener('mousemove', onMouseMove)
@@ -95,11 +141,15 @@
 	})
 
 	function resizeKeyboardColumn(increment: number) {
-		const currentWidth = wrapper.value!.offsetWidth + 24 + 1 / 2 * 16
-
+		const currentWidth = wrapper.value?.offsetWidth || 0
 		if (wrapper.value) {
 			const newWidth = Math.max(50, currentWidth + increment)
 			header.value!.width = newWidth
+
+			// Save column width to localStorage if column key exists
+			if (header.value?.key) {
+				updateColumnWidth(header.value.key, newWidth)
+			}
 		}
 	}
 </script>
