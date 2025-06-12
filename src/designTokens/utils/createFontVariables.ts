@@ -80,7 +80,7 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 	}
 
 	// Process caption, overline, display, and button styles with proper Vuetify theme variable format
-	['caption', 'overline', 'display', 'button'].forEach((category) => {
+	['caption', 'overline', 'display'].forEach((category) => {
 		if (fontTokens[category]) {
 			const value = fontTokens[category]
 			if (typeof value === 'object' && !Array.isArray(value)) {

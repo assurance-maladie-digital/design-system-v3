@@ -111,7 +111,7 @@ export const paFontsTokens = {
 		fontWeight: 400,
 		fontSize: '0.75rem', // 12px
 		lineHeight: 1.5,
-		letterSpacing: '0.025em',
+		letterSpacing: '0',
 	},
 	overline: {
 		fontFamily: '"Arial", sans-serif',

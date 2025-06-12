@@ -78,14 +78,14 @@ export const cnamFontsTokens = {
 		body1: {
 			fontFamily: '"Arial", sans-serif',
 			fontWeight: 400,
-			fontSize: '1rem', // 16px
+			fontSize: '1.125rem', // 18px
 			lineHeight: 1.5,
 			letterSpacing: '0',
 		},
 		body2: {
 			fontFamily: '"Arial", sans-serif',
 			fontWeight: 400,
-			fontSize: '0.875rem', // 14px
+			fontSize: '1rem', // 16px
 			lineHeight: 1.5,
 			letterSpacing: '0',
 		},
@@ -94,14 +94,14 @@ export const cnamFontsTokens = {
 		subtitle1: {
 			fontFamily: '"Arial", sans-serif',
 			fontWeight: 500,
-			fontSize: '1rem', // 16px
+			fontSize: '1.125rem', // 18px
 			lineHeight: 1.5,
 			letterSpacing: '0.009em',
 		},
 		subtitle2: {
 			fontFamily: '"Arial", sans-serif',
 			fontWeight: 500,
-			fontSize: '0.875rem', // 14px
+			fontSize: '1rem', // 16px
 			lineHeight: 1.5,
 			letterSpacing: '0.007em',
 		},
@@ -109,14 +109,14 @@ export const cnamFontsTokens = {
 	caption: {
 		fontFamily: '"Arial", sans-serif',
 		fontWeight: 400,
-		fontSize: '0.75rem', // 12px
+		fontSize: '0.875rem', // 14px
 		lineHeight: 1.5,
-		letterSpacing: '0.025em',
+		letterSpacing: '0',
 	},
 	overline: {
 		fontFamily: '"Arial", sans-serif',
 		fontWeight: 500,
-		fontSize: '0.75rem', // 12px
+		fontSize: '0.875rem', // 14px
 		lineHeight: 1.5,
 		letterSpacing: '0.1em',
 		textTransform: 'uppercase',
