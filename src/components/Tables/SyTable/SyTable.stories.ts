@@ -1893,7 +1893,6 @@ export const ResizableColumns: Story = {
 			},
 		],
 	},
-	// @ts-expect-error - props of VDataTable
 	args: {
 		resizableColumns: true,
 		headers: [
