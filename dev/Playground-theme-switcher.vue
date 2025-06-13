@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-	import { BackBtn } from '@/components'
 	import ThemeSwitcher from './ThemeSwitcher.vue'
 </script>
 
@@ -11,7 +10,7 @@
 			color="primary"
 			class="pa-4"
 		>
-			<BackBtn dark />
+			start developing here
 		</VSheet>
 	</div>
 </template>
