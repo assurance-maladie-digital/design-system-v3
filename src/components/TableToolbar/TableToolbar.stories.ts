@@ -169,15 +169,18 @@ export const Default: Story = {
 				const headers = [
 					{
 						title: 'Nom',
-						value: 'lastname',
+						sortable: true,
+						key: 'lastname',
 					},
 					{
 						title: 'Prénom',
-						value: 'firstname',
+						sortable: true,
+						key: 'firstname',
 					},
 					{
 						title: 'Email',
-						value: 'email',
+						sortable: true,
+						key: 'email',
 					},
 				]
 
@@ -202,8 +205,8 @@ export const Default: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
-					:items-per-page="args.nbFiltered"
 					:search="search"
+					:items-per-page="5"
 					hide-default-footer
 				>
 					<template #top>
@@ -225,7 +228,8 @@ export const Default: Story = {
 					<VDataTable
 						:headers="headers"
 						:items="items"
-						:search="search"
+						:search="args.search"
+						:items-per-page="5"
 						hide-default-footer
 					>
 						<template #top>
@@ -250,15 +254,18 @@ export const Default: Story = {
 					const headers = [
 						{
 							title: 'Nom',
-							value: 'lastname',
+							sortable: true,
+							key: 'lastname',
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							sortable: true,
+							key: 'firstname',
 						},
 						{
 							title: 'Email',
-							value: 'email',
+							sortable: true,
+							key: 'email',
 						},
 					]
 
@@ -296,15 +303,18 @@ export const AddButton: Story = {
 				const headers = [
 					{
 						title: 'Nom',
-						value: 'lastname',
+						sortable: true,
+						key: 'lastname',
 					},
 					{
 						title: 'Prénom',
-						value: 'firstname',
+						sortable: true,
+						key: 'firstname',
 					},
 					{
 						title: 'Email',
-						value: 'email',
+						sortable: true,
+						key: 'email',
 					},
 				]
 
@@ -329,8 +339,8 @@ export const AddButton: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
-					:items-per-page="args.nbFiltered"
 					:search="search"
+					:items-per-page="5"
 					hide-default-footer
 				>
 					<template #top>
@@ -354,6 +364,7 @@ export const AddButton: Story = {
 						:headers="headers"
 						:items="items"
 						:search="search"
+						:items-per-page="5"
 						hide-default-footer
 					>
 						<template #top>
@@ -378,15 +389,18 @@ export const AddButton: Story = {
 					const headers = [
 						{
 							title: 'Nom',
-							value: 'lastname',
+							sortable: true,
+							key: 'lastname',
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							sortable: true,
+							key: 'firstname',
 						},
 						{
 							title: 'Email',
-							value: 'email',
+							sortable: true,
+							key: 'email',
 						},
 					]
 
@@ -427,15 +441,18 @@ export const Labels: Story = {
 				const headers = [
 					{
 						title: 'Nom',
-						value: 'lastname',
+						sortable: true,
+						key: 'lastname',
 					},
 					{
 						title: 'Prénom',
-						value: 'firstname',
+						sortable: true,
+						key: 'firstname',
 					},
 					{
 						title: 'Email',
-						value: 'email',
+						sortable: true,
+						key: 'email',
 					},
 				]
 
@@ -460,8 +477,8 @@ export const Labels: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
-					:items-per-page="args.nbFiltered"
 					:search="search"
+					:items-per-page="5"
 					hide-default-footer
 				>
 					<template #top>
@@ -484,6 +501,7 @@ export const Labels: Story = {
 						:headers="headers"
 						:items="items"
 						:search="search"
+						:items-per-page="5"
 						hide-default-footer
 					>
 						<template #top>
@@ -510,15 +528,18 @@ export const Labels: Story = {
 					const headers = [
 						{
 							title: 'Nom',
-							value: 'lastname',
+							sortable: true,
+							key: 'lastname',
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							sortable: true,
+							key: 'firstname',
 						},
 						{
 							title: 'Email',
-							value: 'email',
+							sortable: true,
+							key: 'email',
 						},
 					]
 
@@ -557,15 +578,18 @@ export const Loading: Story = {
 				const headers = [
 					{
 						title: 'Nom',
-						value: 'lastname',
+						sortable: true,
+						key: 'lastname',
 					},
 					{
 						title: 'Prénom',
-						value: 'firstname',
+						sortable: true,
+						key: 'firstname',
 					},
 					{
 						title: 'Email',
-						value: 'email',
+						sortable: true,
+						key: 'email',
 					},
 				]
 
@@ -639,15 +663,18 @@ export const Loading: Story = {
 					const headers = [
 						{
 							title: 'Nom',
-							value: 'lastname',
+							sortable: true,
+							key: 'lastname',
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							sortable: true,
+							key: 'firstname',
 						},
 						{
 							title: 'Email',
-							value: 'email',
+							sortable: true,
+							key: 'email',
 						},
 					]
 
@@ -686,15 +713,18 @@ export const NbFiltered: Story = {
 				const headers = [
 					{
 						title: 'Nom',
-						value: 'lastname',
+						sortable: true,
+						key: 'lastname',
 					},
 					{
 						title: 'Prénom',
-						value: 'firstname',
+						sortable: true,
+						key: 'firstname',
 					},
 					{
 						title: 'Email',
-						value: 'email',
+						sortable: true,
+						key: 'email',
 					},
 				]
 
@@ -719,8 +749,8 @@ export const NbFiltered: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
-					:items-per-page="args.nbFiltered"
 					:search="search"
+					:items-per-page="5"
 					hide-default-footer
 				>
 					<template #top>
@@ -768,15 +798,18 @@ export const NbFiltered: Story = {
 					const headers = [
 						{
 							title: 'Nom',
-							value: 'lastname',
+							sortable: true,
+							key: 'lastname',
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							sortable: true,
+							key: 'firstname',
 						},
 						{
 							title: 'Email',
-							value: 'email',
+							sortable: true,
+							key: 'email',
 						},
 					]
 
@@ -814,15 +847,18 @@ export const SlotFilters: Story = {
 				const headers = [
 					{
 						title: 'Nom',
-						value: 'lastname',
+						sortable: true,
+						key: 'lastname',
 					},
 					{
 						title: 'Prénom',
-						value: 'firstname',
+						sortable: true,
+						key: 'firstname',
 					},
 					{
 						title: 'Email',
-						value: 'email',
+						sortable: true,
+						key: 'email',
 					},
 				]
 
@@ -856,8 +892,8 @@ export const SlotFilters: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
-					:items-per-page="args.nbFiltered"
 					:search="search"
+					:items-per-page="5"
 					hide-default-footer
 				>
 					<template #top>
@@ -894,6 +930,7 @@ export const SlotFilters: Story = {
 						:headers="headers"
 						:items="items"
 						:search="search"
+						:items-per-page="5"
 						hide-default-footer
 					>
 						<template #top>
@@ -931,15 +968,18 @@ export const SlotFilters: Story = {
 					const headers = [
 						{
 							title: 'Nom',
-							value: 'lastname',
+							sortable: true,
+							key: 'lastname',
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							sortable: true,
+							key: 'firstname',
 						},
 						{
 							title: 'Email',
-							value: 'email',
+							sortable: true,
+							key: 'email',
 						},
 					]
 
@@ -986,15 +1026,18 @@ export const OtherSlots: Story = {
 				const headers = [
 					{
 						title: 'Nom',
-						value: 'lastname',
+						sortable: true,
+						key: 'lastname',
 					},
 					{
 						title: 'Prénom',
-						value: 'firstname',
+						sortable: true,
+						key: 'firstname',
 					},
 					{
 						title: 'Email',
-						value: 'email',
+						sortable: true,
+						key: 'email',
 					},
 				]
 
@@ -1019,8 +1062,8 @@ export const OtherSlots: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
-					:items-per-page="args.nbFiltered"
 					:search="search"
+					:items-per-page="5"
 					hide-default-footer
 				>
 					<template #top>
@@ -1054,6 +1097,7 @@ export const OtherSlots: Story = {
 						:headers="headers"
 						:items="items"
 						:search="search"
+						:items-per-page="5"
 						hide-default-footer
 					>
 						<template #top>
@@ -1089,15 +1133,18 @@ export const OtherSlots: Story = {
 					const headers = [
 						{
 							title: 'Nom',
-							value: 'lastname',
+							sortable: true,
+							key: 'lastname',
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							sortable: true,
+							key: 'firstname',
 						},
 						{
 							title: 'Email',
-							value: 'email',
+							sortable: true,
+							key: 'email',
 						},
 					]
 
@@ -1150,15 +1197,18 @@ export const Customization: Story = {
 				const headers = [
 					{
 						title: 'Nom',
-						value: 'lastname',
+						sortable: true,
+						key: 'lastname',
 					},
 					{
 						title: 'Prénom',
-						value: 'firstname',
+						sortable: true,
+						key: 'firstname',
 					},
 					{
 						title: 'Email',
-						value: 'email',
+						sortable: true,
+						key: 'email',
 					},
 				]
 
@@ -1183,8 +1233,8 @@ export const Customization: Story = {
 				<VDataTable
 					:headers="headers"
 					:items="items"
-					:items-per-page="args.nbFiltered"
 					:search="search"
+					:items-per-page="5"
 					hide-default-footer
 				>
 					<template #top>
@@ -1207,6 +1257,7 @@ export const Customization: Story = {
 						:headers="headers"
 						:items="items"
 						:search="search"
+						:items-per-page="5"
 						hide-default-footer
 					>
 						<template #top>
@@ -1232,15 +1283,18 @@ export const Customization: Story = {
 					const headers = [
 						{
 							title: 'Nom',
-							value: 'lastname',
+							sortable: true,
+							key: 'lastname',
 						},
 						{
 							title: 'Prénom',
-							value: 'firstname',
+							sortable: true,
+							key: 'firstname',
 						},
 						{
 							title: 'Email',
-							value: 'email',
+							sortable: true,
+							key: 'email',
 						},
 					]
 
