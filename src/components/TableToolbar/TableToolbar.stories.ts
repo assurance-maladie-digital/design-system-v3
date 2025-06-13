@@ -155,6 +155,8 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+
+
 export const Default: Story = {
 	args: {
 		'nbTotal': 2,
@@ -203,9 +205,9 @@ export const Default: Story = {
 			},
 			template: `
 				<VDataTable
-					:headers="args.headers"
-					:items="args.items"
-					:search="args.search"
+					:headers="headers"
+					:items="items"
+					:search="search"
 					:items-per-page="5"
 					hide-default-footer
 				>
@@ -226,8 +228,8 @@ export const Default: Story = {
 				code: `
 				<template>
 					<VDataTable
-						:headers="args.headers"
-						:items="args.items"
+						:headers="headers"
+						:items="items"
 						:search="args.search"
 						:items-per-page="5"
 						hide-default-footer
@@ -337,9 +339,9 @@ export const AddButton: Story = {
 			},
 			template: `
 				<VDataTable
-					:headers="args.headers"
-					:items="args.items"
-					:search="args.search"
+					:headers="headers"
+					:items="items"
+					:search="search"
 					:items-per-page="5"
 					hide-default-footer
 				>
@@ -475,9 +477,9 @@ export const Labels: Story = {
 			},
 			template: `
 				<VDataTable
-					:headers="args.headers"
-					:items="args.items"
-					:search="args.search"
+					:headers="headers"
+					:items="items"
+					:search="search"
 					:items-per-page="5"
 					hide-default-footer
 				>
@@ -612,10 +614,10 @@ export const Loading: Story = {
 			},
 			template: `
 				<VDataTable
-					:headers="args.headers"
-					:items="args.items"
+					:headers="headers"
+					:items="items"
 					:items-per-page="args.nbFiltered"
-					:search="args.search"
+					:search="search"
 					loading
 					hide-default-footer
 				>
@@ -747,9 +749,9 @@ export const NbFiltered: Story = {
 			},
 			template: `
 				<VDataTable
-					:headers="args.headers"
-					:items="args.items"
-					:search="args.search"
+					:headers="headers"
+					:items="items"
+					:search="search"
 					:items-per-page="5"
 					hide-default-footer
 				>
@@ -890,9 +892,9 @@ export const SlotFilters: Story = {
 			},
 			template: `
 				<VDataTable
-					:headers="args.headers"
-					:items="args.items"
-					:search="args.search"
+					:headers="headers"
+					:items="items"
+					:search="search"
 					:items-per-page="5"
 					hide-default-footer
 				>
@@ -1060,9 +1062,9 @@ export const OtherSlots: Story = {
 			},
 			template: `
 				<VDataTable
-					:headers="args.headers"
-					:items="args.items"
-					:search="args.search"
+					:headers="headers"
+					:items="items"
+					:search="search"
 					:items-per-page="5"
 					hide-default-footer
 				>
@@ -1231,9 +1233,9 @@ export const Customization: Story = {
 			},
 			template: `
 				<VDataTable
-					:headers="args.headers"
-					:items="args.items"
-					:search="args.search"
+					:headers="headers"
+					:items="items"
+					:search="search"
 					:items-per-page="5"
 					hide-default-footer
 				>
