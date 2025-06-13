@@ -1,10 +1,12 @@
 <script setup lang="ts">
-	import { ref, onMounted, onBeforeUnmount } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from '@/components/Accordion/config'
 	import { mdiChevronRight } from '@mdi/js'
 
-	type EventListener = (event: Event) => void
+	// Importation des composables
+	import useAccordionState from './composables/useAccordionState'
+	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
+	import useAccordionKeyboardNavigation, { type AccordionItem as KeyboardNavigationItem } from './composables/useAccordionKeyboardNavigation'
 
 	interface ContentObject {
 		title: string
@@ -16,6 +18,7 @@
 		title: string
 		content: string | ContentObject
 		headingLevel?: number
+		disabled?: boolean
 	}
 
 	interface Props extends CustomizableOptions {
@@ -41,83 +44,38 @@
 
 	const options = useCustomizableOptions(config, props)
 
+	// Génération d'un ID unique pour cette instance d'accordéon
 	const instanceId = `accordion-${Math.random().toString(36).substring(2, 9)}`
 
-	const ACCORDION_FOCUS_EVENT = 'accordion-focus-changed'
+	// Utilisation du composable pour gérer l'état de l'accordéon
+	const {
+		toggleItem,
+		isItemOpen,
+		isItemFocused,
+		setFocus,
+	} = useAccordionState()
 
-	const openItems = ref<string[]>([])
-	const focusedItemId = ref<string | null>(null)
+	// Utilisation du composable pour gérer la communication entre accordéons
+	const { emitFocusChange } = useAccordionGroupCommunication(
+		instanceId,
+		props.groupId,
+		itemId => setFocus(itemId),
+	)
 
-	const handleFocusChange = (event: CustomEvent) => {
-		const { sourceInstanceId, groupId } = event.detail
-
-		if (sourceInstanceId === instanceId) return
-
-		if (groupId !== props.groupId) return
-
-		focusedItemId.value = null
-	}
-
-	const emitFocusChange = (itemId: string | null) => {
-		const event = new CustomEvent(ACCORDION_FOCUS_EVENT, {
-			bubbles: true,
-			detail: {
-				sourceInstanceId: instanceId,
-				groupId: props.groupId,
-				itemId,
-			},
-		})
-		window.dispatchEvent(event)
-	}
-
-	const toggleItem = (itemId: string) => {
-		// Si cet élément est déjà focalisé, on le garde en mémoire
-		const wasFocused = focusedItemId.value === itemId
-
-		const index = openItems.value.indexOf(itemId)
-		if (index === -1) {
-			openItems.value.push(itemId)
+	// Utilisation du composable pour gérer la navigation clavier
+	const { handleKeyNavigation } = useAccordionKeyboardNavigation(
+		props.items as KeyboardNavigationItem[],
+		(itemId) => {
 			setFocus(itemId)
-		}
-		else {
-			openItems.value.splice(index, 1)
-			if (!wasFocused) {
-				setFocus(itemId)
-			}
-			else {
-				setFocus(null)
-			}
-		}
-	}
+			emitFocusChange(itemId)
+		},
+	)
 
-	const isItemOpen = (itemId: string) => {
-		return openItems.value.includes(itemId)
-	}
-
-	const isItemFocused = (itemId: string) => {
-		return focusedItemId.value === itemId
-	}
-
-	// Méthode pour définir explicitement le focus sur un élément
-	const setFocus = (itemId: string | null) => {
-		if (focusedItemId.value === itemId) return
-
-		focusedItemId.value = itemId
-		emitFocusChange(itemId)
-	}
-
+	// Fonction pour déterminer le niveau de titre à utiliser
 	const getHeadingTag = (item: AccordionItem) => {
 		const level = item.headingLevel || props.headingLevel
 		return `h${level}`
 	}
-
-	onMounted(() => {
-		window.addEventListener(ACCORDION_FOCUS_EVENT, handleFocusChange as unknown as EventListener)
-	})
-
-	onBeforeUnmount(() => {
-		window.removeEventListener(ACCORDION_FOCUS_EVENT, handleFocusChange as unknown as EventListener)
-	})
 </script>
 
 <template>
@@ -130,7 +88,7 @@
 		}"
 	>
 		<div
-			v-for="item in items"
+			v-for="(item, index) in items"
 			:key="item.id"
 			class="sy-accordion-item"
 			:class="`bg-${options.accordion.backgroundColor}`"
@@ -140,12 +98,20 @@
 				role="button"
 				:aria-expanded="isItemOpen(item.id)"
 				:aria-controls="`accordion-content-${item.id}`"
+				:aria-disabled="item.disabled ? 'true' : 'false'"
 				class="sy-accordion-button"
-				:class="{ 'sy-accordion-button--focused': isItemFocused(item.id) }"
+				:class="{
+					'sy-accordion-button--focused': isItemFocused(item.id),
+					'sy-accordion-button--disabled': item.disabled
+				}"
 				tabindex="0"
-				@click="toggleItem(item.id)"
-				@keydown.space.prevent="toggleItem(item.id)"
-				@keydown.enter.prevent="toggleItem(item.id)"
+				@click="!item.disabled && toggleItem(item.id)"
+				@keydown.space.prevent="!item.disabled && toggleItem(item.id)"
+				@keydown.enter.prevent="!item.disabled && toggleItem(item.id)"
+				@keydown.down.prevent="!item.disabled && handleKeyNavigation($event, item.id, index)"
+				@keydown.up.prevent="!item.disabled && handleKeyNavigation($event, item.id, index)"
+				@keydown.home.prevent="!item.disabled && handleKeyNavigation($event, item.id, index)"
+				@keydown.end.prevent="!item.disabled && handleKeyNavigation($event, item.id, index)"
 			>
 				<component
 					:is="getHeadingTag(item)"
@@ -315,5 +281,11 @@
 /* Rotation de l'icône lorsque l'accordéon est ouvert */
 .sy-accordion-icon--open {
 	transform: rotate(90deg);
+}
+
+/* Style pour les éléments désactivés */
+.sy-accordion-button--disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
 }
 </style>
