@@ -877,13 +877,13 @@
 /* Disable ripple effect on month and year buttons */
 :deep(.v-date-picker-controls__month-btn),
 :deep(.v-date-picker-controls__mode-btn) {
-  .v-ripple__container,
-  .v-ripple__animation {
-    display: none !important;
-    opacity: 0 !important;
-    background-color: transparent !important;
-    pointer-events: none !important;
-  }
+	.v-ripple__container,
+	.v-ripple__animation {
+		display: none !important;
+		opacity: 0 !important;
+		background-color: transparent !important;
+		pointer-events: none !important;
+	}
 }
 
 .label-hidden-on-focus:focus + label {
