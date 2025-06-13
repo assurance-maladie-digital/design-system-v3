@@ -885,6 +885,9 @@
 		pointer-events: none !important;
 	}
 }
+:deep(.v-date-picker-controls .v-btn:last-child) {
+  margin-inline-start: 0px;
+}
 
 .label-hidden-on-focus:focus + label {
 	display: none;

@@ -998,7 +998,9 @@
 		pointer-events: none !important;
 	}
 }
-
+:deep(.v-date-picker-controls .v-btn:last-child) {
+  margin-inline-start: 0px;
+}
 .label-hidden-on-focus:focus + label {
 	display: none;
 }
@@ -1088,16 +1090,6 @@
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
 	opacity: 1;
 }
-
-// .fade-enter-active,
-// .fade-leave-active {
-// 	transition: opacity 0.5s ease;
-// }
-
-// .fade-enter-from,
-// .fade-leave-to {
-// 	opacity: 0;
-// }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
 	background-color: #afb1b1;
