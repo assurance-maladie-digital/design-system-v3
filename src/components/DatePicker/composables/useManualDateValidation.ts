@@ -133,7 +133,7 @@ export const useManualDateValidation = (options: {
 					safeCopy.options = { ...rule.options }
 					safeCopy.options.validate = (val: string | Date | null | undefined) => {
 						if (val instanceof Date && originalValidate.toString().includes('.includes')) {
-							return originalValidate(format ? formatDate(val, format) : val.toISOString())
+							return originalValidate(format ? formatDate(dayjs(val), format) : val.toISOString())
 						}
 						return originalValidate(val)
 					}
