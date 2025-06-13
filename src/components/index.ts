@@ -75,4 +75,3 @@ export { default as TableToolbar } from './TableToolbar/TableToolbar.vue'
 export { default as ToolbarContainer } from './ToolbarContainer/ToolbarContainer.vue'
 export { default as UploadWorkflow } from './UploadWorkflow/UploadWorkflow.vue'
 export { default as UserMenuBtn } from './UserMenuBtn/UserMenuBtn.vue'
-
