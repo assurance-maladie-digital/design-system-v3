@@ -27,7 +27,7 @@ export function useMonthButtonCustomization(isPickerVisibleGetter: () => boolean
 
 					// Créer un bouton stylisé comme un VBtn avec une icône Material Design
 					const buttonHTML = `
-						<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary); margin-left: -12px;">
+						<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary); margin-left: -12px;" data-ripple="false">
 							<span class="v-btn__overlay"></span>
 							<span class="v-btn__underlay"></span>
 							<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
@@ -46,7 +46,7 @@ export function useMonthButtonCustomization(isPickerVisibleGetter: () => boolean
 						if (yearBtn) {
 							// Créer un bouton stylisé pour l'année
 							const yearButtonHTML = `
-								<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary);">
+								<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary);" data-ripple="false">
 									<span class="v-btn__overlay"></span>
 									<span class="v-btn__underlay"></span>
 									<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
