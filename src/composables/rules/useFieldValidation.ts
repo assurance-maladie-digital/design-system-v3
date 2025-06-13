@@ -212,7 +212,6 @@ export function useFieldValidation() {
 					if (!options.date) {
 						return { error: 'Configuration de la règle invalide' }
 					}
-
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }

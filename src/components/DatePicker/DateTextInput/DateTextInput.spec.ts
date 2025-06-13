@@ -82,7 +82,7 @@ describe('DateTextInput.vue', () => {
 				customRules: [{
 					type: 'custom',
 					options: {
-						validate: (value: string) => !value.includes('2024'),
+						validate: (value: Date) => !(value instanceof Date && value.getFullYear() === 2024),
 						message: 'Les dates en 2024 ne sont pas autorisées',
 						fieldIdentifier: 'date',
 					},
@@ -105,7 +105,7 @@ describe('DateTextInput.vue', () => {
 				customWarningRules: [{
 					type: 'custom',
 					options: {
-						validate: (value: string) => !/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/2025$/.test(value),
+						validate: (value: Date) => !(value instanceof Date && value.getFullYear() === 2025),
 						message: 'Les dates en 2025 ne sont pas recommandées',
 						fieldIdentifier: 'date',
 						isWarning: true,
@@ -499,7 +499,7 @@ describe('DateTextInput.vue', () => {
 					{
 						type: 'custom',
 						options: {
-							validate: (value: string) => value.includes('2025'),
+							validate: (value: Date) => value instanceof Date && value.getFullYear() === 2025,
 							message: 'La date doit être en 2025',
 							fieldIdentifier: 'date',
 						},
@@ -507,7 +507,7 @@ describe('DateTextInput.vue', () => {
 					{
 						type: 'custom',
 						options: {
-							validate: (value: string) => value.includes('01/'),
+							validate: (value: Date) => value instanceof Date && value.getMonth() === 0, // Janvier est le mois 0
 							message: 'Le mois doit être janvier',
 							fieldIdentifier: 'date',
 						},

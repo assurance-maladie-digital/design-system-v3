@@ -71,13 +71,14 @@ describe('useDateRangeInput', () => {
 			expect(result).toBe('')
 		})
 
-		it('devrait retourner uniquement la date de début si la date de fin est null', () => {
+		it('devrait retourner la date de début suivie du séparateur de plage si la date de fin est null', () => {
 			const { formatRangeForDisplay } = useDateRangeInput(format, true, mockParseDate, mockFormatDate)
 
 			const startDate = new Date(2023, 0, 1)
 			const result = formatRangeForDisplay(startDate, null)
 
-			expect(result).toBe('01/01/2023')
+			// Maintenant, nous attendons que le séparateur de plage soit inclus
+			expect(result).toBe('01/01/2023 - ')
 			expect(mockFormatDate).toHaveBeenCalledWith(startDate, format)
 		})
 

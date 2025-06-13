@@ -139,6 +139,25 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 	 * @param event - Événement keydown
 	 */
 	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }): void => {
+		// Bloquer la saisie de caractères non numériques
+		// Autoriser uniquement : chiffres, touches de navigation, touches de modification et touches de contrôle
+		if (
+			// Si la touche n'est pas un chiffre
+			!/^\d$/.test(event.key)
+			// Et n'est pas une touche spéciale autorisée
+			&& ![
+				'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
+				'Home', 'End', 'Tab', 'Escape', 'Enter',
+				'Control', 'Alt', 'Shift', 'Meta',
+			].includes(event.key)
+			// Et n'est pas une combinaison de touches (Ctrl+A, Ctrl+C, Ctrl+V, etc.)
+			&& !(event.ctrlKey || event.metaKey)
+		) {
+			// Empêcher la saisie de caractères non numériques
+			event.preventDefault()
+			return
+		}
+
 		// Gérer la suppression des séparateurs
 		if (event.key === 'Backspace') {
 			const input = event.target
