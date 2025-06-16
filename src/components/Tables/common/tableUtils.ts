@@ -1,5 +1,5 @@
 import { computed, watch, type Ref } from 'vue'
-import type { DataOptions, TableDensityType } from './types'
+import type { DataOptions, DataTableHeaders, TableDensityType } from './types'
 import { useTableAccessibility } from './tableAccessibilityUtils'
 import { useTableStorage } from './tableStorageUtils'
 
@@ -13,6 +13,7 @@ export function useTableUtils({
 	itemsPerPage,
 	serverItemsLength,
 	componentAttributes,
+	headersProp,
 	options,
 }: {
 	tableId: string
@@ -22,6 +23,7 @@ export function useTableUtils({
 	caption?: string
 	serverItemsLength?: number
 	componentAttributes: Record<string, unknown>
+	headersProp?: Ref<DataTableHeaders[] | undefined>
 	options: Ref<Partial<DataOptions>>
 	density?: TableDensityType
 }) {
@@ -39,10 +41,10 @@ export function useTableUtils({
 	})
 
 	const headers = computed(() => {
-		if (!Array.isArray(componentAttributes['headers'])) {
+		if (!Array.isArray(headersProp?.value)) {
 			return undefined
 		}
-		return componentAttributes['headers'].map(header => ({
+		return headersProp.value.map(header => ({
 			...header,
 			title: header.title ?? header.text,
 		}))

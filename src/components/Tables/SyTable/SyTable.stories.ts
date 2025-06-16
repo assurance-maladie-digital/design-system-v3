@@ -4,6 +4,7 @@ import type { DataOptions, FilterType } from '../common/types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable',
@@ -18,7 +19,7 @@ const meta = {
 	},
 	argTypes: {
 		headers: {
-			description: 'Liste des colonnes du tableau',
+			description: 'Liste des colonnes du tableau (voir : https://vuetifyjs.com/en/api/v-data-table/#props-headers)',
 			control: { type: 'object' },
 			table: {
 				category: 'props',
@@ -29,6 +30,9 @@ const meta = {
 			control: { type: 'object' },
 			table: {
 				category: 'props',
+				defaultValue: {
+					summary: '[]',
+				},
 			},
 		},
 		density: {
@@ -1806,6 +1810,162 @@ export const ManyTables: Story = {
 						:density="args.density"
 						:striped="args.striped"
 						suffix="table2"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const Alignment: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						suffix="alignment-table"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+					})
+					
+					const headers = ref([
+						{
+							title: 'ID',
+							key: 'id',
+							align: 'center',
+						},
+						{
+							title: 'Nom',
+							key: 'lastname',
+							align: 'start',
+						},
+						{
+							title: 'Date de naissance',
+							key: 'birthdate',
+							align: 'center',
+						},
+						{
+							title: 'NIR',
+							key: 'nir',
+							align: 'end',
+						},
+					])
+
+					const items = ref([
+						{
+							id: '1',
+							lastname: 'Lefebvre',
+							birthdate: '18/02/1989',
+							nir: '1 89 02 75 120 005 79',
+						},
+						{
+							id: '2',
+							lastname: 'Richard',
+							birthdate: '22/05/1991',
+							nir: '2 91 05 75 120 005 76',
+						},
+						{
+							id: '3',
+							lastname: 'Fournier',
+							birthdate: '11/11/2000',
+							nir: '2 00 11 42 120 008 87',
+						},
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'ID',
+				key: 'id',
+				align: 'center',
+				sortable: false,
+			},
+			{
+				title: 'Nom',
+				key: 'lastname',
+				align: 'start',
+				sortable: false,
+			},
+			{
+				title: 'Date de naissance',
+				key: 'birthdate',
+				align: 'center',
+				sortable: false,
+			},
+			{
+				title: 'NIR',
+				key: 'nir',
+				align: 'end',
+				sortable: false,
+			},
+		],
+		'items': [
+			{
+				id: '1',
+				lastname: 'Lefebvre',
+				birthdate: '18/02/1989',
+				nir: '1 89 02 75 120 005 79',
+			},
+			{
+				id: '2',
+				lastname: 'Richard',
+				birthdate: '22/05/1991',
+				nir: '2 91 05 75 120 005 76',
+			},
+			{
+				id: '3',
+				lastname: 'Fournier',
+				birthdate: '11/11/2000',
+				nir: '2 00 11 42 120 008 87',
+			},
+		],
+		'options': {
+			itemsPerPage: 4,
+		},
+		'suffix': 'alignment-table',
+		'onUpdate:options': fn(),
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div>
+					<p class="my-4">
+						<span class="d-block font-weight-bold mb-2">Conviention de formatage à suivre :</span>
+						N° de ligne : Les numéros sont centrés<br>
+						Texte : Les textes sont ferré à gauche<br>
+						Date : Les dates sont centrées<br>
+						Numérique : Les nombres sont ferré à droite
+					</p>
+					<SyTable
+						v-model:options="args.options"
+						:headers="args.headers"
+						:items="args.items"
+						:suffix="args.suffix"
+						@update:options="args['onUpdate:options']"
 					/>
 				</div>
 			`,

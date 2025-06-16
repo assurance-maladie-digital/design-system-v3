@@ -5,6 +5,7 @@ import type { DataOptions, FilterType } from '../common/types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
+import { fn } from '@storybook/test'
 
 interface User {
 	[key: string]: string
@@ -31,7 +32,7 @@ const meta = {
 	},
 	argTypes: {
 		headers: {
-			description: 'Liste des colonnes du tableau',
+			description: 'Liste des colonnes du tableau (voir : https://vuetifyjs.com/en/api/v-data-table/#props-headers)',
 			control: { type: 'object' },
 			table: {
 				category: 'props',
@@ -42,6 +43,9 @@ const meta = {
 			control: { type: 'object' },
 			table: {
 				category: 'props',
+				defaultValue: {
+					summary: '[]',
+				},
 			},
 		},
 		density: {
@@ -2663,6 +2667,263 @@ export const ManyServerTables: Story = {
 		}
 	},
 }
+
+export const Alignment: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyServerTable
+						v-model:options="options"
+						:items="users"
+						:headers="headers"
+						:server-items-length="totalUsers"
+						:loading="state === StateEnum.PENDING"
+						suffix="server-resizable-columns"
+						@update:options="fetchData"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref, watch } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+
+					const totalUsers = ref(0)
+					const users = ref<User[]>([])
+					const state = ref(StateEnum.IDLE)
+				
+					const options = ref({
+						itemsPerPage: 5,
+						sortBy: [{ key: 'lastname', order: 'asc' }],
+						page: 1,
+					})
+				
+					const headers = [
+						{
+							title: 'ID',
+							key: 'id',
+							align: 'center',
+						},
+						{
+							title: 'Nom',
+							key: 'lastname',
+							align: 'start',
+						},
+						{
+							title: 'Date de naissance',
+							key: 'birthdate',
+							align: 'center',
+						},
+						{
+							title: 'NIR',
+							key: 'nir',
+							align: 'end',
+						},
+					]
+				
+					const fetchData = async (): Promise<void> => {
+						const { items, total } = await getDataFromApi(options.value)
+						users.value = items
+						totalUsers.value = total
+					}
+				
+					const wait = async (ms: number) => {
+						return new Promise(resolve => setTimeout(resolve, ms))
+					}
+				
+					const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions) => {
+						state.value = StateEnum.PENDING
+						await wait(1000)
+				
+						return new Promise((resolve) => {
+							let items: User[] = getUsers()
+							const total = items.length
+				
+							if (sortBy && sortBy.length > 0) {
+								items = items.sort((a, b) => {
+									const key = sortBy[0].key
+									const order = sortBy[0].order === 'asc' ? 1 : -1
+				
+									return a[key] > b[key] ? order : -order
+								})
+							}
+				
+							if (itemsPerPage > 0) {
+								items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							}
+				
+							resolve({ items, total })
+							state.value = StateEnum.RESOLVED
+						})
+					}
+				
+					const getUsers = () => {
+						return [
+							{
+								id: '1',
+								lastname: 'Lefebvre',
+								birthdate: '18/02/1989',
+								nir: '1 89 02 75 120 005 79',
+							},
+							{
+								id: '2',
+								lastname: 'Richard',
+								birthdate: '22/05/1991',
+								nir: '2 91 05 75 120 005 76',
+							},
+							{
+								id: '3',
+								lastname: 'Fournier',
+								birthdate: '11/11/2000',
+								nir: '2 00 11 42 120 008 87',
+							},
+						]
+					}
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'options': {
+			itemsPerPage: 5,
+			sortBy: [{ key: 'lastname', order: 'asc' }],
+			page: 1,
+		},
+		'headers': [
+			{
+				title: 'ID',
+				key: 'id',
+				align: 'center',
+			},
+			{
+				title: 'Nom',
+				key: 'lastname',
+				align: 'start',
+			},
+			{
+				title: 'Date de naissance',
+				key: 'birthdate',
+				align: 'center',
+			},
+			{
+				title: 'NIR',
+				key: 'nir',
+				align: 'end',
+			},
+		],
+		'caption': '',
+		'serverItemsLength': 15,
+		'suffix': 'server-resizable-columns',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const totalUsers = ref(0)
+				const users = ref<User[]>([])
+				const state = ref(StateEnum.IDLE)
+
+				const fetchData = async (): Promise<void> => {
+					// @ts-expect-error - fetchData is not defined
+					const { items, total } = await getDataFromApi(args.options)
+					users.value = items
+					totalUsers.value = total
+				}
+
+				const wait = async (ms: number) => {
+					return new Promise(resolve => setTimeout(resolve, ms))
+				}
+
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions) => {
+					state.value = StateEnum.PENDING
+					await wait(1000)
+
+					return new Promise((resolve) => {
+						let items = getUsers()
+						const total = items.length
+
+						if (sortBy && sortBy.length > 0) {
+							items = items.sort((a, b) => {
+								const key = sortBy[0].key
+								const order = sortBy[0].order === 'asc' ? 1 : -1
+
+								return a[key] > b[key] ? order : -order
+							})
+						}
+
+						if (itemsPerPage > 0) {
+							items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						}
+
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getUsers = () => {
+					return [
+						{
+							id: '1',
+							lastname: 'Lefebvre',
+							birthdate: '18/02/1989',
+							nir: '1 89 02 75 120 005 79',
+						},
+						{
+							id: '2',
+							lastname: 'Richard',
+							birthdate: '22/05/1991',
+							nir: '2 91 05 75 120 005 76',
+						},
+						{
+							id: '3',
+							lastname: 'Fournier',
+							birthdate: '11/11/2000',
+							nir: '2 00 11 42 120 008 87',
+						},
+					]
+				}
+
+				return { args, users, state, fetchData, totalUsers, StateEnum }
+			},
+			template: `
+			<div>
+				<p class="my-4">
+					<span class="d-block font-weight-bold mb-2">Conviention de formatage à suivre :</span>
+					N° de ligne : Les numéros sont centrés<br>
+					Texte : Les textes sont ferré à gauche<br>
+					Date : Les dates sont centrées<br>
+					Numérique : Les nombres sont ferré à droite
+				</p>
+				<SyServerTable
+					v-model:options="args.options"
+					:items="users"
+					:headers="args.headers"
+					:caption="args.caption"
+					:server-items-length="totalUsers"
+					:loading="state === StateEnum.PENDING"
+					:suffix="args.suffix"
+					:density="args.density"
+					:striped="args.striped"
+					@update:options="[fetchData, args['onUpdate:options']]"
+				/>
+			</div>
+			`,
+		}
+	},
+}
+
 export const ResizableColumns: Story = {
 	parameters: {
 		sourceCode: [
