@@ -25,13 +25,16 @@ export interface DataOptions {
 
 export type DataTableHeaders = {
 	title?: string
+	text?: string
 	value?: string
 	key?: string
 	filterable?: boolean
 	filterType?: FilterType
 	filterOptions?: Array<{ text: string, value: unknown }>
+	sortable?: boolean
 	hideMessages?: boolean
 	dateFormat?: string
+	align?: 'start' | 'end' | 'center'
 }
 
 // Type to handle both Vuetify internal headers and our custom headers

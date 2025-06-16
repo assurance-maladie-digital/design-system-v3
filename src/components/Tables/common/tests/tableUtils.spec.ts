@@ -50,27 +50,26 @@ describe('tableUtils', () => {
 
 	it('should transform headers correctly', () => {
 		const options = ref<Partial<DataOptions>>({})
-		const componentAttributes = {
-			headers: [
-				{
-					text: 'ID',
-					key: 'id',
-				},
-				{
-					title: 'Name',
-					key: 'name',
-				},
-				{
-					key: 'age',
-				},
-			],
-		}
+		const headersProp = ref([
+			{
+				text: 'ID',
+				key: 'id',
+			},
+			{
+				title: 'Name',
+				key: 'name',
+			},
+			{
+				key: 'age',
+			},
+		])
 
 		const { headers } = useTableUtils({
 			tableId: 'test-table',
 			prefix: 'table',
 			caption: 'Test Table',
-			componentAttributes,
+			componentAttributes: {},
+			headersProp,
 			options,
 		})
 
@@ -137,16 +136,17 @@ describe('tableUtils', () => {
 	it('should create propsFacade correctly for client table', () => {
 		const options = ref<Partial<DataOptions>>({})
 		const componentAttributes = {
-			'headers': [{ title: 'ID', key: 'id' }],
 			'items': [{ id: 1 }],
 			'onUpdate:options': vi.fn(),
 		}
+		const headersProp = ref([{ title: 'ID', key: 'id' }])
 
 		const { propsFacade } = useTableUtils({
 			tableId: 'test-table',
 			prefix: 'table',
 			caption: 'Test Table',
 			componentAttributes,
+			headersProp,
 			options,
 		})
 
@@ -160,9 +160,9 @@ describe('tableUtils', () => {
 	it('should create propsFacade correctly for server table', () => {
 		const options = ref<Partial<DataOptions>>({})
 		const componentAttributes = {
-			headers: [{ title: 'ID', key: 'id' }],
 			items: [{ id: 1 }],
 		}
+		const headersProp = ref([{ title: 'ID', key: 'id' }])
 
 		const { propsFacade } = useTableUtils({
 			tableId: 'test-table',
@@ -170,6 +170,7 @@ describe('tableUtils', () => {
 			caption: 'Test Table',
 			serverItemsLength: 100,
 			componentAttributes,
+			headersProp,
 			options,
 		})
 

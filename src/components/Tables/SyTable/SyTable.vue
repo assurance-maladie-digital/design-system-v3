@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref, useAttrs, watch, provide, nextTick } from 'vue'
+	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
@@ -68,6 +68,7 @@
 		itemsPerPage: props.itemsPerPage,
 		caption: props.caption,
 		componentAttributes,
+		headersProp: toRef(props, 'headers'),
 		options,
 		density: props.density,
 	})

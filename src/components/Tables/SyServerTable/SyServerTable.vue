@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref, useAttrs, watch, provide, nextTick } from 'vue'
+	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
@@ -65,6 +65,7 @@
 		caption: props.caption,
 		serverItemsLength: props.serverItemsLength,
 		componentAttributes,
+		headersProp: toRef(props, 'headers'),
 		options,
 		density: props.density,
 	})
