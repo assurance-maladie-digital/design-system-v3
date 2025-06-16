@@ -4,7 +4,7 @@ import { VBtn, VCheckbox, VDivider } from 'vuetify/components'
 import { mdiFormatAlignRight, mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignJustify, mdiFormatBold, mdiFormatItalic, mdiFormatUnderline, mdiFormatColorText, mdiFormatColorFill } from '@mdi/js'
 
 const meta = {
-	title: 'Composants/Boutons/ToolbarContainer',
+	title: 'Composants/Layout/ToolbarContainer',
 	component: Toolbar,
 	argTypes: {
 		default: {
