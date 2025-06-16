@@ -27,7 +27,10 @@ export const Default: Story = {
 			},
 			template: `
 				<div>
-					<Toolbar class="d-flex flex-wrap ga-4">
+					<Toolbar
+						class="d-flex flex-wrap ga-4"
+						aria-label="Outils de mise en forme"
+					>
 						<VBtn>
 							<span class="d-sr-only">aligne a gauche</span>
 							<VIcon
@@ -63,7 +66,10 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 							<div>
-								<Toolbar class="d-flex flex-wrap ga-4">
+								<Toolbar
+									class="d-flex flex-wrap ga-4"
+									aria-label="Outils de mise en forme"
+								>
 									<VBtn>
 										<span class="d-sr-only">aligne a gauche</span>
 										<VIcon
@@ -105,7 +111,10 @@ export const ManyTables: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap ga-4">
-					<Toolbar class="d-flex flex-wrap ga-4">
+					<Toolbar
+						class="d-flex flex-wrap ga-4"
+						aria-label="Outils d'alignement"
+					>
 						<VBtn
 							title="ferrer à gauche"
 						>
@@ -151,7 +160,10 @@ export const ManyTables: Story = {
 						:thickness="2"
 						vertical
 					/>
-					<Toolbar class="d-flex flex-wrap ga-4">
+					<Toolbar
+						class="d-flex flex-wrap ga-4"
+						aria-label="Outils de mise en forme du texte"
+					>
 						<VBtn
 							title="gras"
 						>
@@ -187,7 +199,10 @@ export const ManyTables: Story = {
 						:thickness="2"
 						vertical
 					/>
-					<Toolbar class="d-flex flex-wrap ga-4">
+					<Toolbar
+						class="d-flex flex-wrap ga-4"
+						aria-label="Outils de couleur"
+					>
 						<VBtn
 							title="couleur"
 						>
@@ -213,6 +228,130 @@ export const ManyTables: Story = {
 			`,
 		}
 	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+					<div class="d-flex flex-wrap ga-4">
+						<Toolbar
+							class="d-flex flex-wrap ga-4"
+							aria-label="Outils d'alignement"
+						>
+							<VBtn
+								title="ferrer à gauche"
+							>
+								<span class="d-sr-only">aligne a gauche</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatAlignLeft }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="justifier"
+							>
+								<span class="d-sr-only">Texte justifié</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatAlignJustify }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="centrer"
+							>
+								<span class="d-sr-only">aligne au centre</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatAlignCenter }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="ferrer a droite"
+							>
+								<span class="d-sr-only">aligne à droite</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatAlignRight }}
+								</VIcon>
+							</VBtn>
+						</Toolbar>
+						<VDivider
+							:thickness="2"
+							vertical
+						/>
+						<Toolbar
+							class="d-flex flex-wrap ga-4"
+							aria-label="Outils de mise en forme du texte"
+						>
+							<VBtn
+								title="gras"
+							>
+								<span class="d-sr-only">Text gras</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatBold }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="italique"
+							>
+								<span class="d-sr-only">Text italique</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatItalic }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="souligné"
+							>
+								<span class="d-sr-only">Text souligné</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatUnderline }}
+								</VIcon>
+							</VBtn>
+						</Toolbar>
+						<VDivider
+							:thickness="2"
+							vertical
+						/>
+						<Toolbar
+							class="d-flex flex-wrap ga-4"
+							aria-label="Outils de couleur"
+						>
+							<VBtn
+								title="couleur"
+							>
+								<span class="d-sr-only">couleur du texte</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatColorText }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="fond"
+							>
+								<span class="d-sr-only">Couleur de fond</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatColorFill }}
+								</VIcon>
+							</VBtn>
+						</Toolbar>
+					</div>
+				</template>`,
+			},
+		],
+	},
 }
 
 export const Horizontal: Story = {
@@ -224,7 +363,11 @@ export const Horizontal: Story = {
 			},
 			template: `
 				<div class="d-flex flex-column flex-wrap ga-4" style="width: min-content;">
-					<Toolbar class="d-flex flex-column flex-wrap ga-4">
+					<Toolbar
+						class="d-flex flex-column flex-wrap ga-4"
+						aria-label="Outils d'alignement"
+						aria-orientation="vertical"
+					>
 						<VBtn
 							title="ferrer à gauche"
 						>
@@ -270,7 +413,11 @@ export const Horizontal: Story = {
 						:thickness="2"
 						horizontal
 					/>
-					<Toolbar class="d-flex flex-column flex-wrap ga-4">
+					<Toolbar
+						class="d-flex flex-column flex-wrap ga-4"
+						aria-label="Outils de mise en forme du texte"
+						aria-orientation="vertical"
+					>
 						<VBtn
 							title="gras"
 						>
@@ -306,7 +453,11 @@ export const Horizontal: Story = {
 						:thickness="2"
 						horizontal
 					/>
-					<Toolbar class="d-flex flex-column flex-wrap ga-4">
+					<Toolbar
+						class="d-flex flex-column flex-wrap ga-4"
+						aria-label="Outils de couleur"
+						aria-orientation="vertical"
+					>
 						<VBtn
 							title="couleur"
 						>
@@ -331,5 +482,132 @@ export const Horizontal: Story = {
 				</div>
 			`,
 		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+					<div class="d-flex flex-column flex-wrap ga-4" style="width: min-content;">
+						<Toolbar
+							class="d-flex flex-column flex-wrap ga-4"
+							aria-label="Outils d'alignement"
+							aria-orientation="vertical"
+						>
+							<VBtn
+								title="ferrer à gauche"
+							>
+								<span class="d-sr-only">aligne a gauche</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatAlignLeft }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="justifier"
+							>
+								<span class="d-sr-only">Texte justifié</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatAlignJustify }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="centrer"
+							>
+								<span class="d-sr-only">aligne au centre</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatAlignCenter }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="ferrer a droite"
+							>
+								<span class="d-sr-only">aligne à droite</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatAlignRight }}
+								</VIcon>
+							</VBtn>
+						</Toolbar>
+						<VDivider
+							:thickness="2"
+							horizontal
+						/>
+						<Toolbar
+							class="d-flex flex-column flex-wrap ga-4"
+							aria-label="Outils de mise en forme du texte"
+							aria-orientation="vertical"
+						>
+							<VBtn
+								title="gras"
+							>
+								<span class="d-sr-only">Text gras</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatBold }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="italique"
+							>
+								<span class="d-sr-only">Text italique</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatItalic }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="souligné"
+							>
+								<span class="d-sr-only">Text souligné</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatUnderline }}
+								</VIcon>
+							</VBtn>
+						</Toolbar>
+						<VDivider
+							:thickness="2"
+							horizontal
+						/>
+						<Toolbar
+							class="d-flex flex-column flex-wrap ga-4"
+							aria-label="Outils de couleur"
+							aria-orientation="vertical"
+						>
+							<VBtn
+								title="couleur"
+							>
+								<span class="d-sr-only">couleur du texte</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatColorText }}
+								</VIcon>
+							</VBtn>
+							<VBtn
+								title="fond"
+							>
+								<span class="d-sr-only">Couleur de fond</span>
+								<VIcon
+									size="x-large"
+								>
+									{{ mdiFormatColorFill }}
+								</VIcon>
+							</VBtn>
+						</Toolbar>
+					</div>
+				</template>`,
+			},
+		],
 	},
 }
