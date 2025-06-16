@@ -846,7 +846,7 @@
 						v-if="props.displayTodayButton"
 						#actions
 					>
-						<div class="d-flex justify-center w-100">
+						<div class="d-flex justify-center align-center w-100">
 							<v-btn
 								v-if="props.displayTodayButton"
 								size="x-small"
