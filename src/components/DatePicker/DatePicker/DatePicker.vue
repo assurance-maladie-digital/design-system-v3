@@ -8,10 +8,11 @@
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection } from '../composables'
+	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString } from '../composables'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
+	import { mdiCalendar } from '@mdi/js'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -98,11 +99,40 @@
 
 	// Utilisation des composables pour les fonctionnalités du DatePicker
 	const { displayWeekendDays } = useWeekendDays(props)
-	const { todayInString, selectToday } = useTodayButton(props)
+	const { todayInString } = useTodayButton(props)
 
-	// Wrapper pour la fonction selectToday du composable
+	const selectedDates = ref<Date | Date[] | null>(
+		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
+	)
+
+	// Utilisation du composable pour l'affichage formaté des dates
+	const { displayedDateString } = useDisplayedDateString({
+		selectedDates,
+		todayInString,
+	})
+
+	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
-		selectToday(selectedDates)
+		// Créer une seule instance de la date du jour
+		const today = new Date()
+
+		// Si c'est une plage de dates, on définit le même jour pour début et fin
+		if (props.displayRange) {
+			selectedDates.value = [today, today]
+			// Formater les dates pour le modèle (format de retour)
+			const formattedToday = formatDate(today, props.dateFormatReturn || props.format)
+			updateModel([formattedToday, formattedToday])
+		}
+		else {
+			// Sinon, on sélectionne simplement aujourd'hui
+			selectedDates.value = today
+			// Formater la date pour le modèle (format de retour)
+			const formattedToday = formatDate(today, props.dateFormatReturn || props.format)
+			updateModel(formattedToday)
+		}
+
+		// Mettre à jour l'affichage formaté
+		updateDisplayFormattedDate()
 	}
 
 	const emit = defineEmits<{
@@ -111,10 +141,6 @@
 		(e: 'focus'): void
 		(e: 'blur'): void
 	}>()
-
-	const selectedDates = ref<Date | Date[] | null>(
-		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
-	)
 
 	const isDatePickerVisible = ref(false)
 	const validation = useValidation({
@@ -468,8 +494,16 @@
 
 	// todayInString est maintenant fourni par le composable useTodayButton
 
+	// Utilisation du composable pour personnaliser le bouton du mois
+	const { customizeMonthButton, setupMonthButtonObserver } = useMonthButtonCustomization(
+		() => isDatePickerVisible.value,
+	)
+
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
+
+		// Configurer l'observateur pour le bouton du mois
+		setupMonthButtonObserver()
 
 		// Initialiser l'affichage formaté
 		if (displayFormattedDateComputed.value) {
@@ -651,6 +685,7 @@
 
 	const openDatePickerOnClick = () => {
 		openDatePicker()
+		customizeMonthButton()
 	}
 
 	const openDatePickerOnFocus = () => {
@@ -813,20 +848,31 @@
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ todayInString }}
+							{{ displayedDateString }}
 						</h3>
 					</template>
-					<template #actions>
-						<v-btn
-							v-if="props.displayTodayButton"
-							size="x-small"
-							color="primary"
-							title="Aujourd'hui"
-							class="mb-2"
-							@click="handleSelectToday"
-						>
-							Aujourd'hui
-						</v-btn>
+					<template
+						v-if="props.displayTodayButton"
+						#actions
+					>
+						<div class="d-flex justify-center align-center w-100">
+							<v-btn
+								v-if="props.displayTodayButton"
+								size="x-small"
+								color="primary"
+								:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
+								class="my-2 pa-2 mt-2"
+								:ripple="false"
+								@click="handleSelectToday"
+							>
+								<VIcon
+									class="mr-1"
+								>
+									{{ mdiCalendar }}
+								</VIcon>
+								{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+							</v-btn>
+						</div>
 					</template>
 				</VDatePicker>
 			</VMenu>
@@ -836,6 +882,22 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+
+/* Disable ripple effect on month and year buttons */
+:deep(.v-date-picker-controls__month-btn),
+:deep(.v-date-picker-controls__mode-btn) {
+	.v-ripple__container,
+	.v-ripple__animation {
+		display: none !important;
+		opacity: 0 !important;
+		background-color: transparent !important;
+		pointer-events: none !important;
+	}
+}
+
+:deep(.v-date-picker-controls .v-btn:last-child) {
+	margin-inline-start: 0;
+}
 
 .label-hidden-on-focus:focus + label {
 	display: none;
@@ -944,5 +1006,13 @@
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
 	background-color: #afb1b1;
+}
+
+:deep(.v-date-picker-controls__mode-btn) {
+	transform: none !important;
+}
+
+:deep(.v-btn--variant-text .v-btn__overlay) {
+	padding: 13px;
 }
 </style>

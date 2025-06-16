@@ -139,6 +139,7 @@ export const Default: Story = {
 		noIcon: false,
 		noCalendar: false,
 		modelValue: '',
+		displayTodayButton: true,
 	},
 	render: (args) => {
 		return {
@@ -308,7 +309,7 @@ export const WithCustomPeriod: Story = {
 			},
 			template: `
 			<div style="margin-bottom: 20px; padding: 15px;"> 
-				<SyAlert :variant="tonal" :closable="false">
+				<SyAlert variant="tonal" :closable="false">
 					<template #default>
 					<h4>Note importante pour la validation manuelle</h4>
 					<p>Pour valider les dates saisies manuellement en fonction de la période définie, il faut utiliser la propriété customRules comme dans l'exemple ci-dessous.</p>

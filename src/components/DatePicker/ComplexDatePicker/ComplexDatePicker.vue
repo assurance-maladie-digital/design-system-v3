@@ -10,6 +10,8 @@
 	import type { DateObjectValue } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
+	import { useMonthButtonCustomization } from '../composables'
+	import { mdiCalendar } from '@mdi/js'
 	import {
 		useWeekendDays,
 		useTodayButton,
@@ -22,6 +24,7 @@
 		useManualDateValidation,
 		useInputBlurHandler,
 		useDatePickerVisibility,
+		useDisplayedDateString,
 	} from '../composables'
 
 	import dayjs from 'dayjs'
@@ -415,6 +418,9 @@
 
 		// Valider les dates au montage
 		validateDates()
+
+		// Configurer l'observateur pour le bouton du mois
+		setupMonthButtonObserver()
 	})
 
 	onBeforeUnmount(() => {
@@ -456,6 +462,11 @@
 		inputHandler.handleInput(event)
 	}
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+
+	// Utilisation du composable pour personnaliser le bouton du mois
+	const { customizeMonthButton, setupMonthButtonObserver } = useMonthButtonCustomization(
+		() => isDatePickerVisible.value,
+	)
 
 	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
@@ -505,6 +516,9 @@
 		}
 
 		if (isVisible) {
+			// Personnaliser le bouton du mois
+			customizeMonthButton()
+
 			// set the focus on the date picker
 			await nextTick()
 			const firstButton = datePickerRef.value?.$el.querySelector('button')
@@ -790,10 +804,16 @@
 	const { displayWeekendDays } = useWeekendDays(props)
 
 	// Computed properties pour period
-	const minDate = computed(() => props.period?.min || '11/11/2020')
-	const maxDate = computed(() => props.period?.max || '11/11/2025')
+	const minDate = computed(() => props.period?.min || dayjs().subtract(10, 'year').format(props.format))
+	const maxDate = computed(() => props.period?.max || dayjs().add(10, 'year').format(props.format))
 
 	const { todayInString, selectToday } = useTodayButton(props)
+
+	// Utilisation du composable pour l'affichage formaté des dates
+	const { displayedDateString } = useDisplayedDateString({
+		selectedDates,
+		todayInString,
+	})
 
 	// Wrapper pour la fonction selectToday du composable
 	const handleSelectToday = () => {
@@ -932,18 +952,31 @@
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ todayInString }}
+							{{ displayedDateString }}
 						</h3>
 					</template>
-					<template #actions>
-						<v-btn
-							v-if="props.displayTodayButton"
-							variant="text"
-							class="today-button"
-							@click="handleSelectToday"
-						>
-							{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
-						</v-btn>
+					<template
+						v-if="props.displayTodayButton"
+						#actions
+					>
+						<div class="d-flex justify-center align-center w-100">
+							<v-btn
+								v-if="props.displayTodayButton"
+								size="x-small"
+								color="primary"
+								:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
+								class="my-2 pa-2 mt-2"
+								:ripple="false"
+								@click="handleSelectToday"
+							>
+								<VIcon
+									class="mr-1"
+								>
+									{{ mdiCalendar }}
+								</VIcon>
+								{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+							</v-btn>
+						</div>
 					</template>
 				</VDatePicker>
 			</VMenu>
@@ -953,6 +986,22 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+
+/* Disable ripple effect on month and year buttons */
+:deep(.v-date-picker-controls__month-btn),
+:deep(.v-date-picker-controls__mode-btn) {
+	.v-ripple__container,
+	.v-ripple__animation {
+		display: none !important;
+		opacity: 0 !important;
+		background-color: transparent !important;
+		pointer-events: none !important;
+	}
+}
+
+:deep(.v-date-picker-controls .v-btn:last-child) {
+	margin-inline-start: 0;
+}
 
 .label-hidden-on-focus:focus + label {
 	display: none;
@@ -1044,16 +1093,6 @@
 	opacity: 1;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-	opacity: 0;
-}
-
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
 	background-color: #afb1b1;
 }
@@ -1061,5 +1100,13 @@
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
 	background-color: #afb1b1;
+}
+
+:deep(.v-date-picker-controls__mode-btn) {
+	transform: none !important;
+}
+
+:deep(.v-btn--variant-text .v-btn__overlay) {
+	padding: 13px;
 }
 </style>
