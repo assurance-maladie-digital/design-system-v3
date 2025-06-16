@@ -15,7 +15,7 @@
 	function selectNextElement(e: Event & { target: HTMLElement }) {
 		const currentIndex = tools.findIndex(tool => tool === e.target)
 
-		const nextIndex = Math.min(tools.length - 1, Math.max(0, currentIndex + 1))
+		const nextIndex = currentIndex < tools.length - 1 ? currentIndex + 1 : 0
 
 		const nextElem = tools.at(nextIndex)
 
@@ -27,9 +27,7 @@
 	function selectPrevElement(e: Event & { target: HTMLElement }) {
 		let currentIndex = tools.findIndex(tool => tool === e.target)
 
-		const prevIndex = currentIndex === -1
-			? tools.length - 1
-			: currentIndex === 0 ? 0 : currentIndex - 1
+		const prevIndex = currentIndex > 0 ? currentIndex - 1 : tools.length - 1
 
 		const nextElem = tools.at(prevIndex)
 
