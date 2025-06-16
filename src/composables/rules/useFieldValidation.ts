@@ -212,7 +212,6 @@ export function useFieldValidation() {
 					if (!options.date) {
 						return { error: 'Configuration de la règle invalide' }
 					}
-
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
@@ -300,7 +299,7 @@ export function useFieldValidation() {
 
 					return createValidationResult(
 						!isHolidayDay(dateValue),
-						options.message || options.warningMessage || `${identifier} n'est pas un jour férié.`,
+						options.message || options.warningMessage || `${identifier} est un jour férié.`,
 					)
 				}
 

@@ -228,7 +228,7 @@
 
 				<li
 					v-if="props.version"
-					class="text-primary my-3 mx-4"
+					class="my-3 mx-4"
 				>
 					{{ locales.versionLabel }} {{ props.version }}
 				</li>
@@ -311,6 +311,7 @@ a {
 
 // Use deep selector to style user content as well
 .vd-footer-bar.v-theme--dark :deep() {
+	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
 		color: $white;
 	}

@@ -1,0 +1,160 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as SyServerTable from './SyServerTable.stories';
+
+<Meta of={SyServerTable} />
+
+# SyServerTable
+
+Le composant `SyServerTable` est utilisé pour afficher des données tabulaires chargées depuis un serveur. Il s'appuie sur le composant `VDataTableServer` de Vuetify et offre des fonctionnalités supplémentaires comme le stockage local des options de tableau et des améliorations d'accessibilité.
+
+<Canvas of={SyServerTable.Default} />
+
+## API
+
+<Controls of={SyServerTable.Default} />
+
+## Fonctionnalités
+
+### Chargement côté serveur
+
+Le composant `SyServerTable` est spécialement conçu pour gérer les données chargées depuis un serveur. Il permet de:
+- Paginer les données côté serveur
+- Trier les données côté serveur
+- Afficher un état de chargement pendant les requêtes
+
+### Stockage local des options
+
+Le composant enregistre automatiquement les options du tableau (tri, pagination, etc.) dans le localStorage du navigateur. Ces options sont restaurées lorsque l'utilisateur revient sur la page.
+
+Pour gérer individuellement le stockage des options pour différents tableaux, utilisez la prop `suffix`.
+
+### Tri côté serveur
+
+Le composant permet de trier les données par colonne en déléguant le tri au serveur.
+
+<Canvas of={SyServerTable.ServerSortBy} />
+
+### Filtres des colonnes
+
+Le composant permet d'appliquer des filtres sur les colonnes. Vous pouvez définir des filtres personnalisés pour chaque colonne en utilisant la prop `show-filters`. Voir d'autres exemples de filtres dans les stories.
+<Canvas of={SyServerTable.ServerFilterByText} />
+
+### Resize des colonnes
+
+Le composant peut permettre de redimensionner les colonnes en utilisant la prop `resizable-columns`. Vous pouvez activer ou désactiver cette fonctionnalité selon vos besoins.
+<Canvas of={SyServerTable.ResizableColumns} />
+
+### Accessibilité
+
+Le composant améliore l'accessibilité en ajoutant automatiquement:
+- Une légende (caption) pour le tableau
+- Des attributs ARIA appropriés
+- Des attributs scope pour les en-têtes de colonnes
+
+## Exemples d'utilisation
+
+### Tableau avec chargement côté serveur
+
+<Source dark code={`
+<template>
+  <SyServerTable
+    v-model:options="options"
+    :items="users"
+    :headers="headers"
+    :server-items-length="totalUsers"
+    :loading="state === StateEnum.PENDING"
+    suffix="api-example"
+    @update:options="fetchData"
+  />
+</template>
+
+<script setup lang="ts">
+  import { ref, watch } from 'vue'
+  import { SyServerTable } from '@cnamts/synapse'
+  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+  import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+  
+  interface User {
+    [key: string]: string
+    firstname: string
+    lastname: string
+    email: string
+  }
+
+  interface DataObj {
+    items: User[]
+    total: number
+  }
+
+  const totalUsers = ref(0)
+  const users = ref<User[]>([])
+  const state = ref(StateEnum.IDLE)
+
+  const options = ref({
+    itemsPerPage: 5,
+    sortBy: [{ key: 'lastname', order: 'asc' }],
+    page: 1,
+  })
+
+  const headers = [
+    { title: 'Nom', key: 'lastname' },
+    { title: 'Prénom', key: 'firstname' },
+    { title: 'Email', key: 'email' },
+  ]
+
+  const fetchData = async (): Promise<void> => {
+    const { items, total } = await getDataFromApi(options.value)
+    users.value = items
+    totalUsers.value = total
+  }
+
+  // Simulation d'une API
+  const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+    state.value = StateEnum.PENDING
+    
+    // Simuler un délai réseau
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    return new Promise((resolve) => {
+      let items: User[] = [
+        { firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+        { firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+        // ... autres utilisateurs
+      ]
+      
+      const total = items.length
+
+      // Appliquer le tri côté serveur
+      if (sortBy && sortBy.length > 0) {
+        items = items.sort((a, b) => {
+          const key = sortBy[0].key
+          const order = sortBy[0].order === 'asc' ? 1 : -1
+          return a[key] > b[key] ? order : -order
+        })
+      }
+
+      // Appliquer la pagination côté serveur
+      if (itemsPerPage > 0) {
+        items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+      }
+
+      resolve({ items, total })
+      state.value = StateEnum.RESOLVED
+    })
+  }
+</script>
+`} />
+
+### Plusieurs tableaux serveur sur une même page
+
+Pour utiliser plusieurs tableaux serveur sur une même page avec des options indépendantes, utilisez la prop `suffix` pour chaque tableau.
+
+<Canvas of={SyServerTable.ManyServerTables} />
+
+## Bonnes pratiques
+
+- Utilisez la prop `serverItemsLength` pour indiquer le nombre total d'éléments disponibles côté serveur
+- Implémentez un état de chargement pendant les requêtes avec la prop `loading`
+- Utilisez la prop `suffix` lorsque vous avez plusieurs tableaux sur une même page
+- Optimisez les requêtes serveur en utilisant les options de pagination et de tri
+- Gérez correctement les erreurs de chargement des données

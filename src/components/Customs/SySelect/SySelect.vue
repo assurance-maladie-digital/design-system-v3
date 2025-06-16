@@ -170,7 +170,7 @@
 	})
 
 	const isRequired = computed(() => {
-		if (props.disableErrorHandling || props.hideMessages) return false
+		if (props.disableErrorHandling) return false
 		if (props.readonly) return
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
@@ -218,13 +218,6 @@
 		}
 		window.addEventListener('scroll', updateListPosition, true)
 		window.addEventListener('resize', updateListPosition)
-
-		if (props.hideMessages) {
-			const message = document.querySelector('.v-input__details')
-			if (message) {
-				message.classList.add('d-sr-only')
-			}
-		}
 	})
 
 	onUnmounted(() => {
@@ -253,11 +246,12 @@
 			:aria-label="labelWithAsterisk"
 			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
-			:rules="isRequired && !props.disableErrorHandling && !props.hideMessages ? ['Le champ est requis.'] : []"
+			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
 			:density="props.density"
 			readonly
+			:hide-details="props.hideMessages"
 			class="sy-select"
 			:width="calculatedWidth"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"

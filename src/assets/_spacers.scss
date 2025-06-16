@@ -142,8 +142,44 @@ $pa-spacers: (
 @include generate-side-spacing-classes(margin, mb, bottom);
 @include generate-side-spacing-classes(margin, ml, left);
 
+// Définir les points de rupture
+$breakpoints: (
+	'sm': 600px,
+	'md': 960px,
+	'lg': 1280px,
+	'xl': 1920px,
+);
+
+// Mixin pour générer les classes de marges et de paddings avec les points de rupture
+@mixin generate-breakpoint-spacing-classes($property, $prefix) {
+	@each $breakpoint, $value in $breakpoints {
+		@for $i from 0 through 64 {
+			.#{$prefix}-#{$breakpoint}-#{$i} {
+				@media (min-width: #{$value}) {
+					#{$property}: var(--spacing-#{$i}) !important;
+				}
+			}
+		}
+	}
+}
+
+// Générer les classes de marges et de paddings avec les points de rupture
+@include generate-breakpoint-spacing-classes(margin-right, mr);
+@include generate-breakpoint-spacing-classes(padding-right, pr);
+@include generate-breakpoint-spacing-classes(margin-left, ml);
+@include generate-breakpoint-spacing-classes(padding-left, pl);
+@include generate-breakpoint-spacing-classes(margin-top, mt);
+@include generate-breakpoint-spacing-classes(padding-top, pt);
+@include generate-breakpoint-spacing-classes(margin-bottom, mb);
+@include generate-breakpoint-spacing-classes(padding-bottom, pb);
+@include generate-breakpoint-spacing-classes(margin, mx);
+@include generate-breakpoint-spacing-classes(padding, px);
+@include generate-breakpoint-spacing-classes(margin, my);
+@include generate-breakpoint-spacing-classes(padding, py);
+
 // Additional classes for specific spacing
 
-.v-btn {
+.theme-cnam .v-btn,
+.theme-pa .v-btn {
 	padding: 0 var(--spacing-4) !important;
 }

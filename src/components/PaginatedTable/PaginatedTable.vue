@@ -18,7 +18,7 @@
 		},
 		caption: {
 			type: String,
-			default: 'caption',
+			default: '',
 		},
 	})
 
@@ -29,6 +29,9 @@
 
 	const localStorageUtility = new LocalStorageUtility()
 	const localOptions = ref({})
+
+	// Generate a unique ID for this table instance
+	const uniqueTableId = ref(`paginated-table-${Math.random().toString(36).substr(2, 9)}`)
 
 	const storageKey = computed(() => {
 		const prefix = 'pagination'
@@ -95,38 +98,53 @@
 	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
 
 	onMounted(() => {
-		const table = document.querySelector('#paginated-table table')
+		const table = document.querySelector(`#${uniqueTableId.value} table`)
 		const caption = document.createElement('caption')
-		caption.innerHTML = props.caption
-		if (props.caption === 'caption') {
-			caption.classList.add('d-sr-only')
+		caption.classList.add('d-sr-only')
+		if (props.caption === '') {
+			caption.setAttribute('aria-label', 'Table caption')
+			caption.innerHTML = 'Table caption'
 		}
 		else {
-			caption.classList.add('text-subtitle-1')
+			caption.setAttribute('aria-label', props.caption)
+			caption.innerHTML = props.caption
 		}
 		table?.prepend(caption)
 
-		const inputs = document.querySelectorAll('#paginated-table input')
+		const inputs = document.querySelectorAll(`#${uniqueTableId.value} input`)
 		inputs.forEach((input) => {
 			(input as HTMLElement).removeAttribute('aria-describedby')
 		})
 
-		const fields = document.querySelectorAll('#paginated-table .v-field')
+		const fields = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fields.forEach((field) => {
-			(field as HTMLElement).setAttribute('tabindex', '0')
+			const element = field as HTMLElement
+			element.setAttribute('tabindex', '0')
+
+			// Remove immediately if it exists
+			if (element.hasAttribute('aria-controls')) {
+				element.removeAttribute('aria-controls')
+			}
+
+			// Check again after a delay
+			setTimeout(() => {
+				if (element.hasAttribute('aria-controls')) {
+					element.removeAttribute('aria-controls')
+				}
+			}, 500)
 		})
 
-		const fieldLabels = document.querySelectorAll('#paginated-table .v-field')
+		const fieldLabels = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldLabels.forEach((fieldLabel) => {
 			(fieldLabel as HTMLElement).setAttribute('aria-label', 'items per page')
 		})
 
-		const fieldTitles = document.querySelectorAll('#paginated-table .v-field')
+		const fieldTitles = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldTitles.forEach((fieldTitle) => {
 			(fieldTitle as HTMLElement).setAttribute('title', 'items per page')
 		})
 
-		const th = document.querySelectorAll('#paginated-table th')
+		const th = document.querySelectorAll(`#${uniqueTableId.value} th`)
 		for (let i = 0; i < th.length; i++) {
 			th[i].setAttribute('scope', 'col')
 		}
@@ -135,7 +153,7 @@
 
 <template>
 	<div
-		id="paginated-table"
+		:id="uniqueTableId"
 		class="sy-paginated-table"
 	>
 		<VDataTable
@@ -144,6 +162,16 @@
 			v-bind="propsFacade"
 			@update:options="updateOptions"
 		>
+			<template #top>
+				<div
+					v-if="props.caption"
+					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.caption === '' }"
+					:aria-label="props.caption"
+				>
+					{{ props.caption }}
+				</div>
+			</template>
 			<template
 				v-for="slotName in Object.keys($slots)"
 				#[slotName]="slotProps"
@@ -160,6 +188,16 @@
 			color="primary"
 			@update:options="updateOptions"
 		>
+			<template #top>
+				<div
+					v-if="props.caption"
+					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.caption === '' }"
+					:aria-label="props.caption"
+				>
+					{{ props.caption }}
+				</div>
+			</template>
 			<template
 				v-for="slotName in Object.keys($slots)"
 				#[slotName]="slotProps"

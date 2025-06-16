@@ -1,0 +1,227 @@
+import { Meta, Canvas, Controls, Source } from '@storybook/blocks';
+import { linkTo } from '@storybook/addon-links';
+
+<Meta title="Composants/Formulaires/DatePicker/Introduction" />
+
+# DatePicker - Vue d'ensemble
+
+Le composant `DatePicker` facilite la sélection d’une date et se décline en plusieurs modes selon vos besoins. Cette page détaille chaque variante disponible et vous guide pour choisir celle qui correspond le mieux à votre cas d’usage.
+## Variantes disponibles
+
+Le DatePicker propose trois modes principaux, chacun adapté à des besoins spécifiques :
+
+<div className="sb-unstyled" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '30px' }}>
+  <div 
+    style={{ 
+      flex: '1 1 300px', 
+      border: '1px solid #e0e0e0', 
+      borderRadius: '8px', 
+      padding: '20px',
+      cursor: 'pointer',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+      transition: 'all 0.2s ease',
+      backgroundColor: '#fff'
+    }}
+    onClick={() => linkTo('Composants/Formulaires/DatePicker/DatePicker')()}
+  >
+    <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#1976d2' }}>Mode Calendrier</h3>
+    <div>Mode standard : calendrier interactif pour choisir manuellement une ou plusieurs dates.</div>
+    <div style={{ marginTop: '10px', color: '#666' }}>
+      <strong>Idéal pour :</strong>
+      <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
+        <li>Interface visuelle intuitive</li>
+        <li>Sélection précise avec contraintes</li>
+        <li>Plages de dates</li>
+      </ul>
+    </div>
+    <div style={{ marginTop: '15px' }}>
+      <span style={{ 
+        padding: '5px 10px', 
+        color: '#1976d2', 
+        borderRadius: '4px', 
+        fontSize: '14px' 
+      }}>
+        Voir la documentation →
+      </span>
+    </div>
+  </div>
+
+  <div 
+    style={{ 
+      flex: '1 1 300px', 
+      border: '1px solid #e0e0e0', 
+      borderRadius: '8px', 
+      padding: '20px',
+      cursor: 'pointer',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+      transition: 'all 0.2s ease',
+      backgroundColor: '#fff'
+    }}
+    onClick={() => linkTo('Composants/Formulaires/DatePicker/DateInput')()}
+  >
+    <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#7b1fa2' }}>Mode Saisie Manuelle</h3>
+    <div>Un champ de saisie avec formatage automatique intelligent, sans calendrier (propriété <code>noCalendar</code>).</div>
+    <div style={{ marginTop: '10px', color: '#666' }}>
+      <strong>Idéal pour :</strong>
+      <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
+        <li>Saisie rapide au clavier</li>
+        <li>Automatisation et tests</li>
+        <li>Interfaces compactes</li>
+      </ul>
+    </div>
+    <div style={{ marginTop: '15px' }}>
+      <span style={{ 
+        padding: '5px 10px', 
+        color: '#7b1fa2', 
+        borderRadius: '4px', 
+        fontSize: '14px' 
+      }}>
+        Voir la documentation →
+      </span>
+    </div>
+  </div>
+
+  <div 
+    style={{ 
+      flex: '1 1 300px', 
+      border: '1px solid #e0e0e0', 
+      borderRadius: '8px', 
+      padding: '20px',
+      cursor: 'pointer',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+      transition: 'all 0.2s ease',
+      backgroundColor: '#fff'
+    }}
+    onClick={() => linkTo('Composants/Formulaires/DatePicker/CombinedMode')()}
+  >
+    <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#00796b' }}>Mode Combiné</h3>
+    <div>Combine le calendrier interactif et la saisie manuelle avec formatage (propriété <code>useCombinedMode</code>).</div>
+    <div style={{ marginTop: '10px', color: '#666' }}>
+      <strong>Idéal pour :</strong>
+      <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
+        <li>Flexibilité maximale</li>
+        <li>Meilleure expérience utilisateur</li>
+        <li>Accessibilité optimale</li>
+      </ul>
+    </div>
+    <div style={{ marginTop: '15px' }}>
+      <span style={{ 
+        padding: '5px 10px', 
+        color: '#00796b', 
+        borderRadius: '4px', 
+        fontSize: '14px' 
+      }}>
+        Voir la documentation →
+      </span>
+    </div>
+  </div>
+</div>
+
+## Tableau comparatif des fonctionnalités
+
+<div className="sb-unstyled">
+  <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '30px' }}>
+    <thead>
+      <tr style={{ backgroundColor: '#f5f5f5' }}>
+        <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #e0e0e0' }}>Fonctionnalité</th>
+        <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>Mode Calendrier</th>
+        <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>Mode Saisie Manuelle</th>
+        <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>Mode Combiné</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Sélection visuelle de date</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Saisie manuelle avec formatage</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Plages de dates</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Validation personnalisée</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Format de date personnalisé</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Accessibilité</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>🚧</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Comment choisir la bonne variante ?
+
+### Utilisez le Mode Calendrier quand :
+- Vous avez besoin d'une interface visuelle intuitive pour sélectionner des dates
+- La précision de la sélection est importante (éviter les erreurs de saisie)
+
+### Utilisez le Mode Saisie Manuelle quand :
+- Vous avez besoin d'une interface compacte
+- Vous souhaitez permettre la saisie rapide au clavier
+- Formulaires nécessitant le passage de robots
+
+### Utilisez le Mode Combiné quand :
+- Vous voulez offrir le maximum de flexibilité aux utilisateurs
+- Vous souhaitez combiner les avantages des deux approches
+- Vous développez une application accessible à tous les types d'utilisateurs
+
+## Exemple d'implémentation
+
+<Source
+  dark
+  code={`
+// Mode Calendrier (standard)
+<DatePicker
+  v-model="date"
+  placeholder="Sélectionner une date"
+  format="DD/MM/YYYY"
+  required
+/>
+
+// Mode Saisie Manuelle
+<DatePicker
+  v-model="date"
+  no-calendar
+  placeholder="JJ/MM/AAAA"
+  format="DD/MM/YYYY"
+  required
+/>
+
+// Mode Combiné
+<DatePicker
+  v-model="date"
+  use-combined-mode
+  placeholder="Sélectionner une date"
+  format="DD/MM/YYYY"
+  required
+/>
+`}
+/>
+
+## Bonnes pratiques
+
+- Toujours spécifier le format de date attendu via la prop `format`
+- Utiliser la prop `placeholder` pour indiquer le format de saisie attendu
+- Ajouter des règles de validation personnalisées si nécessaire
+- Utilisez le mode de saisie manuelle pour les interfaces compactes

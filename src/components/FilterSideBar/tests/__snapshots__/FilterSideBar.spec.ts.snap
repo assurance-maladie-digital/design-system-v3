@@ -48,120 +48,125 @@ exports[`FilterSideBar > renders correctly 1`] = `
         <!---->
         <!---->
       </button>
-      <nav
-        class="
-          elevation-6
-          rounded-0
-          v-navigation-drawer
-          v-navigation-drawer--mobile
-          v-navigation-drawer--rail
-          v-navigation-drawer--right
-          v-navigation-drawer--temporary
-          v-theme--light
-        "
-        style="right: 0px; z-index: 1004; transform: translateX(395px); position: fixed; transition: none !important;"
-      >
-        <!---->
-        <!---->
-        <div class="v-navigation-drawer__content">
-          <div class="
-            v-expansion-panels
-            v-expansion-panels--variant-accordion
+      <teleport-stub to="body">
+        <nav
+          class="
+            bg-white
+            elevation-6
+            rounded-0
+            sy-filters-side-bar__content
+            v-navigation-drawer
+            v-navigation-drawer--mobile
+            v-navigation-drawer--rail
+            v-navigation-drawer--right
+            v-navigation-drawer--temporary
             v-theme--light
-          "></div>
-          <div class="v-spacer"></div>
-          <div class="
-            pb-4
-            pt-10
-            px-4
-          ">
-            <button
-              class="
-                mb-4
-                text-primary
-                v-btn
-                v-btn--block
-                v-btn--density-default
-                v-btn--size-large
-                v-btn--variant-outlined
-                v-theme--light
-              "
-              type="button"
-            >
-              <span class="v-btn__overlay"></span>
-              <span class="v-btn__underlay"></span>
-              <!---->
-              <span
-                class="v-btn__content"
-                data-no-activator=""
+          "
+          style="right: 0px; z-index: 1004; transform: translateX(395px); position: fixed; transition: none !important;"
+          tabindex="0"
+        >
+          <!---->
+          <!---->
+          <div class="v-navigation-drawer__content">
+            <div class="
+              v-expansion-panels
+              v-expansion-panels--variant-accordion
+              v-theme--light
+            "></div>
+            <div class="v-spacer"></div>
+            <div class="
+              pb-4
+              pt-10
+              px-4
+            ">
+              <button
+                class="
+                  mb-4
+                  text-primary
+                  v-btn
+                  v-btn--block
+                  v-btn--density-default
+                  v-btn--size-large
+                  v-btn--variant-outlined
+                  v-theme--light
+                "
+                type="button"
               >
-                Fermer
-              </span>
-              <!---->
-              <!---->
-            </button>
-            <button
-              class="
-                mb-4
-                text-primary
-                v-btn
-                v-btn--block
-                v-btn--density-default
-                v-btn--size-large
-                v-btn--variant-outlined
-                v-theme--light
-              "
-              type="button"
-            >
-              <span class="v-btn__overlay"></span>
-              <span class="v-btn__underlay"></span>
-              <!---->
-              <span
-                class="v-btn__content"
-                data-no-activator=""
+                <span class="v-btn__overlay"></span>
+                <span class="v-btn__underlay"></span>
+                <!---->
+                <span
+                  class="v-btn__content"
+                  data-no-activator=""
+                >
+                  Fermer
+                </span>
+                <!---->
+                <!---->
+              </button>
+              <button
+                class="
+                  mb-4
+                  text-primary
+                  v-btn
+                  v-btn--block
+                  v-btn--density-default
+                  v-btn--size-large
+                  v-btn--variant-outlined
+                  v-theme--light
+                "
+                type="button"
               >
-                Réinitialiser
-              </span>
-              <!---->
-              <!---->
-            </button>
-            <button
-              class="
-                bg-primary
-                v-btn
-                v-btn--block
-                v-btn--density-default
-                v-btn--elevated
-                v-btn--size-large
-                v-btn--variant-elevated
-                v-theme--light
-              "
-              type="button"
-            >
-              <span class="v-btn__overlay"></span>
-              <span class="v-btn__underlay"></span>
-              <!---->
-              <span
-                class="v-btn__content"
-                data-no-activator=""
+                <span class="v-btn__overlay"></span>
+                <span class="v-btn__underlay"></span>
+                <!---->
+                <span
+                  class="v-btn__content"
+                  data-no-activator=""
+                >
+                  Réinitialiser
+                </span>
+                <!---->
+                <!---->
+              </button>
+              <button
+                class="
+                  bg-primary
+                  v-btn
+                  v-btn--block
+                  v-btn--density-default
+                  v-btn--elevated
+                  v-btn--size-large
+                  v-btn--variant-elevated
+                  v-theme--light
+                "
+                type="button"
               >
-                Appliquer
-              </span>
-              <!---->
-              <!---->
-            </button>
+                <span class="v-btn__overlay"></span>
+                <span class="v-btn__underlay"></span>
+                <!---->
+                <span
+                  class="v-btn__content"
+                  data-no-activator=""
+                >
+                  Appliquer
+                </span>
+                <!---->
+                <!---->
+              </button>
+            </div>
           </div>
-        </div>
-        <!---->
-      </nav>
-      <transition-stub
-        appear="false"
-        css="true"
-        name="fade-transition"
-        persisted="false"
-      >
-        <!---->
-      </transition-stub>
+          <!---->
+        </nav>
+        <transition-stub
+          appear="false"
+          css="true"
+          name="fade-transition"
+          persisted="false"
+        >
+          <!---->
+        </transition-stub>
+      </teleport-stub>
     </div>
   </div>
 </div>

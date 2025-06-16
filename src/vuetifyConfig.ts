@@ -7,13 +7,18 @@ import {
 	cnamContextualTokens,
 	cnamLightTheme,
 	cnamDarkTheme,
+	cnamFontsTokens,
 	paColorsTokens,
 	paContextualTokens,
 	paLightTheme,
 	paDarkTheme,
+	paFontsTokens,
 } from './designTokens'
-import { createFlattenTheme } from './designTokens/utils'
+import { createFlattenTheme, createFontVariables } from './designTokens/utils'
 import { fr } from 'vuetify/locale'
+
+// Import typography styles
+import './assets/_typography.scss'
 
 export const createVuetifyInstance = () => createVuetify({
 	components,
@@ -33,8 +38,9 @@ export const createVuetifyInstance = () => createVuetify({
 				},
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
-					'font-family': '"Arial", sans-serif',
+					'font-family': cnamFontsTokens.family.primary,
 					...createFlattenTheme(cnamContextualTokens),
+					...createFontVariables(cnamFontsTokens),
 				},
 			},
 			pa: {
@@ -45,8 +51,9 @@ export const createVuetifyInstance = () => createVuetify({
 				},
 				variables: {
 					'border-color': paColorsTokens.grey.base,
-					'font-family': '"Roboto", sans-serif',
+					'font-family': paFontsTokens.family.primary,
 					...createFlattenTheme(paContextualTokens),
+					...createFontVariables(paFontsTokens),
 				},
 			},
 		},

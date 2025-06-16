@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import DatePicker from '@/components/DatePicker/DatePicker.vue'
+import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
 import { useHolidayDay } from '@/composables/date/useHolidayDay'
 
 const meta: Meta<typeof DatePicker> = {
