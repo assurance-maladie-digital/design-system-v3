@@ -2668,7 +2668,7 @@ export const ManyServerTables: Story = {
 	},
 }
 
-export const Alignment: Story = {
+export const DataAlignment: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -2898,14 +2898,6 @@ export const Alignment: Story = {
 				return { args, users, state, fetchData, totalUsers, StateEnum }
 			},
 			template: `
-			<div>
-				<p class="my-4">
-					<span class="d-block font-weight-bold mb-2">Conviention de formatage à suivre :</span>
-					N° de ligne : Les numéros sont centrés<br>
-					Texte : Les textes sont ferré à gauche<br>
-					Date : Les dates sont centrées<br>
-					Numérique : Les nombres sont ferré à droite
-				</p>
 				<SyServerTable
 					v-model:options="args.options"
 					:items="users"
@@ -2918,7 +2910,6 @@ export const Alignment: Story = {
 					:striped="args.striped"
 					@update:options="[fetchData, args['onUpdate:options']]"
 				/>
-			</div>
 			`,
 		}
 	},

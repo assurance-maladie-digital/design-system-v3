@@ -1817,7 +1817,7 @@ export const ManyTables: Story = {
 	},
 }
 
-export const Alignment: Story = {
+export const DataAlignment: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -1952,22 +1952,13 @@ export const Alignment: Story = {
 				return { args }
 			},
 			template: `
-				<div>
-					<p class="my-4">
-						<span class="d-block font-weight-bold mb-2">Conviention de formatage à suivre :</span>
-						N° de ligne : Les numéros sont centrés<br>
-						Texte : Les textes sont ferré à gauche<br>
-						Date : Les dates sont centrées<br>
-						Numérique : Les nombres sont ferré à droite
-					</p>
-					<SyTable
-						v-model:options="args.options"
-						:headers="args.headers"
-						:items="args.items"
-						:suffix="args.suffix"
-						@update:options="args['onUpdate:options']"
-					/>
-				</div>
+				<SyTable
+					v-model:options="args.options"
+					:headers="args.headers"
+					:items="args.items"
+					:suffix="args.suffix"
+					@update:options="args['onUpdate:options']"
+				/>
 			`,
 		}
 	},
