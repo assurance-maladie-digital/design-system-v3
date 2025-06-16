@@ -128,7 +128,6 @@ describe('SyTextArea', () => {
 		await textarea.trigger('blur')
 
 		const expectedValue = 'voici un text probablement trop long pour ce champ\nfdgssssssssssssssssssssssssssssssssssssssssssssss-\nsssssssssssssssssssssssssssssssssssssssssssssssss-\nsssssss top'
-		console.log('emmitted', wrapper.emitted('update:modelValue'))
 
 		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([expectedValue])
 		expect(textarea.element.value).toBe(expectedValue)

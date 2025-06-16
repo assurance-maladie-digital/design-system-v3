@@ -38,7 +38,7 @@ describe('DateTextInput.vue', () => {
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
-		console.log(textField.props('errorMessages'))
+
 		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
 	})
 
