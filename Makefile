@@ -19,6 +19,7 @@ help: ## Affiche l'aide
 	@echo ""
 	@echo "${YELLOW}Note:${NC} Ce projet utilise pnpm comme gestionnaire de paquets par défaut."
 	@echo "Si pnpm n'est pas installé, vous pouvez l'installer avec: ${GREEN}npm install -g pnpm${NC}"
+	@echo "${YELLOW}Pour Windows:${NC} Pour windows: installer make et l'utiliser avec: ${GREEN}git bash${NC}"
 
 check-package-manager:
 	@if [ -z "$(PACKAGE_MANAGER)" ]; then \
