@@ -117,14 +117,17 @@ export const WithCheckboxes: Story = {
 					<VCheckbox
 						label="Envoyer une copie"
 						color="primary"
+						hide-details
 					/>
 					<VCheckbox
 						label="Envoyer en copie cachée"
 						color="primary"
+						hide-details
 					/>
 					<VCheckbox
 						label="Confirmer la lecture"
 						color="primary"
+						hide-details
 					/>
 				</Toolbar>
 			`,
@@ -142,14 +145,17 @@ export const WithCheckboxes: Story = {
 						<VCheckbox
 							label="Envoyer une copie"
 							color="primary"
+							hide-details
 						/>
 						<VCheckbox
 							label="Envoyer en copie cachée"
 							color="primary"
+							hide-details
 						/>
 						<VCheckbox
 							label="Confirmer la lecture"
 							color="primary"
+							hide-details
 						/>
 					</Toolbar>
 				</tempalte>`,
