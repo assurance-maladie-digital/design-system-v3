@@ -6,7 +6,7 @@
 	let tools: Array<HTMLElement>
 
 	onMounted(() => {
-		tools = Array.from(toolbar.value?.querySelectorAll<HTMLElement>('button:not([disabled]), a:not([disabled])') || [])
+		tools = Array.from(toolbar.value?.querySelectorAll<HTMLElement>('button:not([disabled]), a:not([disabled]), input:not([disabled])') || [])
 		tools?.forEach((el) => {
 			el.setAttribute('tabindex', '-1')
 		})
@@ -112,7 +112,7 @@
 	</div>
 </template>
 
-<style>
+<style scoped>
 .sy-toolbar:has(:focus-visible) {
 	position: relative;
 }

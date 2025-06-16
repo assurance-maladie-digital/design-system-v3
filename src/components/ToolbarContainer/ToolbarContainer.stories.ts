@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import Toolbar from './ToolbarContainer.vue'
-import { VBtn, VDivider } from 'vuetify/components'
+import { VBtn, VCheckbox, VDivider } from 'vuetify/components'
 import { mdiFormatAlignRight, mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignJustify, mdiFormatBold, mdiFormatItalic, mdiFormatUnderline, mdiFormatColorText, mdiFormatColorFill } from '@mdi/js'
 
 const meta = {
@@ -97,6 +97,62 @@ export const Default: Story = {
 								</Toolbar>
 							</div>
 						</tempalte>`,
+			},
+		],
+	},
+}
+
+export const WithCheckboxes: Story = {
+	render: (args) => {
+		return {
+			components: { VCheckbox, Toolbar },
+			setup() {
+				return { args }
+			},
+			template: `
+				<Toolbar
+					class="d-flex flex-wrap ga-4"
+					aria-label="Options d'envoi"
+				>
+					<VCheckbox
+						label="Envoyer une copie"
+						color="primary"
+					/>
+					<VCheckbox
+						label="Envoyer en copie cachée"
+						color="primary"
+					/>
+					<VCheckbox
+						label="Confirmer la lecture"
+						color="primary"
+					/>
+				</Toolbar>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+					<Toolbar
+						class="d-flex flex-wrap ga-4"
+						aria-label="Options d'envoi"
+					>
+						<VCheckbox
+							label="Envoyer une copie"
+							color="primary"
+						/>
+						<VCheckbox
+							label="Envoyer en copie cachée"
+							color="primary"
+						/>
+						<VCheckbox
+							label="Confirmer la lecture"
+							color="primary"
+						/>
+					</Toolbar>
+				</tempalte>`,
 			},
 		],
 	},
