@@ -1,7 +1,5 @@
 ## v1.0.1 (16-06-2025)
 
-### Composants
-
 | Synapse                                                                                                                                | Portail Agent                                                                                                                                                                                                          |
 |----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | - TableToolbar: fix headers [`#693`](https://github.com/assurance-maladie-digital/design-system-v3/pull/693)                           | - DatePicker: improve header and buttons display [`#681`](https://github.com/assurance-maladie-digital/design-system-v3/pull/681)                                                                                      |
