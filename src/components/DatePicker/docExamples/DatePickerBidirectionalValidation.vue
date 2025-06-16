@@ -157,15 +157,15 @@
 			Validation bidirectionnelle entre deux DatePickers
 		</h1>
 
-		<p class="text-body-2 mb-4">
+		<div class="text-body-2 mb-4">
 			Ce composant démontre la validation bidirectionnelle entre deux DatePickers. Les règles de validation sont appliquées dans les deux sens :
-			<ul>
+			<ul class="ml-4">
 				<li>La date de fin doit être postérieure ou égale à la date de début</li>
 				<li>La date de début doit être antérieure ou égale à la date de fin</li>
 				<li>Lorsque la date de début change, la validation de la date de fin est mise à jour</li>
 				<li>Lorsque la date de fin change, la validation de la date de début est mise à jour</li>
 			</ul>
-		</p>
+		</div>
 
 		<div class="date-range-container mb-6">
 			<div class="date-picker-wrapper">
