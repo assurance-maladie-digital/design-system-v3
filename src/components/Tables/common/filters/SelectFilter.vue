@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	// SySelect a été modifié pour accepter null comme valeur valide
-	import { computed } from 'vue'
+	import { computed, ref } from 'vue'
 	import type { FilterOption, TableColumnHeader } from '../types'
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 	import { locales } from './locales'
@@ -65,12 +65,12 @@
 	// Ajouter l'option "- choisir -" et gérer les valeurs vides
 	const filterOptions = computed(() => {
 		if (!props.header.filterOptions || !Array.isArray(props.header.filterOptions)) {
-			return [{ text: locales.defaultOption, value: null }]
+			return [{ text: locales.defaultOption, value: locales.defaultOption }]
 		}
 
 		// Définir le type des options pour accepter null et unknown
 		type FilterOptionValue = { text: string, value: unknown | null }
-		const options: FilterOptionValue[] = [{ text: locales.defaultOption, value: null }]
+		const options: FilterOptionValue[] = [{ text: locales.defaultOption, value: locales.defaultOption }]
 
 		// Traiter les options existantes et remplacer les valeurs vides par "(vide)"
 		props.header.filterOptions.forEach((option) => {
@@ -86,14 +86,14 @@
 	})
 
 	const modelValue = computed({
-		get: () => props.filterValue,
+		get: () => props.filterValue === null ? locales.defaultOption : props.filterValue,
 		set: (newValue) => {
 			// Générer une clé unique en utilisant la fonction dédiée
 			const key = generateUniqueKey()
 			if (!key) return
 
-			if (newValue === undefined || newValue === null) {
-				// Effacer le filtre si la valeur est vide
+			if (newValue === undefined || newValue === null || newValue === locales.defaultOption) {
+				// Effacer le filtre si la valeur est vide ou "-choisir-"
 				const newFilters = props.filters.filter(f => f.key !== key)
 				emit('update:filters', newFilters)
 				return
@@ -125,6 +125,18 @@
 		const newFilters = props.filters.filter(f => f.key !== key)
 		emit('update:filters', newFilters)
 	}
+
+	// État pour gérer l'affichage du placeholder
+	const isFocused = ref(false)
+
+	// Gestionnaires d'événements pour focus/blur
+	function onFocus() {
+		isFocused.value = true
+	}
+
+	function onBlur() {
+		isFocused.value = false
+	}
 </script>
 
 <template>
@@ -132,9 +144,9 @@
 		<!-- @ts-ignore - Ignorer l'erreur de type pour v-model -->
 		<SySelect
 			v-model="modelValue"
-			:label="modelValue === null ? locales.defaultOption : (props.header.title || '')"
+			:label="props.header.title || ''"
 			:items="filterOptions"
-			:clearable="inputConfig?.clearable ?? clearable"
+			:clearable="modelValue !== locales.defaultOption && (inputConfig?.clearable ?? clearable)"
 			:density="inputConfig?.density ?? density"
 			:hide-details="inputConfig?.hideDetails ?? hideDetails"
 			:hide-messages="true"
@@ -144,7 +156,10 @@
 			class="filter-input"
 			:aria-label="props.header.title || 'Filtre'"
 			@click:clear="handleClear"
+			@focus="onFocus"
+			@blur="onBlur"
 		/>
+
 	</div>
 </template>
 
@@ -156,5 +171,16 @@
 .select-filter-wrapper {
 	position: relative;
 	width: 100%;
+}
+
+.default-option {
+	position: absolute;
+	top: 1px;
+	left: 12px;
+	color: rgba(0, 0, 0, 0.6);
+	font-size: 14px;
+	line-height: 36px; /* Adjust based on your select height */
+	pointer-events: none;
+	width: calc(100% - 40px); /* Leave space for the dropdown icon */
 }
 </style>
