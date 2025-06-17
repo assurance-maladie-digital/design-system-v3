@@ -306,11 +306,11 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .v-btn {
 	letter-spacing: 0.64px;
-	font-weight: tokens.$ap-font-weight-semi-bold;
+	font-weight: apTokens.$ap-font-weight-semi-bold;
 	text-indent: unset;
 
 	& :deep(.v-btn__overlay),
@@ -335,7 +335,7 @@
 	}
 
 	&.amelipro-btn--style {
-		padding: tokens.$btn-padding-y tokens.$btn-padding-x;
+		padding: apTokens.$btn-padding-y apTokens.$btn-padding-x;
 	}
 
 	&.v-btn--active::before,
@@ -346,7 +346,7 @@
 	}
 
 	&:focus {
-		outline: 1px dotted tokens.$ap-grey-darken1;
+		outline: 1px dotted apTokens.$ap-grey-darken1;
 	}
 
 	&.v-btn--text {
@@ -370,7 +370,7 @@
 		min-height: 1.25rem;
 		padding: 0 0.125rem;
 		border-radius: 50%;
-		font-size: tokens.$font-size-xxs;
+		font-size: apTokens.$font-size-xxs;
 		z-index: 1;
 
 		& span {

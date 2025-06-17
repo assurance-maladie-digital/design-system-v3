@@ -47,7 +47,7 @@ export const Header: StoryObj = {
 							<img alt="line" src="/home-illustration.svg" width="auto" height="300" class="img-animate"/>
 						</VCol>
 					</VRow>
-					<div class="position-absolute" style="right: 60px; bottom: -10px">
+					<div class="position-absolute d-inline-flex" style="right: 60px; bottom: -10px;">
 						<VBtn
 							aria-label="Figma"
 							href="https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1"

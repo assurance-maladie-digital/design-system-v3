@@ -33,7 +33,7 @@ const meta = {
 		valid: { description: 'Ajoute une icône check en bas du bouton' },
 	},
 	component: AmeliproTileBtn,
-	title: 'Composants/Tuiles/AmeliproTileBtn',
+	title: 'Composants/Amelipro/Tuiles/AmeliproTileBtn',
 } as Meta<typeof AmeliproTileBtn>
 
 export default meta

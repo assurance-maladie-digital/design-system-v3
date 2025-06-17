@@ -157,10 +157,10 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .tabs-btn-wrapper {
-	@media #{tokens.$media-only-xs} {
+	@media #{apTokens.$media-only-xs} {
 		width: 100% !important;
 	}
 }

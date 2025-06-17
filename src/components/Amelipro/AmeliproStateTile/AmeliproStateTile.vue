@@ -283,31 +283,31 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .amelipro-state-tile__pdf-download {
-	color: tokens.$ap-blue-darken1;
+	color: apTokens.$ap-blue-darken1;
 }
 
 .amelipro-state-tile__pdf-download--white {
-	color: tokens.$ap-white;
+	color: apTokens.$ap-white;
 }
 
 .amelipro-state-tile {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background-color: tokens.$ap-white;
+	background-color: apTokens.$ap-white;
 	white-space: normal;
 
 	&:hover {
 		& .amelipro-state-tile__pdf-download {
-			color: tokens.$ap-blue-darken2;
+			color: apTokens.$ap-blue-darken2;
 			text-decoration: underline;
 		}
 
 		& .amelipro-state-tile__pdf-download--white {
-			color: tokens.$ap-white;
+			color: apTokens.$ap-white;
 		}
 	}
 }
@@ -318,10 +318,10 @@
 }
 
 .btn-styled-text {
-	min-height: tokens.$btn-min-height;
+	min-height: apTokens.$btn-min-height;
 	padding: 12px 24px;
-	border-radius: tokens.$btn-radius;
-	font-size: tokens.$font-size-sm;
+	border-radius: apTokens.$btn-radius;
+	font-size: apTokens.$font-size-sm;
 }
 
 .state-tile-icon {
@@ -342,7 +342,7 @@
 	}
 
 	&:focus {
-		outline: 1px dotted tokens.$ap-grey-darken1;
+		outline: 1px dotted apTokens.$ap-grey-darken1;
 	}
 
 	& :deep(.v-btn__content) {

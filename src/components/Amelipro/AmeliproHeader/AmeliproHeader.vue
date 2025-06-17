@@ -453,12 +453,12 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .header-separator {
 	width: 1px;
 	height: 38px;
-	background-color: tokens.$ap-blue-darken1;
+	background-color: apTokens.$ap-blue-darken1;
 }
 
 .header-bar-container {
@@ -467,7 +467,7 @@
 		padding: 0 38px;
 
 		& .v-btn:focus {
-			outline-color: tokens.$ap-white;
+			outline-color: apTokens.$ap-white;
 		}
 	}
 

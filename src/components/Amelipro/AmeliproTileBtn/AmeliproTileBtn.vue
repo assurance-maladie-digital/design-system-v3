@@ -311,13 +311,13 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .amelipro-tile-btn {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background-color: tokens.$ap-white;
+	background-color: apTokens.$ap-white;
 	border-radius: 0.5rem;
 	white-space: normal;
 }
@@ -339,7 +339,7 @@
 	}
 
 	&:focus {
-		outline: 1px dotted tokens.$ap-grey-darken1;
+		outline: 1px dotted apTokens.$ap-grey-darken1;
 	}
 
 	& :deep(.v-btn__content) {

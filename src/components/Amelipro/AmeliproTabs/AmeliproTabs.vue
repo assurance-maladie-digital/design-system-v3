@@ -304,7 +304,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .first-tab-btn {
 	border-top-left-radius: 8px;
@@ -316,17 +316,17 @@
 
 .tabpanel {
 	&:focus {
-		outline: 1px dotted tokens.$ap-grey-darken1;
+		outline: 1px dotted apTokens.$ap-grey-darken1;
 	}
 }
 
 .tab-panel-default {
 	border-radius: 8px;
-	border: 1px solid tokens.$ap-grey-lighten2;
+	border: 1px solid apTokens.$ap-grey-lighten2;
 }
 
 .border-top-left {
-	@media #{tokens.$media-up-md} {
+	@media #{apTokens.$media-up-md} {
 		border-top-left-radius: 0;
 	}
 }

@@ -145,14 +145,14 @@
 </template>
 
 <style lang="scss" scoped>
-	@use '@/assets/amelipro/tokens';
+	@use '@/assets/amelipro/apTokens';
 
 	ol {
-		border: 1px solid tokens.$ap-grey-lighten3;
+		border: 1px solid apTokens.$ap-grey-lighten3;
 	}
 
 	li:not(:last-child) {
-		border-right: 1px solid tokens.$ap-grey-lighten3;
+		border-right: 1px solid apTokens.$ap-grey-lighten3;
 	}
 
 	:deep(.amelipro-icon) {

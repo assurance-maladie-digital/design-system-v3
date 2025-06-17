@@ -398,10 +398,10 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 :deep(.v-btn):focus {
-	outline-color: tokens.$ap-white;
+	outline-color: apTokens.$ap-white;
 }
 
 :deep(.v-btn).v-btn--size-default {

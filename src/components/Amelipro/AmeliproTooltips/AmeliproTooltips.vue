@@ -103,7 +103,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .v-btn {
 	&.tooltip-btn {

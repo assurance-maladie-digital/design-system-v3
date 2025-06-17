@@ -310,7 +310,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 ul {
 	list-style: none;
@@ -321,7 +321,7 @@ ul {
 	min-height: unset !important;
 	padding: 0.5rem 1rem !important;
 	border-radius: 0 !important;
-	font-size: tokens.$font-size-sm;
+	font-size: apTokens.$font-size-sm;
 
 	&.amelipro-menu__btn--open {
 		padding: 0 !important;
@@ -345,29 +345,29 @@ ul {
 .menu-btn,
 .home-menu-btn {
 	&:focus {
-		color: tokens.$ap-blue-darken2 !important;
-		background-color: tokens.$ap-blue-lighten3 !important;
+		color: apTokens.$ap-blue-darken2 !important;
+		background-color: apTokens.$ap-blue-lighten3 !important;
 	}
 }
 
 .menu-btn {
 	&:focus :deep(.v-icon) {
-		color: tokens.$ap-blue-darken2 !important;
+		color: apTokens.$ap-blue-darken2 !important;
 	}
 }
 
 .menu-btn-close {
 	&:focus {
-		outline: 1px dotted tokens.$ap-blue-lighten3;
+		outline: 1px dotted apTokens.$ap-blue-lighten3;
 	}
 }
 
 .amelipro-menu__item--level-2,
 .amelipro-menu__item--level-3 {
 	& .v-btn {
-		font-size: tokens.$font-size-xs;
+		font-size: apTokens.$font-size-xs;
 		text-transform: unset;
-		font-weight: tokens.$ap-font-weight-regular;
+		font-weight: apTokens.$ap-font-weight-regular;
 	}
 }
 
@@ -379,7 +379,7 @@ ul {
 	& .amelipro-menu__item--level-3 {
 		& .v-btn {
 			padding: 0.5rem 1rem 0.5rem 2rem !important;
-			font-weight: tokens.$ap-font-weight-light;
+			font-weight: apTokens.$ap-font-weight-light;
 		}
 	}
 }
