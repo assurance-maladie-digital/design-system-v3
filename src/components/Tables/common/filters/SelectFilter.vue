@@ -2,6 +2,7 @@
 	import { computed } from 'vue'
 	import type { FilterOption, TableColumnHeader } from '../types'
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+	import { locales } from './locales'
 
 	const props = defineProps({
 		header: {
@@ -13,8 +14,8 @@
 			default: () => [],
 		},
 		filterValue: {
-			type: [String, Number, Object, undefined] as unknown as () => string | number | Record<string, unknown> | undefined,
-			default: undefined,
+			type: [String, Number, Object, undefined, null] as unknown as () => string | number | Record<string, unknown> | undefined | null,
+			default: null,
 		},
 		inputConfig: {
 			type: Object as () => {
@@ -60,6 +61,28 @@
 		return String(props.header.key || props.header.value || (props.header.title ? `filter_${props.header.title}` : `filter_${Date.now()}`))
 	}
 
+	// Ajouter l'option "- choisir -" et gérer les valeurs vides
+	const filterOptions = computed(() => {
+		if (!props.header.filterOptions || !Array.isArray(props.header.filterOptions)) {
+			return [{ text: locales.defaultOption, value: null }]
+		}
+
+		// Ajouter l'option "- choisir -" en première position
+		const options = [{ text: locales.defaultOption, value: null }]
+
+		// Traiter les options existantes et remplacer les valeurs vides par "(vide)"
+		props.header.filterOptions.forEach((option) => {
+			if (option.text === undefined || option.text === null || option.text === '') {
+				options.push({ text: locales.emptyValue, value: option.value })
+			}
+			else {
+				options.push(option)
+			}
+		})
+
+		return options
+	})
+
 	const modelValue = computed({
 		get: () => props.filterValue,
 		set: (newValue) => {
@@ -103,24 +126,48 @@
 </script>
 
 <template>
-	<SySelect
-		v-model="modelValue"
-		:label="header.title"
-		:items="header.filterOptions"
-		:clearable="inputConfig?.clearable ?? clearable"
-		:density="inputConfig?.density ?? density"
-		:hide-details="inputConfig?.hideDetails ?? hideDetails"
-		:hide-messages="true"
-		:variant="inputConfig?.variant ?? variant"
-		:bg-color="inputConfig?.backgroundColor ?? backgroundColor"
-		:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
-		class="filter-input"
-		@click:clear="handleClear"
-	/>
+	<div class="select-filter-wrapper">
+		<div
+			v-if="!modelValue"
+			class="default-option"
+		>
+			{{ locales.defaultOption }}
+		</div>
+		<SySelect
+			v-model="modelValue"
+			:label="null"
+			:items="filterOptions"
+			:clearable="inputConfig?.clearable ?? clearable"
+			:density="inputConfig?.density ?? density"
+			:hide-details="inputConfig?.hideDetails ?? hideDetails"
+			:hide-messages="true"
+			:variant="inputConfig?.variant ?? variant"
+			:bg-color="inputConfig?.backgroundColor ?? backgroundColor"
+			:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
+			class="filter-input"
+			@click:clear="handleClear"
+		/>
+	</div>
 </template>
 
 <style lang="scss" scoped>
 .filter-input {
 	width: 100%;
+}
+
+.select-filter-wrapper {
+	position: relative;
+	width: 100%;
+
+	.default-option {
+		position: absolute;
+		top: 0;
+		left: 12px;
+		z-index: 1;
+		pointer-events: none;
+		padding: 8px 0;
+		color: rgba(0, 0, 0, 0.6);
+		font-size: 14px;
+	}
 }
 </style>
