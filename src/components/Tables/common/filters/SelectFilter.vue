@@ -159,7 +159,6 @@
 			@focus="onFocus"
 			@blur="onBlur"
 		/>
-
 	</div>
 </template>
 
@@ -177,7 +176,7 @@
 	position: absolute;
 	top: 1px;
 	left: 12px;
-	color: rgba(0, 0, 0, 0.6);
+	color: rgb(0 0 0 / 60%);
 	font-size: 14px;
 	line-height: 36px; /* Adjust based on your select height */
 	pointer-events: none;
