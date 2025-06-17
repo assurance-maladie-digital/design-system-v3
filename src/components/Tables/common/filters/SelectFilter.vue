@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	// SySelect a été modifié pour accepter null comme valeur valide
 	import { computed } from 'vue'
 	import type { FilterOption, TableColumnHeader } from '../types'
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
@@ -68,7 +69,9 @@
 		}
 
 		// Ajouter l'option "- choisir -" en première position
-		const options = [{ text: locales.defaultOption, value: null }]
+		// Définir le type des options pour accepter null et unknown
+		type FilterOptionValue = { text: string, value: unknown | null }
+		const options: FilterOptionValue[] = [{ text: locales.defaultOption, value: null }]
 
 		// Traiter les options existantes et remplacer les valeurs vides par "(vide)"
 		props.header.filterOptions.forEach((option) => {
@@ -133,9 +136,10 @@
 		>
 			{{ locales.defaultOption }}
 		</div>
+		<!-- @ts-ignore - Ignorer l'erreur de type pour v-model -->
 		<SySelect
 			v-model="modelValue"
-			:label="null"
+			:label="''"
 			:items="filterOptions"
 			:clearable="inputConfig?.clearable ?? clearable"
 			:density="inputConfig?.density ?? density"

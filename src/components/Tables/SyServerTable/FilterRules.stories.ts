@@ -3,6 +3,18 @@ import SyServerTable from './SyServerTable.vue'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 
+interface TextItem {
+	example: string
+	description: string
+	[key: string]: string
+}
+
+interface NumberItem {
+	example: number
+	description: string
+	[key: string]: string | number
+}
+
 enum StateEnum {
 	IDLE = 'idle',
 	PENDING = 'pending',
@@ -15,7 +27,8 @@ interface DataOptions {
 	page?: number
 	itemsPerPage?: number
 	groupBy?: Array<string>
-	filters?: Array<{ key: string, value: unknown, type: string }>
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	filters?: Array<{ key: string, value: any, type: string }>
 }
 
 const meta = {
@@ -69,7 +82,7 @@ export const TextFilterRules: Story = {
 				{ example: '*a*i*', description: 'Combinaison de wildcards - trouve "Paris", "Madrid", etc.' },
 			]
 
-			const items = ref([])
+			const items = ref<TextItem[]>([])
 			const totalItems = ref(0)
 			const state = ref(StateEnum.IDLE)
 			const options = ref({
@@ -77,7 +90,7 @@ export const TextFilterRules: Story = {
 				page: 1,
 			})
 
-			const wait = async (ms: number) => {
+			const wait = async (ms: number): Promise<void> => {
 				return new Promise(resolve => setTimeout(resolve, ms))
 			}
 
@@ -223,7 +236,7 @@ export const NumberFilterRules: Story = {
 				{ example: 90, description: 'Recherche exacte (90)' },
 			]
 
-			const items = ref([])
+			const items = ref<NumberItem[]>([])
 			const totalItems = ref(0)
 			const state = ref(StateEnum.IDLE)
 			const options = ref({
@@ -231,7 +244,7 @@ export const NumberFilterRules: Story = {
 				page: 1,
 			})
 
-			const wait = async (ms: number) => {
+			const wait = async (ms: number): Promise<void> => {
 				return new Promise(resolve => setTimeout(resolve, ms))
 			}
 
