@@ -2,99 +2,437 @@ import {Meta} from '@storybook/addon-docs/blocks';
 
 <Meta title="Accessibilité/Kit de pré-audit/Pré-audit"/>
 
-# Pré-audit
+<style>
+{
+`
+  :root {
+    --primary: #0c419a;
+    --primary-light: rgba(0, 120, 212, 0.1);
+    --primary-dark: #005a9e;
+    --secondary: #0c419a;
+    --secondary-light: #e3e8f2;
+    --secondary-dark: #0c419a;
+    --neutral-100: #ffffff;
+    --neutral-200: #f8f9fa;
+    --neutral-300: #eaeaea;
+    --neutral-400: #d1d1d1;
+    --neutral-500: #a0a0a0;
+    --neutral-600: #6e6e6e;
+    --neutral-700: #3d3d3d;
+    --neutral-800: #1f1f1f;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --transition: all 0.3s ease;
+  }
 
-L’objectif du pré-audit est d'atteindre en semi-autonomie un premier palier de conformité de votre service web avant de convenir d’un réel audit <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>. Pour prouver ce palier et être éligible à la demande d'audit complet vous devez compléter <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank">ce fichier</a> qui mentionne les exigences requises par la vérification assistée des outils automatisés et la vérification manuelle. Dans le cas où vous rencontrez une difficulté avec un test, un critère ou un outil n'hésitez pas à nous contacter via l'adresse [valentin.becquet@assurance-maladie.fr](mailto:valentin.becquet@assurance-maladie.fr) (cette adresse évoluera prochainement).
+  .preaudit-header {
+    color: white;
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .preaudit-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  .preaudit-header h1 {
+    margin-top: 0;
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .preaudit-header p {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+    font-weight: 300;
+  }
+  
+  .info-section {
+    margin: 2.5rem 0;
+    padding: 2rem;
+    background-color: var(--neutral-100);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border: 1px solid var(--neutral-300);
+  }
+  
+  .info-section:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  
+  .info-section h2 {
+    position: relative;
+    padding-bottom: 0.75rem;
+    margin-top: 0;
+    color: var(--primary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .info-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+      
+    border-radius: 3px;
+  }
+  
+  .alert {
+    background-color: var(--secondary-light);
+    border-left: 4px solid var(--secondary);
+    padding: 1.25rem 1.5rem;
+    margin: 1.75rem 0;
+    border-radius: var(--radius-sm);
+    position: relative;
+  }
+  
+  .alert strong {
+    color: var(--secondary-dark);
+  }
+  
+  .verification-card {
+    background-color: var(--neutral-200);
+    border: 1px solid var(--neutral-300);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    position: relative;
+  }
+  
+  .verification-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  
+  .verification-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  }
+  
+  .verification-card h3 {
+    color: var(--primary);
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+  }
+  
+  .verification-steps {
+    padding-left: 1.75rem;
+  }
+  
+  .verification-steps h5 {
+    color: var(--primary-dark);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+  }
+  
+  .verification-steps li {
+    margin-bottom: 0.75rem;
+    position: relative;
+    padding-left: 0.5rem;
+  }
+  
+  .verification-steps li::before {
+    color: var(--primary);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+  
+  .highlight {
+    background-color: var(--primary-light);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    color: var(--primary-dark);
+  }
+  
+  .contact-info {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    margin: 1.75rem 0;
+    border: 1px solid #d9e8ff;
+    position: relative;
+  }
+  
+  .contact-info h3 {
+    color: var(--primary-dark);
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  code {
+    background-color: var(--neutral-200);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+    color: var(--primary-dark);
+    border: 1px solid var(--neutral-300);
+  }
+  
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    border-bottom: 1px solid transparent;
+  }
+  
+  a:hover {
+    color: var(--primary-dark);
+    border-bottom: 1px solid var(--primary);
+  }
+`
+}
+</style>
 
-Pour demander un audit merci de contacter [valentin.becquet@assurance-maladie.fr](mailto:valentin.becquet@assurance-maladie.fr). L'acceptance de la demande est soumise à la démonstration de l'effort engagé par l'équipe-produit. Cette appréciation fera l'objet d'une discussion.
+<div className="preaudit-header">
+  <h1>📝 Pré-audit d'accessibilité</h1>
+  <p>Vérifiez la conformité de votre service web avant l'audit officiel</p>
+</div>
 
-Pour rappel, avant de lancer votre pré-audit vous devez définir l'échantillon de votre audit. Vous trouverez toutes les informations associées [ici](/docs/accessibilit%C3%A9-kit-de-pr%C3%A9-audit-%C3%A9chantillonnage--docs).
+<div className="info-section">
+  <h2>🌟 Objectif</h2>
+  <p>L'objectif du pré-audit est d'atteindre en semi-autonomie un premier palier de conformité de votre service web avant de convenir d'un réel audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
+  
+  <p>Pour prouver ce palier et être éligible à la demande d'audit complet vous devez compléter <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank">ce fichier</a> qui mentionne les exigences requises par la vérification assistée des outils automatisés et la vérification manuelle.</p>
+</div>
 
-## Vérification assistée des outils automatisés
+<div className="contact-info">
+  <h3>📬 Contact et assistance</h3>
+  <p>Dans le cas où vous rencontrez une difficulté avec un test, un critère ou un outil n'hésitez pas à nous contacter via l'adresse <a href="mailto:valentin.becquet@assurance-maladie.fr">valentin.becquet@assurance-maladie.fr</a> (cette adresse évoluera prochainement).</p>
+  
+  <p>Pour demander un audit, contactez également cette adresse. L'acceptance de la demande est soumise à la démonstration de l'effort engagé par l'équipe-produit. Cette appréciation fera l'objet d'une discussion.</p>
+</div>
 
-Lancer Tanaguru sur chaque page de l’échantillon de test. Vous pouvez retrouver une documentation d’utilisation de Tanaguru [ici](/docs/accessibilit%C3%A9-kit-de-pr%C3%A9-audit-outils-tanaguru--docs).
+<div className="alert">
+  <p><strong>🔔 Rappel important :</strong> Avant de lancer votre pré-audit, vous devez définir l'échantillon de votre audit. Vous trouverez toutes les informations associées <a href="/docs/accessibilit%C3%A9-kit-de-pr%C3%A9-audit-%C3%A9chantillonnage--docs">ici</a>.</p>
+</div>
 
-L'outil Tanaguru a la capacité de contrôler 158 tests sur les 258 du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>. Les exigences du pré-audit sont respectées dès lors que vous atteignez un minimum d’erreur en lançant les tests automatisés avec Tanaguru. Ce seuil est volontairement sujet à discussion pour ne pas bloquer les produits en cas de grande complexité. Dans le cas où un test est présenté en résultat "non conforme" pour la demande d'audit, une justification devra être apportée pour motiver l'éligibilité du produit. Vous pouvez nous solliciter pour un accompagnement si vous rencontrez des difficultés techniques à résoudre les non-conformités relevées par Tanaguru.
+<div className="info-section">
+  <h2>🔍 Vérification assistée des outils automatisés</h2>
+  
+  <div className="verification-card">
+    <h3>📦 Utilisation de Tanaguru</h3>
+    <p>Lancez Tanaguru sur chaque page de l'échantillon de test. Vous pouvez retrouver une documentation d'utilisation de Tanaguru <a href="/docs/accessibilit%C3%A9-kit-de-pr%C3%A9-audit-outils-tanaguru--docs">ici</a>.</p>
+    
+    <div className="alert">
+      <p><strong>Capacité de l'outil :</strong> Tanaguru peut contrôler <span className="highlight">158 tests sur les 258</span> du <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
+    </div>
+    
+    <p>Les exigences du pré-audit sont respectées dès lors que vous atteignez un minimum d'erreur en lançant les tests automatisés avec Tanaguru. Ce seuil est volontairement sujet à discussion pour ne pas bloquer les produits en cas de grande complexité.</p>
+    
+    <p>Dans le cas où un test est présenté en résultat "non conforme" pour la demande d'audit, une justification devra être apportée pour motiver l'éligibilité du produit.</p>
+  </div>
+</div>
 
-## Vérification manuelle
+<div className="info-section">
+  <h2>👤 Vérification manuelle</h2>
+  
+  <p>L'objectif est de vérifier chacun des 8 points suivants pour chaque page de l'échantillon de test.</p>
+  
+  <div className="alert">
+    <p><strong>Notation :</strong> Au sein de la check-list, il faudra choisir entre <span className="highlight">"Conforme"</span>, <span className="highlight">"Non conforme"</span>, <span className="highlight">"Non applicable"</span>, <span className="highlight">"Dérogé"</span> ou <span className="highlight">"Non testé"</span> pour chacun des critères.</p>
+    <p>Il est possible d'ajouter un commentaire pour expliciter les erreurs relevées, des recommandations ou d'éventuelles questions.</p>
+  </div>
+</div>
 
-L’objectif est de vérifier chacun des 8 points suivants pour chaque page de l’échantillon de test. Au sein de la check-list, il faudra choisir entre “Conforme”, “Non conforme”, “Non applicable”, “Dérogé” ou “Non testé” pour chacun des critères suivants. Il est possible d’ajouter un commentaire pour expliciter les erreurs relevées, des recommandations ou d’éventuelles questions.
+<div className="verification-card">
+  <h3>⌨️ 1. Navigation au clavier</h3>
+  
+  <p>Testez que toutes les parties de votre site sont entièrement navigables à l'aide du clavier (touche Tab pour se déplacer, Shift+Tab pour revenir en arrière, Entrée pour activer un élément, Espace pour les actions interactives comme les boutons).</p>
+  
+  <h4>Vérification manuelle :</h4>
+  <ul className="verification-steps">
+    <li>Naviguez sur toutes les sections du site uniquement avec le clavier.</li>
+    <li>Testez tous les éléments interactifs : menus, formulaires, liens, boutons, carrousels, fenêtres modales, etc.</li>
+    <li>Assurez-vous que les menus déroulants s'ouvrent avec le clavier et que vous pouvez accéder à tous les champs de formulaire et boutons sans difficulté.</li>
+    <li>Vérifiez qu'aucun piège au clavier n'existe (boucle, etc.)</li>
+  </ul>
+  
+  <div className="alert">
+    <p><strong>Exemple :</strong> Vérifiez si un utilisateur peut remplir un formulaire de contact en utilisant uniquement les touches de tabulation.</p>
+  </div>
+</div>
 
-**1. Navigation au clavier** :
+<div className="verification-card">
+  <h3>📺 2. Éléments visuels et déclenchements automatiques</h3>
+  
+  <p>Vérifiez que les animations, transitions et autres éléments visuels peuvent être arrêtés, mis en pause ou désactivés par l'utilisateur.</p>
+  
+  <h4>Vérification manuelle :</h4>
+  <ul className="verification-steps">
+    <li>Identifiez tous les éléments qui bougent, clignotent ou se mettent à jour automatiquement sur votre site.</li>
+    <li>Vérifiez que ces éléments peuvent être arrêtés ou mis en pause par l'utilisateur.</li>
+    <li>Assurez-vous qu'aucun contenu ne clignote plus de trois fois par seconde (risque de crises d'épilepsie).</li>
+  </ul>
+  
+  <div className="alert">
+    <p><strong>Exemple :</strong> Un carrousel d'images doit pouvoir être arrêté ou ralenti par l'utilisateur.</p>
+  </div>
+</div>
 
-- Testez que toutes les parties de votre site sont entièrement navigables à l’aide du clavier (touche Tab pour se déplacer, Shift+Tab pour revenir en arrière, Entrée pour activer un élément, Espace pour les actions interactives comme les boutons).
-  - **Vérification manuelle** :
-  - Naviguez sur toutes les sections du site uniquement avec le clavier.
-  - Testez tous les éléments interactifs : menus, formulaires, liens, boutons, carrousels, fenêtres modales, etc.
-  - Assurez-vous que les menus déroulants s'ouvrent avec le clavier et que vous pouvez accéder à tous les champs de formulaire et boutons sans difficulté.
-  - Vérifiez qu’aucun piège au clavier n’existe (boucle, etc.)
-  - Exemple : Vérifiez si un utilisateur peut remplir un formulaire de contact en utilisant uniquement les touches de tabulation
+<div className="verification-card">
+  <h3>🔗 3. Pertinence des liens et des boutons</h3>
+  
+  <p>Le texte des liens et des boutons doit être explicite, clair et contextuel, en évitant les termes génériques comme "Cliquez ici" ou "En savoir plus".</p>
+  
+  <h4>Vérification manuelle :</h4>
+  <ul className="verification-steps">
+    <li>Parcourez tous les liens et boutons du site.</li>
+    <li>Vérifiez que chaque lien ou bouton a un intitulé qui décrit clairement sa fonction ou sa destination.</li>
+    <li>Assurez-vous que les liens vers des documents téléchargeables indiquent le format et la taille du fichier.</li>
+  </ul>
+  
+  <div className="alert">
+    <p><strong>Exemple :</strong> Au lieu de "Cliquez ici", préférez "Télécharger le formulaire d'inscription (PDF, 1,2 Mo)".</p>
+  </div>
+</div>
 
-**2. Éléments visuels (animations, transitions, etc.) et déclenchement automatiques** :
+<div className="verification-card">
+  <h3>📝 4. Formulaires</h3>
+  
+  <p>Assurez-vous que tous les éléments d'un formulaire sont accessibles et compréhensibles pour les utilisateurs, y compris ceux qui utilisent des technologies d'assistance (lecteurs d'écran, commandes vocales, etc.).</p>
+  
+  <h4>Vérification manuelle :</h4>
+  
+  <div className="verification-steps">
+    <h5>1. Labels associés aux champs</h5>
+    <ul>
+      <li>Vérifiez que chaque champ de formulaire a un label explicite et associé correctement, en utilisant les balises <code>&lt;label&gt;</code> avec l'attribut <code>for</code> correspondant à l'<code>id</code> du champ de saisie.</li>
+      <li>Consultez <a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2">le critère RGAA 11.2</a> pour en savoir plus sur la pertinence d'une étiquette associée à un champ de formulaire.</li>
+    </ul>
+    <div className="alert">
+      <p><strong>Exemple :</strong> Pour un champ de saisie de nom, assurez-vous qu'il est bien associé à un label : <code>&lt;label for="nom"&gt;Nom :&lt;/label&gt; &lt;input type="text" id="nom"&gt;</code>.</p>
+    </div>
+    
+    <h5>2. Messages d'erreur et validation</h5>
+    <ul>
+      <li>Vérifiez que des messages d'erreur sont clairement associés aux champs en cas de saisie incorrecte.</li>
+      <li>Testez que ces messages d'erreur sont visibles, compréhensibles et bien positionnés.</li>
+      <li>Vérifiez également qu'ils sont annoncés par le lecteur d'écran.</li>
+    </ul>
+    
+    <h5>3. Groupes de champs et aide contextuelle</h5>
+    <ul>
+      <li>Vérifiez que les champs sont regroupés de manière logique, avec des titres ou des instructions claires pour chaque section.</li>
+      <li>Assurez-vous que des indices ou des descriptions contextuelles sont fournis pour aider l'utilisateur.</li>
+    </ul>
+    
+    <h5>4. Focus visuel</h5>
+    <ul>
+      <li>Testez que le focus visuel est bien visible lorsqu'un utilisateur navigue au clavier entre les champs du formulaire.</li>
+    </ul>
+  </div>
+</div>
 
-- Assurez-vous que les animations et transitions ne causent pas de problèmes pour les personnes souffrant de troubles comme l’épilepsie photosensible et qu’un contrôle est possible sur les éléments qui se déclenchent automatiquement.
-  - **Vérification manuelle** :
-  - Testez les animations sur le site (bannières, carrousels, transitions de pages).
-  - Vérifiez que la durée d’une animation est inférieure ou égale à 5 secondes
-  - Vérifiez que l’utilisateur peut arrêter, relancer, afficher et masquer une animation
-  - Pour les contenus clignotants ou avec effet de flash, assurez-vous que la fréquence d’effet est inférieure à 3 par seconde et la surface cumulée inférieure à inférieure à 21824 pixels.
-  - Exemple : Si un carrousel d’images se déclenche automatiquement, vérifiez qu’il peut être mis en pause ou que l'utilisateur peut le contrôler avec le clavier ou la souris.
+<div className="verification-card">
+  <h3>📃 5. Tableaux accessibles</h3>
+  
+  <p>Vérifiez que les tableaux de données sont bien structurés avec des balises <code>&lt;th&gt;</code> pour les en-têtes et des descriptions de colonnes et lignes claires, permettant une navigation facile pour les utilisateurs de lecteurs d'écran.</p>
+  
+  <h4>Vérification manuelle :</h4>
+  <ul className="verification-steps">
+    <li>Identifiez tous les tableaux de données sur le site.</li>
+    <li>Vérifiez que les cellules d'en-tête sont correctement marquées avec des balises <code>&lt;th&gt;</code> et non des balises <code>&lt;td&gt;</code> stylisées.</li>
+    <li>Assurez-vous que les tableaux complexes ont des attributs <code>scope</code> ou des associations entre cellules d'en-tête et cellules de données.</li>
+  </ul>
+  
+  <div className="alert">
+    <p><strong>Exemple :</strong> Pour un tableau listant des produits avec leurs prix, assurez-vous que les en-têtes de colonnes ("Produit", "Prix", etc.) sont marquées avec des balises <code>&lt;th&gt;</code> et non des balises <code>&lt;td&gt;</code> stylisées.</p>
+  </div>
+</div>
 
-**3. Pertinence des liens et des boutons** :
+<div className="verification-card">
+  <h3>📬 6. Langue de la page</h3>
+  
+  <p>Vérifiez que la langue du contenu principal de la page est correctement définie avec l’attribut `lang` dans l'élément `<html>`, ce qui permet aux technologies d’assistance de prononcer le texte dans la langue correcte.</p>
+  
+  <h4>Vérification manuelle :</h4>
+  <ul className="verification-steps">
+    <li>Inspectez le code source de la page (clic droit > "Inspecter" dans le navigateur) et vérifiez que l’attribut `lang="fr"` (ou la langue correspondante) est bien présent dans l’élément `<html>`. S’il s’agit d’une autre langue, elle doit être pertinente ([voir documentation MDN sur l’attribut lang](https://developer.mozilla.org/fr/docs/Web/HTML/Global_attributes/lang))</li>
+    <li>Exemple : Si votre site est en français, l'élément `<html>` devrait être : `<html lang="fr">`.</li>
+  </ul>
+</div>
 
-- Le texte des liens et des boutons doit être explicite, clair et contextuel, en évitant les termes génériques comme "Cliquez ici" ou "En savoir plus".
-  - **Vérification manuelle** :
-  - Lisez tous les textes des liens et boutons du site. Vérifiez qu’ils décrivent clairement ce qu'ils ouvrent ou accomplissent, et qu'ils sont compréhensibles même hors contexte.
-  - [Voir le critère RGAA 6.1 pour en savoir plus sur les liens explicites.](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#6.1)
-  - Exemple : Remplacer un lien "En savoir plus" par un lien plus descriptif comme "Voir les services proposés" ou "Découvrir les détails de notre offre".
+<div className="verification-card">
+  <h3>📄 7. Titre de la page</h3>
+  
+  <p>Le titre de chaque page (`<title>`) doit être descriptif, unique et pertinent par rapport au contenu de la page.</p>
+  
+  <h4>Vérification manuelle :</h4>
+  <ul className="verification-steps">
+    <li>Ouvrez chaque page du site et lisez le titre affiché dans l'onglet du navigateur.</li>
+    <li>Vérifiez que le titre est spécifique à la page (par exemple, "Page d'accueil" pour la page d'accueil, "Contactez-nous" pour la page de contact).</li>
+    <li>Exemple : Le titre de la page sur un annuaire pourrait être "Annuaire - [Nom du service]" et non "Page 1".</li>
+  </ul>
+</div>
 
-**4. Formulaires** :
+<div className="verification-card">
+  <h3>📹 8. Accès aux contenus multimédia</h3>
+  
+  <p>Vérifiez que les vidéos et autres contenus multimédia sont accessibles, notamment en fournissant des sous-titres, des transcriptions ou d’autres alternatives textuelles.</p>
+  
+  <h4>Vérification manuelle :</h4>
+  <ul className="verification-steps">
+    <li>Testez les vidéos du site pour vérifier si elles proposent des sous-titres ou des transcriptions disponibles.</li>
+    <li>Assurez-vous que les lecteurs vidéo permettent l’activation des sous-titres et que ces derniers sont synchronisés avec le contenu audio.</li>
+    <li>Exemple : Si une vidéo présente une interview, vérifiez qu’une transcription complète ou des sous-titres sont fournis pour les utilisateurs sourds ou malentendants.</li>
+  </ul>
+</div>
 
-- Assurez-vous que tous les éléments d'un formulaire sont accessibles et compréhensibles pour les utilisateurs, y compris ceux qui utilisent des technologies d'assistance (lecteurs d'écran, commandes vocales, etc.).
-  - **Vérification manuelle** :
-  1. **Labels associés aux champs** :
- - Vérifiez que chaque champ de formulaire a un label explicite et associé correctement, en utilisant les balises `<label>` avec l'attribut `for` correspondant à l'`id` du champ de saisie. Cela permet aux utilisateurs de lecteurs d'écran d'identifier la fonction de chaque champ.
-  - [Voir le critère RGAA 11.2 pour en savoir plus sur la pertinence d’une étiquette associée à un champ de formulaire](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2)
- - **Exemple** : Pour un champ de saisie de nom, assurez-vous qu’il est bien associé à un label : `<label for="nom">Nom :</label> <input type="text" id="nom">`.
-  2. **Messages d'erreur et validation** :
- - Vérifiez que des messages d'erreur sont clairement associés aux champs en cas de saisie incorrecte (par exemple, email mal formé, champ obligatoire non rempli).
- - Testez que ces messages d’erreur sont visibles, compréhensibles et bien positionnés. Vérifiez également qu’ils sont annoncés par le lecteur d'écran.
- - **Exemple** : Si un utilisateur laisse le champ "Email" vide ou entre un format incorrect, un message comme "Veuillez entrer une adresse email valide" doit s'afficher à proximité du champ concerné, et ce message doit être lisible pour les technologies d'assistance.
-  3. **Groupes de champs et aide contextuelle** :
- - Vérifiez que les champs sont regroupés de manière logique, avec des titres ou des instructions claires pour chaque section (par exemple, "Informations personnelles" ou "Adresse de facturation").
- - Assurez-vous que des indices ou des descriptions contextuelles sont fournis pour aider l’utilisateur à comprendre ce qui est attendu dans chaque champ.
- - **Exemple** : Si un champ de formulaire demande un "numéro de carte de crédit", assurez-vous qu'une aide contextuelle est présente pour indiquer le format attendu.
-  4. **Focus visuel** :
- - Testez que le focus visuel (le cadre ou l’indication de l’élément sélectionné) est bien visible lorsqu’un utilisateur navigue au clavier entre les champs du formulaire. Cela permet de garantir une navigation fluide pour les personnes malvoyantes.
- - **Exemple** : Lorsque vous appuyez sur la touche Tab, assurez-vous que chaque champ de saisie est bien mis en surbrillance pour indiquer où le focus est situé.
-
-**5. Tableaux accessibles** :
-
-- Vérifiez que les tableaux de données sont bien structurés avec des balises `<th>` pour les en-têtes et des descriptions de colonnes et lignes claires, permettant une navigation facile pour les utilisateurs de lecteurs d'écran.
-  - **Vérification manuelle** :
-  - Inspectez les tableaux sur le site pour vérifier que les en-têtes de colonnes et lignes utilisent les balises `<th>` et que des attributs `scope` sont utilisés pour clarifier la structure du tableau.
-  - Vérifiez que des descriptions sont disponibles pour les tableaux complexes ou que des alternatives sont fournies.
-  - Exemple : Si un tableau contient des données financières, assurez-vous que les en-têtes de colonnes comme "Date" et "Montant" sont bien définis et que l'ordre des colonnes est logique pour les utilisateurs de lecteurs d’écran.
-
-**6. Langue de la page** :
-
-- Vérifiez que la langue du contenu principal de la page est correctement définie avec l’attribut `lang` dans l'élément `<html>`, ce qui permet aux technologies d’assistance de prononcer le texte dans la langue correcte.
-  - **Vérification manuelle** :
-  - Inspectez le code source de la page (clic droit > "Inspecter" dans le navigateur) et vérifiez que l’attribut `lang="fr"` (ou la langue correspondante) est bien présent dans l’élément `<html>`. S’il s’agit d’une autre langue, elle doit être pertinente ([voir documentation MDN sur l’attribut lang](https://developer.mozilla.org/fr/docs/Web/HTML/Global_attributes/lang))
-  - Exemple : Si votre site est en français, l'élément `<html>` devrait être : `<html lang="fr">`.
-
-**7. Titre de la page** :
-
-- Le titre de chaque page (`<title>`) doit être descriptif, unique et pertinent par rapport au contenu de la page.
-  - **Vérification manuelle** :
-  - Ouvrez chaque page du site et lisez le titre affiché dans l'onglet du navigateur.
-  - Vérifiez que le titre est spécifique à la page (par exemple, "Page d'accueil" pour la page d'accueil, "Contactez-nous" pour la page de contact).
-  - Exemple : Le titre de la page sur un annuaire pourrait être "Annuaire - [Nom du service]" et non "Page 1".
-
-**8. Accès aux contenus multimédia** :
-
-- Vérifiez que les vidéos et autres contenus multimédia sont accessibles, notamment en fournissant des sous-titres, des transcriptions ou d’autres alternatives textuelles.
-  - **Vérification manuelle** :
-  - Testez les vidéos du site pour vérifier si elles proposent des sous-titres ou des transcriptions disponibles.
-  - Assurez-vous que les lecteurs vidéo permettent l’activation des sous-titres et que ces derniers sont synchronisés avec le contenu audio.
-  - Exemple : Si une vidéo présente une interview, vérifiez qu’une transcription complète ou des sous-titres sont fournis pour les utilisateurs sourds ou malentendants.
+<div className="info-section">
+  <h2>💬 Conclusion</h2>
+  
+  <p>En suivant ces vérifications manuelles et automatisées, vous pourrez atteindre un premier niveau de conformité d'accessibilité pour votre service web. N'hésitez pas à documenter vos résultats et à solliciter de l'aide si nécessaire.</p>
+  
+  <div className="alert">
+    <p><strong>Rappel :</strong> Complétez <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank">le fichier de check-list</a> pour chaque page de votre échantillon afin de prouver votre niveau de conformité.</p>
+  </div>
+</div>

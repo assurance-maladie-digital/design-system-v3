@@ -2,76 +2,583 @@ import {Meta} from '@storybook/addon-docs/blocks';
 
 <Meta title="Accessibilité/Kit de pré-audit/Outils/Lecteurs d'écran"/>
 
-# Guide lecteurs d'écran
+<style>
+  {`
+    /* Variables CSS */
+    :root {
+      --primary-color: #0C419A;
+      --secondary-color: #006386;
+      --accent-color: #00a5df;
+      --dark-color: #111212;
+      --light-color: #bbbcbd;
+      --success-color: #004439;
+      --warning-color: #60480e;
+      --info-color: #0c419a;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+      --border-radius-sm: 4px;
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+    }
+    
+    /* Styles globaux */
+    .screen-reader-page {
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+      line-height: 1.6;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Header avec effet glassmorphism */
+    .screen-reader-header {
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .screen-reader-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgzMCkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSI+PC9yZWN0PjwvcGF0dGVybj48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSI+PC9yZWN0Pjwvc3ZnPg==');
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .screen-reader-header h1 {
+      font-size: 3rem;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .screen-reader-header p {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+    
+    /* Sections */
+    .screen-reader-section {
+      margin-bottom: 3rem;
+      background: white;
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+    
+    .screen-reader-section:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .screen-reader-section h2 {
+      color: var(--primary-color);
+      font-size: 2rem;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid #f2f6ff;
+      position: relative;
+    }
+    
+    .screen-reader-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 3px;
+    }
+    
+    .screen-reader-section h3 {
+      color: var(--secondary-color);
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+    
+    .screen-reader-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      border-radius: 3px;
+    }
+    
+    /* Info box */
+    .screen-reader-info {
+      background: #f2f6ff;
+      border-left: 4px solid var(--info-color);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+      position: relative;
+    }
+    
+    .screen-reader-info::before {
+      content: "ℹ️";
+      position: absolute;
+      left: -12px;
+      top: -12px;
+      background: var(--info-color);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    
+    /* Liens */
+    .screen-reader-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color var(--transition-normal);
+    }
+    
+    .screen-reader-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-color), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-normal);
+    }
+    
+    .screen-reader-link:hover {
+      color: var(--secondary-color);
+    }
+    
+    .screen-reader-link:hover::after {
+      transform: scaleX(1);
+    }
+    
+    /* Cards */
+    .screen-reader-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .screen-reader-card {
+      background: white;
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .screen-reader-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .screen-reader-card-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+    }
+    
+    .screen-reader-card-header h3 {
+      margin: 0;
+      color: white;
+      position: relative;
+    }
+    
+    .screen-reader-card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .screen-reader-card-footer {
+      padding: 1rem 1.5rem;
+      background: #f8f9fa;
+      border-top: 1px solid #eee;
+    }
+    
+    /* Shortcuts */
+    .shortcut-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    
+    .shortcut-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      padding: 0.5rem;
+      border-radius: var(--border-radius-sm);
+      transition: background-color var(--transition-fast);
+    }
+    
+    .shortcut-item:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .shortcut-key {
+      background: #eee;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+      font-family: monospace;
+      margin-right: 1rem;
+      min-width: 100px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .shortcut-desc {
+      flex-grow: 1;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .screen-reader-header {
+        padding: 1.5rem;
+      }
+      
+      .screen-reader-header h1 {
+        font-size: 2rem;
+      }
+      
+      .screen-reader-section {
+        padding: 1.5rem;
+      }
+      
+      .screen-reader-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Accessibilité */
+    @media (prefers-reduced-motion: reduce) {
+      .screen-reader-section,
+      .screen-reader-card,
+      .screen-reader-link::after {
+        transition: none;
+      }
+      
+      .screen-reader-section:hover,
+      .screen-reader-card:hover {
+        transform: none;
+      }
+    }
+  `}
+</style>
 
-Ce guide ne vise pas à vous former à l'utilisation quotidienne d'un lecteur d'écran, mais à vous fournir les informations nécessaires pour évaluer l'accessibilité des composants intégrés dans votre service.
+<div className="screen-reader-page">
+  <div className="screen-reader-header">
+    <h1>Guide lecteurs d'écran</h1>
+    <p>Comprendre et utiliser les lecteurs d'écran pour tester l'accessibilité de vos interfaces</p>
+  </div>
 
-## Qu’est-ce qu’un lecteur d’écran ?
+  <div className="screen-reader-section">
+    <h2>Introduction</h2>
+    <p>
+      Ce guide ne vise pas à vous former à l'utilisation quotidienne d'un lecteur d'écran, mais à vous fournir les informations nécessaires pour évaluer l'accessibilité des composants intégrés dans votre service.
+    </p>
+    
+    <div className="screen-reader-info">
+      <p>
+        <strong>Rappel important :</strong> Les lecteurs d'écran sont des outils essentiels pour les personnes en situation de handicap visuel. Comprendre leur fonctionnement est crucial pour créer des interfaces véritablement accessibles.
+      </p>
+    </div>
+  </div>
+  <div className="screen-reader-section">
+    <h2>Qu'est-ce qu'un lecteur d'écran ?</h2>
+    
+    <div className="screen-reader-cards">
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>Définition</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>
+            Un lecteur d'écran est un logiciel d'assistance technique destiné aux personnes « empêchées de lire » (aveugles, malvoyantes, dyslexiques, dyspraxiques…) en transformant le contenu affiché à l'écran en synthèse vocale ou braille.
+          </p>
+        </div>
+      </div>
+      
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>Fonctionnement</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>
+            Il permet de naviguer dans le système d'exploitation et les applications en restituant le contenu textuel et sa structure, à condition que cette information soit correctement fournie par le logiciel (par exemple, le navigateur web).
+          </p>
+        </div>
+      </div>
+      
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>Limitations</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>
+            Il ne peut pas interpréter des éléments non textuels comme des images ou des graphiques. C'est pourquoi le respect des normes d'accessibilité est important afin que la restitution puisse se faire correctement (ex : ajout d'un texte alternatif à une image).
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <p>
+      Le lecteur d'écran bureau se pilote principalement au clavier tandis que c'est essentiellement avec des gestes pour la version mobile.
+    </p>
+    
+    <p>
+      Il n'existe pas de lecteur d'écran unique et ils different en fonction du système d'exploitation. Ce guide se concentrera sur NVDA pour Windows et TalkBack pour Android.
+    </p>
+  </div>
 
-Un lecteur d'écran est un logiciel d’assistance technique destiné aux personnes « empêchées de lire » (aveugles, malvoyantes, dyslexiques, dyspraxiques…) en transformant le contenu affiché à l'écran en synthèse vocale ou braille. Il permet de naviguer dans le système d'exploitation et les applications en restituant le contenu textuel et sa structure, à condition que cette information soit correctement fournie par le logiciel (par exemple, le navigateur web). Il ne peut pas interpréter des éléments non textuels comme des images ou des graphiques. C’est pourquoi le respect des normes d’accessibilité est important afin que la restitution puisse se faire correctement (ex : ajout d’un texte alternatif à une image).
+  <div className="screen-reader-section">
+    <h2>Utilité d'un lecteur d'écran</h2>
+    
+    <p>
+      Un lecteur d'écran est essentiel pour un audit d'accessibilité car il permet de simuler l'expérience d'un utilisateur aveugle ou malvoyant. Il aide à :
+    </p>
+    
+    <div className="screen-reader-cards">
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>1. Vérifier la structure</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>Tester la logique de navigation (titres, sections, éléments interactifs).</p>
+        </div>
+      </div>
+      
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>2. Tester l'interactivité</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>S'assurer que les éléments sont accessibles via le clavier et correctement annoncés.</p>
+        </div>
+      </div>
+      
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>3. Vérifier les mises à jour</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>S'assurer que les changements de contenu dynamiques sont bien signalés.</p>
+        </div>
+      </div>
+      
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>4. Contrôler le balisage</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>Vérifier l'utilisation correcte des balises HTML et ARIA pour une navigation fluide.</p>
+        </div>
+      </div>
+      
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>5. Accessibilité multimédia</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>Vérifier que les images et vidéos sont correctement décrites.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div className="screen-reader-info">
+      <p>
+        Cela garantit que l'interface est réellement accessible, permettant une navigation autonome pour les utilisateurs en situation de handicap visuel. N'oubliez pas de consulter les manuels officiels pour des informations détaillées sur l'utilisation de chaque outil.
+      </p>
+    </div>
+  </div>
+  <div className="screen-reader-section">
+    <h2>NVDA (Windows)</h2>
+    
+    <div className="screen-reader-card" style={{ maxWidth: "100%" }}>
+      <div className="screen-reader-card-header">
+        <h3>Présentation</h3>
+      </div>
+      <div className="screen-reader-card-body">
+        <p>
+          NVDA est un lecteur d'écran pour Windows, principalement utilisé pour l'audit d'accessibilité de sites web et d'applications bureautiques.
+        </p>
+        <p>
+          Il restitue l'information sous 2 modes : le mode navigation et le mode formulaire.
+        </p>
+      </div>
+    </div>
+    
+    <div className="screen-reader-cards">
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>Mode navigation</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>
+            Le mode de navigation permet de se déplacer dans le contenu d'une page (titres, liens, paragraphes, etc.)
+          </p>
+          <p>
+            Il fournit des informations supplémentaires lors de la vocalisation. Par exemple, il annoncera "liste de x éléments" pour une liste à puces ou encore le niveau des titres, comme "titre de niveau 2", suivi de leur intitulé.
+          </p>
+        </div>
+      </div>
+      
+      <div className="screen-reader-card">
+        <div className="screen-reader-card-header">
+          <h3>Mode formulaire</h3>
+        </div>
+        <div className="screen-reader-card-body">
+          <p>
+            Le mode formulaire est utilisé pour interagir avec des éléments de formulaire (champs de texte, cases à cocher, boutons, etc.) et y entrer des données. Le lecteur d'écran passe sur ce mode automatiquement lorsqu'il se trouve être sur un composant interactif. Les "raccourcis lettre" ne fonctionnent alors plus puisqu'ils servent à insérer du texte.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Principaux raccourcis</h3>
+    
+    <div className="shortcut-list">
+      <div className="shortcut-item">
+        <span className="shortcut-key">CTRL + ALT + n</span>
+        <span className="shortcut-desc">Activer NVDA</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">NVDA + q</span>
+        <span className="shortcut-desc">Quitter NVDA</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">CTRL</span>
+        <span className="shortcut-desc">Arrêt de la parole</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">Flèche bas</span>
+        <span className="shortcut-desc">Élément suivant</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">Flèche haut</span>
+        <span className="shortcut-desc">Élément précédent</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">Tab</span>
+        <span className="shortcut-desc">Élément focusable suivant</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">Maj + Tab</span>
+        <span className="shortcut-desc">Élément focusable précédent</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">h</span>
+        <span className="shortcut-desc">Titre suivant</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">f</span>
+        <span className="shortcut-desc">Champ de formulaire suivant</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">k</span>
+        <span className="shortcut-desc">Lien suivant</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">d</span>
+        <span className="shortcut-desc">Région suivante</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">MAJ + lettre</span>
+        <span className="shortcut-desc">Revenir en arrière</span>
+      </div>
+    </div>
+    
+    <div className="screen-reader-info">
+      <p>
+        Pour plus de détails, consultez <a href="https://www.nvda.fr/doc.php" className="screen-reader-link" target="_blank" rel="noopener noreferrer">le manuel officiel NVDA</a> ainsi que <a href="https://www.tanaguru.com/guide-et-raccourcis-nvda-pour-les-tests-daccessibilite/" className="screen-reader-link" target="_blank" rel="noopener noreferrer">le guide de Tanaguru</a>.
+      </p>
+    </div>
+  </div>
 
-Le lecteur d'écran bureau se pilote principalement au clavier tandis que c’est essentiellement avec des gestes pour la version mobile.
-
-Il n'existe pas de lecteur d'écran unique et ils different en fonction du système d’exploitation. Ce guide se concentrera sur NVDA pour Windows et TalkBack pour Android.
-
-## Utilité d’un lecteur d’écran
-
-Un lecteur d'écran est essentiel pour un audit d'accessibilité car il permet de simuler l'expérience d'un utilisateur aveugle ou malvoyant. Il aide à :
-
-1. **Vérifier la structure** : Tester la logique de navigation (titres, sections, éléments interactifs).
-2. **Tester l'interactivité** : S'assurer que les éléments sont accessibles via le clavier et correctement annoncés.
-3. **Vérifier les mises à jour dynamiques** : S'assurer que les changements de contenu sont bien signalés.
-4. **Contrôler le balisage** : Vérifier l'utilisation correcte des balises HTML et ARIA pour une navigation fluide.
-5. **Accessibilité multimédia** : Vérifier que les images et vidéos sont correctement décrites.
-
-Cela garantit que l'interface est réellement accessible, permettant une navigation autonome pour les utilisateurs en situation de handicap visuel. N'oubliez pas de consulter les manuels officiels pour des informations détaillées sur l'utilisation de chaque outil.
-
-## NVDA (Windows)
-
-NVDA est un lecteur d'écran pour Windows, principalement utilisé pour l'audit d'accessibilité de sites web et d'applications bureautiques.
-
-Il restitue l’information sous 2 modes : le mode navigation et le mode formulaire.
-
-### Mode navigation
-
-Le mode de navigation permet de se déplacer dans le contenu d'une page (titres, liens, paragraphes, etc.)
-
-Il fournit des informations supplémentaires lors de la vocalisation. Par exemple, il annoncera "liste de x éléments" pour une liste à puces ou encore le niveau des titres, comme "titre de niveau 2", suivi de leur intitulé.
-
-### Mode formulaire
-
-Le mode formulaire est utilisé pour interagir avec des éléments de formulaire (champs de texte, cases à cocher, boutons, etc.) et y entrer des données. Le lecteur d’écran passe sur ce mode automatiquement lorsqu’il se trouve être sur un composant interactif. Les “raccourcis lettre” ne fonctionnent alors plus puisqu’ils servent à insérer du texte.
-
-Principaux raccourcis :
-
-- CTRL + ALT + n : Activer NVDA
-- NVDA + q : Quitter NVDA
-- CTRL : Arrêt de la parole
-- Flèche bas : Élément suivant
-- Flèche haut : Élément précédent
-- Tab : Élément focusable suivant
-- Maj + Tab : Élément focusable précédent
-- h : Titre suivant
-- f : Champ de formulaire suivant
-- k : Lien suivant
-- d : Région suivante
-- MAJ + lettre : Revenir en arrière
-
-Pour plus de détails, consultez [le manuel officiel NVDA](https://www.nvda.fr/doc.php) ainsi que [le guide de Tanaguru](https://www.tanaguru.com/guide-et-raccourcis-nvda-pour-les-tests-daccessibilite/).
-
-## TalkBack (Android)
-
-TalkBack est un lecteur d'écran pour Android, directement embarqué.
-
-Pour l’activer ou le désactiver, il suffit de se rendre dans les paramètres de votre appareil puis dans le menu “Accessibilité”. Un tutoriel d’utilisation vous sera alors proposé au démarrage. C’est à cet endroit que vous pouvez personnaliser l’outil tel que la vitesse de la parole, la tonalité, les gestes, etc.
-
-Ce lecteur d’écran utilise des gestes spécifiques pour naviguer dans l’interface. Voici les principaux gestes :
-
-- **Déplacer le focus** : Faites glisser un doigt vers la gauche ou vers la droite pour déplacer le focus entre les éléments à l'écran.
-- **Sélectionner un élément** : Touchez un élément à l'écran avec un seul doigt pour entendre sa description, puis double-tapez pour l'activer.
-- **Faire défiler** : Balayez deux doigts vers le haut ou vers le bas pour faire défiler l'écran.
-- **Retour** : Faites glisser trois doigts vers la gauche pour revenir en arrière.
-- **Accéder au menu d'options** : Touchez deux fois et maintenez pour ouvrir le menu contextuel des options (comme le copier, coller, etc.).
-- **Suspendre ou reprendre la lecture :** Appuyez avec deux doigts
-
-Pour plus de détails, consultez [le manuel officiel TalkBack](https://support.google.com/accessibility/android/answer/6283677?hl=fr).
+  <div className="screen-reader-section">
+    <h2>TalkBack (Android)</h2>
+    
+    <div className="screen-reader-card" style={{ maxWidth: "100%" }}>
+      <div className="screen-reader-card-header">
+        <h3>Présentation</h3>
+      </div>
+      <div className="screen-reader-card-body">
+        <p>
+          TalkBack est un lecteur d'écran pour Android, directement embarqué.
+        </p>
+        <p>
+          Pour l'activer ou le désactiver, il suffit de se rendre dans les paramètres de votre appareil puis dans le menu "Accessibilité". Un tutoriel d'utilisation vous sera alors proposé au démarrage. C'est à cet endroit que vous pouvez personnaliser l'outil tel que la vitesse de la parole, la tonalité, les gestes, etc.
+        </p>
+      </div>
+    </div>
+    
+    <h3>Principaux gestes</h3>
+    <p>Ce lecteur d'écran utilise des gestes spécifiques pour naviguer dans l'interface. Voici les principaux gestes :</p>
+    
+    <div className="shortcut-list">
+      <div className="shortcut-item">
+        <span className="shortcut-key">Glisser 1 doigt</span>
+        <span className="shortcut-desc">Déplacer le focus entre les éléments à l'écran</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">Toucher + Double-tap</span>
+        <span className="shortcut-desc">Sélectionner un élément (toucher pour entendre sa description, puis double-taper pour l'activer)</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">Balayer 2 doigts</span>
+        <span className="shortcut-desc">Faire défiler l'écran vers le haut ou vers le bas</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">Glisser 3 doigts</span>
+        <span className="shortcut-desc">Revenir en arrière</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">Double-tap + maintenir</span>
+        <span className="shortcut-desc">Ouvrir le menu contextuel des options (copier, coller, etc.)</span>
+      </div>
+      <div className="shortcut-item">
+        <span className="shortcut-key">Appuyer avec 2 doigts</span>
+        <span className="shortcut-desc">Suspendre ou reprendre la lecture</span>
+      </div>
+    </div>
+    
+    <div className="screen-reader-info">
+      <p>
+        Pour plus de détails, consultez <a href="https://support.google.com/accessibility/android/answer/6283677?hl=fr" className="screen-reader-link" target="_blank" rel="noopener noreferrer">le manuel officiel TalkBack</a>.
+      </p>
+    </div>
+  </div>
+</div>

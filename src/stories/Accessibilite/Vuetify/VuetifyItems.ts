@@ -59,11 +59,9 @@ export const VuetifyItems = [
 				value: 2,
 				name: 'Select',
 				errorImportants: [
-
 					'8.2 Pour chaque page web, le code source généré est-il valide selon le type de document spécifié',
 					'11.1.1 Un bouton adjacent au champ de formulaire lui fournit une étiquette visible et un élément <label> visuellement caché ou un attribut WAI-ARIA aria-label, aria-labelledby ou title lui fournit un nom accessible.',
 					'12.11 Dans chaque page web, les contenus additionnels apparaissant au survol, à la prise de focus ou à l’activation d’un composant d’interface sont-ils si nécessaire atteignables au clavier',
-
 				],
 				errorSolutionImportant: [
 					'Voir méthodologie du test 8.2.1, 11.1.1 et 12.11.1 du référenciel RGAA.',
@@ -78,7 +76,6 @@ export const VuetifyItems = [
 					'11.2.2 Chaque attribut title permet-il de connaître la fonction exacte du champ de formulaire auquel il est associé',
 					'11.2.3 Chaque étiquette implémentée via l’attribut WAI-ARIA aria-label permet-elle de connaître la fonction exacte du champ de formulaire auquel elle est associée',
 					'12.9 Dans chaque page web, la navigation ne doit pas contenir de piège au clavier.',
-
 				],
 				solution: [
 					{
@@ -99,12 +96,8 @@ export const VuetifyItems = [
 				name: 'Divider',
 				value: 3,
 
-				errorImportants: [
-
-				],
-				errorIndeterminated: [
-
-				],
+				errorImportants: [],
+				errorIndeterminated: [],
 				solution: [{
 					name: 'En étude',
 				}],
@@ -127,12 +120,8 @@ export const VuetifyItems = [
 				name: 'Chips',
 				value: 5,
 
-				errorImportants: [
-
-				],
-				errorIndeterminated: [
-
-				],
+				errorImportants: [],
+				errorIndeterminated: [],
 				solution: [{
 					name: 'En étude',
 				}],
@@ -141,12 +130,8 @@ export const VuetifyItems = [
 				name: 'Tooltip',
 				value: 6,
 
-				errorImportants: [
-
-				],
-				errorIndeterminated: [
-
-				],
+				errorImportants: [],
+				errorIndeterminated: [],
 				solution: [{
 					name: 'En étude',
 				}],
@@ -160,9 +145,7 @@ export const VuetifyItems = [
 				errorSolutionImportant: [
 					'Voir méthodologie du test 3.2.1 du référenciel RGAA.',
 				],
-				errorIndeterminated: [
-
-				],
+				errorIndeterminated: [],
 				solution: [{
 					name: 'En étude',
 				}],
@@ -204,7 +187,8 @@ export const VuetifyItems = [
 
 				],
 				solution: [{
-					name: 'En étude',
+					name: 'SyTextArea',
+					href: '/?path=/docs/composants-formulaires-sytextarea--docs',
 				}],
 			},
 			{
@@ -234,13 +218,18 @@ export const VuetifyItems = [
 					'Voir méthodologie du test 5.4.1 du référenciel RGAA.',
 
 				],
-				errorIndeterminated: [
+				errorIndeterminated: [],
 
+				solution: [
+					{
+						name: 'SyTable',
+						href: '/?path=/docs/composants-tableaux-sytable--docs',
+					},
+					{
+						name: 'SyServerTable',
+						href: '/?path=/docs/composants-tableaux-syservertable--docs',
+					},
 				],
-
-				solution: [{
-					name: 'En étude',
-				}],
 			},
 			{
 				name: 'Expansion panels',
@@ -257,7 +246,8 @@ export const VuetifyItems = [
 				],
 
 				solution: [{
-					name: 'En étude',
+					name: 'Accordion',
+					href: '/?path=/docs/composants-données-accordion--docs',
 				}],
 			},
 			{
@@ -272,11 +262,8 @@ export const VuetifyItems = [
 
 				],
 
-				errorIndeterminated: [
-
-				],
-				errorSolutionIndeterminated: [
-				],
+				errorIndeterminated: [],
+				errorSolutionIndeterminated: [],
 
 				solution: [{
 					name: 'En étude',
@@ -294,12 +281,8 @@ export const VuetifyItems = [
 
 				],
 
-				errorIndeterminated: [
-
-				],
-				errorSolutionIndeterminated: [
-				],
-
+				errorIndeterminated: [],
+				errorSolutionIndeterminated: [],
 				solution: [{
 					name: 'En étude',
 				}],
@@ -317,12 +300,8 @@ export const VuetifyItems = [
 					'Utilisez alt="" pour signaler que l\'image est décorative et qu`\'elle ne nécessite pas de description. Ajoutez role="presentation" pour renforcer l`\'intention décorative de l\'image.',
 				],
 
-				errorIndeterminated: [
-
-				],
-				errorSolutionIndeterminated: [
-				],
-
+				errorIndeterminated: [],
+				errorSolutionIndeterminated: [],
 				solution: [{
 					name: 'En étude',
 				}],
@@ -339,12 +318,8 @@ export const VuetifyItems = [
 					'Voir méthodologie du test 3.2.1, 8.2.1 et 11.1.1 du référenciel RGAA.',
 				],
 
-				errorIndeterminated: [
-
-				],
-				errorSolutionIndeterminated: [
-				],
-
+				errorIndeterminated: [],
+				errorSolutionIndeterminated: [],
 				solution: [{
 					name: 'En étude',
 				}],
@@ -543,7 +518,8 @@ export const VuetifyItems = [
 				],
 
 				solution: [{
-					name: 'En étude',
+					name: 'RangeField',
+					href: '/?path=/docs/composants-formulaires-rangefield--docs',
 				}],
 			},
 			{
@@ -568,7 +544,8 @@ export const VuetifyItems = [
 				],
 
 				solution: [{
-					name: 'En étude',
+					name: 'DatePicker',
+					href: '/?path=/docs/composants-formulaires-datepicker-introduction--docs',
 				}],
 			},
 		],

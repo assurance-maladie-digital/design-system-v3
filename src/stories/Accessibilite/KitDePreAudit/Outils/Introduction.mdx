@@ -1,30 +1,543 @@
-import {Meta} from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Accessibilité/Kit de pré-audit/Outils/Introduction"/>
+<Meta title="Accessibilité/Kit de pré-audit/Outils/Introduction" />
 
-# Outils
+<style>
+  {`
+    /* Styles de base */
+    :root {
+      --primary-color: #0C419A;
+      --secondary-color: #006386;
+      --accent-color: #00a5df;
+      --dark-color: #111212;
+      --light-color: #bbbcbd;
+      --success-color: #004439;
+      --warning-color: #60480e;
+      --info-color: #0c419a;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+      --border-radius-sm: 4px;
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+    }
+    
+    /* Header styles */
+    .header-container {
+      border-radius: var(--border-radius-lg);
+      padding: 3rem;
+      margin-bottom: 3rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .header-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>') repeat;
+      opacity: 0.3;
+    }
+    
+    .header-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.1;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .header-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+    border-radius: 3px;
+    }
+    
+    .header-subtitle {
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      max-width: 80%;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+    
+    /* Card styles */
+    .tool-cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .tool-card {
+      background: white;
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 1.5rem;
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+      z-index: 0;
+    }
+    
+    .tool-card:hover::before {
+      opacity: 1;
+    }
+    
+    .tool-card-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .tool-card-title {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+    
+    .tool-card-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      
+      border-radius: 3px;
+    }
+    
+    .tool-card-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 120, 212, 0.1);
+      border-radius: 50%;
+      font-size: 1.2rem;
+    }
+    
+    .tool-card-description {
+      margin-top: 1rem;
+      line-height: 1.6;
+      color: var(--dark-color);
+    }
+    
+    .tool-card-link {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 1.5rem;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color var(--transition-fast);
+      position: relative;
+    }
+    
+    .tool-card-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-color);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform var(--transition-normal);
+    }
+    
+    .tool-card-link:hover {
+      color: var(--secondary-color);
+    }
+    
+    .tool-card-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    
+    .tool-card-link-icon {
+      margin-left: 0.5rem;
+      transition: transform var(--transition-fast);
+    }
+    
+    .tool-card-link:hover .tool-card-link-icon {
+      transform: translateX(3px);
+    }
+    
+    /* Section styles */
+    .section {
+      margin: 3rem 0;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      color: var(--dark-color);
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      
+      border-radius: 1.5px;
+    }
+    
+    .section-description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--dark-color);
+      margin-bottom: 2rem;
+    }
+    
+    /* Info box styles */
+    .info-box {
+      background-color: rgba(0, 120, 212, 0.05);
+      border-left: 4px solid var(--info-color);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    }
+    
+    .warning-box {
+      background-color: rgba(216, 59, 1, 0.05);
+      border-left: 4px solid var(--warning-color);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    }
+    
+    /* List styles */
+    .modern-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+    
+    .modern-list-item {
+      padding: 1rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .modern-list-item:last-child {
+      border-bottom: none;
+    }
+    
+    .modern-list-icon {
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .header-container {
+        padding: 2rem;
+      }
+      
+      .header-title {
+        font-size: 2.5rem;
+      }
+      
+      .header-subtitle {
+        max-width: 100%;
+      }
+      
+      .tool-cards-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .tool-card,
+      .tool-card::before,
+      .tool-card-link::after,
+      .tool-card-link-icon {
+        transition: none;
+      }
+      
+      .tool-card:hover {
+        transform: none;
+      }
+      
+      .tool-card-link:hover .tool-card-link-icon {
+        transform: none;
+      }
+    }
+  `}
+</style>
 
-Dans le cadre du pré-audit et de l’audit, il existe des outils automatisés pour vérifier certains critères de conformité en matière d'accessibilité.
+<div className="header-container">
+  <h1 className="header-title">Outils d'accessibilité</h1>
+  <p className="header-subtitle">
+    Découvrez les outils essentiels pour vérifier la conformité de vos interfaces aux normes d'accessibilité dans le cadre du pré-audit et de l'audit.
+  </p>
+</div>
 
-L'outil principal requis pour le pré-audit est [**Tanaguru webext RGAA (Extension Firefox)**](https://addons.mozilla.org/fr/firefox/addon/tanaguru-webext/). Il s'agit d'une extension de navigateur conçue pour faciliter l'audit d'accessibilité des sites web selon le **Référentiel Général d'Amélioration de l'Accessibilité (RGAA)**. Elle permet aux utilisateurs de vérifier, directement depuis leur navigateur, la conformité de pages web aux critères d'accessibilité du RGAA, en offrant une évaluation rapide des problèmes d'accessibilité tels que les contrastes, les alternatives textuelles manquantes, la structure des balises HTML, etc. Cette extension fonctionne comme un outil d'audit instantané pour les développeurs et les testeurs d'accessibilité, en affichant directement les erreurs et en proposant des suggestions pour améliorer l'accessibilité du site. **Attention, ce service ne permet pas d’évaluer l’ensemble des 106 critères du RGAA, uniquement ceux qui sont automatisable**. Un audit d'accessibilité ne peut pas se reposer uniquement sur des outils automatisés car ces derniers ne détectent qu'un nombre limité de problèmes techniques. De nombreux critères d'accessibilité nécessitent une évaluation manuelle, tenant compte de la perception humaine et du contexte d’utilisation. Sur les 258 tests du RGAA, Tanaguru estime qu’environ 100 tests ne sont pas automatisés. Nous avons mis en place [un guide d'utilisation de Tanaguru webext RGAA](/docs/accessibilité-kit-de-pré-audit-outils-tanaguru--docs) afin de vous aider à le prendre en main.
+<section className="section">
+  <h2 className="section-title">Présentation</h2>
+  <p className="section-description">
+    Dans le cadre du pré-audit et de l'audit, il existe des outils automatisés pour vérifier certains critères de conformité en matière d'accessibilité. Ces outils vous aideront à identifier et corriger les problèmes d'accessibilité avant même de soumettre votre produit à un audit complet.
+  </p>
+</section>
+<section className="section">
+  <h2 className="section-title">Outil principal</h2>
+  
+  <div className="tool-card">
+    <div className="tool-card-content">
+      <h3 className="tool-card-title">
+        <span className="tool-card-icon" role="img" aria-hidden="true">🔍</span>
+        Tanaguru webext RGAA
+      </h3>
+      
+      <p className="tool-card-description">
+        Extension Firefox conçue pour faciliter l'audit d'accessibilité des sites web selon le <strong>Référentiel Général d'Amélioration de l'Accessibilité (RGAA)</strong>. Elle permet de vérifier, directement depuis votre navigateur, la conformité de pages web aux critères d'accessibilité.
+      </p>
+      
+      <div className="info-box">
+        <p>
+          <strong>Fonctionnalités principales :</strong>
+        </p>
+        <ul className="modern-list">
+          <li className="modern-list-item">
+            <span className="modern-list-icon" role="img" aria-hidden="true">✓</span>
+            <span>Évaluation rapide des problèmes d'accessibilité (contrastes, alternatives textuelles, structure HTML)</span>
+          </li>
+          <li className="modern-list-item">
+            <span className="modern-list-icon" role="img" aria-hidden="true">✓</span>
+            <span>Affichage direct des erreurs avec suggestions d'amélioration</span>
+          </li>
+          <li className="modern-list-item">
+            <span className="modern-list-icon" role="img" aria-hidden="true">✓</span>
+            <span>Audit instantané pour développeurs et testeurs d'accessibilité</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div className="warning-box">
+        <p>
+          <strong>Attention :</strong> Ce service ne permet pas d'évaluer l'ensemble des 106 critères du RGAA, uniquement ceux qui sont automatisables. Un audit d'accessibilité ne peut pas se reposer uniquement sur des outils automatisés car ces derniers ne détectent qu'un nombre limité de problèmes techniques.
+        </p>
+        <p>
+          De nombreux critères d'accessibilité nécessitent une évaluation manuelle, tenant compte de la perception humaine et du contexte d'utilisation. Sur les 258 tests du RGAA, Tanaguru estime qu'environ 100 tests ne sont pas automatisés.
+        </p>
+      </div>
+      
+      <a href="/docs/accessibilité-kit-de-pré-audit-outils-tanaguru--docs" className="tool-card-link">
+        Guide d'utilisation de Tanaguru
+        <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
 
-Si vous souhaitez aller plus loin dans le pré-audit ou dans vos développements au quotidien, voici d'autres outils qui pourraient vous être utiles :
+<section className="section">
+  <h2 className="section-title">Outils complémentaires</h2>
+  <p className="section-description">
+    Si vous souhaitez aller plus loin dans le pré-audit ou dans vos développements au quotidien, voici d'autres outils qui pourraient vous être utiles :
+  </p>
+  
+  <div className="tool-cards-container">
+    <div className="tool-card">
+      <div className="tool-card-content">
+        <h3 className="tool-card-title">
+          <span className="tool-card-icon" role="img" aria-hidden="true">📄</span>
+          PDF Accessibility Checker (PAC)
+        </h3>
+        <p className="tool-card-description">
+          Logiciel Windows dédié à l'audit de l'accessibilité des documents PDF. Il vérifie la conformité aux normes WCAG et PDF/UA en analysant la structure du document (titres, balises, liens, tables, éléments multimédia).
+        </p>
+        <a href="https://pac.pdf-accessibility.org/en" className="tool-card-link" target="_blank" rel="noopener noreferrer">
+          Accéder à l'outil
+          <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+    
+    <div className="tool-card">
+      <div className="tool-card-content">
+        <h3 className="tool-card-title">
+          <span className="tool-card-icon" role="img" aria-hidden="true">🔊</span>
+          NVDA (NonVisual Desktop Access)
+        </h3>
+        <p className="tool-card-description">
+          Lecteur d'écran open-source pour Windows conçu pour les personnes malvoyantes ou aveugles. Il rend accessibles les interfaces graphiques en lisant à haute voix les éléments affichés à l'écran.
+        </p>
+        <a href="/docs/accessibilité-kit-de-pré-audit-outils-lecteurs-d-écran--docs#nvda-windows" className="tool-card-link">
+          Guide rapide de NVDA
+          <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+    
+    <div className="tool-card">
+      <div className="tool-card-content">
+        <h3 className="tool-card-title">
+          <span className="tool-card-icon" role="img" aria-hidden="true">📱</span>
+          TalkBack
+        </h3>
+        <p className="tool-card-description">
+          Lecteur d'écran intégré aux appareils Android qui fournit des retours vocaux sur les éléments affichés. Essentiel pour tester l'accessibilité de vos applications mobiles.
+        </p>
+        <a href="/docs/accessibilité-kit-de-pré-audit-outils-lecteurs-d-écran--docs#talkback-android" className="tool-card-link">
+          Guide rapide de TalkBack
+          <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<div className="tool-cards-container">
+  <div className="tool-card">
+    <div className="tool-card-content">
+      <h3 className="tool-card-title">
+        <span className="tool-card-icon" role="img" aria-hidden="true">🧩</span>
+        Assistant RGAA
+      </h3>
+      <p className="tool-card-description">
+        Extension Firefox destinée à vérifier la conformité des sites web aux critères d'accessibilité définis par le RGAA. Permet d'effectuer des audits sur des sites en ligne pour identifier et corriger les problèmes.
+      </p>
+      <a href="https://addons.mozilla.org/fr/firefox/addon/assistant-rgaa/" className="tool-card-link" target="_blank" rel="noopener noreferrer">
+        Télécharger l'extension
+        <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+  
+  <div className="tool-card">
+    <div className="tool-card-content">
+      <h3 className="tool-card-title">
+        <span className="tool-card-icon" role="img" aria-hidden="true">🌊</span>
+        WAVE
+      </h3>
+      <p className="tool-card-description">
+        Outil d'évaluation de l'accessibilité qui analyse les pages pour identifier les erreurs et fournit des rapports détaillés afin d'aider les développeurs à corriger les problèmes de conformité.
+      </p>
+      <a href="https://addons.mozilla.org/fr/firefox/addon/wave-accessibility-tool/" className="tool-card-link" target="_blank" rel="noopener noreferrer">
+        Télécharger l'extension
+        <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+  
+  <div className="tool-card">
+    <div className="tool-card-content">
+      <h3 className="tool-card-title">
+        <span className="tool-card-icon" role="img" aria-hidden="true">🎨</span>
+        WCAG Contrast Checker
+      </h3>
+      <p className="tool-card-description">
+        Outil qui vérifie si le contraste entre le texte et son arrière-plan respecte les exigences des WCAG. Garantit une lisibilité suffisante pour les utilisateurs malvoyants.
+      </p>
+      <a href="https://addons.mozilla.org/fr/firefox/addon/wcag-contrast-checker/" className="tool-card-link" target="_blank" rel="noopener noreferrer">
+        Télécharger l'extension
+        <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+  
+  <div className="tool-card">
+    <div className="tool-card-content">
+      <h3 className="tool-card-title">
+        <span className="tool-card-icon" role="img" aria-hidden="true">👁️</span>
+        Colour Contrast Analyser
+      </h3>
+      <p className="tool-card-description">
+        Outil permettant de tester le contraste des couleurs dans les interfaces numériques pour s'assurer qu'il respecte les normes d'accessibilité des WCAG.
+      </p>
+      <a href="https://www.tpgi.com/color-contrast-checker/" className="tool-card-link" target="_blank" rel="noopener noreferrer">
+        Accéder à l'outil
+        <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+  
+  <div className="tool-card">
+    <div className="tool-card-content">
+      <h3 className="tool-card-title">
+        <span className="tool-card-icon" role="img" aria-hidden="true">💎</span>
+        Stark
+      </h3>
+      <p className="tool-card-description">
+        Plugin pour Figma, Sketch et Adobe XD permettant de tester l'accessibilité des designs, en vérifiant la conformité du contraste des couleurs et en fournissant des suggestions d'amélioration.
+      </p>
+      <a href="https://www.getstark.co/" className="tool-card-link" target="_blank" rel="noopener noreferrer">
+        Découvrir Stark
+        <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+  
+  <div className="tool-card">
+    <div className="tool-card-content">
+      <h3 className="tool-card-title">
+        <span className="tool-card-icon" role="img" aria-hidden="true">✅</span>
+        Check-list du designer
+      </h3>
+      <p className="tool-card-description">
+        Checklist d'accessibilité disponible sur le site Design Accessible. Propose une liste de critères à vérifier pour garantir l'accessibilité des sites web.
+      </p>
+      <a href="https://design-accessible.fr/checklist" className="tool-card-link" target="_blank" rel="noopener noreferrer">
+        Consulter la checklist
+        <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</div>
 
-- [**PDF Accessibility Checker (PAC)**](https://pac.pdf-accessibility.org/en) :
-PDF Accessibility Checker (PAC) est un logiciel Windows dédié à l'audit de l'accessibilité des documents PDF. Il permet de vérifier la conformité d'un fichier PDF aux normes d'accessibilité, telles que les WCAG et les directives PDF/UA (PDF Universal Accessibility). PAC analyse la structure du document, y compris les titres, les balises, les liens, les tables et les éléments multimédia, pour s'assurer que le contenu est correctement organisé et peut être interprété par des technologies d'assistance comme les lecteurs d'écran.
-- [**NVDA (NonVisual Desktop Access)**](https://www.nvda.fr/c2) :
-Lecteur d’écran bureau - NVDA est un lecteur d'écran open-source conçu pour les personnes malvoyantes ou aveugles. Il permet de rendre accessibles les interfaces graphiques des ordinateurs Windows en lisant à haute voix les éléments affichés à l'écran. NVDA prend en charge plusieurs applications et navigateurs web, et il est utilisé pour tester la compatibilité des sites web et des applications avec les technologies d'assistance. Cet outil est particulièrement apprécié pour son accessibilité gratuite et sa capacité à détecter des erreurs de conception qui peuvent nuire à l'expérience des utilisateurs ayant des déficiences visuelles. Afin d'en savoir plus, nous avons mis en place [un guide rapide de NVDA](/docs/accessibilité-kit-de-pré-audit-outils-lecteurs-d-écran--docs#nvda-windows).
-- [**TalkBack**](https://www.notion.so/Pr-audit-web-conformit-l-accessibilit-18c4ee4a529d80e2ab27cadba4829e37?pvs=21) (Si pré-audit sur mobile) :
-Lecteur d’écran mobile - TalkBack est un outil d'accessibilité déjà intégré aux appareils Android qui fournit des retours vocaux sur les éléments affichés à l'écran. Ce lecteur d'écran permet à l'utilisateur d'interagir avec son appareil sans avoir besoin de visionner l'écran. En utilisant des gestes tactiles spécifiques, l'utilisateur peut naviguer à travers les applications, lire des messages, envoyer des e-mails ou encore interagir avec des contenus multimédia. TalkBack offre également des options de personnalisation pour ajuster la vitesse de la voix, le volume et d'autres paramètres en fonction des besoins de l'utilisateur. Il prend en charge une large gamme de contenus accessibles et est régulièrement mis à jour pour améliorer son efficacité et sa compatibilité avec les dernières versions d'Android. Cet outil est essentiel pour garantir que les utilisateurs en situation de handicap visuel peuvent utiliser pleinement leurs appareils Android. Afin d'en savoir plus, nous avons mis en place [un guide rapide de Talkback](/docs/accessibilité-kit-de-pré-audit-outils-lecteurs-d-écran--docs#talkback-android).
-- [**Assistant RGAA (extension Firefox)**](https://addons.mozilla.org/fr/firefox/addon/assistant-rgaa/) :
-L'Assistant RGAA est un outil français destiné à vérifier la conformité des sites web aux critères d’accessibilité définis par le Référentiel Général d'Amélioration de l'Accessibilité (RGAA). Il permet d’effectuer des audits sur des sites en ligne pour identifier et corriger les problèmes d'accessibilité.
-- [**WAVE (extension Firefox)**](https://addons.mozilla.org/fr/firefox/addon/wave-accessibility-tool/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search) :
-WAVE est un outil d'évaluation de l'accessibilité des sites web. Il analyse les pages pour identifier les erreurs d'accessibilité et fournit des rapports détaillés afin d'aider les développeurs à corriger les problèmes de conformité aux normes d'accessibilité.
-- [**WCAG Contrast Checker (extension Firefox)**](https://addons.mozilla.org/fr/firefox/addon/wcag-contrast-checker/) :
-Un outil en ligne qui permet de vérifier si le contraste entre le texte et son arrière-plan respecte les exigences des WCAG (Web Content Accessibility Guidelines). Il aide à garantir une lisibilité suffisante pour les utilisateurs malvoyants.
-- [**Colour Contrast Analyser**](https://www.tpgi.com/color-contrast-checker/) :
-Outil permettant de tester le contraste des couleurs dans les interfaces numériques pour s'assurer qu'il respecte les normes d'accessibilité, notamment celles des WCAG. Il aide à garantir que le texte est lisible pour les personnes ayant des troubles visuels.
-- [**Stark**](https://www.getstark.co/) :
-Stark est un plugin pour des outils de conception comme Figma, Sketch et Adobe XD. Il permet de tester l'accessibilité des designs, en particulier en vérifiant la conformité du contraste des couleurs et en fournissant des suggestions pour améliorer l'accessibilité visuelle.
-- [**Check-list du designer (de Design Accessible)**](https://design-accessible.fr/checklist) :
-Checklist d'accessibilité disponible sur le site Design Accessible. Elle propose une liste de critères à vérifier pour garantir l’accessibilité des sites web en conformité avec les normes d’accessibilité.
+<section className="section">
+  <div className="info-box">
+    <h3 style={{ marginTop: 0 }}>Rappel important</h3>
+    <p>
+      Un audit d'accessibilité complet nécessite une combinaison d'outils automatisés et d'évaluations manuelles. Les outils présentés ici vous aideront à identifier de nombreux problèmes, mais certains aspects de l'accessibilité requièrent une expertise humaine et une compréhension approfondie des besoins des utilisateurs.
+    </p>
+    <p>
+      Pour obtenir les meilleurs résultats, utilisez ces outils tout au long du processus de développement plutôt que d'attendre la fin du projet pour effectuer des tests d'accessibilité.
+    </p>
+  </div>
+</section>
+

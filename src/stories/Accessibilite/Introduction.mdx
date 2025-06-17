@@ -3,29 +3,269 @@ import {Meta} from '@storybook/addon-docs/blocks';
 <Meta title="Accessibilité/Introduction"/>
 
 
-# Accessibilité numérique
+<style>
+{
+  /* Styles globaux pour améliorer l'apparence */
+  `
+    .accessibility-header {
+      color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .accessibility-header h1 {
+      margin-top: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    
+    .accessibility-header p {
+      font-size: 1.1rem;
+      margin-bottom: 0;
+      opacity: 0.9;
+    }
+    
+    .key-element {
+      background-color: #f8f9fa;
+      border-left: 4px solid #0c419a;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .key-element:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .key-element h3 {
+      color: #0c419a;
+      margin-top: 0;
+    }
+    
+    .info-section {
+      margin: 3rem 0 2rem;
+      padding: 1.5rem;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border: none;
+    }
+    
+    .info-section h2 {
+      padding-bottom: 0.5rem;
+      margin-top: 0;
+    }
 
-Pour répondre aux objectifs de mise en conformité des interfaces utilisateurs avec les normes réglementaires de l’accessibilité numérique, la Filière Digital propose une offre accessibilité numérique basée sur trois éléments clés :
+    .accessibility-header-approche {
+      position: relative;
+      padding-bottom: 0.75rem;
+      display: inline-block;
+    }
+    
+    .accessibility-header-approche::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      
+      border-radius: 3px;
+    }
+    
+    .contact-card {
+      background-color: #f0f7ff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .contact-icon {
+      font-size: 2rem;
+      color: #0c419a;
+    }
+    
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .resource-card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .resource-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .resource-card h3 {
+      margin-top: 0;
+      color: #0c419a;
+    }
+    
+    .resource-card a {
+      margin-top: auto;
+      text-decoration: none;
+      font-weight: 500;
+      color: #0c419a;
+    }
+    
+    .resource-card a:hover {
+      text-decoration: underline;
+    }
+    
+    .alert {
+      background-color: #e3e8f2;
+      border-left: 4px solid #0c419a;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+    
+    .alert-title {
+      color: #0c419a;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+    }
+    
+    .process-steps {
+      counter-reset: step;
+      margin: 2rem 0;
+    }
+    
+    .process-step {
+      position: relative;
+      padding-left: 3rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .process-step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2rem;
+      height: 2rem;
+      background-color: #0c419a;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+  `
+}
+</style>
 
-- la mise à disposition d’un Design System performant pour des produits web embarquant déjà ce qui peut l'être à un niveau design system
-- une documentation spécifique d’aide à la conception comportant des outils d’autocontrôle
-- un accompagnement des équipes-produits sur le sujet
+<div className="accessibility-header">
+  <h1>Accessibilité numérique</h1>
+  <p>Construire des interfaces inclusives et conformes aux normes réglementaires</p>
+</div>
 
-Face à l’ampleur du parc numérique de la Cnam et pour atteindre puis maintenir dans la durée la conformité requise par la DINUM nous pensons que la prise de conscience des enjeux de l’accessibilité numérique doit être partagé entre tous les acteurs de la conception à la fabrication des produits numériques.<br/>
-C'est pourquoi et sauf exception motivée, toute nouvelle demande d'audit d'accessibilité numérique sera soumise à la validation de critères d'éligibilité définis dans le kit de pré-audit.<br/>
-L'objectif ici est d'anticiper les erreurs et diluer l'effort de mise en conformité tout au long du processus de fabrication afin de ne pas attendre le résultat de l'audit pour réécrire le produit.<br/>
-Une fois le produit éligible, l'équipe experte de la Filière Digital réalise un audit et communique à l'équipe-produit un rapport comportant des recommandations. Si le produit utilise le DS CNAM et que des problèmes sont identifiés associés à ce dernier, les évolutions seront portés directement par la Filière Digital, en cas contraire il est demandé à l'équipe-produit de corriger les anomalies et de mettre à jour en autonomie le rapport d'audit pour atteindre la pleine conformité.
+<h2 className="accessibility-header-approche">Notre approche de l'accessibilité</h2>
 
-Conscient que tous les produits ne peuvent pas utiliser dans l’immédiat le Design System thème Cnam ou thème Portail Agent, nous avons conçu le kit de pré-audit pour qu’il puisse fonctionner en autonomie.
+Pour répondre aux objectifs de mise en conformité des interfaces utilisateurs avec les normes réglementaires de l'accessibilité numérique, la Filière Digital propose une offre accessibilité numérique basée sur trois éléments clés :
 
-Si vous avez besoin d’un accompagnement sur le sujet, merci de prendre contact avec [valentin.becquet@assurance-maladie.fr](mailto:valentin.becquet@assurance-maladie.fr).
+<div className="key-element">
+  <h3>🧩 Design System accessible</h3>
+  <p>Mise à disposition d'un Design System performant pour des produits web embarquant déjà les bonnes pratiques d'accessibilité.</p>
+</div>
 
-Pour toute remontée de problème liée à l’accessibilité, veuillez ouvrir une issue à l’adresse suivante : [Signaler un problème d'accessibilité](https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility.md)
+<div className="key-element">
+  <h3>📚 Documentation d'aide</h3>
+  <p>Documentation spécifique d'aide à la conception comportant des outils d'autocontrôle pour faciliter la mise en conformité.</p>
+</div>
 
-Vous trouverez dans ce dossier 3 principales rubriques :
+<div className="key-element" style={{ marginBottom: '3rem', borderBottom: 'none' }}>
+  <h3>👥 Accompagnement</h3>
+  <p>Accompagnement personnalisé des équipes-produits sur le sujet de l'accessibilité numérique.</p>
+</div>
 
-- [Aculturation - Sensibilisation à l'accessibilité numérique](/docs/accessibilité-aculturation-sensibilisation-à-l-accessibilité-numérique--docs)
-- [Kit du Pré-Audit](/docs/accessibilité-kit-de-pré-audit-introduction--docs)
-- [Audit](/docs/accessibilité-audit-rgaa--docs)
+<div className="info-section">
+  <h2 className="accessibility-header-approche">Notre démarche</h2>
+  
+  <p>Face à l'ampleur du parc numérique de la Cnam et pour atteindre puis maintenir dans la durée la conformité requise par la DINUM, nous pensons que la prise de conscience des enjeux de l'accessibilité numérique doit être partagée entre tous les acteurs, de la conception à la fabrication des produits numériques.</p>
+  
+  <div className="process-steps">
+    <div className="process-step">
+      <h4>Validation des critères d'éligibilité</h4>
+      <p>Toute nouvelle demande d'audit d'accessibilité numérique sera soumise à la validation de critères d'éligibilité définis dans le kit de pré-audit, sauf exception motivée.</p>
+    </div>
+    
+    <div className="process-step">
+      <h4>Anticipation des erreurs</h4>
+      <p>L'objectif est d'anticiper les erreurs et diluer l'effort de mise en conformité tout au long du processus de fabrication afin de ne pas attendre le résultat de l'audit pour réécrire le produit.</p>
+    </div>
+    
+    <div className="process-step">
+      <h4>Audit et recommandations</h4>
+      <p>Une fois le produit éligible, l'équipe experte de la Filière Digital réalise un audit et communique à l'équipe-produit un rapport comportant des recommandations.</p>
+    </div>
+    
+    <div className="process-step">
+      <h4>Corrections et mise en conformité</h4>
+      <p>Si le produit utilise le DS CNAM et que des problèmes sont identifiés associés à ce dernier, les évolutions seront portées directement par la Filière Digital. Dans le cas contraire, il est demandé à l'équipe-produit de corriger les anomalies et de mettre à jour en autonomie le rapport d'audit pour atteindre la pleine conformité.</p>
+    </div>
+  </div>
+  
+  <div className="alert">
+    <h4 className="alert-title">À noter</h4>
+    <p>Conscient que tous les produits ne peuvent pas utiliser dans l'immédiat le Design System thème Cnam ou thème Portail Agent, nous avons conçu le kit de pré-audit pour qu'il puisse fonctionner en autonomie.</p>
+  </div>
+</div>
 
-Le Design System Synapse réalise un audit de conformité au <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> facilitant la prise en compte de l'accessibilité dans vos produits. Pour en savoir plus, vous pouvez consulter [la page dédiée à l'audit d'accessibilité du Design System](/docs/accessibilité-aculturation-audit-du-design-system--docs).
+<div className="contact-card">
+  <div className="contact-icon">📧</div>
+  <div>
+    <h3>Besoin d'accompagnement ?</h3>
+    <p>Si vous avez besoin d'un accompagnement sur le sujet, merci de prendre contact avec <a href="mailto:valentin.becquet@assurance-maladie.fr">valentin.becquet@assurance-maladie.fr</a>.</p>
+    <p>Pour toute remontée de problème liée à l'accessibilité, veuillez <a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility.md">signaler un problème d'accessibilité</a>.</p>
+  </div>
+</div>
+
+<h2 className="accessibility-header-approche">Ressources disponibles</h2>
+
+<div className="resources-grid">
+  <div className="resource-card">
+    <h3>Aculturation</h3>
+    <p>Sensibilisation à l'accessibilité numérique et bonnes pratiques pour la conception de produits accessibles.</p>
+    <a href="/?path=/docs/accessibilité-aculturation-audit-du-design-system--docs">Découvrir →</a>
+  </div>
+  
+  <div className="resource-card">
+    <h3>Kit du Pré-Audit</h3>
+    <p>Outils et méthodologies pour préparer votre produit à l'audit d'accessibilité.</p>
+    <a href="/?path=/docs/accessibilité-kit-de-pré-audit-introduction--docs">Explorer →</a>
+  </div>
+  
+  <div className="resource-card">
+    <h3>Audit RGAA</h3>
+    <p>Informations sur le processus d'audit et les critères d'évaluation selon le RGAA.</p>
+    <a href="/?path=/docs/accessibilité-audit-rgaa--docs">Consulter →</a>
+  </div>
+</div>
+
+<div className="info-section">
+  <h2 className="accessibility-header-approche">Audit du Design System</h2>
+  <p>Le Design System Synapse réalise un audit de conformité au <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr> facilitant la prise en compte de l'accessibilité dans vos produits.</p>
+  <p>Pour en savoir plus, vous pouvez consulter <a href="/docs/accessibilité-aculturation-audit-du-design-system--docs">la page dédiée à l'audit d'accessibilité du Design System</a>.</p>
+</div>
