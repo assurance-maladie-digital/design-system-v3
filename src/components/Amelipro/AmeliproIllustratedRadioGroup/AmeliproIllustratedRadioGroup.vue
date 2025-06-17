@@ -190,12 +190,12 @@ input {
 	opacity: 0;
 
 	&:focus {
-		&+span {
+		& + span {
 			outline: 1px dotted $ap-grey-darken1;
 		}
 	}
 
-	&+span {
+	& + span {
 		position: relative;
 		padding-bottom: 2.125rem;
 		cursor: pointer;
@@ -209,14 +209,12 @@ input {
 			border-radius: 50%;
 			border: 3px solid $ap-blue-darken1;
 			background-color: transparent;
-			content: "";
+			content: '';
 		}
 	}
 
 	&:checked {
-
-		&+span {
-
+		& + span {
 			&::after {
 				position: absolute;
 				bottom: 0.578rem;
@@ -225,14 +223,13 @@ input {
 				height: 0.825rem;
 				border-radius: 50%;
 				background-color: $ap-blue-darken1;
-				content: "";
+				content: '';
 			}
 		}
 	}
 
 	&:disabled {
-
-		&+span {
+		& + span {
 			cursor: default;
 
 			&::before {
