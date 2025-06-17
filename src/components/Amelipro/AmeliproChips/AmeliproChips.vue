@@ -43,9 +43,9 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/tokens';
 
-	.amelipro-chips {
-		padding: 0.875rem 1rem;
-		border-radius: 8px;
-		background-color: tokens.$ap-blue-lighten3;
-	}
+.amelipro-chips {
+	padding: 0.875rem 1rem;
+	border-radius: 8px;
+	background-color: tokens.$ap-blue-lighten3;
+}
 </style>
