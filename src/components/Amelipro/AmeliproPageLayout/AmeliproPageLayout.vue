@@ -232,7 +232,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .body-content {
 	position: relative;
@@ -244,8 +244,8 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	color: tokens.$ap-blue-darken1;
-	background-color: tokens.$ap-white;
+	color: apTokens.$ap-blue-darken1;
+	background-color: apTokens.$ap-white;
 	text-decoration: underline;
 	z-index: 10;
 }

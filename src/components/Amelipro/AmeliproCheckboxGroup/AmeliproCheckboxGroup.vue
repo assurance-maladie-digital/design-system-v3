@@ -267,7 +267,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .amelipro-checkbox-group__item-input {
 	& .checkbox-label {
@@ -297,7 +297,7 @@
 			width: 1.5rem;
 			height: 1.5rem;
 			border-radius: 0.4rem;
-			border: 3px solid tokens.$ap-blue-darken1;
+			border: 3px solid apTokens.$ap-blue-darken1;
 			background-color: transparent;
 			content: '';
 		}
@@ -306,7 +306,7 @@
 	&[aria-checked='true'] {
 		& .checkbox-label {
 			&::before {
-				background-color: tokens.$ap-blue-darken1;
+				background-color: apTokens.$ap-blue-darken1;
 			}
 
 			&::after {
@@ -316,8 +316,8 @@
 				width: 0.9rem;
 				height: 0.5rem;
 				border-radius: 2px;
-				border-bottom: 3px solid tokens.$ap-white;
-				border-left: 3px solid tokens.$ap-white;
+				border-bottom: 3px solid apTokens.$ap-white;
+				border-left: 3px solid apTokens.$ap-white;
 				transform: rotate(-50deg);
 				content: '';
 			}
@@ -338,23 +338,23 @@
 .amelipro-checkbox-group.pills {
 	& .amelipro-checkbox-group__item-input {
 		& .checkbox-label {
-			font-size: tokens.$font-size-sm;
-			font-weight: tokens.$filter-font-weight;
-			padding: tokens.$filter-padding-y tokens.$filter-padding-x;
-			border-radius: tokens.$filter-radius;
-			border: 1px solid tokens.$ap-blue-darken1;
-			background-color: tokens.$ap-white;
-			color: tokens.$ap-blue-darken1;
+			font-size: apTokens.$font-size-sm;
+			font-weight: apTokens.$filter-font-weight;
+			padding: apTokens.$filter-padding-y apTokens.$filter-padding-x;
+			border-radius: apTokens.$filter-radius;
+			border: 1px solid apTokens.$ap-blue-darken1;
+			background-color: apTokens.$ap-white;
+			color: apTokens.$ap-blue-darken1;
 
 			&.amelipro-checkbox-group__item-label-span-error {
-				background-color: tokens.$ap-red-lighten4;
-				border-color: tokens.$ap-red;
+				background-color: apTokens.$ap-red-lighten4;
+				border-color: apTokens.$ap-red;
 			}
 		}
 
 		&[aria-checked='true'] {
 			& .checkbox-label {
-				background-color: tokens.$ap-blue-lighten3;
+				background-color: apTokens.$ap-blue-lighten3;
 
 				&::after {
 					position: absolute;
@@ -362,8 +362,8 @@
 					left: 1.1rem;
 					width: 1rem;
 					height: 0.5rem;
-					border-bottom: 2px solid tokens.$ap-blue-darken1;
-					border-left: 2px solid tokens.$ap-blue-darken1;
+					border-bottom: 2px solid apTokens.$ap-blue-darken1;
+					border-left: 2px solid apTokens.$ap-blue-darken1;
 					transform: rotate(-50deg);
 					content: '';
 				}
@@ -372,12 +372,12 @@
 
 		&[aria-disabled='true'] {
 			& .checkbox-label {
-				background-color: tokens.$ap-grey-lighten2;
-				border-color: tokens.$ap-grey;
+				background-color: apTokens.$ap-grey-lighten2;
+				border-color: apTokens.$ap-grey;
 
 				&::after {
-					border-bottom-color: tokens.$ap-grey-darken1;
-					border-left-color: tokens.$ap-grey-darken1;
+					border-bottom-color: apTokens.$ap-grey-darken1;
+					border-left-color: apTokens.$ap-grey-darken1;
 				}
 			}
 		}
@@ -385,11 +385,11 @@
 }
 
 .amelipro-checkbox-group__label {
-	font-weight: tokens.$label-font-weight;
+	font-weight: apTokens.$label-font-weight;
 }
 
 .margin-label {
-	@media #{tokens.$media-up-md} {
+	@media #{apTokens.$media-up-md} {
 		margin-top: 3px;
 	}
 }

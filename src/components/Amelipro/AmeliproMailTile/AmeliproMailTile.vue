@@ -264,13 +264,13 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .mail-status-btn {
 	position: relative;
 	min-width: 3rem;
 	white-space: normal;
-	border: 1px solid tokens.$ap-grey-lighten2;
+	border: 1px solid apTokens.$ap-grey-lighten2;
 	border-top-left-radius: 0.5rem;
 	border-bottom-left-radius: 0.5rem;
 
@@ -281,7 +281,7 @@
 		top: calc(50% - 5px);
 		left: calc(50% - 5px);
 		border-radius: 50%;
-		border: 1px solid tokens.$ap-grey;
+		border: 1px solid apTokens.$ap-grey;
 		background-color: transparent;
 		z-index: 2;
 		content: '';
@@ -290,8 +290,8 @@
 	&.mail-status-btn--not-read,
 	&:hover {
 		&::before {
-			border: 1px solid tokens.$ap-blue-darken1;
-			background-color: tokens.$ap-blue-darken1;
+			border: 1px solid apTokens.$ap-blue-darken1;
+			background-color: apTokens.$ap-blue-darken1;
 		}
 	}
 }
@@ -311,12 +311,12 @@
 	}
 
 	&:hover {
-		color: tokens.$ap-grey-darken1;
+		color: apTokens.$ap-grey-darken1;
 		text-decoration: none;
 	}
 
 	&:focus {
-		outline: 1px dotted tokens.$ap-grey-darken1;
+		outline: 1px dotted apTokens.$ap-grey-darken1;
 	}
 
 	& :deep(.v-btn__content) {
@@ -351,7 +351,7 @@
 .mail-btn__content {
 	position: relative;
 	padding: 1rem 2rem 1rem 1rem;
-	border: 1px solid tokens.$ap-grey-lighten2;
+	border: 1px solid apTokens.$ap-grey-lighten2;
 	border-radius: 0.5rem;
 
 	.mail-btn--editable & {
@@ -376,8 +376,8 @@
 			top: calc(50% - 5px);
 			left: 1rem;
 			border-radius: 50%;
-			border: 1px solid tokens.$ap-blue-darken1;
-			background-color: tokens.$ap-blue-darken1;
+			border: 1px solid apTokens.$ap-blue-darken1;
+			background-color: apTokens.$ap-blue-darken1;
 			z-index: 2;
 			content: '';
 		}
@@ -385,17 +385,17 @@
 }
 
 .mail-info__text {
-	@media #{tokens.$media-up-sm} {
+	@media #{apTokens.$media-up-sm} {
 		width: 100%;
 	}
 }
 
 .mail-info__date {
-	@media #{tokens.$media-up-sm} {
+	@media #{apTokens.$media-up-sm} {
 		padding: 0 1.25rem;
 	}
 
-	@media #{tokens.$media-up-lg} {
+	@media #{apTokens.$media-up-lg} {
 		padding: 0 3rem 0 1.25rem;
 	}
 }

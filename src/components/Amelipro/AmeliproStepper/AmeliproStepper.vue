@@ -318,7 +318,7 @@
 </template>
 
 <style lang="scss" scoped>
-	@use '@/assets/amelipro/tokens';
+	@use '@/assets/amelipro/apTokens';
 
 	.amelipro-stepper__list li {
 		&:first-child {
@@ -335,7 +335,7 @@
 	}
 
 	.step-number {
-		font-size: tokens.$font-size-sm;
+		font-size: apTokens.$font-size-sm;
 
 		&::before {
 			position: absolute;
@@ -344,8 +344,8 @@
 			width: 2rem;
 			height: 2rem;
 			border-radius: 50%;
-			background-color: tokens.$ap-white;
-			border: 1px solid tokens.$ap-green-lighten2;
+			background-color: apTokens.$ap-white;
+			border: 1px solid apTokens.$ap-green-lighten2;
 			content: '';
 			z-index: -1;
 		}
@@ -354,28 +354,28 @@
 			position: absolute;
 			left: calc(50% - 0.3rem);
 			bottom: -0.7rem;
-			color: tokens.$ap-grey-darken1;
+			color: apTokens.$ap-grey-darken1;
 		}
 
 		&.step-number--active {
 			&::before {
-				background-color: tokens.$ap-blue-darken1;
+				background-color: apTokens.$ap-blue-darken1;
 				border: 0;
 			}
 
 			& span {
-				color: tokens.$ap-white;
+				color: apTokens.$ap-white;
 			}
 		}
 
 		&.step-number--disabled {
 			&::before {
-				background-color: tokens.$ap-grey-lighten2;
+				background-color: apTokens.$ap-grey-lighten2;
 				border: 0;
 			}
 
 			& span {
-				color: tokens.$ap-grey-darken1;
+				color: apTokens.$ap-grey-darken1;
 			}
 		}
 	}
@@ -387,29 +387,29 @@
 	.active-step-title {
 		position: relative;
 		width: calc(100% - 96px);
-		background-color: tokens.$ap-blue-darken1;
+		background-color: apTokens.$ap-blue-darken1;
 		border-top-left-radius: 8px;
 		border-top-right-radius: 8px;
-		color: tokens.$ap-white;
+		color: apTokens.$ap-white;
 		text-align: center;
 		z-index: 1;
 	}
 
 	.next-step-btn__wrapper {
-		@media #{tokens.$media-only-xs} {
+		@media #{apTokens.$media-only-xs} {
 			width: 100%;
 		}
 	}
 
 	.amelipro-stepper__content--default {
-		padding: 3rem tokens.$card-padding-tablet tokens.$card-padding-tablet tokens.$card-padding-tablet;
-		background-color: tokens.$ap-white;
-		border: 1px solid tokens.$ap-green-lighten2;
+		padding: 3rem apTokens.$card-padding-tablet apTokens.$card-padding-tablet apTokens.$card-padding-tablet;
+		background-color: apTokens.$ap-white;
+		border: 1px solid apTokens.$ap-green-lighten2;
 		border-radius: 8px;
 		border-top-left-radius: 0;
 
-		@media #{tokens.$media-down-md} {
-			padding: 3rem tokens.$card-padding-mobile tokens.$card-padding-mobile tokens.$card-padding-mobile;
+		@media #{apTokens.$media-down-md} {
+			padding: 3rem apTokens.$card-padding-mobile apTokens.$card-padding-mobile apTokens.$card-padding-mobile;
 			border-top-left-radius: 8px;
 		}
 	}

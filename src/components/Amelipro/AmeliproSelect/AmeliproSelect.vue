@@ -332,7 +332,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .v-select {
 	& :deep(.v-select__selection--comma) {
@@ -351,8 +351,8 @@
 }
 
 :deep(.v-input__slot) {
-	min-height: tokens.$input-min-height !important;
-	border-radius: tokens.$input-radius;
+	min-height: apTokens.$input-min-height !important;
+	border-radius: apTokens.$input-radius;
 
 	fieldset {
 		border: 0;
@@ -361,7 +361,7 @@
 
 .amelipro-select__label {
 	margin-bottom: 4px;
-	font-weight: tokens.$label-font-weight;
+	font-weight: apTokens.$label-font-weight;
 }
 
 .v-list {

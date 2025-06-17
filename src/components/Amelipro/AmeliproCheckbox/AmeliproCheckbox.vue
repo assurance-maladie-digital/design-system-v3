@@ -143,7 +143,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .amelipro-checkbox-input {
 	& .checkbox-label {
@@ -160,7 +160,7 @@
 			width: 1.5rem;
 			height: 1.5rem;
 			border-radius: 0.4rem;
-			border: 3px solid tokens.$ap-blue-darken1;
+			border: 3px solid apTokens.$ap-blue-darken1;
 			background-color: transparent;
 			content: '';
 		}
@@ -169,7 +169,7 @@
 	&[aria-checked='true'] {
 		& .checkbox-label {
 			&::before {
-				background-color: tokens.$ap-blue-darken1;
+				background-color: apTokens.$ap-blue-darken1;
 			}
 
 			&::after {
@@ -179,8 +179,8 @@
 				width: 0.9rem;
 				height: 0.5rem;
 				border-radius: 2px;
-				border-bottom: 3px solid tokens.$ap-white;
-				border-left: 3px solid tokens.$ap-white;
+				border-bottom: 3px solid apTokens.$ap-white;
+				border-left: 3px solid apTokens.$ap-white;
 				transform: rotate(-50deg);
 				content: '';
 			}
@@ -211,22 +211,22 @@
 			padding-left: 4rem;
 
 			&::before {
-				height: tokens.$switch-track-height;
-				width: tokens.$switch-track-width;
-				top: tokens.$switch-track-top;
+				height: apTokens.$switch-track-height;
+				width: apTokens.$switch-track-width;
+				top: apTokens.$switch-track-top;
 				border-radius: 24px;
-				background-color: tokens.$ap-grey;
+				background-color: apTokens.$ap-grey;
 				border: 0;
 			}
 
 			&::after {
 				position: absolute;
-				height: tokens.$switch-thumb-height;
-				width: tokens.$switch-thumb-width;
-				top: tokens.$switch-thumb-top;
+				height: apTokens.$switch-thumb-height;
+				width: apTokens.$switch-thumb-width;
+				top: apTokens.$switch-thumb-top;
 				left: 4px;
 				border-radius: 24px;
-				background-color: tokens.$ap-white;
+				background-color: apTokens.$ap-white;
 				border: 0;
 				transition: transform 0.3s ease-in-out;
 				content: '';
@@ -236,7 +236,7 @@
 		&[aria-checked='true'] {
 			& .checkbox-label {
 				&::before {
-					background-color: tokens.$ap-blue-darken1;
+					background-color: apTokens.$ap-blue-darken1;
 				}
 
 				&::after {

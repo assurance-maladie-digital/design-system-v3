@@ -163,7 +163,7 @@
 </template>
 
 <style lang="scss" scoped>
-	@use '@/assets/amelipro/tokens';
+	@use '@/assets/amelipro/apTokens';
 
 	:deep(.v-overlay__content) {
 		top: 40px;
@@ -172,7 +172,7 @@
 		z-index: 8;
 		border-radius: 4px;
 
-		@media #{tokens.$media-up-md} {
+		@media #{apTokens.$media-up-md} {
 			left: -800px;
 		}
 	}

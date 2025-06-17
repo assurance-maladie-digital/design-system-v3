@@ -104,7 +104,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 input {
 	position: absolute;
@@ -119,11 +119,11 @@ input {
 
 .hover-style {
 	&:hover {
-		background-color: tokens.$ap-blue-lighten3 !important;
+		background-color: apTokens.$ap-blue-lighten3 !important;
 	}
 }
 
 .selected-border {
-	border: 1px solid tokens.$ap-blue;
+	border: 1px solid apTokens.$ap-blue;
 }
 </style>

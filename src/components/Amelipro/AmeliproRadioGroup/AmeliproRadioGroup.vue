@@ -253,10 +253,10 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .margin-label {
-	@media #{tokens.$media-up-md} {
+	@media #{apTokens.$media-up-md} {
 		margin-top: 3px;
 	}
 }
@@ -274,7 +274,7 @@ input {
 
 	&:focus {
 		& + span {
-			outline: 1px dotted tokens.$ap-grey-darken1;
+			outline: 1px dotted apTokens.$ap-grey-darken1;
 		}
 	}
 
@@ -298,7 +298,7 @@ input {
 			width: 1.625rem;
 			height: 1.625rem;
 			border-radius: 50%;
-			border: 3px solid tokens.$ap-blue-darken1;
+			border: 3px solid apTokens.$ap-blue-darken1;
 			background-color: transparent;
 			content: '';
 		}
@@ -313,7 +313,7 @@ input {
 				width: 0.825rem;
 				height: 0.825rem;
 				border-radius: 50%;
-				background-color: tokens.$ap-blue-darken1;
+				background-color: apTokens.$ap-blue-darken1;
 				content: '';
 			}
 		}
@@ -331,7 +331,7 @@ input {
 .amelipro-radio-group.pills {
 	& label {
 		&:not(:last-child) {
-			@media #{tokens.$media-up-sm} {
+			@media #{apTokens.$media-up-sm} {
 				margin-right: 16px;
 			}
 		}
@@ -339,23 +339,23 @@ input {
 
 	& input {
 		& + span {
-			font-size: tokens.$font-size-sm;
-			font-weight: tokens.$filter-font-weight;
-			padding: tokens.$filter-padding-y tokens.$filter-padding-x;
-			border-radius: tokens.$filter-radius;
-			border: 1px solid tokens.$ap-blue-darken1;
-			background-color: tokens.$ap-white;
-			color: tokens.$ap-blue-darken1;
+			font-size: apTokens.$font-size-sm;
+			font-weight: apTokens.$filter-font-weight;
+			padding: apTokens.$filter-padding-y apTokens.$filter-padding-x;
+			border-radius: apTokens.$filter-radius;
+			border: 1px solid apTokens.$ap-blue-darken1;
+			background-color: apTokens.$ap-white;
+			color: apTokens.$ap-blue-darken1;
 
 			&.radio-group__item-label-span-error {
-				background-color: tokens.$ap-red-lighten4;
-				border-color: tokens.$ap-red;
+				background-color: apTokens.$ap-red-lighten4;
+				border-color: apTokens.$ap-red;
 			}
 		}
 
 		&:checked {
 			& + span {
-				background-color: tokens.$ap-blue-lighten3;
+				background-color: apTokens.$ap-blue-lighten3;
 
 				&::after {
 					position: absolute;
@@ -363,8 +363,8 @@ input {
 					left: 1.1rem;
 					width: 1rem;
 					height: 0.5rem;
-					border-bottom: 2px solid tokens.$ap-blue-darken1;
-					border-left: 2px solid tokens.$ap-blue-darken1;
+					border-bottom: 2px solid apTokens.$ap-blue-darken1;
+					border-left: 2px solid apTokens.$ap-blue-darken1;
 					transform: rotate(-50deg);
 					content: '';
 				}
@@ -373,12 +373,12 @@ input {
 
 		&:disabled {
 			& + span {
-				background-color: tokens.$ap-grey-lighten2;
-				border-color: tokens.$ap-grey;
+				background-color: apTokens.$ap-grey-lighten2;
+				border-color: apTokens.$ap-grey;
 
 				&::after {
-					border-bottom-color: tokens.$ap-grey-darken1;
-					border-left-color: tokens.$ap-grey-darken1;
+					border-bottom-color: apTokens.$ap-grey-darken1;
+					border-left-color: apTokens.$ap-grey-darken1;
 				}
 			}
 		}
@@ -386,6 +386,6 @@ input {
 }
 
 .radio-group__label {
-	font-weight: tokens.$label-font-weight;
+	font-weight: apTokens.$label-font-weight;
 }
 </style>

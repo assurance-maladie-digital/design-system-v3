@@ -222,7 +222,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .v-input.amelipro-switch {
 	margin-top: 0;
@@ -232,7 +232,7 @@
 	width: 50% !important;
 	max-width: 50% !important;
 
-	@media #{tokens.$media-down-md} {
+	@media #{apTokens.$media-down-md} {
 		width: 100% !important;
 		max-width: 100% !important;
 	}

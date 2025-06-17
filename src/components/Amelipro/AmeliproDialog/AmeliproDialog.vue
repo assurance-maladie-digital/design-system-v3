@@ -298,7 +298,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .v-dialog {
 	& :deep(.v-overlay__content) {
@@ -306,25 +306,25 @@
 	}
 
 	&.dialog-radius :deep(.v-overlay__content) {
-		border-radius: tokens.$card-radius;
+		border-radius: apTokens.$card-radius;
 	}
 }
 
 .dialog {
-	padding: tokens.$card-padding-desktop;
+	padding: apTokens.$card-padding-desktop;
 
-	@media #{tokens.$media-down-md} {
-		padding: tokens.$card-padding-tablet;
+	@media #{apTokens.$media-down-md} {
+		padding: apTokens.$card-padding-tablet;
 	}
 }
 
 .dialog__header {
 	padding-bottom: 0.5rem;
-	border-bottom: 1px solid tokens.$ap-grey-lighten3;
+	border-bottom: 1px solid apTokens.$ap-grey-lighten3;
 }
 
 .dialog__title {
 	width: calc(100% - 60px);
-	font-size: tokens.$font-size-lg;
+	font-size: apTokens.$font-size-lg;
 }
 </style>

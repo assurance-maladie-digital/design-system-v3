@@ -41,11 +41,11 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .amelipro-chips {
 	padding: 0.875rem 1rem;
 	border-radius: 8px;
-	background-color: tokens.$ap-blue-lighten3;
+	background-color: apTokens.$ap-blue-lighten3;
 }
 </style>
