@@ -68,7 +68,6 @@
 			return [{ text: locales.defaultOption, value: null }]
 		}
 
-		// Ajouter l'option "- choisir -" en première position
 		// Définir le type des options pour accepter null et unknown
 		type FilterOptionValue = { text: string, value: unknown | null }
 		const options: FilterOptionValue[] = [{ text: locales.defaultOption, value: null }]
@@ -130,16 +129,10 @@
 
 <template>
 	<div class="select-filter-wrapper">
-		<div
-			v-if="!modelValue"
-			class="default-option"
-		>
-			{{ locales.defaultOption }}
-		</div>
 		<!-- @ts-ignore - Ignorer l'erreur de type pour v-model -->
 		<SySelect
 			v-model="modelValue"
-			:label="props.header.title || ''"
+			:label="modelValue === null ? locales.defaultOption : (props.header.title || '')"
 			:items="filterOptions"
 			:clearable="inputConfig?.clearable ?? clearable"
 			:density="inputConfig?.density ?? density"
@@ -163,16 +156,5 @@
 .select-filter-wrapper {
 	position: relative;
 	width: 100%;
-
-	.default-option {
-		position: absolute;
-		top: 1px;
-		left: 12px;
-		z-index: 1;
-		pointer-events: none;
-		padding: 8px 0;
-		color: rgb(0 0 0 / 60%);
-		font-size: 14px;
-	}
 }
 </style>
