@@ -139,7 +139,7 @@
 		<!-- @ts-ignore - Ignorer l'erreur de type pour v-model -->
 		<SySelect
 			v-model="modelValue"
-			:label="''"
+			:label="props.header.title || ''"
 			:items="filterOptions"
 			:clearable="inputConfig?.clearable ?? clearable"
 			:density="inputConfig?.density ?? density"
