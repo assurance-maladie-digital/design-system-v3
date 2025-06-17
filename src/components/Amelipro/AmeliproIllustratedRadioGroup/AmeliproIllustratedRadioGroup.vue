@@ -179,6 +179,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/amelipro/apTokens';
+
 .icon-radio__wrapper {
 	border-radius: 10px;
 }
@@ -191,7 +193,7 @@ input {
 
 	&:focus {
 		& + span {
-			outline: 1px dotted $ap-grey-darken1;
+			outline: 1px dotted apTokens.$ap-grey-darken1;
 		}
 	}
 
@@ -207,7 +209,7 @@ input {
 			width: 1.625rem;
 			height: 1.625rem;
 			border-radius: 50%;
-			border: 3px solid $ap-blue-darken1;
+			border: 3px solid apTokens.$ap-blue-darken1;
 			background-color: transparent;
 			content: '';
 		}
@@ -222,7 +224,7 @@ input {
 				width: 0.825rem;
 				height: 0.825rem;
 				border-radius: 50%;
-				background-color: $ap-blue-darken1;
+				background-color: apTokens.$ap-blue-darken1;
 				content: '';
 			}
 		}
@@ -240,6 +242,6 @@ input {
 }
 
 .amelipro-illustrated-radio-group__item__label__text {
-	font-weight: $label-font-weight;
+	font-weight: apTokens.$label-font-weight;
 }
 </style>

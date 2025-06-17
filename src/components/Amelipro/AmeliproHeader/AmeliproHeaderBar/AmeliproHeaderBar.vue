@@ -110,7 +110,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .header-bar {
 	z-index: 1;
@@ -126,6 +126,6 @@
 }
 
 .navigation-bar {
-	background-color: tokens.$ap-blue-darken1;
+	background-color: apTokens.$ap-blue-darken1;
 }
 </style>

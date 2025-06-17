@@ -2,7 +2,7 @@
 @use 'spacers';
 @use 'radius';
 @use '@/assets/tokens';
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .v-btn {
 	text-transform: inherit !important;
@@ -20,8 +20,8 @@
 }
 
 .v-tooltip.v-theme--ap .v-overlay__content {
-	background-color: tokens.$ap-white !important;
-	border: 1px solid tokens.$ap-parme-darken1 !important;
+	background-color: apTokens.$ap-white !important;
+	border: 1px solid apTokens.$ap-parme-darken1 !important;
 }
 
 .v-messages {

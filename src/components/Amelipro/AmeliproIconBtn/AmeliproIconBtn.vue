@@ -275,7 +275,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .v-btn {
 	background-color: transparent;
@@ -292,7 +292,7 @@
 	}
 
 	&:focus {
-		outline: 1px dotted tokens.$ap-black;
+		outline: 1px dotted apTokens.$ap-black;
 	}
 }
 
@@ -308,7 +308,7 @@
 	min-height: 1.25rem;
 	padding: 0 0.125rem;
 	border-radius: 50%;
-	font-size: tokens.$font-size-xxs;
+	font-size: apTokens.$font-size-xxs;
 
 	& span {
 		display: block;

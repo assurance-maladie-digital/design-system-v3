@@ -61,15 +61,15 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .v-btn {
 	padding: 0 !important;
 	border-radius: 0 !important;
 	min-height: 2.5rem !important;
 	min-width: 2.5rem !important;
-	font-size: tokens.$font-size-sm !important;
-	font-weight: tokens.$ap-font-weight-semi-bold !important;
+	font-size: apTokens.$font-size-sm !important;
+	font-weight: apTokens.$ap-font-weight-semi-bold !important;
 	text-align: center !important;
 
 	& :deep(.v-btn__content) {

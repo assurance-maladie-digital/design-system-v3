@@ -101,7 +101,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .amelipro-card--numbered-wrapper {
 	padding-top: 1rem;
@@ -110,27 +110,27 @@
 .amelipro-card--numbered {
 	display: block;
 	position: relative;
-	padding: tokens.$card-padding-desktop;
+	padding: apTokens.$card-padding-desktop;
 	max-width: 100%;
-	border-radius: tokens.$card-radius;
+	border-radius: apTokens.$card-radius;
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
 
-	@media #{tokens.$media-down-md} {
-		padding: tokens.$card-padding-tablet;
+	@media #{apTokens.$media-down-md} {
+		padding: apTokens.$card-padding-tablet;
 	}
 
-	@media #{tokens.$media-down-sm} {
-		padding: tokens.$card-padding-mobile;
+	@media #{apTokens.$media-down-sm} {
+		padding: apTokens.$card-padding-mobile;
 	}
 }
 
 .amelipro-card--numbered-content {
 	width: 100%;
-	padding: tokens.$card-padding-desktop tokens.$card-padding-mobile;
-	font-size: tokens.$font-size-xs;
-	font-weight: tokens.$ap-font-weight-regular;
+	padding: apTokens.$card-padding-desktop apTokens.$card-padding-mobile;
+	font-size: apTokens.$font-size-xs;
+	font-weight: apTokens.$ap-font-weight-regular;
 }
 
 .numbered-card-item__wrapper {
@@ -144,10 +144,10 @@
 .number {
 	display: block;
 	width: 100%;
-	font-size: tokens.$font-size-sm;
+	font-size: apTokens.$font-size-sm;
 
-	@media #{tokens.$media-down-sm} {
-		font-size: tokens.$font-size-xs;
+	@media #{apTokens.$media-down-sm} {
+		font-size: apTokens.$font-size-xs;
 	}
 
 	&::before {
@@ -157,12 +157,12 @@
 		width: 2rem;
 		height: 2rem;
 		border-radius: 50%;
-		border: 1px solid tokens.$ap-blue-darken1;
-		background-color: tokens.$ap-white;
+		border: 1px solid apTokens.$ap-blue-darken1;
+		background-color: apTokens.$ap-white;
 		content: '';
 		z-index: 1;
 
-		@media #{tokens.$media-down-sm} {
+		@media #{apTokens.$media-down-sm} {
 			left: calc(50% - 0.75rem);
 			width: 1.5rem;
 			height: 1.5rem;
@@ -174,11 +174,11 @@
 		position: absolute;
 		top: 0.25rem;
 		width: 100%;
-		font-weight: tokens.$ap-font-weight-semi-bold;
+		font-weight: apTokens.$ap-font-weight-semi-bold;
 		text-align: center;
 		z-index: 2;
 
-		@media #{tokens.$media-down-sm} {
+		@media #{apTokens.$media-down-sm} {
 			top: 0.375rem;
 		}
 	}
@@ -191,7 +191,7 @@
 		max-width: calc(50% - 5px);
 
 		&:nth-child(2n+2) {
-			@media #{tokens.$media-up-md} {
+			@media #{apTokens.$media-up-md} {
 				margin-left: 10px;
 			}
 		}
@@ -200,27 +200,27 @@
 
 .items-per-line-3 {
 	& > li {
-		@media #{tokens.$media-up-lg} {
+		@media #{apTokens.$media-up-lg} {
 			width: calc((100% - 20px) / 3);
 			min-width: calc((100% - 20px) / 3);
 			max-width: calc((100% - 20px) / 3);
 		}
 
-		@media #{tokens.$media-only-md} {
+		@media #{apTokens.$media-only-md} {
 			width: calc(50% - 5px);
 			min-width: calc(50% - 5px);
 			max-width: calc(50% - 5px);
 		}
 
 		&:nth-child(2n+2) {
-			@media #{tokens.$media-only-md} {
+			@media #{apTokens.$media-only-md} {
 				margin-left: 10px;
 			}
 		}
 
 		&:nth-child(3n+2),
 		&:nth-child(3n+3) {
-			@media #{tokens.$media-up-lg} {
+			@media #{apTokens.$media-up-lg} {
 				margin-left: 10px;
 			}
 		}
@@ -229,20 +229,20 @@
 
 .items-per-line-4 {
 	& > li {
-		@media #{tokens.$media-up-lg} {
+		@media #{apTokens.$media-up-lg} {
 			width: calc(25% - 9px);
 			min-width: calc(25% - 9px);
 			max-width: calc(25% - 9px);
 		}
 
-		@media #{tokens.$media-only-md} {
+		@media #{apTokens.$media-only-md} {
 			width: calc(50% - 5px);
 			min-width: calc(50% - 5px);
 			max-width: calc(50% - 5px);
 		}
 
 		&:nth-child(2n+2) {
-			@media #{tokens.$media-only-md} {
+			@media #{apTokens.$media-only-md} {
 				margin-left: 10px;
 			}
 		}
@@ -250,7 +250,7 @@
 		&:nth-child(4n+2),
 		&:nth-child(4n+3),
 		&:nth-child(4n+4) {
-			@media #{tokens.$media-up-lg} {
+			@media #{apTokens.$media-up-lg} {
 				margin-left: 12px;
 			}
 		}
@@ -261,7 +261,7 @@
 .items-per-line-3,
 .items-per-line-4 {
 	& > li {
-		@media #{tokens.$media-down-md} {
+		@media #{apTokens.$media-down-md} {
 			width: 100%;
 			min-width: 100%;
 			max-width: 100%;

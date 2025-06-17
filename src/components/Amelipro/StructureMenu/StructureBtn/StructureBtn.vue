@@ -47,7 +47,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/tokens';
+@use '@/assets/amelipro/apTokens';
 
 .v-btn {
 	letter-spacing: unset;
@@ -65,10 +65,10 @@
 	}
 
 	&:focus {
-		outline: 1px dotted tokens.$ap-grey-darken1;
+		outline: 1px dotted apTokens.$ap-grey-darken1;
 	}
 
-	@media #{tokens.$media-only-xs} {
+	@media #{apTokens.$media-only-xs} {
 		margin-bottom: 8px;
 		width: 100% !important;
 	}
