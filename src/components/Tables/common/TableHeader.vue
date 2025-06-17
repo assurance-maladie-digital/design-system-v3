@@ -1,33 +1,11 @@
 <script setup lang="ts">
 	import { computed, nextTick, onMounted, ref, inject, watch, type Ref } from 'vue'
-	import type { VDataTable, VDataTableServer } from 'vuetify/components'
+	import type { VDataTable, VDataTableServer, VIcon } from 'vuetify/components'
 	import { locales } from './locales'
 
-	// Define a type for our column structure
-	type TableColumn = {
-		key: string | null
-		title?: string
-		value: unknown
-		sortable: boolean
-		rowspan?: number
-		colspan?: number
-		width?: number | string
-		sortBy?: string
-	}
-
-	// Define a type for the header parameters
-	interface TableData {
-		columns: TableColumn[]
-		sortBy?: unknown
-		someSelected?: boolean
-		allSelected?: boolean
-		getSortIcon: (column: unknown) => string | undefined
-		toggleSort: (column: unknown) => void
-	}
-
 	const props = withDefaults(defineProps<{
-		column: TableColumn
-		headerParams: TableData
+		column: Parameters<VDataTable['$slots']['headers']>['0']['columns'][number]
+		headerParams: Parameters<VDataTable['$slots']['headers']>['0']
 		table: VDataTable | VDataTableServer | null | undefined
 		resizableColumns?: boolean
 		storageKey?: string
@@ -152,6 +130,12 @@
 			}
 		}
 	}
+
+	const isColumnSorted = computed(() => {
+		return props.headerParams.sortBy.some((sort) => {
+			return sort.key === props.column.key
+		})
+	})
 </script>
 
 <template>
@@ -164,8 +148,8 @@
 		</div>
 		<VIcon
 			v-if="header!.sortable"
-			class="v-data-table-header__sort-icon"
-			:class="`mr-2 ${column.sortBy ? 'text-primary' : ''}`"
+			class="v-data-table-header__sort-icon mr-2"
+			:class="{ 'text-primary opacity-100' : isColumnSorted }"
 			:icon="headerParams.getSortIcon(column)"
 			:title="locales.columnOrder(column.title!)"
 			:aria-label="locales.columnOrder(column.title!)"
