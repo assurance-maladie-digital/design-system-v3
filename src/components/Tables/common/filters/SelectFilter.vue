@@ -166,7 +166,7 @@
 		z-index: 1;
 		pointer-events: none;
 		padding: 8px 0;
-		color: rgba(0, 0, 0, 0.6);
+		color: rgb(0 0 0 / 60%);
 		font-size: 14px;
 	}
 }
