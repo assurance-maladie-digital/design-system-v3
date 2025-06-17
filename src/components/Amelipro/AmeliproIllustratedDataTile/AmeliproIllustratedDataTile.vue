@@ -144,31 +144,31 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/tokens';
 
-	.illustrated-data-tile__wrapper {
-		border-radius: 0.5rem;
-		transform: translateY(0);
-		transition: transform 0.1s ease-in-out;
+.illustrated-data-tile__wrapper {
+	border-radius: 0.5rem;
+	transform: translateY(0);
+	transition: transform 0.1s ease-in-out;
 
-		&:hover {
-			transform: translateY(-8px);
-		}
+	&:hover {
+		transform: translateY(-8px);
 	}
+}
 
-	.illustrated-data-tile__label__line-1 {
-		margin-top: 2rem;
-		margin-bottom: 1rem;
-		font-size: tokens.$font-size-sm;
-		font-weight: tokens.$ap-font-weight-semi-bold;
-	}
+.illustrated-data-tile__label__line-1 {
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+	font-size: tokens.$font-size-sm;
+	font-weight: tokens.$ap-font-weight-semi-bold;
+}
 
-	.illustrated-data-tile__label__line-2 {
-		margin-bottom: 2rem;
-		font-size: tokens.$font-size-xs;
-		font-weight: tokens.$ap-font-weight-regular;
-	}
+.illustrated-data-tile__label__line-2 {
+	margin-bottom: 2rem;
+	font-size: tokens.$font-size-xs;
+	font-weight: tokens.$ap-font-weight-regular;
+}
 
-	.illustrated-data-tile__img {
-		width: 60px;
-		height: 60px;
-	}
+.illustrated-data-tile__img {
+	width: 60px;
+	height: 60px;
+}
 </style>

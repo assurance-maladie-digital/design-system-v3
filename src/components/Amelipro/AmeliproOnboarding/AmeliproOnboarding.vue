@@ -216,26 +216,27 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/tokens';
 
-	.amelipro-ondoarding-content {
-		min-height: 350px;
-	}
+.amelipro-ondoarding-content {
+	min-height: 350px;
+}
 
-	.amelipro-onboarding__content--right__wrapper {
-		min-height: 100%;
-	}
-	.amelipro-onboarding__step-dot {
-		width: 14px;
-		height: 14px;
-		border-radius: 50%;
-		border: 2px solid tokens.$ap-blue-darken1;
-		background-color: tokens.$ap-white;
+.amelipro-onboarding__content--right__wrapper {
+	min-height: 100%;
+}
 
-		&.amelipro-onboarding__active-dot {
-			background-color: tokens.$ap-blue-darken1;
-		}
-	}
+.amelipro-onboarding__step-dot {
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	border: 2px solid tokens.$ap-blue-darken1;
+	background-color: tokens.$ap-white;
 
-	.amelipro-onboarding__content__btn-wrapper {
-		margin-top: auto;
+	&.amelipro-onboarding__active-dot {
+		background-color: tokens.$ap-blue-darken1;
 	}
+}
+
+.amelipro-onboarding__content__btn-wrapper {
+	margin-top: auto;
+}
 </style>
