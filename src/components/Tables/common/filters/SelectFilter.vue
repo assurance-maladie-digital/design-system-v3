@@ -149,6 +149,7 @@
 			:bg-color="inputConfig?.backgroundColor ?? backgroundColor"
 			:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
 			class="filter-input"
+			:aria-label="props.header.title || 'Filtre'"
 			@click:clear="handleClear"
 		/>
 	</div>
@@ -165,7 +166,7 @@
 
 	.default-option {
 		position: absolute;
-		top: 0;
+		top: 1px;
 		left: 12px;
 		z-index: 1;
 		pointer-events: none;
