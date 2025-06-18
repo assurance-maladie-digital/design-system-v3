@@ -202,6 +202,11 @@
 	}
 
 	const selectedItemText = computed(() => {
+		// If chips are enabled and we have selected items, return empty string to hide text
+		if (hasChips.value) {
+			return ''
+		}
+
 		if (!selectedItem.value) return ''
 
 		if (props.multiple) {
@@ -218,17 +223,21 @@
 			}).join(', ')
 		}
 		else {
-			// Single selection mode
+			// For single selection
 			if (props.returnObject) {
-				return (selectedItem.value as Record<string, unknown>)[props.textKey]
+				return selectedItem.value[props.textKey]
 			}
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			return props.items.find((item: any) => item[props.valueKey] === selectedItem.value)?.[props.textKey] || ''
+
+			return props.items.find(item => item[props.valueKey] === selectedItem.value)?.[props.textKey] || ''
 		}
 	})
 
 	const isShouldDisplayAsterisk = computed(() => {
-		return props.displayAsterisk && props.required
+		return props.required && props.displayAsterisk
+	})
+
+	const hasChips = computed(() => {
+		return props.chips && props.multiple && Array.isArray(selectedItem.value) && selectedItem.value.length > 0
 	})
 
 	const labelWithAsterisk = computed(() => {
@@ -373,6 +382,7 @@
 			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
 			:density="props.density"
+			:active="hasChips || isOpen"
 			readonly
 			:hide-details="props.hideMessages"
 			class="sy-select"
@@ -383,7 +393,7 @@
 			@keydown.space.prevent="toggleMenu"
 		>
 			<template
-				v-if="props.chips && props.multiple && Array.isArray(selectedItem) && selectedItem.length > 0"
+				v-if="hasChips"
 				#default
 			>
 				<div class="d-flex flex-wrap gap-1">
@@ -454,8 +464,8 @@
 						density="compact"
 						hide-details
 						color="primary"
-						class="mt-0 pt-0"
-						@click.stop
+						class="mt-0 pt-0 mr-1"
+						@click.stop="selectItem(item)"
 					/>
 				</template>
 				<VListItemTitle>
