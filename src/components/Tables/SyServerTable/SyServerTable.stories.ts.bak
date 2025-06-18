@@ -1684,14 +1684,7 @@ export const ServerFilterBySelectMultiple: Story = {
 								const itemValue = item[key]
 
 								if (type === 'select') {
-									if (Array.isArray(value)) {
-										// Empty array means no filter applied
-										if (value.length === 0) return true;
-										// Check if item value is in the selected values
-										return value.includes(itemValue);
-									} else {
-										return itemValue === value;
-									}
+									return itemValue === value
 								}
 								else {
 									return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
