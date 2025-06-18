@@ -4,6 +4,7 @@ import { type DateObjectValue } from '../types'
 
 export interface DisplayedDateStringProps {
 	selectedDates: { value: DateObjectValue }
+	rangeBoundaryDates?: { value: [Date | null, Date | null] | null }
 	todayInString: ComputedRef<string>
 }
 
@@ -21,7 +22,18 @@ export function useDisplayedDateString(props: DisplayedDateStringProps): Display
 		// Si nous n'avons pas de date sélectionnée, afficher la date du jour
 		if (!props.selectedDates.value) return props.todayInString.value
 
-		// Si nous avons une plage de dates
+		// Priorité aux rangeBoundaryDates pour les plages
+		if (props.rangeBoundaryDates?.value && props.rangeBoundaryDates.value[0] && props.rangeBoundaryDates.value[1]) {
+			const startDate = dayjs(props.rangeBoundaryDates.value[0])
+			const endDate = dayjs(props.rangeBoundaryDates.value[1])
+
+			if (startDate.isValid() && endDate.isValid()) {
+				// Format court pour la date de début, format complet pour la date de fin
+				return `${startDate.format('D MMMM')} - ${endDate.format('D MMMM YYYY')}`
+			}
+		}
+
+		// Si nous avons une plage de dates dans selectedDates
 		if (Array.isArray(props.selectedDates.value)) {
 			// Si nous avons les deux dates de la plage
 			if (props.selectedDates.value.length >= 2) {

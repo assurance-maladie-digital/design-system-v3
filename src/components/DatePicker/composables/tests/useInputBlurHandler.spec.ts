@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { ref } from 'vue'
 import { useInputBlurHandler } from '../useInputBlurHandler'
+import { DATE_PICKER_MESSAGES } from '../../constants/messages'
 
 describe('useInputBlurHandler', () => {
 	// Mocks et setup
@@ -15,6 +16,7 @@ describe('useInputBlurHandler', () => {
 	const isManualInputActive = ref(true)
 	const isUpdatingFromInternal = ref(false)
 	const selectedDates = ref<Date | Date[] | null>(null)
+	const errors = ref<string[]>([])
 
 	beforeEach(() => {
 		// Réinitialiser les mocks et les refs avant chaque test
@@ -29,6 +31,7 @@ describe('useInputBlurHandler', () => {
 		isManualInputActive.value = true
 		isUpdatingFromInternal.value = false
 		selectedDates.value = null
+		errors.value = []
 
 		// Configuration par défaut des mocks
 		mockValidateDateFormat.mockReturnValue({ isValid: true, message: '' })
@@ -273,6 +276,167 @@ describe('useInputBlurHandler', () => {
 			handleInputBlur()
 
 			expect(mockValidateManualInput).toHaveBeenCalledWith('')
+		})
+	})
+
+	// Nouveaux tests pour les plages de dates
+	describe('handleInputBlur avec plages de dates', () => {
+		it('devrait mettre à jour le modèle avec un tableau de dates si la plage est valide', () => {
+			displayFormattedDate.value = '01/01/2023 - 10/01/2023'
+			const startDate = new Date('2023-01-01')
+			const endDate = new Date('2023-01-10')
+
+			mockValidateDateFormat
+				.mockReturnValueOnce({ isValid: true, message: '' }) // Pour la date de début
+				.mockReturnValueOnce({ isValid: true, message: '' }) // Pour la date de fin
+
+			mockParseDate
+				.mockReturnValueOnce(startDate) // Pour la date de début
+				.mockReturnValueOnce(endDate) // Pour la date de fin
+
+			mockFormatDate
+				.mockReturnValueOnce('01/01/2023') // Pour la date de début
+				.mockReturnValueOnce('10/01/2023') // Pour la date de fin
+
+			const { handleInputBlur } = useInputBlurHandler({
+				format: 'DD/MM/YYYY',
+				displayFormattedDate,
+				hasInteracted,
+				isManualInputActive,
+				isUpdatingFromInternal,
+				selectedDates,
+				errors,
+				validateDateFormat: mockValidateDateFormat,
+				parseDate: mockParseDate,
+				formatDate: mockFormatDate,
+				updateModel: mockUpdateModel,
+				validateManualInput: mockValidateManualInput,
+				emitBlur: mockEmitBlur,
+			})
+
+			handleInputBlur()
+
+			expect(mockValidateDateFormat).toHaveBeenCalledWith('01/01/2023')
+			expect(mockValidateDateFormat).toHaveBeenCalledWith('10/01/2023')
+			expect(mockParseDate).toHaveBeenCalledWith('01/01/2023', 'DD/MM/YYYY')
+			expect(mockParseDate).toHaveBeenCalledWith('10/01/2023', 'DD/MM/YYYY')
+			expect(mockFormatDate).toHaveBeenCalledWith(startDate, 'DD/MM/YYYY')
+			expect(mockFormatDate).toHaveBeenCalledWith(endDate, 'DD/MM/YYYY')
+			expect(selectedDates.value).toEqual([startDate, endDate])
+			expect(mockUpdateModel).toHaveBeenCalledWith(['01/01/2023', '10/01/2023'])
+			expect(isUpdatingFromInternal.value).toBe(true) // Sera réinitialisé par le setTimeout
+		})
+
+		it('devrait utiliser le format de retour pour les plages de dates si spécifié', () => {
+			displayFormattedDate.value = '01/01/2023 - 10/01/2023'
+			const startDate = new Date('2023-01-01')
+			const endDate = new Date('2023-01-10')
+
+			mockValidateDateFormat
+				.mockReturnValueOnce({ isValid: true, message: '' }) // Pour la date de début
+				.mockReturnValueOnce({ isValid: true, message: '' }) // Pour la date de fin
+
+			mockParseDate
+				.mockReturnValueOnce(startDate) // Pour la date de début
+				.mockReturnValueOnce(endDate) // Pour la date de fin
+
+			mockFormatDate
+				.mockReturnValueOnce('2023-01-01') // Pour la date de début avec format de retour
+				.mockReturnValueOnce('2023-01-10') // Pour la date de fin avec format de retour
+
+			const { handleInputBlur } = useInputBlurHandler({
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+				displayFormattedDate,
+				hasInteracted,
+				isManualInputActive,
+				isUpdatingFromInternal,
+				selectedDates,
+				errors,
+				validateDateFormat: mockValidateDateFormat,
+				parseDate: mockParseDate,
+				formatDate: mockFormatDate,
+				updateModel: mockUpdateModel,
+				validateManualInput: mockValidateManualInput,
+				emitBlur: mockEmitBlur,
+			})
+
+			handleInputBlur()
+
+			expect(mockFormatDate).toHaveBeenCalledWith(startDate, 'YYYY-MM-DD')
+			expect(mockFormatDate).toHaveBeenCalledWith(endDate, 'YYYY-MM-DD')
+			expect(mockUpdateModel).toHaveBeenCalledWith(['2023-01-01', '2023-01-10'])
+		})
+
+		it('devrait ajouter une erreur si la date de fin est antérieure à la date de début', () => {
+			displayFormattedDate.value = '10/01/2023 - 01/01/2023' // Date de fin avant date de début
+			const startDate = new Date('2023-01-10')
+			const endDate = new Date('2023-01-01')
+
+			mockValidateDateFormat
+				.mockReturnValueOnce({ isValid: true, message: '' }) // Pour la date de début
+				.mockReturnValueOnce({ isValid: true, message: '' }) // Pour la date de fin
+
+			mockParseDate
+				.mockReturnValueOnce(startDate) // Pour la date de début
+				.mockReturnValueOnce(endDate) // Pour la date de fin
+
+			// Utiliser la constante importée au début du fichier
+
+			const { handleInputBlur } = useInputBlurHandler({
+				format: 'DD/MM/YYYY',
+				displayFormattedDate,
+				hasInteracted,
+				isManualInputActive,
+				isUpdatingFromInternal,
+				selectedDates,
+				errors,
+				validateDateFormat: mockValidateDateFormat,
+				parseDate: mockParseDate,
+				formatDate: mockFormatDate,
+				updateModel: mockUpdateModel,
+				validateManualInput: mockValidateManualInput,
+				emitBlur: mockEmitBlur,
+			})
+
+			handleInputBlur()
+
+			expect(mockValidateDateFormat).toHaveBeenCalledWith('10/01/2023')
+			expect(mockValidateDateFormat).toHaveBeenCalledWith('01/01/2023')
+			expect(mockParseDate).toHaveBeenCalledWith('10/01/2023', 'DD/MM/YYYY')
+			expect(mockParseDate).toHaveBeenCalledWith('01/01/2023', 'DD/MM/YYYY')
+			expect(errors.value).toContain(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
+			expect(mockUpdateModel).not.toHaveBeenCalled()
+		})
+
+		it('ne devrait pas mettre à jour le modèle si une des dates de la plage est invalide', () => {
+			displayFormattedDate.value = '01/01/2023 - 32/01/2023' // Date de fin invalide
+
+			mockValidateDateFormat
+				.mockReturnValueOnce({ isValid: true, message: '' }) // Pour la date de début
+				.mockReturnValueOnce({ isValid: false, message: 'Date invalide' }) // Pour la date de fin
+
+			const { handleInputBlur } = useInputBlurHandler({
+				format: 'DD/MM/YYYY',
+				displayFormattedDate,
+				hasInteracted,
+				isManualInputActive,
+				isUpdatingFromInternal,
+				selectedDates,
+				errors,
+				validateDateFormat: mockValidateDateFormat,
+				parseDate: mockParseDate,
+				formatDate: mockFormatDate,
+				updateModel: mockUpdateModel,
+				validateManualInput: mockValidateManualInput,
+				emitBlur: mockEmitBlur,
+			})
+
+			handleInputBlur()
+
+			expect(mockValidateDateFormat).toHaveBeenCalledWith('01/01/2023')
+			expect(mockValidateDateFormat).toHaveBeenCalledWith('32/01/2023')
+			expect(mockUpdateModel).not.toHaveBeenCalled()
 		})
 	})
 })

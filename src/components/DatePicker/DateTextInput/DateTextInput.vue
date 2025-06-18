@@ -52,7 +52,7 @@
 		displayPrependIcon: true,
 		disableErrorHandling: false,
 		showSuccessMessages: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		displayRange: false,
 	})
 
@@ -833,7 +833,7 @@
 		:error-messages="errorMessages"
 		:label="props.label || props.placeholder"
 		:no-icon="props.noIcon"
-		:prepend-icon="displayIcon && !displayPrependIcon ? 'calendar' : undefined"
+		:prepend-icon="displayIcon && displayPrependIcon ? 'calendar' : undefined"
 		:readonly="props.readonly"
 		:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
 		:warning-messages="warningMessages"
