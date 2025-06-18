@@ -233,3 +233,74 @@ export const NumberFilterRules: Story = {
     `,
 	}),
 }
+
+export const SelectFilterRules: Story = {
+	args: {
+		suffix: 'select-filter-rules',
+		showFilters: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Documentation des règles de filtrage par sélection pour le composant SyTable.',
+			},
+		},
+	},
+	render: () => ({
+		components: { SyTable },
+		setup() {
+			const headers = ref([
+				{
+					title: 'Catégorie',
+					key: 'category',
+					filterable: true,
+					filterType: 'select',
+					filterOptions: [
+						{ text: 'Fruits', value: 'Fruits' },
+						{ text: 'Légumes', value: 'Légumes' },
+						{ text: 'Boissons', value: 'Boissons' },
+						{ text: '(vide)', value: '' },
+					],
+				},
+				{ title: 'Description', key: 'description', filterable: false },
+			])
+
+			const items = ref([
+				{ category: 'Fruits', description: 'Catégorie standard avec valeur non vide' },
+				{ category: 'Légumes', description: 'Catégorie standard avec valeur non vide' },
+				{ category: '', description: 'Catégorie avec valeur vide, affichée comme "(vide)" dans la liste' },
+				{ category: 'Fruits', description: 'Valeur dupliquée, apparaît une seule fois dans la liste' },
+				{ category: 'Boissons', description: 'Catégorie standard avec valeur non vide' },
+			])
+
+			const options = ref({
+				itemsPerPage: 10,
+			})
+
+			return {
+				headers,
+				items,
+				options,
+			}
+		},
+		template: `
+      <div>
+        <h2>Règles de filtrage par sélection</h2>
+        <p class="mb-4">Les filtres de sélection permettent de choisir parmi les valeurs uniques présentes dans la colonne.</p>
+        
+        <div class="mb-4">
+          <p>Les filtres de choix sont des listes reprenant les éléments uniques présents dans l'ensemble des colonnes non filtrés. Pour faciliter l'accessibilité de la liste, le premier élément contient la valeur « - choisir - » pour indiquer qu'aucune ligne n'est filtré. Si l'une des cellules de la colonne est vide, l'élément de liste correspondant doit afficher la valeur « (vide) ».</p>
+          <p>L'action de filtrage est effectuée à la sélection d'une option de la liste de choix.</p>
+        </div>
+		  
+        <SyTable
+          v-model:options="options"
+          :headers="headers"
+          :items="items"
+          suffix="select-filter-rules"
+          show-filters
+        />
+      </div>
+    `,
+	}),
+}

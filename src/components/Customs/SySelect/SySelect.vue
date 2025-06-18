@@ -8,9 +8,12 @@
 		[key: string]: unknown
 	}
 
+	// Définition des props avec typage correct pour modelValue
 	const props = defineProps({
 		modelValue: {
-			type: [Object, String, Number],
+			// En Vue, on ne peut pas mettre null directement comme type
+			// On utilise PropType pour définir le type complet incluant null
+			type: [Object, String, Number] as PropType<Record<string, unknown> | string | number | null>,
 			default: null,
 		},
 		items: {
@@ -238,12 +241,12 @@
 			ref="input"
 			v-model="selectedItemText"
 			v-click-outside="closeList"
-			:title="labelWithAsterisk"
+			:title="$attrs['aria-label'] || labelWithAsterisk"
 			color="primary"
 			tabindex="0"
 			:disabled="disabled"
 			:label="labelWithAsterisk"
-			:aria-label="labelWithAsterisk"
+			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
