@@ -2,18 +2,22 @@
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
 	import { ref, watch, onMounted, onUnmounted, computed, type PropType } from 'vue'
 	import type { VTextField } from 'vuetify/components'
+	import { VChip, VCheckbox } from 'vuetify/components'
 	import { locales } from './locales'
 
 	export type ItemType = {
 		[key: string]: unknown
 	}
 
+	export type SelectItemValueType = Record<string, unknown> | string | number | null | undefined
+	export type SelectItemArrayType = Array<Record<string, unknown> | string | number>
+
 	// Définition des props avec typage correct pour modelValue
 	const props = defineProps({
 		modelValue: {
 			// En Vue, on ne peut pas mettre null directement comme type
 			// On utilise PropType pour définir le type complet incluant null
-			type: [Object, String, Number] as PropType<Record<string, unknown> | string | number | null>,
+			type: [Object, String, Number, Array] as PropType<Record<string, unknown> | string | number | null | SelectItemArrayType>,
 			default: null,
 		},
 		items: {
@@ -88,12 +92,20 @@
 			type: String,
 			default: 'undefined',
 		},
+		multiple: {
+			type: Boolean,
+			default: false,
+		},
+		chips: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
 
 	const isOpen = ref(false)
-	const selectedItem = ref<Record<string, unknown > | string | number | null | undefined>(props.modelValue)
+	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const hasError = ref(false)
 
 	const labelWidth = ref(0)
@@ -122,21 +134,66 @@
 		}
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	const selectItem = (item: any) => {
+	const selectItem = (item: ItemType | null) => {
 		if (item === null) {
-			selectedItem.value = null
-			emit('update:modelValue', null)
+			// Clear selection for both single and multiple modes
+			selectedItem.value = props.multiple ? [] : null
+			emit('update:modelValue', props.multiple ? [] : null)
+			isOpen.value = false
+			return
 		}
-		else if (props.returnObject) {
-			selectedItem.value = item
-			emit('update:modelValue', item)
+
+		if (props.multiple) {
+			// Initialize as empty array if not already an array
+			if (!Array.isArray(selectedItem.value)) {
+				selectedItem.value = []
+			}
+
+			const selectedArray = selectedItem.value as SelectItemArrayType
+			let valueToCheck: unknown
+			let valueToStore: Record<string, unknown> | string | number
+
+			if (props.returnObject) {
+				valueToCheck = item[props.valueKey]
+				valueToStore = item
+			}
+			else {
+				valueToCheck = item[props.valueKey]
+				valueToStore = item[props.valueKey]
+			}
+
+			// Check if item is already selected
+			const index = selectedArray.findIndex((selected) => {
+				if (props.returnObject) {
+					return selected[props.valueKey] === valueToCheck
+				}
+				return selected === valueToCheck
+			})
+
+			// Toggle selection
+			if (index > -1) {
+				selectedArray.splice(index, 1)
+			}
+			else {
+				selectedArray.push(valueToStore)
+			}
+
+			emit('update:modelValue', [...selectedArray])
+			// Keep dropdown open for multiple selection
 		}
 		else {
-			selectedItem.value = item[props.valueKey]
-			emit('update:modelValue', item[props.valueKey])
+			// Single selection mode
+			if (props.returnObject) {
+				selectedItem.value = item
+				emit('update:modelValue', item)
+			}
+			else {
+				selectedItem.value = item[props.valueKey]
+				emit('update:modelValue', item[props.valueKey])
+			}
+			// Close dropdown for single selection
+			isOpen.value = false
 		}
-		isOpen.value = false
 	}
 
 	const getItemText = (item: unknown) => {
@@ -145,14 +202,29 @@
 	}
 
 	const selectedItemText = computed(() => {
-		if (selectedItem.value) {
+		if (!selectedItem.value) return ''
+
+		if (props.multiple) {
+			if (!Array.isArray(selectedItem.value) || selectedItem.value.length === 0) return ''
+
+			// For multiple selection, return an array of text values
+			const selectedArray = selectedItem.value as SelectItemArrayType
+
+			return selectedArray.map((selected) => {
+				if (props.returnObject) {
+					return selected[props.textKey]
+				}
+				return props.items.find((item: ItemType) => item[props.valueKey] === selected)?.[props.textKey] || ''
+			}).join(', ')
+		}
+		else {
+			// Single selection mode
 			if (props.returnObject) {
 				return (selectedItem.value as Record<string, unknown>)[props.textKey]
 			}
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			return props.items.find((item: any) => item[props.valueKey] === selectedItem.value)?.[props.textKey]
+			return props.items.find((item: any) => item[props.valueKey] === selectedItem.value)?.[props.textKey] || ''
 		}
-		return ''
 	})
 
 	const isShouldDisplayAsterisk = computed(() => {
@@ -190,6 +262,54 @@
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
 	})
+
+	// Function to check if an item is selected
+	const isItemSelected = (item: ItemType) => {
+		if (!selectedItem.value) return false
+
+		if (props.multiple && Array.isArray(selectedItem.value)) {
+			return selectedItem.value.some((selected) => {
+				if (props.returnObject) {
+					return selected[props.valueKey] === item[props.valueKey]
+				}
+				return selected === item[props.valueKey]
+			})
+		}
+		else {
+			if (props.returnObject) {
+				return selectedItem.value && selectedItem.value[props.valueKey] === item[props.valueKey]
+			}
+			return selectedItem.value === item[props.valueKey]
+		}
+	}
+
+	// Function to get text for a chip
+	const getChipText = (item: Record<string, unknown> | string | number) => {
+		if (props.returnObject) {
+			return item[props.textKey]
+		}
+		return props.items.find((i: ItemType) => i[props.valueKey] === item)?.[props.textKey] || ''
+	}
+
+	// Function to remove a chip
+	const removeChip = (item: Record<string, unknown> | string | number) => {
+		if (!Array.isArray(selectedItem.value)) return
+
+		const selectedArray = selectedItem.value
+		let index: number
+
+		if (props.returnObject) {
+			index = selectedArray.findIndex(selected => selected[props.valueKey] === item[props.valueKey])
+		}
+		else {
+			index = selectedArray.indexOf(item)
+		}
+
+		if (index > -1) {
+			selectedArray.splice(index, 1)
+			emit('update:modelValue', [...selectedArray])
+		}
+	}
 
 	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
 		if (!newIsOpen) {
@@ -262,6 +382,23 @@
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
 		>
+			<template
+				v-if="props.chips && props.multiple && Array.isArray(selectedItem) && selectedItem.length > 0"
+				#default
+			>
+				<div class="d-flex flex-wrap gap-1">
+					<VChip
+						v-for="(item, index) in selectedItem"
+						:key="index"
+						size="small"
+						class="ma-1"
+						closable
+						@click:close="removeChip(item)"
+					>
+						{{ getChipText(item) }}
+					</VChip>
+				</div>
+			</template>
 			<template #append-inner>
 				<VIcon
 					v-if="hasError"
@@ -303,16 +440,24 @@
 				:ref="'options-' + index"
 				role="option"
 				class="v-list-item"
-				:aria-selected="props.returnObject
-					? selectedItem && selectedItem[props.valueKey] === item[props.valueKey]
-					: selectedItem === item[props.valueKey]"
+				:aria-selected="isItemSelected(item)"
 				:tabindex="index + 1"
-				:class="{ active: props.returnObject
-					? selectedItem && selectedItem[props.valueKey] === item[props.valueKey]
-					: selectedItem === item[props.valueKey]
-				}"
+				:class="{ active: isItemSelected(item) }"
 				@click="selectItem(item)"
 			>
+				<template
+					v-if="props.multiple"
+					#prepend
+				>
+					<VCheckbox
+						:model-value="isItemSelected(item)"
+						density="compact"
+						hide-details
+						color="primary"
+						class="mt-0 pt-0"
+						@click.stop
+					/>
+				</template>
 				<VListItemTitle>
 					{{ getItemText(item) }}
 				</VListItemTitle>
@@ -371,6 +516,10 @@
 .sy-select__clear-icon {
 	color: tokens.$grey-darken-20 !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
+}
+
+.v-chip {
+	margin: 2px;
 }
 
 :deep(.v-field__input) {
