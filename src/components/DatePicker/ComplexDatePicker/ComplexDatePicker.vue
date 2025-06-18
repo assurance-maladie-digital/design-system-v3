@@ -118,7 +118,7 @@
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		textFieldActivator: false,
 		displayTodayButton: true,
 		displayWeekendDays: true,

@@ -52,7 +52,7 @@
 		displayPrependIcon: true,
 		disableErrorHandling: false,
 		showSuccessMessages: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		displayRange: false,
 	})
 

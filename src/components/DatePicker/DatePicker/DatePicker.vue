@@ -82,7 +82,7 @@
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		density: 'default',
 		hideDetails: false,
 		displayWeekendDays: true,
