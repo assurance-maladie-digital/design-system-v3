@@ -111,12 +111,12 @@
 				const newFilters = [...props.filters]
 
 				if (existingFilterIndex >= 0) {
-					newFilters[existingFilterIndex].value = newValue
+					newFilters[existingFilterIndex].value = newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined
 				}
 				else {
 					newFilters.push({
 						key,
-						value: newValue,
+						value: newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined,
 						type: 'select',
 					})
 				}
@@ -138,12 +138,12 @@
 			const newFilters = [...props.filters]
 
 			if (existingFilterIndex >= 0) {
-				newFilters[existingFilterIndex].value = newValue
+				newFilters[existingFilterIndex].value = newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined
 			}
 			else {
 				newFilters.push({
 					key,
-					value: newValue,
+					value: newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined,
 					type: 'select',
 				})
 			}

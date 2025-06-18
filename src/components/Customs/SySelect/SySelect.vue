@@ -168,7 +168,7 @@
 			}
 			else {
 				valueToCheck = item[props.valueKey]
-				valueToStore = item[props.valueKey]
+				valueToStore = item[props.valueKey] as string | number | Record<string, unknown>
 			}
 
 			// Check if item is already selected
@@ -197,8 +197,8 @@
 				emit('update:modelValue', item)
 			}
 			else {
-				selectedItem.value = item[props.valueKey]
-				emit('update:modelValue', item[props.valueKey])
+				selectedItem.value = item[props.valueKey] as SelectItemValueType
+				emit('update:modelValue', item[props.valueKey] as SelectItemValueType)
 			}
 			// Close dropdown for single selection
 			isOpen.value = false
@@ -321,26 +321,51 @@
 		}
 	}
 
+	// Function to safely get an item for chip operations
+	const safeChipItem = (item: unknown): Record<string, unknown> | string | number => {
+		// Handle null/undefined case
+		if (item === null || item === undefined) return ''
+
+		// If it's already a valid type, return it
+		if (typeof item === 'string' || typeof item === 'number') return item
+
+		// If it's an object, return it as a Record
+		if (typeof item === 'object') return item as Record<string, unknown>
+
+		// Default case - convert to string
+		return String(item)
+	}
+
 	// Function to get text for a chip
-	const getChipText = (item: Record<string, unknown> | string | number) => {
-		if (props.returnObject) {
-			return item[props.textKey]
+	const getChipText = (item: unknown) => {
+		const safeItem = safeChipItem(item)
+
+		if (typeof safeItem === 'object') {
+			// Handle object type
+			return (safeItem as Record<string, unknown>)[props.textKey] as string
 		}
-		return props.items.find((i: ItemType) => i[props.valueKey] === item)?.[props.textKey] || ''
+		// Handle primitive types
+		return props.items.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey] as string || ''
 	}
 
 	// Function to remove a chip
-	const removeChip = (item: Record<string, unknown> | string | number) => {
+	const removeChip = (item: unknown) => {
 		if (!Array.isArray(selectedItem.value)) return
 
 		const selectedArray = selectedItem.value
+		const safeItem = safeChipItem(item)
 		let index: number
 
 		if (props.returnObject) {
-			index = selectedArray.findIndex(selected => selected[props.valueKey] === item[props.valueKey])
+			// Handle object type
+			const itemValue = typeof safeItem === 'object'
+				? (safeItem as Record<string, unknown>)[props.valueKey]
+				: safeItem
+			index = selectedArray.findIndex(selected =>
+				(selected as Record<string, unknown>)[props.valueKey] === itemValue)
 		}
 		else {
-			index = selectedArray.indexOf(item)
+			index = selectedArray.indexOf(safeItem)
 		}
 
 		if (index > -1) {
