@@ -112,7 +112,8 @@
 
 				if (existingFilterIndex >= 0) {
 					newFilters[existingFilterIndex].value = newValue
-				} else {
+				}
+				else {
 					newFilters.push({
 						key,
 						value: newValue,
@@ -138,7 +139,8 @@
 
 			if (existingFilterIndex >= 0) {
 				newFilters[existingFilterIndex].value = newValue
-			} else {
+			}
+			else {
 				newFilters.push({
 					key,
 					value: newValue,

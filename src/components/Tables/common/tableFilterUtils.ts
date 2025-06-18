@@ -272,15 +272,16 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 				// If itemValue is also an array (e.g., item.skills = ['JavaScript', 'Vue'])
 				if (Array.isArray(itemValue)) {
 					// Check if any value in filterValue matches any value in itemValue
-					return filterValue.some(fv => 
-						itemValue.some(iv => 
+					return filterValue.some(fv =>
+						itemValue.some(iv =>
 							// Handle both primitive values and objects
 							typeof fv === 'object' && fv !== null && typeof iv === 'object' && iv !== null
 								? JSON.stringify(fv) === JSON.stringify(iv)
-								: fv === iv
-						)
+								: fv === iv,
+						),
 					)
-				} else {
+				}
+				else {
 					// If itemValue is a single value, check if it's included in filterValue
 					return filterValue.includes(itemValue as unknown as typeof filterValue[0])
 				}

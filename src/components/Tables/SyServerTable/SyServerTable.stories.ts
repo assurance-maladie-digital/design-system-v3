@@ -1419,6 +1419,328 @@ export const ServerFilterBySelect: Story = {
 	},
 }
 
+export const ServerFilterBySelectMultiple: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+        <template>
+          <SyServerTable
+            v-model:options="options"
+            :items="filteredUsers"
+            :headers="headers"
+            :server-items-length="totalFilteredUsers"
+            :loading="state === StateEnum.PENDING"
+            suffix="server-filter-select"
+            :show-filters="true"
+            @update:options="fetchData"
+          />
+        </template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+        <script setup lang="ts">
+          import { ref } from 'vue'
+          import { SyServerTable } from '@cnamts/synapse'
+          import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+          import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+
+          interface User {
+            name: string
+            department: string
+            status: string
+          }
+
+          interface DataObj {
+            items: User[]
+            total: number
+          }
+
+          const totalFilteredUsers = ref(0)
+          const filteredUsers = ref<User[]>([])
+          const state = ref(StateEnum.IDLE)
+
+          const options = ref<DataOptions>({
+            itemsPerPage: 5,
+            page: 1,
+            filters: [],
+          })
+
+          const headers = [
+            { 
+              title: 'Nom', 
+              key: 'name',
+              filterable: true,
+              filterType: 'text'
+            },
+            { 
+              title: 'Département', 
+              key: 'department',
+              filterable: true,
+              filterType: 'select',
+              multiple: true,
+			chips: true,
+              hideMessages: true,
+              filterOptions: [
+                { text: 'RH', value: 'RH' },
+                { text: 'IT', value: 'IT' },
+                { text: 'Finance', value: 'Finance' },
+                { text: 'Marketing', value: 'Marketing' },
+              ]
+            },
+            { 
+              title: 'Statut', 
+              key: 'status',
+              filterable: true,
+              filterType: 'select',
+              multiple: true,
+			chips: true,
+              hideMessages: true,
+              filterOptions: [
+                { text: 'Actif', value: 'Actif' },
+                { text: 'En congé', value: 'En congé' },
+                { text: 'Inactif', value: 'Inactif' },
+              ]
+            }
+          ]
+
+          const fetchData = async (): Promise<void> => {
+            const { items, total } = await getDataFromApi(options.value)
+            filteredUsers.value = items
+            totalFilteredUsers.value = total
+          }
+
+          const wait = async (ms: number) => {
+            return new Promise(resolve => setTimeout(resolve, ms))
+          }
+
+          const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
+            state.value = StateEnum.PENDING
+            await wait(1000)
+
+            return new Promise((resolve) => {
+              // Get all users
+              let items: User[] = getUsers()
+              
+              // Apply filters on server side
+              if (filters && filters.length > 0) {
+                filters.forEach((filter: FilterOption) => {
+                  const { key, value, type } = filter
+                  
+                  items = items.filter(item => {
+                    const itemValue = item[key as keyof User]
+                    
+                    if (type === 'select') {
+                      return itemValue === value
+                    } else {
+                      return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+                    }
+                  })
+                })
+              }
+              
+              const total = items.length
+
+              // Apply sorting
+              if (sortBy && sortBy.length > 0) {
+                items = items.sort((a, b) => {
+                  const key = sortBy[0].key as keyof User
+                  const order = sortBy[0].order === 'asc' ? 1 : -1
+                  
+                  return String(a[key]) > String(b[key]) ? order : -order
+                })
+              }
+
+              // Apply pagination
+              if (itemsPerPage > 0) {
+                items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+              }
+
+              resolve({ items, total })
+              state.value = StateEnum.RESOLVED
+            })
+          }
+
+          const getUsers = (): User[] => {
+            return [
+              { name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+              { name: 'Marie Martin', department: 'IT', status: 'En congé' },
+              { name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+              { name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+              { name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+              { name: 'Julie Bernard', department: 'RH', status: 'Actif' },
+              { name: 'Nicolas Moreau', department: 'Finance', status: 'En congé' },
+              { name: 'Camille Dubois', department: 'Marketing', status: 'Inactif' },
+              { name: 'Alexandre Lefebvre', department: 'IT', status: 'Actif' },
+              { name: 'Émilie Girard', department: 'RH', status: 'En congé' },
+              { name: 'Lucas Roux', department: 'Finance', status: 'Actif' },
+              { name: 'Chloé Lambert', department: 'Marketing', status: 'Actif' },
+              { name: 'Maxime Simon', department: 'IT', status: 'Inactif' },
+              { name: 'Laura Fournier', department: 'RH', status: 'Actif' },
+              { name: 'Antoine Mercier', department: 'Finance', status: 'En congé' },
+            ]
+          }
+          
+          // Initialize data
+          fetchData()
+        </script>
+        `,
+			},
+		],
+	},
+	args: {
+		headers: [
+			{
+				title: 'Nom',
+				key: 'name',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Département',
+				key: 'department',
+				filterable: true,
+				filterType: 'select',
+				multiple: true,
+				chips: true,
+				hideMessages: true,
+				filterOptions: [
+					{ text: 'RH', value: 'RH' },
+					{ text: 'IT', value: 'IT' },
+					{ text: 'Finance', value: 'Finance' },
+					{ text: 'Marketing', value: 'Marketing' },
+				],
+			},
+			{
+				title: 'Statut',
+				key: 'status',
+				filterable: true,
+				filterType: 'select',
+				multiple: true,
+				chips: true,
+				hideMessages: true,
+				filterOptions: [
+					{ text: 'Actif', value: 'Actif' },
+					{ text: 'En congé', value: 'En congé' },
+					{ text: 'Inactif', value: 'Inactif' },
+				],
+			},
+		],
+		caption: '',
+		options: {
+			itemsPerPage: 5,
+			page: 1,
+			filters: [],
+		},
+		serverItemsLength: 15,
+		showFilters: true,
+		suffix: 'server-filter-select',
+		density: 'default',
+		striped: false,
+	},
+	render(args) {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const options = ref(args.options)
+				const totalFilteredUsers = ref(0)
+				const filteredUsers = ref<Record<string, unknown>[]>([])
+				const state = ref(StateEnum.IDLE)
+
+				const fetchData = async (): Promise<void> => {
+					state.value = StateEnum.PENDING
+
+					// Simulate API call
+					await new Promise(resolve => setTimeout(resolve, 1000))
+
+					// Get all users
+					let items = [
+						{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+						{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+						{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+						{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+						{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+						{ name: 'Julie Bernard', department: 'RH', status: 'Actif' },
+						{ name: 'Nicolas Moreau', department: 'Finance', status: 'En congé' },
+						{ name: 'Camille Dubois', department: 'Marketing', status: 'Inactif' },
+						{ name: 'Alexandre Lefebvre', department: 'IT', status: 'Actif' },
+						{ name: 'Émilie Girard', department: 'RH', status: 'En congé' },
+						{ name: 'Lucas Roux', department: 'Finance', status: 'Actif' },
+						{ name: 'Chloé Lambert', department: 'Marketing', status: 'Actif' },
+						{ name: 'Maxime Simon', department: 'IT', status: 'Inactif' },
+						{ name: 'Laura Fournier', department: 'RH', status: 'Actif' },
+						{ name: 'Antoine Mercier', department: 'Finance', status: 'En congé' },
+					]
+
+					// Apply filters on server side
+					if (options.value?.filters && options.value.filters.length > 0) {
+						options.value.filters.forEach((filter) => {
+							const { key, value, type } = filter
+
+							items = items.filter((item) => {
+								const itemValue = item[key]
+
+								if (type === 'select') {
+									return itemValue === value
+								}
+								else {
+									return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+								}
+							})
+						})
+					}
+
+					const total = items.length
+
+					// Apply pagination
+					const { page = 1, itemsPerPage = 10 } = options.value || {}
+					if (itemsPerPage > 0) {
+						items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+					}
+
+					filteredUsers.value = items as Record<string, unknown>[]
+					totalFilteredUsers.value = total
+					state.value = StateEnum.RESOLVED
+				}
+
+				// Initialize data
+				fetchData()
+
+				return {
+					args,
+					options,
+					filteredUsers,
+					totalFilteredUsers,
+					state,
+					fetchData,
+					StateEnum,
+				}
+			},
+			template: `
+				<div>
+					<SyServerTable
+						v-model:options="options"
+						:items="filteredUsers"
+						:headers="args.headers"
+						:caption="args.caption"
+						:server-items-length="totalFilteredUsers"
+						:loading="state === StateEnum.PENDING"
+						:show-filters="args.showFilters"
+						:suffix="args.suffix"
+						:density="args.density"
+						:striped="args.striped"
+						:resizable-columns="args.resizableColumns"
+						@update:options="fetchData"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const ServerFilterByDate: Story = {
 	parameters: {
 		sourceCode: [

@@ -105,6 +105,7 @@
 	const emit = defineEmits(['update:modelValue'])
 
 	const isOpen = ref(false)
+	// Initialize selectedItem with props.modelValue or empty array for multiple mode
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const hasError = ref(false)
 
@@ -136,9 +137,17 @@
 
 	const selectItem = (item: ItemType | null) => {
 		if (item === null) {
-			// Clear selection for both single and multiple modes
 			selectedItem.value = props.multiple ? [] : null
 			emit('update:modelValue', props.multiple ? [] : null)
+			isOpen.value = false
+			return
+		}
+
+		// Handle default option in multiple mode
+		if (props.multiple && isDefaultOption(item)) {
+			// Clicking the default option in multiple mode clears all selections
+			selectedItem.value = []
+			emit('update:modelValue', [])
 			isOpen.value = false
 			return
 		}
@@ -207,12 +216,18 @@
 			return ''
 		}
 
-		if (!selectedItem.value) return ''
-
+		// For multiple mode, show default option text when nothing is selected
 		if (props.multiple) {
-			if (!Array.isArray(selectedItem.value) || selectedItem.value.length === 0) return ''
+			if (!selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)) {
+				// Find default option and return its text
+				const defaultOption = props.items.find(item => isDefaultOption(item))
+				if (defaultOption) {
+					return defaultOption[props.textKey] as string
+				}
+				return ''
+			}
 
-			// For multiple selection, return an array of text values
+			// For multiple selection with items selected, return an array of text values
 			const selectedArray = selectedItem.value as SelectItemArrayType
 
 			return selectedArray.map((selected) => {
@@ -224,6 +239,8 @@
 		}
 		else {
 			// For single selection
+			if (!selectedItem.value) return ''
+
 			if (props.returnObject) {
 				return selectedItem.value[props.textKey]
 			}
@@ -272,8 +289,20 @@
 		selectedItem.value = newValue
 	})
 
+	// Function to check if an item is the default option (e.g., "-choisir-")
+	const isDefaultOption = (item: ItemType) => {
+		// Check if this is the first item and has a placeholder-like text
+		const itemText = item[props.textKey] as string
+		return itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
+	}
+
 	// Function to check if an item is selected
 	const isItemSelected = (item: ItemType) => {
+		// For default option in multiple mode, show as selected when no other items are selected
+		if (props.multiple && isDefaultOption(item)) {
+			return !selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)
+		}
+
 		if (!selectedItem.value) return false
 
 		if (props.multiple && Array.isArray(selectedItem.value)) {
@@ -456,7 +485,7 @@
 				@click="selectItem(item)"
 			>
 				<template
-					v-if="props.multiple"
+					v-if="props.multiple && !isDefaultOption(item)"
 					#prepend
 				>
 					<VCheckbox
