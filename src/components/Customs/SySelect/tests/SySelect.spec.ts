@@ -643,7 +643,7 @@ describe('SySelect.vue', () => {
 				{ text: '-choisir-', value: null },
 				{ text: 'Option 1', value: '1' },
 				{ text: 'Option 2', value: '2' },
-				{ text: 'Option 3', value: '3' }
+				{ text: 'Option 3', value: '3' },
 			]
 			const wrapper = mount(SySelect, {
 				props: {
@@ -651,7 +651,7 @@ describe('SySelect.vue', () => {
 					multiple: true,
 					modelValue: [],
 					textKey: 'text',
-					valueKey: 'value'
+					valueKey: 'value',
 				},
 				global: {
 					plugins: [vuetify],
@@ -682,7 +682,7 @@ describe('SySelect.vue', () => {
 			const items = [
 				{ text: '-choisir-', value: null },
 				{ text: 'Option 1', value: '1' },
-				{ text: 'Option 2', value: '2' }
+				{ text: 'Option 2', value: '2' },
 			]
 			const wrapper = mount(SySelect, {
 				props: {
@@ -690,7 +690,7 @@ describe('SySelect.vue', () => {
 					multiple: true,
 					modelValue: ['1', '2'],
 					textKey: 'text',
-					valueKey: 'value'
+					valueKey: 'value',
 				},
 				global: {
 					plugins: [vuetify],
@@ -714,7 +714,7 @@ describe('SySelect.vue', () => {
 			const items = [
 				{ text: '-choisir-', value: null },
 				{ text: 'Option 1', value: '1' },
-				{ text: 'Option 2', value: '2' }
+				{ text: 'Option 2', value: '2' },
 			]
 			const wrapper = mount(SySelect, {
 				props: {
@@ -722,7 +722,7 @@ describe('SySelect.vue', () => {
 					multiple: true,
 					modelValue: [],
 					textKey: 'text',
-					valueKey: 'value'
+					valueKey: 'value',
 				},
 				global: {
 					plugins: [vuetify],
@@ -731,14 +731,14 @@ describe('SySelect.vue', () => {
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
-			
+
 			// Check that the selectedItemText is the default option
 			expect(instance.selectedItemText).toBe('-choisir-')
-			
+
 			// Check that isDefaultOption returns true for the default item
 			const defaultItem = items[0]
 			expect(instance.isDefaultOption(defaultItem)).toBe(true)
-			
+
 			// Check that isItemSelected returns true for the default item when no selections
 			expect(instance.isItemSelected(defaultItem)).toBe(true)
 		})
@@ -749,7 +749,7 @@ describe('SySelect.vue', () => {
 			const items = [
 				{ text: 'Option 1', value: '1' },
 				{ text: 'Option 2', value: '2' },
-				{ text: 'Option 3', value: '3' }
+				{ text: 'Option 3', value: '3' },
 			]
 			const wrapper = mount(SySelect, {
 				props: {
@@ -758,7 +758,7 @@ describe('SySelect.vue', () => {
 					chips: true,
 					modelValue: ['1', '2'],
 					textKey: 'text',
-					valueKey: 'value'
+					valueKey: 'value',
 				},
 				global: {
 					plugins: [vuetify],
@@ -776,7 +776,7 @@ describe('SySelect.vue', () => {
 			const items = [
 				{ text: 'Option 1', value: '1' },
 				{ text: 'Option 2', value: '2' },
-				{ text: 'Option 3', value: '3' }
+				{ text: 'Option 3', value: '3' },
 			]
 			const wrapper = mount(SySelect, {
 				props: {
@@ -785,7 +785,7 @@ describe('SySelect.vue', () => {
 					chips: true,
 					modelValue: ['1', '2'],
 					textKey: 'text',
-					valueKey: 'value'
+					valueKey: 'value',
 				},
 				global: {
 					plugins: [vuetify],
@@ -804,7 +804,7 @@ describe('SySelect.vue', () => {
 		it('handles chip text correctly for object items', async () => {
 			const items = [
 				{ text: 'Option 1', value: '1', data: { id: 101 } },
-				{ text: 'Option 2', value: '2', data: { id: 102 } }
+				{ text: 'Option 2', value: '2', data: { id: 102 } },
 			]
 			const wrapper = mount(SySelect, {
 				props: {
@@ -814,7 +814,7 @@ describe('SySelect.vue', () => {
 					returnObject: true,
 					modelValue: [items[0], items[1]],
 					textKey: 'text',
-					valueKey: 'value'
+					valueKey: 'value',
 				},
 				global: {
 					plugins: [vuetify],
@@ -832,7 +832,7 @@ describe('SySelect.vue', () => {
 			// This test verifies our safeChipItem function works correctly
 			const items = [
 				{ text: 'Option 1', value: '1' },
-				{ text: 'Option 2', value: 2 } // Number value
+				{ text: 'Option 2', value: 2 }, // Number value
 			]
 			const wrapper = mount(SySelect, {
 				props: {
@@ -841,7 +841,7 @@ describe('SySelect.vue', () => {
 					chips: true,
 					modelValue: ['1', 2],
 					textKey: 'text',
-					valueKey: 'value'
+					valueKey: 'value',
 				},
 				global: {
 					plugins: [vuetify],
@@ -853,14 +853,14 @@ describe('SySelect.vue', () => {
 			expect(chips.length).toBe(2)
 			expect(chips[0].text()).toBe('Option 1')
 			expect(chips[1].text()).toBe('Option 2')
-			
+
 			// Test the safeChipItem method directly
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
 			const stringResult = instance.safeChipItem('test')
 			const numberResult = instance.safeChipItem(123)
 			const objectResult = instance.safeChipItem({ id: 3 })
-			
+
 			expect(stringResult).toBe('test')
 			expect(numberResult).toBe(123)
 			expect(typeof objectResult).toBe('object')
