@@ -31,6 +31,8 @@ export type DataTableHeaders = {
 	filterable?: boolean
 	filterType?: FilterType
 	filterOptions?: Array<{ text: string, value: unknown }>
+	multiple?: boolean
+	chips?: boolean
 	sortable?: boolean
 	hideMessages?: boolean
 	dateFormat?: string
@@ -45,6 +47,8 @@ export type TableColumnHeader = {
 	filterable?: boolean
 	filterType?: FilterType
 	filterOptions?: Array<{ text: string, value: unknown }>
+	multiple?: boolean
+	chips?: boolean
 	hideMessages?: boolean
 	dateFormat?: string
 	sort?: unknown
