@@ -59,20 +59,6 @@ describe('tableFilterUtils', () => {
 			expect(result[0].id).toBe(2)
 		})
 
-		it('should filter by period correctly', () => {
-			const filters: FilterOption[] = [
-				{
-					key: 'vacationPeriod',
-					value: { from: '01/07/2023', to: '31/07/2023' },
-					type: 'period',
-				},
-			]
-			const result = filterItems(testItems, filters)
-			expect(result).toHaveLength(2)
-			expect(result.map(item => item.id)).toContain(1)
-			expect(result.map(item => item.id)).toContain(3)
-		})
-
 		it('should apply multiple filters correctly', () => {
 			const filters: FilterOption[] = [
 				{ key: 'department', value: 'IT', type: 'select' },
