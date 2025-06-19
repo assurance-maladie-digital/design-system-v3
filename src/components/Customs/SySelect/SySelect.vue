@@ -254,7 +254,7 @@
 	})
 
 	const hasChips = computed(() => {
-		return props.chips && props.multiple && Array.isArray(selectedItem.value) && selectedItem.value.length
+		return props.chips && props.multiple && Array.isArray(selectedItem.value) && selectedItem.value.length > 0
 	})
 
 	const labelWithAsterisk = computed(() => {
@@ -273,7 +273,7 @@
 	const isRequired = computed(() => {
 		if (props.disableErrorHandling) return false
 		if (props.readonly) return
-		return (props.required || props.errorMessages.length) && !selectedItem.value
+		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
 	const input = ref<InstanceType<typeof VTextField> | null>(null)
@@ -380,7 +380,7 @@
 				hasError.value = false
 			}
 			else {
-				hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length
+				hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
 			}
 		}
 		else {
