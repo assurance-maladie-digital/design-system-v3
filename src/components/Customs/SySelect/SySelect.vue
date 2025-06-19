@@ -308,16 +308,16 @@
 		if (props.multiple && Array.isArray(selectedItem.value)) {
 			return selectedItem.value.some((selected) => {
 				if (props.returnObject) {
-					return selected[props.valueKey] === item[props.valueKey]
+					return selected?.[props.valueKey] === item?.[props.valueKey]
 				}
-				return selected === item[props.valueKey]
+				return selected === item?.[props.valueKey]
 			})
 		}
 		else {
 			if (props.returnObject) {
-				return selectedItem.value && selectedItem.value[props.valueKey] === item[props.valueKey]
+				return Boolean(selectedItem.value && selectedItem.value[props.valueKey] === item?.[props.valueKey])
 			}
-			return selectedItem.value === item[props.valueKey]
+			return selectedItem.value === item?.[props.valueKey]
 		}
 	}
 
