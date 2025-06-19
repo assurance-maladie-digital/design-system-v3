@@ -1482,6 +1482,7 @@ export const ServerFilterBySelectMultiple: Story = {
               filterable: true,
               filterType: 'select',
               multiple: true,
+              chips: true,
               hideMessages: true,
               filterOptions: [
                 { text: 'RH', value: 'RH' },
@@ -1496,6 +1497,7 @@ export const ServerFilterBySelectMultiple: Story = {
               filterable: true,
               filterType: 'select',
               multiple: true,
+              chips: true,
               hideMessages: true,
               filterOptions: [
                 { text: 'Actif', value: 'Actif' },
@@ -1603,6 +1605,7 @@ export const ServerFilterBySelectMultiple: Story = {
 				filterable: true,
 				filterType: 'select',
 				multiple: true,
+				chips: true,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'RH', value: 'RH' },
@@ -1617,6 +1620,7 @@ export const ServerFilterBySelectMultiple: Story = {
 				filterable: true,
 				filterType: 'select',
 				multiple: true,
+				chips: true,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'Actif', value: 'Actif' },

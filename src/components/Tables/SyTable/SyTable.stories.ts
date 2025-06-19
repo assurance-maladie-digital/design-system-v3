@@ -1008,6 +1008,7 @@ export const FilterBySelectMultiple: Story = {
 							filterable: true,
 							filterType: 'select',
 							multiple: true,
+							chips: true,
 							hideMessages: true,
 							filterOptions: [
 								{ text: 'RH', value: 'RH' },
@@ -1021,6 +1022,7 @@ export const FilterBySelectMultiple: Story = {
 							key: 'status',
 							filterable: true,
 							multiple: true,
+							chips: true,
 							filterType: 'select',
 							hideMessages: true,
 							filterOptions: [
@@ -1077,6 +1079,7 @@ export const FilterBySelectMultiple: Story = {
 				filterable: true,
 				filterType: 'select',
 				multiple: true,
+				chips: true,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'RH', value: 'RH' },
@@ -1091,6 +1094,7 @@ export const FilterBySelectMultiple: Story = {
 				filterable: true,
 				filterType: 'select',
 				multiple: true,
+				chips: true,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'Actif', value: 'Actif' },

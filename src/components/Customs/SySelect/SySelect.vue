@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
-	import { ref, watch, onMounted, onUnmounted, computed, type PropType } from 'vue'
+	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
 	import type { VTextField } from 'vuetify/components'
 	import { VChip, VCheckbox } from 'vuetify/components'
 	import { locales } from './locales'
@@ -365,7 +365,7 @@
 	const removeChip = (item: unknown) => {
 		if (!Array.isArray(selectedItem.value)) return
 
-		const selectedArray = selectedItem.value
+		const selectedArray = [...selectedItem.value] // Create a copy to avoid mutation issues
 		const safeItem = safeChipItem(item)
 		let index: number
 
@@ -383,7 +383,19 @@
 
 		if (index > -1) {
 			selectedArray.splice(index, 1)
-			emit('update:modelValue', [...selectedArray])
+			// Ensure reactivity by creating a completely new array
+			const updatedArray = [...selectedArray]
+
+			// Update the local state first
+			selectedItem.value = updatedArray
+
+			// Then emit the update to the parent
+			emit('update:modelValue', updatedArray)
+
+			// Force update of the UI
+			nextTick(() => {
+				updateListPosition()
+			})
 		}
 	}
 
@@ -465,8 +477,8 @@
 			>
 				<div class="d-flex flex-wrap gap-1">
 					<VChip
-						v-for="(item, index) in selectedItem"
-						:key="index"
+						v-for="item in selectedItem"
+						:key="props.returnObject ? item[props.valueKey] : item"
 						size="small"
 						class="ma-1"
 						closable
