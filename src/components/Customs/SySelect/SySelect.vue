@@ -602,7 +602,7 @@
 
 :deep(.v-field__input) {
 	color: tokens.$grey-darken-20;
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .hidden-label {
