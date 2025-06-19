@@ -60,7 +60,7 @@ exports[`AmeliproCheckboxGroup > render correctly 1`] = `
               aria-disabled="true"
               class="
                 align-center
-                amelipro-checkbox-group__item__input
+                amelipro-checkbox-group__item-input
                 d-inline-flex
                 flex-row
                 mr-2
@@ -101,7 +101,7 @@ exports[`AmeliproCheckboxGroup > render correctly 1`] = `
               aria-disabled="true"
               class="
                 align-center
-                amelipro-checkbox-group__item__input
+                amelipro-checkbox-group__item-input
                 d-inline-flex
                 flex-row
                 mr-2
@@ -140,7 +140,7 @@ exports[`AmeliproCheckboxGroup > render correctly 1`] = `
               aria-checked="false"
               class="
                 align-center
-                amelipro-checkbox-group__item__input
+                amelipro-checkbox-group__item-input
                 d-inline-flex
                 flex-row
                 mr-2
@@ -179,7 +179,7 @@ exports[`AmeliproCheckboxGroup > render correctly 1`] = `
               aria-checked="false"
               class="
                 align-center
-                amelipro-checkbox-group__item__input
+                amelipro-checkbox-group__item-input
                 d-inline-flex
                 flex-row
                 mr-2
@@ -218,7 +218,7 @@ exports[`AmeliproCheckboxGroup > render correctly 1`] = `
               aria-checked="false"
               class="
                 align-center
-                amelipro-checkbox-group__item__input
+                amelipro-checkbox-group__item-input
                 d-inline-flex
                 flex-row
                 mr-2

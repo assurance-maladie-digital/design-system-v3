@@ -1,13 +1,80 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`UserInformationSummary > render correctly 1`] = `
-"<div id="user-information-summary-id-container" class="user-information-summary">
-  <p id="user-information-summary-id-user-name" class="mb-0 text-body-2 font-weight-semibold user-information-summary__name">nom utilisateur</p>
-  <p id="user-information-summary-id-denomination" class="mb-0 text-body-2 user-information-summary__denomination">dénomination</p>
-  <p id="user-information-summary-id-specialty" class="mb-0 text-body-2 user-information-summary__specialty">catégorie spécialité</p>
-  <p id="user-information-summary-id-profil" class="mb-0 text-body-2 user-information-summary__profil">profil</p>
-  <p id="user-information-summary-id-office" class="mb-0 text-body-2 user-information-summary__office">nom cabinet</p>
-  <p id="user-information-summary-id-address-line-1" class="mb-0 text-body-2 user-information-summary__address-1">adresse ligne 1</p>
-  <p id="user-information-summary-id-address-line-2" class="mb-0 text-body-2 user-information-summary__address-2">adresse ligne 2</p>
-</div>"
+<div
+  class="user-information-summary"
+  id="user-information-summary-id-container"
+>
+  <p
+    class="
+      font-weight-semibold
+      mb-0
+      text-body-2
+      user-information-summary__name
+    "
+    id="user-information-summary-id-user-name"
+  >
+    nom utilisateur
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__denomination
+    "
+    id="user-information-summary-id-denomination"
+  >
+    dénomination
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__specialty
+    "
+    id="user-information-summary-id-specialty"
+  >
+    catégorie spécialité
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__profil
+    "
+    id="user-information-summary-id-profil"
+  >
+    profil
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__office
+    "
+    id="user-information-summary-id-office"
+  >
+    nom cabinet
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__address-1
+    "
+    id="user-information-summary-id-address-line-1"
+  >
+    adresse ligne 1
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__address-2
+    "
+    id="user-information-summary-id-address-line-2"
+  >
+    adresse ligne 2
+  </p>
+</div>
 `;

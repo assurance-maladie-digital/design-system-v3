@@ -36,7 +36,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
     </span>
     <div
       class="
-        amelipro-card--numbered__wrapper
+        amelipro-card--numbered-wrapper
         d-flex
         w-100
       "
@@ -50,7 +50,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
         style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
       >
         <div
-          class="amelipro-card--numbered__content"
+          class="amelipro-card--numbered-content"
           id="my-numbered-card-id-card-0-content"
         >
           <p>
@@ -84,7 +84,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
     </span>
     <div
       class="
-        amelipro-card--numbered__wrapper
+        amelipro-card--numbered-wrapper
         d-flex
         w-100
       "
@@ -98,7 +98,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
         style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
       >
         <div
-          class="amelipro-card--numbered__content"
+          class="amelipro-card--numbered-content"
           id="my-numbered-card-id-card-1-content"
         >
           <p>
@@ -132,7 +132,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
     </span>
     <div
       class="
-        amelipro-card--numbered__wrapper
+        amelipro-card--numbered-wrapper
         d-flex
         w-100
       "
@@ -146,7 +146,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
         style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
       >
         <div
-          class="amelipro-card--numbered__content"
+          class="amelipro-card--numbered-content"
           id="my-numbered-card-id-card-2-content"
         >
           <p>
