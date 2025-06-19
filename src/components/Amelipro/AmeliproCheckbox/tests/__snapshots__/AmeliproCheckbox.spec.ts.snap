@@ -1,10 +1,40 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`AmeliproCheckbox > render correctly 1`] = `
-"<div data-v-9ed61775="" id="my-checkbox-id-container">
-  <div data-v-9ed61775="" class="d-flex align-center amelipro-checkbox">
-    <div data-v-9ed61775="" id="my-checkbox-id" aria-checked="false" aria-disabled="false" class="mr-0 d-inline-flex flex-row align-center text-body-1 amelipro-checkbox-input" role="checkbox" tabindex="0"><span data-v-9ed61775="" id="my-checkbox-id-label-text" class="checkbox-label text-ap-grey-darken-1">Exemple de checkbox<!--v-if--><!--v-if--></span></div>
+<div id="my-checkbox-id-container">
+  <div class="
+    align-center
+    amelipro-checkbox
+    d-flex
+  ">
+    <div
+      aria-checked="false"
+      aria-disabled="false"
+      class="
+        align-center
+        amelipro-checkbox-input
+        d-inline-flex
+        flex-row
+        mr-0
+        text-body-1
+      "
+      id="my-checkbox-id"
+      role="checkbox"
+      tabindex="0"
+    >
+      <span
+        class="
+          checkbox-label
+          text-ap-grey-darken-1
+        "
+        id="my-checkbox-id-label-text"
+      >
+        Exemple de checkbox
+        <!-- v-if -->
+        <!-- v-if -->
+      </span>
+    </div>
   </div>
-  <!--v-if-->
-</div>"
+  <!-- v-if -->
+</div>
 `;

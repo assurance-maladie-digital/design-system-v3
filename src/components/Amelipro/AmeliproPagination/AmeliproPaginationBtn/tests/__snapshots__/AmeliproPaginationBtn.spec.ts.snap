@@ -1,11 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproBtn > render correctly 1`] = `
+exports[`AmeliproPaginationBtn > render correctly 1`] = `
 <button
   class="
     amelipro-btn
     amelipro-btn--style
-    bg-ap-blue-darken-1
+    amelipro-pagination__btn
+    bg-ap-white
     elevation-0
     v-btn
     v-btn--density-default
@@ -14,8 +15,8 @@ exports[`AmeliproBtn > render correctly 1`] = `
     v-btn--variant-flat
     v-theme--light
   "
-  id="my-btn-id"
-  style="height: auto; min-height: 3rem; color: #FFFFFF !important;"
+  id="my-pagination-btn-id"
+  style="height: auto; min-height: 3rem; color: #00749C !important;"
   type="button"
 >
   <span class="v-btn__overlay"></span>
@@ -31,7 +32,6 @@ exports[`AmeliproBtn > render correctly 1`] = `
       d-flex
       flex-row
     ">
-      My Button
       <!-- v-if -->
       <!-- v-if -->
     </span>
