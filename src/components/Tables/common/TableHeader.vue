@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, nextTick, onMounted, ref, inject, watch, type Ref } from 'vue'
-	import type { VDataTable, VDataTableServer, VIcon } from 'vuetify/components'
+	import type { VDataTable, VDataTableServer } from 'vuetify/components'
 	import { locales } from './locales'
 
 	const props = withDefaults(defineProps<{
