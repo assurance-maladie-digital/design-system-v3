@@ -117,7 +117,16 @@
 		isOpen.value = !isOpen.value
 		if (isOpen.value) updateListPosition()
 	}
-	const closeList = () => {
+	const closeList = (event?: Event) => {
+		// Check if the click is inside the dropdown list
+		const target = event?.target as HTMLElement
+		const listElement = document.querySelector('.v-list')
+
+		// In multiple selection mode, don't close the dropdown when clicking on list items
+		if (props.multiple && listElement && listElement.contains(target)) {
+			return
+		}
+
 		isOpen.value = false
 	}
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
@@ -135,7 +144,10 @@
 		}
 	}
 
-	const selectItem = (item: ItemType | null) => {
+	const selectItem = (item: ItemType | null, event?: Event) => {
+		// Stop event propagation to prevent click-outside from triggering
+		event?.stopPropagation()
+
 		if (item === null) {
 			selectedItem.value = props.multiple ? [] : null
 			emit('update:modelValue', props.multiple ? [] : null)
@@ -189,6 +201,7 @@
 
 			emit('update:modelValue', [...selectedArray])
 			// Keep dropdown open for multiple selection
+			isOpen.value = true
 		}
 		else {
 			// Single selection mode
@@ -497,6 +510,7 @@
 			}"
 			bg-color="white"
 			@keydown.esc.prevent="isOpen = false"
+			@click.stop
 		>
 			<VListItem
 				v-for="(item, index) in formattedItems"
@@ -507,7 +521,7 @@
 				:aria-selected="isItemSelected(item)"
 				:tabindex="index + 1"
 				:class="{ active: isItemSelected(item) }"
-				@click="selectItem(item)"
+				@click.stop="(event) => selectItem(item, event)"
 			>
 				<template
 					v-if="props.multiple && !isDefaultOption(item)"
@@ -519,7 +533,7 @@
 						hide-details
 						color="primary"
 						class="mt-0 pt-0 mr-1"
-						@click.stop="selectItem(item)"
+						@click.stop="(event) => selectItem(item, event)"
 					/>
 				</template>
 				<VListItemTitle>
@@ -588,6 +602,7 @@
 
 :deep(.v-field__input) {
 	color: tokens.$grey-darken-20;
+  cursor: pointer;
 }
 
 .hidden-label {
