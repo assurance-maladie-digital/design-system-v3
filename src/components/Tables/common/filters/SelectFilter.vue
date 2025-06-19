@@ -15,7 +15,7 @@
 			default: () => [],
 		},
 		filterValue: {
-			type: [String, Number, Object, undefined, null] as unknown as () => string | number | Record<string, unknown> | undefined | null,
+			type: [String, Number, Object, Array, undefined, null] as unknown as () => string | number | Record<string, unknown> | Array<string | number | Record<string, unknown>> | undefined | null,
 			default: null,
 		},
 		inputConfig: {
@@ -86,12 +86,46 @@
 	})
 
 	const modelValue = computed({
-		get: () => props.filterValue === null ? locales.defaultOption : props.filterValue,
+		get: () => {
+			if (props.filterValue === null) {
+				return props.header.multiple ? [] : locales.defaultOption
+			}
+			return props.filterValue
+		},
 		set: (newValue) => {
 			// Générer une clé unique en utilisant la fonction dédiée
 			const key = generateUniqueKey()
 			if (!key) return
 
+			// Pour la sélection multiple
+			if (props.header.multiple) {
+				// Si le tableau est vide ou undefined, effacer le filtre
+				if (!newValue || (Array.isArray(newValue) && newValue.length === 0)) {
+					const newFilters = props.filters.filter(f => f.key !== key)
+					emit('update:filters', newFilters)
+					return
+				}
+
+				// Créer ou mettre à jour le filtre avec la valeur de tableau
+				const existingFilterIndex = props.filters.findIndex(f => f.key === key)
+				const newFilters = [...props.filters]
+
+				if (existingFilterIndex >= 0) {
+					newFilters[existingFilterIndex].value = newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined
+				}
+				else {
+					newFilters.push({
+						key,
+						value: newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined,
+						type: 'select',
+					})
+				}
+
+				emit('update:filters', newFilters)
+				return
+			}
+
+			// Pour la sélection simple (comportement existant)
 			if (newValue === undefined || newValue === null || newValue === locales.defaultOption) {
 				// Effacer le filtre si la valeur est vide ou "-choisir-"
 				const newFilters = props.filters.filter(f => f.key !== key)
@@ -104,12 +138,12 @@
 			const newFilters = [...props.filters]
 
 			if (existingFilterIndex >= 0) {
-				newFilters[existingFilterIndex].value = newValue
+				newFilters[existingFilterIndex].value = newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined
 			}
 			else {
 				newFilters.push({
 					key,
-					value: newValue,
+					value: newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined,
 					type: 'select',
 				})
 			}
@@ -146,6 +180,9 @@
 			return true
 		}
 		// En mode normal, cacher le bouton quand l'option par défaut est sélectionnée
+		if (props.header.multiple) {
+			return Array.isArray(modelValue.value) && modelValue.value.length > 0
+		}
 		return modelValue.value !== locales.defaultOption
 	})
 </script>
@@ -164,6 +201,8 @@
 			:variant="inputConfig?.variant ?? variant"
 			:bg-color="inputConfig?.backgroundColor ?? backgroundColor"
 			:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
+			:multiple="props.header.multiple"
+			:chips="props.header.chips"
 			class="filter-input"
 			:aria-label="props.header.title || 'Filtre'"
 			@click:clear="handleClear"

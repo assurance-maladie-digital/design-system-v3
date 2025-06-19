@@ -34,6 +34,14 @@ const meta: Meta<typeof SySelect> = {
 			control: 'boolean',
 			description: 'Permet de vider la sélection',
 		},
+		multiple: {
+			control: 'boolean',
+			description: 'Permet la sélection multiple d\'options',
+		},
+		chips: {
+			control: 'boolean',
+			description: 'Affiche les options sélectionnées sous forme de chips',
+		},
 		hideMessages: {
 			control: 'boolean',
 			description: 'Masque les messages d\'erreur',
@@ -221,6 +229,158 @@ const items = [
 						v-bind="args"
 						:required="args.required"
 						:display-asterisk="args.displayAsterisk"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const MultipleSelection: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple de sélection multiple avec SySelect. Les options dans le menu déroulant sont affichées avec des cases à cocher pour faciliter la sélection multiple.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SySelect
+    v-model="selectedOptions"
+    :items="options"
+    label="Options"
+    multiple
+  />
+  <div class="mt-4">
+    Options sélectionnées: {{ selectedOptions }}
+  </div>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import SySelect from '@cnamts/synapse'
+
+const selectedOptions = ref([])
+const options = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+  { text: 'Option 4', value: '4' },
+]
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+			{ text: 'Option 4', value: '4' },
+		],
+		'label': 'Sélection multiple',
+		'multiple': true,
+		'clearable': true,
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SySelect },
+			setup() {
+				const selectedOptions = ref([])
+
+				return { args, selectedOptions }
+			},
+			template: `
+				<div class="pa-4">
+					<SySelect
+						v-model="selectedOptions"
+						v-bind="args"
+					/>
+					<div class="mt-4">
+						Options sélectionnées: {{ selectedOptions }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const ChipsDisplay: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple de sélection multiple avec affichage en chips. Les options sélectionnées sont affichées sous forme de chips dans le champ, et les options dans le menu déroulant sont affichées avec des cases à cocher.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SySelect
+    v-model="selectedOptions"
+    :items="options"
+    label="Options"
+    multiple
+    chips
+  />
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import SySelect from '@cnamts/synapse'
+
+const selectedOptions = ref([])
+const options = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+  { text: 'Option 4', value: '4' },
+]
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+			{ text: 'Option 4', value: '4' },
+		],
+		'label': 'Sélection avec chips',
+		'multiple': true,
+		'chips': true,
+		'clearable': true,
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SySelect },
+			setup() {
+				const selectedOptions = ref([])
+
+				return { args, selectedOptions }
+			},
+			template: `
+				<div class="pa-4">
+					<SySelect
+						v-model="selectedOptions"
+						v-bind="args"
 					/>
 				</div>
 			`,

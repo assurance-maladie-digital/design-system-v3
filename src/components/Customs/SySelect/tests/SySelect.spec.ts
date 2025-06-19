@@ -636,4 +636,234 @@ describe('SySelect.vue', () => {
 		await clearBtn.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([null])
 	})
+
+	describe('Multiple selection mode', () => {
+		it('handles multiple selection correctly', async () => {
+			const items = [
+				{ text: '-choisir-', value: null },
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+				{ text: 'Option 3', value: '3' },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					multiple: true,
+					modelValue: [],
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Open the select menu
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// Select Option 1
+			const listItems = wrapper.findAll('.v-list-item')
+			await listItems[1].trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// Check that Option 1 is selected
+			expect(wrapper.emitted()['update:modelValue'][0]).toEqual([['1']])
+
+			// Select Option 2 as well
+			await listItems[2].trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// Check that both options are selected
+			expect(wrapper.emitted()['update:modelValue'][1]).toEqual([['1', '2']])
+		})
+
+		it('clears all selections when default option is clicked', async () => {
+			const items = [
+				{ text: '-choisir-', value: null },
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					multiple: true,
+					modelValue: ['1', '2'],
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Open the select menu
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// Click on the default option
+			const defaultOption = wrapper.findAll('.v-list-item')[0]
+			await defaultOption.trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// Check that all selections are cleared
+			expect(wrapper.emitted()['update:modelValue'][0]).toEqual([[]])
+		})
+
+		it('treats default option as selected when no items are selected', async () => {
+			const items = [
+				{ text: '-choisir-', value: null },
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					multiple: true,
+					modelValue: [],
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+
+			// Check that the selectedItemText is the default option
+			expect(instance.selectedItemText).toBe('-choisir-')
+
+			// Check that isDefaultOption returns true for the default item
+			const defaultItem = items[0]
+			expect(instance.isDefaultOption(defaultItem)).toBe(true)
+
+			// Check that isItemSelected returns true for the default item when no selections
+			expect(instance.isItemSelected(defaultItem)).toBe(true)
+		})
+	})
+
+	describe('Chips mode', () => {
+		it('renders chips for selected items', async () => {
+			const items = [
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+				{ text: 'Option 3', value: '3' },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					multiple: true,
+					chips: true,
+					modelValue: ['1', '2'],
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Check that chips are rendered
+			const chips = wrapper.findAll('.v-chip')
+			expect(chips.length).toBe(2)
+			expect(chips[0].text()).toBe('Option 1')
+			expect(chips[1].text()).toBe('Option 2')
+		})
+
+		it('removes a chip when close button is clicked', async () => {
+			const items = [
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+				{ text: 'Option 3', value: '3' },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					multiple: true,
+					chips: true,
+					modelValue: ['1', '2'],
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Find the first chip's close button and click it
+			const closeButton = wrapper.find('.v-chip__close')
+			await closeButton.trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// Check that the chip was removed from the model
+			expect(wrapper.emitted()['update:modelValue'][0]).toEqual([['2']])
+		})
+
+		it('handles chip text correctly for object items', async () => {
+			const items = [
+				{ text: 'Option 1', value: '1', data: { id: 101 } },
+				{ text: 'Option 2', value: '2', data: { id: 102 } },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					multiple: true,
+					chips: true,
+					returnObject: true,
+					modelValue: [items[0], items[1]],
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Check that chips display the correct text
+			const chips = wrapper.findAll('.v-chip')
+			expect(chips.length).toBe(2)
+			expect(chips[0].text()).toBe('Option 1')
+			expect(chips[1].text()).toBe('Option 2')
+		})
+
+		it('safely handles different item types in chips', async () => {
+			// This test verifies our safeChipItem function works correctly
+			const items = [
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: 2 }, // Number value
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					multiple: true,
+					chips: true,
+					modelValue: ['1', 2],
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Check that chips are rendered without errors
+			const chips = wrapper.findAll('.v-chip')
+			expect(chips.length).toBe(2)
+			expect(chips[0].text()).toBe('Option 1')
+			expect(chips[1].text()).toBe('Option 2')
+
+			// Test the safeChipItem method directly
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const stringResult = instance.safeChipItem('test')
+			const numberResult = instance.safeChipItem(123)
+			const objectResult = instance.safeChipItem({ id: 3 })
+
+			expect(stringResult).toBe('test')
+			expect(numberResult).toBe(123)
+			expect(typeof objectResult).toBe('object')
+		})
+	})
 })
