@@ -651,7 +651,10 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                                     <div class="
                                       d-flex
                                       flex-column
-                                      flex-md-row
+                                      flex-md-nowrap
+                                      flex-nowrap
+                                      flex-sm-row
+                                      flex-sm-wrap
                                     ">
                                       <div
                                         class="
