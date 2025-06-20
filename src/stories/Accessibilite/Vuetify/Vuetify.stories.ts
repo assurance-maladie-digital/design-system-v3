@@ -116,8 +116,7 @@ export const VuetifyPanel: StoryObj = {
 					itemValue, cardItem, activeBtnIndex, search, searchString,
 					conformityFilter, conformityOptions, isComponentConform,
 					displayedComponents,
-					filterIcon: filterIcon,
-					searchIcon: searchIcon,
+					// Les propriétés filterIcon et searchIcon sont déjà définies à la ligne 115
 				}
 			},
 			template: `
