@@ -3,6 +3,12 @@
 	import { locales } from './locales'
 	import PageContainer from '../PageContainer/PageContainer.vue'
 
+	// Fonction pour formater le message et ajouter des liens tel: aux numéros de téléphone
+	const formatMessage = (message: string): string => {
+		// Regex pour détecter les numéros de téléphone comme 3646
+		return message.replace(/\b(3646|\d{10})\b/g, '<a href="tel:$1">$1</a>')
+	}
+
 	withDefaults(defineProps<{
 		pageTitle?: string
 		message?: string
@@ -44,16 +50,17 @@
 						{{ code }}
 					</div>
 
-					<h2
+					<h1
 						v-if="pageTitle"
 						class="mb-2 font-weight-bold text-h5 mb-4"
 					>
 						{{ pageTitle }}
-					</h2>
+					</h1>
 
-					<p v-if="message">
-						{{ message }}
-					</p>
+					<p
+						v-if="message"
+						v-html="formatMessage(message)"
+					/>
 
 					<slot name="additional-content" />
 
@@ -63,7 +70,6 @@
 							:to="btnLink"
 							:href="btnHref"
 							color="primary"
-							exact
 							class="mt-6"
 						>
 							{{ btnText }}

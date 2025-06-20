@@ -96,14 +96,14 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
             </span>
             404
           </div>
-          <h2 class="
+          <h1 class="
             font-weight-bold
             mb-2
             mb-4
             text-h5
           ">
             Page non trouvée
-          </h2>
+          </h1>
           <p>
             Cette page n’existe pas ou a été déplacée.
           </p>
@@ -233,14 +233,14 @@ exports[`NotFoundPage > renders correctly 1`] = `
             </span>
             404
           </div>
-          <h2 class="
+          <h1 class="
             font-weight-bold
             mb-2
             mb-4
             text-h5
           ">
             Page non trouvée
-          </h2>
+          </h1>
           <p>
             Cette page n’existe pas ou a été déplacée.
           </p>
