@@ -124,7 +124,8 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
           v-col-sm-6
         ">
           <img
-            alt="Page non trouvée"
+            alt=""
+            aria-hidden="true"
             src="/src/components/NotFoundPage/assets/not-found.svg"
           />
         </div>
@@ -254,7 +255,8 @@ exports[`NotFoundPage > renders correctly 1`] = `
           v-col-sm-6
         ">
           <img
-            alt="Page non trouvée"
+            alt=""
+            aria-hidden="true"
             src="/src/components/NotFoundPage/assets/not-found.svg"
           />
         </div>
