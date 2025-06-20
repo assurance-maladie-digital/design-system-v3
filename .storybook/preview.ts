@@ -9,6 +9,29 @@ const vuetify = createVuetifyInstance()
 
 setup((app, { globals }) => {
 	app.use(vuetify)
+	
+	// Add global mixin to help with SySelect dropdown in docs mode
+	if (typeof window !== 'undefined') {
+		// Wait for DOM to be ready
+		window.addEventListener('DOMContentLoaded', () => {
+			// Add click handler to document to help with dropdown positioning
+			document.addEventListener('click', (event) => {
+				// Check if we're in docs mode
+				if (document.body.classList.contains('storybook-docs-mode')) {
+					// Find all dropdowns and make sure they're properly positioned
+					const lists = document.querySelectorAll('.v-list');
+					lists.forEach(list => {
+						if (list instanceof HTMLElement) {
+							list.style.position = 'absolute';
+							list.style.zIndex = '9999';
+							list.style.visibility = 'visible';
+						}
+					});
+				}
+			});
+		});
+	}
+	
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
 	// Apply theme class to <html> (document.documentElement) instead of #root
@@ -74,6 +97,15 @@ const preview: Preview = {
 				localStorage.setItem('storybook-theme', context.globals.theme)
 			}
 			
+			// Check if we're in docs mode to apply special handling for dropdowns
+			const isInDocs = context.viewMode === 'docs';
+			
+			if (isInDocs) {
+				// Add a special class to help target docs mode in CSS
+				if (typeof document !== 'undefined') {
+					document.body.classList.add('storybook-docs-mode');
+				}
+			}
 			
 			return story()
 		},

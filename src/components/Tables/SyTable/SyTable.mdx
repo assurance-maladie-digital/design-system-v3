@@ -7,7 +7,7 @@ import * as SyTable from './SyTable.stories';
 
 Le composant `SyTable` est utilisé pour afficher des données tabulaires côté client. Il s'appuie sur le composant `VDataTable` de Vuetify et offre des fonctionnalités supplémentaires comme le stockage local des options de tableau et des améliorations d'accessibilité.
 
-<Canvas of={SyTable.Default} />
+<Canvas story={{height: '550px'}} of={SyTable.Default} />
 
 ## API
 
@@ -25,17 +25,17 @@ Pour gérer individuellement le stockage des options pour différents tableaux, 
 
 Le composant permet de trier les données par colonne en cliquant sur l'en-tête de la colonne.
 
-<Canvas of={SyTable.SortBy} />
+<Canvas story={{height: '550px'}} of={SyTable.SortBy} />
 
 ### Filtres des colonnes
 
 Le composant permet d'appliquer des filtres sur les colonnes. Vous pouvez définir des filtres personnalisés pour chaque colonne en utilisant la prop `show-filters`. Voir d'autres exemples de filtres dans les stories.
-<Canvas of={SyTable.FilterByText} />
+<Canvas story={{height: '550px'}} of={SyTable.FilterByText} />
 
 ### Resize des colonnes
 
 Le composant peut permettre de redimensionner les colonnes en utilisant la prop `resizable-columns`. Vous pouvez activer ou désactiver cette fonctionnalité selon vos besoins.
-<Canvas of={SyTable.ResizableColumns} />
+<Canvas story={{height: '550px'}} of={SyTable.ResizableColumns} />
 
 ### Accessibilité
 
