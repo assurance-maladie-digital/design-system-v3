@@ -188,7 +188,7 @@ export const Legende: StoryObj = {
 					<p style="color: grey; font-size: 14px">Correctifs associés (<a
 						href="https://github.com/assurance-maladie-digital/design-system-v3/issues/654" target="_blank"
 						style="color:#0C41BD;"
-					>issue #652</a>)</p>
+					>issue #654</a>)</p>
 				</div>
 			  </div>
             `,
