@@ -73,6 +73,8 @@ const preview: Preview = {
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
 			}
+			
+			
 			return story()
 		},
 	],

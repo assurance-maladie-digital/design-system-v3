@@ -21,6 +21,10 @@
 		striped: false,
 	})
 
+	const emit = defineEmits<{
+		(e: 'update:options', options: Partial<DataOptions>): void
+	}>()
+
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
@@ -39,7 +43,7 @@
 		// Applique les filtres aux éléments copiés
 		return filterItems(itemsCopy, filters.value)
 	})
-	
+
 	// Pagination variables
 	const page = computed({
 		get: () => options.value.page || 1,
@@ -50,15 +54,45 @@
 			}
 		},
 	})
-	
+
+	/**
+	 * Update items per page from pagination component
+	 */
+	function updateItemsPerPage(newItemsPerPage: number) {
+		// Create a completely new options object to force reactivity
+		const newOptions = {
+			...options.value,
+			itemsPerPage: newItemsPerPage,
+			page: 1, // Reset to first page when changing items per page
+		}
+
+		// Update options with the new object
+		options.value = newOptions
+
+		// Force a refresh of the table
+		nextTick(() => {
+			if (table.value) {
+				// Force the table to refresh by triggering a re-render
+				table.value.$forceUpdate()
+
+				// Emit an event to notify parent components
+				emit('update:options', newOptions)
+			}
+		})
+	}
+
 	// Items per page with fallback to props or default
 	const itemsPerPageValue = computed(() => {
-		return options.value.itemsPerPage || props.itemsPerPage || 10
+		const value = options.value.itemsPerPage || props.itemsPerPage || 10
+		// If value is -1, it means "Tous" (all items)
+		return value
 	})
-	
+
 	// Calculate total number of pages
 	const pageCount = computed(() => {
 		if (!filteredItems.value.length) return 0
+		// If itemsPerPageValue is -1 ("Tous"), return 1 page
+		if (itemsPerPageValue.value === -1) return 1
 		return Math.ceil(filteredItems.value.length / itemsPerPageValue.value)
 	})
 
@@ -321,10 +355,11 @@
 				<SyTablePagination
 					v-if="filteredItems.length > 0"
 					:page="page"
-					:page-count="pageCount"
 					:items-per-page="itemsPerPageValue"
+					:page-count="pageCount"
 					:items-length="filteredItems.length"
 					@update:page="page = $event"
+					@update:items-per-page="updateItemsPerPage"
 				/>
 			</template>
 		</VDataTable>
