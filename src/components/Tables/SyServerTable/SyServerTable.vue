@@ -3,6 +3,7 @@
 	import type { VDataTableServer } from 'vuetify/components'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
+	import SyTablePagination from '../common/SyTablePagination.vue'
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
 	import { useTableUtils } from '../common/tableUtils'
@@ -42,6 +43,28 @@
 	// Récupère la fonction filterItems du composable
 	// Cela peut être utilisé pour la prévisualisation du filtrage côté client ou pour les tests
 	const { filterItems } = useTableFilter()
+	
+	// Pagination variables
+	const page = computed({
+		get: () => options.value.page || 1,
+		set: (newPage: number) => {
+			options.value = {
+				...options.value,
+				page: newPage,
+			}
+		},
+	})
+	
+	// Items per page with fallback to props or default
+	const itemsPerPageValue = computed(() => {
+		return options.value.itemsPerPage || props.itemsPerPage || 10
+	})
+	
+	// Calculate total number of pages
+	const pageCount = computed(() => {
+		if (!props.serverItemsLength) return 0
+		return Math.ceil(props.serverItemsLength / itemsPerPageValue.value)
+	})
 
 	defineExpose({ filterItems })
 
@@ -278,6 +301,16 @@
 						</th>
 					</tr>
 				</template>
+			</template>
+			<template #bottom>
+				<SyTablePagination
+					v-if="props.serverItemsLength > 0"
+					:page="page"
+					:page-count="pageCount"
+					:items-per-page="itemsPerPageValue"
+					:items-length="props.serverItemsLength"
+					@update:page="page = $event"
+				/>
 			</template>
 		</VDataTableServer>
 	</div>

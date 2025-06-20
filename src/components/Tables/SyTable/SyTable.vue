@@ -3,6 +3,7 @@
 	import type { VDataTable } from 'vuetify/components'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
+	import SyTablePagination from '../common/SyTablePagination.vue'
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
 	import { useTableUtils } from '../common/tableUtils'
@@ -37,6 +38,28 @@
 
 		// Applique les filtres aux éléments copiés
 		return filterItems(itemsCopy, filters.value)
+	})
+	
+	// Pagination variables
+	const page = computed({
+		get: () => options.value.page || 1,
+		set: (newPage: number) => {
+			options.value = {
+				...options.value,
+				page: newPage,
+			}
+		},
+	})
+	
+	// Items per page with fallback to props or default
+	const itemsPerPageValue = computed(() => {
+		return options.value.itemsPerPage || props.itemsPerPage || 10
+	})
+	
+	// Calculate total number of pages
+	const pageCount = computed(() => {
+		if (!filteredItems.value.length) return 0
+		return Math.ceil(filteredItems.value.length / itemsPerPageValue.value)
 	})
 
 	const filters = computed({
@@ -293,6 +316,16 @@
 						</td>
 					</tr>
 				</template>
+			</template>
+			<template #bottom>
+				<SyTablePagination
+					v-if="filteredItems.length > 0"
+					:page="page"
+					:page-count="pageCount"
+					:items-per-page="itemsPerPageValue"
+					:items-length="filteredItems.length"
+					@update:page="page = $event"
+				/>
 			</template>
 		</VDataTable>
 	</div>
