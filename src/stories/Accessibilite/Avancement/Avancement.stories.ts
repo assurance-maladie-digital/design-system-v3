@@ -89,7 +89,7 @@ export const Manuel: StoryObj = {
 					{ composant: 'FilterSideBar', status: 'Non audité' },
 					{ composant: 'PaginatedTable', status: 'Non audité' },
 					{ composant: 'TableToolbar', status: 'Non audité' },
-					{ composant: 'ErrorPage', status: 'En cours' },
+					{ composant: 'ErrorPage', status: 'Audité' },
 					{ composant: 'NotFoundPage', status: 'En cours' },
 					{ composant: 'MaintenancePage', status: 'En cours' },
 					{ composant: 'ContextualMenu', status: 'En cours' },
@@ -235,7 +235,7 @@ export const Manuel: StoryObj = {
 						</div>
 
 						<div class="pa-2 text-caption text-right">
-							Dernière mise à jour: 19/06/2025
+							Dernière mise à jour: 20/06/2025
 						</div>
 					</div>
 					
