@@ -116,6 +116,8 @@ export const VuetifyPanel: StoryObj = {
 					itemValue, cardItem, activeBtnIndex, search, searchString,
 					conformityFilter, conformityOptions, isComponentConform,
 					displayedComponents,
+					filterIcon: filterIcon,
+					searchIcon: searchIcon,
 				}
 			},
 			template: `
@@ -136,7 +138,7 @@ export const VuetifyPanel: StoryObj = {
 									variant="outlined"
 									dense
 									color="primary"
-									prepend-inner-icon="$filterIcon"
+									prepend-inner-icon="mdi-filter-variant"
 								></VSelect>
 							</VCol>
 							
@@ -156,7 +158,7 @@ export const VuetifyPanel: StoryObj = {
 									label="Rechercher un composant"
 									hide-selected
 									return-object
-									prepend-inner-icon="$searchIcon"
+									prepend-inner-icon="mdi-magnify"
 								></v-combobox>
 							</VCol>
 						</VRow>
@@ -355,6 +357,7 @@ export const VuetifyPanel: StoryObj = {
 							</VCardActions>
 						</VCardItem>
 					</VCard>
+				</div>
 				</div>
 			`,
 		}
