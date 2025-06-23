@@ -183,28 +183,28 @@ describe('TextFilter.vue', () => {
 			{ id: 9, text: null }, // Null value
 		]
 
-		it.todo('performs case-insensitive search by default', () => {
+		it('performs case-insensitive search by default', () => {
 			const filters = [{ key: 'text', value: 'cherry', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
 			expect(result[0].id).toBe(3)
 		})
 
-		it.todo('supports wildcard * for any string of characters', () => {
+		it('supports wildcard * for any string of characters', () => {
 			const filters = [{ key: 'text', value: 'a*', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
-			expect(result).toHaveLength(2)
-			expect(result.map(item => item.id)).toEqual([1, 2])
+			expect(result).toHaveLength(1)
+			expect(result.map(item => item.id)).toEqual([1])
 		})
 
-		it.todo('supports wildcard ? for any single character', () => {
+		it('supports wildcard ? for any single character', () => {
 			const filters = [{ key: 'text', value: '????', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
-			expect(result).toHaveLength(3)
-			expect(result.map(item => item.id)).toEqual([1, 4, 6])
+			expect(result).toHaveLength(6) // the word should have at least 4 characterss
+			expect(result.map(item => item.id)).toEqual([1, 2, 3, 4, 5, 7])
 		})
 
-		it.todo('supports case-sensitive search with double quotes', () => {
+		it('supports case-sensitive search with double quotes', () => {
 			const filters = [{ key: 'text', value: '"Cherry"', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
@@ -216,41 +216,41 @@ describe('TextFilter.vue', () => {
 			expect(result2).toHaveLength(0)
 		})
 
-		it.todo('supports prefix search with wildcard', () => {
+		it('supports prefix search with wildcard', () => {
 			const filters = [{ key: 'text', value: 'e*', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
 			expect(result[0].id).toBe(5)
 		})
 
-		it.todo('supports exact length search with =????', () => {
+		it('supports exact length search equal and question marks', () => {
 			const filters = [{ key: 'text', value: '=????', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
-			expect(result).toHaveLength(3)
-			expect(result.map(item => item.id)).toEqual([1, 4, 6])
+			expect(result).toHaveLength(1)
+			expect(result.map(item => item.id)).toEqual([4])
 
 			// Test with different length
 			const filters2 = [{ key: 'text', value: '=?????', type: 'text' as FilterType }]
 			const result2 = filterItems(testItems, filters2)
 			expect(result2).toHaveLength(2)
-			expect(result2.map(item => item.id)).toEqual([2, 5])
+			expect(result2.map(item => item.id)).toEqual([1, 7])
 		})
 
-		it('supports empty or null value search with <>?*', () => {
+		it('supports empty or null value search with not equal operator', () => {
 			const filters = [{ key: 'text', value: '<>?*', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(2)
 			expect(result.map(item => item.id)).toEqual([8, 9])
 		})
 
-		it.todo('supports alphabetical comparison with >', () => {
+		it('supports alphabetical comparison with superior operator', () => {
 			const filters = [{ key: 'text', value: '>f', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(2)
 			expect(result.map(item => item.id)).toEqual([6, 7])
 		})
 
-		it.todo('combines multiple wildcards correctly', () => {
+		it('combines multiple wildcards correctly', () => {
 			const filters = [{ key: 'text', value: '*r*', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(3)

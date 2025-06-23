@@ -14,7 +14,6 @@ export default function filter(itemValue: unknown, filterValue: unknown): boolea
 
 	else if (search.startsWith('<>')) {
 		const regex = generateRegex(search.slice(2), true, true)
-
 		return !regex.test(str)
 	}
 
@@ -54,6 +53,7 @@ function generateRegex(search: string, caseSensitive = false, strict = false): R
 	else if (regex !== escapedSearch) {
 		regex = '^' + regex
 	}
+
 	return new RegExp(regex, caseSensitive ? 'g' : 'gi')
 }
 
