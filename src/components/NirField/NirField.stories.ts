@@ -127,6 +127,20 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
+		nirType: {
+			description: 'Type de validation de NIR.',
+			control: 'select',
+			options: ['simple', 'complexe'],
+			default: 'simple',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'simple',
+				},
+			},
+		},
 		showSuccessMessages: {
 			description: 'Indique si les messages de succès sont affichés.',
 			control: 'boolean',
@@ -323,6 +337,16 @@ const meta: Meta<typeof NirField> = {
 				},
 				defaultValue: {
 					summary: 'false',
+				},
+			},
+		},
+		withoutFieldset: {
+			description: 'Indique si le champ NIR est affiché sans fieldset. (Par défaut, le champ NIR est affiché dans un fieldset si displayKey est true pour des raisons d\'accessibilité)',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
 				},
 			},
 		},
