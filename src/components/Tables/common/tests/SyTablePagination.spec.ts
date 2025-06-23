@@ -87,12 +87,12 @@ describe('SyTablePagination.vue', () => {
 
 		// Access the component instance to check computed properties
 		// Use a type assertion with 'unknown' first to avoid TypeScript errors
-		const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string; value: number }> }
+		const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
 		expect(vm.itemsPerPageOptions).toBeDefined()
 
 		// Check if the options include the total items count
 		const options = vm.itemsPerPageOptions
-		const hasItemsLength = options.some((option) => option.value === 42)
+		const hasItemsLength = options.some(option => option.value === 42)
 		expect(hasItemsLength).toBe(true)
 	})
 
