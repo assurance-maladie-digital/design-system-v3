@@ -35,8 +35,9 @@ export const VuetifyPanel: StoryObj = {
 				const conformityFilter = ref('all')
 				const conformityOptions = [
 					{ title: 'Tous les composants', value: 'all' },
-					{ title: 'Conformes', value: 'conform' },
-					{ title: 'Non conformes', value: 'non-conform' },
+					{ title: 'Natifs Conformes', value: 'conform' },
+					{ title: 'Natifs Non conformes', value: 'non-conform' },
+					{ title: 'Alternatifs Conformes', value: 'alternative' },
 				]
 
 				// Tri des items par ordre alphabétique
@@ -69,6 +70,31 @@ export const VuetifyPanel: StoryObj = {
 					return item && (item.errorImportants.length === 0 && item.errorIndeterminated.length === 0)
 				}
 
+				// Vérification si un composant a une solution alternative avec href
+				const hasAlternativeSolution = (item) => {
+					return item && item.solution && item.solution.some(sol => sol.href)
+				}
+
+				// Détermine le statut du composant (conforme, alternatif, non conforme)
+				const getComponentStatus = (item) => {
+					if (isComponentConform(item)) return 'conform'
+					if (hasAlternativeSolution(item)) return 'alternative'
+					return 'non-conform'
+				}
+
+				// Détermine la couleur du composant selon son statut
+				const getComponentColor = (item) => {
+					const status = getComponentStatus(item)
+					if (status === 'conform') return 'success'
+					if (status === 'alternative') return '#a05bb6'
+					return 'error'
+				}
+
+				// Détermine l'icône du composant selon son statut
+				const getComponentIcon = (item) => {
+					return getComponentStatus(item) === 'conform' ? checkIcon : iconAlert
+				}
+
 				// Filtrage des composants par conformité
 				const filteredComponents = computed(() => {
 					// Si on veut tous les composants
@@ -76,16 +102,22 @@ export const VuetifyPanel: StoryObj = {
 						return items.value
 					}
 
-					// Sinon on filtre selon la conformité
-					const wantConform = conformityFilter.value === 'conform'
-					return items.value.filter(filterByConformity)
-
-					// Fonction locale pour le filtrage
-					function filterByConformity(item) {
+					// Filtrer selon la conformité sélectionnée
+					return items.value.filter(item => {
 						const component = VuetifyItems[0].items.find(c => c.value === item.value)
-						const isConform = isComponentConform(component)
-						return wantConform ? isConform : !isConform
-					}
+						const status = getComponentStatus(component)
+						
+						switch (conformityFilter.value) {
+							case 'conform':
+								return status === 'conform'
+							case 'non-conform':
+								return status === 'non-conform'
+							case 'alternative':
+								return status === 'alternative'
+							default:
+								return true
+						}
+					})
 				})
 
 				// Liste des composants filtrés pour affichage
@@ -93,10 +125,17 @@ export const VuetifyPanel: StoryObj = {
 					return VuetifyItems[0].items.filter((component) => {
 						// Filtrage par conformité
 						if (conformityFilter.value !== 'all') {
-							const isConform = isComponentConform(component)
-							const wantConform = conformityFilter.value === 'conform'
-							if (wantConform !== isConform) {
-								return false
+							const status = getComponentStatus(component)
+							
+							switch (conformityFilter.value) {
+								case 'conform':
+									return status === 'conform'
+								case 'non-conform':
+									return status === 'non-conform'
+								case 'alternative':
+									return status === 'alternative'
+								default:
+									return true
 							}
 						}
 						return true
@@ -115,11 +154,17 @@ export const VuetifyPanel: StoryObj = {
 					checkIcon, iconAlert, linkIcon, searchIcon, filterIcon, infoIcon,
 					itemValue, cardItem, activeBtnIndex, search, searchString,
 					conformityFilter, conformityOptions, isComponentConform,
+					hasAlternativeSolution, getComponentStatus, getComponentColor, getComponentIcon,
 					displayedComponents,
 					// Les propriétés filterIcon et searchIcon sont déjà définies à la ligne 115
 				}
 			},
 			template: `
+				<style>
+				.border-alternative {
+					border-color: #a05bb6 !important;
+				}
+				</style>
 				<div class="vuetify-audit-dashboard">
 					<!-- En-tête avec filtres et recherche -->
 					<VSheet :elevation="2" class="mt-4 pa-4 rounded" style="background: linear-gradient(to right, #f5f7fa, #eef2f7);">
@@ -166,11 +211,15 @@ export const VuetifyPanel: StoryObj = {
 						<div class="d-flex flex-wrap mt-4">
 							<VChip class="mr-2 mb-2" color="success" variant="outlined">
 								<VIcon size="small" class="mr-1" :icon="checkIcon"></VIcon>
-								Composant conforme
+								Composant natif conforme
 							</VChip>
 							<VChip class="mr-2 mb-2" color="error" variant="outlined">
 								<VIcon size="small" class="mr-1" :icon="iconAlert"></VIcon>
-								Composant non conforme
+								Composant natif non conforme
+							</VChip>
+							<VChip class="mr-2 mb-2" color="#a05bb6" variant="outlined">
+								<VIcon size="small" class="mr-1" :icon="iconAlert"></VIcon>
+								Composant alternatif conforme
 							</VChip>
 						</div>
 					</VSheet>
@@ -187,13 +236,13 @@ export const VuetifyPanel: StoryObj = {
 						<VChip
 							v-for="component in displayedComponents"
 							:key="component.value"
-							:color="isComponentConform(component) ? 'success' : 'error'"
+							:color="getComponentColor(component)"
 							variant="outlined"
 							class="ma-1"
 							@click="itemValue = component.value; search = items.find(item => item.value === component.value)"
 							style="cursor: pointer;"
 						>
-							<VIcon size="x-small" class="mr-1" :icon="isComponentConform(component) ? checkIcon : iconAlert"></VIcon>
+							<VIcon size="x-small" class="mr-1" :icon="getComponentIcon(component)"></VIcon>
 							{{ component.name }}
 						</VChip>
 					</div>
@@ -201,19 +250,19 @@ export const VuetifyPanel: StoryObj = {
 
 				<!-- Affichage du composant sélectionné -->
 				<div class="d-flex justify-center mt-8" v-if="itemValue !== 0">
-					<VCard class="w-100 w-md-75" :elevation="3" :class="isComponentConform(cardItem) ? 'border-success' : 'border-error'" style="border-top: 4px solid; border-radius: 8px; overflow: hidden;">
+					<VCard class="w-100 w-md-75" :elevation="3" :class="{'border-success': getComponentStatus(cardItem) === 'conform', 'border-error': getComponentStatus(cardItem) === 'non-conform', 'border-alternative': getComponentStatus(cardItem) === 'alternative'}" style="border-top: 4px solid; border-radius: 8px; overflow: hidden;">
 						<VCardItem>
 							<VCardTitle class="d-flex align-center">
 								<h3 class="text-h5 font-weight-bold">{{ cardItem.name }}</h3>
 								<VChip
 									class="ml-auto"
-									:color="isComponentConform(cardItem) ? 'success' : 'error'"
-									:text="isComponentConform(cardItem) ? 'Conforme' : 'Non conforme'"
+									:color="getComponentColor(cardItem)"
+									:text="getComponentStatus(cardItem) === 'conform' ? 'Conforme' : getComponentStatus(cardItem) === 'alternative' ? 'Alternative conforme' : 'Non conforme'"
 									variant="tonal"
 									size="small"
 								>
 									<template v-slot:prepend>
-										<VIcon size="x-small" :icon="isComponentConform(cardItem) ? checkIcon : iconAlert"></VIcon>
+										<VIcon size="x-small" :icon="getComponentIcon(cardItem)"></VIcon>
 									</template>
 								</VChip>
 							</VCardTitle>
