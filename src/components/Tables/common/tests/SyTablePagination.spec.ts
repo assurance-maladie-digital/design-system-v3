@@ -89,7 +89,7 @@ describe('SyTablePagination.vue', () => {
 		// Should have standard options (10, 25, 50, 100) plus the 'All' option (-1)
 		expect(options1.length).toBe(5)
 		expect(options1.map(o => o.value).sort((a, b) => a - b)).toEqual([-1, 10, 25, 50, 100])
-		
+
 		// Test with custom value
 		const wrapper2 = mount(SyTablePagination, {
 			props: {
@@ -105,11 +105,11 @@ describe('SyTablePagination.vue', () => {
 
 		const vm2 = wrapper2.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
 		const options2 = vm2.itemsPerPageOptions
-		
+
 		// Should include the custom value (42)
 		const hasCustomValue = options2.some(option => option.value === 42)
 		expect(hasCustomValue).toBe(true)
-		
+
 		// Should have standard options + custom value + 'All' option
 		expect(options2.length).toBe(6)
 		expect(options2.map(o => o.value).sort((a, b) => a - b)).toEqual([-1, 10, 25, 42, 50, 100])

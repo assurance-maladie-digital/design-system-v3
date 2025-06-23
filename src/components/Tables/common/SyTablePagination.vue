@@ -10,7 +10,7 @@
 	const itemsPerPageOptions = computed(() => {
 		// Standard options
 		const standardOptions = [10, 25, 50, 100]
-		
+
 		// Add the current itemsPerPage if it's not already in the standard options
 		// and it's not -1 (which represents "Tous")
 		if (!standardOptions.includes(props.itemsPerPage) && props.itemsPerPage !== -1) {
