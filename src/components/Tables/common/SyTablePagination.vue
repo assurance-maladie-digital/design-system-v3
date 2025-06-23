@@ -8,7 +8,6 @@
 
 	// Items per page options - standard options and current value
 	const itemsPerPageOptions = computed(() => {
-		// Standard options
 		const standardOptions = [10, 25, 50, 100]
 
 		// Add the current itemsPerPage if it's not already in the standard options
@@ -35,21 +34,9 @@
 	})
 
 	const props = defineProps<{
-		/**
-		 * Current page number
-		 */
 		page: number
-		/**
-		 * Total number of pages
-		 */
 		pageCount: number
-		/**
-		 * Number of items per page
-		 */
 		itemsPerPage: number
-		/**
-		 * Total number of items
-		 */
 		itemsLength: number
 	}>()
 
@@ -64,16 +51,11 @@
 		(e: 'update:items-per-page', itemsPerPage: number): void
 	}>()
 
-	// Removed unused itemsRange computed property
-
-	// Removed unused paginationTitle computed property
-
 	/**
-	 * Compute the visible page numbers to display
+	 * Visible page numbers to display
 	 * Shows current page, previous and next 2 pages when available
 	 */
 	const visiblePageNumbers = computed(() => {
-		// Define array that can contain both numbers and strings
 		const pages: (number | string)[] = []
 		const currentPage = props.page
 		const totalPages = props.pageCount
@@ -360,7 +342,6 @@
 				}
 			}
 
-			// Style for Previous/Next links
 			li:first-child a,
 			li:last-child a {
 				background-color: transparent;
