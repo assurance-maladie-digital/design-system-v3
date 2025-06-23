@@ -18,11 +18,11 @@
 			// Sort the options numerically
 			standardOptions.sort((a, b) => a - b)
 		}
-		
+
 		// Always include the total number of items as an option if it's reasonable
-		if (props.itemsLength > 0 && 
-		    props.itemsLength <= 500 && 
-		    !standardOptions.includes(props.itemsLength)) {
+		if (props.itemsLength > 0
+			&& props.itemsLength <= 500
+			&& !standardOptions.includes(props.itemsLength)) {
 			standardOptions.push(props.itemsLength)
 			// Sort the options numerically
 			standardOptions.sort((a, b) => a - b)
