@@ -165,15 +165,16 @@
 </script>
 
 <template>
-	<div
-		v-if="pageCount > 1"
-		class="sy-table-pagination"
-	>
+	<div class="sy-table-pagination">
 		<div class="info">
-			{{ locales.pagination.showingItems((page - 1) * itemsPerPage + 1, Math.min(page * itemsPerPage, itemsLength), itemsLength) }}
+			{{ itemsPerPage === -1 
+				? locales.pagination.showingItems(1, itemsLength, itemsLength)
+				: locales.pagination.showingItems((page - 1) * itemsPerPage + 1, Math.min(page * itemsPerPage, itemsLength), itemsLength) 
+			}}
 		</div>
 
 		<nav
+			v-if="pageCount > 1"
 			class="pagination"
 			:aria-labelledby="uniqueId"
 		>
