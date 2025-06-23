@@ -103,10 +103,10 @@ export const VuetifyPanel: StoryObj = {
 					}
 
 					// Filtrer selon la conformité sélectionnée
-					return items.value.filter(item => {
+					return items.value.filter((item) => {
 						const component = VuetifyItems[0].items.find(c => c.value === item.value)
 						const status = getComponentStatus(component)
-						
+
 						switch (conformityFilter.value) {
 							case 'conform':
 								return status === 'conform'
@@ -126,7 +126,7 @@ export const VuetifyPanel: StoryObj = {
 						// Filtrage par conformité
 						if (conformityFilter.value !== 'all') {
 							const status = getComponentStatus(component)
-							
+
 							switch (conformityFilter.value) {
 								case 'conform':
 									return status === 'conform'
@@ -217,7 +217,7 @@ export const VuetifyPanel: StoryObj = {
 								<VIcon size="small" class="mr-1" :icon="iconAlert"></VIcon>
 								Composant natif non conforme
 							</VChip>
-							<VChip class="mr-2 mb-2" color="#a05bb6" variant="outlined">
+							<VChip class="mr-2 mb-2" color="#66cdbb" variant="outlined">
 								<VIcon size="small" class="mr-1" :icon="iconAlert"></VIcon>
 								Composant alternatif conforme
 							</VChip>
