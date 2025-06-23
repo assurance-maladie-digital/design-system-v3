@@ -6,24 +6,15 @@
 	// Generate unique ID for this pagination instance
 	const uniqueId = ref(`pagination-${Math.random().toString(36).substr(2, 9)}`)
 
-	// Items per page options with the current value included
+	// Items per page options - standard options and current value
 	const itemsPerPageOptions = computed(() => {
 		// Standard options
 		const standardOptions = [10, 25, 50, 100]
-
+		
 		// Add the current itemsPerPage if it's not already in the standard options
 		// and it's not -1 (which represents "Tous")
 		if (!standardOptions.includes(props.itemsPerPage) && props.itemsPerPage !== -1) {
 			standardOptions.push(props.itemsPerPage)
-			// Sort the options numerically
-			standardOptions.sort((a, b) => a - b)
-		}
-
-		// Always include the total number of items as an option if it's reasonable
-		if (props.itemsLength > 0
-			&& props.itemsLength <= 500
-			&& !standardOptions.includes(props.itemsLength)) {
-			standardOptions.push(props.itemsLength)
 			// Sort the options numerically
 			standardOptions.sort((a, b) => a - b)
 		}

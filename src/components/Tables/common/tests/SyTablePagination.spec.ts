@@ -68,11 +68,12 @@ describe('SyTablePagination.vue', () => {
 		expect(wrapper.findComponent({ name: 'SySelect' }).exists()).toBe(true)
 	})
 
-	it('includes total items count in items per page options', async () => {
-		const wrapper = mount(SyTablePagination, {
+	it('includes standard options and current itemsPerPage value', async () => {
+		// Test with standard value
+		const wrapper1 = mount(SyTablePagination, {
 			props: {
 				page: 1,
-				itemsPerPage: 10,
+				itemsPerPage: 10, // Standard value
 				itemsLength: 42,
 				pageCount: 5,
 			},
@@ -81,12 +82,37 @@ describe('SyTablePagination.vue', () => {
 			},
 		})
 
-		const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-		expect(vm.itemsPerPageOptions).toBeDefined()
+		const vm1 = wrapper1.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
+		expect(vm1.itemsPerPageOptions).toBeDefined()
 
-		const options = vm.itemsPerPageOptions
-		const hasItemsLength = options.some(option => option.value === 42)
-		expect(hasItemsLength).toBe(true)
+		const options1 = vm1.itemsPerPageOptions
+		// Should have standard options (10, 25, 50, 100) plus the 'All' option (-1)
+		expect(options1.length).toBe(5)
+		expect(options1.map(o => o.value).sort((a, b) => a - b)).toEqual([-1, 10, 25, 50, 100])
+		
+		// Test with custom value
+		const wrapper2 = mount(SyTablePagination, {
+			props: {
+				page: 1,
+				itemsPerPage: 42, // Custom value
+				itemsLength: 100,
+				pageCount: 5,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		const vm2 = wrapper2.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
+		const options2 = vm2.itemsPerPageOptions
+		
+		// Should include the custom value (42)
+		const hasCustomValue = options2.some(option => option.value === 42)
+		expect(hasCustomValue).toBe(true)
+		
+		// Should have standard options + custom value + 'All' option
+		expect(options2.length).toBe(6)
+		expect(options2.map(o => o.value).sort((a, b) => a - b)).toEqual([-1, 10, 25, 42, 50, 100])
 	})
 
 	it('shows correct range when "All" is selected', async () => {
