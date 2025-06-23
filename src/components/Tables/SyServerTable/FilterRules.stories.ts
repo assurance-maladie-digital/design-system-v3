@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyServerTable from './SyServerTable.vue'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
+import dayjs from 'dayjs'
 
 interface TextItem {
 	example: string
@@ -21,6 +22,11 @@ interface SelectItem {
 	[key: string]: string
 }
 
+interface DateItem {
+	date: string
+	description: string
+	[key: string]: string
+}
 enum StateEnum {
 	IDLE = 'idle',
 	PENDING = 'pending',
@@ -472,6 +478,221 @@ export const SelectFilterRules: Story = {
           suffix="select-filter-rules-doc"
           show-filters
           @update:options="fetchData"
+        />
+      </div>
+    `,
+	}),
+}
+export const DateFilterRules = {
+	args: {
+		serverItemsLength: 10,
+		suffix: 'date-filter-rules',
+		showFilters: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Documentation des règles de filtrage par date pour le composant SyServerTable.',
+			},
+		},
+	},
+	render: () => ({
+		components: { SyServerTable },
+		setup() {
+			// Exemple 1: Filtrage par date seule
+			const headersSingleDate = ref([
+				{
+					title: 'Date',
+					key: 'date',
+					filterable: true,
+					filterType: 'date',
+				},
+				{ title: 'Description', key: 'description', filterable: false },
+			])
+
+			const demoItemsSingleDate = [
+				{ date: dayjs('2025-01-15').format('DD/MM/YYYY'), description: 'Date simple' },
+				{ date: dayjs('2025-02-20').format('DD/MM/YYYY'), description: 'Date simple' },
+				{ date: dayjs('2024-12-10').format('DD/MM/YYYY'), description: 'Date simple' },
+				{ date: dayjs('2025-05-05').format('DD/MM/YYYY'), description: 'Date simple' },
+			]
+
+			const itemsSingleDate = ref<DateItem[]>([])
+			const totalItemsSingleDate = ref(0)
+			const stateSingleDate = ref(StateEnum.IDLE)
+			const optionsSingleDate = ref({
+				itemsPerPage: 10,
+				page: 1,
+			})
+
+			// Exemple 2: Filtrage par période
+			const headersPeriod = ref([
+				{
+					title: 'Date',
+					key: 'date',
+					filterable: true,
+					filterType: 'period',
+					dateFormat: 'DD/MM/YYYY',
+				},
+				{ title: 'Description', key: 'description', filterable: false },
+			])
+
+			// Définir une période du 01/01/2025 au 31/03/2025 pour l'exemple
+			const periodStart = dayjs('2025-01-01').format('DD/MM/YYYY')
+			const periodEnd = dayjs('2025-03-31').format('DD/MM/YYYY')
+
+			const demoItemsPeriod = [
+				{ date: dayjs('2025-01-15').format('DD/MM/YYYY'), description: `Date incluse dans la période ${periodStart} - ${periodEnd}` },
+				{ date: dayjs('2025-02-20').format('DD/MM/YYYY'), description: `Date incluse dans la période ${periodStart} - ${periodEnd}` },
+				{ date: dayjs('2024-12-10').format('DD/MM/YYYY'), description: `Date avant la période ${periodStart} - ${periodEnd}` },
+				{ date: dayjs('2025-05-05').format('DD/MM/YYYY'), description: `Date après la période ${periodStart} - ${periodEnd}` },
+				{ date: dayjs('2025-01-01').format('DD/MM/YYYY'), description: `Date limite inférieure de la période (${periodStart})` },
+				{ date: dayjs('2025-03-31').format('DD/MM/YYYY'), description: `Date limite supérieure de la période (${periodEnd})` },
+			]
+
+			const itemsPeriod = ref<DateItem[]>([])
+			const totalItemsPeriod = ref(0)
+			const statePeriod = ref(StateEnum.IDLE)
+			const optionsPeriod = ref({
+				itemsPerPage: 10,
+				page: 1,
+			})
+
+			const wait = async (ms: number): Promise<void> => {
+				return new Promise(resolve => setTimeout(resolve, ms))
+			}
+
+			// Fonction de filtrage pour l'exemple 1 (date simple)
+			const fetchDataSingleDate = async (newOptions?: DataOptions): Promise<void> => {
+				stateSingleDate.value = StateEnum.PENDING
+				await wait(1000)
+
+				// Filtrer les éléments selon les filtres
+				let filteredItems = [...demoItemsSingleDate]
+				if (newOptions?.filters && newOptions.filters.length > 0) {
+					newOptions.filters.forEach((filter) => {
+						if (filter.value !== null && filter.value !== undefined && filter.value !== '') {
+							const filterValue = String(filter.value).toLowerCase()
+							filteredItems = filteredItems.filter((item) => {
+								const itemValue = String(item[filter.key]).toLowerCase()
+								return itemValue === filterValue
+							})
+						}
+					})
+				}
+
+				totalItemsSingleDate.value = filteredItems.length
+				itemsSingleDate.value = filteredItems
+				stateSingleDate.value = StateEnum.RESOLVED
+			}
+
+			// Fonction de filtrage pour l'exemple 2 (période)
+			const fetchDataPeriod = async (newOptions?: DataOptions): Promise<void> => {
+				statePeriod.value = StateEnum.PENDING
+				await wait(1000)
+
+				// Filtrer les éléments selon les filtres
+				let filteredItems = [...demoItemsPeriod]
+				if (newOptions?.filters && newOptions.filters.length > 0) {
+					newOptions.filters.forEach((filter) => {
+						if (filter.value !== null && filter.value !== undefined) {
+							// Pour le filtre de période, la valeur peut être un objet avec from et to
+							if (filter.type === 'period' && typeof filter.value === 'object') {
+								const { from, to } = filter.value
+
+								filteredItems = filteredItems.filter((item) => {
+									const itemDate = dayjs(item[filter.key], 'DD/MM/YYYY')
+
+									// Si from et to sont définis, vérifier si la date est dans l'intervalle
+									if (from && to) {
+										return itemDate.isAfter(dayjs(from, 'DD/MM/YYYY').subtract(1, 'day'))
+											&& itemDate.isBefore(dayjs(to, 'DD/MM/YYYY').add(1, 'day'))
+									}
+									// Si seulement from est défini, vérifier si la date est après from
+									else if (from) {
+										return itemDate.isAfter(dayjs(from, 'DD/MM/YYYY').subtract(1, 'day'))
+									}
+									// Si seulement to est défini, vérifier si la date est avant to
+									else if (to) {
+										return itemDate.isBefore(dayjs(to, 'DD/MM/YYYY').add(1, 'day'))
+									}
+									return true
+								})
+							}
+							else {
+								const filterValue = String(filter.value).toLowerCase()
+								filteredItems = filteredItems.filter((item) => {
+									const itemValue = String(item[filter.key]).toLowerCase()
+									return itemValue === filterValue
+								})
+							}
+						}
+					})
+				}
+
+				totalItemsPeriod.value = filteredItems.length
+				itemsPeriod.value = filteredItems
+				statePeriod.value = StateEnum.RESOLVED
+			}
+
+			// Charger les données initiales
+			fetchDataSingleDate()
+			fetchDataPeriod()
+
+			return {
+				headersSingleDate,
+				itemsSingleDate,
+				optionsSingleDate,
+				stateSingleDate,
+				serverItemsLengthSingleDate: totalItemsSingleDate,
+				fetchDataSingleDate,
+
+				headersPeriod,
+				itemsPeriod,
+				optionsPeriod,
+				statePeriod,
+				serverItemsLengthPeriod: totalItemsPeriod,
+				fetchDataPeriod,
+
+				StateEnum,
+			}
+		},
+		template: `
+      <div>
+        <h2>Règles de filtrage par date</h2>
+        <p class="mb-4">Le filtre de date s'applique à une colonne de dates.</p>
+        
+        <div class="mb-4">
+          <p>Le filtre de période comporte deux champs de saisies permettant de saisir une période du … au …</p>
+          <ul class="mb-4 pl-4">
+            <li>Le premier champ de saisie représente la date minimale recherchée (inclue). S'il n'est pas renseigné, il n'y a pas de limite minimale.</li>
+            <li>Le deuxième champ de saisie représente la date maximale recherchée (inclue). S'il n'est pas renseigné, il n'y a pas de limite maximale.</li>
+          </ul>
+          <p>L'action de filtrage est effectuée lorsque 10 caractères sont présents dans le champ de saisie actif.</p>
+        </div>
+
+        <h3 class="mb-3">Exemple 1: Filtrage par date seule</h3>
+        <SyServerTable
+          v-model:options="optionsSingleDate"
+          :headers="headersSingleDate"
+          :items="itemsSingleDate"
+          :server-items-length="serverItemsLengthSingleDate"
+          :loading="stateSingleDate === StateEnum.PENDING"
+          suffix="date-filter-single"
+          show-filters
+          @update:options="fetchDataSingleDate"
+        />
+
+        <h3 class="mt-6 mb-3">Exemple 2: Filtrage par période</h3>
+        <SyServerTable
+          v-model:options="optionsPeriod"
+          :headers="headersPeriod"
+          :items="itemsPeriod"
+          :server-items-length="serverItemsLengthPeriod"
+          :loading="statePeriod === StateEnum.PENDING"
+          suffix="date-filter-period"
+          show-filters
+          @update:options="fetchDataPeriod"
         />
       </div>
     `,
