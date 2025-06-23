@@ -1,40 +1,230 @@
-import {Meta} from '@storybook/addon-docs/blocks';
+import {Meta} from '@storybook/blocks';
 
 <Meta title="Accessibilité/Kit de pré-audit/Échantillonnage"/>
 
-# Échantillonnage
+<style>
+{
+`
+  .header-container {
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-container h1 {
+    margin-top: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  
+  .header-container p {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    opacity: 0.9;
+  }
+  
+  .info-card {
+    background-color: #f8f9fa;
+    border-left: 4px solid #0c419a;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .section-container {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .section-container h2 {
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+    color: #0c419a;
+    position: relative;
+  }
+  
+  .section-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    
+    border-radius: 3px;
+  }
+  
+  .pages-list {
+    background-color: #f0f7ff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  .pages-list h3 {
+    margin-top: 0;
+    color: #0c419a;
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+  
+  .pages-list h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    
+    border-radius: 3px;
+  }
+  
+  .pages-list ul {
+    padding-left: 1.5rem;
+    margin-bottom: 0;
+  }
+  
+  .pages-list li {
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  
+  .exemption-card {
+    background-color: #f8f9fa;
+    border-left: 4px solid #0c419a;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+  }
+  
+  .exemption-item {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  
+  .note-box {
+    background-color: #e3e8f2;
+    border-left: 4px solid #0c419a;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+  }
+  
+  .highlight {
+    background-color: rgba(0, 120, 212, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+  
+  .derogation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .derogation-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+`
+}
+</style>
 
-Le <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> exige que l’audit d’accessibilité soit effectué sur un ensemble représentatif de pages et des fonctionnalités de votre service. Il serait difficile et très chronophage de tester l’intégralité des contenus. La définition d’un périmètre est un compromis pertinent pour auditer efficacement un service et respecter les exigences légales.
+<div className="header-container">
+  <h1>📊 Échantillonnage</h1>
+  <p>Définir un périmètre représentatif pour votre audit d'accessibilité</p>
+</div>
 
-L’objectif est donc de que vous déterminiez quels pages seront concernées par l’audit (et ce pré-audit).
+<div className="info-card">
+  <p><span className="highlight">Le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr></span> exige que l'audit d'accessibilité soit effectué sur un ensemble représentatif de pages et des fonctionnalités de votre service. Il serait difficile et très chronophage de tester l'intégralité des contenus. La définition d'un périmètre est un compromis pertinent pour auditer efficacement un service et respecter les exigences légales.</p>
+  
+  <p><strong>L'objectif est donc que vous déterminiez quelles pages seront concernées par l'audit (et ce pré-audit).</strong></p>
+</div>
 
-La règlementation indique que l’audit doit être réalisé sur les pages suivantes si elles existent :
+<div className="section-container">
+  <h2>📝 Pages à auditer</h2>
+  
+  <div className="pages-list">
+    <h3>Pages obligatoires</h3>
+    <ul>
+      <li><strong>Accueil</strong> - Point d'entrée principal du service</li>
+      <li><strong>Contact</strong> - Informations permettant de contacter l'organisme</li>
+      <li><strong>Mentions légales</strong> - Informations juridiques obligatoires</li>
+      <li><strong>Page "accessibilité"</strong> - Comprenant la déclaration d'accessibilité</li>
+      <li><strong>Plan du site</strong> - Si présent</li>
+      <li><strong>Aide</strong> - Assistance aux utilisateurs</li>
+      <li><strong>Authentification</strong> - Processus de connexion</li>
+      <li><strong>Pages de service</strong> - Au moins 1 page pertinente pour chaque type de service fourni (ex: rubriques de 1er niveau), y compris la fonctionnalité de recherche et ses pages de résultat</li>
+      <li><strong>Documents téléchargeables</strong> - Au moins 1 document pertinent</li>
+      <li><strong>Processus complets</strong> - L'ensemble des pages constituant un processus (ex: un formulaire sur plusieurs pages)</li>
+      <li><strong>Pages distinctes</strong> - Des exemples de pages ayant un aspect sensiblement distinct ou présentant un type de contenu différent (ex : page contenant des tableaux de données, des éléments multimédias, des illustrations, des formulaires, etc.)</li>
+    </ul>
+  </div>
+</div>
 
-- Accueil
-- Contact
-- Mentions légales
-- Page “accessibilité” (comprenant la déclaration d’accessibilité)
-- Plan du site (si présent)
-- Aide
-- Authentification
-- Au moins 1 page pertinente pour chaque type de service fourni (ex: rubriques de 1er niveau), y compris la fonctionnalité de recherche et ses pages de résultat
-- Au moins 1 document téléchargeable pertinent
-- L’ensemble des pages constituant un processus (ex: un formulaire sur plusieurs pages)
-- Des exemples de pages ayant un aspect sensiblement distinct ou présentation un type de contenu différent (ex : page contenant des tableaux de données, des éléments multimédias, des illustrations, des formulaires, etc.)
+<div className="section-container">
+  <h2>🚫 Exemptions</h2>
+  
+  <div className="exemption-card">
+    <p><strong>Contenus exemptés de l'obligation d'accessibilité :</strong></p>
+    
+    <div className="exemption-item"><strong>Fichiers bureautiques anciens</strong> - Formats publiés avant le 23 septembre 2018, sauf s'ils sont nécessaires à l'accomplissement d'une démarche administrative.</div>
+    
+    <div className="exemption-item"><strong>Contenus audio/vidéo préenregistrés</strong> - Y compris ceux comprenant des composants interactifs, publiés avant le 23 septembre 2020.</div>
+    
+    <div className="exemption-item"><strong>Contenus audio/vidéo en direct</strong> - Y compris ceux comprenant des composants interactifs.</div>
+    
+    <div className="exemption-item"><strong>Cartes et services de cartographie</strong> - Sous réserve que les informations essentielles soient fournies sous une forme numérique accessible pour les cartes de localisation ou d'itinéraire.</div>
+    
+    <div className="exemption-item"><strong>Contenus de tiers</strong> - Qui ne sont ni financés ni développés par l'organisme concerné et qui ne sont pas sous son contrôle.</div>
+    
+    <div className="exemption-item"><strong>Collections patrimoniales</strong> - Qui ne peuvent être rendues totalement accessibles en raison :</div>
+    <div className="exemption-item" style={{paddingLeft: '2.5rem'}}>• De l'incompatibilité des exigences avec la préservation ou l'authenticité de la reproduction.</div>
+    <div className="exemption-item" style={{paddingLeft: '2.5rem'}}>• De l'indisponibilité de solutions automatisées et économiques pour la transcription.</div>
+    
+    <div className="exemption-item"><strong>Intranets et extranets anciens</strong> - Publiés avant le 23 septembre 2019, jusqu'à révision en profondeur.</div>
+    
+    <div className="exemption-item"><strong>Contenus non essentiels ou archivés</strong> - Sites et applications qui ne sont ni nécessaires à l'accomplissement d'une démarche administrative active ni mis à jour après le 23 septembre 2019.</div>
+  </div>
+</div>
 
-Le nombre de visiteurs par page peut notamment être pris en compte lors de la constitution de l’échantillon. S’ajoute à l’échantillon des pages sélectionnées au hasard représentant à minima 10% de l’échantillon.
+<div className="note-box">
+  <p>💡 <strong>Conseil d'échantillonnage :</strong> Le nombre de visiteurs par page peut être pris en compte lors de la constitution de l'échantillon.</p>
+  <p>Ajoutez à votre sélection des pages choisies au hasard représentant <span className="highlight">au moins 10% de l'échantillon total</span>.</p>
+</div>
 
-Certains contenus sont exemptés de l’obligation d’accessibilité et se situent hors champ de l’obligation légale :
-
-1. Les fichiers disponibles dans des formats bureautiques publiés avant le 23 septembre 2018, sauf s’ils sont nécessaires à l’accomplissement d’une démarche administrative relevant des tâches effectuées par l’organisme concerné ;
-2. Les contenus audio et vidéo préenregistrés, y compris ceux comprenant des composants interactifs, publiés avant le 23 septembre 2020 ;
-3. Les contenus audio et vidéo diffusés en direct, y compris ceux comprenant des composants interactifs ;
-4. Les cartes et les services de cartographie en ligne, sous réserve que, s’agissant des cartes destinées à fournir une localisation ou un itinéraire, les informations essentielles soient fournies sous une forme numérique accessible ;
-5. Les contenus de tiers qui ne sont ni financés ni développés par l’organisme concerné et qui ne sont pas sous son contrôle ;
-6. Les reproductions de pièces de collections patrimoniales qui ne peuvent être rendues totalement accessibles en raison ;
- - Soit de l’incompatibilité des exigences en matière d’accessibilité avec la préservation de la pièce concernée ou l’authenticité de la reproduction notamment en termes de contraste ;
- - Soit de l’indisponibilité de solutions automatisées et économiques qui permettraient de transcrire facilement le texte de manuscrits ou d’autres pièces de collections patrimoniales et de le restituer sous la forme d’un contenu compatible avec l’obligation d’accessibilité ;
-7. Les contenus des intranets et des extranets publiés avant le 23 septembre 2019, jusqu’à ce que ces sites fassent l’objet d’une révision en profondeur ;
-8. Les contenus des sites internet et des applications mobiles qui ne sont ni nécessaires à l’accomplissement d’une démarche administrative active ni mis à jour ou modifiés après le 23 septembre 2019, notamment les archives.
-
-Il existe un système de dérogation dans la mise en conformité d’un service numérique à l’accessible : la charge disproportionnée. Elle permet de déroger à certaines règles d'accessibilité lorsque leur mise en œuvre engendre une charge excessive pour l'organisation. Cela peut inclure des contraintes techniques, financières ou temporelles qui rendent la conformité à une norme spécifique difficile ou irréalisable. L’absence de priorité, le manque de temps ou de connaissance ne sont pas des circonstances légitimes de dérogations. Cette dérogation doit être justifiée, documentée et nécessite un accord auprès du comité de gouvernance de la l'accessibilité numérique (en attendant sa création, c'est la Filière Digital qui en a le mandat). De plus, des solutions alternatives doivent être proposées pour garantir un accès maximal aux utilisateurs en situation de handicap.
+<div className="section-container">
+  <h2>⚖️ Dérogations</h2>
+  
+  <p>Il existe un système de dérogation dans la mise en conformité d'un service numérique : <span className="highlight">la charge disproportionnée</span>.</p>
+  
+  <div className="derogation-grid">
+    <div className="derogation-card">
+      <h4>ℹ️ Définition</h4>
+      <p>Permet de déroger à certaines règles d'accessibilité lorsque leur mise en œuvre engendre une charge excessive pour l'organisation (contraintes techniques, financières ou temporelles).</p>
+    </div>
+    
+    <div className="derogation-card">
+      <h4>⚠️ Attention</h4>
+      <p>L'absence de priorité, le manque de temps ou de connaissance <strong>ne sont pas</strong> des circonstances légitimes de dérogations.</p>
+    </div>
+    
+    <div className="derogation-card">
+      <h4>✅ Procédure</h4>
+      <p>Cette dérogation doit être justifiée, documentée et nécessite un accord auprès du comité de gouvernance de l'accessibilité numérique (en attendant sa création, c'est la Filière Digital qui en a le mandat).</p>
+      <p>Des solutions alternatives doivent être proposées pour garantir un accès maximal aux utilisateurs en situation de handicap.</p>
+    </div>
+  </div>
+</div>

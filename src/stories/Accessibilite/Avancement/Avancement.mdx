@@ -1,12 +1,596 @@
-import { Story, Meta } from '@storybook/addon-docs/blocks';
-import * as AvancementStories from './Avancement.stories.ts';
+import { Story, Meta } from '@storybook/blocks';
+import * as AvancementStories from './Avancement.stories';
 
 <Meta of={AvancementStories} />
 
-# Outils de pré-audit
+<style>
+{
+  `
+    /* Variables CSS */
+    :root {
+      --primary-color: #0c419a;
+      --primary-light: #1e88e5;
+      --accent-color: #00a5df;
+      --text-color: #333;
+      --background-light: #f8faff;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --transition-speed: 0.3s;
+      --border-radius: 8px;
+    }
+    
+    /* Styles globaux */
+    .avancement-container {
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-color);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    /* Header avec effet glassmorphism */
+    .avancement-header {
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .avancement-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgzMCkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .avancement-header h1 {
+      margin: 0;
+      position: relative;
+      z-index: 1;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    
+    .avancement-header p {
+      margin-top: 0.5rem;
+      position: relative;
+      z-index: 1;
+      font-size: 1.1rem;
+      max-width: 800px;
+    }
+    
+    /* Titres avec ligne décorative */
+    .section-title {
+      position: relative;
+      color: var(--primary-color);
+      padding-bottom: 0.75rem;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      
+      border-radius: 3px;
+    }
+    
+    /* Cartes de progression */
+    .progress-overview {
+      margin-bottom: 3rem;
+    }
+    
+    .progress-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 10rem;
+      margin-bottom: 2rem;
+    }
+    
+    .progress-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .progress-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    
+    .progress-card h3 {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    
+    .progress-card p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    /* Cercle de progression */
+    .progress-circle {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .progress-label {
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+    
+    /* Statistiques */
+    .progress-stats {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.05rem;
+      margin-bottom: 1rem;
+    }
+    
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      min-width: 80px;
+      margin-top: 1.7rem;
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-align: center;
+      color: #666;
+    }
 
-<Story of={AvancementStories.PreAudit} />
+    .stat-detail {
+      text-align: center !important;
+    }
+    
+    .stat-success {
+      color: #56c271;
+    }
+    
+    .stat-warning {
+      color: #f0b323;
+    }
+    
+    .stat-info {
+      color: var(--primary-color);
+    }
+    
+    /* Barres de progression par catégorie */
+    .category-progress {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .category-item {
+      width: 100%;
+    }
+    
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .category-name {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .category-percent {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      border-radius: 4px;
+      transition: width 1s ease-in-out;
+    }
+    
+    /* Boîte d'information */
+    .info-box {
+      background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .info-box h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+    
+    .info-box p {
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+    
+    .info-box p:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Tableau des composants */
+    .components-table-container {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+    
+    .table-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid #eaeaea;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .search-container {
+      position: relative;
+      width: 300px;
+      max-width: 100%;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: border-color var(--transition-speed);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(12, 65, 154, 0.1);
+    }
+    
+    .filter-container {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .filter-button {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ddd;
+      background-color: white;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+    }
+    
+    .filter-button:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .filter-button.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .components-table {
+      width: 100%;
+      overflow-x: auto;
+    }
+    
+    .table-pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-top: 1px solid #eaeaea;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .pagination-info {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .pagination-controls {
+      display: flex;
+      gap: 0.25rem;
+    }
+    
+    .pagination-button {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ddd;
+      background-color: white;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+    }
+    
+    .pagination-button:hover:not(:disabled) {
+      background-color: #f5f5f5;
+    }
+    
+    .pagination-button.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .pagination-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    /* Section d'actions */
+    .action-section {
+      margin-bottom: 3rem;
+    }
+    
+    .action-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .action-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .action-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    
+    .action-icon {
+      width: 48px;
+      height: 48px;
+      background-color: rgba(12, 65, 154, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+    
+    .action-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    
+    .action-card p {
+      margin: 0 0 1.5rem 0;
+      color: #666;
+      font-size: 0.9rem;
+      flex-grow: 1;
+    }
+    
+    .action-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      transition: color var(--transition-speed);
+    }
+    
+    .action-link:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .table-controls {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .search-container {
+        width: 100%;
+      }
+      
+      .filter-container {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .table-pagination {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .pagination-controls {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  `
+}
+</style>
 
-# Contrôle manuel
-
-<Story of={AvancementStories.Manuel} />
+<div className="avancement-container">
+  <div className="avancement-header">
+    <h1>Suivi d'avancement de l'accessibilité</h1>
+    <p>Tableau de bord de l'état d'avancement des audits d'accessibilité des composants du Design System CNAM</p>
+  </div>
+  
+  <h2 className="section-title">Vue d'ensemble</h2>
+  
+  <div className="progress-overview">
+    <div className="progress-cards">
+      <div className="progress-card">
+      <h3 className="stat-label">Avancement global</h3>
+        <p className="stat-label">Progression dans la création des composants du Design System</p>
+        <div className="progress-circle">
+          <Story of={AvancementStories.PreAudit} />
+        </div>
+      </div>
+      
+      <div className="progress-card">
+          <h3 className="stat-label">Statistiques détaillées</h3>
+        <p className="stat-label">Progression dans l'audit des composants du Design System</p>
+        <div className="progress-stats">
+          <div className="stat-item">
+            <span className="stat-value stat-success">11</span>
+            <span className="stat-label">Composants audités</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-value stat-warning">39</span>
+            <span className="stat-label">Composants en attente</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-value stat-info">59</span>
+            <span className="stat-label">Total des composants</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div className="info-box">
+      <h3>📊 Suivi des audits</h3>
+      <p>L'audit d'accessibilité des composants est réalisé selon les critères du <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr> version 4.1. Chaque composant est évalué individuellement pour garantir sa conformité aux normes d'accessibilité.</p>
+      <p>Les composants sont considérés comme <strong>audités</strong> lorsqu'ils ont été testés et validés selon les critères applicables. Les composants <strong>en attente</strong> sont ceux qui n'ont pas encore été audités ou qui sont en cours d'audit.</p>
+    </div>
+  </div>
+  
+  <h2 className="section-title">Composants audités</h2>
+  
+  <div className="components-table-container">    
+    <div className="components-table">
+      <Story of={AvancementStories.Manuel} />
+    </div>
+  </div>
+  
+  <div className="action-section">
+    <h2 className="section-title">Actions recommandées</h2>
+    
+    <div className="action-cards">
+      <div className="action-card">
+        <div className="action-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <h3>Documentation</h3>
+        <p>Consultez la documentation d'accessibilité pour comprendre les critères d'audit et les bonnes pratiques.</p>
+        <a href="/?path=/docs/accessibilité-introduction--docs" className="action-link">Voir la documentation</a>
+      </div>
+      
+      <div className="action-card">
+        <div className="action-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+            <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+            <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+        </div>
+        <h3>Kit de pré-audit</h3>
+        <p>Utilisez les outils de pré-audit pour évaluer vos composants avant de soumettre une demande d'audit officielle.</p>
+        <a href="/?path=/docs/accessibilité-kit-de-pré-audit-pré-audit--docs" className="action-link">Accéder au kit</a>
+      </div>
+      
+      <div className="action-card">
+        <div className="action-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h3>Demande d'audit</h3>
+        <p>Soumettez une demande d'audit d'accessibilité pour vos composants ou applications.</p>
+        <a href="/?path=/docs/accessibilité-aculturation-sensibilisation-accessibilité--docs" className="action-link">Faire une demande</a>
+      </div>
+    </div>
+  </div>
+</div>
