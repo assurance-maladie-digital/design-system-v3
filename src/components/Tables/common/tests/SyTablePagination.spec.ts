@@ -33,7 +33,6 @@ describe('SyTablePagination.vue', () => {
 			},
 		})
 		expect(wrapper.find('.pagination').exists()).toBe(true)
-		// Just check that the pagination container exists, as buttons might be rendered differently in test environment
 	})
 
 	it('does not display pagination navigation when there is only one page', () => {
@@ -48,9 +47,7 @@ describe('SyTablePagination.vue', () => {
 				plugins: [vuetify],
 			},
 		})
-		// The component itself should still be visible
 		expect(wrapper.find('.sy-table-pagination').exists()).toBe(true)
-		// But the pagination navigation should not be visible
 		expect(wrapper.find('.pagination').exists()).toBe(false)
 	})
 
@@ -68,7 +65,6 @@ describe('SyTablePagination.vue', () => {
 		})
 		expect(wrapper.find('.sy-table-pagination').exists()).toBe(true)
 		expect(wrapper.find('.info').exists()).toBe(true)
-		// The SySelect component should be present
 		expect(wrapper.findComponent({ name: 'SySelect' }).exists()).toBe(true)
 	})
 
@@ -85,12 +81,9 @@ describe('SyTablePagination.vue', () => {
 			},
 		})
 
-		// Access the component instance to check computed properties
-		// Use a type assertion with 'unknown' first to avoid TypeScript errors
 		const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
 		expect(vm.itemsPerPageOptions).toBeDefined()
 
-		// Check if the options include the total items count
 		const options = vm.itemsPerPageOptions
 		const hasItemsLength = options.some(option => option.value === 42)
 		expect(hasItemsLength).toBe(true)
@@ -109,7 +102,6 @@ describe('SyTablePagination.vue', () => {
 			},
 		})
 
-		// The info text should show "1-42 sur 42 éléments"
 		const infoText = wrapper.find('.info').text()
 		expect(infoText).toContain('1-42')
 	})
@@ -127,10 +119,8 @@ describe('SyTablePagination.vue', () => {
 			},
 		})
 
-		// Call the nextPage method directly
 		await (wrapper.vm as unknown as { nextPage: () => Promise<void> }).nextPage()
 
-		// Check if the update:page event was emitted with value 2
 		expect(wrapper.emitted('update:page')).toBeTruthy()
 		expect(wrapper.emitted('update:page')![0]).toEqual([2])
 	})
@@ -148,10 +138,8 @@ describe('SyTablePagination.vue', () => {
 			},
 		})
 
-		// Check that the items per page selector exists
 		expect(wrapper.find('.rows-per-page-label').exists()).toBe(true)
 
-		// Check that the label text is correct
 		const labelText = wrapper.find('.rows-per-page-label').text()
 		expect(labelText).toContain('Lignes par page')
 	})
