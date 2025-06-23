@@ -1,44 +1,62 @@
 export default function filter(itemValue: unknown, filterValue: unknown): boolean {
-	const str = String(itemValue)
-	const search = String(filterValue)
+	const str = String(itemValue ?? '')
+	const search = String(filterValue ?? '')
 
-	// Utiliser la fonction de conversion en regex pour les autres cas
-	const result = convertFilterToRegex(search)
-
-	if (result.caseSensitive) {
-		return result.regex.test(str)
+	if (search.startsWith('"') && search.endsWith('"')) {
+		const regex = generateRegex(search.slice(1, -1), true)
+		return regex.test(str)
 	}
+
+	else if (search.startsWith('=')) {
+		const regex = generateRegex(search.slice(1), true, true)
+		return regex.test(str)
+	}
+
+	else if (search.startsWith('<>')) {
+		const regex = generateRegex(search.slice(2), true, true)
+		return !regex.test(str)
+	}
+
+	else if (search.startsWith('<=')) {
+		const cleanedSearch = search.slice(2).trim()
+		return str.localeCompare(cleanedSearch) <= 0
+	}
+
+	else if (search.startsWith('>=')) {
+		const cleanedSearch = search.slice(2).trim()
+		return str.localeCompare(cleanedSearch) >= 0
+	}
+
+	else if (search.startsWith('>')) {
+		const cleanedSearch = search.slice(1).trim()
+		return str.localeCompare(cleanedSearch) > 0
+	}
+
+	else if (search.startsWith('<')) {
+		const cleanedSearch = search.slice(1).trim()
+		return str.localeCompare(cleanedSearch) < 0
+	}
+
 	else {
-		return result.regex.test(str.toLowerCase())
+		const regex = generateRegex(removeAccents(search))
+		return regex.test(removeAccents(str))
 	}
 }
 
-/**
- * Convertit une chaîne de caractères de filtre avec des caractères spéciaux en expression régulière
- * @param filterStr Chaîne de caractères de filtre
- * @returns Expression régulière correspondante
- */
-function convertFilterToRegex(filterStr: string): { regex: RegExp, caseSensitive: boolean, isGreaterThan?: boolean } {
-	// Traiter les cas spéciaux
-	// Cas <>?* - Toutes les valeurs vides ou nulles
-	if (filterStr === '<>?*') {
-		return { regex: /^\s*$/, caseSensitive: false }
+function generateRegex(search: string, caseSensitive = false, strict = false): RegExp {
+	const escapedSearch = search.replace(/[-[\]{}()+.,\\^$|#\s]/g, '\\$&')
+	const regexSequenceWithWildcards = escapedSearch.replace(/\?/g, '.')
+	let regex = regexSequenceWithWildcards.replace(/\*/g, '.*')
+	if (strict) {
+		regex = '^' + regex + '$'
+	}
+	else if (regex !== escapedSearch) {
+		regex = '^' + regex
 	}
 
-	// Cas =???? - Tous les mots de 4 lettres exactement (ou autre longueur)
-	const exactLengthMatch = /^=(\?+)$/.exec(filterStr)
-	if (exactLengthMatch) {
-		const length = exactLengthMatch[1].length
-		return { regex: new RegExp(`^.{${length}}$`), caseSensitive: false }
-	}
+	return new RegExp(regex, caseSensitive ? 'g' : 'gi')
+}
 
-	// Cas >zu - Tous les mots classés après "zu" alphabétiquement
-	const greaterThanMatch = /^>(.+)$/.exec(filterStr)
-	if (greaterThanMatch) {
-		// On ne peut pas utiliser une regex pour cette comparaison, on utilisera une fonction spéciale
-		return { regex: new RegExp(`.`), caseSensitive: false, isGreaterThan: true }
-	}
-
-	// Recherche insensible à la casse par défaut avec correspondance partielle
-	return { regex: new RegExp(filterStr, 'i'), caseSensitive: false }
+function removeAccents(str: string): string {
+	return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }

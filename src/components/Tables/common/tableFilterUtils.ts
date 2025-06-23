@@ -20,7 +20,7 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 	const itemValue = item[filter.key]
 	const filterValue = filter.value
 
-	if (itemValue == null || filterValue == null) return true
+	if (filterValue == null) return true
 
 	switch (filter.type) {
 		case 'text': {
