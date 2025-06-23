@@ -217,7 +217,7 @@ export const VuetifyPanel: StoryObj = {
 								<VIcon size="small" class="mr-1" :icon="iconAlert"></VIcon>
 								Composant natif non conforme
 							</VChip>
-							<VChip class="mr-2 mb-2" color="#66cdbb" variant="outlined">
+							<VChip class="mr-2 mb-2" color="#a05bb6" variant="outlined">
 								<VIcon size="small" class="mr-1" :icon="iconAlert"></VIcon>
 								Composant alternatif conforme
 							</VChip>

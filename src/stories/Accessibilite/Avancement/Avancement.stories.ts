@@ -199,22 +199,11 @@ export const Manuel: StoryObj = {
 								>
 									<v-card-item>
 										<v-card-title class="text-truncate">{{ item.composant }}</v-card-title>
-										<template v-slot:append>
-											<v-avatar
-												:color="item.status === 'Audité' ? 'success' : (item.status === 'En cours' ? 'info' : 'warning')"
-												size="36"
-											>
-												<v-icon
-													:icon="item.status === 'Audité' ? mdiCheckCircle : (item.status === 'En cours' ? mdiProgressClock : mdiClockOutline)"
-													color="white"
-												></v-icon>
-											</v-avatar>
-										</template>
 									</v-card-item>
 									
 									<v-card-text>
 										<v-chip
-											:color="item.status === 'Audité' ? 'success' : (item.status === 'En cours' ? 'info' : 'warning')"
+											:color="item.status === 'Audité' ? '#56c271' : (item.status === 'En cours' ? '#a05bb6' : '#f0b323')"
 											variant="flat"
 											class="mb-2"
 										>
