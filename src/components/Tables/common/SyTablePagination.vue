@@ -18,6 +18,15 @@
 			// Sort the options numerically
 			standardOptions.sort((a, b) => a - b)
 		}
+		
+		// Always include the total number of items as an option if it's reasonable
+		if (props.itemsLength > 0 && 
+		    props.itemsLength <= 500 && 
+		    !standardOptions.includes(props.itemsLength)) {
+			standardOptions.push(props.itemsLength)
+			// Sort the options numerically
+			standardOptions.sort((a, b) => a - b)
+		}
 
 		// Map to the format expected by SySelect
 		const options = standardOptions.map(value => ({
@@ -167,9 +176,9 @@
 <template>
 	<div class="sy-table-pagination">
 		<div class="info">
-			{{ itemsPerPage === -1 
+			{{ itemsPerPage === -1
 				? locales.pagination.showingItems(1, itemsLength, itemsLength)
-				: locales.pagination.showingItems((page - 1) * itemsPerPage + 1, Math.min(page * itemsPerPage, itemsLength), itemsLength) 
+				: locales.pagination.showingItems((page - 1) * itemsPerPage + 1, Math.min(page * itemsPerPage, itemsLength), itemsLength)
 			}}
 		</div>
 
