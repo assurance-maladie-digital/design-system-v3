@@ -227,31 +227,6 @@ export const Manuel: StoryObj = {
 							Dernière mise à jour: 20/06/2025
 						</div>
 					</div>
-					
-					<style>
-					.component-grid {
-						background-color: #f5f5f5;
-						border-radius: 8px;
-						padding: 16px;
-					}
-					.component-card {
-						transition: all 0.3s ease;
-						border-left: 5px solid transparent;
-						overflow: hidden;
-					}
-					.component-card:hover {
-						transform: translateY(-5px);
-					}
-					.component-card.audited {
-						border-left-color: #4CAF50;
-					}
-					.component-card.in-progress {
-						border-left-color: #2196F3;
-					}
-					.component-card.not-audited {
-						border-left-color: #FF9800;
-					}
-					</style>
 				</div>
 			`,
 		}

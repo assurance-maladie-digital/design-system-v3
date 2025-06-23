@@ -160,11 +160,6 @@ export const VuetifyPanel: StoryObj = {
 				}
 			},
 			template: `
-				<style>
-				.border-alternative {
-					border-color: #a05bb6 !important;
-				}
-				</style>
 				<div class="vuetify-audit-dashboard">
 					<!-- En-tête avec filtres et recherche -->
 					<VSheet :elevation="2" class="mt-4 pa-4 rounded" style="background: linear-gradient(to right, #f5f7fa, #eef2f7);">
