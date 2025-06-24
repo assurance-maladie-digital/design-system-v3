@@ -220,6 +220,9 @@ export const Default: Story = {
 							{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
 						]
 					}
+                    
+                      // Initialize data
+		  			fetchData()
 				</script>
 				`,
 			},
@@ -258,8 +261,7 @@ export const Default: Story = {
 				const options = ref(args.options)
 
 				const fetchData = async (): Promise<void> => {
-					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(args.options)
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -313,6 +315,9 @@ export const Default: Story = {
 						{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
 					]
 				}
+
+				// Initialize data
+				fetchData()
 
 				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
@@ -426,18 +431,26 @@ export const ServerSortBy: Story = {
 
 		  const getUsers = (): User[] => {
 			return [
-			  { firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
-			  { firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
-			  { firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
-			  { firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
-			  { firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
-			  { firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
-			  { firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
-			  { firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
-			  { firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
-			  { firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
-			]
+							{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+							{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+							{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+							{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+							{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+							{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+							{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+							{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+							{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+							{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+							{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+							{ firstname: 'Jacques', lastname: 'Demers', email: 'jacques.demers@example.com' },
+							{ firstname: 'Aimée', lastname: 'Josseaume', email: 'aimee.josseaume@example.com' },
+							{ firstname: 'Delphine', lastname: 'Robillard', email: 'delphine.robillard@example.com' },
+							{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
+						]
 		  }
+          
+           // Initialize data
+		  	fetchData()
 		</script>
 		`,
 			},
@@ -455,7 +468,7 @@ export const ServerSortBy: Story = {
 			{ title: 'Email', key: 'email' },
 		],
 		'caption': '',
-		'serverItemsLength': 0,
+		'serverItemsLength': 15,
 		'suffix': 'server-sort',
 		'density': 'default',
 		'striped': false,
@@ -476,7 +489,7 @@ export const ServerSortBy: Story = {
 				const options = ref(args.options)
 
 				const fetchData = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(args.options as DataOptions)
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -523,8 +536,16 @@ export const ServerSortBy: Story = {
 						{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
 						{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
 						{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+						{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+						{ firstname: 'Jacques', lastname: 'Demers', email: 'jacques.demers@example.com' },
+						{ firstname: 'Aimée', lastname: 'Josseaume', email: 'aimee.josseaume@example.com' },
+						{ firstname: 'Delphine', lastname: 'Robillard', email: 'delphine.robillard@example.com' },
+						{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
 					]
 				}
+
+				// Initialize data
+				fetchData()
 
 				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
@@ -2008,6 +2029,9 @@ export const ServerFilterByExacteDate: Story = {
 					state.value = StateEnum.RESOLVED
 				}
 
+				// Initialize data
+				fetchData()
+
 				return {
 					args,
 					users,
@@ -2305,6 +2329,9 @@ export const ServerFilterByPeriod: Story = {
 
 					state.value = StateEnum.RESOLVED
 				}
+
+				// Initialize data
+				fetchData()
 
 				return {
 					args,
@@ -2632,6 +2659,9 @@ export const CustomFilterSlot: Story = {
 					items.value = filteredItems.slice(start, end)
 					loading.value = false
 				}
+
+				// Initialize data
+				fetchData()
 
 				return {
 					args,
@@ -3109,6 +3139,9 @@ export const ManyServerTables: Story = {
 			  { firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
 			]
 		  }
+          
+          fetchDataTable1()
+          fetchDataTable2()
 		</script>
 		`,
 			},
@@ -3382,6 +3415,8 @@ export const DataAlignment: Story = {
 							},
 						]
 					}
+                    
+                    fetchData()
 				</script>
 				`,
 			},
@@ -3438,7 +3473,7 @@ export const DataAlignment: Story = {
 
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(args.options)
+					const { items, total } = await getDataFromApi(options.value)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -3495,6 +3530,8 @@ export const DataAlignment: Story = {
 						},
 					]
 				}
+
+				fetchData()
 
 				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
@@ -3624,6 +3661,8 @@ export const ResizableColumns: Story = {
 							{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
 						]
 					}
+                    
+                    fetchData()
 				</script>
 				`,
 			},
@@ -3664,7 +3703,7 @@ export const ResizableColumns: Story = {
 
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(args.options)
+					const { items, total } = await getDataFromApi(options.value)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -3718,6 +3757,8 @@ export const ResizableColumns: Story = {
 						{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
 					]
 				}
+
+				fetchData()
 
 				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
