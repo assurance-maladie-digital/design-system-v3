@@ -255,6 +255,8 @@ export const Default: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
+				const options = ref(args.options)
+
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
 					const { items, total } = await getDataFromApi(args.options)
@@ -312,12 +314,12 @@ export const Default: Story = {
 					]
 				}
 
-				return { args, users, state, fetchData, totalUsers, StateEnum }
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
 			template: `
 			<div>
 				<SyServerTable
-					v-model:options="args.options"
+					v-model:options="options"
 					:items="users"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
@@ -471,6 +473,8 @@ export const ServerSortBy: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
+				const options = ref(args.options)
+
 				const fetchData = async (): Promise<void> => {
 					const { items, total } = await getDataFromApi(args.options as DataOptions)
 					users.value = items
@@ -522,12 +526,12 @@ export const ServerSortBy: Story = {
 					]
 				}
 
-				return { args, users, state, fetchData, totalUsers, StateEnum }
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
 			template: `
 	  <div>
 		<SyServerTable
-		  v-model:options="args.options"
+		  v-model:options="options"
 		  :items="users"
 		  :server-items-length="totalUsers"
 		  :loading="state === StateEnum.PENDING"
@@ -795,6 +799,7 @@ export const ServerFilterByText: Story = {
 					filteredUsers,
 					totalFilteredUsers,
 					state,
+					options,
 					fetchData,
 					StateEnum,
 				}
@@ -802,7 +807,7 @@ export const ServerFilterByText: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="args.options"
+						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
@@ -1084,6 +1089,7 @@ export const ServerFilterByNumber: Story = {
 					args,
 					filteredUsers,
 					totalFilteredUsers,
+					options,
 					state,
 					fetchData,
 					StateEnum,
@@ -1092,7 +1098,7 @@ export const ServerFilterByNumber: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="args.options"
+						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
@@ -1396,6 +1402,7 @@ export const ServerFilterBySelect: Story = {
 					args,
 					filteredUsers,
 					totalFilteredUsers,
+					options,
 					state,
 					fetchData,
 					StateEnum,
@@ -1404,7 +1411,7 @@ export const ServerFilterBySelect: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="args.options"
+						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
@@ -1724,6 +1731,7 @@ export const ServerFilterBySelectMultiple: Story = {
 					args,
 					filteredUsers,
 					totalFilteredUsers,
+					options,
 					state,
 					fetchData,
 					StateEnum,
@@ -1732,7 +1740,7 @@ export const ServerFilterBySelectMultiple: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="args.options"
+						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
@@ -2013,7 +2021,7 @@ export const ServerFilterByExacteDate: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="args.options"
+						v-model:options="options"
 						:items="users"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
@@ -2311,7 +2319,7 @@ export const ServerFilterByPeriod: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="args.options"
+						v-model:options="options"
 						:items="users"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
@@ -2679,7 +2687,7 @@ export const CustomFilterInputs: Story = {
 				code: `
 		<template>
 		  <SyServerTable
-			v-model:options="args.options"
+			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
 			:server-items-length="totalFilteredUsers"
@@ -2943,6 +2951,7 @@ export const CustomFilterInputs: Story = {
 					args,
 					filteredUsers,
 					totalFilteredUsers,
+					options,
 					state,
 					fetchData,
 					StateEnum,
@@ -2951,7 +2960,7 @@ export const CustomFilterInputs: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="args.options"
+						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
@@ -3425,6 +3434,8 @@ export const DataAlignment: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
+				const options = ref(args.options)
+
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
 					const { items, total } = await getDataFromApi(args.options)
@@ -3485,11 +3496,11 @@ export const DataAlignment: Story = {
 					]
 				}
 
-				return { args, users, state, fetchData, totalUsers, StateEnum }
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
 			template: `
 				<SyServerTable
-					v-model:options="args.options"
+					v-model:options="options"
 					:items="users"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
@@ -3649,6 +3660,8 @@ export const ResizableColumns: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
+				const options = ref(args.options)
+
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
 					const { items, total } = await getDataFromApi(args.options)
@@ -3706,12 +3719,12 @@ export const ResizableColumns: Story = {
 					]
 				}
 
-				return { args, users, state, fetchData, totalUsers, StateEnum }
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
 			template: `
 			<div>
 				<SyServerTable
-					v-model:options="args.options"
+					v-model:options="options"
 					:items="users"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
