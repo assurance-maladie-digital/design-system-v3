@@ -370,6 +370,32 @@
 	const hasKeyWarning = computed(() => !hasKeyErrors.value && keyValidation.hasWarning.value)
 	const hasKeySuccess = computed(() => !hasKeyErrors.value && !hasKeyWarning.value && keyValidation.hasSuccess.value)
 
+	// Propriétés calculées pour les attributs ARIA et les états d'erreur
+	const hasFieldErrors = computed(() => hasNumberErrors.value || hasKeyErrors.value)
+	const ariaRequired = computed(() => props.required ? 'true' : undefined)
+	const ariaInvalidNumber = computed(() => hasFieldErrors.value ? 'true' : undefined)
+	const ariaInvalidKey = computed(() => hasKeyErrors.value ? 'true' : undefined)
+
+	// Propriétés calculées pour les messages
+	const numberMessages = computed(() => {
+		if (hasNumberErrors.value) {
+			return numberValidation.errors.value
+		}
+		else if (hasNumberWarning.value) {
+			return numberValidation.warnings.value
+		}
+		else if (hasNumberSuccess.value && props.showSuccessMessages) {
+			return numberValidation.successes.value
+		}
+		return []
+	})
+
+	// Messages d'erreur combinés pour le champ numéro
+	const combinedErrorMessages = computed(() => [
+		...numberValidation.errors.value,
+		...keyValidation.errors.value,
+	])
+
 	const numberLabelWithAsterisk = computed(() => {
 		return props.required && props.displayAsterisk ? `${props.numberLabel} *` : props.numberLabel
 	})
@@ -457,8 +483,8 @@
 				:messages="hasNumberErrors || hasKeyErrors ? numberValidation.errors.value ?? keyValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess && props.showSuccessMessages ? numberValidation.successes.value : []))"
 				:has-error="hasNumberErrors || hasKeyErrors"
 				:required="required"
-				:aria-required="required ? 'true' : undefined"
-				:aria-invalid="hasNumberErrors || hasKeyErrors ? 'true' : undefined"
+				:aria-required="ariaRequired"
+				:aria-invalid="ariaInvalidNumber"
 				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
@@ -511,8 +537,8 @@
 				:counter="props.counter"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
-				:aria-required="required ? 'true' : undefined"
-				:aria-invalid="hasKeyErrors ? 'true' : undefined"
+				:aria-required="ariaRequired"
+				:aria-invalid="ariaInvalidKey"
 				class="key-field"
 				:display-asterisk="false"
 				@input="handleKeyInput"
@@ -536,18 +562,18 @@
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
 				:append-tooltip="nirTooltip && nirTooltipPosition === 'append' ? nirTooltip : undefined"
 				:max-errors="2"
-				:error-messages="[...numberValidation.errors.value, ...keyValidation.errors.value]"
+				:error-messages="combinedErrorMessages"
 				:warning-messages="numberValidation.warnings.value"
 				:success-messages="numberValidation.successes.value"
 				:show-success-messages="showSuccessMessages"
 				:has-warning="hasNumberWarning"
 				:has-success="hasNumberSuccess"
 				:error="hasNumberErrors || hasKeyErrors"
-				:messages="hasNumberErrors ? numberValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess && props.showSuccessMessages ? numberValidation.successes.value : []))"
+				:messages="numberMessages"
 				:has-error="hasNumberErrors || hasKeyErrors"
 				:required="required"
-				:aria-required="required ? 'true' : undefined"
-				:aria-invalid="hasNumberErrors || hasKeyErrors ? 'true' : undefined"
+				:aria-required="ariaRequired"
+				:aria-invalid="ariaInvalidNumber"
 				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
@@ -600,8 +626,8 @@
 				:counter="props.counter"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
-				:aria-required="required ? 'true' : undefined"
-				:aria-invalid="hasKeyErrors ? 'true' : undefined"
+				:aria-required="ariaRequired"
+				:aria-invalid="ariaInvalidKey"
 				class="key-field"
 				:display-asterisk="false"
 				@input="handleKeyInput"
@@ -615,12 +641,12 @@
 .nir-field {
 	display: flex;
 	gap: 16px;
-	width: calc(v-bind('props.width') - 16px);
+	width: calc(v-bind('props.width || "100%"') - 16px);
 	align-items: flex-start;
 }
 
 .nir-field--fieldset {
-	width: calc(v-bind('props.width'));
+	width: calc(v-bind('props.width || "100%"'));
 	border: 1px solid #b9b9b9;
 	border-radius: 4px;
 	padding: 25px;
