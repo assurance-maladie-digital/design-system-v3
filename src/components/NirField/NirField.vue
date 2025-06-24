@@ -93,8 +93,8 @@
 	const numberField = ref<InstanceType<typeof SyTextField> | null>(null)
 
 	// Valeurs non masquées
-	const unmaskedNumberValue = computed(() => numberValue.value.replace(/\s/g, ''))
-	const unmaskedKeyValue = computed(() => keyValue.value.replace(/\s/g, ''))
+	const unmaskedNumberValue = computed(() => numberValue.value ? numberValue.value.replace(/\s/g, '') : '')
+	const unmaskedKeyValue = computed(() => keyValue.value ? keyValue.value.replace(/\s/g, '') : '')
 
 	// Masques
 	const numberMask = {
@@ -136,7 +136,7 @@
 
 	// Watch sur la valeur non masquée du numéro pour gérer le focus automatique
 	watch(unmaskedNumberValue, (newValue) => {
-		if (newValue.length === 13 && props.displayKey) {
+		if (newValue && newValue.length === 13 && props.displayKey) {
 			focusField(keyField)
 		}
 	})
@@ -150,7 +150,11 @@
 	// Watch pour détecter la suppression des chiffres de la clé
 	watch(keyValue, (newValue, oldValue) => {
 		// Si l'ancienne valeur avait des chiffres et la nouvelle est vide ou ne contient que des espaces
-		if (oldValue.trim() && !newValue.trim()) {
+		if (oldValue && newValue !== null && oldValue.trim() && !newValue.trim()) {
+			focusField(numberField)
+		}
+		else if (oldValue && newValue === null) {
+			// Cas où newValue est null (effacement avec clearable)
 			focusField(numberField)
 		}
 	})
