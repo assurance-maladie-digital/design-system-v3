@@ -300,8 +300,29 @@
 		emit('update:modelValue', `${number}${key}`)
 	}
 
+	// État pour suivre si une validation est en cours
+	const isValidating = ref(false)
+	const shouldValidateOnBlur = ref(false)
+
+	// Fonction utilitaire pour créer une fonction debounced
+	const createDebouncedFunction = <T extends (...args: unknown[]) => void>(fn: T, delay: number) => {
+		let timeout: number | undefined
+		return (...args: Parameters<T>) => {
+			window.clearTimeout(timeout)
+			timeout = window.setTimeout(() => fn(...args), delay)
+		}
+	}
+
 	// Validation des champs
 	const validateFields = async (onBlur = false) => {
+		// Éviter les validations redondantes
+		if (isValidating.value) {
+			shouldValidateOnBlur.value = shouldValidateOnBlur.value || onBlur
+			return true
+		}
+
+		isValidating.value = true
+
 		// Valider le numéro
 		const numberResult = numberValidation.validateField(
 			unmaskedNumberValue.value,
@@ -322,7 +343,7 @@
 		}
 
 		// Si on est en mode blur et qu'il y a des erreurs, focus sur le premier champ en erreur
-		if (onBlur) {
+		if (onBlur || shouldValidateOnBlur.value) {
 			await nextTick()
 			if (numberResult.hasError) {
 				numberField.value?.$el.querySelector('input')?.focus()
@@ -330,8 +351,10 @@
 			else if (keyResult.hasError) {
 				keyField.value?.$el.querySelector('input')?.focus()
 			}
+			shouldValidateOnBlur.value = false
 		}
 
+		isValidating.value = false
 		return !numberResult.hasError && !keyResult.hasError
 	}
 
@@ -355,14 +378,21 @@
 		return props.required && props.displayAsterisk ? `${props.keyLabel} *` : props.keyLabel
 	})
 
+	// Utilisation de debounce pour limiter les validations pendant la saisie
+	const debouncedValidate = createDebouncedFunction(() => {
+		validateFields(false)
+	}, 300) // 300ms de délai
+
 	const handleNumberInput = () => {
 		emitValue()
-		validateFields()
+		// Utiliser la validation debounced pour la saisie
+		debouncedValidate()
 	}
 
 	const handleKeyInput = () => {
 		emitValue()
-		validateFields()
+		// Utiliser la validation debounced pour la saisie
+		debouncedValidate()
 
 		// Si on supprime le contenu de la clé, on revient au champ NIR
 		if (unmaskedKeyValue.value.length === 0) {
