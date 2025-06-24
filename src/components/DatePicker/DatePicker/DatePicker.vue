@@ -21,6 +21,12 @@
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility } = useDatePickerAccessibility()
 
+	// Variables pour suivre le mois et l'année actuellement affichés dans le DatePicker
+	const currentMonth = ref<string | null>(null)
+	const currentYear = ref<string | null>(null)
+	const currentMonthName = ref<string | null>(null)
+	const currentYearName = ref<string | null>(null)
+
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
 		label?: string
@@ -58,6 +64,7 @@
 			min?: string
 			max?: string
 		}
+		autoClamp?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
@@ -93,6 +100,7 @@
 			min: '',
 			max: '',
 		}),
+		autoClamp: false,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -140,6 +148,8 @@
 		(e: 'closed'): void
 		(e: 'focus'): void
 		(e: 'blur'): void
+		(e: 'input', value: DateValue): void
+		(e: 'date-selected', value: DateValue): void
 	}>()
 
 	const isDatePickerVisible = ref(false)
@@ -494,9 +504,11 @@
 
 	// todayInString est maintenant fourni par le composable useTodayButton
 
-	// Utilisation du composable pour personnaliser le bouton du mois
+	// Utilisation du composable pour personnaliser les boutons du mois et de l'année
 	const { customizeMonthButton, setupMonthButtonObserver } = useMonthButtonCustomization(
 		() => isDatePickerVisible.value,
+		currentMonthName,
+		currentYearName,
 	)
 
 	onMounted(() => {
@@ -541,6 +553,30 @@
 		if (!isDatePickerVisible.value) {
 			toggleDatePicker()
 		}
+	}
+
+	// Fonction pour mettre à jour le mois
+	const onUpdateMonth = (month: string) => {
+		currentMonth.value = month
+		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
+		handleMonthUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+			}
+		})
+	}
+
+	// Fonction pour mettre à jour l'année
+	const onUpdateYear = (year: string) => {
+		currentYear.value = year
+		currentYearName.value = year
+		handleYearUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+			}
+		})
 	}
 
 	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
@@ -738,6 +774,7 @@
 				:bg-color="props.bgColor"
 				:hide-details="props.hideDetails"
 				:display-range="props.displayRange"
+				:auto-clamp="props.autoClamp"
 				title="Date text input"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -773,9 +810,11 @@
 				:text-field-activator="props.textFieldActivator"
 				:title="'Date text input'"
 				:period="period"
+				:auto-clamp="props.autoClamp"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
+				@date-selected="emit('date-selected', $event)"
 			/>
 		</template>
 		<template v-else>
@@ -816,6 +855,7 @@
 						:density="props.density"
 						:hide-details="props.hideDetails"
 						is-clearable
+						:auto-clamp="props.autoClamp"
 						title="Date Picker"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
@@ -839,8 +879,9 @@
 					:max="props.period?.max"
 					:min="props.period?.min"
 					@update:view-mode="handleViewModeUpdate"
-					@update:year="handleYearUpdate"
-					@update:month="handleMonthUpdate"
+					@update:month="onUpdateMonth"
+					@update:year="onUpdateYear"
+					@click:date="updateSelectedDates"
 					@update:model-value="updateDisplayFormattedDate"
 				>
 					<template #title>

@@ -78,18 +78,21 @@ export function useDateRangeInput(
 	 * @param cursorPosition Position actuelle du curseur (optionnel)
 	 * @returns Objet contenant les informations sur la plage de dates
 	 */
-	const handleRangeInput = (inputValue: string, newValue: string, cursorPosition?: number): {
+	const handleRangeInput = (inputValue: string | unknown, newValue: string | unknown, cursorPosition?: number): {
 		formattedValue: string
 		dates: [Date | null, Date | null]
 		isComplete: boolean
 		justCompletedFirstDate?: boolean
 		cursorPosition?: number
 	} => {
+		// S'assurer que inputValue et newValue sont des chaînes de caractères
+		const safeInputValue = typeof inputValue === 'string' ? inputValue : ''
+		const safeNewValue = typeof newValue === 'string' ? newValue : ''
 		// Si le mode plage n'est pas activé, traiter comme une date unique
 		if (!isRangeMode) {
-			const date = parseDate(newValue, format)
+			const date = parseDate(safeNewValue, format)
 			return {
-				formattedValue: date ? formatDate(date, format) : newValue,
+				formattedValue: date ? formatDate(date, format) : safeNewValue,
 				dates: [date, null],
 				isComplete: !!date,
 				cursorPosition: cursorPosition,
@@ -98,32 +101,32 @@ export function useDateRangeInput(
 
 		// Cas spécial : si la valeur précédente se terminait par un séparateur et que la nouvelle valeur
 		// contient du texte après le séparateur, c'est qu'on commence à saisir la seconde date
-		if (inputValue && inputValue.endsWith(rangeSeparator)
-			&& newValue.startsWith(inputValue)
-			&& newValue.length > inputValue.length) {
+		if (safeInputValue && safeInputValue.endsWith(rangeSeparator)
+			&& safeNewValue.startsWith(safeInputValue)
+			&& safeNewValue.length > safeInputValue.length) {
 			// On est en train de saisir la seconde date pour la première fois
 			isEditingSecondDate.value = true
 
 			// Extraire la première date et le nouveau caractère saisi
-			const firstPart = inputValue.substring(0, inputValue.length - rangeSeparator.length)
+			const firstPart = safeInputValue.substring(0, safeInputValue.length - rangeSeparator.length)
 			const firstDateObj = parseDate(firstPart, format)
 			firstDate.value = firstDateObj
 
 			// Extraire le caractère nouvellement saisi (après le séparateur)
-			const secondPart = newValue.substring(inputValue.length)
+			const secondPart = safeNewValue.substring(safeInputValue.length)
 			secondDate.value = parseDate(secondPart, format)
 
 			return {
 				formattedValue: `${firstPart}${rangeSeparator}${secondPart}`,
 				dates: [firstDateObj, secondDate.value],
 				isComplete: false,
-				cursorPosition: newValue.length,
+				cursorPosition: safeNewValue.length,
 			}
 		}
 
 		// Si la valeur contient déjà un séparateur de plage
-		if (hasRangeSeparator(newValue)) {
-			const [startStr, endStr] = extractRangeParts(newValue)
+		if (hasRangeSeparator(safeNewValue)) {
+			const [startStr, endStr] = extractRangeParts(safeNewValue)
 			const startDate = parseDate(startStr, format)
 			const endDate = parseDate(endStr, format)
 
@@ -143,7 +146,7 @@ export function useDateRangeInput(
 
 			// Si la position du curseur est dans la première partie de la date
 			if (cursorPosition !== undefined) {
-				const separatorPos = inputValue.indexOf(rangeSeparator)
+				const separatorPos = safeInputValue.indexOf(rangeSeparator)
 				if (separatorPos !== -1 && cursorPosition <= separatorPos) {
 					// Ajuster la position si la première partie a été formatée
 					if (startStr !== formattedStart) {
@@ -172,24 +175,24 @@ export function useDateRangeInput(
 		// (ce cas ne devrait pas arriver souvent car la valeur devrait contenir un séparateur)
 		if (isEditingSecondDate.value && firstDate.value) {
 			// Formater la valeur pour afficher la première date + séparateur + nouvelle valeur
-			const formattedValue = `${formatDate(firstDate.value, format)}${rangeSeparator}${newValue}`
-			const secondDateParsed = parseDate(newValue, format)
+			const formattedValue = `${formatDate(firstDate.value, format)}${rangeSeparator}${typeof newValue === 'string' ? newValue : ''}`
+			const secondDateParsed = parseDate(typeof newValue === 'string' ? newValue : '', format)
 			secondDate.value = secondDateParsed
 
 			return {
 				formattedValue,
 				dates: [firstDate.value, secondDateParsed],
 				isComplete: !!firstDate.value && !!secondDateParsed,
-				cursorPosition: cursorPosition !== undefined ? formatDate(firstDate.value, format).length + rangeSeparator.length + Math.min(cursorPosition, newValue.length) : undefined,
+				cursorPosition: cursorPosition !== undefined ? formatDate(firstDate.value, format).length + rangeSeparator.length + Math.min(cursorPosition, typeof newValue === 'string' ? newValue.length : 0) : undefined,
 			}
 		}
 
 		// Si nous éditons la première date
-		const date = parseDate(newValue, format)
+		const date = parseDate(typeof newValue === 'string' ? newValue : '', format)
 		firstDate.value = date
 
 		// Si la première date est complète, passer à la saisie de la deuxième date
-		if (date && newValue.length >= format.length) {
+		if (date && typeof newValue === 'string' && newValue.length >= format.length) {
 			isEditingSecondDate.value = true
 			const formattedDate = formatDate(date, format)
 
@@ -203,7 +206,7 @@ export function useDateRangeInput(
 		}
 
 		return {
-			formattedValue: newValue,
+			formattedValue: safeNewValue,
 			dates: [date, null],
 			isComplete: false,
 			cursorPosition: cursorPosition,

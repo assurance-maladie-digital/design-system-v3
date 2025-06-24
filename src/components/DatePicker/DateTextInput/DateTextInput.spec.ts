@@ -135,6 +135,8 @@ describe('DateTextInput.vue', () => {
 	})
 
 	it('handles invalid dates correctly', async () => {
+		// Désactiver l'autoClamp pour ce test spécifique
+		await wrapper.setProps({ autoClamp: false })
 		const input = wrapper.find('input')
 		await input.setValue('31/02/2025')
 		await input.trigger('blur')

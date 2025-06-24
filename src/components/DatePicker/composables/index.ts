@@ -3,6 +3,7 @@
 // Date input and editing
 export { useDateInputEditing } from './useDateInputEditing'
 export { useDateRangeInput } from './useDateRangeInput'
+export { useDateAutoClamp } from './useDateAutoClamp'
 
 // Date selection and validation
 export { useDateSelection } from './useDateSelection'
