@@ -1912,7 +1912,7 @@ export const ServerFilterByExacteDate: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 0,
+		'serverItemsLength': 5,
 		'showFilters': true,
 		'headers': [
 			{
@@ -2213,7 +2213,7 @@ export const ServerFilterByPeriod: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 0,
+		'serverItemsLength': 5,
 		'showFilters': true,
 		'headers': [
 			{
@@ -2404,7 +2404,7 @@ export const CustomFilterSlot: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { ref } from 'vue'
+					import { ref, watch } from 'vue'
 					import { SyServerTable } from '@cnamts/synapse'
 					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 					import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
@@ -2697,8 +2697,8 @@ export const CustomFilterSlot: Story = {
 								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
-									// Utiliser la fonction updateFilter fournie par le slot
-									updateFilter(val)
+								// Utiliser la fonction updateFilter fournie par le slot
+								updateFilter(val)
 								}"
 							/>
 						</div>
@@ -3451,7 +3451,7 @@ export const DataAlignment: Story = {
 			},
 		],
 		'caption': '',
-		'serverItemsLength': 15,
+		'serverItemsLength': 3,
 		'suffix': 'server-resizable-columns',
 		'density': 'default',
 		'striped': false,
