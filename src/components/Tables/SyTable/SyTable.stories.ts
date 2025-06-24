@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import SyTable from './SyTable.vue'
-import type { DataOptions, FilterType } from '../common/types'
+import { fn } from '@storybook/test'
 import { ref } from 'vue'
+import SyTable from './SyTable.vue'
+import type { DataOptions } from '../common/types'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
-import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable',
@@ -1467,6 +1467,11 @@ export const FilterByPeriod: Story = {
 
 export const CustomFilterSlot: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Cette story démontre comment utiliser un slot personnalisé pour le filtrage. Le filtre personnalisé utilise un v-select pour filtrer par statut.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1479,7 +1484,7 @@ export const CustomFilterSlot: Story = {
 						show-filters
 						suffix="custom-filter-slot-table"
 					>
-						<template #filter.custom="{ header, value, updateFilter }">
+						<template #filter.custom="{ header, updateFilter }">
 							<div class="custom-filter-container">
 								<div class="custom-filter-info mb-2">
 									Filtre personnalisé :
@@ -1493,16 +1498,10 @@ export const CustomFilterSlot: Story = {
 									color="primary"
 									bg-color="white"
 									@update:model-value="(val) => {
-										// Créer manuellement un filtre de sélection
-										const currentFilters = [...options.filters || []]
-										// Supprimer le filtre existant pour cette clé si nécessaire
-										const filteredFilters = currentFilters.filter(f => f.key !== 'status')
-										// Ajouter un nouveau filtre si la valeur n'est pas vide
-										if (val) {
-											filteredFilters.push({ key: 'status', value: val, type: 'select' })
-										}
-										// Mettre à jour les options avec les nouveaux filtres
-										options.filters = filteredFilters
+										// Use updateFilter provided by the slot props
+										updateFilter(val);
+										// Also update our local state
+										handleFilterChange(val);
 									}"
 								/>
 							</div>
@@ -1519,12 +1518,34 @@ export const CustomFilterSlot: Story = {
 					import { SyTable } from '@cnamts/synapse'
 					
 					const options = ref({
+						page: 1,
 						itemsPerPage: 4,
 						filters: []
 					})
 					
 					const customFilterValue = ref('')
 					const statusOptions = ['Actif', 'Inactif', 'En attente']
+					
+					// Function to update the filter when the select value changes
+					function handleFilterChange(val) {
+						// Create a new filters array
+						const newFilters = options.value.filters.filter(f => f.key !== 'status')
+						
+						// Add the new filter if a value is selected
+						if (val) {
+							newFilters.push({
+								key: 'status',
+								value: val,
+								type: 'select' // Use 'select' type for compatibility with filtering logic
+							})
+						}
+						
+						// Update the options with the new filters
+						options.value = {
+							...options.value,
+							filters: newFilters
+						}
+					}
 					
 					const headers = ref([
 						{
@@ -1620,7 +1641,7 @@ export const CustomFilterSlot: Story = {
 				title: 'Statut',
 				key: 'status',
 				filterable: true,
-				filterType: 'custom' as FilterType,
+				filterType: 'custom',
 			},
 		],
 		'items': [
@@ -1667,33 +1688,58 @@ export const CustomFilterSlot: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
-				// Create reactive references
-				const options = ref(args.options)
-				const items = ref(args.items)
+				// Create a fresh copy of the options to avoid reactivity issues
+				const options = ref({
+					page: 1,
+					itemsPerPage: 4,
+					filters: [],
+				})
+
+				// Create a reactive reference for the custom filter value
 				const customFilterValue = ref('')
 				const statusOptions = ['Actif', 'Inactif', 'En attente']
+
+				// Function to update the filter when the select value changes
+				function handleFilterChange(val) {
+					// Create a new filters array
+					const newFilters = options.value.filters.filter(f => f.key !== 'status')
+
+					// Add the new filter if a value is selected
+					if (val) {
+						newFilters.push({
+							key: 'status',
+							value: val,
+							type: 'select', // Use 'select' type for compatibility with filtering logic
+						})
+					}
+
+					// Update the options with the new filters
+					options.value = {
+						...options.value,
+						filters: newFilters,
+					}
+				}
 
 				return {
 					args,
 					options,
-					items,
 					customFilterValue,
 					statusOptions,
+					handleFilterChange,
 				}
 			},
 			template: `
 				<SyTable
 					v-model:options="options"
-					v-bind="args"
+					:headers="args.headers"
+					:items="args.items"
+					show-filters
+					suffix="custom-filter-slot-table"
 				>
-					<template #filter.custom="{ header, value, updateFilter }">
+					<template #filter.custom="{ header, updateFilter }">
 						<div class="custom-filter-container">
 							<div class="custom-filter-info mb-2">
 								Filtre personnalisé :
@@ -1707,16 +1753,10 @@ export const CustomFilterSlot: Story = {
 								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
-									// Manually create a select filter
-									const currentFilters = [...options.filters || []]
-									// Remove existing filter for this key if any
-									const filteredFilters = currentFilters.filter(f => f.key !== 'status')
-									// Add new filter if value is not empty
-									if (val) {
-										filteredFilters.push({ key: 'status', value: val, type: 'select' })
-									}
-									// Update options with new filters
-									options.filters = filteredFilters
+									// Use updateFilter provided by the slot props
+									updateFilter(val);
+									// Also update our local state
+									handleFilterChange(val);
 								}"
 							/>
 						</div>
