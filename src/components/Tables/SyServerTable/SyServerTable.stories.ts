@@ -226,21 +226,22 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		options: {
+		'options': {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		headers: [
+		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		caption: '',
-		serverItemsLength: 15,
-		suffix: 'server-default',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'serverItemsLength': 15,
+		'suffix': 'server-default',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -318,14 +319,9 @@ export const Default: Story = {
 				<SyServerTable
 					v-model:options="args.options"
 					:items="users"
-					:headers="args.headers"
-					:caption="args.caption"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 					@update:options="fetchData"
 				/>
 			</div>
@@ -446,21 +442,22 @@ export const ServerSortBy: Story = {
 		],
 	},
 	args: {
-		options: {
+		'options': {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'desc' }],
 			page: 1,
 		},
-		headers: [
+		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		caption: '',
-		serverItemsLength: 0,
-		suffix: 'server-sort',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'serverItemsLength': 0,
+		'suffix': 'server-sort',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -532,14 +529,9 @@ export const ServerSortBy: Story = {
 		<SyServerTable
 		  v-model:options="args.options"
 		  :items="users"
-		  :headers="args.headers"
-		  :caption="args.caption"
 		  :server-items-length="totalUsers"
 		  :loading="state === StateEnum.PENDING"
-		  :suffix="args.suffix"
-		  :density="args.density"
-		  :striped="args.striped"
-		  :resizable-columns="args.resizableColumns"
+		  v-bind="args"
 		  @update:options="fetchData"
 		/>
 	  </div>
@@ -699,8 +691,8 @@ export const ServerFilterByText: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 15,
-		headers: [
+		'serverItemsLength': 15,
+		'headers': [
 			{
 				title: 'Prénom',
 				key: 'firstname',
@@ -720,16 +712,17 @@ export const ServerFilterByText: Story = {
 				filterType: 'text',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'server-filter-text',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'server-filter-text',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -811,15 +804,9 @@ export const ServerFilterByText: Story = {
 					<SyServerTable
 						v-model:options="args.options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
+						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -988,7 +975,7 @@ export const ServerFilterByNumber: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1008,17 +995,18 @@ export const ServerFilterByNumber: Story = {
 				filterType: 'number',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		serverItemsLength: 15,
-		showFilters: true,
-		suffix: 'server-filter-number',
-		density: 'default',
-		striped: false,
+		'serverItemsLength': 15,
+		'showFilters': true,
+		'suffix': 'server-filter-number',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -1106,15 +1094,9 @@ export const ServerFilterByNumber: Story = {
 					<SyServerTable
 						v-model:options="args.options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
+						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1292,7 +1274,7 @@ export const ServerFilterBySelect: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1325,17 +1307,18 @@ export const ServerFilterBySelect: Story = {
 				],
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		serverItemsLength: 15,
-		showFilters: true,
-		suffix: 'server-filter-select',
-		density: 'default',
-		striped: false,
+		'serverItemsLength': 15,
+		'showFilters': true,
+		'suffix': 'server-filter-select',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -1423,15 +1406,9 @@ export const ServerFilterBySelect: Story = {
 					<SyServerTable
 						v-model:options="args.options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
+						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1613,7 +1590,7 @@ export const ServerFilterBySelectMultiple: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1650,17 +1627,18 @@ export const ServerFilterBySelectMultiple: Story = {
 				],
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		serverItemsLength: 15,
-		showFilters: true,
-		suffix: 'server-filter-select',
-		density: 'default',
-		striped: false,
+		'serverItemsLength': 15,
+		'showFilters': true,
+		'suffix': 'server-filter-select',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -1756,15 +1734,9 @@ export const ServerFilterBySelectMultiple: Story = {
 					<SyServerTable
 						v-model:options="args.options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
+						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1911,9 +1883,9 @@ export const ServerFilterByExacteDate: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 0,
-		showFilters: true,
-		headers: [
+		'serverItemsLength': 0,
+		'showFilters': true,
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1928,10 +1900,11 @@ export const ServerFilterByExacteDate: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		caption: '',
-		suffix: 'server-filter-date',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'suffix': 'server-filter-date',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -2042,15 +2015,9 @@ export const ServerFilterByExacteDate: Story = {
 					<SyServerTable
 						v-model:options="args.options"
 						:items="users"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
-						:resizable-columns="args.resizableColumns"
-						:show-filters="true"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
+						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2214,9 +2181,9 @@ export const ServerFilterByPeriod: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 0,
-		showFilters: true,
-		headers: [
+		'serverItemsLength': 0,
+		'showFilters': true,
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -2231,10 +2198,11 @@ export const ServerFilterByPeriod: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		caption: '',
-		suffix: 'server-filter-date',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'suffix': 'server-filter-date',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -2345,15 +2313,9 @@ export const ServerFilterByPeriod: Story = {
 					<SyServerTable
 						v-model:options="args.options"
 						:items="users"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
-						:resizable-columns="args.resizableColumns"
-						:show-filters="true"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
+						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2543,8 +2505,8 @@ export const CustomFilterSlot: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 6,
-		headers: [
+		'serverItemsLength': 6,
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -2564,7 +2526,7 @@ export const CustomFilterSlot: Story = {
 				filterType: 'custom' as FilterType,
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -2596,15 +2558,16 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'server-custom-filter-slot',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'server-custom-filter-slot',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -2676,16 +2639,10 @@ export const CustomFilterSlot: Story = {
 			template: `
 				<SyServerTable
 					v-model:options="options"
-					:headers="args.headers"
 					:items="items"
-					:caption="args.caption"
 					:server-items-length="serverItemsLength"
 					:loading="loading"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 					@update:options="fetchData"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
@@ -2876,8 +2833,8 @@ export const CustomFilterInputs: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 15,
-		headers: [
+		'serverItemsLength': 15,
+		'headers': [
 			{
 				title: 'Prénom',
 				key: 'firstname',
@@ -2897,23 +2854,24 @@ export const CustomFilterInputs: Story = {
 				filterType: 'text',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		filterInputConfig: {
+		'filterInputConfig': {
 			variant: 'outlined',
 			density: 'comfortable',
 			hideDetails: true,
 			clearable: false,
 			disableErrorHandling: true,
 		},
-		showFilters: true,
-		suffix: 'server-filter-text',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'server-filter-text',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -2995,16 +2953,9 @@ export const CustomFilterInputs: Story = {
 					<SyServerTable
 						v-model:options="args.options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:filter-input-config="args.filterInputConfig"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
+						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -3155,16 +3106,17 @@ export const ManyServerTables: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 15,
-		headers: [
+		'serverItemsLength': 15,
+		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		caption: '',
-		suffix: 'multi',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'suffix': 'multi',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -3280,28 +3232,20 @@ export const ManyServerTables: Story = {
 		<SyServerTable
 		  v-model:options="optionsTable1"
 		  :items="usersTable1"
-		  :headers="args.headers"
-		  :caption="args.caption"
 		  :server-items-length="totalUsersTable1"
 		  :loading="stateTable1 === StateEnum.PENDING"
-		  :density="args.density"
-		  :striped="args.striped"
+		  v-bind="args"
 		  suffix="table1"
 		  class="mb-10"
-		  :resizable-columns="args.resizableColumns"
 		  @update:options="fetchDataTable1"
 		/>
 		<SyServerTable
 		  v-model:options="optionsTable2"
 		  :items="usersTable2"
-		  :headers="args.headers"
-		  :caption="args.caption"
 		  :server-items-length="totalUsersTable2"
 		  :loading="stateTable2 === StateEnum.PENDING"
-		  :density="args.density"
-		  :striped="args.striped"
+		  v-bind="args"
 		  suffix="table2"
-		  :resizable-columns="args.resizableColumns"
 		  @update:options="fetchDataTable2"
 		/>
 	  </div>
@@ -3547,13 +3491,9 @@ export const DataAlignment: Story = {
 				<SyServerTable
 					v-model:options="args.options"
 					:items="users"
-					:headers="args.headers"
-					:caption="args.caption"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
+					v-bind="args"
 					@update:options="[fetchData, args['onUpdate:options']]"
 				/>
 			`,
@@ -3679,22 +3619,23 @@ export const ResizableColumns: Story = {
 		],
 	},
 	args: {
-		options: {
+		'options': {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		headers: [
+		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		caption: '',
-		serverItemsLength: 15,
-		suffix: 'server-resizable-columns',
-		density: 'default',
-		striped: false,
-		resizableColumns: true,
+		'caption': '',
+		'serverItemsLength': 15,
+		'suffix': 'server-resizable-columns',
+		'density': 'default',
+		'striped': false,
+		'resizableColumns': true,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -3772,14 +3713,9 @@ export const ResizableColumns: Story = {
 				<SyServerTable
 					v-model:options="args.options"
 					:items="users"
-					:headers="args.headers"
-					:caption="args.caption"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 					@update:options="fetchData"
 				/>
 			</div>

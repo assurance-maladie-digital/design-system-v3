@@ -176,7 +176,7 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -190,7 +190,7 @@ export const Default: Story = {
 				value: 'email',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -222,13 +222,14 @@ export const Default: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		options: {
+		'options': {
 			itemsPerPage: 4,
 		},
-		caption: '',
-		suffix: 'default-table',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'suffix': 'default-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -243,13 +244,7 @@ export const Default: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="args.items"
-					:caption="args.caption"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -343,7 +338,7 @@ export const SortBy: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -357,7 +352,7 @@ export const SortBy: Story = {
 				value: 'email',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -389,8 +384,8 @@ export const SortBy: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
 			sortBy: [
 				{
@@ -399,9 +394,10 @@ export const SortBy: Story = {
 				},
 			],
 		},
-		suffix: 'sort-table',
-		density: 'default',
-		striped: false,
+		'suffix': 'sort-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -416,13 +412,7 @@ export const SortBy: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="args.items"
-					:caption="args.caption"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -517,7 +507,7 @@ export const FilterByText: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -537,7 +527,7 @@ export const FilterByText: Story = {
 				filterType: 'text',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -569,15 +559,16 @@ export const FilterByText: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-text-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-text-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -600,14 +591,7 @@ export const FilterByText: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -697,7 +681,7 @@ export const FilterByNumber: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -717,7 +701,7 @@ export const FilterByNumber: Story = {
 				filterType: 'number',
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				age: 32,
@@ -744,15 +728,16 @@ export const FilterByNumber: Story = {
 				salary: 58000,
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-number-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-number-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -775,14 +760,7 @@ export const FilterByNumber: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -885,7 +863,7 @@ export const FilterBySelect: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -918,7 +896,7 @@ export const FilterBySelect: Story = {
 				],
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				department: 'RH',
@@ -945,15 +923,16 @@ export const FilterBySelect: Story = {
 				status: 'Inactif',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-select-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-select-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -976,14 +955,7 @@ export const FilterBySelect: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -1090,7 +1062,7 @@ export const FilterBySelectMultiple: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1127,7 +1099,7 @@ export const FilterBySelectMultiple: Story = {
 				],
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				department: 'RH',
@@ -1154,15 +1126,16 @@ export const FilterBySelectMultiple: Story = {
 				status: 'Inactif',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-select-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-select-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -1185,14 +1158,7 @@ export const FilterBySelectMultiple: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -1273,7 +1239,7 @@ export const FilterByExactDate: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1288,7 +1254,7 @@ export const FilterByExactDate: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				hireDate: dayjs('2025-05-15').format('DD/MM/YYYY'),
@@ -1310,15 +1276,16 @@ export const FilterByExactDate: Story = {
 				hireDate: dayjs('2025-07-30').format('DD/MM/YYYY'),
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-date-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-date-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -1341,14 +1308,7 @@ export const FilterByExactDate: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -1429,7 +1389,7 @@ export const FilterByPeriod: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1444,7 +1404,7 @@ export const FilterByPeriod: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				hireDate: dayjs('2025-05-15').format('DD/MM/YYYY'),
@@ -1466,15 +1426,16 @@ export const FilterByPeriod: Story = {
 				hireDate: dayjs('2025-07-30').format('DD/MM/YYYY'),
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-date-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-date-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -1497,14 +1458,7 @@ export const FilterByPeriod: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -1649,7 +1603,7 @@ export const CustomFilterSlot: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -1669,7 +1623,7 @@ export const CustomFilterSlot: Story = {
 				filterType: 'custom' as FilterType,
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -1701,15 +1655,16 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'custom-filter-slot-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'custom-filter-slot-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -1736,14 +1691,7 @@ export const CustomFilterSlot: Story = {
 			template: `
 				<SyTable
 					v-model:options="options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
 						<div class="custom-filter-container">
@@ -1876,7 +1824,7 @@ export const CustomFilterInputs: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -1896,7 +1844,7 @@ export const CustomFilterInputs: Story = {
 				filterType: 'text',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -1928,22 +1876,23 @@ export const CustomFilterInputs: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
 			filters: [],
 		},
-		filterInputConfig: {
+		'filterInputConfig': {
 			variant: 'outlined',
 			density: 'comfortable',
 			hideDetails: true,
 			clearable: false,
 			disableErrorHandling: true,
 		},
-		showFilters: true,
-		suffix: 'filter-text-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-text-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -1966,14 +1915,7 @@ export const CustomFilterInputs: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:filter-input-config="args.filterInputConfig"
-					:resizable-columns="args.resizableColumns"
-					:suffix="args.suffix"
-					:density="args.density"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -2072,7 +2014,7 @@ export const ManyTables: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -2086,7 +2028,7 @@ export const ManyTables: Story = {
 				value: 'email',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -2118,10 +2060,11 @@ export const ManyTables: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
-		suffix: 'multi-server',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'suffix': 'multi-server',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -2143,23 +2086,13 @@ export const ManyTables: Story = {
 				<div>
 					<SyTable
 						v-model:options="options1"
-						:resizable-columns="args.resizableColumns"
-						:headers="args.headers"
-						:items="args.items"
-						:caption="args.caption"
-						:density="args.density"
-						:striped="args.striped"
+						v-bind="args"
 						suffix="table1"
 						class="mb-10"
 					/>
 					<SyTable
 						v-model:options="options2"
-						:resizable-columns="args.resizableColumns"
-						:headers="args.headers"
-						:items="args.items"
-						:caption="args.caption"
-						:density="args.density"
-						:striped="args.striped"
+						v-bind="args"
 						suffix="table2"
 					/>
 				</div>
@@ -2309,10 +2242,7 @@ export const DataAlignment: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="args.items"
-					:suffix="args.suffix"
-					@update:options="args['onUpdate:options']"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -2400,8 +2330,8 @@ export const ResizableColumns: Story = {
 		],
 	},
 	args: {
-		resizableColumns: true,
-		headers: [
+		'resizableColumns': true,
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -2415,7 +2345,7 @@ export const ResizableColumns: Story = {
 				value: 'email',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -2447,10 +2377,11 @@ export const ResizableColumns: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		options: {
+		'options': {
 			itemsPerPage: 4,
 		},
-		suffix: 'resizable-columns',
+		'suffix': 'resizable-columns',
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		// Synchroniser itemsPerPage avec options.itemsPerPage
@@ -2465,10 +2396,7 @@ export const ResizableColumns: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="args.items"
-					:resizableColumns="args.resizableColumns"
-					:suffix="args.suffix"
+					v-bind="args"
 				/>
 			`,
 		}
