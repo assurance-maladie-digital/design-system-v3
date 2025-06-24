@@ -90,6 +90,10 @@ const meta = {
 		itemsPerPage: {
 			description: 'Nombre d\'éléments par page',
 			control: { type: 'number' },
+			table: {
+				category: 'props',
+				type: { summary: 'number' },
+			},
 		},
 		caption: {
 			description: 'Texte de la légende du tableau',
@@ -239,6 +243,10 @@ export const Default: Story = {
 		striped: false,
 	},
 	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -455,6 +463,10 @@ export const ServerSortBy: Story = {
 		striped: false,
 	},
 	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -720,6 +732,10 @@ export const ServerFilterByText: Story = {
 		striped: false,
 	},
 	render(args) {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -783,7 +799,6 @@ export const ServerFilterByText: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
 					state,
@@ -794,7 +809,7 @@ export const ServerFilterByText: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="options"
+						v-model:options="args.options"
 						:items="filteredUsers"
 						:headers="args.headers"
 						:caption="args.caption"
@@ -1006,6 +1021,10 @@ export const ServerFilterByNumber: Story = {
 		striped: false,
 	},
 	render(args) {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -1075,7 +1094,6 @@ export const ServerFilterByNumber: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
 					state,
@@ -1086,7 +1104,7 @@ export const ServerFilterByNumber: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="options"
+						v-model:options="args.options"
 						:items="filteredUsers"
 						:headers="args.headers"
 						:caption="args.caption"
@@ -1320,6 +1338,10 @@ export const ServerFilterBySelect: Story = {
 		striped: false,
 	},
 	render(args) {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -1389,7 +1411,6 @@ export const ServerFilterBySelect: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
 					state,
@@ -1400,7 +1421,7 @@ export const ServerFilterBySelect: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="options"
+						v-model:options="args.options"
 						:items="filteredUsers"
 						:headers="args.headers"
 						:caption="args.caption"
@@ -1642,6 +1663,10 @@ export const ServerFilterBySelectMultiple: Story = {
 		striped: false,
 	},
 	render(args) {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -1719,7 +1744,6 @@ export const ServerFilterBySelectMultiple: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
 					state,
@@ -1730,7 +1754,7 @@ export const ServerFilterBySelectMultiple: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="options"
+						v-model:options="args.options"
 						:items="filteredUsers"
 						:headers="args.headers"
 						:caption="args.caption"
@@ -1910,6 +1934,10 @@ export const ServerFilterByExacteDate: Story = {
 		striped: false,
 	},
 	render(args) {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -2012,7 +2040,7 @@ export const ServerFilterByExacteDate: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="options"
+						v-model:options="args.options"
 						:items="users"
 						:headers="args.headers"
 						:caption="args.caption"
@@ -2209,6 +2237,10 @@ export const ServerFilterByPeriod: Story = {
 		striped: false,
 	},
 	render(args) {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -2311,7 +2343,7 @@ export const ServerFilterByPeriod: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="options"
+						v-model:options="args.options"
 						:items="users"
 						:headers="args.headers"
 						:caption="args.caption"
@@ -2575,6 +2607,10 @@ export const CustomFilterSlot: Story = {
 		striped: false,
 	},
 	render(args) {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -2686,7 +2722,7 @@ export const CustomFilterInputs: Story = {
 				code: `
 		<template>
 		  <SyServerTable
-			v-model:options="options"
+			v-model:options="args.options"
 			:items="filteredUsers"
 			:headers="headers"
 			:server-items-length="totalFilteredUsers"
@@ -2880,6 +2916,10 @@ export const CustomFilterInputs: Story = {
 		striped: false,
 	},
 	render(args) {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -2943,7 +2983,6 @@ export const CustomFilterInputs: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
 					state,
@@ -2954,7 +2993,7 @@ export const CustomFilterInputs: Story = {
 			template: `
 				<div>
 					<SyServerTable
-						v-model:options="options"
+						v-model:options="args.options"
 						:items="filteredUsers"
 						:headers="args.headers"
 						:caption="args.caption"
@@ -3041,8 +3080,9 @@ export const ManyServerTables: Story = {
 			page: 1,
 		  })
 
-		  const fetchDataTable1 = async (): Promise<void> => {
-			const { items, total } = await getDataFromApi(optionsTable1.value)
+		  const fetchDataTable1 = async (options?: DataOptions): Promise<void> => {
+			const optionsToUse = options || optionsTable1.value
+			const { items, total } = await getDataFromApi(optionsToUse)
 			usersTable1.value = items
 			totalUsersTable1.value = total
 		  }
@@ -3057,8 +3097,9 @@ export const ManyServerTables: Story = {
 			page: 1,
 		  })
 
-		  const fetchDataTable2 = async (): Promise<void> => {
-			const { items, total } = await getDataFromApi(optionsTable2.value)
+		  const fetchDataTable2 = async (options?: DataOptions): Promise<void> => {
+			const optionsToUse = options || optionsTable2.value
+			const { items, total } = await getDataFromApi(optionsToUse)
 			usersTable2.value = items
 			totalUsersTable2.value = total
 		  }
@@ -3126,6 +3167,10 @@ export const ManyServerTables: Story = {
 		striped: false,
 	},
 	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -3140,8 +3185,9 @@ export const ManyServerTables: Story = {
 					page: 1,
 				})
 
-				const fetchDataTable1 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(optionsTable1.value as DataOptions)
+				const fetchDataTable1 = async (options?: DataOptions): Promise<void> => {
+					const optionsToUse = options || optionsTable1.value as DataOptions
+					const { items, total } = await getDataFromApi(optionsToUse)
 					usersTable1.value = items
 					totalUsersTable1.value = total
 				}
@@ -3157,8 +3203,9 @@ export const ManyServerTables: Story = {
 					page: 1,
 				})
 
-				const fetchDataTable2 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(optionsTable2.value as DataOptions)
+				const fetchDataTable2 = async (options?: DataOptions): Promise<void> => {
+					const optionsToUse = options || optionsTable2.value as DataOptions
+					const { items, total } = await getDataFromApi(optionsToUse)
 					usersTable2.value = items
 					totalUsersTable2.value = total
 				}
@@ -3208,6 +3255,10 @@ export const ManyServerTables: Story = {
 						{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
 					]
 				}
+
+				// Chargement initial des données
+				fetchDataTable1()
+				fetchDataTable2()
 
 				return {
 					args,
@@ -3419,6 +3470,10 @@ export const DataAlignment: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -3642,6 +3697,10 @@ export const ResizableColumns: Story = {
 		resizableColumns: true,
 	},
 	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyServerTable },
 			setup() {

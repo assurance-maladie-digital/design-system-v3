@@ -73,6 +73,10 @@ const meta = {
 		itemsPerPage: {
 			description: 'Nombre d\'éléments par page',
 			control: { type: 'number' },
+			table: {
+				category: 'props',
+				type: { summary: 'number' },
+			},
 		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
@@ -226,7 +230,11 @@ export const Default: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -395,7 +403,11 @@ export const SortBy: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -567,7 +579,11 @@ export const FilterByText: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -583,7 +599,7 @@ export const FilterByText: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
+					v-model:options="args.options"
 					:headers="args.headers"
 					:items="items"
 					:caption="args.caption"
@@ -738,7 +754,11 @@ export const FilterByNumber: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -754,7 +774,7 @@ export const FilterByNumber: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
+					v-model:options="args.options"
 					:headers="args.headers"
 					:items="items"
 					:caption="args.caption"
@@ -935,7 +955,11 @@ export const FilterBySelect: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -951,7 +975,7 @@ export const FilterBySelect: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
+					v-model:options="args.options"
 					:headers="args.headers"
 					:items="items"
 					:caption="args.caption"
@@ -1140,7 +1164,11 @@ export const FilterBySelectMultiple: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -1156,7 +1184,7 @@ export const FilterBySelectMultiple: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
+					v-model:options="args.options"
 					:headers="args.headers"
 					:items="items"
 					:caption="args.caption"
@@ -1292,7 +1320,11 @@ export const FilterByExactDate: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -1308,7 +1340,7 @@ export const FilterByExactDate: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
+					v-model:options="args.options"
 					:headers="args.headers"
 					:items="items"
 					:caption="args.caption"
@@ -1444,7 +1476,11 @@ export const FilterByPeriod: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -1460,7 +1496,7 @@ export const FilterByPeriod: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
+					v-model:options="args.options"
 					:headers="args.headers"
 					:items="items"
 					:caption="args.caption"
@@ -1675,7 +1711,11 @@ export const CustomFilterSlot: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -1905,7 +1945,11 @@ export const CustomFilterInputs: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -1921,7 +1965,7 @@ export const CustomFilterInputs: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
+					v-model:options="args.options"
 					:headers="args.headers"
 					:items="items"
 					:caption="args.caption"
@@ -2079,7 +2123,11 @@ export const ManyTables: Story = {
 		density: 'default',
 		striped: false,
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -2248,7 +2296,11 @@ export const DataAlignment: Story = {
 		'suffix': 'alignment-table',
 		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -2400,7 +2452,11 @@ export const ResizableColumns: Story = {
 		},
 		suffix: 'resizable-columns',
 	},
-	render(args) {
+	render: (args) => {
+		// Synchroniser itemsPerPage avec options.itemsPerPage
+		if (args.itemsPerPage !== undefined && args.options) {
+			args.options.itemsPerPage = args.itemsPerPage
+		}
 		return {
 			components: { SyTable },
 			setup() {
