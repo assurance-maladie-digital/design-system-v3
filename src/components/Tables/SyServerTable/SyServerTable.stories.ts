@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyServerTable from './SyServerTable.vue'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions, FilterType } from '../common/types'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
 import { fn } from '@storybook/test'
@@ -258,7 +258,13 @@ export const Default: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
 
 				const fetchData = async (): Promise<void> => {
 					const { items, total } = await getDataFromApi(options.value as DataOptions)

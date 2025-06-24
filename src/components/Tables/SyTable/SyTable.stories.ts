@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
 import { ref } from 'vue'
 import SyTable from './SyTable.vue'
-import type { DataOptions } from '../common/types'
+import type { DataOptions, FilterType } from '../common/types'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
 
@@ -1692,10 +1692,11 @@ export const CustomFilterSlot: Story = {
 			components: { SyTable },
 			setup() {
 				// Create a fresh copy of the options to avoid reactivity issues
-				const options = ref({
+				const options = ref<DataOptions>({
 					page: 1,
 					itemsPerPage: 4,
-					filters: [],
+					filters: [] as import('../common/types').FilterOption[],
+					sortBy: [],
 				})
 
 				// Create a reactive reference for the custom filter value
@@ -1704,15 +1705,21 @@ export const CustomFilterSlot: Story = {
 
 				// Function to update the filter when the select value changes
 				function handleFilterChange(val) {
-					// Create a new filters array
-					const newFilters = options.value.filters.filter(f => f.key !== 'status')
+					// Ensure options.value.filters is initialized
+					if (!options.value.filters) {
+						options.value.filters = []
+					}
+
+					// Create a new filters array with proper typing
+					const currentFilters = options.value.filters as import('../common/types').FilterOption[]
+					const newFilters = [...currentFilters].filter(f => f.key !== 'status')
 
 					// Add the new filter if a value is selected
 					if (val) {
 						newFilters.push({
 							key: 'status',
 							value: val,
-							type: 'select', // Use 'select' type for compatibility with filtering logic
+							type: 'select' as FilterType, // Use 'select' type for compatibility with filtering logic
 						})
 					}
 
