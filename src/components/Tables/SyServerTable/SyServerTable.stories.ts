@@ -492,7 +492,13 @@ export const ServerSortBy: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
 
 				const fetchData = async (): Promise<void> => {
 					const { items, total } = await getDataFromApi(options.value as DataOptions)
@@ -763,7 +769,14 @@ export const ServerFilterByText: Story = {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -1048,7 +1061,14 @@ export const ServerFilterByNumber: Story = {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -1361,7 +1381,14 @@ export const ServerFilterBySelect: Story = {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -1682,7 +1709,14 @@ export const ServerFilterBySelectMultiple: Story = {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -1935,6 +1969,11 @@ export const ServerFilterByExacteDate: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
+		'options': {
+			itemsPerPage: 5,
+			page: 1,
+			filters: [],
+		},
 		'caption': '',
 		'suffix': 'server-filter-date',
 		'density': 'default',
@@ -1973,13 +2012,16 @@ export const ServerFilterByExacteDate: Story = {
 					},
 				]
 
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalUsers = ref(originalUsers.length)
 				const users = ref([...originalUsers])
-				const options = ref({
-					itemsPerPage: 5,
-					page: 1,
-					filters: [],
-				})
 				const state = ref(StateEnum.IDLE)
 
 				const fetchData = async () => {
@@ -2236,6 +2278,11 @@ export const ServerFilterByPeriod: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
+		'options': {
+			itemsPerPage: 5,
+			page: 1,
+			filters: [],
+		},
 		'caption': '',
 		'suffix': 'server-filter-date',
 		'density': 'default',
@@ -2274,13 +2321,16 @@ export const ServerFilterByPeriod: Story = {
 					},
 				]
 
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalUsers = ref(originalUsers.length)
 				const users = ref([...originalUsers])
-				const options = ref({
-					itemsPerPage: 5,
-					page: 1,
-					filters: [],
-				})
 				const state = ref(StateEnum.IDLE)
 
 				const fetchData = async () => {
@@ -2619,7 +2669,14 @@ export const CustomFilterSlot: Story = {
 			components: { SyServerTable },
 			setup() {
 				// Create reactive references
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const items = ref(args.items)
 				const customFilterValue = ref('')
 				const statusOptions = ['Actif', 'Inactif', 'En attente']
@@ -2925,7 +2982,14 @@ export const CustomFilterInputs: Story = {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -3154,7 +3218,6 @@ export const ManyServerTables: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 15,
 		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
@@ -3475,7 +3538,13 @@ export const DataAlignment: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
 
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
@@ -3705,7 +3774,13 @@ export const ResizableColumns: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
 
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
