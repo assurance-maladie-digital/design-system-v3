@@ -2652,6 +2652,7 @@ export const CustomFilterSlot: Story = {
 		'caption': '',
 		'options': {
 			itemsPerPage: 4,
+			page: 1,
 			filters: [],
 		},
 		'showFilters': true,
@@ -2723,6 +2724,32 @@ export const CustomFilterSlot: Story = {
 					loading.value = false
 				}
 
+				function handleFilterChange(val) {
+					// Ensure options.value.filters is initialized
+					if (!options.value.filters) {
+						options.value.filters = []
+					}
+
+					// Create a new filters array with proper typing
+					const currentFilters = options.value.filters as import('../common/types').FilterOption[]
+					const newFilters = [...currentFilters].filter(f => f.key !== 'status')
+
+					// Add the new filter if a value is selected
+					if (val) {
+						newFilters.push({
+							key: 'status',
+							value: val,
+							type: 'select' as FilterType, // Use 'select' type for compatibility with filtering logic
+						})
+					}
+
+					// Update the options with the new filters
+					options.value = {
+						...options.value,
+						filters: newFilters,
+					}
+				}
+
 				// Initialize data
 				fetchData()
 
@@ -2734,6 +2761,7 @@ export const CustomFilterSlot: Story = {
 					statusOptions,
 					loading,
 					serverItemsLength,
+					handleFilterChange,
 					fetchData,
 				}
 			},
@@ -2760,8 +2788,10 @@ export const CustomFilterSlot: Story = {
 								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
-								// Utiliser la fonction updateFilter fournie par le slot
-								updateFilter(val)
+									// Use updateFilter provided by the slot props
+									updateFilter(val);
+									// Also update our local state
+									handleFilterChange(val);
 								}"
 							/>
 						</div>
