@@ -7,8 +7,12 @@
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
 	import { useTableUtils } from '../common/tableUtils'
-	import type { DataOptions, FilterOption, SyTableProps, TableColumnHeader } from '../common/types'
+	import type { DataOptions, SyTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
+	import { usePagination } from '../common/usePagination'
+	import { useTableOptions } from '../common/useTableOptions'
+	import { useTableHeaders } from '../common/useTableHeaders'
+	import { useTableItems } from '../common/useTableItems'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		itemsPerPage: undefined,
@@ -32,78 +36,41 @@
 
 	const table = ref<VDataTable>()
 
+	// Get filter utilities
 	const { filterItems } = useTableFilter()
 
-	// Éléments filtrés en fonction des filtres
-	const filteredItems = computed(() => {
-		const itemsCopy = props.items.map((item) => {
-			return JSON.parse(JSON.stringify(item))
-		})
-
-		// Applique les filtres aux éléments copiés
-		return filterItems(itemsCopy, filters.value)
+	// Use the table options composable
+	const { filters } = useTableOptions({
+		options,
 	})
 
-	// Pagination variables
-	const page = computed({
-		get: () => options.value.page || 1,
-		set: (newPage: number) => {
-			options.value = {
-				...options.value,
-				page: newPage,
-			}
-		},
+	// Use the table headers composable
+	const headersProp = toRef(props, 'headers')
+	const { headers, getEnhancedHeader } = useTableHeaders({
+		headersProp,
+		filterInputConfig: props.filterInputConfig,
 	})
 
-	/**
-	 * Update items per page from pagination component
-	 */
-	function updateItemsPerPage(newItemsPerPage: number) {
-		// Create a completely new options object to force reactivity
-		const newOptions = {
-			...options.value,
-			itemsPerPage: newItemsPerPage,
-			page: 1, // Reset to first page when changing items per page
-		}
+	// Create a reactive reference for items
+	const itemsRef = computed(() => props.items)
 
-		// Update options with the new object
-		options.value = newOptions
-
-		// Force a refresh of the table
-		nextTick(() => {
-			if (table.value) {
-				// Force the table to refresh by triggering a re-render
-				table.value.$forceUpdate()
-
-				// Emit an event to notify parent components
-				emit('update:options', newOptions)
-			}
-		})
-	}
-
-	// Items per page with fallback to props or default
-	const itemsPerPageValue = computed(() => {
-		const value = options.value.itemsPerPage || props.itemsPerPage || 10
-		// If value is -1, it means "Tous" (all items)
-		return value
+	// Use the table items composable
+	const { filteredItems, createEmptyItemWithStructure } = useTableItems({
+		items: itemsRef,
+		headers,
+		filters,
+		options,
+		filterItems,
 	})
 
-	// Calculate total number of pages
-	const pageCount = computed(() => {
-		if (!filteredItems.value.length) return 0
-		// If itemsPerPageValue is -1 ("Tous"), return 1 page
-		if (itemsPerPageValue.value === -1) return 1
-		return Math.ceil(filteredItems.value.length / itemsPerPageValue.value)
-	})
-
-	const filters = computed({
-		get: () => options.value.filters || [],
-		set: (newFilters: FilterOption[]) => {
-			options.value = {
-				...options.value,
-				filters: newFilters,
-			}
-		},
+	// Use the pagination composable
+	const itemsLength = computed(() => filteredItems.value.length)
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
+		options,
+		itemsPerPageProp: props.itemsPerPage,
+		itemsLength,
+		table,
+		emit,
 	})
 
 	const componentAttributes = useAttrs()
@@ -169,47 +136,6 @@
 		{ deep: true },
 	)
 
-	// Fonction pour améliorer les en-têtes de colonnes avec les types de filtres appropriés
-	function getEnhancedHeader(column: TableColumnHeader): TableColumnHeader {
-		// Trouve l'en-tête correspondant dans les props si disponible
-		const matchingHeader = props.headers?.find(h => h.key === column.key || h.value === column.value)
-		// Crée un en-tête amélioré avec les types appropriés
-		return {
-			...column,
-			title: column.name || matchingHeader?.title,
-			// Utilise le filterType de la colonne si disponible, sinon utilise le filterType de l'en-tête correspondant
-			filterType: column.filterType || matchingHeader?.filterType,
-			// Utilise les filterOptions de la colonne si disponibles, sinon utilise les filterOptions de l'en-tête correspondant
-			filterOptions: column.filterOptions || matchingHeader?.filterOptions,
-		} as TableColumnHeader
-	}
-
-	// Fonction pour créer un élément vide qui maintient la structure des colonnes
-	function createEmptyItemWithStructure(): Record<string, unknown>[] {
-		// Si nous avons des éléments, utilise le premier élément comme modèle
-		if (props.items.length > 0) {
-			// Crée un objet vide avec les mêmes clés que le premier élément
-			const template = Object.keys(props.items[0]).reduce((obj, key) => {
-				obj[key] = ''
-				return obj
-			}, {} as Record<string, unknown>)
-			return [template]
-		}
-
-		// Si nous avons des en-têtes, les utilise pour créer une structure
-		if (props.headers && props.headers.length > 0) {
-			// Crée un objet vide avec les clés des en-têtes
-			const template = props.headers.reduce((obj, header) => {
-				const key = header.key || header.value || ''
-				if (key) obj[key] = ''
-				return obj
-			}, {} as Record<string, unknown>)
-			return [template]
-		}
-
-		// Repli vers un objet vide
-		return [{}]
-	}
 </script>
 
 <template>
