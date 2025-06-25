@@ -40,9 +40,11 @@
 		persistentHint?: boolean
 		persistentPlaceholder?: boolean
 		disableErrorHandling?: boolean
+		nirType?: 'simple' | 'complexe'
+		withoutFieldset?: boolean
 	}>(), {
 		modelValue: undefined,
-		label: undefined,
+		label: 'NirField',
 		numberLabel: 'Numéro de sécurité sociale',
 		keyLabel: 'Clé',
 		displayKey: true,
@@ -74,6 +76,8 @@
 		persistentHint: false,
 		persistentPlaceholder: false,
 		disableErrorHandling: false,
+		nirType: 'simple',
+		withoutFieldset: false,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -89,8 +93,8 @@
 	const numberField = ref<InstanceType<typeof SyTextField> | null>(null)
 
 	// Valeurs non masquées
-	const unmaskedNumberValue = computed(() => numberValue.value.replace(/\s/g, ''))
-	const unmaskedKeyValue = computed(() => keyValue.value.replace(/\s/g, ''))
+	const unmaskedNumberValue = computed(() => numberValue.value ? numberValue.value.replace(/\s/g, '') : '')
+	const unmaskedKeyValue = computed(() => keyValue.value ? keyValue.value.replace(/\s/g, '') : '')
 
 	// Masques
 	const numberMask = {
@@ -132,7 +136,7 @@
 
 	// Watch sur la valeur non masquée du numéro pour gérer le focus automatique
 	watch(unmaskedNumberValue, (newValue) => {
-		if (newValue.length === 13 && props.displayKey) {
+		if (newValue && newValue.length === 13 && props.displayKey) {
 			focusField(keyField)
 		}
 	})
@@ -146,7 +150,11 @@
 	// Watch pour détecter la suppression des chiffres de la clé
 	watch(keyValue, (newValue, oldValue) => {
 		// Si l'ancienne valeur avait des chiffres et la nouvelle est vide ou ne contient que des espaces
-		if (oldValue.trim() && !newValue.trim()) {
+		if (oldValue && newValue !== null && oldValue.trim() && !newValue.trim()) {
+			focusField(numberField)
+		}
+		else if (oldValue && newValue === null) {
+			// Cas où newValue est null (effacement avec clearable)
 			focusField(numberField)
 		}
 	})
@@ -196,7 +204,7 @@
 					if (value.length < 13) {
 						return 'Le numéro de sécurité sociale est invalide.'
 					}
-					const result = checkNIR(value)
+					const result = checkNIR(value, props.nirType)
 					return result === true ? true : 'Le numéro de sécurité sociale est invalide.'
 				},
 				message: 'Le numéro de sécurité sociale est invalide.',
@@ -247,8 +255,8 @@
 				type: 'custom',
 				options: {
 					validate: validateKey,
-					message: 'La clé du numéro de sécurité sociale est invalide.',
-					successMessage: `Le champ ${props.keyLabel} est valide.`,
+					message: 'Le numéro de sécurité sociale est invalide.',
+					successMessage: 'Le numéro de sécurité sociale est valide.',
 					fieldIdentifier: props.keyLabel,
 				},
 			})
@@ -296,8 +304,29 @@
 		emit('update:modelValue', `${number}${key}`)
 	}
 
+	// État pour suivre si une validation est en cours
+	const isValidating = ref(false)
+	const shouldValidateOnBlur = ref(false)
+
+	// Fonction utilitaire pour créer une fonction debounced
+	const createDebouncedFunction = <T extends (...args: unknown[]) => void>(fn: T, delay: number) => {
+		let timeout: number | undefined
+		return (...args: Parameters<T>) => {
+			window.clearTimeout(timeout)
+			timeout = window.setTimeout(() => fn(...args), delay)
+		}
+	}
+
 	// Validation des champs
 	const validateFields = async (onBlur = false) => {
+		// Éviter les validations redondantes
+		if (isValidating.value) {
+			shouldValidateOnBlur.value = shouldValidateOnBlur.value || onBlur
+			return true
+		}
+
+		isValidating.value = true
+
 		// Valider le numéro
 		const numberResult = numberValidation.validateField(
 			unmaskedNumberValue.value,
@@ -318,7 +347,7 @@
 		}
 
 		// Si on est en mode blur et qu'il y a des erreurs, focus sur le premier champ en erreur
-		if (onBlur) {
+		if (onBlur || shouldValidateOnBlur.value) {
 			await nextTick()
 			if (numberResult.hasError) {
 				numberField.value?.$el.querySelector('input')?.focus()
@@ -326,8 +355,10 @@
 			else if (keyResult.hasError) {
 				keyField.value?.$el.querySelector('input')?.focus()
 			}
+			shouldValidateOnBlur.value = false
 		}
 
+		isValidating.value = false
 		return !numberResult.hasError && !keyResult.hasError
 	}
 
@@ -343,6 +374,32 @@
 	const hasKeyWarning = computed(() => !hasKeyErrors.value && keyValidation.hasWarning.value)
 	const hasKeySuccess = computed(() => !hasKeyErrors.value && !hasKeyWarning.value && keyValidation.hasSuccess.value)
 
+	// Propriétés calculées pour les attributs ARIA et les états d'erreur
+	const hasFieldErrors = computed(() => hasNumberErrors.value || hasKeyErrors.value)
+	const ariaRequired = computed(() => props.required ? 'true' : undefined)
+	const ariaInvalidNumber = computed(() => hasFieldErrors.value ? 'true' : undefined)
+	const ariaInvalidKey = computed(() => hasKeyErrors.value ? 'true' : undefined)
+
+	// Propriétés calculées pour les messages
+	const numberMessages = computed(() => {
+		if (hasNumberErrors.value) {
+			return numberValidation.errors.value
+		}
+		else if (hasNumberWarning.value) {
+			return numberValidation.warnings.value
+		}
+		else if (hasNumberSuccess.value && props.showSuccessMessages) {
+			return numberValidation.successes.value
+		}
+		return []
+	})
+
+	// Messages d'erreur combinés pour le champ numéro
+	const combinedErrorMessages = computed(() => [
+		...numberValidation.errors.value,
+		...keyValidation.errors.value,
+	])
+
 	const numberLabelWithAsterisk = computed(() => {
 		return props.required && props.displayAsterisk ? `${props.numberLabel} *` : props.numberLabel
 	})
@@ -351,14 +408,21 @@
 		return props.required && props.displayAsterisk ? `${props.keyLabel} *` : props.keyLabel
 	})
 
+	// Utilisation de debounce pour limiter les validations pendant la saisie
+	const debouncedValidate = createDebouncedFunction(() => {
+		validateFields(false)
+	}, 300) // 300ms de délai
+
 	const handleNumberInput = () => {
 		emitValue()
-		validateFields()
+		// Utiliser la validation debounced pour la saisie
+		debouncedValidate()
 	}
 
 	const handleKeyInput = () => {
 		emitValue()
-		validateFields()
+		// Utiliser la validation debounced pour la saisie
+		debouncedValidate()
 
 		// Si on supprime le contenu de la clé, on revient au champ NIR
 		if (unmaskedKeyValue.value.length === 0) {
@@ -394,9 +458,13 @@
 </script>
 
 <template>
-	<div
-		class="nir-field"
+	<fieldset
+		v-if="displayKey && !withoutFieldset"
+		class="nir-field nir-field--fieldset"
 	>
+		<legend v-if="label">
+			{{ label }}
+		</legend>
 		<div class="number-field-container">
 			<SyTextField
 				ref="numberField"
@@ -409,16 +477,18 @@
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
 				:append-tooltip="nirTooltip && nirTooltipPosition === 'append' ? nirTooltip : undefined"
 				:max-errors="2"
-				:error-messages="[...numberValidation.errors.value, ...keyValidation.errors.value]"
+				:error-messages="[...new Set([...numberValidation.errors.value, ...keyValidation.errors.value])]"
 				:warning-messages="numberValidation.warnings.value"
 				:success-messages="numberValidation.successes.value"
 				:show-success-messages="showSuccessMessages"
 				:has-warning="hasNumberWarning"
 				:has-success="hasNumberSuccess"
-				:error="hasNumberErrors"
-				:messages="hasNumberErrors ? numberValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess && props.showSuccessMessages ? numberValidation.successes.value : []))"
-				:has-error="hasNumberErrors"
+				:error="hasNumberErrors || hasKeyErrors"
+				:messages="hasNumberErrors || hasKeyErrors ? numberValidation.errors.value ?? keyValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess && props.showSuccessMessages ? numberValidation.successes.value : []))"
+				:has-error="hasNumberErrors || hasKeyErrors"
 				:required="required"
+				:aria-required="ariaRequired"
+				:aria-invalid="ariaInvalidNumber"
 				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
@@ -454,12 +524,10 @@
 				:append-tooltip="keyTooltip && keyTooltipPosition === 'append' ? keyTooltip : undefined"
 				:error-messages="keyValidation.errors.value.length > 0 ? [''] : []"
 				:warning-messages="keyValidation.warnings.value"
-				:success-messages="keyValidation.successes.value"
-				:show-success-messages="showSuccessMessages"
+				:show-success-messages="false"
 				:has-warning="hasKeyWarning"
 				:has-success="hasKeySuccess"
 				:hint="props.hint || locales.keyHint"
-				:messages="hasKeyErrors ? keyValidation.errors.value : (hasKeyWarning ? keyValidation.warnings.value : (hasKeySuccess && props.showSuccessMessages ? keyValidation.successes.value : []))"
 				:has-error="hasKeyErrors"
 				:disabled="disabled"
 				:bg-color="bgColor"
@@ -473,6 +541,97 @@
 				:counter="props.counter"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
+				:aria-required="ariaRequired"
+				:aria-invalid="ariaInvalidKey"
+				class="key-field"
+				:display-asterisk="false"
+				@input="handleKeyInput"
+				@blur="handleKeyBlur"
+			/>
+		</div>
+	</fieldset>
+	<div
+		v-else
+		class="nir-field"
+	>
+		<div class="number-field-container">
+			<SyTextField
+				ref="numberField"
+				v-model="numberValue"
+				v-maska="numberMask"
+				:label="numberLabelWithAsterisk"
+				:variant-style="outlined ? 'outlined' : 'underlined'"
+				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'info' : undefined"
+				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
+				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
+				:append-tooltip="nirTooltip && nirTooltipPosition === 'append' ? nirTooltip : undefined"
+				:max-errors="2"
+				:error-messages="combinedErrorMessages"
+				:warning-messages="numberValidation.warnings.value"
+				:success-messages="numberValidation.successes.value"
+				:show-success-messages="showSuccessMessages"
+				:has-warning="hasNumberWarning"
+				:has-success="hasNumberSuccess"
+				:error="hasNumberErrors || hasKeyErrors"
+				:messages="numberMessages"
+				:has-error="hasNumberErrors || hasKeyErrors"
+				:required="required"
+				:aria-required="ariaRequired"
+				:aria-invalid="ariaInvalidNumber"
+				:disabled="disabled"
+				:bg-color="bgColor"
+				:density="props.density"
+				:hide-details="props.hideDetails"
+				:hide-spin-buttons="props.hideSpinButtons"
+				:placeholder="props.placeholder"
+				:readonly="props.readonly"
+				:variant="props.variant"
+				:clearable="props.clearable"
+				:counter="props.counter"
+				:persistent-hint="props.persistentHint"
+				:persistent-placeholder="props.persistentPlaceholder"
+				:hint="props.hint || locales.numberHint"
+				class="number-field"
+				:display-asterisk="false"
+				@input="handleNumberInput"
+				@blur="handleNumberBlur"
+			/>
+		</div>
+		<div
+			v-if="displayKey"
+			class="key-field-container"
+		>
+			<SyTextField
+				ref="keyField"
+				v-model="keyValue"
+				v-maska="keyMask"
+				:label="keyLabelWithAsterisk"
+				:variant-style="outlined ? 'outlined' : 'underlined'"
+				:prepend-icon="keyTooltip && keyTooltipPosition === 'prepend' ? 'info' : undefined"
+				:append-icon="keyTooltip && keyTooltipPosition === 'append' ? 'info' : undefined"
+				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
+				:append-tooltip="keyTooltip && keyTooltipPosition === 'append' ? keyTooltip : undefined"
+				:error-messages="keyValidation.errors.value.length > 0 ? [''] : []"
+				:warning-messages="keyValidation.warnings.value"
+				:show-success-messages="false"
+				:has-warning="hasKeyWarning"
+				:has-success="hasKeySuccess"
+				:hint="props.hint || locales.keyHint"
+				:has-error="hasKeyErrors"
+				:disabled="disabled"
+				:bg-color="bgColor"
+				:density="props.density"
+				:hide-details="props.hideDetails"
+				:hide-spin-buttons="props.hideSpinButtons"
+				:placeholder="props.placeholder"
+				:readonly="props.readonly"
+				:variant="props.variant"
+				:clearable="props.clearable"
+				:counter="props.counter"
+				:persistent-hint="props.persistentHint"
+				:persistent-placeholder="props.persistentPlaceholder"
+				:aria-required="ariaRequired"
+				:aria-invalid="ariaInvalidKey"
 				class="key-field"
 				:display-asterisk="false"
 				@input="handleKeyInput"
@@ -486,16 +645,44 @@
 .nir-field {
 	display: flex;
 	gap: 16px;
-	width: calc(v-bind('props.width') - 16px);
+	width: calc(v-bind('props.width || "100%"') - 16px);
 	align-items: flex-start;
 }
 
-.number-field-container {
+.nir-field--fieldset {
+	width: calc(v-bind('props.width || "100%"') + 5px);
+	border: 1px solid #b9b9b9;
+	border-radius: 4px;
+	padding: 25px;
+	margin: 0;
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+	box-sizing: border-box;
+}
+
+.nir-field--fieldset legend {
+	padding: 0 8px;
+	font-weight: 500;
+	color: #666;
+}
+
+/* Styles pour le mode standard (div) */
+.nir-field:not(.nir-field--fieldset) .number-field-container {
 	flex: 0 0 80%;
 }
 
-.key-field-container {
+.nir-field:not(.nir-field--fieldset) .key-field-container {
 	flex: 0 0 20%;
+}
+
+/* Styles pour le mode fieldset */
+.nir-field--fieldset .number-field-container {
+	flex: v-bind('props.clearable ? "0 0 70%" : "0 0 78%"');
+}
+
+.nir-field--fieldset .key-field-container {
+	flex: v-bind('props.clearable ? "0 0 29%" : "0 0 18%"');
 }
 
 .number-field,

@@ -65,15 +65,28 @@ Le composant `NirField` est utilisé pour afficher un champ de saisie de numéro
 Le composant `NirField` utilise des règles de validation par défaut pour le numéro NIR et la Clé. Voici les règles de validation par défaut :
 
 #### Pour le numéro NIR :
-- Le numéro NIR doit être composé de 13 chiffres.
-- Le numéro NIR doit respecter le format suivant :
-- 1 chiffre pour le sexe (1-4, 7, 8)
-- 2 chiffres pour l'année de naissance
-- 2 chiffres pour le mois de naissance (01-12, 20-42)
-- 2 chiffres pour le département de naissance (01-99, 2A, 2B, 96, 97X, 98X)
-- 3 chiffres pour la commune de naissance
-- 3 chiffres pour le rang d'inscription
-- Le numéro NIR doit passer la validation de la clé de contrôle (2 chiffres).
+
+- Props: `nirType` à simple (par defaut) d'après le [repo](https://github.com/assurance-maladie-digital/nir-validation) : 
+
+  - Le 1er chiffre (1er composant) permet d'identifier le sexe de l'assuré (1 pour un homme et 2 pour une femme) ;
+  - Le second composant est un groupe de deux chiffres permettant de distinguer l'année de naissance (exemple 77 pour 1977) ;
+  - Le 3ème composant est un groupe de deux chiffres correspondant au mois de naissance (de 01 à 12) mais peut aussi prendre d’autres valeurs (de 20 à 99) qui indiquent que le mois de naissance de l’individu n’est pas connu (cela peut arriver pour des personnes nées à l’étranger) (https://www.insee.fr/fr/information/6665190?sommaire=6665196#titre-bloc-encadre4) ;
+  - Le 4ème correspond au département de naissance selon le code géographique officiel (de 01 à 95 et 97 pour les DOM et COM 976, 98 pour les TOM et COM et enfin 99 pour les nés hors de France) ;
+  - Le 5ème est un groupe de 3 chiffres permettant d'identifier la commune de naissance, selon le code géographique officiel édité par l'INSEE (https://www.insee.fr/fr/information/5057840) ;
+  - Le 6ème est un groupe de 3 chiffres, correspondant au rang d'inscription sur la liste du répertoire régional de l'INSEE ;
+  - Le 7ème composant optionnel est un groupe de 2 chiffres appelé la clé de contrôle du NIR.
+
+- Props: `nirType` à complexe : d'après la page [Wikipedia](https://fr.wikipedia.org/wiki/Num%C3%A9ro_de_s%C3%A9curit%C3%A9_sociale_en_France)
+
+  - Le numéro NIR doit être composé de 13 chiffres.
+  - Le numéro NIR doit respecter le format suivant :
+  - 1 chiffre pour le sexe (1-4, 7, 8)
+  - 2 chiffres pour l'année de naissance
+  - 2 chiffres pour le mois de naissance (01-12, 20-42)
+  - 2 chiffres pour le département de naissance (01-99, 2A, 2B, 96, 97X, 98X)
+  - 3 chiffres pour la commune de naissance
+  - 3 chiffres pour le rang d'inscription
+  - Le numéro NIR doit passer la validation de la clé de contrôle (2 chiffres).
 
 #### Pour la Clé :
 - La clé doit être composée de 2 chiffres.

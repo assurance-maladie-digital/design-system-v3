@@ -1,21 +1,35 @@
 export const NUMBER_LENGTH = 13
 export const KEY_LENGTH = 2
 
-export function checkNIR(nir: string): boolean {
+export function checkNIR(nir: string, nirType: string): boolean {
 	nir = nir.replace(/\s+/g, '').toUpperCase()
 
-	const nirRegex = new RegExp(
+	const nirRegexComplex = new RegExp(
 		'^'
 		+ '(?<sexe>[1-4]|7|8)'
 		+ '(?<anneeNaissance>\\d{2})'
 		+ '(?<moisNaissance>0[1-9]|1[0-2]|2[0-9]|3[0-9]|4[0-2])'
-		+ '(?<departementNaissance>\\d{2}|2A|2B|96|97\\d|98\\d)'
+		+ '(?<departementNaissance>\\d{2}|2A|2B|96|97\\d|98\\d|99\\d)'
 		+ '(?<communeNaissance>\\d{3})'
 		+ '(?<rangInscription>\\d{3})'
 		+ '(?<cle>[0-9]{2})?'
 		+ '$',
 		'i',
 	)
+
+	const nirSimpleRegex = new RegExp(
+		'^'
+		+ '(?<sexe>[12])'
+		+ '(?<anneeNaissance>\\d{2})'
+		+ '(?<moisNaissance>0[1-9]|1[0-2]|[2-9][0-9])'
+		+ '(?<departementNaissance>\\d{2}|2A|2B)'
+		+ '(?<communeNaissance>\\d{3})'
+		+ '(?<rangInscription>\\d{3})'
+		+ '(?<cle>9[0-7]|[0-8]\\d)?'
+		+ '$',
+		'i',
+	)
+	const nirRegex = nirType === 'simple' ? nirSimpleRegex : nirRegexComplex
 	return nirRegex.test(nir)
 }
 
