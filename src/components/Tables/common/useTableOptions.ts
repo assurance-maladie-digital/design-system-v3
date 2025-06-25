@@ -19,6 +19,7 @@ export function useTableOptions({
 			options.value = {
 				...options.value,
 				filters: newFilters,
+				page: 1, // reset
 			}
 		},
 	})
