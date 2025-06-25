@@ -650,7 +650,7 @@
 }
 
 .nir-field--fieldset {
-	width: calc(v-bind('props.width || "100%"'));
+	width: calc(v-bind('props.width || "100%"') + 5px);
 	border: 1px solid #b9b9b9;
 	border-radius: 4px;
 	padding: 25px;
@@ -678,11 +678,11 @@
 
 /* Styles pour le mode fieldset */
 .nir-field--fieldset .number-field-container {
-	flex: 0 0 78%;
+	flex: v-bind('props.clearable ? "0 0 70%" : "0 0 78%"');
 }
 
 .nir-field--fieldset .key-field-container {
-	flex: 0 0 18%;
+	flex: v-bind('props.clearable ? "0 0 29%" : "0 0 18%"');
 }
 
 .number-field,

@@ -1157,7 +1157,7 @@ Cette story montre l'utilisation du NirField dans un formulaire avec validation.
 				code: `<form @submit.prevent="onSubmit">
 	<NirField
 		v-model="value"
-		label="Numéro de sécurité sociale"
+		label="NirField"
 		required
 		showSuccessMessages
 		ref="nirField"
@@ -1218,7 +1218,7 @@ const onSubmit = async () => {
 				<NirField
 					v-model="value"
 					v-bind="args"
-					label="Numéro de sécurité sociale"
+					label="NirField"
 					required
 					showSuccessMessages
 					ref="nirField"
