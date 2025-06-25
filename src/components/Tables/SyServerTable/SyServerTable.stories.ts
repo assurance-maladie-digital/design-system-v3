@@ -3248,6 +3248,7 @@ export const ManyServerTables: Story = {
 		],
 	},
 	args: {
+		'serverItemsLength': 15, // Add required serverItemsLength property
 		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
