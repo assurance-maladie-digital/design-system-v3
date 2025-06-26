@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components'
+	import SyCheckbox from '../common/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
 	import { processItems } from '../common/formatters'
@@ -223,13 +224,13 @@
 						>
 							<th>
 								<template v-if="column.key === 'data-table-select' && props.showSelect">
-									<v-checkbox
+									<SyCheckbox
 										:model-value="slotProps.allSelected"
 										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
 										color="primary"
 										density="compact"
-										hide-details
-										@click.stop="toggleAllRows"
+										:is-header="true"
+										@click="toggleAllRows"
 									/>
 								</template>
 								<template v-else>
