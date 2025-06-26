@@ -317,9 +317,6 @@
 					</tr>
 				</template>
 			</template>
-
-			<!-- Individual row checkboxes are handled by Vuetify's built-in functionality -->
-			<!-- The header checkbox is handled in the headers slot above -->
 		</VDataTable>
 	</div>
 </template>
