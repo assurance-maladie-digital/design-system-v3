@@ -125,6 +125,7 @@ describe('tableUtils', () => {
 		expect(optionsFacade.value).toEqual({
 			page: 2,
 			sortBy: [{ key: 'name', order: 'asc' }],
+			itemsPerPage: 10,
 			groupBy: undefined,
 			multiSort: undefined,
 			mustSort: undefined,
