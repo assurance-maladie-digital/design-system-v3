@@ -98,6 +98,14 @@ const meta = {
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
 		},
+		showSelect: {
+			description: 'Affiche des cases à cocher pour sélectionner des lignes',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
@@ -3724,6 +3732,176 @@ export const ResizableColumns: Story = {
 					@update:options="fetchData"
 				/>
 			</div>
+			`,
+		}
+	},
+}
+export const RowSelection: Story = {
+	name: 'Row Selection',
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyServerTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						:serverItemsLength="items.length"
+						show-select
+						show-filters
+						suffix="selection-server-table"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+		},
+		caption: '',
+		suffix: 'selection-server-table',
+		density: 'default',
+		striped: false,
+		showSelect: true,
+		showFilters: true,
+		serverItemsLength: 6,
+	},
+	render(args) {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const selection = ref([])
+				return { args, selection }
+			},
+			template: `
+				<div style="padding: 20px;">
+					<SyServerTable
+						v-model:options="args.options"
+						v-model="selection"
+						:headers="args.headers"
+						:items="args.items"
+						:server-items-length="args.serverItemsLength"
+						:show-select="args.showSelect"
+						:suffix="args.suffix"
+						:density="args.density"
+						:striped="args.striped"
+						:show-filters="args.showFilters"
+					/>
+					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
+						<strong>Selected items:</strong> {{ selection.length }}
+					</div>
+				</div>
 			`,
 		}
 	},

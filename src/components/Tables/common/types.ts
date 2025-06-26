@@ -71,6 +71,7 @@ export interface SyTableProps {
 	density?: TableDensityType
 	striped?: boolean
 	resizableColumns?: boolean
+	showSelect?: boolean
 }
 
 export interface SyServerTableProps {
@@ -85,4 +86,5 @@ export interface SyServerTableProps {
 	filterInputConfig?: Record<string, unknown>
 	density?: TableDensityType
 	striped?: boolean
+	showSelect?: boolean
 }

@@ -19,11 +19,17 @@
 		filterInputConfig: () => ({}),
 		density: 'default',
 		striped: false,
+		showSelect: false,
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
+	})
+
+	const model = defineModel<unknown[]>({
+		required: false,
+		default: () => [],
 	})
 
 	const table = ref<VDataTableServer>()
@@ -160,10 +166,14 @@
 		<VDataTableServer
 			ref="table"
 			v-bind="propsFacade"
+			v-model="model"
 			color="primary"
 			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
 			:items-length="props.serverItemsLength || 0"
 			:density="props.density"
+			:show-select="props.showSelect"
+			:item-selectable="() => true"
+			:select-strategy="'all'"
 			@update:options="updateOptions"
 		>
 			<template #top>
