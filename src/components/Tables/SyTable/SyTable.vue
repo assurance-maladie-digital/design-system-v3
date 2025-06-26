@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
-	import SyCheckbox from '../common/SyCheckbox.vue'
+	import SyCheckbox from '@/components/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
 	import { processItems } from '../common/formatters'
