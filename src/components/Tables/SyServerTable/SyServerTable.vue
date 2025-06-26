@@ -27,7 +27,7 @@
 		default: () => ({}),
 	})
 
-	const model = defineModel<unknown[]>({
+	const model = defineModel<unknown[]>('modelValue', {
 		required: false,
 		default: () => [],
 	})
@@ -55,6 +55,14 @@
 
 	// Generate a unique ID for this table instance
 	const uniqueTableId = ref(`sy-server-table-${Math.random().toString(36).substr(2, 9)}`)
+
+	// Function to get a unique identifier for each item
+	const getItemValue = (item: Record<string, unknown>) => {
+		if (item.id !== undefined) {
+			return item.id
+		}
+		return JSON.stringify(item)
+	}
 
 	const {
 		propsFacade,
@@ -172,8 +180,8 @@
 			:items-length="props.serverItemsLength || 0"
 			:density="props.density"
 			:show-select="props.showSelect"
-			:item-selectable="() => true"
-			:select-strategy="'page'"
+			:item-selectable="(item) => true"
+			:item-value="getItemValue"
 			@update:options="updateOptions"
 		>
 			<template #top>
@@ -303,9 +311,6 @@
 					</tr>
 				</template>
 			</template>
-
-			<!-- Individual row checkboxes are handled by Vuetify's built-in functionality -->
-			<!-- The header checkbox is handled in the headers slot above -->
 		</VDataTableServer>
 	</div>
 </template>
@@ -316,6 +321,32 @@
 
 .sy-server-table :deep() {
 	@include tablestyles;
+
+	// Override Vuetify's checkbox styles to use primary color
+	.v-table .v-selection-control {
+		color: rgb(var(--v-theme-primary)) !important;
+	}
+
+	.v-table .v-selection-control--dirty .v-selection-control__input::before {
+		background-color: rgb(var(--v-theme-primary)) !important;
+		border-color: rgb(var(--v-theme-primary)) !important;
+	}
+
+	// Target the header checkbox specifically
+	.v-data-table-header__checkbox .v-selection-control {
+		color: rgb(var(--v-theme-primary)) !important;
+	}
+
+	// Target the row checkboxes specifically
+	.v-data-table-row__checkbox .v-selection-control {
+		color: rgb(var(--v-theme-primary)) !important;
+	}
+
+	// Add a global style for all checkboxes in the table
+	.v-checkbox .v-selection-control__input::before,
+	.v-checkbox-btn .v-selection-control__input::before {
+		border-color: rgb(var(--v-theme-primary)) !important;
+	}
 }
 
 @mixin striped-rows {
