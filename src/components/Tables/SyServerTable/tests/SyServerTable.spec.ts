@@ -168,9 +168,8 @@ describe('SyServerTable', () => {
 	it('passes itemsPerPage prop correctly', () => {
 		const wrapper = mount(SyServerTable, {
 			props: {
-				options: {} as DataOptions,
+				options: { itemsPerPage: 5 } as DataOptions,
 				serverItemsLength: 10,
-				itemsPerPage: 5,
 				suffix: 'test',
 			},
 			attrs: {
