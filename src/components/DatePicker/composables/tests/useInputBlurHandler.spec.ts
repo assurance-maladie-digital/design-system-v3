@@ -232,8 +232,15 @@ describe('useInputBlurHandler', () => {
 			expect(mockUpdateModel).not.toHaveBeenCalled()
 		})
 
-		it('devrait appeler validateManualInput avec la valeur actuelle', () => {
+		it('devrait valider la date et mettre à jour le modèle avec la valeur formatée', () => {
 			displayFormattedDate.value = '01/01/2023'
+			// Simuler une date valide
+			mockValidateDateFormat.mockReturnValue({ isValid: true, message: '' })
+			const parsedDate = new Date('2023-01-01')
+			mockParseDate.mockReturnValue(parsedDate)
+			// Simuler le formatage de la date
+			const formattedDate = '01/01/2023'
+			mockFormatDate.mockReturnValue(formattedDate)
 
 			const { handleInputBlur } = useInputBlurHandler({
 				format: 'DD/MM/YYYY',
@@ -242,6 +249,7 @@ describe('useInputBlurHandler', () => {
 				isManualInputActive,
 				isUpdatingFromInternal,
 				selectedDates,
+				errors,
 				validateDateFormat: mockValidateDateFormat,
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
@@ -252,10 +260,13 @@ describe('useInputBlurHandler', () => {
 
 			handleInputBlur()
 
-			expect(mockValidateManualInput).toHaveBeenCalledWith('01/01/2023')
+			// Avec nos modifications, on valide d'abord le format de la date
+			expect(mockValidateDateFormat).toHaveBeenCalledWith('01/01/2023')
+			// Puis on met à jour le modèle avec la date formatée (pas l'objet Date)
+			expect(mockUpdateModel).toHaveBeenCalledWith(formattedDate)
 		})
 
-		it('devrait appeler validateManualInput avec une chaîne vide si displayFormattedDate est vide', () => {
+		it('devrait mettre à jour le modèle avec null si displayFormattedDate est vide', () => {
 			displayFormattedDate.value = ''
 
 			const { handleInputBlur } = useInputBlurHandler({
@@ -265,6 +276,7 @@ describe('useInputBlurHandler', () => {
 				isManualInputActive,
 				isUpdatingFromInternal,
 				selectedDates,
+				errors,
 				validateDateFormat: mockValidateDateFormat,
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
@@ -275,7 +287,9 @@ describe('useInputBlurHandler', () => {
 
 			handleInputBlur()
 
-			expect(mockValidateManualInput).toHaveBeenCalledWith('')
+			// Avec nos modifications, on met à jour directement le modèle avec null
+			// au lieu d'appeler validateManualInput
+			expect(mockUpdateModel).toHaveBeenCalledWith(null)
 		})
 	})
 

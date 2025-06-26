@@ -66,8 +66,13 @@ export const useInputBlurHandler = (options: {
 
 		// Gérer la mise à jour du modèle en fonction de la validité de la date
 		if (displayFormattedDate.value) {
+			// S'assurer que displayFormattedDate.value est une chaîne de caractères
+			if (typeof displayFormattedDate.value !== 'string') {
+				return
+			}
+
 			// Vérifier si c'est une plage de dates (contient un séparateur)
-			if (typeof displayFormattedDate.value === 'string' && displayFormattedDate.value.includes(' - ')) {
+			if (displayFormattedDate.value.includes(' - ')) {
 				const parts = displayFormattedDate.value.split(' - ')
 				const startDateStr = parts[0]?.trim() || ''
 				const endDateStr = parts[1]?.trim() || ''
@@ -147,7 +152,9 @@ export const useInputBlurHandler = (options: {
 		}
 
 		// Valider la saisie manuelle (affiche les messages d'erreur)
-		if (typeof displayFormattedDate.value === 'string') {
+		// Note: La vérification du type string a déjà été faite plus haut
+		// et on retourne si ce n'est pas une chaîne, donc ici displayFormattedDate.value est forcément une chaîne
+		if (displayFormattedDate.value) {
 			validateManualInput(displayFormattedDate.value || '')
 		}
 	}

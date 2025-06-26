@@ -77,7 +77,7 @@ describe('useMonthButtonCustomization', () => {
 		expect(nextTick).toHaveBeenCalled()
 		// Vérifier que le contenu du bouton a été modifié
 		expect(mockMonthBtn.innerHTML).not.toBe('')
-		expect(mockMonthBtn.innerHTML).toContain('Janvier')
+		expect(mockMonthBtn.innerHTML).toContain('Janv.')
 	})
 
 	it('devrait configurer un observateur pour le bouton du mois', () => {

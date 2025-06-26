@@ -5,7 +5,7 @@
 	import { useValidation, type ValidationRule, type ValidationResult } from '@/composables/validation/useValidation'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import { useDateRangeInput, useDateRangeValidation, useDateFormatValidation, useDateValidation, useDateInputEditing, useManualDateValidation } from '../composables'
+	import { useDateRangeInput, useDateRangeValidation, useDateFormatValidation, useDateValidation, useDateInputEditing, useManualDateValidation, useDateAutoClamp } from '../composables'
 	import { type DateObjectValue } from '../types'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { type DateValue } from '@/composables/date/useDateInitializationDayjs'
@@ -34,6 +34,7 @@
 		showSuccessMessages?: boolean
 		bgColor?: string
 		displayRange?: boolean
+		autoClamp?: boolean
 	}>(), {
 		modelValue: null,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -54,6 +55,7 @@
 		showSuccessMessages: true,
 		bgColor: 'white',
 		displayRange: false,
+		autoClamp: true,
 	})
 
 	const emit = defineEmits<{
@@ -126,6 +128,9 @@
 
 	// Utilisation des composables pour la gestion des plages de dates
 	const { parseDate, formatDate } = useDateFormat()
+
+	// Utilisation du composable pour l'auto-clamping des dates invalides
+	const { autoClampDate } = useDateAutoClamp()
 
 	// Référence pour stocker les dates sélectionnées (pour le mode plage)
 	const selectedDates = ref<DateObjectValue>(null)
@@ -388,11 +393,101 @@
 				return
 			}
 
+			// Appliquer l'auto-clamping si activé
+			if (props.autoClamp) {
+				// Pour les plages de dates, traiter chaque partie séparément
+				if (props.displayRange && newValue.includes(' - ')) {
+					const parts = newValue.split(' - ')
+					const startDateStr = parts[0]?.trim() || ''
+					const endDateStr = parts[1]?.trim() || ''
+
+					// Appliquer l'auto-clamping à chaque partie si nécessaire
+					let adjusted = false
+					let clampedStart = startDateStr
+					let clampedEnd = endDateStr
+
+					if (startDateStr) {
+						const startResult = autoClampDate(startDateStr, props.format)
+						if (startResult.adjusted) {
+							clampedStart = startResult.clampedDate
+							adjusted = true
+						}
+					}
+
+					if (endDateStr) {
+						const endResult = autoClampDate(endDateStr, props.format)
+						if (endResult.adjusted) {
+							clampedEnd = endResult.clampedDate
+							adjusted = true
+						}
+					}
+
+					// Si un ajustement a été fait, mettre à jour la valeur
+					if (adjusted) {
+						const clampedValue = clampedEnd
+							? `${clampedStart} - ${clampedEnd}`
+							: clampedStart
+						newValue = clampedValue
+						inputValue.value = clampedValue
+
+						// Mettre à jour le modèle avec les dates ajustées
+						const startDate = clampedStart ? parseDate(clampedStart, props.format) : null
+						const endDate = clampedEnd ? parseDate(clampedEnd, props.format) : null
+
+						if (startDate) {
+							// Mettre à jour les dates sélectionnées
+							if (endDate) {
+								selectedDates.value = [startDate, endDate]
+
+								// Formater les dates pour le modèle
+								const format = props.dateFormatReturn || props.format
+								const formattedStartDate = formatDate(startDate, format)
+								const formattedEndDate = formatDate(endDate, format)
+
+								// Émettre la plage de dates mise à jour
+								emit('update:model-value', [formattedStartDate, formattedEndDate])
+							}
+							else {
+								selectedDates.value = [startDate]
+
+								// Émettre la date de début mise à jour
+								const format = props.dateFormatReturn || props.format
+								const formattedStartDate = formatDate(startDate, format)
+								emit('update:model-value', formattedStartDate)
+							}
+						}
+					}
+				}
+				else {
+					// Pour une date unique
+					const result = autoClampDate(newValue, props.format)
+					if (result.adjusted) {
+						newValue = result.clampedDate
+						inputValue.value = result.clampedDate
+
+						// Mettre à jour le modèle avec la date ajustée
+						const date = parseDate(result.clampedDate, props.format)
+						if (date) {
+							const formattedDate = props.dateFormatReturn && props.dateFormatReturn !== props.format
+								? formatDate(date, props.dateFormatReturn)
+								: formatDate(date, props.format)
+							emit('update:model-value', formattedDate)
+						}
+					}
+				}
+			}
+
 			const input = inputRef.value?.$el.querySelector('input')
 			const cursorPos = input?.selectionStart || 0
 
 			// Utiliser le composable de plage de dates si le mode plage est activé
 			if (props.displayRange) {
+				// S'assurer que newValue est une chaîne de caractères
+				if (typeof newValue !== 'string') {
+					// Si newValue n'est pas une chaîne, on ne peut pas appliquer le formatage
+					return
+				}
+
 				// Appliquer le formatage automatique aux dates saisies
 				const cleanedInput = newValue.replace(/[^\d]/g, '')
 				let formattedInput = ''
@@ -628,7 +723,94 @@
 	const handleBlur = () => {
 		isFocused.value = false
 		hasInteracted.value = true
-		emit('blur')
+
+		// Vérifier si la valeur est vide
+		if (!inputValue.value) {
+			emit('update:model-value', null)
+			validateRules('')
+			emit('blur')
+			return
+		}
+
+		// Appliquer l'auto-clamping au moment du blur si activé
+		if (props.autoClamp) {
+			// Pour les plages de dates, traiter chaque partie séparément
+			if (props.displayRange && inputValue.value.includes(' - ')) {
+				const parts = inputValue.value.split(' - ')
+				const startDateStr = parts[0]?.trim() || ''
+				const endDateStr = parts[1]?.trim() || ''
+
+				// Appliquer l'auto-clamping à chaque partie si nécessaire
+				let adjusted = false
+				let clampedStart = startDateStr
+				let clampedEnd = endDateStr
+
+				if (startDateStr) {
+					const startResult = autoClampDate(startDateStr, props.format)
+					if (startResult.adjusted) {
+						clampedStart = startResult.clampedDate
+						adjusted = true
+					}
+				}
+
+				if (endDateStr) {
+					const endResult = autoClampDate(endDateStr, props.format)
+					if (endResult.adjusted) {
+						clampedEnd = endResult.clampedDate
+						adjusted = true
+					}
+				}
+
+				// Si un ajustement a été fait, mettre à jour la valeur
+				if (adjusted) {
+					const clampedValue = clampedEnd
+						? `${clampedStart} - ${clampedEnd}`
+						: clampedStart
+					inputValue.value = clampedValue
+				}
+			}
+			else {
+				// Pour une date unique
+				const result = autoClampDate(inputValue.value, props.format)
+				if (result.adjusted) {
+					inputValue.value = result.clampedDate
+				}
+			}
+
+			// Après avoir appliqué l'autoClamp, mettre à jour le modèle
+			if (props.displayRange) {
+				// Utiliser directement parseRangeInput pour analyser la plage de dates
+				// sans passer par handleRangeInput qui peut causer des erreurs
+				const [startDate, endDate] = parseRangeInput(inputValue.value)
+
+				// Mettre à jour le modèle avec les dates analysées si la plage est complète
+				if (startDate) {
+					const returnFormat = props.dateFormatReturn || props.format
+					if (endDate) {
+						// Plage complète avec deux dates
+						const modelValue: [string, string] = [
+							formatDate(startDate, returnFormat),
+							formatDate(endDate, returnFormat),
+						]
+						emit('update:model-value', modelValue)
+					}
+					// Sinon, on ne met pas à jour le modèle car on n'a qu'une date partielle
+				}
+			}
+			else {
+				// Traiter une date unique
+				const date = parseDate(inputValue.value, props.format)
+				if (date) {
+					const formattedDate = props.dateFormatReturn && props.dateFormatReturn !== props.format
+						? formatDate(date, props.dateFormatReturn)
+						: formatDate(date, props.format)
+					emit('update:model-value', formattedDate)
+				}
+			}
+
+			// Valider les règles avec la valeur ajustée
+			validateRules(inputValue.value)
+		}
 
 		// Traitement spécifique pour les plages de dates
 		if (props.displayRange && inputValue.value) {
@@ -833,7 +1015,7 @@
 		:error-messages="errorMessages"
 		:label="props.label || props.placeholder"
 		:no-icon="props.noIcon"
-		:prepend-icon="displayIcon && displayPrependIcon ? 'calendar' : undefined"
+		:prepend-icon="displayIcon && displayPrependIcon && !displayAppendIcon ? 'calendar' : undefined"
 		:readonly="props.readonly"
 		:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
 		:warning-messages="warningMessages"

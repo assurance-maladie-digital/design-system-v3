@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import DatePicker from '../DatePicker/DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/CombinedMode',
@@ -14,6 +15,7 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue'] },
+		actions: { argTypesRegex: '^on.*' },
 	},
 	argTypes: {
 		modelValue: {
@@ -125,6 +127,10 @@ const meta = {
 			control: 'object',
 			description: 'Période pendant laquelle les dates peuvent être sélectionnées (au format: MM/DD/YYYY)',
 		},
+		autoClamp: {
+			control: 'boolean',
+			description: 'Active le clamping automatique des dates',
+		},
 	},
 } as Meta<typeof DatePicker>
 
@@ -162,22 +168,27 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		displayPrependIcon: true,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		// modelValue est défini dans le setup du render
-		displayTodayButton: true,
-		displayWeekendDays: true,
-		useCombinedMode: true,
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'displayPrependIcon': true,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '',
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+		'onDate-selected': fn(),
+		'displayTodayButton': true,
+		'displayWeekendDays': true,
+		'useCombinedMode': true,
 	},
 	render: (args) => {
 		return {
@@ -226,21 +237,26 @@ export const DateRange: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Sélectionner une période',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: true,
-		displayIcon: true,
-		displayAppendIcon: false,
-		displayPrependIcon: true,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		// modelValue est défini dans le setup du render
-		useCombinedMode: true,
+		'placeholder': 'Sélectionner une période',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': true,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'displayPrependIcon': true,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': ['', ''],
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+		'onDate-selected': fn(),
+		'useCombinedMode': true,
 	},
 	render: (args) => {
 		return {
@@ -998,6 +1014,110 @@ export const WithTextFieldActivator: Story = {
                   <p>Valeur actuelle: {{ value }}</p>
                   <p>Le calendrier s'ouvre au clic sur l'ensemble du champ.</p>
                 </div>
+              </div>
+            `,
+		}
+	},
+}
+
+export const AutoClampFeature: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div class="d-flex flex-column">
+						<h3>Démonstration de l'auto clamp avec différents formats</h3>
+						
+						<h4 class="mt-4">Format DD/MM/YYYY (séparateur /)</h4>
+						<DatePicker
+							v-model="dateSlash"
+							placeholder="Saisie avec auto clamp - séparateur /"
+							format="DD/MM/YYYY"
+							useCombinedMode
+							autoClamp
+						/>
+						
+						<h4 class="mt-4">Format DD-MM-YYYY (séparateur -)</h4>
+						<DatePicker
+							v-model="dateDash"
+							placeholder="Saisie avec auto clamp - séparateur -"
+							format="DD-MM-YYYY"
+							useCombinedMode
+							autoClamp
+						/>
+						
+						<h4 class="mt-4">Format YYYY.MM.DD (séparateur .)</h4>
+						<DatePicker
+							v-model="dateDot"
+							placeholder="Saisie avec auto clamp - séparateur ."
+							format="YYYY.MM.DD"
+							useCombinedMode
+							autoClamp
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const dateSlash = ref('')
+					const dateDash = ref('')
+					const dateDot = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	render: () => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const dateSlash = ref('')
+				const dateDash = ref('')
+				const dateDot = ref('')
+				return { dateSlash, dateDash, dateDot }
+			},
+			template: `
+              <div class="d-flex flex-column pa-4">
+                <h3>Démonstration de l'auto clamp avec différents formats</h3>
+                <div class="mb-4 mt-2">Saisissez uniquement des chiffres - les séparateurs seront ajoutés automatiquement selon le format défini</div>
+                
+                <h4 class="mb-2">Format DD/MM/YYYY (séparateur /)</h4>
+                <DatePicker
+                  v-model="dateSlash"
+                  placeholder="Saisie avec auto clamp - séparateur /"
+                  format="DD/MM/YYYY"
+                  useCombinedMode
+                  autoClamp
+                />
+                <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
+                
+                <h4 class="mb-2">Format DD-MM-YYYY (séparateur -)</h4>
+                <DatePicker
+                  v-model="dateDash"
+                  placeholder="Saisie avec auto clamp - séparateur -"
+                  format="DD-MM-YYYY"
+                  useCombinedMode
+                  autoClamp
+                />
+                <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
+                
+                <h4 class="mb-2">Format YYYY.MM.DD (séparateur .)</h4>
+                <DatePicker
+                  v-model="dateDot"
+                  placeholder="Saisie avec auto clamp - séparateur ."
+                  format="YYYY.MM.DD"
+                  useCombinedMode
+                  autoClamp
+                />
+                <div class="caption mb-4">Valeur actuelle: {{ dateDot || 'aucune date saisie' }}</div>
               </div>
             `,
 		}
