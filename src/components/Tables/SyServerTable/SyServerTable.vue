@@ -64,6 +64,21 @@
 		return JSON.stringify(item)
 	}
 
+	// Function to toggle selection of all rows
+	const toggleAllRows = () => {
+		const items = props.items.length > 0 ? props.items : []
+		if (model.value.length === items.length) {
+			// If all items are selected, deselect all
+			model.value = []
+		} else {
+			// Otherwise, select all items
+			// We need to map the items to their values to ensure proper selection
+			model.value = items.map(item => {
+				return getItemValue(item)
+			})
+		}
+	}
+
 	const {
 		propsFacade,
 		updateOptions,
@@ -181,6 +196,7 @@
 			:density="props.density"
 			:show-select="props.showSelect"
 			:item-selectable="(item) => true"
+			:select-strategy="'multiple'"
 			:item-value="getItemValue"
 			@update:options="updateOptions"
 		>
@@ -209,7 +225,7 @@
 										color="primary"
 										density="compact"
 										hide-details
-										@click="() => slotProps.toggleSelectAll && slotProps.toggleSelectAll()"
+										@click.stop="toggleAllRows"
 									/>
 								</template>
 								<template v-else>
