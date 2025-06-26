@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/valid-v-slot -->
 <script setup lang="ts">
 	import { computed, nextTick, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components'
@@ -111,7 +110,7 @@
 	const { internalHeader, displayHeaders } = useTableHeaders(toRef(props, 'headers'))
 
 </script>
-
+<!-- eslint-disable vue/valid-v-slot -->
 <template>
 	<div
 		:class="['sy-server-table', { 'sy-server-table--striped': props.striped }]"
