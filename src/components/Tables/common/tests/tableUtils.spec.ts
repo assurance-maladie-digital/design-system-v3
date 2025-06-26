@@ -207,7 +207,9 @@ describe('tableUtils', () => {
 	it('should setup local storage correctly', () => {
 		mockLocalStorageUtility.getItem.mockReturnValue({
 			page: 2,
-			itemsPerPage: 20,
+			options: {
+				itemsPerPage: 20,
+			},
 		})
 
 		const options = ref<Partial<DataOptions>>({})
@@ -227,7 +229,9 @@ describe('tableUtils', () => {
 		expect(mockLocalStorageUtility.getItem).toHaveBeenCalledWith('table-test')
 		expect(localOptions.value).toEqual({
 			page: 2,
-			itemsPerPage: 20,
+			options: {
+				itemsPerPage: 20,
+			},
 		})
 
 		// Test watchOptions
