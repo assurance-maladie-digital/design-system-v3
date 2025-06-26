@@ -206,11 +206,11 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-            <th v-if="props.showSelect" />
-            <template
-                v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
-                :key="column.key"
-            >
+						<th v-if="props.showSelect" />
+						<template
+							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
+							:key="column.key"
+						>
 							<th>
 								<!-- Check if the column is filterable based on the headers prop -->
 								<SyTableFilter

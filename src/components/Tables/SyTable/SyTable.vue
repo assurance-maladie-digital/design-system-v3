@@ -208,11 +208,11 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-            <th v-if="props.showSelect" />
-            <template
-                v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
-                :key="column.key"
-            >
+						<th v-if="props.showSelect" />
+						<template
+							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
+							:key="column.key"
+						>
 							<th>
 								<SyTableFilter
 									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
