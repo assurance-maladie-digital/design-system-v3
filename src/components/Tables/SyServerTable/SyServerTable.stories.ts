@@ -3881,8 +3881,68 @@ export const RowSelection: Story = {
 		return {
 			components: { SyServerTable },
 			setup() {
+				const totalUsers = ref(0)
+				const users = ref<User[]>([])
 				const selection = ref([])
-				return { args, selection }
+				const state = ref(StateEnum.IDLE)
+
+				const fetchData = async (): Promise<void> => {
+					const { items, total } = await getDataFromApi(args.options)
+					users.value = items
+					totalUsers.value = total
+				}
+
+				const wait = async (ms: number) => {
+					return new Promise(resolve => setTimeout(resolve, ms))
+				}
+
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+					state.value = StateEnum.PENDING
+					await wait(1000)
+
+					return new Promise((resolve) => {
+						let items: User[] = getUsers()
+						const total = items.length
+
+						if (sortBy && sortBy.length > 0) {
+							items = items.sort((a, b) => {
+								const key = sortBy[0].key
+								const order = sortBy[0].order === 'asc' ? 1 : -1
+
+								return a[key] > b[key] ? order : -order
+							})
+						}
+
+						if (itemsPerPage > 0) {
+							items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						}
+
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getUsers = (): User[] => {
+					return [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Thierry', lastname: 'Bobu', email: 'thierry.bobu@example.com' },
+						{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@exemple.com' },
+						{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@exemple.com' },
+						{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+						{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+						{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+						{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+						{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+						{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+					]
+				}
+
+				// Call fetchData on mount
+				fetchData()
+
+				return { args, users, state, fetchData, totalUsers, selection, StateEnum }
 			},
 			template: `
 				<div>
@@ -3890,20 +3950,22 @@ export const RowSelection: Story = {
 						v-model:options="args.options"
 						v-model="selection"
 						:headers="args.headers"
-						:items="args.items"
-						:server-items-length="args.serverItemsLength"
+						:items="users"
+						:loading="state === StateEnum.PENDING"
+						:server-items-length="totalUsers"
 						:show-select="args.showSelect"
 						:suffix="args.suffix"
 						:density="args.density"
 						:striped="args.striped"
 						:show-filters="args.showFilters"
+						@update:options="fetchData"
 					/>
 					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
 						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
-							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : args.items.find(i => JSON.stringify(i) === item)?.lastname }}</div>
-							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : args.items.find(i => JSON.stringify(i) === item)?.firstname }}</div>
-							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : args.items.find(i => JSON.stringify(i) === item)?.email }}</div>
+							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : users.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : users.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : users.find(i => JSON.stringify(i) === item)?.email }}</div>
 						</div>
 					</div>
 				</div>
