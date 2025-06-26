@@ -847,11 +847,11 @@ export const ServerFilterByText: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1145,11 +1145,11 @@ export const ServerFilterByNumber: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1465,11 +1465,11 @@ export const ServerFilterBySelect: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1801,11 +1801,11 @@ export const ServerFilterBySelectMultiple: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2093,11 +2093,11 @@ export const ServerFilterByExacteDate: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="users"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
-						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2402,11 +2402,11 @@ export const ServerFilterByPeriod: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="users"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
-						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2767,11 +2767,11 @@ export const CustomFilterSlot: Story = {
 			},
 			template: `
 				<SyServerTable
+					v-bind="args"
 					v-model:options="options"
 					:items="items"
 					:server-items-length="serverItemsLength"
 					:loading="loading"
-					v-bind="args"
 					@update:options="fetchData"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
@@ -3090,11 +3090,11 @@ export const CustomFilterInputs: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						v-bind="args"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -3372,21 +3372,21 @@ export const ManyServerTables: Story = {
 			template: `
 	  <div>
 		<SyServerTable
+		  v-bind="args"
 		  v-model:options="optionsTable1"
 		  :items="usersTable1"
 		  :server-items-length="totalUsersTable1"
 		  :loading="stateTable1 === StateEnum.PENDING"
-		  v-bind="args"
 		  suffix="table1"
 		  class="mb-10"
 		  @update:options="fetchDataTable1"
 		/>
 		<SyServerTable
+		  v-bind="args"
 		  v-model:options="optionsTable2"
 		  :items="usersTable2"
 		  :server-items-length="totalUsersTable2"
 		  :loading="stateTable2 === StateEnum.PENDING"
-		  v-bind="args"
 		  suffix="table2"
 		  @update:options="fetchDataTable2"
 		/>
@@ -3643,11 +3643,11 @@ export const DataAlignment: Story = {
 			},
 			template: `
 				<SyServerTable
+					v-bind="args"
 					v-model:options="options"
 					:items="users"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
-					v-bind="args"
 					@update:options="[fetchData, args['onUpdate:options']]"
 				/>
 			`,
@@ -3877,11 +3877,11 @@ export const ResizableColumns: Story = {
 			template: `
 			<div>
 				<SyServerTable
+					v-bind="args"
 					v-model:options="options"
 					:items="users"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
-					v-bind="args"
 					@update:options="fetchData"
 				/>
 			</div>
