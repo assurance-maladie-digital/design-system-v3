@@ -3887,7 +3887,16 @@ export const RowSelection: Story = {
 				const state = ref(StateEnum.IDLE)
 
 				const fetchData = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(args.options)
+					// Create a complete DataOptions object with all required properties
+					const defaultOptions: DataOptions = {
+						page: 1,
+						itemsPerPage: 10,
+						sortBy: [],
+						multiSort: false,
+						mustSort: false
+					}
+					const options = args.options ? { ...defaultOptions, ...args.options } : defaultOptions
+					const { items, total } = await getDataFromApi(options)
 					users.value = items
 					totalUsers.value = total
 				}

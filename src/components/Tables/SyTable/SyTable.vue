@@ -206,7 +206,6 @@
 			:density="props.density"
 			:show-select="props.showSelect"
 			:item-selectable="(item) => true"
-			:select-strategy="'multiple'"
 			:item-value="getItemValue"
 			@update:options="updateOptions"
 		>
