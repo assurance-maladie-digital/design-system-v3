@@ -446,7 +446,8 @@ export const VuetifyItems = [
 				],
 
 				solution: [{
-					name: 'En étude',
+					name: 'SyCheckbox',
+					href: '/?path=/docs/composants-formulaires-sycheckbox--docs',
 				}],
 			},
 			{
