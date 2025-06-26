@@ -3899,7 +3899,12 @@ export const RowSelection: Story = {
 						:show-filters="args.showFilters"
 					/>
 					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
-						<strong>Selected items:</strong> {{ selection.length }}
+						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
+						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : args.items.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : args.items.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : args.items.find(i => JSON.stringify(i) === item)?.email }}</div>
+						</div>
 					</div>
 				</div>
 			`,

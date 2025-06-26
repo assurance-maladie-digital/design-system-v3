@@ -69,7 +69,7 @@
 		// Ensure props.items is an array and has a length property
 		const itemsArray = Array.isArray(props.items) ? props.items : []
 		const items = itemsArray.length > 0 ? itemsArray : []
-		
+
 		if (model.value.length === items.length) {
 			// If all items are selected, deselect all
 			model.value = []
