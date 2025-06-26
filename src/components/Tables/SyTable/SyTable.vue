@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, nextTick, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
@@ -8,6 +8,7 @@
 	import { useTableUtils } from '../common/tableUtils'
 	import type { DataOptions, FilterOption, SyTableProps, TableColumnHeader } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
+	import { setupAccessibility } from '../common/tableAccessibilityUtils'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		itemsPerPage: undefined,
@@ -57,7 +58,6 @@
 	const {
 		propsFacade,
 		updateOptions,
-		setupAccessibility,
 		setupLocalStorage,
 		columnWidths,
 		updateColumnWidth,
@@ -73,7 +73,9 @@
 		density: props.density,
 	})
 
-	setupAccessibility()
+	onMounted(() => {
+		setupAccessibility(uniqueTableId.value)
+	})
 
 	const { watchOptions } = setupLocalStorage()
 

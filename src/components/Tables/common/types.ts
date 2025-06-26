@@ -1,3 +1,5 @@
+import type { VDataTableServer } from 'vuetify/components'
+
 export type SortOptions = {
 	key: string
 	order: 'desc' | 'asc'
@@ -13,6 +15,14 @@ export interface FilterOption {
 	type: FilterType
 }
 
+export type SyHeader = NonNullable<VDataTableServer['$props']['headers']>[number] & {
+	hidden?: boolean
+	filterable?: boolean
+	order?: number
+}
+
+export type SyHeaders = SyHeader[]
+
 export interface DataOptions {
 	page: number
 	itemsPerPage: number
@@ -23,42 +33,6 @@ export interface DataOptions {
 	filters?: FilterOption[]
 }
 
-export type DataTableHeaders = {
-	title?: string
-	text?: string
-	value?: string
-	key?: string
-	filterable?: boolean
-	filterType?: FilterType
-	filterOptions?: Array<{ text: string, value: unknown }>
-	multiple?: boolean
-	chips?: boolean
-	sortable?: boolean
-	hideMessages?: boolean
-	dateFormat?: string
-	align?: 'start' | 'end' | 'center'
-}
-
-// Type to handle both Vuetify internal headers and our custom headers
-export type TableColumnHeader = {
-	title?: string
-	value?: unknown
-	key?: string | null
-	filterable?: boolean
-	filterType?: FilterType
-	filterOptions?: Array<{ text: string, value: unknown }>
-	multiple?: boolean
-	chips?: boolean
-	hideMessages?: boolean
-	dateFormat?: string
-	sort?: unknown
-	filter?: unknown
-	width?: string | number
-	align?: string
-	children?: unknown[]
-	[key: string]: unknown // Allow for any additional properties from Vuetify
-}
-
 // Component-specific props interfaces
 export interface SyTableProps {
 	items?: Record<string, unknown>[]
@@ -66,23 +40,33 @@ export interface SyTableProps {
 	itemsPerPage?: number
 	caption?: string
 	showFilters?: boolean
-	headers?: DataTableHeaders[]
+	headers?: SyHeaders[]
 	filterInputConfig?: Record<string, unknown>
 	density?: TableDensityType
 	striped?: boolean
 	resizableColumns?: boolean
 }
 
-export interface SyServerTableProps {
+export type SyServerTableBaseProps = {
 	serverItemsLength: number
 	items?: Record<string, unknown>[]
 	suffix: string
 	itemsPerPage?: number
+	hide?: boolean
 	caption?: string
 	showFilters?: boolean
-	headers?: DataTableHeaders[]
 	resizableColumns?: boolean
 	filterInputConfig?: Record<string, unknown>
 	density?: TableDensityType
 	striped?: boolean
 }
+
+export type SyServerTableProps =
+	| (SyServerTableBaseProps & {
+		enableColumnControls?: false
+		headers?: SyHeaders
+	})
+	| (SyServerTableBaseProps & {
+		enableColumnControls: true
+		headers: SyHeaders
+	})

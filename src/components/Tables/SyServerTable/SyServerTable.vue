@@ -1,13 +1,18 @@
+<!-- eslint-disable vue/valid-v-slot -->
 <script setup lang="ts">
-	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, nextTick, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
-	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
 	import { useTableUtils } from '../common/tableUtils'
-	import type { DataOptions, FilterOption, SyServerTableProps, TableColumnHeader } from '../common/types'
+	import type { DataOptions, FilterOption, SyServerTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
+	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
+	import { setupAccessibility } from '../common/tableAccessibilityUtils'
+	import useTableHeaders from '../common/organizeColumns/useTableHeaders'
+
+	type HeaderSlotProps = Parameters<VDataTableServer['$slots']['headers']>[0]
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		itemsPerPage: undefined,
@@ -19,6 +24,7 @@
 		filterInputConfig: () => ({}),
 		density: 'default',
 		striped: false,
+		enableColumnControls: false,
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -45,32 +51,24 @@
 
 	defineExpose({ filterItems })
 
-	const componentAttributes = useAttrs()
-
-	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`sy-server-table-${Math.random().toString(36).substr(2, 9)}`)
-
 	const {
 		propsFacade,
 		updateOptions,
-		setupAccessibility,
 		setupLocalStorage,
 		columnWidths,
 		updateColumnWidth,
 	} = useTableUtils({
-		tableId: uniqueTableId.value,
 		prefix: 'server-table',
 		suffix: props.suffix,
+		defaultAttrs: useAttrs(),
 		itemsPerPage: props.itemsPerPage,
-		caption: props.caption,
 		serverItemsLength: props.serverItemsLength,
-		componentAttributes,
-		headersProp: toRef(props, 'headers'),
 		options,
-		density: props.density,
 	})
 
-	setupAccessibility()
+	onMounted(() => {
+		setupAccessibility(table.value?.$el)
+	})
 
 	const { watchOptions } = setupLocalStorage()
 
@@ -109,59 +107,21 @@
 		{ deep: true },
 	)
 
-	// Fonction pour améliorer les en-têtes de colonnes avec les types de filtres appropriés
-	function getEnhancedHeader(column: TableColumnHeader): TableColumnHeader {
-		// Trouve l'en-tête correspondant dans les props si disponible
-		const matchingHeader = props.headers?.find(h => h.key === column.key || h.value === column.value)
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const { internalHeader, displayHeaders } = useTableHeaders(toRef(props, 'headers'))
 
-		// Crée un en-tête amélioré avec les types appropriés
-		return {
-			...column,
-			title: column.name || matchingHeader?.title,
-			filterType: column.filterType || matchingHeader?.filterType,
-			filterOptions: column.filterOptions || matchingHeader?.filterOptions,
-			filterable: matchingHeader?.filterable !== undefined ? matchingHeader.filterable : column.filterable,
-		} as TableColumnHeader
-	}
-
-	// Fonction pour créer un élément vide qui maintient la structure des colonnes
-	function createEmptyItemWithStructure(): Record<string, unknown>[] {
-		// Si nous avons des éléments, utilise le premier élément comme modèle
-		if (props.items.length > 0) {
-			// Crée un objet vide avec les mêmes clés que le premier élément
-			const template = Object.keys(props.items[0]).reduce((obj, key) => {
-				obj[key] = ''
-				return obj
-			}, {} as Record<string, unknown>)
-			return [template]
-		}
-
-		// Si nous avons des en-têtes, les utilise pour créer une structure
-		if (props.headers && props.headers.length > 0) {
-			// Crée un objet vide avec les clés des en-têtes
-			const template = props.headers.reduce((obj, header) => {
-				const key = header.key || header.value || ''
-				if (key) obj[key] = ''
-				return obj
-			}, {} as Record<string, unknown>)
-			return [template]
-		}
-
-		// Repli vers un objet vide
-		return [{}]
-	}
 </script>
 
 <template>
 	<div
-		:id="uniqueTableId"
 		:class="['sy-server-table', { 'sy-server-table--striped': props.striped }]"
 	>
 		<VDataTableServer
 			ref="table"
 			v-bind="propsFacade"
+			:headers="displayHeaders"
 			color="primary"
-			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
+			:items="props.items"
 			:items-length="props.serverItemsLength || 0"
 			:density="props.density"
 			@update:options="updateOptions"
@@ -179,7 +139,7 @@
 				<template v-if="slotProps && slotProps.columns">
 					<tr class="headers">
 						<template
-							v-for="column in slotProps.columns"
+							v-for="column in (slotProps as HeaderSlotProps).columns"
 							:key="column.key"
 						>
 							<th>
@@ -197,7 +157,7 @@
 						class="filters"
 					>
 						<template
-							v-for="column in slotProps.columns"
+							v-for="column in (slotProps as HeaderSlotProps).columns"
 							:key="column.key"
 						>
 							<th>
@@ -206,7 +166,7 @@
 									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
 									:filterable="true"
 									:filters="filters"
-									:header="getEnhancedHeader(column)"
+									:header="column"
 									:input-config="props.filterInputConfig"
 									@update:filters="filters = $event"
 								>
@@ -246,7 +206,7 @@
 					<tr class="headers">
 						<th
 							v-for="header in props.headers || []"
-							:key="header.key || header.value || ''"
+							:key="((header.key || header.value || '') as string)"
 						>
 							<span class="font-weight-bold">{{ header.title }}</span>
 						</th>
@@ -257,7 +217,7 @@
 					>
 						<th
 							v-for="header in props.headers || []"
-							:key="header.key || header.value || ''"
+							:key="((header.key || header.value || '') as string)"
 						>
 							<SyTableFilter
 								v-if="header.filterable"
@@ -268,7 +228,7 @@
 							>
 								<template #custom-filter="customFilterSlotProps">
 									<slot
-										name="filter.custom"
+										:name="filter.custom"
 										:header="customFilterSlotProps.header"
 										:value="customFilterSlotProps.value"
 										:update-filter="customFilterSlotProps.updateFilter"
@@ -278,6 +238,13 @@
 						</th>
 					</tr>
 				</template>
+			</template>
+			<template #footer.prepend>
+				<OrganizeColumns
+					v-if="props.enableColumnControls"
+					v-model:headers="internalHeaders"
+				/>
+				<slot name="footer.prepend" />
 			</template>
 		</VDataTableServer>
 	</div>

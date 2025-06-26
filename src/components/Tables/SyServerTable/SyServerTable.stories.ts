@@ -98,8 +98,18 @@ const meta = {
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
 		},
+		enableColumnControls: {
+			description: 'Allow the users to re-organize the columns',
+			table: {
+				defaultValue: {
+					summary: 'false',
+				},
+				type: { summary: 'boolean' },
+			},
+			control: { type: 'boolean' },
+		},
 	},
-} satisfies Meta<typeof SyServerTable & typeof VDataTable>
+} as Meta<typeof SyServerTable & typeof VDataTable>
 
 export default meta
 
@@ -318,6 +328,7 @@ export const Default: Story = {
 					:density="args.density"
 					:striped="args.striped"
 					:resizable-columns="args.resizableColumns"
+					:enable-column-controls="args.enableColumnControls"
 					@update:options="fetchData"
 				/>
 			</div>

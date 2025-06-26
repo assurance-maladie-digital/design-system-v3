@@ -1,31 +1,24 @@
 import { computed, watch, type Ref } from 'vue'
-import type { DataOptions, DataTableHeaders, TableDensityType } from './types'
-import { useTableAccessibility } from './tableAccessibilityUtils'
+import type { DataOptions } from './types'
 import { useTableStorage } from './tableStorageUtils'
 
 /**
  * Crée et renvoie des fonctionnalités communes pour les tableaux
  */
 export function useTableUtils({
-	tableId,
 	prefix,
 	suffix,
 	itemsPerPage,
 	serverItemsLength,
-	componentAttributes,
-	headersProp,
+	defaultAttrs,
 	options,
 }: {
-	tableId: string
 	prefix: string
 	suffix?: string
 	itemsPerPage?: number
-	caption?: string
 	serverItemsLength?: number
-	componentAttributes: Record<string, unknown>
-	headersProp?: Ref<DataTableHeaders[] | undefined>
+	defaultAttrs: Record<string, unknown>
 	options: Ref<Partial<DataOptions>>
-	density?: TableDensityType
 }) {
 	// Use the separated storage utility
 	const { localOptions, columnWidths, storageKey, setupLocalStorage, updateColumnWidth } = useTableStorage({
@@ -35,24 +28,9 @@ export function useTableUtils({
 		options,
 	})
 
-	// Use the separated accessibility utility
-	const { setupAccessibility } = useTableAccessibility({
-		tableId,
-	})
-
-	const headers = computed(() => {
-		if (!Array.isArray(headersProp?.value)) {
-			return undefined
-		}
-		return headersProp.value.map(header => ({
-			...header,
-			title: header.title ?? header.text,
-		}))
-	})
-
 	const optionsFacade = computed(() => {
 		return {
-			page: options.value.page || componentAttributes['page'],
+			page: options.value.page || defaultAttrs['page'],
 			itemsPerPage: options.value.itemsPerPage || itemsPerPage,
 			sortBy: options.value.sortBy,
 			groupBy: options.value.groupBy,
@@ -63,11 +41,10 @@ export function useTableUtils({
 
 	const propsFacade = computed(() => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { 'onUpdate:options': _, ...attrs } = componentAttributes
+		const { 'onUpdate:options': _, ...attrs } = defaultAttrs
 
 		const props = {
 			...attrs,
-			headers: headers.value,
 			...localOptions.value,
 			...(serverItemsLength !== undefined ? { itemsLength: serverItemsLength } : {}),
 		}
@@ -106,11 +83,9 @@ export function useTableUtils({
 		localOptions,
 		columnWidths,
 		storageKey,
-		headers,
 		optionsFacade,
 		propsFacade,
 		updateOptions,
-		setupAccessibility,
 		setupLocalStorage,
 		updateColumnWidth,
 	}
