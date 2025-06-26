@@ -87,14 +87,6 @@ const meta = {
 			},
 			required: true,
 		},
-		itemsPerPage: {
-			description: 'Nombre d\'éléments par page',
-			control: { type: 'number' },
-			table: {
-				category: 'props',
-				type: { summary: 'number' },
-			},
-		},
 		caption: {
 			description: 'Texte de la légende du tableau',
 			control: { type: 'text' },
@@ -247,10 +239,6 @@ export const Default: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -481,10 +469,6 @@ export const ServerSortBy: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -762,10 +746,6 @@ export const ServerFilterByText: Story = {
 		'onUpdate:options': fn(),
 	},
 	render(args) {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -1054,10 +1034,6 @@ export const ServerFilterByNumber: Story = {
 		'onUpdate:options': fn(),
 	},
 	render(args) {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -1374,10 +1350,6 @@ export const ServerFilterBySelect: Story = {
 		'onUpdate:options': fn(),
 	},
 	render(args) {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -1702,10 +1674,6 @@ export const ServerFilterBySelectMultiple: Story = {
 		'onUpdate:options': fn(),
 	},
 	render(args) {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -1981,10 +1949,6 @@ export const ServerFilterByExacteDate: Story = {
 		'onUpdate:options': fn(),
 	},
 	render(args) {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -2290,10 +2254,6 @@ export const ServerFilterByPeriod: Story = {
 		'onUpdate:options': fn(),
 	},
 	render(args) {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -2662,10 +2622,6 @@ export const CustomFilterSlot: Story = {
 		'onUpdate:options': fn(),
 	},
 	render(args) {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -3005,10 +2961,6 @@ export const CustomFilterInputs: Story = {
 		'onUpdate:options': fn(),
 	},
 	render(args) {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -3261,10 +3213,6 @@ export const ManyServerTables: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -3558,10 +3506,6 @@ export const DataAlignment: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {
@@ -3794,10 +3738,6 @@ export const ResizableColumns: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyServerTable },
 			setup() {

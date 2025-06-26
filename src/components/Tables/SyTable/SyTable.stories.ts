@@ -70,14 +70,6 @@ const meta = {
 			},
 			required: true,
 		},
-		itemsPerPage: {
-			description: 'Nombre d\'éléments par page',
-			control: { type: 'number' },
-			table: {
-				category: 'props',
-				type: { summary: 'number' },
-			},
-		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
 		},
@@ -232,10 +224,6 @@ export const Default: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -400,10 +388,6 @@ export const SortBy: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -571,10 +555,6 @@ export const FilterByText: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -740,10 +720,6 @@ export const FilterByNumber: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -935,10 +911,6 @@ export const FilterBySelect: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -1138,10 +1110,6 @@ export const FilterBySelectMultiple: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -1288,10 +1256,6 @@ export const FilterByExactDate: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -1438,10 +1402,6 @@ export const FilterByPeriod: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -1942,10 +1902,6 @@ export const CustomFilterInputs: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -2114,10 +2070,6 @@ export const ManyTables: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -2277,10 +2229,6 @@ export const DataAlignment: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {
@@ -2431,10 +2379,6 @@ export const ResizableColumns: Story = {
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
-		// Synchroniser itemsPerPage avec options.itemsPerPage
-		if (args.itemsPerPage !== undefined && args.options) {
-			args.options.itemsPerPage = args.itemsPerPage
-		}
 		return {
 			components: { SyTable },
 			setup() {

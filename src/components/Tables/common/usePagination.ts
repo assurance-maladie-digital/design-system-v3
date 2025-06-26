@@ -5,7 +5,6 @@ import type { DataOptions } from './types'
  * Composable for managing table pagination
  *
  * @param options - Reactive reference to table options
- * @param itemsPerPageProp - Default items per page from props
  * @param itemsLength - Total number of items (for client-side) or serverItemsLength (for server-side)
  * @param table - Reference to the table component
  * @param emit - Emit function for update:options event
@@ -13,13 +12,11 @@ import type { DataOptions } from './types'
  */
 export function usePagination({
 	options,
-	itemsPerPageProp,
 	itemsLength,
 	table,
 	emit,
 }: {
 	options: Ref<Partial<DataOptions>>
-	itemsPerPageProp?: number
 	itemsLength: Ref<number>
 	table: Ref<unknown>
 	emit: (event: 'update:options', options: Partial<DataOptions>) => void
@@ -35,9 +32,9 @@ export function usePagination({
 		},
 	})
 
-	// Items per page with fallback to props or default
+	// Items per page with fallback to default
 	const itemsPerPageValue = computed(() => {
-		const value = options.value.itemsPerPage || itemsPerPageProp || 10
+		const value = options.value.itemsPerPage || 10
 		// If value is -1, it means "Tous" (all items)
 		return value
 	})

@@ -117,7 +117,6 @@ describe('tableUtils', () => {
 		const { optionsFacade } = useTableUtils({
 			tableId: 'test-table',
 			prefix: 'table',
-			itemsPerPage: 10,
 			caption: 'Test Table',
 			componentAttributes,
 			options,
@@ -125,7 +124,6 @@ describe('tableUtils', () => {
 
 		expect(optionsFacade.value).toEqual({
 			page: 2,
-			itemsPerPage: 10,
 			sortBy: [{ key: 'name', order: 'asc' }],
 			groupBy: undefined,
 			multiSort: undefined,

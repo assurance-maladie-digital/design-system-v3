@@ -15,7 +15,6 @@
 	import { useTableItems } from '../common/useTableItems'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
-		itemsPerPage: undefined,
 		caption: '',
 		showFilters: false,
 		items: () => [],
@@ -70,7 +69,6 @@
 	const itemsLength = computed(() => props.serverItemsLength)
 	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
 		options,
-		itemsPerPageProp: props.itemsPerPage,
 		itemsLength,
 		table,
 		emit,
@@ -94,7 +92,6 @@
 		tableId: uniqueTableId.value,
 		prefix: 'server-table',
 		suffix: props.suffix,
-		itemsPerPage: props.itemsPerPage,
 		caption: props.caption,
 		serverItemsLength: props.serverItemsLength,
 		componentAttributes,
