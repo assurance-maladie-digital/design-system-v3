@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyServerTable from './SyServerTable.vue'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions, FilterType } from '../common/types'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
 import { fn } from '@storybook/test'
@@ -86,10 +86,6 @@ const meta = {
 				type: { summary: 'string' },
 			},
 			required: true,
-		},
-		itemsPerPage: {
-			description: 'Nombre d\'éléments par page',
-			control: { type: 'number' },
 		},
 		caption: {
 			description: 'Texte de la légende du tableau',
@@ -216,27 +212,31 @@ export const Default: Story = {
 							{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
 						]
 					}
+                    
+                      // Initialize data
+		  			fetchData()
 				</script>
 				`,
 			},
 		],
 	},
 	args: {
-		options: {
+		'options': {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		headers: [
+		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		caption: '',
-		serverItemsLength: 15,
-		suffix: 'server-default',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'serverItemsLength': 15,
+		'suffix': 'server-default',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		return {
@@ -246,9 +246,16 @@ export const Default: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const fetchData = async (): Promise<void> => {
-					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(args.options)
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -303,21 +310,19 @@ export const Default: Story = {
 					]
 				}
 
-				return { args, users, state, fetchData, totalUsers, StateEnum }
+				// Initialize data
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
 			template: `
 			<div>
 				<SyServerTable
-					v-model:options="args.options"
+					v-model:options="options"
 					:items="users"
-					:headers="args.headers"
-					:caption="args.caption"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 					@update:options="fetchData"
 				/>
 			</div>
@@ -420,39 +425,48 @@ export const ServerSortBy: Story = {
 
 		  const getUsers = (): User[] => {
 			return [
-			  { firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
-			  { firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
-			  { firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
-			  { firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
-			  { firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
-			  { firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
-			  { firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
-			  { firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
-			  { firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
-			  { firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
-			]
+							{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+							{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+							{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+							{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+							{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+							{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+							{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+							{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+							{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+							{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+							{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+							{ firstname: 'Jacques', lastname: 'Demers', email: 'jacques.demers@example.com' },
+							{ firstname: 'Aimée', lastname: 'Josseaume', email: 'aimee.josseaume@example.com' },
+							{ firstname: 'Delphine', lastname: 'Robillard', email: 'delphine.robillard@example.com' },
+							{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
+						]
 		  }
+          
+           // Initialize data
+		  	fetchData()
 		</script>
 		`,
 			},
 		],
 	},
 	args: {
-		options: {
+		'options': {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'desc' }],
 			page: 1,
 		},
-		headers: [
+		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		caption: '',
-		serverItemsLength: 0,
-		suffix: 'server-sort',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'serverItemsLength': 15,
+		'suffix': 'server-sort',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		return {
@@ -462,8 +476,16 @@ export const ServerSortBy: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const fetchData = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(args.options as DataOptions)
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -510,24 +532,27 @@ export const ServerSortBy: Story = {
 						{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
 						{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
 						{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+						{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+						{ firstname: 'Jacques', lastname: 'Demers', email: 'jacques.demers@example.com' },
+						{ firstname: 'Aimée', lastname: 'Josseaume', email: 'aimee.josseaume@example.com' },
+						{ firstname: 'Delphine', lastname: 'Robillard', email: 'delphine.robillard@example.com' },
+						{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
 					]
 				}
 
-				return { args, users, state, fetchData, totalUsers, StateEnum }
+				// Initialize data
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
 			template: `
 	  <div>
 		<SyServerTable
-		  v-model:options="args.options"
+		  v-model:options="options"
 		  :items="users"
-		  :headers="args.headers"
-		  :caption="args.caption"
 		  :server-items-length="totalUsers"
 		  :loading="state === StateEnum.PENDING"
-		  :suffix="args.suffix"
-		  :density="args.density"
-		  :striped="args.striped"
-		  :resizable-columns="args.resizableColumns"
+		  v-bind="args"
 		  @update:options="fetchData"
 		/>
 	  </div>
@@ -687,8 +712,8 @@ export const ServerFilterByText: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 15,
-		headers: [
+		'serverItemsLength': 15,
+		'headers': [
 			{
 				title: 'Prénom',
 				key: 'firstname',
@@ -708,22 +733,30 @@ export const ServerFilterByText: Story = {
 				filterType: 'text',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'server-filter-text',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'server-filter-text',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -783,10 +816,10 @@ export const ServerFilterByText: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
 					state,
+					options,
 					fetchData,
 					StateEnum,
 				}
@@ -794,17 +827,11 @@ export const ServerFilterByText: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -973,7 +1000,7 @@ export const ServerFilterByNumber: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -993,23 +1020,31 @@ export const ServerFilterByNumber: Story = {
 				filterType: 'number',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		serverItemsLength: 15,
-		showFilters: true,
-		suffix: 'server-filter-number',
-		density: 'default',
-		striped: false,
+		'serverItemsLength': 15,
+		'showFilters': true,
+		'suffix': 'server-filter-number',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -1075,9 +1110,9 @@ export const ServerFilterByNumber: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
+					options,
 					state,
 					fetchData,
 					StateEnum,
@@ -1086,17 +1121,11 @@ export const ServerFilterByNumber: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1274,7 +1303,7 @@ export const ServerFilterBySelect: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1307,23 +1336,31 @@ export const ServerFilterBySelect: Story = {
 				],
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		serverItemsLength: 15,
-		showFilters: true,
-		suffix: 'server-filter-select',
-		density: 'default',
-		striped: false,
+		'serverItemsLength': 15,
+		'showFilters': true,
+		'suffix': 'server-filter-select',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -1389,9 +1426,9 @@ export const ServerFilterBySelect: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
+					options,
 					state,
 					fetchData,
 					StateEnum,
@@ -1400,17 +1437,11 @@ export const ServerFilterBySelect: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1592,7 +1623,7 @@ export const ServerFilterBySelectMultiple: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1629,23 +1660,31 @@ export const ServerFilterBySelectMultiple: Story = {
 				],
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		serverItemsLength: 15,
-		showFilters: true,
-		suffix: 'server-filter-select',
-		density: 'default',
-		striped: false,
+		'serverItemsLength': 15,
+		'showFilters': true,
+		'suffix': 'server-filter-select',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -1719,9 +1758,9 @@ export const ServerFilterBySelectMultiple: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
+					options,
 					state,
 					fetchData,
 					StateEnum,
@@ -1730,17 +1769,11 @@ export const ServerFilterBySelectMultiple: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -1887,9 +1920,9 @@ export const ServerFilterByExacteDate: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 0,
-		showFilters: true,
-		headers: [
+		'serverItemsLength': 5,
+		'showFilters': true,
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1904,10 +1937,16 @@ export const ServerFilterByExacteDate: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		caption: '',
-		suffix: 'server-filter-date',
-		density: 'default',
-		striped: false,
+		'options': {
+			itemsPerPage: 5,
+			page: 1,
+			filters: [],
+		},
+		'caption': '',
+		'suffix': 'server-filter-date',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		return {
@@ -1937,13 +1976,16 @@ export const ServerFilterByExacteDate: Story = {
 					},
 				]
 
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalUsers = ref(originalUsers.length)
 				const users = ref([...originalUsers])
-				const options = ref({
-					itemsPerPage: 5,
-					page: 1,
-					filters: [],
-				})
 				const state = ref(StateEnum.IDLE)
 
 				const fetchData = async () => {
@@ -1999,6 +2041,9 @@ export const ServerFilterByExacteDate: Story = {
 					state.value = StateEnum.RESOLVED
 				}
 
+				// Initialize data
+				fetchData()
+
 				return {
 					args,
 					users,
@@ -2012,17 +2057,11 @@ export const ServerFilterByExacteDate: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="users"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
-						:resizable-columns="args.resizableColumns"
-						:show-filters="true"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2186,9 +2225,9 @@ export const ServerFilterByPeriod: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 0,
-		showFilters: true,
-		headers: [
+		'serverItemsLength': 5,
+		'showFilters': true,
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -2203,10 +2242,16 @@ export const ServerFilterByPeriod: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		caption: '',
-		suffix: 'server-filter-date',
-		density: 'default',
-		striped: false,
+		'options': {
+			itemsPerPage: 5,
+			page: 1,
+			filters: [],
+		},
+		'caption': '',
+		'suffix': 'server-filter-date',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		return {
@@ -2236,13 +2281,16 @@ export const ServerFilterByPeriod: Story = {
 					},
 				]
 
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalUsers = ref(originalUsers.length)
 				const users = ref([...originalUsers])
-				const options = ref({
-					itemsPerPage: 5,
-					page: 1,
-					filters: [],
-				})
 				const state = ref(StateEnum.IDLE)
 
 				const fetchData = async () => {
@@ -2298,6 +2346,9 @@ export const ServerFilterByPeriod: Story = {
 					state.value = StateEnum.RESOLVED
 				}
 
+				// Initialize data
+				fetchData()
+
 				return {
 					args,
 					users,
@@ -2311,17 +2362,11 @@ export const ServerFilterByPeriod: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="users"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
-						:resizable-columns="args.resizableColumns"
-						:show-filters="true"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -2375,7 +2420,7 @@ export const CustomFilterSlot: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { ref } from 'vue'
+					import { ref, watch } from 'vue'
 					import { SyServerTable } from '@cnamts/synapse'
 					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 					import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
@@ -2511,8 +2556,8 @@ export const CustomFilterSlot: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 6,
-		headers: [
+		'serverItemsLength': 6,
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -2532,7 +2577,7 @@ export const CustomFilterSlot: Story = {
 				filterType: 'custom' as FilterType,
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -2564,22 +2609,31 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
+			page: 1,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'server-custom-filter-slot',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'server-custom-filter-slot',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		return {
 			components: { SyServerTable },
 			setup() {
 				// Create reactive references
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const items = ref(args.items)
 				const customFilterValue = ref('')
 				const statusOptions = ['Actif', 'Inactif', 'En attente']
@@ -2626,6 +2680,35 @@ export const CustomFilterSlot: Story = {
 					loading.value = false
 				}
 
+				function handleFilterChange(val) {
+					// Ensure options.value.filters is initialized
+					if (!options.value.filters) {
+						options.value.filters = []
+					}
+
+					// Create a new filters array with proper typing
+					const currentFilters = options.value.filters as import('../common/types').FilterOption[]
+					const newFilters = [...currentFilters].filter(f => f.key !== 'status')
+
+					// Add the new filter if a value is selected
+					if (val) {
+						newFilters.push({
+							key: 'status',
+							value: val,
+							type: 'select' as FilterType, // Use 'select' type for compatibility with filtering logic
+						})
+					}
+
+					// Update the options with the new filters
+					options.value = {
+						...options.value,
+						filters: newFilters,
+					}
+				}
+
+				// Initialize data
+				fetchData()
+
 				return {
 					args,
 					options,
@@ -2634,22 +2717,17 @@ export const CustomFilterSlot: Story = {
 					statusOptions,
 					loading,
 					serverItemsLength,
+					handleFilterChange,
 					fetchData,
 				}
 			},
 			template: `
 				<SyServerTable
+					v-bind="args"
 					v-model:options="options"
-					:headers="args.headers"
 					:items="items"
-					:caption="args.caption"
 					:server-items-length="serverItemsLength"
 					:loading="loading"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
 					@update:options="fetchData"
 				>
 					<template #filter.custom="{ header, value, updateFilter }">
@@ -2666,8 +2744,10 @@ export const CustomFilterSlot: Story = {
 								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
-									// Utiliser la fonction updateFilter fournie par le slot
-									updateFilter(val)
+									// Use updateFilter provided by the slot props
+									updateFilter(val);
+									// Also update our local state
+									handleFilterChange(val);
 								}"
 							/>
 						</div>
@@ -2840,8 +2920,8 @@ export const CustomFilterInputs: Story = {
 		],
 	},
 	args: {
-		serverItemsLength: 15,
-		headers: [
+		'serverItemsLength': 15,
+		'headers': [
 			{
 				title: 'Prénom',
 				key: 'firstname',
@@ -2861,29 +2941,37 @@ export const CustomFilterInputs: Story = {
 				filterType: 'text',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		filterInputConfig: {
+		'filterInputConfig': {
 			variant: 'outlined',
 			density: 'comfortable',
 			hideDetails: true,
 			clearable: false,
 			disableErrorHandling: true,
 		},
-		showFilters: true,
-		suffix: 'server-filter-text',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'server-filter-text',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		return {
 			components: { SyServerTable },
 			setup() {
-				const options = ref(args.options)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const totalFilteredUsers = ref(0)
 				const filteredUsers = ref<Record<string, unknown>[]>([])
 				const state = ref(StateEnum.IDLE)
@@ -2943,9 +3031,9 @@ export const CustomFilterInputs: Story = {
 
 				return {
 					args,
-					options,
 					filteredUsers,
 					totalFilteredUsers,
+					options,
 					state,
 					fetchData,
 					StateEnum,
@@ -2954,18 +3042,11 @@ export const CustomFilterInputs: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="options"
 						:items="filteredUsers"
-						:headers="args.headers"
-						:caption="args.caption"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
-						:show-filters="args.showFilters"
-						:filter-input-config="args.filterInputConfig"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:resizable-columns="args.resizableColumns"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -3041,8 +3122,9 @@ export const ManyServerTables: Story = {
 			page: 1,
 		  })
 
-		  const fetchDataTable1 = async (): Promise<void> => {
-			const { items, total } = await getDataFromApi(optionsTable1.value)
+		  const fetchDataTable1 = async (options?: DataOptions): Promise<void> => {
+			const optionsToUse = options || optionsTable1.value
+			const { items, total } = await getDataFromApi(optionsToUse)
 			usersTable1.value = items
 			totalUsersTable1.value = total
 		  }
@@ -3057,8 +3139,9 @@ export const ManyServerTables: Story = {
 			page: 1,
 		  })
 
-		  const fetchDataTable2 = async (): Promise<void> => {
-			const { items, total } = await getDataFromApi(optionsTable2.value)
+		  const fetchDataTable2 = async (options?: DataOptions): Promise<void> => {
+			const optionsToUse = options || optionsTable2.value
+			const { items, total } = await getDataFromApi(optionsToUse)
 			usersTable2.value = items
 			totalUsersTable2.value = total
 		  }
@@ -3108,22 +3191,26 @@ export const ManyServerTables: Story = {
 			  { firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
 			]
 		  }
+          
+          fetchDataTable1()
+          fetchDataTable2()
 		</script>
 		`,
 			},
 		],
 	},
 	args: {
-		serverItemsLength: 15,
-		headers: [
+		'serverItemsLength': 15, // Add required serverItemsLength property
+		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		caption: '',
-		suffix: 'multi',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'suffix': 'multi',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		return {
@@ -3140,8 +3227,9 @@ export const ManyServerTables: Story = {
 					page: 1,
 				})
 
-				const fetchDataTable1 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(optionsTable1.value as DataOptions)
+				const fetchDataTable1 = async (options?: DataOptions): Promise<void> => {
+					const optionsToUse = options || optionsTable1.value as DataOptions
+					const { items, total } = await getDataFromApi(optionsToUse)
 					usersTable1.value = items
 					totalUsersTable1.value = total
 				}
@@ -3157,8 +3245,9 @@ export const ManyServerTables: Story = {
 					page: 1,
 				})
 
-				const fetchDataTable2 = async (): Promise<void> => {
-					const { items, total } = await getDataFromApi(optionsTable2.value as DataOptions)
+				const fetchDataTable2 = async (options?: DataOptions): Promise<void> => {
+					const optionsToUse = options || optionsTable2.value as DataOptions
+					const { items, total } = await getDataFromApi(optionsToUse)
 					usersTable2.value = items
 					totalUsersTable2.value = total
 				}
@@ -3209,6 +3298,10 @@ export const ManyServerTables: Story = {
 					]
 				}
 
+				// Chargement initial des données
+				fetchDataTable1()
+				fetchDataTable2()
+
 				return {
 					args,
 					usersTable1,
@@ -3227,30 +3320,22 @@ export const ManyServerTables: Story = {
 			template: `
 	  <div>
 		<SyServerTable
+		  v-bind="args"
 		  v-model:options="optionsTable1"
 		  :items="usersTable1"
-		  :headers="args.headers"
-		  :caption="args.caption"
 		  :server-items-length="totalUsersTable1"
 		  :loading="stateTable1 === StateEnum.PENDING"
-		  :density="args.density"
-		  :striped="args.striped"
 		  suffix="table1"
 		  class="mb-10"
-		  :resizable-columns="args.resizableColumns"
 		  @update:options="fetchDataTable1"
 		/>
 		<SyServerTable
+		  v-bind="args"
 		  v-model:options="optionsTable2"
 		  :items="usersTable2"
-		  :headers="args.headers"
-		  :caption="args.caption"
 		  :server-items-length="totalUsersTable2"
 		  :loading="stateTable2 === StateEnum.PENDING"
-		  :density="args.density"
-		  :striped="args.striped"
 		  suffix="table2"
-		  :resizable-columns="args.resizableColumns"
 		  @update:options="fetchDataTable2"
 		/>
 	  </div>
@@ -3378,6 +3463,8 @@ export const DataAlignment: Story = {
 							},
 						]
 					}
+                    
+                    fetchData()
 				</script>
 				`,
 			},
@@ -3412,7 +3499,7 @@ export const DataAlignment: Story = {
 			},
 		],
 		'caption': '',
-		'serverItemsLength': 15,
+		'serverItemsLength': 3,
 		'suffix': 'server-resizable-columns',
 		'density': 'default',
 		'striped': false,
@@ -3426,9 +3513,17 @@ export const DataAlignment: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(args.options)
+					const { items, total } = await getDataFromApi(options.value)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -3486,19 +3581,17 @@ export const DataAlignment: Story = {
 					]
 				}
 
-				return { args, users, state, fetchData, totalUsers, StateEnum }
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
 			template: `
 				<SyServerTable
-					v-model:options="args.options"
+					v-bind="args"
+					v-model:options="options"
 					:items="users"
-					:headers="args.headers"
-					:caption="args.caption"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
 					@update:options="[fetchData, args['onUpdate:options']]"
 				/>
 			`,
@@ -3618,28 +3711,31 @@ export const ResizableColumns: Story = {
 							{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
 						]
 					}
+                    
+                    fetchData()
 				</script>
 				`,
 			},
 		],
 	},
 	args: {
-		options: {
+		'options': {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		headers: [
+		'headers': [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		caption: '',
-		serverItemsLength: 15,
-		suffix: 'server-resizable-columns',
-		density: 'default',
-		striped: false,
-		resizableColumns: true,
+		'caption': '',
+		'serverItemsLength': 15,
+		'suffix': 'server-resizable-columns',
+		'density': 'default',
+		'striped': false,
+		'resizableColumns': true,
+		'onUpdate:options': fn(),
 	},
 	render: (args) => {
 		return {
@@ -3649,9 +3745,17 @@ export const ResizableColumns: Story = {
 				const users = ref<User[]>([])
 				const state = ref(StateEnum.IDLE)
 
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
 				const fetchData = async (): Promise<void> => {
 					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(args.options)
+					const { items, total } = await getDataFromApi(options.value)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -3706,21 +3810,18 @@ export const ResizableColumns: Story = {
 					]
 				}
 
-				return { args, users, state, fetchData, totalUsers, StateEnum }
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
 			},
 			template: `
 			<div>
 				<SyServerTable
-					v-model:options="args.options"
+					v-bind="args"
+					v-model:options="options"
 					:items="users"
-					:headers="args.headers"
-					:caption="args.caption"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
 					@update:options="fetchData"
 				/>
 			</div>

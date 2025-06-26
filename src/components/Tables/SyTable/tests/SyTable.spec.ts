@@ -162,8 +162,7 @@ describe('SyTable', () => {
 	it('passes itemsPerPage prop correctly', () => {
 		const wrapper = mount(SyTable, {
 			props: {
-				options: {} as DataOptions,
-				itemsPerPage: 5,
+				options: { itemsPerPage: 5 } as DataOptions,
 				suffix: 'test',
 			},
 			attrs: {

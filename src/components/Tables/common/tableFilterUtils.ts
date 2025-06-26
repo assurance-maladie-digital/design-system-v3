@@ -32,6 +32,10 @@ function applyFilter<T extends Record<string, unknown>>(item: T, filter: FilterO
 		case 'select': {
 			return filterBySelect(itemValue, filterValue)
 		}
+		case 'custom': {
+			// Traiter les filtres personnalisés comme des filtres de sélection
+			return filterBySelect(itemValue, filterValue)
+		}
 		case 'period':{
 			return filterByPeriod(itemValue, filterValue)
 		}

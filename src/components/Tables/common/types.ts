@@ -63,7 +63,6 @@ export type TableColumnHeader = {
 export interface SyTableProps {
 	items?: Record<string, unknown>[]
 	suffix: string
-	itemsPerPage?: number
 	caption?: string
 	showFilters?: boolean
 	headers?: DataTableHeaders[]
@@ -77,7 +76,6 @@ export interface SyServerTableProps {
 	serverItemsLength: number
 	items?: Record<string, unknown>[]
 	suffix: string
-	itemsPerPage?: number
 	caption?: string
 	showFilters?: boolean
 	headers?: DataTableHeaders[]

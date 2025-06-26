@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { fn } from '@storybook/test'
+import { ref } from 'vue'
 import SyTable from './SyTable.vue'
 import type { DataOptions, FilterType } from '../common/types'
-import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
-import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable',
@@ -69,10 +69,6 @@ const meta = {
 				type: { summary: 'string' },
 			},
 			required: true,
-		},
-		itemsPerPage: {
-			description: 'Nombre d\'éléments par page',
-			control: { type: 'number' },
 		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
@@ -172,7 +168,7 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -186,7 +182,7 @@ export const Default: Story = {
 				value: 'email',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -218,15 +214,16 @@ export const Default: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		options: {
+		'options': {
 			itemsPerPage: 4,
 		},
-		caption: '',
-		suffix: 'default-table',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'suffix': 'default-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -235,13 +232,7 @@ export const Default: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="args.items"
-					:caption="args.caption"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -335,7 +326,7 @@ export const SortBy: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -349,7 +340,7 @@ export const SortBy: Story = {
 				value: 'email',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -381,8 +372,8 @@ export const SortBy: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
 			sortBy: [
 				{
@@ -391,11 +382,12 @@ export const SortBy: Story = {
 				},
 			],
 		},
-		suffix: 'sort-table',
-		density: 'default',
-		striped: false,
+		'suffix': 'sort-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -404,13 +396,7 @@ export const SortBy: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="args.items"
-					:caption="args.caption"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -505,7 +491,7 @@ export const FilterByText: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -525,7 +511,7 @@ export const FilterByText: Story = {
 				filterType: 'text',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -557,17 +543,18 @@ export const FilterByText: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-text-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-text-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -583,15 +570,8 @@ export const FilterByText: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-model:options="args.options"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -681,7 +661,7 @@ export const FilterByNumber: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -701,7 +681,7 @@ export const FilterByNumber: Story = {
 				filterType: 'number',
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				age: 32,
@@ -728,17 +708,18 @@ export const FilterByNumber: Story = {
 				salary: 58000,
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-number-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-number-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -754,15 +735,8 @@ export const FilterByNumber: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-model:options="args.options"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -865,7 +839,7 @@ export const FilterBySelect: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -898,7 +872,7 @@ export const FilterBySelect: Story = {
 				],
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				department: 'RH',
@@ -925,17 +899,18 @@ export const FilterBySelect: Story = {
 				status: 'Inactif',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-select-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-select-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -951,15 +926,8 @@ export const FilterBySelect: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-model:options="args.options"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -1066,7 +1034,7 @@ export const FilterBySelectMultiple: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1103,7 +1071,7 @@ export const FilterBySelectMultiple: Story = {
 				],
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				department: 'RH',
@@ -1130,17 +1098,18 @@ export const FilterBySelectMultiple: Story = {
 				status: 'Inactif',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-select-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-select-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -1156,15 +1125,8 @@ export const FilterBySelectMultiple: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-model:options="args.options"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -1245,7 +1207,7 @@ export const FilterByExactDate: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1260,7 +1222,7 @@ export const FilterByExactDate: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				hireDate: dayjs('2025-05-15').format('DD/MM/YYYY'),
@@ -1282,17 +1244,18 @@ export const FilterByExactDate: Story = {
 				hireDate: dayjs('2025-07-30').format('DD/MM/YYYY'),
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-date-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-date-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -1308,15 +1271,8 @@ export const FilterByExactDate: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-model:options="args.options"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -1397,7 +1353,7 @@ export const FilterByPeriod: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1412,7 +1368,7 @@ export const FilterByPeriod: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		items: [
+		'items': [
 			{
 				name: 'Jean Dupont',
 				hireDate: dayjs('2025-05-15').format('DD/MM/YYYY'),
@@ -1434,17 +1390,18 @@ export const FilterByPeriod: Story = {
 				hireDate: dayjs('2025-07-30').format('DD/MM/YYYY'),
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 5,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'filter-date-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-date-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -1460,15 +1417,8 @@ export const FilterByPeriod: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					v-model:options="args.options"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -1477,6 +1427,11 @@ export const FilterByPeriod: Story = {
 
 export const CustomFilterSlot: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Cette story démontre comment utiliser un slot personnalisé pour le filtrage. Le filtre personnalisé utilise un v-select pour filtrer par statut.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1489,7 +1444,7 @@ export const CustomFilterSlot: Story = {
 						show-filters
 						suffix="custom-filter-slot-table"
 					>
-						<template #filter.custom="{ header, value, updateFilter }">
+						<template #filter.custom="{ header, updateFilter }">
 							<div class="custom-filter-container">
 								<div class="custom-filter-info mb-2">
 									Filtre personnalisé :
@@ -1503,16 +1458,10 @@ export const CustomFilterSlot: Story = {
 									color="primary"
 									bg-color="white"
 									@update:model-value="(val) => {
-										// Créer manuellement un filtre de sélection
-										const currentFilters = [...options.filters || []]
-										// Supprimer le filtre existant pour cette clé si nécessaire
-										const filteredFilters = currentFilters.filter(f => f.key !== 'status')
-										// Ajouter un nouveau filtre si la valeur n'est pas vide
-										if (val) {
-											filteredFilters.push({ key: 'status', value: val, type: 'select' })
-										}
-										// Mettre à jour les options avec les nouveaux filtres
-										options.filters = filteredFilters
+										// Use updateFilter provided by the slot props
+										updateFilter(val);
+										// Also update our local state
+										handleFilterChange(val);
 									}"
 								/>
 							</div>
@@ -1529,12 +1478,34 @@ export const CustomFilterSlot: Story = {
 					import { SyTable } from '@cnamts/synapse'
 					
 					const options = ref({
+						page: 1,
 						itemsPerPage: 4,
 						filters: []
 					})
 					
 					const customFilterValue = ref('')
 					const statusOptions = ['Actif', 'Inactif', 'En attente']
+					
+					// Function to update the filter when the select value changes
+					function handleFilterChange(val) {
+						// Create a new filters array
+						const newFilters = options.value.filters.filter(f => f.key !== 'status')
+						
+						// Add the new filter if a value is selected
+						if (val) {
+							newFilters.push({
+								key: 'status',
+								value: val,
+								type: 'select' // Use 'select' type for compatibility with filtering logic
+							})
+						}
+						
+						// Update the options with the new filters
+						options.value = {
+							...options.value,
+							filters: newFilters
+						}
+					}
 					
 					const headers = ref([
 						{
@@ -1613,7 +1584,7 @@ export const CustomFilterSlot: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -1630,10 +1601,10 @@ export const CustomFilterSlot: Story = {
 				title: 'Statut',
 				key: 'status',
 				filterable: true,
-				filterType: 'custom' as FilterType,
+				filterType: 'custom',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -1665,47 +1636,77 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
 			filters: [],
 		},
-		showFilters: true,
-		suffix: 'custom-filter-slot-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'custom-filter-slot-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
-				// Create reactive references
-				const options = ref(args.options)
-				const items = ref(args.items)
+				// Create a fresh copy of the options to avoid reactivity issues
+				const options = ref<DataOptions>({
+					page: 1,
+					itemsPerPage: 4,
+					filters: [] as import('../common/types').FilterOption[],
+					sortBy: [],
+				})
+
+				// Create a reactive reference for the custom filter value
 				const customFilterValue = ref('')
 				const statusOptions = ['Actif', 'Inactif', 'En attente']
+
+				// Function to update the filter when the select value changes
+				function handleFilterChange(val) {
+					// Ensure options.value.filters is initialized
+					if (!options.value.filters) {
+						options.value.filters = []
+					}
+
+					// Create a new filters array with proper typing
+					const currentFilters = options.value.filters as import('../common/types').FilterOption[]
+					const newFilters = [...currentFilters].filter(f => f.key !== 'status')
+
+					// Add the new filter if a value is selected
+					if (val) {
+						newFilters.push({
+							key: 'status',
+							value: val,
+							type: 'select' as FilterType, // Use 'select' type for compatibility with filtering logic
+						})
+					}
+
+					// Update the options with the new filters
+					options.value = {
+						...options.value,
+						filters: newFilters,
+					}
+				}
 
 				return {
 					args,
 					options,
-					items,
 					customFilterValue,
 					statusOptions,
+					handleFilterChange,
 				}
 			},
 			template: `
 				<SyTable
 					v-model:options="options"
 					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:suffix="args.suffix"
-					:density="args.density"
-					:striped="args.striped"
-					:resizable-columns="args.resizableColumns"
+					:items="args.items"
+					show-filters
+					suffix="custom-filter-slot-table"
 				>
-					<template #filter.custom="{ header, value, updateFilter }">
+					<template #filter.custom="{ header, updateFilter }">
 						<div class="custom-filter-container">
 							<div class="custom-filter-info mb-2">
 								Filtre personnalisé :
@@ -1719,16 +1720,10 @@ export const CustomFilterSlot: Story = {
 								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
-									// Manually create a select filter
-									const currentFilters = [...options.filters || []]
-									// Remove existing filter for this key if any
-									const filteredFilters = currentFilters.filter(f => f.key !== 'status')
-									// Add new filter if value is not empty
-									if (val) {
-										filteredFilters.push({ key: 'status', value: val, type: 'select' })
-									}
-									// Update options with new filters
-									options.filters = filteredFilters
+									// Use updateFilter provided by the slot props
+									updateFilter(val);
+									// Also update our local state
+									handleFilterChange(val);
 								}"
 							/>
 						</div>
@@ -1836,7 +1831,7 @@ export const CustomFilterInputs: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -1856,7 +1851,7 @@ export const CustomFilterInputs: Story = {
 				filterType: 'text',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -1888,24 +1883,25 @@ export const CustomFilterInputs: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
-		options: {
+		'caption': '',
+		'options': {
 			itemsPerPage: 4,
 			filters: [],
 		},
-		filterInputConfig: {
+		'filterInputConfig': {
 			variant: 'outlined',
 			density: 'comfortable',
 			hideDetails: true,
 			clearable: false,
 			disableErrorHandling: true,
 		},
-		showFilters: true,
-		suffix: 'filter-text-table',
-		density: 'default',
-		striped: false,
+		'showFilters': true,
+		'suffix': 'filter-text-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -1921,15 +1917,8 @@ export const CustomFilterInputs: Story = {
 			},
 			template: `
 				<SyTable
-					v-model:options="options"
-					:headers="args.headers"
-					:items="items"
-					:caption="args.caption"
-					:show-filters="args.showFilters"
-					:filter-input-config="args.filterInputConfig"
-					:resizable-columns="args.resizableColumns"
-					:suffix="args.suffix"
-					:density="args.density"
+					v-model:options="args.options"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -2028,7 +2017,7 @@ export const ManyTables: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -2042,7 +2031,7 @@ export const ManyTables: Story = {
 				value: 'email',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -2074,12 +2063,13 @@ export const ManyTables: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
-		suffix: 'multi-server',
-		density: 'default',
-		striped: false,
+		'caption': '',
+		'suffix': 'multi-server',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -2095,23 +2085,13 @@ export const ManyTables: Story = {
 				<div>
 					<SyTable
 						v-model:options="options1"
-						:resizable-columns="args.resizableColumns"
-						:headers="args.headers"
-						:items="args.items"
-						:caption="args.caption"
-						:density="args.density"
-						:striped="args.striped"
+						v-bind="args"
 						suffix="table1"
 						class="mb-10"
 					/>
 					<SyTable
 						v-model:options="options2"
-						:resizable-columns="args.resizableColumns"
-						:headers="args.headers"
-						:items="args.items"
-						:caption="args.caption"
-						:density="args.density"
-						:striped="args.striped"
+						v-bind="args"
 						suffix="table2"
 					/>
 				</div>
@@ -2248,7 +2228,7 @@ export const DataAlignment: Story = {
 		'suffix': 'alignment-table',
 		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -2257,10 +2237,7 @@ export const DataAlignment: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="args.items"
-					:suffix="args.suffix"
-					@update:options="args['onUpdate:options']"
+					v-bind="args"
 				/>
 			`,
 		}
@@ -2348,8 +2325,8 @@ export const ResizableColumns: Story = {
 		],
 	},
 	args: {
-		resizableColumns: true,
-		headers: [
+		'resizableColumns': true,
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -2363,7 +2340,7 @@ export const ResizableColumns: Story = {
 				value: 'email',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -2395,12 +2372,13 @@ export const ResizableColumns: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		options: {
+		'options': {
 			itemsPerPage: 4,
 		},
-		suffix: 'resizable-columns',
+		'suffix': 'resizable-columns',
+		'onUpdate:options': fn(),
 	},
-	render(args) {
+	render: (args) => {
 		return {
 			components: { SyTable },
 			setup() {
@@ -2409,10 +2387,7 @@ export const ResizableColumns: Story = {
 			template: `
 				<SyTable
 					v-model:options="args.options"
-					:headers="args.headers"
-					:items="args.items"
-					:resizableColumns="args.resizableColumns"
-					:suffix="args.suffix"
+					v-bind="args"
 				/>
 			`,
 		}

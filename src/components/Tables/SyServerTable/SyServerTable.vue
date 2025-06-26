@@ -3,14 +3,18 @@
 	import type { VDataTableServer } from 'vuetify/components'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
+	import SyTablePagination from '../common/SyTablePagination.vue'
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
 	import { useTableUtils } from '../common/tableUtils'
-	import type { DataOptions, FilterOption, SyServerTableProps, TableColumnHeader } from '../common/types'
+	import type { DataOptions, SyServerTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
+	import { usePagination } from '../common/usePagination'
+	import { useTableOptions } from '../common/useTableOptions'
+	import { useTableHeaders } from '../common/useTableHeaders'
+	import { useTableItems } from '../common/useTableItems'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
-		itemsPerPage: undefined,
 		caption: '',
 		showFilters: false,
 		items: () => [],
@@ -21,6 +25,10 @@
 		striped: false,
 	})
 
+	const emit = defineEmits<{
+		(e: 'update:options', options: Partial<DataOptions>): void
+	}>()
+
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
@@ -28,20 +36,43 @@
 
 	const table = ref<VDataTableServer>()
 
-	// Computed pour les filtres
-	const filters = computed({
-		get: () => options.value.filters || [],
-		set: (newFilters: FilterOption[]) => {
-			options.value = {
-				...options.value,
-				filters: newFilters,
-			}
-		},
+	// Get filter utilities
+	const { filterItems } = useTableFilter()
+
+	// Use the table options composable
+	const { filters } = useTableOptions({
+		options,
 	})
 
-	// Récupère la fonction filterItems du composable
-	// Cela peut être utilisé pour la prévisualisation du filtrage côté client ou pour les tests
-	const { filterItems } = useTableFilter()
+	// Use the table headers composable
+	const headersProp = toRef(props, 'headers')
+	const { headers, getEnhancedHeader } = useTableHeaders({
+		headersProp,
+		filterInputConfig: props.filterInputConfig,
+	})
+
+	// Create a reactive reference for items
+	const itemsRef = computed(() => props.items)
+
+	// For server-side tables, we don't use the filteredItems from useTableItems
+	// Instead, we use the items directly from props as they are already filtered server-side
+	// But we still need the createEmptyItemWithStructure function
+	const { createEmptyItemWithStructure } = useTableItems({
+		items: itemsRef,
+		headers,
+		filters,
+		options,
+		filterItems,
+	})
+
+	// Use the pagination composable with serverItemsLength
+	const itemsLength = computed(() => props.serverItemsLength)
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
+		options,
+		itemsLength,
+		table,
+		emit,
+	})
 
 	defineExpose({ filterItems })
 
@@ -61,7 +92,6 @@
 		tableId: uniqueTableId.value,
 		prefix: 'server-table',
 		suffix: props.suffix,
-		itemsPerPage: props.itemsPerPage,
 		caption: props.caption,
 		serverItemsLength: props.serverItemsLength,
 		componentAttributes,
@@ -109,47 +139,9 @@
 		{ deep: true },
 	)
 
-	// Fonction pour améliorer les en-têtes de colonnes avec les types de filtres appropriés
-	function getEnhancedHeader(column: TableColumnHeader): TableColumnHeader {
-		// Trouve l'en-tête correspondant dans les props si disponible
-		const matchingHeader = props.headers?.find(h => h.key === column.key || h.value === column.value)
-
-		// Crée un en-tête amélioré avec les types appropriés
-		return {
-			...column,
-			title: column.name || matchingHeader?.title,
-			filterType: column.filterType || matchingHeader?.filterType,
-			filterOptions: column.filterOptions || matchingHeader?.filterOptions,
-			filterable: matchingHeader?.filterable !== undefined ? matchingHeader.filterable : column.filterable,
-		} as TableColumnHeader
-	}
-
-	// Fonction pour créer un élément vide qui maintient la structure des colonnes
-	function createEmptyItemWithStructure(): Record<string, unknown>[] {
-		// Si nous avons des éléments, utilise le premier élément comme modèle
-		if (props.items.length > 0) {
-			// Crée un objet vide avec les mêmes clés que le premier élément
-			const template = Object.keys(props.items[0]).reduce((obj, key) => {
-				obj[key] = ''
-				return obj
-			}, {} as Record<string, unknown>)
-			return [template]
-		}
-
-		// Si nous avons des en-têtes, les utilise pour créer une structure
-		if (props.headers && props.headers.length > 0) {
-			// Crée un objet vide avec les clés des en-têtes
-			const template = props.headers.reduce((obj, header) => {
-				const key = header.key || header.value || ''
-				if (key) obj[key] = ''
-				return obj
-			}, {} as Record<string, unknown>)
-			return [template]
-		}
-
-		// Repli vers un objet vide
-		return [{}]
-	}
+	// These functions are now provided by the composables
+	// getEnhancedHeader is provided by useTableHeaders
+	// createEmptyItemWithStructure is provided by useTableItems
 </script>
 
 <template>
@@ -278,6 +270,17 @@
 						</th>
 					</tr>
 				</template>
+			</template>
+			<template #bottom>
+				<SyTablePagination
+					v-if="props.serverItemsLength > 0"
+					:page="page"
+					:items-per-page="itemsPerPageValue"
+					:page-count="pageCount"
+					:items-length="props.serverItemsLength"
+					@update:page="page = $event"
+					@update:items-per-page="updateItemsPerPage"
+				/>
 			</template>
 		</VDataTableServer>
 	</div>
