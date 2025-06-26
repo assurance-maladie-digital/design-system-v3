@@ -3885,7 +3885,7 @@ export const RowSelection: Story = {
 				return { args, selection }
 			},
 			template: `
-				<div style="padding: 20px;">
+				<div>
 					<SyServerTable
 						v-model:options="args.options"
 						v-model="selection"
