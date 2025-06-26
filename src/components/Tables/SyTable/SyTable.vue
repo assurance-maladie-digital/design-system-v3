@@ -175,7 +175,7 @@
 			:density="props.density"
 			:show-select="props.showSelect"
 			:item-selectable="() => true"
-			:select-strategy="'all'"
+			:select-strategy="'page'"
 			@update:options="updateOptions"
 		>
 			<template #top>
@@ -195,12 +195,24 @@
 							:key="column.key"
 						>
 							<th>
-								<TableHeader
-									:table="table"
-									:header-params="slotProps"
-									:column="column"
-									:resizable-columns="props.resizableColumns"
-								/>
+								<template v-if="column.key === 'data-table-select' && props.showSelect">
+									<v-checkbox
+										:model-value="slotProps.allSelected"
+										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
+										color="primary"
+										density="compact"
+										hide-details
+										@click="() => slotProps.toggleSelectAll && slotProps.toggleSelectAll()"
+									/>
+								</template>
+								<template v-else>
+									<TableHeader
+										:table="table"
+										:header-params="slotProps"
+										:column="column"
+										:resizable-columns="props.resizableColumns"
+									/>
+								</template>
 							</th>
 						</template>
 					</tr>
@@ -305,6 +317,9 @@
 					</tr>
 				</template>
 			</template>
+
+			<!-- Individual row checkboxes are handled by Vuetify's built-in functionality -->
+			<!-- The header checkbox is handled in the headers slot above -->
 		</VDataTable>
 	</div>
 </template>
