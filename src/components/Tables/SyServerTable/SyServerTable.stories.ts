@@ -3893,7 +3893,7 @@ export const RowSelection: Story = {
 						itemsPerPage: 10,
 						sortBy: [],
 						multiSort: false,
-						mustSort: false
+						mustSort: false,
 					}
 					const options = args.options ? { ...defaultOptions, ...args.options } : defaultOptions
 					const { items, total } = await getDataFromApi(options)
