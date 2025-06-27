@@ -51,4 +51,26 @@
 			color: tokens.$primary-base;
 		}
 	}
+
+	// Override Vuetify's checkbox styles to use primary color
+	.v-table .v-selection-control {
+		color: rgb(var(--v-theme-primary)) !important;
+	}
+	.v-table .v-selection-control--dirty .v-selection-control__input::before {
+		background-color: rgb(var(--v-theme-primary)) !important;
+		border-color: rgb(var(--v-theme-primary)) !important;
+	}
+	// Target the header checkbox specifically
+	.v-data-table-header__checkbox .v-selection-control {
+		color: rgb(var(--v-theme-primary)) !important;
+	}
+	// Target the row checkboxes specifically
+	.v-data-table-row__checkbox .v-selection-control {
+		color: rgb(var(--v-theme-primary)) !important;
+	}
+	// Add a global style for all checkboxes in the table
+	.v-checkbox .v-selection-control__input::before,
+	.v-checkbox-btn .v-selection-control__input::before {
+		border-color: rgb(var(--v-theme-primary)) !important;
+	}
 }

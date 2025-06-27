@@ -94,6 +94,14 @@ const meta = {
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
 		},
+		showSelect: {
+			description: 'Affiche des cases à cocher pour sélectionner des lignes',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
@@ -3825,6 +3833,253 @@ export const ResizableColumns: Story = {
 					@update:options="fetchData"
 				/>
 			</div>
+			`,
+		}
+	},
+}
+
+export const RowSelection: Story = {
+	name: 'Row Selection',
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyServerTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						:serverItemsLength="items.length"
+						show-select
+						show-filters
+						suffix="selection-server-table"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+		},
+		caption: '',
+		suffix: 'selection-server-table',
+		density: 'default',
+		striped: false,
+		showSelect: true,
+		showFilters: true,
+		serverItemsLength: 6,
+	},
+	render(args) {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const totalUsers = ref(0)
+				const users = ref<User[]>([])
+				const selection = ref([])
+				const state = ref(StateEnum.IDLE)
+
+				const fetchData = async (): Promise<void> => {
+					// Create a complete DataOptions object with all required properties
+					const defaultOptions: DataOptions = {
+						page: 1,
+						itemsPerPage: 10,
+						sortBy: [],
+						multiSort: false,
+						mustSort: false,
+					}
+					const options = args.options ? { ...defaultOptions, ...args.options } : defaultOptions
+					const { items, total } = await getDataFromApi(options)
+					users.value = items
+					totalUsers.value = total
+				}
+
+				const wait = async (ms: number) => {
+					return new Promise(resolve => setTimeout(resolve, ms))
+				}
+
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+					state.value = StateEnum.PENDING
+					await wait(1000)
+
+					return new Promise((resolve) => {
+						let items: User[] = getUsers()
+						const total = items.length
+
+						if (sortBy && sortBy.length > 0) {
+							items = items.sort((a, b) => {
+								const key = sortBy[0].key
+								const order = sortBy[0].order === 'asc' ? 1 : -1
+
+								return a[key] > b[key] ? order : -order
+							})
+						}
+
+						if (itemsPerPage > 0) {
+							items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						}
+
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getUsers = (): User[] => {
+					return [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Thierry', lastname: 'Bobu', email: 'thierry.bobu@example.com' },
+						{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@exemple.com' },
+						{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@exemple.com' },
+						{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+						{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+						{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+						{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+						{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+						{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+					]
+				}
+
+				// Call fetchData on mount
+				fetchData()
+
+				return { args, users, state, fetchData, totalUsers, selection, StateEnum }
+			},
+			template: `
+				<div>
+					<SyServerTable
+						v-model:options="args.options"
+						v-model="selection"
+						:headers="args.headers"
+						:items="users"
+						:loading="state === StateEnum.PENDING"
+						:server-items-length="totalUsers"
+						:show-select="args.showSelect"
+						:suffix="args.suffix"
+						:density="args.density"
+						:striped="args.striped"
+						:show-filters="args.showFilters"
+						@update:options="fetchData"
+					/>
+					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
+						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : users.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : users.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : users.find(i => JSON.stringify(i) === item)?.email }}</div>
+						</div>
+					</div>
+				</div>
 			`,
 		}
 	},

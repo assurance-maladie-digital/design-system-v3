@@ -81,6 +81,14 @@ const meta = {
 			description: 'Affiche les filtres au-dessus du tableau',
 			control: { type: 'boolean' },
 		},
+		showSelect: {
+			description: 'Affiche des cases à cocher pour sélectionner des lignes',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 
@@ -2389,6 +2397,179 @@ export const ResizableColumns: Story = {
 					v-model:options="args.options"
 					v-bind="args"
 				/>
+			`,
+		}
+	},
+}
+
+export const RowSelection: Story = {
+	name: 'Row Selection',
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						show-select
+						show-filters
+						suffix="selection-table"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+		},
+		caption: '',
+		suffix: 'selection-table',
+		density: 'default',
+		striped: false,
+		showSelect: true,
+		showFilters: true,
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				const selection = ref([])
+				return { args, selection }
+			},
+			template: `
+				<div>
+					<SyTable
+						v-model:options="args.options"
+						v-model="selection"
+						:headers="args.headers"
+						:items="args.items"
+						:show-select="args.showSelect"
+						:suffix="args.suffix"
+						:density="args.density"
+						:striped="args.striped"
+						:show-filters="args.showFilters"
+					/>
+					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
+						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : args.items.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : args.items.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : args.items.find(i => JSON.stringify(i) === item)?.email }}</div>
+						</div>
+					</div>
+				</div>
 			`,
 		}
 	},

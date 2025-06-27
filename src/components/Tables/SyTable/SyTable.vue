@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
+	import SyCheckbox from '@/components/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
@@ -22,6 +23,7 @@
 		filterInputConfig: () => ({}),
 		density: 'default',
 		striped: false,
+		showSelect: false,
 	})
 
 	const emit = defineEmits<{
@@ -31,6 +33,11 @@
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
+	})
+
+	const model = defineModel<unknown[]>('modelValue', {
+		required: false,
+		default: () => [],
 	})
 
 	const table = ref<VDataTable>()
@@ -70,6 +77,33 @@
 		table,
 		emit,
 	})
+
+	// Function to get a unique identifier for each item
+	const getItemValue = (item: Record<string, unknown>) => {
+		// If the item has an id field, use that
+		if (item.id !== undefined) {
+			return item.id
+		}
+		// Otherwise, create a unique string representation of the item
+		return JSON.stringify(item)
+	}
+	// Function to toggle selection of all rows
+	const toggleAllRows = () => {
+		// Ensure filteredItems.value is an array
+		const itemsArray = Array.isArray(props.items) ? props.items : []
+		const items = itemsArray.length > 0 ? itemsArray : []
+		if (model.value.length === items.length) {
+			// If all items are selected, deselect all
+			model.value = []
+		}
+		else {
+			// Otherwise, select all items
+			// We need to map the items to their values to ensure proper selection
+			model.value = items.map((item) => {
+				return getItemValue(item)
+			})
+		}
+	}
 
 	const componentAttributes = useAttrs()
 
@@ -142,10 +176,14 @@
 	>
 		<VDataTable
 			ref="table"
+			v-model="model"
 			color="primary"
 			v-bind="propsFacade"
 			:items="processItems(filteredItems.length > 0 ? filteredItems : createEmptyItemWithStructure())"
 			:density="props.density"
+			:show-select="props.showSelect"
+			:item-selectable="(item) => true"
+			:item-value="getItemValue"
 			@update:options="updateOptions"
 		>
 			<template #top>
@@ -165,12 +203,24 @@
 							:key="column.key"
 						>
 							<th>
-								<TableHeader
-									:table="table"
-									:header-params="slotProps"
-									:column="column"
-									:resizable-columns="props.resizableColumns"
-								/>
+								<template v-if="column.key === 'data-table-select' && props.showSelect">
+									<SyCheckbox
+										:model-value="slotProps.allSelected"
+										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
+										color="primary"
+										density="compact"
+										:is-header="true"
+										@click="toggleAllRows"
+									/>
+								</template>
+								<template v-else>
+									<TableHeader
+										:table="table"
+										:header-params="slotProps"
+										:column="column"
+										:resizable-columns="props.resizableColumns"
+									/>
+								</template>
 							</th>
 						</template>
 					</tr>
@@ -178,8 +228,9 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
+						<th v-if="props.showSelect" />
 						<template
-							v-for="column in slotProps.columns"
+							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key"
 						>
 							<th>
