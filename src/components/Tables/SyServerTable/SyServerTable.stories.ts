@@ -175,7 +175,7 @@ export const Default: Story = {
 						return new Promise(resolve => setTimeout(resolve, ms))
 					}
 				
-					const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+					const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
 						state.value = StateEnum.PENDING
 						await wait(1000)
 				
@@ -3676,7 +3676,7 @@ export const ResizableColumns: Story = {
 						return new Promise(resolve => setTimeout(resolve, ms))
 					}
 				
-					const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+					const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
 						state.value = StateEnum.PENDING
 						await wait(1000)
 				
@@ -4022,13 +4022,27 @@ export const RowSelection: Story = {
 					return new Promise(resolve => setTimeout(resolve, ms))
 				}
 
-				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
 					state.value = StateEnum.PENDING
 					await wait(1000)
 
 					return new Promise((resolve) => {
 						let items: User[] = getUsers()
-						const total = items.length
+						let total = items.length // Changed from const to let
+
+						// Add filtering logic here
+						if (filters && filters.length > 0) {
+							filters.forEach((filter) => {
+								const { key, value } = filter
+
+								items = items.filter((item) => {
+									const itemValue = item[key]
+									return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+								})
+							})
+							// Update total after filtering
+							total = items.length
+						}
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
