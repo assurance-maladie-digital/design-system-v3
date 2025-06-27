@@ -3600,6 +3600,7 @@ export const DataAlignment: Story = {
 					:items="users"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
+					suffix="server-data-alignment"
 					@update:options="[fetchData, args['onUpdate:options']]"
 				/>
 			`,
@@ -3830,6 +3831,7 @@ export const ResizableColumns: Story = {
 					:items="users"
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
+					suffix="server-resizable-columns"
 					@update:options="fetchData"
 				/>
 			</div>
@@ -4058,17 +4060,13 @@ export const RowSelection: Story = {
 			template: `
 				<div>
 					<SyServerTable
+						v-bind="args"
 						v-model:options="args.options"
 						v-model="selection"
-						:headers="args.headers"
 						:items="users"
-						:loading="state === StateEnum.PENDING"
 						:server-items-length="totalUsers"
-						:show-select="args.showSelect"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:show-filters="args.showFilters"
+						:loading="state === StateEnum.PENDING"
+						suffix="selection-server-table"
 						@update:options="fetchData"
 					/>
 					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
