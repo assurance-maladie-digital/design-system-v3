@@ -2421,12 +2421,21 @@ export const RowSelection: Story = {
 				<template>
 					<SyTable
 						v-model:options="options"
+						v-model="selection"
 						:headers="headers"
 						:items="items"
 						show-select
 						show-filters
 						suffix="selection-table"
 					/>
+					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
+						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : items.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : items.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : items.find(i => JSON.stringify(i) === item)?.email }}</div>
+						</div>
+					</div>
 				</template>
 				`,
 			},

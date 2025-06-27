@@ -840,6 +840,7 @@ export const ServerFilterByText: Story = {
 						:items="filteredUsers"
 						:server-items-length="totalFilteredUsers"
 						:loading="state === StateEnum.PENDING"
+						suffix="server-filter-text"
 						@update:options="fetchData"
 					/>
 				</div>
@@ -3850,6 +3851,7 @@ export const RowSelection: Story = {
 				<template>
 					<SyServerTable
 						v-model:options="options"
+						v-model="selection"
 						:headers="headers"
 						:items="items"
 						:serverItemsLength="items.length"
@@ -3857,6 +3859,15 @@ export const RowSelection: Story = {
 						show-filters
 						suffix="selection-server-table"
 					/>
+					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
+						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : users.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : users.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : users.find(i => JSON.stringify(i) === item)?.email }}</div>
+						</div>
+					</div>
+				</div>
 				</template>
 				`,
 			},
@@ -3924,7 +3935,7 @@ export const RowSelection: Story = {
 		],
 	},
 	args: {
-		headers: [
+		'headers': [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -3938,7 +3949,7 @@ export const RowSelection: Story = {
 				value: 'email',
 			},
 		],
-		items: [
+		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -3970,16 +3981,19 @@ export const RowSelection: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		options: {
+		'options': {
 			itemsPerPage: 4,
+			page: 1,
+			filters: [],
 		},
-		caption: '',
-		suffix: 'selection-server-table',
-		density: 'default',
-		striped: false,
-		showSelect: true,
-		showFilters: true,
-		serverItemsLength: 6,
+		'caption': '',
+		'suffix': 'selection-server-table',
+		'density': 'default',
+		'striped': false,
+		'showSelect': true,
+		'showFilters': true,
+		'serverItemsLength': 6,
+		'onUpdate:options': fn(),
 	},
 	render(args) {
 		return {
@@ -3997,7 +4011,6 @@ export const RowSelection: Story = {
 						itemsPerPage: 10,
 						sortBy: [],
 						multiSort: false,
-						mustSort: false,
 					}
 					const options = args.options ? { ...defaultOptions, ...args.options } : defaultOptions
 					const { items, total } = await getDataFromApi(options)
