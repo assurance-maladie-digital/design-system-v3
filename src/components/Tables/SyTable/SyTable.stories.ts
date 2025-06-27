@@ -580,6 +580,7 @@ export const FilterByText: Story = {
 				<SyTable
 					v-model:options="args.options"
 					v-bind="args"
+					suffix="filter-text-table"
 				/>
 			`,
 		}
@@ -745,6 +746,7 @@ export const FilterByNumber: Story = {
 				<SyTable
 					v-model:options="args.options"
 					v-bind="args"
+					suffix="filter-number-table"
 				/>
 			`,
 		}
@@ -936,6 +938,7 @@ export const FilterBySelect: Story = {
 				<SyTable
 					v-model:options="args.options"
 					v-bind="args"
+					suffix="filter-select-table"
 				/>
 			`,
 		}
@@ -1135,6 +1138,7 @@ export const FilterBySelectMultiple: Story = {
 				<SyTable
 					v-model:options="args.options"
 					v-bind="args"
+					suffix="filter-select-table"
 				/>
 			`,
 		}
@@ -1281,6 +1285,7 @@ export const FilterByExactDate: Story = {
 				<SyTable
 					v-model:options="args.options"
 					v-bind="args"
+					suffix="filter-date-table"
 				/>
 			`,
 		}
@@ -1427,6 +1432,7 @@ export const FilterByPeriod: Story = {
 				<SyTable
 					v-model:options="args.options"
 					v-bind="args"
+					suffix="filter-date-table"
 				/>
 			`,
 		}
@@ -1927,6 +1933,7 @@ export const CustomFilterInputs: Story = {
 				<SyTable
 					v-model:options="args.options"
 					v-bind="args"
+					suffix="filter-custom-input"
 				/>
 			`,
 		}
@@ -2246,6 +2253,7 @@ export const DataAlignment: Story = {
 				<SyTable
 					v-model:options="args.options"
 					v-bind="args"
+					suffix="alignment-table"
 				/>
 			`,
 		}
@@ -2396,6 +2404,7 @@ export const ResizableColumns: Story = {
 				<SyTable
 					v-model:options="args.options"
 					v-bind="args"
+					suffix="resizable-columns"
 				/>
 			`,
 		}
@@ -2545,21 +2554,17 @@ export const RowSelection: Story = {
 		return {
 			components: { SyTable },
 			setup() {
+				const items = ref(args.items)
 				const selection = ref([])
-				return { args, selection }
+				return { args, selection, items }
 			},
 			template: `
 				<div>
 					<SyTable
 						v-model:options="args.options"
 						v-model="selection"
-						:headers="args.headers"
-						:items="args.items"
-						:show-select="args.showSelect"
-						:suffix="args.suffix"
-						:density="args.density"
-						:striped="args.striped"
-						:show-filters="args.showFilters"
+						v-bind="args"
+						suffix="selection-table"
 					/>
 					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
