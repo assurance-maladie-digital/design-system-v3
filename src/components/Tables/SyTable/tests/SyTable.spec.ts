@@ -341,4 +341,109 @@ describe('SyTable', () => {
 		await wrapper.vm.$nextTick()
 		expect(wrapper.text()).toContain('Aucune donnée disponible')
 	})
+
+	it('enables selection when showSelect is true', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelect: true,
+				suffix: '',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		// Check that the VDataTable has showSelect prop set to true
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		expect(dataTable.props('showSelect')).toBe(true)
+	})
+
+	it('disables selection when showSelect is false', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelect: false,
+				suffix: '',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		// Check that the VDataTable has showSelect prop set to false
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		expect(dataTable.props('showSelect')).toBe(false)
+	})
+
+	it('passes the correct item-value function to the data table', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelect: true,
+				suffix: '',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		// Get the getItemValue function from the component instance
+		const vm = wrapper.vm as InstanceType<typeof SyTable>
+		const getItemValue = vm.getItemValue
+
+		// Test with an item that has an id
+		expect(getItemValue({ id: 123, name: 'Test' })).toBe(123)
+
+		// Test with an item that doesn't have an id
+		const itemWithoutId = { name: 'No ID' }
+		expect(getItemValue(itemWithoutId)).toBe(JSON.stringify(itemWithoutId))
+	})
+
+	it('properly binds the v-model for selection', async () => {
+		const selectedItems = [fakeItems[0].id, fakeItems[2].id]
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelect: true,
+				modelValue: selectedItems,
+				suffix: '',
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		// Check that the VDataTable has the correct model value
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		expect(dataTable.props('modelValue')).toEqual(selectedItems)
+	})
+
+	it('exposes the toggleAllRows method', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				'items': fakeItems,
+				'showSelect': true,
+				'modelValue': [],
+				'suffix': '',
+				'onUpdate:modelValue': (val: unknown[]) => {
+					wrapper.setProps({ modelValue: val })
+				},
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		// Access the component instance
+		const vm = wrapper.vm as InstanceType<typeof SyTable>
+
+		// Check that toggleAllRows is a function
+		expect(typeof vm.toggleAllRows).toBe('function')
+	})
 })
