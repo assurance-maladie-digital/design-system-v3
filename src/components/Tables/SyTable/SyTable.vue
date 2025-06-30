@@ -14,6 +14,7 @@
 	import { useTableOptions } from '../common/useTableOptions'
 	import { useTableHeaders } from '../common/useTableHeaders'
 	import { useTableItems } from '../common/useTableItems'
+	import { useTableCheckbox } from '../common/useTableCheckbox'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -78,32 +79,17 @@
 		emit,
 	})
 
-	// Function to get a unique identifier for each item
-	const getItemValue = (item: Record<string, unknown>) => {
-		// If the item has an id field, use that
-		if (item.id !== undefined) {
-			return item.id
-		}
-		// Otherwise, create a unique string representation of the item
-		return JSON.stringify(item)
-	}
-	// Function to toggle selection of all rows
-	const toggleAllRows = () => {
-		// Ensure filteredItems.value is an array
-		const itemsArray = Array.isArray(props.items) ? props.items : []
-		const items = itemsArray.length > 0 ? itemsArray : []
-		if (model.value.length === items.length) {
-			// If all items are selected, deselect all
-			model.value = []
-		}
-		else {
-			// Otherwise, select all items
-			// We need to map the items to their values to ensure proper selection
-			model.value = items.map((item) => {
-				return getItemValue(item)
-			})
-		}
-	}
+	// Create a computed property for items to ensure reactivity
+	const tableItems = computed(() => props.items)
+
+	// Use the table checkbox composable
+	const { getItemValue, toggleAllRows } = useTableCheckbox({
+		items: tableItems,
+		modelValue: model,
+		updateModelValue: (value) => {
+			model.value = value
+		},
+	})
 
 	const componentAttributes = useAttrs()
 
