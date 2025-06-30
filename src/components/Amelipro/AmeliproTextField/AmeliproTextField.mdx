@@ -1,0 +1,35 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as AmeliproTextFieldStories from './AmeliproTextField.stories';
+
+<Meta of={AmeliproTextFieldStories} />
+
+# AmeliproTextField
+
+L’élément `AmeliproTextField` est utilisé pour afficher les champs textes dans les formulaires.
+
+<Canvas of={AmeliproTextFieldStories.Default}  />
+
+## API
+
+<Controls of={AmeliproTextFieldStories.Default} />
+
+## Usages
+
+### Libellé
+
+Le libellé est obligatoire, il se trouve au-dessus du champ ou sur la gauche. Il est court (sans verbe) et indique clairement le type d’information à saisir.
+
+### Placeholder
+Le placeholder aide les utilisateurs à comprendre quel type d’information saisir dans le champ, cependant son usage doit être limité pour ne pas rendre l’interface chargée et confuse de plus, il ne peut en aucun cas remplacer le libellé du champ.
+
+### Champ de saisie
+Il est recommandé de donner une largeur au champ alignée avec le type de saisie, de limiter les caractères à saisir et d’utiliser des paramètres pertinents par défaut. Exemple*: lors de la saisie d’un numéro de téléphone, suggérez des indicatifs téléphoniques en fonction de l’adresse IP de l’internaute.
+
+### Aide à la saisie
+
+Si vous avez besoin d’utiliser des données susceptibles de provoquer une incompréhension chez l’utilisateur (exemple : numéro de série de carte vitale, email, numéro de téléphone), vous devez fournir des informations d’aide pour guider l’utilisateur (c’est quoi et où la trouver, quel est le format attendu).
+Si l'utilisateur fait une erreur, il faut donner un exemple respectant le format dans le message d'erreur pour l'aider.
+
+
+
