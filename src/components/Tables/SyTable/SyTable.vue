@@ -195,7 +195,7 @@
 										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
 										color="primary"
 										density="compact"
-                    hide-details
+										hide-details
 										:is-header="true"
 										@click="toggleAllRows"
 									/>
