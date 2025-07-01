@@ -7,7 +7,7 @@
 	const uniqueId = ref(`pagination-${Math.random().toString(36).substr(2, 9)}`)
 
 	// Reference to the SySelect component
-	const selectRef = ref(null)
+	const selectRef = ref<InstanceType<typeof SySelect> | null>(null)
 
 	// Items per page options - standard options and current value
 	const itemsPerPageOptions = computed(() => {
