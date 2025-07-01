@@ -35,7 +35,7 @@ exports[`AmeliproIllustratedDataTile > render correctly 1`] = `
       <span
         class="
           d-block
-          illustrated-data-tile__label__line-1
+          illustrated-data-tile__label-line-1
           text-center
         "
         id="my-disclosure-id-label-line-1"
@@ -45,7 +45,7 @@ exports[`AmeliproIllustratedDataTile > render correctly 1`] = `
       <span
         class="
           d-block
-          illustrated-data-tile__label__line-2
+          illustrated-data-tile__label-line-2
           text-center
           text-uppercase
         "

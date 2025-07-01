@@ -128,7 +128,7 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                 </span>
                 <span
                   class="
-                    amelipro-illustrated-radio-group__item__label__text
+                    amelipro-illustrated-radio-group__item-label-text
                     mt-4
                     text-ap-blue-darken-1
                   "
@@ -222,7 +222,7 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                 </span>
                 <span
                   class="
-                    amelipro-illustrated-radio-group__item__label__text
+                    amelipro-illustrated-radio-group__item-label-text
                     mt-4
                     text-ap-blue-darken-1
                   "
@@ -316,7 +316,7 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                 </span>
                 <span
                   class="
-                    amelipro-illustrated-radio-group__item__label__text
+                    amelipro-illustrated-radio-group__item-label-text
                     mt-4
                     text-ap-blue-darken-1
                   "
@@ -410,7 +410,7 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                 </span>
                 <span
                   class="
-                    amelipro-illustrated-radio-group__item__label__text
+                    amelipro-illustrated-radio-group__item-label-text
                     mt-4
                     text-ap-blue-darken-1
                   "
@@ -504,7 +504,7 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                 </span>
                 <span
                   class="
-                    amelipro-illustrated-radio-group__item__label__text
+                    amelipro-illustrated-radio-group__item-label-text
                     mt-4
                     text-ap-blue-darken-1
                   "

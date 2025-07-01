@@ -128,7 +128,7 @@
 					class="py-0 amelipro-onboarding__content--right"
 					:style="textWrapperStyle"
 				>
-					<div class="d-flex flex-column amelipro-onboarding__content--right__wrapper">
+					<div class="d-flex flex-column amelipro-onboarding__content--right-wrapper">
 						<div
 							:id="`${uniqueId}-step-wrapper`"
 							class="mt-2 d-flex align-center amelipro-onboarding__dots"
@@ -176,11 +176,11 @@
 
 						<div
 							:id="`${uniqueId}-btn-wrapper`"
-							class="d-flex justify-space-between align-center amelipro-onboarding__content__btn-wrapper"
+							class="d-flex justify-space-between align-center amelipro-onboarding__content-btn-wrapper"
 						>
 							<AmeliproBtn
 								v-if="currentStepIndex < steps.length - 1"
-								class="mt-6 mb-2  amelipro-onboarding__content__btn--next"
+								class="mt-6 mb-2 amelipro-onboarding__content__btn--next"
 								:unique-id="`${uniqueId}-next-btn`"
 								@click="nextStep"
 							>
@@ -220,7 +220,7 @@
 	min-height: 350px;
 }
 
-.amelipro-onboarding__content--right__wrapper {
+.amelipro-onboarding__content--right-wrapper {
 	min-height: 100%;
 }
 
@@ -236,7 +236,7 @@
 	}
 }
 
-.amelipro-onboarding__content__btn-wrapper {
+.amelipro-onboarding__content-btn-wrapper {
 	margin-top: auto;
 }
 </style>

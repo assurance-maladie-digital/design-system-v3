@@ -151,7 +151,7 @@
 
 									<span
 										:id="`${uniqueId}-label-text-${index}`"
-										class="mt-4 amelipro-illustrated-radio-group__item__label__text"
+										class="mt-4 amelipro-illustrated-radio-group__item-label-text"
 										:class="item.isChecked ? 'text-ap-white' : 'text-ap-blue-darken-1'"
 									>
 										{{ item.label }}
@@ -241,7 +241,7 @@ input {
 	}
 }
 
-.amelipro-illustrated-radio-group__item__label__text {
+.amelipro-illustrated-radio-group__item-label-text {
 	font-weight: apTokens.$label-font-weight;
 }
 </style>
