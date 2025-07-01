@@ -130,7 +130,6 @@ pre.prismjs {
 /* Fix for SySelect dropdown in Storybook docs canvas */
 .docs-story .v-list,
 .storybook-docs-mode .v-list {
-	position: absolute !important;
 	z-index: 9999 !important;
 	background-color: white !important;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08) !important;
