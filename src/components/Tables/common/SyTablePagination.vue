@@ -331,7 +331,7 @@
 				}
 
 				&.disabled {
-					color: rgb(0 0 0 / 40%);
+					color: rgb(0 0 0 / 60%); /* Increased from 40% to 60% for better contrast */
 					border-color: rgb(0 0 0 / 20%);
 					pointer-events: none;
 				}

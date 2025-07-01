@@ -207,8 +207,13 @@
 										density="compact"
 										hide-details
 										:is-header="true"
+										:aria-label="locales.selectAllRows"
 										@click="toggleAllRows"
-									/>
+									>
+										<template #label>
+											<span class="d-sr-only">{{ locales.selectAllRows }}</span>
+										</template>
+									</SyCheckbox>
 								</template>
 								<template v-else>
 									<TableHeader
