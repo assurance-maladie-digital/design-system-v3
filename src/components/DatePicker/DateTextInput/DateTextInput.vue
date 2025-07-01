@@ -997,7 +997,51 @@
 				inputValue.value = modelValueStr
 			}
 		}
+		
+		// Fix ARIA attributes to prevent validation errors
+		nextTick(() => {
+			fixAriaAttributes()
+		})
 	})
+	
+	// Function to fix ARIA attributes that cause validation errors
+	function fixAriaAttributes() {
+		try {
+			// Get the root element of the component
+			const rootElement = inputRef.value?.$el
+			if (!rootElement) return
+			
+			// Find the parent container with invalid ARIA attributes
+			const containerDiv = rootElement.closest('[aria-haspopup="menu"]')
+			if (containerDiv) {
+				containerDiv.removeAttribute('aria-haspopup')
+				containerDiv.removeAttribute('aria-expanded')
+				containerDiv.removeAttribute('aria-controls')
+			}
+			
+			// Find input elements with invalid ARIA attributes
+			const inputElements = rootElement.querySelectorAll('input')
+			inputElements.forEach((input) => {
+				// Remove invalid ARIA attributes
+				input.removeAttribute('aria-haspopup')
+				input.removeAttribute('aria-expanded')
+				input.removeAttribute('aria-controls')
+				
+				// Remove invalid period attribute
+				input.removeAttribute('period')
+				
+				// Set proper aria-label that matches the visible label
+				if (props.label) {
+					input.setAttribute('aria-label', props.label)
+				} else if (props.placeholder) {
+					input.setAttribute('aria-label', props.placeholder)
+				}
+			})
+		}
+		catch (error) {
+			console.error('Error fixing ARIA attributes:', error)
+		}
+	}
 </script>
 
 <template>
@@ -1023,7 +1067,7 @@
 		:bg-color="props.bgColor"
 		color="primary"
 		is-clearable
-		:aria-label="ariaLabel || props.placeholder"
+
 		title="Date text input"
 		@focus="handleFocus"
 		@blur="handleBlur"

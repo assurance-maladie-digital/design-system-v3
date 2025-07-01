@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	/* eslint-disable @typescript-eslint/no-explicit-any -- Nécessaire pour gérer différents types d'entrée */
-	import { ref, watch, computed, onMounted } from 'vue'
+	import { ref, watch, computed, onMounted, nextTick } from 'vue'
 	import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
@@ -311,7 +311,40 @@
 		internalToDate.value = formatDateValue(props.modelValue?.to)
 		// Validation initiale
 		validateFields()
+		
+		// Fix ARIA attributes to prevent validation errors
+		nextTick(() => {
+			fixAriaAttributes()
+		})
 	})
+	
+	// Function to fix ARIA attributes that cause validation errors
+	function fixAriaAttributes() {
+		try {
+			// Get the root element of the component
+			const rootElement = document.querySelector('.period-field-container')
+			if (!rootElement) return
+			
+			// Find all elements with invalid ARIA attributes
+			const elementsWithAriaHaspopup = rootElement.querySelectorAll('[aria-haspopup="menu"]')
+			elementsWithAriaHaspopup.forEach((element) => {
+				element.removeAttribute('aria-haspopup')
+				element.removeAttribute('aria-expanded')
+				element.removeAttribute('aria-controls')
+			})
+			
+			// Find input elements with invalid ARIA attributes
+			const inputElements = rootElement.querySelectorAll('input[aria-haspopup="menu"]')
+			inputElements.forEach((input) => {
+				input.removeAttribute('aria-haspopup')
+				input.removeAttribute('aria-expanded')
+				input.removeAttribute('aria-controls')
+			})
+		}
+		catch (error) {
+			console.error('Error fixing ARIA attributes:', error)
+		}
+	}
 
 	defineExpose({
 		validateOnSubmit,
