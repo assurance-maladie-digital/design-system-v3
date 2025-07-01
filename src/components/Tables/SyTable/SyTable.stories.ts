@@ -2405,7 +2405,6 @@ export const ResizableColumns: Story = {
 	},
 }
 
-
 export const ColumnControls: Story = {
 	parameters: {
 		sourceCode: [
