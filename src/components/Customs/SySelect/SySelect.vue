@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	// Prevent display-asterisk from being passed to the DOM
 	defineOptions({
-		inheritAttrs: false
+		inheritAttrs: false,
 	})
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
 	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
