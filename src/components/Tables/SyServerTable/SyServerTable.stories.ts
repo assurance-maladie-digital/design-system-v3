@@ -94,6 +94,17 @@ const meta = {
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
 		},
+		enableColumnControls: {
+			description: 'Allow the users to re-organize the columns',
+			table: {
+				defaultValue: {
+					summary: 'false',
+				},
+				type: { summary: 'boolean' },
+				category: 'props',
+			},
+			control: { type: 'boolean' },
+		},
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 

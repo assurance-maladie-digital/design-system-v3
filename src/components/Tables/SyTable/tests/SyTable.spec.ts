@@ -6,6 +6,7 @@ import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
 import SyTable from '../SyTable.vue'
+import { VCard } from 'vuetify/components'
 
 vi.mock('@/utils/localStorageUtility')
 
@@ -340,5 +341,120 @@ describe('SyTable', () => {
 
 		await wrapper.vm.$nextTick()
 		expect(wrapper.text()).toContain('Aucune donnée disponible')
+	})
+
+	it('shoulds hide a column when hideColumn is called', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'test',
+				headers: headers,
+				items: fakeItems,
+				enableColumnControls: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const btnMenuColumns = wrapper.find('[title="Réorganiser les colonnes"]')
+		await btnMenuColumns.trigger('click')
+
+		const menuColumns = wrapper.findComponent(VCard)
+		expect(menuColumns.exists()).toBe(true)
+
+		const firstHideButton = menuColumns.find('[title="Masquer la colonne Name"]')
+
+		expect(firstHideButton.exists()).toBe(true)
+		await firstHideButton.trigger('click')
+
+		expect(firstHideButton.attributes('title')).toBe('Afficher la colonne Name')
+		const columns = wrapper.findAll('th')
+		expect(columns.length).toBe(2)
+	})
+
+	it('shoulds move the column ID to the bottom', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'test',
+				headers: headers,
+				items: fakeItems,
+				enableColumnControls: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const btnMenuColumns = wrapper.find('[title="Réorganiser les colonnes"]')
+		await btnMenuColumns.trigger('click')
+
+		const menuColumns = wrapper.findComponent(VCard)
+		expect(menuColumns.exists()).toBe(true)
+
+		let bottomButton = menuColumns.find('[title="Déplacer la colonne ID vers la droite"]')
+		expect(bottomButton.exists()).toBe(true)
+
+		await bottomButton.trigger('click')
+		vi.runAllTimers()
+		await wrapper.vm.$nextTick()
+
+		bottomButton = menuColumns.find('[title="Déplacer la colonne ID vers la droite"]')
+
+		await bottomButton.trigger('click')
+		vi.runAllTimers()
+		await wrapper.vm.$nextTick()
+
+		const columns = wrapper.findAll('th')
+		expect(columns.length).toBe(3)
+		expect(columns[0].text()).toBe('Name')
+		expect(columns[1].text()).toBe('Age')
+		expect(columns[2].text()).toBe('ID')
+	})
+
+	it('shoulds move the column age to the top', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'test',
+				headers: headers,
+				items: fakeItems,
+				enableColumnControls: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const btnMenuColumns = wrapper.find('[title="Réorganiser les colonnes"]')
+		await btnMenuColumns.trigger('click')
+
+		const menuColumns = wrapper.findComponent(VCard)
+		expect(menuColumns.exists()).toBe(true)
+
+		let topButton = menuColumns.find('[title="Déplacer la colonne Age vers la gauche"]')
+		expect(topButton.exists()).toBe(true)
+
+		await topButton.trigger('click')
+		vi.runAllTimers()
+		await wrapper.vm.$nextTick()
+
+		topButton = menuColumns.find('[title="Déplacer la colonne Age vers la gauche"]')
+
+		await topButton.trigger('click')
+		vi.runAllTimers()
+		await wrapper.vm.$nextTick()
+
+		const columns = wrapper.findAll('th')
+		expect(columns.length).toBe(3)
+		expect(columns[0].text()).toBe('Age')
+		expect(columns[1].text()).toBe('ID')
+		expect(columns[2].text()).toBe('Name')
 	})
 })

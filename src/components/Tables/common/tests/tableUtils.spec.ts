@@ -48,48 +48,6 @@ describe('tableUtils', () => {
 		expect(storageKey.value).toBe('table')
 	})
 
-	it('should transform headers correctly', () => {
-		const options = ref<Partial<DataOptions>>({})
-		const headersProp = ref([
-			{
-				text: 'ID',
-				key: 'id',
-			},
-			{
-				title: 'Name',
-				key: 'name',
-			},
-			{
-				key: 'age',
-			},
-		])
-
-		const { headers } = useTableUtils({
-			tableId: 'test-table',
-			prefix: 'table',
-			caption: 'Test Table',
-			componentAttributes: {},
-			headersProp,
-			options,
-		})
-
-		expect(headers.value).toEqual([
-			{
-				text: 'ID',
-				key: 'id',
-				title: 'ID',
-			},
-			{
-				title: 'Name',
-				key: 'name',
-			},
-			{
-				key: 'age',
-				title: undefined,
-			},
-		])
-	})
-
 	it('should handle undefined headers', () => {
 		const options = ref<Partial<DataOptions>>({})
 		const componentAttributes = {}
@@ -138,19 +96,16 @@ describe('tableUtils', () => {
 			'items': [{ id: 1 }],
 			'onUpdate:options': vi.fn(),
 		}
-		const headersProp = ref([{ title: 'ID', key: 'id' }])
 
 		const { propsFacade } = useTableUtils({
 			tableId: 'test-table',
 			prefix: 'table',
 			caption: 'Test Table',
 			componentAttributes,
-			headersProp,
 			options,
 		})
 
 		expect(propsFacade.value).toMatchObject({
-			headers: [{ title: 'ID', key: 'id' }],
 			items: [{ id: 1 }],
 		})
 		expect(propsFacade.value['onUpdate:options']).toBeUndefined()
@@ -161,7 +116,6 @@ describe('tableUtils', () => {
 		const componentAttributes = {
 			items: [{ id: 1 }],
 		}
-		const headersProp = ref([{ title: 'ID', key: 'id' }])
 
 		const { propsFacade } = useTableUtils({
 			tableId: 'test-table',
@@ -169,12 +123,10 @@ describe('tableUtils', () => {
 			caption: 'Test Table',
 			serverItemsLength: 100,
 			componentAttributes,
-			headersProp,
 			options,
 		})
 
 		expect(propsFacade.value).toMatchObject({
-			headers: [{ title: 'ID', key: 'id' }],
 			items: [{ id: 1 }],
 			itemsLength: 100,
 		})

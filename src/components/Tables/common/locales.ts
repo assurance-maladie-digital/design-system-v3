@@ -5,7 +5,6 @@ export const locales = {
 	columnOrder: (columnTitle: string) => `Ordonner par ${columnTitle}`,
 	ResizableColumn: 'Redimensionner la colonne',
 	resizeColumn: (columnTitle: string) => `Redimensionner la colonne ${columnTitle}`,
-
 	// Pagination locales
 	pagination: {
 		itemsPerPageText: 'Lignes par page:',
@@ -18,4 +17,12 @@ export const locales = {
 		currentPageAriaLabel: (page: number) => `Page courante, Page ${page}`,
 		paginationNavAriaLabel: 'Navigation de pagination',
 	},
+	reorganizeColumns: 'Réorganiser les colonnes',
+	close: 'Fermer',
+	apply: 'Appliquer',
+	reorganizeColumnsTitle: 'Réorganiser les colonnes',
+	hideColumn: (columnTitle: string) => `Masquer la colonne ${columnTitle}`,
+	showColumn: (columnTitle: string) => `Afficher la colonne ${columnTitle}`,
+	moveColumnLeft: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la gauche`,
+	moveColumnRight: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la droite`,
 }

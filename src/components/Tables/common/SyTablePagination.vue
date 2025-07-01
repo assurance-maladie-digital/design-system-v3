@@ -254,6 +254,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	width: 100%;
 	padding: 12px 16px;
 	flex-wrap: wrap;
 	gap: 1rem;

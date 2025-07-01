@@ -1,5 +1,5 @@
 import { computed, watch, type Ref } from 'vue'
-import type { DataOptions, DataTableHeaders, TableDensityType } from './types'
+import type { DataOptions, TableDensityType } from './types'
 import { useTableAccessibility } from './tableAccessibilityUtils'
 import { useTableStorage } from './tableStorageUtils'
 
@@ -12,7 +12,6 @@ export function useTableUtils({
 	suffix,
 	serverItemsLength,
 	componentAttributes,
-	headersProp,
 	options,
 }: {
 	tableId: string
@@ -21,12 +20,11 @@ export function useTableUtils({
 	caption?: string
 	serverItemsLength?: number
 	componentAttributes: Record<string, unknown>
-	headersProp?: Ref<DataTableHeaders[] | undefined>
 	options: Ref<Partial<DataOptions>>
 	density?: TableDensityType
 }) {
 	// Use the separated storage utility
-	const { localOptions, columnWidths, storageKey, setupLocalStorage, updateColumnWidth } = useTableStorage({
+	const { localOptions, columnWidths, headers, storageKey, setupLocalStorage, updateColumnWidth } = useTableStorage({
 		prefix,
 		suffix,
 		serverItemsLength,
@@ -36,16 +34,6 @@ export function useTableUtils({
 	// Use the separated accessibility utility
 	const { setupAccessibility } = useTableAccessibility({
 		tableId,
-	})
-
-	const headers = computed(() => {
-		if (!Array.isArray(headersProp?.value)) {
-			return undefined
-		}
-		return headersProp.value.map(header => ({
-			...header,
-			title: header.title ?? header.text,
-		}))
 	})
 
 	const optionsFacade = computed(() => {
@@ -65,7 +53,6 @@ export function useTableUtils({
 
 		const props = {
 			...attrs,
-			headers: headers.value,
 			...localOptions.value,
 			...(serverItemsLength !== undefined ? { itemsLength: serverItemsLength } : {}),
 		}
@@ -104,12 +91,12 @@ export function useTableUtils({
 		localOptions,
 		columnWidths,
 		storageKey,
-		headers,
 		optionsFacade,
 		propsFacade,
 		updateOptions,
 		setupAccessibility,
 		setupLocalStorage,
 		updateColumnWidth,
+		headers,
 	}
 }
