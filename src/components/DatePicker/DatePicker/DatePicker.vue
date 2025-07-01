@@ -536,8 +536,41 @@
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
 			isInitialValidation.value = false
+			// Fix ARIA attributes to prevent validation errors
+			fixAriaAttributes()
 		})
 	})
+
+	// Function to fix ARIA attributes that cause validation errors
+	function fixAriaAttributes() {
+		try {
+			// Wait for the DOM to be fully rendered
+			nextTick(() => {
+				// Get the root element of the component
+				const rootElement = dateCalendarTextInputRef.value?.$el
+				if (!rootElement) return
+
+				// Find the parent container with invalid ARIA attributes
+				const containerDiv = rootElement.closest('[aria-haspopup="menu"]')
+				if (containerDiv) {
+					containerDiv.removeAttribute('aria-haspopup')
+					containerDiv.removeAttribute('aria-expanded')
+					containerDiv.removeAttribute('aria-controls')
+				}
+
+				// Find input elements with invalid ARIA attributes
+				const inputElements = rootElement.querySelectorAll('input[aria-haspopup="menu"]')
+				inputElements.forEach((input) => {
+					input.removeAttribute('aria-haspopup')
+					input.removeAttribute('aria-expanded')
+					input.removeAttribute('aria-controls')
+				})
+			})
+		}
+		catch (error) {
+			console.error('Error fixing ARIA attributes:', error)
+		}
+	}
 
 	onBeforeUnmount(() => {
 		document.removeEventListener('click', handleClickOutside)
@@ -813,6 +846,7 @@
 		handleClickOutside,
 		initializeSelectedDates,
 		updateAccessibility,
+		fixAriaAttributes,
 		openDatePicker,
 	})
 </script>
