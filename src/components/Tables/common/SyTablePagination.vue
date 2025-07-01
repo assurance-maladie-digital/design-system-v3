@@ -11,7 +11,7 @@
 
 	// Items per page options - standard options and current value
 	const itemsPerPageOptions = computed(() => {
-		const standardOptions = [10, 25, 50, 100]
+		const standardOptions = [5, 10, 25, 50, 100]
 
 		// Add the current itemsPerPage if it's not already in the standard options
 		// and it's not -1 (which represents "Tous")
