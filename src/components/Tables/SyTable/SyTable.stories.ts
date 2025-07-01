@@ -2539,7 +2539,6 @@ export const ColumnControls: Story = {
 		'suffix': 'default-table',
 		'density': 'default',
 		'striped': false,
-		// @ts-expect-error storybook struggles with the type
 		'enableColumnControls': true,
 		'onUpdate:options': fn(),
 	},

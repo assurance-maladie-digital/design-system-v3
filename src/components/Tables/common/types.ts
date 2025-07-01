@@ -62,7 +62,7 @@ export type TableColumnHeader = {
 }
 
 // Component-specific props interfaces
-export type SyTablePropsBase = {
+export type SyTableProps = {
 	items?: Record<string, unknown>[]
 	suffix: string
 	caption?: string
@@ -71,19 +71,11 @@ export type SyTablePropsBase = {
 	density?: TableDensityType
 	striped?: boolean
 	resizableColumns?: boolean
+	enableColumnControls?: boolean
+	headers?: DataTableHeaders[]
 }
 
-export type SyTableProps =
-	| (SyTablePropsBase & {
-		enableColumnControls?: false
-		headers?: DataTableHeaders[]
-	})
-	| (SyTablePropsBase & {
-		enableColumnControls: true
-		headers: DataTableHeaders[]
-	})
-
-export type SyServerTablePropsBase = {
+export type SyServerTableProps = {
 	serverItemsLength: number
 	items?: Record<string, unknown>[]
 	suffix: string
@@ -93,14 +85,6 @@ export type SyServerTablePropsBase = {
 	filterInputConfig?: Record<string, unknown>
 	density?: TableDensityType
 	striped?: boolean
+	enableColumnControls?: boolean
+	headers?: DataTableHeaders[]
 }
-
-export type SyServerTableProps =
-	| (SyServerTablePropsBase & {
-		enableColumnControls: true
-		headers: DataTableHeaders[]
-	})
-	| (SyServerTablePropsBase & {
-		enableColumnControls?: false
-		headers?: DataTableHeaders[]
-	})
