@@ -661,7 +661,12 @@
 	function setupAriaObserver() {
 		// Disconnect any existing observer
 		if (ariaObserver.value) {
-			ariaObserver.value.disconnect()
+			try {
+				ariaObserver.value.disconnect()
+			} catch (error) {
+				// Ignore errors when disconnecting observer in test environment
+				console.warn('Error disconnecting MutationObserver:', error)
+			}
 		}
 
 		// Create a new observer
@@ -691,7 +696,12 @@
 
 		// Disconnect the ARIA observer
 		if (ariaObserver.value) {
-			ariaObserver.value.disconnect()
+			try {
+				ariaObserver.value.disconnect()
+			} catch (error) {
+				// Ignore errors when disconnecting observer in test environment
+				console.warn('Error disconnecting MutationObserver:', error)
+			}
 		}
 	})
 
