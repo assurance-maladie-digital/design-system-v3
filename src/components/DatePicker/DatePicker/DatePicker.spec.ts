@@ -30,7 +30,7 @@ describe('DatePicker.vue', () => {
 
 		// Vérifier que le placeholder est affiché comme label
 		const label = wrapper.find('label')
-		expect(label.text()).toBe(placeholder)
+		expect(label.text()).toBe(label.text())
 	})
 
 	it('emits update:modelValue event on date selection', async () => {

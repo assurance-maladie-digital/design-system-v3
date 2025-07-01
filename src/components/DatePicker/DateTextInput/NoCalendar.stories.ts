@@ -146,6 +146,54 @@ export const Default: Story = {
 	},
 }
 
+export const Required: Story = {
+	args: {
+		'noCalendar': true,
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date avec règles de validation',
+		'required': true,
+		'disabled': false,
+		'readonly': false,
+		'isOutlined': true,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'noIcon': false,
+		'displayRange': false,
+		'displayPrependIcon': false,
+		'showSuccessMessages': true,
+		'disableErrorHandling': false,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+	},
+	render(args) {
+		const date = ref<string | null>(null)
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div>
+					<h4 class="mb-4">Sans astérisque :</h4>
+					<DatePicker
+						v-model="date"
+						v-bind="args"
+					/>
+					<h4 class="mb-4">Avec astérisque :</h4>
+					<DatePicker
+						v-model="date"
+						v-bind="args"
+						displayAsterisk
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const EuropeanFormat: Story = {
 	parameters: {
 		sourceCode: [
@@ -161,6 +209,17 @@ export const EuropeanFormat: Story = {
 						required
 						no-icon
 						no-calendar
+					/>
+
+					<DatePicker
+						v-model="date"
+						format="DD/MM/YYYY"
+						date-format-return="YYYY/MM/DD"
+						placeholder="JJ/MM/AAAA"
+						required
+						no-icon
+						no-calendar
+						displayAsterisk
 					/>
 				</template>
 				`,
