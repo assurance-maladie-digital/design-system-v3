@@ -160,11 +160,11 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokens';
 
-	.amelipro-callback__retry-btn {
-		margin-left: 0;
+.amelipro-callback__retry-btn {
+	margin-left: 0;
 
-		@media #{apTokens.$media-up-sm} {
-			margin-left: 1rem;
-		}
+	@media #{apTokens.$media-up-sm} {
+		margin-left: 1rem;
 	}
+}
 </style>
