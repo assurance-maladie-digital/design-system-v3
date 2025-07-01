@@ -44,8 +44,6 @@
 
 	const table = ref<VDataTableServer>()
 
-
-
 	// Get filter utilities
 	const { filterItems } = useTableFilter()
 
