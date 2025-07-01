@@ -207,7 +207,7 @@
 										density="compact"
 										hide-details
 										:is-header="true"
-										:aria-label="locales.selectAllRows"
+                    :aria-label="locales.selectAllRows"
 										@click="toggleAllRows"
 									>
 										<template #label>
