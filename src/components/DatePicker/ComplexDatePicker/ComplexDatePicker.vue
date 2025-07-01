@@ -663,7 +663,8 @@
 		if (ariaObserver.value) {
 			try {
 				ariaObserver.value.disconnect()
-			} catch (error) {
+			}
+			catch (error) {
 				// Ignore errors when disconnecting observer in test environment
 				console.warn('Error disconnecting MutationObserver:', error)
 			}
@@ -698,7 +699,8 @@
 		if (ariaObserver.value) {
 			try {
 				ariaObserver.value.disconnect()
-			} catch (error) {
+			}
+			catch (error) {
 				// Ignore errors when disconnecting observer in test environment
 				console.warn('Error disconnecting MutationObserver:', error)
 			}
