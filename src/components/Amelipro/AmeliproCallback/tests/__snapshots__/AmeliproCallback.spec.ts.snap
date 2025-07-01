@@ -1,0 +1,154 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproCallback > render correctly 1`] = `
+<div
+  class="
+    amelipro-callback
+    w-100
+  "
+  id="my-callback-id-container"
+>
+  <div
+    class="
+      amelipro-callback__card
+      amelipro-card
+      d-flex
+      flex-column
+      flex-md-row
+      w-100
+    "
+    id="my-callback-id-card-container"
+    style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
+  >
+    <div
+      class="amelipro-card__left-part"
+      id="my-callback-id-card-left-part"
+      style="width: 100%;"
+    >
+      <div
+        class="
+          amelipro-card__header
+          w-100
+        "
+        id="my-callback-id-card-header"
+      >
+        <div
+          class="
+            align-sm-center
+            amelipro-card__header-content
+            d-flex
+            flex-column
+            flex-sm-row
+            w-100
+          "
+          style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #DDDEDE;"
+        >
+          <div
+            class="amelipro-card__header-slot-wrapper--left"
+            id="my-callback-id-card-header-left-part"
+            style="width: 100%;"
+          >
+            <!-- v-if -->
+          </div>
+          <!-- v-if -->
+        </div>
+      </div>
+      <div
+        class="amelipro-card__content"
+        id="my-callback-id-card-content"
+      >
+        <div
+          class="
+            align-center
+            amelipro-callback__card__main-content
+            d-flex
+            flex-column
+            flex-sm-row
+            w-100
+          "
+          id="my-callback-id-card-main-content"
+        >
+          <div class="
+            d-flex
+            w-100
+          ">
+            <span
+              class="
+                amelipro-callback__img
+                amelipro-icon
+                mx-4
+              "
+              id="my-callback-id-icon"
+            >
+              <span
+                aria-hidden="true"
+                class="
+                  amelipro-custom-icon
+                  custom-color
+                "
+                focusable="false"
+                role="img"
+                style="color: #FFFFFF; height: 32px; width: 32px;"
+              >
+                <span>
+                  <svg
+                    aria-hidden="true"
+                    style="enable-background:new 0 0 46 46;"
+                    viewBox="0 0 46 46"
+                    x="0px"
+                    xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    y="0px"
+                  >
+                    <circle
+                      class="circle-color"
+                      cx="23"
+                      cy="23"
+                      r="23"
+                    />
+                    <path
+                      class="shape-color"
+                      d="M31.5,15.3c-0.3-0.3-0.7-0.3-0.9,0l-9.8,9.8c-0.3,0.3-0.7,0.3-0.9,0l-4.3-4.3c-0.1-0.2-0.3-0.2-0.4-0.2 s-0.4,0-0.5,0.2l-1.9,1.7c-0.1,0.1-0.2,0.3-0.2,0.4s0,0.4,0.2,0.4l4.3,4.6c0.3,0.3,0.7,0.7,0.9,0.9l1.8,1.9c0.3,0.2,0.7,0.2,0.9,0 l12.6-12.6c0.3-0.3,0.3-0.7,0-0.9L31.5,15.3L31.5,15.3L31.5,15.3z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <div class="
+              amelipro-callback__content
+              d-flex
+              flex-column
+              ml-2
+            ">
+              <span
+                aria-level="3"
+                class="
+                  amelipro-callback__title
+                  font-weight-semibold
+                  mb-2
+                  text-h6
+                "
+                id="my-callback-id-card-main-content-title"
+                role="heading"
+                style="color: #1A1B1B;"
+              >
+                titre de la callback.
+              </span>
+              <p
+                class="amelipro-callback__text"
+                id="my-callback-id-card-main-content-text"
+              >
+                Contenu texte de la callback.
+              </p>
+            </div>
+          </div>
+          <!-- v-if -->
+        </div>
+      </div>
+    </div>
+    <!-- v-if -->
+  </div>
+  <!-- v-if -->
+</div>
+`;

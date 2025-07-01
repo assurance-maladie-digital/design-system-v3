@@ -108,14 +108,14 @@
 			>
 				<span
 					:id="uniqueId ? `${uniqueId}-label-line-1` : undefined"
-					class="d-block text-center illustrated-data-tile__label__line-1"
+					class="d-block text-center illustrated-data-tile__label-line-1"
 				>
 					{{ labelFirstLine }}
 				</span>
 
 				<span
 					:id="uniqueId ? `${uniqueId}-label-line-2` : undefined"
-					class="d-block text-center text-uppercase illustrated-data-tile__label__line-2"
+					class="d-block text-center text-uppercase illustrated-data-tile__label-line-2"
 				>
 					{{ labelSecondLine }}
 				</span>
@@ -154,14 +154,14 @@
 	}
 }
 
-.illustrated-data-tile__label__line-1 {
+.illustrated-data-tile__label-line-1 {
 	margin-top: 2rem;
 	margin-bottom: 1rem;
 	font-size: apTokens.$font-size-sm;
 	font-weight: apTokens.$ap-font-weight-semi-bold;
 }
 
-.illustrated-data-tile__label__line-2 {
+.illustrated-data-tile__label-line-2 {
 	margin-bottom: 2rem;
 	font-size: apTokens.$font-size-xs;
 	font-weight: apTokens.$ap-font-weight-regular;
