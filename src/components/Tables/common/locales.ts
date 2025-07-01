@@ -6,6 +6,7 @@ export const locales = {
 	ResizableColumn: 'Redimensionner la colonne',
 	resizeColumn: (columnTitle: string) => `Redimensionner la colonne ${columnTitle}`,
 	selectAllRows: 'Sélectionner toutes les lignes',
+	selectRow: 'Sélectionner la ligne',
 
 	// Pagination locales
 	pagination: {

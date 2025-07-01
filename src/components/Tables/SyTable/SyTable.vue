@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, onMounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -95,6 +95,34 @@
 
 	// Generate a unique ID for this table instance
 	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substr(2, 9)}`)
+
+	// Function to add accessibility attributes to row checkboxes
+	const accessibilityRowCheckboxes = () => {
+		nextTick(() => {
+			setTimeout(() => {
+				const tableElement = document.getElementById(uniqueTableId.value)
+				if (!tableElement) return
+
+				// Find all row checkboxes
+				const rowCheckboxes = tableElement.querySelectorAll('td .v-selection-control input[type="checkbox"]')
+				rowCheckboxes.forEach((checkbox, index) => {
+					const rowLabel = `${locales.selectRow} ${index + 1}`
+					checkbox.setAttribute('aria-label', rowLabel)
+					checkbox.setAttribute('title', rowLabel)
+				})
+			}, 100) // Small delay to ensure DOM is updated
+		})
+	}
+
+	// Watch for changes that might affect the table and update accessibility
+	watch(() => props.items, accessibilityRowCheckboxes, { deep: true })
+	watch(() => filteredItems.value, accessibilityRowCheckboxes)
+	watch(() => page.value, accessibilityRowCheckboxes)
+
+	// Apply accessibility attributes when component is mounted
+	onMounted(() => {
+		accessibilityRowCheckboxes()
+	})
 
 	const {
 		propsFacade,
@@ -197,7 +225,8 @@
 										density="compact"
 										hide-details
 										:is-header="true"
-                    :aria-label="locales.selectAllRows"
+										:aria-label="locales.selectAllRows"
+										:title="locales.selectAllRows"
 										@click="toggleAllRows"
 									>
 										<template #label>
@@ -317,6 +346,7 @@
 					</tr>
 				</template>
 			</template>
+
 			<template #bottom>
 				<SyTablePagination
 					v-if="filteredItems.length > 0"
