@@ -86,9 +86,8 @@ describe('SyTablePagination.vue', () => {
 		expect(vm1.itemsPerPageOptions).toBeDefined()
 
 		const options1 = vm1.itemsPerPageOptions
-		// Should have standard options (10, 25, 50, 100) plus the 'All' option (-1)
-		expect(options1.length).toBe(5)
-		expect(options1.map(o => o.value).sort((a, b) => a - b)).toEqual([-1, 10, 25, 50, 100])
+		// Should have standard options 5, 10, 25, 50, 100) plus the 'All' option (-1)
+		expect(options1.map(o => o.value).sort((a, b) => a - b)).toEqual([-1, 5, 10, 25, 50, 100])
 
 		// Test with custom value
 		const wrapper2 = mount(SyTablePagination, {
@@ -111,8 +110,7 @@ describe('SyTablePagination.vue', () => {
 		expect(hasCustomValue).toBe(true)
 
 		// Should have standard options + custom value + 'All' option
-		expect(options2.length).toBe(6)
-		expect(options2.map(o => o.value).sort((a, b) => a - b)).toEqual([-1, 10, 25, 42, 50, 100])
+		expect(options2.map(o => o.value).sort((a, b) => a - b)).toEqual([-1, 5, 10, 25, 42, 50, 100])
 	})
 
 	it('shows correct range when "All" is selected', async () => {
