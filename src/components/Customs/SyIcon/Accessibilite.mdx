@@ -1,0 +1,103 @@
+import { Meta, Title, Subtitle, Description, Primary, Controls, Stories, Canvas } from '@storybook/blocks'
+import * as SyIconStoriesAccessibility from './Accessibilite.stories'
+import SyIconAccessibility from './SyIconAccessibility.vue'
+
+<Meta of={SyIconStoriesAccessibility} />
+
+# 🌐 Accessibilité des icônes
+
+<Subtitle>
+	Guide d'accessibilité pour l'utilisation des icônes dans le Design System
+</Subtitle>
+
+<div className="tip-wrapper" style={{ background: '#f8f9fa', padding: '20px', borderRadius: '5px', marginBottom: '20px' }}>
+  <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>💡 Pourquoi l'accessibilité des icônes est importante</div>
+  <p>
+    Les icônes améliorent l'expérience utilisateur, mais doivent être accessibles à tous, y compris aux personnes utilisant des technologies d'assistance.
+  </p>
+</div>
+
+## 🔍 Principes généraux
+
+Le composant `SyIcon` implémente automatiquement les bonnes pratiques d'accessibilité en fonction de la nature de l'icône :
+
+<div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+  <div style={{ flex: 1, border: '1px solid #e0e0e0', borderRadius: '5px', padding: '15px' }}>
+    <h3>📌 Icônes décoratives</h3>
+    <p><em>Invisibles pour les lecteurs d'écran</em></p>
+    
+    ```vue
+    <!-- Icône décorative (par défaut) -->
+    <SyIcon 
+    :icon="mdi-home" 
+    />
+    ```
+    
+    <div style={{ background: '#f5f5f5', padding: '10px', borderRadius: '4px', marginTop: '78px' }}>
+      <strong>Attributs ARIA générés :</strong>
+      <ul>
+        <li><code>role="presentation"</code></li>
+        <li><code>aria-hidden="true"</code></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div style={{ flex: 1, border: '1px solid #e0e0e0', borderRadius: '5px', padding: '15px' }}>
+    <h3>🔊 Icônes informatives</h3>
+    <p><em>Annoncées par les lecteurs d'écran</em></p>
+    
+    ```vue
+    <!-- Icône informative avec label -->
+    <SyIcon 
+      :icon="mdi-information" 
+      :decorative="false" 
+      label="Information importante" 
+    />
+    ```
+    
+    <div style={{ background: '#f5f5f5', padding: '10px', borderRadius: '4px' }}>
+      <strong>Attributs ARIA générés :</strong>
+      <ul>
+        <li><code>role="img"</code></li>
+        <li><code>aria-label="Information importante"</code></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+## 🧪 Démonstration interactive
+
+La démonstration ci-dessous vous permet de voir comment les attributs d'accessibilité sont générés en fonction des propriétés du composant :
+
+<Canvas of={SyIconStoriesAccessibility.AccessibilityDemo} />
+
+## ✅ Bonnes pratiques
+
+<div style={{ background: '#edf7ed', padding: '15px', borderRadius: '5px', borderLeft: '4px solid #4caf50', marginBottom: '20px' }}>
+  <h4 style={{ marginTop: '0' }}>📋 Recommandations</h4>
+  <ul style={{ paddingLeft: '20px' }}>
+    <li><strong>Toujours fournir un label</strong> lorsque l'icône est informative (<code>decorative="false"</code>)</li>
+    <li><strong>Utiliser des labels explicites</strong> qui décrivent clairement la fonction de l'icône</li>
+    <li><strong>Éviter les icônes seules</strong> pour les actions importantes - combinez-les avec du texte visible</li>
+    <li><strong>Maintenir un bon contraste</strong> entre l'icône et son arrière-plan</li>
+  </ul>
+</div>
+
+## 🔒 Conformité RGAA
+
+<div style={{ background: '#e8f4fd', padding: '15px', borderRadius: '5px', borderLeft: '4px solid #2196f3', marginBottom: '20px' }}>
+  <p style={{ margin: '0' }}>
+    Le composant <code>SyIcon</code> utilise la directive <code>v-rgaa-svg-fix</code> qui assure la compatibilité 
+    avec les lecteurs d'écran en appliquant les correctifs nécessaires aux SVG.
+  </p>
+  <p style={{ marginTop: '10px', marginBottom: '0' }}>
+    <strong>Important :</strong> Tous les éléments SVG ont systématiquement l'attribut <code>aria-hidden="true"</code> et 
+    n'ont jamais l'attribut <code>role="img"</code>, indépendamment du type d'icône. La sémantique d'accessibilité 
+    est gérée uniquement au niveau de l'élément conteneur (<code>&lt;i&gt;</code>).
+  </p>
+</div>
+
+## 📚 Ressources
+
+- [Guide d'accessibilité WAI-ARIA pour les images et icônes](https://www.w3.org/WAI/ARIA/apg/patterns/)
+- [RGAA - Référentiel Général d'Amélioration de l'Accessibilité](https://www.numerique.gouv.fr/publications/rgaa-accessibilite/)

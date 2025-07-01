@@ -1,0 +1,340 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Directives/v-rgaa-svg-fix" />
+
+<style>
+{
+  `
+    .directive-header {
+      color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .directive-header h1 {
+      margin-top: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    
+    .directive-header p {
+      font-size: 1.1rem;
+      margin-bottom: 0;
+      opacity: 0.9;
+    }
+    
+    .section-title {
+      position: relative;
+      padding-bottom: 0.75rem;
+      display: inline-block;
+      margin-top: 2rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background-color: #0c419a;
+      border-radius: 3px;
+    }
+    
+    .info-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid #0c419a;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .warning-box {
+      background-color: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+    
+    .code-example {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .feature-card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-card h3 {
+      margin-top: 0;
+      color: #0c419a;
+    }
+    
+    .best-practice {
+      background-color: #e3e8f2;
+      border-left: 4px solid #0c419a;
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+    
+    .best-practice-title {
+      color: #0c419a;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+    }
+  `
+}
+</style>
+
+<div className="directive-header">
+  <h1>Directive v-rgaa-svg-fix</h1>
+  <p>Correction des attributs d'accessibilité pour les icônes SVG selon les normes RGAA</p>
+</div>
+
+<h2 className="section-title">Pourquoi cette directive existe</h2>
+
+<div className="info-box">
+  <p>La directive <code>v-rgaa-svg-fix</code> a été créée pour résoudre un problème spécifique d'accessibilité avec les icônes SVG générées par Vuetify. Ce problème est particulièrement important dans le contexte du <strong>RGAA</strong> (Référentiel Général d'Amélioration de l'Accessibilité), qui définit les règles d'accessibilité pour les services numériques publics en France.</p>
+</div>
+
+<div className="warning-box">
+  <h3>Problème identifié</h3>
+  <p>Vuetify génère des SVG avec des attributs ARIA contradictoires :</p>
+  <ul>
+    <li>Le conteneur <code>&lt;v-icon&gt;</code> peut avoir <code>role="presentation"</code> et <code>aria-hidden="true"</code> (pour les icônes décoratives)</li>
+    <li>Mais le SVG à l'intérieur a souvent <code>role="img"</code> et <code>aria-hidden="true"</code> simultanément</li>
+  </ul>
+  <p>Cette contradiction peut perturber les technologies d'assistance comme les lecteurs d'écran, car :</p>
+  <ol>
+    <li><code>role="img"</code> indique que l'élément doit être traité comme une image et donc annoncé</li>
+    <li><code>aria-hidden="true"</code> indique que l'élément doit être ignoré par les technologies d'assistance</li>
+  </ol>
+  <p>Ces attributs contradictoires créent une confusion pour les lecteurs d'écran et ne respectent pas les normes d'accessibilité.</p>
+</div>
+
+<h2 className="section-title">Ce que fait cette directive</h2>
+
+<p>La directive <code>v-rgaa-svg-fix</code> corrige automatiquement les attributs d'accessibilité des SVG en fonction du type d'icône :</p>
+
+<div className="feature-grid">
+  <div className="feature-card">
+    <h3>🎨 Pour les icônes décoratives (par défaut)</h3>
+    <p>Les icônes décoratives sont purement esthétiques et n'apportent pas d'information essentielle. Elles doivent être ignorées par les technologies d'assistance.</p>
+    <div className="info-box" style={{ margin: '1rem 0' }}>
+      <p>La directive :</p>
+      <ul>
+        <li>Ajoute <code>role="presentation"</code> et <code>aria-hidden="true"</code> au conteneur parent</li>
+        <li>Supprime l'attribut <code>role="img"</code> du SVG (car contradictoire avec <code>aria-hidden="true"</code>)</li>
+        <li>S'assure que <code>aria-hidden="true"</code> est présent sur le SVG</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div className="feature-card">
+    <h3>📢 Pour les icônes fonctionnelles (informatives)</h3>
+    <p>Les icônes fonctionnelles transmettent une information importante et doivent être annoncées par les technologies d'assistance.</p>
+    <div className="info-box" style={{ margin: '1rem 0' }}>
+      <p>La directive :</p>
+      <ul>
+        <li>Ajoute <code>role="img"</code> au conteneur parent</li>
+        <li>Ajoute <code>aria-label="Icône"</code> au conteneur parent si aucun aria-label n'est présent</li>
+        <li>Supprime <code>aria-hidden="true"</code> du SVG pour permettre aux technologies d'assistance de le percevoir</li>
+        <li>Supprime <code>role="img"</code> du SVG car il est redondant avec le rôle du conteneur parent</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h2 className="section-title">Comment utiliser cette directive</h2>
+
+<h3 className="section-title" style={{ fontSize: '1.5rem' }}>Importation de la directive</h3>
+
+<div className="feature-grid">
+  <div className="feature-card">
+    <h3>📄 Importation dans un composant individuel</h3>
+    <p>Vous pouvez importer la directive directement dans un composant Vue où vous en avez besoin :</p>
+    <div className="code-example">
+      ```vue
+      <script setup lang="ts">
+      import { vRgaaSvgFix } from '@cnamts/synapse'
+      </script>
+
+      <template>
+        <v-icon v-rgaa-svg-fix>mdi-home</v-icon>
+      </template>
+      ```
+    </div>
+  </div>
+  
+  <div className="feature-card">
+    <h3>🌐 Enregistrement global dans votre application</h3>
+    <p>Pour utiliser la directive dans toute votre application, vous pouvez l'enregistrer globalement dans votre fichier principal (généralement <code>main.ts</code>) :</p>
+    <div className="code-example">
+      ```typescript
+      import { createApp } from 'vue'
+      import App from './App.vue'
+      import { vRgaaSvgFix } from '@cnamts/synapse'
+
+      const app = createApp(App)
+
+      // Enregistrement global de la directive
+      app.directive('rgaa-svg-fix', vRgaaSvgFix)
+
+      app.mount('#app')
+      ```
+    </div>
+  </div>
+</div>
+
+<h3 className="section-title" style={{ fontSize: '1.5rem' }}>Utilisation dans vos composants</h3>
+
+<div className="feature-grid">
+  <div className="feature-card">
+    <h3>🧩 Avec les composants du Design System</h3>
+    <p>Il est recommandé d'utiliser le composant <code>SyIcon</code> qui intègre déjà cette directive, plutôt que d'appliquer manuellement la directive sur des <code>v-icon</code>.</p>
+    <div className="code-example">
+      ```vue
+      <!-- Icône décorative (par défaut) -->
+      <SyIcon icon="mdi-home" />
+
+      <!-- Icône informative avec label personnalisé -->
+      <SyIcon 
+        icon="mdi-alert" 
+        decorative="false" 
+        label="Attention, information importante"
+      />
+      ```
+    </div>
+  </div>
+  
+  <div className="feature-card">
+    <h3>🔧 Avec les composants Vuetify</h3>
+    <p>Si vous devez utiliser directement des composants <code>v-icon</code> de Vuetify dans votre projet, vous pouvez appliquer la directive comme suit :</p>
+    <div className="code-example">
+      ```vue
+      <!-- Pour une icône décorative (par défaut) -->
+      <v-icon v-rgaa-svg-fix>mdi-account</v-icon>
+
+      <!-- Pour une icône fonctionnelle sans label spécifique -->
+      <v-icon v-rgaa-svg-fix="false">mdi-account</v-icon>
+
+      <!-- Pour une icône fonctionnelle avec un label personnalisé -->
+      <v-icon
+        v-rgaa-svg-fix="false"
+        aria-label="Profil utilisateur"
+      >
+        mdi-account
+      </v-icon>
+      ```
+    </div>
+  </div>
+</div>
+
+<h2 className="section-title">Bonnes pratiques</h2>
+
+<div className="feature-grid">
+  <div className="best-practice">
+    <h3 className="best-practice-title">🔍 Identifiez correctement le type d'icône</h3>
+    <p>Déterminez si votre icône est purement décorative ou si elle transmet une information importante.</p>
+  </div>
+  
+  <div className="best-practice">
+    <h3 className="best-practice-title">🏷️ Utilisez des labels explicites</h3>
+    <p>Pour les icônes informatives, fournissez toujours un <code>aria-label</code> descriptif qui explique clairement la fonction de l'icône.</p>
+  </div>
+  
+  <div className="best-practice">
+    <h3 className="best-practice-title">🔄 Évitez la redondance</h3>
+    <p>Si l'icône est accompagnée d'un texte qui explique déjà sa fonction, considérez-la comme décorative pour éviter que les lecteurs d'écran ne répètent la même information.</p>
+  </div>
+  
+  <div className="best-practice">
+    <h3 className="best-practice-title">🧪 Testez avec des lecteurs d'écran</h3>
+    <p>Vérifiez régulièrement que vos icônes sont correctement annoncées (ou ignorées) par les technologies d'assistance.</p>
+  </div>
+</div>
+
+<h2 className="section-title">Exemples concrets</h2>
+
+<div className="feature-grid">
+  <div className="feature-card">
+    <h3>➕ Bouton "Ajouter" avec icône</h3>
+    <div className="warning-box" style={{ margin: '1rem 0' }}>
+      <h4>❌ MAUVAIS</h4>
+      <p>L'icône et le texte seraient tous deux annoncés :</p>
+      <div className="code-example">
+        ```vue
+        <v-btn>
+          <v-icon v-rgaa-svg-fix="false" aria-label="Ajouter">mdi-plus</v-icon>
+          Ajouter
+        </v-btn>
+        ```
+      </div>
+    </div>
+    <div className="info-box" style={{ margin: '1rem 0' }}>
+      <h4>✅ BON</h4>
+      <p>L'icône est décorative car le texte suffit :</p>
+      <div className="code-example">
+        ```vue
+        <v-btn>
+          <v-icon v-rgaa-svg-fix>mdi-plus</v-icon>
+          Ajouter
+        </v-btn>
+        ```
+      </div>
+    </div>
+  </div>
+  
+  <div className="feature-card">
+    <h3>🔔 Icône de notification sans texte</h3>
+    <div className="warning-box" style={{ margin: '1rem 0' }}>
+      <h4>❌ MAUVAIS</h4>
+      <p>L'icône serait ignorée par les lecteurs d'écran :</p>
+      <div className="code-example">
+        ```vue
+        <v-icon v-rgaa-svg-fix>mdi-bell</v-icon>
+        ```
+      </div>
+    </div>
+    <div className="info-box" style={{ margin: '1rem 0' }}>
+      <h4>✅ BON</h4>
+      <p>L'icône est informative et a un label explicite :</p>
+      <div className="code-example">
+        ```vue
+        <v-icon v-rgaa-svg-fix="false" aria-label="Notifications (3 non lues)">
+          mdi-bell
+        </v-icon>
+        ```
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="directive-header" style={{ background: '#e3e8f2', color: '#0c419a', marginTop: '3rem' }}>
+  <h2 style={{ margin: '0 0 1rem 0' }}>Conclusion</h2>
+  <p>La directive <code>v-rgaa-svg-fix</code> est un outil essentiel pour garantir que les icônes SVG de votre application respectent les normes d'accessibilité RGAA. En l'utilisant correctement, vous améliorez l'expérience des utilisateurs de technologies d'assistance et vous contribuez à rendre votre application plus inclusive.</p>
+</div>
