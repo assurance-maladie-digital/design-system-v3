@@ -62,7 +62,7 @@ export const Header: StoryObj = {
 							href="https://github.com/assurance-maladie-digital/design-system-v3"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="d-flex align-center justify-center text-lowercase"
+							class="d-flex align-center justify-center text-lowercase ml-2"
 						>
 							<b>v{{ version }}</b>
 							<VIcon size="large" class="ml-2">{{ githubIcon }}</VIcon>
