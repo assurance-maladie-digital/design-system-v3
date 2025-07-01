@@ -1248,7 +1248,7 @@
 /* Style pour les jours fériés */
 :deep(.holiday-day) {
 	background-color: rgb(255 193 7 / 10%);
-	border: 2px solid #2d2d2d;
+	border: 2px dotted tokens.$neutral-black;
 	border-radius: 50%;
 }
 
