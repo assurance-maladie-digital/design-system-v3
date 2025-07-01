@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+	// Prevent display-asterisk from being passed to the DOM
+	defineOptions({
+		inheritAttrs: false
+	})
 	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
@@ -10,6 +14,8 @@
 		mdiInformation,
 		mdiCalendar,
 	} from '@mdi/js'
+
+
 
 	const props = withDefaults(
 		defineProps<{
@@ -164,6 +170,8 @@
 		'prepend-icon-click',
 		'append-icon-click',
 	])
+
+
 
 	const model = computed({
 		get() {
@@ -399,6 +407,7 @@
 		:type="props.type"
 		:variant="props.variantStyle"
 		:width="props.width"
+		v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
 		:class="{
 			'error-field': hasError,
 			'warning-field': hasWarning,

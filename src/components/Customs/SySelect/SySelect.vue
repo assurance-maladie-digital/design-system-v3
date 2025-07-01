@@ -1,4 +1,8 @@
 <script setup lang="ts">
+	// Prevent display-asterisk from being passed to the DOM
+	defineOptions({
+		inheritAttrs: false
+	})
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
 	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
 	import type { VTextField } from 'vuetify/components'
@@ -458,7 +462,6 @@
 			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
-			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
 			:density="props.density"
 			:active="hasChips || isOpen"
@@ -467,6 +470,7 @@
 			class="sy-select"
 			:width="calculatedWidth"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
+			v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
