@@ -100,6 +100,10 @@ const meta = {
 			control: 'boolean',
 			description: 'Active le clamping automatique des dates',
 		},
+		displayHolidayDays: {
+			control: 'boolean',
+			description: 'Affiche les jours fériés',
+		},
 	},
 } as Meta<typeof DatePicker>
 
@@ -144,6 +148,7 @@ export const Default: Story = {
 		'disabled': false,
 		'noIcon': false,
 		'noCalendar': false,
+		'displayHolidayDays': true,
 		'modelValue': '',
 		'displayTodayButton': true,
 		'onUpdate:modelValue': fn(),
@@ -161,6 +166,78 @@ export const Default: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Sélectionner une date"
+						required
+						format="DD/MM/YYYY"
+					  />
+					  	<DatePicker
+						v-model="date"
+						placeholder="Sélectionner une date"
+						required
+						displayAsterisk
+						format="DD/MM/YYYY"
+					  />
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePicker } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': true,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'displayHolidayDays': true,
+		'modelValue': '',
+		'displayTodayButton': true,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker: DatePicker },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+				<h4 class="mb-4">Sans astérisque :</h4>
+                <DatePicker v-bind="args" v-model="value"/>
+				<h4 class="mb-4">Avec astérisque :</h4>
+				<DatePicker v-bind="args" v-model="value" displayAsterisk/>
               </div>
             `,
 		}

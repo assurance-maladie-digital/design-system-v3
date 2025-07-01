@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
 import { nextTick } from 'vue'
-import DatePicker from './DatePicker.vue'
+import DatePicker from '../DatePicker.vue'
 
 describe('DatePicker.vue - Events', () => {
 	let wrapper

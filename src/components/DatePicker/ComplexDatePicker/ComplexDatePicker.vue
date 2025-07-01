@@ -12,6 +12,7 @@
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import { useMonthButtonCustomization } from '../composables'
 	import { mdiCalendar } from '@mdi/js'
+	import { useHolidayDay } from '@/composables/date/useHolidayDay'
 	import {
 		useTodayButton,
 		useDatePickerViewMode,
@@ -24,6 +25,7 @@
 		useInputBlurHandler,
 		useDatePickerVisibility,
 		useDisplayedDateString,
+		useAsteriskDisplay,
 	} from '../composables'
 
 	import dayjs from 'dayjs'
@@ -43,23 +45,41 @@
 	const currentYearName = ref<string | null>(null)
 
 	const onUpdateMonth = (month: string) => {
+		// Éviter les mises à jour inutiles si le mois n'a pas changé
+		if (currentMonth.value === month) return
+
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
 		handleMonthUpdate()
 		nextTick(() => {
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
+				markHolidayDays()
 			}
 		})
 	}
 
 	const onUpdateYear = (year: string) => {
+		const oldYear = currentYear.value
 		currentYear.value = year
 		currentYearName.value = year
+
+		// Gérer le changement d'année entre décembre et janvier
+		if (parseInt(year) > parseInt(oldYear || '0') && parseInt(currentMonth.value || '0') === 11) {
+			currentMonth.value = '0'
+			currentMonthName.value = dayjs().month(0).format('MMMM')
+		}
+		else if (parseInt(year) < parseInt(oldYear || '0') && parseInt(currentMonth.value || '0') === 0) {
+			currentMonth.value = '11'
+			currentMonthName.value = dayjs().month(11).format('MMMM')
+		}
+
 		handleYearUpdate()
+		handleMonthUpdate()
 		nextTick(() => {
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
+				markHolidayDays()
 			}
 		})
 	}
@@ -92,6 +112,7 @@
 
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
+		label?: string
 		placeholder?: string
 		format?: string
 		dateFormatReturn?: string
@@ -119,6 +140,8 @@
 		textFieldActivator?: boolean
 		displayTodayButton?: boolean
 		displayWeekendDays?: boolean
+		displayHolidayDays?: boolean
+		displayAsterisk?: boolean
 		period?: {
 			min?: string
 			max?: string
@@ -151,11 +174,14 @@
 		textFieldActivator: false,
 		displayTodayButton: true,
 		displayWeekendDays: true,
+		displayHolidayDays: true,
+		displayAsterisk: false,
 		period: () => ({
 			min: '',
 			max: '',
 		}),
 		autoClamp: false,
+		label: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 	})
 
 	// Computed properties pour period
@@ -535,6 +561,46 @@
 		emit('blur')
 	}
 
+	// Utilisation du composable pour les jours fériés
+	const { getJoursFeries } = useHolidayDay()
+
+	// Fonction pour marquer les jours fériés dans le calendrier
+	const markHolidayDays = () => {
+		// Si l'affichage des jours fériés est désactivé, ne rien faire
+		if (!props.displayHolidayDays) return
+
+		// Attendre que le DOM soit mis à jour
+		nextTick(() => {
+			// Récupérer l'année et le mois courants
+			const year = parseInt(currentYear.value || new Date().getFullYear().toString(), 10)
+			// Utiliser currentMonth.value !== null pour vérifier si la valeur est définie, même si c'est 0
+			const month = parseInt(currentMonth.value !== null ? currentMonth.value : new Date().getMonth().toString(), 10)
+
+			// Récupérer les jours fériés pour cette année
+			const joursFeries = getJoursFeries(year)
+			// Convertir les jours fériés en objets Date
+			const holidayDates = Array.from(joursFeries).map((dateStr) => {
+				const [day, monthStr, yearStr] = dateStr.split('/')
+				return new Date(parseInt(yearStr), parseInt(monthStr) - 1, parseInt(day))
+			})
+
+			// Filtrer les jours fériés pour le mois courant
+			const monthHolidays = holidayDates.filter((holiday) => {
+				return holiday.getMonth() === month && holiday.getFullYear() === year
+			})
+
+			// Pour chaque jour férié, trouver l'élément DOM correspondant et ajouter la classe
+			monthHolidays.forEach((holiday) => {
+				const day = holiday.getDate()
+				const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+				const dayElements = document.querySelectorAll(`[data-v-date="${dateStr}"]`)
+				dayElements.forEach((element) => {
+					element.classList.add('holiday-day')
+				})
+			})
+		})
+	}
+
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
 
@@ -686,6 +752,11 @@
 		if (isVisible) {
 			// Personnaliser le bouton du mois
 			customizeMonthButton()
+
+			// Marquer les jours fériés lorsque le calendrier devient visible
+			if (props.displayHolidayDays) {
+				markHolidayDays()
+			}
 
 			// set the focus on the date picker
 			await nextTick()
@@ -969,6 +1040,7 @@
 	})
 
 	const { todayInString, selectToday } = useTodayButton(props)
+	const { labelWithAsterisk } = useAsteriskDisplay(props)
 
 	// Utilisation du composable pour l'affichage formaté des dates
 	const { displayedDateString } = useDisplayedDateString({
@@ -1025,7 +1097,7 @@
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:date-format-return="props.dateFormatReturn"
 				:format="props.format"
-				:label="props.placeholder"
+				:label="labelWithAsterisk"
 				:placeholder="props.placeholder"
 				:required="props.required"
 				:custom-rules="props.customRules"
@@ -1041,6 +1113,7 @@
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
 				:auto-clamp="props.autoClamp"
+				:display-asterisk="props.displayAsterisk"
 				title="Date text input"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -1064,6 +1137,7 @@
 						v-bind="menuProps"
 						ref="dateCalendarTextInputRef"
 						v-model="textInputValue"
+						:label="labelWithAsterisk"
 						:placeholder="props.placeholder"
 						:format="props.format"
 						:date-format-return="props.dateFormatReturn"
@@ -1077,6 +1151,7 @@
 						:no-icon="props.noIcon"
 						:custom-rules="props.customRules"
 						:custom-warning-rules="props.customWarningRules"
+						:display-asterisk="props.displayAsterisk"
 						:disable-error-handling="props.disableErrorHandling"
 						:show-success-messages="props.showSuccessMessages"
 						:bg-color="props.bgColor"
@@ -1108,11 +1183,15 @@
 					:view-mode="currentViewMode"
 					:max="maxDate"
 					:min="minDate"
+					:display-holiday-days="props.displayHolidayDays"
+					:display-asterisk="props.displayAsterisk"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"
 					@update:year="onUpdateYear"
 					@click:date="updateSelectedDates"
+					@focus="props.displayHolidayDays ? markHolidayDays : undefined"
+					@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
 				>
 					<template #title>
 						Sélectionnez une date
@@ -1164,6 +1243,13 @@
 		background-color: transparent !important;
 		pointer-events: none !important;
 	}
+}
+
+/* Style pour les jours fériés */
+:deep(.holiday-day) {
+	background-color: rgb(255 193 7 / 10%);
+	border: 2px dotted tokens.$neutral-black;
+	border-radius: 50%;
 }
 
 :deep(.v-date-picker-controls .v-btn:last-child) {
