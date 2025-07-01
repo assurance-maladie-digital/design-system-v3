@@ -433,6 +433,18 @@
 		}
 		window.addEventListener('scroll', updateListPosition, true)
 		window.addEventListener('resize', updateListPosition)
+
+		// Use nextTick to ensure the DOM is fully rendered
+		nextTick(() => {
+			if (input.value && input.value.$el) {
+				// Find the input element
+				const inputElement = input.value.$el.querySelector('input')
+				if (inputElement) {
+					// Remove the aria-describedby attribute
+					inputElement.removeAttribute('aria-describedby')
+				}
+			}
+		})
 	})
 
 	onUnmounted(() => {

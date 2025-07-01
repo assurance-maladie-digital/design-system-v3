@@ -342,6 +342,12 @@
 			setAriaHidden('.v-text-field__suffix')
 			addSrOnlySpan('.v-text-field__prefix')
 			addSrOnlySpan('.v-text-field__suffix')
+
+			// Remove aria-describedby attribute
+			const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
+			if (inputElement) {
+				inputElement.removeAttribute('aria-describedby')
+			}
 		})
 	})
 
