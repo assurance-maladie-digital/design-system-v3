@@ -622,7 +622,7 @@
 	})
 
 	// Variables to hold observers
-	const ariaObserver = ref(null)
+	const ariaObserver = ref<MutationObserver | null>(null)
 
 	// Function to fix ARIA attributes that cause validation errors
 	function fixAriaAttributes() {
@@ -677,7 +677,7 @@
 					&& (mutation.attributeName === 'aria-haspopup'
 						|| mutation.attributeName === 'aria-expanded'
 						|| mutation.attributeName === 'aria-controls')) {
-					const element = mutation.target
+					const element = mutation.target as Element
 					// Remove the problematic attribute
 					element.removeAttribute(mutation.attributeName)
 				}
