@@ -311,20 +311,20 @@
 		internalToDate.value = formatDateValue(props.modelValue?.to)
 		// Validation initiale
 		validateFields()
-		
+
 		// Fix ARIA attributes to prevent validation errors
 		nextTick(() => {
 			fixAriaAttributes()
 		})
 	})
-	
+
 	// Function to fix ARIA attributes that cause validation errors
 	function fixAriaAttributes() {
 		try {
 			// Get the root element of the component
 			const rootElement = document.querySelector('.period-field-container')
 			if (!rootElement) return
-			
+
 			// Find all elements with invalid ARIA attributes
 			const elementsWithAriaHaspopup = rootElement.querySelectorAll('[aria-haspopup="menu"]')
 			elementsWithAriaHaspopup.forEach((element) => {
@@ -332,7 +332,7 @@
 				element.removeAttribute('aria-expanded')
 				element.removeAttribute('aria-controls')
 			})
-			
+
 			// Find input elements with invalid ARIA attributes
 			const inputElements = rootElement.querySelectorAll('input[aria-haspopup="menu"]')
 			inputElements.forEach((input) => {

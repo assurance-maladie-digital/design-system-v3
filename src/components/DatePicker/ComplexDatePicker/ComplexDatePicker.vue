@@ -614,22 +614,22 @@
 
 		// Configurer l'observateur pour le bouton du mois
 		setupMonthButtonObserver()
-		
+
 		// Fix ARIA attributes to prevent validation errors
 		nextTick(() => {
 			fixAriaAttributes()
 		})
 	})
-	
+
 	// Variables to hold observers
 	const ariaObserver = ref(null)
-	
+
 	// Function to fix ARIA attributes that cause validation errors
 	function fixAriaAttributes() {
 		try {
 			// First, clean up any existing attributes
 			cleanupAriaAttributes()
-			
+
 			// Then set up an observer to continuously monitor and remove these attributes
 			setupAriaObserver()
 		}
@@ -637,59 +637,58 @@
 			console.error('Error fixing ARIA attributes:', error)
 		}
 	}
-	
+
 	// Function to clean up ARIA attributes
 	function cleanupAriaAttributes() {
 		// Get all date picker containers
 		const datePickerContainers = document.querySelectorAll('.date-picker-container')
-		datePickerContainers.forEach(container => {
+		datePickerContainers.forEach((container) => {
 			container.removeAttribute('aria-haspopup')
 			container.removeAttribute('aria-expanded')
 			container.removeAttribute('aria-controls')
 		})
-		
+
 		// Find all input elements with invalid ARIA attributes
 		const inputElements = document.querySelectorAll('input')
-		inputElements.forEach(input => {
+		inputElements.forEach((input) => {
 			input.removeAttribute('aria-haspopup')
 			input.removeAttribute('aria-expanded')
 			input.removeAttribute('aria-controls')
 		})
 	}
-	
+
 	// Function to set up MutationObserver for ARIA attributes
 	function setupAriaObserver() {
 		// Disconnect any existing observer
 		if (ariaObserver.value) {
 			ariaObserver.value.disconnect()
 		}
-		
+
 		// Create a new observer
-		ariaObserver.value = new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				if (mutation.type === 'attributes' && 
-					(mutation.attributeName === 'aria-haspopup' || 
-					mutation.attributeName === 'aria-expanded' || 
-					mutation.attributeName === 'aria-controls')) {
-					
+		ariaObserver.value = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (mutation.type === 'attributes'
+					&& (mutation.attributeName === 'aria-haspopup'
+						|| mutation.attributeName === 'aria-expanded'
+						|| mutation.attributeName === 'aria-controls')) {
 					const element = mutation.target
 					// Remove the problematic attribute
 					element.removeAttribute(mutation.attributeName)
 				}
 			})
 		})
-		
+
 		// Observe the entire document for attribute changes
 		ariaObserver.value.observe(document.body, {
 			subtree: true,
 			attributes: true,
-			attributeFilter: ['aria-haspopup', 'aria-expanded', 'aria-controls']
+			attributeFilter: ['aria-haspopup', 'aria-expanded', 'aria-controls'],
 		})
 	}
 
 	onBeforeUnmount(() => {
 		document.removeEventListener('click', handleClickOutside)
-		
+
 		// Disconnect the ARIA observer
 		if (ariaObserver.value) {
 			ariaObserver.value.disconnect()
