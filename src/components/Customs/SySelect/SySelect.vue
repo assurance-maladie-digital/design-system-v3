@@ -1,4 +1,8 @@
 <script setup lang="ts">
+	// Prevent display-asterisk from being passed to the DOM
+	defineOptions({
+		inheritAttrs: false,
+	})
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
 	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
 	import type { VTextField } from 'vuetify/components'
@@ -429,6 +433,18 @@
 		}
 		window.addEventListener('scroll', updateListPosition, true)
 		window.addEventListener('resize', updateListPosition)
+
+		// Use nextTick to ensure the DOM is fully rendered
+		nextTick(() => {
+			if (input.value && input.value.$el) {
+				// Find the input element
+				const inputElement = input.value.$el.querySelector('input')
+				if (inputElement) {
+					// Remove the aria-describedby attribute
+					inputElement.removeAttribute('aria-describedby')
+				}
+			}
+		})
 	})
 
 	onUnmounted(() => {
@@ -458,7 +474,6 @@
 			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
-			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
 			:density="props.density"
 			:active="hasChips || isOpen"
@@ -467,6 +482,7 @@
 			class="sy-select"
 			:width="calculatedWidth"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
+			v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"

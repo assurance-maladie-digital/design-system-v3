@@ -73,6 +73,7 @@ export type SyTableProps = {
 	resizableColumns?: boolean
 	enableColumnControls?: boolean
 	headers?: DataTableHeaders[]
+	showSelect?: boolean
 }
 
 export type SyServerTableProps = {
@@ -87,4 +88,5 @@ export type SyServerTableProps = {
 	striped?: boolean
 	enableColumnControls?: boolean
 	headers?: DataTableHeaders[]
+	showSelect?: boolean
 }

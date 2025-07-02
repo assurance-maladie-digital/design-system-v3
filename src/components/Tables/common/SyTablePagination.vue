@@ -1,14 +1,17 @@
 <script setup lang="ts">
-	import { computed, ref, nextTick, watch } from 'vue'
+	import { computed, ref, nextTick, watch, onMounted } from 'vue'
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 	import { locales } from './locales'
 
 	// Generate unique ID for this pagination instance
 	const uniqueId = ref(`pagination-${Math.random().toString(36).substr(2, 9)}`)
 
+	// Reference to the SySelect component
+	const selectRef = ref<InstanceType<typeof SySelect> | null>(null)
+
 	// Items per page options - standard options and current value
 	const itemsPerPageOptions = computed(() => {
-		const standardOptions = [10, 25, 50, 100]
+		const standardOptions = [5, 10, 25, 50, 100]
 
 		// Add the current itemsPerPage if it's not already in the standard options
 		// and it's not -1 (which represents "Tous")
@@ -144,6 +147,21 @@
 			emit('update:items-per-page', newValue)
 		})
 	})
+
+	// Remove aria-describedby attribute after component is mounted
+	onMounted(() => {
+		// Use nextTick to ensure the DOM is fully rendered
+		nextTick(() => {
+			if (selectRef.value && selectRef.value.$el) {
+				// Find the input element
+				const inputElement = selectRef.value.$el.querySelector('input')
+				if (inputElement) {
+					// Remove the aria-describedby attribute
+					inputElement.removeAttribute('aria-describedby')
+				}
+			}
+		})
+	})
 </script>
 
 <template>
@@ -232,6 +250,7 @@
 		<div class="rows-per-page">
 			<span class="rows-per-page-label">{{ locales.pagination.itemsPerPageText }}</span>
 			<SySelect
+				ref="selectRef"
 				v-model="localItemsPerPage"
 				:items="itemsPerPageOptions"
 				hide-details
@@ -332,7 +351,7 @@
 				}
 
 				&.disabled {
-					color: rgb(0 0 0 / 40%);
+					color: rgb(0 0 0 / 60%); /* Increased from 40% to 60% for better contrast */
 					border-color: rgb(0 0 0 / 20%);
 					pointer-events: none;
 				}

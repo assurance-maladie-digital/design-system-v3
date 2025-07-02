@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, onMounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
@@ -14,6 +15,7 @@
 	import { useTableHeaders } from '../common/useTableHeaders'
 	import { useTableItems } from '../common/useTableItems'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
+	import { useTableCheckbox } from '../common/useTableCheckbox'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
@@ -24,6 +26,7 @@
 		filterInputConfig: () => ({}),
 		density: 'default',
 		striped: false,
+		showSelect: false,
 	})
 
 	const emit = defineEmits<{
@@ -33,6 +36,11 @@
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
+	})
+
+	const model = defineModel<unknown[]>('modelValue', {
+		required: false,
+		default: () => [],
 	})
 
 	const table = ref<VDataTableServer>()
@@ -98,6 +106,46 @@
 		emit,
 	})
 
+	// Create a computed property for items to ensure reactivity
+	const tableItems = computed(() => props.items)
+
+	// Function to add accessibility attributes to row checkboxes
+	const accessibilityRowCheckboxes = () => {
+		nextTick(() => {
+			setTimeout(() => {
+				const tableElement = document.getElementById(uniqueTableId.value)
+				if (!tableElement) return
+
+				// Find all row checkboxes
+				const rowCheckboxes = tableElement.querySelectorAll('td .v-selection-control input[type="checkbox"]')
+				rowCheckboxes.forEach((checkbox, index) => {
+					const rowLabel = `${locales.selectRow} ${index + 1}`
+					checkbox.setAttribute('aria-label', rowLabel)
+					checkbox.setAttribute('title', rowLabel)
+				})
+			}, 100) // Small delay to ensure DOM is updated
+		})
+	}
+
+	// Watch for changes that might affect the table and update accessibility
+	watch(() => props.items, accessibilityRowCheckboxes, { deep: true })
+	watch(() => props.serverItemsLength, accessibilityRowCheckboxes)
+	watch(() => page.value, accessibilityRowCheckboxes)
+
+	// Apply accessibility attributes when component is mounted
+	onMounted(() => {
+		accessibilityRowCheckboxes()
+	})
+
+	// Use the table checkbox composable
+	const { getItemValue, toggleAllRows } = useTableCheckbox({
+		items: tableItems,
+		modelValue: model,
+		updateModelValue: (value) => {
+			model.value = value
+		},
+	})
+
 	defineExpose({ filterItems })
 
 	setupAccessibility()
@@ -157,11 +205,15 @@
 		<VDataTableServer
 			ref="table"
 			v-bind="propsFacade"
+			v-model="model"
 			:headers="displayHeaders"
 			color="primary"
 			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
 			:items-length="props.serverItemsLength || 0"
 			:density="props.density"
+			:show-select="props.showSelect"
+			:item-selectable="(item) => true"
+			:item-value="getItemValue"
 			@update:options="updateOptions"
 		>
 			<template #top>
@@ -181,12 +233,31 @@
 							:key="column.key"
 						>
 							<th>
-								<TableHeader
-									:table="table"
-									:header-params="slotProps"
-									:column="column"
-									:resizable-columns="props.resizableColumns"
-								/>
+								<template v-if="column.key === 'data-table-select' && props.showSelect">
+									<SyCheckbox
+										:model-value="slotProps.allSelected"
+										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
+										color="primary"
+										density="compact"
+										hide-details
+										:is-header="true"
+										:aria-label="locales.selectAllRows"
+										:title="locales.selectAllRows"
+										@click="toggleAllRows"
+									>
+										<template #label>
+											<span class="d-sr-only">{{ locales.selectAllRows }}</span>
+										</template>
+									</SyCheckbox>
+								</template>
+								<template v-else>
+									<TableHeader
+										:table="table"
+										:header-params="slotProps"
+										:column="column"
+										:resizable-columns="props.resizableColumns"
+									/>
+								</template>
 							</th>
 						</template>
 					</tr>
@@ -194,8 +265,9 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
+						<th v-if="props.showSelect" />
 						<template
-							v-for="column in slotProps.columns"
+							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key"
 						>
 							<th>
@@ -277,6 +349,7 @@
 					</tr>
 				</template>
 			</template>
+
 			<template #bottom>
 				<div class="d-flex align-center pa-2">
 					<OrganizeColumns
