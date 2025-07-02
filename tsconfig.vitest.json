@@ -24,7 +24,7 @@
 		"lib": [],
 		"types": [
 			"node",
-			"jsdom"
+			"happy-dom"
 		]
 	}
 }
