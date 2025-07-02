@@ -14,20 +14,29 @@ export const Header: StoryObj = {
 		return {
 			components: { VBtn, VIcon, VCol, VRow },
 			setup() {
+				const theme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
 				return {
 					arrowRight: mdiArrowRight,
 					githubIcon: mdiGithub,
 					version,
+					theme,
 				}
 			},
 			template: `
               <div>
-				  <span style="position: absolute; top:0; left:-1000px; background-color: rgba(12, 65, 154, 0.2); width: 1000%; height: 100%; z-index: 0" />
+				  <span v-if="theme === 'pa'"
+						style="position: absolute; top:0; left:-1000px; background-color: rgba(183,203,214, 0.7); width: 1000%; height: 100%; z-index: 0"
+				  />
+				  <span v-if="theme === 'cnam'"
+						style="position: absolute; top:0; left:-1000px; background-color: rgba(12, 65, 154, 0.2); width: 1000%; height: 100%; z-index: 0"
+				  />
 				  <VRow cols="12" style="z-index: 1; position: relative">
 					  <VCol md="6" sm="12">
 						  <h1 class="font-weight-bold text-h4 mb-2">Synapse</h1>
 						  <img alt="line" src="/home-line.svg" width="120" height="5" class="mb-5" />
-						  <h2 class="text-h4 mb-5">Documentation d'aide<br/> à la fabrication des IHM<br/>de la CNAM</h2>
+						  <h2 class="text-h4 mb-5">Documentation d'aide<br/> à la fabrication des IHM<br/>
+							  <span v-if="theme === 'pa'">de Portail Agent</span>
+							  <span v-if="theme === 'cnam'">de la CNAM</span></h2>
 						  <VBtn color="primary" href="/?path=/docs/d%C3%A9marrer-introduction--docs">
 							  Démarrer
 							  <VIcon size="small" class="ml-2" right>{{arrowRight}}</VIcon>
@@ -68,9 +77,15 @@ export const Header: StoryObj = {
 export const Welcome: StoryObj = {
 	render: () => {
 		return {
+			setup() {
+				const theme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
+				return {
+					theme,
+				}
+			},
 			template: `
               <div class="mt-12 mb-12">
-                  <p>Bienvenue dans notre guide d'aide à la conception, pensé par et pour les équipes de la CNAM.</p>
+                  <p>Bienvenue dans notre guide d'aide à la conception, pensé par et pour les équipes <span v-if="theme === 'pa'">de Portail Agent</span><span v-if="theme === 'cnam'">de la CNAM</span>.</p>
                   <p class="mt-4">Ce guide a été conçu pour accompagner chaque membre de l'équipe dans la création de plateformes web de qualité, alignées avec nos standards et nos valeurs.</p>
                   <p class="mt-4">Vous y trouverez toutes les ressources essentielles pour vous guider tout au long du processus de conception :</p>
               </div>
