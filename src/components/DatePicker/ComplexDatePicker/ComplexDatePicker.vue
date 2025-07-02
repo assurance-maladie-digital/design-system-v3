@@ -3,7 +3,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
-	import { vAccessibleButtons } from '../accessibleButtons'
+	import { vAccessibleButtons } from '../directives'
 	import { useInputHandler } from '../composables/useInputHandler'
 	import { useValidation } from '@/composables/validation/useValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
@@ -1260,9 +1260,9 @@
 				</template>
 				<VDatePicker
 					v-if="isDatePickerVisible && !props.noCalendar"
-					v-accessible-buttons
 					ref="datePickerRef"
 					v-model="selectedDates"
+					v-accessible-buttons
 					color="primary"
 					:class="props.displayWeekendDays ? 'weekend' : ''"
 					:first-day-of-week="1"
