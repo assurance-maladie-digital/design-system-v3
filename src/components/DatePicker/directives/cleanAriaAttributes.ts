@@ -16,7 +16,7 @@ export const vCleanAriaAttributes = {
 
 			// Nettoyer les attributs ARIA sur les champs input
 			const inputs = el.querySelectorAll('input')
-			inputs.forEach(input => {
+			inputs.forEach((input) => {
 				input.removeAttribute('aria-expanded')
 				input.removeAttribute('aria-haspopup')
 				input.removeAttribute('aria-controls')
@@ -29,8 +29,8 @@ export const vCleanAriaAttributes = {
 		// Observer les changements d'attributs pour nettoyer dynamiquement
 		const observer = new MutationObserver((mutations) => {
 			mutations.forEach((mutation) => {
-				if (mutation.type === 'attributes' && 
-					['aria-haspopup', 'aria-expanded', 'aria-controls'].includes(mutation.attributeName || '')) {
+				if (mutation.type === 'attributes'
+					&& ['aria-haspopup', 'aria-expanded', 'aria-controls'].includes(mutation.attributeName || '')) {
 					// Nettoyer à nouveau les attributs ARIA
 					cleanAriaAttributes()
 				}
