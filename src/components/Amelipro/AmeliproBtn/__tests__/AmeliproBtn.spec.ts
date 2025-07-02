@@ -7,9 +7,7 @@ import type { ExpectedPropOptions } from '@tests/types'
 import TestHelper from '@tests/helpers/TestHelper'
 import { VBtn } from 'vuetify/components'
 
-const Mock = AmeliproBtn
-
-const expectedPropOptions: ExpectedPropOptions<typeof Mock> = {
+const expectedPropOptions: ExpectedPropOptions<typeof AmeliproBtn> = {
 	badge: {
 		type: [Boolean, Number, String],
 		default: false,
@@ -121,10 +119,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof Mock> = {
 }
 
 // Values pour les props "required"
-const requiredPropValues = (): ComponentProps<typeof Mock> => ({})
+const requiredPropValues = (): ComponentProps<typeof AmeliproBtn> => ({})
 
 // Valeurs pour les props "modified"
-const modifiedPropValues = (): ComponentProps<typeof Mock> => ({
+const modifiedPropValues = (): ComponentProps<typeof AmeliproBtn> => ({
 	badge: true,
 	badgeBgColor: 'ap-parme-darken-1',
 	badgeColor: 'ap-parme',
@@ -154,7 +152,7 @@ const modifiedPropValues = (): ComponentProps<typeof Mock> => ({
 	uniqueId: 'modified-unique-id',
 })
 
-const testHelper = new TestHelper(Mock)
+const testHelper = new TestHelper(AmeliproBtn)
 testHelper.setExpectedPropOptions(expectedPropOptions)
 	.setRequiredPropValues(requiredPropValues)
 	.setModifiedPropValues(modifiedPropValues)
@@ -169,51 +167,51 @@ describe('AmeliproBtn', () => {
 	})
 
 	describe('Setting props should update attributes of inner tags', () => {
-		let vueWrapper: VueWrapper<InstanceType<typeof Mock>>
-		const findBadgeWrapperWrapper = () => vueWrapper.find('.amelipro-btn__badge__wrapper')
+		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproBtn>>
+		const findBadgeWrapperWrapper = () => vueWrapper.find('.amelipro-btn__badge-wrapper')
 		const findBadgeWrapper = () => vueWrapper.find('.amelipro-btn__badge')
 
 		beforeEach(() => {
-			vueWrapper = mount(Mock, { props: { ...requiredPropValues(), badge: true, badgeBgColor: 'ap-black', badgeColor: 'ap-white' } })
+			vueWrapper = mount(AmeliproBtn, { props: { ...requiredPropValues(), badge: true, badgeBgColor: 'ap-black', badgeColor: 'ap-white' } })
 		})
 
 		describe('badge wrapper', () => {
 			it('prop infoBlock & iconLeft sets attribute class', async () => {
 				expect(findBadgeWrapperWrapper().exists()).toBe(true)
-				expect(findBadgeWrapperWrapper().attributes('class')).toBe('amelipro-btn__badge__wrapper amelipro-btn__icon--right')
+				expect(findBadgeWrapperWrapper().attributes('class')).toBe('amelipro-btn__badge-wrapper amelipro-btn__icon--right')
 
 				const { infoBlock } = modifiedPropValues()
 				await vueWrapper.setProps({ infoBlock })
-				expect(findBadgeWrapperWrapper().attributes('class')).toBe('amelipro-btn__badge__wrapper')
+				expect(findBadgeWrapperWrapper().attributes('class')).toBe('amelipro-btn__badge-wrapper')
 
 				const { iconLeft } = modifiedPropValues()
 				await vueWrapper.setProps({ infoBlock: false, iconLeft })
-				expect(findBadgeWrapperWrapper().attributes('class')).toBe('amelipro-btn__badge__wrapper amelipro-btn__icon--left')
+				expect(findBadgeWrapperWrapper().attributes('class')).toBe('amelipro-btn__badge-wrapper amelipro-btn__icon--left')
 			})
 		})
 
 		describe('badge', () => {
 			it('prop badgeBgColor & badgeColor sets attribute style', async () => {
 				expect(findBadgeWrapper().exists()).toBe(true)
-				expect(findBadgeWrapper().attributes('style')).toBe('background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);')
+				expect(findBadgeWrapper().attributes('style')).toBe('background-color: #000000; color: #FFFFFF;')
 
 				const { badgeBgColor } = modifiedPropValues()
 				await vueWrapper.setProps({ badgeBgColor })
-				expect(findBadgeWrapper().attributes('style')).toBe('background-color: rgb(77, 84, 125); color: rgb(255, 255, 255);')
+				expect(findBadgeWrapper().attributes('style')).toBe('background-color: #4D547D; color: #FFFFFF;')
 
 				const { badgeColor } = modifiedPropValues()
 				await vueWrapper.setProps({ badgeColor })
-				expect(findBadgeWrapper().attributes('style')).toBe('background-color: rgb(77, 84, 125); color: rgb(221, 230, 251);')
+				expect(findBadgeWrapper().attributes('style')).toBe('background-color: #4D547D; color: #C8D1E6;')
 			})
 		})
 	})
 
 	describe('Setting props should update props or attributes of inner components', () => {
-		let vueWrapper: VueWrapper<InstanceType<typeof Mock>>
+		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproBtn>>
 
 		describe('VBtn', () => {
 			beforeEach(() => {
-				vueWrapper = shallowMount(Mock, { props: requiredPropValues() })
+				vueWrapper = shallowMount(AmeliproBtn, { props: requiredPropValues() })
 			})
 
 			// 1. Assertion sur l'attribut id du VBtn
@@ -248,25 +246,23 @@ describe('AmeliproBtn', () => {
 			})
 
 			it('props bordered, color, disabled, text & textColor sets attribute style', async () => {
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('color: rgb(255, 255, 255);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('color: #FFFFFF !important;')
 
 				const { bordered, color, disabled, text, textColor } = modifiedPropValues()
 				await vueWrapper.setProps({ text })
 				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('padding: 0px;')
 
 				await vueWrapper.setProps({ bordered })
-				expect(vueWrapper.findComponent(VBtn).attributes('style'))
-					.toBe('padding: 0px; border: 2px solid rgb(255, 255, 255);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('padding: 0px; border: 2px solid #FFFFFF !important; background-color: white;')
 
-				// TODO: pourquoi "opacity" manque à l'appel quand on utilise 30% à la place de 0.3 (valide selon https://developer.mozilla.org/en-US/docs/Web/CSS/opacity)
 				await vueWrapper.setProps({ disabled })
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('padding: 0px; border: 2px solid rgb(255, 255, 255) !important; opacity: 0.3; color: rgb(0, 116, 156);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('padding: 0px; border: 2px solid #FFFFFF !important; background-color: white; opacity: 30%; color: #00749C !important;')
 
 				await vueWrapper.setProps({ color, textColor })
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('padding: 0px; opacity: 0.3; color: rgb(0, 0, 0); border: 2px solid rgb(0, 0, 0) !important;')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('padding: 0px; border: 2px solid #000 !important; background-color: white; opacity: 30%; color: #000 !important;')
 
 				await vueWrapper.setProps({ text: undefined })
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('opacity: 0.3; color: rgb(0, 0, 0) !important; border: 2px solid rgb(0, 0, 0) !important; background-color: rgb(0, 0, 0);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toBe('border: 2px solid #000 !important; background-color: #000 !important; opacity: 30%; color: #000 !important;')
 			})
 
 			// 2. Assertion sur l'attribut target du VBtn
@@ -290,7 +286,7 @@ describe('AmeliproBtn', () => {
 
 		describe('AmeliproIcon - no badge', () => {
 			beforeEach(() => {
-				vueWrapper = mount(Mock, {
+				vueWrapper = mount(AmeliproBtn, {
 					props: requiredPropValues(),
 					slots: { icon: '<span>Slot icon</span>' },
 				})
@@ -351,28 +347,28 @@ describe('AmeliproBtn', () => {
 	})
 
 	describe('Events & setting props should update props or attributes of inner components', () => {
-		let vueWrapper: VueWrapper<InstanceType<typeof Mock>>
+		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproBtn>>
 		describe('VBtn', () => {
 			beforeEach(() => {
-				vueWrapper = mount(Mock, {
+				vueWrapper = mount(AmeliproBtn, {
 					props: requiredPropValues(),
 					stubs: { AmeliproIcon, VBtn },
 				})
 			})
 
 			it('props text, hoverUnderline & classes sets attribute class', async () => {
-				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light bg-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-flat amelipro-btn--style')
+				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light bg-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-flat amelipro-btn--style amelipro-btn')
 
 				await vueWrapper.setProps({ text: true })
-				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text')
+				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text amelipro-btn')
 
 				vueWrapper.findComponent(VBtn).vm.$emit('mouseenter')
 				await vueWrapper.setProps({ hoverUnderline: true })
-				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-2 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text text-decoration-underline')
+				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-2 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text text-decoration-underline amelipro-btn')
 
 				vueWrapper.findComponent(VBtn).vm.$emit('mouseleave')
 				await vueWrapper.setProps({ classes: 'class1 class2' })
-				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text class1 class2')
+				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text class1 class2 amelipro-btn')
 			})
 
 			it('props color & hoverColor sets prop color', async () => {
@@ -389,32 +385,32 @@ describe('AmeliproBtn', () => {
 			})
 
 			it('prop bordered, disabled, text, textHoverColor & textColor sets attribute style', async () => {
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: rgb(255, 255, 255);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: #FFFFFF !important;')
 
 				await vueWrapper.setProps({ textColor: 'black' })
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: rgb(0, 0, 0);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: #000 !important;')
 
 				await vueWrapper.findComponent(VBtn).vm.$emit('mouseenter')
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: rgb(0, 0, 0);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: #000 !important;')
 
 				await vueWrapper.setProps({ textHoverColor: 'secondary' })
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: rgb(0, 81, 109);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: #00516D !important;')
 
 				vueWrapper.findComponent(VBtn).vm.$emit('mouseleave')
 				await vueWrapper.setProps({ bordered: true })
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('height: auto; min-height: 3rem; color: rgb(0, 0, 0) !important; border: 2px solid rgb(0, 0, 0);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: #000 !important; border: 2px solid #000 !important; background-color: white;')
 
 				await vueWrapper.setProps({ bordered: false, disabled: true })
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('min-height: 3rem; color: rgb(0, 0, 0) !important; opacity: 0.3; background-color: rgb(0, 116, 156);')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: #000 !important; background-color: #00749C !important; opacity: 30%;')
 
 				await vueWrapper.setProps({ text: true, color: 'primary' })
-				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('min-height: auto; color: rgb(0, 116, 156); opacity: 0.3; padding: 0px;')
+				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: #00749C !important; opacity: 30%; padding: 0px;')
 			})
 		})
 
 		describe('AmeliproIcon', () => {
 			beforeEach(() => {
-				vueWrapper = mount(Mock, {
+				vueWrapper = mount(AmeliproBtn, {
 					props: requiredPropValues(),
 					slots: { icon: '<span>The icon</span>' },
 					stubs: { AmeliproIcon, VBtn },
