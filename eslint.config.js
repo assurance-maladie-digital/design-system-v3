@@ -15,7 +15,10 @@ export default ts.config(
 			},
 		},
 	},
-
+	{
+		files: ['**/*.spec.ts', 'tests/**/*.ts'],
+		languageOptions: { parserOptions: { project: './tsconfig.spec.json' } },
+	},
 	// Base config
 	js.configs.recommended,
 	...ts.configs.recommended,
@@ -27,6 +30,16 @@ export default ts.config(
 		semi: false,
 		jsx: false,
 	}),
+	// -----------------------
+	// Règles communes
+	// -----------------------
+	{
+		rules: {
+			'sort-imports': 'warn',
+			'sort-keys': ['warn', 'asc', { minKeys: 3 }],
+			'sort-vars': 'warn',
+		},
+	},
 	// Overrides
 	{
 		// Vue Overrides

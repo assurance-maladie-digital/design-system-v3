@@ -1,0 +1,30 @@
+{
+	"extends": "./tsconfig.app.json",
+	"exclude": [],
+	"include": [
+		"env.d.ts",
+		"src/**/*",
+		"dev/**/*.ts",
+		"dev/**/*.vue",
+		"tests/**/*.ts",
+		"tests/**/*.vue"
+	],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"composite": true,
+		"paths": {
+			"@/*": [
+				"./src/*"
+			],
+			"@tests/*": [
+				"./tests/*"
+			]
+		},
+		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
+		"lib": [],
+		"types": [
+			"node",
+			"jsdom"
+		]
+	}
+}
