@@ -183,3 +183,8 @@ pre.prismjs {
 		padding: 2px 8px;
 	}
 }
+
+.component-name {
+	font-style: italic;
+	color: #87104d;
+}
