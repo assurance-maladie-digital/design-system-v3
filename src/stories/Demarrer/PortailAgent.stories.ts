@@ -35,6 +35,7 @@ export const PAgComponents: StoryObj = {
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-accordeon.htm">
 									Documentation du composant Portail Accordéon correspondant
 								</a>
+							</p>
 						</VExpansionPanelText>
 					</VExpansionPanel>
 
@@ -71,6 +72,7 @@ export const PAgComponents: StoryObj = {
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-badge.htm">
 									Documentation du composant Portail Badge correspondant
 								</a>
+							</p>
 						</VExpansionPanelText>
 					</VExpansionPanel>
 
@@ -81,20 +83,19 @@ export const PAgComponents: StoryObj = {
 						<VExpansionPanelText>
 							<p>
 								Le composant Portail <span class="component-name">Barre d’action</span> est remplacé par le composant <span class="component-name">Vbtn</span> et <span class="component-name">VbtnGroupe</span> de Vuetify.
-								<br>
-								<ul>
-									<li>
-										<a href="https://vuetifyjs.com/components/button-groups" target="_blank" rel="noopener noreferrer">
-											Documentation du composant Vuetify Button Group
-										</a>
-									</li>
-									<li>
-										<a href="https://vuetifyjs.com/components/buttons" target="_blank" rel="noopener noreferrer">
-											Documentation du composant Vuetify Button
-										</a>
-									</li>
-								</ul>
 							</p>
+							<ul class="mt-4">
+								<li>
+									<a href="https://vuetifyjs.com/components/button-groups" target="_blank" rel="noopener noreferrer">
+										Documentation du composant Vuetify Button Group
+									</a>
+								</li>
+								<li>
+									<a href="https://vuetifyjs.com/components/buttons" target="_blank" rel="noopener noreferrer">
+										Documentation du composant Vuetify Button
+									</a>
+								</li>
+							</ul>
 							<p class="mt-4">
 								Le composant <span class="component-name">ToolbarContainer</span> de Synapse peut également être utilisé en complément pour améliorer l’expérience utilisateur lors de la navigation clavier.
 								<br>
@@ -115,27 +116,26 @@ export const PAgComponents: StoryObj = {
 							Barre de tâches
 						</VExpansionPanelTitle>
 						<VExpansionPanelText>
-							<p>	
-								Les composant de barre de tâches peuvent êtres crées en utilisant les composants Vuetify <span class="component-name">VbtnGroup</span>,  <span class="component-name">Vbtn</span> et <span class="component-name">VProgressLinear</span>.
-								<br>
-								<ul>
-									<li>
-									 	<a href="https://vuetifyjs.com/api/v-btn-group" target="_blank" rel="noopener noreferrer">
-											Documentation du composant Vuetify VbtnGroup
-										</a>
-									</li>
-									<li>
-										<a href="https://vuetifyjs.com/api/v-btn" target="_blank" rel="noopener noreferrer">
-											Documentation du composant Vuetify Vbtn
-										</a>
-									</li>
-									<li>
-										<a href="https://vuetifyjs.com/components/progress-linear" target="_blank" rel="noopener noreferrer">
-											Documentation du composant Vuetify VProgressLinear
-										</a>
-									</li>
-								</ul>
+							<p>
+								Les composant de barre de tâches peuvent êtres crées en utilisant les composants Vuetify <span class="component-name">VbtnGroup</span>, <span class="component-name">Vbtn</span> et <span class="component-name">VProgressLinear</span>.
 							</p>
+							<ul class="mt-4">
+								<li>
+									<a href="https://vuetifyjs.com/api/v-btn-group" target="_blank" rel="noopener noreferrer">
+										Documentation du composant Vuetify VbtnGroup
+									</a>
+								</li>
+								<li>
+									<a href="https://vuetifyjs.com/api/v-btn" target="_blank" rel="noopener noreferrer">
+										Documentation du composant Vuetify Vbtn
+									</a>
+								</li>
+								<li>
+									<a href="https://vuetifyjs.com/components/progress-linear" target="_blank" rel="noopener noreferrer">
+										Documentation du composant Vuetify VProgressLinear
+									</a>
+								</li>
+							</ul>
 							<p class="mt-4">
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-barre-taches.htm">
 									Documentation du composant Portail Barre de tâches correspondant
@@ -150,22 +150,24 @@ export const PAgComponents: StoryObj = {
 						</VExpansionPanelTitle>
 						<VExpansionPanelText>
 							<p>
-								Les boutons de bases peuvent êtres crées en utilisant le composant <span class="component-name">VBtn</sapn> de Vuetify.
+								Les boutons de bases peuvent êtres crées en utilisant le composant <span class="component-name">VBtn</span> de Vuetify.
 								<br>
 								<a href="https://vuetifyjs.com/api/v-btn" target="_blank" rel="noopener noreferrer">
 									Documentation du composant Vuetify Vbtn
 								</a>
 							</p>
-							<p class="mt-4">
-								<pre><code>
+
+							<div class="mt-4">
+								<pre>
 	&lt;VBtn color=&quot;primary&quot;&gt;
 		Bouton d’action primaire
 	&lt;/VBtn&gt;
 	&lt;VBtn&gt;
 		Bouton d’action par d&#233;faut
 	&lt;/VBtn&gt;
-								</code></pre>
-							</p>
+								</pre>
+							</div>
+
 							<p class="mt-4">
 								Les boutons case à cocher ou radio peuvent êtres crées avec le composant Vuetify <span class="component-name">VBtnToggle</span>.
 								<a href="https://vuetifyjs.com/components/button-groups" target="_blank" rel="noopener noreferrer">
@@ -437,7 +439,8 @@ export const PAgComponents: StoryObj = {
 									VBadge
 								</a> pourra être utilisé pour ajouter des informations.
 							</p>
-<pre class="mt-4"><code>
+							<div class="mt-4">
+<pre>
 &lt;VBadge
 	color=&quot;primary&quot;
 	content=&quot;8&quot;
@@ -448,9 +451,8 @@ export const PAgComponents: StoryObj = {
 		Messagerie
 	&lt;/VBtn&gt;
 &lt;/VBadge&gt;
-</code></pre>
-
-							</p>
+</pre>
+							</div>
 							<p class="mt-4">
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-titre.htm">
 									Documentation du composant Portail Titres de page et de tableau correspondant
