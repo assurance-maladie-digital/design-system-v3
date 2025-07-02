@@ -1,0 +1,68 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<v-btn-stub
+  block="false"
+  border="false"
+  class="
+    amelipro-btn
+    modified-classes
+    text-decoration-underline
+  "
+  color="modified-color"
+  density="default"
+  disabled="true"
+  elevation="0"
+  exact="false"
+  flat="true"
+  height="auto"
+  icon="false"
+  id="modified-unique-id"
+  loading="false"
+  minheight="auto"
+  replace="false"
+  ripple="false"
+  size="default"
+  slim="false"
+  stacked="false"
+  style="padding: 0px; border: 2px solid rgb(0, 0, 0) !important; background-color: white; opacity: 30%; color: rgb(0, 0, 0);"
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tag="button"
+  target="modified-target"
+  tile="false"
+  type="modified-type"
+  variant="text"
+></v-btn-stub>
+`;
+
+exports[`AmeliproBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<v-btn-stub
+  block="false"
+  border="false"
+  class="
+    amelipro-btn
+    amelipro-btn--style
+  "
+  color="ap-blue-darken-1"
+  density="default"
+  disabled="false"
+  elevation="0"
+  exact="false"
+  flat="true"
+  height="auto"
+  icon="false"
+  loading="false"
+  minheight="3rem"
+  replace="false"
+  ripple="false"
+  size="default"
+  slim="false"
+  stacked="false"
+  style="color: rgb(255, 255, 255);"
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tag="button"
+  tile="false"
+  type="button"
+  variant="flat"
+></v-btn-stub>
+`;
