@@ -50,6 +50,13 @@ Ce document liste les différences, adaptations et conventions à respecter lors
 - Privilégier l’adaptation des tests plutôt que la modification des composants, sauf bug confirmé.
 - Ajouter ici toute nouvelle règle ou différence identifiée lors des migrations futures.
 
+## 7. Migration des imports de composants internes
+
+- Certains composants internes ont changé d'emplacement dans l'arborescence du projet.
+- Par exemple, `import AmeliproMessage from '@/elements/AmeliproMessage'` doit être remplacé par `import { AmeliproMessage } from '@/components'`.
+- **Adapter systématiquement les imports de composants internes pour pointer vers leur nouvel emplacement dans `@/components` ou selon la nouvelle structure.**
+- Ce cas peut se présenter avec d'autres composants : vérifier et corriger les imports lors de la migration.
+
 ---
 
 **Ce fichier est destiné à être pris en compte par GitHub Copilot et les développeurs lors de toute migration de tests.**
