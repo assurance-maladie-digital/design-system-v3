@@ -249,7 +249,7 @@
 					class="pa-2 footer-list-item"
 				>
 					<AmeliproBtn
-						class="text-none"
+						class="text-none amelipro-footer__site-map-btn"
 						color="ap-white"
 						hover-color="ap-white"
 						hover-underline
@@ -269,7 +269,7 @@
 					class="pa-2 footer-list-item"
 				>
 					<AmeliproBtn
-						class="text-none"
+						class="text-none amelipro-footer__about-btn"
 						color="ap-white"
 						hover-color="ap-white"
 						hover-underline
@@ -289,7 +289,7 @@
 					class="pa-2 footer-list-item"
 				>
 					<AmeliproBtn
-						class="text-none"
+						class="text-none amelipro-footer__config-btn"
 						color="ap-white"
 						hover-color="ap-white"
 						hover-underline
@@ -309,7 +309,7 @@
 					class="pa-2 footer-list-item"
 				>
 					<AmeliproBtn
-						class="text-none"
+						class="text-none amelipro-footer__legal-notice-btn"
 						color="ap-white"
 						hover-color="ap-white"
 						hover-underline
@@ -329,7 +329,7 @@
 					class="pa-2 footer-list-item"
 				>
 					<AmeliproBtn
-						class="text-none"
+						class="text-none amelipro-footer__cgu-btn"
 						color="ap-white"
 						hover-color="ap-white"
 						hover-underline
@@ -350,7 +350,7 @@
 				>
 					<AmeliproBtn
 						v-if="!noLinkA11y"
-						class="text-none"
+						class="text-none amelipro-footer__a11y-btn"
 						color="ap-white"
 						hover-color="ap-white"
 						hover-underline
@@ -363,7 +363,6 @@
 					>
 						{{ a11yComplianceLabel }}
 					</AmeliproBtn>
-
 					<p
 						v-else
 						:id="uniqueId ? `${uniqueId}-a11y-text` : undefined"
