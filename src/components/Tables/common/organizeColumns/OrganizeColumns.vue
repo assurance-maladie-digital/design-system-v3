@@ -5,6 +5,7 @@
 	import { watch } from 'vue'
 	import type { DataTableHeaders } from '../types'
 	import { sortHeaders } from './sortHeaders'
+	import { useId } from '../../../../composables/useId'
 
 	const headers = defineModel<DataTableHeaders[]>(
 		'headers',
@@ -112,9 +113,9 @@
 		{ immediate: true, deep: true },
 	)
 
-	// Generate unique IDs for components - use fixed IDs instead of dynamic ones
-	const columnsMenuId = 'organize-columns-menu'
-	const columnsTitleId = 'organize-columns-title'
+	// Generate unique IDs for components using the useId composable
+	const columnsMenuId = useId('organize-columns-menu')
+	const columnsTitleId = useId('organize-columns-title')
 
 	// Track menu open state
 	const isMenuOpen = ref(false)
