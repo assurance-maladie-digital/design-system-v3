@@ -162,7 +162,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import StructureMenu from '@amelipro/amelipro-vue3';
+	import StructureMenu from '@cnamts/synapse';
 	import { ref } from 'vue';
 
 	const model = ref({ dialog: false, activeTab: 0 });

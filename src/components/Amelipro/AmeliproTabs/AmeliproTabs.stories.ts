@@ -85,7 +85,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproTabs from '@amelipro/amelipro-vue3';
+	import AmeliproTabs from '@cnamts/synapse';
 
 	const items = [
 		{

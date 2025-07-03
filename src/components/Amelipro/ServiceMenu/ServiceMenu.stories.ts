@@ -195,7 +195,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import ServiceMenu from '@amelipro/amelipro-vue3';
+	import ServiceMenu from '@cnamts/synapse';
 	import { ref } from 'vue';
 
 	const model = ref(false);

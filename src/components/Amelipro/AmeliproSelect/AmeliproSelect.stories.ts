@@ -108,7 +108,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproSelect from '@amelipro/amelipro-vue3';
+	import AmeliproSelect from '@cnamts/synapse';
 	import { ref } from 'vue';
 
 	const model = ref();

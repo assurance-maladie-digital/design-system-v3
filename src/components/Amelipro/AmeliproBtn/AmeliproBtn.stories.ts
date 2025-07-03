@@ -85,7 +85,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproBtn from '@amelipro/amelipro-vue3';
+	import AmeliproBtn from '@cnamts/synapse';
 </script>
 				`,
 			},
@@ -130,7 +130,7 @@ export const Badge: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproBtn from '@amelipro/amelipro-vue3';
+	import AmeliproBtn from '@cnamts/synapse';
 </script>
 				`,
 			},
@@ -173,7 +173,7 @@ export const SecundaryBtn: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproBtn from '@amelipro/amelipro-vue3';
+	import AmeliproBtn from '@cnamts/synapse';
 </script>
 				`,
 			},
