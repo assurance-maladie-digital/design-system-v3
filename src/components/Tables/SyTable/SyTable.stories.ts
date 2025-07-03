@@ -2611,8 +2611,8 @@ export const ColumnControls: Story = {
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
-						suffix="default-table"
-						enableColumnControls
+						suffix="column-control-table"
+						enable-column-controls
 					/>
 				</template>
 				`,
@@ -2731,7 +2731,7 @@ export const ColumnControls: Story = {
 			itemsPerPage: 4,
 		},
 		'caption': '',
-		'suffix': 'default-table',
+		'suffix': 'column-control-table',
 		'density': 'default',
 		'striped': false,
 		'enableColumnControls': true,
