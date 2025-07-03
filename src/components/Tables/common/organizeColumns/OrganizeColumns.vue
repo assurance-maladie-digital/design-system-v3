@@ -116,6 +116,9 @@
 	const columnsMenuId = 'organize-columns-menu'
 	const columnsTitleId = 'organize-columns-title'
 
+	// Track menu open state
+	const isMenuOpen = ref(false)
+
 	// Counter for generating unique header IDs
 	let headerIdCounter = 0
 	const getHeaderId = (title: string) => {
@@ -132,6 +135,7 @@
 	>
 		<VMenu
 			:id="columnsMenuId"
+			v-model="isMenuOpen"
 			:close-on-content-click="false"
 			location="end"
 			attach="body"
@@ -143,7 +147,7 @@
 					color="primary"
 					v-bind="props"
 					aria-haspopup="menu"
-					:aria-controls="columnsMenuId"
+					:aria-controls="isMenuOpen ? columnsMenuId : undefined"
 				>
 					<VIcon size="large">
 						{{ mdiTableEdit }}
