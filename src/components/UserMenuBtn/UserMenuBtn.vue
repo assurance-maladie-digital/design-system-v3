@@ -64,23 +64,25 @@
 			</VIcon>
 		</template>
 		<template #footer-list-item>
-			<VListItem
-				v-if="!hideLogoutBtn"
-				class="logout"
-				v-bind="options['logoutListItem']"
-				@click="$emit('logout')"
-			>
-				<div class="d-flex">
-					<VIcon
-						:icon="mdiLoginVariant"
-						class="mr-4"
-						v-bind="options['logoutIcon']"
-					/>
-					<VListItemTitle class="logout">
-						{{ props.logoutText }}
-					</VListItemTitle>
-				</div>
-			</VListItem>
+			<slot>
+				<VListItem
+					v-if="!hideLogoutBtn"
+					class="logout"
+					v-bind="options['logoutListItem']"
+					@click="$emit('logout')"
+				>
+					<div class="d-flex">
+						<VIcon
+							:icon="mdiLoginVariant"
+							class="mr-4"
+							v-bind="options['logoutIcon']"
+						/>
+						<VListItemTitle class="logout">
+							{{ props.logoutText }}
+						</VListItemTitle>
+					</div>
+				</VListItem>
+			</slot>
 		</template>
 	</SyBtnSelect>
 </template>
