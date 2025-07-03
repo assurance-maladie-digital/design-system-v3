@@ -115,7 +115,7 @@
 	// Generate unique IDs for components - use fixed IDs instead of dynamic ones
 	const columnsMenuId = 'organize-columns-menu'
 	const columnsTitleId = 'organize-columns-title'
-	
+
 	// Counter for generating unique header IDs
 	let headerIdCounter = 0
 	const getHeaderId = (title: string) => {
