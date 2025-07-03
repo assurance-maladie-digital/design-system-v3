@@ -31,7 +31,7 @@ Pour utiliser ce Design System, vous devez avoir au moins les versions suivantes
 
 Pour utiliser ce package, vous pouvez installer le starter kit suivant :
 
--   [Starter Kit Synapse](https://gitlab.cnqd.cnamts.fr/human/developpement/SKV3_X)
+-   [Starter Kit Synapse](https://gitlab.cnqd.cnamts.fr/human/developpement/sksn_x)
 
 ### Librairie uniquement
 
