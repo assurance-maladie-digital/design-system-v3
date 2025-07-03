@@ -6,6 +6,7 @@ import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
 import SyTable from '../SyTable.vue'
+import { VCard } from 'vuetify/components'
 
 vi.mock('@/utils/localStorageUtility')
 
@@ -71,6 +72,7 @@ describe('SyTable', () => {
 
 	afterEach(() => {
 		vi.resetAllMocks()
+		document.body.innerHTML = ''
 	})
 
 	it('renders correctly with default props', () => {
@@ -489,7 +491,7 @@ describe('SyTable', () => {
 			props: {
 				options: {} as DataOptions,
 				suffix: 'test',
-				headers: [...headers], // Use a copy to avoid mutation issues
+				headers: JSON.parse(JSON.stringify(headers)), // Use a copy to avoid mutation issues
 				items: testItems,
 				enableColumnControls: true,
 			},
@@ -511,7 +513,7 @@ describe('SyTable', () => {
 		expect(columns.length).toBe(3)
 
 		// Simulate hiding a column by directly updating the headers
-		const updatedHeaders = [...headers] as TestDataTableHeaders[]
+		const updatedHeaders = JSON.parse(JSON.stringify(headers)) as TestDataTableHeaders[]
 		updatedHeaders[1].hidden = true // Hide the Name column
 		organizeColumnsComponent.vm.$emit('update:headers', updatedHeaders)
 		await wrapper.vm.$nextTick()
@@ -519,6 +521,8 @@ describe('SyTable', () => {
 		// Check that the column is hidden
 		columns = wrapper.findAll('th')
 		expect(columns.length).toBe(2) // One less column should be visible
+
+		wrapper.unmount()
 	})
 
 	it('shoulds move the column ID to the bottom', async () => {
@@ -526,7 +530,7 @@ describe('SyTable', () => {
 		const { sortHeaders } = await import('../../common/organizeColumns/sortHeaders')
 
 		// Add order property to headers for proper sorting
-		const headersWithOrder = headers.map((header, index) => ({
+		const headersWithOrder = JSON.parse(JSON.stringify(headers)).map((header, index) => ({
 			...header,
 			order: index + 1,
 		}))
@@ -558,7 +562,7 @@ describe('SyTable', () => {
 		const { sortHeaders } = await import('../../common/organizeColumns/sortHeaders')
 
 		// Add order property to headers for proper sorting
-		const headersWithOrder = headers.map((header, index) => ({
+		const headersWithOrder = JSON.parse(JSON.stringify(headers)).map((header, index) => ({
 			...header,
 			order: index + 1,
 		}))
@@ -583,5 +587,121 @@ describe('SyTable', () => {
 		expect(sortedHeaders[0].title).toBe('Age')
 		expect(sortedHeaders[1].title).toBe('ID')
 		expect(sortedHeaders[2].title).toBe('Name')
+	})
+
+	it('shoulds move the column ID to the bottom using the dom', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'test',
+				headers: JSON.parse(JSON.stringify(headers)),
+				items: fakeItems,
+				enableColumnControls: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const btnMenuColumns = wrapper.find('[title="Gestion des colonnes"]')
+		await btnMenuColumns.trigger('click')
+
+		const menuColumns = wrapper.findComponent(VCard)
+		expect(menuColumns.exists()).toBe(true)
+
+		let bottomButton = menuColumns.find('[title="Déplacer la colonne ID vers la droite"]')
+		expect(bottomButton.exists()).toBe(true)
+
+		await bottomButton.trigger('click')
+		vi.runAllTimers()
+		await wrapper.vm.$nextTick()
+
+		bottomButton = menuColumns.find('[title="Déplacer la colonne ID vers la droite"]')
+
+		await bottomButton.trigger('click')
+		vi.runAllTimers()
+		await wrapper.vm.$nextTick()
+
+		const columns = wrapper.findAll('th')
+		expect(columns.length).toBe(3)
+		expect(columns[0].text()).toBe('Name')
+		expect(columns[1].text()).toBe('Age')
+		expect(columns[2].text()).toBe('ID')
+
+		wrapper.unmount()
+	})
+
+	it('shoulds move the column age to the top using the dom', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'test',
+				headers: JSON.parse(JSON.stringify(headers)),
+				items: fakeItems,
+				enableColumnControls: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const btnMenuColumns = wrapper.find('[title="Gestion des colonnes"]')
+		await btnMenuColumns.trigger('click')
+
+		const menuColumns = wrapper.findComponent(VCard)
+		expect(menuColumns.exists()).toBe(true)
+
+		let topButton = menuColumns.find('[title="Déplacer la colonne Age vers la gauche"]')
+		expect(topButton.exists()).toBe(true)
+
+		await topButton.trigger('click')
+		vi.runAllTimers()
+		await wrapper.vm.$nextTick()
+
+		topButton = menuColumns.find('[title="Déplacer la colonne Age vers la gauche"]')
+
+		await topButton.trigger('click')
+		vi.runAllTimers()
+		await wrapper.vm.$nextTick()
+
+		const columns = wrapper.findAll('th')
+		expect(columns.length).toBe(3)
+		expect(columns[0].text()).toBe('Age')
+		expect(columns[1].text()).toBe('ID')
+		expect(columns[2].text()).toBe('Name')
+
+		wrapper.unmount()
+	})
+
+	it('shoulds hide a column when hideColumn is called using the dom', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'test',
+				headers: JSON.parse(JSON.stringify(headers)),
+				items: fakeItems,
+				enableColumnControls: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+		const btnMenuColumns = wrapper.find('[title="Gestion des colonnes"]')
+		await btnMenuColumns.trigger('click')
+		const menuColumns = wrapper.findComponent(VCard)
+		expect(menuColumns.exists()).toBe(true)
+		const firstHideButton = menuColumns.find('[title="Masquer la colonne Name"]')
+		expect(firstHideButton.exists()).toBe(true)
+		await firstHideButton.trigger('click')
+		expect(firstHideButton.attributes('title')).toBe('Afficher la colonne Name')
+		const columns = wrapper.findAll('th')
+		expect(columns.length).toBe(2)
+
+		wrapper.unmount()
 	})
 })
