@@ -112,6 +112,11 @@
 		{ immediate: true, deep: true },
 	)
 
+	// Generate unique IDs for components - use fixed IDs instead of dynamic ones
+	const columnsMenuId = 'organize-columns-menu'
+	const columnsTitleId = 'organize-columns-title'
+	const getHeaderId = (title: string) => `header-${title}`
+
 </script>
 
 <template>
@@ -120,7 +125,7 @@
 		class="ml-3"
 	>
 		<VMenu
-			id="organize-columns-menu"
+			:id="columnsMenuId"
 			:close-on-content-click="false"
 			location="end"
 			attach="body"
@@ -131,8 +136,8 @@
 					variant="outlined"
 					color="primary"
 					v-bind="props"
-					aria-haspopup="true"
-					aria-controls="organize-columns-menu"
+					aria-haspopup="menu"
+					:aria-controls="columnsMenuId"
 				>
 					<VIcon size="large">
 						{{ mdiTableEdit }}
@@ -140,11 +145,11 @@
 				</VBtn>
 			</template>
 			<VCard min-width="300">
-				<VCardTitle id="organize-columns-title">
+				<VCardTitle :id="columnsTitleId">
 					{{ locales.reorganizeColumnsTitle }}
 				</VCardTitle>
 				<VList
-					aria-labelledby="organize-columns-title"
+					:aria-labelledby="columnsTitleId"
 				>
 					<VListItem
 						v-for="(header, index) in orderedHeaders"
@@ -157,7 +162,7 @@
 					>
 						<div class="d-flex ga-8 justify-space-between align-center w-100">
 							<div class="d-flex align-center flex-row-reverse">
-								<div :id="`header-${header!.title}`">
+								<div :id="getHeaderId(header!.title as string)">
 									{{ header!.title }}
 								</div>
 								<VBtn
