@@ -917,6 +917,7 @@
 		if (errors.value.length === 0) {
 			validateRules(inputValue.value || '')
 		}
+		emit('blur')
 	}
 
 	const isValidating = ref(false)
