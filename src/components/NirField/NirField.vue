@@ -62,7 +62,7 @@
 		customRulesPrecedence: false,
 		showSuccessMessages: true,
 		width: '100%',
-		bgColor: undefined,
+		bgColor: 'white',
 		disabled: false,
 		density: 'default',
 		hideDetails: false,

@@ -78,7 +78,7 @@
 		},
 		bgColor: {
 			type: String,
-			default: undefined,
+			default: 'white',
 		},
 		readonly: {
 			type: Boolean,

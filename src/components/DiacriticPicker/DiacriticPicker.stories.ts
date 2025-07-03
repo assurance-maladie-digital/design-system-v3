@@ -51,6 +51,7 @@ export const Default: Story = {
       label="Nom avec accents"
       color="primary"
       variant="outlined"
+      bg-color="white"
     />
   </DiacriticPicker>
 </template>`,
@@ -110,6 +111,7 @@ export const Default: Story = {
 							label="Nom avec accents"
 							color="primary"
 							variant="outlined"
+							bg-color="white"
 						/>
 					</DiacriticPicker>
 					<div class="mt-2">Valeur actuelle: {{ value }}</div>
@@ -130,6 +132,7 @@ export const WithTextarea: Story = {
       v-model="adresse"
       label="Adresse"
       color="primary"
+      bg-color="white"
       variant="outlined"
       auto-grow
     />
@@ -190,6 +193,7 @@ export const WithTextarea: Story = {
 							v-model="value"
 							label="Adresse"
 							color="primary"
+							bg-color="white"
 							variant="outlined"
 							auto-grow
 						/>
@@ -213,6 +217,7 @@ export const CustomDiacritics: Story = {
       label="Texte avec accents personnalisés"
       color="primary"
       variant="outlined"
+				bg-color="white"
     />
   </DiacriticPicker>
 </template>`,
@@ -265,6 +270,7 @@ export const CustomDiacritics: Story = {
 							label="Texte avec accents personnalisés"
 							color="primary"
 							variant="outlined"
+							bg-color="white"
 						/>
 					</DiacriticPicker>
 					<div class="mt-2">Valeur actuelle: {{ value }}</div>
@@ -286,6 +292,7 @@ export const CustomButtonTitle: Story = {
       label="Texte avec bouton personnalisé"
       color="primary"
       variant="outlined"
+      bg-color="white"
     />
   </DiacriticPicker>
 </template>`,
@@ -345,6 +352,7 @@ export const CustomButtonTitle: Story = {
 							label="Texte avec bouton personnalisé"
 							color="primary"
 							variant="outlined"
+							bg-color="white"
 						/>
 					</DiacriticPicker>
 					<div class="mt-2">Valeur actuelle: {{ value }}</div>
@@ -379,6 +387,7 @@ export const Customization: Story = {
       label="Options Vuetify personnalisées"
       color="secondary"
       variant="outlined"
+      bg-color="white"
     />
   </DiacriticPicker>
 </template>`,
@@ -437,6 +446,7 @@ export const Customization: Story = {
 							label="Options Vuetify personnalisées"
 							color="secondary"
 							variant="outlined"
+							bg-color="white"
 						/>
 					</DiacriticPicker>
 					<div class="mt-2">Valeur actuelle: {{ value }}</div>
