@@ -1,11 +1,10 @@
 <script setup lang="ts">
 	import { mdiEye, mdiEyeOff, mdiChevronUp, mdiChevronDown, mdiTableEdit } from '@mdi/js'
-	import { computed, ref } from 'vue'
+	import { computed, ref, useId } from 'vue'
 	import { locales } from '../locales'
 	import { watch } from 'vue'
 	import type { DataTableHeaders } from '../types'
 	import { sortHeaders } from './sortHeaders'
-	import { useId } from '../../../../composables/useId'
 
 	const headers = defineModel<DataTableHeaders[]>(
 		'headers',
@@ -114,17 +113,15 @@
 	)
 
 	// Generate unique IDs for components using the useId composable
-	const columnsMenuId = useId('organize-columns-menu')
-	const columnsTitleId = useId('organize-columns-title')
+	const columnsMenuId = useId() + '-organize-columns-menu'
+	const columnsTitleId = useId() + '-organize-columns-title'
 
 	// Track menu open state
 	const isMenuOpen = ref(false)
 
-	// Counter for generating unique header IDs
-	let headerIdCounter = 0
+	// Generate unique IDs for header items
 	const getHeaderId = (title: string) => {
-		headerIdCounter++
-		return `header-${title}-${headerIdCounter}`
+		return useId() + `-header-${title}`
 	}
 
 </script>
