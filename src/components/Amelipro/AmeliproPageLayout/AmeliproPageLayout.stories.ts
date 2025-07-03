@@ -469,7 +469,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproPageLayout from '@amelipro/amelipro-vue3';
+	import AmeliproPageLayout from '@cnamts/synapse';
 	import { ref } from 'vue';
 
 	const userMenuInfos = {

@@ -74,7 +74,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproTextField from '@amelipro/amelipro-vue3';
+	import AmeliproTextField from '@cnamts/synapse';
 	import { ref } from 'vue';
 
 	const model = ref();
@@ -134,7 +134,7 @@ export const Date: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproTextField from '@amelipro/amelipro-vue3';
+	import AmeliproTextField from '@cnamts/synapse';
 	import { ref } from 'vue';
 
 	const model = ref();
@@ -201,7 +201,7 @@ export const Number: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproTextField from '@amelipro/amelipro-vue3';
+	import AmeliproTextField from '@cnamts/synapse';
 	import { ref } from 'vue';
 
 	const model = ref();
