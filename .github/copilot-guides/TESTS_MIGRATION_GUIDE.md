@@ -10,6 +10,16 @@ Ce document liste les différences, adaptations et conventions à respecter lors
   - Nouveau projet : `.amelipro-btn__badge-wrapper`
 - **Adapter systématiquement les sélecteurs dans les tests pour correspondre au composant cible.**
 
+## 1bis. Nommage des dossiers de tests
+
+- Par convention, tous les dossiers contenant des tests doivent être nommés `__tests__` (et non `tests`).
+- Renommer systématiquement les dossiers `tests` en `__tests__` lors de la migration.
+
+## 1ter. Utilisation de la constante Mock
+
+- L'utilisation d'une constante `Mock` pour référencer le composant testé est désormais obsolète.
+- Utiliser directement le composant dans les helpers et les tests, sans passer par une constante intermédiaire.
+
 ## 2. Structure des composants
 
 - Ne pas modifier les fichiers Vue du Design System v3 sauf en cas de bug avéré.
