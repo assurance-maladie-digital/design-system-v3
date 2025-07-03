@@ -301,10 +301,6 @@
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
 	})
 
-	const inputStyle = computed(() => ({
-		'min-width': '100%',
-	}))
-
 	// Utilisation du composable pour gérer la sélection de dates
 	const { updateSelectedDates, rangeBoundaryDates } = useDateSelection(
 		parseDate,
@@ -820,7 +816,6 @@
 <template>
 	<div
 		class="date-picker-container"
-		:style="inputStyle"
 	>
 		<template v-if="props.noCalendar">
 			<DateTextInput
@@ -1098,7 +1093,7 @@
 }
 
 .date-picker-container {
-	max-width: 100%;
+	width: 100%;
 	position: relative;
 
 	:deep(.v-date-picker) {

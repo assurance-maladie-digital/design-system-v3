@@ -322,10 +322,6 @@
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
 	})
 
-	const inputStyle = computed(() => ({
-		'min-width': '100%',
-	}))
-
 	// Déclaration des variables qui seront initialisées par le composable useDateSelection
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 	// Initialisation des variables après la déclaration de selectedDates
@@ -1081,7 +1077,6 @@
 <template>
 	<div
 		class="date-picker-container"
-		:style="inputStyle"
 	>
 		<!-- Variable pour stocker la description accessible -->
 		<span
@@ -1156,7 +1151,6 @@
 						:show-success-messages="props.showSuccessMessages"
 						:bg-color="props.bgColor"
 						:display-range="props.displayRange"
-						:style="inputStyle"
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
 						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
@@ -1326,7 +1320,7 @@
 }
 
 .date-picker-container {
-	max-width: 100%;
+	width: 100%;
 	position: relative;
 
 	:deep(.v-date-picker) {
