@@ -53,9 +53,9 @@ Ce document liste les différences, adaptations et conventions à respecter lors
 ## 7. Migration des imports de composants internes
 
 - Certains composants internes ont changé d'emplacement dans l'arborescence du projet.
-- Par exemple, `import AmeliproMessage from '@/elements/AmeliproMessage'` doit être remplacé par `import { AmeliproMessage } from '@/components'`.
+- Par exemple, `import AmeliproMessage from '@/elements/AmeliproMessage'` ou `import AmeliproIconBtn from '@/elements/AmeliproIconBtn'` doivent être remplacés par `import { AmeliproMessage } from '@/components'` ou `import { AmeliproIconBtn } from '@/components'`.
 - **Adapter systématiquement les imports de composants internes pour pointer vers leur nouvel emplacement dans `@/components` ou selon la nouvelle structure.**
-- Ce cas peut se présenter avec d'autres composants : vérifier et corriger les imports lors de la migration.
+- Ce cas peut se présenter avec d'autres composants provenant de `@/elements` : vérifier et corriger les imports lors de la migration.
 
 ---
 

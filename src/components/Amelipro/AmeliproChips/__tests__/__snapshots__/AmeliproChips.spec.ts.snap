@@ -1,5 +1,85 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AmeliproChips > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-chips
+    d-inline-block
+  "
+  id="modified-unique-id"
+>
+  <p class="
+    amelipro-chips__text
+    d-inline-block
+    mb-0
+  ">
+    <span class="truncate-text">
+      Modified text
+    </span>
+  </p>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    btnlabel="supprimer Modified text"
+    class="
+      amelipro-chips__btn
+      ml-4
+    "
+    icon="closeNoCircle"
+    iconbgcolor="transparent"
+    iconcolor="ap-blue-darken-1"
+    iconhoverbgcolor="transparent"
+    iconhovercolor="ap-blue-darken-2"
+    large="true"
+    medium="false"
+    small="false"
+    title="supprimer Modified text"
+    uniqueid="modified-unique-id-btn"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+</div>
+`;
+
+exports[`AmeliproChips > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-chips
+    d-inline-block
+  "
+  id="required-unique-id"
+>
+  <p class="
+    amelipro-chips__text
+    d-inline-block
+    mb-0
+  ">
+    <span class="truncate-text">
+      Required text
+    </span>
+  </p>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    btnlabel="supprimer Required text"
+    class="
+      amelipro-chips__btn
+      ml-4
+    "
+    icon="closeNoCircle"
+    iconbgcolor="transparent"
+    iconcolor="ap-blue-darken-1"
+    iconhoverbgcolor="transparent"
+    iconhovercolor="ap-blue-darken-2"
+    large="true"
+    medium="false"
+    small="false"
+    title="supprimer Required text"
+    uniqueid="required-unique-id-btn"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+</div>
+`;
+
 exports[`AmeliproChips > render correctly 1`] = `
 <div
   class="
