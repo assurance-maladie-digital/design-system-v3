@@ -120,10 +120,10 @@
 		class="ml-3"
 	>
 		<VMenu
+			id="organize-columns-menu"
 			:close-on-content-click="false"
 			location="end"
 			attach="body"
-			id="organize-columns-menu"
 		>
 			<template #activator="{ props }">
 				<VBtn
