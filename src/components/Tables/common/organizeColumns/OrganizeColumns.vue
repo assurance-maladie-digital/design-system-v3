@@ -123,12 +123,16 @@
 			:close-on-content-click="false"
 			location="end"
 			attach="body"
+			id="organize-columns-menu"
 		>
 			<template #activator="{ props }">
 				<VBtn
 					:title="locales.reorganizeColumns"
 					variant="outlined"
+					color="primary"
 					v-bind="props"
+					aria-haspopup="true"
+					aria-controls="organize-columns-menu"
 				>
 					<VIcon size="large">
 						{{ mdiTableEdit }}
@@ -136,10 +140,12 @@
 				</VBtn>
 			</template>
 			<VCard min-width="300">
-				<VCardTitle>
+				<VCardTitle id="organize-columns-title">
 					{{ locales.reorganizeColumnsTitle }}
 				</VCardTitle>
-				<VList>
+				<VList
+					aria-labelledby="organize-columns-title"
+				>
 					<VListItem
 						v-for="(header, index) in orderedHeaders"
 						ref="items"
@@ -157,8 +163,11 @@
 								<VBtn
 									:title="header.hidden ? locales.showColumn(header.title as string) : locales.hideColumn(header.title as string)"
 									elevation="0"
-									variant="plain"
-									size="small"
+									variant="text"
+									color="primary"
+									width="45"
+									min-width="45"
+									class="mr-2"
 									:disabled="visibleColumnsCount <= 1 && !header.hidden"
 									@click="() => {
 										header.hidden = !header.hidden
@@ -182,6 +191,7 @@
 										:disabled="index === 0"
 										width="45"
 										min-width="45"
+										color="primary"
 										@click="left(header)"
 									>
 										<VIcon
@@ -195,6 +205,7 @@
 										:disabled="index === headers!.length - 1"
 										width="45"
 										min-width="45"
+										color="primary"
 										@click="right(header)"
 									>
 										<VIcon
