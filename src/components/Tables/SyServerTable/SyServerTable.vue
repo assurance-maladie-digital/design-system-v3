@@ -14,6 +14,7 @@
 	import { useTableOptions } from '../common/useTableOptions'
 	import { useTableHeaders } from '../common/useTableHeaders'
 	import { useTableItems } from '../common/useTableItems'
+	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
@@ -52,10 +53,33 @@
 		options,
 	})
 
+	const componentAttributes = useAttrs()
+
+	// Generate a unique ID for this table instance
+	const uniqueTableId = ref(`sy-server-table-${Math.random().toString(36).substr(2, 9)}`)
+
+	const {
+		propsFacade,
+		updateOptions,
+		setupAccessibility,
+		setupLocalStorage,
+		columnWidths,
+		updateColumnWidth,
+		headers: storageHeaders,
+	} = useTableUtils({
+		tableId: uniqueTableId.value,
+		prefix: 'server-table',
+		suffix: props.suffix,
+		caption: props.caption,
+		serverItemsLength: props.serverItemsLength,
+		componentAttributes,
+		options,
+		density: props.density,
+	})
+
 	// Use the table headers composable
-	const headersProp = toRef(props, 'headers')
-	const { headers, getEnhancedHeader } = useTableHeaders({
-		headersProp,
+	const { headers, displayHeaders, getEnhancedHeader } = useTableHeaders({
+		headersProp: storageHeaders.value ? storageHeaders : toRef(props, 'headers'),
 		filterInputConfig: props.filterInputConfig,
 	})
 
@@ -124,33 +148,9 @@
 
 	defineExpose({ filterItems })
 
-	const componentAttributes = useAttrs()
-
-	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`sy-server-table-${Math.random().toString(36).substr(2, 9)}`)
-
-	const {
-		propsFacade,
-		updateOptions,
-		setupAccessibility,
-		setupLocalStorage,
-		columnWidths,
-		updateColumnWidth,
-	} = useTableUtils({
-		tableId: uniqueTableId.value,
-		prefix: 'server-table',
-		suffix: props.suffix,
-		caption: props.caption,
-		serverItemsLength: props.serverItemsLength,
-		componentAttributes,
-		headersProp: toRef(props, 'headers'),
-		options,
-		density: props.density,
-	})
-
 	setupAccessibility()
 
-	const { watchOptions } = setupLocalStorage()
+	const { watchOptions, saveHeaders } = setupLocalStorage()
 
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(columnWidths.value)
@@ -187,9 +187,14 @@
 		{ deep: true },
 	)
 
-	// These functions are now provided by the composables
-	// getEnhancedHeader is provided by useTableHeaders
-	// createEmptyItemWithStructure is provided by useTableItems
+	watch(
+		headers,
+		() => {
+			saveHeaders(headers.value)
+		},
+		{ deep: true },
+	)
+
 </script>
 
 <template>
@@ -201,6 +206,7 @@
 			ref="table"
 			v-bind="propsFacade"
 			v-model="model"
+			:headers="displayHeaders"
 			color="primary"
 			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
 			:items-length="props.serverItemsLength || 0"
@@ -345,15 +351,21 @@
 			</template>
 
 			<template #bottom>
-				<SyTablePagination
-					v-if="props.serverItemsLength > 0"
-					:page="page"
-					:items-per-page="itemsPerPageValue"
-					:page-count="pageCount"
-					:items-length="props.serverItemsLength"
-					@update:page="page = $event"
-					@update:items-per-page="updateItemsPerPage"
-				/>
+				<div class="d-flex align-center pa-2">
+					<OrganizeColumns
+						v-if="props.enableColumnControls && headers"
+						v-model:headers="headers"
+					/>
+					<SyTablePagination
+						v-if="props.serverItemsLength > 0"
+						:page="page"
+						:items-per-page="itemsPerPageValue"
+						:page-count="pageCount"
+						:items-length="props.serverItemsLength"
+						@update:page="page = $event"
+						@update:items-per-page="updateItemsPerPage"
+					/>
+				</div>
 			</template>
 		</VDataTableServer>
 	</div>

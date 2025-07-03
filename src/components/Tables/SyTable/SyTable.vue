@@ -7,6 +7,7 @@
 	import SyTablePagination from '../common/SyTablePagination.vue'
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
+	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableUtils } from '../common/tableUtils'
 	import type { DataOptions, SyTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
@@ -51,10 +52,32 @@
 		options,
 	})
 
+	const componentAttributes = useAttrs()
+
+	// Generate a unique ID for this table instance
+	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substr(2, 9)}`)
+
+	const {
+		propsFacade,
+		updateOptions,
+		setupAccessibility,
+		setupLocalStorage,
+		columnWidths,
+		updateColumnWidth,
+		headers: storageHeaders,
+	} = useTableUtils({
+		tableId: uniqueTableId.value,
+		prefix: 'table',
+		suffix: props.suffix,
+		caption: props.caption,
+		componentAttributes,
+		options,
+		density: props.density,
+	})
+
 	// Use the table headers composable
-	const headersProp = toRef(props, 'headers')
-	const { headers, getEnhancedHeader } = useTableHeaders({
-		headersProp,
+	const { headers, displayHeaders, getEnhancedHeader } = useTableHeaders({
+		headersProp: storageHeaders.value ? storageHeaders : toRef(props, 'headers'),
 		filterInputConfig: props.filterInputConfig,
 	})
 
@@ -91,11 +114,6 @@
 		},
 	})
 
-	const componentAttributes = useAttrs()
-
-	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substr(2, 9)}`)
-
 	// Function to add accessibility attributes to row checkboxes
 	const accessibilityRowCheckboxes = () => {
 		nextTick(() => {
@@ -124,27 +142,9 @@
 		accessibilityRowCheckboxes()
 	})
 
-	const {
-		propsFacade,
-		updateOptions,
-		setupAccessibility,
-		setupLocalStorage,
-		columnWidths,
-		updateColumnWidth,
-	} = useTableUtils({
-		tableId: uniqueTableId.value,
-		prefix: 'table',
-		suffix: props.suffix,
-		caption: props.caption,
-		componentAttributes,
-		headersProp: toRef(props, 'headers'),
-		options,
-		density: props.density,
-	})
-
 	setupAccessibility()
 
-	const { watchOptions } = setupLocalStorage()
+	const { watchOptions, saveHeaders } = setupLocalStorage()
 
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(columnWidths.value)
@@ -181,6 +181,14 @@
 		{ deep: true },
 	)
 
+	watch(
+		headers,
+		() => {
+			saveHeaders(headers.value)
+		},
+		{ deep: true },
+	)
+
 </script>
 
 <template>
@@ -192,6 +200,7 @@
 			ref="table"
 			v-model="model"
 			color="primary"
+			:headers="displayHeaders"
 			v-bind="propsFacade"
 			:items="processItems(filteredItems.length > 0 ? filteredItems : createEmptyItemWithStructure())"
 			:density="props.density"
@@ -283,14 +292,14 @@
 							:colspan="slotProps.columns.length"
 							class="text-right px-4 py-2"
 						>
-							<v-btn
+							<VBtn
 								size="small"
 								color="primary"
 								variant="outlined"
 								@click="filters = []"
 							>
 								{{ locales.resetFilters }}
-							</v-btn>
+							</VBtn>
 						</td>
 					</tr>
 					<tr v-if="filteredItems.length === 0">
@@ -348,15 +357,21 @@
 			</template>
 
 			<template #bottom>
-				<SyTablePagination
-					v-if="filteredItems.length > 0"
-					:page="page"
-					:items-per-page="itemsPerPageValue"
-					:page-count="pageCount"
-					:items-length="filteredItems.length"
-					@update:page="page = $event"
-					@update:items-per-page="updateItemsPerPage"
-				/>
+				<div class="d-flex align-center pa-2">
+					<OrganizeColumns
+						v-if="props.enableColumnControls && headers"
+						v-model:headers="headers"
+					/>
+					<SyTablePagination
+						v-if="filteredItems.length > 0"
+						:page="page"
+						:items-per-page="itemsPerPageValue"
+						:page-count="pageCount"
+						:items-length="filteredItems.length"
+						@update:page="page = $event"
+						@update:items-per-page="updateItemsPerPage"
+					/>
+				</div>
 			</template>
 		</VDataTable>
 	</div>

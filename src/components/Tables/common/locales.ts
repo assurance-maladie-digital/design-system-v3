@@ -20,4 +20,12 @@ export const locales = {
 		currentPageAriaLabel: (page: number) => `Page courante, Page ${page}`,
 		paginationNavAriaLabel: 'Navigation de pagination',
 	},
+	reorganizeColumns: 'Gestion des colonnes',
+	close: 'Fermer',
+	apply: 'Appliquer',
+	reorganizeColumnsTitle: 'Gestion des colonnes',
+	hideColumn: (columnTitle: string) => `Masquer la colonne ${columnTitle}`,
+	showColumn: (columnTitle: string) => `Afficher la colonne ${columnTitle}`,
+	moveColumnLeft: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la gauche`,
+	moveColumnRight: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la droite`,
 }
