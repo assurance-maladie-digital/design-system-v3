@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+	// Prevent display-asterisk from being passed to the DOM
+	defineOptions({
+		inheritAttrs: false,
+	})
 	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
@@ -92,7 +96,7 @@
 			tooltipLocation: 'top',
 			variantStyle: 'outlined',
 			color: 'primary',
-			label: 'custom label',
+			label: '',
 			errorMessages: null,
 			warningMessages: null,
 			successMessages: null,
@@ -338,6 +342,12 @@
 			setAriaHidden('.v-text-field__suffix')
 			addSrOnlySpan('.v-text-field__prefix')
 			addSrOnlySpan('.v-text-field__suffix')
+
+			// Remove aria-describedby attribute
+			const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
+			if (inputElement) {
+				inputElement.removeAttribute('aria-describedby')
+			}
 		})
 	})
 
@@ -399,6 +409,7 @@
 		:type="props.type"
 		:variant="props.variantStyle"
 		:width="props.width"
+		v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
 		:class="{
 			'error-field': hasError,
 			'warning-field': hasWarning,
@@ -519,11 +530,11 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
-:deep(.v-field__input input::placeholder),
-:deep(input.v-field__input::placeholder),
-:deep(textarea.v-field__input::placeholder) {
-	opacity: 0;
-}
+// :deep(.v-field__input input::placeholder),
+// :deep(input.v-field__input::placeholder),
+// :deep(textarea.v-field__input::placeholder) {
+// 	opacity: 0;
+// }
 
 .warning-field {
 	:deep(.v-input__details > .v-icon),

@@ -37,6 +37,16 @@ Le composant permet d'appliquer des filtres sur les colonnes. Vous pouvez défin
 Le composant peut permettre de redimensionner les colonnes en utilisant la prop `resizable-columns`. Vous pouvez activer ou désactiver cette fonctionnalité selon vos besoins.
 <Canvas story={{height: '550px'}} of={SyTable.ResizableColumns} />
 
+### Réorganisation des colonnes
+
+Le composant permet de cacher ou réorganiser l'ordre des colonnes en utilisant la prop `enable-column-controls`. Vous pouvez activer ou désactiver cette fonctionnalité selon vos besoins.
+<Canvas story={{height: '550px'}} of={SyTable.ColumnControls} />
+
+### Selection des lignes
+
+Le composant permet de sélectionner des lignes individuellement ou en masse. Vous pouvez activer la sélection en utilisant la prop `show-select`.
+<Canvas story={{height: '550px'}} of={SyTable.RowSelection} />
+
 ### Accessibilité
 
 Le composant améliore l'accessibilité en ajoutant automatiquement :

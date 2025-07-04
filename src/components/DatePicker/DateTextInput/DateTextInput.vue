@@ -725,11 +725,21 @@
 		hasInteracted.value = true
 
 		// Vérifier si la valeur est vide
-		if (!inputValue.value) {
-			emit('update:model-value', null)
-			validateRules('')
-			emit('blur')
-			return
+		if (inputValue.value) {
+			const validation = validateDateFormat(inputValue.value)
+			if (validation.isValid) {
+				// Si le format est valide, la date est également valide grâce à notre correction dans useDateFormatValidation
+				const formattedDate = props.dateFormatReturn
+					? dayjs(inputValue.value, props.format).format(props.dateFormatReturn)
+					: inputValue.value
+				emit('update:model-value', formattedDate)
+			}
+			else {
+				// Si le format n'est pas valide ou si la date est invalide, ajouter le message d'erreur
+				clearValidation()
+				errors.value.push(validation.message)
+				emit('update:model-value', props.modelValue)
+			}
 		}
 
 		// Appliquer l'auto-clamping au moment du blur si activé
@@ -907,6 +917,7 @@
 		if (errors.value.length === 0) {
 			validateRules(inputValue.value || '')
 		}
+		emit('blur')
 	}
 
 	const isValidating = ref(false)
@@ -1013,7 +1024,8 @@
 		}"
 		:disabled="props.disabled"
 		:error-messages="errorMessages"
-		:label="props.label || props.placeholder"
+		:label="props.label || ''"
+		:placeholder="props.placeholder"
 		:no-icon="props.noIcon"
 		:prepend-icon="displayIcon && displayPrependIcon && !displayAppendIcon ? 'calendar' : undefined"
 		:readonly="props.readonly"
@@ -1023,6 +1035,7 @@
 		:bg-color="props.bgColor"
 		color="primary"
 		is-clearable
+		:display-persistent-placeholder="true"
 		:aria-label="ariaLabel || props.placeholder"
 		title="Date text input"
 		@focus="handleFocus"

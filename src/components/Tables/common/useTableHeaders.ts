@@ -1,5 +1,6 @@
-import { computed, type Ref } from 'vue'
+import { computed, ref, watch, type Ref } from 'vue'
 import type { DataTableHeaders, TableColumnHeader } from './types'
+import { sortHeaders } from './organizeColumns/sortHeaders'
 
 /**
  * Composable for processing and enhancing table headers
@@ -16,7 +17,7 @@ export function useTableHeaders({
 	filterInputConfig?: Record<string, unknown>
 }) {
 	// Process headers to ensure they have title property
-	const headers = computed(() => {
+	const normalizedHeaders = computed(() => {
 		if (!Array.isArray(headersProp?.value)) {
 			return undefined
 		}
@@ -28,8 +29,8 @@ export function useTableHeaders({
 
 	// Get filterable headers
 	const filterableHeaders = computed(() => {
-		if (!headers.value) return []
-		return headers.value.filter(header => header.filterable)
+		if (!normalizedHeaders.value) return []
+		return normalizedHeaders.value.filter(header => header.filterable)
 	})
 
 	/**
@@ -53,15 +54,33 @@ export function useTableHeaders({
 		} as TableColumnHeader
 	}
 
+	// Mutable internal headers to manage state inside the component
+	const internalHeaders = ref<DataTableHeaders[] | undefined>([])
+
+	watch(normalizedHeaders, (newHeaders) => {
+		// Update internal headers when props.headers changes
+		internalHeaders.value = newHeaders
+	}, { immediate: true, deep: true })
+
 	/**
    * Get header by key
    */
 	function getHeaderByKey(key: string): TableColumnHeader | undefined {
-		return headers.value?.find(header => header.key === key)
+		return normalizedHeaders.value?.find(header => header.key === key)
 	}
 
+	/**
+	 * The headers filtered by visibility and sorted by order
+	 */
+	const displayHeaders = computed(() => {
+		if (!internalHeaders.value) return undefined
+		const filteredHeaders = internalHeaders.value.filter(header => header.hidden !== true)
+		return sortHeaders(filteredHeaders)
+	})
+
 	return {
-		headers,
+		headers: internalHeaders,
+		displayHeaders,
 		filterableHeaders,
 		getEnhancedHeader,
 		getHeaderByKey,

@@ -111,6 +111,13 @@ const meta = {
 				},
 			},
 		},
+		'default': {
+			control: false,
+			description: 'Ecrase le contenu du menu utilisateur',
+			table: {
+				category: 'slots',
+			},
+		},
 		'onLogout': {
 			action: 'logout',
 			description: 'Événement déclenché lors de la déconnexion de l\'utilisateur',
@@ -590,6 +597,73 @@ export const LogoutEvent: Story = {
 			template: `
 <div class="pa-4">
 	<UserMenuBtn v-bind="args" @logout="handleLogout"/>
+</div>`,
+		}
+	},
+}
+
+export const Slot: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<UserMenuBtn
+		v-model="selected"
+		:full-name="fullName"
+	>
+		<div class="ma-6 text-center">
+			<p class="text-h6">
+				Bienvenue, {{ fullName }}
+			</p>
+
+			<p class="mt-2">
+				La création de votre compte est en cours,<br> vos services seront accessibles dans les prochains jours.
+			</p>
+		</div>
+	</UserMenuBtn>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	import { UserMenuBtn } from '@cnamts/synapse'
+
+	const selected = ref(null)
+	const fullName = ref('John Doe')
+
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: null,
+		hideLogoutBtn: false,
+		hideUserIcon: false,
+		isMobileView: false,
+		vuetifyOptions: undefined,
+		fullName: 'John Doe',
+	},
+	render: (args) => {
+		return {
+			components: { UserMenuBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+<div class="pa-4">
+	<UserMenuBtn v-bind="args">
+			<div class="ma-6 text-center">
+			<p class="text-h6">
+				Bienvenue, {{ args.fullName }}
+			</p>
+
+			<p class="mt-2">
+				La création de votre compte est en cours,<br> vos services seront accessibles dans les prochains jours.
+			</p>
+		</div>
+	</UserMenuBtn>
 </div>`,
 		}
 	},

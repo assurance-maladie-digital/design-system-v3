@@ -123,6 +123,10 @@ const meta = {
 			control: 'boolean',
 			description: 'Affiche les jours de week-end',
 		},
+		displayHolidayDays: {
+			control: 'boolean',
+			description: 'Affiche les jours fériés',
+		},
 		period: {
 			control: 'object',
 			description: 'Période pendant laquelle les dates peuvent être sélectionnées (au format: MM/DD/YYYY)',
@@ -130,6 +134,10 @@ const meta = {
 		autoClamp: {
 			control: 'boolean',
 			description: 'Active le clamping automatique des dates',
+		},
+		displayAsterisk: {
+			control: 'boolean',
+			description: 'Affiche l\'astérisque',
 		},
 	},
 } as Meta<typeof DatePicker>
@@ -188,6 +196,7 @@ export const Default: Story = {
 		'onDate-selected': fn(),
 		'displayTodayButton': true,
 		'displayWeekendDays': true,
+		'displayHolidayDays': true,
 		'useCombinedMode': true,
 	},
 	render: (args) => {
@@ -200,6 +209,87 @@ export const Default: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Sélectionner une date"
+						useCombinedMode
+						required
+						format="DD/MM/YYYY"
+					/>
+					<DatePicker
+						v-model="date"
+						placeholder="Sélectionner une date"
+						useCombinedMode
+						required
+						displayAsterisk
+						format="DD/MM/YYYY"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+					
+					const date = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'label': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': true,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'displayPrependIcon': true,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '',
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+		'onDate-selected': fn(),
+		'displayTodayButton': true,
+		'displayWeekendDays': true,
+		'displayHolidayDays': true,
+		'useCombinedMode': true,
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+				<h4 class="mb-4">Sans astérisque :</h4>
+                <DatePicker v-bind="args" v-model="value"/>
+				<h4 class="mb-4">Avec astérisque :</h4>
+				<DatePicker v-bind="args" displayAsterisk v-model="value"/>
               </div>
             `,
 		}

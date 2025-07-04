@@ -1,11 +1,13 @@
 <script setup lang="ts">
-	import { computed, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, onMounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
+	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableUtils } from '../common/tableUtils'
 	import type { DataOptions, SyTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
@@ -13,6 +15,7 @@
 	import { useTableOptions } from '../common/useTableOptions'
 	import { useTableHeaders } from '../common/useTableHeaders'
 	import { useTableItems } from '../common/useTableItems'
+	import { useTableCheckbox } from '../common/useTableCheckbox'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -22,6 +25,7 @@
 		filterInputConfig: () => ({}),
 		density: 'default',
 		striped: false,
+		showSelect: false,
 	})
 
 	const emit = defineEmits<{
@@ -31,6 +35,11 @@
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
+	})
+
+	const model = defineModel<unknown[]>('modelValue', {
+		required: false,
+		default: () => [],
 	})
 
 	const table = ref<VDataTable>()
@@ -43,10 +52,32 @@
 		options,
 	})
 
+	const componentAttributes = useAttrs()
+
+	// Generate a unique ID for this table instance
+	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substr(2, 9)}`)
+
+	const {
+		propsFacade,
+		updateOptions,
+		setupAccessibility,
+		setupLocalStorage,
+		columnWidths,
+		updateColumnWidth,
+		headers: storageHeaders,
+	} = useTableUtils({
+		tableId: uniqueTableId.value,
+		prefix: 'table',
+		suffix: props.suffix,
+		caption: props.caption,
+		componentAttributes,
+		options,
+		density: props.density,
+	})
+
 	// Use the table headers composable
-	const headersProp = toRef(props, 'headers')
-	const { headers, getEnhancedHeader } = useTableHeaders({
-		headersProp,
+	const { headers, displayHeaders, getEnhancedHeader } = useTableHeaders({
+		headersProp: storageHeaders.value ? storageHeaders : toRef(props, 'headers'),
 		filterInputConfig: props.filterInputConfig,
 	})
 
@@ -71,32 +102,49 @@
 		emit,
 	})
 
-	const componentAttributes = useAttrs()
+	// Create a computed property for items to ensure reactivity
+	const tableItems = computed(() => props.items)
 
-	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substr(2, 9)}`)
+	// Use the table checkbox composable
+	const { getItemValue, toggleAllRows } = useTableCheckbox({
+		items: tableItems,
+		modelValue: model,
+		updateModelValue: (value) => {
+			model.value = value
+		},
+	})
 
-	const {
-		propsFacade,
-		updateOptions,
-		setupAccessibility,
-		setupLocalStorage,
-		columnWidths,
-		updateColumnWidth,
-	} = useTableUtils({
-		tableId: uniqueTableId.value,
-		prefix: 'table',
-		suffix: props.suffix,
-		caption: props.caption,
-		componentAttributes,
-		headersProp: toRef(props, 'headers'),
-		options,
-		density: props.density,
+	// Function to add accessibility attributes to row checkboxes
+	const accessibilityRowCheckboxes = () => {
+		nextTick(() => {
+			setTimeout(() => {
+				const tableElement = document.getElementById(uniqueTableId.value)
+				if (!tableElement) return
+
+				// Find all row checkboxes
+				const rowCheckboxes = tableElement.querySelectorAll('td .v-selection-control input[type="checkbox"]')
+				rowCheckboxes.forEach((checkbox, index) => {
+					const rowLabel = `${locales.selectRow} ${index + 1}`
+					checkbox.setAttribute('aria-label', rowLabel)
+					checkbox.setAttribute('title', rowLabel)
+				})
+			}, 100) // Small delay to ensure DOM is updated
+		})
+	}
+
+	// Watch for changes that might affect the table and update accessibility
+	watch(() => props.items, accessibilityRowCheckboxes, { deep: true })
+	watch(() => filteredItems.value, accessibilityRowCheckboxes)
+	watch(() => page.value, accessibilityRowCheckboxes)
+
+	// Apply accessibility attributes when component is mounted
+	onMounted(() => {
+		accessibilityRowCheckboxes()
 	})
 
 	setupAccessibility()
 
-	const { watchOptions } = setupLocalStorage()
+	const { watchOptions, saveHeaders } = setupLocalStorage()
 
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(columnWidths.value)
@@ -133,6 +181,14 @@
 		{ deep: true },
 	)
 
+	watch(
+		headers,
+		() => {
+			saveHeaders(headers.value)
+		},
+		{ deep: true },
+	)
+
 </script>
 
 <template>
@@ -142,10 +198,15 @@
 	>
 		<VDataTable
 			ref="table"
+			v-model="model"
 			color="primary"
+			:headers="displayHeaders"
 			v-bind="propsFacade"
 			:items="processItems(filteredItems.length > 0 ? filteredItems : createEmptyItemWithStructure())"
 			:density="props.density"
+			:show-select="props.showSelect"
+			:item-selectable="(item) => true"
+			:item-value="getItemValue"
 			@update:options="updateOptions"
 		>
 			<template #top>
@@ -165,12 +226,31 @@
 							:key="column.key"
 						>
 							<th>
-								<TableHeader
-									:table="table"
-									:header-params="slotProps"
-									:column="column"
-									:resizable-columns="props.resizableColumns"
-								/>
+								<template v-if="column.key === 'data-table-select' && props.showSelect">
+									<SyCheckbox
+										:model-value="slotProps.allSelected"
+										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
+										color="primary"
+										density="compact"
+										hide-details
+										:is-header="true"
+										:aria-label="locales.selectAllRows"
+										:title="locales.selectAllRows"
+										@click="toggleAllRows"
+									>
+										<template #label>
+											<span class="d-sr-only">{{ locales.selectAllRows }}</span>
+										</template>
+									</SyCheckbox>
+								</template>
+								<template v-else>
+									<TableHeader
+										:table="table"
+										:header-params="slotProps"
+										:column="column"
+										:resizable-columns="props.resizableColumns"
+									/>
+								</template>
 							</th>
 						</template>
 					</tr>
@@ -178,8 +258,9 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
+						<th v-if="props.showSelect" />
 						<template
-							v-for="column in slotProps.columns"
+							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key"
 						>
 							<th>
@@ -211,14 +292,14 @@
 							:colspan="slotProps.columns.length"
 							class="text-right px-4 py-2"
 						>
-							<v-btn
+							<VBtn
 								size="small"
 								color="primary"
 								variant="outlined"
 								@click="filters = []"
 							>
 								{{ locales.resetFilters }}
-							</v-btn>
+							</VBtn>
 						</td>
 					</tr>
 					<tr v-if="filteredItems.length === 0">
@@ -274,16 +355,23 @@
 					</tr>
 				</template>
 			</template>
+
 			<template #bottom>
-				<SyTablePagination
-					v-if="filteredItems.length > 0"
-					:page="page"
-					:items-per-page="itemsPerPageValue"
-					:page-count="pageCount"
-					:items-length="filteredItems.length"
-					@update:page="page = $event"
-					@update:items-per-page="updateItemsPerPage"
-				/>
+				<div class="d-flex align-center pa-2">
+					<OrganizeColumns
+						v-if="props.enableColumnControls && headers"
+						v-model:headers="headers"
+					/>
+					<SyTablePagination
+						v-if="filteredItems.length > 0"
+						:page="page"
+						:items-per-page="itemsPerPageValue"
+						:page-count="pageCount"
+						:items-length="filteredItems.length"
+						@update:page="page = $event"
+						@update:items-per-page="updateItemsPerPage"
+					/>
+				</div>
 			</template>
 		</VDataTable>
 	</div>

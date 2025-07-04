@@ -37,6 +37,8 @@ export type DataTableHeaders = {
 	hideMessages?: boolean
 	dateFormat?: string
 	align?: 'start' | 'end' | 'center'
+	order?: number
+	hidden?: boolean
 }
 
 // Type to handle both Vuetify internal headers and our custom headers
@@ -60,27 +62,31 @@ export type TableColumnHeader = {
 }
 
 // Component-specific props interfaces
-export interface SyTableProps {
+export type SyTableProps = {
 	items?: Record<string, unknown>[]
 	suffix: string
 	caption?: string
 	showFilters?: boolean
-	headers?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
 	density?: TableDensityType
 	striped?: boolean
 	resizableColumns?: boolean
+	enableColumnControls?: boolean
+	headers?: DataTableHeaders[]
+	showSelect?: boolean
 }
 
-export interface SyServerTableProps {
+export type SyServerTableProps = {
 	serverItemsLength: number
 	items?: Record<string, unknown>[]
 	suffix: string
 	caption?: string
 	showFilters?: boolean
-	headers?: DataTableHeaders[]
 	resizableColumns?: boolean
 	filterInputConfig?: Record<string, unknown>
 	density?: TableDensityType
 	striped?: boolean
+	enableColumnControls?: boolean
+	headers?: DataTableHeaders[]
+	showSelect?: boolean
 }

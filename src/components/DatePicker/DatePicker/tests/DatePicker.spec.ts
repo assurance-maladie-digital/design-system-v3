@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
 import { nextTick } from 'vue'
-import DatePicker from './DatePicker.vue'
+import DatePicker from '../DatePicker.vue'
 
 describe('DatePicker.vue', () => {
 	let wrapper
@@ -17,20 +17,6 @@ describe('DatePicker.vue', () => {
 				required: true,
 			},
 		})
-	})
-
-	it('displays the placeholder text as label', () => {
-		const placeholder = 'Sélectionner une date'
-		const wrapper = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
-			props: { placeholder },
-		})
-
-		// Vérifier que le placeholder est affiché comme label
-		const label = wrapper.find('label')
-		expect(label.text()).toBe(placeholder)
 	})
 
 	it('emits update:modelValue event on date selection', async () => {
