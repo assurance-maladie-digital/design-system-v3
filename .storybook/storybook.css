@@ -127,23 +127,22 @@ pre.prismjs {
 	transform: none !important;
 }
 
-/* Ensure the dropdown has proper positioning context */
-.docs-story .sy-select,
-.storybook-docs-mode .sy-select {
-	position: relative !important;
-	z-index: 100 !important;
-}
-
 .sbdocs-preview {
 	/* Fix for dropdown positioning */
 	.docs-story .v-list,
 	.storybook-docs-mode .v-list {
-		top: auto !important;
-		left: auto !important;
-		margin-top: 0 !important;
-		width: auto !important;
-		min-width: 100px !important;
+		top: auto;
+		left: auto;
+		margin-top: 0;
+		width: auto;
+		position: absolute;
 	}
+
+	/* SySelect */
+	.v-list[data-v-3bd0eb8e] {
+		margin-top: -22px !important;
+	}
+
 
 	/* Make sure the menu content is visible */
 	.storybook-docs-mode .v-menu__content {
@@ -153,6 +152,7 @@ pre.prismjs {
 		opacity: 1 !important;
 	}
 }
+
 
 /* Fix for Table doc */
 #story--démarrer-releases--list {
