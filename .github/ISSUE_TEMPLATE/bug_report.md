@@ -9,14 +9,11 @@ labels:
 
 🐛 Bug
 
-### Priorisation :
+### Impact
 
-<!-- Choisissez une priorité -->
-🟢 Peu prioritaire : Améliorations mineures, bugs non bloquants
+<!-- Quel est l'impact sur votre projet ? -->
 
-🟡 Prioritaire : Bugs impactant l'expérience utilisateur, nouvelles fonctionnalités importantes
-
-🔴 Très prioritaire : Bugs critiques, problèmes de sécurité, fonctionnalités essentielles
+Bloquant : <!-- Oui, Non (est-ce que le problème empêche le développement ou la mise en production ?) -->
 
 ## Description
 
