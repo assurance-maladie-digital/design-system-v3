@@ -4,16 +4,17 @@ import {Meta, Source} from '@storybook/blocks';
 
 # Configuration du thème
 
-Le thème par défaut du Starter kit est celui du Digital par défaut.
-Si votre projet dépend de AmeliPro ou du Portail Agent, il vous faudra modifier la configutaion pour appliquer le thème spécifique à votre ligne de fabrication.
-
+Le thème par défaut du Starter kit est celui de la Cnam par défaut.
+Si votre projet dépend du Portail Agent, il vous faudra modifier la configuration pour appliquer le thème spécifique à votre ligne de fabrication.
 
 ## Étapes pour changer le thème du Design System
 
 ### 1. Modification du fichier main.ts
 
 1. Ouvrez le fichier `src/main.ts` dans votre éditeur de code.
-2. Remplacez la valeur de `defaultTheme` par le thème qui correspond a votre projet. Exemple pour Portail Agent : `pa`.
+2. Remplacez la valeur de `defaultTheme` par le thème qui correspond à votre projet :
+- `cnam` : CNAM
+- `pa` : Portail Agent
 
 <Source dark code={`
 import { createApp } from 'vue';
