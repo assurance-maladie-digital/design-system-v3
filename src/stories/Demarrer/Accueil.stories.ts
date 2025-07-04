@@ -37,8 +37,8 @@ export const Header: StoryObj = {
 						  <h2 class="text-h4 mb-5">Documentation d'aide<br/> à la fabrication des IHM<br/>
 							  <span v-if="theme === 'pa'">de Portail Agent</span>
 							  <span v-if="theme === 'cnam'">de la CNAM</span></h2>
-						  <VBtn color="primary" href="/?path=/docs/d%C3%A9marrer-introduction--docs">
-							  Démarrer
+						  <VBtn color="primary" href="/?path=/docs/guide-du-dev-gestion-du-th%C3%A8me--docs">
+							  Configurer le thème
 							  <VIcon size="small" class="ml-2" right>{{arrowRight}}</VIcon>
 						  </VBtn>
 					  </VCol>
