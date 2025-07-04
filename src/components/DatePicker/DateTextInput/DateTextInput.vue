@@ -1024,7 +1024,8 @@
 		}"
 		:disabled="props.disabled"
 		:error-messages="errorMessages"
-		:label="props.label || props.placeholder"
+		:label="props.label || ''"
+		:placeholder="props.placeholder"
 		:no-icon="props.noIcon"
 		:prepend-icon="displayIcon && displayPrependIcon && !displayAppendIcon ? 'calendar' : undefined"
 		:readonly="props.readonly"
@@ -1034,6 +1035,7 @@
 		:bg-color="props.bgColor"
 		color="primary"
 		is-clearable
+		:display-persistent-placeholder="true"
 		:aria-label="ariaLabel || props.placeholder"
 		title="Date text input"
 		@focus="handleFocus"

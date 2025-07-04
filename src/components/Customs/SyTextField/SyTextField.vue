@@ -96,7 +96,7 @@
 			tooltipLocation: 'top',
 			variantStyle: 'outlined',
 			color: 'primary',
-			label: 'custom label',
+			label: '',
 			errorMessages: null,
 			warningMessages: null,
 			successMessages: null,
@@ -530,11 +530,11 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
-:deep(.v-field__input input::placeholder),
-:deep(input.v-field__input::placeholder),
-:deep(textarea.v-field__input::placeholder) {
-	opacity: 0;
-}
+// :deep(.v-field__input input::placeholder),
+// :deep(input.v-field__input::placeholder),
+// :deep(textarea.v-field__input::placeholder) {
+// 	opacity: 0;
+// }
 
 .warning-field {
 	:deep(.v-input__details > .v-icon),
