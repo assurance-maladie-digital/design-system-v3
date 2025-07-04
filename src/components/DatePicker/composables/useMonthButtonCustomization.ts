@@ -74,74 +74,107 @@ export function useMonthButtonCustomization(
 	const customizeMonthButton = () => {
 		if (isPickerVisibleGetter() || monthName?.value) {
 			nextTick(() => {
-				// Personnalisation du bouton du mois
-				const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')
-				if (monthBtn) {
-					// Récupérer le texte original et le nettoyer
-					monthButtonText.value = monthBtn.textContent?.trim() || ''
-
-					// Extraire le mois et l'année
+				// Personnalisation des boutons du mois pour tous les DatePickers
+				const monthBtns = document.querySelectorAll('.v-date-picker-controls__month-btn')
+				if (monthBtns.length > 0) {
+					// Récupérer le texte original et le nettoyer du premier bouton pour référence
+					// Cela n'affectera pas la personnalisation des autres boutons
+					monthButtonText.value = monthBtns[0].textContent?.trim() || ''
 					const parts = monthButtonText.value.split(' ')
-					// Utiliser le monthName fourni s'il existe, sinon utiliser le texte extrait
-					const rawMonthText = monthName?.value || parts[0]
-					// Personnaliser le nom du mois avec notre fonction switch case
-					const monthText = getCustomMonthName(rawMonthText)
 					yearText.value = parts.length > 1 ? parts[1] : ''
 
-					// Créer un bouton stylisé comme un VBtn avec une icône Material Design
-					const buttonHTML = `
-						<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary); margin-left: -12px;" data-ripple="false">
-							<span class="v-btn__overlay"></span>
-							<span class="v-btn__underlay"></span>
-							<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
-								<span style="color: var(--v-theme-primary);">${monthText.charAt(0).toUpperCase() + monthText.slice(1)}</span> 
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-label="chevron-down"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-							</div>
-						</button>
-					`
+					// Appliquer la personnalisation à tous les boutons du mois
+					monthBtns.forEach((monthBtn) => {
+						// Extraire le mois et l'année pour ce bouton spécifique
+						const btnText = monthBtn.textContent?.trim() || ''
+						const btnParts = btnText.split(' ')
+						// Utiliser le monthName fourni s'il existe, sinon utiliser le texte extrait
+						const rawMonthText = monthName?.value || btnParts[0]
+						// Personnaliser le nom du mois avec notre fonction switch case
+						const monthText = getCustomMonthName(rawMonthText)
 
-					// Remplacer le contenu du bouton original
-					monthBtn.innerHTML = buttonHTML
+						// Créer un bouton stylisé comme un VBtn avec une icône Material Design
+						const buttonHTML = `
+							<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary); margin-left: -12px;" data-ripple="false">
+								<span class="v-btn__overlay"></span>
+								<span class="v-btn__underlay"></span>
+								<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
+									<span style="color: var(--v-theme-primary);">${monthText.charAt(0).toUpperCase() + monthText.slice(1)}</span> 
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-label="chevron-down"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+								</div>
+							</button>
+						`
 
-					// Personnalisation du bouton d'année si l'année est disponible
-					if (yearText.value || yearName?.value) {
-						const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')
-						if (yearBtn) {
-							// Utiliser le yearName fourni s'il existe, sinon utiliser yearText
-							const displayedYear = yearName?.value || yearText.value
-							// Créer un bouton stylisé pour l'année
-							const yearButtonHTML = `
-								<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary);" data-ripple="false">
-									<span class="v-btn__overlay"></span>
-									<span class="v-btn__underlay"></span>
-									<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
-										<span style="color: var(--v-theme-primary);">${displayedYear}</span> 
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-label="chevron-down"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-									</div>
-								</button>
-							`
+						// Remplacer le contenu du bouton original
+						monthBtn.innerHTML = buttonHTML
+					})
 
-							// Remplacer le contenu du bouton d'année
-							yearBtn.innerHTML = yearButtonHTML
+					// Personnalisation des boutons d'année pour tous les DatePickers
+					const yearBtns = document.querySelectorAll('.v-date-picker-controls__mode-btn')
+					yearBtns.forEach((yearBtn) => {
+						// Trouver le parent DatePicker-controls pour ce bouton d'année
+						const parentControl = yearBtn.closest('.v-date-picker-controls')
+						if (!parentControl) return
+
+						// Trouver le bouton de mois correspondant dans le même contrôle
+						const siblingMonthBtn = parentControl.querySelector('.v-date-picker-controls__month-btn')
+						if (!siblingMonthBtn) return
+
+						// Extraire le texte du bouton de mois pour obtenir l'année
+						const monthBtnText = siblingMonthBtn.textContent?.trim() || ''
+						const monthBtnParts = monthBtnText.split(' ')
+
+						// Déterminer l'année à afficher selon les priorités
+						let displayedYear = ''
+						if (yearName?.value) {
+							displayedYear = yearName.value
 						}
-					}
+						else if (monthBtnParts.length > 1) {
+							displayedYear = monthBtnParts[1]
+						}
+						else if (yearText.value) {
+							displayedYear = yearText.value
+						}
+						else {
+							// Si aucune année n'est trouvée, utiliser l'année courante
+							displayedYear = new Date().getFullYear().toString()
+						}
+
+						// Créer un bouton stylisé pour l'année
+						const yearButtonHTML = `
+							<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary);" data-ripple="false">
+								<span class="v-btn__overlay"></span>
+								<span class="v-btn__underlay"></span>
+								<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
+									<span style="color: var(--v-theme-primary);">${displayedYear}</span> 
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-label="chevron-down"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+								</div>
+							</button>
+						`
+
+						// Remplacer le contenu du bouton d'année
+						yearBtn.innerHTML = yearButtonHTML
+					})
 				}
 			})
 		}
 	}
 
 	/**
-	 * Configure un observateur pour détecter les changements dans le DOM
+	 * Configure des observateurs pour détecter les changements dans le DOM
 	 * et personnaliser les boutons du mois et de l'année automatiquement avec une icône SVG chevron-down
+	 * pour tous les DatePickers présents sur la page
 	 */
 	const setupMonthButtonObserver = () => {
 		nextTick(() => {
-			const targetNode = document.querySelector('.v-date-picker-controls')
-			if (targetNode) {
-				const observer = new MutationObserver(() => {
-					customizeMonthButton()
+			const targetNodes = document.querySelectorAll('.v-date-picker-controls')
+			if (targetNodes.length > 0) {
+				targetNodes.forEach((targetNode) => {
+					const observer = new MutationObserver(() => {
+						customizeMonthButton()
+					})
+					observer.observe(targetNode, { childList: true, subtree: true })
 				})
-				observer.observe(targetNode, { childList: true, subtree: true })
 			}
 		})
 	}
