@@ -127,41 +127,32 @@ pre.prismjs {
 	transform: none !important;
 }
 
-/* Fix for SySelect dropdown in Storybook docs canvas */
-.docs-story .v-list,
-.storybook-docs-mode .v-list {
-	z-index: 9999 !important;
-	background-color: white !important;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.08) !important;
-	visibility: visible !important;
-	opacity: 1 !important;
-	pointer-events: auto !important;
+.sbdocs-preview {
+	/* Fix for dropdown positioning */
+	.docs-story .v-list,
+	.storybook-docs-mode .v-list {
+		top: auto;
+		left: auto;
+		margin-top: 0;
+		width: auto;
+		position: absolute;
+	}
+
+	/* SySelect */
+	.v-list[data-v-3bd0eb8e] {
+		margin-top: -22px !important;
+	}
+
+
+	/* Make sure the menu content is visible */
+	.storybook-docs-mode .v-menu__content {
+		position: absolute !important;
+		z-index: 9999 !important;
+		visibility: visible !important;
+		opacity: 1 !important;
+	}
 }
 
-/* Ensure the dropdown has proper positioning context */
-.docs-story .sy-select,
-.storybook-docs-mode .sy-select {
-	position: relative !important;
-	z-index: 100 !important;
-}
-
-/* Fix for dropdown positioning */
-.docs-story .v-list,
-.storybook-docs-mode .v-list {
-	top: auto !important;
-	left: auto !important;
-	margin-top: 0 !important;
-	width: auto !important;
-	min-width: 100px !important;
-}
-
-/* Make sure the menu content is visible */
-.storybook-docs-mode .v-menu__content {
-	position: absolute !important;
-	z-index: 9999 !important;
-	visibility: visible !important;
-	opacity: 1 !important;
-}
 
 /* Fix for Table doc */
 #story--démarrer-releases--list {
