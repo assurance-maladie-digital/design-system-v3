@@ -34,8 +34,6 @@ export const Header: StoryObj = {
 					  <VCol md="6" sm="12">
 						  <h1 class="font-weight-bold text-h4 mb-2">Synapse</h1>
 						  <img alt="line" src="/home-line.svg" width="120" height="5" class="mb-5" />
-						  <h2 class="text-h4 mb-5">Documentation d'aide<br/> à la fabrication des IHM<br/>de la CNAM</h2>
-		
 						  <h2 class="text-h4 mb-5">Documentation d'aide<br/> à la fabrication des IHM<br/>
 							  <span v-if="theme === 'pa'">de Portail Agent</span>
 							  <span v-if="theme === 'cnam'">de la CNAM</span></h2>
