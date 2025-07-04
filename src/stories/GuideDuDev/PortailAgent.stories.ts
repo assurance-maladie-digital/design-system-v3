@@ -2,7 +2,7 @@ import { VExpansionPanel, VExpansionPanels, VExpansionPanelText, VExpansionPanel
 import type { StoryObj } from '@storybook/vue3'
 
 export default {
-	title: 'Démarrer/Portail Agent',
+	title: 'Guide Du Dev/Correspondance composants PAG',
 }
 
 export const PAgComponents: StoryObj = {

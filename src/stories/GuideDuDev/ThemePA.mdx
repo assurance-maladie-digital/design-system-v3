@@ -1,0 +1,78 @@
+import {Meta, Source} from '@storybook/blocks';
+
+<Meta title="Guide Du Dev/Gestion du theme" />
+
+# Configuration du thème
+
+Le thème par défaut du Starter kit est celui du Digital par défaut.
+Si votre projet dépend de AmeliPro ou du Portail Agent, il vous faudra modifier la configutaion pour appliquer le thème spécifique à votre ligne de fabrication.
+
+
+---
+
+## Étapes pour changer le thème du Design System
+
+### Starter Kit SKSN basé sur Vue 3
+
+Cette section porte sur la configuration du thème pour le Starter Kit SKSN basé sur Vue 3. Pour les projets basés sur Nuxt 3, veuillez vous référer à la section suivante.
+
+#### 1. Modification du fichier main.ts
+
+1. Ouvrez le fichier `src/main.ts` dans votre éditeur de code.
+2. Remplacez la valeur de `defaultTheme` par le thème qui correspond a votre projet. Exemple pour Portail Agent : `pa`.
+
+<Source dark code={`
+import { createApp } from 'vue';
+...
+
+const vuetify = createVuetify({
+	theme: {
+		defaultTheme: 'pa',
+...
+
+`}
+/>
+
+#### 2. Relancer le projet
+
+Après avoir effectué les modifications dans le fichier de configuration, relancez le serveur de développement pour appliquer les changements :
+<Source dark code={`
+pnpm dev
+`}
+/>
+
+#### 3. Vérification
+
+Une fois le projet redémarré, vérifiez que la charte PA est bien appliquée.
+
+---
+
+### Starter Kit SKSY basé sur Nuxt 3
+
+#### 1. Modification du fichier nuxt.config.ts
+
+1.	Ouvrez le fichier nuxt.config.ts dans votre éditeur de code.
+2.	Remplacer la valeur du thème par défaut`defaultTheme` par le thème PA : `pa`.
+
+<Source dark code={`
+theme: {
+	defaultTheme: 'pa',
+	...
+}
+`}
+/>
+
+NB : les thèmes `customLightTheme` et `customDarkTheme` sont à votre disposition pour ajouter des couleurs supplémentaires.
+
+#### 2. Relancer le projet
+
+Après avoir effectué les modifications dans le fichier de configuration, relancez le serveur de développement pour appliquer les changements :
+
+<Source dark code={`
+pnpm dev
+`}
+/>
+
+#### 3. Vérification
+
+Une fois le projet redémarré, vérifiez que la charte PA est bien appliquée.
