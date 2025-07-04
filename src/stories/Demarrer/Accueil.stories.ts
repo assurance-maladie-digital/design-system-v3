@@ -28,8 +28,8 @@ export const Header: StoryObj = {
 						  <h1 class="font-weight-bold text-h4 mb-2">Synapse</h1>
 						  <img alt="line" src="/home-line.svg" width="120" height="5" class="mb-5" />
 						  <h2 class="text-h4 mb-5">Documentation d'aide<br/> à la fabrication des IHM<br/>de la CNAM</h2>
-						  <VBtn color="primary" href="/?path=/docs/d%C3%A9marrer-introduction--docs">
-							  Démarrer
+						  <VBtn color="primary" href="/?path=/docs/guide-du-dev-gestion-du-theme--docs">
+							  Configurer le thème
 							  <VIcon size="small" class="ml-2" right>{{arrowRight}}</VIcon>
 						  </VBtn>
 					  </VCol>
