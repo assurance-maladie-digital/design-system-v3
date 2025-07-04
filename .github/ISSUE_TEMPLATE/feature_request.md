@@ -14,9 +14,9 @@ labels:
 <!-- Choisissez une priorité -->
 🟢 Peu prioritaire : Améliorations mineures
 
-🟡 Prioritaire : Nouvelles fonctionnalités importantes
+🟡 Normal : Nouvelles fonctionnalités importantes
 
-🔴 Très prioritaire : Fonctionnalités essentielles
+🔴 Prioritaire : Fonctionnalités essentielles
 
 ## Description de la fonctionnalité
 
