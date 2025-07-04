@@ -1,15 +1,15 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, type Ref } from 'vue'
 import { useMonthButtonCustomization } from '../useMonthButtonCustomization'
 
 describe('useMonthButtonCustomization', () => {
 	let isPickerVisibleGetter: () => boolean
 	// Définir explicitement le type pour éviter les erreurs de compatibilité
-	let monthName = ref<string | null>(null)
-	let yearName = ref<string | null>(null)
+	let monthName: Ref<string | null>
+	let yearName: Ref<string | null>
 
 	beforeEach(() => {
-		// Réinitialiser les refs pour chaque test
+		// Réinitialiser les refs pour chaque test avec le type exact attendu par le composable
 		monthName = ref<string | null>(null)
 		yearName = ref<string | null>(null)
 
