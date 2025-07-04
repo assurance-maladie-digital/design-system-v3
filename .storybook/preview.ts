@@ -72,7 +72,7 @@ const globalTypes = {
 			icon: 'paintbrush',
 			items: [
 				{ value: 'cnam', title: 'Thème CNAM' },
-				{ value: 'pa', title: 'Thème PA' },
+				{ value: 'pa', title: 'Thème PAG' },
 			],
 			dynamicTitle: true,
 		},
