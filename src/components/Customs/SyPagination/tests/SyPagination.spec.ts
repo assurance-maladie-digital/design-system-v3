@@ -37,18 +37,22 @@ describe('SyPagination', () => {
 		})
 
 		// Click on page 2
-		// Find the second page link (index 1 is the second page after first page)
-		const pageLinks = wrapper.findAll('a').filter(a => !a.classes('list-first') && !a.classes('list-last') && !a.classes('ellipsis') && !a.classes('disabled'))
-		await pageLinks[1].trigger('click')
+		// Find the page 2 link directly
+		const page2Link = wrapper.findAll('a').find(a => a.text().trim() === '2')
+		expect(page2Link).toBeTruthy()
+		await page2Link!.trigger('click')
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
 		expect(emitted && emitted[0]).toEqual([2])
+
+		// Update the component's modelValue to simulate v-model binding
+		await wrapper.setProps({ modelValue: 2 })
 
 		// Click on next button
 		await wrapper.findAll('a').filter(a => a.text().includes('Suivant'))[0].trigger('click')
 		// Get updated emitted events
 		const updatedEmitted = wrapper.emitted('update:modelValue')
-		expect(updatedEmitted && updatedEmitted[1]).toEqual([2])
+		expect(updatedEmitted && updatedEmitted[1]).toEqual([3])
 	})
 
 	it('disables previous button on first page', () => {
