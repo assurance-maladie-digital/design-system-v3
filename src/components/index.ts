@@ -69,6 +69,7 @@ export { default as SocialMediaLinks } from './SocialMediaLinks/SocialMediaLinks
 export { default as SubHeader } from './SubHeader/SubHeader.vue'
 export { default as SyAlert } from './SyAlert/SyAlert.vue'
 export { default as SyCheckbox } from './Customs/SyCheckbox/SyCheckbox.vue'
+export { default as SyPagination } from './Customs/SyPagination/SyPagination.vue'
 export { default as SyTextArea } from './SyTextArea/SyTextArea.vue'
 export { default as SyServerTable } from './Tables/SyServerTable/SyServerTable.vue'
 export { default as SyTable } from './Tables/SyTable/SyTable.vue'
