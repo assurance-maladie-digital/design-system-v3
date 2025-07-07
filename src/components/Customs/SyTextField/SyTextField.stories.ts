@@ -224,6 +224,7 @@ const meta = {
 		'placeholder': {
 			description: 'Texte affiché quand le champ est vide',
 			control: 'text',
+			default: 'Placeholder',
 		},
 		'prefix': {
 			description: 'Texte affiché avant la valeur: prefix="€" : affichera "€" avant la valeur saisie',
