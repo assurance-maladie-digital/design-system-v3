@@ -11,10 +11,12 @@
 		min?: number
 		max?: number
 		step?: number
+		bgColor?: string
 	}>(), {
 		min: 0,
 		max: 100,
 		step: 1,
+		bgColor: 'white',
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -132,6 +134,7 @@
 				:aria-label="locales.minLabel"
 				inputmode="numeric"
 				color="primary"
+				:bg-color="bgColor"
 				:title="locales.minLabel"
 				@update:model-value="updateMin"
 				@update:focused="validateMin"
@@ -144,6 +147,7 @@
 				:aria-label="locales.maxLabel"
 				inputmode="numeric"
 				color="primary"
+				:bg-color="bgColor"
 				:title="locales.maxLabel"
 				@update:model-value="updateMax"
 				@update:focused="validateMax"

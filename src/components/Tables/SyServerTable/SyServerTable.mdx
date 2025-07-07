@@ -7,11 +7,11 @@ import * as SyServerTable from './SyServerTable.stories';
 
 Le composant `SyServerTable` est utilisé pour afficher des données tabulaires chargées depuis un serveur. Il s'appuie sur le composant `VDataTableServer` de Vuetify et offre des fonctionnalités supplémentaires comme le stockage local des options de tableau et des améliorations d'accessibilité.
 
-<Canvas of={SyServerTable.Default} />
+<Canvas story={{height: '550px'}} of={SyServerTable.Default} />
 
 ## API
 
-<Controls of={SyServerTable.Default} />
+<Controls story={{height: '550px'}} of={SyServerTable.Default} />
 
 ## Fonctionnalités
 
@@ -32,17 +32,27 @@ Pour gérer individuellement le stockage des options pour différents tableaux, 
 
 Le composant permet de trier les données par colonne en déléguant le tri au serveur.
 
-<Canvas of={SyServerTable.ServerSortBy} />
+<Canvas story={{height: '550px'}} of={SyServerTable.ServerSortBy} />
 
 ### Filtres des colonnes
 
 Le composant permet d'appliquer des filtres sur les colonnes. Vous pouvez définir des filtres personnalisés pour chaque colonne en utilisant la prop `show-filters`. Voir d'autres exemples de filtres dans les stories.
-<Canvas of={SyServerTable.ServerFilterByText} />
+<Canvas story={{height: '550px'}} of={SyServerTable.ServerFilterByText} />
 
 ### Resize des colonnes
 
 Le composant peut permettre de redimensionner les colonnes en utilisant la prop `resizable-columns`. Vous pouvez activer ou désactiver cette fonctionnalité selon vos besoins.
-<Canvas of={SyServerTable.ResizableColumns} />
+<Canvas story={{height: '550px'}} of={SyServerTable.ResizableColumns} />
+
+### Réorganisation des colonnes
+
+Le composant permet de cacher ou réorganiser l'ordre des colonnes en utilisant la prop `enable-column-controls`. Vous pouvez activer ou désactiver cette fonctionnalité selon vos besoins.
+<Canvas story={{height: '550px'}} of={SyServerTable.ColumnControls} />
+
+### Selection des lignes
+
+Le composant permet de sélectionner des lignes individuellement ou en masse. Vous pouvez activer la sélection en utilisant la prop `show-select`.
+<Canvas story={{height: '550px'}} of={SyServerTable.RowSelection} />
 
 ### Accessibilité
 

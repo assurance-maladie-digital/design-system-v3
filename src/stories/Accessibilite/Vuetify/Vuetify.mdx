@@ -1,11 +1,137 @@
 import { Meta, Story } from '@storybook/addon-docs';
-import * as AccessStories from './Vuetify.stories.ts';
+import * as AccessStories from './Vuetify.stories';
 
 <Meta of={AccessStories} />
 
-Vuetify
-=============
+<style>
+{
+  `
+    /* Variables CSS basées sur les couleurs du thème CNAM */
+    :root {
+      --primary-color: #0c419a; /* blue.base */
+      --primary-light: #3d67ae; /* blue.lighten20 */
+      --accent-color: #00a5df; /* cyan.base */
+      --error-color: #e04f39; /* orange.base */
+      --warning-color: #f0b323; /* yellow.base */
+      --success-color: #56c271; /* green.base */
+      --text-color: #020d1f; /* blue.darken80 */
+      --background-light: #f8f9fc; /* blue.lighten97 */
+      --card-shadow: 0 4px 12px rgba(12, 65, 154, 0.05);
+      --transition-speed: 0.3s;
+      --border-radius: 8px;
+    }
+    
+    /* Styles globaux */
+    .vuetify-container {
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-color);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    /* Header avec effet glassmorphism */
+    .vuetify-header {
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .section-title {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(24, 103, 192, 0.2);
+    }
+    
+    .info-box {
+      background-color: var(--background-light);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .info-box h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+    
+    .legend-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      background-color: white;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .legend-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+    
+    .legend-icon.success {
+      background-color: var(--success-color);
+    }
+    
+    .legend-icon.error {
+      background-color: var(--error-color);
+    }
+    
+    .legend-icon.warning {
+      background-color: var(--warning-color);
+    }
+    
+    .panel-container {
+      margin-top: 2rem;
+    }
+  `
+}
+</style>
 
-<Story of={AccessStories.Legende} />
-
-<Story of={AccessStories.VuetifyPanel} />
+<div className="vuetify-container">
+  <div className="vuetify-header">
+    <h1>Audit d'accessibilité des composants Vuetify</h1>
+    <p>Tableau de bord de l'état d'accessibilité des composants Vuetify</p>
+  </div>
+  
+  <h2 className="section-title">Présentation</h2>
+  
+  <div className="info-box">
+    <h3>🔍 À propos de cet audit</h3>
+    <p>Cet outil permet d'évaluer la conformité des composants Vuetify aux critères du <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr> version 4.1.</p>
+    <p>Pour chaque composant, vous pouvez consulter :</p>
+    <ul>
+      <li>Les erreurs bloquantes qui empêchent la conformité</li>
+      <li>Les erreurs indéterminées qui nécessitent une vérification manuelle</li>
+      <li>Les solutions recommandées pour corriger les problèmes identifiés</li>
+    </ul>
+  </div>
+  
+  <h2 className="section-title">Légende</h2>
+  
+  <div className="legend-container">
+    <Story of={AccessStories.Legende} />
+  </div>
+  
+  <h2 className="section-title">Tableau de bord des composants</h2>
+  
+  <div className="panel-container">
+    <Story of={AccessStories.VuetifyPanel} />
+  </div>
+</div>

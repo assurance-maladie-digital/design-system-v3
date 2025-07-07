@@ -8,11 +8,12 @@
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString } from '../composables'
+	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay } from '../composables'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { mdiCalendar } from '@mdi/js'
+	import { useHolidayDay } from '@/composables/date/useHolidayDay'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -20,6 +21,12 @@
 	const { parseDate, formatDate } = useDateFormat()
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility } = useDatePickerAccessibility()
+
+	// Variables pour suivre le mois et l'année actuellement affichés dans le DatePicker
+	const currentMonth = ref<string | null>(null)
+	const currentYear = ref<string | null>(null)
+	const currentMonthName = ref<string | null>(null)
+	const currentYearName = ref<string | null>(null)
 
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
@@ -52,12 +59,15 @@
 		hideDetails?: boolean | 'auto'
 		displayWeekendDays?: boolean
 		displayTodayButton?: boolean
+		displayHolidayDays?: boolean
 		useCombinedMode?: boolean
 		textFieldActivator?: boolean
+		displayAsterisk?: boolean
 		period?: {
 			min?: string
 			max?: string
 		}
+		autoClamp?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
@@ -82,17 +92,20 @@
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		density: 'default',
 		hideDetails: false,
 		displayWeekendDays: true,
 		displayTodayButton: true,
+		displayHolidayDays: true,
 		useCombinedMode: false,
 		textFieldActivator: false,
+		displayAsterisk: false,
 		period: () => ({
 			min: '',
 			max: '',
 		}),
+		autoClamp: false,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -100,6 +113,7 @@
 	// Utilisation des composables pour les fonctionnalités du DatePicker
 	const { displayWeekendDays } = useWeekendDays(props)
 	const { todayInString } = useTodayButton(props)
+	const { labelWithAsterisk } = useAsteriskDisplay(props)
 
 	const selectedDates = ref<Date | Date[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
@@ -140,6 +154,8 @@
 		(e: 'closed'): void
 		(e: 'focus'): void
 		(e: 'blur'): void
+		(e: 'input', value: DateValue): void
+		(e: 'date-selected', value: DateValue): void
 	}>()
 
 	const isDatePickerVisible = ref(false)
@@ -244,6 +260,8 @@
 	watch(selectedDates, (newValue) => {
 		// Valider les dates
 		validateDates()
+		// Marquer les jours fériés après la mise à jour des dates
+		markHolidayDays()
 
 		// Mettre à jour le modèle si nécessaire
 		if (newValue !== null) {
@@ -282,10 +300,6 @@
 		'v-messages__message--error': errorMessages.value.length > 0,
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
 	})
-
-	const inputStyle = computed(() => ({
-		'min-width': '100%',
-	}))
 
 	// Utilisation du composable pour gérer la sélection de dates
 	const { updateSelectedDates, rangeBoundaryDates } = useDateSelection(
@@ -494,9 +508,11 @@
 
 	// todayInString est maintenant fourni par le composable useTodayButton
 
-	// Utilisation du composable pour personnaliser le bouton du mois
+	// Utilisation du composable pour personnaliser les boutons du mois et de l'année
 	const { customizeMonthButton, setupMonthButtonObserver } = useMonthButtonCustomization(
 		() => isDatePickerVisible.value,
+		currentMonthName,
+		currentYearName,
 	)
 
 	onMounted(() => {
@@ -543,6 +559,90 @@
 		}
 	}
 
+	// Fonction pour mettre à jour le mois
+	const onUpdateMonth = (month: string) => {
+		// Éviter les mises à jour inutiles si le mois n'a pas changé
+		if (currentMonth.value === month) return
+		currentMonth.value = month
+		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
+		handleMonthUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
+
+	// Fonction pour mettre à jour l'année
+	const onUpdateYear = (year: string) => {
+		currentYear.value = year
+		currentYearName.value = year
+		markHolidayDays()
+
+		handleYearUpdate()
+		handleMonthUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
+
+	// Propriété calculée pour récupérer les jours fériés de l'année courante
+	const holidays = computed(() => {
+		// Utiliser le composable useHolidayDay pour récupérer les jours fériés
+		const { getJoursFeries } = useHolidayDay()
+
+		// Convertir l'année en nombre, utiliser l'année courante comme valeur par défaut
+		const year = parseInt(currentYear.value || new Date().getFullYear().toString(), 10)
+
+		// Récupérer les jours fériés au format DD/MM/YYYY
+		const joursFeries = getJoursFeries(year)
+
+		// Tableau pour stocker les jours fériés
+		const holidayDates: Date[] = []
+
+		// Convertir les dates du format string en objets Date
+		joursFeries.forEach((dateStr) => {
+			const [day, month, yearStr] = dateStr.split('/')
+			// Mois -1 car les mois dans Date sont indexés à partir de 0
+			holidayDates.push(new Date(parseInt(yearStr), parseInt(month) - 1, parseInt(day)))
+		})
+
+		// Retourner le tableau des jours fériés
+		return holidayDates
+	})
+
+	// Fonction pour marquer les jours fériés dans le calendrier
+	const markHolidayDays = () => {
+		if (!props.displayHolidayDays) return
+		// Attendre que le DOM soit mis à jour
+		nextTick(() => {
+			// Récupérer l'année et le mois courants
+			const year = parseInt(currentYear.value || new Date().getFullYear().toString(), 10)
+			// Utiliser currentMonth.value !== null pour vérifier si la valeur est définie, même si c'est 0
+			const month = parseInt(currentMonth.value !== null ? currentMonth.value : new Date().getMonth().toString(), 10)
+
+			// Récupérer les jours fériés pour ce mois
+			const monthHolidays = holidays.value.filter((holiday) => {
+				// La comparaison doit tenir compte du fait que getMonth() retourne 0-11
+				return holiday.getMonth() === month
+			})
+
+			// Pour chaque jour férié, trouver l'élément DOM correspondant et ajouter la classe
+			monthHolidays.forEach((holiday) => {
+				const day = holiday.getDate()
+				const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+				const dayElements = document.querySelectorAll(`[data-v-date="${dateStr}"]`)
+				dayElements.forEach((element) => {
+					element.classList.add('holiday-day')
+				})
+			})
+		})
+	}
+
 	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
 		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
@@ -555,6 +655,10 @@
 	}
 
 	watch(isDatePickerVisible, async (isVisible) => {
+		if (isVisible) {
+			// Marquer les jours fériés lorsque le calendrier devient visible
+			markHolidayDays()
+		}
 		if (!isVisible && props.isBirthDate) {
 			// Réinitialiser le mode d'affichage au type birthdate
 			resetViewMode()
@@ -712,37 +816,40 @@
 <template>
 	<div
 		class="date-picker-container"
-		:style="inputStyle"
 	>
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
 				v-model="textInputValue"
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
-				:date-format-return="props.dateFormatReturn"
-				:format="props.format"
-				:label="props.placeholder"
+				:label="labelWithAsterisk || ''"
 				:placeholder="props.placeholder"
+				:format="props.format"
+				:date-format-return="props.dateFormatReturn"
 				:required="props.required"
-				:custom-rules="props.customRules"
-				:custom-warning-rules="props.customWarningRules"
-				:disabled="props.disabled"
-				:readonly="props.readonly"
-				:is-outlined="props.isOutlined"
+				:display-range="props.displayRange"
 				:display-icon="props.displayIcon"
 				:display-append-icon="props.displayAppendIcon"
 				:display-prepend-icon="props.displayPrependIcon"
+				:custom-rules="props.customRules"
+				:custom-warning-rules="props.customWarningRules"
+				:disabled="props.disabled"
 				:no-icon="props.noIcon"
+				:is-outlined="props.isOutlined"
+				:readonly="props.readonly"
+				:width="props.width"
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
+				:density="props.density"
 				:hide-details="props.hideDetails"
-				:display-range="props.displayRange"
-				title="Date text input"
-				@focus="emit('focus')"
-				@blur="emit('blur')"
-				@date-selected="handleDateTextInputSelection"
+				:period="props.period"
+				:auto-clamp="props.autoClamp"
+				:display-asterisk="props.displayAsterisk"
 				@update:model-value="handleDateTextInputUpdate"
+				@date-selected="handleDateTextInputSelection"
+				@blur="handleInputBlur"
+				@focus="emit('focus')"
 			/>
 		</template>
 		<template v-else-if="props.useCombinedMode">
@@ -768,14 +875,20 @@
 				:display-range="props.displayRange"
 				:display-weekend-days="props.displayWeekendDays"
 				:display-today-button="props.displayTodayButton"
+				:display-holiday-days="props.displayHolidayDays"
+				:display-asterisk="props.displayAsterisk"
 				:show-week-number="props.showWeekNumber"
 				:is-birth-date="props.isBirthDate || props.birthDate"
 				:text-field-activator="props.textFieldActivator"
 				:title="'Date text input'"
 				:period="period"
+				:auto-clamp="props.autoClamp"
+				:label="props.label"
+				:placeholder="props.placeholder"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
+				@date-selected="emit('date-selected', $event)"
 			/>
 		</template>
 		<template v-else>
@@ -806,7 +919,9 @@
 						:disabled="props.disabled"
 						:disable-click-button="false"
 						:readonly="true"
-						:label="props.placeholder"
+						:label="labelWithAsterisk || ''"
+						:placeholder="props.placeholder"
+						:display-persistent-placeholder="true"
 						:no-icon="props.noIcon"
 						:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 						:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
@@ -815,7 +930,9 @@
 						:bg-color="props.bgColor"
 						:density="props.density"
 						:hide-details="props.hideDetails"
+						:display-asterisk="props.displayAsterisk"
 						is-clearable
+						:auto-clamp="props.autoClamp"
 						title="Date Picker"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
@@ -838,10 +955,14 @@
 					:class="displayWeekendDays ? 'weekend' : ''"
 					:max="props.period?.max"
 					:min="props.period?.min"
+					:display-holiday-days="props.displayHolidayDays"
 					@update:view-mode="handleViewModeUpdate"
-					@update:year="handleYearUpdate"
-					@update:month="handleMonthUpdate"
+					@update:month="onUpdateMonth"
+					@update:year="onUpdateYear"
+					@click:date="updateSelectedDates"
 					@update:model-value="updateDisplayFormattedDate"
+					@focus="markHolidayDays"
+					@update:month-year="markHolidayDays"
 				>
 					<template #title>
 						Sélectionnez une date
@@ -882,6 +1003,13 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+
+/* Style pour les jours fériés */
+:deep(.holiday-day) {
+	background-color: rgb(255 193 7 / 10%);
+	border: 2px dotted tokens.$neutral-black;
+	border-radius: 50%;
+}
 
 /* Disable ripple effect on month and year buttons */
 :deep(.v-date-picker-controls__month-btn),
@@ -969,7 +1097,7 @@
 }
 
 .date-picker-container {
-	max-width: 100%;
+	width: 100%;
 	position: relative;
 
 	:deep(.v-date-picker) {

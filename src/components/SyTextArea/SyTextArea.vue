@@ -18,6 +18,7 @@
 		variant?: VTextarea['variant']
 		color?: string
 		label: string
+		bgColor?: string
 	}>(), {
 		modelValue: '',
 		trim: false,
@@ -29,6 +30,7 @@
 		validateOn: 'eager input',
 		variant: 'outlined',
 		color: 'primary',
+		bgColor: 'white',
 	})
 
 	const emits = defineEmits<{
@@ -103,6 +105,7 @@
 		:model-value="internalValue"
 		:variant="variant"
 		:color="color"
+		:bg-color="props.bgColor"
 		:validate-on="validateOn"
 		:rules="[...props.rules, ...internalRules]"
 		:label="label"

@@ -10,7 +10,6 @@ export function useTableUtils({
 	tableId,
 	prefix,
 	suffix,
-	itemsPerPage,
 	serverItemsLength,
 	componentAttributes,
 	options,
@@ -18,7 +17,6 @@ export function useTableUtils({
 	tableId: string
 	prefix: string
 	suffix?: string
-	itemsPerPage?: number
 	caption?: string
 	serverItemsLength?: number
 	componentAttributes: Record<string, unknown>
@@ -26,7 +24,7 @@ export function useTableUtils({
 	density?: TableDensityType
 }) {
 	// Use the separated storage utility
-	const { localOptions, columnWidths, storageKey, setupLocalStorage, updateColumnWidth } = useTableStorage({
+	const { localOptions, columnWidths, headers, storageKey, setupLocalStorage, updateColumnWidth } = useTableStorage({
 		prefix,
 		suffix,
 		serverItemsLength,
@@ -38,20 +36,10 @@ export function useTableUtils({
 		tableId,
 	})
 
-	const headers = computed(() => {
-		if (!Array.isArray(componentAttributes['headers'])) {
-			return undefined
-		}
-		return componentAttributes['headers'].map(header => ({
-			...header,
-			title: header.title ?? header.text,
-		}))
-	})
-
 	const optionsFacade = computed(() => {
 		return {
 			page: options.value.page || componentAttributes['page'],
-			itemsPerPage: options.value.itemsPerPage || itemsPerPage,
+			itemsPerPage: options.value.itemsPerPage || 10,
 			sortBy: options.value.sortBy,
 			groupBy: options.value.groupBy,
 			multiSort: options.value.multiSort,
@@ -65,7 +53,6 @@ export function useTableUtils({
 
 		const props = {
 			...attrs,
-			headers: headers.value,
 			...localOptions.value,
 			...(serverItemsLength !== undefined ? { itemsLength: serverItemsLength } : {}),
 		}
@@ -104,12 +91,12 @@ export function useTableUtils({
 		localOptions,
 		columnWidths,
 		storageKey,
-		headers,
 		optionsFacade,
 		propsFacade,
 		updateOptions,
 		setupAccessibility,
 		setupLocalStorage,
 		updateColumnWidth,
+		headers,
 	}
 }

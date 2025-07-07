@@ -11,6 +11,7 @@ exports[`Accordion > renders correctly 1`] = `
   ">
     <div
       aria-controls="accordion-content-item1"
+      aria-disabled="false"
       aria-expanded="false"
       class="sy-accordion-button"
       id="accordion-button-item1"
@@ -58,6 +59,7 @@ exports[`Accordion > renders correctly 1`] = `
   ">
     <div
       aria-controls="accordion-content-item2"
+      aria-disabled="false"
       aria-expanded="false"
       class="sy-accordion-button"
       id="accordion-button-item2"
@@ -105,6 +107,7 @@ exports[`Accordion > renders correctly 1`] = `
   ">
     <div
       aria-controls="accordion-content-item3"
+      aria-disabled="false"
       aria-expanded="false"
       class="sy-accordion-button"
       id="accordion-button-item3"

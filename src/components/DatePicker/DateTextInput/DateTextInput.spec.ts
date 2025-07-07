@@ -38,7 +38,7 @@ describe('DateTextInput.vue', () => {
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
-		console.log(textField.props('errorMessages'))
+
 		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
 	})
 
@@ -135,6 +135,8 @@ describe('DateTextInput.vue', () => {
 	})
 
 	it('handles invalid dates correctly', async () => {
+		// Désactiver l'autoClamp pour ce test spécifique
+		await wrapper.setProps({ autoClamp: false })
 		const input = wrapper.find('input')
 		await input.setValue('31/02/2025')
 		await input.trigger('blur')

@@ -56,7 +56,8 @@
 		<template #illustration>
 			<img
 				src="./assets/not-found.svg"
-				:alt="locales.pageTitle"
+				alt=""
+				aria-hidden="true"
 			>
 		</template>
 	</ErrorPage>

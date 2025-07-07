@@ -9,14 +9,12 @@ labels:
 
 ♿ Accessibilité
 
-### Priorisation
+### Impact
 
-<!-- Choisissez une priorité -->
-🟢 Peu prioritaire : Corrections mineures, améliorations de clarté
+<!-- Quel est l'impact sur votre projet ? -->
 
-🟡 Prioritaire : Documentation manquante, sections importantes à améliorer
+Bloquant : <!-- Oui, Non (est-ce que le problème empêche le développement ou la mise en production ?) -->
 
-🔴 Très prioritaire : Documentation critique manquante ou erronée
 
 ## Description du problème
 

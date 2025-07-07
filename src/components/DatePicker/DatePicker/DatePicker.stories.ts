@@ -3,6 +3,7 @@ import DatePicker from './DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, watch, computed } from 'vue'
 import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/DatePicker',
@@ -15,6 +16,7 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue'] },
+		actions: { argTypesRegex: '^on.*' },
 	},
 	argTypes: {
 		modelValue: {
@@ -94,6 +96,14 @@ const meta = {
 			control: 'object',
 			description: 'Période pendant laquelle les dates peuvent être sélectionnées (au format: MM/DD/YYYY)',
 		},
+		autoClamp: {
+			control: 'boolean',
+			description: 'Active le clamping automatique des dates',
+		},
+		displayHolidayDays: {
+			control: 'boolean',
+			description: 'Affiche les jours fériés',
+		},
 	},
 } as Meta<typeof DatePicker>
 
@@ -127,19 +137,24 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '',
-		displayTodayButton: true,
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'displayHolidayDays': true,
+		'modelValue': '',
+		'displayTodayButton': true,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render: (args) => {
 		return {
@@ -151,6 +166,78 @@ export const Default: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Sélectionner une date"
+						required
+						format="DD/MM/YYYY"
+					  />
+					  	<DatePicker
+						v-model="date"
+						placeholder="Sélectionner une date"
+						required
+						displayAsterisk
+						format="DD/MM/YYYY"
+					  />
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePicker } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': true,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'displayHolidayDays': true,
+		'modelValue': '',
+		'displayTodayButton': true,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker: DatePicker },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+				<h4 class="mb-4">Sans astérisque :</h4>
+                <DatePicker v-bind="args" v-model="value"/>
+				<h4 class="mb-4">Avec astérisque :</h4>
+				<DatePicker v-bind="args" v-model="value" displayAsterisk/>
               </div>
             `,
 		}
@@ -187,19 +274,23 @@ export const DateRange: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Sélectionner une période',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: true,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: ['', ''],
+		'placeholder': 'Sélectionner une période',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': true,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': ['', ''],
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render: (args) => {
 		return {
@@ -265,23 +356,27 @@ export const WithCustomPeriod: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '',
-		period: {
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '',
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+		'period': {
 			min: '01/01/1995',
 			max: '12/31/2005',
 		},
-		customRules: [
+		'customRules': [
 			{
 				type: 'notBeforeDate',
 				options: {
@@ -311,9 +406,8 @@ export const WithCustomPeriod: Story = {
 			<div style="margin-bottom: 20px; padding: 15px;"> 
 				<SyAlert variant="tonal" :closable="false">
 					<template #default>
-					<h4>Note importante pour la validation manuelle</h4>
-					<p>Pour valider les dates saisies manuellement en fonction de la période définie, il faut utiliser la propriété customRules comme dans l'exemple ci-dessous.</p>
-					<p>La propriété <strong>period</strong> limite les dates sélectionnables dans le calendrier, mais les règles personnalisées sont nécessaires pour la validation des saisies manuelles.</p>
+					<p>La propriété <strong>period</strong> limite les dates sélectionnables dans le calendrier</p>
+					<p>Ouvrez les années dans le calendrier pour voir les dates limites</p>
 					</template>
 				</SyAlert>
 			</div>
@@ -355,19 +449,23 @@ export const WithAppendIcon: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: true,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '',
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': true,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '',
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render: (args) => {
 		return {
@@ -415,19 +513,23 @@ export const WithoutIcon: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: false,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '',
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': false,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '',
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render: (args) => {
 		return {
@@ -475,19 +577,23 @@ export const BirthDate: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Date de naissance',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: true,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '',
+		'placeholder': 'Date de naissance',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': true,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '',
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render: (args) => {
 		return {
@@ -536,22 +642,26 @@ export const WithError: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '01/01/2100',
-		customRules: [
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '01/01/2100',
+		'customRules': [
 			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
 		],
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render: (args) => {
 		return {
@@ -604,20 +714,20 @@ export const WithWarning: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Date avec avertissement',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '20/12/2023',
-		customWarningRules: [
+		'placeholder': 'Date avec avertissement',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '20/12/2023',
+		'customWarningRules': [
 			{
 				type: 'notBeforeDate', options: {
 					warningMessage: 'Attention : la date est antérieure à la date de référence',
@@ -626,6 +736,10 @@ export const WithWarning: Story = {
 				},
 			},
 		],
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render: (args) => {
 		return {
@@ -675,22 +789,26 @@ export const WithSuccess: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Date valide',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: true,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '22/01/2024',
-		customRules: [
+		'placeholder': 'Date valide',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': true,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '22/01/2024',
+		'customRules': [
 			{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } },
 		],
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render: (args) => {
 		return {
@@ -861,19 +979,23 @@ export const WithDateFormatReturn: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '24/12/2025',
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '24/12/2025',
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render: () => {
 		return {

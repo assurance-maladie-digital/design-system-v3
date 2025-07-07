@@ -9,6 +9,29 @@ const vuetify = createVuetifyInstance()
 
 setup((app, { globals }) => {
 	app.use(vuetify)
+	
+	// Add global mixin to help with SySelect dropdown in docs mode
+	if (typeof window !== 'undefined') {
+		// Wait for DOM to be ready
+		window.addEventListener('DOMContentLoaded', () => {
+			// Add click handler to document to help with dropdown positioning
+			document.addEventListener('click', (event) => {
+				// Check if we're in docs mode
+				if (document.body.classList.contains('storybook-docs-mode')) {
+					// Find all dropdowns and make sure they're properly positioned
+					const lists = document.querySelectorAll('.v-list');
+					lists.forEach(list => {
+						if (list instanceof HTMLElement) {
+							list.style.position = 'absolute';
+							list.style.zIndex = '9999';
+							list.style.visibility = 'visible';
+						}
+					});
+				}
+			});
+		});
+	}
+	
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
 	// Apply theme class to <html> (document.documentElement) instead of #root
@@ -49,7 +72,7 @@ const globalTypes = {
 			icon: 'paintbrush',
 			items: [
 				{ value: 'cnam', title: 'Thème CNAM' },
-				{ value: 'pa', title: 'Thème PA' },
+				{ value: 'pa', title: 'Thème PAG' },
 			],
 			dynamicTitle: true,
 		},
@@ -73,6 +96,17 @@ const preview: Preview = {
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
 			}
+			
+			// Check if we're in docs mode to apply special handling for dropdowns
+			const isInDocs = context.viewMode === 'docs';
+			
+			if (isInDocs) {
+				// Add a special class to help target docs mode in CSS
+				if (typeof document !== 'undefined') {
+					document.body.classList.add('storybook-docs-mode');
+				}
+			}
+			
 			return story()
 		},
 	],
@@ -114,7 +148,17 @@ const preview: Preview = {
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
 					],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
-					'Guide Du Dev', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes', 'Règles De Validation', 'Utiliser les rules', 'VuetifyOptions', 'Services'],
+					'Guide Du Dev', [
+						'Migration depuis Bridge',
+						'Migration depuis Vue2',
+						'Breaking changes',
+						'Gestion du thème',
+						'Correspondance composants PAG',
+						'Règles De Validation',
+						'Utiliser les rules',
+						'VuetifyOptions',
+						'Services',
+					],
 				],
 			},
 		},

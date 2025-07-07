@@ -1,16 +1,23 @@
 <script setup lang="ts">
-	import { computed, ref, useAttrs, watch, provide, nextTick } from 'vue'
+	import { computed, onMounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
+	import SyTablePagination from '../common/SyTablePagination.vue'
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
 	import { useTableUtils } from '../common/tableUtils'
-	import type { DataOptions, FilterOption, SyServerTableProps, TableColumnHeader } from '../common/types'
+	import type { DataOptions, SyServerTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
+	import { usePagination } from '../common/usePagination'
+	import { useTableOptions } from '../common/useTableOptions'
+	import { useTableHeaders } from '../common/useTableHeaders'
+	import { useTableItems } from '../common/useTableItems'
+	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
+	import { useTableCheckbox } from '../common/useTableCheckbox'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
-		itemsPerPage: undefined,
 		caption: '',
 		showFilters: false,
 		items: () => [],
@@ -19,31 +26,32 @@
 		filterInputConfig: () => ({}),
 		density: 'default',
 		striped: false,
+		showSelect: false,
 	})
+
+	const emit = defineEmits<{
+		(e: 'update:options', options: Partial<DataOptions>): void
+	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
 	})
 
-	const table = ref<VDataTableServer>()
-
-	// Computed pour les filtres
-	const filters = computed({
-		get: () => options.value.filters || [],
-		set: (newFilters: FilterOption[]) => {
-			options.value = {
-				...options.value,
-				filters: newFilters,
-			}
-		},
+	const model = defineModel<unknown[]>('modelValue', {
+		required: false,
+		default: () => [],
 	})
 
-	// Récupère la fonction filterItems du composable
-	// Cela peut être utilisé pour la prévisualisation du filtrage côté client ou pour les tests
+	const table = ref<VDataTableServer>()
+
+	// Get filter utilities
 	const { filterItems } = useTableFilter()
 
-	defineExpose({ filterItems })
+	// Use the table options composable
+	const { filters } = useTableOptions({
+		options,
+	})
 
 	const componentAttributes = useAttrs()
 
@@ -57,11 +65,11 @@
 		setupLocalStorage,
 		columnWidths,
 		updateColumnWidth,
+		headers: storageHeaders,
 	} = useTableUtils({
 		tableId: uniqueTableId.value,
 		prefix: 'server-table',
 		suffix: props.suffix,
-		itemsPerPage: props.itemsPerPage,
 		caption: props.caption,
 		serverItemsLength: props.serverItemsLength,
 		componentAttributes,
@@ -69,9 +77,80 @@
 		density: props.density,
 	})
 
+	// Use the table headers composable
+	const { headers, displayHeaders, getEnhancedHeader } = useTableHeaders({
+		headersProp: storageHeaders.value ? storageHeaders : toRef(props, 'headers'),
+		filterInputConfig: props.filterInputConfig,
+	})
+
+	// Create a reactive reference for items
+	const itemsRef = computed(() => props.items)
+
+	// For server-side tables, we don't use the filteredItems from useTableItems
+	// Instead, we use the items directly from props as they are already filtered server-side
+	// But we still need the createEmptyItemWithStructure function
+	const { createEmptyItemWithStructure } = useTableItems({
+		items: itemsRef,
+		headers,
+		filters,
+		options,
+		filterItems,
+	})
+
+	// Use the pagination composable with serverItemsLength
+	const itemsLength = computed(() => props.serverItemsLength)
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
+		options,
+		itemsLength,
+		table,
+		emit,
+	})
+
+	// Create a computed property for items to ensure reactivity
+	const tableItems = computed(() => props.items)
+
+	// Function to add accessibility attributes to row checkboxes
+	const accessibilityRowCheckboxes = () => {
+		nextTick(() => {
+			setTimeout(() => {
+				const tableElement = document.getElementById(uniqueTableId.value)
+				if (!tableElement) return
+
+				// Find all row checkboxes
+				const rowCheckboxes = tableElement.querySelectorAll('td .v-selection-control input[type="checkbox"]')
+				rowCheckboxes.forEach((checkbox, index) => {
+					const rowLabel = `${locales.selectRow} ${index + 1}`
+					checkbox.setAttribute('aria-label', rowLabel)
+					checkbox.setAttribute('title', rowLabel)
+				})
+			}, 100) // Small delay to ensure DOM is updated
+		})
+	}
+
+	// Watch for changes that might affect the table and update accessibility
+	watch(() => props.items, accessibilityRowCheckboxes, { deep: true })
+	watch(() => props.serverItemsLength, accessibilityRowCheckboxes)
+	watch(() => page.value, accessibilityRowCheckboxes)
+
+	// Apply accessibility attributes when component is mounted
+	onMounted(() => {
+		accessibilityRowCheckboxes()
+	})
+
+	// Use the table checkbox composable
+	const { getItemValue, toggleAllRows } = useTableCheckbox({
+		items: tableItems,
+		modelValue: model,
+		updateModelValue: (value) => {
+			model.value = value
+		},
+	})
+
+	defineExpose({ filterItems })
+
 	setupAccessibility()
 
-	const { watchOptions } = setupLocalStorage()
+	const { watchOptions, saveHeaders } = setupLocalStorage()
 
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(columnWidths.value)
@@ -108,47 +187,14 @@
 		{ deep: true },
 	)
 
-	// Fonction pour améliorer les en-têtes de colonnes avec les types de filtres appropriés
-	function getEnhancedHeader(column: TableColumnHeader): TableColumnHeader {
-		// Trouve l'en-tête correspondant dans les props si disponible
-		const matchingHeader = props.headers?.find(h => h.key === column.key || h.value === column.value)
+	watch(
+		headers,
+		() => {
+			saveHeaders(headers.value)
+		},
+		{ deep: true },
+	)
 
-		// Crée un en-tête amélioré avec les types appropriés
-		return {
-			...column,
-			title: column.name || matchingHeader?.title,
-			filterType: column.filterType || matchingHeader?.filterType,
-			filterOptions: column.filterOptions || matchingHeader?.filterOptions,
-			filterable: matchingHeader?.filterable !== undefined ? matchingHeader.filterable : column.filterable,
-		} as TableColumnHeader
-	}
-
-	// Fonction pour créer un élément vide qui maintient la structure des colonnes
-	function createEmptyItemWithStructure(): Record<string, unknown>[] {
-		// Si nous avons des éléments, utilise le premier élément comme modèle
-		if (props.items.length > 0) {
-			// Crée un objet vide avec les mêmes clés que le premier élément
-			const template = Object.keys(props.items[0]).reduce((obj, key) => {
-				obj[key] = ''
-				return obj
-			}, {} as Record<string, unknown>)
-			return [template]
-		}
-
-		// Si nous avons des en-têtes, les utilise pour créer une structure
-		if (props.headers && props.headers.length > 0) {
-			// Crée un objet vide avec les clés des en-têtes
-			const template = props.headers.reduce((obj, header) => {
-				const key = header.key || header.value || ''
-				if (key) obj[key] = ''
-				return obj
-			}, {} as Record<string, unknown>)
-			return [template]
-		}
-
-		// Repli vers un objet vide
-		return [{}]
-	}
 </script>
 
 <template>
@@ -159,10 +205,15 @@
 		<VDataTableServer
 			ref="table"
 			v-bind="propsFacade"
+			v-model="model"
+			:headers="displayHeaders"
 			color="primary"
 			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
 			:items-length="props.serverItemsLength || 0"
 			:density="props.density"
+			:show-select="props.showSelect"
+			:item-selectable="(item) => true"
+			:item-value="getItemValue"
 			@update:options="updateOptions"
 		>
 			<template #top>
@@ -182,12 +233,31 @@
 							:key="column.key"
 						>
 							<th>
-								<TableHeader
-									:table="table"
-									:header-params="slotProps as any"
-									:column="column"
-									:resizable-columns="props.resizableColumns"
-								/>
+								<template v-if="column.key === 'data-table-select' && props.showSelect">
+									<SyCheckbox
+										:model-value="slotProps.allSelected"
+										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
+										color="primary"
+										density="compact"
+										hide-details
+										:is-header="true"
+										:aria-label="locales.selectAllRows"
+										:title="locales.selectAllRows"
+										@click="toggleAllRows"
+									>
+										<template #label>
+											<span class="d-sr-only">{{ locales.selectAllRows }}</span>
+										</template>
+									</SyCheckbox>
+								</template>
+								<template v-else>
+									<TableHeader
+										:table="table"
+										:header-params="slotProps"
+										:column="column"
+										:resizable-columns="props.resizableColumns"
+									/>
+								</template>
 							</th>
 						</template>
 					</tr>
@@ -195,8 +265,9 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
+						<th v-if="props.showSelect" />
 						<template
-							v-for="column in slotProps.columns"
+							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key"
 						>
 							<th>
@@ -277,6 +348,24 @@
 						</th>
 					</tr>
 				</template>
+			</template>
+
+			<template #bottom>
+				<div class="d-flex align-center pa-2">
+					<OrganizeColumns
+						v-if="props.enableColumnControls && headers"
+						v-model:headers="headers"
+					/>
+					<SyTablePagination
+						v-if="props.serverItemsLength > 0"
+						:page="page"
+						:items-per-page="itemsPerPageValue"
+						:page-count="pageCount"
+						:items-length="props.serverItemsLength"
+						@update:page="page = $event"
+						@update:items-per-page="updateItemsPerPage"
+					/>
+				</div>
 			</template>
 		</VDataTableServer>
 	</div>

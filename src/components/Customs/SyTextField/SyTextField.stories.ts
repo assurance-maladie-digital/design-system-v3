@@ -138,7 +138,7 @@ const meta = {
 		},
 		'bgColor': {
 			description: 'Couleur de fond du champ',
-			control: 'text',
+			control: 'color',
 		},
 		'centerAffix': {
 			description: 'Centre verticalement les éléments ajoutés avant/après le champ',
@@ -217,13 +217,14 @@ const meta = {
 			default: false,
 		},
 		'displayPersistentPlaceholder': {
-			description: 'Garde le placeholder visible même avec une valeur',
+			description: 'Garde le placeholder visible. Si le champ est vide, le placeholder reste affiché',
 			control: 'boolean',
 			default: false,
 		},
 		'placeholder': {
 			description: 'Texte affiché quand le champ est vide',
 			control: 'text',
+			default: 'Placeholder',
 		},
 		'prefix': {
 			description: 'Texte affiché avant la valeur: prefix="€" : affichera "€" avant la valeur saisie',

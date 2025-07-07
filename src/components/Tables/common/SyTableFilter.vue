@@ -1,63 +1,9 @@
 <script setup lang="ts">
-	import { ref, watch, provide, defineAsyncComponent, markRaw, shallowRef, computed } from 'vue'
+	import { ref, watch, provide, computed } from 'vue'
 	import type { FilterOption, TableColumnHeader } from './types'
 	import { filterItems } from './tableFilterUtils'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
-
-	// Utilisation de shallowRef pour stocker les composants chargés dynamiquement
-	const loadedComponents = shallowRef<Record<string, unknown>>({})
-
-	// Fonction pour charger et récupérer un composant de filtre à la demande
-	function getFilterComponent(filterType?: string, filterOptions?: unknown) {
-		// Déterminer le type de composant à charger
-		let componentType = 'text'
-
-		if (filterType === 'select' || filterOptions) {
-			componentType = 'select'
-		}
-		else if (filterType === 'date') {
-			componentType = 'date'
-		}
-		else if (filterType === 'period') {
-			componentType = 'period'
-		}
-		else if (filterType === 'number') {
-			componentType = 'number'
-		}
-
-		// Si le composant est déjà chargé, le retourner
-		if (loadedComponents.value[componentType]) {
-			return loadedComponents.value[componentType]
-		}
-
-		// Sinon, charger le composant de manière asynchrone
-		let asyncComponent
-		switch (componentType) {
-		case 'select':
-			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/SelectFilter.vue')))
-			Object.defineProperty(asyncComponent, 'name', { value: 'SelectFilter' })
-			break
-		case 'date':
-			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/DateFilter.vue')))
-			Object.defineProperty(asyncComponent, 'name', { value: 'DateFilter' })
-			break
-		case 'period':
-			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/PeriodFilter.vue')))
-			Object.defineProperty(asyncComponent, 'name', { value: 'PeriodFilter' })
-			break
-		case 'number':
-			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/NumberFilter.vue')))
-			Object.defineProperty(asyncComponent, 'name', { value: 'NumberFilter' })
-			break
-		default:
-			asyncComponent = markRaw(defineAsyncComponent(() => import('./filters/TextFilter.vue')))
-			Object.defineProperty(asyncComponent, 'name', { value: 'TextFilter' })
-		}
-
-		// Stocker le composant pour éviter de le recharger
-		loadedComponents.value[componentType] = asyncComponent
-		return asyncComponent
-	}
+	import getFilterComponent from './filters/getFilterComponent'
 
 	const props = defineProps({
 		header: {
@@ -339,4 +285,5 @@
 		flex: 1;
 	}
 }
+
 </style>

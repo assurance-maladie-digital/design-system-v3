@@ -1,0 +1,303 @@
+import { Meta, Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
+import * as SyCheckboxStories from './SyCheckbox.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+
+<Meta of={SyCheckboxStories} />
+
+<div className="accessibility-guide">
+  <Title>Guide d'Accessibilité du Composant SyCheckbox</Title>
+  
+  <div className="intro-section">
+    <img 
+      src={AccessibilityIcon} 
+      alt="Icône d'accessibilité" 
+      className="accessibility-icon"
+    />
+    <p className="intro-text">
+      Le composant SyCheckbox a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C, 
+      notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/examples/checkbox-mixed/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les cases à cocher tri-état</a>. 
+      Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
+    </p>
+  </div>
+
+  <div className="criteria-section">
+    <h2>Critères d'accessibilité respectés</h2>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">🔍</span>
+        <h3>Structure sémantique</h3>
+      </div>
+      <ul>
+        <li><strong>Rôles ARIA appropriés</strong> : <code>role="checkbox"</code> pour la case à cocher</li>
+        <li><strong>État de la case à cocher</strong> : <code>aria-checked</code> avec les valeurs <code>true</code>, <code>false</code> ou <code>mixed</code> pour l'état indéterminé</li>
+        <li><strong>Relations entre éléments</strong> : <code>aria-controls</code> pour indiquer les éléments contrôlés par la case à cocher parent</li>
+        <li><strong>Étiquetage explicite</strong> : Association claire entre la case à cocher et son label</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">⌨️</span>
+        <h3>Navigation clavier complète</h3>
+      </div>
+      <ul>
+        <li><strong>Touche Espace</strong> : Pour activer/désactiver la case à cocher</li>
+        <li><strong>Touche Tab</strong> : Navigation séquentielle entre les cases à cocher</li>
+        <li><strong>Focus visible</strong> : Indication claire de l'élément actuellement focalisé</li>
+        <li><strong>Gestion des états multiples</strong> : Cycle entre les états non coché, coché et indéterminé</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">📱</span>
+        <h3>États et retours d'information</h3>
+      </div>
+      <ul>
+        <li><strong>État de sélection</strong> : <code>aria-checked</code> indique si la case est cochée, non cochée ou indéterminée</li>
+        <li><strong>État de désactivation</strong> : <code>aria-disabled</code> signale les éléments non disponibles</li>
+        <li><strong>Indication visuelle</strong> : Symboles distincts pour chaque état (coché, non coché, indéterminé)</li>
+        <li><strong>Validation visuelle</strong> : Couleurs et icônes spécifiques pour les états d'erreur, d'avertissement et de succès</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">🎨</span>
+        <h3>Personnalisation accessible</h3>
+      </div>
+      <ul>
+        <li><strong>Contraste configurable</strong> : Options de couleurs pour garantir un contraste suffisant</li>
+        <li><strong>Taille et espacement</strong> : Dimensions adaptées pour faciliter l'interaction tactile</li>
+        <li><strong>Compatibilité avec le mode contraste élevé</strong> : Utilisation de <code>currentColor</code> pour s'adapter aux paramètres système</li>
+        <li><strong>Densité ajustable</strong> : Options de densité pour s'adapter aux besoins des utilisateurs</li>
+      </ul>
+    </div>
+  </div>
+
+  <div className="tri-state-section">
+    <h2>Fonctionnalité tri-état (indéterminé)</h2>
+    <p>
+      Le composant SyCheckbox prend en charge l'état indéterminé, particulièrement utile pour représenter :
+    </p>
+    <ul>
+      <li>Une sélection partielle d'éléments dans un groupe</li>
+      <li>Un état intermédiaire avant que l'utilisateur ne fasse un choix définitif</li>
+      <li>Une relation parent-enfant où certains éléments enfants sont sélectionnés</li>
+    </ul>
+    <p>
+      Conformément aux recommandations WAI-ARIA, notre implémentation de l'état indéterminé :
+    </p>
+    <ul>
+      <li>Utilise l'attribut <code>aria-checked="mixed"</code> pour les lecteurs d'écran</li>
+      <li>Fournit un indicateur visuel distinct pour l'état indéterminé</li>
+      <li>Gère correctement le cycle des états lors de l'interaction utilisateur</li>
+      <li>Maintient la cohérence entre l'état parent et les états des enfants</li>
+    </ul>
+  </div>
+
+  <div className="demo-section">
+    <h2>Démonstration interactive</h2>
+    <p>
+      Explorez ci-dessous un exemple de SyCheckbox entièrement accessible avec état indéterminé. 
+      Essayez de naviguer en utilisant uniquement votre clavier (Tab pour naviguer, Espace pour activer) pour tester l'accessibilité.
+    </p>
+    <Primary />
+  </div>
+
+  <div className="parent-child-section">
+    <h2>Relation parent-enfant</h2>
+    <p>
+      Le composant SyCheckbox permet de créer des relations parent-enfant entre les cases à cocher, où :
+    </p>
+    <ul>
+      <li>La case à cocher parent contrôle l'état de toutes les cases à cocher enfants</li>
+      <li>L'état de la case à cocher parent reflète l'état collectif des enfants :</li>
+      <ul>
+        <li>Cochée : tous les enfants sont cochés</li>
+        <li>Non cochée : aucun enfant n'est coché</li>
+        <li>Indéterminée : certains enfants sont cochés, d'autres non</li>
+      </ul>
+    </ul>
+    <p>
+      Cette relation est établie via la propriété <code>controlsIds</code> qui liste les identifiants des cases à cocher enfants.
+    </p>
+  </div>
+
+  <div className="best-practices">
+    <h2>Bonnes pratiques d'utilisation</h2>
+    <ul>
+      <li>Utilisez des libellés clairs et concis pour décrire l'action associée à la case à cocher</li>
+      <li>Regroupez les cases à cocher liées dans un fieldset avec une légende explicative</li>
+      <li>Évitez de modifier l'état d'une case à cocher automatiquement sans action utilisateur explicite</li>
+      <li>Assurez-vous que la taille de la zone cliquable est suffisante (au moins 44×44 pixels pour les interfaces tactiles)</li>
+      <li>Utilisez l'état indéterminé uniquement pour indiquer une sélection partielle, pas un troisième état fonctionnel</li>
+      <li>Fournissez un retour visuel et textuel clair pour les erreurs de validation</li>
+    </ul>
+  </div>
+
+  <div className="resources-section">
+    <h2>Ressources supplémentaires</h2>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/" target="_blank" rel="noopener noreferrer">Guide des pratiques d'auteur WAI-ARIA pour les cases à cocher</a></li>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/examples/checkbox-mixed/" target="_blank" rel="noopener noreferrer">Exemple de case à cocher tri-état WAI-ARIA</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+      <li><a href="https://www.w3.org/TR/wai-aria-1.2/#checkbox" target="_blank" rel="noopener noreferrer">Spécification WAI-ARIA 1.2 pour le rôle checkbox</a></li>
+    </ul>
+  </div>
+</div>
+
+<style>
+{`
+  .accessibility-guide {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+  }
+
+  .intro-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 5px solid #0077cc;
+  }
+
+  .accessibility-icon {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+
+  .intro-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .criteria-section {
+    margin-bottom: 40px;
+  }
+
+  .criteria-section h2,
+  .demo-section h2,
+  .tri-state-section h2,
+  .parent-child-section h2,
+  .best-practices h2,
+  .resources-section h2 {
+    border-bottom: 2px solid #eaecef;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #0077cc;
+  }
+
+  .criteria-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .criteria-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .criteria-icon {
+    font-size: 1.8em;
+    margin-right: 15px;
+  }
+
+  .criteria-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #0077cc;
+  }
+
+  .criteria-card ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .criteria-card li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .demo-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+  }
+
+  .tri-state-section,
+  .parent-child-section {
+    background-color: #f0f7ff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .tri-state-section p,
+  .parent-child-section p {
+    line-height: 1.6;
+  }
+
+  .best-practices {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .best-practices ul {
+    padding-left: 20px;
+  }
+
+  .best-practices li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .resources-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .resources-section ul {
+    padding-left: 20px;
+  }
+
+  .resources-section li {
+    margin-bottom: 10px;
+  }
+
+  .resources-section a {
+    color: #0077cc;
+    text-decoration: none;
+  }
+
+  .resources-section a:hover {
+    text-decoration: underline;
+  }
+
+  code {
+    background-color: #f0f0f0;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+  }
+`}
+</style>

@@ -1,0 +1,326 @@
+<script lang="ts" setup>
+	import { computed, ref, watch, onMounted, nextTick } from 'vue'
+	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+
+	const props = withDefaults(
+		defineProps<{
+			modelValue?: boolean | null
+			indeterminate?: boolean
+			label?: string
+			color?: string
+			disabled?: boolean
+			readonly?: boolean
+			required?: boolean
+			hideDetails?: boolean | 'auto'
+			density?: 'default' | 'comfortable' | 'compact'
+			errorMessages?: string[] | null
+			warningMessages?: string[] | null
+			successMessages?: string[] | null
+			customRules?: ValidationRule[]
+			customWarningRules?: ValidationRule[]
+			customSuccessRules?: ValidationRule[]
+			showSuccessMessages?: boolean
+			isValidateOnBlur?: boolean
+			disableErrorHandling?: boolean
+			id?: string
+			name?: string
+			value?: unknown
+			trueValue?: unknown
+			falseValue?: unknown
+			controlsIds?: string[]
+		}>(),
+		{
+			modelValue: false,
+			indeterminate: false,
+			label: '',
+			color: 'primary',
+			disabled: false,
+			readonly: false,
+			required: false,
+			hideDetails: false,
+			density: 'default',
+			errorMessages: null,
+			warningMessages: null,
+			successMessages: null,
+			customRules: () => [],
+			customWarningRules: () => [],
+			customSuccessRules: () => [],
+			showSuccessMessages: true,
+			isValidateOnBlur: true,
+			disableErrorHandling: false,
+			id: undefined,
+			name: undefined,
+			value: undefined,
+			trueValue: () => true,
+			falseValue: () => false,
+			controlsIds: () => [],
+		},
+	)
+
+	const emit = defineEmits(['update:modelValue', 'update:indeterminate', 'change'])
+
+	const internalIndeterminate = ref(props.indeterminate)
+
+	const model = computed({
+		get() {
+			return props.modelValue
+		},
+		set(value) {
+			if (internalIndeterminate.value) {
+				internalIndeterminate.value = false
+				emit('update:indeterminate', false)
+			}
+			emit('update:modelValue', value)
+			emit('change', value)
+		},
+	})
+
+	watch(() => props.indeterminate, (val) => {
+		internalIndeterminate.value = val
+	})
+
+	// Initialisation du composable de validation
+	const validation = useValidation({
+		customRules: props.customRules,
+		warningRules: props.customWarningRules,
+		successRules: props.customSuccessRules,
+		showSuccessMessages: props.showSuccessMessages,
+		fieldIdentifier: props.label,
+		disableErrorHandling: props.disableErrorHandling,
+	})
+
+	// Synchronisation des messages externes
+	watch(() => props.errorMessages, (newVal) => {
+		validation.errors.value = newVal || []
+	}, { immediate: true })
+
+	watch(() => props.warningMessages, (newVal) => {
+		validation.warnings.value = newVal || []
+	}, { immediate: true })
+
+	watch(() => props.successMessages, (newVal) => {
+		validation.successes.value = newVal || []
+	}, { immediate: true })
+
+	// Construction des règles de validation
+	const defaultRules = computed<ValidationRule[]>(() => props.required
+		? [{
+			type: 'required',
+			options: {
+				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				fieldIdentifier: props.label,
+			},
+		}]
+		: [],
+	)
+
+	const validateField = (value: boolean | null) => {
+		// Si en lecture seule ou si la valeur est null et non requise, pas de validation
+		if (props.readonly) {
+			validation.clearValidation()
+			return true
+		}
+
+		if (value === null && !props.required) {
+			validation.clearValidation()
+			return true
+		}
+
+		// Pour les règles personnalisées qui vérifient si la case est cochée
+		// Si la valeur est true, on peut déjà savoir que la validation va réussir
+		if (value === true && props.customRules.every(rule =>
+			rule.type === 'custom',
+		)) {
+			validation.clearValidation()
+			return true
+		}
+
+		// Validation standard
+		const result = validation.validateField(
+			value,
+			[...defaultRules.value, ...props.customRules],
+			props.customWarningRules,
+		)
+
+		return !result.hasError
+	}
+
+	const validateOnSubmit = () => {
+		return validateField(model.value)
+	}
+
+	const checkErrorOnBlur = () => {
+		validateField(model.value)
+	}
+
+	watch(model, (newValue) => {
+		if (!props.isValidateOnBlur) {
+			// Valider le champ et s'assurer que l'état d'erreur est correctement mis à jour
+			const isValid = validateField(newValue)
+
+			// Si la validation réussit, s'assurer que les erreurs sont effacées
+			if (isValid && validation.hasError.value) {
+				validation.clearValidation()
+			}
+		}
+	})
+
+	const hasError = computed(() => validation.hasError.value)
+	const hasWarning = computed(() => validation.hasWarning.value)
+	const hasSuccess = computed(() => validation.hasSuccess.value)
+
+	const errors = computed(() => validation.errors.value)
+	const warnings = computed(() => validation.warnings.value)
+	const successes = computed(() => validation.successes.value)
+
+	const ariaChecked = computed(() => {
+		if (internalIndeterminate.value) return 'mixed'
+		return model.value ? 'true' : 'false'
+	})
+
+	// Propriétés ARIA personnalisées pour éviter les conflits
+	const ariaAttributes = computed(() => {
+		return {
+			'aria-checked': ariaChecked.value,
+			'aria-controls': props.controlsIds.length > 0 ? props.controlsIds.join(' ') : undefined,
+		}
+	})
+
+	// Fonction pour supprimer l'attribut aria-disabled="false" des éléments input
+	const removeAriaDisabled = () => {
+		nextTick(() => {
+			// Sélectionner tous les inputs de type checkbox dans le composant
+			const checkboxInputs = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
+
+			// Supprimer l'attribut aria-disabled="false" de chaque input
+			checkboxInputs.forEach((input) => {
+				input.removeAttribute('aria-disabled')
+			})
+
+			// Configurer un MutationObserver pour surveiller les changements futurs
+			const observer = new MutationObserver((mutations) => {
+				mutations.forEach(() => {
+					const newCheckboxInputs = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
+					newCheckboxInputs.forEach((input) => {
+						input.removeAttribute('aria-disabled')
+					})
+				})
+			})
+
+			// Observer le document pour les changements
+			observer.observe(document.body, {
+				subtree: true,
+				childList: true,
+				attributes: true,
+				attributeFilter: ['aria-disabled'],
+			})
+		})
+	}
+
+	// Appliquer la correction lors du montage du composant
+	onMounted(() => {
+		removeAriaDisabled()
+	})
+
+	const toggleMixed = () => {
+		if (!props.readonly && !props.disabled) {
+			if (internalIndeterminate.value) {
+				// Désactiver l'état indéterminé
+				internalIndeterminate.value = false
+				emit('update:indeterminate', false)
+				// Émettre l'événement update:modelValue directement
+				emit('update:modelValue', true)
+				emit('change', true)
+			}
+			else if (model.value) {
+				// Émettre l'événement update:modelValue directement
+				emit('update:modelValue', false)
+				emit('change', false)
+			}
+			else {
+				if (props.controlsIds.length > 0) {
+					// Activer l'état indéterminé
+					internalIndeterminate.value = true
+					emit('update:indeterminate', true)
+				}
+				else {
+					// Émettre l'événement update:modelValue directement
+					emit('update:modelValue', true)
+					emit('change', true)
+				}
+			}
+		}
+	}
+
+	defineExpose({
+		validation,
+		validateOnSubmit,
+		checkErrorOnBlur,
+		toggleMixed,
+	})
+</script>
+
+<template>
+	<VCheckbox
+		:id="props.id"
+		v-model="model"
+		:name="props.name"
+		:label="props.label"
+		:color="props.color"
+		:disabled="props.disabled"
+		:readonly="props.readonly"
+		:hide-details="props.hideDetails"
+		:density="props.density"
+		:error="hasError"
+		:error-messages="errors"
+		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+		:indeterminate="internalIndeterminate"
+		:value="props.value"
+		:true-value="props.trueValue"
+		:false-value="props.falseValue"
+		v-bind="ariaAttributes"
+		@click="toggleMixed"
+		@blur="checkErrorOnBlur"
+	>
+		<template
+			v-if="$slots.label"
+			#label
+		>
+			<slot name="label" />
+		</template>
+		<template
+			v-if="$slots.default"
+			#default
+		>
+			<slot />
+		</template>
+	</VCheckbox>
+</template>
+
+<style scoped>
+:deep(.v-selection-control--dirty .v-selection-control__input) {
+	color: v-bind('props.color');
+}
+
+:deep(.v-checkbox--indeterminate .v-selection-control__input) {
+	color: v-bind('props.color');
+}
+
+:deep(.v-checkbox--indeterminate .v-selection-control__input .v-selection-control__input-icon) {
+	transform: scale(0.8);
+	height: 16px;
+	width: 16px;
+}
+
+:deep(.v-selection-control__input) {
+	cursor: pointer;
+}
+
+:deep(.v-selection-control--disabled .v-selection-control__input) {
+	cursor: not-allowed;
+}
+
+:deep(.v-selection-control--error .v-selection-control__input) {
+	color: rgb(var(--v-theme-error));
+}
+</style>

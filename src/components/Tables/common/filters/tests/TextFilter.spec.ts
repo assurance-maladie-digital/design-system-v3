@@ -117,7 +117,7 @@ describe('TextFilter.vue', () => {
 
 		// Émettre une valeur pour déclencher la mise à jour du filtre
 		const syTextField = newWrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 'test value')
+		syTextField.vm.$emit('update:modelValue', 'test value')
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le titre
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
@@ -193,15 +193,15 @@ describe('TextFilter.vue', () => {
 		it('supports wildcard * for any string of characters', () => {
 			const filters = [{ key: 'text', value: 'a*', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
-			expect(result).toHaveLength(2)
-			expect(result.map(item => item.id)).toEqual([1, 2])
+			expect(result).toHaveLength(1)
+			expect(result.map(item => item.id)).toEqual([1])
 		})
 
 		it('supports wildcard ? for any single character', () => {
 			const filters = [{ key: 'text', value: '????', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
-			expect(result).toHaveLength(3)
-			expect(result.map(item => item.id)).toEqual([1, 4, 6])
+			expect(result).toHaveLength(6) // the word should have at least 4 characterss
+			expect(result.map(item => item.id)).toEqual([1, 2, 3, 4, 5, 7])
 		})
 
 		it('supports case-sensitive search with double quotes', () => {
@@ -223,27 +223,27 @@ describe('TextFilter.vue', () => {
 			expect(result[0].id).toBe(5)
 		})
 
-		it('supports exact length search with =????', () => {
+		it('supports exact length search equal and question marks', () => {
 			const filters = [{ key: 'text', value: '=????', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
-			expect(result).toHaveLength(3)
-			expect(result.map(item => item.id)).toEqual([1, 4, 6])
+			expect(result).toHaveLength(1)
+			expect(result.map(item => item.id)).toEqual([4])
 
 			// Test with different length
 			const filters2 = [{ key: 'text', value: '=?????', type: 'text' as FilterType }]
 			const result2 = filterItems(testItems, filters2)
 			expect(result2).toHaveLength(2)
-			expect(result2.map(item => item.id)).toEqual([2, 5])
+			expect(result2.map(item => item.id)).toEqual([1, 7])
 		})
 
-		it('supports empty or null value search with <>?*', () => {
+		it('supports empty or null value search with not equal operator', () => {
 			const filters = [{ key: 'text', value: '<>?*', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(2)
 			expect(result.map(item => item.id)).toEqual([8, 9])
 		})
 
-		it('supports alphabetical comparison with >', () => {
+		it('supports alphabetical comparison with superior operator', () => {
 			const filters = [{ key: 'text', value: '>f', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(2)

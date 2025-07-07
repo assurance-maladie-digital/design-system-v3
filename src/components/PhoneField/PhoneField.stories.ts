@@ -93,7 +93,7 @@ export const Default: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		readonly: false,
 		disabled: false,
 	},
@@ -177,7 +177,7 @@ export const Required: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		readonly: false,
 		disabled: false,
 	},
@@ -218,7 +218,7 @@ export const RequiredWithAsterisk: Story = {
 		...Default.args,
 		required: true,
 		displayAsterisk: true,
-		bgColor: undefined,
+		bgColor: 'white',
 	},
 	parameters: {
 		docs: {
@@ -342,7 +342,7 @@ export const CustomIndicatifs: Story = {
 		],
 		useCustomIndicatifsOnly: true,
 		isValidatedOnBlur: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		readonly: false,
 		disabled: false,
 	},
@@ -427,7 +427,7 @@ export const NotValidatedOnBlur: Story = {
 		isValidatedOnBlur: false,
 		readonly: false,
 		disabled: false,
-		bgColor: undefined,
+		bgColor: 'white',
 	},
 	render: (args) => {
 		return {
@@ -510,7 +510,7 @@ export const DisplayFormatCode: Story = {
 		isValidatedOnBlur: false,
 		readonly: false,
 		disabled: false,
-		bgColor: undefined,
+		bgColor: 'white',
 	},
 	render: (args) => {
 		return {
@@ -593,7 +593,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 		isValidatedOnBlur: false,
 		readonly: false,
 		disabled: false,
-		bgColor: undefined,
+		bgColor: 'white',
 	},
 	render: (args) => {
 		return {
@@ -676,7 +676,7 @@ export const DisplayFormatCodeCountry: Story = {
 		isValidatedOnBlur: false,
 		readonly: false,
 		disabled: false,
-		bgColor: undefined,
+		bgColor: 'white',
 	},
 	render: (args) => {
 		return {
@@ -759,7 +759,7 @@ export const DisplayFormatCountry: Story = {
 		isValidatedOnBlur: false,
 		readonly: false,
 		disabled: false,
-		bgColor: undefined,
+		bgColor: 'white',
 	},
 	render: (args) => {
 		return {
@@ -842,7 +842,7 @@ export const DisplayFormatAbbreviation: Story = {
 		isValidatedOnBlur: false,
 		readonly: false,
 		disabled: false,
-		bgColor: undefined,
+		bgColor: 'white',
 	},
 	render: (args) => {
 		return {
@@ -940,7 +940,7 @@ export const DefaultDialCode: Story = {
 		],
 		useCustomIndicatifsOnly: true,
 		isValidatedOnBlur: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		readonly: false,
 		disabled: false,
 	},
@@ -1025,7 +1025,7 @@ export const DefaultDialCodeStandard: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		readonly: false,
 		disabled: false,
 	},
@@ -1121,7 +1121,7 @@ export const DisplayModels: Story = {
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
 		readonly: false,
-		bgColor: undefined,
+		bgColor: 'white',
 	},
 	render: (args) => {
 		return {
@@ -1211,7 +1211,7 @@ export const DisabledErrorHandling: Story = {
 		disableErrorHandling: true,
 		readonly: false,
 		disabled: false,
-		bgColor: undefined,
+		bgColor: 'white',
 	},
 	render: (args) => {
 		return {
@@ -1337,7 +1337,7 @@ export const FormValidation: Story = {
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
 		isValidatedOnBlur: false,
-		bgColor: undefined,
+		bgColor: 'white',
 		readonly: false,
 		disabled: false,
 	},

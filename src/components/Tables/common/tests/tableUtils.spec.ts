@@ -48,49 +48,6 @@ describe('tableUtils', () => {
 		expect(storageKey.value).toBe('table')
 	})
 
-	it('should transform headers correctly', () => {
-		const options = ref<Partial<DataOptions>>({})
-		const componentAttributes = {
-			headers: [
-				{
-					text: 'ID',
-					key: 'id',
-				},
-				{
-					title: 'Name',
-					key: 'name',
-				},
-				{
-					key: 'age',
-				},
-			],
-		}
-
-		const { headers } = useTableUtils({
-			tableId: 'test-table',
-			prefix: 'table',
-			caption: 'Test Table',
-			componentAttributes,
-			options,
-		})
-
-		expect(headers.value).toEqual([
-			{
-				text: 'ID',
-				key: 'id',
-				title: 'ID',
-			},
-			{
-				title: 'Name',
-				key: 'name',
-			},
-			{
-				key: 'age',
-				title: undefined,
-			},
-		])
-	})
-
 	it('should handle undefined headers', () => {
 		const options = ref<Partial<DataOptions>>({})
 		const componentAttributes = {}
@@ -118,7 +75,6 @@ describe('tableUtils', () => {
 		const { optionsFacade } = useTableUtils({
 			tableId: 'test-table',
 			prefix: 'table',
-			itemsPerPage: 10,
 			caption: 'Test Table',
 			componentAttributes,
 			options,
@@ -126,8 +82,8 @@ describe('tableUtils', () => {
 
 		expect(optionsFacade.value).toEqual({
 			page: 2,
-			itemsPerPage: 10,
 			sortBy: [{ key: 'name', order: 'asc' }],
+			itemsPerPage: 10,
 			groupBy: undefined,
 			multiSort: undefined,
 			mustSort: undefined,
@@ -137,7 +93,6 @@ describe('tableUtils', () => {
 	it('should create propsFacade correctly for client table', () => {
 		const options = ref<Partial<DataOptions>>({})
 		const componentAttributes = {
-			'headers': [{ title: 'ID', key: 'id' }],
 			'items': [{ id: 1 }],
 			'onUpdate:options': vi.fn(),
 		}
@@ -151,7 +106,6 @@ describe('tableUtils', () => {
 		})
 
 		expect(propsFacade.value).toMatchObject({
-			headers: [{ title: 'ID', key: 'id' }],
 			items: [{ id: 1 }],
 		})
 		expect(propsFacade.value['onUpdate:options']).toBeUndefined()
@@ -160,7 +114,6 @@ describe('tableUtils', () => {
 	it('should create propsFacade correctly for server table', () => {
 		const options = ref<Partial<DataOptions>>({})
 		const componentAttributes = {
-			headers: [{ title: 'ID', key: 'id' }],
 			items: [{ id: 1 }],
 		}
 
@@ -174,7 +127,6 @@ describe('tableUtils', () => {
 		})
 
 		expect(propsFacade.value).toMatchObject({
-			headers: [{ title: 'ID', key: 'id' }],
 			items: [{ id: 1 }],
 			itemsLength: 100,
 		})
@@ -208,7 +160,9 @@ describe('tableUtils', () => {
 	it('should setup local storage correctly', () => {
 		mockLocalStorageUtility.getItem.mockReturnValue({
 			page: 2,
-			itemsPerPage: 20,
+			options: {
+				itemsPerPage: 20,
+			},
 		})
 
 		const options = ref<Partial<DataOptions>>({})
@@ -228,7 +182,9 @@ describe('tableUtils', () => {
 		expect(mockLocalStorageUtility.getItem).toHaveBeenCalledWith('table-test')
 		expect(localOptions.value).toEqual({
 			page: 2,
-			itemsPerPage: 20,
+			options: {
+				itemsPerPage: 20,
+			},
 		})
 
 		// Test watchOptions

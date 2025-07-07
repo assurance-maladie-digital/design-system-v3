@@ -1,16 +1,27 @@
 <script setup lang="ts">
+	// Prevent display-asterisk from being passed to the DOM
+	defineOptions({
+		inheritAttrs: false,
+	})
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
-	import { ref, watch, onMounted, onUnmounted, computed, type PropType } from 'vue'
+	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
 	import type { VTextField } from 'vuetify/components'
+	import { VChip, VCheckbox } from 'vuetify/components'
 	import { locales } from './locales'
 
 	export type ItemType = {
 		[key: string]: unknown
 	}
 
+	export type SelectItemValueType = Record<string, unknown> | string | number | null | undefined
+	export type SelectItemArrayType = Array<Record<string, unknown> | string | number>
+
+	// Définition des props avec typage correct pour modelValue
 	const props = defineProps({
 		modelValue: {
-			type: [Object, String, Number],
+			// En Vue, on ne peut pas mettre null directement comme type
+			// On utilise PropType pour définir le type complet incluant null
+			type: [Object, String, Number, Array] as PropType<Record<string, unknown> | string | number | null | SelectItemArrayType>,
 			default: null,
 		},
 		items: {
@@ -67,7 +78,7 @@
 		},
 		bgColor: {
 			type: String,
-			default: undefined,
+			default: 'white',
 		},
 		readonly: {
 			type: Boolean,
@@ -85,12 +96,21 @@
 			type: String,
 			default: 'undefined',
 		},
+		multiple: {
+			type: Boolean,
+			default: false,
+		},
+		chips: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
 
 	const isOpen = ref(false)
-	const selectedItem = ref<Record<string, unknown > | string | number | null | undefined>(props.modelValue)
+	// Initialize selectedItem with props.modelValue or empty array for multiple mode
+	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const hasError = ref(false)
 
 	const labelWidth = ref(0)
@@ -101,7 +121,16 @@
 		isOpen.value = !isOpen.value
 		if (isOpen.value) updateListPosition()
 	}
-	const closeList = () => {
+	const closeList = (event?: Event) => {
+		// Check if the click is inside the dropdown list
+		const target = event?.target as HTMLElement
+		const listElement = document.querySelector('.v-list')
+
+		// In multiple selection mode, don't close the dropdown when clicking on list items
+		if (props.multiple && listElement && listElement.contains(target)) {
+			return
+		}
+
 		isOpen.value = false
 	}
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
@@ -119,21 +148,78 @@
 		}
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	const selectItem = (item: any) => {
+	const selectItem = (item: ItemType | null, event?: Event) => {
+		// Stop event propagation to prevent click-outside from triggering
+		event?.stopPropagation()
+
 		if (item === null) {
-			selectedItem.value = null
-			emit('update:modelValue', null)
+			selectedItem.value = props.multiple ? [] : null
+			emit('update:modelValue', props.multiple ? [] : null)
+			isOpen.value = false
+			return
 		}
-		else if (props.returnObject) {
-			selectedItem.value = item
-			emit('update:modelValue', item)
+
+		// Handle default option in multiple mode
+		if (props.multiple && isDefaultOption(item)) {
+			// Clicking the default option in multiple mode clears all selections
+			selectedItem.value = []
+			emit('update:modelValue', [])
+			isOpen.value = false
+			return
+		}
+
+		if (props.multiple) {
+			// Initialize as empty array if not already an array
+			if (!Array.isArray(selectedItem.value)) {
+				selectedItem.value = []
+			}
+
+			const selectedArray = selectedItem.value as SelectItemArrayType
+			let valueToCheck: unknown
+			let valueToStore: Record<string, unknown> | string | number
+
+			if (props.returnObject) {
+				valueToCheck = item[props.valueKey]
+				valueToStore = item
+			}
+			else {
+				valueToCheck = item[props.valueKey]
+				valueToStore = item[props.valueKey] as string | number | Record<string, unknown>
+			}
+
+			// Check if item is already selected
+			const index = selectedArray.findIndex((selected) => {
+				if (props.returnObject) {
+					return selected[props.valueKey] === valueToCheck
+				}
+				return selected === valueToCheck
+			})
+
+			// Toggle selection
+			if (index > -1) {
+				selectedArray.splice(index, 1)
+			}
+			else {
+				selectedArray.push(valueToStore)
+			}
+
+			emit('update:modelValue', [...selectedArray])
+			// Keep dropdown open for multiple selection
+			isOpen.value = true
 		}
 		else {
-			selectedItem.value = item[props.valueKey]
-			emit('update:modelValue', item[props.valueKey])
+			// Single selection mode
+			if (props.returnObject) {
+				selectedItem.value = item
+				emit('update:modelValue', item)
+			}
+			else {
+				selectedItem.value = item[props.valueKey] as SelectItemValueType
+				emit('update:modelValue', item[props.valueKey] as SelectItemValueType)
+			}
+			// Close dropdown for single selection
+			isOpen.value = false
 		}
-		isOpen.value = false
 	}
 
 	const getItemText = (item: unknown) => {
@@ -142,18 +228,50 @@
 	}
 
 	const selectedItemText = computed(() => {
-		if (selectedItem.value) {
-			if (props.returnObject) {
-				return (selectedItem.value as Record<string, unknown>)[props.textKey]
-			}
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			return props.items.find((item: any) => item[props.valueKey] === selectedItem.value)?.[props.textKey]
+		// If chips are enabled and we have selected items, return empty string to hide text
+		if (hasChips.value) {
+			return ''
 		}
-		return ''
+
+		// For multiple mode, show default option text when nothing is selected
+		if (props.multiple) {
+			if (!selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)) {
+				// Find default option and return its text
+				const defaultOption = props.items.find(item => isDefaultOption(item))
+				if (defaultOption) {
+					return defaultOption[props.textKey] as string
+				}
+				return ''
+			}
+
+			// For multiple selection with items selected, return an array of text values
+			const selectedArray = selectedItem.value as SelectItemArrayType
+
+			return selectedArray.map((selected) => {
+				if (props.returnObject) {
+					return selected?.[props.textKey]
+				}
+				return props.items.find((item: ItemType) => item[props.valueKey] === selected)?.[props.textKey] || ''
+			}).join(', ')
+		}
+		else {
+			// For single selection
+			if (!selectedItem.value) return ''
+
+			if (props.returnObject) {
+				return selectedItem.value[props.textKey]
+			}
+
+			return props.items.find(item => item[props.valueKey] === selectedItem.value)?.[props.textKey] || ''
+		}
 	})
 
 	const isShouldDisplayAsterisk = computed(() => {
-		return props.displayAsterisk && props.required
+		return props.required && props.displayAsterisk
+	})
+
+	const hasChips = computed(() => {
+		return props.chips && props.multiple && Array.isArray(selectedItem.value) && selectedItem.value.length > 0
 	})
 
 	const labelWithAsterisk = computed(() => {
@@ -188,6 +306,103 @@
 		selectedItem.value = newValue
 	})
 
+	// Function to check if an item is the default option (e.g., "-choisir-")
+	const isDefaultOption = (item: ItemType) => {
+		// Check if this is the first item and has a placeholder-like text
+		const itemText = item[props.textKey] as string
+		return itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
+	}
+
+	// Function to check if an item is selected
+	const isItemSelected = (item: ItemType) => {
+		// For default option in multiple mode, show as selected when no other items are selected
+		if (props.multiple && isDefaultOption(item)) {
+			return !selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)
+		}
+
+		if (!selectedItem.value) return false
+
+		if (props.multiple && Array.isArray(selectedItem.value)) {
+			return selectedItem.value.some((selected) => {
+				if (props.returnObject) {
+					return selected?.[props.valueKey] === item?.[props.valueKey]
+				}
+				return selected === item?.[props.valueKey]
+			})
+		}
+		else {
+			if (props.returnObject) {
+				return Boolean(selectedItem.value && selectedItem.value[props.valueKey] === item?.[props.valueKey])
+			}
+			return selectedItem.value === item?.[props.valueKey]
+		}
+	}
+
+	// Function to safely get an item for chip operations
+	const safeChipItem = (item: unknown): Record<string, unknown> | string | number => {
+		// Handle null/undefined case
+		if (item === null || item === undefined) return ''
+
+		// If it's already a valid type, return it
+		if (typeof item === 'string' || typeof item === 'number') return item
+
+		// If it's an object, return it as a Record
+		if (typeof item === 'object') return item as Record<string, unknown>
+
+		// Default case - convert to string
+		return String(item)
+	}
+
+	// Function to get text for a chip
+	const getChipText = (item: unknown) => {
+		const safeItem = safeChipItem(item)
+
+		if (typeof safeItem === 'object') {
+			// Handle object type
+			return (safeItem as Record<string, unknown>)[props.textKey] as string
+		}
+		// Handle primitive types
+		return props.items.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey] as string || ''
+	}
+
+	// Function to remove a chip
+	const removeChip = (item: unknown) => {
+		if (!Array.isArray(selectedItem.value)) return
+
+		const selectedArray = [...selectedItem.value] // Create a copy to avoid mutation issues
+		const safeItem = safeChipItem(item)
+		let index: number
+
+		if (props.returnObject) {
+			// Handle object type
+			const itemValue = typeof safeItem === 'object'
+				? (safeItem as Record<string, unknown>)[props.valueKey]
+				: safeItem
+			index = selectedArray.findIndex(selected =>
+				(selected as Record<string, unknown>)[props.valueKey] === itemValue)
+		}
+		else {
+			index = selectedArray.indexOf(safeItem)
+		}
+
+		if (index > -1) {
+			selectedArray.splice(index, 1)
+			// Ensure reactivity by creating a completely new array
+			const updatedArray = [...selectedArray]
+
+			// Update the local state first
+			selectedItem.value = updatedArray
+
+			// Then emit the update to the parent
+			emit('update:modelValue', updatedArray)
+
+			// Force update of the UI
+			nextTick(() => {
+				updateListPosition()
+			})
+		}
+	}
+
 	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
 		if (!newIsOpen) {
 			if (props.disableErrorHandling || props.readonly) {
@@ -218,6 +433,18 @@
 		}
 		window.addEventListener('scroll', updateListPosition, true)
 		window.addEventListener('resize', updateListPosition)
+
+		// Use nextTick to ensure the DOM is fully rendered
+		nextTick(() => {
+			if (input.value && input.value.$el) {
+				// Find the input element
+				const inputElement = input.value.$el.querySelector('input')
+				if (inputElement) {
+					// Remove the aria-describedby attribute
+					inputElement.removeAttribute('aria-describedby')
+				}
+			}
+		})
 	})
 
 	onUnmounted(() => {
@@ -238,27 +465,45 @@
 			ref="input"
 			v-model="selectedItemText"
 			v-click-outside="closeList"
-			:title="labelWithAsterisk"
+			:title="$attrs['aria-label'] || labelWithAsterisk"
 			color="primary"
 			tabindex="0"
 			:disabled="disabled"
 			:label="labelWithAsterisk"
-			:aria-label="labelWithAsterisk"
+			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
-			:display-asterisk="displayAsterisk"
 			:bg-color="props.bgColor"
 			:density="props.density"
+			:active="hasChips || isOpen"
 			readonly
 			:hide-details="props.hideMessages"
 			class="sy-select"
 			:width="calculatedWidth"
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
+			v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
 			@keydown.space.prevent="toggleMenu"
 		>
+			<template
+				v-if="hasChips"
+				#default
+			>
+				<div class="d-flex flex-wrap gap-1">
+					<VChip
+						v-for="item in selectedItem"
+						:key="props.returnObject ? item[props.valueKey] : item"
+						size="small"
+						class="ma-1"
+						closable
+						@click:close="removeChip(item)"
+					>
+						{{ getChipText(item) }}
+					</VChip>
+				</div>
+			</template>
 			<template #append-inner>
 				<VIcon
 					v-if="hasError"
@@ -293,6 +538,7 @@
 			}"
 			bg-color="white"
 			@keydown.esc.prevent="isOpen = false"
+			@click.stop
 		>
 			<VListItem
 				v-for="(item, index) in formattedItems"
@@ -300,16 +546,24 @@
 				:ref="'options-' + index"
 				role="option"
 				class="v-list-item"
-				:aria-selected="props.returnObject
-					? selectedItem && selectedItem[props.valueKey] === item[props.valueKey]
-					: selectedItem === item[props.valueKey]"
+				:aria-selected="isItemSelected(item)"
 				:tabindex="index + 1"
-				:class="{ active: props.returnObject
-					? selectedItem && selectedItem[props.valueKey] === item[props.valueKey]
-					: selectedItem === item[props.valueKey]
-				}"
-				@click="selectItem(item)"
+				:class="{ active: isItemSelected(item) }"
+				@click.stop="(event) => selectItem(item, event)"
 			>
+				<template
+					v-if="props.multiple && !isDefaultOption(item)"
+					#prepend
+				>
+					<VCheckbox
+						:model-value="isItemSelected(item)"
+						density="compact"
+						hide-details
+						color="primary"
+						class="mt-0 pt-0 mr-1"
+						@click.stop="(event) => selectItem(item, event)"
+					/>
+				</template>
 				<VListItemTitle>
 					{{ getItemText(item) }}
 				</VListItemTitle>
@@ -370,8 +624,13 @@
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
+.v-chip {
+	margin: 2px;
+}
+
 :deep(.v-field__input) {
 	color: tokens.$grey-darken-20;
+	cursor: pointer;
 }
 
 .hidden-label {

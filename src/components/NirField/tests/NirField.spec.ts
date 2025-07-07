@@ -56,7 +56,7 @@ describe('NirField.vue', () => {
 		await wrapper.find('.key-field input').setValue('1')
 		await wrapper.find('.key-field input').trigger('blur')
 		await wrapper.vm.$nextTick()
-		expect(wrapper.vm.keyValidation.errors.value[0]).toBe('La clé du numéro de sécurité sociale est invalide.')
+		expect(wrapper.vm.keyValidation.errors.value[0]).toBe('Le numéro de sécurité sociale est invalide.')
 	})
 
 	it('validates the key field successfully', async () => {
@@ -64,7 +64,7 @@ describe('NirField.vue', () => {
 		await wrapper.find('.key-field input').setValue('91')
 		await wrapper.find('.key-field input').trigger('blur')
 		await wrapper.vm.$nextTick()
-		expect(wrapper.vm.keyValidation.successes.value).toContain('Le champ Clé est valide.')
+		expect(wrapper.vm.keyValidation.successes.value).toContain('Le numéro de sécurité sociale est valide.')
 	})
 
 	it('hides the key field when displayKey is false', async () => {

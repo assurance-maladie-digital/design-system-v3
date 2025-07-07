@@ -33,6 +33,7 @@
 		displayAsterisk?: boolean
 		isValidateOnBlur?: boolean
 		disableErrorHandling?: boolean
+		bgColor?: string
 	} & CustomizableOptions>(), {
 		modelValue: null,
 		variantStyle: 'outlined',
@@ -52,6 +53,7 @@
 		displayAsterisk: false,
 		isValidateOnBlur: true,
 		disableErrorHandling: false,
+		bgColor: 'white',
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -202,6 +204,7 @@
 		:readonly="props.readonly"
 		:disabled="props.disabled"
 		:placeholder="props.placeholder"
+		:bg-color="props.bgColor"
 		:type="showEyeIcon ? 'text' : 'password'"
 		:display-asterisk="props.displayAsterisk"
 		:rules="[...defaultRules, ...props.customRules]"

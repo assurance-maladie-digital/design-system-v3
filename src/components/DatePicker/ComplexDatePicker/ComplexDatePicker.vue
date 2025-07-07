@@ -12,8 +12,8 @@
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import { useMonthButtonCustomization } from '../composables'
 	import { mdiCalendar } from '@mdi/js'
+	import { useHolidayDay } from '@/composables/date/useHolidayDay'
 	import {
-		useWeekendDays,
 		useTodayButton,
 		useDatePickerViewMode,
 		useDateSelection,
@@ -25,6 +25,7 @@
 		useInputBlurHandler,
 		useDatePickerVisibility,
 		useDisplayedDateString,
+		useAsteriskDisplay,
 	} from '../composables'
 
 	import dayjs from 'dayjs'
@@ -37,8 +38,81 @@
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility } = useDatePickerAccessibility()
 
+	// Variables pour suivre le mois et l'année actuellement affichés dans le DatePicker
+	const currentMonth = ref<string | null>(null)
+	const currentYear = ref<string | null>(null)
+	const currentMonthName = ref<string | null>(null)
+	const currentYearName = ref<string | null>(null)
+
+	const onUpdateMonth = (month: string) => {
+		// Éviter les mises à jour inutiles si le mois n'a pas changé
+		if (currentMonth.value === month) return
+
+		currentMonth.value = month
+		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
+		handleMonthUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
+
+	const onUpdateYear = (year: string) => {
+		const oldYear = currentYear.value
+		currentYear.value = year
+		currentYearName.value = year
+
+		// Gérer le changement d'année entre décembre et janvier
+		if (parseInt(year) > parseInt(oldYear || '0') && parseInt(currentMonth.value || '0') === 11) {
+			currentMonth.value = '0'
+			currentMonthName.value = dayjs().month(0).format('MMMM')
+		}
+		else if (parseInt(year) < parseInt(oldYear || '0') && parseInt(currentMonth.value || '0') === 0) {
+			currentMonth.value = '11'
+			currentMonthName.value = dayjs().month(11).format('MMMM')
+		}
+
+		handleYearUpdate()
+		handleMonthUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
+
+	// Fonction pour gérer les dates sélectionnées depuis le DateTextInput
+	const handleDateSelected = (value: DateValue) => {
+		// Mettre à jour le modèle avec la nouvelle valeur
+		updateModel(value)
+
+		// Mettre à jour les dates sélectionnées
+		if (value === null) {
+			selectedDates.value = null
+		}
+		else if (Array.isArray(value)) {
+			// Pour les plages de dates
+			const dateObjects = value.map((dateStr) => {
+				return parseDate(dateStr, props.dateFormatReturn || props.format)
+			}).filter(Boolean) as Date[]
+			selectedDates.value = dateObjects
+		}
+		else {
+			// Pour une date unique
+			const dateObject = parseDate(value, props.dateFormatReturn || props.format)
+			selectedDates.value = dateObject
+		}
+
+		// Émettre l'événement date-selected
+		emit('date-selected', value)
+	}
+
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
+		label?: string
 		placeholder?: string
 		format?: string
 		dateFormatReturn?: string
@@ -66,10 +140,13 @@
 		textFieldActivator?: boolean
 		displayTodayButton?: boolean
 		displayWeekendDays?: boolean
+		displayHolidayDays?: boolean
+		displayAsterisk?: boolean
 		period?: {
 			min?: string
 			max?: string
 		}
+		autoClamp?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -93,15 +170,27 @@
 		width: '100%',
 		disableErrorHandling: false,
 		showSuccessMessages: true,
-		bgColor: undefined,
+		bgColor: 'white',
 		textFieldActivator: false,
 		displayTodayButton: true,
 		displayWeekendDays: true,
+		displayHolidayDays: true,
+		displayAsterisk: false,
 		period: () => ({
 			min: '',
 			max: '',
 		}),
+		autoClamp: false,
+		label: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 	})
+
+	// Computed properties pour period
+	const minDate = computed(() =>
+		props.period?.min || dayjs().subtract(10, 'year').format(props.format),
+	)
+	const maxDate = computed(() =>
+		props.period?.max || dayjs().add(10, 'year').format(props.format),
+	)
 
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: DateValue): void
@@ -233,10 +322,6 @@
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
 	})
 
-	const inputStyle = computed(() => ({
-		'min-width': '100%',
-	}))
-
 	// Déclaration des variables qui seront initialisées par le composable useDateSelection
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 	// Initialisation des variables après la déclaration de selectedDates
@@ -246,6 +331,10 @@
 		props.format,
 		props.displayRange,
 	)
+
+	watch(() => dateSelectionResult.rangeBoundaryDates.value, (newValue) => {
+		rangeBoundaryDates.value = newValue
+	}, { immediate: true })
 
 	// Assignation des fonctions et variables retournées par le composable
 	// Utiliser une fonction pour wrapper updateSelectedDates afin de maintenir la compatibilité avec le template
@@ -382,23 +471,83 @@
 		}
 	})
 
-	// Fonction pour mettre à jour displayFormattedDate quand le VDatePicker change
+	/**
+	 * Met à jour l'affichage formaté de la date lorsqu'une date est sélectionnée dans le calendrier
+	 */
 	const updateDisplayFormattedDate = () => {
-		if (displayFormattedDateComputed.value) {
-			displayFormattedDate.value = displayFormattedDateComputed.value
-			// Émettre l'événement date-selected pour indiquer qu'une date a été sélectionnée dans le calendrier
-			emit('date-selected', formattedDate.value)
+		// Utiliser setTimeout pour s'assurer que toutes les mises à jour sont terminées
+		setTimeout(() => {
+			// Mettre à jour l'affichage formaté pour qu'il corresponde à la date sélectionnée
+			let formattedValue = ''
 
-			// En mode plage, ne pas fermer le DatePicker après la sélection de la première date
-			// Vérifier si nous sommes en mode plage et si les deux dates sont sélectionnées
-			if (!props.displayRange || (props.displayRange && rangeBoundaryDates.value && rangeBoundaryDates.value[0] && rangeBoundaryDates.value[1])) {
-				// Fermer le DatePicker seulement si nous ne sommes pas en mode plage
-				// ou si les deux dates de la plage sont déjà sélectionnées
+			// Gérer la fermeture du DatePicker en fonction du mode et de l'état de sélection
+			if (props.displayRange) {
+				// Priorité à rangeBoundaryDates pour les plages
+				if (rangeBoundaryDates.value && rangeBoundaryDates.value[0] && rangeBoundaryDates.value[1]) {
+					// Les deux dates de la plage sont disponibles dans rangeBoundaryDates
+					const startDate = formatDate(rangeBoundaryDates.value[0], props.format)
+					const endDate = formatDate(rangeBoundaryDates.value[1], props.format)
+
+					// Formater l'affichage de la plage
+					formattedValue = `${startDate} - ${endDate}`
+					displayFormattedDate.value = formattedValue
+					textInputValue.value = formattedValue
+
+					// Mettre à jour le modèle avec les dates formatées
+					const formattedDates = [
+						formatDate(rangeBoundaryDates.value[0], props.dateFormatReturn || props.format),
+						formatDate(rangeBoundaryDates.value[1], props.dateFormatReturn || props.format),
+					] as [string, string]
+
+					updateModel(formattedDates)
+					emit('date-selected', formattedDates)
+
+					// Les deux dates de la plage sont sélectionnées, fermer le DatePicker
+					isDatePickerVisible.value = false
+					emit('closed')
+				}
+				// Fallback sur selectedDates si rangeBoundaryDates n'est pas complet
+				else if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
+					// Émettre l'événement date-selected avec les dates formatées
+					const formattedDates = [
+						formatDate(selectedDates.value[0], props.format),
+						formatDate(selectedDates.value[selectedDates.value.length - 1], props.format),
+					] as [string, string]
+
+					formattedValue = `${formattedDates[0]} - ${formattedDates[1]}`
+					displayFormattedDate.value = formattedValue
+					textInputValue.value = formattedValue
+
+					// Mettre à jour le modèle avec les dates formatées
+					updateModel(formattedDates)
+					emit('date-selected', formattedDates)
+
+					// Les deux dates de la plage sont sélectionnées, fermer le DatePicker
+					isDatePickerVisible.value = false
+					emit('closed')
+				}
+				else {
+					// Utiliser la valeur calculée par le computed si disponible
+					formattedValue = displayFormattedDateComputed.value || ''
+					displayFormattedDate.value = formattedValue
+					textInputValue.value = formattedValue
+				}
+			}
+			else {
+				// En mode date unique
+				formattedValue = displayFormattedDateComputed.value || ''
+				displayFormattedDate.value = formattedValue
+				textInputValue.value = formattedValue
+
+				// En mode date unique, fermer le DatePicker après sélection
 				isDatePickerVisible.value = false
 				emit('closed')
+				emit('date-selected', formattedDate.value)
 			}
+
+			// Valider les dates après mise à jour
 			validateDates()
-		}
+		}, 0) // setTimeout avec délai de 0ms pour s'exécuter après le cycle de rendu actuel
 	}
 
 	// Les variables useDateSelection sont maintenant déclarées et initialisées plus haut dans le code
@@ -406,6 +555,46 @@
 	// Fonction pour émettre l'événement blur (utilisée pour les tests)
 	const emitBlurEvent = () => {
 		emit('blur')
+	}
+
+	// Utilisation du composable pour les jours fériés
+	const { getJoursFeries } = useHolidayDay()
+
+	// Fonction pour marquer les jours fériés dans le calendrier
+	const markHolidayDays = () => {
+		// Si l'affichage des jours fériés est désactivé, ne rien faire
+		if (!props.displayHolidayDays) return
+
+		// Attendre que le DOM soit mis à jour
+		nextTick(() => {
+			// Récupérer l'année et le mois courants
+			const year = parseInt(currentYear.value || new Date().getFullYear().toString(), 10)
+			// Utiliser currentMonth.value !== null pour vérifier si la valeur est définie, même si c'est 0
+			const month = parseInt(currentMonth.value !== null ? currentMonth.value : new Date().getMonth().toString(), 10)
+
+			// Récupérer les jours fériés pour cette année
+			const joursFeries = getJoursFeries(year)
+			// Convertir les jours fériés en objets Date
+			const holidayDates = Array.from(joursFeries).map((dateStr) => {
+				const [day, monthStr, yearStr] = dateStr.split('/')
+				return new Date(parseInt(yearStr), parseInt(monthStr) - 1, parseInt(day))
+			})
+
+			// Filtrer les jours fériés pour le mois courant
+			const monthHolidays = holidayDates.filter((holiday) => {
+				return holiday.getMonth() === month && holiday.getFullYear() === year
+			})
+
+			// Pour chaque jour férié, trouver l'élément DOM correspondant et ajouter la classe
+			monthHolidays.forEach((holiday) => {
+				const day = holiday.getDate()
+				const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+				const dayElements = document.querySelectorAll(`[data-v-date="${dateStr}"]`)
+				dayElements.forEach((element) => {
+					element.classList.add('holiday-day')
+				})
+			})
+		})
 	}
 
 	onMounted(() => {
@@ -455,17 +644,57 @@
 
 	/**
 	 * Gère l'entrée utilisateur dans le champ de saisie de date
-	 * Délègue le traitement au composable useInputHandler
+	 * Adapté pour fonctionner avec DateTextInput qui émet une valeur string au lieu d'un Event
 	 */
-	const handleInput = (event: Event) => {
-		// Utiliser la fonction handleInput du composable
-		inputHandler.handleInput(event)
+	const handleInput = (eventOrValue: Event | string) => {
+		// Si c'est un événement standard, utiliser directement
+		if (eventOrValue instanceof Event) {
+			inputHandler.handleInput(eventOrValue)
+			return
+		}
+
+		// Si c'est une valeur string (venant du DateTextInput)
+		const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
+		if (!inputElement) return
+
+		// Mettre à jour la valeur du modèle directement
+		textInputValue.value = eventOrValue
+
+		// Traitement spécifique pour les plages de dates
+		if (props.displayRange && typeof eventOrValue === 'string') {
+			// Vérifier si la plage est complète (contient un séparateur et deux dates)
+			if (eventOrValue.includes(' - ')) {
+				const parts = eventOrValue.split(' - ')
+				const startDateStr = parts[0]?.trim() || ''
+				const endDateStr = parts[1]?.trim() || ''
+
+				// Si les deux dates sont présentes et valides, mettre à jour le modèle
+				if (startDateStr && endDateStr && !endDateStr.includes('_')) {
+					// Convertir les dates en objets Date
+					const startDate = parseDate(startDateStr, props.format)
+					const endDate = parseDate(endDateStr, props.format)
+
+					if (startDate && endDate) {
+						// Mettre à jour les dates sélectionnées
+						selectedDates.value = [startDate, endDate]
+						// Valider la plage de dates
+						validateDates()
+					}
+				}
+			}
+		}
+		else {
+			// Pour une date unique
+			validateDates()
+		}
 	}
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 
-	// Utilisation du composable pour personnaliser le bouton du mois
+	// Utilisation du composable pour personnaliser les boutons du mois et de l'année
 	const { customizeMonthButton, setupMonthButtonObserver } = useMonthButtonCustomization(
 		() => isDatePickerVisible.value,
+		currentMonthName,
+		currentYearName,
 	)
 
 	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
@@ -501,6 +730,7 @@
 		isManualInputActive,
 		isUpdatingFromInternal,
 		selectedDates,
+		errors,
 		validateDateFormat,
 		parseDate,
 		formatDate,
@@ -518,6 +748,11 @@
 		if (isVisible) {
 			// Personnaliser le bouton du mois
 			customizeMonthButton()
+
+			// Marquer les jours fériés lorsque le calendrier devient visible
+			if (props.displayHolidayDays) {
+				markHolidayDays()
+			}
 
 			// set the focus on the date picker
 			await nextTick()
@@ -788,7 +1023,7 @@
 
 	// Mettre à jour la description accessible lorsque la valeur affichée change
 	watch(displayFormattedDate, (newValue) => {
-		if (newValue) {
+		if (newValue && typeof newValue === 'string') {
 			// Créer une version accessible pour les lecteurs d'écran (sans les caractères de placeholder)
 			const accessibleValue = newValue.replace(/_/g, ' ')
 
@@ -800,18 +1035,13 @@
 		}
 	})
 
-	// Utilisation des composables pour les fonctionnalités du DatePicker
-	const { displayWeekendDays } = useWeekendDays(props)
-
-	// Computed properties pour period
-	const minDate = computed(() => props.period?.min || dayjs().subtract(10, 'year').format(props.format))
-	const maxDate = computed(() => props.period?.max || dayjs().add(10, 'year').format(props.format))
-
 	const { todayInString, selectToday } = useTodayButton(props)
+	const { labelWithAsterisk } = useAsteriskDisplay(props)
 
 	// Utilisation du composable pour l'affichage formaté des dates
 	const { displayedDateString } = useDisplayedDateString({
 		selectedDates,
+		rangeBoundaryDates,
 		todayInString,
 	})
 
@@ -831,6 +1061,8 @@
 		updateAccessibility,
 		openDatePicker,
 		updateDisplayFormattedDate,
+		currentMonth, // Exposer le mois actuellement affiché
+		currentMonthName, // Exposer le nom du mois actuellement affiché
 		toggleDatePicker,
 		validateField,
 		clearValidation,
@@ -845,7 +1077,6 @@
 <template>
 	<div
 		class="date-picker-container"
-		:style="inputStyle"
 	>
 		<!-- Variable pour stocker la description accessible -->
 		<span
@@ -861,7 +1092,7 @@
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:date-format-return="props.dateFormatReturn"
 				:format="props.format"
-				:label="props.placeholder"
+				:label="labelWithAsterisk || ''"
 				:placeholder="props.placeholder"
 				:required="props.required"
 				:custom-rules="props.customRules"
@@ -876,6 +1107,8 @@
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
+				:auto-clamp="props.autoClamp"
+				:display-asterisk="props.displayAsterisk"
 				title="Date text input"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -892,39 +1125,42 @@
 				:open-on-click="false"
 				scroll-strategy="none"
 				transition="fade-transition"
-				attach="body"
-				:offset="[-20, 5]"
+				:offset="[0, 10]"
 			>
 				<template #activator="{ props: menuProps }">
-					<SyTextField
+					<DateTextInput
 						v-bind="menuProps"
 						ref="dateCalendarTextInputRef"
-						v-model="displayFormattedDate"
-						:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
-						:append-inner-icon="getIcon"
-						:class="[getMessageClasses(), 'label-hidden-on-focus']"
-						:error-messages="errorMessages"
-						:warning-messages="warningMessages"
-						:success-messages="props.showSuccessMessages ? successMessages : []"
+						v-model="textInputValue"
+						:label="labelWithAsterisk || ''"
+						:placeholder="props.placeholder"
+						:format="props.format"
+						:date-format-return="props.dateFormatReturn"
+						:required="props.required"
 						:disabled="props.disabled"
-						:disable-click-button="false"
 						:readonly="props.readonly"
-						:label="props.placeholder"
+						:is-outlined="props.isOutlined"
+						:display-icon="props.displayIcon"
+						:display-append-icon="props.displayAppendIcon"
+						:display-prepend-icon="props.displayPrependIcon"
 						:no-icon="props.noIcon"
-						:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
-						:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
-						color="primary"
+						:custom-rules="props.customRules"
+						:custom-warning-rules="props.customWarningRules"
+						:display-asterisk="props.displayAsterisk"
+						:disable-error-handling="props.disableErrorHandling"
 						:show-success-messages="props.showSuccessMessages"
 						:bg-color="props.bgColor"
-						is-clearable
-						title="Date Picker"
-						:aria-label="accessibilityDescription"
+						:display-range="props.displayRange"
+						:display-persistent-placeholder="true"
+						:class="[getMessageClasses(), 'label-hidden-on-focus']"
+						:append-inner-icon="getIcon"
+						:auto-clamp="props.autoClamp"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
-						@update:model-value="updateSelectedDates"
 						@input="handleInput"
 						@keydown="handleKeydown"
+						@date-selected="handleDateSelected"
 						@prepend-icon-click="openDatePickerOnIconClick"
 						@append-icon-click="openDatePickerOnIconClick"
 					/>
@@ -934,7 +1170,7 @@
 					ref="datePickerRef"
 					v-model="selectedDates"
 					color="primary"
-					:class="displayWeekendDays ? 'weekend' : ''"
+					:class="props.displayWeekendDays ? 'weekend' : ''"
 					:first-day-of-week="1"
 					:multiple="props.displayRange ? 'range' : false"
 					:show-adjacent-months="true"
@@ -942,10 +1178,15 @@
 					:view-mode="currentViewMode"
 					:max="maxDate"
 					:min="minDate"
-					@update:view-mode="handleViewModeUpdate"
-					@update:year="handleYearUpdate"
-					@update:month="handleMonthUpdate"
+					:display-holiday-days="props.displayHolidayDays"
+					:display-asterisk="props.displayAsterisk"
 					@update:model-value="updateDisplayFormattedDate"
+					@update:view-mode="handleViewModeUpdate"
+					@update:month="onUpdateMonth"
+					@update:year="onUpdateYear"
+					@click:date="updateSelectedDates"
+					@focus="props.displayHolidayDays ? markHolidayDays : undefined"
+					@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
 				>
 					<template #title>
 						Sélectionnez une date
@@ -997,6 +1238,13 @@
 		background-color: transparent !important;
 		pointer-events: none !important;
 	}
+}
+
+/* Style pour les jours fériés */
+:deep(.holiday-day) {
+	background-color: rgb(255 193 7 / 10%);
+	border: 2px dotted tokens.$neutral-black;
+	border-radius: 50%;
 }
 
 :deep(.v-date-picker-controls .v-btn:last-child) {
@@ -1073,7 +1321,7 @@
 }
 
 .date-picker-container {
-	max-width: 100%;
+	width: 100%;
 	position: relative;
 
 	:deep(.v-date-picker) {

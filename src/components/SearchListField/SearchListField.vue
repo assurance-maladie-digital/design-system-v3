@@ -20,6 +20,10 @@
 			type: Boolean,
 			default: true,
 		},
+		bgColor: {
+			type: String,
+			default: 'white',
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -68,6 +72,7 @@
 			:variant="outlined ? 'outlined' : 'underlined'"
 			clearable
 			tabindex="0"
+			:bg-color="props.bgColor"
 		>
 			<template #prepend-inner>
 				<VIcon class="mr-1">

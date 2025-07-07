@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import DatePicker from '../DatePicker/DatePicker.vue'
 import { ref } from 'vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/DateInput/DateRange',
@@ -13,6 +14,7 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue'] },
+		actions: { argTypesRegex: '^on.*' },
 	},
 	argTypes: {
 		placeholder: {
@@ -98,13 +100,17 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		noCalendar: true,
-		format: 'DD/MM/YYYY',
-		placeholder: 'JJ/MM/AAAA - JJ/MM/AAAA',
-		label: 'Période',
-		displayRange: true,
-		displayIcon: true,
-		isOutlined: true,
+		'noCalendar': true,
+		'format': 'DD/MM/YYYY',
+		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
+		'label': 'Période',
+		'displayRange': true,
+		'displayIcon': true,
+		'isOutlined': true,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render(args) {
 		const dateRange = ref<string | null>(null)
@@ -149,13 +155,17 @@ export const WithInitialValue: Story = {
 		],
 	},
 	args: {
-		noCalendar: true,
-		format: 'DD/MM/YYYY',
-		placeholder: 'JJ/MM/AAAA - JJ/MM/AAAA',
-		label: 'Période avec valeur initiale',
-		displayRange: true,
-		displayIcon: true,
-		isOutlined: true,
+		'noCalendar': true,
+		'format': 'DD/MM/YYYY',
+		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
+		'label': 'Période avec valeur initiale',
+		'displayRange': true,
+		'displayIcon': true,
+		'isOutlined': true,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
 	},
 	render(args) {
 		const dateRange = ref<string | null>('01/06/2025 - 30/06/2025')

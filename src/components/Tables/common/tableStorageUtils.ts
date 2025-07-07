@@ -1,5 +1,5 @@
 import { computed, ref, type Ref } from 'vue'
-import type { DataOptions } from './types'
+import type { DataOptions, DataTableHeaders } from './types'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 
 /**
@@ -35,8 +35,16 @@ export function useTableStorage({
 		return `${storageKey.value}-column-widths`
 	})
 
+	// Separate key for headers
+	const heardersKey = computed(() => {
+		return `${storageKey.value}-headers`
+	})
+
 	// Column widths storage
 	const columnWidths = ref<ColumnWidthsStorage>({})
+
+	// Headers storage
+	const headers = ref<DataTableHeaders[] | undefined>(undefined)
 
 	// Configuration of local storage synchronization
 	function setupLocalStorage() {
@@ -64,6 +72,12 @@ export function useTableStorage({
 			if (storedColumnWidths) {
 				columnWidths.value = storedColumnWidths
 			}
+
+			// Load headers from storage
+			const storedHeaders = localStorageUtility.getItem<DataTableHeaders[]>(heardersKey.value)
+			if (storedHeaders) {
+				headers.value = storedHeaders
+			}
 		}
 
 		// Save column widths to localStorage
@@ -81,12 +95,23 @@ export function useTableStorage({
 			saveColumnWidths(updatedWidths)
 		}
 
-		return { watchOptions, initFromStorage, saveColumnWidths, updateColumnWidth }
+		// Save headers to localStorage
+		const saveHeaders = (headers: DataTableHeaders[] | undefined) => {
+			if (!headers) {
+				localStorageUtility.removeItem(heardersKey.value)
+				return
+			}
+
+			localStorageUtility.setItem(heardersKey.value, headers)
+		}
+
+		return { watchOptions, initFromStorage, saveColumnWidths, updateColumnWidth, saveHeaders }
 	}
 
 	return {
 		localOptions,
 		columnWidths,
+		headers,
 		storageKey,
 		columnWidthsKey,
 		setupLocalStorage,

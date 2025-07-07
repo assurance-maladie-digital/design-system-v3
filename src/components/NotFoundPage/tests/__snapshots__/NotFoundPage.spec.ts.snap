@@ -96,14 +96,14 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
             </span>
             404
           </div>
-          <h2 class="
+          <h1 class="
             font-weight-bold
             mb-2
             mb-4
             text-h5
           ">
             Page non trouvée
-          </h2>
+          </h1>
           <p>
             Cette page n’existe pas ou a été déplacée.
           </p>
@@ -124,7 +124,8 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
           v-col-sm-6
         ">
           <img
-            alt="Page non trouvée"
+            alt=""
+            aria-hidden="true"
             src="/src/components/NotFoundPage/assets/not-found.svg"
           />
         </div>
@@ -233,14 +234,14 @@ exports[`NotFoundPage > renders correctly 1`] = `
             </span>
             404
           </div>
-          <h2 class="
+          <h1 class="
             font-weight-bold
             mb-2
             mb-4
             text-h5
           ">
             Page non trouvée
-          </h2>
+          </h1>
           <p>
             Cette page n’existe pas ou a été déplacée.
           </p>
@@ -254,7 +255,8 @@ exports[`NotFoundPage > renders correctly 1`] = `
           v-col-sm-6
         ">
           <img
-            alt="Page non trouvée"
+            alt=""
+            aria-hidden="true"
             src="/src/components/NotFoundPage/assets/not-found.svg"
           />
         </div>

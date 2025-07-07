@@ -9,14 +9,6 @@ labels:
 
 📝 Documentation
 
-### Priorisation
-
-<!-- Choisissez une priorité -->
-🟢 Peu prioritaire : Corrections mineures, améliorations de clarté
-
-🟡 Prioritaire : Documentation manquante, sections importantes à améliorer
-
-🔴 Très prioritaire : Documentation critique manquante ou erronée
 
 ## Page(s) concernée(s)
 

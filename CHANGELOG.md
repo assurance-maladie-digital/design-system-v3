@@ -1,6 +1,29 @@
-## v1.0.1 (16-06-2025)
+## v1.0.2 (07-07-2025)
 
-### Composants
+| Synapse                                                                                                                       | Portail Agent                                                                                                                                                                                                          |
+|-------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| - DatePicker: improve placeholder documentation [`#767`](https://github.com/assurance-maladie-digital/design-system-v3/pull/767) | - Documentation: add Portail Agent components mapping [`#734`](https://github.com/assurance-maladie-digital/design-system-v3/pull/734)
+| - Inputs components: harmonize bg color [`#765`](https://github.com/assurance-maladie-digital/design-system-v3/pull/765)      | - SyTable / SyServerTable: add organisation colums option [`#730`](https://github.com/assurance-maladie-digital/design-system-v3/pull/730)
+| - SyTextField: improve states management [`#764`](https://github.com/assurance-maladie-digital/design-system-v3/pull/764)     | - Documentation: fix typographic styles page [`#744`](https://github.com/assurance-maladie-digital/design-system-v3/pull/744)
+| - SySelect: fix display on documentation [`#762`](https://github.com/assurance-maladie-digital/design-system-v3/pull/762)     | - DatePicker: add holidays [`#731`](https://github.com/assurance-maladie-digital/design-system-v3/pull/731)
+| - Documentation: improve issue templates [`#758`](https://github.com/assurance-maladie-digital/design-system-v3/pull/758)     | - SyTable / SyServerTable : add selection option [`#726`](https://github.com/assurance-maladie-digital/design-system-v3/pull/726)
+| - DatePicker: fix box displaying [`#759`](https://github.com/assurance-maladie-digital/design-system-v3/pull/759)             | - SyTable / SyServerTable : add pagination [`#714`](https://github.com/assurance-maladie-digital/design-system-v3/pull/714)
+| - DatePicker: fix label and placeholder [`#746`](https://github.com/assurance-maladie-digital/design-system-v3/pull/746)      | - Accordion: improve  w3c pattern [`#704`](https://github.com/assurance-maladie-digital/design-system-v3/pull/704)
+| - Documentation: fix some broken links in rgaa page [`#756`](https://github.com/assurance-maladie-digital/design-system-v3/pull/756) | - SyTable / SyServerTable: add filtering rules [`#719`](https://github.com/assurance-maladie-digital/design-system-v3/pull/719), [`#715`](https://github.com/assurance-maladie-digital/design-system-v3/pull/715), [`#708`](https://github.com/assurance-maladie-digital/design-system-v3/pull/708)
+| - DatePicker :  improve styling [`#754`](https://github.com/assurance-maladie-digital/design-system-v3/pull/754)              | - SyTable / SyServerTable : date and period filter [`#711`](https://github.com/assurance-maladie-digital/design-system-v3/pull/711)
+| - Documentation : fix SK links [`#752`](https://github.com/assurance-maladie-digital/design-system-v3/pull/752)               | - SyTable / SyServerTable: improve headers [`#705`](https://github.com/assurance-maladie-digital/design-system-v3/pull/705)
+| - UserMenuBtn: add slot support[`#748`](https://github.com/assurance-maladie-digital/design-system-v3/pull/748)               | - Add ToolbarContainer comopnent[`#694`](https://github.com/assurance-maladie-digital/design-system-v3/pull/694)
+| - DatePicker: fix handleBlur in DateTextInput [`#749`](https://github.com/assurance-maladie-digital/design-system-v3/pull/749) | - SyTable / SyServerTable : add alignment management [`#702`](https://github.com/assurance-maladie-digital/design-system-v3/pull/702)
+| - DatePicker: fix breaking changes documentation [`#747`](https://github.com/assurance-maladie-digital/design-system-v3/pull/747) | - DatePicker: add autoClamp [`#723`](https://github.com/assurance-maladie-digital/design-system-v3/pull/723)
+| - Add SyCheckbox componant [`#725`](https://github.com/assurance-maladie-digital/design-system-v3/pull/725)                   | 
+| - Nirfield: improve component  [`#720`](https://github.com/assurance-maladie-digital/design-system-v3/pull/720)               | 
+| - Documentation: improve accessibility pages [`#706`](https://github.com/assurance-maladie-digital/design-system-v3/pull/706) | 
+| - NotFoundPage: fix accessibility issues [`#713`](https://github.com/assurance-maladie-digital/design-system-v3/pull/713)     | 
+| - ErrorPage: fix accessibility issues [`#712`](https://github.com/assurance-maladie-digital/design-system-v3/pull/712)        | 
+| - SySelect: add Multiple and Chips props [`#710`](https://github.com/assurance-maladie-digital/design-system-v3/pull/710)     | 
+| - DatePicker:  improve  input management [`#696`](https://github.com/assurance-maladie-digital/design-system-v3/pull/696)     | 
+
+## v1.0.1 (16-06-2025)
 
 | Synapse                                                                                                                                | Portail Agent                                                                                                                                                                                                          |
 |----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

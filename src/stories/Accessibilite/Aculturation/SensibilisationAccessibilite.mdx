@@ -1,63 +1,457 @@
-import {Meta} from '@storybook/addon-docs/blocks';
+import {Meta} from '@storybook/blocks';
 
 <Meta title="Accessibilité/Aculturation/Sensibilisation à l’accessibilité numérique"/>
 
-# 1. L’accessibilité concerne tout le monde
-## **1.1 La CNAM doit respecter le <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>**
+<style>
+{
+`
+  :root {
+    --primary: #0c419a;
+    --primary-light: rgba(0, 120, 212, 0.1);
+    --primary-dark: #005a9e;
+    --secondary: #0c419a;
+    --secondary-light: #e3e8f2;
+    --secondary-dark: #0c419a;
+    --neutral-100: #ffffff;
+    --neutral-200: #f8f9fa;
+    --neutral-300: #eaeaea;
+    --neutral-400: #d1d1d1;
+    --neutral-500: #a0a0a0;
+    --neutral-600: #6e6e6e;
+    --neutral-700: #3d3d3d;
+    --neutral-800: #1f1f1f;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --transition: all 0.3s ease;
+  }
 
-En tant que personne morale de droit public, nous avons l'obligation légale de concevoir les composants de notre Design System en respectant les enjeux d’accessibilité. En conformité avec la Direction Interministérielle du Numérique (DINUM), il est demandé de respecter le   Référentiel Général d'Amélioration de l'Accessibilité (RGAA) pour le desktop et Référentiel d’Accessibilité des Applications Mobiles (RAAM) pour le mobile. 
-#
+  .header {
+    color: white;
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  .header h1 {
+    margin-top: 0;
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .header p {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+    font-weight: 300;
+  }
+  
+  .section {
+    margin: 2.5rem 0;
+    padding: 2rem;
+    background-color: var(--neutral-100);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border: 1px solid var(--neutral-300);
+  }
+  
+  .section:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  
+  .section h2 {
+    position: relative;
+    padding-bottom: 0.75rem;
+    margin-top: 0;
+    color: var(--primary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    
+    border-radius: 3px;
+  }
+  
+  .alert {
+    background-color: var(--secondary-light);
+    border-left: 4px solid var(--secondary);
+    padding: 1.25rem 1.5rem;
+    margin: 1.75rem 0;
+    border-radius: var(--radius-sm);
+    position: relative;
+  }
+  
+  .alert strong {
+    color: var(--secondary-dark);
+  }
+  
+  .info-box {
+    background-color: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    padding: 1.25rem 1.5rem;
+    margin: 1.75rem 0;
+    border-radius: var(--radius-sm);
+  }
+  
+  .highlight {
+    background-color: var(--primary-light);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    color: var(--primary-dark);
+  }
+  
+  .image-container {
+    margin: 2rem 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--neutral-300);
+    transition: var(--transition);
+  }
+  
+  .image-container:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+  }
+  
+  .image-container img {
+    width: 100%;
+    display: block;
+  }
+  
+  .image-caption {
+    background-color: var(--neutral-200);
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: var(--neutral-700);
+    border-top: 1px solid var(--neutral-300);
+  }
+  
+  abbr {
+    text-decoration: none;
+    border-bottom: 1px dotted var(--primary);
+    cursor: help;
+  }
+  
+  .feature-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .feature-card {
+    background-color: var(--neutral-100);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-300);
+    transition: var(--transition);
+  }
+  
+  .feature-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  
+  .feature-card h3 {
+    color: var(--primary);
+    margin-top: 0;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    border-bottom: 1px solid transparent;
+  }
+  
+  a:hover {
+    color: var(--primary-dark);
+    border-bottom: 1px solid var(--primary);
+  }
+  
+  .disability-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  .disability-card {
+    background-color: var(--neutral-200);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    border: 1px solid var(--primary);
+    transition: var(--transition);
+  }
+  
+  .disability-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .disability-card strong {
+    color: var(--primary);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .resource-links {
+    background-color: var(--neutral-200);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  .resource-links h3 {
+    margin-top: 0;
+    color: var(--primary);
+    font-size: 1.1rem;
+  }
+  
+  .resource-links ul {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+  
+  .resource-links li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .process-image {
+    max-width: 100%;
+    margin: 1.5rem 0;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .cta-box {
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(0, 99, 134, 0.1) 100%);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    margin: 2rem 0;
+    border: 1px solid var(--primary-light);
+    text-align: center;
+  }
+  
+  .cta-box h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+  
+  .cta-box .button {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    margin-top: 1rem;
+    transition: var(--transition);
+  }
+  
+  .cta-box .button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
 
-## 1.2 Une diversité de handicap
+  .cta-list {
+    text-align: center;
+  }
+  
+  .cta-list li {
+    text-align: center;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+`
+}
+</style>
 
-Bien que l’accessibilité concerne tout le monde, il est particulièrement pertinent pour l’inclusion des personnes avec des **handicaps qu’ils soient** 
+<div className="header">
+  <h1>Sensibilisation à l'accessibilité numérique</h1>
+  <p>Comprendre les enjeux et mettre en place une démarche d'accessibilité inclusive</p>
+</div>
 
-- **visuels** (ex: les aveugles ou les malvoyants)
-- **auditifs** (ex: les sourds ou les malentendants)
-- **moteurs** (ex: ceux qui ont des difficultés à bouger à cause de maladies ou d'accidents)
-- **cognitifs** (ex: ceux avec des troubles de l'apprentissage ou des troubles psychiques).
+<div className="section">
+  <h2>👥 L'accessibilité concerne tout le monde</h2>
+  
+  <div className="info-box">
+    <p><strong>La CNAM doit respecter le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr></strong></p>
+    <p>En tant que personne morale de droit public, nous avons l'obligation légale de concevoir les composants de notre Design System en respectant les enjeux d'accessibilité. En conformité avec la Direction Interministérielle du Numérique (DINUM), il est demandé de respecter le Référentiel Général d'Amélioration de l'Accessibilité (RGAA) pour le desktop et Référentiel d'Accessibilité des Applications Mobiles (RAAM) pour le mobile.</p>
+  </div>
+  
+  <h3>Une diversité de handicaps</h3>
+  
+  <p>Bien que l'accessibilité concerne tout le monde, elle est particulièrement pertinente pour l'inclusion des personnes en situation de handicap.</p>
+  
+  <div className="disability-types">
+    <div className="feature-card">
+      <strong>👁️ Handicaps visuels</strong>
+      <p>Personnes aveugles ou malvoyantes qui utilisent des lecteurs d'écran ou des paramètres d'affichage spécifiques.</p>
+    </div>
+    
+    <div className="feature-card">
+      <strong>👂 Handicaps auditifs</strong>
+      <p>Personnes sourdes ou malentendantes qui ont besoin de sous-titres ou d'alternatives textuelles pour les contenus audio.</p>
+    </div>
+    
+    <div className="feature-card">
+      <strong>🦶 Handicaps moteurs</strong>
+      <p>Personnes ayant des difficultés à se mouvoir qui utilisent des dispositifs d'assistance ou la navigation au clavier.</p>
+    </div>
+    
+    <div className="feature-card">
+      <strong>🧠 Handicaps cognitifs</strong>
+      <p>Personnes avec des troubles de l'apprentissage ou des troubles psychiques qui bénéficient d'interfaces simplifiées.</p>
+    </div>
+  </div>
+  
+  <p className="highlight">L'enjeu de l'accessibilité est de s'assurer que les sites web, les applications et autres outils numériques soient faciles à utiliser pour tout le monde, peu importe leurs capacités.</p>
+</div>
 
-L’enjeu de l’accessibilité est de s'assurer que les sites web, les applications et autres outils numériques soient **faciles à utiliser pour tout le monde, peu importe leurs capacités.**
+<div className="section">
+  <h2>👨‍👩‍👧‍👦 Nos utilisateurs sont concernés</h2>
+  
+  <p>Nos outils s'adressent à tous (assurés, agents, professionnels de santé), une partie significative de nos utilisateurs sont donc concernés par les enjeux d'accessibilité.</p>
+  
+  <div className="alert">
+    <p><strong>Saviez-vous que</strong> en France, 14% de la population, soit 7,6 millions de personnes de 15 ans ou plus, sont en situation de handicap ?</p>
+  </div>
+  
+  <p>Cependant, l'accessibilité ne concerne pas seulement ces personnes. Toute situation où l'environnement n'est pas adapté aux capacités d'une personne peut créer un handicap.</p>
+  
+  <div className="feature-list">
+    <div className="feature-card">
+      <h3>♿ Situation contextuelle</h3>
+      <p>Une personne en fauteuil roulant n'est pas en situation de handicap dans un environnement pleinement accessible.</p>
+    </div>
+    
+    <div className="feature-card">
+      <h3>👨‍👩‍👧 Handicap invisible</h3>
+      <p>Certaines personnes peuvent ne pas se considérer comme handicapées même si elles rencontrent des difficultés.</p>
+    </div>
+    
+    <div className="feature-card">
+      <h3>🕐 Handicap temporaire</h3>
+      <p>Tous nos utilisateurs peuvent être concernés par des situations de handicap temporaires (bras cassé, fatigue visuelle...).</p>
+    </div>
+  </div>
+  
+  <div className="image-container">
+  <img alt="handicap" src={"/handicap1.jpg"} style={{ padding: '10px', border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0', width: '50%', margin: '0 auto', display: 'block' }} />
+    <div className="image-caption">
+      Illustration des différentes situations de handicap pouvant affecter nos utilisateurs
+    </div>
+  </div>
+  
+  <div className="resource-links">
+    <h3>👀 Tester la navigation du point de vue des utilisateurs en situation de handicap</h3>
+    <ul>
+      <li><a href="https://www.atalan.fr/agissons/fr/daltonisme.html" target="_blank">Atalan Simulateur</a> - Simulateur de daltonisme</li>
+      <li><a href="https://simulation-accessibilite.inria.fr/public/fr/daltonisme.html" target="_blank">Inria Simulateur de vision sur une interface</a> - Outil de simulation visuelle</li>
+    </ul>
+  </div>
+</div>
 
-## 1.3 Nous outils s’adressent à tous (assurés, agents, professionnels de santé), une partie significative de nos utilisateurs sont donc concernés.
-
-En France, 14% de la population, soit 7,6 millions de personnes de 15 ans ou plus, sont en situation de handicap. Cependant, l'accessibilité ne concerne pas seulement ces personnes. Toute situation où l'environnement n'est pas adapté aux capacités d'une personne peut créer un handicap. 
-
-Par exemple, une personne en fauteuil roulant n'est pas en situation de handicap dans un environnement accessible. 
-De plus, certaines personnes peuvent ne pas se considérer comme handicapées même si elles rencontrent des difficultés. Ainsi, tous nos utilisateurs peuvent être concernés par des situations de handicap, qu'elles soient permanentes ou temporaires.
-<img alt="handicap" src={'/handicap1.jpg'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
-
-<aside>
-
-Tester la navigation du point de vue des utilisateurs en situation de handicap
-
-- [Atalan Simulateur](https://www.atalan.fr/agissons/fr/daltonisme.html)
-- [Inria Simulateur de vision sur une interface](https://simulation-accessibilite.inria.fr/public/fr/daltonisme.html)
-</aside>
-# 2. Comment mettre en place l’accessibilité ?
-
-On dit souvent que l’accessibilité ce n’est pas pour tel ou tel service car cela serait trop long, couteux ou encore qu’on n’a pas l’expertise. Pourtant de nombreuses actions sont faciles et à portée de main pour initier une démarche d’accessibilité. 
-<img alt="processusAccessibilite" src={'/processusAccessibilite.jpg'} style={{ padding: '10px',  border: '1px solid rgba(0, 0, 0, 0.05)', boxShadow: 'rgba(0, 0, 0, 0.10) 0 1px 3px 0'}} />
-
-## **2.1 L’accessibilité s’intègre tout au long de votre processus de conception**
-
-Etre accessible est un travail en continu qui s’intègre à plusieurs niveaux de votre processus de conception. C’est un travail de collaboration qui mêlent plusieurs expertises, chef de projet, designer et développeurs. 
-
-## 2.2 Vous pouvez pré-auditer un service
-
-Un pré-audit est une évaluation préparatoire réalisée par les équipes-produits pour vérifier la conformité d'un produit aux critères du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>. À l'aide d’outil et de méthodologie, ces équipes peuvent identifier la moitié des critères requis avant un audit complet. Ces équipes peuvent compter sur un accompagnement pour la prise en main de cet outil ainsi que du conseil pour la résolution des défauts constatés. L’objectif premier du pré-audit est de réduire la quantité de correctif relevée par l’audit complet en donnant un meilleur contrôle aux produits sur leur gestion de projet.
-
-**[Guide du pré-audit](/docs/accessibilité-kit-de-pré-audit-pré-audit--docs)**
-
-## 2.3 Prêt pour soumettre une demande d’audit  ?
-
-**Vous avez fait votre pré audit et vous êtes prêts à le soumettre ?** 
-
-Une fois le pré-audit effectué, un audit complet est réalisé par une équipe dédiée à la Filière Digital sur la totalité des critères évalués sur les pages retenues. Le résultat de cet audit donne à la fois les correctifs à apporter et le taux de conformité. En complément l’équipe FD délivre un template de déclaration d’accessibilité à compléter par le produit selon les correctifs réalisés. Les correctifs sont à réaliser par l’équipe-produit. Il est demandé à cette dernière de publier la page de déclaration d’accessibilité dès qu’elle en a les moyens.
-
-Pour demander un audit complet de votre site web, vous devez compléter <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank">ce fichier</a> et le soumettre à [valentin.becquet@assurance-maladie.fr](mailto:valentin.becquet@assurance-maladie.fr).
-L'acceptance de la demande est soumise à la démonstration de l'effort engagé par l'équipe-produit. Cette appréciation fera l'objet d'une discussion.
-
-
-
-
+<div className="section">
+  <h2>💪 Comment mettre en place l'accessibilité ?</h2>
+  
+  <p>On dit souvent que l'accessibilité n'est pas adaptée pour tel ou tel service car cela serait trop long, coûteux ou encore qu'on n'a pas l'expertise. Pourtant de nombreuses actions sont faciles et à portée de main pour initier une démarche d'accessibilité.</p>
+  
+  <div className="image-container">
+    <img className="process-image" alt="Processus d'accessibilité" src={"/processusAccessibilite.jpg"} />
+    <div className="image-caption">
+      Processus d'intégration de l'accessibilité dans le cycle de développement
+    </div>
+  </div>
+  
+  <h3>💼 L'accessibilité s'intègre tout au long de votre processus de conception</h3>
+  
+  <p>Etre accessible est un travail en continu qui s'intègre à plusieurs niveaux de votre processus de conception. C'est un travail de collaboration qui mêle plusieurs expertises :</p>
+  
+  <div className="feature-list">
+    <div className="feature-card">
+      <h3>💼 Chef de projet</h3>
+      <p>Intègre l'accessibilité dans la planification et les exigences du projet dès le départ.</p>
+    </div>
+    
+    <div className="feature-card">
+      <h3>🎨 Designer</h3>
+      <p>Conçoit des interfaces accessibles en tenant compte des contrastes, de la typographie et de l'expérience utilisateur.</p>
+    </div>
+    
+    <div className="feature-card">
+      <h3>💻 Développeur</h3>
+      <p>Implémente le code en respectant les standards d'accessibilité et en testant avec des outils spécialisés.</p>
+    </div>
+  </div>
+  
+  <div className="info-box">
+    <h3>🔍 Vous pouvez pré-auditer un service</h3>
+    
+    <p>Un pré-audit est une évaluation préparatoire réalisée par les équipes-produits pour vérifier la conformité d'un produit aux critères du <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
+    
+    <p>À l'aide d'outils et de méthodologies, ces équipes peuvent identifier la moitié des critères requis avant un audit complet. L'objectif premier du pré-audit est de réduire la quantité de correctifs relevés par l'audit complet en donnant un meilleur contrôle aux produits sur leur gestion de projet.</p>
+    
+    <p><a href="/docs/accessibilité-kit-de-pré-audit-pré-audit--docs" className="button">Consulter le guide du pré-audit</a></p>
+  </div>
+  
+  <div className="cta-box">
+    <h3>📝 Prêt pour soumettre une demande d'audit ?</h3>
+    
+    <p>Une fois le pré-audit effectué, un audit complet est réalisé par une équipe dédiée à la Filière Digital sur la totalité des critères évalués sur les pages retenues.</p>
+    
+    <ol className="cta-list">
+      <li>1. Complétez <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank">ce fichier</a> de pré-audit</li>
+      <li>2. Soumettez-le à <a href="mailto:valentin.becquet@assurance-maladie.fr">valentin.becquet@assurance-maladie.fr</a></li>
+      <li>3. Attendez la validation de votre demande basée sur l'effort engagé</li>
+      <li>4. Recevez les résultats de l'audit avec les correctifs à apporter</li>
+      <li>5. Implémentez les correctifs et publiez votre déclaration d'accessibilité</li>
+    </ol>
+    
+    <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank" className="button">Télécharger le fichier de pré-audit</a>
+  </div>
+</div>

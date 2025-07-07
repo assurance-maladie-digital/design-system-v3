@@ -127,6 +127,33 @@ pre.prismjs {
 	transform: none !important;
 }
 
+.sbdocs-preview {
+	/* Fix for dropdown positioning */
+	.docs-story .v-list,
+	.storybook-docs-mode .v-list {
+		top: auto;
+		left: auto;
+		margin-top: 0;
+		width: auto;
+		position: absolute;
+	}
+
+	/* SySelect */
+	.v-list[data-v-3bd0eb8e] {
+		margin-top: -22px !important;
+	}
+
+
+	/* Make sure the menu content is visible */
+	.storybook-docs-mode .v-menu__content {
+		position: absolute !important;
+		z-index: 9999 !important;
+		visibility: visible !important;
+		opacity: 1 !important;
+	}
+}
+
+
 /* Fix for Table doc */
 #story--démarrer-releases--list {
 	table {
@@ -146,4 +173,9 @@ pre.prismjs {
 	td {
 		padding: 2px 8px;
 	}
+}
+
+.component-name {
+	font-style: italic;
+	color: #87104d;
 }

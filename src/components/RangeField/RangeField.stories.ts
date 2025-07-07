@@ -53,6 +53,15 @@ const meta = {
 				},
 			},
 		},
+		'bgColor': {
+			control: 'color',
+			description: 'Couleur de fond du champ',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
 		'vuetifyOptions': {
 			control: 'object',
 			description: 'Personnalisation des composants Vuetify internes',

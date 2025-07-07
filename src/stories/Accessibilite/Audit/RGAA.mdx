@@ -1,29 +1,237 @@
-import {Meta} from '@storybook/addon-docs/blocks';
+import {Meta} from '@storybook/blocks';
 
 <Meta title="Accessibilité/Audit/RGAA"/>
 
-## Le <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>, le référentiel français d’accessibilité numérique
+<style>
+{
+  `
+    /* Variables CSS basées sur les couleurs exactes du thème CNAM */
+    :root {
+      --primary-color: #0c419a; /* primary: cnamColorsTokens.blue.base */
+      --primary-light: #3d67ae; /* blue.lighten20 */
+      --secondary-color: #006386; /* secondary: cnamColorsTokens.cyan.darken40 */
+      --accent-color: #00a5df; /* accent: cnamColorsTokens.cyan.base */
+      --error-color: #b33f2e; /* error: cnamColorsTokens.orange.darken20 */
+      --info-color: #0c419a; /* info: cnamColorsTokens.blue.base */
+      --success-color: #004439; /* success: cnamColorsTokens.turquoise.darken60 */
+      --warning-color: #906b15; /* warning: cnamColorsTokens.yellow.darken60 */
+      --text-color: #020d1f; /* blue.darken80 */
+      --background-light: #f8f9fc; /* blue.lighten97 */
+      --card-shadow: 0 4px 12px rgba(12, 65, 154, 0.05);
+      --transition-speed: 0.3s;
+      --border-radius: 8px;
+    }
+    
+    /* Styles globaux */
+    .rgaa-container {
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-color);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    /* Header avec effet glassmorphism */
+    .rgaa-header {
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .section-title {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(12, 65, 154, 0.2);
+    }
+    
+    .info-box {
+      background-color: var(--background-color);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .info-box h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+    
+    .link-card {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+      background-color: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      transition: all var(--transition-speed) ease;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .link-card:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+    
+    .conformity-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .conformity-card {
+      flex: 1;
+      min-width: 250px;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+    }
+    
+    .conformity-card.total {
+      border-left: 4px solid var(--success-color);
+    }
+    
+    .conformity-card.partial {
+      border-left: 4px solid var(--warning-color);
+    }
+    
+    .conformity-card.none {
+      border-left: 4px solid var(--error-color);
+    }
+    
+    .conformity-card h4 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    
+    .principles-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    
+    .principle-card {
+      flex: 1 1 200px;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      background-color: white;
+      box-shadow: var(--card-shadow);
+      transition: transform var(--transition-speed) ease;
+    }
+    
+    .principle-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .principle-card h4 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+    
+    .principle-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+    }
 
-Le <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> est un outil méthodologique de certification permettant d'assurer par le respect de ses critères une manipulation des produits numériques dans le domaine du Web de manière égale entre chaque citoyen, qu'il soit ou non en situation de handicap (visuel, auditif, moteur, trouble dys...). Basé sur les travaux du W3C Web Accessibility Initiative (WAI) il vise à garantir quatre indices de performance : **la bonne perceptibilité de l'information**, une **manipulation efficiente dans la navigation**, une **bonne compréhension** et une **robustesse efficace** dans l'usage des produits numériques. Actuellement le <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> (version 4) est constitué de 106 critères répartis dans 13 catégories
+    .link-buttons {
+        margin-bottom: 1rem;
+    }
+  `
+}
+</style>
 
-[En savoir plus sur le RGAA](https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#contenu)
+<div className="rgaa-container">
+  <div className="rgaa-header">
+    <h1>Le RGAA, le référentiel français d'accessibilité numérique</h1>
+    <p>Référentiel Général d'Amélioration de l'Accessibilité - Version 4.1</p>
+  </div>
+  
+  <div className="info-box">
+    <h3>📋 Présentation</h3>
+    <p>Le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr> est un outil méthodologique de certification permettant d'assurer par le respect de ses critères une manipulation des produits numériques dans le domaine du Web de manière égale entre chaque citoyen, qu'il soit ou non en situation de handicap (visuel, auditif, moteur, trouble dys...).</p>
+    <p>Basé sur les travaux du W3C Web Accessibility Initiative (WAI), il vise à garantir quatre indices de performance :</p>
+  </div>
+  
+  <div className="principles-container">
+    <div className="principle-card">
+      <div className="principle-icon">👁️</div>
+      <h4>Perceptibilité</h4>
+      <p>La bonne perceptibilité de l'information et des composants de l'interface utilisateur</p>
+    </div>
+    
+    <div className="principle-card">
+      <div className="principle-icon">🖱️</div>
+      <h4>Utilisabilité</h4>
+      <p>Une manipulation efficiente dans la navigation et les interactions</p>
+    </div>
+    
+    <div className="principle-card">
+      <div className="principle-icon">🧠</div>
+      <h4>Compréhension</h4>
+      <p>Une bonne compréhension des informations et du fonctionnement de l'interface</p>
+    </div>
+    
+    <div className="principle-card">
+      <div className="principle-icon">🛡️</div>
+      <h4>Robustesse</h4>
+      <p>Une robustesse efficace dans l'usage des produits numériques</p>
+    </div>
+  </div>
+  
+  <p>Actuellement le <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> (version 4) est constitué de 106 critères répartis dans 13 catégories</p>
+  
+  <div className="link-buttons">
+    <a href="https://accessibilite.numerique.gouv.fr/methode/introduction/" className="link-card">En savoir plus sur le RGAA</a>
+    <a href="https://www.w3.org/WAI/fundamentals/" className="link-card">En savoir plus sur le W3C WAI</a>
+    <a href="https://accessibilite.numerique.gouv.fr/ressources/criteres-aaa/" className="link-card">Accéder à la liste des critères</a>
+  </div>
+  
+  <h2 className="section-title">Résultats</h2>
+  
+  <p>La conduite d'une évaluation pour attester de la conformité du produit numérique avec le <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> peut être menée par un audit en auto-évaluation ou par un organisme tiers. Au terme de cette évaluation vous recevez un score et des informations complémentaires permettant de définir l'état de conformité de votre produit.</p>
+  <div className="conformity-cards">
+    <div className="conformity-card total">
+      <h4>Conformité totale</h4>
+      <p>Tous les critères de contrôle du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> sont respectés</p>
+    </div>
+    
+    <div className="conformity-card partial">
+      <h4>Conformité partielle</h4>
+      <p>Au moins 50 % des critères de contrôle du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> sont respectés</p>
+    </div>
+    
+    <div className="conformity-card none">
+      <h4>Non-conformité</h4>
+      <p>Moins de 50 % des critères sont respectés ou aucun audit en cours de validité</p>
+    </div>
+  </div>
+  
+  <h2 className="section-title">Avantages du Design System CNAM</h2>
+  
+  <div className="info-box">
+    <h3>💡 Conformité intégrée</h3>
+    <p>L'usage sans modification de notre Design System vous assure :</p>
+    <ul>
+      <li>Un gain de temps significatif dans le développement</li>
+      <li>Une augmentation du pourcentage de succès dans l'évaluation de votre produit</li>
+      <li>Une cohérence visuelle et fonctionnelle à travers toutes vos applications</li>
+    </ul>
+    <p>Nos composants sont conçus en respectant les critères du RGAA, vous permettant de vous concentrer sur les fonctionnalités métier plutôt que sur la conformité technique.</p>
+  </div>
+  
+  <h2 className="section-title">Ressources complémentaires</h2>
 
-[En savoir plus sur le W3C WAI](https://www.w3.org/WAI/fundamentals/)
-
-[Accéder à la liste des critères du RGAA](https://www.numerique.gouv.fr/publications/rgaa-accessibilite/methode-rgaa/criteres/#contenu)
-
-### Résultats
-
- 
-La conduite d'une évaluation pour attester de la conformité du produit numérique avec le <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> peut être menée par un audit en auto-évaluation ou par un organisme tiers. Au terme de cette évaluation vous recevez un score et des informations complémentaires permettant de définir l'état de conformité de votre produit. Il existe 3 états:
-
-- **Conformité totale :** si tous les critères de contrôle du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> sont respectés
-- **Conformité partielle :** si au moins 50 % des critères de contrôle du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> sont respectés
-- **Non-conformité :** s'il n'existe aucun résultat d'audit en cours de validité permettant de mesurer le respect des critères ou si moins de 50 % des critères de contrôle du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr> sont respectés
-
-Vous garantissant d'un respect de ces critères, l'usage sans modification de notre Design System vous assure d'abord un gain de temps dans le développement mais surtout une augmentation du pourcentage de succès dans l'évaluation de votre produit.
-
-<aside>
-- [En savoir plus sur les obligations légales françaises](https://accessibilite.numerique.gouv.fr/obligations/)
-- [En savoir plus sur les recommandations web de Orange](https://a11y-guidelines.orange.com/fr/web/)
-</aside>
+    <div className="link-buttons">
+    <a href="https://accessibilite.numerique.gouv.fr/obligations/" className="link-card">En savoir plus sur les obligations légales françaises</a>
+    <a href="https://a11y-guidelines.orange.com/fr/web/" className="link-card">Consulter les recommandations web d'Orange</a>
+  </div>
+</div>
