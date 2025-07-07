@@ -92,7 +92,7 @@ const meta = {
 		bgColor: {
 			control: 'color',
 			description: 'Couleur de fond du champ',
-		}
+		},
 	},
 	args: {
 		modelValue: '',
