@@ -1,5 +1,200 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AmeliproSelect > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="modified-classes"
+  id="modified-unique-id-container"
+  style="margin-bottom: 12px; max-width: modified-global-max-width; min-width: modified-global-min-width;"
+>
+  <div class="
+    amelipro-select__wrapper
+    d-flex
+    flex-column
+    flex-md-row
+    w-100
+  ">
+    <div class="
+      align-start
+      d-inline-flex
+      mr-md-2
+      mt-md-2
+    ">
+      <label
+        class="
+          amelipro-select__label
+          mr-2
+        "
+        for="modified-unique-id"
+        id="modified-unique-id-label"
+        style="max-width: modified-label-max-width; min-width: modified-label-min-width;"
+      >
+        Modified label
+        <span>
+          <span aria-hidden="true">
+            &nbsp;*
+          </span>
+          <span class="d-sr-only">
+            &nbsp;Champ obligatoire
+          </span>
+        </span>
+      </label>
+    </div>
+    <v-select-stub
+      active="false"
+      aria-required="true"
+      autofocus="false"
+      bgcolor="ap-grey-lighten-2"
+      chips="false"
+      class="
+        amelipro-select
+        pt-0
+      "
+      clearable="true"
+      clearicon="$clear"
+      closablechips="false"
+      closetext="$vuetify.close"
+      color="ap-blue-darken-1"
+      counter="false"
+      density="compact"
+      direction="horizontal"
+      disabled="true"
+      eager="false"
+      errormessages=""
+      flat="false"
+      focused="false"
+      hidedetails="true"
+      hidenodata="false"
+      hideselected="false"
+      hidespinbuttons="false"
+      id="modified-unique-id"
+      itemchildren="false"
+      itemprops="true"
+      items="[object Object],[object Object],[object Object]"
+      itemtitle="title"
+      itemvalue="value"
+      loading="false"
+      maxerrors="1"
+      menu="false"
+      menuicon="$dropdown"
+      messages=""
+      modelvalue="modified-value"
+      multiple="false"
+      nodatatext="$vuetify.noDataText"
+      openonclear="false"
+      opentext="$vuetify.open"
+      persistentclear="false"
+      persistentcounter="false"
+      persistenthint="false"
+      persistentplaceholder="false"
+      placeholder="Modified placeholder"
+      readonly=""
+      returnobject="false"
+      reverse="false"
+      role="combobox"
+      rules="() => "modified-rule",mocked-is-required"
+      singleline="false"
+      style="max-width: modified-input-max-width; min-width: modified-input-min-width;"
+      tile="false"
+      transition="[object Object]"
+      type="text"
+      validateon="input"
+      variant="outlined"
+    ></v-select-stub>
+  </div>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`AmeliproSelect > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class=""
+  id="required-unique-id-container"
+  style="margin-bottom: 12px;"
+>
+  <div class="
+    amelipro-select__wrapper
+    d-flex
+    flex-column
+    w-100
+  ">
+    <div class="
+      align-start
+      d-inline-flex
+    ">
+      <label
+        class="
+          amelipro-select__label
+          mr-2
+        "
+        for="required-unique-id"
+        id="required-unique-id-label"
+      >
+        Required label
+        <!-- v-if -->
+      </label>
+    </div>
+    <v-select-stub
+      active="false"
+      aria-required="false"
+      autofocus="false"
+      bgcolor="ap-white"
+      chips="false"
+      class="
+        amelipro-select
+        pt-0
+      "
+      clearable="false"
+      clearicon="$clear"
+      closablechips="false"
+      closetext="$vuetify.close"
+      color="ap-blue-darken-1"
+      counter="false"
+      density="compact"
+      direction="horizontal"
+      disabled="false"
+      eager="false"
+      errormessages=""
+      flat="false"
+      focused="false"
+      hidedetails="false"
+      hidenodata="false"
+      hideselected="false"
+      hidespinbuttons="false"
+      id="required-unique-id"
+      itemchildren="false"
+      itemprops="true"
+      items=""
+      itemtitle="title"
+      itemvalue="value"
+      loading="false"
+      maxerrors="1"
+      menu="false"
+      menuicon="$dropdown"
+      messages=""
+      multiple="false"
+      nodatatext="$vuetify.noDataText"
+      openonclear="false"
+      opentext="$vuetify.open"
+      persistentclear="false"
+      persistentcounter="false"
+      persistenthint="false"
+      persistentplaceholder="false"
+      returnobject="false"
+      reverse="false"
+      role="combobox"
+      rules=""
+      singleline="false"
+      tile="false"
+      transition="[object Object]"
+      type="text"
+      validateon="input"
+      variant="outlined"
+    ></v-select-stub>
+  </div>
+  <!-- v-if -->
+</div>
+`;
+
 exports[`AmeliproSelect > render correctly 1`] = `
 <div
   class=""
