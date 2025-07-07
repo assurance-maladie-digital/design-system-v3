@@ -1,5 +1,75 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AmeliproMessagingMenuBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<amelipro-btn-stub
+  active="true"
+  badge="false"
+  badgebgcolor="ap-pink"
+  badgecolor="ap-white"
+  bordered="false"
+  class="
+    font-weight-semibold
+    mb-1
+    messaging-menu__btn
+    text-h6
+    text-none
+    w-100
+  "
+  color="ap-blue-darken-2"
+  disabled="false"
+  hovercolor="ap-blue-darken-2"
+  hoverunderline="false"
+  href="#modified"
+  iconbgcolor="transparent"
+  iconbordered="false"
+  iconleft="false"
+  infoblock="false"
+  minheight="3rem"
+  size="60px"
+  style="min-height: 50px;"
+  text="false"
+  textcolor="ap-white"
+  to="/modified-home"
+  type="button"
+  underline="false"
+  uniqueid="modified-unique-id"
+></amelipro-btn-stub>
+`;
+
+exports[`AmeliproMessagingMenuBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<amelipro-btn-stub
+  active="false"
+  badge="false"
+  badgebgcolor="ap-pink"
+  badgecolor="ap-white"
+  bordered="false"
+  class="
+    font-weight-semibold
+    mb-1
+    messaging-menu__btn
+    text-h6
+    text-none
+    w-100
+  "
+  color="ap-blue-darken-1"
+  disabled="false"
+  hovercolor="ap-blue-darken-2"
+  hoverunderline="false"
+  iconbgcolor="transparent"
+  iconbordered="false"
+  iconleft="false"
+  infoblock="false"
+  minheight="3rem"
+  size="60px"
+  style="min-height: 50px;"
+  text="false"
+  textcolor="ap-white"
+  type="button"
+  underline="false"
+  uniqueid="required-unique-id"
+></amelipro-btn-stub>
+`;
+
 exports[`AmeliproMessagingMenuBtn > render correctly 1`] = `
 <button
   class="
