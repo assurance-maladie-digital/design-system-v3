@@ -1,5 +1,71 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AmeliproDropdownMenuBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<amelipro-btn-stub
+  badge="false"
+  badgebgcolor="ap-pink"
+  badgecolor="ap-white"
+  bordered="false"
+  class="
+    dropdown-menu__btn
+    text-left
+    text-none
+    w-100
+  "
+  color="ap-white"
+  disabled="false"
+  hovercolor="ap-grey-lighten-4"
+  hoverunderline="false"
+  href="modified-href"
+  iconbgcolor="transparent"
+  iconbordered="false"
+  iconleft="false"
+  infoblock="false"
+  minheight="3rem"
+  role="menuitem"
+  size="60px"
+  tabindex="-1"
+  text="false"
+  textcolor="ap-grey-darken-1"
+  to="modified-to"
+  type="button"
+  underline="false"
+  uniqueid="modified-unique-id"
+></amelipro-btn-stub>
+`;
+
+exports[`AmeliproDropdownMenuBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<amelipro-btn-stub
+  badge="false"
+  badgebgcolor="ap-pink"
+  badgecolor="ap-white"
+  bordered="false"
+  class="
+    dropdown-menu__btn
+    text-left
+    text-none
+    w-100
+  "
+  color="ap-white"
+  disabled="false"
+  hovercolor="ap-grey-lighten-4"
+  hoverunderline="false"
+  iconbgcolor="transparent"
+  iconbordered="false"
+  iconleft="false"
+  infoblock="false"
+  minheight="3rem"
+  role="menuitem"
+  size="60px"
+  tabindex="-1"
+  text="false"
+  textcolor="ap-grey-darken-1"
+  type="button"
+  underline="false"
+  uniqueid="required-unique-id"
+></amelipro-btn-stub>
+`;
+
 exports[`AmeliproDropdownMenuBtn > render correctly 1`] = `
 <button
   class="
