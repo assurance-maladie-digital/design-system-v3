@@ -116,6 +116,7 @@ export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 // ===========================
 // Amelipro
 // ===========================
+export { default as AmeliproAutoCompleteField } from './Amelipro/AmeliproBtn/AmeliproAutoCompleteField.vue'
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
 export { default as AmeliproCard } from './Amelipro/AmeliproCard/AmeliproCard.vue'
 export { default as AmeliproCallback } from './Amelipro/AmeliproCallback/AmeliproCallback.vue'
@@ -145,6 +146,7 @@ export { default as AmeliproStateTile } from './Amelipro/AmeliproStateTile/Ameli
 export { default as AmeliproStatus } from './Amelipro/AmeliproStatus/AmeliproStatus.vue'
 export { default as AmeliproStepper } from './Amelipro/AmeliproStepper/AmeliproStepper.vue'
 export { default as AmeliproTabs } from './Amelipro/AmeliproTabs/AmeliproTabs.vue'
+export { default as AmeliproTextArea } from './Amelipro/AmeliproTextField/AmeliproTextArea.vue'
 export { default as AmeliproTextField } from './Amelipro/AmeliproTextField/AmeliproTextField.vue'
 export { default as AmeliproTileBtn } from './Amelipro/AmeliproTileBtn/AmeliproTileBtn.vue'
 export { default as AmeliproTooltips } from './Amelipro/AmeliproTooltips/AmeliproTooltips.vue'
