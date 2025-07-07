@@ -1,6 +1,22 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproStatus > render correctly 1`] = `
+exports[`AmeliproStatus > Snapshots > renders the component with all properties filled in 1`] = `
+<span
+  class="
+    amelipro-status
+    d-inline-flex
+    font-weight-semibold
+    mb-0
+    text-h6
+  "
+  id="modified-unique-id"
+  style="border: 2px solid #000; border-radius: 16px; padding: 15px 16px;"
+>
+  Modified label
+</span>
+`;
+
+exports[`AmeliproStatus > Snapshots > renders the component with only required properties filled in 1`] = `
 <p
   class="
     amelipro-status
@@ -9,9 +25,8 @@ exports[`AmeliproStatus > render correctly 1`] = `
     font-weight-bold
     mb-0
   "
-  id="my-status-id"
-  style="border: 2px solid transparent; border-radius: 16px; padding: 4px 12px;"
+  style="border: 2px solid transparent; border-radius: 16px; padding: 12px 24px;"
 >
-  texte du statut
+  Brouillon
 </p>
 `;
