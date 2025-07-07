@@ -20,6 +20,7 @@
 		clearable?: boolean
 		customRules?: ValidationRule[]
 		disableErrorHandling?: boolean
+		bgColor?: string
 	}>(), {
 
 		modelValue: null,
@@ -36,6 +37,7 @@
 		clearable: false,
 		customRules: () => [],
 		disableErrorHandling: false,
+		bgColor: 'white',
 	})
 
 	const options = useCustomizableOptions(defaultOptions, props)
@@ -241,7 +243,8 @@
 				'sy-input-select',
 				buttonClass,
 				hasError ? 'text-error' : 'text-'+options.menu.color,
-				hasError ? 'error--text' : ''
+				hasError ? 'error--text' : '',
+				bgColor ? 'bg-color' : '',
 			]"
 			role="menu"
 			tabindex="0"
@@ -321,6 +324,10 @@
 	border-radius: 4px;
 	overflow-y: auto;
 	max-height: 300px;
+}
+
+.bg-color {
+	background-color: v-bind(bgColor);
 }
 
 .v-list-item:hover {

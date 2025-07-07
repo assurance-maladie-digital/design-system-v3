@@ -104,7 +104,7 @@
 			isClearable: false,
 			isActive: false,
 			baseColor: undefined,
-			bgColor: undefined,
+			bgColor: 'white',
 			centerAffix: undefined,
 			counter: false,
 			counterValue: undefined,

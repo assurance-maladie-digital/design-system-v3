@@ -138,7 +138,7 @@ const meta = {
 		},
 		'bgColor': {
 			description: 'Couleur de fond du champ',
-			control: 'text',
+			control: 'color',
 		},
 		'centerAffix': {
 			description: 'Centre verticalement les éléments ajoutés avant/après le champ',

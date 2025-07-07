@@ -117,10 +117,12 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
       <!---->
       <div class="v-input__control">
         <div class="
+          bg-white
           v-field
           v-field--active
           v-field--center-affix
           v-field--dirty
+          v-field--has-background
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -263,10 +265,12 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
       <!---->
       <div class="v-input__control">
         <div class="
+          bg-white
           v-field
           v-field--active
           v-field--center-affix
           v-field--dirty
+          v-field--has-background
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -516,10 +520,12 @@ exports[`RangeField > renders correctly 1`] = `
       <!---->
       <div class="v-input__control">
         <div class="
+          bg-white
           v-field
           v-field--active
           v-field--center-affix
           v-field--dirty
+          v-field--has-background
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -662,10 +668,12 @@ exports[`RangeField > renders correctly 1`] = `
       <!---->
       <div class="v-input__control">
         <div class="
+          bg-white
           v-field
           v-field--active
           v-field--center-affix
           v-field--dirty
+          v-field--has-background
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -915,10 +923,12 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
       <!---->
       <div class="v-input__control">
         <div class="
+          bg-white
           v-field
           v-field--active
           v-field--center-affix
           v-field--dirty
+          v-field--has-background
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -1061,10 +1071,12 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
       <!---->
       <div class="v-input__control">
         <div class="
+          bg-white
           v-field
           v-field--active
           v-field--center-affix
           v-field--dirty
+          v-field--has-background
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
