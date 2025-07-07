@@ -156,12 +156,12 @@
 			rules.push(isRequired)
 		}
 
-		if (props.type === 'date') {
+		if (computedType.value === 'date' || computedType.value === 'text') {
 			if (props.maxDate) {
-				rules.push(notAfterDate(props.maxDate) as ValidationRule)
+				rules.push(notAfterDate(props.maxDate, computedType.value) as ValidationRule)
 			}
 			if (props.minDate) {
-				rules.push(notBeforeDate(props.minDate) as ValidationRule)
+				rules.push(notBeforeDate(props.minDate, computedType.value) as ValidationRule)
 			}
 		}
 
