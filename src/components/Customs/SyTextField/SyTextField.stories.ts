@@ -217,7 +217,7 @@ const meta = {
 			default: false,
 		},
 		'displayPersistentPlaceholder': {
-			description: 'Garde le placeholder visible même avec une valeur',
+			description: 'Garde le placeholder visible. Si le champ est vide, le placeholder reste affiché',
 			control: 'boolean',
 			default: false,
 		},
