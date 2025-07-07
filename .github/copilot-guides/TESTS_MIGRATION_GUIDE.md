@@ -29,6 +29,10 @@ Ce document liste les différences, adaptations et conventions à respecter lors
 
 - Les valeurs de couleurs (`badgeColor`, `badgeBgColor`, etc.) peuvent donner des résultats différents (ex : `rgb(221, 230, 251)` vs `rgb(200, 209, 230)`).
 - Convertir systématiquement les valeurs de couleur `rgb()` en notation hexadécimale dans les assertions de tests.
+  - rgb(238, 238, 238) => #EEEEEE
+  - rgb(255, 255, 255) => #FFFFFF
+  - rgb(230, 246, 252) => #E6F6FC
+  - rgb(250, 250, 250) => #FAFAFA
 - **Attention : le format hexadécimal retourné par happy-dom peut varier (majuscules de 3 ou 6 caractères, ou nom de couleur en minuscule). Adapter les assertions pour accepter ces variations si besoin.**
 - L’ordre des propriétés CSS dans l’attribut `style` peut différer.
 - Certaines propriétés CSS peuvent être ajoutées ou omises selon la logique du composant.
@@ -52,11 +56,9 @@ Ce document liste les différences, adaptations et conventions à respecter lors
 
 ## 7. Migration des imports de composants internes
 
-- Certains composants internes ont changé d'emplacement dans l'arborescence du projet.
-- Par exemple, `import AmeliproMessage from '@/elements/AmeliproMessage'` ou `import AmeliproIconBtn from '@/elements/AmeliproIconBtn'` doivent être remplacés par `import { AmeliproMessage } from '@/components'` ou `import { AmeliproIconBtn } from '@/components'`.
-- **Adapter systématiquement les imports de composants internes pour pointer vers leur nouvel emplacement dans `@/components` ou selon la nouvelle structure.**
-- Ce cas peut se présenter avec d'autres composants provenant de `@/elements` : vérifier et corriger les imports lors de la migration.
-- **Note : la fonction utilitaire `propValidator` a été déplacée de `@/helpers/propValidator` vers `@/utils/propValidator`. Adapter les imports en conséquence.**
+- Les composants internes dans `@/elements` ont changé d'emplacement dans l'arborescence du projet.
+- Remplacer les imports du type `import AmeliproMonComposant from '@/elements/AmeliproMonComposant'` par `import { AmeliproMonComposant } from '@/components'`.
+- La fonction utilitaire `propValidator` a été déplacée de `@/helpers/propValidator` vers `@/utils/propValidator`. Adapter les imports en conséquence.
 
 ---
 
