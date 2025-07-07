@@ -3,6 +3,7 @@
  * @type {RegExp}
  */
 const ISO_8601_BASIC = /^\d{4}-\d\d-\d\d$/i
+const FRENCH_FORMAT_ISO = /^\d\d\/\d\d\/\d{4}$/i
 
 /**
  * Formats a single-digit number as a two-digit string with a leading zero.
@@ -24,6 +25,18 @@ export const dateMatchIso = (date: string | null | undefined): boolean => {
 }
 
 /**
+ * Checks if a given string matches the French date format (DD/MM/YYYY).
+ * @param {string | null | undefined} date - The date string to check.
+ * @returns {boolean} True if the string matches the format, false otherwise.
+ */
+export const dateMatchFrIso = (date: string | null | undefined): boolean => {
+	if (typeof date !== 'string') {
+		return false
+	}
+	return FRENCH_FORMAT_ISO.test(date)
+}
+
+/**
  * Parses a string in the format 'YYYY-MM-DD' into an array of year, month, and day strings.
  * @param {string} date - The date string to parse.
  * @returns {string[]} An array containing [year, month, day].
@@ -31,6 +44,16 @@ export const dateMatchIso = (date: string | null | undefined): boolean => {
 export const parseDate = (date: string): string[] => {
 	const [year, month, day] = date.split('-')
 	return [year, month, day]
+}
+
+/**
+ * Parses a string in the format 'DD/MM/YYYY' into an array of year, month, and day strings.
+ * @param {string} date - The date string to parse.
+ * @returns {string[]} An array containing [day, month, year].
+ */
+export const parseDateToFr = (date: string): string[] => {
+	const [day, month, year] = date.split('/')
+	return [day, month, year]
 }
 
 /**
@@ -44,6 +67,19 @@ export const dateToFormatFr = (date: string): string => {
 	}
 	const [year, month, day] = parseDate(date)
 	return `${padTo2Digits(parseInt(day))}/${padTo2Digits(parseInt(month))}/${year.toString()}`
+}
+
+/**
+ * Formats a date string in the French format (DD/MM/YYYY) to the ISO 8601 basic format (YYYY-MM-DD).
+ * @param {string} date - The date string to format.
+ * @returns {string} The formatted date string in French format, or an empty string if invalid input is provided.
+ */
+export const dateToBasicFormat = (date: string): string => {
+	if (typeof date !== 'string' || date === '') {
+		return ''
+	}
+	const [day, month, year] = parseDateToFr(date)
+	return `${padTo2Digits(parseInt(year))}-${padTo2Digits(parseInt(month))}-${day.toString()}`
 }
 
 /**
