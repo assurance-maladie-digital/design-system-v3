@@ -89,6 +89,10 @@ const meta = {
 			control: 'boolean',
 			description: 'Indique si la validation doit être effectuée lors de la perte de focus',
 		},
+		bgColor: {
+			control: 'color',
+			description: 'Couleur de fond du champ',
+		}
 	},
 	args: {
 		modelValue: '',

@@ -22,6 +22,7 @@ const meta = {
 		vuetifyOptions: { control: 'object' },
 		displayAsterisk: { control: 'boolean' },
 		readonly: { control: 'boolean' },
+		bgColor: { control: 'color' },
 	},
 } as Meta<typeof SyInputSelect>
 
