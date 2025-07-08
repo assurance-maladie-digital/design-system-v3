@@ -26,6 +26,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
+    "lint:amelipro": "eslint \"src/**/Amelipro/**/*.{ts,vue}\"",
+    "lint:amelipro:fix": "eslint \"src/**/Amelipro/**/*.{ts,vue}\" --fix",
     "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
     "lint:fix": "eslint \"src/**/*.{ts,vue}\" --fix && stylelint \"src/**/*.{css,scss,vue}\" --fix",
     "test:unit": "vitest run",

@@ -3,6 +3,7 @@ import js from '@eslint/js'
 import pluginVueA11y from 'eslint-plugin-vuejs-accessibility'
 import stylistic from '@stylistic/eslint-plugin'
 import ts from 'typescript-eslint'
+import ameliproRules from './eslint.amelipro.rules.js'
 
 export default ts.config(
 	// Parser
@@ -31,16 +32,12 @@ export default ts.config(
 		semi: false,
 	}),
 	// Overrides
-	{
-		// -----------------------
-		// Règles communes (js, ts, vue, ...)
-		// -----------------------
-		rules: {
-			'sort-imports': 'warn',
-			'sort-keys': ['warn', 'asc', { minKeys: 3 }],
-			'sort-vars': 'warn',
-		},
-	},
+	// -----------------------
+	// Récup règles AMELIPRO
+	// Ne s'appliquent qu'aux fichiers Amelipro
+	// à fusionner avec les règles de base petit à petit, en ajustant les règles si nécessaire
+	// -----------------------
+	...ameliproRules,
 	{
 		// -----------------------
 		// Règles Vue.js
@@ -70,4 +67,5 @@ export default ts.config(
 			'vuejs-accessibility/interactive-supports-focus': 0,
 		},
 	},
+
 )

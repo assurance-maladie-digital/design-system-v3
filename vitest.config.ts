@@ -41,7 +41,8 @@ export default mergeConfig(viteConfig, defineConfig({
 		exclude: [...configDefaults.exclude, 'e2e/**'],
 		globals: true,
 		include: [
-			'src/**/__tests__/*.spec.ts',
+			'src/**/tests/*.spec.ts',
+			'src/**/Amelipro/**/__tests__/*.spec.ts',
 			'tests/**/*.spec.ts',
 		],
 		root: fileURLToPath(new URL('./', import.meta.url)),
