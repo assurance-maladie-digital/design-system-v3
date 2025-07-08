@@ -1,3 +1,4 @@
+/* eslint-disable vue/require-default-prop */
 import { DisplayTestComponent, attachToApp } from '@tests/helpers/utils'
 import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
