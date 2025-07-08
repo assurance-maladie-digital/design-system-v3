@@ -96,7 +96,7 @@ describe('AmeliproHeaderBrandSection', () => {
 			})
 
 			// TODO: corriger le rendu du Component
-			it.skip('prop homeHref undefined uses RouterLink', async () => {
+			it.skip('prop homeHref undefined uses RouterLink', () => {
 				expect(vueWrapper.findComponent(RouterLink).exists()).toBe(true)
 			})
 		})
@@ -153,13 +153,13 @@ describe('AmeliproHeaderBrandSection', () => {
 			beforeEach(() => {
 				vueWrapper = shallowMount(AmeliproHeaderBrandSection, { props: requiredPropValues() })
 			})
-			it('prop themeAmelipro true displays logo', async () => {
+			it('prop themeAmelipro true displays logo', () => {
 				vueWrapper = shallowMount(AmeliproHeaderBrandSection, { props: { ...requiredPropValues(), themeAmelipro: true } })
 				expect(vueWrapper.find('img.logo-amelipro').exists()).toBe(true)
 			})
 
-			it('prop themeAmelipro false hides logo', async () => {
-				vueWrapper = shallowMount(AmeliproHeaderBrandSection, { props: { ...requiredPropValues(), themeAmelipro: false, serviceTitle: 'Titre' } })
+			it('prop themeAmelipro false hides logo', () => {
+				vueWrapper = shallowMount(AmeliproHeaderBrandSection, { props: { ...requiredPropValues(), serviceTitle: 'Titre', themeAmelipro: false } })
 				expect(vueWrapper.find('img.logo-amelipro').exists()).toBe(false)
 			})
 		})

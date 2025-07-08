@@ -29,13 +29,9 @@
 	const hover = ref(false)
 	const focus = ref(false)
 
-	const activeItemLabel = computed<string | undefined>(() => {
-		return props.items?.filter(item => item.active)?.map(item => item.label)[0]
-	})
+	const activeItemLabel = computed<string | undefined>(() => props.items?.filter(item => item.active)?.map(item => item.label)[0])
 
-	const menuStyle = computed<IndexedObject>(() => {
-		return { width: props.menuWidth }
-	})
+	const menuStyle = computed<IndexedObject>(() => ({ width: props.menuWidth }))
 
 	const setFocus = (id: string): void => {
 		const element = document.getElementById(id)
@@ -134,9 +130,9 @@
 			hover-color="ap-grey-lighten-4"
 			text-color="ap-grey-darken-1"
 			:unique-id="`${uniqueId}-btn`"
+			@blur="focus = false"
 			@click="openCloseMenu()"
 			@focus="focus = true"
-			@blur="focus = false"
 			@keyup.down="openMenu()"
 			@keyup.up="openMenu(true)"
 			@mouseenter="hover = true"

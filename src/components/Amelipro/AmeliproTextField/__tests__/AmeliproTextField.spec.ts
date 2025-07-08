@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproTextField from '../AmeliproTextField.vue'

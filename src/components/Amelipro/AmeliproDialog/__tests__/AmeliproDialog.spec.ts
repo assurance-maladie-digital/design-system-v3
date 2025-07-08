@@ -107,7 +107,7 @@ class NoopMutationObserver {
 	disconnect = vi.fn()
 	takeRecords = vi.fn(() => [])
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 global.MutationObserver = NoopMutationObserver as any
 
 describe('AmeliproDialog', () => {

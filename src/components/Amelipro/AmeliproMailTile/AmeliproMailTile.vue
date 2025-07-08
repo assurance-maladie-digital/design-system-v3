@@ -77,9 +77,9 @@
 				:ripple="false"
 				:to="mailInfo.to"
 				variant="flat"
+				@blur="focus = false"
 				@click="emitClickEvent()"
 				@focus="focus = true"
-				@blur="focus = false"
 				@mouseenter="hover = true"
 				@mouseleave="hover = false"
 			>
@@ -175,9 +175,9 @@
 			:title="currentReadValue ? 'Message lu' : 'Message non lu'"
 			:to="mailInfo.to"
 			variant="flat"
+			@blur="focus = false"
 			@click="emitClickEvent"
 			@focus="focus = true"
-			@blur="focus = false"
 			@mouseenter="hover = true"
 			@mouseleave="hover = false"
 		>

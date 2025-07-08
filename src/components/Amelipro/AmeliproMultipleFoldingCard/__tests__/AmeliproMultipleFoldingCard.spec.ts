@@ -3,10 +3,10 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import AmeliproMultipleFoldingCard from '../AmeliproMultipleFoldingCard.vue'
 import type { AmeliproMultipleFoldingCardItem } from '../types'
 import type { ComponentProps } from 'vue-component-type-helpers'
+import { DisplayTestComponent } from '@tests/helpers/utils'
 import type { ExpectedPropOptions } from '@tests/types'
 import { type PropType } from 'vue'
 import TestHelper from '@tests/helpers/TestHelper'
-import { DisplayTestComponent } from '@tests/helpers/utils'
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproMultipleFoldingCard> = {
 	borderColor: {

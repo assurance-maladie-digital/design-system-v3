@@ -1,45 +1,192 @@
-import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
+import { VueWrapper, shallowMount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproOnboarding from '../AmeliproOnboarding.vue'
-import { vuetify } from '@tests/unit/setup'
+import type { ComponentProps } from 'vue-component-type-helpers'
+import type { ExpectedPropOptions } from '@tests/types'
+import type { IOnboarding } from '../types'
+import TestHelper from '@tests/helpers/TestHelper'
+
+const expectedPropOptions: ExpectedPropOptions<typeof AmeliproOnboarding> = {
+	attach: {
+		type: Boolean,
+		default: false,
+	},
+	displayImgMobile: {
+		type: Boolean,
+		default: false,
+	},
+	eager: {
+		type: Boolean,
+		default: false,
+	},
+	finalBtnLabel: {
+		type: String,
+		default: 'Commencer',
+	},
+	imgHeight: {
+		type: String,
+		default: '335px',
+	},
+	imgWidth: {
+		type: String,
+		default: '35%',
+	},
+	modelValue: {
+		type: Boolean,
+		default: false,
+	},
+	persistent: {
+		type: Boolean,
+		default: false,
+	},
+	skipBtnLabel: {
+		type: String,
+		default: 'Passer',
+	},
+	steps: {
+		type: Array,
+		required: true,
+	},
+	title: {
+		type: String,
+		required: true,
+	},
+	uniqueId: {
+		type: String,
+		required: true,
+	},
+	width: {
+		type: String,
+		default: '800px',
+	},
+}
+
+const stepsData = (): IOnboarding[] => [
+	{
+		content: ['Contenu 1', 'Contenu 2'],
+		img: 'img1.png',
+		title: 'Step 1',
+	},
+	{
+		content: ['Contenu 3'],
+		img: 'img2.png',
+		title: 'Step 2',
+	},
+]
+
+const requiredPropValues = (): ComponentProps<typeof AmeliproOnboarding> => ({
+	steps: stepsData(),
+	title: 'Required title',
+	uniqueId: 'required-unique-id',
+})
+
+const modifiedPropValues = (): ComponentProps<typeof AmeliproOnboarding> => ({
+	attach: true,
+	displayImgMobile: true,
+	eager: true,
+	finalBtnLabel: 'Modified final label',
+	imgHeight: '222px',
+	imgWidth: '44%',
+	modelValue: true,
+	persistent: true,
+	skipBtnLabel: 'Modified skip label',
+	steps: [
+		{
+			content: ['Contenu 4'],
+			img: 'img3.png',
+			title: 'Step 3',
+		},
+		{
+			content: ['Contenu 5', 'Contenu 6'],
+			img: 'img4.png',
+			title: 'Step 4',
+		},
+	],
+	title: 'Modified title',
+	uniqueId: 'modified-unique-id',
+	width: '600px',
+})
+
+const testHelper = new TestHelper(AmeliproOnboarding)
+testHelper.setExpectedPropOptions(expectedPropOptions)
+	.setRequiredPropValues(requiredPropValues)
+	.setModifiedPropValues(modifiedPropValues)
 
 describe('AmeliproOnboarding', () => {
-	it('render correctly', async () => {
-		const wrapper = mount(AmeliproOnboarding, {
-			global: {
-				plugins: [vuetify],
-			},
-			props: {
-				steps: [
-					{
-						content: [
-							'Dans cet espace, vous allez pouvoir souscrire un contrat d’engagement au dispositif AIR afin de permettre aux professionnels de santé '
-							+ 'de votre établissement de consulter le DMP de leurs patients.',
-						],
-						img: 'img-1',
-						title: 'Gérez votre contrat d’accès au DMP en toute simplicité',
-					},
-					{
-						content: [
-							'Vous avez la possibilité de désigner les personnes qui seront les contacts privilégiés de l’Assurance Maladie dans la gestion au quotidien de la solution AIR.',
-						],
-						img: 'img-2',
-						title: 'Ajoutez ou modifiez des contacts',
-					},
-					{
-						content: [
-							'A partir de la page principale, vous pouvez consulter vos conditions d’engagement et retrouver les documents  '
-							+ 'utiles à l’application des conditions de mise en œuvre de la solution AIR.',
-						],
-						img: 'img-3',
-						title: 'Retrouvez les informations utiles à la gestion de vos contrats',
-					},
-				],
-				title: 'titre de la modale',
-				uniqueId: 'my-onboarding-id',
-			},
+	describe('Snapshots', () => {
+		testHelper.snapshots()
+	})
+
+	describe('Properties', () => {
+		testHelper.properties()
+	})
+
+	describe('Setting props should update attributes of inner tags', () => {
+		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproOnboarding>>
+
+		beforeEach(() => {
+			vueWrapper = shallowMount(AmeliproOnboarding, {
+				props: requiredPropValues(),
+				global: { mocks: { AmeliproDialog: '<div class="amelipro-dialog"><slot /></div>' } },
+			})
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		describe('Default slot content', () => {
+			it('prop uniqueId sets attribute id', async () => {
+				expect(vueWrapper.find('.amelipro-ondoarding__content').attributes('id')).toBe(`${testHelper.default('uniqueId')}-main-content`)
+
+				const { uniqueId } = modifiedPropValues()
+				await vueWrapper.setProps({ uniqueId })
+				expect(vueWrapper.find('.amelipro-ondoarding__content').attributes('id')).toBe(testHelper.modified('uniqueId'))
+			})
+		})
+
+		it('prop title sets header content', async () => {
+			vueWrapper = shallowMount(AmeliproOnboarding, { props: requiredPropValues() })
+			expect(vueWrapper.find(`#${testHelper.default('uniqueId')}-title`).text()).toBe(testHelper.default('title'))
+
+			const { title } = modifiedPropValues()
+			await vueWrapper.setProps({ title })
+			expect(vueWrapper.find(`#${testHelper.default('uniqueId')}-title`).text()).toBe(title)
+		})
+
+		it('prop steps sets step content', async () => {
+			vueWrapper = shallowMount(AmeliproOnboarding, { props: requiredPropValues() })
+			expect(vueWrapper.findAll('.amelipro-onboarding__step-dot').length).toBe(2)
+
+			const { steps } = modifiedPropValues()
+			await vueWrapper.setProps({ steps })
+			expect(vueWrapper.findAll('.amelipro-onboarding__step-dot').length).toBe(2)
+		})
+
+		it('prop finalBtnLabel sets final button label', async () => {
+			vueWrapper = shallowMount(AmeliproOnboarding, { props: { ...requiredPropValues(), modelValue: true } })
+			// Aller à la dernière étape
+			await vueWrapper.setData({ currentStepIndex: 1 })
+			expect(vueWrapper.find('.amelipro-onboarding__content__btn--final').text()).toBe(testHelper.default('finalBtnLabel'))
+
+			const { finalBtnLabel } = modifiedPropValues()
+			await vueWrapper.setProps({ finalBtnLabel })
+			expect(vueWrapper.find('.amelipro-onboarding__content__btn--final').text()).toBe(testHelper.modified('finalBtnLabel'))
+		})
+
+		it('prop skipBtnLabel sets skip button label', async () => {
+			vueWrapper = shallowMount(AmeliproOnboarding, { props: requiredPropValues() })
+			expect(vueWrapper.find('.amelipro-onboarding__content__btn--skip').text()).toBe(testHelper.default('skipBtnLabel'))
+
+			const { skipBtnLabel } = modifiedPropValues()
+			await vueWrapper.setProps({ skipBtnLabel })
+			expect(vueWrapper.find('.amelipro-onboarding__content__btn--skip').text()).toBe(testHelper.modified('skipBtnLabel'))
+		})
+	})
+
+	describe('Events', () => {
+		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproOnboarding>>
+
+		it('emit update:model-value when closing onboarding', async () => {
+			vueWrapper = shallowMount(AmeliproOnboarding, { props: { ...requiredPropValues(), modelValue: true } })
+			await vueWrapper.find('.amelipro-onboarding__content__btn--final').trigger('click')
+			expect(vueWrapper.emitted('update:model-value')).toBeTruthy()
+		})
 	})
 })

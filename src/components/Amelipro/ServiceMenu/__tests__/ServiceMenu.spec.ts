@@ -1,11 +1,10 @@
 /* eslint-disable vue/require-default-prop */
 import { DisplayTestComponent, attachToApp } from '@tests/helpers/utils'
+import { type PropType, defineComponent, h } from 'vue'
 import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { defineComponent, h } from 'vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { ExpectedPropOptions } from '@tests/types'
-import type { PropType } from 'vue'
 import type { Service } from '../ServiceBtn/types'
 import ServiceMenu from '../ServiceMenu.vue'
 import TestHelper from '@tests/helpers/TestHelper'
@@ -232,7 +231,7 @@ describe('ServiceMenu', () => {
 
 	// TODO: à corriger
 	describe.skip('Other', () => {
-		it('setMenuAttrs() ajoute les attributs d’accessibilité sur le menu', async () => {
+		it('setMenuAttrs() ajoute les attributs d’accessibilité sur le menu', () => {
 			vueWrapper = mount(ServiceMenu, {
 				attachTo: attachToApp(),
 				global: { stubs: { VMenu: VMenuMock } },
@@ -247,7 +246,7 @@ describe('ServiceMenu', () => {
 			document.body.appendChild(menuDiv);
 
 			// Appelle la méthode setMenuAttrs
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 			(vueWrapper.vm as any).setMenuAttrs()
 			expect(overlayContent.getAttribute('aria-label')).toBe('Liste des services')
 			expect(overlayContent.getAttribute('aria-modal')).toBe('true')

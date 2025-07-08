@@ -24,9 +24,7 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproLogoAm> = {
 	},
 }
 
-const requiredPropValues = (): ComponentProps<typeof AmeliproLogoAm> => ({
-	// aucune prop requise
-})
+const requiredPropValues = (): ComponentProps<typeof AmeliproLogoAm> => ({})
 
 const modifiedPropValues = (): ComponentProps<typeof AmeliproLogoAm> => ({
 	hideSignature: true,

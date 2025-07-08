@@ -362,8 +362,7 @@ describe('AmeliproFooter', () => {
 
 				const { uniqueId } = modifiedPropValues()
 				await vueWrapper.setProps({ uniqueId })
-				expect(vueWrapper.find('.amelipro-footer__list').attributes('id')).toBe('modified-unique-id-list',
-				)
+				expect(vueWrapper.find('.amelipro-footer__list').attributes('id')).toBe('modified-unique-id-list')
 			})
 
 			it('display width & prop backOffice set attribute class', async () => {
