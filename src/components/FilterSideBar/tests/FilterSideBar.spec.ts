@@ -239,24 +239,22 @@ describe('FilterSideBar', () => {
 		// Open the filter sidebar
 		await wrapper.find('.v-btn__content').trigger('click')
 
-		// Open the filter panel
+		// Open the first filter panel (name filter)
 		await wrapper.find('.v-expansion-panel-title').trigger('click')
 
-		// Directly emit the expected result to simulate resetting one filter
-		await wrapper.vm.$emit('update:modelValue', [
-			{
-				name: 'name',
-				title: 'Nom',
-				value: undefined,
-			},
-			{
-				name: 'age',
-				title: 'Âge',
-				value: '18',
-			},
-		])
+		// Wait for the panel to expand
+		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('update:modelValue')?.[0][0]).toEqual([
+		// Trouver et cliquer sur le bouton de réinitialisation du filtre
+		// Le bouton de réinitialisation est dans le ChipList du premier panneau d'expansion
+		const resetButton = wrapper.find('.v-expansion-panel-text .v-btn:last-child')
+		expect(resetButton.exists()).toBe(true)
+		await resetButton.trigger('click')
+
+		// Vérifier que l'événement émis contient les données attendues
+		const emittedEvents = wrapper.emitted('update:modelValue')
+		expect(emittedEvents).toBeTruthy()
+		expect(emittedEvents?.[0][0]).toEqual([
 			{
 				name: 'name',
 				title: 'Nom',
