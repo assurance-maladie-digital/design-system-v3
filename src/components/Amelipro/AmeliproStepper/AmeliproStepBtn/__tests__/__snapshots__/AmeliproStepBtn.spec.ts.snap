@@ -1,5 +1,51 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AmeliproStepBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<button
+  aria-current="step"
+  class="
+    amelipro-step-btn
+    pa-4
+    text-subtitle-1
+    text-uppercase
+  "
+  disabled=""
+  id="modified-unique-id"
+  role="tab"
+  style="background-color: #E6F6FC; border: 1px solid #DDDEDE; color: #00749C; position: relative; z-index: 1;"
+  type="button"
+>
+  <span
+    class="
+      align-center
+      amelipro-step-btn__content
+      d-flex
+    "
+    id="modified-unique-id-content"
+  ></span>
+</button>
+`;
+
+exports[`AmeliproStepBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<button
+  class="
+    amelipro-step-btn
+    pa-4
+    text-subtitle-1
+    text-uppercase
+  "
+  role="tab"
+  style="background-color: #E6F6FC; border: 1px solid #DDDEDE; color: #00749C; position: relative; z-index: 1;"
+  type="button"
+>
+  <span class="
+    align-center
+    amelipro-step-btn__content
+    d-flex
+  "></span>
+</button>
+`;
+
 exports[`AmeliproStepBtn > render correctly 1`] = `
 <button
   class="
