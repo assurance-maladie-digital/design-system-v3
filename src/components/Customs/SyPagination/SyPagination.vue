@@ -56,7 +56,7 @@
 		pages.push(1)
 
 		// For small total pages, just show all pages without ellipsis
-		if (totalPages <= visibleCount) {
+		if (totalPages <= visibleCount + 2) { // +2 to account for first and last pages
 			for (let i = 2; i < totalPages; i++) {
 				pages.push(i)
 			}
@@ -68,14 +68,14 @@
 
 		// Calculate how many pages we can show around the current page
 		// We need to account for first and last page which are always shown
-		const maxVisibleMiddlePages = visibleCount - 2 // -2 for first and last pages
+		const maxVisibleMiddlePages = visibleCount // No need to subtract 2 as visible prop already accounts for middle pages only
 		const halfVisible = Math.floor(maxVisibleMiddlePages / 2)
 
 		// Calculate the range of pages to show around the current page
 		let startPage = Math.max(2, currentPage - halfVisible)
 		let endPage = Math.min(totalPages - 1, currentPage + halfVisible)
 
-		// Adjust the range to ensure we show exactly visibleCount - 2 pages in the middle
+		// Adjust the range to ensure we show the correct number of pages in the middle
 		const currentVisibleCount = endPage - startPage + 1
 		if (currentVisibleCount < maxVisibleMiddlePages) {
 			// If we're closer to the start, show more pages at the end
