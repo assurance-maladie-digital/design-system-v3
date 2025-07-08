@@ -43,6 +43,8 @@
 	/**
 	 * Visible page numbers to display
 	 * Shows current page and surrounding pages based on visible prop
+	 * If the number of visible pages is greater than the total number of pages,
+	 * ellipsis will be shown to indicate the presence of additional pages
 	 */
 	const visiblePageNumbers = computed(() => {
 		const pages: (number | string)[] = []
@@ -53,23 +55,51 @@
 		// Always show first page
 		pages.push(1)
 
-		// Add ellipsis if needed
-		if (currentPage > visibleCount) {
-			pages.push('ellipsis-start')
+		// For small total pages, just show all pages without ellipsis
+		if (totalPages <= visibleCount) {
+			for (let i = 2; i < totalPages; i++) {
+				pages.push(i)
+			}
+			if (totalPages > 1) {
+				pages.push(totalPages)
+			}
+			return pages
 		}
 
+		// Calculate how many pages we can show around the current page
+		// We need to account for first and last page which are always shown
+		const maxVisibleMiddlePages = visibleCount - 2 // -2 for first and last pages
+		const halfVisible = Math.floor(maxVisibleMiddlePages / 2)
+
 		// Calculate the range of pages to show around the current page
-		const halfVisible = Math.floor(visibleCount / 2)
-		const startPage = Math.max(2, currentPage - halfVisible)
-		const endPage = Math.min(totalPages - 1, currentPage + halfVisible)
+		let startPage = Math.max(2, currentPage - halfVisible)
+		let endPage = Math.min(totalPages - 1, currentPage + halfVisible)
+
+		// Adjust the range to ensure we show exactly visibleCount - 2 pages in the middle
+		const currentVisibleCount = endPage - startPage + 1
+		if (currentVisibleCount < maxVisibleMiddlePages) {
+			// If we're closer to the start, show more pages at the end
+			if (startPage === 2) {
+				endPage = Math.min(totalPages - 1, startPage + maxVisibleMiddlePages - 1)
+			} 
+			// If we're closer to the end, show more pages at the start
+			else if (endPage === totalPages - 1) {
+				startPage = Math.max(2, endPage - maxVisibleMiddlePages + 1)
+			}
+		}
+
+		// Determine if we need ellipsis at the start
+		if (startPage > 2) {
+			pages.push('ellipsis-start')
+		}
 
 		// Show pages around current page
 		for (let i = startPage; i <= endPage; i++) {
 			pages.push(i)
 		}
 
-		// Add ellipsis if needed
-		if (currentPage < totalPages - visibleCount + 1) {
+		// Determine if we need ellipsis at the end
+		if (endPage < totalPages - 1) {
 			pages.push('ellipsis-end')
 		}
 
@@ -345,6 +375,9 @@
 				&.ellipsis {
 					border: none;
 					pointer-events: none;
+					display: inline-block;
+					color: tokens.$primary-base;
+          padding: 0.6rem;
 				}
 			}
 
@@ -356,6 +389,10 @@
 				border: none;
 				padding-left: 0.25rem;
 				padding-right: 0.25rem;
+        &:hover,
+        &:focus {
+          background-color: transparent;
+        }
 			}
 		}
 	}

@@ -54,7 +54,7 @@
 		<SyPagination
 			v-model="currentPage"
 			:max="totalPages"
-			:visible="5"
+			:visible="4"
 			label="Fiches"
 			class="custom-pagination"
 		>
@@ -103,6 +103,7 @@
 }
 
 .custom-pagination {
+  flex-direction: column;
   margin-top: 20px;
   border-top: 1px solid #eee;
   padding-top: 20px;

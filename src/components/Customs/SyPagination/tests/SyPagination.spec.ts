@@ -145,4 +145,35 @@ describe('SyPagination', () => {
 		expect(wrapper.find('h2').classes()).toContain('d-sr-only')
 		expect(wrapper.find('.d-sr-only').exists()).toBe(true)
 	})
+
+	it('shows start ellipsis when current page is far from first page', () => {
+		const wrapper = mount(SyPagination, {
+			props: {
+				modelValue: 8, // Current page far from first page
+				max: 10,
+				visible: 3, // Small visible count to ensure ellipsis appears
+			},
+		})
+
+		// Should show ellipsis between first page and middle pages
+		expect(wrapper.findAll('.ellipsis').length).toBeGreaterThanOrEqual(1)
+		expect(wrapper.find('.ellipsis').text()).toBe('…')
+	})
+
+	it('shows both ellipses when current page is in the middle of a large range', () => {
+		const wrapper = mount(SyPagination, {
+			props: {
+				modelValue: 10, // Middle page
+				max: 20,
+				visible: 3, // Small visible count to ensure ellipsis appears
+			},
+		})
+
+		// Should show both start and end ellipsis
+		expect(wrapper.findAll('.ellipsis').length).toBe(2)
+		// Verify the structure: first page, ellipsis, middle pages, ellipsis, last page
+		expect(wrapper.find('.list-first').exists()).toBe(true)
+		expect(wrapper.findAll('.ellipsis').length).toBe(2)
+		expect(wrapper.find('.list-last').exists()).toBe(true)
+	})
 })
