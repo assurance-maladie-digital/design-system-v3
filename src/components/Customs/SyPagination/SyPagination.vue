@@ -26,7 +26,7 @@
 	}>()
 
 	// Default values for optional props
-	const visible = computed(() => props.visible || 5)
+	const visiblePages = computed(() => props.visible || 5)
 	const label = computed(() => props.label || 'Pagination')
 
 	// Generate unique ID for this pagination instance
@@ -50,7 +50,7 @@
 		const pages: (number | string)[] = []
 		const currentPage = props.modelValue
 		const totalPages = props.max
-		const visibleCount = visible.value
+		const visibleCount = visiblePages.value
 
 		// Always show first page
 		pages.push(1)
