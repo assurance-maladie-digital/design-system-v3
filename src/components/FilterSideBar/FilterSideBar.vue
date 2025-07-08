@@ -64,7 +64,7 @@
 	<div class="sy-filters-side-bar">
 		<VBtn
 			ref="drawerBtnRef"
-      class="px-4 py-3"
+			class="px-4 py-3"
 			:class="{ 'v-btn--active': drawer }"
 			color="primary"
 			variant="text"
@@ -173,10 +173,10 @@
 					</VBtn>
 
 					<VBtn
-              color="primary"
+						color="primary"
 						block
 						size="large"
-              variant="elevated"
+						variant="elevated"
 						@click.stop="applyFilters"
 					>
 						{{ locales.apply }}
