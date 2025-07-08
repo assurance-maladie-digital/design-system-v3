@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref, nextTick, watch, onMounted, defineExpose } from 'vue'
+	import { computed, ref, nextTick, watch, onMounted } from 'vue'
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
 	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 	import { locales } from './locales'
@@ -59,32 +59,6 @@
 	function goToPage(pageNumber: number) {
 		emit('update:page', pageNumber)
 	}
-
-	/**
-	 * Navigate to the next page
-	 * This function is used in tests and can be called from parent components
-	 */
-	function nextPage() {
-		if (props.page < props.pageCount) {
-			emit('update:page', props.page + 1)
-		}
-	}
-
-	/**
-	 * Navigate to the previous page
-	 * This function can be called from parent components
-	 */
-	function previousPage() {
-		if (props.page > 1) {
-			emit('update:page', props.page - 1)
-		}
-	}
-
-	// Expose methods for external use and testing
-	defineExpose({
-		nextPage,
-		previousPage,
-	})
 
 	/**
 	 * Local items per page with two-way binding
