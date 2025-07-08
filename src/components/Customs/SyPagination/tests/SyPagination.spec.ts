@@ -7,7 +7,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 1,
-				max: 10,
+				pages: 10,
 			},
 		})
 
@@ -17,11 +17,11 @@ describe('SyPagination', () => {
 		expect(wrapper.find('.list').exists()).toBe(true)
 	})
 
-	it('does not render pagination if max is 1', () => {
+	it('does not render pagination if pages is 1', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 1,
-				max: 1,
+				pages: 1,
 			},
 		})
 
@@ -32,7 +32,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 1,
-				max: 10,
+				pages: 10,
 			},
 		})
 
@@ -59,7 +59,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 1,
-				max: 10,
+				pages: 10,
 			},
 		})
 
@@ -71,7 +71,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 10,
-				max: 10,
+				pages: 10,
 			},
 		})
 
@@ -83,7 +83,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 3,
-				max: 10,
+				pages: 10,
 			},
 		})
 
@@ -95,7 +95,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 5,
-				max: 10,
+				pages: 10,
 				visible: 3,
 			},
 		})
@@ -114,7 +114,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 1,
-				max: 10,
+				pages: 10,
 				label: 'Test Pagination',
 			},
 		})
@@ -126,7 +126,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 1,
-				max: 10,
+				pages: 10,
 				ariaControls: 'test-content',
 			},
 		})
@@ -138,7 +138,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 1,
-				max: 10,
+				pages: 10,
 			},
 		})
 
@@ -150,7 +150,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 8, // Current page far from first page
-				max: 10,
+				pages: 10,
 				visible: 3, // Small visible count to ensure ellipsis appears
 			},
 		})
@@ -164,7 +164,7 @@ describe('SyPagination', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
 				modelValue: 10, // Middle page
-				max: 20,
+				pages: 20,
 				visible: 3, // Small visible count to ensure ellipsis appears
 			},
 		})
