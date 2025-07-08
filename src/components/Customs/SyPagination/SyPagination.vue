@@ -200,6 +200,7 @@
 						href="#"
 						class="first-page"
 						:class="{ 'disabled': !hasPrevious }"
+						:aria-disabled="!hasPrevious ? 'true' : undefined"
 						@click.prevent="firstPage"
 					>
 						<slot name="first-page">
@@ -214,6 +215,7 @@
 						href="#"
 						class="previous-page"
 						:class="{ 'disabled': !hasPrevious }"
+						:aria-disabled="!hasPrevious ? 'true' : undefined"
 						@click.prevent="previousPage"
 					>
 						<slot name="previous">
@@ -305,6 +307,7 @@
 						href="#"
 						class="next-page"
 						:class="{ 'disabled': !hasNext }"
+						:aria-disabled="!hasNext ? 'true' : undefined"
 						@click.prevent="nextPage"
 					>
 						<slot name="next">
@@ -319,6 +322,7 @@
 						href="#"
 						class="last-page"
 						:class="{ 'disabled': !hasNext }"
+						:aria-disabled="!hasNext ? 'true' : undefined"
 						@click.prevent="lastPage"
 					>
 						<slot name="last-page">
