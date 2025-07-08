@@ -69,6 +69,17 @@ export function useDatePickerAccessibility() {
 
 		// Attribuer des labels significatifs basés sur la position ou l'icône
 		navigationButtons.forEach((button) => {
+			const prevMonthButton = button.querySelector('button[data-testid="prev-month"]')
+			const nextMonthButton = button.querySelector('button[data-testid="next-month"]')
+
+			if (prevMonthButton && !prevMonthButton.hasAttribute('aria-label')) {
+				prevMonthButton.setAttribute('aria-label', 'Mois précédent')
+			}
+
+			// Ajouter aria-label au bouton "mois suivant"
+			if (nextMonthButton && !nextMonthButton.hasAttribute('aria-label')) {
+				nextMonthButton.setAttribute('aria-label', 'Mois suivant')
+			}
 			const iconEl = button.querySelector('.v-icon')
 			if (!iconEl) return
 
@@ -76,13 +87,7 @@ export function useDatePickerAccessibility() {
 			const iconContent = iconEl.textContent || ''
 			const iconClasses = iconEl.className || ''
 
-			if (iconClasses.includes('mdi-chevron-left') || iconContent.includes('chevron-left')) {
-				button.setAttribute('aria-label', 'Mois précédent')
-			}
-			else if (iconClasses.includes('mdi-chevron-right') || iconContent.includes('chevron-right')) {
-				button.setAttribute('aria-label', 'Mois suivant')
-			}
-			else if (iconClasses.includes('mdi-chevron-down') || iconContent.includes('chevron-down')
+			if (iconClasses.includes('mdi-chevron-down') || iconContent.includes('chevron-down')
 				|| iconClasses.includes('mdi-menu-down') || iconContent.includes('menu-down')) {
 				button.setAttribute('aria-label', 'Changer de vue')
 			}
@@ -134,17 +139,22 @@ export function useDatePickerAccessibility() {
 
 			const allInputsWithAriaExpanded = document.querySelectorAll('input[aria-expanded]')
 			allInputsWithAriaExpanded.forEach((input) => {
-				input.removeAttribute('aria-expanded')
+				if (input) {
+					input.removeAttribute('aria-expanded')
+				}
 			})
 
 			// Pour chaque conteneur, rechercher et corriger les attributs ARIA invalides
 			containers.forEach((container) => {
+				if (!container) return
+
 				container.removeAttribute('aria-expanded')
 				container.removeAttribute('aria-haspopup')
 				container.removeAttribute('aria-controls')
 				// Find all elements with invalid ARIA attributes
 				const elementsWithAriaHaspopup = container.querySelectorAll('[aria-haspopup="menu"]')
 				elementsWithAriaHaspopup.forEach((element) => {
+					if (!element) return
 					element.removeAttribute('aria-haspopup')
 					element.removeAttribute('aria-controls')
 				})
@@ -152,6 +162,7 @@ export function useDatePickerAccessibility() {
 				// Find input elements with invalid ARIA attributes
 				const inputElements = container.querySelectorAll('input[aria-haspopup="menu"]')
 				inputElements.forEach((input) => {
+					if (!input) return
 					input.removeAttribute('aria-haspopup')
 					input.removeAttribute('aria-expanded')
 					input.removeAttribute('aria-controls')
@@ -175,8 +186,13 @@ export function useDatePickerAccessibility() {
 
 		// Créer un nouvel observateur
 		observer = new MutationObserver((mutations) => {
+			if (!Array.isArray(mutations)) return
 			// Vérifier si les mutations concernent des attributs ARIA ou des éléments pertinents
 			const shouldFix = mutations.some((mutation) => {
+				if (!mutation) return false
+				// Vérification défensive pour s'assurer que mutation.el existe avant d'accéder à ses propriétés
+				if (mutation.target === undefined || mutation.target === null) return false
+
 				// Si un attribut a été modifié
 				if (mutation.type === 'attributes') {
 					const attributeName = mutation.attributeName
