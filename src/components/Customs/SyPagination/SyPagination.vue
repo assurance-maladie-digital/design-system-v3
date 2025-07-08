@@ -81,7 +81,7 @@
 			// If we're closer to the start, show more pages at the end
 			if (startPage === 2) {
 				endPage = Math.min(totalPages - 1, startPage + maxVisibleMiddlePages - 1)
-			} 
+			}
 			// If we're closer to the end, show more pages at the start
 			else if (endPage === totalPages - 1) {
 				startPage = Math.max(2, endPage - maxVisibleMiddlePages + 1)
@@ -377,7 +377,7 @@
 					pointer-events: none;
 					display: inline-block;
 					color: tokens.$primary-base;
-          padding: 0.6rem;
+					padding: 0.6rem;
 				}
 			}
 
@@ -389,10 +389,11 @@
 				border: none;
 				padding-left: 0.25rem;
 				padding-right: 0.25rem;
-        &:hover,
-        &:focus {
-          background-color: transparent;
-        }
+
+				&:hover,
+				&:focus {
+					background-color: transparent;
+				}
 			}
 		}
 	}
