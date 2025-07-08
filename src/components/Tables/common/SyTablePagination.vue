@@ -112,18 +112,18 @@
 
 		<SyPagination
 			v-if="pageCount > 1"
-			:modelValue="page"
+			:model-value="page"
 			:max="pageCount"
 			:visible="5"
 			:label="locales.pagination.paginationNavAriaLabel"
 			class="pagination"
-			@update:modelValue="goToPage"
+			@update:model-value="goToPage"
 		>
 			<template #previous>
 				<span>{{ locales.pagination.previous }}</span>
 			</template>
-			<template #page-number="{ page }">
-				{{ locales.pagination.pageText(page) }}
+			<template #page-number="{ page: pageNum }">
+				{{ locales.pagination.pageText(pageNum) }}
 			</template>
 			<template #next>
 				<span>{{ locales.pagination.next }}</span>
