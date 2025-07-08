@@ -69,17 +69,6 @@ export function useDatePickerAccessibility() {
 
 		// Attribuer des labels significatifs basés sur la position ou l'icône
 		navigationButtons.forEach((button) => {
-			const prevMonthButton = button.querySelector('button[data-testid="prev-month"]')
-			const nextMonthButton = button.querySelector('button[data-testid="next-month"]')
-
-			if (prevMonthButton && !prevMonthButton.hasAttribute('aria-label')) {
-				prevMonthButton.setAttribute('aria-label', 'Mois précédent')
-			}
-
-			// Ajouter aria-label au bouton "mois suivant"
-			if (nextMonthButton && !nextMonthButton.hasAttribute('aria-label')) {
-				nextMonthButton.setAttribute('aria-label', 'Mois suivant')
-			}
 			const iconEl = button.querySelector('.v-icon')
 			if (!iconEl) return
 
@@ -87,7 +76,13 @@ export function useDatePickerAccessibility() {
 			const iconContent = iconEl.textContent || ''
 			const iconClasses = iconEl.className || ''
 
-			if (iconClasses.includes('mdi-chevron-down') || iconContent.includes('chevron-down')
+			if (iconClasses.includes('mdi-chevron-left') || iconContent.includes('chevron-left')) {
+				button.setAttribute('aria-label', 'Mois précédent')
+			}
+			else if (iconClasses.includes('mdi-chevron-right') || iconContent.includes('chevron-right')) {
+				button.setAttribute('aria-label', 'Mois suivant')
+			}
+			else if (iconClasses.includes('mdi-chevron-down') || iconContent.includes('chevron-down')
 				|| iconClasses.includes('mdi-menu-down') || iconContent.includes('menu-down')) {
 				button.setAttribute('aria-label', 'Changer de vue')
 			}
