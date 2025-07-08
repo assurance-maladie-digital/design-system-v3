@@ -1,7 +1,7 @@
 /**
  * Composable pour améliorer l'accessibilité du DatePicker
  */
-import { nextTick } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted } from 'vue'
 
 /**
  * Améliore l'accessibilité du DatePicker en ajoutant des attributs ARIA et des instructions pour les lecteurs d'écran
@@ -51,6 +51,7 @@ export function useDatePickerAccessibility() {
 	/**
 	 * Met à jour les attributs d'accessibilité du DatePicker
 	 * Ajoute des attributs ARIA et des instructions pour les lecteurs d'écran
+	 * Corrige également les attributs ARIA invalides
 	 */
 	const updateAccessibility = async (): Promise<void> => {
 		await nextTick()
@@ -114,9 +115,119 @@ export function useDatePickerAccessibility() {
 		datePickerEl.addEventListener('keydown', handleKeyDown as EventListener)
 	}
 
+	// Référence pour le MutationObserver
+	let observer: MutationObserver | null = null
+
+	/**
+	 * Corrige les attributs ARIA invalides dans le composant
+	 * Supprime les attributs aria-haspopup, aria-expanded et aria-controls inappropriés
+	 */
+	const fixAriaAttributes = () => {
+		try {
+			// Rechercher dans tout le document les éléments avec des attributs ARIA invalides
+			// Cibler les éléments dans les conteneurs DatePicker et DateTextInput
+			const containers = document.querySelectorAll('.date-picker-container, .v-date-picker')
+
+			if (containers.length === 0) {
+				return
+			}
+
+			const allInputsWithAriaExpanded = document.querySelectorAll('input[aria-expanded]')
+			allInputsWithAriaExpanded.forEach((input) => {
+				input.removeAttribute('aria-expanded')
+			})
+
+			// Pour chaque conteneur, rechercher et corriger les attributs ARIA invalides
+			containers.forEach((container) => {
+				container.removeAttribute('aria-expanded')
+				container.removeAttribute('aria-haspopup')
+				container.removeAttribute('aria-controls')
+				// Find all elements with invalid ARIA attributes
+				const elementsWithAriaHaspopup = container.querySelectorAll('[aria-haspopup="menu"]')
+				elementsWithAriaHaspopup.forEach((element) => {
+					element.removeAttribute('aria-haspopup')
+					element.removeAttribute('aria-controls')
+				})
+
+				// Find input elements with invalid ARIA attributes
+				const inputElements = container.querySelectorAll('input[aria-haspopup="menu"]')
+				inputElements.forEach((input) => {
+					input.removeAttribute('aria-haspopup')
+					input.removeAttribute('aria-expanded')
+					input.removeAttribute('aria-controls')
+				})
+			})
+		}
+		catch {
+			// Do nothing
+		}
+	}
+
+	/**
+	 * Configure un MutationObserver pour surveiller les changements dans le DOM
+	 * et réexécuter fixAriaAttributes lorsque nécessaire
+	 */
+	const setupMutationObserver = () => {
+		// Nettoyer l'observateur existant s'il y en a un
+		if (observer) {
+			observer.disconnect()
+		}
+
+		// Créer un nouvel observateur
+		observer = new MutationObserver((mutations) => {
+			// Vérifier si les mutations concernent des attributs ARIA ou des éléments pertinents
+			const shouldFix = mutations.some((mutation) => {
+				// Si un attribut a été modifié
+				if (mutation.type === 'attributes') {
+					const attributeName = mutation.attributeName
+					return attributeName && (
+						attributeName.startsWith('aria-')
+						|| attributeName === 'class'
+						|| attributeName === 'style'
+					)
+				}
+				// Si des nœuds ont été ajoutés ou supprimés
+				return mutation.type === 'childList'
+			})
+
+			// Si des modifications pertinentes ont été détectées, corriger les attributs ARIA
+			if (shouldFix) {
+				// Utiliser nextTick pour s'assurer que le DOM est stable avant de faire les corrections
+				nextTick(() => {
+					fixAriaAttributes()
+				})
+			}
+		})
+
+		// Observer le document entier pour les changements
+		observer.observe(document.body, {
+			childList: true, // Observer les ajouts/suppressions d'enfants
+			subtree: true, // Observer les descendants
+			attributes: true, // Observer les changements d'attributs
+			attributeFilter: ['aria-expanded', 'aria-haspopup', 'aria-controls', 'class'], // Filtrer les attributs à observer
+		})
+	}
+
+	// Configurer l'observateur au montage du composant
+	onMounted(() => {
+		// Exécuter une première fois pour nettoyer les attributs initiaux
+		fixAriaAttributes()
+		// Configurer l'observateur pour les changements futurs
+		setupMutationObserver()
+	})
+
+	// Nettoyer l'observateur avant de démonter le composant
+	onBeforeUnmount(() => {
+		if (observer) {
+			observer.disconnect()
+			observer = null
+		}
+	})
+
 	return {
 		updateAccessibility,
 		handleKeyDown,
+		fixAriaAttributes,
 	}
 }
 
