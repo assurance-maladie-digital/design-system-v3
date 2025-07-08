@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import SyPagination from '../src/components/Customs/SyPagination/SyPagination.vue'
+import SyPagination from '../SyPagination.vue'
 
 // Exemple de données
 const items = Array.from({ length: 50 }, (_, i) => ({

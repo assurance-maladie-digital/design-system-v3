@@ -118,41 +118,6 @@ export const ManyPages: Story = {
 	}),
 }
 
-export const CustomVisiblePages: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: 'Le nombre de pages visibles autour de la page courante peut être personnalisé avec la prop `visible`.',
-			},
-		},
-	},
-	args: {
-		'modelValue': 5,
-		'pages': 10,
-		'visible': 3,
-		'onUpdate:modelValue': fn(),
-	},
-	render: args => ({
-		components: { SyPagination },
-		setup() {
-			const currentPage = ref(args.modelValue)
-			return { args, currentPage }
-		},
-		template: `
-			<div>
-				<p>Page actuelle: {{ currentPage }}</p>
-				<SyPagination
-					v-model="currentPage"
-					:pages="args.pages"
-					:visible="args.visible"
-					:label="args.label"
-					@update:model-value="args['onUpdate:modelValue']"
-				/>
-			</div>
-		`,
-	}),
-}
-
 export const CustomButtons: Story = {
 	parameters: {
 		docs: {
