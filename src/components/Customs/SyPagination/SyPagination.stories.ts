@@ -166,7 +166,7 @@ export const CustomButtons: Story = {
 	}),
 }
 
-export const WithInfoText: Story = {
+export const Slots: Story = {
 	parameters: {
 		docs: {
 			description: {
