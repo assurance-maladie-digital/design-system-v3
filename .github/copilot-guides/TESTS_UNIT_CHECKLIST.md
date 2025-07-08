@@ -9,6 +9,9 @@
 - [ ] Le fichier de test est placé dans un dossier `__tests__` (et non `tests`).
 - [ ] Ajouter au contexte le fichier Vue testé
 - [ ] Ajouter au contexte les interfaces Typescript utilisées dans le fichier de test
+- [ ] **Les imports sont triés par ordre alphabétique (conformément à la règle ESLint du projet).**
+- [ ] **La variable du wrapper doit être nommée `vueWrapper` (et non `wrapper`).**
+- [ ] **Le type du wrapper doit être `let vueWrapper: VueWrapper<InstanceType<typeof MonComposant>>`.**
 
 ## 1. Structure et organisation
 

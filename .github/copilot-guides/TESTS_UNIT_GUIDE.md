@@ -9,6 +9,9 @@ Ce fichier contient les instructions pour générer des fichiers de test unitair
 - Tous les fichiers de tests unitaires doivent être placés dans un dossier nommé `__tests__` (et non `tests`).
 - Le nom du fichier doit suivre la convention `[NomComposant].spec.ts`.
 - **Ne pas utiliser de constante `Mock` pour référencer le composant testé : utiliser directement le composant dans les helpers et les tests.**
+- **Les imports doivent être triés par ordre alphabétique (conformément à la règle ESLint du projet).**
+- **Utiliser la convention de nommage `vueWrapper` pour la variable contenant le wrapper du composant (et non `wrapper`).**
+- **Toujours typer le wrapper comme `let vueWrapper: VueWrapper<InstanceType<typeof MonComposant>>` pour la cohérence avec les autres TU.**
 
 ## 1. Principes généraux
 
