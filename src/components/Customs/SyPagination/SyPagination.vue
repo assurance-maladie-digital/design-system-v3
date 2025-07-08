@@ -8,11 +8,11 @@
 		 */
 		modelValue: number
 		/**
-		 * Total number of pages
+		 * Total number of pages (optional, defaults to 1)
 		 */
-		max: number
+		pages?: number
 		/**
-		 * Number of visible page buttons
+		 * Nombre de boutons visibles
 		 */
 		visible?: number
 		/**
@@ -28,6 +28,7 @@
 	// Default values for optional props
 	const visiblePages = computed(() => props.visible || 5)
 	const label = computed(() => props.label || 'Pagination')
+	const totalPages = computed(() => props.pages || 1)
 
 	// Generate unique ID for this pagination instance
 	const uniqueId = ref(`pagination-${Math.random().toString(36).substr(2, 9)}`)
@@ -49,41 +50,40 @@
 	const visiblePageNumbers = computed(() => {
 		const pages: (number | string)[] = []
 		const currentPage = props.modelValue
-		const totalPages = props.max
 		const visibleCount = visiblePages.value
 
 		// Always show first page
 		pages.push(1)
 
 		// For small total pages, just show all pages without ellipsis
-		if (totalPages <= visibleCount + 2) { // +2 to account for first and last pages
-			for (let i = 2; i < totalPages; i++) {
+		if (totalPages.value <= visibleCount + 2) { // +2 to account for first and last pages
+			for (let i = 2; i < totalPages.value; i++) {
 				pages.push(i)
 			}
-			if (totalPages > 1) {
-				pages.push(totalPages)
+			if (totalPages.value > 1) {
+				pages.push(totalPages.value)
 			}
 			return pages
 		}
 
-		// Calculate how many pages we can show around the current page
+		// Calculate how many pages we can show in total
 		// We need to account for first and last page which are always shown
-		const maxVisibleMiddlePages = visibleCount // No need to subtract 2 as visible prop already accounts for middle pages only
+		const maxVisibleMiddlePages = Math.max(1, visibleCount - 2) // Subtract 2 to account for first and last pages
 		const halfVisible = Math.floor(maxVisibleMiddlePages / 2)
 
 		// Calculate the range of pages to show around the current page
 		let startPage = Math.max(2, currentPage - halfVisible)
-		let endPage = Math.min(totalPages - 1, currentPage + halfVisible)
+		let endPage = Math.min(totalPages.value - 1, currentPage + halfVisible)
 
 		// Adjust the range to ensure we show the correct number of pages in the middle
 		const currentVisibleCount = endPage - startPage + 1
 		if (currentVisibleCount < maxVisibleMiddlePages) {
 			// If we're closer to the start, show more pages at the end
 			if (startPage === 2) {
-				endPage = Math.min(totalPages - 1, startPage + maxVisibleMiddlePages - 1)
+				endPage = Math.min(totalPages.value - 1, startPage + maxVisibleMiddlePages - 1)
 			}
 			// If we're closer to the end, show more pages at the start
-			else if (endPage === totalPages - 1) {
+			else if (endPage === totalPages.value - 1) {
 				startPage = Math.max(2, endPage - maxVisibleMiddlePages + 1)
 			}
 		}
@@ -99,13 +99,13 @@
 		}
 
 		// Determine if we need ellipsis at the end
-		if (endPage < totalPages - 1) {
+		if (endPage < totalPages.value - 1) {
 			pages.push('ellipsis-end')
 		}
 
 		// Always show last page if more than 1 page
-		if (totalPages > 1) {
-			pages.push(totalPages)
+		if (totalPages.value > 1) {
+			pages.push(totalPages.value)
 		}
 
 		return pages
@@ -116,7 +116,7 @@
 	 */
 	const middlePages = computed(() => {
 		return visiblePageNumbers.value.filter(
-			page => typeof page === 'number' && page !== 1 && page !== props.max,
+			page => typeof page === 'number' && page !== 1 && page !== totalPages.value,
 		) as number[]
 	})
 
@@ -133,7 +133,7 @@
 	 * Navigate to next page
 	 */
 	function nextPage() {
-		if (props.modelValue < props.max) {
+		if (props.modelValue < totalPages.value) {
 			emit('update:modelValue', props.modelValue + 1)
 		}
 	}
@@ -149,7 +149,7 @@
 	 * Navigate to last page
 	 */
 	function lastPage() {
-		emit('update:modelValue', props.max)
+		emit('update:modelValue', totalPages.value)
 	}
 
 	/**
@@ -167,7 +167,7 @@
 	/**
 	 * Check if there are next pages available
 	 */
-	const hasNext = computed(() => props.modelValue < props.max)
+	const hasNext = computed(() => props.modelValue < totalPages.value)
 </script>
 
 <template>
@@ -176,7 +176,7 @@
 		<slot name="prepend" />
 
 		<nav
-			v-if="max > 1"
+			v-if="totalPages > 1"
 			class="pagination"
 			:aria-labelledby="uniqueId"
 			:aria-controls="ariaControls"
@@ -263,18 +263,18 @@
 				</li>
 
 				<!-- Last page (if not already shown) -->
-				<li v-if="max > 1">
+				<li v-if="totalPages > 1">
 					<a
 						href="#"
 						class="list-last"
-						:aria-current="modelValue === max ? 'page' : undefined"
-						@click.prevent="goToPage(max)"
+						:aria-current="modelValue === totalPages ? 'page' : undefined"
+						@click.prevent="goToPage(totalPages)"
 					>
 						<slot
 							name="page-number"
-							:page="max"
+							:page="totalPages"
 						>
-							{{ max }}
+							{{ totalPages }}
 						</slot>
 					</a>
 				</li>

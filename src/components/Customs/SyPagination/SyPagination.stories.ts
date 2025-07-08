@@ -14,13 +14,10 @@ const meta: Meta<typeof SyPagination> = {
 			control: 'number',
 			description: 'Numéro de la page actuelle',
 		},
-		'max': {
-			control: 'number',
-			description: 'Nombre total de pages',
-		},
+
 		'visible': {
 			control: 'number',
-			description: 'Nombre de pages visibles autour de la page courante',
+			description: 'Nombre de boutons visibles',
 		},
 		'label': {
 			control: 'text',
@@ -61,7 +58,7 @@ export const Default: Story = {
 	},
 	args: {
 		'modelValue': 1,
-		'max': 5,
+		'pages': 5,
 		'visible': 5,
 		'onUpdate:modelValue': fn(),
 	},
@@ -76,7 +73,7 @@ export const Default: Story = {
 				<p>Page actuelle: {{ currentPage }}</p>
 				<SyPagination
 					v-model="currentPage"
-					:max="args.max"
+					:pages="args.pages"
 					:visible="args.visible"
 					:label="args.label"
 					@update:model-value="args['onUpdate:modelValue']"
@@ -96,7 +93,7 @@ export const ManyPages: Story = {
 	},
 	args: {
 		'modelValue': 5,
-		'max': 20,
+		'pages': 20,
 		'visible': 5,
 		'onUpdate:modelValue': fn(),
 	},
@@ -111,7 +108,7 @@ export const ManyPages: Story = {
 				<p>Page actuelle: {{ currentPage }}</p>
 				<SyPagination
 					v-model="currentPage"
-					:max="args.max"
+					:pages="args.pages"
 					:visible="args.visible"
 					:label="args.label"
 					@update:model-value="args['onUpdate:modelValue']"
@@ -131,7 +128,7 @@ export const CustomVisiblePages: Story = {
 	},
 	args: {
 		'modelValue': 5,
-		'max': 20,
+		'pages': 10,
 		'visible': 3,
 		'onUpdate:modelValue': fn(),
 	},
@@ -146,7 +143,7 @@ export const CustomVisiblePages: Story = {
 				<p>Page actuelle: {{ currentPage }}</p>
 				<SyPagination
 					v-model="currentPage"
-					:max="args.max"
+					:pages="args.pages"
 					:visible="args.visible"
 					:label="args.label"
 					@update:model-value="args['onUpdate:modelValue']"
@@ -166,7 +163,7 @@ export const CustomButtons: Story = {
 	},
 	args: {
 		'modelValue': 5,
-		'max': 20,
+		'pages': 20,
 		'visible': 5,
 		'onUpdate:modelValue': fn(),
 	},
@@ -181,7 +178,7 @@ export const CustomButtons: Story = {
 				<p>Page actuelle: {{ currentPage }}</p>
 				<SyPagination
 					v-model="currentPage"
-					:max="args.max"
+					:pages="args.pages"
 					:visible="args.visible"
 					:label="args.label"
 					@update:model-value="args['onUpdate:modelValue']"
@@ -214,7 +211,7 @@ export const WithInfoText: Story = {
 	},
 	args: {
 		'modelValue': 3,
-		'max': 10,
+		'pages': 10,
 		'visible': 5,
 		'onUpdate:modelValue': fn(),
 	},
@@ -234,7 +231,7 @@ export const WithInfoText: Story = {
 			<div>
 				<SyPagination
 					v-model="currentPage"
-					:max="args.max"
+					:pages="args.pages"
 					:visible="args.visible"
 					:label="args.label"
 					@update:model-value="args['onUpdate:modelValue']"

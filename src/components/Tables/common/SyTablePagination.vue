@@ -113,7 +113,7 @@
 		<SyPagination
 			v-if="pageCount > 1"
 			:model-value="page"
-			:max="pageCount"
+			:pages="pageCount"
 			:visible="5"
 			:label="locales.pagination.paginationNavAriaLabel"
 			class="pagination"
