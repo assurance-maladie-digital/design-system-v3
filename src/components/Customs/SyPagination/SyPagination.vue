@@ -60,7 +60,7 @@
 		// Always show first and last
 		const first = 1
 		const last = total
-		
+
 		// Special case for the test with modelValue: 5, pages: 10, visible: 3
 		if (visible === 3 && current === 5 && total === 10) {
 			pages.push(first)
@@ -70,7 +70,7 @@
 			pages.push(last)
 			return pages
 		}
-		
+
 		// Add first page
 		pages.push(first)
 
@@ -91,7 +91,7 @@
 		if (end === total - 1) {
 			start = Math.max(2, end - middleCount + 1)
 		}
-		
+
 		// Ensure we don't have duplicates with first page
 		if (start === first) {
 			start++
@@ -100,7 +100,7 @@
 		// Add ellipsis before if needed
 		if (start > 2) {
 			pages.push('ellipsis-start')
-		} 
+		}
 		else if (start === 2) {
 			// If start is 2, just show it instead of an ellipsis
 			pages.push(2)
@@ -115,7 +115,7 @@
 		// Add ellipsis after if needed
 		if (end < total - 1) {
 			pages.push('ellipsis-end')
-		} 
+		}
 		else if (end === total - 1) {
 			// If end is just before the last page, just show it
 			if (total - 1 > start) { // Only add if it's not already included
@@ -127,10 +127,10 @@
 		if (last !== first) {
 			pages.push(last)
 		}
-		
+
 		// Remove any duplicate page numbers
-		const uniquePages = pages.filter((page, index, self) => 
-			typeof page === 'string' || self.indexOf(page) === index
+		const uniquePages = pages.filter((page, index, self) =>
+			typeof page === 'string' || self.indexOf(page) === index,
 		)
 
 		return uniquePages
