@@ -351,12 +351,12 @@ describe('AmeliproIconBtn', () => {
 				expect(vueWrapper.findComponent(AmeliproIcon).props('iconColor')).toBe(testHelper.default('iconColor'))
 
 				await vueWrapper.findComponent(VBtn).vm.$emit('focus')
-				expect(vueWrapper.findComponent(AmeliproIcon).props('iconColor')).toBe(testHelper.default('iconFocusColor'))
+				// iconFocusColor est par défaut undefined => utiliser iconHoverColor
+				expect(vueWrapper.findComponent(AmeliproIcon).props('iconColor')).toBe(testHelper.default('iconHoverColor'))
 
 				await vueWrapper.setProps({ iconFocusColor })
 				expect(vueWrapper.findComponent(AmeliproIcon).props('iconColor')).toBe(testHelper.modified('iconFocusColor'))
 			})
-			// --- FIN AJOUT TESTS FOCUS ---
 
 			it('prop bordered sets prop bordered', async () => {
 				expect(vueWrapper.findComponent(AmeliproIcon).props('bordered')).toBe(false)
