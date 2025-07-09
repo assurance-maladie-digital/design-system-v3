@@ -100,7 +100,7 @@ export function useMonthButtonCustomization(
 								<span class="v-btn__underlay"></span>
 								<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
 									<span style="color: var(--v-theme-primary);">${monthText.charAt(0).toUpperCase() + monthText.slice(1)}</span> 
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-label="chevron-down" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
 								</div>
 							</button>
 						`
@@ -147,7 +147,7 @@ export function useMonthButtonCustomization(
 								<span class="v-btn__underlay"></span>
 								<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
 									<span style="color: var(--v-theme-primary);">${displayedYear}</span> 
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-label="chevron-down" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
 								</div>
 							</button>
 						`
