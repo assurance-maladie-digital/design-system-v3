@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { computed } from 'vue'
-	import SyBtnSelect from '../Customs/SyBtnSelect/SyBtnSelect.vue'
+	import SyBtnSelect from '@/components/Customs/Selects/SyBtnSelect/SyBtnSelect.vue'
 	import { useDisplay } from 'vuetify'
 	import { mdiAccount, mdiLoginVariant } from '@mdi/js'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'

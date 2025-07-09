@@ -62,6 +62,29 @@ import * as AccessStories from './Vuetify.stories';
       margin-top: 0;
     }
     
+    .accessibility-issues {
+      border-left: 4px solid var(--primary-color);
+      background-color: rgba(24, 103, 192, 0.05);
+    }
+    
+    .issues-link {
+      color: var(--accent-color);
+      text-decoration: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--border-radius);
+      background-color: rgba(0, 165, 223, 0.1);
+      transition: all var(--transition-speed);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .issues-link:hover, .issues-link:focus {
+      background-color: rgba(0, 165, 223, 0.2);
+      box-shadow: 0 2px 4px rgba(0, 165, 223, 0.2);
+      text-decoration: underline;
+    }
+    
     .legend-container {
       display: flex;
       flex-wrap: wrap;
@@ -109,6 +132,21 @@ import * as AccessStories from './Vuetify.stories';
     <h1>Audit d'accessibilité des composants Vuetify</h1>
     <p>Tableau de bord de l'état d'accessibilité des composants Vuetify</p>
   </div>
+
+    <div className="info-box accessibility-issues">
+    <h3>⚠️ Issues d'accessibilité Vuetify</h3>
+    <p>
+      Vous pouvez suivre les problèmes d'accessibilité officiels de Vuetify sur GitHub. 
+      Consultez les <a href="https://github.com/vuetifyjs/vuetify/issues?q=is%3Aissue%20state%3Aopen%20label%3Aa11y" target="_blank" rel="noopener noreferrer" className="issues-link">
+        <strong>issues d'accessibilité</strong>
+      </a> pour rester informé des derniers développements et corrections.
+    </p>
+    <p>
+      La participation de la communauté est essentielle pour améliorer l'accessibilité de Vuetify. 
+      N'hésitez pas à signaler de nouveaux problèmes ou à proposer des solutions aux problèmes existants.
+    </p>
+  </div>
+  
   
   <h2 className="section-title">Présentation</h2>
   
@@ -122,6 +160,7 @@ import * as AccessStories from './Vuetify.stories';
       <li>Les solutions recommandées pour corriger les problèmes identifiés</li>
     </ul>
   </div>
+
   
   <h2 className="section-title">Légende</h2>
   

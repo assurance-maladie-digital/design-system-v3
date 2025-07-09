@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SelectBtnField from './SelectBtnField.vue'
-import SyAlert from '../SyAlert/SyAlert.vue'
+import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { VBtn } from 'vuetify/components'
 import { ref } from 'vue'
 
 const meta = {
-	title: 'Composants/Formulaires/SelectBtnField',
+	title: 'Composants/Formulaires/Selects/SelectBtnField',
 	component: SelectBtnField,
 	decorators: [
 		() => ({

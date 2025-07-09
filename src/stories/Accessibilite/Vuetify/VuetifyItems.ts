@@ -81,15 +81,15 @@ export const VuetifyItems = [
 				solution: [
 					{
 						name: 'SySelect',
-						href: '/?path=/docs/composants-formulaires-syselect--docs',
+						href: '/?path=/docs/composants-formulaires-selects-syselect--docs',
 					},
 					{
 						name: 'SyInputSelect',
-						href: '/?path=/docs/composants-formulaires-syinputselect--docs',
+						href: '/?path=/docs/composants-formulaires-selects-syinputselect--docs',
 					},
 					{
 						name: 'SyBtnSelect',
-						href: '/?path=/docs/composants-formulaires-sybtnselect--docs',
+						href: '/?path=/docs/composants-formulaires-selects-sybtnselect--docs',
 					},
 				],
 			},

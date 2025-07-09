@@ -1,6 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import RatingPicker from './RatingPicker.vue'
-import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { VBtn, VSpacer } from 'vuetify/components'
 import { fn } from '@storybook/test'
 

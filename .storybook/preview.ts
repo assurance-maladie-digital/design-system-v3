@@ -9,7 +9,7 @@ const vuetify = createVuetifyInstance()
 
 setup((app, { globals }) => {
 	app.use(vuetify)
-	
+
 	// Add global mixin to help with SySelect dropdown in docs mode
 	if (typeof window !== 'undefined') {
 		// Wait for DOM to be ready
@@ -19,19 +19,19 @@ setup((app, { globals }) => {
 				// Check if we're in docs mode
 				if (document.body.classList.contains('storybook-docs-mode')) {
 					// Find all dropdowns and make sure they're properly positioned
-					const lists = document.querySelectorAll('.v-list');
-					lists.forEach(list => {
+					const lists = document.querySelectorAll('.v-list')
+					lists.forEach((list) => {
 						if (list instanceof HTMLElement) {
-							list.style.position = 'absolute';
-							list.style.zIndex = '9999';
-							list.style.visibility = 'visible';
+							list.style.position = 'absolute'
+							list.style.zIndex = '9999'
+							list.style.visibility = 'visible'
 						}
-					});
+					})
 				}
-			});
-		});
+			})
+		})
 	}
-	
+
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
 	// Apply theme class to <html> (document.documentElement) instead of #root
@@ -96,17 +96,17 @@ const preview: Preview = {
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
 			}
-			
+
 			// Check if we're in docs mode to apply special handling for dropdowns
-			const isInDocs = context.viewMode === 'docs';
-			
+			const isInDocs = context.viewMode === 'docs'
+
 			if (isInDocs) {
 				// Add a special class to help target docs mode in CSS
 				if (typeof document !== 'undefined') {
-					document.body.classList.add('storybook-docs-mode');
+					document.body.classList.add('storybook-docs-mode')
 				}
 			}
-			
+
 			return story()
 		},
 	],
@@ -141,7 +141,7 @@ const preview: Preview = {
 						'Layout', ['PageContainer'],
 						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink', 'SyPagination'],
 						'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'],
-						'Formulaires', ['SyTextField', 'SySelect', 'SyInputSelect', 'SyBtnSelect', 'SyTextArea', 'DatePicker', ['Introduction', 'DatePicker', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'SelectBtnField', 'UploadWorkflow', 'SyBtnSelect'],
+						'Formulaires', ['SyTextField', 'SyTextArea', 'DatePicker', ['Introduction', 'DatePicker', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'Selects', ['Introduction', 'SelectBtnField', 'SyBtnSelect', 'SyInputSelect', 'SySelect'], 'UploadWorkflow', 'SyBtnSelect'],
 						'Tableaux', ['PaginatedTable', 'TableToolbar', 'SyTable', 'SyServerTable'],
 						'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],

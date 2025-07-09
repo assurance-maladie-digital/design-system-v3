@@ -4,7 +4,7 @@ import SyBtnSelect from './SyBtnSelect.vue'
 import { VIcon, VListItem, VListItemTitle } from 'vuetify/components'
 
 const meta: Meta<typeof SyBtnSelect> = {
-	title: 'Composants/Formulaires/SyBtnSelect',
+	title: 'Composants/Formulaires/Selects/SyBtnSelect',
 	component: SyBtnSelect,
 	parameters: {
 		layout: 'fullscreen',

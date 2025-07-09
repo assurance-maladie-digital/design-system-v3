@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import TableToolbar from './TableToolbar.vue'
-import SySelect from '../Customs/SySelect/SySelect.vue'
+import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { VDataTable } from 'vuetify/components'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
