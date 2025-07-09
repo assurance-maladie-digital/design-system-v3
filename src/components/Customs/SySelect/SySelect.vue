@@ -5,6 +5,7 @@
 	})
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
 	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
+	import { vRgaaSvgFix } from '../../../directives/rgaaSvgFix'
 	import type { VTextField } from 'vuetify/components'
 	import { VChip, VCheckbox } from 'vuetify/components'
 	import { locales } from './locales'
@@ -465,6 +466,7 @@
 			ref="input"
 			v-model="selectedItemText"
 			v-click-outside="closeList"
+			v-rgaa-svg-fix="true"
 			:title="$attrs['aria-label'] || labelWithAsterisk"
 			color="primary"
 			tabindex="0"

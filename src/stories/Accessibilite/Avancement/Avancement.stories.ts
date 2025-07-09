@@ -16,7 +16,7 @@ export const PreAudit: StoryObj = {
 					color="success"
 					variant="elevated"
 				>
-					59/59 Composants
+					60/60 Composants
 				</v-chip>
 			`,
 		}
@@ -94,6 +94,7 @@ export const Manuel: StoryObj = {
 					{ composant: 'MaintenancePage', status: 'En cours' },
 					{ composant: 'ContextualMenu', status: 'En cours' },
 					{ composant: 'ExternalLinks', status: 'En cours' },
+					{ composant: 'SyIcon', status: 'Non audité' },
 				]
 
 				// Options de filtrage par statut

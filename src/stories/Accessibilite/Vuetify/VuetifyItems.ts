@@ -25,6 +25,7 @@ export const itemsChips = [
 	{ text: 'OTP Input ', value: 23 },
 	{ text: 'Range Sliders', value: 24 },
 	{ text: 'Date Input', value: 25 },
+	{ text: 'Icon', value: 26 },
 
 ]
 
@@ -547,6 +548,22 @@ export const VuetifyItems = [
 				solution: [{
 					name: 'DatePicker',
 					href: '/?path=/docs/composants-formulaires-datepicker-introduction--docs',
+				}],
+			},
+			{
+				name: 'Icon',
+				value: 26,
+				errorImportants: [
+					'1.2Chaque image de décoration est-elle correctement ignorée par les technologies d’assistance ? ',
+				],
+				errorSolutionImportant: [],
+
+				errorIndeterminated: [],
+				errorSolutionIndeterminated: [],
+
+				solution: [{
+					name: 'SyIcon',
+					href: '/?path=/docs/composants-formulaires-syicon--docs',
 				}],
 			},
 		],
