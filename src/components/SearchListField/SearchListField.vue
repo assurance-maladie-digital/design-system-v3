@@ -133,32 +133,29 @@
 				:value="item.value"
 				role="option"
 				:aria-selected="internalValue.includes(item.value)"
-				:aria-labelledby="`search-list-item-${index}`"
 				:tabindex="0"
 				active-class="text-primary"
 				class="d-flex align-center justify-start mx-4"
 			>
-				<span
-					:id="`search-list-item-label-${index}`"
-					class="d-sr-only"
-				>
-					{{ item.label }}
-				</span>
 				<template #prepend="{ isActive }">
 					<VListItemAction start>
 						<SyCheckbox
 							:id="`checkbox-${index}`"
 							:model-value="isActive"
+							label=""
 							:aria-label="`${locales.checkboxLabel} ${item.label}`"
 							:title="`${locales.checkboxLabel} ${item.label}`"
+							:aria-labelledby="`list-item-title-${index}`"
 							hide-details
-							class="ml-2"
+							class="ml-2 search-list-checkbox"
 							density="compact"
 							@click="toggleSelection(item.value)"
 						/>
 					</VListItemAction>
 
-					<VListItemTitle>{{ item.label }}</VListItemTitle>
+					<VListItemTitle :id="`list-item-title-${index}`">
+						{{ item.label }}
+					</VListItemTitle>
 				</template>
 			</VListItem>
 		</VList>
@@ -176,4 +173,11 @@
 	opacity: 0;
 }
 
+/* Hide duplicate labels for accessibility */
+.search-list-checkbox {
+	/* Hide the label from screen readers but keep the checkbox visible */
+	::v-deep(.v-label) {
+		display: none;
+	}
+}
 </style>

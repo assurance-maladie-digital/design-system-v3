@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 	import { computed, ref, watch, onMounted, nextTick } from 'vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { locales } from './locales'
 
 	const props = withDefaults(
 		defineProps<{
 			modelValue?: boolean | null
 			indeterminate?: boolean
 			label?: string
+			ariaLabel?: string
+			title?: string
 			color?: string
 			disabled?: boolean
 			readonly?: boolean
@@ -28,11 +31,14 @@
 			trueValue?: unknown
 			falseValue?: unknown
 			controlsIds?: string[]
+			disableScreenReader?: boolean
 		}>(),
 		{
 			modelValue: false,
 			indeterminate: false,
-			label: '',
+			label: undefined,
+			ariaLabel: undefined,
+			title: undefined,
 			color: 'primary',
 			disabled: false,
 			readonly: false,
@@ -42,6 +48,7 @@
 			errorMessages: null,
 			warningMessages: null,
 			successMessages: null,
+			disableScreenReader: false,
 			customRules: () => [],
 			customWarningRules: () => [],
 			customSuccessRules: () => [],
@@ -178,12 +185,23 @@
 		return model.value ? 'true' : 'false'
 	})
 
+	// Check if this checkbox is in a SearchListField component
+	const isInSearchList = computed(() => {
+		return props.id && props.id.startsWith('checkbox-') && props.id.length === 10
+	})
+
 	// Propriétés ARIA personnalisées pour éviter les conflits
-	const ariaAttributes = computed(() => {
-		return {
-			'aria-checked': ariaChecked.value,
-			'aria-controls': props.controlsIds.length > 0 ? props.controlsIds.join(' ') : undefined,
+	const messageId = computed(() => {
+		// If screen reader is disabled, don't return a messageId
+		if (props.disableScreenReader || isInSearchList.value) {
+			return undefined
 		}
+
+		// Only create messageId for checkboxes with IDs that aren't from SearchListField
+		if (props.id && props.id.startsWith('checkbox-')) {
+			return `${props.id}-messages`
+		}
+		return undefined
 	})
 
 	// Fonction pour supprimer les attributs ARIA non désirés des éléments input
@@ -196,15 +214,6 @@
 				input.removeAttribute('aria-disabled')
 			})
 
-			// Pour aria-describedby
-			const checkboxInputsDescribed = document.querySelectorAll('input[type="checkbox"][aria-describedby]')
-			checkboxInputsDescribed.forEach((input) => {
-				// Si l'ID du checkbox commence par notre préfixe et qu'il a un aria-describedby, on le supprime
-				if (input.id && input.id.startsWith('checkbox-')) {
-					input.removeAttribute('aria-describedby')
-				}
-			})
-
 			// Configurer un MutationObserver pour surveiller les changements futurs
 			const observer = new MutationObserver((mutations) => {
 				mutations.forEach(() => {
@@ -212,15 +221,6 @@
 					const newCheckboxInputsDisabled = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
 					newCheckboxInputsDisabled.forEach((input) => {
 						input.removeAttribute('aria-disabled')
-					})
-
-					// Pour aria-describedby
-					const newCheckboxInputsDescribed = document.querySelectorAll('input[type="checkbox"][aria-describedby]')
-					newCheckboxInputsDescribed.forEach((input) => {
-						// Si l'ID du checkbox commence par notre préfixe et qu'il a un aria-describedby, on le supprime
-						if (input.id && input.id.startsWith('checkbox-')) {
-							input.removeAttribute('aria-describedby')
-						}
 					})
 				})
 			})
@@ -230,7 +230,7 @@
 				subtree: true,
 				childList: true,
 				attributes: true,
-				attributeFilter: ['aria-disabled', 'aria-describedby'],
+				attributeFilter: ['aria-disabled'],
 			})
 		})
 	}
@@ -279,40 +279,54 @@
 </script>
 
 <template>
-	<VCheckbox
-		:id="props.id"
-		v-model="model"
-		:name="props.name"
-		:label="props.label"
-		:color="props.color"
-		:disabled="props.disabled"
-		:readonly="props.readonly"
-		:hide-details="props.hideDetails"
-		:density="props.density"
-		:error="hasError"
-		:error-messages="errors"
-		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
-		:indeterminate="internalIndeterminate"
-		:value="props.value"
-		:true-value="props.trueValue"
-		:false-value="props.falseValue"
-		v-bind="ariaAttributes"
-		@click="toggleMixed"
-		@blur="checkErrorOnBlur"
-	>
-		<template
-			v-if="$slots.label"
-			#label
+	<div>
+		<VCheckbox
+			:id="props.id"
+			v-model="model"
+			:name="props.name"
+			:label="isInSearchList ? '' : props.label"
+			:aria-label="props.ariaLabel"
+			:title="props.title"
+			:color="props.color"
+			:disabled="props.disabled"
+			:readonly="props.readonly"
+			:hide-details="props.hideDetails"
+			:density="props.density"
+			:error="hasError"
+			:error-messages="errors"
+			:success="hasSuccess"
+			:success-messages="successes"
+			:warning="hasWarning"
+			:warning-messages="warnings"
+			:indeterminate="internalIndeterminate"
+			:true-value="props.trueValue"
+			:false-value="props.falseValue"
+			:aria-checked="ariaChecked"
+			:aria-describedby="isInSearchList ? undefined : messageId"
+			@click="toggleMixed"
+			@blur="checkErrorOnBlur"
 		>
-			<slot name="label" />
-		</template>
-		<template
-			v-if="$slots.default"
-			#default
-		>
-			<slot />
-		</template>
-	</VCheckbox>
+			<template
+				v-if="$slots.label"
+				#label
+			>
+				<slot name="label" />
+			</template>
+			<template
+				v-if="$slots.default"
+				#default
+			>
+				<slot />
+			</template>
+			<span
+				v-if="messageId && props.required && !props.ariaLabel && !props.disableScreenReader && !isInSearchList"
+				:id="messageId"
+				class="d-sr-only"
+			>
+				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label }}</span>.
+			</span>
+		</VCheckbox>
+	</div>
 </template>
 
 <style scoped>
