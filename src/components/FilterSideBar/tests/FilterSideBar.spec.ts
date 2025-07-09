@@ -39,9 +39,9 @@ describe('FilterSideBar', () => {
 		template: `
 			<VApp>
 				<FiltersSideBar v-model="localModelValue">
-					<template v-slot:name="{ props }">
+					<template v-slot:name="{ attrs }">
 						<EventSenderComponent
-							v-bind="props"
+							v-bind="attrs"
 						/>
 					</template>
 				</FiltersSideBar>
@@ -62,7 +62,6 @@ describe('FilterSideBar', () => {
 			},
 		})
 
-		// Check that the component renders without errors
 		expect(wrapper.find('.sy-filters-side-bar').exists()).toBe(true)
 	})
 
@@ -94,16 +93,16 @@ describe('FilterSideBar', () => {
 
 	it('renders correctly with multiple active filters', () => {
 		const wrapper = mount(TestComponent, {
-			props: {
+			propsData: {
 				modelValue: [
 					{
 						name: 'name',
-						title: 'Nom',
+						label: 'Nom',
 						value: 'John Doe',
 					},
 					{
 						name: 'age',
-						title: 'Âge',
+						label: 'Âge',
 						value: '18',
 					},
 				],
@@ -125,7 +124,7 @@ describe('FilterSideBar', () => {
 				modelValue: [
 					{
 						name: 'name',
-						title: 'Nom',
+						label: 'Nom',
 						value: 'John Doe',
 					},
 				],
@@ -138,25 +137,18 @@ describe('FilterSideBar', () => {
 			},
 		})
 
-		// Open the filter sidebar
 		await wrapper.find('.v-btn__content').trigger('click')
 
-		// Open the filter panel
 		await wrapper.find('.v-expansion-panel-title').trigger('click')
 
-		// Apply filters directly
-		await wrapper.vm.$emit('update:modelValue', [
-			{
-				name: 'name',
-				title: 'Nom',
-				value: undefined,
-			},
-		])
+		await wrapper.find('.remove-chip').trigger('click')
+
+		await wrapper.find('button:nth-child(3)').trigger('click')
 
 		expect(wrapper.emitted('update:modelValue')?.[0][0]).toEqual([
 			{
 				name: 'name',
-				title: 'Nom',
+				label: 'Nom',
 				value: undefined,
 			},
 		])
@@ -205,7 +197,7 @@ describe('FilterSideBar', () => {
 		await wrapper.find('.v-expansion-panel-title').trigger('click')
 
 		const EventSender = wrapper.findComponent(EventSenderComponent)
-		await wrapper.find('.v-navigation-drawer__content>div:last-child button:last-child').trigger('click')
+		await wrapper.find('button:nth-child(3)').trigger('click')
 
 		EventSender.vm.sentEvent()
 
@@ -236,25 +228,15 @@ describe('FilterSideBar', () => {
 			},
 		})
 
-		// Open the filter sidebar
 		await wrapper.find('.v-btn__content').trigger('click')
 
-		// Open the first filter panel (name filter)
 		await wrapper.find('.v-expansion-panel-title').trigger('click')
 
-		// Wait for the panel to expand
-		await wrapper.vm.$nextTick()
+		await wrapper.find('[data-test-id="reset-btn"]').trigger('click')
 
-		// Trouver et cliquer sur le bouton de réinitialisation du filtre
-		// Le bouton de réinitialisation est dans le ChipList du premier panneau d'expansion
-		const resetButton = wrapper.find('.v-expansion-panel-text .v-btn:last-child')
-		expect(resetButton.exists()).toBe(true)
-		await resetButton.trigger('click')
+		await wrapper.find('button:nth-child(3)').trigger('click')
 
-		// Vérifier que l'événement émis contient les données attendues
-		const emittedEvents = wrapper.emitted('update:modelValue')
-		expect(emittedEvents).toBeTruthy()
-		expect(emittedEvents?.[0][0]).toEqual([
+		expect(wrapper.emitted('update:modelValue')?.[0][0]).toEqual([
 			{
 				name: 'name',
 				title: 'Nom',
