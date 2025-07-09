@@ -20,7 +20,7 @@
 
 	const { parseDate, formatDate } = useDateFormat()
 	const { initializeSelectedDates } = useDateInitialization()
-	const { updateAccessibility } = useDatePickerAccessibility()
+	const { updateAccessibility, fixAriaAttributes } = useDatePickerAccessibility()
 
 	// Variables pour suivre le mois et l'année actuellement affichés dans le DatePicker
 	const currentMonth = ref<string | null>(null)
@@ -124,6 +124,10 @@
 		selectedDates,
 		todayInString,
 	})
+
+	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
+	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
+	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
@@ -532,16 +536,13 @@
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
 			isInitialValidation.value = false
+			fixAriaAttributes()
 		})
 	})
 
 	onBeforeUnmount(() => {
 		document.removeEventListener('click', handleClickOutside)
 	})
-
-	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
-	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
-	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 
 	const validateOnSubmit = () => {
 		if (props.noCalendar) {
