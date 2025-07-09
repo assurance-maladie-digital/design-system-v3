@@ -293,7 +293,7 @@ input {
 
 		&::before {
 			position: absolute;
-			top: 0.0781rem;
+			top: 0.075rem;
 			left: 0;
 			width: 1.625rem;
 			height: 1.625rem;
@@ -308,7 +308,7 @@ input {
 		& + span {
 			&::after {
 				position: absolute;
-				top: 0.4781rem;
+				top: 0.45rem;
 				left: 0.4rem;
 				width: 0.825rem;
 				height: 0.825rem;
@@ -359,7 +359,7 @@ input {
 
 				&::after {
 					position: absolute;
-					top: 1.1rem;
+					top: 1rem;
 					left: 1.1rem;
 					width: 1rem;
 					height: 0.5rem;

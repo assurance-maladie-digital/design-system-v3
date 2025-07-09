@@ -128,7 +128,6 @@
 
 .amelipro-card--numbered-content {
 	width: 100%;
-	padding: apTokens.$card-padding-desktop apTokens.$card-padding-mobile;
 	font-size: apTokens.$font-size-xs;
 	font-weight: apTokens.$ap-font-weight-regular;
 }
@@ -174,7 +173,7 @@
 		position: absolute;
 		top: 0.25rem;
 		width: 100%;
-		font-weight: apTokens.$ap-font-weight-semi-bold;
+		font-weight: apTokens.$ap-font-weight-bold;
 		text-align: center;
 		z-index: 2;
 

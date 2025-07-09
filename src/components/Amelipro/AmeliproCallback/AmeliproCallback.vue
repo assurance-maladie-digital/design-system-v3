@@ -108,7 +108,7 @@
 								<span
 									:id="uniqueId ? `${uniqueId}-card-main-content-title` : undefined"
 									:aria-level="3"
-									class="mb-2 font-weight-semibold text-h6 amelipro-callback__title"
+									class="mb-2 font-weight-bold text-h6 amelipro-callback__title"
 									role="heading"
 									:style="style"
 								>

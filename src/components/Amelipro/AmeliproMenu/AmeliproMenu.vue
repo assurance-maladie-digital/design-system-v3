@@ -379,7 +379,7 @@ ul {
 	& .amelipro-menu__item--level-3 {
 		& .v-btn {
 			padding: 0.5rem 1rem 0.5rem 2rem !important;
-			font-weight: apTokens.$ap-font-weight-light;
+			font-weight: apTokens.$ap-font-weight-regular;
 		}
 	}
 }

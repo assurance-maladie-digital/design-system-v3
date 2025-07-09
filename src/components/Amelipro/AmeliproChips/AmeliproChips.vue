@@ -44,7 +44,7 @@
 @use '@/assets/amelipro/apTokens';
 
 .amelipro-chips {
-	padding: 0.875rem 1rem;
+	padding: 0.75rem;
 	border-radius: 8px;
 	background-color: apTokens.$ap-blue-lighten3;
 }

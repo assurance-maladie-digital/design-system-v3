@@ -104,7 +104,7 @@
 		>
 			<p
 				:id="`${uniqueId}-label`"
-				class="ma-0 mr-3 font-weight-semibold"
+				class="ma-0 mr-3 font-weight-bold"
 				:class="labelClasses"
 			>
 				{{ locales.label }}

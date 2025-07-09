@@ -219,7 +219,7 @@
 						<h2
 							v-if="title"
 							:id="`${uniqueId}-title`"
-							class="ma-0 text-h4"
+							class="ma-0 text-h3"
 						>
 							{{ title }}
 						</h2>
@@ -311,11 +311,7 @@
 }
 
 .dialog {
-	padding: apTokens.$card-padding-desktop;
-
-	@media #{apTokens.$media-down-md} {
-		padding: apTokens.$card-padding-tablet;
-	}
+	padding: apTokens.$dialog-padding;
 }
 
 .dialog__header {

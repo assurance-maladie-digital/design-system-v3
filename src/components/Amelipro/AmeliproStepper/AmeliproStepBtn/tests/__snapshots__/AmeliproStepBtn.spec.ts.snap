@@ -4,9 +4,10 @@ exports[`AmeliproStepBtn > render correctly 1`] = `
 <button
   class="
     amelipro-step-btn
-    pa-4
+    pb-4
+    pt-3
+    px-4
     text-subtitle-1
-    text-uppercase
   "
   id="my-step-btn-id"
   role="tab"

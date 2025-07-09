@@ -22,7 +22,9 @@ exports[`StructureItem > render correctly 1`] = `
     d-flex
     flex-column
     hover-style
-    pa-4
+    px-2
+    px-sm-4
+    py-2
     rounded
     w-100
   ">

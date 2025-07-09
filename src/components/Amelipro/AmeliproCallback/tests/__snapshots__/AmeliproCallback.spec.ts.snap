@@ -125,7 +125,7 @@ exports[`AmeliproCallback > render correctly 1`] = `
                 aria-level="3"
                 class="
                   amelipro-callback__title
-                  font-weight-semibold
+                  font-weight-bold
                   mb-2
                   text-h6
                 "

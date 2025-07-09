@@ -344,7 +344,7 @@
 			width: 2rem;
 			height: 2rem;
 			border-radius: 50%;
-			background-color: apTokens.$ap-white;
+			background-color: apTokens.$ap-blue-lighten3;
 			border: 1px solid apTokens.$ap-green-lighten2;
 			content: '';
 			z-index: -1;

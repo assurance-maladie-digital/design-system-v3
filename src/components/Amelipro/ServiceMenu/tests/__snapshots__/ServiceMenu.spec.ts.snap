@@ -238,8 +238,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                           </span>
                           <span
                             class="
+                              font-size-xs
+                              font-weight-regular
                               service-btn__text
-                              text-caption
+                              text-ap-grey-darken-1
                             "
                             id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-0-text"
                           >
@@ -354,8 +356,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                           </span>
                           <span
                             class="
+                              font-size-xs
+                              font-weight-regular
                               service-btn__text
-                              text-caption
+                              text-ap-grey-darken-1
                             "
                             id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-1-text"
                           >
@@ -472,8 +476,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                             </span>
                             <span
                               class="
+                                font-size-xs
+                                font-weight-regular
                                 service-btn__text
-                                text-caption
+                                text-ap-grey-darken-1
                               "
                               id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-0-text"
                             >
@@ -588,8 +594,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                             </span>
                             <span
                               class="
+                                font-size-xs
+                                font-weight-regular
                                 service-btn__text
-                                text-caption
+                                text-ap-grey-darken-1
                               "
                               id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-1-text"
                             >
@@ -707,8 +715,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                           </span>
                           <span
                             class="
+                              font-size-xs
+                              font-weight-regular
                               service-btn__text
-                              text-caption
+                              text-ap-grey-darken-1
                             "
                             id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-0-text"
                           >
@@ -823,8 +833,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                           </span>
                           <span
                             class="
+                              font-size-xs
+                              font-weight-regular
                               service-btn__text
-                              text-caption
+                              text-ap-grey-darken-1
                             "
                             id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-1-text"
                           >

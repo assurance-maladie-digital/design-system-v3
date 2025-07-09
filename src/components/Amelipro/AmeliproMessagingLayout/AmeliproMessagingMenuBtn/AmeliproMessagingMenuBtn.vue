@@ -42,7 +42,7 @@
 <template>
 	<AmeliproBtn
 		:active="active"
-		class="w-100 mb-1 text-none text-h6 font-weight-semibold messaging-menu__btn"
+		class="w-100 mb-1 text-none text-h6 font-weight-bold messaging-menu__btn"
 		:color="active ? 'ap-blue-darken-2' : 'ap-blue-darken-1'"
 		hover-color="ap-blue-darken-2"
 		:href="href"

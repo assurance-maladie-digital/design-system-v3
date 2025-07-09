@@ -185,6 +185,11 @@
 	border-radius: 10px;
 }
 
+.amelipro-illustrated-radio-group__label {
+	font-size: apTokens.$font-size-xs;
+	font-weight: apTokens.$label-font-weight;
+}
+
 input {
 	position: absolute;
 	width: 0;

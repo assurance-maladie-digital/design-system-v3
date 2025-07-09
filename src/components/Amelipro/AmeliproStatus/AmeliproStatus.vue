@@ -15,11 +15,11 @@
 		},
 		paddingX: {
 			type: String,
-			default: '24px',
+			default: '12px',
 		},
 		paddingY: {
 			type: String,
-			default: '12px',
+			default: '4px',
 		},
 		type: {
 			default: 'draft',
@@ -54,7 +54,7 @@
 	<Component
 		:is="isSpan ? 'span' : 'p'"
 		:id="uniqueId"
-		class="d-inline-flex mb-0 font-weight-semibold text-h6 amelipro-status"
+		class="d-inline-flex mb-0 font-weight-bold amelipro-status"
 		:class="statusClasses"
 		:style="statusStyles"
 	>

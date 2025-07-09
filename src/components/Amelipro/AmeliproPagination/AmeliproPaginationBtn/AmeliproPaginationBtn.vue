@@ -68,8 +68,8 @@
 	border-radius: 0 !important;
 	min-height: 2.5rem !important;
 	min-width: 2.5rem !important;
-	font-size: apTokens.$font-size-sm !important;
-	font-weight: apTokens.$ap-font-weight-semi-bold !important;
+	font-size: apTokens.$font-size-md !important;
+	font-weight: apTokens.$ap-font-weight-bold !important;
 	text-align: center !important;
 
 	& :deep(.v-btn__content) {
