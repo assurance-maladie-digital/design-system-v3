@@ -151,7 +151,7 @@
 							:model-value="isActive"
 							:aria-label="`${locales.checkboxLabel} ${item.label}`"
 							:title="`${locales.checkboxLabel} ${item.label}`"
-              hide-details
+							hide-details
 							class="ml-2"
 							density="compact"
 							@click="toggleSelection(item.value)"
