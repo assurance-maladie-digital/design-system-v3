@@ -1,187 +1,129 @@
-import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
+import type { AmeliproPageLayoutInfos, SkipLink } from '../types'
+import { VueWrapper, shallowMount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproPageLayout from '../AmeliproPageLayout.vue'
-import { vuetify } from '@tests/unit/setup'
+import type { ComponentProps } from 'vue-component-type-helpers'
+import type { ExpectedPropOptions } from '@tests/types'
+import TestHelper from '@tests/helpers/TestHelper'
+
+const expectedPropOptions: ExpectedPropOptions<typeof AmeliproPageLayout> = {
+	ameliproPageLayoutInfos: {
+		type: Object as () => AmeliproPageLayoutInfos,
+		default: undefined,
+	},
+	customMainContent: {
+		type: Boolean,
+		default: false,
+	},
+	skipLinks: {
+		type: Array as () => SkipLink[],
+		default: () => [],
+	},
+	uniqueId: {
+		type: String,
+		default: undefined,
+	},
+}
+
+const requiredPropValues = (): ComponentProps<typeof AmeliproPageLayout> => ({})
+
+const modifiedPropValues = (): ComponentProps<typeof AmeliproPageLayout> => ({
+	ameliproPageLayoutInfos: {
+		ameliproFooterInfos: {
+			a11yCompliance: 'conforme',
+			version: '1.2.3',
+		},
+		ameliproHeaderInfos: {
+			backoffice: true,
+			headerTitle: 'Modified header title',
+			serviceName: 'Modified service name',
+		},
+		ameliproPatientBannerInfos: {
+			birthName: 'Patient Birth Name',
+			birthdate: '01/01/1980',
+			name: 'Patient Name',
+			noMoreInformation: true,
+			noPatientChange: true,
+			patientNir: '1234567890123',
+			patientOrganism: 'Organism',
+			patientStatus: 'Status',
+			patientSystem: 'System',
+		},
+		displayPatientBanner: true,
+	},
+	customMainContent: true,
+	skipLinks: [
+		{ label: 'Modified skip link', href: '#modified' },
+	],
+	uniqueId: 'modified-unique-id',
+})
+
+const testHelper = new TestHelper(AmeliproPageLayout)
+testHelper.setExpectedPropOptions(expectedPropOptions)
+	.setRequiredPropValues(requiredPropValues)
+	.setModifiedPropValues(modifiedPropValues)
 
 describe('AmeliproPageLayout', () => {
-	it('render correctly', async () => {
-		const wrapper = mount(AmeliproPageLayout, {
-			global: {
-				plugins: [vuetify],
-			},
-			props: {
-				ameliproPageLayoutInfos: {
-					ameliproFooterInfos: {
-						a11yCompliance: 'non-conforme',
-						a11yHref: '#',
-						aboutHref: '#',
-						cguHref: '#',
-						configurationHref: '#',
-						legalNoticeHref: '#',
-						siteMapHref: '#',
-						version: 'X.X.X',
-					},
-					ameliproHeaderInfos: {
-						serviceMenuInfos: {
-							servicesContact: [
-								{
-									href: '#',
-									icon: 'paiements',
-									label: 'Contact 1',
-								},
-								{
-									href: '#',
-									icon: 'releveHonoraires',
-									label: 'Contact 2',
-								},
-							],
-							servicesPatient: [
-								{
-									href: '#',
-									icon: 'brasCasse',
-									label: 'Arrêt de travail',
-								},
-								{
-									href: '#',
-									icon: 'chute',
-									label: 'Certificat ATMP',
-								},
-							],
-							servicesPs: [
-								{
-									href: '#',
-									icon: 'paiements',
-									label: 'Paiements',
-								},
-								{
-									href: '#',
-									icon: 'convention',
-									label: 'Conventions',
-								},
-							],
-							uniqueId: 'service-menu',
-						},
-						serviceName: 'Titre du service',
-						signatureInfos: { href: '#' },
-						structureMenuInfos: {
-							defaultSelected: { activeTab: 0, activeValue: 'e' },
-							maxStructuresLoadedDefault: 3,
-							structuresTabs: [
-								{
-									structures: [
-										{
-											address: '70 rue de Lyon',
-											idNumber: 'XXXXXXXXXX',
-											value: 'titu',
-										},
-										{
-											address: '34 avenue de Bordeaux',
-											idNumber: 'XXXXXXXXXX',
-											value: 'titi',
-										},
-										{
-											address: '47 boulevard du Mans',
-											idNumber: 'XXXXXXXXXX',
-											value: 'a',
-										},
-										{
-											address: '84 bis rue de Toulouse',
-											idNumber: 'XXXXXXXXXX',
-											value: 'b',
-										},
-										{
-											address: '103 rue de Paris',
-											idNumber: 'XXXXXXXXXX',
-											value: 'c',
-										},
-										{
-											address: '21 rue de Nantes',
-											idNumber: 'XXXXXXXXXX',
-											value: 'd',
-										},
-									],
-									label: 'Mes structures',
-								},
-								{
-									structures: [
-										{
-											address: '39 rue de Rennes',
-											idNumber: 'XXXXXXXXXX',
-											value: 'e',
-										},
-										{
-											address: '40 rue de Vannes',
-											idNumber: 'XXXXXXXXXX',
-											value: 'f',
-										},
-										{
-											address: '50 Avenue de Marseille',
-											idNumber: 'XXXXXXXXXX',
-											value: 'g',
-										},
-										{
-											address: '62 Boulevard de Lille',
-											idNumber: 'XXXXXXXXXX',
-											value: 'h',
-										},
-									],
-									label: 'Mes délégués',
-								},
-							],
-							uniqueId: 'structures',
-							userAdeli: 'xxxadelixxx',
-							userName: 'xxxnamexxx',
-							userProfession: 'xxxprofessionxxx',
-							userRpps: 'xxxrppsxxx',
-						},
-						uniqueId: 'logged-page-header',
-						userInformationSummaryInfos: {
-							adresseLigne1: '31 Boulevard des champs',
-							adresseLigne2: '75730 Fleurie',
-							categorieSpecialite: 'Médecin généraliste',
-							denomination: 'Docteur',
-							nomCabinet: 'Cabinet des fleurs',
-							userName: 'Jean Martin',
-						},
-						userMenuInfos: {
-							lastConnexion: '01/01/2024',
-							userMenuDetailsInfos: {
-								adeli: 'ADELI',
-								adresse: {
-									codePostal: '35000',
-									commune: 'Rennes',
-									complement: 'bis',
-									nom: 'de la Mayenne',
-									numero: '3',
-									type: 'rue',
-								},
-								denomination: 'denomination',
-								email: 'email',
-								finess: 'FINESS',
-								profil: 'profil',
-								rpps: 'RPPS',
-								userName: 'userName',
-							},
-						},
-						userName: 'Dr. Jean Dupont',
-					},
-					ameliproPatientBannerInfos: {
-						birthName: 'Dupont',
-						birthdate: '09/11/1992',
-						moreInformationHref: '#',
-						name: 'Jeanne',
-						patientDoctorInfos: 'Vous êtes le médecin traitant',
-						patientNir: 'NIR patient',
-						patientOrganism: 'CPAM des Alpes de Haute Provence - Centre 103',
-						patientStatus: 'Assuré(e)',
-						patientSystem: 'Régime Général',
-					},
-					displayPatientBanner: true,
-				},
-				uniqueId: 'my-page-layout-id',
-			},
+	describe('Snapshots', () => {
+		testHelper.snapshots()
+	})
+
+	describe('Properties', () => {
+		testHelper.properties()
+	})
+
+	describe('Setting props should update attributes of inner tags', () => {
+		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproPageLayout>>
+
+		beforeEach(() => {
+			vueWrapper = shallowMount(AmeliproPageLayout, { props: requiredPropValues() })
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		it('prop uniqueId sets attribute id', async () => {
+			expect(vueWrapper.find('.amelipro-page-layout').attributes('id')).toBeUndefined()
+
+			const { uniqueId } = modifiedPropValues()
+			await vueWrapper.setProps({ uniqueId })
+			expect(vueWrapper.find('.amelipro-page-layout').attributes('id')).toBe(`${testHelper.modified('uniqueId')}-container`)
+		})
+
+		it('prop skipLinks sets skip link content', async () => {
+			expect(vueWrapper.findAll('.skip-link__item').length).toBe(1)
+
+			const { skipLinks } = modifiedPropValues()
+			await vueWrapper.setProps({ skipLinks })
+			expect(vueWrapper.findAll('.skip-link__item').length).toBe(2)
+			expect(vueWrapper.find('.skip-link__item:last-child .skip-link').text()).toBe('Modified skip link')
+		})
+
+		it('prop ameliproPageLayoutInfos sets header and footer', async () => {
+			expect(vueWrapper.findComponent({ name: 'AmeliproHeader' }).exists()).toBe(false)
+			expect(vueWrapper.findComponent({ name: 'AmeliproFooter' }).exists()).toBe(false)
+
+			const { ameliproPageLayoutInfos } = modifiedPropValues()
+			await vueWrapper.setProps({ ameliproPageLayoutInfos })
+			expect(vueWrapper.findComponent({ name: 'AmeliproHeader' }).exists()).toBe(true)
+			expect(vueWrapper.findComponent({ name: 'AmeliproFooter' }).exists()).toBe(true)
+		})
+	})
+
+	describe('Events', () => {
+		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproPageLayout>>
+
+		beforeEach(() => {
+			vueWrapper = shallowMount(AmeliproPageLayout, { props: { ...modifiedPropValues(), uniqueId: 'event-id' } })
+		})
+
+		it('emit back-btn-click when header emits back-btn-click', () => {
+			const header = vueWrapper.findComponent({ name: 'AmeliproHeader' })
+			header.vm.$emit('back-btn-click')
+			expect(vueWrapper.emitted('back-btn-click')).toBeTruthy()
+		})
+
+		it('emit click:patient-change when patient banner emits click:patient-change', () => {
+			const patientBanner = vueWrapper.findComponent({ name: 'AmeliproPatientBanner' })
+			patientBanner.vm.$emit('click:patient-change')
+			expect(vueWrapper.emitted('click:patient-change')).toBeTruthy()
+		})
 	})
 })
