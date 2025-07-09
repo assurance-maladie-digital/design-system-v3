@@ -272,7 +272,7 @@
 		>
 			<label
 				:id="`${uniqueId}-label`"
-				class="text-body-1 amelipro-autocomplete__label"
+				class="amelipro-autocomplete__label"
 				:class="horizontal ? 'mr-md-2' : undefined"
 				:for="uniqueId"
 				:style="labelStyles"
@@ -376,6 +376,7 @@
 
 	.amelipro-autocomplete__label {
 		margin-bottom: 4px;
+		font-size: apTokens.$font-size-xs;
 		font-weight: apTokens.$label-font-weight;
 	}
 

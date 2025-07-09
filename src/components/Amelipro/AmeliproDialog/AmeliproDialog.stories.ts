@@ -63,7 +63,7 @@ export const Default: Story = {
 			<template #header>
 				<h2
 					id="modal-title"
-					class="ma-0 text-h4"
+					class="ma-0 text-h3"
 				>
 					Mon titre
 				</h2>
@@ -114,7 +114,7 @@ export const Default: Story = {
 		<template #header>
 			<h2
 				id="modal-title"
-				class="ma-0 text-h4"
+				class="ma-0 text-h3"
 			>
 				Mon titre
 			</h2>

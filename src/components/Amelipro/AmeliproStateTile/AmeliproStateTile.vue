@@ -209,7 +209,7 @@
 				<span
 					v-else-if="btnStyledText && !disabled"
 					:id="uniqueId ? `${uniqueId}-btn-styled-text` : undefined"
-					class="d-flex align-center justify-center w-100 mt-6 font-weight-semibold text-uppercase high-letter-spacing btn-styled-text"
+					class="d-flex align-center justify-center w-100 mt-6 font-weight-bold text-uppercase btn-styled-text"
 					:class="{
 						'text-ap-blue-darken-1 bg-ap-white': tileType === 'toDo' || tileType === 'done',
 						'bg-ap-blue-darken-1 text-ap-white': tileType !== 'toDo' && tileType !== 'done',
@@ -221,7 +221,7 @@
 				<span
 					v-else-if="disabled && tileType !== 'optionnal'"
 					:id="uniqueId ? `${uniqueId}-unavailable-text` : undefined"
-					class="d-block mt-6 text-center font-weight-semibold amelipro-state-tile__unavailable"
+					class="d-block mt-6 text-center font-weight-bold amelipro-state-tile__unavailable"
 				>
 					Non disponible
 				</span>

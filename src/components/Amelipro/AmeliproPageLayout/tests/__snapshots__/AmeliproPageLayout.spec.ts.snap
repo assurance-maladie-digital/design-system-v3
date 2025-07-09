@@ -72,7 +72,7 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
             header-bar-content
             justify-center
             px-14
-            py-8
+            py-2
           ">
             <div
               class="
@@ -247,7 +247,7 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                         >
                           <p
                             class="
-                              font-weight-semibold
+                              font-weight-bold
                               mb-0
                               text-body-2
                               user-information-summary__name
@@ -750,8 +750,10 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
 		</svg>
 	</span></span></span><span
                                                 class="
+                                                  font-size-xs
+                                                  font-weight-regular
                                                   service-btn__text
-                                                  text-caption
+                                                  text-ap-grey-darken-1
                                                 "
                                                 id="service-menu-content-desktop-ps-service-list-service-ps-btn-0-text"
                                               >Paiements</span></span>
@@ -834,8 +836,10 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                                               />
 		</svg></span></span></span><span
                                                 class="
+                                                  font-size-xs
+                                                  font-weight-regular
                                                   service-btn__text
-                                                  text-caption
+                                                  text-ap-grey-darken-1
                                                 "
                                                 id="service-menu-content-desktop-ps-service-list-service-ps-btn-1-text"
                                               >Conventions</span></span>
@@ -943,8 +947,10 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
 			</g>
 		</svg></span></span></span><span
                                                   class="
+                                                    font-size-xs
+                                                    font-weight-regular
                                                     service-btn__text
-                                                    text-caption
+                                                    text-ap-grey-darken-1
                                                   "
                                                   id="service-menu-content-desktop-patient-service-list-service-patient-btn-0-text"
                                                 >Arrêt de travail</span></span>
@@ -1032,8 +1038,10 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
 			</g>
 		</svg></span></span></span><span
                                                   class="
+                                                    font-size-xs
+                                                    font-weight-regular
                                                     service-btn__text
-                                                    text-caption
+                                                    text-ap-grey-darken-1
                                                   "
                                                   id="service-menu-content-desktop-patient-service-list-service-patient-btn-1-text"
                                                 >Certificat ATMP</span></span>
@@ -1143,8 +1151,10 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
 		</svg>
 	</span></span></span><span
                                                 class="
+                                                  font-size-xs
+                                                  font-weight-regular
                                                   service-btn__text
-                                                  text-caption
+                                                  text-ap-grey-darken-1
                                                 "
                                                 id="service-menu-content-desktop-contact-service-list-service-contact-btn-0-text"
                                               >Contact 1</span></span>
@@ -1230,8 +1240,10 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
 			</g>
 		</svg></span></span></span><span
                                                 class="
+                                                  font-size-xs
+                                                  font-weight-regular
                                                   service-btn__text
-                                                  text-caption
+                                                  text-ap-grey-darken-1
                                                 "
                                                 id="service-menu-content-desktop-contact-service-list-service-contact-btn-1-text"
                                               >Contact 2</span></span>
@@ -1335,7 +1347,7 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
               justify-center
               navigation-bar
               px-14
-              py-4
+              py-2
             "
             id="my-page-layout-id-header-navigation-bar"
           >
@@ -1495,7 +1507,8 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
             bg-ap-white
             d-flex
             justify-center
-            pa-8
+            px-8
+            py-4
             w-100
           "
           id="my-page-layout-id-patient-banner-container"
@@ -1525,14 +1538,13 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                     amelipro-patient-banner__patient-info__name
                     mb-4
                     mb-md-0
-                    text-h5
                   "
                   id="my-page-layout-id-patient-banner-identity"
                 >
                   <span class="
                     d-block
                     d-sm-inline
-                    font-weight-semibold
+                    font-weight-bold
                     text-h3
                   ">
                     Jeanne
@@ -1556,8 +1568,6 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                     mx-4
                     mx-4
                     text-ap-blue-darken-1
-                    text-h5
-                    text-h5
                     text-none
                     text-none
                     v-btn
@@ -1621,9 +1631,9 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
               <p
                 class="
                   amelipro-patient-banner__patient-info__doctor
+                  font-weight-bold
                   mb-0
                   text-ap-blue-darken-1
-                  text-h5
                 "
                 id="my-page-layout-id-patient-banner-patient-doctor-infos"
               >
@@ -1655,7 +1665,7 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                     id="my-page-layout-id-patient-banner-patient-status"
                   >
                     Statut :
-                    <span class="font-weight-semibold">
+                    <span class="font-weight-bold">
                       Assuré(e)
                     </span>
                   </p>
@@ -1664,12 +1674,11 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                       font-weight-regular
                       mb-4
                       mb-md-0
-                      text-h5
                     "
                     id="my-page-layout-id-patient-banner-patient-number"
                   >
                     NIR :
-                    <span class="font-weight-semibold">
+                    <span class="font-weight-bold">
                       NIR patient
                     </span>
                   </p>
@@ -1677,8 +1686,8 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                 <div class="mr-3">
                   <p
                     class="
+                      font-weight-bold
                       mb-4
-                      text-h5
                     "
                     id="my-page-layout-id-patient-banner-patient-system"
                   >
@@ -1686,9 +1695,9 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                   </p>
                   <p
                     class="
+                      font-weight-bold
                       mb-4
                       mb-md-0
-                      text-h5
                     "
                     id="my-page-layout-id-patient-banner-patient-organism"
                   >
@@ -1711,7 +1720,7 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                 "
                 href="#"
                 id="my-page-layout-id-patient-banner-more-info-btn"
-                style="height: auto; min-height: 3rem; color: #00749C !important; border: 2px solid #00749C !important; background-color: white;"
+                style="height: auto; min-height: 2.5rem; color: #00749C !important; border: 2px solid #00749C !important; background-color: white;"
                 type="button"
               ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
                 
@@ -1752,7 +1761,8 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
             bg-ap-blue-darken-2
             d-block
             justify-center
-            pa-8
+            px-8
+            py-3
             w-100
           "
           id="my-page-layout-id-footer-container"
@@ -1772,7 +1782,7 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
           >
             <p
               class="
-                font-weight-semibold
+                font-weight-bold
                 footer-version
                 mb-0
                 mr-4
@@ -2115,7 +2125,7 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
           ">
             <p
               class="
-                font-weight-semibold
+                font-weight-bold
                 mb-0
                 mt-2
                 text-ap-white

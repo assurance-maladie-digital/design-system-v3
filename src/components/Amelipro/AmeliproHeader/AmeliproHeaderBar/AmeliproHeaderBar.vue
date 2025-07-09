@@ -45,9 +45,9 @@
 	}))
 	const spacingClass = computed<string>(() => {
 		if (xs.value) {
-			return 'pa-6'
+			return 'px-6 py-2'
 		}
-		return isMobileVersion.value ? 'pa-8' : 'px-14 py-8'
+		return isMobileVersion.value ? 'px-8 py-2' : 'px-14 py-2'
 	})
 	const navigationBarSpacingClass = computed<string>(() => (isMobileVersion.value ? 'px-8' : 'px-14'))
 	const slots = useSlots()
@@ -95,7 +95,7 @@
 			<div
 				v-if="showNavigationBar"
 				:id="uniqueId ? `${uniqueId}-navigation-bar` : undefined"
-				class="d-flex align-center justify-center py-4 navigation-bar"
+				class="d-flex align-center justify-center py-2 navigation-bar"
 				:class="navigationBarSpacingClass"
 			>
 				<div

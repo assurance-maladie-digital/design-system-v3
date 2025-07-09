@@ -238,7 +238,7 @@ exports[`AmeliproMenu > render correctly 1`] = `
               w-100
             "
             id="menu-btn__1"
-            style="height: auto; min-height: 3rem; color: #FFFFFF !important;"
+            style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
             type="button"
           >
             <span class="v-btn__overlay"></span>
@@ -313,7 +313,7 @@ exports[`AmeliproMenu > render correctly 1`] = `
               w-100
             "
             id="menu-btn__2"
-            style="height: auto; min-height: 3rem; color: #FFFFFF !important;"
+            style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
             type="button"
           >
             <span class="v-btn__overlay"></span>
@@ -384,7 +384,7 @@ exports[`AmeliproMenu > render correctly 1`] = `
               w-100
             "
             id="menu-btn__3"
-            style="height: auto; min-height: 3rem; color: #FFFFFF !important;"
+            style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
             type="button"
           >
             <span class="v-btn__overlay"></span>
@@ -441,7 +441,7 @@ exports[`AmeliproMenu > render correctly 1`] = `
           w-100
         "
         id="amelipro-menu-id-return-home-menu-btn"
-        style="height: auto; min-height: 3rem; color: #FFFFFF !important;"
+        style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
         type="button"
       >
         <span class="v-btn__overlay"></span>

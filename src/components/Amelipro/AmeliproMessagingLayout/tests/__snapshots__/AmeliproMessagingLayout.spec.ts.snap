@@ -31,8 +31,8 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
           amelipro-btn--style
           bg-ap-blue-darken-1
           elevation-0
-          font-weight-semibold
-          font-weight-semibold
+          font-weight-bold
+          font-weight-bold
           messaging-menu__new-message-btn
           messaging-menu__new-message-btn
           px-5
@@ -45,7 +45,7 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
           v-theme--light
         "
         id="my-messaging-layout-id-new-message-btn"
-        style="height: auto; min-height: 3rem; color: #FFFFFF !important; border: 2px solid #FFFFFF !important; background-color: white;"
+        style="height: auto; min-height: 2.5rem; color: #FFFFFF !important; border: 2px solid #FFFFFF !important; background-color: white;"
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -121,8 +121,8 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
               amelipro-btn--style
               bg-ap-blue-darken-1
               elevation-0
-              font-weight-semibold
-              font-weight-semibold
+              font-weight-bold
+              font-weight-bold
               mb-1
               mb-1
               messaging-menu__btn
@@ -213,8 +213,8 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
               amelipro-btn--style
               bg-ap-blue-darken-2
               elevation-0
-              font-weight-semibold
-              font-weight-semibold
+              font-weight-bold
+              font-weight-bold
               mb-1
               mb-1
               messaging-menu__btn
@@ -305,8 +305,8 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
               amelipro-btn--style
               bg-ap-blue-darken-1
               elevation-0
-              font-weight-semibold
-              font-weight-semibold
+              font-weight-bold
+              font-weight-bold
               mb-1
               mb-1
               messaging-menu__btn

@@ -6,7 +6,8 @@ exports[`AmeliproMessage > render correctly 1`] = `
     amelipro-message
     amelipro-message__radius
     elevation-0
-    pa-6
+    pa-3
+    pa-sm-4
     text-ap-white
     text-body-1
     v-alert

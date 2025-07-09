@@ -23,7 +23,7 @@ exports[`AmeliproHeaderBar > render correctly 1`] = `
       header-bar-content
       justify-center
       px-14
-      py-8
+      py-2
     ">
       <div
         class="

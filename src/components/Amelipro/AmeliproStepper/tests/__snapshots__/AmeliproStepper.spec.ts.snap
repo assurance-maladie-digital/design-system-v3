@@ -30,9 +30,10 @@ exports[`AmeliproStepper > render correctly 1`] = `
           aria-current="step"
           class="
             amelipro-step-btn
-            pa-4
+            pb-4
+            pt-3
+            px-4
             text-subtitle-1
-            text-uppercase
           "
           id="my-stepper-id-step-btn-0"
           role="tab"
@@ -72,9 +73,10 @@ exports[`AmeliproStepper > render correctly 1`] = `
         <button
           class="
             amelipro-step-btn
-            pa-4
+            pb-4
+            pt-3
+            px-4
             text-subtitle-1
-            text-uppercase
           "
           id="my-stepper-id-step-btn-1"
           role="tab"
@@ -111,9 +113,10 @@ exports[`AmeliproStepper > render correctly 1`] = `
         <button
           class="
             amelipro-step-btn
-            pa-4
+            pb-4
+            pt-3
+            px-4
             text-subtitle-1
-            text-uppercase
           "
           disabled=""
           id="my-stepper-id-step-btn-2"
@@ -154,9 +157,10 @@ exports[`AmeliproStepper > render correctly 1`] = `
         <button
           class="
             amelipro-step-btn
-            pa-4
+            pb-4
+            pt-3
+            px-4
             text-subtitle-1
-            text-uppercase
           "
           disabled=""
           id="my-stepper-id-step-btn-3"
@@ -243,7 +247,7 @@ exports[`AmeliproStepper > render correctly 1`] = `
           v-theme--light
         "
         id="my-stepper-id-footer-next-btn"
-        style="height: auto; min-height: 3rem; color: #FFFFFF !important;"
+        style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
         type="button"
       >
         <span class="v-btn__overlay"></span>

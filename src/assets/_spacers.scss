@@ -213,10 +213,26 @@ $breakpoints: (
 @include generate-breakpoint-spacing-classes(padding-top, pt);
 @include generate-breakpoint-spacing-classes(margin-bottom, mb);
 @include generate-breakpoint-spacing-classes(padding-bottom, pb);
-@include generate-breakpoint-spacing-classes(margin, mx);
-@include generate-breakpoint-spacing-classes(padding, px);
-@include generate-breakpoint-spacing-classes(margin, my);
-@include generate-breakpoint-spacing-classes(padding, py);
+
+// Mixin for X (left & right) and Y (top & bottom) spacing with breakpoints
+@mixin generate-breakpoint-axis-spacing-classes($property, $prefix, $side1, $side2) {
+	@each $breakpoint, $value in $breakpoints {
+		@for $i from 0 through 64 {
+			.#{$prefix}-#{$breakpoint}-#{$i} {
+				@media (min-width: #{$value}) {
+					#{$property}-#{$side1}: var(--spacing-#{$i}) !important;
+					#{$property}-#{$side2}: var(--spacing-#{$i}) !important;
+				}
+			}
+		}
+	}
+}
+
+// Generate px, py, mx, my breakpoints spacing classes
+@include generate-breakpoint-axis-spacing-classes(padding, px, left, right);
+@include generate-breakpoint-axis-spacing-classes(padding, py, top, bottom);
+@include generate-breakpoint-axis-spacing-classes(margin, mx, left, right);
+@include generate-breakpoint-axis-spacing-classes(margin, my, top, bottom);
 
 // Additional classes for specific spacing
 

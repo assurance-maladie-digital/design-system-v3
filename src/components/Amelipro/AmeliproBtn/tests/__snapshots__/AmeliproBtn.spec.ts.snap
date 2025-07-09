@@ -15,7 +15,7 @@ exports[`AmeliproBtn > render correctly 1`] = `
     v-theme--light
   "
   id="my-btn-id"
-  style="height: auto; min-height: 3rem; color: #FFFFFF !important;"
+  style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
   type="button"
 >
   <span class="v-btn__overlay"></span>

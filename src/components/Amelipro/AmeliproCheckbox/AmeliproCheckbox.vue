@@ -155,7 +155,7 @@
 
 		&::before {
 			position: absolute;
-			top: 0.125rem;
+			top: 0.0625rem;
 			left: 0;
 			width: 1.5rem;
 			height: 1.5rem;
@@ -174,7 +174,7 @@
 
 			&::after {
 				position: absolute;
-				top: 0.525rem;
+				top: 0.5rem;
 				left: 0.3rem;
 				width: 0.9rem;
 				height: 0.5rem;

@@ -7,7 +7,8 @@ exports[`AmeliproFooter > render correctly 1`] = `
     bg-ap-blue-darken-2
     d-block
     justify-center
-    pa-8
+    px-8
+    py-3
     w-100
   "
   id="my-footer-id-container"
@@ -27,7 +28,7 @@ exports[`AmeliproFooter > render correctly 1`] = `
   >
     <p
       class="
-        font-weight-semibold
+        font-weight-bold
         footer-version
         mb-0
         mr-4
@@ -388,7 +389,7 @@ exports[`AmeliproFooter > render correctly 1`] = `
   ">
     <p
       class="
-        font-weight-semibold
+        font-weight-bold
         mb-0
         mt-2
         text-ap-white

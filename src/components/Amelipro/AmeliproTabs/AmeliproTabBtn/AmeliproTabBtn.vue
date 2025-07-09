@@ -113,7 +113,7 @@
 		:class="{
 			'mr-2 amelipro-tab__btn--pills': pills,
 			'selected': selected,
-			'pa-4 text-uppercase': !pills,
+			'px-4 py-2 text-uppercase': !pills,
 			'disabled': disabled
 		}"
 		:disabled="disabled"
@@ -153,16 +153,16 @@
 
 .amelipro-tab__btn--pills {
 	position: relative;
-	border-radius: apTokens.$filter-radius;
+	border-radius: apTokens.$tabs-pill-radius;
 	cursor: pointer;
-	padding: apTokens.$filter-padding-y apTokens.$filter-padding-x;
-	font-weight: apTokens.$filter-font-weight;
+	padding: apTokens.$tabs-pill-padding-y apTokens.$tabs-pill-padding-x;
+	font-weight: apTokens.$tabs-pill-font-weight;
 
 	&.selected {
 		&::after {
 			position: absolute;
-			top: 1.1rem;
-			left: 1.1rem;
+			top: 0.8rem;
+			left: 0.75rem;
 			width: 1rem;
 			height: 0.5rem;
 			border-bottom: 2px solid apTokens.$ap-blue-darken1;

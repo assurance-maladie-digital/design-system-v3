@@ -136,7 +136,7 @@
 			<template #header>
 				<h2
 					:id="modalId"
-					class="ma-0 text-h4"
+					class="ma-0 text-h3"
 				>
 					Liste des services
 				</h2>

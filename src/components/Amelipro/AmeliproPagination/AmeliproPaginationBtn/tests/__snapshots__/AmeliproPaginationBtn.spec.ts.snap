@@ -16,7 +16,7 @@ exports[`AmeliproPaginationBtn > render correctly 1`] = `
     v-theme--light
   "
   id="my-pagination-btn-id"
-  style="height: auto; min-height: 3rem; color: #00749C !important;"
+  style="height: auto; min-height: 2.5rem; color: #00749C !important;"
   type="button"
 >
   <span class="v-btn__overlay"></span>

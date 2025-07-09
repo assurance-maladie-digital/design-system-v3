@@ -75,7 +75,7 @@
 		},
 		minHeight: {
 			type: String,
-			default: '3rem',
+			default: '2.5rem',
 		},
 		size: {
 			type: String,
@@ -310,7 +310,7 @@
 
 .v-btn {
 	letter-spacing: 0.64px;
-	font-weight: apTokens.$ap-font-weight-semi-bold;
+	font-weight: apTokens.$ap-font-weight-bold;
 	text-indent: unset;
 
 	& :deep(.v-btn__overlay),

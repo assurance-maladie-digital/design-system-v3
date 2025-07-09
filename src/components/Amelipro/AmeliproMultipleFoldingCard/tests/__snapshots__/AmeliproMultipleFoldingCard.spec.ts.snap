@@ -76,7 +76,7 @@ exports[`AmeliproMultipleFoldingCard > render correctly 1`] = `
             <p
               aria-level="2"
               class="
-                font-weight-semibold
+                font-weight-bold
                 mb-0
                 text-h3
               "

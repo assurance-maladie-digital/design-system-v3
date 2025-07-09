@@ -29,7 +29,7 @@ exports[`AmeliproTileBtn > render correctly 1`] = `
       class="
         amelipro-tile-btn__content
         d-block
-        font-weight-semibold
+        font-weight-bold
         text-center
         text-h5
       "

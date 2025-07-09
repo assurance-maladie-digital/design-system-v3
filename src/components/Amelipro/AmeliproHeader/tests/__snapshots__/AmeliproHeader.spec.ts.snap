@@ -24,7 +24,7 @@ exports[`AmeliproHeader > render correctly 1`] = `
       header-bar-content
       justify-center
       px-14
-      py-8
+      py-2
     ">
       <div
         class="
@@ -199,7 +199,7 @@ exports[`AmeliproHeader > render correctly 1`] = `
                   >
                     <p
                       class="
-                        font-weight-semibold
+                        font-weight-bold
                         mb-0
                         text-body-2
                         user-information-summary__name
@@ -702,8 +702,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
 		</svg>
 	</span></span></span><span
                                           class="
+                                            font-size-xs
+                                            font-weight-regular
                                             service-btn__text
-                                            text-caption
+                                            text-ap-grey-darken-1
                                           "
                                           id="service-menu-content-desktop-ps-service-list-service-ps-btn-0-text"
                                         >Paiements</span></span>
@@ -786,8 +788,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
                                         />
 		</svg></span></span></span><span
                                           class="
+                                            font-size-xs
+                                            font-weight-regular
                                             service-btn__text
-                                            text-caption
+                                            text-ap-grey-darken-1
                                           "
                                           id="service-menu-content-desktop-ps-service-list-service-ps-btn-1-text"
                                         >Conventions</span></span>
@@ -895,8 +899,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
 			</g>
 		</svg></span></span></span><span
                                             class="
+                                              font-size-xs
+                                              font-weight-regular
                                               service-btn__text
-                                              text-caption
+                                              text-ap-grey-darken-1
                                             "
                                             id="service-menu-content-desktop-patient-service-list-service-patient-btn-0-text"
                                           >Arrêt de travail</span></span>
@@ -984,8 +990,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
 			</g>
 		</svg></span></span></span><span
                                             class="
+                                              font-size-xs
+                                              font-weight-regular
                                               service-btn__text
-                                              text-caption
+                                              text-ap-grey-darken-1
                                             "
                                             id="service-menu-content-desktop-patient-service-list-service-patient-btn-1-text"
                                           >Certificat ATMP</span></span>
@@ -1095,8 +1103,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
 		</svg>
 	</span></span></span><span
                                           class="
+                                            font-size-xs
+                                            font-weight-regular
                                             service-btn__text
-                                            text-caption
+                                            text-ap-grey-darken-1
                                           "
                                           id="service-menu-content-desktop-contact-service-list-service-contact-btn-0-text"
                                         >Contact 1</span></span>
@@ -1182,8 +1192,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
 			</g>
 		</svg></span></span></span><span
                                           class="
+                                            font-size-xs
+                                            font-weight-regular
                                             service-btn__text
-                                            text-caption
+                                            text-ap-grey-darken-1
                                           "
                                           id="service-menu-content-desktop-contact-service-list-service-contact-btn-1-text"
                                         >Contact 2</span></span>
@@ -1287,7 +1299,7 @@ exports[`AmeliproHeader > render correctly 1`] = `
         justify-center
         navigation-bar
         px-14
-        py-4
+        py-2
       "
       id="amelipro-header-id-navigation-bar"
     >

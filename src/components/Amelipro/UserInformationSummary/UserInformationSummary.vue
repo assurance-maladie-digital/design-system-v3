@@ -23,7 +23,7 @@
 		<p
 			v-if="userInformationSummaryInfos.userName !== undefined && userInformationSummaryInfos.userName !== null"
 			:id="uniqueId ? `${uniqueId}-user-name` : undefined"
-			class="mb-0 text-body-2 font-weight-semibold user-information-summary__name"
+			class="mb-0 text-body-2 font-weight-bold user-information-summary__name"
 		>
 			{{ userInformationSummaryInfos.userName }}
 		</p>

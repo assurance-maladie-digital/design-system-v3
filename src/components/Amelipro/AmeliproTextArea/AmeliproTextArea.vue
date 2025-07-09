@@ -304,6 +304,7 @@
 
 	.amelipro-textarea__label {
 		margin-bottom: 4px;
+		font-size: apTokens.$font-size-xs;
 		font-weight: apTokens.$label-font-weight;
 	}
 

@@ -129,7 +129,7 @@
 			:aria-controls="`${uniqueId}-menu`"
 			:aria-expanded="isOpen === true ? 'true' : 'false'"
 			aria-haspopup="true"
-			class="w-100 text-none text-h6 font-weight-semibold dropdown-menu__open-btn"
+			class="w-100 text-none text-h6 font-weight-bold dropdown-menu__open-btn"
 			color="ap-white"
 			hover-color="ap-grey-lighten-4"
 			text-color="ap-grey-darken-1"
@@ -144,7 +144,7 @@
 		>
 			<span
 				:id="`${uniqueId}-btn-text`"
-				class="w-100 text-left text-h6 font-weight-semibold"
+				class="w-100 text-left text-h6 font-weight-bold"
 			>
 				<span class="d-sr-only">
 					Page active :&nbsp;

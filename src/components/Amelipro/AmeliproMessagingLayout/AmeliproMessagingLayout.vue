@@ -78,7 +78,7 @@
 			<div class="messaging-menu__new-message">
 				<AmeliproBtn
 					bordered
-					class="font-weight-semibold px-5 messaging-menu__new-message-btn"
+					class="font-weight-bold px-5 messaging-menu__new-message-btn"
 					:color="newMessageDisable ? 'ap-grey-lighten-2' : 'ap-blue-darken-1'"
 					:disabled="newMessageDisable"
 					:hover-color="newMessageDisable ? 'ap-grey-lighten-2' : 'ap-blue-darken-2'"
