@@ -9,6 +9,7 @@
 			indeterminate?: boolean
 			label?: string
 			ariaLabel?: string
+			ariaLabelledby?: string
 			title?: string
 			color?: string
 			disabled?: boolean
@@ -31,13 +32,13 @@
 			trueValue?: unknown
 			falseValue?: unknown
 			controlsIds?: string[]
-			disableScreenReader?: boolean
 		}>(),
 		{
 			modelValue: false,
 			indeterminate: false,
 			label: undefined,
 			ariaLabel: undefined,
+			ariaLabelledby: undefined,
 			title: undefined,
 			color: 'primary',
 			disabled: false,
@@ -48,7 +49,6 @@
 			errorMessages: null,
 			warningMessages: null,
 			successMessages: null,
-			disableScreenReader: false,
 			customRules: () => [],
 			customWarningRules: () => [],
 			customSuccessRules: () => [],
@@ -185,20 +185,15 @@
 		return model.value ? 'true' : 'false'
 	})
 
-	// Check if this checkbox is in a SearchListField component
-	const isInSearchList = computed(() => {
-		return props.id && props.id.startsWith('checkbox-') && props.id.length === 10
-	})
-
 	// Propriétés ARIA personnalisées pour éviter les conflits
 	const messageId = computed(() => {
-		// If screen reader is disabled, don't return a messageId
-		if (props.disableScreenReader || isInSearchList.value) {
+		// Don't create messageId if aria-labelledby is provided
+		if (props.ariaLabelledby) {
 			return undefined
 		}
 
-		// Only create messageId for checkboxes with IDs that aren't from SearchListField
-		if (props.id && props.id.startsWith('checkbox-')) {
+		// Create messageId for checkboxes with IDs
+		if (props.id) {
 			return `${props.id}-messages`
 		}
 		return undefined
@@ -284,8 +279,9 @@
 			:id="props.id"
 			v-model="model"
 			:name="props.name"
-			:label="isInSearchList ? '' : props.label"
+			:label="props.label"
 			:aria-label="props.ariaLabel"
+			:aria-labelledby="props.ariaLabelledby"
 			:title="props.title"
 			:color="props.color"
 			:disabled="props.disabled"
@@ -302,7 +298,7 @@
 			:true-value="props.trueValue"
 			:false-value="props.falseValue"
 			:aria-checked="ariaChecked"
-			:aria-describedby="isInSearchList ? undefined : messageId"
+			:aria-describedby="messageId"
 			@click="toggleMixed"
 			@blur="checkErrorOnBlur"
 		>
@@ -319,7 +315,7 @@
 				<slot />
 			</template>
 			<span
-				v-if="messageId && props.required && !props.ariaLabel && !props.disableScreenReader && !isInSearchList"
+				v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
 				:id="messageId"
 				class="d-sr-only"
 			>
