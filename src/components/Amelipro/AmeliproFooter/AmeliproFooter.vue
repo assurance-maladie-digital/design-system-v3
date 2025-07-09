@@ -189,7 +189,7 @@
 <template>
 	<footer
 		:id="uniqueId ? `${uniqueId}-container` : undefined"
-		class="w-100 bg-ap-blue-darken-2 pa-8 justify-center amelipro-footer"
+		class="w-100 bg-ap-blue-darken-2 px-8 py-3 justify-center amelipro-footer"
 		:class="footerDisplay"
 		role="contentinfo"
 		style="position: relative;"
@@ -203,7 +203,7 @@
 			<p
 				v-if="!backOffice"
 				:id="uniqueId ? `${uniqueId}-version` : undefined"
-				class="mb-0 mr-4 text-ap-white text-caption font-weight-semibold footer-version"
+				class="mb-0 mr-4 text-ap-white text-caption font-weight-bold footer-version"
 				:class="versionDisplay"
 			>
 				{{ version }}
@@ -377,7 +377,7 @@
 			<p
 				v-if="backOffice"
 				:id="uniqueId ? `${uniqueId}-backoffice-text` : undefined"
-				class="mb-0 text-ap-white text-center font-weight-semibold amelipro-footer__backoffice-text"
+				class="mb-0 text-ap-white text-center font-weight-bold amelipro-footer__backoffice-text"
 			>
 				CNAM - {{ backOfficeText }} - Version {{ version }}
 			</p>
@@ -389,7 +389,7 @@
 		>
 			<p
 				:id="uniqueId ? `${uniqueId}-version-mobile` : undefined"
-				class="mt-2 mb-0 text-ap-white text-caption font-weight-semibold"
+				class="mt-2 mb-0 text-ap-white text-caption font-weight-bold"
 			>
 				{{ version }}
 			</p>

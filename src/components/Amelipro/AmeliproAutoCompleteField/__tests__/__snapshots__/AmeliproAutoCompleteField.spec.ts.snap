@@ -15,10 +15,7 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
     d-inline-flex
   ">
     <label
-      class="
-        amelipro-autocomplete__label
-        text-body-1
-      "
+      class="amelipro-autocomplete__label"
       for="my-AutoCompleteField-id"
       id="my-AutoCompleteField-id-label"
     >

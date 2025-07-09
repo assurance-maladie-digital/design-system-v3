@@ -78,7 +78,7 @@
 <template>
 	<div
 		:id="uniqueId ? `${uniqueId}-container` : undefined"
-		class="w-100 bg-ap-white pa-8 d-flex justify-center amelipro-patient-banner"
+		class="w-100 bg-ap-white px-8 py-4 d-flex justify-center amelipro-patient-banner"
 		style="position: relative;"
 	>
 		<div
@@ -101,9 +101,9 @@
 				>
 					<p
 						:id="uniqueId ? `${uniqueId}-identity` : undefined"
-						class="mb-4 mb-md-0 text-h5 amelipro-patient-banner__patient-info__name"
+						class="mb-4 mb-md-0 amelipro-patient-banner__patient-info__name"
 					>
-						<span class="text-h3 font-weight-semibold d-block d-sm-inline">
+						<span class="text-h3 font-weight-bold d-block d-sm-inline">
 							{{ name }}
 						</span>
 						né(e)
@@ -115,7 +115,7 @@
 
 					<AmeliproBtn
 						v-if="!noPatientChange"
-						class="mb-4 mb-md-0 text-none text-h5 amelipro-patient-banner__patient-change__btn"
+						class="mb-4 mb-md-0 text-none amelipro-patient-banner__patient-change__btn"
 						:class="smAndUp ? 'mx-4 ' : ''"
 						hover-underline
 						text
@@ -132,7 +132,7 @@
 
 				<p
 					:id="uniqueId ? `${uniqueId}-patient-doctor-infos` : undefined"
-					class="mb-0 text-h5 text-ap-blue-darken-1 amelipro-patient-banner__patient-info__doctor"
+					class="mb-0 text-ap-blue-darken-1 font-weight-bold amelipro-patient-banner__patient-info__doctor"
 				>
 					{{ patientDoctorInfos }}
 				</p>
@@ -156,17 +156,17 @@
 							class="mb-4 text-h5 font-weight-regular"
 						>
 							{{ locales.status }}
-							<span class="font-weight-semibold">
+							<span class="font-weight-bold">
 								{{ patientStatus }}
 							</span>
 						</p>
 
 						<p
 							:id="uniqueId ? `${uniqueId}-patient-number` : undefined"
-							class="mb-4 mb-md-0 text-h5 font-weight-regular"
+							class="mb-4 mb-md-0 font-weight-regular"
 						>
 							{{ locales.nir }}
-							<span class="font-weight-semibold">
+							<span class="font-weight-bold">
 								{{ patientNir }}
 							</span>
 						</p>
@@ -175,14 +175,14 @@
 					<div :class="smAndUp ? 'mr-3' : ''">
 						<p
 							:id="uniqueId ? `${uniqueId}-patient-system` : undefined"
-							class="mb-4 text-h5"
+							class="mb-4 font-weight-bold"
 						>
 							{{ patientSystem }}
 						</p>
 
 						<p
 							:id="uniqueId ? `${uniqueId}-patient-organism` : undefined"
-							class="mb-4 mb-md-0 text-h5"
+							class="mb-4 mb-md-0 font-weight-bold"
 						>
 							{{ patientOrganism }}
 						</p>

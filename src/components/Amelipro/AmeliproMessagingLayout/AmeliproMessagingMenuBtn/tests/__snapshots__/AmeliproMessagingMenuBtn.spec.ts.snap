@@ -7,8 +7,8 @@ exports[`AmeliproMessagingMenuBtn > render correctly 1`] = `
     amelipro-btn--style
     bg-ap-blue-darken-1
     elevation-0
-    font-weight-semibold
-    font-weight-semibold
+    font-weight-bold
+    font-weight-bold
     mb-1
     mb-1
     messaging-menu__btn

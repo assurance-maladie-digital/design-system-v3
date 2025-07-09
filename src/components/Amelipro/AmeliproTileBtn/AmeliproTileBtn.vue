@@ -186,14 +186,14 @@
 		<span v-if="alignTopStyle || complementaryInfoLine1 || complementaryInfoLine2 || message">
 			<span
 				:id="uniqueId ? `${uniqueId}-text` : undefined"
-				class="d-block text-h5 text-center font-weight-semibold amelipro-tile-btn__content"
+				class="d-block text-h5 text-center font-weight-bold amelipro-tile-btn__content"
 			>
 				{{ label }}
 
 				<span
 					v-if="labelBottom"
 					:id="uniqueId ? `${uniqueId}-text-bottom` : undefined"
-					class="d-block mt-4 text-h5 text-center font-weight-semibold amelipro-tile-btn__content--bottom"
+					class="d-block mt-4 text-h5 text-center font-weight-bold amelipro-tile-btn__content--bottom"
 				>
 					{{ labelBottom }}
 				</span>
@@ -222,7 +222,7 @@
 
 			<span
 				v-if="message"
-				class="d-flex justify-center mt-4 text-center font-weight-semibold"
+				class="d-flex justify-center mt-4 text-center font-weight-bold"
 				:class="{
 					'text-ap-parme-darken-1': messageType === 'info',
 					'text-ap-red': messageType === 'error',
@@ -262,14 +262,14 @@
 		<span
 			v-if="!complementaryInfoLine1 && !complementaryInfoLine2 && !alignTopStyle && !message"
 			:id="uniqueId ? `${uniqueId}-text` : undefined"
-			class="d-block text-h5 text-center font-weight-semibold amelipro-tile-btn__content"
+			class="d-block text-h5 text-center font-weight-bold amelipro-tile-btn__content"
 		>
 			{{ label }}
 
 			<span
 				v-if="labelBottom"
 				:id="uniqueId ? `${uniqueId}-text-bottom` : undefined"
-				class="d-block mt-4 text-h5 text-center font-weight-semibold amelipro-tile-btn__content--bottom"
+				class="d-block mt-4 text-h5 text-center font-weight-bold amelipro-tile-btn__content--bottom"
 			>
 				{{ labelBottom }}
 			</span>

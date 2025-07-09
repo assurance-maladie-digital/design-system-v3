@@ -132,7 +132,7 @@
 				>
 					{{ info.label }}
 
-					<span class="font-weight-semibold">
+					<span class="font-weight-bold">
 						{{ info.value ? info.value : undefined }}
 					</span>
 				</span>
@@ -158,7 +158,7 @@
 	margin-top: 2rem;
 	margin-bottom: 1rem;
 	font-size: apTokens.$font-size-sm;
-	font-weight: apTokens.$ap-font-weight-semi-bold;
+	font-weight: apTokens.$ap-font-weight-bold;
 }
 
 .illustrated-data-tile__label-line-2 {

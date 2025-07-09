@@ -57,14 +57,14 @@
 		>
 
 		<span
-			class="d-flex flex-column w-100 pa-4 rounded hover-style"
+			class="d-flex flex-column w-100 px-2 px-sm-4 py-2 rounded hover-style"
 			:class="checked ? 'bg-ap-blue-lighten-3 selected-border' : 'bg-ap-grey-lighten-4'"
 			:style="focusStyle"
 		>
 			<span
 				v-if="item.defaultStructure"
 				:id="`${uniqueId}-default-structure-mobile`"
-				class="d-block d-md-none align-self-end text-ap-blue-darken-1 font-weight-semibold"
+				class="d-block d-md-none align-self-end text-ap-blue-darken-1 font-weight-bold"
 			>
 				{{ locales.defaultStructure }}
 			</span>
@@ -90,7 +90,7 @@
 						<span
 							v-if="item.defaultStructure"
 							:id="`${uniqueId}-default-structure-desktop`"
-							class="d-none d-md-block text-right text-ap-blue-darken-1 font-weight-semibold"
+							class="d-none d-md-block text-right text-ap-blue-darken-1 font-weight-bold"
 						>
 							{{ locales.defaultStructure }}
 						</span>

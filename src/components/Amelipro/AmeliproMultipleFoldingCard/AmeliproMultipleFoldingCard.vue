@@ -171,7 +171,7 @@
 							<p
 								:id="uniqueId ? `${uniqueId}-title` : undefined"
 								:aria-level="titleLevel"
-								class="font-weight-semibold text-h3 mb-0"
+								class="font-weight-bold text-h3 mb-0"
 								:class="titleUppercase ? 'text-uppercase' : undefined"
 								role="heading"
 							>
@@ -336,13 +336,13 @@
 
 .classic-btn {
 	position: relative;
-	padding: apTokens.$filter-padding-y apTokens.$filter-padding-x;
+	padding: apTokens.$multi-folding-btn-padding-y apTokens.$multi-folding-btn-padding-x;
 	border: 1px solid apTokens.$ap-blue-darken1;
-	border-radius: apTokens.$filter-radius;
+	border-radius: apTokens.$multi-folding-btn-radius;
 	background-color: apTokens.$ap-white;
 	color: apTokens.$ap-blue-darken1;
 	font-size: apTokens.$font-size-sm;
-	font-weight: apTokens.$filter-font-weight;
+	font-weight: apTokens.$multi-folding-btn-font-weight;
 	cursor: pointer;
 
 	&.active-btn {
@@ -373,6 +373,6 @@
 .btn-icon {
 	position: absolute;
 	top: calc(50% - 13px);
-	left: 0.8rem;
+	left: 0.5rem;
 }
 </style>

@@ -23,21 +23,21 @@
 		<p
 			v-if="userMenuDetailsInfos.userName !== undefined && userMenuDetailsInfos.userName !== null"
 			:id="uniqueId ? `${uniqueId}-user-name` : undefined"
-			class="mb-0 text-body-2 font-weight-semibold text-ap-grey-darken-1 user-menu-details__name"
+			class="mb-0 text-body-2 font-weight-bold text-ap-grey-darken-1 user-menu-details__name"
 		>
 			{{ userMenuDetailsInfos.userName }}
 		</p>
 		<p
 			v-if="userMenuDetailsInfos.profil !== undefined && userMenuDetailsInfos.profil !== null"
 			:id="uniqueId ? `${uniqueId}-profile` : undefined"
-			class="mb-0 text-body-2 font-weight-semibold text-ap-grey-darken-1 user-menu-details__profil"
+			class="mb-0 text-body-2 font-weight-bold text-ap-grey-darken-1 user-menu-details__profil"
 		>
 			{{ userMenuDetailsInfos.profil }}
 		</p>
 		<p
 			v-if="userMenuDetailsInfos.denomination !== undefined && userMenuDetailsInfos.denomination !== null"
 			:id="uniqueId ? `${uniqueId}-denomination` : undefined"
-			class="mb-0 text-body-2 font-weight-semibold text-ap-grey-darken-1 user-menu-details__denomination"
+			class="mb-0 text-body-2 font-weight-bold text-ap-grey-darken-1 user-menu-details__denomination"
 		>
 			{{ userMenuDetailsInfos.denomination }}
 		</p>

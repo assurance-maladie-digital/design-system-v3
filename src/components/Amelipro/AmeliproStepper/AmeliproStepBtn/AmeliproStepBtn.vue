@@ -51,7 +51,7 @@
 	<button
 		:id="uniqueId"
 		:aria-current="isActive ? 'step' : undefined"
-		class="text-subtitle-1 pa-4 text-uppercase amelipro-step-btn"
+		class="text-subtitle-1 px-4 pt-3 pb-4 amelipro-step-btn"
 		:disabled="disabled"
 		role="tab"
 		:style="styles"

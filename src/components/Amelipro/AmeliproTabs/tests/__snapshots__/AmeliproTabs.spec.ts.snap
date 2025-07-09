@@ -31,7 +31,8 @@ exports[`AmeliproTabs > render correctly 1`] = `
           class="
             amelipro-tab__btn
             first-tab-btn
-            pa-4
+            px-4
+            py-2
             selected
             text-uppercase
           "
@@ -58,7 +59,8 @@ exports[`AmeliproTabs > render correctly 1`] = `
           aria-selected="false"
           class="
             amelipro-tab__btn
-            pa-4
+            px-4
+            py-2
             text-uppercase
           "
           id="my-tabs-group-id-tab-btn-1"
@@ -85,7 +87,8 @@ exports[`AmeliproTabs > render correctly 1`] = `
           class="
             amelipro-tab__btn
             disabled
-            pa-4
+            px-4
+            py-2
             text-uppercase
           "
           disabled=""
@@ -113,7 +116,8 @@ exports[`AmeliproTabs > render correctly 1`] = `
           class="
             amelipro-tab__btn
             last-tab-btn
-            pa-4
+            px-4
+            py-2
             text-uppercase
           "
           id="my-tabs-group-id-tab-btn-3"

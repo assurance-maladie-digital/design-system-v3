@@ -101,7 +101,7 @@
 		<template #header>
 			<h2
 				:id="`${uniqueId}-structure-menu-title`"
-				class="ma-0 text-h4"
+				class="ma-0 text-h3"
 			>
 				{{ locales.title }}
 			</h2>
@@ -119,14 +119,14 @@
 					<div>
 						<p
 							:id="`${uniqueId}-structure-menu-user-name`"
-							class="ma-0 body-1 font-weight-semibold"
+							class="ma-0 body-1 font-weight-bold"
 						>
 							{{ userName }}
 						</p>
 
 						<p
 							:id="`${uniqueId}-structure-menu-user-profession`"
-							class="ma-0 body-2 font-weight-semibold"
+							class="ma-0 body-2 font-weight-bold"
 						>
 							{{ userProfession }}
 						</p>

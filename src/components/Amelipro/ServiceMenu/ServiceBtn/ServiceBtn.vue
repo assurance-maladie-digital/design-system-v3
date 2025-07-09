@@ -47,7 +47,7 @@
 			<template #append>
 				<span
 					:id="uniqueId ? `${uniqueId}-text` : undefined"
-					class="text-caption service-btn__text"
+					class="font-size-xs font-weight-regular text-ap-grey-darken-1 service-btn__text"
 				>
 					{{ item.label }}
 				</span>
@@ -75,7 +75,7 @@
 			>
 			<span
 				:id="uniqueId ? `${uniqueId}-text` : undefined"
-				class="d-block text-caption"
+				class="d-block font-size-xs text-ap-grey-darken-1 font-weight-regular"
 			>
 				{{ item.label }}
 			</span>

@@ -98,7 +98,7 @@
 		<template #header>
 			<h2
 				:id="`${uniqueId}-title`"
-				class="ma-0 text-h4"
+				class="ma-0 text-h3"
 			>
 				{{ title }}
 			</h2>

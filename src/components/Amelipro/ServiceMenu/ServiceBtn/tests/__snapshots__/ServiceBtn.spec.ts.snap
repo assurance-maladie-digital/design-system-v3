@@ -75,8 +75,10 @@ exports[`ServiceBtn > render correctly 1`] = `
       </span>
       <span
         class="
+          font-size-xs
+          font-weight-regular
           service-btn__text
-          text-caption
+          text-ap-grey-darken-1
         "
         id="service-btn-id-text"
       >

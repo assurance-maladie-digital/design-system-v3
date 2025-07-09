@@ -72,7 +72,7 @@
 				:id="`${uniqueId}-content`"
 				class="user-menu-popover bg-ap-white"
 			>
-				<div class="px-4 pt-3 pb-1">
+				<div class="pa-4">
 					<slot>
 						<div v-if="userMenuInfos !== undefined && userMenuInfos !== null && userMenuInfos.userMenuDetailsInfos !== undefined && userMenuInfos.userMenuDetailsInfos !== null">
 							<UserMenuDetails
@@ -100,10 +100,10 @@
 
 				<div
 					:id="`${uniqueId}-footer`"
-					class="mt-6 d-flex justify-space-between bg-ap-blue-lighten-3 user-menu__btn-wrapper"
+					class="d-flex justify-space-between bg-ap-blue-lighten-3 user-menu__btn-wrapper"
 				>
 					<AmeliproBtn
-						class="text-none font-weight-semibold user-menu__btn--account"
+						class="text-none font-weight-bold user-menu__btn--account"
 						hover-underline
 						text-color="ap-blue-darken-1"
 						:unique-id="`${uniqueId}-account-btn`"
@@ -114,7 +114,7 @@
 					</AmeliproBtn>
 
 					<AmeliproBtn
-						class="text-none font-weight-semibold user-menu__btn--logout"
+						class="text-none font-weight-bold user-menu__btn--logout"
 						hover-underline
 						text-color="ap-blue-darken-1"
 						:unique-id="`${uniqueId}-logout-btn`"

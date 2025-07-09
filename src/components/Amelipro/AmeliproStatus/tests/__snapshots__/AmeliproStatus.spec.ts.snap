@@ -6,12 +6,11 @@ exports[`AmeliproStatus > render correctly 1`] = `
     amelipro-status
     bg-ap-yellow-lighten-3
     d-inline-flex
-    font-weight-semibold
+    font-weight-bold
     mb-0
-    text-h6
   "
   id="my-status-id"
-  style="border: 2px solid transparent; border-radius: 16px; padding: 12px 24px;"
+  style="border: 2px solid transparent; border-radius: 16px; padding: 4px 12px;"
 >
   texte du statut
 </p>

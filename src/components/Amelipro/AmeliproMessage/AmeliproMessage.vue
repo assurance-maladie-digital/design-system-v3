@@ -135,10 +135,10 @@
 			'text-ap-white': !isDark && !text,
 			'text-ap-grey-darken-1': isDark && !text,
 			'pa-0': text,
-			'pa-6': !text && !borderLeftMessage,
+			'pa-3 pa-sm-4': !text && !borderLeftMessage,
 			'amelipro-message__radius': !text,
 			'message-align-start': alignStart,
-			'px-6 py-4 bg-ap-grey-lighten-6': borderLeftMessage,
+			'px-6 py-3 bg-ap-grey-lighten-6': borderLeftMessage,
 		}"
 		:color="colorValue"
 		dense
