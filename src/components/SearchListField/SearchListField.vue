@@ -115,8 +115,8 @@
 		</span>
 
 		<VList
-			ref="checkboxListRef"
 			id="search-list"
+			ref="checkboxListRef"
 			v-model:selected="internalValue"
 			title="search-list"
 			select-strategy="classic"

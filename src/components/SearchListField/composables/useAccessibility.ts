@@ -42,11 +42,11 @@ export function useAccessibility(containerRef: Ref<HTMLElement | null>, dependen
 			subtree: true,
 			childList: true,
 			attributes: true,
-			attributeFilter: ['aria-describedby']
+			attributeFilter: ['aria-describedby'],
 		})
 	})
 
 	return {
-		removeAriaDescribedby
+		removeAriaDescribedby,
 	}
 }
