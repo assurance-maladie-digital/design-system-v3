@@ -4,7 +4,6 @@
 	import type { PropType } from 'vue'
 	import type { SearchListItem } from './types'
 	import { locales } from './locales'
-	import { useAccessibility } from './useAccessibility'
 
 	import { SyTextField, SyCheckbox } from '@/components'
 
@@ -66,10 +65,6 @@
 		}
 		emitChangeEvent(newValue)
 	}
-
-	// Use the composable to remove aria-describedby from checkboxes
-	// Pass the ref to the VList and the filteredItems as a dependency
-	useAccessibility(checkboxListRef, [filteredItems])
 
 	defineExpose({
 		filteredItems,
@@ -156,7 +151,7 @@
 							:model-value="isActive"
 							:aria-label="`${locales.checkboxLabel} ${item.label}`"
 							:title="`${locales.checkboxLabel} ${item.label}`"
-							hide-details
+              hide-details
 							class="ml-2"
 							density="compact"
 							@click="toggleSelection(item.value)"

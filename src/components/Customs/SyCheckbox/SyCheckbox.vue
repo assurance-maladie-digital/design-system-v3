@@ -186,23 +186,41 @@
 		}
 	})
 
-	// Fonction pour supprimer l'attribut aria-disabled="false" des éléments input
-	const removeAriaDisabled = () => {
+	// Fonction pour supprimer les attributs ARIA non désirés des éléments input
+	const removeAriaAttributes = () => {
 		nextTick(() => {
 			// Sélectionner tous les inputs de type checkbox dans le composant
-			const checkboxInputs = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
-
-			// Supprimer l'attribut aria-disabled="false" de chaque input
-			checkboxInputs.forEach((input) => {
+			// Pour aria-disabled
+			const checkboxInputsDisabled = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
+			checkboxInputsDisabled.forEach((input) => {
 				input.removeAttribute('aria-disabled')
+			})
+
+			// Pour aria-describedby
+			const checkboxInputsDescribed = document.querySelectorAll('input[type="checkbox"][aria-describedby]')
+			checkboxInputsDescribed.forEach((input) => {
+				// Si l'ID du checkbox commence par notre préfixe et qu'il a un aria-describedby, on le supprime
+				if (input.id && input.id.startsWith('checkbox-')) {
+					input.removeAttribute('aria-describedby')
+				}
 			})
 
 			// Configurer un MutationObserver pour surveiller les changements futurs
 			const observer = new MutationObserver((mutations) => {
 				mutations.forEach(() => {
-					const newCheckboxInputs = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
-					newCheckboxInputs.forEach((input) => {
+					// Pour aria-disabled
+					const newCheckboxInputsDisabled = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
+					newCheckboxInputsDisabled.forEach((input) => {
 						input.removeAttribute('aria-disabled')
+					})
+
+					// Pour aria-describedby
+					const newCheckboxInputsDescribed = document.querySelectorAll('input[type="checkbox"][aria-describedby]')
+					newCheckboxInputsDescribed.forEach((input) => {
+						// Si l'ID du checkbox commence par notre préfixe et qu'il a un aria-describedby, on le supprime
+						if (input.id && input.id.startsWith('checkbox-')) {
+							input.removeAttribute('aria-describedby')
+						}
 					})
 				})
 			})
@@ -212,14 +230,14 @@
 				subtree: true,
 				childList: true,
 				attributes: true,
-				attributeFilter: ['aria-disabled'],
+				attributeFilter: ['aria-disabled', 'aria-describedby'],
 			})
 		})
 	}
 
 	// Appliquer la correction lors du montage du composant
 	onMounted(() => {
-		removeAriaDisabled()
+		removeAriaAttributes()
 	})
 
 	const toggleMixed = () => {
