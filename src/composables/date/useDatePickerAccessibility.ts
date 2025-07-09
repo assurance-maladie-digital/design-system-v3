@@ -70,9 +70,7 @@ export function useDatePickerAccessibility() {
 		// Attribuer des labels significatifs basés sur la position ou l'icône
 		navigationButtons.forEach(async (button) => {
 			// find btn with aria-label contain item
-			console.log(button.className.includes('v-date-picker-controls__mode-btn'))
 			if (button.className.includes('v-date-picker-controls__mode-btn')) {
-				console.log(button)
 				button.removeAttribute('aria-label')
 			}
 			// recuperer les btns contenant un svg
