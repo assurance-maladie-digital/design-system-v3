@@ -73,14 +73,16 @@ export function useDatePickerAccessibility() {
 			if (button.className.includes('v-date-picker-controls__mode-btn')) {
 				button.removeAttribute('aria-label')
 			}
-			// recuperer les btns contenant un svg
+			// Vérifier si le bouton contient un SVG ou une icône
 			const svgEl = button.querySelector('svg')
-			if (svgEl) {
-				// Button contains an SVG element
-				const svgContent = svgEl.innerHTML
+			const iconEl = button.querySelector('.v-icon')
 
-				// Get any existing visible text content
-				const buttonText = button.textContent?.trim() || ''
+			// Get any existing visible text content
+			const buttonText = button.textContent?.trim() || ''
+
+			// Traiter les boutons avec SVG
+			if (svgEl) {
+				const svgContent = svgEl.innerHTML
 
 				// Left arrow (previous month)
 				if (svgContent.includes('M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z')) {
@@ -95,6 +97,19 @@ export function useDatePickerAccessibility() {
 				// Calendar icon
 				else if (svgContent.includes('M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z')) {
 					const accessibleName = buttonText ? `${buttonText} (Ouvrir le calendrier)` : 'Ouvrir le calendrier'
+					button.setAttribute('aria-label', accessibleName)
+				}
+			}
+			// Traiter les boutons avec icônes Material Design
+			else if (iconEl) {
+				// Left arrow (previous month)
+				if (iconEl.classList.contains('mdi-chevron-left')) {
+					const accessibleName = buttonText ? `${buttonText} (Mois précédent)` : 'Mois précédent'
+					button.setAttribute('aria-label', accessibleName)
+				}
+				// Right arrow (next month)
+				else if (iconEl.classList.contains('mdi-chevron-right')) {
+					const accessibleName = buttonText ? `${buttonText} (Mois suivant)` : 'Mois suivant'
 					button.setAttribute('aria-label', accessibleName)
 				}
 			}
