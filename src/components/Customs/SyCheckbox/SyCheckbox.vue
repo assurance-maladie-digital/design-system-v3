@@ -1,12 +1,16 @@
 <script lang="ts" setup>
 	import { computed, ref, watch, onMounted, nextTick } from 'vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { locales } from './locales'
 
 	const props = withDefaults(
 		defineProps<{
 			modelValue?: boolean | null
 			indeterminate?: boolean
 			label?: string
+			ariaLabel?: string
+			ariaLabelledby?: string
+			title?: string
 			color?: string
 			disabled?: boolean
 			readonly?: boolean
@@ -32,7 +36,10 @@
 		{
 			modelValue: false,
 			indeterminate: false,
-			label: '',
+			label: undefined,
+			ariaLabel: undefined,
+			ariaLabelledby: undefined,
+			title: undefined,
 			color: 'primary',
 			disabled: false,
 			readonly: false,
@@ -179,29 +186,35 @@
 	})
 
 	// Propriétés ARIA personnalisées pour éviter les conflits
-	const ariaAttributes = computed(() => {
-		return {
-			'aria-checked': ariaChecked.value,
-			'aria-controls': props.controlsIds.length > 0 ? props.controlsIds.join(' ') : undefined,
+	const messageId = computed(() => {
+		// Don't create messageId if aria-labelledby is provided
+		if (props.ariaLabelledby) {
+			return undefined
 		}
+
+		// Create messageId for checkboxes with IDs
+		if (props.id) {
+			return `${props.id}-messages`
+		}
+		return undefined
 	})
 
-	// Fonction pour supprimer l'attribut aria-disabled="false" des éléments input
-	const removeAriaDisabled = () => {
+	// Fonction pour supprimer les attributs ARIA non désirés des éléments input
+	const removeAriaAttributes = () => {
 		nextTick(() => {
 			// Sélectionner tous les inputs de type checkbox dans le composant
-			const checkboxInputs = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
-
-			// Supprimer l'attribut aria-disabled="false" de chaque input
-			checkboxInputs.forEach((input) => {
+			// Pour aria-disabled
+			const checkboxInputsDisabled = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
+			checkboxInputsDisabled.forEach((input) => {
 				input.removeAttribute('aria-disabled')
 			})
 
 			// Configurer un MutationObserver pour surveiller les changements futurs
 			const observer = new MutationObserver((mutations) => {
 				mutations.forEach(() => {
-					const newCheckboxInputs = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
-					newCheckboxInputs.forEach((input) => {
+					// Pour aria-disabled
+					const newCheckboxInputsDisabled = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
+					newCheckboxInputsDisabled.forEach((input) => {
 						input.removeAttribute('aria-disabled')
 					})
 				})
@@ -219,7 +232,7 @@
 
 	// Appliquer la correction lors du montage du composant
 	onMounted(() => {
-		removeAriaDisabled()
+		removeAriaAttributes()
 	})
 
 	const toggleMixed = () => {
@@ -261,40 +274,52 @@
 </script>
 
 <template>
-	<VCheckbox
-		:id="props.id"
-		v-model="model"
-		:name="props.name"
-		:label="props.label"
-		:color="props.color"
-		:disabled="props.disabled"
-		:readonly="props.readonly"
-		:hide-details="props.hideDetails"
-		:density="props.density"
-		:error="hasError"
-		:error-messages="errors"
-		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
-		:indeterminate="internalIndeterminate"
-		:value="props.value"
-		:true-value="props.trueValue"
-		:false-value="props.falseValue"
-		v-bind="ariaAttributes"
-		@click="toggleMixed"
-		@blur="checkErrorOnBlur"
-	>
-		<template
-			v-if="$slots.label"
-			#label
+	<div>
+		<VCheckbox
+			:id="props.id"
+			v-model="model"
+			:name="props.name"
+			:label="props.label"
+			:aria-label="props.ariaLabel"
+			:aria-labelledby="props.ariaLabelledby"
+			:title="props.title"
+			:color="props.color"
+			:disabled="props.disabled"
+			:readonly="props.readonly"
+			:hide-details="props.hideDetails"
+			:density="props.density"
+			:error="hasError"
+			:error-messages="errors"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+			:indeterminate="internalIndeterminate"
+			:true-value="props.trueValue"
+			:false-value="props.falseValue"
+			:aria-checked="ariaChecked"
+			:aria-describedby="messageId"
+			@click="toggleMixed"
+			@blur="checkErrorOnBlur"
 		>
-			<slot name="label" />
-		</template>
-		<template
-			v-if="$slots.default"
-			#default
-		>
-			<slot />
-		</template>
-	</VCheckbox>
+			<template
+				v-if="$slots.label"
+				#label
+			>
+				<slot name="label" />
+			</template>
+			<template
+				v-if="$slots.default"
+				#default
+			>
+				<slot />
+			</template>
+			<span
+				v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
+				:id="messageId"
+				class="d-sr-only"
+			>
+				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label }}</span>.
+			</span>
+		</VCheckbox>
+	</div>
 </template>
 
 <style scoped>
