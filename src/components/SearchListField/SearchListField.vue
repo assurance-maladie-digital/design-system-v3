@@ -4,7 +4,7 @@
 	import type { PropType } from 'vue'
 	import type { SearchListItem } from './types'
 	import { locales } from './locales'
-	import { useAccessibility } from './composables/useAccessibility'
+	import { useAccessibility } from './useAccessibility'
 
 	import { SyTextField, SyCheckbox } from '@/components'
 
