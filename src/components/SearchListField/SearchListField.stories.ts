@@ -65,7 +65,13 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-                <SearchListField v-bind="args" v-model="args.modelValue"/>
+                <div>
+                    <SearchListField v-bind="args" v-model="args.modelValue"/>
+                    <div style="margin-top: 20px;">
+                        <strong>Valeur(s) sélectionnée(s) :</strong>
+                        <pre>{{ args.modelValue }}</pre>
+                    </div>
+                </div>
             `,
 		}
 	},

@@ -153,6 +153,13 @@ pre.prismjs {
 	}
 }
 
+#story--composants-formulaires-searchlistfield--default {
+	.v-list {
+		width: 100% !important;
+		position: relative;
+	}
+}
+
 
 /* Fix for Table doc */
 #story--démarrer-releases--list {

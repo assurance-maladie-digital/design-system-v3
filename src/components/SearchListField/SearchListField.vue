@@ -4,8 +4,9 @@
 	import type { PropType } from 'vue'
 	import type { SearchListItem } from './types'
 	import { locales } from './locales'
+	import { useAccessibility } from './composables/useAccessibility'
 
-	import { SyTextField } from '@/components'
+	import { SyTextField, SyCheckbox } from '@/components'
 
 	const props = defineProps({
 		modelValue: {
@@ -31,6 +32,7 @@
 	const search = ref<string | null>(null)
 	const internalValue = ref<unknown[]>(props.modelValue)
 	const searchIcon = mdiMagnify
+	const checkboxListRef = ref<HTMLElement | null>(null)
 
 	watch(
 		() => props.modelValue,
@@ -53,10 +55,27 @@
 		emit('update:modelValue', value)
 	}
 
+	const toggleSelection = (itemValue: unknown) => {
+		const newValue = [...internalValue.value]
+		const index = newValue.indexOf(itemValue)
+		if (index === -1) {
+			newValue.push(itemValue)
+		}
+		else {
+			newValue.splice(index, 1)
+		}
+		emitChangeEvent(newValue)
+	}
+
+	// Use the composable to remove aria-describedby from checkboxes
+	// Pass the ref to the VList and the filteredItems as a dependency
+	useAccessibility(checkboxListRef, [filteredItems])
+
 	defineExpose({
 		filteredItems,
 		search,
 		emitChangeEvent,
+		toggleSelection,
 	})
 </script>
 
@@ -96,6 +115,7 @@
 		</span>
 
 		<VList
+			ref="checkboxListRef"
 			id="search-list"
 			v-model:selected="internalValue"
 			title="search-list"
@@ -131,24 +151,16 @@
 				</span>
 				<template #prepend="{ isActive }">
 					<VListItemAction start>
-						<input
+						<SyCheckbox
 							:id="`checkbox-${index}`"
-							type="checkbox"
-							role="option"
-							:checked="isActive"
-							:aria-selected="isActive"
+							:model-value="isActive"
 							:aria-label="`${locales.checkboxLabel} ${item.label}`"
-							:aria-labelledby="`checkbox-${index}`"
 							:title="`${locales.checkboxLabel} ${item.label}`"
-							class="custom-checkbox ml-2"
-						>
-						<!-- eslint-disable-next-line  vuejs-accessibility/label-has-for -->
-						<label
-							:for="`checkbox-${index}`"
-							class="d-sr-only"
-						>
-							{{ locales.checkboxLabel }}
-						</label>
+							hide-details
+							class="ml-2"
+							density="compact"
+							@click="toggleSelection(item.value)"
+						/>
 					</VListItemAction>
 
 					<VListItemTitle>{{ item.label }}</VListItemTitle>
@@ -169,31 +181,4 @@
 	opacity: 0;
 }
 
-.custom-checkbox {
-	appearance: none;
-	width: 20px;
-	height: 20px;
-	border: 2px solid rgb(0 0 0 / 50%);
-	border-radius: 2px;
-	outline: none;
-	cursor: pointer;
-	transition: all 0.3s ease;
-}
-
-.custom-checkbox:checked {
-	background-color: tokens.$primary-base !important;
-	border-color: tokens.$primary-base !important;
-
-	&::before {
-		content: '\2713';
-		display: block;
-		text-align: center;
-		line-height: 15px;
-		color: #fff;
-	}
-}
-
-.custom-checkbox:hover {
-	border-color: tokens.$primary-darker !important;
-}
 </style>
