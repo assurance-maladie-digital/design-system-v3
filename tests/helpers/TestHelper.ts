@@ -17,7 +17,7 @@ export default class TestHelper<C extends Component> {
 	private vueWrapper: VueWrapper<ComponentInstance<C>>
 	private mountOptions: Record<string, any> = {}
 
-	constructor(component: typeof this.component) {
+	constructor(component: Component) {
 		this.component = component
 		this.expectedPropOptions = {} as ExpectedPropOptions<C>
 		this.requiredPropValues = () => ({} as ComponentProps<C>)
