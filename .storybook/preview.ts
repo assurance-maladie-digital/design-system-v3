@@ -139,7 +139,7 @@ const preview: Preview = {
 						'Vue d\'ensemble',
 						'Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'],
 						'Layout', ['PageContainer'],
-						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink'],
+						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink', 'SyPagination'],
 						'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'],
 						'Formulaires', ['SyTextField', 'SySelect', 'SyInputSelect', 'SyBtnSelect', 'SyTextArea', 'DatePicker', ['Introduction', 'DatePicker', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'SelectBtnField', 'UploadWorkflow', 'SyBtnSelect'],
 						'Tableaux', ['PaginatedTable', 'TableToolbar', 'SyTable', 'SyServerTable'],

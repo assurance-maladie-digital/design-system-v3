@@ -1,10 +1,8 @@
 <script setup lang="ts">
 	import { computed, ref, nextTick, watch, onMounted } from 'vue'
 	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 	import { locales } from './locales'
-
-	// Generate unique ID for this pagination instance
-	const uniqueId = ref(`pagination-${Math.random().toString(36).substr(2, 9)}`)
 
 	// Reference to the SySelect component
 	const selectRef = ref<InstanceType<typeof SySelect> | null>(null)
@@ -55,69 +53,8 @@
 	}>()
 
 	/**
-	 * Visible page numbers to display
-	 * Shows current page, previous and next 2 pages when available
-	 */
-	const visiblePageNumbers = computed(() => {
-		const pages: (number | string)[] = []
-		const currentPage = props.page
-		const totalPages = props.pageCount
-
-		// Always show first page
-		pages.push(1)
-
-		// Add ellipsis if needed
-		if (currentPage > 4) {
-			pages.push('ellipsis-start')
-		}
-
-		// Show pages around current page
-		for (let i = Math.max(2, currentPage - 2); i <= Math.min(totalPages - 1, currentPage + 2); i++) {
-			pages.push(i)
-		}
-
-		// Add ellipsis if needed
-		if (currentPage < totalPages - 3) {
-			pages.push('ellipsis-end')
-		}
-
-		// Always show last page if more than 1 page
-		if (totalPages > 1) {
-			pages.push(totalPages)
-		}
-
-		return pages
-	})
-
-	/**
-	 * Extract only the numeric middle pages from visiblePageNumbers
-	 */
-	const middlePages = computed(() => {
-		return visiblePageNumbers.value.filter(
-			page => typeof page === 'number' && page !== 1 && page !== props.pageCount,
-		) as number[]
-	})
-
-	/**
-	 * Navigate to previous page
-	 */
-	function previousPage() {
-		if (props.page > 1) {
-			emit('update:page', props.page - 1)
-		}
-	}
-
-	/**
-	 * Navigate to next page
-	 */
-	function nextPage() {
-		if (props.page < props.pageCount) {
-			emit('update:page', props.page + 1)
-		}
-	}
-
-	/**
 	 * Navigate to a specific page
+	 * This function is used as a callback for the SyPagination component
 	 */
 	function goToPage(pageNumber: number) {
 		emit('update:page', pageNumber)
@@ -173,79 +110,25 @@
 			}}
 		</div>
 
-		<nav
+		<SyPagination
 			v-if="pageCount > 1"
+			:model-value="page"
+			:pages="pageCount"
+			:visible="5"
+			:label="locales.pagination.paginationNavAriaLabel"
 			class="pagination"
-			:aria-labelledby="uniqueId"
+			@update:model-value="goToPage"
 		>
-			<h2
-				:id="uniqueId"
-				class="d-sr-only"
-			>
-				{{ locales.pagination.paginationNavAriaLabel }}
-			</h2>
-			<ul class="list">
-				<!-- Previous link -->
-				<li>
-					<a
-						href="#"
-						:class="{ 'disabled': page <= 1 }"
-						@click.prevent="previousPage"
-					>{{ locales.pagination.previous }}</a>
-				</li>
-
-				<!-- First page -->
-				<li>
-					<a
-						href="#"
-						class="list-first"
-						:aria-current="page === 1 ? 'page' : undefined"
-						@click.prevent="goToPage(1)"
-					>{{ locales.pagination.pageText(1) }}</a>
-				</li>
-
-				<!-- Start ellipsis if needed -->
-				<li v-if="visiblePageNumbers.includes('ellipsis-start')">
-					<a class="ellipsis">&#8230;</a>
-				</li>
-
-				<!-- Middle pages (6, 7, 8, 9, 10) -->
-				<li
-					v-for="pageNum in middlePages"
-					:key="pageNum"
-				>
-					<a
-						href="#"
-						:aria-current="page === pageNum ? 'page' : undefined"
-						@click.prevent="goToPage(pageNum)"
-					>{{ locales.pagination.pageText(pageNum) }}</a>
-				</li>
-
-				<!-- End ellipsis if needed -->
-				<li v-if="visiblePageNumbers.includes('ellipsis-end')">
-					<a class="ellipsis">&#8230;</a>
-				</li>
-
-				<!-- Last page (if not already shown) -->
-				<li v-if="pageCount > 1">
-					<a
-						href="#"
-						class="list-last"
-						:aria-current="page === pageCount ? 'page' : undefined"
-						@click.prevent="goToPage(pageCount)"
-					>{{ locales.pagination.pageText(pageCount) }}</a>
-				</li>
-
-				<!-- Next link -->
-				<li>
-					<a
-						href="#"
-						:class="{ 'disabled': page >= pageCount }"
-						@click.prevent="nextPage"
-					>{{ locales.pagination.next }}</a>
-				</li>
-			</ul>
-		</nav>
+			<template #previous>
+				<span>{{ locales.pagination.previous }}</span>
+			</template>
+			<template #page-number="{ page: pageNum }">
+				{{ locales.pagination.pageText(pageNum) }}
+			</template>
+			<template #next>
+				<span>{{ locales.pagination.next }}</span>
+			</template>
+		</SyPagination>
 
 		<div class="rows-per-page">
 			<span class="rows-per-page-label">{{ locales.pagination.itemsPerPageText }}</span>
@@ -315,61 +198,6 @@
 		flex-wrap: wrap;
 		gap: 0.5rem;
 		align-items: center;
-
-		.list {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.5rem;
-			list-style: none;
-			padding: 0;
-			margin: 0;
-
-			li {
-				display: inline-block;
-			}
-
-			a {
-				display: inline-block;
-				padding: 0.5rem 0.75rem;
-				text-decoration: none;
-				color: tokens.$primary-base;
-				border: 1px solid tokens.$primary-base;
-				border-radius: 4px;
-				transition: all 0.2s ease;
-				font-size: 0.875rem;
-				line-height: 1;
-
-				&:hover,
-				&:focus {
-					background-color: rgba(tokens.$primary-base, 0.1);
-				}
-
-				&[aria-current='page'] {
-					background-color: tokens.$primary-base;
-					color: white;
-					font-weight: 500;
-				}
-
-				&.disabled {
-					color: rgb(0 0 0 / 60%); /* Increased from 40% to 60% for better contrast */
-					border-color: rgb(0 0 0 / 20%);
-					pointer-events: none;
-				}
-
-				&.ellipsis {
-					border: none;
-					pointer-events: none;
-				}
-			}
-
-			li:first-child a,
-			li:last-child a {
-				background-color: transparent;
-				border: none;
-				padding-left: 0.25rem;
-				padding-right: 0.25rem;
-			}
-		}
 	}
 }
 </style>

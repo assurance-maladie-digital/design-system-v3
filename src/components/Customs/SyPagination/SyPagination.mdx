@@ -1,0 +1,150 @@
+import { Canvas, Meta, Controls, Story, Source } from '@storybook/blocks';
+import * as SyPaginationStories from "./SyPagination.stories";
+
+<Meta of={SyPaginationStories} />
+
+# SyPagination
+
+Le composant `SyPagination` permet de naviguer à travers un ensemble de données divisées en pages. Il offre une interface intuitive avec des boutons de navigation et des indicateurs de page.
+
+<Canvas of={SyPaginationStories.Default} />
+
+## Caractéristiques
+
+- Navigation entre les pages avec boutons première page, page précédente, page suivante et dernière page
+- Affichage des numéros de page avec gestion automatique des ellipses pour les grands ensembles de pages
+- Personnalisation du nombre de pages visibles autour de la page courante
+- Support complet de l'accessibilité avec attributs ARIA
+- Slots personnalisables pour les boutons et l'ajout de contenu supplémentaire
+
+## API
+
+<Controls of={SyPaginationStories.Default} />
+
+## Exemples d'utilisation
+
+### Pagination avec peu de pages
+
+Lorsque le nombre total de pages est faible, toutes les pages sont affichées sans ellipses.
+
+<Canvas of={SyPaginationStories.Default} />
+
+### Pagination avec beaucoup de pages
+
+Lorsque le nombre total de pages est élevé, des ellipses sont affichées pour indiquer les pages masquées.
+
+<Canvas of={SyPaginationStories.ManyPages} />
+
+### Personnalisation des boutons de navigation
+
+Les boutons de navigation peuvent être personnalisés à l'aide de slots.
+
+<Canvas of={SyPaginationStories.CustomButtons} />
+
+### Ajout d'informations complémentaires
+
+Vous pouvez ajouter du contenu avant ou après la pagination à l'aide des slots `prepend` et `append`.
+
+<Canvas of={SyPaginationStories.Slots} />
+
+## Implémentation
+
+Voici un exemple d'implémentation du composant SyPagination :
+
+<Source dark code={`
+<script setup lang="ts">
+	import { ref, computed } from 'vue'
+	import { SyPagination } from '@cnamts/synapse'
+
+	// Exemple de données
+	const items = Array.from({ length: 50 }, (_, i) => ({
+		id: i + 1,
+		title: \`Élément \${i + 1}\`,
+	}))
+
+	const currentPage = ref(1)
+	const itemsPerPage = 10
+	const totalItems = items.length
+	const totalPages = computed(() => Math.ceil(totalItems / itemsPerPage))
+
+	// Calcul des éléments à afficher sur la page courante
+	const displayedItems = computed(() => {
+		const start = (currentPage.value - 1) * itemsPerPage
+		const end = start + itemsPerPage
+		return items.slice(start, end)
+	})
+
+	// Informations pour l'affichage du texte d'information
+	const startItem = computed(() => (currentPage.value - 1) * itemsPerPage + 1)
+	const endItem = computed(() => Math.min(currentPage.value * itemsPerPage, totalItems))
+</script>
+
+<template>
+	<div class="example-container">
+		<div
+			id="paginatedContent"
+			class="content-area"
+		>
+			<div
+				v-for="item in displayedItems"
+				:key="item.id"
+				class="content-item"
+			>
+				{{ item.title }}
+			</div>
+		</div>
+
+		<SyPagination
+			v-model="currentPage"
+			:pages="totalPages"
+			:visible="5"
+			aria-controls="paginatedContent"
+		>
+			<template #prepend>
+				<div class="info-text">
+					Éléments {{ startItem }}-{{ endItem }} sur {{ totalItems }}
+				</div>
+			</template>
+		</SyPagination>
+	</div>
+</template>
+
+<style scoped>
+.example-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.content-area {
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.content-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.content-item:last-child {
+  border-bottom: none;
+}
+
+.info-text {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+</style>
+`} />
+
+## Accessibilité
+
+Le composant SyPagination respecte les règles d'accessibilité RGAA :
+
+- Utilisation appropriée des attributs ARIA pour identifier la navigation de pagination
+- Libellés explicites pour les boutons de navigation
+- Support complet de la navigation au clavier
+- Contraste suffisant entre le texte et le fond
+- Association claire entre la pagination et le contenu paginé via l'attribut `aria-controls`
