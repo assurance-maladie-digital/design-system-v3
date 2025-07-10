@@ -356,6 +356,17 @@
 				</template>
 			</template>
 
+			<!-- Dynamically forward all slots to maintain flexibility -->
+			<template
+				v-for="slotName in Object.keys($slots)"
+				#[slotName]="slotProps"
+			>
+				<slot
+					:name="slotName"
+					v-bind="slotProps ?? {}"
+				/>
+			</template>
+
 			<template #bottom>
 				<div class="d-flex align-center pa-2">
 					<OrganizeColumns

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, onMounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, nextTick, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -137,7 +137,6 @@
 		accessibilityRowCheckboxes()
 	})
 
-	// Use the table checkbox composable
 	const { getItemValue, toggleAllRows } = useTableCheckbox({
 		items: tableItems,
 		modelValue: model,
@@ -348,6 +347,17 @@
 						</th>
 					</tr>
 				</template>
+			</template>
+
+			<!-- Dynamically forward all slots to maintain flexibility -->
+			<template
+				v-for="slotName in Object.keys($slots)"
+				#[slotName]="slotProps"
+			>
+				<slot
+					:name="slotName"
+					v-bind="slotProps ?? {}"
+				/>
 			</template>
 
 			<template #bottom>
