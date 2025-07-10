@@ -142,10 +142,10 @@ Vérifie si une date est postérieure à une autre date.
 
 #### Utilisation
 
-```typescript dark
-// Avec des chaînes de dates (format DD/MM/YYYY)
+<Source dark code={`// Avec des chaînes de dates (format DD/MM/YYYY)
 isDateAfter('15/02/2023', '10/02/2023') // true
 isDateAfter('10/02/2023', '15/02/2023') // false
+ `}/>
 
 <Source dark code={`// Avec des objets Date
 isDateAfter(new Date('2023-02-15'), new Date('2023-02-10')) // true
@@ -246,7 +246,6 @@ Vérifie si une chaîne est un email valide.
 
 #### Utilisation
 
-```typescript dark
 <Source dark code={`// Emails valides
 isEmailValid('user@example.com') // true
 isEmailValid('user.name+tag@example.co.uk') // true
