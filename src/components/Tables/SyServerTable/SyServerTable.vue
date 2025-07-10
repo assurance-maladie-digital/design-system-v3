@@ -349,35 +349,15 @@
 				</template>
 			</template>
 
-			<!-- Pass through the item slot if provided -->
+			<!-- Dynamically forward all slots to maintain flexibility -->
 			<template
-				v-if="$slots.item"
-				#item="slotProps"
+				v-for="slotName in Object.keys($slots)"
+				#[slotName]="slotProps"
 			>
 				<slot
-					name="item"
-					:item="slotProps.item"
-					:columns="slotProps.columns"
+					:name="slotName"
+					v-bind="slotProps ?? {}"
 				/>
-			</template>
-
-			<!-- Pass through the group-header slot if provided -->
-			<template
-				v-if="$slots['group-header']"
-				#group-header="slotProps"
-			>
-				<slot
-					name="group-header"
-					:item="slotProps.item"
-				/>
-			</template>
-
-			<!-- Pass through the loading slot if provided -->
-			<template
-				v-if="$slots.loading"
-				#loading
-			>
-				<slot name="loading" />
 			</template>
 
 			<template #bottom>
