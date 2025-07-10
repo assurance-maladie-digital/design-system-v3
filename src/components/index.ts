@@ -80,23 +80,49 @@ export { default as FilterSideBar } from './FilterSideBar/FilterSideBar.vue'
 // ===========================
 // Données
 // ===========================
+export { default as Accordion } from './Accordion/Accordion.vue'
 export { default as ChipList } from './ChipList/ChipList.vue'
 export * from './ChipList/types'
 export { default as CollapsibleList } from './CollapsibleList/CollapsibleList.vue'
 export { default as DataList } from './DataList/DataList.vue'
 export { default as DataListGroup } from './DataListGroup/DataListGroup.vue'
 export { default as DataListItem } from './DataListItem/DataListItem.vue'
+export { default as FileList } from './FileList/FileList.vue'
+export { default as FilePreview } from './FilePreview/FilePreview.vue'
 export { default as Logo } from './Logo/Logo.vue'
 export { default as LogoBrandSection } from './LogoBrandSection/LogoBrandSection.vue'
+export { default as SyIcon } from './Customs/SyIcon/SyIcon.vue'
+
+// ===========================
+// Feedback
+// ===========================
+export { default as CookieBanner } from './CookieBanner/CookieBanner.vue'
+export { default as CookiesInformation } from './CookiesSelection/CookiesInformation/CookiesInformation.vue'
+export { default as CookiesSelection } from './CookiesSelection/CookiesSelection.vue'
+export { default as CookiesTable } from './CookiesSelection/CookiesTable/CookiesTable.vue'
+export { default as DialogBox } from './DialogBox/DialogBox.vue'
 export { default as NotificationBar } from './NotificationBar/NotificationBar.vue'
 export * from './NotificationBar/types'
+export { default as RatingPicker } from './RatingPicker/RatingPicker.vue'
+export { default as SyAlert } from './SyAlert/SyAlert.vue'
 
+// ===========================
+// Templates
+// ===========================
+export { default as ErrorPage } from './ErrorPage/ErrorPage.vue'
+export { default as MaintenancePage } from './MaintenancePage/MaintenancePage.vue'
+export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
+
+// ===========================
 // Composables and services
+// ===========================
 export { useDateFormat } from '../composables/date/useDateFormatDayjs'
 export { useFieldValidation } from '../composables/rules/useFieldValidation'
 export { useNotificationService } from '../services/NotificationService'
 export { useValidation } from '../composables/validation/useValidation'
 export type { RuleOptions } from '../composables/rules/useFieldValidation'
 
+// ===========================
 // Directives
+// ===========================
 export { vRgaaSvgFix } from '../directives/rgaaSvgFix'
