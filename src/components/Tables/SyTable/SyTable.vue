@@ -355,6 +355,37 @@
 					</tr>
 				</template>
 			</template>
+			
+			<!-- Pass through the item slot if provided -->
+			<template
+				v-if="$slots.item"
+				#item="slotProps"
+			>
+				<slot
+					name="item"
+					:item="slotProps.item"
+					:columns="slotProps.columns"
+				/>
+			</template>
+
+			<!-- Pass through the group-header slot if provided -->
+			<template
+				v-if="$slots['group-header']"
+				#group-header="slotProps"
+			>
+				<slot
+					name="group-header"
+					:item="slotProps.item"
+				/>
+			</template>
+
+			<!-- Pass through the loading slot if provided -->
+			<template
+				v-if="$slots.loading"
+				#loading
+			>
+				<slot name="loading" />
+			</template>
 
 			<template #bottom>
 				<div class="d-flex align-center pa-2">
