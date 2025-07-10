@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, provide, ref, toRef, useAttrs, useSlots, watch } from 'vue'
+	import { computed, nextTick, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -137,10 +137,6 @@
 		accessibilityRowCheckboxes()
 	})
 
-	// Helper method to check if a specific item.* slot exists
-	const slots = useSlots()
-
-	// Use the table checkbox composable
 	const { getItemValue, toggleAllRows } = useTableCheckbox({
 		items: tableItems,
 		modelValue: model,
@@ -355,7 +351,7 @@
 
 			<!-- Pass through the item slot if provided -->
 			<template
-				v-if="slots.item"
+				v-if="$slots.item"
 				#item="slotProps"
 			>
 				<slot
@@ -367,7 +363,7 @@
 
 			<!-- Pass through the group-header slot if provided -->
 			<template
-				v-if="slots['group-header']"
+				v-if="$slots['group-header']"
 				#group-header="slotProps"
 			>
 				<slot
@@ -378,7 +374,7 @@
 
 			<!-- Pass through the loading slot if provided -->
 			<template
-				v-if="slots.loading"
+				v-if="$slots.loading"
 				#loading
 			>
 				<slot name="loading" />
