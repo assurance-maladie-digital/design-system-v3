@@ -1,0 +1,292 @@
+import { Meta, Source } from '@storybook/addon-docs'
+
+<Meta title="Guide du dev/Classes utilitaires" />
+
+# Classes utilitaires
+
+Le Design System fournit un ensemble de fonctions utilitaires pour faciliter le développement d'applications. Ces fonctions sont regroupées par catégories et peuvent être importées individuellement selon vos besoins.
+
+## Sommaire
+
+- [Utilitaires de stockage](#utilitaires-de-stockage)
+- [Utilitaires de formatage](#utilitaires-de-formatage)
+- [Utilitaires de validation](#utilitaires-de-validation)
+- [Utilitaires DOM & Navigateur](#utilitaires-dom--navigateur)
+- [Utilitaires de données](#utilitaires-de-données)
+- [Règles de validation](#règles-de-validation)
+
+## Utilitaires de stockage
+
+### LocalStorageUtility
+
+Classe utilitaire pour manipuler le localStorage avec gestion des préfixes et de la sérialisation.
+
+<Source dark code={`import { LocalStorageUtility } from '@cnamts/synpase'
+
+// Création d'une instance avec un préfixe
+const storage = new LocalStorageUtility('my-app')
+
+// Stocker une valeur
+storage.setItem('user', { name: 'John', role: 'admin' })
+
+// Récupérer une valeur
+const user = storage.getItem('user')
+console.log(user) // { name: 'John', role: 'admin' }
+
+// Supprimer une valeur
+storage.removeItem('user')
+
+// Vérifier si une clé existe
+const hasUser = storage.hasItem('user')
+console.log(hasUser) // false
+
+// Effacer toutes les valeurs avec le préfixe
+storage.clear()
+`}/>
+
+## Utilitaires de formatage
+
+### calcHumanFileSize
+
+Convertit une taille en octets en une chaîne de caractères lisible par un humain.
+
+<Source dark code={`import { calcHumanFileSize } from '@cnamts/synpase'
+
+console.log(calcHumanFileSize(1024)) // '1 Ko'
+console.log(calcHumanFileSize(1048576)) // '1 Mo'
+console.log(calcHumanFileSize(1073741824)) // '1 Go'
+`}/>
+
+### convertToUnit
+
+Convertit une valeur en unité CSS (px, em, rem, etc.).
+
+<Source dark code={`import { convertToUnit } from '@cnamts/synpase'
+
+console.log(convertToUnit(16)) // '16px'
+console.log(convertToUnit('16')) // '16px'
+console.log(convertToUnit('16px')) // '16px'
+console.log(convertToUnit('2rem')) // '2rem'
+console.log(convertToUnit(null)) // undefined
+`}/>
+
+### formatDate
+
+Formate une date selon un format spécifique.
+
+<Source dark code={`import { formatDate } from '@cnamts/synpase'
+
+const date = new Date('2023-01-15')
+
+console.log(formatDate(date)) // '15/01/2023'
+console.log(formatDate(date, 'DD/MM/YYYY HH:mm')) // '15/01/2023 00:00'
+console.log(formatDate('2023-01-15')) // '15/01/2023'
+`}/>
+
+### parseDate
+
+Parse une chaîne de caractères en objet Date.
+
+<Source dark code={`import { parseDate } from '@cnamts/synpase'
+
+console.log(parseDate('15/01/2023').toISOString()) // '2023-01-15T00:00:00.000Z'
+console.log(parseDate('2023-01-15').toISOString()) // '2023-01-15T00:00:00.000Z'
+`}/>
+
+## Utilitaires de validation
+
+### propValidator
+
+Valide les props d'un composant Vue.
+
+<Source dark code={`import { propValidator } from '@cnamts/synpase'
+
+export default {
+  props: {
+    size: {
+      type: String,
+      validator: propValidator('size', ['small', 'medium', 'large'])
+    }
+  }
+}
+`}/>
+
+### ruleMessage
+
+Génère un message d'erreur pour les règles de validation.
+
+<Source dark code={`import { ruleMessage } from '@cnamts/synpase'
+
+const message = ruleMessage('Ce champ est requis')
+console.log(message) // 'Ce champ est requis'
+
+// Avec un nom de champ
+const fieldMessage = ruleMessage('Ce champ est requis', 'Email')
+console.log(fieldMessage) // 'Email : Ce champ est requis'
+`}/>
+
+### Validation de dates
+
+<Source dark code={`import { 
+  isDateAfter,
+  isDateBefore,
+  isDateInRange,
+  isDateValidUtil,
+  isWeekend
+} from '@cnamts/synpase'
+
+// Vérifier si une date est après une autre
+console.log(isDateAfter('15/02/2023', '10/02/2023')) // true
+
+// Vérifier si une date est avant une autre
+console.log(isDateBefore('10/02/2023', '15/02/2023')) // true
+
+// Vérifier si une date est dans une plage
+console.log(isDateInRange('15/02/2023', '10/02/2023', '20/02/2023')) // true
+
+// Vérifier si une date est valide
+console.log(isDateValidUtil('15/02/2023')) // true
+console.log(isDateValidUtil('31/02/2023')) // false (février n'a pas 31 jours)
+
+// Vérifier si une date est un week-end
+console.log(isWeekend(new Date('2023-02-18'))) // true (samedi)
+console.log(isWeekend(new Date('2023-02-19'))) // true (dimanche)
+console.log(isWeekend(new Date('2023-02-20'))) // false (lundi)
+`}/>
+
+### Validation d'email
+
+<Source dark code={`import { isEmailValid } from '@cnamts/synpase'
+
+console.log(isEmailValid('user@example.com')) // true
+console.log(isEmailValid('invalid-email')) // false
+`}/>
+
+## Utilitaires DOM & Navigateur
+
+### copyToClipboard
+
+Copie un texte dans le presse-papier.
+
+<Source dark code={`import { copyToClipboard } from '@cnamts/synpase'
+
+// Copier un texte dans le presse-papier
+copyToClipboard('Texte à copier')
+  .then(() => console.log('Texte copié avec succès'))
+  .catch(error => console.error('Erreur lors de la copie', error))
+`}/>
+
+### downloadFile
+
+Télécharge un fichier à partir d'une URL ou d'un Blob.
+
+<Source dark code={`import { downloadFile } from '@cnamts/synpase'
+
+// Télécharger un fichier à partir d'une URL
+downloadFile('https://example.com/document.pdf', 'mon-document.pdf')
+
+// Télécharger un fichier à partir d'un Blob
+const blob = new Blob(['contenu du fichier'], { type: 'text/plain' })
+downloadFile(blob, 'mon-fichier.txt')
+`}/>
+
+### throttleDisplayFn
+
+Limite le nombre d'appels à une fonction d'affichage pour améliorer les performances.
+
+<Source dark code={`import { throttleDisplayFn } from '@cnamts/synpase'
+
+// Fonction originale qui pourrait être appelée trop fréquemment
+const updateUI = () => {
+  // Mise à jour coûteuse de l'interface
+}
+
+// Création d'une version limitée de la fonction
+const throttledUpdateUI = throttleDisplayFn(updateUI)
+
+// Utilisation dans un événement qui se déclenche fréquemment
+window.addEventListener('scroll', throttledUpdateUI)
+`}/>
+
+## Utilitaires de données
+
+### deepCopy
+
+Crée une copie profonde d'un objet.
+
+<Source dark code={`import { deepCopy } from '@cnamts/synpase'
+
+const originalObject = {
+  user: {
+    name: 'John',
+    settings: {
+      theme: 'dark',
+      notifications: true
+    }
+  }
+}
+
+const copy = deepCopy(originalObject)
+
+// Modifier la copie n'affecte pas l'original
+copy.user.settings.theme = 'light'
+console.log(originalObject.user.settings.theme) // 'dark'
+`}/>
+
+## Règles de validation
+
+Le Design System fournit également un ensemble de règles de validation prêtes à l'emploi pour les formulaires Vuetify.
+
+<Source dark code={`import { 
+  doMatchPattern,
+  isDateValid,
+  isExactLength,
+  isHolidayDay,
+  isMaxLength,
+  isMinLength,
+  isNotAfterDate,
+  isNotAfterToday,
+  isNotBeforeDate,
+  isNotBeforeToday,
+  isRequired,
+  isValidEmail
+} from '@cnamts/synpase'
+
+export default {
+  setup() {
+    // Exemple d'utilisation dans un formulaire
+    const form = ref({
+      email: '',
+      password: '',
+      birthDate: ''
+    })
+
+    const rules = {
+      email: [
+        isRequired(),
+        isValidEmail()
+      ],
+      password: [
+        isRequired(),
+        isMinLength(8),
+        isMaxLength(20),
+        doMatchPattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, 
+          'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial')
+      ],
+      birthDate: [
+        isRequired(),
+        isDateValid(),
+        isNotAfterToday(),
+        v => !isHolidayDay(v) || 'La date ne peut pas être un jour férié'
+      ]
+    }
+
+    return {
+      form,
+      rules
+    }
+  }
+}
+`}/>
+
+Pour plus de détails sur l'utilisation des règles, consultez la [documentation des règles de validation](/story/guide-du-dev-utiliser-les-rules--page).

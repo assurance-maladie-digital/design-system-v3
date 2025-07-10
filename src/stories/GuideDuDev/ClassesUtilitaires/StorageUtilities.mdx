@@ -1,0 +1,145 @@
+import { Meta, Source } from '@storybook/addon-docs'
+
+<Meta title="Guide du dev/Classes utilitaires/Utilitaires de stockage" />
+
+# Utilitaires de stockage
+
+## LocalStorageUtility
+
+`LocalStorageUtility` est une classe qui facilite l'utilisation du localStorage en ajoutant des fonctionnalités comme :
+- Préfixage automatique des clés
+- Sérialisation/désérialisation des objets JSON
+- Gestion des erreurs
+- Méthodes utilitaires pour vérifier l'existence des clés
+
+### Importation
+
+<Source dark code={`import { LocalStorageUtility } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+#### Création d'une instance
+
+<Source dark code={`// Avec un préfixe (recommandé pour éviter les collisions)
+const storage = new LocalStorageUtility('my-app')
+
+// Sans préfixe (non recommandé)
+const globalStorage = new LocalStorageUtility()
+`}/>
+
+#### Méthodes disponibles
+
+##### setItem
+
+Stocke une valeur dans le localStorage avec préfixage automatique et sérialisation.
+
+<Source dark code={`// Stockage d'une valeur simple
+storage.setItem('username', 'john.doe')
+
+// Stockage d'un objet
+storage.setItem('user', { 
+  id: 1, 
+  name: 'John Doe', 
+  roles: ['admin', 'user'] 
+})
+
+// Stockage avec une clé personnalisée (sans préfixe)
+storage.setItem('global-config', { theme: 'dark' }, false)
+`}/>
+
+##### getItem
+
+Récupère une valeur du localStorage avec désérialisation automatique.
+
+<Source dark code={`// Récupération d'une valeur simple
+const username = storage.getItem('username')
+console.log(username) // 'john.doe'
+
+// Récupération d'un objet
+const user = storage.getItem('user')
+console.log(user) // { id: 1, name: 'John Doe', roles: ['admin', 'user'] }
+
+// Récupération avec une clé personnalisée (sans préfixe)
+const config = storage.getItem('global-config', false)
+console.log(config) // { theme: 'dark' }
+
+// Récupération avec une valeur par défaut
+const settings = storage.getItem('settings', true, { notifications: true })
+console.log(settings) // { notifications: true }
+`}/>
+
+##### removeItem
+
+Supprime une valeur du localStorage.
+
+<Source dark code={`// Suppression d'une valeur
+storage.removeItem('username')
+
+// Suppression avec une clé personnalisée (sans préfixe)
+storage.removeItem('global-config', false)
+`}/>
+
+##### hasItem
+
+Vérifie si une clé existe dans le localStorage.
+
+<Source dark code={`// Vérification de l'existence d'une clé
+const hasUser = storage.hasItem('user')
+console.log(hasUser) // true ou false
+
+// Vérification avec une clé personnalisée (sans préfixe)
+const hasConfig = storage.hasItem('global-config', false)
+console.log(hasConfig) // true ou false
+`}/>
+
+##### clear
+
+Efface toutes les valeurs du localStorage avec le préfixe spécifié.
+
+<Source dark code={`// Effacer toutes les valeurs avec le préfixe
+storage.clear()
+`}/>
+
+### Exemple complet
+
+<Source dark code={`import { LocalStorageUtility } from '@cnamts/synpase'
+
+// Création d'une instance pour notre application
+const appStorage = new LocalStorageUtility('my-app')
+
+// Stockage des préférences utilisateur
+appStorage.setItem('preferences', {
+  theme: 'dark',
+  fontSize: 'medium',
+  notifications: true
+})
+
+// Récupération des préférences
+const preferences = appStorage.getItem('preferences')
+
+// Mise à jour d'une préférence
+if (preferences) {
+  preferences.theme = 'light'
+  appStorage.setItem('preferences', preferences)
+}
+
+// Vérification si l'utilisateur est connecté
+const isLoggedIn = appStorage.hasItem('user')
+
+// Nettoyage lors de la déconnexion
+if (isLoggedIn) {
+  // Suppression de données spécifiques
+  appStorage.removeItem('user')
+  
+  // Ou suppression de toutes les données de l'application
+  appStorage.clear()
+}
+`}/>
+
+### Bonnes pratiques
+
+- Utilisez toujours un préfixe pour éviter les collisions avec d'autres applications
+- Regroupez les données liées dans des objets plutôt que de créer plusieurs clés
+- Utilisez la méthode `clear()` avec précaution, car elle supprime toutes les données associées au préfixe
+- Pensez à gérer les cas où les données peuvent être absentes ou corrompues
