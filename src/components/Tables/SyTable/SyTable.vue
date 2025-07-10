@@ -355,7 +355,7 @@
 					</tr>
 				</template>
 			</template>
-			
+
 			<!-- Pass through the item slot if provided -->
 			<template
 				v-if="$slots.item"
