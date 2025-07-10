@@ -1,0 +1,109 @@
+<template>
+	<section>
+		<h1>AmeliproDialog</h1>
+		<div class="d-flex flex-wrap align-center justify-center w-100">
+			<AmeliproBtn
+				rounded
+				@click="value = true"
+			>
+				Ouvrir la modale
+			</AmeliproBtn>
+
+			<AmeliproDialog
+				v-model="value"
+				aria-labelledby="modal-title"
+				:no-footer="false"
+			>
+				<template #header>
+					<h2
+						id="modal-title"
+						class="ma-0 text-h4"
+					>
+						Exemple de fenêtre de dialogue
+					</h2>
+				</template>
+
+				<template #default>
+					<div class="modal__content">
+						Le contenu de ma fenêtre de dialogue
+					</div>
+				</template>
+			</AmeliproDialog>
+		</div>
+		<div class="d-flex flex-wrap align-center justify-center w-100">
+			<AmeliproBtn
+				rounded
+				@click="value2 = true"
+			>
+				Ouvrir la modale 2
+			</AmeliproBtn>
+
+			<AmeliproDialog
+				v-model="value2"
+				aria-labelledby="modal-title-exemple"
+			>
+				<template #header>
+					<h2
+						id="modal-title-exemple"
+						class="ma-0 text-h4"
+					>
+						Exemple de fenêtre de dialogue
+					</h2>
+				</template>
+
+				<template #default>
+					<div class="modal__content">
+						Le contenu de ma fenêtre de dialogue 2
+					</div>
+				</template>
+
+				<template #footer>
+					<div class="d-flex flex-column flex-sm-row justify-sm-space-between">
+						<AmeliproBtn
+							class="d-block d-sm-none"
+							rounded
+							@click="value2 = false"
+						>
+							Valider
+						</AmeliproBtn>
+
+						<AmeliproBtn
+							bordered
+							class="mt-2 mt-sm-0"
+							color="ap-white"
+							hover-color="ap-blue lighten-3"
+							rounded
+							text-color="ap-blue darken-1"
+							@click="value2 = false"
+						>
+							Retour
+						</AmeliproBtn>
+
+						<AmeliproBtn
+							class="d-none d-sm-block"
+							rounded
+							@click="value2 = false"
+						>
+							Valider
+						</AmeliproBtn>
+					</div>
+				</template>
+			</AmeliproDialog>
+		</div>
+	</section>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue';
+
+	const value = ref(false);
+	const value2 = ref(false);
+
+</script>
+
+<style lang="scss" scoped>
+	.modal__content {
+		padding: 30px 16px;
+	}
+</style>
+

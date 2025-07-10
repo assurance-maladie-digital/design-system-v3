@@ -2,7 +2,7 @@ export default [{
 	// -----------------------
 	// AMELIPRO : Règles communes
 	// -----------------------
-	files: ['**/Amelipro/**/*.{js,ts,vue}'],
+	files: ['**/Amelipro/**/*.{js,ts,vue}', '**/_gni/**/*.{js,ts,vue}'],
 	rules: {
 		'array-bracket-newline': 'off',
 		'array-element-newline': 'off',
@@ -81,6 +81,7 @@ export default [{
 		'no-implicit-coercion': 'warn',
 		'no-inline-comments': 'off',
 		'no-invalid-this': 'off',
+		'no-irregular-whitespace': ['error', { skipComments: true }],
 		'no-magic-numbers': 'off',
 		'no-mixed-spaces-and-tabs': ['warn', 'smart-tabs'],
 		'no-multi-spaces': 'warn',
@@ -146,7 +147,7 @@ export default [{
 	// -----------------------
 	// Règles Typescript
 	// -----------------------
-	files: ['**/Amelipro/**/*.ts', '**/Amelipro/**/*.vue'],
+	files: ['**/Amelipro/**/*.{js,ts,vue}', '**/_gni/**/*.{js,ts,vue}'],
 	rules: {
 		// -----------------------
 		// @typescript Rules
@@ -166,7 +167,7 @@ export default [{
 	// -----------------------
 	// Règles Vue.js
 	// -----------------------
-	files: ['**/Amelipro/**/*.vue'],
+	files: ['**/Amelipro/**/*.vue', '**/_gni/**/*.vue'],
 	rules: {
 		'indent': 'off',
 		'vue/attributes-order': ['warn', {
