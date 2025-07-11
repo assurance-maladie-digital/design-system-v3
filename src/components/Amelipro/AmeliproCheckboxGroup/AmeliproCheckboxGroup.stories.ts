@@ -38,7 +38,10 @@ const meta = {
 		'requiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props ariaRequired est active' },
 		'subItem': { description: 'Permet de rajouter un élément sous toutes checkbox seulement lorsqu’elle sont cochées (existe seulement si les props horizontal et fullHorizontal sont à false)' },
 		'uniqueId': { description: 'Id unique du groupe de checkbox' },
-		'update:model-value': { description: 'Événement émis au changement du v-model' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement du v-model',
+		},
 	},
 	component: AmeliproCheckboxGroup,
 	title: 'Composants/Amelipro/Formulaires/AmeliproCheckboxGroup',
@@ -101,6 +104,7 @@ export const Default: Story = {
 				class="ml-2"
 				tooltip-text="contenu de la tooltip"
 				unique-id="ma-tooltip"
+				@update:model-value="args['update:model-value']"
 			/>
 		</template>
 	</AmeliproCheckboxGroup>
@@ -163,6 +167,7 @@ export const Default: Story = {
 	:unique-id="args.uniqueId"
 	v-bind="args"
 	v-model="model"
+	@update:model-value="args['update:model-value']"
 >
 	<template #append-1>
 		<AmeliproTooltips

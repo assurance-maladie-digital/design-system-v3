@@ -27,7 +27,10 @@ const meta = {
 			},
 		},
 		'uniqueId': { description: 'Id du groupe de boutons radios, il doit être unique' },
-		'update:model-value': { description: 'Événement émis au changement du v-model' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement du v-model',
+		},
 	},
 	component: AmeliproIllustratedRadioGroup,
 	title: 'Composants/Amelipro/Formulaires/AmeliproIllustratedRadioGroup',
@@ -91,6 +94,7 @@ export const Default: Story = {
 		v-model="value"
 		group-label="Libellé du groupe"
 		unique-id="unique-id"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>`,
 			},
@@ -157,6 +161,7 @@ export const Default: Story = {
 <AmeliproIllustratedRadioGroup
 	v-bind="args"
 	v-model="model"
+	@update:model-value="args['update:model-value']"
 />`,
 	}),
 }

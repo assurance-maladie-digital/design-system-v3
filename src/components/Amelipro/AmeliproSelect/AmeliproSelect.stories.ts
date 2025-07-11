@@ -53,7 +53,10 @@ const meta = {
 		'readonly': { description: 'Passe le select en lecture seule' },
 		'rules': { description: 'Tableau des règles à appliquer au champ' },
 		'uniqueId': { description: 'Id unique du select' },
-		'update:model-value': { description: 'Event émis au changement du v-model' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Event émis au changement du v-model',
+		},
 		'validateOn': { description: 'Défini le moment où la validation du champ se fait, voir la documentation de Vuetify pour plus d’informtations' },
 	},
 	component: AmeliproSelect,
@@ -102,6 +105,7 @@ export const Default: Story = {
 		:items="items"
 		label="Mon label"
 		unique-id="amelipro-select-id"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>`,
 			},
@@ -154,6 +158,7 @@ export const Default: Story = {
 <AmeliproSelect
 	v-bind="args"
 	v-model="model"
+	@update:model-value="args['update:model-value']"
 />`,
 	}),
 
