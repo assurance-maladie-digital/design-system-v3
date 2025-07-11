@@ -16,7 +16,7 @@ exports[`AmeliproDropdownMenu > Snapshots > renders the component with all prope
     bordered="false"
     class="
       dropdown-menu__open-btn
-      font-weight-semibold
+      font-weight-bold
       text-h6
       text-none
       w-100
@@ -29,7 +29,7 @@ exports[`AmeliproDropdownMenu > Snapshots > renders the component with all prope
     iconbordered="false"
     iconleft="false"
     infoblock="false"
-    minheight="3rem"
+    minheight="2.5rem"
     size="60px"
     text="false"
     textcolor="ap-grey-darken-1"
@@ -98,7 +98,7 @@ exports[`AmeliproDropdownMenu > Snapshots > renders the component with only requ
     bordered="false"
     class="
       dropdown-menu__open-btn
-      font-weight-semibold
+      font-weight-bold
       text-h6
       text-none
       w-100
@@ -111,7 +111,7 @@ exports[`AmeliproDropdownMenu > Snapshots > renders the component with only requ
     iconbordered="false"
     iconleft="false"
     infoblock="false"
-    minheight="3rem"
+    minheight="2.5rem"
     size="60px"
     text="false"
     textcolor="ap-grey-darken-1"
@@ -130,284 +130,5 @@ exports[`AmeliproDropdownMenu > Snapshots > renders the component with only requ
     role="menu"
     style="display: none;"
   ></ul>
-</div>
-`;
-
-exports[`AmeliproDropdownMenu > render correctly 1`] = `
-<div
-  class="dropdown-menu"
-  id="my-dropdown-menu-id"
-  style="width: 100%;"
->
-  <button
-    aria-controls="my-dropdown-menu-id-menu"
-    aria-expanded="false"
-    aria-haspopup="true"
-    class="
-      amelipro-btn
-      amelipro-btn--style
-      bg-ap-white
-      dropdown-menu__open-btn
-      dropdown-menu__open-btn
-      elevation-0
-      font-weight-bold
-      font-weight-bold
-      text-h6
-      text-h6
-      text-none
-      text-none
-      v-btn
-      v-btn--density-default
-      v-btn--flat
-      v-btn--size-default
-      v-btn--variant-flat
-      v-theme--light
-      w-100
-      w-100
-    "
-    id="my-dropdown-menu-id-btn"
-    style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
-    type="button"
-  >
-    <span class="v-btn__overlay"></span>
-    <span class="v-btn__underlay"></span>
-    <!---->
-    <span
-      class="v-btn__content"
-      data-no-activator=""
-    >
-      <span class="
-        align-center
-        amelipro-custom-btn
-        d-flex
-        flex-row
-      ">
-        <span
-          class="
-            font-weight-bold
-            text-h6
-            text-left
-            w-100
-          "
-          id="my-dropdown-menu-id-btn-text"
-        >
-          <span class="d-sr-only">
-            Page active :&nbsp;
-          </span>
-          item 2
-        </span>
-        <span
-          class="amelipro-icon"
-          id="my-dropdown-menu-id-icon"
-          style="margin-top: -18px;"
-        >
-          <span
-            aria-hidden="true"
-            class="
-              amelipro-custom-icon
-              custom-color
-            "
-            focusable="false"
-            role="img"
-            style="color: #1A1B1B; height: 8px; width: 8px;"
-          >
-            <span>
-              <svg
-                aria-hidden="true"
-                style="enable-background:new 0 0 42 42;"
-                version="1.1"
-                viewBox="0 0 42 42"
-                x="0px"
-                xml:space="preserve"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                y="0px"
-              >
-                <polygon
-                  class="shape-color"
-                  points="21,39.2 42,2.8 0,2.8 "
-                />
-              </svg>
-            </span>
-          </span>
-        </span>
-        <!-- v-if -->
-        <!-- v-if -->
-      </span>
-    </span>
-    <!---->
-    <!---->
-  </button>
-  <ul
-    aria-label="menu déroulant"
-    class="
-      ap-white
-      dropdown-menu__list
-      list-style-none
-    "
-    id="my-dropdown-menu-id-menu"
-    role="menu"
-    style="display: none;"
-  >
-    <li
-      class="dropdown-menu__item"
-      role="none"
-    >
-      <button
-        class="
-          amelipro-btn
-          amelipro-btn--style
-          bg-ap-white
-          dropdown-menu__btn
-          dropdown-menu__btn
-          elevation-0
-          text-left
-          text-left
-          text-none
-          text-none
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-flat
-          v-theme--light
-          w-100
-          w-100
-        "
-        id="my-dropdown-menu-id-btn-0"
-        role="menuitem"
-        style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
-        tabindex="-1"
-        type="button"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="
-            align-center
-            amelipro-custom-btn
-            d-flex
-            flex-row
-          ">
-            item 1
-            <!-- v-if -->
-            <!-- v-if -->
-          </span>
-        </span>
-        <!---->
-        <!---->
-      </button>
-    </li>
-    <li
-      class="dropdown-menu__item"
-      role="none"
-    >
-      <button
-        class="
-          amelipro-btn
-          amelipro-btn--style
-          bg-ap-white
-          dropdown-menu__btn
-          dropdown-menu__btn
-          elevation-0
-          text-left
-          text-left
-          text-none
-          text-none
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-flat
-          v-theme--light
-          w-100
-          w-100
-        "
-        id="my-dropdown-menu-id-btn-1"
-        role="menuitem"
-        style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
-        tabindex="-1"
-        type="button"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="
-            align-center
-            amelipro-custom-btn
-            d-flex
-            flex-row
-          ">
-            item 2
-            <!-- v-if -->
-            <!-- v-if -->
-          </span>
-        </span>
-        <!---->
-        <!---->
-      </button>
-    </li>
-    <li
-      class="dropdown-menu__item"
-      role="none"
-    >
-      <button
-        class="
-          amelipro-btn
-          amelipro-btn--style
-          bg-ap-white
-          dropdown-menu__btn
-          dropdown-menu__btn
-          elevation-0
-          text-left
-          text-left
-          text-none
-          text-none
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-flat
-          v-theme--light
-          w-100
-          w-100
-        "
-        id="my-dropdown-menu-id-btn-2"
-        role="menuitem"
-        style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
-        tabindex="-1"
-        type="button"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="
-            align-center
-            amelipro-custom-btn
-            d-flex
-            flex-row
-          ">
-            item 3
-            <!-- v-if -->
-            <!-- v-if -->
-          </span>
-        </span>
-        <!---->
-        <!---->
-      </button>
-    </li>
-  </ul>
 </div>
 `;

@@ -28,7 +28,7 @@ exports[`AmeliproDisclosure > Snapshots > renders the component with all propert
     iconbordered="false"
     iconleft="false"
     infoblock="false"
-    minheight="3rem"
+    minheight="2.5rem"
     size="60px"
     text="true"
     textcolor="ap-white"
@@ -72,7 +72,7 @@ exports[`AmeliproDisclosure > Snapshots > renders the component with only requir
     iconbordered="false"
     iconleft="false"
     infoblock="false"
-    minheight="3rem"
+    minheight="2.5rem"
     size="60px"
     text="true"
     textcolor="ap-white"
@@ -85,92 +85,5 @@ exports[`AmeliproDisclosure > Snapshots > renders the component with only requir
     id="required-unique-id"
     style="display: none;"
   ></div>
-</div>
-`;
-
-exports[`AmeliproDisclosure > render correctly 1`] = `
-<div
-  class="
-    amelipro-disclosure
-    mb-3
-    w-100
-  "
-  id="my-disclosure-id-container"
->
-  <button
-    aria-controls="my-disclosure-id"
-    aria-expanded="false"
-    class="
-      amelipro-btn
-      amelipro-disclosure__btn
-      amelipro-disclosure__btn
-      elevation-0
-      text-ap-blue-darken-1
-      text-none
-      text-none
-      v-btn
-      v-btn--density-default
-      v-btn--flat
-      v-btn--size-default
-      v-btn--variant-text
-      v-theme--light
-    "
-    id="my-disclosure-id-open-close-btn"
-    style="height: auto; min-height: auto; padding: 0px;"
-    type="button"
-  >
-    <span class="v-btn__overlay"></span>
-    <span class="v-btn__underlay"></span>
-    <!---->
-    <span
-      class="v-btn__content"
-      data-no-activator=""
-    >
-      <span class="
-        align-center
-        amelipro-custom-btn
-        d-flex
-        flex-row
-      ">
-        titre disclosure
-        <span
-          class="
-            amelipro-btn__icon--right
-            amelipro-icon
-            d-block
-          "
-          id="my-disclosure-id-open-close-btn-icon"
-        >
-          <span
-            class="amelipro-external-icon"
-            style="background-color: transparent; border-radius: 50%; color: #00749C; padding: 0px; height: 1.5rem; width: 1.5rem;"
-          >
-            <i
-              aria-hidden="true"
-              class="
-                M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z
-                mdi
-                notranslate
-                text-ap-blue-darken-1
-                v-icon
-                v-theme--light
-              "
-              style="font-size: 100%; height: 100%; width: 100%; display: block;"
-            ></i>
-          </span>
-        </span>
-        <!-- v-if -->
-      </span>
-    </span>
-    <!---->
-    <!---->
-  </button>
-  <div
-    class="amelipro-disclosure__content"
-    id="my-disclosure-id"
-    style="display: none;"
-  >
-    Contenu disclosure
-  </div>
 </div>
 `;

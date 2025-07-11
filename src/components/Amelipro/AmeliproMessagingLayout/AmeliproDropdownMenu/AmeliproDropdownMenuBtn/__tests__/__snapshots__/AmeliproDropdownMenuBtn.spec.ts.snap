@@ -21,7 +21,7 @@ exports[`AmeliproDropdownMenuBtn > Snapshots > renders the component with all pr
   iconbordered="false"
   iconleft="false"
   infoblock="false"
-  minheight="3rem"
+  minheight="2.5rem"
   role="menuitem"
   size="60px"
   tabindex="-1"
@@ -54,7 +54,7 @@ exports[`AmeliproDropdownMenuBtn > Snapshots > renders the component with only r
   iconbordered="false"
   iconleft="false"
   infoblock="false"
-  minheight="3rem"
+  minheight="2.5rem"
   role="menuitem"
   size="60px"
   tabindex="-1"
@@ -64,55 +64,4 @@ exports[`AmeliproDropdownMenuBtn > Snapshots > renders the component with only r
   underline="false"
   uniqueid="required-unique-id"
 ></amelipro-btn-stub>
-`;
-
-exports[`AmeliproDropdownMenuBtn > render correctly 1`] = `
-<button
-  class="
-    amelipro-btn
-    amelipro-btn--style
-    bg-ap-white
-    dropdown-menu__btn
-    dropdown-menu__btn
-    elevation-0
-    text-left
-    text-left
-    text-none
-    text-none
-    v-btn
-    v-btn--density-default
-    v-btn--flat
-    v-btn--size-default
-    v-btn--variant-flat
-    v-theme--light
-    w-100
-    w-100
-  "
-  id="my-btn-id"
-  role="menuitem"
-  style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
-  tabindex="-1"
-  type="button"
->
-  <span class="v-btn__overlay"></span>
-  <span class="v-btn__underlay"></span>
-  <!---->
-  <span
-    class="v-btn__content"
-    data-no-activator=""
-  >
-    <span class="
-      align-center
-      amelipro-custom-btn
-      d-flex
-      flex-row
-    ">
-      label du bouton
-      <!-- v-if -->
-      <!-- v-if -->
-    </span>
-  </span>
-  <!---->
-  <!---->
-</button>
 `;

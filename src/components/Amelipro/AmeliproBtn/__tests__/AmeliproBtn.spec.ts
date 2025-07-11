@@ -78,7 +78,7 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproBtn> = {
 	},
 	minHeight: {
 		type: String,
-		default: '3rem',
+		default: '2.5rem',
 	},
 	size: {
 		type: String,
@@ -235,7 +235,7 @@ describe('AmeliproBtn', () => {
 			})
 
 			it('props text & minHeight sets prop minHeight', async () => {
-				expect(vueWrapper.findComponent(VBtn).props('minHeight')).toBe('3rem')
+				expect(vueWrapper.findComponent(VBtn).props('minHeight')).toBe('2.5rem')
 
 				const { minHeight, text } = modifiedPropValues()
 				await vueWrapper.setProps({ minHeight })

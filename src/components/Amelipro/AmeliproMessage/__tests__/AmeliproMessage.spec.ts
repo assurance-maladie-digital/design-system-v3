@@ -205,18 +205,18 @@ describe('AmeliproMessage', () => {
 				expect(wrapperFinder().classes('pa-0')).toBe(true)
 			})
 
-			it('props borderLeftMessage & text set class pa-6', async () => {
-				expect(wrapperFinder().classes('pa-6')).toBe(true)
+			it('props borderLeftMessage & text set class pa-3', async () => {
+				expect(wrapperFinder().classes('pa-3')).toBe(true)
 
 				const { borderLeftMessage, text } = modifiedPropValues()
 				await vueWrapper.setProps({ borderLeftMessage })
-				expect(wrapperFinder().classes('pa-6')).toBe(false)
+				expect(wrapperFinder().classes('pa-3')).toBe(false)
 
 				await vueWrapper.setProps({ text })
-				expect(wrapperFinder().classes('pa-6')).toBe(false)
+				expect(wrapperFinder().classes('pa-3')).toBe(false)
 
 				await vueWrapper.setProps({ borderLeftMessage: false })
-				expect(wrapperFinder().classes('pa-6')).toBe(false)
+				expect(wrapperFinder().classes('pa-3')).toBe(false)
 			})
 
 			it('prop text sets class amelipro-message__radius', async () => {
@@ -243,7 +243,7 @@ describe('AmeliproMessage', () => {
 				const { borderLeftMessage } = modifiedPropValues()
 				await vueWrapper.setProps({ borderLeftMessage })
 				expect(wrapperFinder().classes('px-6')).toBe(true)
-				expect(wrapperFinder().classes('py-4')).toBe(true)
+				expect(wrapperFinder().classes('py-3')).toBe(true)
 				expect(wrapperFinder().classes('bg-ap-grey-lighten-6')).toBe(true)
 			})
 

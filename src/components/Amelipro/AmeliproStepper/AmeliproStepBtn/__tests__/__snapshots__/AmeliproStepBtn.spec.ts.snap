@@ -5,9 +5,10 @@ exports[`AmeliproStepBtn > Snapshots > renders the component with all properties
   aria-current="step"
   class="
     amelipro-step-btn
-    pa-4
+    pb-4
+    pt-3
+    px-4
     text-subtitle-1
-    text-uppercase
   "
   disabled=""
   id="modified-unique-id"
@@ -30,9 +31,10 @@ exports[`AmeliproStepBtn > Snapshots > renders the component with only required 
 <button
   class="
     amelipro-step-btn
-    pa-4
+    pb-4
+    pt-3
+    px-4
     text-subtitle-1
-    text-uppercase
   "
   role="tab"
   style="background-color: #E6F6FC; border: 1px solid #DDDEDE; color: #00749C; position: relative; z-index: 1;"
@@ -43,32 +45,5 @@ exports[`AmeliproStepBtn > Snapshots > renders the component with only required 
     amelipro-step-btn__content
     d-flex
   "></span>
-</button>
-`;
-
-exports[`AmeliproStepBtn > render correctly 1`] = `
-<button
-  class="
-    amelipro-step-btn
-    pb-4
-    pt-3
-    px-4
-    text-subtitle-1
-  "
-  id="my-step-btn-id"
-  role="tab"
-  style="background-color: #E6F6FC; border: 1px solid #DDDEDE; color: #00749C; position: relative; z-index: 1;"
-  type="button"
->
-  <span
-    class="
-      align-center
-      amelipro-step-btn__content
-      d-flex
-    "
-    id="my-step-btn-id-content"
-  >
-    Libellé du bouton
-  </span>
 </button>
 `;

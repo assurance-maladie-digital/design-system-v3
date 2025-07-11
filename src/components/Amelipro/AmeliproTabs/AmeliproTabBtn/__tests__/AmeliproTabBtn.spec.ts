@@ -99,7 +99,8 @@ describe('AmeliproTabBtn', () => {
 		it('prop pills sets button class & style', async () => {
 			expect(vueWrapper.find('.amelipro-tab__btn').classes()).toEqual([
 				'amelipro-tab__btn',
-				'pa-4',
+				'px-4',
+				'py-2',
 				'text-uppercase',
 			])
 			expect(vueWrapper.find('.amelipro-tab__btn').attributes('style')).toBe('background-color: #E6F6FC; border: 1px solid #DDDEDE; color: #00749C;')

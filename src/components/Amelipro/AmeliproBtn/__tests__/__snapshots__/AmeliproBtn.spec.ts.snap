@@ -52,7 +52,7 @@ exports[`AmeliproBtn > Snapshots > renders the component with only required prop
   height="auto"
   icon="false"
   loading="false"
-  minheight="3rem"
+  minheight="2.5rem"
   replace="false"
   ripple="false"
   size="default"

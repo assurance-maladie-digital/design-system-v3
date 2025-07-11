@@ -76,7 +76,7 @@ exports[`AmeliproStateTile > Snapshots > renders the component with all properti
         class="
           amelipro-state-tile__unavailable
           d-block
-          font-weight-semibold
+          font-weight-bold
           mt-6
           text-center
         "

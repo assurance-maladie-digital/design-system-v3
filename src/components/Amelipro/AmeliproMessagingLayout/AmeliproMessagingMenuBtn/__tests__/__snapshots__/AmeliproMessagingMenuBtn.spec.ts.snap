@@ -8,7 +8,7 @@ exports[`AmeliproMessagingMenuBtn > Snapshots > renders the component with all p
   badgecolor="ap-white"
   bordered="false"
   class="
-    font-weight-semibold
+    font-weight-bold
     mb-1
     messaging-menu__btn
     text-h6
@@ -24,7 +24,7 @@ exports[`AmeliproMessagingMenuBtn > Snapshots > renders the component with all p
   iconbordered="false"
   iconleft="false"
   infoblock="false"
-  minheight="3rem"
+  minheight="2.5rem"
   size="60px"
   style="min-height: 50px;"
   text="false"
@@ -44,7 +44,7 @@ exports[`AmeliproMessagingMenuBtn > Snapshots > renders the component with only 
   badgecolor="ap-white"
   bordered="false"
   class="
-    font-weight-semibold
+    font-weight-bold
     mb-1
     messaging-menu__btn
     text-h6
@@ -59,7 +59,7 @@ exports[`AmeliproMessagingMenuBtn > Snapshots > renders the component with only 
   iconbordered="false"
   iconleft="false"
   infoblock="false"
-  minheight="3rem"
+  minheight="2.5rem"
   size="60px"
   style="min-height: 50px;"
   text="false"
@@ -68,84 +68,4 @@ exports[`AmeliproMessagingMenuBtn > Snapshots > renders the component with only 
   underline="false"
   uniqueid="required-unique-id"
 ></amelipro-btn-stub>
-`;
-
-exports[`AmeliproMessagingMenuBtn > render correctly 1`] = `
-<button
-  class="
-    amelipro-btn
-    amelipro-btn--style
-    bg-ap-blue-darken-1
-    elevation-0
-    font-weight-bold
-    font-weight-bold
-    mb-1
-    mb-1
-    messaging-menu__btn
-    messaging-menu__btn
-    text-h6
-    text-h6
-    text-none
-    text-none
-    v-btn
-    v-btn--density-default
-    v-btn--flat
-    v-btn--size-default
-    v-btn--variant-flat
-    v-theme--light
-    w-100
-    w-100
-  "
-  id="my-messaging-menu-btn-id"
-  style="height: auto; min-height: 50px; color: #FFFFFF !important;"
-  type="button"
->
-  <span class="v-btn__overlay"></span>
-  <span class="v-btn__underlay"></span>
-  <!---->
-  <span
-    class="v-btn__content"
-    data-no-activator=""
-  >
-    <span class="
-      align-center
-      amelipro-custom-btn
-      d-flex
-      flex-row
-    ">
-      <span class="
-        align-center
-        d-flex
-        w-100
-      ">
-        <span
-          class="
-            amelipro-icon
-            mr-2
-          "
-          id="my-messaging-menu-btn-id-icon"
-        >
-          <span
-            aria-hidden="true"
-            class="
-              amelipro-custom-icon
-              custom-color
-            "
-            focusable="false"
-            role="img"
-            style="color: #FFFFFF; height: 24px; width: 24px;"
-          >
-            <!-- v-if -->
-          </span>
-        </span>
-        label du bouton
-      </span>
-      <!-- v-if -->
-      <!-- v-if -->
-      <!-- v-if -->
-    </span>
-  </span>
-  <!---->
-  <!---->
-</button>
 `;

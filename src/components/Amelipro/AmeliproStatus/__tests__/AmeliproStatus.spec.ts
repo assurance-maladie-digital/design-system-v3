@@ -18,11 +18,11 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproStatus> = {
 	},
 	paddingX: {
 		type: String,
-		default: '24px',
+		default: '124',
 	},
 	paddingY: {
 		type: String,
-		default: '12px',
+		default: '4px',
 	},
 	type: {
 		default: 'draft',
@@ -95,7 +95,7 @@ describe('AmeliproStatus', () => {
 			})
 
 			it('props paddingX, paddingY & type sets component style', async () => {
-				expect(vueWrapper.find('p').attributes('style')).toBe('border: 2px solid transparent; border-radius: 16px; padding: 12px 24px;')
+				expect(vueWrapper.find('p').attributes('style')).toBe('border: 2px solid transparent; border-radius: 16px; padding: 4px 12px;')
 
 				const { paddingX, paddingY } = modifiedPropValues()
 				await vueWrapper.setProps({ paddingX, paddingY })

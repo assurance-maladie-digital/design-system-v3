@@ -163,11 +163,11 @@ describe('AmeliproMultipleFoldingCard', () => {
 			})
 
 			it('prop titleUppercase sets attribute class', async () => {
-				expect(getTitleWrapper().attributes('class')).toBe('font-weight-semibold text-h3 mb-0')
+				expect(getTitleWrapper().attributes('class')).toBe('font-weight-bold text-h3 mb-0')
 
 				const { titleUppercase } = modifiedPropValues()
 				await vueWrapper.setProps({ titleUppercase })
-				expect(getTitleWrapper().attributes('class')).toBe('font-weight-semibold text-h3 mb-0 text-uppercase')
+				expect(getTitleWrapper().attributes('class')).toBe('font-weight-bold text-h3 mb-0 text-uppercase')
 			})
 
 			it('prop title sets text', async () => {

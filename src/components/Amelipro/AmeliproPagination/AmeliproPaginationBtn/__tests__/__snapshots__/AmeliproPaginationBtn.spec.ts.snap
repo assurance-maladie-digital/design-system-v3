@@ -17,7 +17,7 @@ exports[`AmeliproPaginationBtn > Snapshots > renders the component with all prop
   iconbordered="false"
   iconleft="false"
   infoblock="false"
-  minheight="3rem"
+  minheight="2.5rem"
   size="60px"
   text="false"
   textcolor="ap-white"
@@ -45,7 +45,7 @@ exports[`AmeliproPaginationBtn > Snapshots > renders the component with only req
   iconbordered="false"
   iconleft="false"
   infoblock="false"
-  minheight="3rem"
+  minheight="2.5rem"
   size="60px"
   text="false"
   textcolor="ap-blue-darken-1"
@@ -53,45 +53,4 @@ exports[`AmeliproPaginationBtn > Snapshots > renders the component with only req
   type="button"
   underline="false"
 ></amelipro-btn-stub>
-`;
-
-exports[`AmeliproPaginationBtn > render correctly 1`] = `
-<button
-  class="
-    amelipro-btn
-    amelipro-btn--style
-    amelipro-pagination__btn
-    bg-ap-white
-    elevation-0
-    v-btn
-    v-btn--density-default
-    v-btn--flat
-    v-btn--size-default
-    v-btn--variant-flat
-    v-theme--light
-  "
-  id="my-pagination-btn-id"
-  style="height: auto; min-height: 2.5rem; color: #00749C !important;"
-  type="button"
->
-  <span class="v-btn__overlay"></span>
-  <span class="v-btn__underlay"></span>
-  <!---->
-  <span
-    class="v-btn__content"
-    data-no-activator=""
-  >
-    <span class="
-      align-center
-      amelipro-custom-btn
-      d-flex
-      flex-row
-    ">
-      <!-- v-if -->
-      <!-- v-if -->
-    </span>
-  </span>
-  <!---->
-  <!---->
-</button>
 `;

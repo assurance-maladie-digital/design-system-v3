@@ -112,15 +112,15 @@ describe('AmeliproHeaderBar', () => {
 				displayWrapper.vm.setXs(false)
 				displayWrapper.vm.setSmAndDown(false)
 				await vueWrapper.vm.$nextTick()
-				expect(vueWrapper.find('.header-bar-content').attributes('class')).toBe('header-bar-content d-flex justify-center px-14 py-8')
+				expect(vueWrapper.find('.header-bar-content').attributes('class')).toBe('header-bar-content d-flex justify-center px-14 py-2')
 
 				displayWrapper.vm.setSmAndDown(true)
 				await vueWrapper.vm.$nextTick()
-				expect(vueWrapper.find('.header-bar-content').attributes('class')).toBe('header-bar-content d-flex justify-center pa-8')
+				expect(vueWrapper.find('.header-bar-content').attributes('class')).toBe('header-bar-content d-flex justify-center px-8 py-2')
 
 				displayWrapper.vm.setXs(true)
 				await vueWrapper.vm.$nextTick()
-				expect(vueWrapper.find('.header-bar-content').attributes('class')).toBe('header-bar-content d-flex justify-center pa-6')
+				expect(vueWrapper.find('.header-bar-content').attributes('class')).toBe('header-bar-content d-flex justify-center px-6 py-2')
 
 				displayWrapper.vm.resetDefaults()
 			})

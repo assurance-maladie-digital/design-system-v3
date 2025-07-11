@@ -47,7 +47,8 @@ exports[`AmeliproTabBtn > Snapshots > renders the component with only required p
   aria-selected="false"
   class="
     amelipro-tab__btn
-    pa-4
+    px-4
+    py-2
     text-uppercase
   "
   id="required-unique-id"
@@ -63,35 +64,6 @@ exports[`AmeliproTabBtn > Snapshots > renders the component with only required p
       d-flex
     "
     id="required-unique-id-notification-content"
-  >
-    <!-- v-if -->
-  </span>
-</button>
-`;
-
-exports[`AmeliproTabBtn > render correctly 1`] = `
-<button
-  aria-controls="content-id"
-  aria-selected="false"
-  class="
-    amelipro-tab__btn
-    px-4
-    py-2
-    text-uppercase
-  "
-  id="my-tab-btn-id"
-  role="tab"
-  style="background-color: #E6F6FC; border: 1px solid #DDDEDE; color: #00749C;"
-  tabindex="0"
-  type="button"
->
-  <span
-    class="
-      align-center
-      amelipro-tab__btn__content
-      d-flex
-    "
-    id="my-tab-btn-id-notification-content"
   >
     <!-- v-if -->
   </span>
