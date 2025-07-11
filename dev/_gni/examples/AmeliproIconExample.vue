@@ -23,17 +23,19 @@
 	const ameliproIcon = ref<typeof AmeliproIcon>()
 
 	const valueA = (): IAmeliproIconProps => ({
+		icon: 'utilisateur',
 		iconColor: '#f0c0c0',
 		uniqueId: 'amelipro-icon-unique-id-a',
 	})
 
 	const valueB = (): IAmeliproIconProps => ({
+		icon: 'structures',
 		iconColor: '#c0f0c0',
 		uniqueId: 'amelipro-icon-unique-id-b',
 	})
 
 	const valueC = (): IAmeliproIconProps => ({
-
+		icon: 'applications',
 		iconColor: '#c0c0f0',
 		uniqueId: 'amelipro-icon-unique-id-c',
 	})
@@ -76,6 +78,4 @@
 	</section>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

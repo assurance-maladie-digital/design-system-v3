@@ -25,7 +25,8 @@
 		// href?: string
 		// to?: RouteLocationRaw
 		// readValue?: boolean
-		}, uniqueId: 'the-unique-id-a',
+		},
+		uniqueId: 'the-unique-id-a',
 	})
 
 	const valueB = (): IAmeliproMailTileProps => ({
@@ -44,7 +45,8 @@
 			// },
 
 			readValue: false,
-		}, uniqueId: 'the-unique-id-b',
+		},
+		uniqueId: 'the-unique-id-b',
 	})
 
 	const valueC = (): IAmeliproMailTileProps => ({
@@ -58,7 +60,8 @@
 			hour: '12:24',
 			href: '#href-c',
 			readValue: false,
-		}, uniqueId: 'the-unique-id-c',
+		},
+		uniqueId: 'the-unique-id-c',
 	})
 
 	const dataTest = ref<IAmeliproMailTileProps>(valueA())
@@ -92,8 +95,8 @@
 			<AmeliproMailTile
 				v-bind="dataTest"
 				ref="ameliproMailTile"
-				@status-change="onStatusChange"
 				@click="onClick"
+				@status-change="onStatusChange"
 			/>
 		</div>
 	</section>
