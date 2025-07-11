@@ -357,18 +357,18 @@ describe('AmeliproBtn', () => {
 			})
 
 			it('props text, hoverUnderline & classes sets attribute class', async () => {
-				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light bg-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-flat amelipro-btn--style amelipro-btn')
+				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light bg-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-flat amelipro-btn amelipro-btn--style')
 
 				await vueWrapper.setProps({ text: true })
 				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text amelipro-btn')
 
 				vueWrapper.findComponent(VBtn).vm.$emit('mouseenter')
 				await vueWrapper.setProps({ hoverUnderline: true })
-				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-2 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text text-decoration-underline amelipro-btn')
+				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-2 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text amelipro-btn text-decoration-underline')
 
 				vueWrapper.findComponent(VBtn).vm.$emit('mouseleave')
 				await vueWrapper.setProps({ classes: 'class1 class2' })
-				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text class1 class2 amelipro-btn')
+				expect(vueWrapper.attributes('class')).toBe('v-btn v-btn--flat v-theme--light text-ap-blue-darken-1 v-btn--density-default elevation-0 v-btn--size-default v-btn--variant-text amelipro-btn class1 class2')
 			})
 
 			it('props color & hoverColor sets prop color', async () => {

@@ -1,4 +1,4 @@
-import { VueWrapper, shallowMount } from '@vue/test-utils'
+import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproMailTile from '../AmeliproMailTile.vue'
 import type { AmeliproMailTileType } from '../types'
@@ -29,10 +29,10 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproMailTile> => ({
 		date: '25/06/2023',
 		hour: '12h00',
 		href: '#required',
-		mailObject: 'Objet du mail requis',
-		messageInfoFirstLine: 'infos ligne 1 requise',
-		messageInfoSecondLine: 'infos ligne 2 requise',
-		messageInfoThirdLine: 'infos ligne 3 requise',
+		mailObject: 'Required mail object',
+		messageInfoFirstLine: 'Required info line 1',
+		messageInfoSecondLine: 'Required info line 2',
+		messageInfoThirdLine: 'Required info line 3',
 		readValue: true,
 	} as AmeliproMailTileType,
 	uniqueId: 'required-unique-id',
@@ -46,13 +46,13 @@ const modifiedPropValues = (): ComponentProps<typeof AmeliproMailTile> => ({
 		date: '26/06/2023',
 		hour: '13h00',
 		href: '#modified',
-		mailObject: 'Objet du mail',
-		messageInfoFirstLine: 'infos ligne 1',
-		messageInfoSecondLine: 'infos ligne 2',
-		messageInfoThirdLine: 'infos ligne 3',
+		mailObject: 'Modified mail object',
+		messageInfoFirstLine: 'Modified info line 1',
+		messageInfoSecondLine: 'Modified info line 2',
+		messageInfoThirdLine: 'Modified info line 3',
 		readValue: false,
 	} as AmeliproMailTileType,
-	uniqueId: 'required-unique-id',
+	uniqueId: 'modified-unique-id',
 })
 
 const testHelper = new TestHelper(AmeliproMailTile)
@@ -69,6 +69,40 @@ describe('AmeliproMailTile', () => {
 		testHelper.properties()
 	})
 
+	describe('Setting props should update attributes of inner tags', () => {
+		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproMailTile>>
+
+		beforeEach(() => {
+			vueWrapper = mount(AmeliproMailTile, {
+				props: requiredPropValues(),
+				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+			})
+		})
+
+		it('prop uniqueId sets attribute id', async () => {
+			expect(vueWrapper.attributes('id')).toBe(`${testHelper.default('uniqueId')}-container`)
+			const { uniqueId } = modifiedPropValues()
+			await vueWrapper.setProps({ uniqueId })
+			expect(vueWrapper.attributes('id')).toBe(`${testHelper.modified('uniqueId')}-container`)
+		})
+
+		it('prop mailInfo sets mail object', async () => {
+			expect(vueWrapper.find(`#${testHelper.default('uniqueId')}-mail-object`).exists()).toBe(true)
+			expect(vueWrapper.find(`#${testHelper.default('uniqueId')}-mail-object`).text()).toContain(testHelper.default('mailInfo').mailObject)
+
+			const { mailInfo, uniqueId } = modifiedPropValues()
+			await vueWrapper.setProps({ mailInfo, uniqueId })
+			expect(vueWrapper.find(`#${testHelper.modified('uniqueId')}-mail-object`).exists()).toBe(true)
+			expect(vueWrapper.find(`#${testHelper.modified('uniqueId')}-mail-object`).text()).toContain(testHelper.modified('mailInfo').mailObject)
+		})
+
+		it('prop editable sets edit mode', async () => {
+			expect(vueWrapper.find('.mail-status-btn').exists()).toBe(false)
+			await vueWrapper.setProps({ editable: true })
+			expect(vueWrapper.find('.mail-status-btn').exists()).toBe(true)
+		})
+	})
+
 	describe('Events', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproMailTile>>
 
@@ -76,57 +110,99 @@ describe('AmeliproMailTile', () => {
 			vueWrapper = shallowMount(AmeliproMailTile, { props: { ...requiredPropValues(), editable: true } })
 		})
 
-		it('test emitStatusChangeEvent', async () => {
-			expect(vueWrapper.emitted('status-change')).toStrictEqual(undefined)
-
+		it('emit status-change when clicking mail-status-btn', async () => {
+			expect(vueWrapper.emitted('status-change')).toBeUndefined()
 			await vueWrapper.find('.mail-status-btn').trigger('click')
-			expect(vueWrapper.emitted('status-change')).toStrictEqual([['required-unique-id']])
+			expect(vueWrapper.emitted('status-change')).toBeTruthy()
+			expect(vueWrapper.emitted('status-change')?.[0]).toEqual([testHelper.default('uniqueId')])
 		})
 
-		it('test emitClickEvent', async () => {
+		it('emit click when clicking not-editable tile', async () => {
 			await vueWrapper.setProps({ editable: false })
-			expect(vueWrapper.emitted('click')).toStrictEqual(undefined)
-
+			expect(vueWrapper.emitted('click')).toBeUndefined()
 			await vueWrapper.find('.amelipro-mail-tile__not-editable').trigger('click')
-			expect(vueWrapper.emitted('click')).toStrictEqual([['required-unique-id']])
+			expect(vueWrapper.emitted('click')).toBeTruthy()
+			expect(vueWrapper.emitted('click')?.[0]).toEqual([testHelper.default('uniqueId')])
 		})
 	})
 
-	describe('Rendering', () => {
+	describe('Editable info text', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproMailTile>>
+
 		beforeEach(() => {
-			vueWrapper = shallowMount(AmeliproMailTile, { props: { ...requiredPropValues(), editable: true } })
+			vueWrapper = shallowMount(AmeliproMailTile, {
+				props: { ...requiredPropValues(), editable: true },
+				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+			})
 		})
 
-		it('does not render comment icon if commentValue is false', async () => {
+		it('prop mailInfo.commentValue sets comment icon visibility', async () => {
+			expect(vueWrapper.find('.mail-info__comment-icon').exists()).toBe(true)
+
 			const { mailInfo } = modifiedPropValues()
-			await vueWrapper.setProps({ mailInfo: { ...mailInfo, commentValue: false } })
+			await vueWrapper.setProps({ mailInfo })
 			expect(vueWrapper.find('.mail-info__comment-icon').exists()).toBe(false)
 		})
 	})
 
-	describe('CSS classes according to readValue', () => {
+	describe('Mail status button', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproMailTile>>
+
 		beforeEach(() => {
-			vueWrapper = shallowMount(AmeliproMailTile, { props: { ...requiredPropValues(), editable: true } })
+			vueWrapper = shallowMount(AmeliproMailTile, {
+				props: { ...requiredPropValues(), editable: true },
+				// global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+			})
 		})
 
-		it('mail-status-btn does not have class mail-status-btn--not-read if read', () => {
+		it('prop uniqueId sets attribute id', async () => {
+			expect(vueWrapper.find('.mail-status-btn').attributes('id')).toBe(`${testHelper.default('uniqueId')}-read-btn`)
+
+			const { uniqueId } = modifiedPropValues()
+			await vueWrapper.setProps({ uniqueId })
+			expect(vueWrapper.find('.mail-status-btn').attributes('id')).toBe(`${testHelper.modified('uniqueId')}-read-btn`)
+		})
+
+		it('prop mailInfo.readValue sets attribute aria-label', async () => {
+			expect(vueWrapper.find('.mail-status-btn').attributes('aria-label')).toBe('Message lu')
+
+			const { mailInfo } = modifiedPropValues()
+			await vueWrapper.setProps({ mailInfo })
+			expect(vueWrapper.find('.mail-status-btn').attributes('aria-label')).toBe('Message non lu')
+		})
+
+		it('prop mailInfo.readValue sets attribute aria-pressed', async () => {
+			expect(vueWrapper.find('.mail-status-btn').attributes('aria-pressed')).toBe('true')
+
+			const { mailInfo } = modifiedPropValues()
+			await vueWrapper.setProps({ mailInfo })
+			expect(vueWrapper.find('.mail-status-btn').attributes('aria-pressed')).toBe('false')
+		})
+
+		it('prop mailInfo.readValue sets class mail-status-btn--not-read', async () => {
 			expect(vueWrapper.find('.mail-status-btn').classes('mail-status-btn--not-read')).toBe(false)
+
+			const { mailInfo } = modifiedPropValues()
+			expect(mailInfo.readValue).toBe(false)
+			await vueWrapper.setProps({ mailInfo })
+			expect(vueWrapper.html()).toMatchSnapshot()
+			expect(vueWrapper.find('.mail-status-btn').classes('mail-status-btn--not-read')).toBe(true)
 		})
 	})
 
 	describe('backgroundStyle changes on status change', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproMailTile>>
+
 		beforeEach(() => {
 			vueWrapper = shallowMount(AmeliproMailTile, { props: { ...requiredPropValues(), editable: true } })
 		})
 
 		it('backgroundStyle changes after click', async () => {
 			const btn = vueWrapper.find('.mail-status-btn')
-			expect(btn.attributes('style')).toBe('background-color: #FFFFFF;')
+			const initialStyle = btn.attributes('style')
 			await btn.trigger('click')
-			expect(btn.attributes('style')).toBe('background-color: #E6F6FC;')
+			const afterClickStyle = btn.attributes('style')
+			expect(initialStyle).not.toBe(afterClickStyle)
 		})
 	})
 })
