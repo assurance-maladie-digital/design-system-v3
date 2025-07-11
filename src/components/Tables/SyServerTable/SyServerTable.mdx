@@ -31,8 +31,10 @@ Pour gérer individuellement le stockage des options pour différents tableaux, 
 ### Tri côté serveur
 
 Le composant permet de trier les données par colonne en déléguant le tri au serveur.
-
 <Canvas story={{height: '550px'}} of={SyServerTable.ServerSortBy} />
+
+Le multi-tri est également supporté. Vous pouvez activer cette fonctionnalité en utilisant la prop `multi-sort`.
+<Canvas story={{height: '550px'}} of={SyServerTable.ServerMultiSort} />
 
 ### Filtres des colonnes
 

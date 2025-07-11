@@ -26,6 +26,8 @@
 		density: 'default',
 		striped: false,
 		showSelect: false,
+		multiSort: false,
+		mustSort: false,
 	})
 
 	const emit = defineEmits<{
@@ -207,6 +209,8 @@
 			:show-select="props.showSelect"
 			:item-selectable="(item) => true"
 			:item-value="getItemValue"
+			:multi-sort="props.multiSort"
+			:must-sort="props.mustSort"
 			@update:options="updateOptions"
 		>
 			<template #top>
