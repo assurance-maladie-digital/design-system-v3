@@ -48,7 +48,10 @@ const meta = {
 			},
 		},
 		'uniqueId': { description: 'Id unique du composant' },
-		'update:model-value': { description: 'Événement émis au changement d’état de la valeur d’affichage de la fenêtre de menu. Retourne la nouvelle valeur.', type: 'boolean' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement d’état de la valeur d’affichage de la fenêtre de menu. Retourne la nouvelle valeur.', type: 'boolean',
+		},
 	},
 	component: ServiceMenu,
 	title: 'Composants/Amelipro/Mise en page/Sous-composants du header/ServiceMenu',
@@ -187,7 +190,7 @@ export const Default: Story = {
 		:services-patient="servicesPatient"
 		:services-ps="servicesPs"
 		unique-id="service-menu-unique-id"
-
+		@update:model-value="args['update:model-value']"
 	/>
 </template>
 				`,
@@ -330,6 +333,7 @@ export const Default: Story = {
 	<ServiceMenu
 		v-bind="args"
 		v-model="model"
+		@update:model-value="args['update:model-value']"
 	/>
 </div>
 		`,

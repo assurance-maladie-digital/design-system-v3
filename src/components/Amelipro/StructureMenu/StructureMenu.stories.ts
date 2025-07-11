@@ -42,7 +42,10 @@ const meta = {
 		},
 		'switchValue': { description: 'Valeur du switch' },
 		'uniqueId': { description: 'Identifiant unique du composant' },
-		'update:model-value': { description: 'event emis lorsque le modèle change' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'event emis lorsque le modèle change',
+		},
 		'userAdeli': { description: 'Le numéro Adeli de l’utilisateur connecté' },
 		'userName': { description: 'Le nom de l’utilisateur connecté' },
 		'userProfession': { description: 'Le métier de l’utilisateur connecté' },
@@ -154,6 +157,7 @@ export const Default: Story = {
 					user-name="Jean Martin"
 					user-profession="Médecin génraliste"
 					user-rpps="n° RPPS"
+					@update:model-value="args['update:model-value']"
 				/>
 	</div>
 </template>
@@ -261,6 +265,7 @@ export const Default: Story = {
 	<StructureMenu
 		v-bind="args"
 		v-model="model"
+		@update:model-value="args['update:model-value']"
 	/>
 </div>`,
 	}),

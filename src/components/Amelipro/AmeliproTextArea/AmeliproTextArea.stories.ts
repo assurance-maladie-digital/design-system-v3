@@ -31,7 +31,10 @@ const meta = {
 			table: { type: { summary: 'ValidationRule[]' } },
 		},
 		'uniqueId': { description: 'Défini un id pour le champ' },
-		'update:model-value': { description: 'Événement émis au changement du v-model' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement du v-model',
+		},
 		'validateOn': { description: 'Défini le moment où la validation du champ se fait, voir la documentation de Vuetify pour plus d\'informtations' },
 	},
 	component: AmeliproTextArea,
@@ -56,6 +59,7 @@ export const Default: Story = {
 		v-model="model"
 		label="Label"
 		unique-id="text-area-example"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>`,
 			},
@@ -85,6 +89,7 @@ export const Default: Story = {
 <AmeliproTextArea
 	v-bind="args"
 	v-model="model"
+	@update:model-value="args['update:model-value']"
 />`,
 	}),
 }
