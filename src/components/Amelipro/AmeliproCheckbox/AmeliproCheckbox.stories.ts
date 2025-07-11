@@ -61,14 +61,15 @@ export const Default: Story = {
 			{
 				name: 'Scripts',
 				code: `<script setup lang="ts">
-	import { ref } from 'vue';
+	import { ref } from 'vue'
+	import { AmeliproCheckbox } from '@cnamts/synapse'
 
-	const isChecked = ref(false);
+	const isChecked = ref(false)
 	const checkbox = {
 		description: 'ma-tooltip',
 		label: 'Exemple',
 		value: 'Valeur de la checkbox',
-	};
+	}
 </script>`,
 			},
 		],

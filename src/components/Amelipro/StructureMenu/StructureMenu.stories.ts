@@ -149,6 +149,7 @@ export const Default: Story = {
 				/>
 				<StructureMenu
 					v-model="model"
+					:structures-tabs="structuresTabs"
 					unique-id="structure-menu-unique-id"
 					user-adeli="n° Adeli"
 					user-name="Jean Martin"
@@ -162,10 +163,10 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import StructureMenu from '@cnamts/synapse';
-	import { ref } from 'vue';
+	import { AmeliproIconBtn, StructureMenu } from '@cnamts/synapse'
+	import { ref } from 'vue'
 
-	const model = ref({ dialog: false, activeTab: 0 });
+	const model = ref({ dialog: false, activeTab: 0 })
 	const structuresTabs = [
 		{
 			structures: [
@@ -227,7 +228,7 @@ export const Default: Story = {
 			],
 			label: 'Mes délégués',
 		},
-	];
+	]
 </script>
 				`,
 			},

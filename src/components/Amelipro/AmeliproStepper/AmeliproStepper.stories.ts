@@ -96,6 +96,8 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
+	import { AmeliproCard, AmeliproStepper } from '@cnamts/synapse'
+	
 	const items = [
 		{
 			disabled: false,

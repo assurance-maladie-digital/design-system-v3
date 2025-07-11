@@ -195,10 +195,10 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import ServiceMenu from '@cnamts/synapse';
-	import { ref } from 'vue';
+	import { ServiceMenu } from '@cnamts/synapse'
+	import { ref } from 'vue'
 
-	const model = ref(false);
+	const model = ref(false)
 
 	const servicesContact = [
 		{
@@ -226,7 +226,7 @@ export const Default: Story = {
 			icon: 'convention',
 			label: 'Contact 5',
 		},
-	];
+	]
 
 	const servicesPs = [
 		{
@@ -264,7 +264,7 @@ export const Default: Story = {
 			icon: 'commandes',
 			label: 'Commandes d’imprimés',
 		},
-	];
+	]
 
 	const servicesPatient = [
 		{
@@ -307,7 +307,7 @@ export const Default: Story = {
 			icon: 'seringue',
 			label: 'Bilan soins infirmiers',
 		},
-	];
+	]
 </script>
 				`,
 			},

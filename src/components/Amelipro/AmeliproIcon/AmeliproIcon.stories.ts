@@ -49,6 +49,12 @@ export const Default: Story = {
 	/>
 </template>`,
 			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproIcon } from '@cnamts/synapse'
+</script>`,
+			},
 		],
 	},
 	render: args => ({

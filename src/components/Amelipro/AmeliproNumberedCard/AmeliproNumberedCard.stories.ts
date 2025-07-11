@@ -106,6 +106,8 @@ export const Default: Story = {
 			{
 				name: 'Scripts',
 				code: `<script setup lang="ts">
+	import { AmeliproNumberedCard } from '@cnamts/synapse'
+
 	const items = [
 		{
 			email: 'jean.bernard@gmail.com',
@@ -143,7 +145,7 @@ export const Default: Story = {
 			id: 5,
 			name: 'Pierre',
 		},
-	];
+	]
 </script>`,
 			},
 		],

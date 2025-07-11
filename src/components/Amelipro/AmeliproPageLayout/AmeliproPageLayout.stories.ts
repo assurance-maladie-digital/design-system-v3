@@ -469,8 +469,8 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproPageLayout from '@cnamts/synapse';
-	import { ref } from 'vue';
+	import { AmeliproPageLayout } from '@cnamts/synapse'
+	import { ref } from 'vue'
 
 	const userMenuInfos = {
 		lastConnexion: '01/01/2024',
@@ -491,7 +491,7 @@ export const Default: Story = {
 			rpps: 'RPPS',
 			userName: 'userName',
 		},
-	};
+	}
 
 	const structureItems = [
 		{
@@ -554,7 +554,7 @@ export const Default: Story = {
 			],
 			label: 'Mes délégués',
 		},
-	];
+	]
 
 	const servicesContact = [
 		{
@@ -582,7 +582,7 @@ export const Default: Story = {
 			icon: 'convention',
 			label: 'Contact 5',
 		},
-	];
+	]
 
 	const servicesPs = [
 		{
@@ -620,7 +620,7 @@ export const Default: Story = {
 			icon: 'commandes',
 			label: 'Commandes d’imprimés',
 		},
-	];
+	]
 
 	const servicesPatient = [
 		{
@@ -663,7 +663,7 @@ export const Default: Story = {
 			icon: 'seringue',
 			label: 'Bilan soins infirmiers',
 		},
-	];
+	]
 
 	const userInformationSummaryInfos = {
 		adresseLigne1: '31 Boulevard des champs',
@@ -672,7 +672,7 @@ export const Default: Story = {
 		denomination: 'Docteur',
 		nomCabinet: 'Cabinet des fleurs',
 		userName: 'Jean Martin',
-	};
+	}
 
 	const ameliproHeaderInfos = {
 		serviceMenuInfos: {
@@ -697,7 +697,7 @@ export const Default: Story = {
 		userInformationSummaryInfos,
 		userMenuInfos,
 		userName: 'Dr. Jean Dupont',
-	};
+	}
 
 	const ameliproPatientBannerInfos = {
 		birthName: 'Dupont',
@@ -709,7 +709,7 @@ export const Default: Story = {
 		patientOrganism: 'CPAM des Alpes de Haute Provence - Centre 103',
 		patientStatus: 'Assuré(e)',
 		patientSystem: 'Régime Général',
-	};
+	}
 
 	const ameliproFooterInfos = {
 		a11yCompliance: 'non-conforme',
@@ -720,14 +720,14 @@ export const Default: Story = {
 		legalNoticeHref: '#',
 		siteMapHref: '#',
 		version: 'X.X.X',
-	};
+	}
 
 	const ameliproPageLayoutInfos = {
 		ameliproFooterInfos,
 		ameliproHeaderInfos,
 		ameliproPatientBannerInfos,
 		displayPatientBanner: true,
-	};
+	}
 </script>`,
 			},
 		],

@@ -38,6 +38,12 @@ export const Default: Story = {
 </template>
 				`,
 			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproTooltips } from '@cnamts/synapse'
+</script>`,
+			},
 		],
 	},
 	render: args => ({
@@ -51,5 +57,4 @@ export const Default: Story = {
 />
 		`,
 	}),
-
 }

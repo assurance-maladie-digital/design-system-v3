@@ -95,6 +95,8 @@ export const Default: Story = {
 			{
 				name: 'Scripts',
 				code: `<script setup lang="ts">
+	import { AmeliproMultipleFoldingCard } from '@cnamts/synapse'
+
 	const items = [
 		{
 			id: 'amelipro-multiple-folding-card-item-1',
@@ -114,7 +116,7 @@ export const Default: Story = {
 			id: 'amelipro-multiple-folding-card-item-4',
 			title: 'Exemple 4',
 		},
-	];
+	]
 </script>`,
 			},
 		],

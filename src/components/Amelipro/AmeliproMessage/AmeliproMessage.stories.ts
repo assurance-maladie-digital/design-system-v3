@@ -51,6 +51,12 @@ export const Default: Story = {
 	</AmeliproMessage>
 </template>`,
 			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproMessage } from '@cnamts/synapse'
+</script>`,
+			},
 		],
 	},
 	render: args => ({
@@ -93,6 +99,12 @@ export const BorderLeft: Story = {
 	</AmeliproMessage>
 </template>
 				`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproMessage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},

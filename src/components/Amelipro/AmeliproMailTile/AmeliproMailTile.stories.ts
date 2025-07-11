@@ -62,6 +62,8 @@ export const Default: Story = {
 			{
 				name: 'Scripts',
 				code: `<script setup lang="ts">
+	import { AmeliproMailTile } from '@cnamts/synapse'
+
 	const item = {
 		date: '25/06/2023',
 		hour: '12h00',
@@ -69,7 +71,7 @@ export const Default: Story = {
 		messageInfoFirstLine: 'infos ligne 1',
 		messageInfoSecondLine: 'infos ligne 2',
 		readValue: false,
-	};
+	}
 </script>`,
 			},
 		],
@@ -118,6 +120,8 @@ export const Commented: Story = {
 			{
 				name: 'Scripts',
 				code: `<script setup lang="ts">
+	import { AmeliproMailTile } from '@cnamts/synapse'
+	
 	const item = {
 		commentValue: true,
 		date: '25/06/2023',
@@ -126,7 +130,7 @@ export const Commented: Story = {
 		messageInfoFirstLine: 'infos ligne 1',
 		messageInfoSecondLine: 'infos ligne 2',
 		readValue: false,
-	};
+	}
 </script>`,
 			},
 		],

@@ -400,7 +400,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 	<AmeliproHeader
-		:amelipro-page-layout-infos="ameliproHeaderInfos"
+		:amelipro-header-infos="ameliproHeaderInfos"
 		unique-id="amelipro-header-id"
 	/>
 </template>
@@ -409,6 +409,8 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
+	import { AmeliproHeader } from '@cnamts/synapse'
+
 	const userMenuInfos = {
 		lastConnexion: '01/01/2024',
 		userMenuDetailsInfos: {
@@ -428,7 +430,7 @@ export const Default: Story = {
 			rpps: 'RPPS',
 			userName: 'userName',
 		},
-	};
+	}
 
 	const structureItems = [
 		{
@@ -491,7 +493,7 @@ export const Default: Story = {
 			],
 			label: 'Mes délégués',
 		},
-	];
+	]
 
 	const servicesContact = [
 		{
@@ -519,7 +521,7 @@ export const Default: Story = {
 			icon: 'convention',
 			label: 'Contact 5',
 		},
-	];
+	]
 
 	const servicesPs = [
 		{
@@ -557,7 +559,7 @@ export const Default: Story = {
 			icon: 'commandes',
 			label: 'Commandes d’imprimés',
 		},
-	];
+	]
 
 	const servicesPatient = [
 		{
@@ -600,7 +602,7 @@ export const Default: Story = {
 			icon: 'seringue',
 			label: 'Bilan soins infirmiers',
 		},
-	];
+	]
 
 	const userInformationSummaryInfos = {
 		adresseLigne1: '31 Boulevard des champs',
@@ -609,7 +611,7 @@ export const Default: Story = {
 		denomination: 'Docteur',
 		nomCabinet: 'Cabinet des fleurs',
 		userName: 'Jean Martin',
-	};
+	}
 
 	const ameliproHeaderInfos = {
 		serviceMenuInfos: {
@@ -634,7 +636,7 @@ export const Default: Story = {
 		userInformationSummaryInfos,
 		userMenuInfos,
 		userName: 'Dr. Jean Dupont',
-	};
+	}
 </script>
 				`,
 			},
@@ -671,6 +673,12 @@ export const notLogged: Story = {
 	/>
 </template>
 				`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproHeader } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
@@ -711,6 +719,12 @@ export const other: Story = {
 	</AmeliproHeader>
 </template>
 				`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproHeader } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},

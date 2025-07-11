@@ -32,8 +32,13 @@ export const Default: Story = {
 	<AmeliproStatus
 		type="draft"
 	/>
-</template>
-				`,
+</template>`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproStatus } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
