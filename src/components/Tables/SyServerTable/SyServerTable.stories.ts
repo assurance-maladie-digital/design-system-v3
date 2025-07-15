@@ -93,6 +93,33 @@ const meta = {
 		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
+		multiSort: {
+			description: 'Permet de trier sur plusieurs colonnes simultanément. Lorsque activé, des indicateurs numériques apparaissent à côté des icônes de tri pour montrer l\'ordre de priorité.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		mustSort: {
+			description: 'Force au moins une colonne à être toujours triée. Si désactivé, toutes les colonnes peuvent être non triées.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
 		},
 		enableColumnControls: {
 			description: 'Allow the users to re-organize the columns',
