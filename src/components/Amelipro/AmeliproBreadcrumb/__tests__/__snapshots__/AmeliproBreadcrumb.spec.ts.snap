@@ -1,0 +1,192 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproBreadcrumb > render correctly 1`] = `
+<nav
+  aria-label="Fil d'Ariane"
+  class="breadcrumb"
+  id="amelipro-breadcrumb-unique-id-container"
+>
+  <ol
+    class="
+      align-center
+      breadcrumb__list
+      d-flex
+      list-style-none
+    "
+    id="amelipro-breadcrumb-unique-id-list"
+  >
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <button
+        class="
+          amelipro-btn
+          breadcrumb__btn
+          breadcrumb__btn
+          elevation-0
+          font-weight-semibold
+          font-weight-semibold
+          text-ap-blue-darken-1
+          text-none
+          text-none
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-text
+          v-theme--light
+        "
+        id="amelipro-breadcrumb-unique-id-btn-0"
+        style="height: auto; min-height: auto; padding: 0px;"
+        type="button"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="
+            align-center
+            amelipro-custom-btn
+            d-flex
+            flex-row
+          ">
+            Breadcrumb item 1
+            <!-- v-if -->
+            <!-- v-if -->
+          </span>
+        </span>
+        <!---->
+        <!---->
+      </button>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <button
+        class="
+          amelipro-btn
+          breadcrumb__btn
+          breadcrumb__btn
+          elevation-0
+          font-weight-semibold
+          font-weight-semibold
+          text-ap-blue-darken-1
+          text-none
+          text-none
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-text
+          v-theme--light
+        "
+        id="amelipro-breadcrumb-unique-id-btn-1"
+        style="height: auto; min-height: auto; padding: 0px;"
+        type="button"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="
+            align-center
+            amelipro-custom-btn
+            d-flex
+            flex-row
+          ">
+            Breadcrumb item 2
+            <!-- v-if -->
+            <!-- v-if -->
+          </span>
+        </span>
+        <!---->
+        <!---->
+      </button>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <button
+        class="
+          amelipro-btn
+          breadcrumb__btn
+          breadcrumb__btn
+          elevation-0
+          font-weight-semibold
+          font-weight-semibold
+          text-ap-blue-darken-1
+          text-none
+          text-none
+          v-btn
+          v-btn--density-default
+          v-btn--flat
+          v-btn--size-default
+          v-btn--variant-text
+          v-theme--light
+        "
+        id="amelipro-breadcrumb-unique-id-btn-2"
+        style="height: auto; min-height: auto; padding: 0px;"
+        type="button"
+      >
+        <span class="v-btn__overlay"></span>
+        <span class="v-btn__underlay"></span>
+        <!---->
+        <span
+          class="v-btn__content"
+          data-no-activator=""
+        >
+          <span class="
+            align-center
+            amelipro-custom-btn
+            d-flex
+            flex-row
+          ">
+            Breadcrumb item 3
+            <!-- v-if -->
+            <!-- v-if -->
+          </span>
+        </span>
+        <!---->
+        <!---->
+      </button>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li>
+      <p
+        aria-current="page"
+        class="
+          breadcrumb__active-page
+          mb-0
+          text-none
+        "
+        id="amelipro-breadcrumb-unique-id-current-page"
+      >
+        Breadcrumb item 4
+      </p>
+    </li>
+  </ol>
+</nav>
+`;
