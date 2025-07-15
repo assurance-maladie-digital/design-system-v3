@@ -587,15 +587,21 @@ export const ServerMultiSort: Story = {
 				name: 'Template',
 				code: `
 		<template>
-		  <SyServerTable
-			v-model:options="options"
-			:items="users"
-			:headers="headers"
-			:server-items-length="totalUsers"
-			:loading="state === StateEnum.PENDING"
-			suffix="server-multi-sort"
-			@update:options="fetchData"
-		  />
+		  <div>
+			<p class="mb-4">
+			  Cet exemple montre le tri multiple côté serveur avec des indicateurs d'ordre de priorité.
+			  Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+			</p>
+			<SyServerTable
+			  v-model:options="options"
+			  :items="users"
+			  :headers="headers"
+			  :server-items-length="totalUsers"
+			  :loading="state === StateEnum.PENDING"
+			  suffix="server-multi-sort"
+			  @update:options="fetchData"
+			/>
+		  </div>
 		</template>
 		`,
 			},
@@ -757,7 +763,6 @@ export const ServerMultiSort: Story = {
 			{ title: 'Email', key: 'email' },
 		],
 		'caption': '',
-		'serverItemsLength': 15,
 		'suffix': 'server-sort',
 		'density': 'default',
 		'striped': false,
@@ -869,6 +874,10 @@ export const ServerMultiSort: Story = {
 			},
 			template: `
 	  <div>
+		<p class="mb-4">
+		  Cet exemple montre le tri multiple côté serveur avec des indicateurs d'ordre de priorité.
+		  Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+		</p>
 		<SyServerTable
 		  v-model:options="options"
 		  :items="users"

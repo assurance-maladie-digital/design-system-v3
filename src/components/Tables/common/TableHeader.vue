@@ -136,6 +136,14 @@
 			return sort.key === props.column.key
 		})
 	})
+
+	// Get the sort order index (for multi-sort)
+	const sortOrderIndex = computed(() => {
+		if (!props.headerParams.sortBy || props.headerParams.sortBy.length <= 1) return null
+
+		const index = props.headerParams.sortBy.findIndex(sort => sort.key === props.column.key)
+		return index !== -1 ? index + 1 : null
+	})
 </script>
 
 <template>
@@ -146,15 +154,30 @@
 		<div class="col-title">
 			{{ column.title }}
 		</div>
-		<VIcon
+		<div
 			v-if="header!.sortable"
-			class="v-data-table-header__sort-icon mr-2"
-			:class="{ 'text-primary opacity-100' : isColumnSorted }"
-			:icon="headerParams.getSortIcon(column)"
-			:title="locales.columnOrder(column.title!)"
-			:aria-label="locales.columnOrder(column.title!)"
-			@click="headerParams.toggleSort(column)"
-		/>
+			class="sort-container d-flex align-center"
+		>
+			<VIcon
+				class="v-data-table-header__sort-icon"
+				:class="{ 'text-primary opacity-100' : isColumnSorted }"
+				:icon="headerParams.getSortIcon(column)"
+				:title="locales.columnOrder(column.title!)"
+				:aria-label="locales.columnOrder(column.title!)"
+				@click="headerParams.toggleSort(column)"
+			/>
+			<div
+				v-if="sortOrderIndex"
+				class="sort-order-indicator text-primary ml-0 mr-2"
+				:title="`Sort order: ${sortOrderIndex}`"
+			>
+				{{ sortOrderIndex }}
+			</div>
+			<div
+				v-else-if="isColumnSorted"
+				class="mr-2"
+			/>
+		</div>
 		<button
 			v-if="props.resizableColumns && !isLastColumn"
 			type="button"
@@ -174,6 +197,12 @@
 </template>
 
 <style lang="scss" scoped>
+.sort-order-indicator {
+	font-size: 0.75rem;
+	font-weight: bold;
+	line-height: 1;
+}
+
 .resizer {
 	margin-left: auto;
 	flex: 0 0 auto;

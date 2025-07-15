@@ -429,12 +429,19 @@ export const MultiSort: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<SyTable
-						v-model:options="options"
-						:headers="headers"
-						:items="items"
-						suffix="multi-sort-table"
-					/>
+					<div>
+						<p class="mb-4">
+							Cet exemple montre le tri multiple avec des indicateurs d'ordre de priorité.
+							Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+						</p>
+						<SyTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							:multi-sort="true"
+							suffix="multi-sort-table"
+						/>
+					</div>
 				</template>
 				`,
 			},
@@ -473,6 +480,10 @@ export const MultiSort: Story = {
                             title: 'Email',
 							value: 'email',
 						},
+						{
+                            title: 'Ville',
+							key: 'city',
+						},
 					])
 						
 					const items = ref([
@@ -480,36 +491,43 @@ export const MultiSort: Story = {
 							firstname: 'Virginie',
 							lastname: 'Beauchesne',
 							email: 'virginie.beauchesne@example.com',
+							city: 'Paris',
 						},
 						{
 							firstname: 'Simone',
 							lastname: 'Bellefeuille',
 							email: 'simone.bellefeuille@example.com',
+							city: 'Lyon',
 						},
 						{
 							firstname: 'Étienne',
 							lastname: 'Salois',
 							email: 'etienne.salois@example.com',
+							city: 'Marseille',
 						},
 						{
 							firstname: 'Thierry',
 							lastname: 'Bobu',
 							email: 'thierry.bobu@example.com',
+							city: 'Toulouse',
 						},
 						{
 							firstname: 'Bernadette',
 							lastname: 'Langelier',
-							email: 'bernadette.langelier@exemple.com'
+							email: 'bernadette.langelier@exemple.com',
+							city: 'Nice',
 						},
 						{
 							firstname: 'Agate',
 							lastname: 'Roy',
-							email: 'agate.roy@exemple.com'
+							email: 'agate.roy@exemple.com',
+							city: 'Bordeaux',
 						},
 						{
 							firstname: 'Agate',
 							lastname: 'Beauchesne',
-							email: 'agate.beauchesne@exemple.com'
+							email: 'agate.beauchesne@exemple.com',
+							city: 'Lille',
 						}
 					])
 				</script>
@@ -531,42 +549,53 @@ export const MultiSort: Story = {
 				title: 'Email',
 				value: 'email',
 			},
+			{
+				title: 'Ville',
+				key: 'city',
+			},
 		],
 		'items': [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
 				email: 'virginie.beauchesne@example.com',
+				city: 'Paris',
 			},
 			{
 				firstname: 'Simone',
 				lastname: 'Bellefeuille',
 				email: 'simone.bellefeuille@example.com',
+				city: 'Lyon',
 			},
 			{
 				firstname: 'Étienne',
 				lastname: 'Salois',
 				email: 'etienne.salois@example.com',
+				city: 'Marseille',
 			},
 			{
 				firstname: 'Thierry',
 				lastname: 'Bobu',
 				email: 'thierry.bobu@example.com',
+				city: 'Toulouse',
 			},
 			{
 				firstname: 'Bernadette',
 				lastname: 'Langelier',
 				email: 'bernadette.langelier@exemple.com',
+				city: 'Nice',
 			},
 			{
 				firstname: 'Agate',
 				lastname: 'Roy',
 				email: 'agate.roy@exemple.com',
+				city: 'Bordeaux',
 			},
 			{
 				firstname: 'Agate',
 				lastname: 'Beauchesne',
 				email: 'agate.beauchesne@exemple.com',
+				city: 'Lille',
 			},
 		],
 		'caption': '',
@@ -597,11 +626,17 @@ export const MultiSort: Story = {
 				return { args }
 			},
 			template: `
-				<SyTable
-					v-model:options="args.options"
-					v-bind="args"
-					suffix="multi-sort-table"
-				/>
+				<div>
+					<p class="mb-4">
+						Cet exemple montre le tri multiple avec des indicateurs d'ordre de priorité.
+						Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+					</p>
+					<SyTable
+						v-model:options="args.options"
+						v-bind="args"
+						suffix="multi-sort-table"
+					/>
+				</div>
 			`,
 		}
 	},
