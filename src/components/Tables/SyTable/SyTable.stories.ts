@@ -72,6 +72,33 @@ const meta = {
 		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
+		multiSort: {
+			description: 'Permet de trier sur plusieurs colonnes simultanément. Lorsque activé, des indicateurs numériques apparaissent à côté des icônes de tri pour montrer l\'ordre de priorité.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		mustSort: {
+			description: 'Force au moins une colonne à être toujours triée. Si désactivé, toutes les colonnes peuvent être non triées.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
 		},
 		caption: {
 			description: 'Texte de la légende du tableau',
@@ -417,6 +444,226 @@ export const SortBy: Story = {
 					v-model:options="args.options"
 					v-bind="args"
 				/>
+			`,
+		}
+	},
+}
+
+export const MultiSort: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<p class="mb-4">
+							Cet exemple montre le tri multiple avec des indicateurs d'ordre de priorité.
+							Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+						</p>
+						<SyTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							:multi-sort="true"
+							suffix="multi-sort-table"
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+						multiSort: true,
+						sortBy: [
+							{
+								key: 'lastname',
+								order: 'desc',
+							},
+							{
+								key: 'firstname',
+								order: 'asc',
+							},
+						],
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+                            title: 'Email',
+							value: 'email',
+						},
+						{
+                            title: 'Ville',
+							key: 'city',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+							city: 'Paris',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+							city: 'Lyon',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+							city: 'Marseille',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+							city: 'Toulouse',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com',
+							city: 'Nice',
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com',
+							city: 'Bordeaux',
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Beauchesne',
+							email: 'agate.beauchesne@exemple.com',
+							city: 'Lille',
+						}
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+			{
+				title: 'Ville',
+				key: 'city',
+			},
+		],
+		'items': [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+				city: 'Paris',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+				city: 'Lyon',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+				city: 'Marseille',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+				city: 'Toulouse',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+				city: 'Nice',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+				city: 'Bordeaux',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Beauchesne',
+				email: 'agate.beauchesne@exemple.com',
+				city: 'Lille',
+			},
+		],
+		'caption': '',
+		'options': {
+			itemsPerPage: 4,
+			multiSort: true,
+			sortBy: [
+				{
+					key: 'lastname',
+					order: 'desc',
+				},
+				{
+					key: 'firstname',
+					order: 'asc',
+				},
+			],
+		},
+		'suffix': 'multi-sort-table',
+		'density': 'default',
+		'striped': false,
+		'multiSort': true,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div>
+					<p class="mb-4">
+						Cet exemple montre le tri multiple avec des indicateurs d'ordre de priorité.
+						Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+					</p>
+					<SyTable
+						v-model:options="args.options"
+						v-bind="args"
+						suffix="multi-sort-table"
+					/>
+				</div>
 			`,
 		}
 	},

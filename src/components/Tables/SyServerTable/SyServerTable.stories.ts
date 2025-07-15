@@ -93,6 +93,33 @@ const meta = {
 		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
+		multiSort: {
+			description: 'Permet de trier sur plusieurs colonnes simultanément. Lorsque activé, des indicateurs numériques apparaissent à côté des icônes de tri pour montrer l\'ordre de priorité.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		mustSort: {
+			description: 'Force au moins une colonne à être toujours triée. Si désactivé, toutes les colonnes peuvent être non triées.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
 		},
 		enableColumnControls: {
 			description: 'Allow the users to re-organize the columns',
@@ -572,6 +599,320 @@ export const ServerSortBy: Story = {
 		  :server-items-length="totalUsers"
 		  :loading="state === StateEnum.PENDING"
 		  v-bind="args"
+		  @update:options="fetchData"
+		/>
+	  </div>
+	  `,
+		}
+	},
+}
+
+export const ServerMultiSort: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+		<template>
+		  <div>
+			<p class="mb-4">
+			  Cet exemple montre le tri multiple côté serveur avec des indicateurs d'ordre de priorité.
+			  Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+			</p>
+			<SyServerTable
+			  v-model:options="options"
+			  :items="users"
+			  :headers="headers"
+			  :server-items-length="totalUsers"
+			  :loading="state === StateEnum.PENDING"
+			  suffix="server-multi-sort"
+			  @update:options="fetchData"
+			/>
+		  </div>
+		</template>
+		`,
+			},
+			{
+				name: 'Script',
+				code: `
+		<script setup lang="ts">
+		  import { ref } from 'vue'
+		  import { SyServerTable } from '@cnamts/synapse'
+		  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+		  import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+
+		  interface User {
+			[key: string]: string
+			firstname: string
+			lastname: string
+			email: string
+		  }
+
+		  interface DataObj {
+			items: User[]
+			total: number
+		  }
+
+		  const totalUsers = ref(0)
+		  const users = ref<User[]>([])
+		  const state = ref(StateEnum.IDLE)
+
+		  const options = ref<DataOptions>({
+			itemsPerPage: 5,
+			multiSort: true,
+			sortBy: [
+				{
+					key: 'lastname',
+					order: 'desc',
+				},
+				{
+					key: 'firstname',
+					order: 'asc',
+				},
+			],
+			page: 1,
+		  })
+
+		  const headers = [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		  ]
+
+		  const fetchData = async (): Promise<void> => {
+			const { items, total } = await getDataFromApi(options.value)
+			users.value = items
+			totalUsers.value = total
+		  }
+
+		  const wait = async (ms: number) => {
+			return new Promise(resolve => setTimeout(resolve, ms))
+		  }
+
+		  const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+			state.value = StateEnum.PENDING
+			await wait(1000)
+
+			return new Promise((resolve) => {
+			  let items: User[] = getUsers()
+			  const total = items.length
+
+			  if (sortBy && sortBy.length > 0) {
+					items.sort((a, b) => {
+						for (const sort of sortBy) {
+							const key = sort.key
+							const r = String(a[key]).localeCompare(String(b[key]))
+
+							const order = sort.order === 'asc' ? 1 : -1
+							if (r !== 0) {
+								return r * order
+							}
+						}
+						return 0
+					})
+				}
+
+			  if (itemsPerPage > 0) {
+				items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+			  }
+
+			  resolve({ items, total })
+			  state.value = StateEnum.RESOLVED
+			})
+		  }
+
+		  const getUsers = (): User[] => {
+			return [
+				{
+					firstname: 'Virginie',
+					lastname: 'Beauchesne',
+					email: 'virginie.beauchesne@example.com',
+				},
+				{
+					firstname: 'Simone',
+					lastname: 'Bellefeuille',
+					email: 'simone.bellefeuille@example.com',
+				},
+				{
+					firstname: 'Étienne',
+					lastname: 'Salois',
+					email: 'etienne.salois@example.com',
+				},
+				{
+					firstname: 'Thierry',
+					lastname: 'Bobu',
+					email: 'thierry.bobu@example.com',
+				},
+				{
+					firstname: 'Bernadette',
+					lastname: 'Langelier',
+					email: 'bernadette.langelier@exemple.com'
+				},
+				{
+					firstname: 'Agate',
+					lastname: 'Roy',
+					email: 'agate.roy@exemple.com'
+				},
+				{
+					firstname: 'Agate',
+					lastname: 'Beauchesne',
+					email: 'agate.beauchesne@exemple.com'
+				}
+			]
+		  }
+          
+           // Initialize data
+		  	fetchData()
+		</script>
+		`,
+			},
+		],
+	},
+	args: {
+		'options': {
+			itemsPerPage: 5,
+			multiSort: true,
+			sortBy: [
+				{
+					key: 'lastname',
+					order: 'desc',
+				},
+				{
+					key: 'firstname',
+					order: 'asc',
+				},
+			],
+			page: 1,
+		},
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'caption': '',
+		'suffix': 'server-sort',
+		'density': 'default',
+		'striped': false,
+		'multiSort': true,
+		'serverItemsLength': 7,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const totalUsers = ref(0)
+				const users = ref<User[]>([])
+				const state = ref(StateEnum.IDLE)
+
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
+				const fetchData = async (): Promise<void> => {
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
+					users.value = items
+					totalUsers.value = total
+				}
+
+				const wait = async (ms: number) => {
+					return new Promise(resolve => setTimeout(resolve, ms))
+				}
+
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+					state.value = StateEnum.PENDING
+					await wait(1000)
+
+					return new Promise((resolve) => {
+						let items: User[] = getUsers()
+						const total = items.length
+
+						if (sortBy && sortBy.length > 0) {
+							items.sort((a, b) => {
+								for (const sort of sortBy) {
+									const key = sort.key
+									const r = String(a[key]).localeCompare(String(b[key]))
+
+									const order = sort.order === 'asc' ? 1 : -1
+									if (r !== 0) {
+										return r * order
+									}
+								}
+								return 0
+							})
+						}
+
+						if (itemsPerPage > 0) {
+							items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						}
+
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getUsers = (): User[] => {
+					return [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com',
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com',
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Beauchesne',
+							email: 'agate.beauchesne@exemple.com',
+						},
+					]
+				}
+
+				// Initialize data
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
+			},
+			template: `
+	  <div>
+		<p class="mb-4">
+		  Cet exemple montre le tri multiple côté serveur avec des indicateurs d'ordre de priorité.
+		  Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+		</p>
+		<SyServerTable
+		  v-model:options="options"
+		  :items="users"
+		  :server-items-length="totalUsers"
+		  :loading="state === StateEnum.PENDING"
+		  v-bind="args"
+		  suffix="server-multi-sort"
 		  @update:options="fetchData"
 		/>
 	  </div>

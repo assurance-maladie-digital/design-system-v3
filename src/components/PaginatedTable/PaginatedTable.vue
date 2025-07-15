@@ -20,6 +20,14 @@
 			type: String,
 			default: '',
 		},
+		multiSort: {
+			type: Boolean,
+			default: false,
+		},
+		mustSort: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -56,8 +64,8 @@
 			itemsPerPage: options.value.itemsPerPage || props.itemsPerPage,
 			sortBy: options.value.sortBy,
 			groupBy: options.value.groupBy,
-			multiSort: options.value.multiSort,
-			mustSort: options.value.mustSort,
+			multiSort: options.value.multiSort !== undefined ? options.value.multiSort : props.multiSort,
+			mustSort: options.value.mustSort !== undefined ? options.value.mustSort : props.mustSort,
 		}
 	})
 
