@@ -4,7 +4,11 @@ import type { AmeliproMenuItem } from './types'
 
 const meta = {
 	argTypes: {
-		escape: { description: 'Événement émis si la touche "Échap" est utilisée pour fermer le menu', type: 'void' },
+		escape: {
+			action: 'escape',
+			description: 'Événement émis si la touche "Échap" est utilisée pour fermer le menu',
+			type: 'void',
+		},
 		homeHref: { description: 'Lien du bouton vers l’accueil' },
 		homeTo: { description: 'Route du bouton vers l’accueil' },
 		items: {
@@ -110,6 +114,7 @@ export const Default: Story = {
 	<AmeliproMenu
 		:items="items"
 		unique-id="amelipro-menu-unique-id"
+		@escape="args['escape']"
 	/>
 </template>
 				`,
@@ -195,6 +200,7 @@ export const Default: Story = {
 		<div class="bg-ap-blue-darken-1">
 			<AmeliproMenu
 				v-bind="args"
+				@escape="args['escape']"
 			/>
 		</div>
 	</VApp>

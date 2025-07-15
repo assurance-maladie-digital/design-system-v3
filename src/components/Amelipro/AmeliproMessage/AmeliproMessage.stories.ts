@@ -7,7 +7,11 @@ const meta = {
 		'borderLeftMessage': { description: 'Applique un nouveau style au message avec un fond gris et une bordure à gauche du bloc lorsque cette property est active il ne faut pas utiliser le slot par défaut mais un slot dédié pour le contenu du message' },
 		'borderLeftMessageContent': { description: 'Slot pour le contenu du message si la property `BorderLeftMessage` est active.' },
 		'borderLeftMessageTitle': { description: 'Titre du Message pour le cas où la property BorderLeftMessage est active' },
-		'click:close': { description: 'Événement émis lorsque l’utilisateur clique sur le bouton fermer.', type: 'void' },
+		'click:close': {
+			action: 'click:close',
+			description: 'Événement émis lorsque l’utilisateur clique sur le bouton fermer.',
+			type: 'void',
+		},
 		'color': { description: 'Couleur personnalisée du message' },
 		'dark': { description: 'Change le style tu texte et de l’icône du blanc vers le noir' },
 		'default': { description: 'Slot pour le contenu du message.' },
@@ -44,6 +48,7 @@ export const Default: Story = {
 				code: `<template>
 	<AmeliproMessage
 		unique-id="amelipro-message-unique-id"
+		@click:close="args['click:close']"
 		>
 		<p class="mb-0">
 			Exemple de Message
@@ -61,6 +66,7 @@ export const Default: Story = {
 		template: `
 <AmeliproMessage
 	v-bind="args"
+	@click:close="args['click:close']"
 	>
 	<p class="mb-0">
 		Exemple de Message
@@ -84,6 +90,7 @@ export const BorderLeft: Story = {
 		border-left-message
 		border-left-message-title="Le titre du message"
 		unique-id="amelipro-message-unique-id-2"
+		@click:close="args['click:close']"
 	>
 		<template #borderLeftMessageContent>
 			<p class="ap-grey--text text--darken-1 mb-0">
@@ -104,6 +111,7 @@ export const BorderLeft: Story = {
 		template: `
 <AmeliproMessage
 	v-bind="args"
+	@click:close="args['click:close']"
 >
 	<template #borderLeftMessageContent>
 		<p class="text-ap-grey-darken-1 mb-0">

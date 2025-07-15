@@ -13,7 +13,11 @@ const meta = {
 		'item': { description: 'Slot généré automatiquement pour tous les blocs dépliants afin d’y insérer le contenu principal du bloc' },
 		'item.id': { description: 'Slot généré automatiquement pour chaque bloc dépliant afin d’y insérer le contenu principal du bloc' },
 		'manualValidation': { description: 'Active le fonctionnement manuel de la validation des items' },
-		'tab-clicked': { description: 'Événement émis au click sur les boutons ouverture/fermeture des cards, renvoie l’id de l’item cliqué' },
+		'tab-clicked': {
+			action: 'tab-clicked',
+			description: 'Événement émis au click sur les boutons ouverture/fermeture des cards, renvoie l’id de l’item cliqué',
+			type: 'string',
+		},
 		'tabs': {
 			description: 'Tableau comprenant la liste des blocs dépliant avec leur identifiant( doit être unique dans la page) et leurs titres',
 			table: {
@@ -77,6 +81,7 @@ export const Default: Story = {
 		:tabs="items"
 		title="Titre de la Carte"
 		unique-id="amelipro-multiple-folding-card-unique-id"
+		@tab-clicked="args['tab-clicked']"
 	>
 		<template #amelipro-multiple-folding-card-item-1>
 			<p>Mon test 1</p>
@@ -127,6 +132,7 @@ export const Default: Story = {
 		template: `
 <AmeliproMultipleFoldingCard
 	v-bind="args"
+	@tab-clicked="args['tab-clicked']"
 >
 	<template #amelipro-multiple-folding-card-item-1>
 		<p>Mon test 1</p>
