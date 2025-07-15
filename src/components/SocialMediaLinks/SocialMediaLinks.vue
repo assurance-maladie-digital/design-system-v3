@@ -2,20 +2,35 @@
 	import type { PropType } from 'vue'
 	import { locales } from './locales'
 	import type { SocialMediaLink } from './types'
+	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 
 	const props = defineProps({
 		links: {
 			type: Array as PropType<SocialMediaLink[]>,
 			default: null,
 		},
+		headingLevel: {
+			type: Number,
+			default: 6,
+			validator: (value: number) => value >= 1 && value <= 6,
+		},
+		useNativeHeading: {
+			type: Boolean,
+			default: true,
+		},
 	})
 </script>
 
 <template>
 	<div class="d-flex flex-column">
-		<span class="vd-social-media-links-label text-subtitle-2 text--primary">
+		<component
+			:is="props.useNativeHeading ? `h${props.headingLevel}` : 'span'"
+			class="vd-social-media-links-label text-subtitle-2 text--primary"
+			:role="!props.useNativeHeading ? 'heading' : undefined"
+			:aria-level="!props.useNativeHeading ? props.headingLevel : undefined"
+		>
 			{{ locales.followUs }}
-		</span>
+		</component>
 
 		<ul class="vd-social-media-links-content d-flex max-width-none">
 			<li
@@ -31,12 +46,12 @@
 					:aria-label="`Lien vers ${social.name}`"
 					variant="text"
 				>
-					<VIcon
+					<SyIcon
+						:icon="social.icon"
 						size="30px"
 						class="vd-social-media-links-icon"
-					>
-						{{ social.icon }}
-					</VIcon>
+						decorative
+					/>
 				</VBtn>
 			</li>
 		</ul>
@@ -58,6 +73,9 @@ li {
 .vd-social-media-links-label.text--primary {
 	color: tokens.$blue-base;
 	font-weight: 600;
+	margin: 0;
+	padding: 0;
+	font-family: inherit;
 }
 
 .v-theme--dark .vd-social-media-links-label.text--primary {
