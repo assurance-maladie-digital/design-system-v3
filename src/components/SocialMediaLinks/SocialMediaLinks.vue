@@ -25,7 +25,7 @@
 	<div class="d-flex flex-column">
 		<component
 			:is="props.useNativeHeading ? `h${props.headingLevel}` : 'span'"
-			class="vd-social-media-links-label text-subtitle-2 text--primary"
+			class="vd-social-media-links-label text--primary"
 			:role="!props.useNativeHeading ? 'heading' : undefined"
 			:aria-level="!props.useNativeHeading ? props.headingLevel : undefined"
 		>
@@ -76,6 +76,10 @@ li {
 	margin: 0;
 	padding: 0;
 	font-family: inherit;
+	font-size: 0.875rem;
+	line-height: 1.375rem;
+	/* Removed fixed letter-spacing of Vuetify */
+	letter-spacing: normal;
 }
 
 .v-theme--dark .vd-social-media-links-label.text--primary {
@@ -90,10 +94,22 @@ li {
 	width: calc(var(--v-btn-height) + 5px);
 	height: calc(var(--v-btn-height) + 5px);
 	border: 0;
+
+	&:focus-visible {
+		outline: 3px solid tokens.$blue-base;
+		outline-offset: -1px;
+	}
 }
 
-.v-theme--dark .v-btn--variant-text:hover :deep() {
-	background: rgba(white, 0.1);
+.v-theme--dark {
+	.v-btn--variant-text:hover :deep() {
+		background: rgba(white, 0.1);
+	}
+
+	.v-btn--icon:focus-visible {
+		outline: 3px solid white;
+		outline-offset: -1px;
+	}
 }
 
 @media (width >= 768px) {
