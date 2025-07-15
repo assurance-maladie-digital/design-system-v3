@@ -78,6 +78,7 @@ li {
 	font-family: inherit;
 	font-size: 0.875rem;
 	line-height: 1.375rem;
+
 	/* Removed fixed letter-spacing of Vuetify */
 	letter-spacing: normal;
 }
