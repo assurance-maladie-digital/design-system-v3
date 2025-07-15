@@ -10,7 +10,11 @@ const meta = {
 		bordered: { description: 'Active le mode bordered' },
 		btnLabel: { description: 'Label masqué du bouton à remplir si les slots `prepend`, `append` et la property `btnTitle` ne sont pas utilisés' },
 		btnTitle: { description: 'Title du bouton à remplir si le slots `prepend`, `append` et la property `btnLabel` ne sont pas utilisés. Est affiché au survol du bouton' },
-		click: { description: 'Event émis au click sur le bouton, ne fonctionne correctement que si `href` et `to` ne sont pas renseignés.' },
+		click: {
+			action: 'click',
+			description: 'Event émis au click sur le bouton, ne fonctionne correctement que si `href` et `to` ne sont pas renseignés.',
+			type: 'void',
+		},
 		href: { description: 'Url du lien' },
 		icon: { description: 'Nom de l’icône personnalisée' },
 		iconBgColor: { description: 'Couleur de l’arrière plan de l’icône' },
@@ -56,6 +60,7 @@ export const Default: Story = {
 		icon-hover-color="ap-white"
 		unique-id="amelipro-icon-btn-id
 		x-large
+		@click="args.click"
 	/>
 </template>
 				`,
@@ -70,6 +75,7 @@ export const Default: Story = {
 		template: `
 <AmeliproIconBtn
 	v-bind="args"
+	@click="args.click"
 />`,
 	}),
 }

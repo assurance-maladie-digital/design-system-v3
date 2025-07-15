@@ -5,6 +5,23 @@ import AmeliproAutoCompleteField from './AmeliproAutoCompleteField.vue'
 const meta = {
 	argTypes: {
 		'ariaRequired': { description: 'Défini le champ comme étant obligatoire' },
+		// l'event 'change' ne fonctionne pas dans la doc/actions
+		'change': {
+			action: 'change',
+			description: 'Événement émis au changement de la valeur du champ. Déprécié, utilisez `update:model-value` à la place.',
+		},
+		'blur': {
+			action: 'blur',
+			description: 'Événement émis au blur du champ',
+		},
+		'esc': {
+			action: 'esc',
+			description: 'Événement émis quand la touche échap est pressée',
+		},
+		'focus': {
+			action: 'focus',
+			description: 'Événement émis au focus du champ',
+		},
 		'classes': { description: 'Permet d’ajouter des classes au wrapper du composant' },
 		'disabled': { description: 'Défini le champ comme désactivé' },
 		'globalMaxWidth': { description: 'Gère la largeur maximale du composant, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
@@ -23,7 +40,14 @@ const meta = {
 		'readonly': { description: 'Défini que le champ est en lecture seule' },
 		'rules': { description: 'Liste des règles à respecter pour valider le champ' },
 		'uniqueId': { description: 'Défini un id pour le champ' },
-		'update:menu': { description: 'Event émis au changement d’état de la liste d’autocomplétion' },
+		'update:menu': {
+			action: 'update:menu',
+			description: 'Événement émis au changement d’état de la liste d’autocomplétion',
+		},
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement de valeur du champ',
+		},
 		'validateOn': { description: 'Défini le moment où la validation du champ se fait, voir la documentation de Vuetify pour plus d’informtations' },
 	},
 	component: AmeliproAutoCompleteField,
@@ -92,6 +116,12 @@ export const Default: Story = {
 		:items="items"
 		unique-id="amelipro-auto-complete-field-id"
 		label="Mon label"
+		@change="args['change']"
+		@blur="args['blur']"
+		@esc="args['esc']"
+		@focus="args['focus']"
+		@update:menu="args['update:menu']"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>
 				`,
@@ -165,6 +195,12 @@ export const Default: Story = {
 <AmeliproAutoCompleteField
 	v-bind="args"
 	v-model="model"
+	@change="args['change']"
+	@blur="args['blur']"
+	@esc="args['esc']"
+	@focus="args['focus']"
+	@update:menu="args['update:menu']"
+	@update:model-value="args['update:model-value']"
 />`,
 	}),
 }

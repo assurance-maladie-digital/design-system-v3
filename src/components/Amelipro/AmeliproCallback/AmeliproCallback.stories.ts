@@ -5,7 +5,11 @@ const meta = {
 	argTypes: {
 		'cardActions': { description: 'Permet de modifier la zone prévu pour les boutons cardActions' },
 		'cardTitle': { description: 'Titre de la carte' },
-		'click:transmission': { description: 'Événement émis au clic sur le bouton "Réessayer".', type: 'void' },
+		'click:transmission': {
+			action: 'click:transmission',
+			description: 'Événement émis au clic sur le bouton "Réessayer".',
+			type: 'void',
+		},
 		'contentBottom': { description: 'Permet de rajouter du contenu sous le contenu principal de la carte' },
 		'contentText': { description: 'Text de la carte (contenu)' },
 		'contentTitle': { description: 'Titre du contenu' },
@@ -39,7 +43,9 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<AmeliproCallback />
+	<AmeliproCallback
+		@click:transmission="onTransmission"
+	/>
 </template>
 				`,
 			},
@@ -53,6 +59,7 @@ export const Default: Story = {
 		template: `
 <AmeliproCallback
 	v-bind="args"
+	@click:transmission="args['click:transmission']"
 />
 		`,
 	}),
