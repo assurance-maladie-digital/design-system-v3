@@ -111,7 +111,7 @@ a {
 }
 
 .vd-collapse-list a {
-	color: #222324;
+	color: rgb(var(--v-theme-text-base));
 }
 
 .vd-collapse-list :deep() {
@@ -134,6 +134,12 @@ a {
 .vd-collapse-list-mobile :deep() {
 	.v-expansion-panel-title {
 		font-weight: 700 !important;
+
+		&:focus-visible {
+			outline: 2px solid rgb(var(--v-theme-primary));
+			outline-offset: 2px;
+			border-radius: 4px;
+		}
 	}
 
 	.text-subtitle-2 {
@@ -145,6 +151,15 @@ a {
 
 	.v-icon {
 		color: rgb(0 0 0 / 54%) !important;
+	}
+
+	// Ensure focus is visible on the disclosure button
+	.v-expansion-panel-title__overlay {
+		background-color: transparent;
+
+		&:focus-visible {
+			background-color: rgba(var(--v-theme-primary), 0.08);
+		}
 	}
 }
 
