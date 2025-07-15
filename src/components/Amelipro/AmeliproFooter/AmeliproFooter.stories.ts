@@ -68,9 +68,26 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<AmeliproFooter />
+	<AmeliproFooter
+		a11y-compliance="A11yComplianceEnum.NON_COMPLIANT"
+		:back-office="false"
+		:no-a11y="false"
+		:no-about="false"
+		:no-cgu="false"
+		:no-configuration="false"
+		:no-legal-notice="false"
+		:no-link-a11y="false"
+		:no-site-map="false"
+		version="X.X.X"
+	/>
 </template>
 				`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproFooter } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},

@@ -98,6 +98,8 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
+	import { AmeliproBtn, AmeliproOnboarding } from '@cnamts/synapse'
+	
 	const steps = [
 		{
 			content: [
@@ -122,7 +124,7 @@ export const Default: Story = {
 			img: './public/tile-example.svg',
 			title: 'Retrouvez les informations utiles à la gestion de vos contrats',
 		},
-	];
+	]
 </script>`,
 			},
 		],

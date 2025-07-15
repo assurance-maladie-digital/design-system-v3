@@ -93,6 +93,8 @@ export const Default: Story = {
 			{
 				name: 'Scripts',
 				code: `<script setup lang="ts">
+	import { AmeliproCard, AmeliproMessagingLayout } from '@cnamts/synapse'
+
 	const items = [
 		{
 			href: '#',
@@ -118,7 +120,7 @@ export const Default: Story = {
 			label: 'Clos',
 			unreadNumber: 1,
 		},
-	];
+	]
 </script>`,
 			},
 		],

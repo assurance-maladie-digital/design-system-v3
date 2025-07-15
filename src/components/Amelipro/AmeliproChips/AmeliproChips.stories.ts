@@ -25,12 +25,17 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 	<AmeliproChips
-		v-model="model"
 		text="Texte à afficher"
 		unique-id="amelipro-chips-unique-id"
 	/>
 </template>
 				`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproChips } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},

@@ -99,7 +99,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproAutoCompleteField from '@cnamts/synapse';
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
 	import { ref } from 'vue';
 
 	const model = ref();

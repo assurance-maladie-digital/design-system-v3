@@ -39,9 +39,19 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<AmeliproCallback />
+	<AmeliproCallback 
+		card-title="Titre de la carte"
+		content-text="Texte du contenu"
+		content-title="Titre du contenu"
+	/>
 </template>
 				`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproCallback } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},

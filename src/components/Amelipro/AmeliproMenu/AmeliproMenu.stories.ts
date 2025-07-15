@@ -117,6 +117,8 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
+	import { AmeliproMenu } from '@cnamts/synapse'
+
 	const items = [
 		{	actif: false,
 			children: [
@@ -179,8 +181,7 @@ export const Default: Story = {
 			id: '3',
 			name: 'Menu 3',
 		},
-	];
-		
+	]
 </script>`,
 			},
 		],
