@@ -144,11 +144,11 @@ describe('SocialMediaLinks', () => {
 				useNativeHeading: true,
 			},
 		})
-		
+
 		// Verify that the button exists
 		const button = wrapper.find('.v-btn--icon')
 		expect(button.exists()).toBe(true)
-		
+
 		// The actual focus styles are tested in snapshots since we can't easily test CSS in JSDOM
 		expect(wrapper.html()).toMatchSnapshot()
 	})
