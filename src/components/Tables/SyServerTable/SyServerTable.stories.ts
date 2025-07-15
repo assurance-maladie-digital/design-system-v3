@@ -794,6 +794,7 @@ export const ServerMultiSort: Story = {
 		'density': 'default',
 		'striped': false,
 		'multiSort': true,
+		'serverItemsLength': 7,
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
