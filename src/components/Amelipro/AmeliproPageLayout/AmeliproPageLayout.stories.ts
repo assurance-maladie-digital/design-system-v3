@@ -162,8 +162,16 @@ const meta = {
 				},
 			},
 		},
-		'back-btn-click': { description: 'Événement émis lorsque l’utilisateur clique sur le bouton retour présent dans le header.', type: 'void' },
-		'click:patient-change': { description: 'Événement émis au clic sur le bouton changer de patient dans le bandeau patient.', type: 'void' },
+		'back-btn-click': {
+			action: 'back-btn-click',
+			description: 'Événement émis lorsque l’utilisateur clique sur le bouton retour présent dans le header.',
+			type: 'void',
+		},
+		'click:patient-change': {
+			action: 'click:patient-change',
+			description: 'Événement émis au clic sur le bouton changer de patient dans le bandeau patient.',
+			type: 'void',
+		},
 		'customMainContent': { description: 'Permet de personnaliser la partie contenu principal pour les page différentes du format classique' },
 		'footer': { description: 'Slot pour ajouter le footer.' },
 		'header': { description: 'Slot pour ajouter le header.' },
@@ -462,6 +470,8 @@ export const Default: Story = {
 	<AmeliproPageLayout
 		:amelipro-page-layout-infos="ameliproPageLayoutInfos"
 		unique-id="amelipro-page-layout-id"
+		@back-btn-click="args['back-btn-click']"
+		@click:patient-change="args['click:patient-change']"
 	/>
 </template>
 				`,
@@ -740,6 +750,8 @@ export const Default: Story = {
 		template: `
 			<AmeliproPageLayout
 				v-bind="args"
+				@back-btn-click="args['back-btn-click']"
+				@click:patient-change="args['click:patient-change']"
 			/>
 		`,
 	}),

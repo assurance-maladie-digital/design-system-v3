@@ -5,7 +5,11 @@ import type { MessagingMenuTypes } from './types'
 
 const meta = {
 	argTypes: {
-		'click-new-message': { description: 'Pour gérer un affichage spécifique à une carte' },
+		'click-new-message': {
+			action: 'click-new-message',
+			description: 'Pour gérer un affichage spécifique à une carte',
+			type: 'void',
+		},
 		'items': {
 			description: 'Liste des lien composants le menu de la messagerie, la propriété active symbolisant la page active',
 			table: {
@@ -76,6 +80,7 @@ export const Default: Story = {
 	<AmeliproMessagingLayout
 		:items="items"
 		unique-id="amelipro-messaging-layout-unique-id"
+		@click:new-message="args['click:new-message']"
 	>
 		<div class="pa-4">
 			<AmeliproCard
@@ -133,6 +138,7 @@ export const Default: Story = {
 		template: `
 <AmeliproMessagingLayout
 	v-bind="args"
+	@click:new-message="args['click:new-message']"
 >
 	<div class="pa-4">
 		<AmeliproCard

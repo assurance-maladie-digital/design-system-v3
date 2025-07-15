@@ -3,7 +3,11 @@ import AmeliproMailTile from './AmeliproMailTile.vue'
 
 const meta = {
 	argTypes: {
-		'click': { description: 'Événement émis au click sur la partie principale de la tuile. Retourne `unique-id`.', type: 'string' },
+		'click': {
+			action: 'click',
+			description: 'Événement émis au click sur la partie principale de la tuile. Retourne `unique-id`.',
+			type: 'string',
+		},
 		'editable': { description: 'Défini si le statut de la tuile peut être modifiée par l’utilisateur' },
 		'mailInfo': {
 			description: 'Les infos à afficher dans la tuile',
@@ -25,7 +29,11 @@ const meta = {
 				},
 			},
 		},
-		'status-change': { description: 'Événement émis au click sur le bouton de gauche quand qui change le statut du mail, quand la props editable est active. Retourne `unique-id`.', type: 'string' },
+		'status-change': {
+			action: 'status-change',
+			description: 'Événement émis au click sur le bouton de gauche quand qui change le statut du mail, quand la props editable est active. Retourne `unique-id`.',
+			type: 'string',
+		},
 		'uniqueId': { description: 'Identifiant unique de la tuile' },
 	},
 	component: AmeliproMailTile,
@@ -56,6 +64,8 @@ export const Default: Story = {
 	<AmeliproMailTile
 		:mail-info="item"
 		unique-id="mail-tile"
+		@click="args['click']"
+		@status-change="args['status-change']"
 	/>
 </template>`,
 			},
@@ -87,6 +97,8 @@ export const Default: Story = {
 	:mail-info="args.mailInfo"
 	:unique-id="args.uniqueId"
 	v-bind="args"
+	@click="args['click']"
+	@status-change="args['status-change']"
 />`,
 	}),
 }
