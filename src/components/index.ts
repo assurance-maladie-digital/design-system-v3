@@ -117,6 +117,7 @@ export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 // Amelipro
 // ===========================
 export { default as AmeliproAutoCompleteField } from './Amelipro/AmeliproAutoCompleteField/AmeliproAutoCompleteField.vue'
+export { default as AmeliproBreadcrumb } from './Amelipro/AmeliproBreadcrumb/AmeliproBreadcrumb.vue'
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
 export { default as AmeliproCard } from './Amelipro/AmeliproCard/AmeliproCard.vue'
 export { default as AmeliproCallback } from './Amelipro/AmeliproCallback/AmeliproCallback.vue'
