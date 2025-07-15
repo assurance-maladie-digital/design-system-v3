@@ -79,9 +79,10 @@ export const Default: Story = {
 			{
 				name: 'Scripts',
 				code: `<script setup lang="ts">
-	import { ref } from 'vue;
+	import { ref } from 'vue
+	import { AmeliproBtn, AmeliproDialog } from '@cnamts/synapse'
 
-	const value = ref(false);
+	const value = ref(false)
 </script>`,
 			},
 		],

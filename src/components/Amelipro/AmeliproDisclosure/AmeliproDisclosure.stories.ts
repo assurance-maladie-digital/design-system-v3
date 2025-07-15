@@ -35,6 +35,12 @@ export const Default: Story = {
 	</AmeliproDisclosure>
 </template>`,
 			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproDisclosure } from '@cnamts/synapse'
+</script>`,
+			},
 		],
 	},
 	render: args => ({

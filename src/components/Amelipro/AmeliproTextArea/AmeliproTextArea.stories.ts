@@ -62,10 +62,10 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproTextArea from '@cnamts/synapse';
-	import { ref } from 'vue';
+	import { AmeliproTextArea } from '@cnamts/synapse'
+	import { ref } from 'vue'
 
-	const model = ref();
+	const model = ref()
 </script>`,
 			},
 		],

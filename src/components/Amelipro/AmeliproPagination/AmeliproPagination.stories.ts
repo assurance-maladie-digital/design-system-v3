@@ -53,7 +53,7 @@ export const Default: Story = {
 				code: `<template>
 	<AmeliproPagination
 		:active-page-default="1"
-		:items="items5"
+		:items="items"
 		unique-id="amelipro-pagination-unique-id"
 	/>
 </template>
@@ -62,6 +62,8 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
+	import { AmeliproPagination } from '@cnamts/synapse'
+
 	const items = [
 		{ key: 1 },
 		{ key: 2 },
@@ -73,7 +75,7 @@ export const Default: Story = {
 		{ key: 8 },
 		{ key: 9 },
 		{ key: 10 },
-	];
+	]
 </script>
 				`,
 			},

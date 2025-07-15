@@ -54,11 +54,17 @@ export const Default: Story = {
 		icon-color="ap-white"
 		icon-hover-bg-color="ap-blue-darken-2"
 		icon-hover-color="ap-white"
-		unique-id="amelipro-icon-btn-id
+		unique-id="amelipro-icon-btn-id"
 		x-large
 	/>
 </template>
 				`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproIconBtn } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},

@@ -77,6 +77,12 @@ export const Default: Story = {
 				`,
 			},
 			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproTileBtn } from '@cnamts/synapse'
+</script>`,
+			},
+			{
 				name: 'Style',
 				code: `<style lang="scss" scoped>
 	li {

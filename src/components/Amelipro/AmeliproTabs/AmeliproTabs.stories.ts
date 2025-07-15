@@ -70,22 +70,21 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 	<AmeliproTabs
-		:aria-label="Titre du group d'onglets"
+		aria-label="Titre du group d'onglets"
 		:items="items"
-		:unique-id="tabs"
+		unique-id="tabs"
 	>
 		<template #tabs-tab-panel-0>Contenu de l'onglet 1</template>
 		<template #tabs-tab-panel-1>Contenu de l'onglet 2</template>
 		<template #tabs-tab-panel-2>Contenu de l'onglet 3</template>
 		<template #tabs-tab-panel-3>Contenu de l'onglet 4</template>
 	</AmeliproTabs>
-</template>
-				`,
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import AmeliproTabs from '@cnamts/synapse';
+	import { AmeliproTabs } from '@cnamts/synapse'
 
 	const items = [
 		{
@@ -104,9 +103,8 @@ export const Default: Story = {
 			label: 'Mon onglet 4',
 			disabled: false,
 		},
-	];
-</script>
-				`,
+	]
+</script>`,
 			},
 		],
 	},
@@ -144,22 +142,23 @@ export const Pills: Story = {
 				name: 'Template',
 				code: `<template>
 	<AmeliproTabs
-		:aria-label="Titre du group d'onglets"
+		aria-label="Titre du group d'onglets"
 		:items="items"
 		pills
-		:unique-id="tabs"
+		unique-id="tabs"
 	>
 		<template #tabs-tab-panel-0>Contenu de l'onglet 1</template>
 		<template #tabs-tab-panel-1>Contenu de l'onglet 2</template>
 		<template #tabs-tab-panel-2>Contenu de l'onglet 3</template>
 		<template #tabs-tab-panel-3>Contenu de l'onglet 4</template>
 	</AmeliproTabs>
-</template>
-				`,
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
+	import { AmeliproTabs } from '@cnamts/synapse'
+
 	const items = [
 		{
 			label: 'Mon onglet 1',
@@ -177,9 +176,8 @@ export const Pills: Story = {
 			label: 'Mon onglet 4',
 			disabled: false,
 		},
-	];
-</script>
-				`,
+	]
+</script>`,
 			},
 		],
 	},

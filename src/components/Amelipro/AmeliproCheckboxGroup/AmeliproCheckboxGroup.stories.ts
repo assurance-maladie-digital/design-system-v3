@@ -109,7 +109,8 @@ export const Default: Story = {
 			{
 				name: 'Scripts',
 				code: `<script setup lang="ts">
-	import { ref } from 'vue';
+	import { ref } from 'vue'
+	import { AmeliproCheckboxGroup } from '@cnamts/synapse'
 
 	const value = ref([
 		{
@@ -140,7 +141,7 @@ export const Default: Story = {
 			label: '5',
 			value: 'Valeur 5',
 		},
-	]);
+	])
 </script>`,
 			},
 		],

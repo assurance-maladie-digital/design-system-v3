@@ -92,6 +92,8 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
+	import { UserMenu } from '@cnamts/synapse'
+
 	const userMenuInfos = {
 		lastConnexion: '01/01/2024',
 		userMenuDetailsInfos: {
@@ -111,7 +113,7 @@ export const Default: Story = {
 			rpps: 'RPPS',
 			userName: 'userName',
 		},
-	};
+	}
 </script>
 				`,
 			},

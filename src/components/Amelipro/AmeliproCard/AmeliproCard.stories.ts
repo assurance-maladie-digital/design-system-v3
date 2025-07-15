@@ -62,6 +62,12 @@ export const Default: Story = {
 	</AmeliproCard>
 </template>`,
 			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+	import { AmeliproCard } from '@cnamts/synapse'
+</script>`,
+			},
 		],
 	},
 	render: args => ({
