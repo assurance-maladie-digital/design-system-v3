@@ -18,7 +18,7 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproStatus> = {
 	},
 	paddingX: {
 		type: String,
-		default: '124',
+		default: '12px',
 	},
 	paddingY: {
 		type: String,
