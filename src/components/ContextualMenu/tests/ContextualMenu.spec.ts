@@ -11,6 +11,7 @@ describe('ContextualMenu', () => {
 				plugins: [vuetify],
 			},
 			props: {
+				ariaLabel: 'menu contextuel',
 				items: [
 					{
 						text: 'Titre 1',
@@ -33,6 +34,7 @@ describe('ContextualMenu', () => {
 				plugins: [vuetify],
 			},
 			props: {
+				ariaLabel: 'menu contextuel',
 				items: [],
 			},
 		})
@@ -46,6 +48,7 @@ describe('ContextualMenu', () => {
 				plugins: [vuetify],
 			},
 			props: {
+				ariaLabel: 'menu contextuel',
 				items: [
 					{
 						text: 'Titre 1',
@@ -70,6 +73,7 @@ describe('ContextualMenu', () => {
 				plugins: [vuetify],
 			},
 			props: {
+				ariaLabel: 'menu contextuel',
 				items: [
 					{
 						text: 'Titre 1',
@@ -95,6 +99,7 @@ describe('ContextualMenu', () => {
 				plugins: [vuetify],
 			},
 			props: {
+				ariaLabel: 'menu contextuel',
 				items: [
 					{
 						text: 'Titre 1',
@@ -111,5 +116,154 @@ describe('ContextualMenu', () => {
 		await wrapper.vm.$nextTick()
 		expect(wrapper.find('[href="#example-2"]').classes()).toContain('active')
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['#example-2'])
+	})
+
+	describe('layout', () => {
+		it('render correctly with a deepth', () => {
+			const wrapper = mount(ContextualMenu, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					ariaLabel: 'menu contextuel',
+					items: [
+						{
+							text: 'Titre 1',
+							hash: '#example-1',
+							level: 2,
+						},
+						{
+							text: 'Titre 2',
+							hash: '#example-2',
+							level: 4,
+						},
+						{
+							text: 'Titre 3',
+							hash: '#example-3',
+							level: 2,
+						},
+					],
+				},
+			})
+
+			expect(wrapper.html()).toMatchSnapshot()
+		})
+
+		it('render correctly with a deepth', () => {
+			const wrapper = mount(ContextualMenu, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					ariaLabel: 'menu contextuel',
+					items: [
+						{
+							text: 'Titre 1',
+							hash: '#example-1',
+							level: 3,
+						},
+						{
+							text: 'Titre 2',
+							hash: '#example-2',
+							level: 2,
+						},
+						{
+							text: 'Titre 3',
+							hash: '#example-3',
+							level: 1,
+						},
+						{
+							text: 'Titre 4',
+							hash: '#example-4',
+							level: 2,
+						},
+						{
+							text: 'Titre 5',
+							hash: '#example-5',
+							level: 3,
+						},
+					],
+				},
+			})
+
+			expect(wrapper.html()).toMatchSnapshot()
+		})
+
+		it('render correctly with a deepth', () => {
+			const wrapper = mount(ContextualMenu, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					ariaLabel: 'menu contextuel',
+					items: [
+						{
+							text: 'Titre 1',
+							hash: '#example-1',
+							level: 1,
+						},
+						{
+							text: 'Titre 2',
+							hash: '#example-2',
+							level: 3,
+						},
+						{
+							text: 'Titre 3',
+							hash: '#example-3',
+						},
+						{
+							text: 'Titre 4',
+							hash: '#example-4',
+							level: 3,
+						},
+						{
+							text: 'Titre 5',
+							hash: '#example-5',
+							level: 1,
+						},
+					],
+				},
+			})
+
+			expect(wrapper.html()).toMatchSnapshot()
+		})
+
+		it('render correctly with a deepth', () => {
+			const wrapper = mount(ContextualMenu, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					ariaLabel: 'menu contextuel',
+					items: [
+						{
+							text: 'Titre 1',
+							hash: '#example-1',
+						},
+						{
+							text: 'Titre 2',
+							hash: '#example-2',
+						},
+						{
+							text: 'Titre 3',
+							hash: '#example-3',
+							level: 3,
+						},
+						{
+							text: 'Titre 4',
+							hash: '#example-4',
+							level: 3,
+						},
+						{
+							text: 'Titre 5',
+							hash: '#example-5',
+							level: 1,
+						},
+					],
+				},
+			})
+
+			expect(wrapper.html()).toMatchSnapshot()
+		})
 	})
 })
