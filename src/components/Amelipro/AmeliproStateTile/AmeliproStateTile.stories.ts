@@ -4,7 +4,11 @@ import AmeliproStateTile from './AmeliproStateTile.vue'
 const meta = {
 	argTypes: {
 		btnStyledText: { description: 'Partie du texte qui s’affiche dans la tuile sous forme de bouton' },
-		click: { description: 'Événement émis au click sur les tuiles cliquables. Retourne `uniqueId`', type: 'string | undefined' },
+		click: {
+			action: 'click',
+			description: 'Événement émis au click sur les tuiles cliquables. Retourne `uniqueId`',
+			type: 'string | undefined',
+		},
 		contentMinHeight: { description: 'Hauteur minimale du contenu de la tuile' },
 		disabled: { description: 'Pour désactiver la tuile' },
 		href: { description: 'Url de destination du lien.' },
@@ -62,6 +66,7 @@ export const Default: Story = {
 		tile-type="toDoNoCertificate"
 		tile-width="300px"
 		unique-id="amelipro-state-tile-unique-id"
+		@click="args['click']"
 	/>
 </template>`,
 			},
@@ -75,6 +80,7 @@ export const Default: Story = {
 		template: `
 <AmeliproStateTile
 	v-bind="args"
+	@click="args['click']"
 />`,
 	}),
 }

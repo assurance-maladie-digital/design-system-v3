@@ -6,7 +6,11 @@ const meta = {
 	argTypes: {
 		'backBtn': { description: 'Slot dans lequel injecter un bouton retour pour la première étape' },
 		'centered': { description: 'Centrer les boutons étape' },
-		'change-step': { description: 'Événement émis au click sur une des étapes. Retourne le nouvel `index`', type: 'number' },
+		'change-step': {
+			action: 'change-step',
+			description: 'Événement émis au click sur une des étapes. Retourne le nouvel `index`',
+			type: 'number',
+		},
 		'finalOptionalBtn': { description: 'Slot dans lequel injecter des boutons supplémentaire pour l’étape finale' },
 		'finalStepBtn': { description: 'Libellé du bouton de soumission de la dernière étape' },
 		'finalStepLeftBtn': { description: 'Slot permettant de mettre un élément à gauche du bouton final' },
@@ -27,13 +31,25 @@ const meta = {
 		},
 		'leftBtn': { description: 'Slot permettant de mettre un élément à gauche des boutons suivant ou transmettre sur toutes les étapes' },
 		'manualChangeStep': { description: 'Retire le fonctionnement par défaut du changement automatique des étapes' },
-		'next-step': { description: 'Événement émis au click sur le bouton suivant. Retourne le nouvel `index`', type: 'number' },
+		'next-step': {
+			action: 'next-step',
+			description: 'Événement émis au click sur le bouton suivant. Retourne le nouvel `index`',
+			type: 'number',
+		},
 		'nextBtnLabel': { description: 'Libellé du bouton étape suivant' },
 		'noDefaultStyle': { description: 'Retire le style par défaut autour du contenu des étapes' },
-		'previous-step': { description: 'Événement émis au click sur le bouton précédent. Retourne le nouvel `index`', type: 'number' },
+		'previous-step': {
+			action: 'previous-step',
+			description: 'Événement émis au click sur le bouton précédent. Retourne le nouvel `index`',
+			type: 'number',
+		},
 		'previousBtnLabel': { description: 'Libellé du bouton étape précédente' },
 		'stepContent': { description: 'Slot dans lequel injecter le contenu des étapes' },
-		'submit': { description: 'Événement émis au click sur le bouton permettant de soumettre la dernière étape.', type: 'void' },
+		'submit': {
+			action: 'submit',
+			description: 'Événement émis au click sur le bouton permettant de soumettre la dernière étape.',
+			type: 'void',
+		},
 		'uniqueId': { description: 'Identifiant unique du composant' },
 		'value': { description: 'Index de l’étape séléctionnée par défaut' },
 
@@ -80,6 +96,10 @@ export const Default: Story = {
 		no-default-style
 		unique-id="stepper-example"
 		:value="1"
+		@change-step="args['change-step']"
+		@next-step="args['next-step']"
+		@previous-step="args['previous-step']"
+		@submit="args['submit']"
 	>
 		<template #stepContent>
 			<AmeliproCard
@@ -132,6 +152,10 @@ export const Default: Story = {
 		<AmeliproCard
 			card-title="Titre de mon étape"
 			unique-id="current-step-card"
+			@change-step="args['change-step']"
+			@next-step="args['next-step']"
+			@previous-step="args['previous-step']"
+			@submit="args['submit']"
 		>
 			Contenu de l'étape dans le slot
 		</AmeliproCard>

@@ -56,6 +56,7 @@ const meta = {
 		'update:model-value': {
 			action: 'update:model-value',
 			description: 'Event émis au changement du v-model',
+			type: 'SelectItem | number | string',
 		},
 		'validateOn': { description: 'Défini le moment où la validation du champ se fait, voir la documentation de Vuetify pour plus d’informtations' },
 	},

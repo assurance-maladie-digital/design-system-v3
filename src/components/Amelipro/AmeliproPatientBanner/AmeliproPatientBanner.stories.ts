@@ -5,7 +5,11 @@ const meta = {
 	argTypes: {
 		'birthName': { description: 'Nom de naissance du patient s’il y en a un' },
 		'birthdate': { description: 'Date de naissance du patient' },
-		'click:patient-change': { description: 'Événement émis au clic sur le bouton changer de patient', type: 'void' },
+		'click:patient-change': {
+			action: 'click:patient-change',
+			description: 'Événement émis au clic sur le bouton changer de patient',
+			type: 'void',
+		},
 		'moreInformationHref': { description: 'URL pour aux informations détaillées du patient' },
 		'moreInformationTo': { description: 'Route pour aux informations détaillées du patient' },
 		'name': { description: 'Nom et Prénom du patient' },
@@ -52,6 +56,7 @@ export const Default: Story = {
 		patient-organism="CPAM des Alpes de Haute Provence - Centre 103"
 		patient-status="Assuré(e)"
 		patient-system="Régime Général"
+		@click:patient-change="args['click:patient-change']"
 	/>
 </template>
 				`,
@@ -66,6 +71,7 @@ export const Default: Story = {
 		template: `
 <AmeliproPatientBanner
 	v-bind="args"
+	@click:patient-change="args['click:patient-change']"
 />`,
 	}),
 
