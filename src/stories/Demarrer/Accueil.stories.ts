@@ -32,11 +32,11 @@ export const Header: StoryObj = {
 				  />
 				  <VRow cols="12" style="z-index: 1; position: relative">
 					  <VCol md="6" sm="12">
-						  <h1 class="font-weight-bold text-h4 mb-2">Synapse : 
-							  <span v-if="theme === 'pa'" class="text-h5 font-weight-bold">Thème Portail Agent</span>
-							  <span v-if="theme === 'cnam'" class="text-h5 font-weight-bold">Thème CNAM</span></h1>
+						  <h1 class="text-h4 font-weight-bold mb-2">Design System de la CNAM</h1>
 						  <img alt="line" src="/home-line.svg" width="120" height="5" class="mb-5" />
-						  <h2 class="text-h4 mb-5">Design System de la CNAM</h2>
+						  <h2 class="text-h5 mb-5">Synapse : 
+							  <span v-if="theme === 'pa'" class="text-h5">thème Portail Agent</span>
+							  <span v-if="theme === 'cnam'" class="text-h5">thème CNAM</span></h2>
 						  <p class="mb-5">Veuillez sélectionner dans la barre d’outil en haut de l’écran le thème graphique de votre produit avant de consulter la documentation, elle s’actualisera en conséquence avec les tokens et composants disponibles.
 							  <br/>Si vous ne connaissez pas le thème auquel votre produit est soumis veuillez consulter le dossier d’architecture du produit.
 							  <br/><br/>
@@ -47,8 +47,7 @@ export const Header: StoryObj = {
 						  </VBtn>
 					  </VCol>
 					  <VCol md="6" sm="12" class="d-flex justify-start flex-column align-center">
-						  <img alt="components" src="/home-illustration.svg" width="auto" height="250" class="img-animate mb-6" />
-						  <img alt="theme" src="/theme.jpeg" width="200" height="auto" class="img-animate" />
+						  <img alt="components" src="/home-illustration.svg" width="auto" height="250" class="img-animate" />
 					  </VCol>
 				  </VRow>
 				  <div class="position-absolute d-inline-flex" style="right: 60px; bottom: -10px">

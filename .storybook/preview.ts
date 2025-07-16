@@ -152,7 +152,7 @@ const preview: Preview = {
 						'Migration depuis Bridge',
 						'Migration depuis Vue2',
 						'Breaking changes',
-						'Gestion du thème',
+						'Configuration du thème',
 						'Correspondance composants PAG',
 						'Règles De Validation',
 						'Utiliser les rules',
