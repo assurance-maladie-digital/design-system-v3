@@ -648,7 +648,7 @@
 			}"
 			bg-color="white"
 			tabindex="0"
-			title="props.multiple ? 'Sélection multiple' : 'Sélection'"
+			:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
 			@keydown.esc.prevent="closeList"
 			@keydown.tab.prevent="closeList"
 			@keydown.enter.prevent="handleEnterKey"
