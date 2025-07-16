@@ -25,7 +25,7 @@ export const Header: StoryObj = {
 			template: `
               <div>
 				  <span v-if="theme === 'pa'"
-						style="position: absolute; top:0; left:-1000px; background-color: rgba(183,203,214, 0.7); width: 1000%; height: 100%; z-index: 0"
+						style="position: absolute; top:0; left:-1000px; background-color: rgba(7, 39, 92, 0.2); width: 1000%; height: 100%; z-index: 0"
 				  />
 				  <span v-if="theme === 'cnam'"
 						style="position: absolute; top:0; left:-1000px; background-color: rgba(12, 65, 154, 0.2); width: 1000%; height: 100%; z-index: 0"
@@ -47,7 +47,8 @@ export const Header: StoryObj = {
 						  </VBtn>
 					  </VCol>
 					  <VCol md="6" sm="12" class="d-flex justify-start flex-column align-center">
-						  <img alt="components" src="/home-illustration.svg" width="auto" height="250" class="img-animate" />
+						  <img v-if="theme === 'cnam'" alt="components" src="/home-illustration.svg" width="auto" height="300" class="img-animate" />
+						  <img v-if="theme === 'pa'" alt="components" src="/home-illustration-pa.svg" width="auto" height="300" class="img-animate" />
 					  </VCol>
 				  </VRow>
 				  <div class="position-absolute d-inline-flex" style="right: 60px; bottom: -10px">
