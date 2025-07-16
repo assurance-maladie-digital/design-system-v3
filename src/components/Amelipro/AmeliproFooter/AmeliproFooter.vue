@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	/* eslint-disable vuejs-accessibility/no-redundant-roles */
+	/* eslint-disable vuejs-accessibility/no-redundant-roles, max-lines */
 	import { A11Y_COMPLIANCE_ENUM_VALUES, A11yComplianceEnum } from './A11yComplianceEnum'
 	import { type PropType, computed } from 'vue'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'

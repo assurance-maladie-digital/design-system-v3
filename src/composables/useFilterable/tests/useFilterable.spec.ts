@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import useFilterable, { type FilterItem, type FilterProp } from './useFilterable'
+import useFilterable, { type FilterItem, type FilterProp } from '../useFilterable'
 import type { ChipItem } from '@/components/ChipList/types'
 import { nextTick, ref } from 'vue'
 

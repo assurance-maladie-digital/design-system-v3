@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	/* eslint-disable max-lines */
 	import { computed, ref, useSlots } from 'vue'
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import type { IndexedObject } from '../types'

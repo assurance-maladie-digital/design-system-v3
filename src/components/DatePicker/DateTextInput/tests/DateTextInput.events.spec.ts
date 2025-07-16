@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
 import { nextTick } from 'vue'
-import DateTextInput from './DateTextInput.vue'
+import DateTextInput from '../DateTextInput.vue'
 
 describe('DateTextInput.vue - Events', () => {
 	let wrapper

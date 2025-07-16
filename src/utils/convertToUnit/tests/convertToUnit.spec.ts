@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { convertToUnit } from '../'
+import { convertToUnit } from '..'
 
 describe('convertToUnit', () => {
 	it('returns undefined when the value is null', () => {
