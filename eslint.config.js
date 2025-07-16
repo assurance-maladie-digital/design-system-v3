@@ -1,8 +1,9 @@
-import js from '@eslint/js'
 import eslintPluginVue from 'eslint-plugin-vue'
-import ts from 'typescript-eslint'
-import stylistic from '@stylistic/eslint-plugin'
+import js from '@eslint/js'
 import pluginVueA11y from 'eslint-plugin-vuejs-accessibility'
+import stylistic from '@stylistic/eslint-plugin'
+import ts from 'typescript-eslint'
+import ameliproRules from './eslint.amelipro.rules.js'
 
 export default ts.config(
 	// Parser
@@ -15,7 +16,10 @@ export default ts.config(
 			},
 		},
 	},
-
+	{
+		files: ['**/*.spec.ts', 'tests/**/*.ts'],
+		languageOptions: { parserOptions: { project: './tsconfig.spec.json' } },
+	},
 	// Base config
 	js.configs.recommended,
 	...ts.configs.recommended,
@@ -23,13 +27,21 @@ export default ts.config(
 	...pluginVueA11y.configs['flat/recommended'],
 	stylistic.configs.customize({
 		indent: 'tab',
+		jsx: false,
 		quotes: 'single',
 		semi: false,
-		jsx: false,
 	}),
 	// Overrides
+	// -----------------------
+	// Récup règles AMELIPRO
+	// Ne s'appliquent qu'aux fichiers Amelipro
+	// à fusionner avec les règles de base petit à petit, en ajustant les règles si nécessaire
+	// -----------------------
+	...ameliproRules,
 	{
-		// Vue Overrides
+		// -----------------------
+		// Règles Vue.js
+		// -----------------------
 		files: ['*.vue', '**/*.vue'],
 		rules: {
 			'vue/block-order': [
@@ -44,15 +56,16 @@ export default ts.config(
 					],
 				},
 			],
-			'vue/multi-word-component-names': 0,
-			'vue/script-indent': ['error', 'tab', { baseIndent: 1 }],
-			'vue/html-indent': ['error', 'tab'],
 			'vue/html-comment-indent': ['error', 'tab'],
+			'vue/html-indent': ['error', 'tab'],
+			'vue/multi-word-component-names': 0,
 			'vue/no-v-html': 0,
+			'vue/script-indent': ['error', 'tab', { baseIndent: 1 }],
 			'@stylistic/indent': 0,
 			'no-console': ['error', { allow: ['warn', 'error'] }],
 			'no-explicit-any': 0,
 			'vuejs-accessibility/interactive-supports-focus': 0,
 		},
 	},
+
 )

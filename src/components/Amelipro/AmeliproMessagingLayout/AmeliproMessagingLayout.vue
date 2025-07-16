@@ -33,16 +33,14 @@
 	})
 
 	const { mdAndUp } = useDisplay()
-	const menuItems = computed<DropdownItem[]>(() => {
-		return props.items.map(item => (
-			{
-				active: item.active,
-				href: item.href,
-				label: item.label,
-				to: item.to,
-			}
-		))
-	})
+	const menuItems = computed<DropdownItem[]>(() => props.items.map(item => (
+		{
+			active: item.active,
+			href: item.href,
+			label: item.label,
+			to: item.to,
+		}
+	)))
 
 	const menuStyles = computed<IndexedObject>(() => {
 		const styles: IndexedObject = {}

@@ -217,6 +217,8 @@
 <template>
 	<VBtn
 		:id="uniqueId"
+		v-bind="$attrs"
+		class="amelipro-btn"
 		:class="btnClasses"
 		:color="currentColor"
 		:disabled="disabled"
@@ -229,8 +231,6 @@
 		:target="target"
 		:type="type"
 		:variant="variant"
-		v-bind="$attrs"
-		class="amelipro-btn"
 		@blur="focus = false"
 		@focus="focus = true"
 		@mouseenter="hover = true;"

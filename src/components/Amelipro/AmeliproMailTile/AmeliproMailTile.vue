@@ -22,7 +22,7 @@
 	})
 
 	const { smAndUp } = useDisplay()
-	const currentReadValue = ref(props.mailInfo.readValue)
+	const currentReadValue = ref(props.mailInfo.readValue || false)
 	const hover = ref(false)
 	const focus = ref(false)
 
@@ -58,7 +58,7 @@
 		>
 			<button
 				:id="`${uniqueId}-read-btn`"
-				aria-label="Message lu"
+				:aria-label="currentReadValue ? 'Message lu' : 'Message non lu'"
 				:aria-pressed="currentReadValue ? true : false"
 				class="mail-status-btn"
 				:class="currentReadValue ? undefined : 'mail-status-btn--not-read'"
@@ -77,9 +77,9 @@
 				:ripple="false"
 				:to="mailInfo.to"
 				variant="flat"
+				@blur="focus = false"
 				@click="emitClickEvent()"
 				@focus="focus = true"
-				@blur="focus = false"
 				@mouseenter="hover = true"
 				@mouseleave="hover = false"
 			>
@@ -175,9 +175,9 @@
 			:title="currentReadValue ? 'Message lu' : 'Message non lu'"
 			:to="mailInfo.to"
 			variant="flat"
+			@blur="focus = false"
 			@click="emitClickEvent"
 			@focus="focus = true"
-			@blur="focus = false"
 			@mouseenter="hover = true"
 			@mouseleave="hover = false"
 		>

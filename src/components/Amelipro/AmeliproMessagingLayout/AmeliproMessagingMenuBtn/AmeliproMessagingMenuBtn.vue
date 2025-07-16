@@ -50,8 +50,8 @@
 		text-color="ap-white"
 		:to="to"
 		:unique-id="uniqueId"
-		@focus="focus = true"
 		@blur="focus = false"
+		@focus="focus = true"
 		@mouseenter="hover = true"
 		@mouseleave="hover = false"
 	>

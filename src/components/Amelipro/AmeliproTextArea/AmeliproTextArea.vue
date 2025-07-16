@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	/* eslint-disable vuejs-accessibility/label-has-for */
+	import type { IndexedObject, ValidateOnType } from '../types'
 	import { type PropType, computed, onMounted, ref } from 'vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
-	import type { IndexedObject, ValidateOnType } from '../types'
 	import type { InputTextArea } from './types'
 	import type { ValidationRule } from '@/utils/rules/types'
 	import { convertToHex } from '@/utils/functions/convertToHex'

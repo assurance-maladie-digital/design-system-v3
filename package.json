@@ -26,6 +26,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
+    "lint:amelipro": "eslint \"src/**/Amelipro/**/*.{ts,vue}\"",
+    "lint:amelipro:fix": "eslint \"src/**/Amelipro/**/*.{ts,vue}\" --fix",
     "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
     "lint:fix": "eslint \"src/**/*.{ts,vue}\" --fix && stylelint \"src/**/*.{css,scss,vue}\" --fix",
     "test:unit": "vitest run",
@@ -98,6 +100,7 @@
     "vite-plugin-vuetify": "^2.0.4",
     "vitest": "^2.0.5",
     "vue": "^3.4.33",
+    "vue-component-type-helpers": "2.2.0",
     "vue-router": "^4.4.5",
     "vue-tsc": "^2.1.8",
     "vue3-snapshot-serializer": "^2.9.0"
@@ -119,5 +122,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"
 }

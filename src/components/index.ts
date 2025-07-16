@@ -156,6 +156,7 @@ export { default as StructureMenu } from './Amelipro/StructureMenu/StructureMenu
 export { default as ServiceMenu } from './Amelipro/ServiceMenu/ServiceMenu.vue'
 export { default as UserInformationSummary } from './Amelipro/UserInformationSummary/UserInformationSummary.vue'
 export { default as UserMenu } from './Amelipro/UserMenu/UserMenu.vue'
+export { default as AmeliproMessagingLayout } from './Amelipro/AmeliproMessagingLayout/AmeliproMessagingLayout.vue'
 
 // ===========================
 // Composables and services

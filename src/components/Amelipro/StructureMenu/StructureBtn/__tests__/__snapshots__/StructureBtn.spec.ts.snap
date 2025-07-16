@@ -1,0 +1,63 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StructureBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<v-btn-stub
+  aria-controls="test-id"
+  aria-selected="true"
+  block="false"
+  border="false"
+  class="structure-btn"
+  color="ap-blue-darken-2"
+  density="default"
+  disabled="false"
+  elevation="0"
+  exact="false"
+  flat="false"
+  icon="false"
+  id="modified-unique-id"
+  loading="false"
+  replace="false"
+  ripple="false"
+  role="tab"
+  size="default"
+  slim="false"
+  stacked="false"
+  style="color: #FFFFFF;"
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tabindex="0"
+  tag="button"
+  tile="false"
+  variant="elevated"
+></v-btn-stub>
+`;
+
+exports[`StructureBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<v-btn-stub
+  aria-controls="required-controls"
+  aria-selected="false"
+  block="false"
+  border="false"
+  class="structure-btn"
+  color="ap-grey-lighten-3"
+  density="default"
+  disabled="false"
+  elevation="0"
+  exact="false"
+  flat="false"
+  icon="false"
+  id="required-unique-id"
+  loading="false"
+  replace="false"
+  ripple="false"
+  role="tab"
+  size="default"
+  slim="false"
+  stacked="false"
+  style="color: #1A1B1B;"
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tabindex="1"
+  tag="button"
+  tile="false"
+  variant="elevated"
+></v-btn-stub>
+`;

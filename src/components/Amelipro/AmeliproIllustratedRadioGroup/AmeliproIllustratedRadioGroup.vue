@@ -118,8 +118,8 @@
 					>
 						<label
 							:id="`${uniqueId}-label-${index}`"
-							:for="`${uniqueId}-input-${index}`"
 							class="mr-2 mb-2 d-inline-flex flex-row align-center amelipro-illustrated-radio-group__item__label"
+							:for="`${uniqueId}-input-${index}`"
 						>
 							<input
 								:id="`${uniqueId}-input-${index}`"
