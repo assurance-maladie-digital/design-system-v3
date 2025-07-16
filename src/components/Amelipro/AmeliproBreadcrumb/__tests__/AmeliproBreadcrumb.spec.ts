@@ -1,10 +1,9 @@
+import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproBreadcrumb from '../AmeliproBreadcrumb.vue'
 import type { AmeliproBreadcrumbItem } from '../types'
 import type { PropType } from 'vue'
 import TestHelper from '@tests/helpers/TestHelper'
-import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
-import type { AmeliproAutoCompleteField } from '@/components'
 
 const expectedPropOptions = {
 	items: {
