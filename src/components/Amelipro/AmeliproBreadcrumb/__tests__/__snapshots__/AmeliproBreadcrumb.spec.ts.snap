@@ -1,5 +1,353 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AmeliproBreadcrumb > Setting props should update attributes of inner tags > prop uniqueId sets id attributes on nav, ol, btn and current page 1`] = `
+<nav
+  aria-label="Fil d'Ariane"
+  class="breadcrumb"
+  id="modified-unique-id-container"
+>
+  <ol
+    class="
+      align-center
+      breadcrumb__list
+      d-flex
+      list-style-none
+    "
+    id="modified-unique-id-list"
+  >
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        class="
+          breadcrumb__btn
+          font-weight-semibold
+          text-none
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="true"
+        href="/required-1"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="true"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+        uniqueid="modified-unique-id-btn-0"
+      ></amelipro-btn-stub>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        class="
+          breadcrumb__btn
+          font-weight-semibold
+          text-none
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="true"
+        href="/required-2"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="true"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+        uniqueid="modified-unique-id-btn-1"
+      ></amelipro-btn-stub>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li>
+      <p
+        aria-current="page"
+        class="
+          breadcrumb__active-page
+          mb-0
+          text-none
+        "
+        id="modified-unique-id-current-page"
+      >
+        Required title 3
+      </p>
+    </li>
+  </ol>
+</nav>
+`;
+
+exports[`AmeliproBreadcrumb > Snapshots > renders the component with all properties filled in 1`] = `
+<nav
+  aria-label="Fil d'Ariane"
+  class="breadcrumb"
+  id="modified-unique-id-container"
+>
+  <ol
+    class="
+      align-center
+      breadcrumb__list
+      d-flex
+      list-style-none
+    "
+    id="modified-unique-id-list"
+  >
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        class="
+          breadcrumb__btn
+          font-weight-semibold
+          text-none
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="true"
+        href="/modified-1"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="true"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+        uniqueid="modified-unique-id-btn-0"
+      ></amelipro-btn-stub>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        class="
+          breadcrumb__btn
+          font-weight-semibold
+          text-none
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="true"
+        href="/modified-2"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="true"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+        uniqueid="modified-unique-id-btn-1"
+      ></amelipro-btn-stub>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        class="
+          breadcrumb__btn
+          font-weight-semibold
+          text-none
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="true"
+        href="/modified-3"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="true"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+        uniqueid="modified-unique-id-btn-2"
+      ></amelipro-btn-stub>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li>
+      <p
+        aria-current="page"
+        class="
+          breadcrumb__active-page
+          mb-0
+          text-none
+        "
+        id="modified-unique-id-current-page"
+      >
+        Modified title 4
+      </p>
+    </li>
+  </ol>
+</nav>
+`;
+
+exports[`AmeliproBreadcrumb > Snapshots > renders the component with only required properties filled in 1`] = `
+<nav
+  aria-label="Fil d'Ariane"
+  class="breadcrumb"
+>
+  <ol class="
+    align-center
+    breadcrumb__list
+    d-flex
+    list-style-none
+  ">
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        class="
+          breadcrumb__btn
+          font-weight-semibold
+          text-none
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="true"
+        href="/required-1"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="true"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+      ></amelipro-btn-stub>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li class="
+      align-center
+      breadcrumb__item
+      d-flex
+    ">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        class="
+          breadcrumb__btn
+          font-weight-semibold
+          text-none
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="true"
+        href="/required-2"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="true"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+      ></amelipro-btn-stub>
+      <span
+        aria-hidden="true"
+        class="breadcrumb__separator"
+      ></span>
+    </li>
+    <li>
+      <p
+        aria-current="page"
+        class="
+          breadcrumb__active-page
+          mb-0
+          text-none
+        "
+      >
+        Required title 3
+      </p>
+    </li>
+  </ol>
+</nav>
+`;
+
 exports[`AmeliproBreadcrumb > render correctly 1`] = `
 <nav
   aria-label="Fil d'Ariane"
