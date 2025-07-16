@@ -41,7 +41,7 @@
 						<a
 							:href="item.href"
 							:aria-label="item.text"
-							class="text-body-2 text-decoration-none"
+							class="text-body-2 text-decoration-none text--primary"
 						>
 							{{ item.text }}
 						</a>
@@ -111,7 +111,7 @@ a {
 }
 
 .vd-collapse-list a {
-	color: black;
+	color: rgb(var(--v-theme-text-base));
 }
 
 .vd-collapse-list :deep() {
@@ -122,7 +122,7 @@ a {
 	}
 }
 
-.vd-collapse-list.theme--dark :deep() {
+.v-theme--dark .vd-collapse-list :deep() {
 	h4,
 	ul,
 	a,
@@ -132,6 +132,16 @@ a {
 }
 
 .vd-collapse-list-mobile :deep() {
+	.v-expansion-panel-title {
+		font-weight: 700 !important;
+
+		&:focus-visible {
+			outline: 2px solid rgb(var(--v-theme-primary));
+			outline-offset: 2px;
+			border-radius: 4px;
+		}
+	}
+
 	.text-subtitle-2 {
 		font-size: 1rem !important;
 		letter-spacing: 0.001em !important;
@@ -139,16 +149,21 @@ a {
 		font-weight: 600;
 	}
 
-	button {
-		color: red !important;
-	}
-
 	.v-icon {
 		color: rgb(0 0 0 / 54%) !important;
 	}
+
+	// Ensure focus is visible on the disclosure button
+	.v-expansion-panel-title__overlay {
+		background-color: transparent;
+
+		&:focus-visible {
+			background-color: rgba(var(--v-theme-primary), 0.08);
+		}
+	}
 }
 
-.vd-collapse-list-mobile.theme--dark :deep() {
+.v-theme--dark .vd-collapse-list-mobile :deep() {
 	button {
 		color: white !important;
 	}
