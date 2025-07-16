@@ -586,23 +586,21 @@
 				}
 			}"
 		>
-			<template
+			<div
 				v-if="hasChips"
-				#default
+				class="d-flex flex-wrap gap-1"
 			>
-				<div class="d-flex flex-wrap gap-1">
-					<VChip
-						v-for="item in selectedItem"
-						:key="props.returnObject ? item[props.valueKey] : item"
-						size="small"
-						class="ma-1"
-						closable
-						@click:close="removeChip(item)"
-					>
-						{{ getChipText(item) }}
-					</VChip>
-				</div>
-			</template>
+				<VChip
+					v-for="item in selectedItem"
+					:key="props.returnObject ? item[props.valueKey] : item"
+					size="small"
+					class="ma-1"
+					closable
+					@click:close="removeChip(item)"
+				>
+					{{ getChipText(item) }}
+				</VChip>
+			</div>
 			<template #append-inner>
 				<SyIcon
 					v-if="hasError"
