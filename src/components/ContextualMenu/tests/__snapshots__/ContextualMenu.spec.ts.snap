@@ -1,36 +1,441 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ContextualMenu > renders correctly with items 1`] = `
-<ul class="vd-contextual-menu">
-  <li>
-    <a
-      class="
-        align-center
-        d-flex
-        px-4
-        py-2
-        text-body-1
-        text-decoration-none
-        text-medium-emphasis
-      "
-      href="#example-1"
-    >Titre 1</a>
-  </li>
-  <li>
-    <a
-      class="
-        align-center
-        d-flex
-        px-4
-        py-2
-        text-body-1
-        text-decoration-none
-        text-medium-emphasis
-      "
-      href="#example-2"
-    >Titre 2</a>
-  </li>
-</ul>
+exports[`ContextualMenu > layout > render correctly with a deepth 1`] = `
+<nav
+  aria-label="menu contextuel"
+  class="vd-contextual-menu-container"
+>
+  <ul class="vd-contextual-menu">
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-1"
+      >Titre 1</a>
+      <ul>
+        <li>
+          <!-- v-if -->
+          <ul>
+            <li>
+              <a
+                aria-current="false"
+                class="
+                  align-center
+                  d-flex
+                  pe-4
+                  ps-4
+                  ps-8
+                  py-2
+                  text-body-1
+                  text-decoration-none
+                  text-medium-emphasis
+                "
+                href="#example-2"
+              >Titre 2</a>
+              <!-- v-if -->
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a
+            aria-current="false"
+            class="
+              align-center
+              d-flex
+              pe-4
+              ps-4
+              ps-6
+              py-2
+              text-body-1
+              text-decoration-none
+              text-medium-emphasis
+            "
+            href="#example-3"
+          >Titre 3</a>
+          <!-- v-if -->
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 `;
 
-exports[`ContextualMenu > renders correctly without items 1`] = `<!-- v-if -->`;
+exports[`ContextualMenu > layout > render correctly with a deepth 2`] = `
+<nav
+  aria-label="menu contextuel"
+  class="vd-contextual-menu-container"
+>
+  <ul class="vd-contextual-menu">
+    <li>
+      <!-- v-if -->
+      <ul>
+        <li>
+          <a
+            aria-current="false"
+            class="
+              align-center
+              d-flex
+              pe-4
+              ps-4
+              ps-6
+              py-2
+              text-body-1
+              text-decoration-none
+              text-medium-emphasis
+            "
+            href="#example-1"
+          >Titre 1</a>
+          <!-- v-if -->
+        </li>
+        <li>
+          <a
+            aria-current="false"
+            class="
+              align-center
+              d-flex
+              pe-4
+              ps-4
+              ps-6
+              py-2
+              text-body-1
+              text-decoration-none
+              text-medium-emphasis
+            "
+            href="#example-2"
+          >Titre 2</a>
+          <!-- v-if -->
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-3"
+      >Titre 3</a>
+      <ul>
+        <li>
+          <a
+            aria-current="false"
+            class="
+              align-center
+              d-flex
+              pe-4
+              ps-4
+              ps-6
+              py-2
+              text-body-1
+              text-decoration-none
+              text-medium-emphasis
+            "
+            href="#example-4"
+          >Titre 4</a>
+          <ul>
+            <li>
+              <a
+                aria-current="false"
+                class="
+                  align-center
+                  d-flex
+                  pe-4
+                  ps-4
+                  ps-8
+                  py-2
+                  text-body-1
+                  text-decoration-none
+                  text-medium-emphasis
+                "
+                href="#example-5"
+              >Titre 5</a>
+              <!-- v-if -->
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`ContextualMenu > layout > render correctly with a deepth 3`] = `
+<nav
+  aria-label="menu contextuel"
+  class="vd-contextual-menu-container"
+>
+  <ul class="vd-contextual-menu">
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-1"
+      >Titre 1</a>
+      <ul>
+        <li>
+          <!-- v-if -->
+          <ul>
+            <li>
+              <a
+                aria-current="false"
+                class="
+                  align-center
+                  d-flex
+                  pe-4
+                  ps-4
+                  ps-8
+                  py-2
+                  text-body-1
+                  text-decoration-none
+                  text-medium-emphasis
+                "
+                href="#example-2"
+              >Titre 2</a>
+              <!-- v-if -->
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-3"
+      >Titre 3</a>
+      <ul>
+        <li>
+          <!-- v-if -->
+          <ul>
+            <li>
+              <a
+                aria-current="false"
+                class="
+                  align-center
+                  d-flex
+                  pe-4
+                  ps-4
+                  ps-8
+                  py-2
+                  text-body-1
+                  text-decoration-none
+                  text-medium-emphasis
+                "
+                href="#example-4"
+              >Titre 4</a>
+              <!-- v-if -->
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-5"
+      >Titre 5</a>
+      <!-- v-if -->
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`ContextualMenu > layout > render correctly with a deepth 4`] = `
+<nav
+  aria-label="menu contextuel"
+  class="vd-contextual-menu-container"
+>
+  <ul class="vd-contextual-menu">
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-1"
+      >Titre 1</a>
+      <!-- v-if -->
+    </li>
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-2"
+      >Titre 2</a>
+      <ul>
+        <li>
+          <!-- v-if -->
+          <ul>
+            <li>
+              <a
+                aria-current="false"
+                class="
+                  align-center
+                  d-flex
+                  pe-4
+                  ps-4
+                  ps-8
+                  py-2
+                  text-body-1
+                  text-decoration-none
+                  text-medium-emphasis
+                "
+                href="#example-3"
+              >Titre 3</a>
+              <!-- v-if -->
+            </li>
+            <li>
+              <a
+                aria-current="false"
+                class="
+                  align-center
+                  d-flex
+                  pe-4
+                  ps-4
+                  ps-8
+                  py-2
+                  text-body-1
+                  text-decoration-none
+                  text-medium-emphasis
+                "
+                href="#example-4"
+              >Titre 4</a>
+              <!-- v-if -->
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-5"
+      >Titre 5</a>
+      <!-- v-if -->
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`ContextualMenu > renders correctly with items 1`] = `
+<nav
+  aria-label="menu contextuel"
+  class="vd-contextual-menu-container"
+>
+  <ul class="vd-contextual-menu">
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-1"
+      >Titre 1</a>
+      <!-- v-if -->
+    </li>
+    <li>
+      <a
+        aria-current="false"
+        class="
+          align-center
+          d-flex
+          pe-4
+          ps-4
+          py-2
+          text-body-1
+          text-decoration-none
+          text-medium-emphasis
+        "
+        href="#example-2"
+      >Titre 2</a>
+      <!-- v-if -->
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`ContextualMenu > renders correctly without items 1`] = `
+<nav
+  aria-label="menu contextuel"
+  class="vd-contextual-menu-container"
+>
+  <!-- v-if -->
+</nav>
+`;

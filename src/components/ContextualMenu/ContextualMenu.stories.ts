@@ -44,6 +44,9 @@ const meta = {
 				category: 'events',
 			},
 		},
+		'ariaLabel': {
+			description: 'Label pour l’accessibilité du menu',
+		},
 	},
 } satisfies Meta<typeof ContextualMenu>
 
@@ -53,6 +56,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
+		'ariaLabel': 'Menu contextuel',
 		'items': [
 			{
 				text: 'Titre 1',
@@ -94,7 +98,8 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 		<ContextualMenu 
-			:items="items" 
+			:items="items"
+			aria-label="Menu contextuel"
 		/>
 	</template>
 	`,
@@ -127,6 +132,7 @@ export const Default: Story = {
 
 export const WithAnchors: Story = {
 	args: {
+		'ariaLabel': 'Menu contextuel',
 		'items': [{
 			text: 'section 1',
 			hash: '#section-1',
@@ -162,39 +168,50 @@ export const WithAnchors: Story = {
 			<ContextualMenu
 				v-bind="args"
 				v-model="hash"
+				aria-label="Menu contextuel"
 			/>
 		</div>
 		<div style="border: 1px solid black; max-height: 500px; overflow-y: auto; scroll-behavior: smooth;">
-			<section id="section-1" style="padding: 20px">
-				<h2>section 1</h2>
+			<section id="section-1" style="padding: 20px" aria-labelledby="section-1-title" tabindex="-1">
+				<h2
+					id="section-1-title"
+				>section 1</h2>
 				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
 				</p>
 			</section>
-			<section id="section-2" style="padding: 20px">
-				<h2>section 2</h2>
+			<section id="section-2" style="padding: 20px" aria-labelledby="section-2-title" tabindex="-1">
+				<h2
+					id="section-2-title"
+				>section 2</h2>
 				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
 				</p>
 			</section>
-			<section id="section-3" style="padding: 20px">
-				<h2>section 3</h2>
+			<section id="section-3" style="padding: 20px" aria-labelledby="section-3-title" tabindex="-1">
+				<h2
+					id="section-3-title"
+				>section 3</h2>
 				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
 				</p>
 			</section>
-			<section id="section-4" style="padding: 20px">
-				<h2>section 4</h2>
+			<section id="section-4" style="padding: 20px" aria-labelledby="section-4-title" tabindex="-1">
+				<h2
+					id="section-4-title"
+				>section 4</h2>
 				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
 				</p>
 			</section>
-			<section id="section-5" style="padding: 20px">
-				<h2>section 5</h2>
+			<section id="section-5" style="padding: 20px" aria-labelledby="section-5-title" tabindex="-1">
+				<h2
+					id="section-5-title"
+				>section 5</h2>
 				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
@@ -215,40 +232,51 @@ export const WithAnchors: Story = {
 			<ContextualMenu
 				v-model="hash"
 				:items
+				aria-label="Menu contextuel"
 			/>
 		</div>
-		<div class="content">
-			<section id="section-1">
-				<h2>section 1</h2>
-				<p>
+		<div style="border: 1px solid black; max-height: 500px; overflow-y: auto; scroll-behavior: smooth;">
+			<section id="section-1" style="padding: 20px" aria-labelledby="section-1-title" tabindex="-1">
+				<h2
+					id="section-1-title"
+				>section 1</h2>
+				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
 				</p>
 			</section>
-			<section id="section-2">
-				<h2>section 2</h2>
-				<p>
+			<section id="section-2" style="padding: 20px" aria-labelledby="section-2-title" tabindex="-1">
+				<h2
+					id="section-2-title"
+				>section 2</h2>
+				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
 				</p>
 			</section>
-			<section id="section-3">
-				<h2>section 3</h2>
-				<p>
+			<section id="section-3" style="padding: 20px" aria-labelledby="section-3-title" tabindex="-1">
+				<h2
+					id="section-3-title"
+				>section 3</h2>
+				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
 				</p>
 			</section>
-			<section id="section-4">
-				<h2>section 4</h2>
-				<p>
+			<section id="section-4" style="padding: 20px" aria-labelledby="section-4-title" tabindex="-1">
+				<h2
+					id="section-4-title"
+				>section 4</h2>
+				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
 				</p>
 			</section>
-			<section id="section-5">
-				<h2>section 5</h2>
-				<p>
+			<section id="section-5" style="padding: 20px" aria-labelledby="section-5-title" tabindex="-1">
+				<h2
+					id="section-5-title"
+				>section 5</h2>
+				<p style="max-width: 300px">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quae eligendi modi, rem consectetur cum labore voluptate nostrum molestiae asperiores dolorum, saepe perspiciatis quisquam provident placeat aut distinctio minima dolor.
 					Temporibus consequatur consectetur sequi. Sequi tempora velit soluta? Nam error, nesciunt molestiae provident possimus voluptas tempore porro at officia sint exercitationem dolore debitis eaque temporibus accusantium soluta? In, maxime excepturi.
 				</p>
@@ -323,6 +351,7 @@ section p {
 
 export const levels: Story = {
 	args: {
+		'ariaLabel': 'Menu contextuel',
 		'items': [
 			{
 				text: 'Level 1',
@@ -381,7 +410,8 @@ export const levels: Story = {
 				name: 'Template',
 				code: `<template>
 		<ContextualMenu 
-			:items="items" 
+			:items="items"
+			aria-label="Menu contextuel"
 		/>
 	</template>
 	`,

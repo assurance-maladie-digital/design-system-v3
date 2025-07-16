@@ -1,12 +1,83 @@
 <script setup lang="ts">
-	import { type MenuItem } from './types'
-	import { onMounted, watch } from 'vue'
+	import DeepMenu from './DeepMenu.vue'
+	import { type DeepMenuItem, type MenuItem } from './types'
+	import { computed, onMounted, watch } from 'vue'
 
 	const model = defineModel<string | null>()
 
-	defineProps<{
+	const props = defineProps<{
+		ariaLabel: string
 		items: MenuItem[]
 	}>()
+
+	const organisedItems = computed<DeepMenuItem[]>(() => {
+		const newItems: DeepMenuItem[] = []
+		let oldCopieItem: DeepMenuItem | undefined = undefined
+		for (const item of props.items) {
+			const currentDeep = oldCopieItem?.level || 1
+			const copieItem: DeepMenuItem = JSON.parse(JSON.stringify(item))
+			const level = copieItem.level || 1
+
+			if (level > currentDeep) {
+				const diff = level - currentDeep
+				if (oldCopieItem && !oldCopieItem.children) {
+					oldCopieItem.children = []
+				}
+				let parent = oldCopieItem
+
+				for (let i = 1; i < diff; i++) {
+					const newChild: DeepMenuItem = {
+						level: level + i,
+						children: [],
+					}
+					if (parent) {
+						newChild.parent = parent
+						parent.children!.push(newChild)
+					}
+					else {
+						newItems.push(newChild)
+					}
+					parent = newChild
+				}
+
+				if (parent) {
+					copieItem.parent = parent
+					parent.children!.push(copieItem)
+				}
+				else {
+					newItems.push(copieItem)
+				}
+			}
+			else if (level === currentDeep) {
+				if (level < 2) {
+					newItems.push(copieItem)
+				}
+				else {
+					oldCopieItem!.parent!.children!.push(copieItem)
+					copieItem.parent = oldCopieItem!.parent
+				}
+			}
+			else if (level < currentDeep) {
+				if (level < 2) {
+					newItems.push(copieItem)
+				}
+				else {
+					const diff = currentDeep - level
+					let parent = oldCopieItem!
+					for (let i = 0; i < diff; i++) {
+						parent = parent!.parent!
+					}
+
+					parent!.children!.push(copieItem)
+					copieItem.parent = parent
+				}
+			}
+
+			oldCopieItem = copieItem
+		}
+
+		return newItems
+	})
 
 	onMounted(() => {
 		if (!model.value && window.location.hash) {
@@ -38,64 +109,26 @@
 </script>
 
 <template>
-	<ul
-		v-if="items.length"
-		class="vd-contextual-menu"
+	<nav
+		:aria-label="ariaLabel"
+		class="vd-contextual-menu-container"
 	>
-		<li
-			v-for="{ text, hash, level } in items"
-			:key="hash"
+		<ul
+			v-if="items.length"
+			class="vd-contextual-menu"
 		>
-			<a
-				:href="hash"
-				:class="{
-					'text-primary active': model === hash,
-					'text-medium-emphasis': model !== hash,
-					'ps-4': level === 2,
-					'ps-6': level === 3,
-					'ps-9': level === 4,
-					'ps-12': level === 5,
-					'ps-14': level === 6,
-				}"
-				class="d-flex align-center text-decoration-none text-body-1 px-4 py-2"
-				@click.prevent.stop="setHash(hash)"
-				v-text="text"
+			<DeepMenu
+				:items="organisedItems"
+				:current-active-hash="model"
+				:current-deepth="1"
+				@click="setHash"
 			/>
-		</li>
-	</ul>
+		</ul>
+	</nav>
 </template>
 
 <style lang="scss" scoped>
 ul {
 	list-style: none;
-}
-
-a {
-	position: relative;
-	transition: none;
-
-	&::before {
-		content: '';
-		width: 2px;
-		background: rgb(0 0 0 / 60%);
-		position: absolute;
-		left: 0;
-		height: 100%;
-	}
-
-	&::after {
-		content: '';
-		width: 4px;
-		border-radius: 0 2px 2px 0;
-		background: currentcolor;
-		position: absolute;
-		left: 0;
-		height: 100%;
-		opacity: 0;
-	}
-
-	&.active::after {
-		opacity: 1;
-	}
 }
 </style>
