@@ -6,7 +6,7 @@
 	} from '@mdi/js'
 
 	import { locales } from './locales'
-	import { computed, ref, type CSSProperties } from 'vue'
+	import { computed, ref, watch, nextTick, type CSSProperties } from 'vue'
 	import { convertToUnit } from '@/utils/convertToUnit'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
@@ -67,6 +67,16 @@
 		}
 		return left.value ? rightArrowIcon : leftArrowIcon
 	})
+
+	const list = ref<HTMLElement | null>(null)
+
+	watch(menu, async (newValue) => {
+		if (newValue) {
+			await nextTick()
+			const firstItem = list.value?.querySelector<HTMLElement>('li a')
+			firstItem?.focus()
+		}
+	})
 </script>
 
 <template>
@@ -117,30 +127,43 @@
 				</VBtn>
 			</template>
 
-			<VList
+			<ul
 				v-if="items.length"
 				v-bind="options.list"
-				class="vd-external-links-list"
+				ref="list"
+				class="vd-external-links-list elevation-3"
 			>
-				<VListItem
+				<li
 					v-for="(item, index) in items"
 					:key="index"
-					:href="item.href"
 					v-bind="options.listItem"
 				>
-					<div class="d-flex flex-row justify-space-between">
-						<VListItemTitle v-bind="options.listItemTitle">
-							{{ item.text }}
-						</VListItemTitle>
+					<VBtn
+						:href="item.href"
+						size="large"
+						flat
+						external-link-btn
+						:rounded="0"
+						block
+						class="vd-external-links-list-item py-2"
+						@keydown.space.prevent=""
+					>
+						<div
+							class="w-100 h-100 d-flex justify-space-between align-center"
+						>
+							<div v-bind="options.listItemTitle">
+								{{ item.text }}
+							</div>
 
-						<slot name="link-icon">
-							<VIcon v-bind="options.linkIcon">
-								{{ linkIcon }}
-							</VIcon>
-						</slot>
-					</div>
-				</VListItem>
-			</VList>
+							<slot name="link-icon">
+								<VIcon v-bind="options.linkIcon">
+									{{ linkIcon }}
+								</VIcon>
+							</slot>
+						</div>
+					</VBtn>
+				</li>
+			</ul>
 
 			<VSheet
 				v-else
@@ -160,6 +183,7 @@ $list-max-height: 248px;
 .vd-external-links-btn {
 	// Allow overgrow on mobile
 	max-width: none;
+	border-radius: 0 !important;
 
 	:deep(.v-btn__content) {
 		flex-direction: inherit;
@@ -190,6 +214,34 @@ $list-max-height: 248px;
 	max-height: $list-max-height;
 	overflow-y: auto;
 	border-radius: 0;
+	background-color: white;
+	box-shadow: 0 5px 5px -3px var(--v-shadow-key-umbra-opacity, rgb(0 0 0 / 20%)), 0 8px 10px 1px var(--v-shadow-key-penumbra-opacity, rgb(0 0 0 / 14%)), 0 3px 14px 2px var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
+}
+
+.vd-external-links-list-item {
+	padding-block: 4px !important;
+	height: 48px !important;
+	border-radius: 0 !important;
+
+	&:focus-visible {
+		outline: 0;
+
+		:deep(.v-btn__overlay) {
+			background-color: transparent !important;
+		}
+
+		&::after {
+			opacity: 1;
+			border: 2px solid rgb(var(--v-theme-primary));
+		}
+	}
+}
+
+.vd-external-links-list-item :deep(.v-btn__content) {
+	width: 100%;
+	font-size: 1rem;
+	font-weight: 400;
+	letter-spacing: 0.009375em;
 }
 
 @media only screen and (height <= 340px) {
