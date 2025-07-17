@@ -27,6 +27,8 @@
 	const showCookiesSelection = ref(false)
 	const closeBtnRef = ref<HTMLElement | null>(null)
 	const vsheetRef = ref<HTMLElement | null>(null)
+	const bannerRef = ref<HTMLElement | null>(null)
+	const focusableElements = ref<HTMLElement[]>([])
 
 	const display = useDisplay()
 	const btnWidth = computed(() => {
@@ -56,6 +58,26 @@
 		active.value = false
 	}
 
+	// Fonction pour mettre à jour la liste des éléments focusables dans le banner
+	function updateFocusableElements(): void {
+		if (!bannerRef.value) return
+
+		// Sélecteur pour tous les éléments focusables
+		const selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+
+		// Récupérer tous les éléments focusables dans le banner
+		const elements = bannerRef.value.querySelectorAll(selector)
+
+		// Convertir NodeList en Array et filtrer les éléments visibles et non désactivés
+		focusableElements.value = Array.from(elements)
+			.filter((el) => {
+				const element = el as HTMLElement
+				return !element.hasAttribute('disabled')
+					&& element.style.display !== 'none'
+					&& element.style.visibility !== 'hidden'
+			}) as HTMLElement[]
+	}
+
 	// Mettre le focus sur le bouton de fermeture lorsque le composant est monté
 	onMounted(() => {
 		if (active.value && !showCookiesSelection.value) {
@@ -64,8 +86,12 @@
 				if (closeBtnRef.value && '$el' in closeBtnRef.value) {
 					(closeBtnRef.value.$el as HTMLElement).focus()
 				}
+
+				// Initialiser la liste des éléments focusables
+				updateFocusableElements()
 			})
 		}
+
 		document.addEventListener('keydown', handleKeydown)
 	})
 
@@ -77,12 +103,16 @@
 				if (closeBtnRef.value && '$el' in closeBtnRef.value) {
 					(closeBtnRef.value.$el as HTMLElement).focus()
 				}
+
+				// Mettre à jour la liste des éléments focusables
+				updateFocusableElements()
 			})
 		}
 	})
 
-	// Fonction pour gérer l'appui sur la touche Escape
+	// Fonction pour gérer les touches clavier (Escape et Tab)
 	function handleKeydown(event: KeyboardEvent): void {
+		// Gestion de la touche Escape
 		if (event.key === 'Escape') {
 			if (showCookiesSelection.value) {
 				showCookiesSelection.value = false
@@ -91,7 +121,38 @@
 				reject()
 			}
 		}
+
+		// Gestion de la touche Tab pour créer une boucle de focus
+		if (event.key === 'Tab') {
+			// Mettre à jour la liste des éléments focusables
+			updateFocusableElements()
+
+			// S'il n'y a pas d'éléments focusables, on ne fait rien
+			if (focusableElements.value.length === 0) return
+
+			// Récupérer le premier et le dernier élément focusable
+			const firstFocusableElement = focusableElements.value[0]
+			const lastFocusableElement = focusableElements.value[focusableElements.value.length - 1]
+
+			// Si Shift+Tab est pressé et que le focus est sur le premier élément, rediriger vers le dernier
+			if (event.shiftKey && document.activeElement === firstFocusableElement) {
+				lastFocusableElement.focus()
+				event.preventDefault()
+			}
+			// Si Tab est pressé et que le focus est sur le dernier élément, rediriger vers le premier
+			else if (!event.shiftKey && document.activeElement === lastFocusableElement) {
+				firstFocusableElement.focus()
+				event.preventDefault()
+			}
+		}
 	}
+
+	// Observer les changements dans le contenu du banner pour mettre à jour les éléments focusables
+	watch(showCookiesSelection, () => {
+		nextTick(() => {
+			updateFocusableElements()
+		})
+	})
 
 	// Nettoyer l'écouteur d'événement lorsque le composant est détruit
 	onUnmounted(() => {
@@ -112,6 +173,7 @@
 			class="vd-cookie-banner"
 		>
 			<div
+				ref="bannerRef"
 				class="vd-cookie-banner__inner"
 				role="dialog"
 			>
