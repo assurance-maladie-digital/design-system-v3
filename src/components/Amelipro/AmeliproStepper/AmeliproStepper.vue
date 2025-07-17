@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	/* eslint-disable max-lines */
 	import { type PropType, computed, onMounted, reactive, ref, watch } from 'vue'
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'

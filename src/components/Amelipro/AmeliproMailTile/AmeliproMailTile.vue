@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	/* eslint-disable max-lines */
 	import { type PropType, computed, ref } from 'vue'
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import type { AmeliproMailTileType } from './types'

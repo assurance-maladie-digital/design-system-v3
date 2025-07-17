@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	/* eslint-disable vuejs-accessibility/label-has-for */
+	/* eslint-disable vuejs-accessibility/label-has-for, max-lines */
 	import type { IndexedObject, ValidateOnType } from '../types'
 	import { type PropType, computed, onMounted, ref } from 'vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'

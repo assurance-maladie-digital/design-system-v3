@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproTileBtn from './AmeliproTileBtn.vue'
 

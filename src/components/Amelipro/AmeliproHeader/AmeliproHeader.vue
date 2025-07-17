@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	/* eslint-disable max-lines */
 	import { type PropType, computed, ref, useSlots } from 'vue'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 	import AmeliproHeaderBar from './AmeliproHeaderBar/AmeliproHeaderBar.vue'

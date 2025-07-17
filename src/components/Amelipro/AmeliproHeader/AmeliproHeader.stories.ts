@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproHeader from './AmeliproHeader.vue'
 

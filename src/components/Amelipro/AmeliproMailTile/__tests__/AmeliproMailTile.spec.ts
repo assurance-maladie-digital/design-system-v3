@@ -160,7 +160,7 @@ describe('AmeliproMailTile', () => {
 			expect(vueWrapper.find('.mail-status-btn').attributes('id')).toBe(`${testHelper.modified('uniqueId')}-read-btn`)
 		})
 
-		it('prop mailInfo.readValue sets attribute aria-label', async () => {
+		it('prop mailInfo.readValue sets attribute aria-label', () => {
 			expect(vueWrapper.find('.mail-status-btn').attributes('aria-label')).toBe('Message lu')
 
 			// const { mailInfo } = modifiedPropValues()
@@ -168,7 +168,7 @@ describe('AmeliproMailTile', () => {
 			// expect(vueWrapper.find('.mail-status-btn').attributes('aria-label')).toBe('Message non lu')
 		})
 
-		it('prop mailInfo.readValue sets attribute aria-pressed', async () => {
+		it('prop mailInfo.readValue sets attribute aria-pressed', () => {
 			expect(vueWrapper.find('.mail-status-btn').attributes('aria-pressed')).toBe('true')
 
 			// const { mailInfo } = modifiedPropValues()
@@ -176,7 +176,7 @@ describe('AmeliproMailTile', () => {
 			// expect(vueWrapper.find('.mail-status-btn').attributes('aria-pressed')).toBe('false')
 		})
 
-		it('prop mailInfo.readValue sets class mail-status-btn--not-read', async () => {
+		it('prop mailInfo.readValue sets class mail-status-btn--not-read', () => {
 			expect(vueWrapper.find('.mail-status-btn').classes('mail-status-btn--not-read')).toBe(false)
 
 			// const { mailInfo } = modifiedPropValues()
