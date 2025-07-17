@@ -128,6 +128,15 @@
 			</CookiesTable>
 		</details>
 
+		<div
+			:id="`radio-group-${type}`"
+			role="heading"
+			aria-level="3"
+			class="vd-cookies-information__heading"
+		>
+			{{ locales.fieldLabel(locales[type].title) }}
+		</div>
+
 		<VRadioGroup
 			v-if="type !== 'essentials'"
 			ref="radioGroupRef"
@@ -135,7 +144,6 @@
 			:rules="[isRequired]"
 			data-test-id="radio-group"
 			inline
-			:label="locales.fieldLabel(locales[type].title)"
 			hide-details="auto"
 			class="vd-cookies-information__radio-group"
 			@update:model-value="status = $event === 'accept'"
@@ -172,6 +180,11 @@ details > summary {
 	&::-webkit-details-marker {
 		display: none;
 	}
+}
+
+.vd-cookies-information__heading {
+	text-align: end;
+	opacity: var(--v-medium-emphasis-opacity);
 }
 
 .vd-cookies-information__radio-group {
