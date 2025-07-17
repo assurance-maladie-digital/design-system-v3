@@ -143,6 +143,7 @@
 			:model-value="parsedValue"
 			:rules="[isRequired]"
 			data-test-id="radio-group"
+			aria-required="true"
 			inline
 			hide-details="auto"
 			class="vd-cookies-information__radio-group"
