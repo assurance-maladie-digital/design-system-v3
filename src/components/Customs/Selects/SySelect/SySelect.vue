@@ -522,6 +522,10 @@
 					inputElement.removeAttribute('aria-describedby')
 					// fix le critere RGAA 10.1 : Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l'information?
 					inputElement.removeAttribute('size')
+					// Ensure the input is properly announced by screen readers
+					inputElement.setAttribute('aria-hidden', 'false')
+					// Make sure the input has a proper role
+					inputElement.setAttribute('role', 'textbox')
 				}
 			}
 		})
@@ -585,6 +589,7 @@
 					handleCharacterKey(e.key)
 				}
 			}"
+			:tabindex="0"
 		>
 			<div
 				v-if="hasChips"
@@ -596,6 +601,7 @@
 					size="small"
 					class="ma-1"
 					closable
+					:close-label="`Supprimer ${getChipText(item)}`"
 					@click:close="removeChip(item)"
 				>
 					{{ getChipText(item) }}
