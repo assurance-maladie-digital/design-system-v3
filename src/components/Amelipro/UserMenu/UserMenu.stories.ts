@@ -3,8 +3,16 @@ import UserMenu from './UserMenu.vue'
 
 const meta = {
 	argTypes: {
-		'click:account': { description: 'Événement émis lorsque l’utilisateur clique sur le bouton mon compte.', type: 'void' },
-		'click:logout': { description: 'Événement émis lorsque l’utilisateur clique sur le bouton déconnexion.', type: 'void' },
+		'click:account': {
+			action: 'click:account',
+			description: 'Événement émis lorsque l’utilisateur clique sur le bouton mon compte.',
+			type: 'void',
+		},
+		'click:logout': {
+			action: 'click:logout',
+			description: 'Événement émis lorsque l’utilisateur clique sur le bouton déconnexion.',
+			type: 'void',
+		},
 		'complementaryInfo': { description: 'Slot pour ajouter des informations supplémentaires.' },
 		'default': { description: 'Slot pour le contenu, il surcharge le contenu de `userMenuDetailsInfos`.' },
 		'icon': { description: 'Le nom de l’icône à afficher comme bouton d’ouverture de la popover' },
@@ -85,6 +93,8 @@ export const Default: Story = {
 	<UserMenu
 		:user-menu-infos="userMenuInfos"
 		unique-id="user-menu-unique-id"
+		@click:account="args['click:account']"
+		@click:logout="args['click:logout']"
 	/>
 </template>
 				`,
@@ -127,6 +137,9 @@ export const Default: Story = {
 		template: `
 <UserMenu
 	v-bind="args"
+	@click:account="args['click:account']"
+	@click:logout="args['click:logout']"
+	style="margin-left: 20%"
 />
 		`,
 	}),

@@ -5,9 +5,21 @@ const meta = {
 	argTypes: {
 		'actions': { description: 'Pour remplacer les boutons inclus par défaut dans le composant`' },
 		'alternateButtonLabel': { description: 'Label du bouton alternatif' },
-		'click:confirm': { description: 'Événement émis au clic sur le bouton confirmer', type: 'void' },
-		'click:modify': { description: 'Événement émis au clic sur le bouton modifier', type: 'void' },
-		'click:print': { description: 'Événement émis au clic sur le bouton imprimer', type: 'void' },
+		'click:confirm': {
+			action: 'click:confirm',
+			description: 'Événement émis au clic sur le bouton confirmer',
+			type: 'void',
+		},
+		'click:modify': {
+			action: 'click:modify',
+			description: 'Événement émis au clic sur le bouton modifier',
+			type: 'void',
+		},
+		'click:print': {
+			action: 'click:print',
+			description: 'Événement émis au clic sur le bouton imprimer',
+			type: 'void',
+		},
 		'confirmButtonLabel': { description: 'Label du bouton de confirmation' },
 		'confirmHref': { description: 'Url du bouton confirmer' },
 		'confirmTo': { description: 'Route du bouton confirmer' },
@@ -36,6 +48,9 @@ export const Default: Story = {
 				code: `<template>
 	<AmeliproTransmission
 		transmission-card-title="Titre de la carte"
+		@click:confirm="args['click:confirm']"
+		@click:modify="args['click:modify']"
+		@click:print="args['click:print']"
 	>
 		Contenu principal
 	</AmeliproTransmission>
@@ -58,6 +73,9 @@ export const Default: Story = {
 		template: `
 <AmeliproTransmission
 	v-bind="args"
+	@click:confirm="args['click:confirm']"
+	@click:modify="args['click:modify']"
+	@click:print="args['click:print']"
 >
 	Contenu principal
 </AmeliproTransmission>

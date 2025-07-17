@@ -5,8 +5,16 @@ import StructureMenu from './StructureMenu.vue'
 
 const meta = {
 	argTypes: {
-		'cancel': { description: 'event émis à la fermeture de la modale par le bouton annuler' },
-		'change': { description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation' },
+		'cancel': {
+			action: 'cancel',
+			description: 'event émis à la fermeture de la modale par le bouton annuler',
+			type: 'void',
+		},
+		'change': {
+			action: 'change',
+			description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation',
+			type: 'boolean',
+		},
 		'maxStructuresLoadedDefault': { description: 'Le nombre de structures affichées par défaut dans les onglets' },
 		'modelValue': {
 			description: 'Objet contenant la valeur d’affichage de la modale ainsi que la structure sélectionnée',
@@ -45,12 +53,20 @@ const meta = {
 		'update:model-value': {
 			action: 'update:model-value',
 			description: 'event emis lorsque le modèle change',
+			type: 'IStructureMenuValue + IStructureTabs',
 		},
 		'userAdeli': { description: 'Le numéro Adeli de l’utilisateur connecté' },
 		'userName': { description: 'Le nom de l’utilisateur connecté' },
 		'userProfession': { description: 'Le métier de l’utilisateur connecté' },
 		'userRpps': { description: 'Le numéro RPPS de l’utilisateur connecté' },
-		'validate': { description: 'event émis au clic sur le bouton de confirmation de la modale' },
+		'validate': {
+			action: 'validate',
+			description: 'event émis au clic sur le bouton de confirmation de la modale',
+			type: `{
+	defaultStructure: boolean;
+	selected: IStructureTabs;
+			}`,
+		},
 
 	},
 	component: StructureMenu,
@@ -158,6 +174,9 @@ export const Default: Story = {
 					user-name="Jean Martin"
 					user-profession="Médecin génraliste"
 					user-rpps="n° RPPS"
+					@cancel="args['cancel']"
+					@change="args['change']"
+					@validate="args['validate']"
 					@update:model-value="args['update:model-value']"
 				/>
 	</div>
@@ -266,6 +285,9 @@ export const Default: Story = {
 	<StructureMenu
 		v-bind="args"
 		v-model="model"
+		@cancel="args['cancel']"
+		@change="args['change']"
+		@validate="args['validate']"
 		@update:model-value="args['update:model-value']"
 	/>
 </div>`,
