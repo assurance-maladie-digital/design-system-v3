@@ -17,32 +17,48 @@ const applyThemeSidebar = (theme) => {
 		if (sidebar) {
 			const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
+			// First pass: identify if amelipro should be hidden
+			const hideAmelipro = theme === 'pa' || theme === 'cnam'
+
+			// Hide or show items based on theme
 			items.forEach((item) => {
-				if (theme === 'pa') {
-					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
-						item.style.display = 'none'
-					}
-					if (item.getAttribute('data-item-id') === 'composants-amelipro') {
-						item.style.display = 'none'
-					}
+				// Handle design tokens container page
+				if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
+					item.style.display = theme === 'cnam' ? 'block' : 'none'
 				}
-				if (theme === 'cnam') {
-					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
-						item.style.display = 'block'
-					}
-					if (item.getAttribute('data-item-id') === 'composants-amelipro') {
-						item.style.display = 'none'
-					}
+
+				// Handle amelipro components folder
+				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
+				if (isAmeliproFolder) {
+					item.style.display = hideAmelipro ? 'none' : 'block'
 				}
-				if (theme === 'ap') {
-					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
-						item.style.display = 'none'
-					}
-					if (item.getAttribute('data-item-id') === 'composants-amelipro') {
-						item.style.display = 'block'
-					}
+
+				// Handle all items containing 'amelipro' in their ID or text content
+				const itemId = item.getAttribute('data-item-id') || ''
+				const itemText = item.textContent || ''
+				if (!isAmeliproFolder && (itemId.toLowerCase().includes('amelipro') || itemText.toLowerCase().includes('amelipro'))) {
+					item.style.display = hideAmelipro ? 'none' : 'block'
 				}
 			})
+
+			// Second pass: find all links related to amelipro components
+			if (hideAmelipro) {
+				const allLinks = sidebar.querySelectorAll('a[id]') as NodeListOf<HTMLAnchorElement>
+				allLinks.forEach(link => {
+					const linkId = link.id || ''
+					const linkText = link.textContent || ''
+					if (linkId.toLowerCase().includes('amelipro') || linkText.toLowerCase().includes('amelipro')) {
+						// Find the parent sidebar item and hide it
+						let parent = link.parentElement
+						while (parent && !parent.classList.contains('sidebar-item')) {
+							parent = parent.parentElement
+						}
+						if (parent) {
+							(parent as HTMLElement).style.display = 'none'
+						}
+					}
+				})
+			}
 
 			if (observer) {
 				observer.disconnect()
