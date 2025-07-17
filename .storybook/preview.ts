@@ -134,7 +134,7 @@ const preview: Preview = {
 						'Introduction',
 					],
 					'Design Tokens',
-					['Introduction', 'Couleurs', 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Thème Portail Agent', 'Thème Amelipro'],
+					['Introduction', 'Couleurs', 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations'],
 					'Composants',
 					[
 						'Vue d\'ensemble',

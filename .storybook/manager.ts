@@ -33,6 +33,11 @@ const applyThemeSidebar = (theme) => {
 					item.style.display = hideAmelipro ? 'none' : 'block'
 				}
 
+				// Handle the Couleur page - hide it when AP theme is active
+				if (item.querySelector('a[id^="design-tokens-couleurs"]')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
 				// Handle all items containing 'amelipro' in their ID or text content
 				const itemId = item.getAttribute('data-item-id') || ''
 				const itemText = item.textContent || ''
