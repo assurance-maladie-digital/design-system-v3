@@ -522,10 +522,8 @@
 					inputElement.removeAttribute('aria-describedby')
 					// fix le critere RGAA 10.1 : Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l'information?
 					inputElement.removeAttribute('size')
-					// Ensure the input is properly announced by screen readers
-					inputElement.setAttribute('aria-hidden', 'false')
-					// Make sure the input has a proper role
-					inputElement.setAttribute('role', 'textbox')
+					// Remove any tabindex from the input element to prevent it from being tabbable
+					inputElement.removeAttribute('tabindex')
 				}
 			}
 		})
@@ -589,7 +587,6 @@
 					handleCharacterKey(e.key)
 				}
 			}"
-			:tabindex="0"
 		>
 			<div
 				v-if="hasChips"
@@ -616,20 +613,22 @@
 					label="Information"
 					role="img"
 				/>
-				<div class="sy-select__clear-wrapper">
-					<span class="d-sr-only">{{ locales.clear }}</span>
+				<button
+					v-if="props.clearable && selectedItemText"
+					type="button"
+					class="sy-select__clear-button"
+					:style="{ right: hasError ? '38px' : '32px' }"
+					:aria-label="locales.clear"
+					@keydown.enter.prevent="$event => selectItem(null, $event)"
+					@keydown.space.prevent="$event => selectItem(null, $event)"
+					@click.stop.prevent="$event => selectItem(null, $event)"
+				>
 					<SyIcon
-						v-if="props.clearable && selectedItemText"
 						class="sy-select__clear-icon"
-						:class="hasError ? 'mr-14' : 'mr-8'"
 						:icon="mdiCloseCircle"
 						:decorative="true"
-						:auto-detect-button="true"
-						@keydown.enter.prevent="$event => selectItem(null, $event)"
-						@keydown.space.prevent="$event => selectItem(null, $event)"
-						@click.stop.prevent="$event => selectItem(null, $event)"
 					/>
-				</div>
+				</button>
 				<SyIcon
 					class="arrow"
 					:icon="mdiMenuDown"
@@ -755,7 +754,20 @@
 .sy-select__clear-icon {
 	color: tokens.$grey-darken-20 !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
-	top: 15px;
+}
+
+.sy-select__clear-button {
+	position: absolute;
+	background: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 10px;
 }
 
 .v-chip {
