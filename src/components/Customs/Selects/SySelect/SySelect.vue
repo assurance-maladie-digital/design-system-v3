@@ -520,7 +520,7 @@
 				if (inputElement) {
 					// Remove the aria-describedby attribute
 					inputElement.removeAttribute('aria-describedby')
-					// fix le critere RGAA 10.1 : Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l’information?
+					// fix le critere RGAA 10.1 : Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l'information?
 					inputElement.removeAttribute('size')
 				}
 			}
@@ -610,18 +610,20 @@
 					label="Information"
 					role="img"
 				/>
-				<SyIcon
-					v-if="props.clearable && selectedItemText"
-					class="sy-select__clear-icon"
-					:class="hasError ? 'mr-14' : 'mr-8'"
-					:icon="mdiCloseCircle"
-					:decorative="false"
-					:label="locales.clear"
-					:auto-detect-button="true"
-					@keydown.enter.prevent="$event => selectItem(null, $event)"
-					@keydown.space.prevent="$event => selectItem(null, $event)"
-					@click.stop.prevent="$event => selectItem(null, $event)"
-				/>
+				<div class="sy-select__clear-wrapper">
+					<span class="d-sr-only">{{ locales.clear }}</span>
+					<SyIcon
+						v-if="props.clearable && selectedItemText"
+						class="sy-select__clear-icon"
+						:class="hasError ? 'mr-14' : 'mr-8'"
+						:icon="mdiCloseCircle"
+						:decorative="true"
+						:auto-detect-button="true"
+						@keydown.enter.prevent="$event => selectItem(null, $event)"
+						@keydown.space.prevent="$event => selectItem(null, $event)"
+						@click.stop.prevent="$event => selectItem(null, $event)"
+					/>
+				</div>
 				<SyIcon
 					class="arrow"
 					:icon="mdiMenuDown"
@@ -747,6 +749,7 @@
 .sy-select__clear-icon {
 	color: tokens.$grey-darken-20 !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
+  top: 15px
 }
 
 .v-chip {
@@ -763,5 +766,18 @@
 	visibility: hidden;
 	position: absolute;
 	white-space: nowrap;
+}
+
+/* Screen reader only class - visually hidden but accessible to screen readers */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }
 </style>
