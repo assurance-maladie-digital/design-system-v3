@@ -727,7 +727,9 @@
 		// Vérifier si la valeur est vide
 		if (inputValue.value) {
 			const validation = validateDateFormat(inputValue.value)
-			if (validation.isValid) {
+			// check si pas d'erreur des rules
+			const checkRules = validateField(inputValue.value, props.customRules, props.customWarningRules)
+			if (validation.isValid && !checkRules.hasError) {
 				// Si le format est valide, la date est également valide grâce à notre correction dans useDateFormatValidation
 				const formattedDate = props.dateFormatReturn
 					? dayjs(inputValue.value, props.format).format(props.dateFormatReturn)
