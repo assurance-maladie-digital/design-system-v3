@@ -86,7 +86,8 @@
 		if (event.key === 'Escape') {
 			if (showCookiesSelection.value) {
 				showCookiesSelection.value = false
-			} else {
+			}
+			else {
 				reject()
 			}
 		}
