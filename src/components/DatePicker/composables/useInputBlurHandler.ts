@@ -123,8 +123,6 @@ export const useInputBlurHandler = (options: {
 			else {
 				// Traitement pour une date unique
 				const validation = validateDateFormat(displayFormattedDate.value)
-				// check si date respecte les rules de validation (default et custom)
-
 				if (validation.isValid) {
 					const date = parseDate(displayFormattedDate.value, format)
 					if (date) {
