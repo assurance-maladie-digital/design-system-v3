@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { isRequired } from '@/utils/rules/isRequired'
-	import type { VRadio } from 'vuetify/components'
+	import type { VRadio, VRadioGroup } from 'vuetify/components'
 	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 	import { computed, ref, nextTick, onMounted } from 'vue'
 	import CookiesTable from '../CookiesTable/CookiesTable.vue'
@@ -31,6 +31,7 @@
 
 	const rejectRadioRef = ref<VRadio | null>(null)
 	const acceptRadioRef = ref<VRadio | null>(null)
+	const radioGroupRef = ref<VRadioGroup | null>(null)
 
 	// Fonction pour supprimer les attributs aria-disabled des composants radio
 	const removeAriaDisabled = (radioRef: typeof rejectRadioRef) => {
@@ -47,16 +48,32 @@
 		elements.forEach(el => el.removeAttribute('aria-disabled'))
 	}
 
+	const removeAriaDescribedby = (radioGrpRef: typeof radioGroupRef) => {
+		if (!radioGrpRef.value?.$el) return
+
+		// Chercher l'élément input dans le composant radio
+		const radioElement = radioGrpRef.value.$el
+
+		// Supprimer l'attribut aria-disabled du composant lui-même
+		radioElement.removeAttribute('aria-describedby')
+
+		// Chercher et supprimer l'attribut aria-disabled des éléments enfants (input, label, etc.)
+		const elements = radioElement.querySelectorAll('[aria-describedby]')
+		elements.forEach(el => el.removeAttribute('aria-describedby'))
+	}
+
 	onMounted(() => {
 		nextTick(() => {
 			// Supprimer les attributs aria-disabled initiaux
 			removeAriaDisabled(rejectRadioRef)
 			removeAriaDisabled(acceptRadioRef)
+			removeAriaDescribedby(radioGroupRef)
 
 			// Observer les changements DOM pour supprimer aria-disabled s'il est ajouté dynamiquement
 			const observer = new MutationObserver(() => {
 				removeAriaDisabled(rejectRadioRef)
 				removeAriaDisabled(acceptRadioRef)
+				removeAriaDescribedby(radioGroupRef)
 			})
 
 			// Observer les deux boutons radio
@@ -65,6 +82,9 @@
 			}
 			if (acceptRadioRef.value?.$el) {
 				observer.observe(acceptRadioRef.value.$el, { attributes: true, subtree: true, childList: true })
+			}
+			if (radioGroupRef.value?.$el) {
+				observer.observe(radioGroupRef.value.$el, { attributes: true, subtree: true, childList: true })
 			}
 		})
 	})
@@ -110,6 +130,7 @@
 
 		<VRadioGroup
 			v-if="type !== 'essentials'"
+			ref="radioGroupRef"
 			:model-value="parsedValue"
 			:rules="[isRequired]"
 			data-test-id="radio-group"
