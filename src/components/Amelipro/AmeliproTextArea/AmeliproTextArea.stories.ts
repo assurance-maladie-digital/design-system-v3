@@ -11,6 +11,11 @@ const meta = {
 			name: 'aria-required',
 			type: 'boolean',
 		},
+		'change': {
+			action: 'change',
+			description: 'Événement émis au changement de la valeur du champ',
+			type: 'string',
+		},
 		'classes': { description: 'Classes à appliquer à la racine du composant' },
 		'counter': { description: 'Défini la valeur du compteur de caractères' },
 		'disabled': { description: 'Désactive le champ de texte' },
@@ -34,6 +39,7 @@ const meta = {
 		'update:model-value': {
 			action: 'update:model-value',
 			description: 'Événement émis au changement du v-model',
+			type: 'string',
 		},
 		'validateOn': { description: 'Défini le moment où la validation du champ se fait, voir la documentation de Vuetify pour plus d\'informtations' },
 	},
@@ -59,6 +65,7 @@ export const Default: Story = {
 		v-model="model"
 		label="Label"
 		unique-id="text-area-example"
+		@change="args['change']"
 		@update:model-value="args['update:model-value']"
 	/>
 </template>`,
@@ -89,6 +96,7 @@ export const Default: Story = {
 <AmeliproTextArea
 	v-bind="args"
 	v-model="model"
+	@change="args['change']"
 	@update:model-value="args['update:model-value']"
 />`,
 	}),
