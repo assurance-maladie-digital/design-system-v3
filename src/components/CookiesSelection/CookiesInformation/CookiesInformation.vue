@@ -1,7 +1,8 @@
 <script setup lang="ts">
 	import { isRequired } from '@/utils/rules/isRequired'
+	import type { VRadio } from 'vuetify/components'
 	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
-	import { computed, ref } from 'vue'
+	import { computed, ref, nextTick, onMounted } from 'vue'
 	import CookiesTable from '../CookiesTable/CookiesTable.vue'
 	import type { CookieTypes, Cookie } from '../types'
 	import { locales } from './locales'
@@ -27,6 +28,46 @@
 	function toggleDetails(event: ToggleEvent): void {
 		open.value = event.newState === 'open'
 	}
+
+	const rejectRadioRef = ref<VRadio | null>(null)
+	const acceptRadioRef = ref<VRadio | null>(null)
+
+	// Fonction pour supprimer les attributs aria-disabled des composants radio
+	const removeAriaDisabled = (radioRef: typeof rejectRadioRef) => {
+		if (!radioRef.value?.$el) return
+
+		// Chercher l'élément input dans le composant radio
+		const radioElement = radioRef.value.$el
+
+		// Supprimer l'attribut aria-disabled du composant lui-même
+		radioElement.removeAttribute('aria-disabled')
+
+		// Chercher et supprimer l'attribut aria-disabled des éléments enfants (input, label, etc.)
+		const elements = radioElement.querySelectorAll('[aria-disabled]')
+		elements.forEach(el => el.removeAttribute('aria-disabled'))
+	}
+
+	onMounted(() => {
+		nextTick(() => {
+			// Supprimer les attributs aria-disabled initiaux
+			removeAriaDisabled(rejectRadioRef)
+			removeAriaDisabled(acceptRadioRef)
+
+			// Observer les changements DOM pour supprimer aria-disabled s'il est ajouté dynamiquement
+			const observer = new MutationObserver(() => {
+				removeAriaDisabled(rejectRadioRef)
+				removeAriaDisabled(acceptRadioRef)
+			})
+
+			// Observer les deux boutons radio
+			if (rejectRadioRef.value?.$el) {
+				observer.observe(rejectRadioRef.value.$el, { attributes: true, subtree: true, childList: true })
+			}
+			if (acceptRadioRef.value?.$el) {
+				observer.observe(acceptRadioRef.value.$el, { attributes: true, subtree: true, childList: true })
+			}
+		})
+	})
 </script>
 
 <template>
@@ -81,12 +122,14 @@
 			<VSpacer />
 
 			<VRadio
+				ref="rejectRadioRef"
 				:label="locales.reject"
 				:value="'reject'"
 				color="primary"
 			/>
 
 			<VRadio
+				ref="acceptRadioRef"
 				:label="locales.accept"
 				:value="'accept'"
 				class="mr-0"
