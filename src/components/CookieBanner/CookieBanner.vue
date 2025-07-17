@@ -3,7 +3,7 @@
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiClose, mdiArrowULeftBottom } from '@mdi/js'
-	import { computed, ref } from 'vue'
+	import { computed, ref, onMounted, watch, nextTick } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import type { CookiesItems } from '../CookiesSelection/types'
 	import { config } from './config'
@@ -25,6 +25,7 @@
 	})
 
 	const showCookiesSelection = ref(false)
+	const closeBtnRef = ref<HTMLElement | null>(null)
 
 	const display = useDisplay()
 	const btnWidth = computed(() => {
@@ -53,6 +54,30 @@
 		showCookiesSelection.value = false
 		active.value = false
 	}
+
+	// Mettre le focus sur le bouton de fermeture lorsque le composant est monté
+	onMounted(() => {
+		if (active.value && !showCookiesSelection.value) {
+			nextTick(() => {
+				// Accéder à l'élément DOM réel via $el
+				if (closeBtnRef.value && '$el' in closeBtnRef.value) {
+					(closeBtnRef.value.$el as HTMLElement).focus()
+				}
+			})
+		}
+	})
+
+	// Observer les changements de l'état actif pour mettre le focus sur le bouton de fermeture
+	watch(active, (newValue) => {
+		if (newValue && !showCookiesSelection.value) {
+			nextTick(() => {
+				// Accéder à l'élément DOM réel via $el
+				if (closeBtnRef.value && '$el' in closeBtnRef.value) {
+					(closeBtnRef.value.$el as HTMLElement).focus()
+				}
+			})
+		}
+	})
 </script>
 
 <template>
@@ -66,7 +91,11 @@
 			:aria-label="locales.label"
 			class="vd-cookie-banner"
 		>
-			<div class="vd-cookie-banner__inner">
+			<div
+				class="vd-cookie-banner__inner"
+				role="dialog"
+				aria-modal="true"
+			>
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<h2
 						v-letter-spacing
@@ -92,6 +121,7 @@
 					<VBtn
 						v-else
 						v-bind="options.closeBtn"
+						ref="closeBtnRef"
 						:aria-label="locales.closeBtn"
 						@click="reject"
 					>
@@ -234,5 +264,4 @@
 .height-leave-from {
 	height: auto;
 }
-
 </style>
