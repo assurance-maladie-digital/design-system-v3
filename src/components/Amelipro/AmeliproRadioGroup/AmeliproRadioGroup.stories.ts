@@ -8,7 +8,10 @@ const meta = {
 		'`subItem-${index}`': { description: 'Permet de rajouter un élément sous un bouton radio seulement lorsqu’il est coché (existe seulement si les props horizontal et fullHorizontal sont à false)' },
 		'append': { description: 'Permet de rajouter un élément générique après le label des boutons radios' },
 		'ariaRequired': { description: 'Permet de rendre la selection obligatoire' },
-		'change:selected': { description: 'Événement émis au click sur un bouton radio retourne la valeur sélectionnée' },
+		'change:selected': {
+			action: 'change:selected',
+			description: 'Événement émis au click sur un bouton radio retourne la valeur sélectionnée',
+		},
 		'disabled': { description: 'Permet de désactiver le groupe de boutons radios' },
 		'error': { description: 'Permet de mettre le champ en erreur' },
 		'fullHorizontal': { description: 'Permet d’afficher le radioGroup ainsi que le titre a l’horizontal' },
@@ -91,6 +94,7 @@ export const Default: Story = {
 		v-model="items"
 		group-label="Libellé du groupe"
 		unique-id="radio-id"
+		@change:selected="args['change:selected']"
 		@update:model-value="args['update:model-value']"
 	/>
 </template>`,
@@ -147,6 +151,7 @@ export const Default: Story = {
 <AmeliproRadioGroup
 	v-bind="args"
 	v-model="model"
+	@change:selected="args['change:selected']"
 	@update:model-value="args['update:model-value']"
 />`,
 	}),

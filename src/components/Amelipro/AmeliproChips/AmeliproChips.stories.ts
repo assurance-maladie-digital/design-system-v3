@@ -3,7 +3,11 @@ import AmeliproChips from './AmeliproChips.vue'
 
 const meta = {
 	argTypes: {
-		click: { description: 'Événement émis au click sur le bouton croix. Retourne `uniqueId`', type: 'string' },
+		click: {
+			action: 'click',
+			description: 'Événement émis au click sur le bouton croix. Retourne `uniqueId`',
+			type: 'string',
+		},
 		text: { description: 'Partie textuelle du composant' },
 		uniqueId: { description: 'Identifiant unique' },
 	},
@@ -27,6 +31,7 @@ export const Default: Story = {
 	<AmeliproChips
 		text="Texte à afficher"
 		unique-id="amelipro-chips-unique-id"
+		@click="args['click']"
 	/>
 </template>
 				`,
@@ -47,6 +52,7 @@ export const Default: Story = {
 		template: `
 <AmeliproChips
 	v-bind="args"
+	@click="args['click']"
 />
 		`,
 	}),
