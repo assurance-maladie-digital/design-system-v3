@@ -94,7 +94,6 @@
 			<div
 				class="vd-cookie-banner__inner"
 				role="dialog"
-				aria-modal="true"
 			>
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<h2
