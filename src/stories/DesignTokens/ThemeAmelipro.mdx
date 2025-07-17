@@ -1,0 +1,35 @@
+import {Meta, Source} from '@storybook/addon-docs/blocks';
+
+<Meta title="Design Tokens/Thème Amelipro" />
+
+# Thème Amelipro
+
+## Étapes pour changer le thème du Design System aux couleurs et composants du Thème Amelipro
+
+### 1. Modification du fichier nuxt.config.ts
+
+1.	Ouvrez le fichier nuxt.config.ts dans votre éditeur de code.
+2.	Remplacer la valeur du thème par défaut`defaultTheme` par le thème Amelipro : `ap`.
+
+<Source dark code={`
+theme: {
+	defaultTheme: 'ap',
+	...
+}
+`}
+/>
+
+NB : les thèmes `customLightTheme` et `customDarkTheme` sont à votre disposition pour ajouter des couleurs supplémentaires.
+
+### 2. Relancer le projet
+
+Après avoir effectué les modifications dans le fichier de configuration, relancez le serveur de développement pour appliquer les changements :
+
+<Source dark code={`
+pnpm dev
+`}
+/>
+
+### 3. Vérification
+
+Une fois le projet redémarré, vérifiez que la charte Amelipro est bien appliquée.

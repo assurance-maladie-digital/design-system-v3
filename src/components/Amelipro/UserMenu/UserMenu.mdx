@@ -1,0 +1,15 @@
+import { Controls, Canvas, Meta } from '@storybook/blocks';
+
+import * as UserMenuStories from './UserMenu.stories';
+
+<Meta of={UserMenuStories} />
+
+# UserMenu
+
+L’élément `UserMenu` est utilisé pour afficher le menu de l’utilisateur connecté dans une popover.
+
+<Canvas of={UserMenuStories.Default} />
+
+## API
+
+<Controls of={UserMenuStories.Default} />

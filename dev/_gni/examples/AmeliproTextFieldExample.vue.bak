@@ -1,0 +1,66 @@
+<template>
+	<section>
+		<h1>AmeliproTextField</h1>
+		<p>
+			Set prop "value" :
+			<button @click="selectValue('A')">
+				Value A (reset)
+			</button> | <button @click="selectValue('B')">
+				Value B
+			</button> | <button @click="selectValue('C')">
+				Value C
+			</button>
+			-
+			<label><input
+				v-model="theModel.ariaRequired"
+				type="checkbox"
+			> ariaRequired</label>
+			-
+			<label><input
+				v-model="theModel.horizontal"
+				type="checkbox"
+			> horizontal</label>
+		</p>
+		<div class="component-wrapper">
+			<AmeliproTextField
+				id="the-AmeliproTextField-id"
+				:aria-required="theModel.ariaRequired"
+				:horizontal="theModel.horizontal"
+				label="the-label"
+				:rules="theModel.rules"
+				:value="theValue"
+				@change="onChange"
+			/>
+		</div>
+	</section>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue';
+
+	const theModel = ref({
+		ariaRequired: false,
+		horizontal: false,
+		rules: ['the-rules'],
+	});
+
+	const valueA = (): string => '';
+	const valueB = (): string => 'Input B';
+	const valueC = (): string => 'Input C';
+
+	const values: Record<string, () => string> = {
+		A: valueA,
+		B: valueB,
+		C: valueC,
+	};
+	const theValue = ref(values.A());
+	const selectValue = (key: string): void => {
+		theValue.value = values[key]();
+	};
+
+	const onChange = (event: any) => console.info('AmeliproTextField:onChange', event);
+</script>
+
+<style scoped>
+
+</style>

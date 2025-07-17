@@ -1,0 +1,24 @@
+import { Controls, Canvas, Meta } from '@storybook/blocks';
+
+import * as AmeliproTransmissionStories from './AmeliproTransmission.stories';
+
+<Meta of={AmeliproTransmissionStories} />
+
+# AmeliproTransmission
+
+L’élément `AmeliproTransmission` est utilisé pour afficher un récapitulatif avant envoi.
+
+Il existe un modèle formalisé de page pour la transmission de données, ceci afin d'assurer une cohérence visuelle et fonctionnelle
+pour l'utilisateur. Le modèle est constitué d'un récapitulatif avant transmission et d'un accusé de réception.
+
+## Règles d’usage :
+	- Avant transmission, lors de l'affichage du récapitulatif, l'utilisateur doit pouvoir revenir en arrière pour modifier.
+    - L'utilisateur doit toujours savoir si la transmission des données a réussi ou échoué.
+    - En cas d'échec, donner la possibilité de retransmettre.
+    - Respecter les termes courants pour informer l'utilisateur
+
+<Canvas of={AmeliproTransmissionStories.Default} />
+
+## API
+
+<Controls of={AmeliproTransmissionStories.Default} />

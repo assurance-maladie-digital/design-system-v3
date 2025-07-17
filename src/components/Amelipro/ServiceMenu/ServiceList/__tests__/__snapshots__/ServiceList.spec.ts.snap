@@ -1,0 +1,58 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ServiceList > Snapshots > renders the component with all properties filled in 1`] = `
+<ul
+  class="
+    d-flex
+    flex-wrap
+    list-style-none
+    service-list
+  "
+  id="modified-unique-id"
+>
+  <li
+    class="
+      mx-1
+      my-2
+      service-item
+    "
+    id="modified-unique-id-item-0"
+    style="max-width: calc((100% / 3) - 8px);"
+  >
+    <service-btn-stub
+      iconbgcolor="#1CB0BA"
+      iconhoverbgcolor="#006A77"
+      item="[object Object]"
+      uniqueid="modified-unique-id-service-patient-btn-0"
+    ></service-btn-stub>
+  </li>
+  <li
+    class="
+      mx-1
+      my-2
+      service-item
+    "
+    id="modified-unique-id-item-1"
+    style="max-width: calc((100% / 3) - 8px);"
+  >
+    <service-btn-stub
+      iconbgcolor="#1CB0BA"
+      iconhoverbgcolor="#006A77"
+      item="[object Object]"
+      uniqueid="modified-unique-id-service-patient-btn-1"
+    ></service-btn-stub>
+  </li>
+</ul>
+`;
+
+exports[`ServiceList > Snapshots > renders the component with only required properties filled in 1`] = `
+<ul
+  class="
+    d-flex
+    flex-wrap
+    list-style-none
+    service-list
+  "
+  id="required-unique-id"
+></ul>
+`;

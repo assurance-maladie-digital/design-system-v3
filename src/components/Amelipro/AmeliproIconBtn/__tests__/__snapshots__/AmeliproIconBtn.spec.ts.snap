@@ -1,0 +1,58 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproIconBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<v-btn-stub
+  block="false"
+  border="false"
+  class="btn--icon"
+  density="default"
+  disabled="false"
+  elevation="0"
+  exact="false"
+  flat="false"
+  height="auto"
+  href="#modified-href"
+  icon="true"
+  id="modified-unique-id"
+  loading="false"
+  plain=""
+  replace="false"
+  ripple="false"
+  size="default"
+  slim="false"
+  stacked="false"
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tag="button"
+  tile="true"
+  to="#modified-to"
+  variant="elevated"
+  width="auto"
+></v-btn-stub>
+`;
+
+exports[`AmeliproIconBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<v-btn-stub
+  block="false"
+  border="false"
+  class="btn--icon"
+  density="default"
+  disabled="false"
+  elevation="0"
+  exact="false"
+  flat="false"
+  height="auto"
+  icon="true"
+  loading="false"
+  plain=""
+  replace="false"
+  ripple="false"
+  size="default"
+  slim="false"
+  stacked="false"
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tag="button"
+  tile="true"
+  variant="elevated"
+  width="auto"
+></v-btn-stub>
+`;
