@@ -676,10 +676,8 @@
 						hide-details
 						color="primary"
 						class="mt-0 pt-0 mr-1"
-						title="getItemText(item)"
-						:aria-checked="isItemSelected(item) ? 'true' : 'false'"
+						:title="getItemText(item)"
 						:aria-label="getItemText(item)"
-						:aria-describedby="`option-${index}`"
 						@click.stop="(event) => selectItem(item, event)"
 					/>
 				</template>
