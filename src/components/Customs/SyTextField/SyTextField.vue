@@ -255,7 +255,7 @@
 		}
 	})
 
-	const hasError = computed(() => validation.hasError.value && !hasSuccess.value && !hasWarning.value)
+	const hasError = computed(() => validation.hasError.value)
 	const hasWarning = computed(() => validation.hasWarning.value)
 	const hasSuccess = computed(() => validation.hasSuccess.value && !hasError.value && !hasWarning.value)
 
