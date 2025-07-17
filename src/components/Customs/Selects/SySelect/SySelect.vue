@@ -749,7 +749,7 @@
 .sy-select__clear-icon {
 	color: tokens.$grey-darken-20 !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
-  top: 15px
+	top: 15px;
 }
 
 .v-chip {
