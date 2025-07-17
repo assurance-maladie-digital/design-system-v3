@@ -38,6 +38,56 @@ const applyThemeSidebar = (theme) => {
 					item.style.display = theme === 'ap' ? 'none' : 'block'
 				}
 
+				// Handle the "Créer une issue" page - hide it when AP theme is active
+				if (item.querySelector('a[id^="démarrer-créer-une-issue--creeruneissue"]')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
+				// Handle the "Conteneurs de page" page - hide it when AP theme is active
+				if (item.querySelector('a[id^="design-tokens-conteneurs-de-page"]')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
+				// Handle the "Arrondis" page - hide it when AP theme is active
+				if (item.querySelector('a[id*="design-tokens-arrondis"]')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
+				// Handle the "Elevations" page - hide it when AP theme is active
+				if (item.querySelector('a[id*="design-tokens-elevations"]')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
+				// Handle the "Styles typographiques" page - hide it when AP theme is active
+				if (item.querySelector('a[id*="design-tokens-styles-typographiques"]')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
+				// Handle the "Vue d'ensemble" page - hide it when AP theme is active
+				if (item.textContent && item.textContent.includes('Vue d\'ensemble')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
+				// Handle the "Migration depuis Bridge" page - hide it when AP theme is active
+				if (item.textContent && item.textContent.includes('Migration depuis Bridge')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
+				// Handle the "Migration depuis Vue2" page - hide it when AP theme is active
+				if (item.textContent && item.textContent.includes('Migration depuis Vue2')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
+				// Handle the "Breaking changes" page - hide it when AP theme is active
+				if (item.textContent && item.textContent.includes('Breaking changes')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
+				// Handle the "Correspondance composants PAG" page - hide it when AP theme is active
+				if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
+					item.style.display = theme === 'ap' ? 'none' : 'block'
+				}
+
 				// Handle all items containing 'amelipro' in their ID or text content
 				const itemId = item.getAttribute('data-item-id') || ''
 				const itemText = item.textContent || ''
