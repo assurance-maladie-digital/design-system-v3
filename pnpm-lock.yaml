@@ -190,6 +190,9 @@ devDependencies:
   vue:
     specifier: ^3.4.33
     version: 3.5.13(typescript@5.4.2)
+  vue-component-type-helpers:
+    specifier: 2.2.0
+    version: 2.2.0
   vue-router:
     specifier: ^4.4.5
     version: 4.5.0(vue@3.5.13)
@@ -2062,7 +2065,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.5.13(typescript@5.4.2)
-      vue-component-type-helpers: 2.2.8
+      vue-component-type-helpers: 3.0.1
     dev: true
 
   /@stylistic/eslint-plugin-ts@2.13.0(eslint@9.22.0)(typescript@5.4.2):
@@ -2695,7 +2698,7 @@ packages:
     resolution: {integrity: sha512-FMxEjOpYNYiFe0GkaHsnJPXFHxQ6m4t8vI/ElPGpMWxZKpmRvQ33OIrvRXemy6yha03RxhOlQuy+gZMC3CQSow==}
     dependencies:
       js-beautify: 1.15.4
-      vue-component-type-helpers: 2.2.8
+      vue-component-type-helpers: 2.2.0
     dev: true
 
   /@vue/tsconfig@0.5.1:
@@ -7413,8 +7416,16 @@ packages:
       vue-component-type-helpers: 2.2.8
     dev: true
 
+  /vue-component-type-helpers@2.2.0:
+    resolution: {integrity: sha512-cYrAnv2me7bPDcg9kIcGwjJiSB6Qyi08+jLDo9yuvoFQjzHiPTzML7RnkJB1+3P6KMsX/KbCD4QE3Tv/knEllw==}
+    dev: true
+
   /vue-component-type-helpers@2.2.8:
     resolution: {integrity: sha512-4bjIsC284coDO9om4HPA62M7wfsTvcmZyzdfR0aUlFXqq4tXxM1APyXpNVxPC8QazKw9OhmZNHBVDA6ODaZsrA==}
+    dev: true
+
+  /vue-component-type-helpers@3.0.1:
+    resolution: {integrity: sha512-j23mCB5iEbGsyIhnVdXdWUOg+UdwmVxpKnYYf2j+4ppCt5VSFXKjwu9YFt0QYxUaf5G99PuHsVfRScjHCRSsGQ==}
     dev: true
 
   /vue-docgen-api@4.79.2(vue@3.5.13):

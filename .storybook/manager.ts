@@ -1,11 +1,12 @@
 import { addons } from '@storybook/manager-api'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
+import apTheme from './ApTheme'
 
 // Helper function to apply theme class to HTML root element
 const applyThemeClass = (theme) => {
 	const rootElement = document.documentElement // Always exists
-	rootElement.classList.remove('theme-cnam', 'theme-pa')
+	rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
 	rootElement.classList.add(`theme-${theme}`)
 }
 
@@ -21,9 +22,23 @@ const applyThemeSidebar = (theme) => {
 					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
 						item.style.display = 'none'
 					}
+					if (item.getAttribute('data-item-id') === 'composants-amelipro') {
+						item.style.display = 'none'
+					}
 				}
 				if (theme === 'cnam') {
 					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
+						item.style.display = 'block'
+					}
+					if (item.getAttribute('data-item-id') === 'composants-amelipro') {
+						item.style.display = 'none'
+					}
+				}
+				if (theme === 'ap') {
+					if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
+						item.style.display = 'none'
+					}
+					if (item.getAttribute('data-item-id') === 'composants-amelipro') {
 						item.style.display = 'block'
 					}
 				}
@@ -81,7 +96,7 @@ if (typeof window !== 'undefined') {
 }
 
 addons.setConfig({
-	theme: storedTheme === 'pa' ? paTheme : cnamTheme,
+	theme: storedTheme === 'pa' ? paTheme : storedTheme === 'ap' ? apTheme : cnamTheme,
 })
 
 // Listen for theme changes
@@ -92,7 +107,7 @@ if (typeof window !== 'undefined') {
 
 			// Update Storybook theme
 			addons.setConfig({
-				theme: newTheme === 'pa' ? paTheme : cnamTheme,
+				theme: newTheme === 'pa' ? paTheme : newTheme === 'ap' ? apTheme : cnamTheme,
 			})
 
 			// Apply theme class to HTML root

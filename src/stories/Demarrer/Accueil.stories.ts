@@ -23,56 +23,60 @@ export const Header: StoryObj = {
 				}
 			},
 			template: `
-              <div>
-				  <span v-if="theme === 'pa'"
-						style="position: absolute; top:0; left:-1000px; background-color: rgba(7, 39, 92, 0.2); width: 1000%; height: 100%; z-index: 0"
-				  />
-				  <span v-if="theme === 'cnam'"
+				<div>
+					<span v-if="theme === 'pa'"
+						style="position: absolute; top:0; left:-1000px; background-color: rgba(183,203,214, 0.7); width: 1000%; height: 100%; z-index: 0"
+					/>
+					<span v-if="theme === 'pa'"
+						style="position: absolute; top:0; left:-1000px; background-color: rgba(183,203,214, 0.7); width: 1000%; height: 100%; z-index: 0"
+					/>
+					<span v-if="theme === 'cnam'"
 						style="position: absolute; top:0; left:-1000px; background-color: rgba(12, 65, 154, 0.2); width: 1000%; height: 100%; z-index: 0"
-				  />
-				  <VRow cols="12" style="z-index: 1; position: relative">
-					  <VCol md="6" sm="12">
-						  <h1 class="text-h4 font-weight-bold mb-2">Design System de la CNAM</h1>
-						  <img alt="line" src="/home-line.svg" width="120" height="5" class="mb-5" />
-						  <h2 class="text-h5 mb-5">Synapse : 
-							  <span v-if="theme === 'pa'" class="text-h5">thème Portail Agent</span>
-							  <span v-if="theme === 'cnam'" class="text-h5">thème CNAM</span></h2>
-						  <p class="mb-5">Veuillez sélectionner dans la barre d’outil en haut de l’écran le thème graphique de votre produit avant de consulter la documentation, elle s’actualisera en conséquence avec les tokens et composants disponibles.
-							  <br/>Si vous ne connaissez pas le thème auquel votre produit est soumis veuillez consulter le dossier d’architecture du produit.
-							  <br/><br/>
-							  <b>Par défaut la documentation est affichée avec le thème CNAM.</b></p>
-						  <VBtn color="primary" href="/?path=/docs/guide-du-dev-gestion-du-th%C3%A8me--docs">
-							  Configurer le thème
-							  <VIcon size="small" class="ml-2" right>{{arrowRight}}</VIcon>
-						  </VBtn>
-					  </VCol>
-					  <VCol md="6" sm="12" class="d-flex justify-start flex-column align-center">
-						  <img v-if="theme === 'cnam'" alt="components" src="/home-illustration.svg" width="auto" height="300" class="img-animate" />
-						  <img v-if="theme === 'pa'" alt="components" src="/home-illustration-pa.svg" width="auto" height="300" class="img-animate" />
-					  </VCol>
-				  </VRow>
-				  <div class="position-absolute d-inline-flex" style="right: 60px; bottom: -10px">
-					  <VBtn
-						  aria-label="Figma"
-						  href="https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1"
-						  target="_blank"
-						  rel="noopener noreferrer"
-						  class="d-flex align-center justify-center text-lowercase"
-					  >
-						  <img src="/figma.svg" alt="Figma" width="auto" height="17" />
-					  </VBtn>
-					  <VBtn
-						  aria-label="GitHub"
-						  href="https://github.com/assurance-maladie-digital/design-system-v3"
-						  target="_blank"
-						  rel="noopener noreferrer"
-						  class="d-flex align-center justify-center text-lowercase ml-2"
-					  >
-						  <VIcon size="large" class="mr-2">{{ githubIcon }}</VIcon>
-						  <b>v{{ version }}</b>
-					  </VBtn>
-				  </div>
-              </div>
+					/>
+					<VRow cols="12" style="z-index: 1; position: relative">
+						<VCol md="6" sm="12">
+							<h1 class="text-h4 font-weight-bold mb-2">Design System de la CNAM</h1>
+							<img alt="line" src="/home-line.svg" width="120" height="5" class="mb-5" />
+							<h2 class="text-h5 mb-5">Synapse : 
+								<span v-if="theme === 'pa'" class="text-h5">thème Portail Agent</span>
+								<span v-if="theme === 'ap'" class="text-h5">thème Amelipro</span>
+								<span v-if="theme === 'cnam'" class="text-h5">thème CNAM</span></h2>
+							<p class="mb-5">Veuillez sélectionner dans la barre d’outil en haut de l’écran le thème graphique de votre produit avant de consulter la documentation, elle s’actualisera en conséquence avec les tokens et composants disponibles.
+								<br/>Si vous ne connaissez pas le thème auquel votre produit est soumis veuillez consulter le dossier d’architecture du produit.
+								<br/><br/>
+								<b>Par défaut la documentation est affichée avec le thème CNAM.</b></p>
+							<VBtn color="primary" href="/?path=/docs/guide-du-dev-gestion-du-th%C3%A8me--docs">
+								Configurer le thème
+								<VIcon size="small" class="ml-2" right>{{arrowRight}}</VIcon>
+							</VBtn>
+						</VCol>
+						<VCol md="6" sm="12" class="d-flex justify-start flex-column align-center">
+							<img v-if="theme === 'cnam'" alt="components" src="/home-illustration.svg" width="auto" height="300" class="img-animate" />
+						  	<img v-if="theme === 'pa'" alt="components" src="/home-illustration-pa.svg" width="auto" height="300" class="img-animate" />
+						</VCol>
+					</VRow>
+					<div class="position-absolute d-inline-flex" style="right: 60px; bottom: -10px">
+						<VBtn
+							aria-label="Figma"
+							href="https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="d-flex align-center justify-center text-lowercase"
+						>
+							<img src="/figma.svg" alt="Figma" width="auto" height="17" />
+						</VBtn>
+						<VBtn
+							aria-label="GitHub"
+							href="https://github.com/assurance-maladie-digital/design-system-v3"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="d-flex align-center justify-center text-lowercase ml-2"
+						>
+							<VIcon size="large" class="mr-2">{{ githubIcon }}</VIcon>
+							<b>v{{ version }}</b>
+						</VBtn>
+					</div>
+				</div>
             `,
 		}
 	},
@@ -89,12 +93,14 @@ export const Welcome: StoryObj = {
 				}
 			},
 			template: `
-              <div class="mt-12 mb-12">
-                  <p>Bienvenue dans notre guide d'aide à la conception, pensé par et pour les équipes <span v-if="theme === 'pa'">de Portail Agent</span><span v-if="theme === 'cnam'">de la CNAM</span>.</p>
-                  <p class="mt-4">Ce guide a été conçu pour accompagner chaque membre de l'équipe dans la création de plateformes web de qualité, alignées avec nos standards et nos valeurs.</p>
-                  <p class="mt-4">Vous y trouverez toutes les ressources essentielles pour vous guider tout au long du processus de conception :</p>
-              </div>
-            `,
+				<div class="mt-12 mb-12">
+					<p>Bienvenue dans notre guide d'aide à la conception, pensé par et pour les équipes <span v-if="theme === 'ap'">d'AmeliPro</span><span v-if="theme === 'pa'">de Portail Agent</span><span v-if="theme === 'cnam'">de la CNAM</span>.</p>
+					<p class="mt-4">Ce guide a été conçu pour accompagner chaque membre de l'équipe dans la création de
+						plateformes web de qualité, alignées avec nos standards et nos valeurs.</p>
+					<p v-if="theme !== 'ap'" class="mt-4">Vous y trouverez toutes les ressources essentielles pour vous
+						guider tout au long du processus de conception :</p>
+				</div>
+			`,
 		}
 	},
 	tags: ['!dev'],
@@ -103,9 +109,15 @@ export const Welcome: StoryObj = {
 export const DesignSystem: StoryObj = {
 	render: () => {
 		return {
+			setup() {
+				const theme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
+				return {
+					theme,
+				}
+			},
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
-              <div class="mb-12">
+              <div class="mb-12" v-if="theme !== 'ap'">
                   <h3 class="text-h5 font-weight-bold mb-6 text-primary">Design System</h3>
                   <VRow>
                       <VCol cols="12" md="4">
@@ -147,9 +159,15 @@ export const DesignSystem: StoryObj = {
 export const Guidelines: StoryObj = {
 	render: () => {
 		return {
+			setup() {
+				const theme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
+				return {
+					theme,
+				}
+			},
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
-				<div>
+				<div v-if="theme !== 'ap'">
 					<h3 class="text-h5 font-weight-bold mb-6 text-primary">Guidelines</h3>
 					<VRow>
 						<VCol cols="12" md="4">

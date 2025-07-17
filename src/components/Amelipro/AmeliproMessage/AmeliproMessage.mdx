@@ -1,0 +1,17 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as AmeliproMessageStories from './AmeliproMessage.stories';
+
+<Meta of={AmeliproMessageStories} />
+
+# AmeliproMessage
+
+L’élément `AmeliproMessage` est utilisé pour afficher les différents messages d’alertes ou d’information.
+
+Communiquer sur l’état d’une action est essentiel afin de guider l’utilisateur durant l’utilisation du portail et services. Pour cela différents types de messages sont à utiliser en fonction du type d’interaction. Ne jamais oublier que plus important que guider l’utilisateur lorsque une erreur se produit, c’est de faire en sorte de l’éviter.
+
+<Canvas of={AmeliproMessageStories.Default} />
+
+## API
+
+<Controls of={AmeliproMessageStories.Default} />

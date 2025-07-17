@@ -1,0 +1,194 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproTextField > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="modified-classes"
+  id="modified-unique-id-container"
+  style="margin-bottom: 12px; max-width: 300px; min-width: 100px; width: 200px;"
+>
+  <div class="
+    amelipro-text-field__wrapper
+    d-flex
+    flex-column
+    flex-md-row
+    w-100
+  ">
+    <div class="
+      align-start
+      d-inline-flex
+      mr-md-2
+      mt-md-2
+    ">
+      <label
+        class="
+          amelipro-text-field__label
+          mr-2
+        "
+        for="modified-unique-id"
+        id="modified-unique-id-label"
+        style="max-width: 120px; min-width: 60px;"
+      >
+        Modified label
+        <span>
+          <span aria-hidden="true">
+            &nbsp;*
+          </span>
+          <span class="d-sr-only">
+            &nbsp;Champ obligatoire
+          </span>
+        </span>
+      </label>
+    </div>
+    <v-text-field-stub
+      active="false"
+      aria-required="true"
+      autofocus="false"
+      bgcolor="ap-grey-lighten-2"
+      class="
+        amelipro-text-field
+        pt-0
+      "
+      clearable="true"
+      clearicon="$clear"
+      color="ap-blue-darken-1"
+      counter="5"
+      density="compact"
+      direction="horizontal"
+      dirty="false"
+      disabled="true"
+      error="false"
+      errormessages=""
+      flat="false"
+      focused="false"
+      hidedetails="auto"
+      hidespinbuttons="false"
+      id="modified-unique-id"
+      loading="false"
+      max="2099-12-31"
+      maxerrors="1"
+      messages=""
+      min="2000-01-01"
+      modelvalue="Modified model value"
+      persistentclear="false"
+      persistentcounter="false"
+      persistenthint="false"
+      persistentplaceholder="false"
+      placeholder="Modified placeholder"
+      readonly=""
+      reverse="false"
+      rules="() => true,(value) => {
+    let valid;
+    if (Array.isArray(value)) {
+      valid = value.length !== 0;
+    } else {
+      valid = Boolean(typeof value === "string" ? value.trim() : value);
+    }
+    return valid || __vite_ssr_import_0__.ruleMessage(errorMessages, "default");
+  },(value) => {
+    if (value === "" || value === void 0 || value === null) {
+      return true;
+    }
+    const valueHasGoodFormat = __vite_ssr_import_0__.numberMatchRegex(value);
+    const maxDateHasGoodFormat = __vite_ssr_import_0__.numberMatchRegex(maxNumber);
+    const valid = __vite_ssr_import_1__.ref(false);
+    if (valueHasGoodFormat && maxDateHasGoodFormat) {
+      const numberToTest = __vite_ssr_import_0__.parseToNumber(value);
+      const maxNumberAsNumber = __vite_ssr_import_0__.parseToNumber(maxNumber);
+      valid.value = Boolean(numberToTest <= maxNumberAsNumber);
+    }
+    return valid.value || \`Le nombre saisi doit être inférieur ou égal à \${__vite_ssr_import_0__.parseToFrNumberFormat(maxNumber)}.\`;
+  },(value) => {
+    if (value === "" || value === void 0 || value === null) {
+      return true;
+    }
+    const valueHasGoodFormat = __vite_ssr_import_0__.numberMatchRegex(value);
+    const minDateHasGoodFormat = __vite_ssr_import_0__.numberMatchRegex(minNumber);
+    const valid = __vite_ssr_import_1__.ref(false);
+    if (valueHasGoodFormat && minDateHasGoodFormat) {
+      const numberToTest = __vite_ssr_import_0__.parseToNumber(value);
+      const minNumberAsNumber = __vite_ssr_import_0__.parseToNumber(minNumber);
+      valid.value = Boolean(numberToTest >= minNumberAsNumber);
+    }
+    return valid.value || \`Le nombre saisi doit être supérieur ou égal à \${__vite_ssr_import_0__.parseToFrNumberFormat(minNumber)}.\`;
+  }"
+      singleline="false"
+      style="max-width: 150px; min-width: 50px; background-color: transparent;"
+      tile="false"
+      type="number"
+      validateon="input"
+      variant="outlined"
+    ></v-text-field-stub>
+  </div>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`AmeliproTextField > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class=""
+  id="required-unique-id-container"
+  style="margin-bottom: 12px;"
+>
+  <div class="
+    amelipro-text-field__wrapper
+    d-flex
+    flex-column
+    w-100
+  ">
+    <div class="
+      align-start
+      d-inline-flex
+    ">
+      <label
+        class="
+          amelipro-text-field__label
+          mr-2
+        "
+        for="required-unique-id"
+        id="required-unique-id-label"
+      >
+        Required label
+        <!-- v-if -->
+      </label>
+    </div>
+    <v-text-field-stub
+      active="false"
+      aria-required="false"
+      autofocus="false"
+      bgcolor="ap-white"
+      class="
+        amelipro-text-field
+        pt-0
+      "
+      clearable="false"
+      clearicon="$clear"
+      color="ap-blue-darken-1"
+      density="compact"
+      direction="horizontal"
+      dirty="false"
+      disabled="false"
+      error="false"
+      errormessages=""
+      flat="false"
+      focused="false"
+      hidedetails="false"
+      hidespinbuttons="false"
+      id="required-unique-id"
+      loading="false"
+      maxerrors="1"
+      messages=""
+      persistentclear="false"
+      persistentcounter="false"
+      persistenthint="false"
+      persistentplaceholder="false"
+      reverse="false"
+      rules=""
+      singleline="false"
+      tile="false"
+      type="text"
+      variant="outlined"
+    ></v-text-field-stub>
+  </div>
+  <!-- v-if -->
+</div>
+`;
