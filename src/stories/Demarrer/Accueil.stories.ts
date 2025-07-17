@@ -28,7 +28,7 @@ export const Header: StoryObj = {
 						style="position: absolute; top:0; left:-1000px; background-color: rgba(183,203,214, 0.7); width: 1000%; height: 100%; z-index: 0"
 					/>
 					<span v-if="theme === 'ap'"
-						style="position: absolute; top:0; left:-1000px; background-color: rgba(0, 116, 156, 0.2); width: 1000%; height: 100%; z-index: 0"
+						style="position: absolute; top:0; left:-1000px; background-color: rgba(0, 116, 156, 0.1); width: 1000%; height: 100%; z-index: 0"
 					/>
 					<span v-if="theme === 'cnam'"
 						style="position: absolute; top:0; left:-1000px; background-color: rgba(12, 65, 154, 0.2); width: 1000%; height: 100%; z-index: 0"
@@ -51,8 +51,9 @@ export const Header: StoryObj = {
 							</VBtn>
 						</VCol>
 						<VCol md="6" sm="12" class="d-flex justify-start flex-column align-center">
-							<img v-if="theme === 'cnam' || theme === 'ap'" alt="components" src="/home-illustration.svg" width="auto" height="300" class="img-animate" />
+							<img v-if="theme === 'cnam'" alt="components" src="/home-illustration.svg" width="auto" height="300" class="img-animate" />
 						  	<img v-if="theme === 'pa'" alt="components" src="/home-illustration-pa.svg" width="auto" height="300" class="img-animate" />
+						  	<img v-if="theme === 'ap'" alt="components" src="/home-illustration-ap.svg" width="auto" height="300" class="img-animate" />
 						</VCol>
 					</VRow>
 					<div class="position-absolute d-inline-flex" style="right: 60px; bottom: -10px">
@@ -94,8 +95,8 @@ export const Welcome: StoryObj = {
 			},
 			template: `
 				<div class="mt-12 mb-12">
-					<p>Bienvenue dans notre guide d'aide à la conception, pensé par et pour les équipes <span v-if="theme === 'ap'">d'AmeliPro</span><span v-if="theme === 'pa'">de Portail Agent</span><span v-if="theme === 'cnam'">de la CNAM</span>.</p>
-					<p class="mt-4">Ce guide a été conçu pour accompagner chaque membre de l'équipe dans la création de
+					<p style="font-family: Arial !important; font-size: 1rem !important;">Bienvenue dans notre guide d'aide à la conception, pensé par et pour les équipes <span v-if="theme === 'ap'">d'AmeliPro</span><span v-if="theme === 'pa'">de Portail Agent</span><span v-if="theme === 'cnam'">de la CNAM</span>.</p>
+					<p style="font-family: Arial !important; font-size: 1rem !important;" class="mt-4">Ce guide a été conçu pour accompagner chaque membre de l'équipe dans la création de
 						plateformes web de qualité, alignées avec nos standards et nos valeurs.</p>
 					<p v-if="theme !== 'ap'" class="mt-4">Vous y trouverez toutes les ressources essentielles pour vous
 						guider tout au long du processus de conception :</p>
