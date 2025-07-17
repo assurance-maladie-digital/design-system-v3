@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiClose, mdiArrowULeftBottom } from '@mdi/js'
 	import { computed, ref } from 'vue'
 	import { useDisplay } from 'vuetify'
@@ -82,9 +83,11 @@
 						:aria-label="locales.backBtn"
 						@click="showCookiesSelection = false"
 					>
-						<VIcon v-bind="options.icon">
-							{{ mdiArrowULeftBottom }}
-						</VIcon>
+						<SyIcon
+							v-bind="options.icon"
+							:icon="mdiArrowULeftBottom"
+							label="Bouton de retour en arrière."
+						/>
 					</VBtn>
 					<VBtn
 						v-else
@@ -92,9 +95,11 @@
 						:aria-label="locales.closeBtn"
 						@click="reject"
 					>
-						<VIcon v-bind="options.icon">
-							{{ mdiClose }}
-						</VIcon>
+						<SyIcon
+							v-bind="options.icon"
+							:icon="mdiClose"
+							label="Bouton de fermeture."
+						/>
 					</VBtn>
 				</div>
 				<div class="vd-cookie-banner-content">
