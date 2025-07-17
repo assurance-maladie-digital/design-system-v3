@@ -3,7 +3,7 @@
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiClose, mdiArrowULeftBottom } from '@mdi/js'
-	import { computed, ref, onMounted, watch, nextTick } from 'vue'
+	import { computed, ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import type { CookiesItems } from '../CookiesSelection/types'
 	import { config } from './config'
@@ -26,6 +26,7 @@
 
 	const showCookiesSelection = ref(false)
 	const closeBtnRef = ref<HTMLElement | null>(null)
+	const vsheetRef = ref<HTMLElement | null>(null)
 
 	const display = useDisplay()
 	const btnWidth = computed(() => {
@@ -65,6 +66,7 @@
 				}
 			})
 		}
+		document.addEventListener('keydown', handleKeydown)
 	})
 
 	// Observer les changements de l'état actif pour mettre le focus sur le bouton de fermeture
@@ -78,6 +80,22 @@
 			})
 		}
 	})
+
+	// Fonction pour gérer l'appui sur la touche Escape
+	function handleKeydown(event: KeyboardEvent): void {
+		if (event.key === 'Escape') {
+			if (showCookiesSelection.value) {
+				showCookiesSelection.value = false
+			} else {
+				reject()
+			}
+		}
+	}
+
+	// Nettoyer l'écouteur d'événement lorsque le composant est détruit
+	onUnmounted(() => {
+		document.removeEventListener('keydown', handleKeydown)
+	})
 </script>
 
 <template>
@@ -87,6 +105,7 @@
 	>
 		<VSheet
 			v-letter-spacing
+			ref="vsheetRef"
 			v-bind="options.banner"
 			:aria-label="locales.label"
 			class="vd-cookie-banner"
