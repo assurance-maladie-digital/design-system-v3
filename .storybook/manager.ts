@@ -15,6 +15,16 @@ const applyThemeSidebar = (theme) => {
 		const sidebar = document.querySelector('.sidebar-container')
 
 		if (sidebar) {
+			// First, reset display of all items if we're coming from AP theme
+			// This ensures components are properly restored when switching from AP to other themes
+			if (theme !== 'ap') {
+				const allItems = sidebar.querySelectorAll('.sidebar-item, .sidebar-subheading') as NodeListOf<HTMLElement>
+				allItems.forEach(item => {
+					// Reset display to default
+					item.style.display = ''
+				})
+			}
+
 			const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
 			// First pass: identify if amelipro should be hidden
@@ -286,22 +296,48 @@ addons.setConfig({
 	theme: storedTheme === 'pa' ? paTheme : storedTheme === 'ap' ? apTheme : cnamTheme,
 })
 
-// Listen for theme changes
+// Create a function to handle theme changes that can be called from anywhere
+const handleThemeChange = (newTheme) => {
+	// Update Storybook theme
+	addons.setConfig({
+		theme: newTheme === 'pa' ? paTheme : newTheme === 'ap' ? apTheme : cnamTheme,
+	})
+
+	// Apply theme class to HTML root
+	applyThemeClass(newTheme)
+
+	// Apply theme menu sidebar with a slightly longer delay to ensure DOM is ready
+	// Especially important when switching from AP theme to other themes
+	setTimeout(() => {
+		applyThemeSidebar(newTheme)
+		
+		// For non-AP themes, apply a second pass after a delay to ensure all components are visible
+		if (newTheme !== 'ap') {
+			setTimeout(() => {
+				applyThemeSidebar(newTheme)
+			}, 200)
+		}
+	}, 100)
+}
+
+// Listen for theme changes from other tabs (storage event)
 if (typeof window !== 'undefined') {
+	// Override the localStorage.setItem method to detect changes in the current tab
+	const originalSetItem = localStorage.setItem
+	localStorage.setItem = function(key, value) {
+		// Call the original method
+		originalSetItem.apply(this, arguments)
+		
+		// If the theme is being changed, handle it
+		if (key === 'storybook-theme') {
+			handleThemeChange(value || 'cnam')
+		}
+	}
+
+	// Listen for storage events (from other tabs)
 	window.addEventListener('storage', (event) => {
 		if (event.key === 'storybook-theme') {
-			const newTheme = event.newValue || 'cnam'
-
-			// Update Storybook theme
-			addons.setConfig({
-				theme: newTheme === 'pa' ? paTheme : newTheme === 'ap' ? apTheme : cnamTheme,
-			})
-
-			// Apply theme class to HTML root
-			applyThemeClass(newTheme)
-
-			// Apply theme menu sidebar
-			applyThemeSidebar(newTheme)
+			handleThemeChange(event.newValue || 'cnam')
 		}
 	})
 }
