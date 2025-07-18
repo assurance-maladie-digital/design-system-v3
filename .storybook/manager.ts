@@ -33,11 +33,6 @@ const applyThemeSidebar = (theme) => {
 					item.style.display = hideAmelipro ? 'none' : 'block'
 				}
 
-				// Handle the Couleur page - hide it when AP theme is active
-				if (item.querySelector('a[id^="design-tokens-couleurs"]')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
-				}
-
 				// Handle the "Créer une issue" page - hide it when AP theme is active
 				if (item.querySelector('a[id^="démarrer-créer-une-issue--creeruneissue"]')) {
 					item.style.display = theme === 'ap' ? 'none' : 'block'
