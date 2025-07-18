@@ -10,6 +10,7 @@
 	import { convertToUnit } from '@/utils/convertToUnit'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
+	import { vToolbar } from '@/directives/Toolbar'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		items: Array<{
@@ -29,7 +30,7 @@
 		nudgeTop: 0,
 		nudgeBottom: 0,
 		fixed: false,
-		ariaLabel: 'external-link-btn',
+		ariaLabel: locales.ariaLabel,
 		ariaOwns: 'external-link-btn',
 	})
 
@@ -80,12 +81,10 @@
 </script>
 
 <template>
-	<div
-		:id="props.ariaOwns"
-	>
+	<div>
 		<VMenu
-			v-bind="options.menu"
 			:id="props.ariaOwns"
+			v-bind="options.menu"
 			v-model="menu"
 			:location="top ? 'bottom' : 'top'"
 			attach
@@ -131,22 +130,19 @@
 				v-if="items.length"
 				v-bind="options.list"
 				ref="list"
+				v-toolbar
 				class="vd-external-links-list elevation-3"
 			>
 				<li
 					v-for="(item, index) in items"
 					:key="index"
-					v-bind="options.listItem"
 				>
 					<VBtn
 						:href="item.href"
-						size="large"
-						flat
 						external-link-btn
-						:rounded="0"
 						block
 						class="vd-external-links-list-item py-2"
-						@keydown.space.prevent=""
+						v-bind="options.listItem"
 					>
 						<div
 							class="w-100 h-100 d-flex justify-space-between align-center"
@@ -215,7 +211,10 @@ $list-max-height: 248px;
 	overflow-y: auto;
 	border-radius: 0;
 	background-color: white;
-	box-shadow: 0 5px 5px -3px var(--v-shadow-key-umbra-opacity, rgb(0 0 0 / 20%)), 0 8px 10px 1px var(--v-shadow-key-penumbra-opacity, rgb(0 0 0 / 14%)), 0 3px 14px 2px var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
+	box-shadow:
+		0 5px 5px -3px var(--v-shadow-key-umbra-opacity, rgb(0 0 0 / 20%)),
+		0 8px 10px 1px var(--v-shadow-key-penumbra-opacity, rgb(0 0 0 / 14%)),
+		0 3px 14px 2px var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
 }
 
 .vd-external-links-list-item {
@@ -228,6 +227,7 @@ $list-max-height: 248px;
 
 		:deep(.v-btn__overlay) {
 			background-color: transparent !important;
+			display: none !important;
 		}
 
 		&::after {
@@ -241,7 +241,7 @@ $list-max-height: 248px;
 	width: 100%;
 	font-size: 1rem;
 	font-weight: 400;
-	letter-spacing: 0.009375em;
+	letter-spacing: 0.0094em;
 }
 
 @media only screen and (height <= 340px) {
