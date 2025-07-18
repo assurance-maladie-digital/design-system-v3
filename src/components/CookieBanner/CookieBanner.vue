@@ -281,10 +281,11 @@
 <style lang="scss" scoped>
 :deep(.text-h5) {
 	font-size: 1.5rem;
-font-weight: 400;
-line-height: 1.333;
-line-height: normal;
+	font-weight: 400;
+	line-height: 1.333;
+	line-height: normal;
 }
+
 .vd-cookie-banner {
 	position: fixed;
 	left: 50%;
