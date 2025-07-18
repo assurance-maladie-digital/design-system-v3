@@ -22,7 +22,7 @@ const toolbarInstances = new WeakMap<HTMLElement, Instance>()
  */
 export const vToolbar: Directive = {
 	mounted(el: HTMLElement) {
-		el.setAttribute('role', 'toolbar') // Requied on firefox to capture arrow keys!
+		el.setAttribute('role', 'toolbar') // Required on firefox to capture arrow keys!
 		el.setAttribute('tabindex', '0')
 
 		const tools = Array.from(el.querySelectorAll<HTMLElement>('button:not([disabled]), a:not([disabled]), input:not([disabled])') || [])
