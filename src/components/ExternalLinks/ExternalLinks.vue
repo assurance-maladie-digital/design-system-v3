@@ -142,7 +142,7 @@
 				>
 					<VBtn
 						:href="item.href"
-						external-link-btn
+						class="external-link-btn"
 						block
 						class="vd-external-links-list-item py-2"
 						v-bind="options.listItem"
