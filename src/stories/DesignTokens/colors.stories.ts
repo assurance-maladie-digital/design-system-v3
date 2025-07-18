@@ -2,6 +2,8 @@ import { cnamLightTheme } from '@/designTokens/tokens/cnam/cnamLightTheme'
 import { cnamColorsTokens } from '@/designTokens/tokens/cnam/cnamColors'
 import { paLightTheme } from '@/designTokens/tokens/pa/paLightTheme'
 import { paColorsTokens } from '@/designTokens/tokens/pa/paColors'
+import { apLightTheme } from '@/designTokens/tokens/amelipro/apLightTheme'
+import { apColorsTokens } from '@/designTokens/tokens/amelipro/apColors'
 import ColorDisplay from './ColorDisplay.vue'
 
 import type { StoryObj } from '@storybook/vue3'
@@ -35,6 +37,8 @@ export const Base: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Couleurs de base'
+				const colorTitleLevel = 2
 				const cnamColors = {
 					'primary': cnamLightTheme.primary,
 					'secondary': cnamLightTheme.secondary,
@@ -52,16 +56,31 @@ export const Base: StoryObj = {
 					success: paLightTheme.success,
 					warning: paLightTheme.warning,
 				}
+				const apColors = {
+					primary: apLightTheme.primary,
+					secondary: apLightTheme.secondary,
+					error: apLightTheme.error,
+					info: apLightTheme.info,
+					success: apLightTheme.success,
+					warning: apLightTheme.warning,
+				}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -74,6 +93,8 @@ export const Others: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Autres couleurs'
+				const colorTitleLevel = 2
 				const cnamColors = {
 					accent: cnamLightTheme.accent,
 					avatar: cnamLightTheme.avatar,
@@ -86,16 +107,24 @@ export const Others: StoryObj = {
 					light: paLightTheme.light,
 					dark: paLightTheme.dark,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel" 
 				/>
 			`,
 		}
@@ -108,6 +137,8 @@ export const PaletteOrange: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Orange'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'orange-darken-80': cnamColorsTokens.orange.darken80,
 					'orange-darken-60': cnamColorsTokens.orange.darken60,
@@ -134,16 +165,68 @@ export const PaletteOrange: StoryObj = {
 					'orange-lighten-90': paColorsTokens.orange.lighten90,
 					'orange-lighten-97': paColorsTokens.orange.lighten97,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
+				/>
+			`,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const PaletteRed: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Red'
+				const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const cnamColors = {}
+				const paColors = {}
+				const apColors = {
+					'ap-red-darken-2': apColorsTokens.apRed.darken2,
+					'ap-red-darken-1': apColorsTokens.apRed.darken1,
+					'ap-red': apColorsTokens.apRed.base,
+					'ap-red-lighten-1': apColorsTokens.apRed.lighten1,
+					'ap-red-lighten-2': apColorsTokens.apRed.lighten2,
+					'ap-red-lighten-3': apColorsTokens.apRed.lighten3,
+					'ap-red-lighten-4': apColorsTokens.apRed.lighten4,
+				}
+				return {
+					displayEmptyColors,
+					cnamColors,
+					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
+				}
+			},
+			template: `
+				<ColorDisplay
+					colorCategory="base" 
+					:cnamColors="cnamColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
+					:displayEmptyColors="displayEmptyColors"
 				/>
 			`,
 		}
@@ -156,6 +239,8 @@ export const PaletteYellow: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Yellow'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'yellow-darken-80': cnamColorsTokens.yellow.darken80,
 					'yellow-darken-60': cnamColorsTokens.yellow.darken60,
@@ -182,16 +267,35 @@ export const PaletteYellow: StoryObj = {
 					'yellow-lighten-90': paColorsTokens.yellow.lighten90,
 					'yellow-lighten-97': paColorsTokens.yellow.lighten97,
 				}
+				const apColors = {
+					'ap-yellow-darken-4': apColorsTokens.apYellow.darken4,
+					'ap-yellow-darken-3': apColorsTokens.apYellow.darken3,
+					'ap-yellow-darken-2': apColorsTokens.apYellow.darken2,
+					'ap-yellow-darken-1': apColorsTokens.apYellow.darken1,
+					'ap-yellow': apColorsTokens.apYellow.base,
+					'ap-yellow-lighten-1': apColorsTokens.apYellow.lighten1,
+					'ap-yellow-lighten-2': apColorsTokens.apYellow.lighten2,
+					'ap-yellow-lighten-3': apColorsTokens.apYellow.lighten3,
+					'ap-yellow-lighten-4': apColorsTokens.apYellow.lighten4,
+					'ap-yellow-lighten-5': apColorsTokens.apYellow.lighten5,
+				}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors 
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -204,6 +308,8 @@ export const PaletteGreen: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Green'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'green-darken-80': cnamColorsTokens.green.darken80,
 					'green-darken-60': cnamColorsTokens.green.darken60,
@@ -230,16 +336,30 @@ export const PaletteGreen: StoryObj = {
 					'green-lighten-90': paColorsTokens.green.lighten90,
 					'green-lighten-97': paColorsTokens.green.lighten97,
 				}
+				const apColors = {
+					'ap-green-darken-2': apColorsTokens.apGreen.darken2,
+					'ap-green-darken-1': apColorsTokens.apGreen.darken1,
+					'ap-green': apColorsTokens.apGreen.base,
+					'ap-green-lighten-1': apColorsTokens.apGreen.lighten1,
+					'ap-green-lighten-2': apColorsTokens.apGreen.lighten2,
+				}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors" 
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -252,6 +372,8 @@ export const PaletteTurquoise: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Turquoise'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'turquoise-darken-80': cnamColorsTokens.turquoise.darken80,
 					'turquoise-darken-60': cnamColorsTokens.turquoise.darken60,
@@ -278,16 +400,31 @@ export const PaletteTurquoise: StoryObj = {
 					'turquoise-lighten-90': paColorsTokens.turquoise.lighten90,
 					'turquoise-lighten-97': paColorsTokens.turquoise.lighten97,
 				}
+				const apColors = {
+					'ap-turquoise-darken-3': apColorsTokens.apTurquoise.darken3,
+					'ap-turquoise-darken-2': apColorsTokens.apTurquoise.darken2,
+					'ap-turquoise-darken-1': apColorsTokens.apTurquoise.darken1,
+					'ap-Turquoise': apColorsTokens.apTurquoise.base,
+					'ap-turquoise-lighten-1': apColorsTokens.apTurquoise.lighten1,
+					'ap-turquoise-lighten-2': apColorsTokens.apTurquoise.lighten2,
+				}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -300,6 +437,8 @@ export const PaletteBlue: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Blue'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'blue-darken-80': cnamColorsTokens.blue.darken80,
 					'blue-darken-60': cnamColorsTokens.blue.darken60,
@@ -326,16 +465,32 @@ export const PaletteBlue: StoryObj = {
 					'blue-lighten-90': paColorsTokens.blue.lighten90,
 					'blue-lighten-97': paColorsTokens.blue.lighten97,
 				}
+				const apColors = {
+					'ap-blue-darken-2': apColorsTokens.apBlue.darken2,
+					'ap-blue-darken-1': apColorsTokens.apBlue.darken1,
+					'ap-blue': apColorsTokens.apBlue.base,
+					'ap-blue-lighten-1': apColorsTokens.apBlue.lighten1,
+					'ap-blue-lighten-2': apColorsTokens.apBlue.lighten2,
+					'ap-blue-lighten-3': apColorsTokens.apBlue.lighten3,
+					'ap-blue-lighten-4': apColorsTokens.apBlue.lighten4,
+				}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -348,6 +503,8 @@ export const PaletteCyan: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Cyan'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'cyan-darken-80': cnamColorsTokens.cyan.darken80,
 					'cyan-darken-60': cnamColorsTokens.cyan.darken60,
@@ -374,16 +531,24 @@ export const PaletteCyan: StoryObj = {
 					'cyan-lighten-90': paColorsTokens.cyan.lighten90,
 					'cyan-lighten-97': paColorsTokens.cyan.lighten97,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -396,6 +561,8 @@ export const PaletteFrostedBlue: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Frosted blue'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'frosted-blue-darken-80': cnamColorsTokens.frostedBlue.darken80,
 					'frosted-blue-darken-60': cnamColorsTokens.frostedBlue.darken60,
@@ -422,16 +589,24 @@ export const PaletteFrostedBlue: StoryObj = {
 					'frosted-blue-lighten-90': paColorsTokens.frostedBlue.lighten90,
 					'frosted-blue-lighten-97': paColorsTokens.frostedBlue.lighten97,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -444,6 +619,8 @@ export const PaletteParma: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Parma'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'parma-darken-80': cnamColorsTokens.parma.darken80,
 					'parma-darken-60': cnamColorsTokens.parma.darken60,
@@ -470,16 +647,27 @@ export const PaletteParma: StoryObj = {
 					'parma-lighten-90': paColorsTokens.parma.lighten90,
 					'parma-lighten-97': paColorsTokens.parma.lighten97,
 				}
+				const apColors = {
+					'ap-parme-darken-1': apColorsTokens.apParme.darken1,
+					'ap-parme': apColorsTokens.apParme.base,
+				}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -492,6 +680,8 @@ export const PaletteMauve: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Mauve'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'mauve-darken-80': cnamColorsTokens.mauve.darken80,
 					'mauve-darken-60': cnamColorsTokens.mauve.darken60,
@@ -518,16 +708,24 @@ export const PaletteMauve: StoryObj = {
 					'mauve-lighten-90': paColorsTokens.mauve.lighten90,
 					'mauve-lighten-97': paColorsTokens.mauve.lighten97,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -540,6 +738,8 @@ export const PalettePink: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Pink'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'pink-darken-80': cnamColorsTokens.pink.darken80,
 					'pink-darken-60': cnamColorsTokens.pink.darken60,
@@ -566,16 +766,26 @@ export const PalettePink: StoryObj = {
 					'pink-lighten-90': paColorsTokens.pink.lighten90,
 					'pink-lighten-97': paColorsTokens.pink.lighten97,
 				}
+				const apColors = {
+					'ap-pink': apColorsTokens.apPink.base,
+				}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -588,6 +798,8 @@ export const PaletteBrick: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Brick'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'brick-darken-80': cnamColorsTokens.brick.darken80,
 					'brick-darken-60': cnamColorsTokens.brick.darken60,
@@ -614,16 +826,24 @@ export const PaletteBrick: StoryObj = {
 					'brick-lighten-90': paColorsTokens.brick.lighten90,
 					'brick-lighten-97': paColorsTokens.brick.lighten97,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -636,6 +856,8 @@ export const PaletteGrey: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Grey'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'grey-darken-80': cnamColorsTokens.grey.darken80,
 					'grey-darken-60': cnamColorsTokens.grey.darken60,
@@ -662,16 +884,33 @@ export const PaletteGrey: StoryObj = {
 					'grey-lighten-90': paColorsTokens.grey.lighten90,
 					'grey-lighten-97': paColorsTokens.grey.lighten97,
 				}
+				const apColors = {
+					'ap-grey-darken-1': apColorsTokens.apGrey.darken1,
+					'ap-grey': apColorsTokens.apGrey.base,
+					'ap-grey-lighten-1': apColorsTokens.apGrey.lighten1,
+					'ap-grey-lighten-2': apColorsTokens.apGrey.lighten2,
+					'ap-grey-lighten-3': apColorsTokens.apGrey.lighten3,
+					'ap-grey-lighten-4': apColorsTokens.apGrey.lighten4,
+					'ap-grey-lighten-5': apColorsTokens.apGrey.lighten5,
+					'ap-grey-lighten-6': apColorsTokens.apGrey.lighten6,
+				}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
-				<ColorDisplay 
+				<ColorDisplay
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -684,6 +923,8 @@ export const PaletteWhite: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'White'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'white-lighten-70': cnamColorsTokens.white.lighten70,
 					'white-lighten-60': cnamColorsTokens.white.lighten40,
@@ -698,16 +939,64 @@ export const PaletteWhite: StoryObj = {
 					'white-lighten-20': paColorsTokens.white.lighten20,
 					'white-base': paColorsTokens.white.base,
 				}
+				const apColors = {
+					'ap-white': apColorsTokens.apWhite.base,
+				}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
+				/>
+			`,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const PaletteBlack: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Black'
+				const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const cnamColors = {}
+				const paColors = {}
+				const apColors = {
+					'ap-black': apColorsTokens.apBlack.base,
+				}
+				return {
+					displayEmptyColors,
+					cnamColors,
+					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
+				}
+			},
+			template: `
+				<ColorDisplay 
+					:displayEmptyColors="displayEmptyColors"
+					colorCategory="base" 
+					:cnamColors="cnamColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -720,6 +1009,8 @@ export const Interactive: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Interactive'
+				const colorTitleLevel = 2
 				const cnamColors = {
 					'interactive-default': cnamLightTheme.interactiveDefault,
 					'interactive-hover': cnamLightTheme.interactiveHover,
@@ -736,16 +1027,24 @@ export const Interactive: StoryObj = {
 					'interactive-disabled': paLightTheme.interactiveDisabled,
 					'interactive-hover-on-selected': paLightTheme.interactiveHoverOnSelected,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="interactive" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -758,6 +1057,8 @@ export const Border: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Border'
+				const colorTitleLevel = 2
 				const cnamColors = {
 					'border-darker': cnamLightTheme.borderDarker,
 					'border-base': cnamLightTheme.borderBase,
@@ -788,16 +1089,24 @@ export const Border: StoryObj = {
 					'border-disabled': paLightTheme.borderDisabled,
 					'border-disabled-on-dark': paLightTheme.borderDisabledOnDark,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="border" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -810,6 +1119,8 @@ export const Text: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Text'
+				const colorTitleLevel = 2
 				const cnamColors = {
 					'text-base': cnamLightTheme.textBase,
 					'text-accent': cnamLightTheme.textAccent,
@@ -838,16 +1149,24 @@ export const Text: StoryObj = {
 					'text-subdued-on-dark': paLightTheme.textSubduedOnDark,
 					'text-disabled-on-dark': paLightTheme.textDisabledOnDark,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="text" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>`,
 		}
 	},
@@ -859,6 +1178,8 @@ export const Icons: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Icons'
+				const colorTitleLevel = 2
 				const cnamColors = {
 					'icon-base': cnamLightTheme.iconBase,
 					'icon-subdued': cnamLightTheme.iconSubdued,
@@ -887,16 +1208,24 @@ export const Icons: StoryObj = {
 					'icon-disabled': paLightTheme.iconDisabled,
 					'icon-disabled-on-dark': paLightTheme.iconDisabledOnDark,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="icons" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -909,6 +1238,8 @@ export const MainBackgrounds: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Main'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'background-main': cnamLightTheme.backgroundMain,
 					'background-surface': cnamLightTheme.backgroundSurface,
@@ -919,16 +1250,24 @@ export const MainBackgrounds: StoryObj = {
 					'background-surface': paLightTheme.backgroundSurface,
 					'background-surface-alt': paLightTheme.backgroundSurfaceAlt,
 				}
+				const apColors = { 'ap-grey-lighten-6': apColorsTokens.apGrey.lighten6 }
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="mainBackgrounds" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -941,6 +1280,8 @@ export const AlternativeBackgrounds: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Alternative'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'background-mainAlt': cnamLightTheme.backgroundMainAlt,
 					'background-raised': cnamLightTheme.backgroundRaised,
@@ -955,16 +1296,24 @@ export const AlternativeBackgrounds: StoryObj = {
 					'background-accent-contrasted': paLightTheme.backgroundAccentContrasted,
 					'background-accent-alt': paLightTheme.backgroundAccentAlt,
 				}
+				const apColors = { 'ap-blue-lighten-3': apColorsTokens.apBlue.lighten3 }
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="alternativeBackgrounds" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -977,6 +1326,8 @@ export const InformationalBackgrounds: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Informational'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'background-info': cnamLightTheme.backgroundInfo,
 					'background-info-subdued': cnamLightTheme.backgroundInfoSubdued,
@@ -987,16 +1338,24 @@ export const InformationalBackgrounds: StoryObj = {
 					'background-info-subdued': paLightTheme.backgroundInfoSubdued,
 					'background-info-contrasted': paLightTheme.backgroundInfoContrasted,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="informationalBackgrounds" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -1009,6 +1368,8 @@ export const SuccessBackgrounds: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Success'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'background-success': cnamLightTheme.backgroundSuccess,
 					'background-success-subdued': cnamLightTheme.backgroundSuccessSubdued,
@@ -1019,16 +1380,24 @@ export const SuccessBackgrounds: StoryObj = {
 					'background-success-subdued': paLightTheme.backgroundSuccessSubdued,
 					'background-success-contrasted': paLightTheme.backgroundSuccessContrasted,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="successBackgrounds" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -1041,6 +1410,8 @@ export const WarningBackgrounds: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Warning'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'background-warning': cnamLightTheme.backgroundWarning,
 					'background-warning-subdued': cnamLightTheme.backgroundWarningSubdued,
@@ -1051,16 +1422,24 @@ export const WarningBackgrounds: StoryObj = {
 					'background-warning-subdued': paLightTheme.backgroundWarningSubdued,
 					'background-warning-contrasted': paLightTheme.backgroundWarningContrasted,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="warningBackgrounds" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -1073,6 +1452,8 @@ export const ErrorBackgrounds: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Error'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'background-error': cnamLightTheme.backgroundError,
 					'background-error-subdued': cnamLightTheme.backgroundErrorSubdued,
@@ -1083,16 +1464,24 @@ export const ErrorBackgrounds: StoryObj = {
 					'background-error-subdued': paLightTheme.backgroundErrorSubdued,
 					'background-error-contrasted': paLightTheme.backgroundErrorContrasted,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="errorBackgrounds" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
 				/>
 			`,
 		}
@@ -1105,6 +1494,8 @@ export const OtherBackgrounds: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
+				const colorTitle = 'Other'
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'background-disabled': cnamLightTheme.backgroundDisabled,
 					'background-disabled-on-dark': cnamLightTheme.backgroundDisabledOnDark,
@@ -1119,16 +1510,109 @@ export const OtherBackgrounds: StoryObj = {
 					'background-professionnel': paLightTheme.backgroundProfessionnel,
 					'background-entreprise': paLightTheme.backgroundEntreprise,
 				}
+				const apColors = {}
 				return {
 					cnamColors,
 					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
 				}
 			},
 			template: `
 				<ColorDisplay 
+					displayEmptyColors
 					colorCategory="otherBackgrounds" 
 					:cnamColors="cnamColors" 
-					:paColors="paColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
+				/>
+			`,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const StatusBackgrounds: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Fonds pour les statuts'
+				const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const cnamColors = {}
+				const paColors = {}
+				const apColors = {
+					'ap-blue-lighten-2': apColorsTokens.apBlue.lighten2,
+					'ap-parme': apColorsTokens.apParme.base,
+					'ap-yellow-lighten-3': apColorsTokens.apYellow.lighten3,
+					'ap-red-lighten-2': apColorsTokens.apRed.lighten2,
+					'ap-red-lighten-3': apColorsTokens.apRed.lighten3,
+					'ap-green-lighten-2': apColorsTokens.apGreen.lighten2,
+					'ap-grey-lighten-2': apColorsTokens.apGrey.lighten2,
+				}
+				return {
+					displayEmptyColors,
+					cnamColors,
+					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
+				}
+			},
+			template: `
+				<ColorDisplay
+					colorCategory="base" 
+					:cnamColors="cnamColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
+					:displayEmptyColors="displayEmptyColors"
+				/>
+			`,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const MessagesBackgrounds: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Fonds pour les messages'
+				const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const cnamColors = {}
+				const paColors = {}
+				const apColors = {
+					'ap-red': apColorsTokens.apRed.base,
+					'ap-turquoise-darken-1': apColorsTokens.apTurquoise.darken1,
+					'ap-yellow': apColorsTokens.apYellow.base,
+					'ap-parme-darken-1': apColorsTokens.apParme.darken1,
+				}
+				return {
+					displayEmptyColors,
+					cnamColors,
+					paColors,
+					apColors,
+					colorTitle,
+					colorTitleLevel,
+				}
+			},
+			template: `
+				<ColorDisplay
+					colorCategory="base" 
+					:cnamColors="cnamColors" 
+					:paColors="paColors"
+					:apColors="apColors"
+					:colorTitle="colorTitle"
+					:colorTitleLevel="colorTitleLevel"
+					:displayEmptyColors="displayEmptyColors"
 				/>
 			`,
 		}

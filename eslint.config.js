@@ -52,6 +52,7 @@ export default ts.config(
 			'@stylistic/indent': 0,
 			'no-console': ['error', { allow: ['warn', 'error'] }],
 			'no-explicit-any': 0,
+			'vuejs-accessibility/interactive-supports-focus': 0,
 		},
 	},
 )

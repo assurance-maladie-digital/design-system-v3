@@ -1,0 +1,21 @@
+import { Controls, Canvas, Meta } from '@storybook/blocks';
+
+import * as AmeliproCallbackStories from './AmeliproCallback.stories';
+
+<Meta of={AmeliproCallbackStories} />
+
+# AmeliproCallback
+
+L’élément `AmeliproCallback` est utilisé pour afficher les retours (réussite ou échec) lors d'une transmission.
+
+<Canvas of={AmeliproCallbackStories.Default} />
+
+## Règles d’usage
+
+En cas de réussite : Prévoir un retour à l'accueil amelipro en fin de processus de transmission.
+
+En cas d'échec : Ne pas laisser dans ce cas l'utilisateur sans solution. Prévoir donc la possibilité de retransmettre les données. Si le service prévoit la possibilité d'imprimer sans transmettre, ajouter dans ce cas le lien dès cette page.
+
+## API
+
+<Controls of={AmeliproCallbackStories.Default} />

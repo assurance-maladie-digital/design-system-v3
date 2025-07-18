@@ -35,6 +35,15 @@
 		>
 			Thème PA
 		</v-btn>
+		<v-btn
+			:color="currentTheme === 'ap' ? 'primary' : ''"
+			variant="outlined"
+			size="small"
+			style="background-color: white"
+			@click="switchTheme('ap')"
+		>
+			Thème AmeliPro
+		</v-btn>
 	</div>
 </template>
 

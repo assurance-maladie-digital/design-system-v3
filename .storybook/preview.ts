@@ -37,7 +37,7 @@ setup((app, { globals }) => {
 	// Apply theme class to <html> (document.documentElement) instead of #root
 	const applyThemeClass = (theme) => {
 		const rootElement = document.documentElement // Always exists
-		rootElement.classList.remove('theme-cnam', 'theme-pa')
+		rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
 		rootElement.classList.add(`theme-${theme}`)
 	}
 
@@ -65,14 +65,15 @@ setup((app, { globals }) => {
 const globalTypes = {
 	theme: {
 		name: 'Theme',
-		description: 'Switch between CNAM and PA themes',
+		description: 'Switch between CNAM, PA and AP themes',
 		defaultValue: 'cnam',
 		toolbar: {
 			title: 'Thèmes',
 			icon: 'paintbrush',
 			items: [
 				{ value: 'cnam', title: 'Thème CNAM' },
-				{ value: 'pa', title: 'Thème PAG' },
+				{ value: 'pa', title: 'Thème PA' },
+				{ value: 'ap', title: 'Thème AmeliPro' },
 			],
 			dynamicTitle: true,
 		},
@@ -92,7 +93,7 @@ const preview: Preview = {
 			// Handle theme changes
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
 				vuetify.theme.global.name.value = context.globals.theme
-				document.documentElement.classList.remove('theme-cnam', 'theme-pa')
+				document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
 			}
@@ -133,7 +134,7 @@ const preview: Preview = {
 						'Introduction',
 					],
 					'Design Tokens',
-					['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Thème Portail Agent'],
+					['Introduction', 'Couleurs', 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations'],
 					'Composants',
 					[
 						'Vue d\'ensemble',

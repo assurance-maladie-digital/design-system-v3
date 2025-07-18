@@ -1,0 +1,57 @@
+import { Controls, Canvas, Meta } from '@storybook/blocks';
+
+import * as AmeliproPatientBannerStories from './AmeliproPatientBanner.stories';
+import infoPatientImg1 from '../../../../.storybook/public/amelipro/img/info-patient-img-1.png';
+import infoPatientImg2 from '../../../../.storybook/public/amelipro/img/info-patient-img-2.png';
+
+<Meta of={AmeliproPatientBannerStories} />
+
+# AmeliproPatientBanner
+
+L’élément `AmeliproPatientBanner` est utilisé pour afficher le bandeau patient.
+
+<Canvas of={AmeliproPatientBannerStories.Default} />
+
+## API
+
+<Controls of={AmeliproPatientBannerStories.Default} />
+
+## Information patient
+
+### Bloc Patient VS Bandeau Patient
+
+L’utilisateur retrouve sur la page d’accueil et sur la page de produit une section nommée <b>Bloc patient</b> lui permettant d’identifier le patient et de consulter certaines informations comme les droits de l’Assurance Maladie et de changer de patient. Cette section prend la forme d’un <b>bandeau</b> en haut de lorsque les produits sont rénovés. Dans le cas où le patient est identifié et que l’utilisateur choisi de réaliser une télé-procédure, ce sont les données du patient identifié qui sont transmises dans le contexte au service ciblé.
+
+Le bloc patient propose un <b>lien “plus d’information”</b> permettant à l’utilisateur de consulter la fiche détaillé du patient identifié. Le bandeau patient propose ce lien seulement si nécessaire, permettant à l’utilisateur de consulter à l’aide d’une Pop-in, des informations complémentaires en contexte avec le type de télé-procédure. Vous pouvez ajouter ce lien à des endroit stratégiques des services activités, si l’usage s’avère importante pour l’utilisateur. Attention à l’autorisation du patient qui est requise pour cette consultation.
+
+Bandeau patient | Sur les services rénovés
+
+### Règles d’usage
+
+Utilisez le bandeau patient lors de la refonte (rénovation) des services. Intégrez un lien “plus d’information” si cela s’avère nécessaire pour l’utilisateur dans le contexte de réalisation des télé-procédures. Les informations disponibles dans le bandeau patient, sont les mêmes quelle que soit la télé-procédure, à l’exception du lien “plus d’information qui peut être exclut.
+
+### Desktop + mobile
+
+L’utilisateur retrouve dans un premier niveau à gauche, l’identification du patient et le lien permettant de changer de patient. À droite, l’information sur le médecin traitant. Dans un deuxième niveau, il visualise quelques informations génériques et le lien plus d’information, le cas échéant.
+
+### Contenu :
+
+#### Niveau 1
+
+  - Prénom, nom d’usage / date de naissance / nom de famille ou de naissance (facultatif)
+  - Lien “Changer de patient” donnant accès à la page d’accueil (retour au bloc patient tant que la page d’accueil n’est pas rénovée)
+  - Information : Vous êtes le médecin traitant / Il n’y a pas de médecin traitant / MT : DR nom prénom et numéro AM
+
+#### Niveau 2
+
+  - Statut & NIR
+  - Régime & Organisme de rattachement
+  - Lien “Plus d’information” donnant accès à la pop-in. (Optionnel)
+
+<img src={infoPatientImg1} alt="Exemple de bandeau patient numéroté avec les différent éléments"></img>
+
+### Smartphone
+
+La page d’accueil n’étant pas rénovée l’affichage mobile n’est pas optimal, lorsque l’utilisateur clique sur changer de patient il retourne à la page d’accueil. Le lien “plus d’information” peut éventuellement ne pas être affiché en mobilité, à évaluer le besoin afin de prendre les décisions adaptées.
+
+<img src={infoPatientImg2} alt="Exemple de bandeau patient en mobile numéroté avec les différent éléments"></img>
