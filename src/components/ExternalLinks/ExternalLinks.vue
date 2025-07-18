@@ -11,6 +11,7 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
 	import { vToolbar } from '@/directives/Toolbar'
+	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		items: Array<{
@@ -120,9 +121,11 @@
 						{{ btnText }}
 					</span>
 
-					<VIcon v-bind="options.btnIcon">
-						{{ arrowIcon }}
-					</VIcon>
+					<SyIcon
+						v-bind="options.btnIcon"
+						:icon="arrowIcon"
+						decorative
+					/>
 				</VBtn>
 			</template>
 
@@ -152,9 +155,11 @@
 							</div>
 
 							<slot name="link-icon">
-								<VIcon v-bind="options.linkIcon">
-									{{ linkIcon }}
-								</VIcon>
+								<SyIcon
+									v-bind="options.linkIcon"
+									:icon="linkIcon"
+									decorative
+								/>
 							</slot>
 						</div>
 					</VBtn>
