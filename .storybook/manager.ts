@@ -19,6 +19,8 @@ const applyThemeSidebar = (theme) => {
 
 			// First pass: identify if amelipro should be hidden
 			const hideAmelipro = theme === 'pa' || theme === 'cnam'
+			// When AP theme is active, only show Amelipro components
+			const showOnlyAmelipro = theme === 'ap'
 
 			// Hide or show items based on theme
 			items.forEach((item) => {
@@ -31,6 +33,19 @@ const applyThemeSidebar = (theme) => {
 				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
 				if (isAmeliproFolder) {
 					item.style.display = hideAmelipro ? 'none' : 'block'
+				}
+
+				// For AP theme, hide all components except those in Amelipro folder
+				if (showOnlyAmelipro) {
+					// Get item ID and text content
+					const itemId = item.getAttribute('data-item-id') || ''
+					const itemText = item.textContent || ''
+
+					// Check if this is a component folder (but not Amelipro)
+					const isComponentFolder = itemId.startsWith('composants-') && !isAmeliproFolder
+					if (isComponentFolder) {
+						item.style.display = 'none'
+					}
 				}
 
 				// Handle the "Créer une issue" page - hide it when AP theme is active
@@ -117,61 +132,104 @@ const applyThemeSidebar = (theme) => {
 					}
 				})
 			}
+
+			// Third pass: if AP theme, hide all component folders except Amelipro
+			if (showOnlyAmelipro) {
+				// First hide all templates related elements
+				// 1. Hide all template sections and their content completely
+				const templateSections = sidebar.querySelectorAll('.sidebar-item[data-item-id*="templates"], .sidebar-item[data-nodeid*="templates"]')
+				templateSections.forEach(el => {
+					(el as HTMLElement).style.display = 'none'
+				})
+
+				// 2. Hide template headings
+				const allHeadings = sidebar.querySelectorAll('.sidebar-subheading')
+				allHeadings.forEach(heading => {
+					const el = heading as HTMLElement
+					if (el.textContent && el.textContent.toLowerCase().includes('template')) {
+						el.style.display = 'none'
+						
+						// Also hide the next element which is usually the container
+						if (el.nextElementSibling) {
+							(el.nextElementSibling as HTMLElement).style.display = 'none'
+						}
+					}
+				})
+
+				// 3. Hide any sidebar items containing "templates" in their text
+				const allSidebarItems = sidebar.querySelectorAll('.sidebar-item')
+				allSidebarItems.forEach(item => {
+					const el = item as HTMLElement
+					if (el.textContent && el.textContent.toLowerCase().includes('template')) {
+						el.style.display = 'none'
+					}
+				})
+
+				// 4. Now process all links to hide non-Amelipro components
+				const allLinks = sidebar.querySelectorAll('a[id]') as NodeListOf<HTMLAnchorElement>
+				allLinks.forEach(link => {
+					const linkId = link.id || ''
+					const linkText = link.textContent || ''
+					
+					// Skip Amelipro components
+					if (linkId.toLowerCase().includes('amelipro') || linkText.toLowerCase().includes('amelipro')) {
+						return
+					}
+
+					// Hide templates and other components
+					if (linkId.startsWith('composants-') || 
+					    linkId.toLowerCase().includes('template') || 
+					    linkText.toLowerCase().includes('template')) {
+						// Find the parent sidebar item and hide it
+						let parent = link.parentElement
+						while (parent && !parent.classList.contains('sidebar-item')) {
+							parent = parent.parentElement
+						}
+						if (parent) {
+							(parent as HTMLElement).style.display = 'none'
+						}
+					}
+				})
+			}
 			
-			// Find the Templates section in the sidebar
-			const templatesHeading = Array.from(sidebar.querySelectorAll('.sidebar-subheading')).find(
-				heading => heading.textContent && heading.textContent.trim() === 'Templates'
-			) as HTMLElement | undefined
-			
-			// If we found the Templates heading, handle it and its container
-			if (templatesHeading) {
-				console.log('Found Templates heading:', templatesHeading)
+			// Find the Templates section in the sidebar - this is now handled in the third pass for AP theme
+			// but we keep this for other themes
+			if (theme !== 'ap') {
+				const templatesHeading = Array.from(sidebar.querySelectorAll('.sidebar-subheading')).find(
+					heading => heading.textContent && heading.textContent.trim() === 'Templates'
+				) as HTMLElement | undefined
 				
-				// Only modify the display property, preserving other styles
-				if (theme === 'ap') {
-					templatesHeading.style.display = 'none'
-				} else {
-					// Reset to original display value or use a sensible default
+				// If we found the Templates heading, handle it and its container
+				if (templatesHeading) {
+					// Only modify the display property, preserving other styles
 					templatesHeading.style.display = ''
-				}
-				
-				// Find and handle the container element (usually the next sibling)
-				const templatesContainer = templatesHeading.nextElementSibling as HTMLElement | null
-				if (templatesContainer) {
-					if (theme === 'ap') {
-						templatesContainer.style.display = 'none'
-					} else {
+					
+					// Find and handle the container element (usually the next sibling)
+					const templatesContainer = templatesHeading.nextElementSibling as HTMLElement | null
+					if (templatesContainer) {
 						// Reset to original display value or use a sensible default
 						templatesContainer.style.display = ''
 					}
 				}
-			}
-			
-			// Also look for any elements with data-item-id="templates"
-			const templateItems = sidebar.querySelectorAll('[data-item-id="templates"]')
-			templateItems.forEach(item => {
-				const templateItem = item as HTMLElement
-				if (theme === 'ap') {
-					templateItem.style.display = 'none'
-				} else {
+				
+				// Also look for any elements with data-item-id="templates"
+				const templateItems = sidebar.querySelectorAll('[data-item-id="templates"]')
+				templateItems.forEach(item => {
+					const templateItem = item as HTMLElement
 					// Reset to original display value
 					templateItem.style.display = ''
-				}
-			})
-			
-			// Find any sidebar items that contain Templates
-			const sidebarItems = sidebar.querySelectorAll('.sidebar-item')
-			sidebarItems.forEach(item => {
-				if (item.textContent && item.textContent.includes('Templates')) {
-					const templateItem = item as HTMLElement
-					if (theme === 'ap') {
-						templateItem.style.display = 'none'
-					} else {
+				})
+				
+				// Find any sidebar items that contain Templates
+				const sidebarItems = sidebar.querySelectorAll('.sidebar-item')
+				sidebarItems.forEach(item => {
+					if (item.textContent && item.textContent.includes('Templates')) {
+						const templateItem = item as HTMLElement
 						// Reset to original display value
 						templateItem.style.display = ''
 					}
-				}
-			})
+				})
+			}
 
 			if (observer) {
 				observer.disconnect()
