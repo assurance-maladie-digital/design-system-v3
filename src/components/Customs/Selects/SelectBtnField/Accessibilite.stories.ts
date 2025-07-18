@@ -8,7 +8,7 @@ const iconEye = mdiEye
 const linkICon = mdiLink
 
 export default {
-	title: 'Composants/Formulaires/SyBtnSelect/Accessibilité',
+	title: 'Composants/Formulaires/Selects/SelectBtnField/Accessibilité',
 }
 
 export const AccessibilitePanel: StoryObj = {
@@ -58,10 +58,10 @@ export const AccessibilitePanel: StoryObj = {
 															href="{{i.link}}" target="blank">
 															<VIcon :icon="linkICon"/>
 														</a></p>
-
 														<p>{{ value.info1 }}</p>
 														<p>{{ value.info2 }}</p>
 														<p>{{ value.info3 }}</p>
+														<p>{{ value.info4 }}</p>
 
 													</div>
 													<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
@@ -84,11 +84,9 @@ export const AccessibilitePanel: StoryObj = {
 															href="value.link" target="blank">
 															<VIcon :icon="linkICon"/>
 														</a></p>
-
 														<p>{{ element.info1 }}</p>
 														<p>{{ element.info2 }}</p>
 														<p>{{ element.info3 }}</p>
-
 													</div>
 													<span style="display:flex; justify-content:center; margin-bottom:5px;">______</span>
 												</div>

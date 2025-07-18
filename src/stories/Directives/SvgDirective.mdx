@@ -167,6 +167,21 @@ import { Meta } from '@storybook/blocks'
       </ul>
     </div>
   </div>
+
+  <div className="feature-card">
+    <h3>🔘 Pour les icônes interactives (boutons)</h3>
+    <p>Les icônes interactives déclenchent une action et doivent être annoncées comme des boutons par les technologies d'assistance.</p>
+    <div className="info-box" style={{ margin: '1rem 0' }}>
+      <p>La directive :</p>
+      <ul>
+        <li>Ajoute <code>role="button"</code> au conteneur parent</li>
+        <li>Ajoute <code>aria-label="Bouton"</code> au conteneur parent si aucun aria-label n'est présent</li>
+        <li>Ajoute <code>tabindex="0"</code> si nécessaire pour rendre l'élément focusable</li>
+        <li>Supprime <code>aria-hidden="true"</code> du conteneur parent</li>
+        <li>Supprime <code>role="img"</code> du SVG et ajoute <code>aria-hidden="true"</code></li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <h2 className="section-title">Comment utiliser cette directive</h2>
@@ -224,8 +239,26 @@ import { Meta } from '@storybook/blocks'
       <!-- Icône informative avec label personnalisé -->
       <SyIcon 
         icon="mdi-alert" 
-        decorative="false" 
+        :decorative="false" 
         label="Attention, information importante"
+      />
+
+      <!-- Icône interactive (bouton) avec rôle explicite -->
+      <SyIcon 
+        icon="mdi-delete" 
+        :decorative="false" 
+        role="button" 
+        label="Supprimer"
+        @click="handleDelete"
+      />
+
+      <!-- Icône interactive avec détection automatique du rôle bouton -->
+      <SyIcon 
+        icon="mdi-close" 
+        :decorative="false" 
+        :auto-detect-button="true" 
+        label="Fermer"
+        @click="closeModal"
       />
       ```
     </div>
@@ -236,6 +269,7 @@ import { Meta } from '@storybook/blocks'
     <p>Si vous devez utiliser directement des composants <code>v-icon</code> de Vuetify dans votre projet, vous pouvez appliquer la directive comme suit :</p>
     <div className="code-example">
       ```vue
+      <!-- Utilisation simple -->
       <!-- Pour une icône décorative (par défaut) -->
       <v-icon v-rgaa-svg-fix>mdi-account</v-icon>
 
@@ -249,7 +283,65 @@ import { Meta } from '@storybook/blocks'
       >
         mdi-account
       </v-icon>
+
+      <!-- Utilisation avancée avec objet de configuration -->
+      <!-- Icône avec rôle bouton explicite -->
+      <v-icon
+        v-rgaa-svg-fix="{ isDecorative: false, role: 'button' }"
+        aria-label="Supprimer"
+        @click="handleDelete"
+      >
+        mdi-delete
+      </v-icon>
+
+      <!-- Icône avec détection automatique du rôle bouton -->
+      <v-icon
+        v-rgaa-svg-fix="{ isDecorative: false, autoDetectButton: true }"
+        aria-label="Fermer"
+        @click="closeModal"
+      >
+        mdi-close
+      </v-icon>
       ```
+    </div>
+  </div>
+</div>
+
+<h2 className="section-title">Configuration avancée</h2>
+
+<div className="feature-grid">
+  <div className="feature-card">
+    <h3>⚙️ Options de configuration</h3>
+    <p>La directive accepte désormais un objet de configuration avec les options suivantes :</p>
+    <div className="info-box" style={{ margin: '1rem 0' }}>
+      <ul>
+        <li><code>isDecorative</code> : <code>boolean</code> - Indique si l'icône est décorative (true) ou fonctionnelle (false)</li>
+        <li><code>role</code> : <code>'img' | 'button' | 'presentation'</code> - Définit explicitement le rôle ARIA de l'icône</li>
+        <li><code>autoDetectButton</code> : <code>boolean</code> - Active la détection automatique du rôle bouton en fonction des événements</li>
+      </ul>
+    </div>
+    <div className="code-example">
+      ```typescript
+      // Structure de l'objet de configuration
+      interface RgaaSvgFixConfig {
+        isDecorative?: boolean;
+        role?: 'img' | 'button' | 'presentation';
+        autoDetectButton?: boolean;
+      }
+      ```
+    </div>
+  </div>
+  
+  <div className="feature-card">
+    <h3>🔍 Détection automatique du rôle bouton</h3>
+    <p>La directive peut désormais détecter automatiquement si une icône doit avoir le rôle "button" en analysant :</p>
+    <div className="info-box" style={{ margin: '1rem 0' }}>
+      <ul>
+        <li>La présence d'écouteurs d'événements Vue (<code>@click</code>, <code>@keydown</code>, etc.)</li>
+        <li>La présence de l'attribut <code>tabindex</code></li>
+        <li>Le contexte d'utilisation de l'icône</li>
+      </ul>
+      <p>Cette détection est activée en définissant <code>autoDetectButton: true</code> dans l'objet de configuration.</p>
     </div>
   </div>
 </div>

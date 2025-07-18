@@ -3,9 +3,9 @@
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import type { PropType } from 'vue'
-	import type { ItemType } from '@/components/Customs/SySelect/SySelect.vue'
+	import type { ItemType } from '@/components/Customs/Selects/SySelect/SySelect.vue'
 
-	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 
 	import { useDisplay } from 'vuetify'
 

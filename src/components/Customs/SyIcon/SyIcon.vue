@@ -1,6 +1,18 @@
 <script setup lang="ts">
 	import { vRgaaSvgFix } from '../../../directives/rgaaSvgFix'
-	import { onMounted, watch } from 'vue'
+	import { computed, onMounted, watch } from 'vue'
+
+	/**
+	 * Composant SyIcon - Affiche une icône avec gestion de l'accessibilité
+	 *
+	 * Ce composant permet d'afficher des icônes en gérant correctement leur accessibilité selon leur rôle :
+	 * - Icônes décoratives : ignorées par les lecteurs d'écran (role="presentation", aria-hidden="true")
+	 * - Icônes fonctionnelles : annoncées comme images (role="img", avec aria-label)
+	 * - Icônes interactives : annoncées comme boutons (role="button", avec aria-label et tabindex)
+	 *
+	 * Le composant peut détecter automatiquement si une icône est interactive (bouton) en analysant
+	 * la présence d'événements comme @click, @keydown, etc.
+	 */
 
 	/**
 	 * Vérifie si une icône non décorative a un label
@@ -15,9 +27,20 @@
 		icon: string
 		label?: string
 		decorative?: boolean
+		role?: 'img' | 'button' | 'presentation'
+		autoDetectButton?: boolean
 		color?: string
 		size?: string
 	}>()
+
+	// Configuration pour la directive rgaaSvgFix
+	const rgaaSvgFixConfig = computed(() => {
+		return {
+			isDecorative: props.decorative,
+			role: props.role,
+			autoDetectButton: props.autoDetectButton,
+		}
+	})
 
 	// Vérification à l'initialisation du composant
 	onMounted(() => {
@@ -28,19 +51,21 @@
 	watch(
 		[() => props.decorative, () => props.label, () => props.icon],
 		([decorative, label, icon]) => {
-			checkAccessibility(icon as string, decorative as boolean | undefined, label as string | undefined)
+			checkAccessibility(
+				icon as string,
+				decorative as boolean | undefined,
+				label as string | undefined,
+			)
 		},
 	)
 </script>
 
 <template>
 	<v-icon
-		v-rgaa-svg-fix="props.decorative"
+		v-rgaa-svg-fix="rgaaSvgFixConfig"
 		:color="props.color"
 		:size="props.size"
-		:role="props.decorative !== false ? undefined : 'img'"
-		:aria-hidden="props.decorative !== false ? 'true' : undefined"
-		:aria-label="props.decorative === false && props.label ? props.label : undefined"
+		:aria-label="props.label"
 	>
 		{{ icon }}
 	</v-icon>

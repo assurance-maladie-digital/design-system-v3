@@ -5,9 +5,12 @@
 	})
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
 	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
-	import { vRgaaSvgFix } from '../../../directives/rgaaSvgFix'
+	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
+	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import type { VTextField } from 'vuetify/components'
-	import { VChip, VCheckbox } from 'vuetify/components'
+	import { VChip } from 'vuetify/components'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
 
 	export type ItemType = {
@@ -120,8 +123,22 @@
 	const toggleMenu = () => {
 		if (props.readonly) return
 		isOpen.value = !isOpen.value
-		if (isOpen.value) updateListPosition()
+		if (isOpen.value) {
+			updateListPosition()
+			// Initialiser la sélection à l'ouverture
+			nextTick(() => {
+				// Si un élément est déjà sélectionné, l'activer
+				const selectedIndex = formattedItems.value.findIndex(item => isItemSelected(item))
+				if (selectedIndex >= 0) {
+					setActiveDescendant(selectedIndex)
+				}
+				else {
+					setActiveDescendant(0)
+				}
+			})
+		}
 	}
+
 	const closeList = (event?: Event) => {
 		// Check if the click is inside the dropdown list
 		const target = event?.target as HTMLElement
@@ -135,7 +152,6 @@
 		isOpen.value = false
 	}
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
-
 	const listStyles = ref<Record<string, string>>({})
 	const updateListPosition = () => {
 		if (input.value?.$el) {
@@ -150,13 +166,53 @@
 	}
 
 	const selectItem = (item: ItemType | null, event?: Event) => {
+		// Prevent default action if event is provided
+		event?.preventDefault()
+
 		// Stop event propagation to prevent click-outside from triggering
 		event?.stopPropagation()
+
+		// Si c'est un clic, appliquer le focus visuel en utilisant le système existant
+		if (event?.type === 'click' && item !== null) {
+			// Trouver l'index de l'élément cliqué
+			const clickedIndex = formattedItems.value.findIndex((formattedItem) => {
+				if (props.returnObject) {
+					return formattedItem[props.valueKey] === item[props.valueKey]
+				}
+				return formattedItem === item
+			})
+
+			// Si l'élément est trouvé, utiliser le système existant pour appliquer le focus visuel
+			if (clickedIndex !== -1) {
+				setActiveDescendant(clickedIndex)
+			}
+		}
 
 		if (item === null) {
 			selectedItem.value = props.multiple ? [] : null
 			emit('update:modelValue', props.multiple ? [] : null)
-			isOpen.value = false
+
+			// Garder la liste ouverte après une suppression et réinitialiser la navigation au clavier
+			if (event?.type === 'keydown' || event?.type === 'click') {
+				if (!isOpen.value) {
+					isOpen.value = true
+					updateListPosition()
+				}
+
+				// S'assurer que le focus DOM revient à l'input et restaurer le focus visuel
+				nextTick(() => {
+					// Focus DOM sur l'input
+					const inputElement = document.querySelector('.v-field__input')
+					if (inputElement) {
+						(inputElement as HTMLInputElement).focus()
+					}
+					// Restaurer le focus visuel/ARIA
+					restoreFocus()
+				})
+			}
+			else {
+				isOpen.value = false
+			}
 			return
 		}
 
@@ -166,6 +222,11 @@
 			selectedItem.value = []
 			emit('update:modelValue', [])
 			isOpen.value = false
+			return
+		}
+
+		// If the item is the default option (e.g., "-choisir-") in single mode, don't select it
+		if (isDefaultOption(item)) {
 			return
 		}
 
@@ -307,6 +368,26 @@
 		selectedItem.value = newValue
 	})
 
+	// Utilisation du composable pour la gestion clavier
+	const {
+		activeDescendantId,
+		setActiveDescendant,
+		handleEnterKey,
+		handleSpaceKey,
+		handleDownKey,
+		handleUpKey,
+		handleCharacterKey,
+		handleEscapeKey,
+		restoreFocus,
+	} = useSySelectKeyboard({
+		isOpen,
+		formattedItems,
+		toggleMenu,
+		selectItem,
+		getItemText,
+		updateListPosition,
+	})
+
 	// Function to check if an item is the default option (e.g., "-choisir-")
 	const isDefaultOption = (item: ItemType) => {
 		// Check if this is the first item and has a placeholder-like text
@@ -424,10 +505,6 @@
 		}
 	})
 
-	watch(isOpen, (open) => {
-		if (open) updateListPosition()
-	})
-
 	onMounted(() => {
 		if (labelRef.value) {
 			labelWidth.value = labelRef.value.offsetWidth + 64
@@ -443,6 +520,10 @@
 				if (inputElement) {
 					// Remove the aria-describedby attribute
 					inputElement.removeAttribute('aria-describedby')
+					// fix le critere RGAA 10.1 : Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l'information?
+					inputElement.removeAttribute('size')
+					// Remove any tabindex from the input element to prevent it from being tabbable
+					inputElement.removeAttribute('tabindex')
 				}
 			}
 		})
@@ -469,13 +550,22 @@
 			v-rgaa-svg-fix="true"
 			:title="$attrs['aria-label'] || labelWithAsterisk"
 			color="primary"
-			tabindex="0"
+			role="combobox"
 			:disabled="disabled"
 			:label="labelWithAsterisk"
 			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
+			:aria-expanded="isOpen ? 'true' : 'false'"
+			:aria-controls="menuId"
+			aria-autocomplete="list"
+			aria-haspopup="listbox"
+			aria-readonly="true"
+			:aria-owns="menuId"
+			:aria-activedescendant="isOpen ? activeDescendantId : undefined"
 			:error-messages="props.disableErrorHandling ? [] : errorMessages"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
+			:aria-required="isRequired ? 'true' : undefined"
+			:aria-invalid="hasError ? 'true' : undefined"
 			:bg-color="props.bgColor"
 			:density="props.density"
 			:active="hasChips || isOpen"
@@ -486,45 +576,64 @@
 			:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 			v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
 			@click="toggleMenu"
-			@keydown.enter.prevent="toggleMenu"
-			@keydown.space.prevent="toggleMenu"
+			@keydown.enter.prevent="handleEnterKey"
+			@keydown.space.prevent="handleSpaceKey"
+			@keydown.down.prevent="handleDownKey"
+			@keydown.up.prevent="handleUpKey"
+			@keydown.esc.prevent="handleEscapeKey"
+			@keydown="(e) => {
+				// Handle printable characters for keyboard navigation
+				if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+					handleCharacterKey(e.key)
+				}
+			}"
 		>
-			<template
+			<div
 				v-if="hasChips"
-				#default
+				class="d-flex flex-wrap gap-1"
 			>
-				<div class="d-flex flex-wrap gap-1">
-					<VChip
-						v-for="item in selectedItem"
-						:key="props.returnObject ? item[props.valueKey] : item"
-						size="small"
-						class="ma-1"
-						closable
-						@click:close="removeChip(item)"
-					>
-						{{ getChipText(item) }}
-					</VChip>
-				</div>
-			</template>
+				<VChip
+					v-for="item in selectedItem"
+					:key="props.returnObject ? item[props.valueKey] : item"
+					size="small"
+					class="ma-1"
+					closable
+					:close-label="`Supprimer ${getChipText(item)}`"
+					@click:close="removeChip(item)"
+				>
+					{{ getChipText(item) }}
+				</VChip>
+			</div>
 			<template #append-inner>
-				<VIcon
+				<SyIcon
 					v-if="hasError"
 					class="mr-6"
-				>
-					{{ mdiInformation }}
-				</VIcon>
-				<VIcon
+					:icon="mdiInformation"
+					:decorative="false"
+					label="Information"
+					role="img"
+				/>
+				<button
 					v-if="props.clearable && selectedItemText"
-					class="sy-select__clear-icon"
-					:class="hasError ? 'mr-14' : 'mr-8'"
+					type="button"
+					class="sy-select__clear-button"
+					:style="{ right: hasError ? '38px' : '32px' }"
 					:aria-label="locales.clear"
-					@click.stop.prevent="selectItem(null)"
+					@keydown.enter.prevent="$event => selectItem(null, $event)"
+					@keydown.space.prevent="$event => selectItem(null, $event)"
+					@click.stop.prevent="$event => selectItem(null, $event)"
 				>
-					{{ mdiCloseCircle }}
-				</VIcon>
-				<VIcon class="arrow">
-					{{ mdiMenuDown }}
-				</VIcon>
+					<SyIcon
+						class="sy-select__clear-icon"
+						:icon="mdiCloseCircle"
+						:decorative="true"
+					/>
+				</button>
+				<SyIcon
+					class="arrow"
+					:icon="mdiMenuDown"
+					:decorative="true"
+				/>
 			</template>
 		</VTextField>
 		<span
@@ -533,36 +642,49 @@
 		>{{ label }}</span>
 		<VList
 			v-if="isOpen"
+			:id="menuId"
 			class="v-list"
+			role="listbox"
+			:aria-multiselectable="props.multiple ? 'true' : undefined"
+			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 			:style="{
 				minWidth: `${input?.$el.offsetWidth}px`,
 				...listStyles
 			}"
 			bg-color="white"
-			@keydown.esc.prevent="isOpen = false"
+			tabindex="0"
+			:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
+			@keydown.esc.prevent="closeList"
+			@keydown.tab.prevent="closeList"
+			@keydown.enter.prevent="handleEnterKey"
+			@keydown.down.prevent="handleDownKey"
+			@keydown.up.prevent="handleUpKey"
 			@click.stop
 		>
 			<VListItem
 				v-for="(item, index) in formattedItems"
+				:id="`option-${index}`"
 				:key="index"
 				:ref="'options-' + index"
 				role="option"
 				class="v-list-item"
-				:aria-selected="isItemSelected(item)"
-				:tabindex="index + 1"
-				:class="{ active: isItemSelected(item) }"
+				:aria-selected="(isItemSelected(item) || `option-${index}` === activeDescendantId) ? 'true' : 'false'"
+				tabindex="-1"
+				:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
 				@click.stop="(event) => selectItem(item, event)"
 			>
 				<template
 					v-if="props.multiple && !isDefaultOption(item)"
 					#prepend
 				>
-					<VCheckbox
+					<SyCheckbox
 						:model-value="isItemSelected(item)"
 						density="compact"
 						hide-details
 						color="primary"
 						class="mt-0 pt-0 mr-1"
+						:title="getItemText(item)"
+						:aria-label="getItemText(item)"
 						@click.stop="(event) => selectItem(item, event)"
 					/>
 				</template>
@@ -615,6 +737,14 @@
 	background-color: rgb(0 0 0 / 8%);
 }
 
+/* Ensure focus styles match selection styles for keyboard navigation */
+.v-list-item:focus-visible,
+.v-list-item.keyboard-focused {
+	outline: 2px solid tokens.$primary-base;
+	outline-offset: -2px;
+	background-color: rgb(0 0 0 / 8%);
+}
+
 .v-icon {
 	position: absolute;
 	right: 10px;
@@ -626,6 +756,20 @@
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
+.sy-select__clear-button {
+	position: absolute;
+	background: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 10px;
+}
+
 .v-chip {
 	margin: 2px;
 }
@@ -633,6 +777,7 @@
 :deep(.v-field__input) {
 	color: tokens.$grey-darken-20;
 	cursor: pointer;
+	caret-color: transparent;
 }
 
 .hidden-label {

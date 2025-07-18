@@ -4,7 +4,7 @@ import { checkIcon, linkICon, croixIcon } from '@/constants/icons'
 import Usages from '@/components/Usages/Usages.vue'
 
 export default {
-	title: 'Composants/Formulaires/SySelect/Usages',
+	title: 'Composants/Formulaires/Selects/SySelect/Usages',
 }
 
 const itemsToDo = [

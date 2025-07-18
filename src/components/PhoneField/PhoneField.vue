@@ -5,7 +5,7 @@
 	import { indicatifs } from './indicatifs'
 	import { vMaska } from 'maska/vue'
 	import { locales } from './locales'
-	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import {

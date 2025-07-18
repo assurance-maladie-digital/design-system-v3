@@ -4,7 +4,7 @@ import { checkIcon, linkICon, croixIcon } from '@/constants/icons'
 import Usages from '@/components/Usages/Usages.vue'
 
 export default {
-	title: 'Composants/Formulaires/SelectBtnField/Usages',
+	title: 'Composants/Formulaires/Selects/SelectBtnField/Usages',
 }
 const itemsToDo = [
 	'Utiliser des libellés clairs et compréhensibles.',

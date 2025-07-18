@@ -2,7 +2,7 @@
 	// SySelect a été modifié pour accepter null comme valeur valide
 	import { computed, ref } from 'vue'
 	import type { FilterOption, TableColumnHeader } from '../types'
-	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import { locales } from './locales'
 
 	const props = defineProps({

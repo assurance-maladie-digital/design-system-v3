@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyInputSelect from './SyInputSelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle, VForm } from 'vuetify/components'
 import { ref } from 'vue'
-import SyAlert from '@/components/SyAlert/SyAlert.vue'
+import SyAlert from '../../../SyAlert/SyAlert.vue'
 
 const meta = {
-	title: 'Composants/Formulaires/SyInputSelect',
+	title: 'Composants/Formulaires/Selects/SyInputSelect',
 	component: SyInputSelect,
 	parameters: {
 		layout: 'fullscreen',

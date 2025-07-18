@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, ref, nextTick, watch, onMounted } from 'vue'
-	import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 	import { locales } from './locales'
 

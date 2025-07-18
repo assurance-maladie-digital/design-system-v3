@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import SySelect from '@/components/Customs/SySelect/SySelect.vue'
-import SyAlert from '@/components/SyAlert/SyAlert.vue'
+import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+import SyAlert from '../../../SyAlert/SyAlert.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle, VForm } from 'vuetify/components'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
 
 const meta: Meta<typeof SySelect> = {
-	title: 'Composants/Formulaires/SySelect',
+	title: 'Composants/Formulaires/Selects/SySelect',
 	component: SySelect,
 	parameters: {
 		layout: 'fullscreen',
@@ -82,8 +82,16 @@ export const Default: Story = {
 					import SySelect from '@cnamts/SySelect'
 					
 					const items =  [
-						{ text: 'Option 1', value: '1' },
-						{ text: 'Option 2', value: '2' },
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+						{ text: 'Clement', value: 'Clement' },
+						{ text: 'Corentin', value: 'Corentin' },
+						{ text: 'Damien', value: 'Damien' },
+						{ text: 'David', value: 'David' },
+						{ text: 'Eloi', value: 'Eloi' },
+						{ text: 'Louis', value: 'Louis' },
+						{ text: 'Valentin', value: 'Valentin' },
 					],
 				</script>
 				`,
@@ -92,8 +100,16 @@ export const Default: Story = {
 	},
 	args: {
 		'items': [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
+			{ text: 'Adrien', value: 'Adrien' },
+			{ text: 'Axel', value: 'Axel' },
+			{ text: 'Baptiste', value: 'Baptiste' },
+			{ text: 'Clement', value: 'Clement' },
+			{ text: 'Corentin', value: 'Corentin' },
+			{ text: 'Damien', value: 'Damien' },
+			{ text: 'David', value: 'David' },
+			{ text: 'Eloi', value: 'Eloi' },
+			{ text: 'Louis', value: 'Louis' },
+			{ text: 'Valentin', value: 'Valentin' },
 		],
 		'onUpdate:modelValue': fn(),
 	},
@@ -269,10 +285,16 @@ import SySelect from '@cnamts/synapse'
 
 const selectedOptions = ref([])
 const options = [
-  { text: 'Option 1', value: '1' },
-  { text: 'Option 2', value: '2' },
-  { text: 'Option 3', value: '3' },
-  { text: 'Option 4', value: '4' },
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+						{ text: 'Clement', value: 'Clement' },
+						{ text: 'Corentin', value: 'Corentin' },
+						{ text: 'Damien', value: 'Damien' },
+						{ text: 'David', value: 'David' },
+						{ text: 'Eloi', value: 'Eloi' },
+						{ text: 'Louis', value: 'Louis' },
+						{ text: 'Valentin', value: 'Valentin' },
 ]
 </script>
         `,
@@ -281,10 +303,16 @@ const options = [
 	},
 	args: {
 		'items': [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-			{ text: 'Option 3', value: '3' },
-			{ text: 'Option 4', value: '4' },
+			{ text: 'Adrien', value: 'Adrien' },
+			{ text: 'Axel', value: 'Axel' },
+			{ text: 'Baptiste', value: 'Baptiste' },
+			{ text: 'Clement', value: 'Clement' },
+			{ text: 'Corentin', value: 'Corentin' },
+			{ text: 'Damien', value: 'Damien' },
+			{ text: 'David', value: 'David' },
+			{ text: 'Eloi', value: 'Eloi' },
+			{ text: 'Louis', value: 'Louis' },
+			{ text: 'Valentin', value: 'Valentin' },
 		],
 		'label': 'Sélection multiple',
 		'multiple': true,
