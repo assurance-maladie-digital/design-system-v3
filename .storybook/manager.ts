@@ -88,11 +88,19 @@ const applyThemeSidebar = (theme) => {
 					item.style.display = theme === 'ap' ? 'none' : 'block'
 				}
 
-				// Handle all items containing 'amelipro' in their ID or text content
+				// Get item ID and text content once for all checks
 				const itemId = item.getAttribute('data-item-id') || ''
 				const itemText = item.textContent || ''
+
+				// Handle all items containing 'amelipro' in their ID or text content
 				if (!isAmeliproFolder && (itemId.toLowerCase().includes('amelipro') || itemText.toLowerCase().includes('amelipro'))) {
 					item.style.display = hideAmelipro ? 'none' : 'block'
+				}
+
+				// Target any element with Templates text - case insensitive
+				if (itemText && itemText.toLowerCase().includes('templates')) {
+					// console.log('Found element with Templates text:', itemText)
+					item.style.display = theme === 'ap' ? 'none' : 'block'
 				}
 			})
 
@@ -114,6 +122,61 @@ const applyThemeSidebar = (theme) => {
 					}
 				})
 			}
+			
+			// Find the Templates section in the sidebar
+			const templatesHeading = Array.from(sidebar.querySelectorAll('.sidebar-subheading')).find(
+				heading => heading.textContent && heading.textContent.trim() === 'Templates'
+			) as HTMLElement | undefined
+			
+			// If we found the Templates heading, handle it and its container
+			if (templatesHeading) {
+				console.log('Found Templates heading:', templatesHeading)
+				
+				// Only modify the display property, preserving other styles
+				if (theme === 'ap') {
+					templatesHeading.style.display = 'none'
+				} else {
+					// Reset to original display value or use a sensible default
+					templatesHeading.style.display = ''
+				}
+				
+				// Find and handle the container element (usually the next sibling)
+				const templatesContainer = templatesHeading.nextElementSibling as HTMLElement | null
+				if (templatesContainer) {
+					if (theme === 'ap') {
+						templatesContainer.style.display = 'none'
+					} else {
+						// Reset to original display value or use a sensible default
+						templatesContainer.style.display = ''
+					}
+				}
+			}
+			
+			// Also look for any elements with data-item-id="templates"
+			const templateItems = sidebar.querySelectorAll('[data-item-id="templates"]')
+			templateItems.forEach(item => {
+				const templateItem = item as HTMLElement
+				if (theme === 'ap') {
+					templateItem.style.display = 'none'
+				} else {
+					// Reset to original display value
+					templateItem.style.display = ''
+				}
+			})
+			
+			// Find any sidebar items that contain Templates
+			const sidebarItems = sidebar.querySelectorAll('.sidebar-item')
+			sidebarItems.forEach(item => {
+				if (item.textContent && item.textContent.includes('Templates')) {
+					const templateItem = item as HTMLElement
+					if (theme === 'ap') {
+						templateItem.style.display = 'none'
+					} else {
+						// Reset to original display value
+						templateItem.style.display = ''
+					}
+				}
+			})
 
 			if (observer) {
 				observer.disconnect()
