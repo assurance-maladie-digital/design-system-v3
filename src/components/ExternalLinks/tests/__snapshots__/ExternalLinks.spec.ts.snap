@@ -1,12 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
-<div id="external-link-btn">
+<div>
   <button
     aria-controls="external-link-btn"
     aria-expanded="true"
     aria-haspopup="menu"
-    aria-label="external-link-btn"
+    aria-label="Menu : Consulter les données externes"
     aria-owns="external-link-btn"
     class="
       d-flex
@@ -20,7 +20,7 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
       v-theme--light
       vd-external-links-btn
     "
-    style="background-color: #3d67ae; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row; top: 0px; bottom: auto; left: 0px; right: auto; z-index: 4;"
+    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row; top: 0px; bottom: auto; left: 0px; right: auto; z-index: 4;"
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -67,7 +67,6 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
     "
     id="external-link-btn"
     style="z-index: 4;"
-    tile="true"
   >
     <transition-stub
       appear="true"
@@ -82,191 +81,187 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
       css="true"
       name="fade-transition"
       persisted="true"
-      target="<button data-v-353763df="" type="button" class="v-btn v-btn--elevated v-theme--light v-btn--density-default rounded-0 v-btn--size-default v-btn--variant-elevated d-flex px-3 vd-external-links-btn" style="background-color: #3d67ae; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row; top: 0px; bottom: auto; left: 0px; right: auto; z-index: 4;" aria-haspopup="menu" aria-expanded="true" aria-controls="external-link-btn" aria-label="external-link-btn" aria-owns="external-link-btn"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!----><span class="v-btn__content" data-no-activator=""><span data-v-353763df="" class="mr-3 vd-external-links-btn-text white--text">Consulter les données externes</span><i data-v-353763df="" class="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white" aria-hidden="true"></i></span><!----><!----></button>"
+      target="<button data-v-353763df="" type="button" class="v-btn v-btn--elevated v-theme--light v-btn--density-default rounded-0 v-btn--size-default v-btn--variant-elevated d-flex px-3 vd-external-links-btn" style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row; top: 0px; bottom: auto; left: 0px; right: auto; z-index: 4;" aria-haspopup="menu" aria-expanded="true" aria-controls="external-link-btn" aria-label="Menu : Consulter les données externes" aria-owns="external-link-btn"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!----><span class="v-btn__content" data-no-activator=""><span data-v-353763df="" class="mr-3 vd-external-links-btn-text white--text">Consulter les données externes</span><i data-v-353763df="" class="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white" aria-hidden="true"></i></span><!----><!----></button>"
     >
       <div
         class="v-overlay__content"
         style="--v-overlay-anchor-origin: top right; transform-origin: bottom right; top: 12px; left: 12px; min-width: 0px; max-width: 0px; max-height: 0px;"
       >
-        <div
+        <ul
           class="
             elevation-3
             py-0
-            v-list
-            v-list--density-default
-            v-list--one-line
-            v-theme--light
             vd-external-links-list
           "
-          role="listbox"
+          role="toolbar"
           tabindex="0"
         >
-          <a
-            class="
-              rounded-0
-              v-list-item
-              v-list-item--density-default
-              v-list-item--link
-              v-list-item--one-line
-              v-list-item--variant-text
-              v-theme--light
-            "
-            href="https://www.ameli.fr"
-            rel="noopener noreferrer"
-            tabindex="-2"
-            target="_blank"
-          ><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span>
-            
-          <!---->
-            <div
-            class="v-list-item__content"
-            data-no-activator=""
-          >
+          <li>
+            <a
+              class="
+                py-2
+                rounded-0
+                v-btn
+                v-btn--block
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-large
+                v-btn--variant-elevated
+                v-theme--light
+                vd-external-links-list-item
+              "
+              href="https://www.ameli.fr"
+              rel="noopener noreferrer"
+              tabindex="-1"
+              target="_blank"
+            ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
               
-          <!---->
+            <!----><span
+              class="v-btn__content"
+              data-no-activator=""
+            ><div class="
+              align-center
+              d-flex
+              h-100
+              justify-space-between
+              w-100
+            "><div>ameli.fr</div><i
+              aria-hidden="true"
+              class="
+                0
+                0
+                0,0
+                0,0
+                21,19V12H19V19Z
+                3,3.9
+                3,5V19A2,2
+                5,21H19A2,2
+                M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
+                mdi
+                notranslate
+                v-icon
+                v-icon--size-large
+                v-theme--light
+              "
+              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+            ></i></div></span>
               
-          <!---->
-              <div class="
-            d-flex
-            flex-row
-            justify-space-between
-          ">
-                <div class="v-list-item-title">ameli.fr</div><i
-            aria-hidden="true"
-            class="
-              0
-              0
-              0,0
-              0,0
-              21,19V12H19V19Z
-              3,3.9
-              3,5V19A2,2
-              5,21H19A2,2
-              M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
-              mdi
-              notranslate
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
-          ></i>
-              </div>
-            </div>
-            
-          <!---->
-          </a>
-          <a
-            class="
-              rounded-0
-              v-list-item
-              v-list-item--density-default
-              v-list-item--link
-              v-list-item--one-line
-              v-list-item--variant-text
-              v-theme--light
-            "
-            href="https://www.github.com"
-            rel="noopener noreferrer"
-            tabindex="-2"
-            target="_blank"
-          ><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span>
-            
-          <!---->
-            <div
-            class="v-list-item__content"
-            data-no-activator=""
-          >
+            <!---->
               
-          <!---->
+            <!---->
+            </a>
+          </li>
+          <li>
+            <a
+              class="
+                py-2
+                rounded-0
+                v-btn
+                v-btn--block
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-large
+                v-btn--variant-elevated
+                v-theme--light
+                vd-external-links-list-item
+              "
+              href="https://www.github.com"
+              rel="noopener noreferrer"
+              tabindex="-1"
+              target="_blank"
+            ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
               
-          <!---->
-              <div class="
-            d-flex
-            flex-row
-            justify-space-between
-          ">
-                <div class="v-list-item-title">Github</div><i
-            aria-hidden="true"
-            class="
-              0
-              0
-              0,0
-              0,0
-              21,19V12H19V19Z
-              3,3.9
-              3,5V19A2,2
-              5,21H19A2,2
-              M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
-              mdi
-              notranslate
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
-          ></i>
-              </div>
-            </div>
-            
-          <!---->
-          </a>
-          <a
-            class="
-              rounded-0
-              v-list-item
-              v-list-item--density-default
-              v-list-item--link
-              v-list-item--one-line
-              v-list-item--variant-text
-              v-theme--light
-            "
-            href="https://www.twitter.com"
-            rel="noopener noreferrer"
-            tabindex="-2"
-            target="_blank"
-          ><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span>
-            
-          <!---->
-            <div
-            class="v-list-item__content"
-            data-no-activator=""
-          >
+            <!----><span
+              class="v-btn__content"
+              data-no-activator=""
+            ><div class="
+              align-center
+              d-flex
+              h-100
+              justify-space-between
+              w-100
+            "><div>Github</div><i
+              aria-hidden="true"
+              class="
+                0
+                0
+                0,0
+                0,0
+                21,19V12H19V19Z
+                3,3.9
+                3,5V19A2,2
+                5,21H19A2,2
+                M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
+                mdi
+                notranslate
+                v-icon
+                v-icon--size-large
+                v-theme--light
+              "
+              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+            ></i></div></span>
               
-          <!---->
+            <!---->
               
-          <!---->
-              <div class="
-            d-flex
-            flex-row
-            justify-space-between
-          ">
-                <div class="v-list-item-title">Twitter</div><i
-            aria-hidden="true"
-            class="
-              0
-              0
-              0,0
-              0,0
-              21,19V12H19V19Z
-              3,3.9
-              3,5V19A2,2
-              5,21H19A2,2
-              M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
-              mdi
-              notranslate
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
-          ></i>
-              </div>
-            </div>
-            
-          <!---->
-          </a>
-        </div>
+            <!---->
+            </a>
+          </li>
+          <li>
+            <a
+              class="
+                py-2
+                rounded-0
+                v-btn
+                v-btn--block
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-large
+                v-btn--variant-elevated
+                v-theme--light
+                vd-external-links-list-item
+              "
+              href="https://www.twitter.com"
+              rel="noopener noreferrer"
+              tabindex="-1"
+              target="_blank"
+            ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+              
+            <!----><span
+              class="v-btn__content"
+              data-no-activator=""
+            ><div class="
+              align-center
+              d-flex
+              h-100
+              justify-space-between
+              w-100
+            "><div>Twitter</div><i
+              aria-hidden="true"
+              class="
+                0
+                0
+                0,0
+                0,0
+                21,19V12H19V19Z
+                3,3.9
+                3,5V19A2,2
+                5,21H19A2,2
+                M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
+                mdi
+                notranslate
+                v-icon
+                v-icon--size-large
+                v-theme--light
+              "
+              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+            ></i></div></span>
+              
+            <!---->
+              
+            <!---->
+            </a>
+          </li>
+        </ul>
       </div>
     </transition-stub>
   </div>
@@ -275,7 +270,7 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
 `;
 
 exports[`ExternalLinks > renders correctly 1`] = `
-<div id="external-link-btn">
+<div>
   <v-menu-stub
     activatorprops="[object Object]"
     attach="true"
@@ -302,7 +297,6 @@ exports[`ExternalLinks > renders correctly 1`] = `
     scrim="false"
     scrollstrategy="reposition"
     submenu="false"
-    tile="true"
     transition="fade-transition"
     zindex="4"
   ></v-menu-stub>
@@ -310,12 +304,12 @@ exports[`ExternalLinks > renders correctly 1`] = `
 `;
 
 exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
-<div id="external-link-btn">
+<div>
   <button
     aria-controls="external-link-btn"
     aria-expanded="true"
     aria-haspopup="menu"
-    aria-label="external-link-btn"
+    aria-label="Menu : Consulter les données externes"
     aria-owns="external-link-btn"
     class="
       d-flex
@@ -329,7 +323,7 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
       v-theme--light
       vd-external-links-btn
     "
-    style="background-color: #3d67ae; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: fixed; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: fixed; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -376,7 +370,6 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
     "
     id="external-link-btn"
     style="z-index: 24;"
-    tile="true"
   >
     <transition-stub
       appear="true"
@@ -391,191 +384,187 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
       css="true"
       name="fade-transition"
       persisted="true"
-      target="<button data-v-353763df="" type="button" class="v-btn v-btn--elevated v-theme--light v-btn--density-default rounded-0 v-btn--size-default v-btn--variant-elevated d-flex px-3 vd-external-links-btn" style="background-color: #3d67ae; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: fixed; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;" aria-haspopup="menu" aria-expanded="true" aria-controls="external-link-btn" aria-label="external-link-btn" aria-owns="external-link-btn"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!----><span class="v-btn__content" data-no-activator=""><span data-v-353763df="" class="ml-3 vd-external-links-btn-text white--text">Consulter les données externes</span><i data-v-353763df="" class="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white" aria-hidden="true"></i></span><!----><!----></button>"
+      target="<button data-v-353763df="" type="button" class="v-btn v-btn--elevated v-theme--light v-btn--density-default rounded-0 v-btn--size-default v-btn--variant-elevated d-flex px-3 vd-external-links-btn" style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: fixed; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;" aria-haspopup="menu" aria-expanded="true" aria-controls="external-link-btn" aria-label="Menu : Consulter les données externes" aria-owns="external-link-btn"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!----><span class="v-btn__content" data-no-activator=""><span data-v-353763df="" class="ml-3 vd-external-links-btn-text white--text">Consulter les données externes</span><i data-v-353763df="" class="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white" aria-hidden="true"></i></span><!----><!----></button>"
     >
       <div
         class="v-overlay__content"
         style="--v-overlay-anchor-origin: bottom right; transform-origin: top right; top: 12px; left: 12px; min-width: 0px; max-width: 0px; max-height: 0px;"
       >
-        <div
+        <ul
           class="
             elevation-3
             py-0
-            v-list
-            v-list--density-default
-            v-list--one-line
-            v-theme--light
             vd-external-links-list
           "
-          role="listbox"
+          role="toolbar"
           tabindex="0"
         >
-          <a
-            class="
-              rounded-0
-              v-list-item
-              v-list-item--density-default
-              v-list-item--link
-              v-list-item--one-line
-              v-list-item--variant-text
-              v-theme--light
-            "
-            href="https://www.ameli.fr"
-            rel="noopener noreferrer"
-            tabindex="-2"
-            target="_blank"
-          ><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span>
-            
-          <!---->
-            <div
-            class="v-list-item__content"
-            data-no-activator=""
-          >
+          <li>
+            <a
+              class="
+                py-2
+                rounded-0
+                v-btn
+                v-btn--block
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-large
+                v-btn--variant-elevated
+                v-theme--light
+                vd-external-links-list-item
+              "
+              href="https://www.ameli.fr"
+              rel="noopener noreferrer"
+              tabindex="-1"
+              target="_blank"
+            ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
               
-          <!---->
+            <!----><span
+              class="v-btn__content"
+              data-no-activator=""
+            ><div class="
+              align-center
+              d-flex
+              h-100
+              justify-space-between
+              w-100
+            "><div>ameli.fr</div><i
+              aria-hidden="true"
+              class="
+                0
+                0
+                0,0
+                0,0
+                21,19V12H19V19Z
+                3,3.9
+                3,5V19A2,2
+                5,21H19A2,2
+                M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
+                mdi
+                notranslate
+                v-icon
+                v-icon--size-large
+                v-theme--light
+              "
+              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+            ></i></div></span>
               
-          <!---->
-              <div class="
-            d-flex
-            flex-row
-            justify-space-between
-          ">
-                <div class="v-list-item-title">ameli.fr</div><i
-            aria-hidden="true"
-            class="
-              0
-              0
-              0,0
-              0,0
-              21,19V12H19V19Z
-              3,3.9
-              3,5V19A2,2
-              5,21H19A2,2
-              M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
-              mdi
-              notranslate
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
-          ></i>
-              </div>
-            </div>
-            
-          <!---->
-          </a>
-          <a
-            class="
-              rounded-0
-              v-list-item
-              v-list-item--density-default
-              v-list-item--link
-              v-list-item--one-line
-              v-list-item--variant-text
-              v-theme--light
-            "
-            href="https://www.github.com"
-            rel="noopener noreferrer"
-            tabindex="-2"
-            target="_blank"
-          ><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span>
-            
-          <!---->
-            <div
-            class="v-list-item__content"
-            data-no-activator=""
-          >
+            <!---->
               
-          <!---->
+            <!---->
+            </a>
+          </li>
+          <li>
+            <a
+              class="
+                py-2
+                rounded-0
+                v-btn
+                v-btn--block
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-large
+                v-btn--variant-elevated
+                v-theme--light
+                vd-external-links-list-item
+              "
+              href="https://www.github.com"
+              rel="noopener noreferrer"
+              tabindex="-1"
+              target="_blank"
+            ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
               
-          <!---->
-              <div class="
-            d-flex
-            flex-row
-            justify-space-between
-          ">
-                <div class="v-list-item-title">Github</div><i
-            aria-hidden="true"
-            class="
-              0
-              0
-              0,0
-              0,0
-              21,19V12H19V19Z
-              3,3.9
-              3,5V19A2,2
-              5,21H19A2,2
-              M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
-              mdi
-              notranslate
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
-          ></i>
-              </div>
-            </div>
-            
-          <!---->
-          </a>
-          <a
-            class="
-              rounded-0
-              v-list-item
-              v-list-item--density-default
-              v-list-item--link
-              v-list-item--one-line
-              v-list-item--variant-text
-              v-theme--light
-            "
-            href="https://www.twitter.com"
-            rel="noopener noreferrer"
-            tabindex="-2"
-            target="_blank"
-          ><span class="v-list-item__overlay"></span><span class="v-list-item__underlay"></span>
-            
-          <!---->
-            <div
-            class="v-list-item__content"
-            data-no-activator=""
-          >
+            <!----><span
+              class="v-btn__content"
+              data-no-activator=""
+            ><div class="
+              align-center
+              d-flex
+              h-100
+              justify-space-between
+              w-100
+            "><div>Github</div><i
+              aria-hidden="true"
+              class="
+                0
+                0
+                0,0
+                0,0
+                21,19V12H19V19Z
+                3,3.9
+                3,5V19A2,2
+                5,21H19A2,2
+                M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
+                mdi
+                notranslate
+                v-icon
+                v-icon--size-large
+                v-theme--light
+              "
+              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+            ></i></div></span>
               
-          <!---->
+            <!---->
               
-          <!---->
-              <div class="
-            d-flex
-            flex-row
-            justify-space-between
-          ">
-                <div class="v-list-item-title">Twitter</div><i
-            aria-hidden="true"
-            class="
-              0
-              0
-              0,0
-              0,0
-              21,19V12H19V19Z
-              3,3.9
-              3,5V19A2,2
-              5,21H19A2,2
-              M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
-              mdi
-              notranslate
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
-          ></i>
-              </div>
-            </div>
-            
-          <!---->
-          </a>
-        </div>
+            <!---->
+            </a>
+          </li>
+          <li>
+            <a
+              class="
+                py-2
+                rounded-0
+                v-btn
+                v-btn--block
+                v-btn--density-default
+                v-btn--flat
+                v-btn--size-large
+                v-btn--variant-elevated
+                v-theme--light
+                vd-external-links-list-item
+              "
+              href="https://www.twitter.com"
+              rel="noopener noreferrer"
+              tabindex="-1"
+              target="_blank"
+            ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+              
+            <!----><span
+              class="v-btn__content"
+              data-no-activator=""
+            ><div class="
+              align-center
+              d-flex
+              h-100
+              justify-space-between
+              w-100
+            "><div>Twitter</div><i
+              aria-hidden="true"
+              class="
+                0
+                0
+                0,0
+                0,0
+                21,19V12H19V19Z
+                3,3.9
+                3,5V19A2,2
+                5,21H19A2,2
+                M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3
+                mdi
+                notranslate
+                v-icon
+                v-icon--size-large
+                v-theme--light
+              "
+              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+            ></i></div></span>
+              
+            <!---->
+              
+            <!---->
+            </a>
+          </li>
+        </ul>
       </div>
     </transition-stub>
   </div>
@@ -584,12 +573,12 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
 `;
 
 exports[`ExternalLinks > slides on hover or focus 1`] = `
-<div id="external-link-btn">
+<div>
   <button
     aria-controls="external-link-btn"
     aria-expanded="false"
     aria-haspopup="menu"
-    aria-label="external-link-btn"
+    aria-label="Menu : Consulter les données externes"
     aria-owns="external-link-btn"
     class="
       d-flex
@@ -603,7 +592,7 @@ exports[`ExternalLinks > slides on hover or focus 1`] = `
       v-theme--light
       vd-external-links-btn
     "
-    style="background-color: #3d67ae; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(calc(100% - 48px)); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(calc(100% - 48px)); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -641,12 +630,12 @@ exports[`ExternalLinks > slides on hover or focus 1`] = `
 `;
 
 exports[`ExternalLinks > slides on hover or focus 2`] = `
-<div id="external-link-btn">
+<div>
   <button
     aria-controls="external-link-btn"
     aria-expanded="false"
     aria-haspopup="menu"
-    aria-label="external-link-btn"
+    aria-label="Menu : Consulter les données externes"
     aria-owns="external-link-btn"
     class="
       d-flex
@@ -660,7 +649,7 @@ exports[`ExternalLinks > slides on hover or focus 2`] = `
       v-theme--light
       vd-external-links-btn
     "
-    style="background-color: #3d67ae; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -698,12 +687,12 @@ exports[`ExternalLinks > slides on hover or focus 2`] = `
 `;
 
 exports[`ExternalLinks > slides on hover or focus 3`] = `
-<div id="external-link-btn">
+<div>
   <button
     aria-controls="external-link-btn"
     aria-expanded="false"
     aria-haspopup="menu"
-    aria-label="external-link-btn"
+    aria-label="Menu : Consulter les données externes"
     aria-owns="external-link-btn"
     class="
       d-flex
@@ -717,7 +706,7 @@ exports[`ExternalLinks > slides on hover or focus 3`] = `
       v-theme--light
       vd-external-links-btn
     "
-    style="background-color: #3d67ae; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(calc(100% - 48px)); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(calc(100% - 48px)); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -755,12 +744,12 @@ exports[`ExternalLinks > slides on hover or focus 3`] = `
 `;
 
 exports[`ExternalLinks > slides on hover or focus 4`] = `
-<div id="external-link-btn">
+<div>
   <button
     aria-controls="external-link-btn"
     aria-expanded="false"
     aria-haspopup="menu"
-    aria-label="external-link-btn"
+    aria-label="Menu : Consulter les données externes"
     aria-owns="external-link-btn"
     class="
       d-flex
@@ -774,7 +763,7 @@ exports[`ExternalLinks > slides on hover or focus 4`] = `
       v-theme--light
       vd-external-links-btn
     "
-    style="background-color: #3d67ae; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -812,12 +801,12 @@ exports[`ExternalLinks > slides on hover or focus 4`] = `
 `;
 
 exports[`ExternalLinks > slides on hover or focus 5`] = `
-<div id="external-link-btn">
+<div>
   <button
     aria-controls="external-link-btn"
     aria-expanded="false"
     aria-haspopup="menu"
-    aria-label="external-link-btn"
+    aria-label="Menu : Consulter les données externes"
     aria-owns="external-link-btn"
     class="
       d-flex
@@ -831,7 +820,7 @@ exports[`ExternalLinks > slides on hover or focus 5`] = `
       v-theme--light
       vd-external-links-btn
     "
-    style="background-color: #3d67ae; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(calc(100% - 48px)); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(calc(100% - 48px)); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
     type="button"
   >
     <span class="v-btn__overlay"></span>
