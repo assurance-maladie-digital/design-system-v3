@@ -10,6 +10,8 @@
 	<div>
 		<ThemeSwitcher class="theme-switcher-position" />
 
+    coucou
+
 		<AmeliproBtn
 			default="My Button"
 			unique-id="my-btn-id"
