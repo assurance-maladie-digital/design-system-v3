@@ -1,4 +1,8 @@
 /* eslint-disable vue/one-component-per-file */
+// Sinon warnings qui viennent de la règle ESLint vue/one-component-per-file.
+// Elle est pensée pour les .vue (1 composant par fichier), mais elle s’applique aussi aux fichierx de tests .spec.ts
+// comme ici: on déclare plusieurs defineComponent.
+
 import { describe, it, expect, vi } from 'vitest'
 import { defineComponent, h } from 'vue'
 import { mount } from '@vue/test-utils'

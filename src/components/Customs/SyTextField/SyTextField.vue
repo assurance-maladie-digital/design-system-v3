@@ -14,7 +14,7 @@
 	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
+	import { useValidationMode } from '@/composables/validation/useValidationMode'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(
@@ -90,6 +90,7 @@
 			disableClickButton?: boolean
 			autocomplete?: string
 			helpText?: string
+			useVuetifyValidation?: boolean
 		}>(),
 		{
 			modelValue: undefined,
@@ -159,6 +160,7 @@
 			disableClickButton: true,
 			autocomplete: 'off',
 			helpText: '',
+			useVuetifyValidation: false,
 		},
 	)
 
@@ -223,6 +225,8 @@
 		disableErrorHandling: props.disableErrorHandling,
 	})
 
+	const { isVuetifyMode, registerValidatableInMode } = useValidationMode(props)
+
 	// Synchronisation des messages externes
 	watch(() => props.errorMessages, (newVal) => {
 		validation.errors.value = newVal || []
@@ -276,17 +280,22 @@
 
 	const validateOnSubmit = () => {
 		isBlurred.value = true
+		if (isVuetifyMode.value) {
+			return true
+		}
 		return validateField(model.value ?? null)
 	}
 
 	const checkErrorOnBlur = () => {
 		isBlurred.value = true
-		validateField(model.value ?? null)
+		if (!isVuetifyMode.value) {
+			validateField(model.value ?? null)
+		}
 		emit('update:modelValue', model.value)
 	}
 
 	watch(model, (newValue) => {
-		if (!props.isValidateOnBlur) {
+		if (!props.isValidateOnBlur && !isVuetifyMode.value) {
 			validateField(newValue ?? null)
 		}
 		if (props.isClearable && newValue === '') {
@@ -375,7 +384,7 @@
 	const syTextFieldRef = ref<ComponentPublicInstance | null>(null)
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, validation.clearValidation)
+	registerValidatableInMode(validateOnSubmit, validation.clearValidation)
 
 	onMounted(() => {
 		nextTick(() => {
