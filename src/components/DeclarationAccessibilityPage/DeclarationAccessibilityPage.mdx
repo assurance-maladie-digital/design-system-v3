@@ -1,0 +1,78 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as DeclarationAccessibilityPageStories from './DeclarationAccessibilityPage.stories.ts';
+
+<Meta of={DeclarationAccessibilityPageStories} />
+
+# DeclarationAccessibilityPage
+
+Le composant `DeclarationAccessibilityPage` permet de générer une déclaration d'accessibilité conforme aux exigences légales françaises (RGAA) pour un site ou une application web.
+
+<Canvas of={DeclarationAccessibilityPageStories.Default}  />
+
+## API
+
+<Controls of={DeclarationAccessibilityPageStories.Default} />
+
+## Utilisation standard
+
+La version standard de la déclaration d'accessibilité contient les informations minimales requises.
+
+<Canvas of={DeclarationAccessibilityPageStories.Default} />
+
+## Cas simple
+
+Un exemple de déclaration avec les informations minimales requises.
+
+<Canvas of={DeclarationAccessibilityPageStories.SimpleCase} />
+
+## Avec non-conformités
+
+Exemple de déclaration incluant des non-conformités identifiées.
+
+<Canvas of={DeclarationAccessibilityPageStories.WithNonConformities} />
+
+## Avec dérogations
+
+Exemple de déclaration incluant des dérogations pour charge disproportionnée.
+
+<Canvas of={DeclarationAccessibilityPageStories.WithExemptions} />
+
+## Avec environnements de tests
+
+Exemple de déclaration incluant les environnements de tests utilisés pour l'audit d'accessibilité.
+
+<Canvas of={DeclarationAccessibilityPageStories.WithTestsEnvironement} />
+
+## Accessibilité
+
+Le composant `DeclarationAccessibilityPage` est lui-même conçu pour être pleinement accessible :
+- Structure sémantique avec utilisation appropriée des balises HTML5
+- Contraste des couleurs conforme aux exigences RGAA
+- Navigation au clavier facilitée
+- Compatibilité avec les technologies d'assistance
+
+
+## Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+import { DeclarationAccessibilityPage } from '@cnamts/synapse'
+</script>
+
+<template>
+  <DeclarationAccessibilityPage
+    entityName="Assurance Maladie"
+    siteName="ameli.fr"
+    siteUrl="https://www.ameli.fr"
+    conformityLevel="partiellement"
+    auditEntity="Société d'audit AccessiWeb"
+    :rgaaCriteriaRespectedPercent="78"
+    contactEmail="accessibilite@ameli.fr"
+    :nonConformities="[
+      'La vidéo de présentation n\'a pas de transcription. Cette erreur sera corrigée avant le 31 mars 2023.',
+      'Le bouton d\'envoi du formulaire contient un intitulé incorrect. Cette erreur sera corrigée prochainement.'
+    ]"
+  />
+</template>
+`} />
