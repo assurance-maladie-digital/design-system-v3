@@ -192,8 +192,8 @@
 
 <template>
 	<div
-		:height="height"
-		class="vd-logo-brand-section d-flex"
+		:style="{ height: height }"
+		class="vd-logo-brand-section d-flex flex-wrap"
 	>
 		<component
 			:is="logoContainerComponent"
@@ -205,7 +205,7 @@
 				:hide-signature="hideSignature"
 				:hide-organism="isCompteAmeliMobile"
 				:risque-pro="isRisquePro"
-				:aria-label="homeLink?.ariaLabel"
+				:aria-label="homeLink?.ariaLabel + ' Retour vers accueil du site'"
 				:avatar="avatar"
 				:size="logoSize"
 				:class="{ 'mr-2': avatar }"
@@ -216,9 +216,8 @@
 			<svg
 				v-if="showDivider"
 				:width="dividerDimensions.width"
-				:height="dividerDimensions.height"
+				:style="{ height: dividerDimensions.height }"
 				:fill="dividerColor"
-				role="img"
 				focusable="false"
 				aria-hidden="true"
 				xmlns="http://www.w3.org/2000/svg"

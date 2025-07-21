@@ -4,15 +4,17 @@ exports[`LogoBrandSection > renders correctly 1`] = `
 <div
   class="
     d-flex
+    flex-wrap
     vd-logo-brand-section
   "
-  height="64px"
+  style="height: 64px;"
 >
   <a
     class="vd-home-link"
     href="/"
   >
     <logo-stub
+    arialabel="undefined Retour vers accueil du site"
     avatar="false"
     class=""
     dark="false"
@@ -27,8 +29,6 @@ exports[`LogoBrandSection > renders correctly 1`] = `
     class="vd-divider"
     fill="#0c419a"
     focusable="false"
-    height="64"
-    role="img"
     viewBox="0 0 22 64"
     width="22"
     xmlns="http://www.w3.org/2000/svg"
