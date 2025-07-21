@@ -50,6 +50,9 @@ export const List = {
 					<SyAlert type="info" variant="tonal" :closable="false">
 						<template #default>Nous faisons des nouvelles release (correction de bugs ou nouvelles fonctionnalités) régulièrement. Vous pouvez retrouver la liste des dernières releases ci-dessous.</template>
 					</SyAlert>
+					<SyAlert type="info" variant="tonal" :closable="false" class="mt-4">
+						<template #default>Version Amelipro : alpha</template>
+					</SyAlert>
 					<div v-if="errorMessage" class="error">{{ errorMessage }}</div>
 					<div v-else>
 						<div v-for="release in releases" :key="release.id">

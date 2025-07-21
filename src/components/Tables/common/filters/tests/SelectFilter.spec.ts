@@ -5,7 +5,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
 import SelectFilter from '../SelectFilter.vue'
-import SySelect from '@/components/Customs/SySelect/SySelect.vue'
+import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import type { FilterType } from '../../types'
 
 const vuetify = createVuetify({

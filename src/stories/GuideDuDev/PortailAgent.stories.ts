@@ -1,4 +1,4 @@
-import { VExpansionPanel, VExpansionPanels, VExpansionPanelText, VExpansionPanelTitle } from 'vuetify/components'
+import { VDivider, VExpansionPanel, VExpansionPanels, VExpansionPanelText, VExpansionPanelTitle } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
 
 export default {
@@ -13,6 +13,7 @@ export const PAgComponents: StoryObj = {
 				VExpansionPanel,
 				VExpansionPanelTitle,
 				VExpansionPanelText,
+				VDivider,
 			},
 			setup() {
 				return {}
@@ -27,11 +28,12 @@ export const PAgComponents: StoryObj = {
 							<p>
 								Le composant Portail <span class="component-name">Accordéon</span> est remplacé par le composant <span class="component-name">Accordion</span> de Synapse.
 								<br>
-								<a href="/docs/composants-donn%C3%A9es-accordion--docs" target="_blank" rel="noopener noreferrer">
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-donn%C3%A9es-accordion--docs" target="_blank" rel="noopener noreferrer">
 									Documentation du composant Synapse Accordion
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-accordeon.htm">
 									Documentation du composant Portail Accordéon correspondant
 								</a>
@@ -47,11 +49,12 @@ export const PAgComponents: StoryObj = {
 							<p>
 								Le composant Portail <span class="component-name">Alerts</span> est remplacé par le composant <span class="component-name">SyAlert</span> de Synapse.
 								<br>
-								<a href="/docs/composants-feedback-syalert--docs" target="_blank" rel="noopener noreferrer">
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-feedback-syalert--docs" target="_blank" rel="noopener noreferrer">
 									Documentation du composant Synapse SyAlert
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-alert.htm">
 									Documentation du composant Portail Alert correspondant
 								</a>
@@ -69,6 +72,7 @@ export const PAgComponents: StoryObj = {
 								<br> Si un seul élément doit être affiché le composant <span class="component-name">Vchip</span> de Vuetify peut lui être préféré : <a href="https://vuetifyjs.com/components/chips" target="_blank" rel="noopener noreferrer">Documentation du composant Vuetify Chip</a>.
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-badge.htm">
 									Documentation du composant Portail Badge correspondant
 								</a>
@@ -99,11 +103,12 @@ export const PAgComponents: StoryObj = {
 							<p class="mt-4">
 								Le composant <span class="component-name">ToolbarContainer</span> de Synapse peut également être utilisé en complément pour améliorer l’expérience utilisateur lors de la navigation clavier.
 								<br>
-								<a href="https://synapse-dev.netlify.app/?path=//docs/composants-layout-toolbarcontainer--docs" target="_blank" rel="noopener noreferrer">
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-layout-toolbarcontainer--docs" target="_blank" rel="noopener noreferrer">
 									Documentation du composant Synapse ToolbarContainer
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-barreactions.htm">
 									Documentation du composant Portail Barre d'actions correspondant
 								</a>
@@ -137,6 +142,7 @@ export const PAgComponents: StoryObj = {
 								</li>
 							</ul>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-barre-taches.htm">
 									Documentation du composant Portail Barre de tâches correspondant
 								</a>
@@ -175,6 +181,7 @@ export const PAgComponents: StoryObj = {
 								</a>
 							</p>
 							<p class="mt-6">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-buttons.htm">
 									Documentation du composant Portail Buttons correspondant
 								</a>
@@ -190,11 +197,12 @@ export const PAgComponents: StoryObj = {
 							<p>
 								Le composant Portail <span class="component-name">Fenêtre modale</span> est remplacé par le composant <span class="component-name">DialogBox</span> de Synapse.
 								<br>
-								<a href="https://synapse-dev.netlify.app/?path=//docs/composants-feedback-dialogbox--docs" target="_blank" rel="noopener noreferrer">
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-feedback-dialogbox--docs" target="_blank" rel="noopener noreferrer">
 									Documentation du composant Synapse DialogBox
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-modal.htm">
 									Documentation du composant Portail Fenêtre modales correspondant
 								</a>
@@ -210,11 +218,12 @@ export const PAgComponents: StoryObj = {
 							<p>
 								Le composant Portail <span class="component-name">Fiche de travail</span> est remplacé par le composant <span class="component-name">DataListGroup</span> Synapse.
 								<br>
-								<a href="https://synapse-dev.netlify.app/?path=//docs/composants-donn%C3%A9es-datalistgroup--docs" target="_blank" rel="noopener noreferrer">
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-donn%C3%A9es-datalistgroup--docs" target="_blank" rel="noopener noreferrer">
 									Documentation du composant Synapse DataListGroup
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-fichetravail.htm">
 									Documentation du composant Portail Fiche de travail correspondant
 								</a>
@@ -229,23 +238,24 @@ export const PAgComponents: StoryObj = {
 						<VExpansionPanelText>
 							<p>
 								Pour constituer des formulaires, Synapse met a disposition les composants 
-								<a href="/docs/composants-formulaires-sytextfield--docs">SyTextField</a>, 
-								<a href="/docs/composants-formulaires-syselect--docs">SySelect</a>, 
-								<a href="/docs/composants-formulaires-syinputselect--docs">SyInputSelect</a>, 
-								<a href="/docs/composants-formulaires-sybtnselect--docs">SyBtnSelect</a>, 
-								<a href="/docs/composants-formulaires-sytextarea--docs">SyTextArea</a>, 
-								<a href="/docs/composants-formulaires-datepicker-introduction--docs">DatePicker</a>, 
-								<a href="/docs/composants-formulaires-diacriticpicker--docs">DiacriticPicker</a>, 
-								<a href="/docs/composants-formulaires-fileupload--docs">FileUpload</a>, 
-								<a href="/docs/composants-formulaires-nirfield--docs">NirField</a>, 
-								<a href="/docs/composants-formulaires-passwordfield--docs">PasswordField</a>, 
-								<a href="/docs/composants-formulaires-periodfield--docs">PeriodField</a>, 
-								<a href="/docs/composants-formulaires-phonefield--docs">PhoneField</a>, 
-								<a href="/docs/composants-formulaires-rangefield--docs">RangeField</a>, 
-								<a href="/docs/composants-formulaires-searchlistfield--docs">SearchListField</a> et
-								<a href="/docs/composants-formulaires-selectbtnfield--docs">SelectBtnField</a>
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-sytextfield--docs">SyTextField</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-syselect--docs">SySelect</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-syinputselect--docs">SyInputSelect</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-sybtnselect--docs">SyBtnSelect</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-sytextarea--docs">SyTextArea</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-datepicker-introduction--docs">DatePicker</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-diacriticpicker--docs">DiacriticPicker</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-fileupload--docs">FileUpload</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-nirfield--docs">NirField</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-passwordfield--docs">PasswordField</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-periodfield--docs">PeriodField</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-phonefield--docs">PhoneField</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-rangefield--docs">RangeField</a>, 
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-searchlistfield--docs">SearchListField</a> et
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-selectbtnfield--docs">SelectBtnField</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-forms.htm">
 									Documentation des composants Portail formulaires correspondant
 								</a>
@@ -266,6 +276,7 @@ export const PAgComponents: StoryObj = {
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-breadcrumbs.htm">
 									Documentation du composant Portail Fil d'ariane correspondant
 								</a>
@@ -289,6 +300,7 @@ export const PAgComponents: StoryObj = {
 							
 							<p class="mt-4">Pour plus d'informations sur l'intégration des icons materials <a href="https://vuetifyjs.com/en/features/icon-fonts/#mdi-js-svg">https://vuetifyjs.com/en/features/icon-fonts/#mdi-js-svg</a>.</p>
 							<p class="mt-6">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-icones.htm">
 									Documentation des icones Portail
 								</a>
@@ -306,6 +318,7 @@ export const PAgComponents: StoryObj = {
 								 peuvent être mise en formes avec les classes utilitaires Vuetify <a href="https://vuetifyjs.com/styles/text-and-typography">https://vuetifyjs.com/styles/text-and-typography</a> et êtres ajointes d’une icône (voir section Icones) Si le lien ne contient qu’une icône, il doit alors posséder un attribut <span class="component-name">title</span>.
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-liens.htm">
 									Documentation du composant Portail Liens correspondant
 								</a>
@@ -326,6 +339,7 @@ export const PAgComponents: StoryObj = {
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-dropdown.htm">
 									Documentation du composant Portail Menus déroulants correspondant
 								</a>
@@ -341,11 +355,12 @@ export const PAgComponents: StoryObj = {
 							<p>
 								Le composant Portail <span class="component-name">Notfications</span> est remplacé par le composant <span class="component-name">NotificationBar</span> Synapse.
 								<br>
-								<a href="/docs/composants-feedback-notificationbar--docs" target="_blank" rel="noopener noreferrer">
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-feedback-notificationbar--docs" target="_blank" rel="noopener noreferrer">
 									Documentation du composant Synapse NotificationBar
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-notification.htm">
 									Documentation du composant Portail Notification correspondant
 								</a>
@@ -366,6 +381,7 @@ export const PAgComponents: StoryObj = {
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-tabs.htm">
 									Documentation du composant Portail Onglets correspondant
 								</a>
@@ -391,6 +407,7 @@ export const PAgComponents: StoryObj = {
 								</a>
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-popover.htm">
 									Documentation du composants Portail Popovers et tooltips correspondants
 								</a>
@@ -405,10 +422,10 @@ export const PAgComponents: StoryObj = {
 						<VExpansionPanelText>
 							<p>
 								Le composant <span class="component-name">Tableau</span> est remplacé par deux composants Synapse 
-								<a href="/docs/composants-tableaux-sytable--docs" target="_blank" rel="noopener noreferrer">
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-tableaux-sytable--docs" target="_blank" rel="noopener noreferrer">
 									SyTable
 								</a> et 
-								<a href="/docs/composants-tableaux-syservertable--docs" target="_blank" rel="noopener noreferrer">
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-tableaux-syservertable--docs" target="_blank" rel="noopener noreferrer">
 									SyServerTable
 								</a>.
 							</p>
@@ -417,6 +434,7 @@ export const PAgComponents: StoryObj = {
 								<li class="mt-4"><span class="component-name">SyServerTable</span> doit être utilisée quand le volume de données est trop gros pour les chargés intégralement sur le client. Le composants émets des événements quand l’utilisateur fait appel a la paginations ou aux filtres, Le développeur a la charge de récupérer ces événements pour faire un requête au serveur et mettre à jours les données affichées par le tableau.</li>
 							</ul>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-accordeon.htm">
 									Documentation du composant Portail Accordéon correspondant
 								</a>
@@ -454,6 +472,7 @@ export const PAgComponents: StoryObj = {
 </pre>
 							</div>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-titre.htm">
 									Documentation du composant Portail Titres de page et de tableau correspondant
 								</a>
@@ -468,7 +487,7 @@ export const PAgComponents: StoryObj = {
 						<VExpansionPanelText>
 							<p>
 								Le composant Synapse
-								<a href="/docs/composants-layout-panel--docs" target="_blank" rel="noopener noreferrer">
+								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-layout-panel--docs" target="_blank" rel="noopener noreferrer">
 									Accordion
 								</a>
 								permet d’organiser sa page en différents panels. 
@@ -492,6 +511,7 @@ export const PAgComponents: StoryObj = {
 								https://vuetifyjs.com/components/grids
 							</p>
 							<p class="mt-4">
+								<VDivider class="pb-2"/>
 								<a href="https://maloron.net/am/cnamuipav2/cnamui-panels.htm">
 									Documentation du composant Portail Panel correspondant
 								</a>

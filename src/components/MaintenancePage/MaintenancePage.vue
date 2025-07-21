@@ -7,12 +7,13 @@
 	<ErrorPage
 		:page-title="locales.pageTitle"
 		:message="locales.message"
-		no-btn
+		:hide-btn="true"
 	>
 		<template #illustration>
 			<img
 				src="./assets/maintenance.svg"
-				:alt="locales.pageTitle"
+				alt=""
+				aria-hidden="true"
 			>
 		</template>
 	</ErrorPage>

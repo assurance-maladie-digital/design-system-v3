@@ -1,0 +1,287 @@
+import { Meta, Source } from '@storybook/addon-docs'
+
+<Meta title="Guide du dev/Classes utilitaires/Utilitaires de formatage" />
+
+# Utilitaires de formatage
+
+Les utilitaires de formatage vous permettent de transformer des données brutes en formats lisibles et adaptés à l'affichage dans votre interface utilisateur.
+
+## calcHumanFileSize
+
+Cette fonction convertit une taille en octets en une chaîne de caractères lisible par un humain, avec l'unité appropriée (Ko, Mo, Go, etc.).
+
+### Importation
+
+<Source dark code={`import { calcHumanFileSize } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`// Conversion d'octets en format lisible
+calcHumanFileSize(1024) // '1 Ko'
+calcHumanFileSize(1536) // '1,5 Ko'
+calcHumanFileSize(1048576) // '1 Mo'
+calcHumanFileSize(1073741824) // '1 Go'
+calcHumanFileSize(1099511627776) // '1 To'
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <div>
+    <v-file-input
+      v-model="file"
+      label="Pièce jointe"
+      @change="updateFileInfo"
+    />
+    <div v-if="fileSize">Taille du fichier : {{ fileSize }}</div>
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue'
+import { calcHumanFileSize } from '@cnamts/synpase'
+
+export default {
+  setup() {
+    const file = ref(null)
+    const fileSize = ref('')
+
+    const updateFileInfo = () => {
+      if (file.value) {
+        fileSize.value = calcHumanFileSize(file.value.size)
+      } else {
+        fileSize.value = ''
+      }
+    }
+
+    return {
+      file,
+      fileSize,
+      updateFileInfo
+    }
+  }
+}
+</script>
+`}/>
+
+## convertToUnit
+
+Cette fonction convertit une valeur en unité CSS (px, em, rem, etc.).
+
+### Importation
+
+<Source dark code={`import { convertToUnit } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`// Conversion en pixels par défaut
+convertToUnit(16) // '16px'
+convertToUnit('16') // '16px'
+
+// Valeurs avec unité déjà spécifiée
+convertToUnit('16px') // '16px'
+convertToUnit('2rem') // '2rem'
+convertToUnit('1.5em') // '1.5em'
+
+// Gestion des valeurs nulles ou undefined
+convertToUnit(null) // undefined
+convertToUnit(undefined) // undefined
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <div :style="{ marginTop: spacing }">
+    Contenu avec marge dynamique
+  </div>
+</template>
+
+<script>
+import { ref, computed } from 'vue'
+import { convertToUnit } from '@cnamts/synpase'
+
+export default {
+  props: {
+    spacingValue: {
+      type: [Number, String],
+      default: 16
+    }
+  },
+  setup(props) {
+    const spacing = computed(() => convertToUnit(props.spacingValue))
+
+    return {
+      spacing
+    }
+  }
+}
+</script>
+`}/>
+
+## formatDate
+
+Cette fonction formate une date selon un format spécifique, en utilisant la bibliothèque dayjs.
+
+### Importation
+
+<Source dark code={`import { formatDate } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`// Format par défaut (DD/MM/YYYY)
+formatDate(new Date('2023-01-15')) // '15/01/2023'
+formatDate('2023-01-15') // '15/01/2023'
+
+// Format personnalisé
+formatDate(new Date('2023-01-15'), 'DD/MM/YYYY HH:mm') // '15/01/2023 00:00'
+formatDate('2023-01-15T14:30:00', 'DD/MM/YYYY HH:mm') // '15/01/2023 14:30'
+formatDate('15/01/2023', 'YYYY-MM-DD') // '2023-01-15'
+
+// Gestion des valeurs nulles
+formatDate(null) // ''
+formatDate(undefined) // ''
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <div>
+    <p>Date de création : {{ formattedCreationDate }}</p>
+    <p>Date de mise à jour : {{ formattedUpdateDate }}</p>
+  </div>
+</template>
+
+<script>
+import { computed } from 'vue'
+import { formatDate } from '@cnamts/synpase'
+
+export default {
+  props: {
+    creationDate: {
+      type: String,
+      required: true
+    },
+    updateDate: {
+      type: String,
+      default: null
+    }
+  },
+  setup(props) {
+    const formattedCreationDate = computed(() => 
+      formatDate(props.creationDate, 'DD/MM/YYYY')
+    )
+    
+    const formattedUpdateDate = computed(() => 
+      props.updateDate ? formatDate(props.updateDate, 'DD/MM/YYYY HH:mm') : 'Non modifié'
+    )
+
+    return {
+      formattedCreationDate,
+      formattedUpdateDate
+    }
+  }
+}
+</script>
+`}/>
+
+## parseDate
+
+Cette fonction parse une chaîne de caractères en objet Date, en prenant en charge différents formats d'entrée.
+
+### Importation
+
+<Source dark code={`import { parseDate } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`// Format français (DD/MM/YYYY)
+parseDate('15/01/2023') // Date object: 2023-01-15T00:00:00.000Z
+
+// Format ISO
+parseDate('2023-01-15') // Date object: 2023-01-15T00:00:00.000Z
+parseDate('2023-01-15T14:30:00') // Date object: 2023-01-15T14:30:00.000Z
+
+// Gestion des valeurs nulles
+parseDate(null) // null
+parseDate('') // null
+parseDate('date invalide') // null
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <div>
+    <v-text-field
+      v-model="dateInput"
+      label="Date de naissance"
+      placeholder="JJ/MM/AAAA"
+      @blur="validateDate"
+    />
+    <p v-if="dateError" class="error-text">{{ dateError }}</p>
+    <p v-if="age !== null">Âge : {{ age }} ans</p>
+  </div>
+</template>
+
+<script>
+import { ref, computed } from 'vue'
+import { parseDate, isDateValidUtil } from '@cnamts/synpase'
+
+export default {
+  setup() {
+    const dateInput = ref('')
+    const dateError = ref('')
+    const parsedDate = ref(null)
+    
+    const validateDate = () => {
+      if (!dateInput.value) {
+        dateError.value = ''
+        parsedDate.value = null
+        return
+      }
+      
+      if (!isDateValidUtil(dateInput.value)) {
+        dateError.value = 'Format de date invalide. Utilisez le format JJ/MM/AAAA.'
+        parsedDate.value = null
+        return
+      }
+      
+      parsedDate.value = parseDate(dateInput.value)
+      dateError.value = ''
+    }
+    
+    const age = computed(() => {
+      if (!parsedDate.value) return null
+      
+      const today = new Date()
+      let age = today.getFullYear() - parsedDate.value.getFullYear()
+      const monthDiff = today.getMonth() - parsedDate.value.getMonth()
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < parsedDate.value.getDate())) {
+        age--
+      }
+      
+      return age
+    })
+
+    return {
+      dateInput,
+      dateError,
+      age,
+      validateDate
+    }
+  }
+}
+</script>
+`}/>
+
+## Bonnes pratiques
+
+- Utilisez `formatDate` pour l'affichage des dates à l'utilisateur
+- Utilisez `parseDate` pour convertir les entrées utilisateur en objets Date
+- Combinez `parseDate` avec les utilitaires de validation de date pour garantir la validité des dates
+- Utilisez `calcHumanFileSize` pour afficher des tailles de fichiers de manière lisible
+- Utilisez `convertToUnit` pour gérer les dimensions dans les composants personnalisés

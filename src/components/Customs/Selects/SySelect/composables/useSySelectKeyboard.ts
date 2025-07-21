@@ -1,0 +1,272 @@
+import { ref, watch, nextTick, type Ref } from 'vue'
+
+export type ItemType = {
+	[key: string]: unknown
+}
+
+export interface UseSySelectKeyboardOptions {
+	isOpen: Ref<boolean>
+	formattedItems: Ref<ItemType[]>
+	toggleMenu: () => void
+	selectItem: (item: ItemType | null, event?: Event) => void
+	getItemText: (item: unknown) => unknown
+	updateListPosition: () => void
+}
+
+export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
+	const {
+		isOpen,
+		formattedItems,
+		toggleMenu,
+		selectItem,
+		getItemText,
+		updateListPosition,
+	} = options
+
+	// État central pour le focus et la navigation
+	const activeDescendantId = ref('')
+	const lastFocusedIndex = ref(-1)
+
+	/**
+	 * Fonction centrale pour gérer le focus visuel et ARIA
+	 * Cette fonction est le point d'entrée unique pour toute modification du focus
+	 * @param index Index de l'élément à activer
+	 * @param options Options supplémentaires
+	 */
+	const setActiveDescendant = (index: number, options: { scrollIntoView?: boolean } = { scrollIntoView: true }) => {
+		// Vérifier si l'index est valide
+		if (index >= 0 && index < formattedItems.value.length) {
+			// Mettre à jour l'ID pour ARIA
+			activeDescendantId.value = `option-${index}`
+			// Stocker l'index pour référence future
+			lastFocusedIndex.value = index
+
+			// Appliquer les changements visuels au prochain cycle de rendu
+			nextTick(() => {
+				const element = document.getElementById(`option-${index}`)
+				if (element) {
+					// Faire défiler l'élément en vue si demandé
+					if (options.scrollIntoView) {
+						element.scrollIntoView({ block: 'nearest' })
+					}
+
+					// Appliquer la classe de focus visuel
+					element.classList.add('keyboard-focused')
+
+					// Supprimer le focus visuel des autres éléments
+					const allItems = document.querySelectorAll('.v-list-item')
+					allItems.forEach((item) => {
+						if (item !== element) {
+							item.classList.remove('keyboard-focused')
+						}
+					})
+				}
+			})
+		}
+		else {
+			// Réinitialiser le focus si l'index est invalide
+			clearActiveDescendant()
+		}
+	}
+
+	/**
+	 * Fonction pour effacer le focus actif
+	 */
+	const clearActiveDescendant = () => {
+		activeDescendantId.value = ''
+		lastFocusedIndex.value = -1
+
+		// Supprimer la classe de focus visuel de tous les éléments
+		nextTick(() => {
+			const allItems = document.querySelectorAll('.v-list-item')
+			allItems.forEach((item) => {
+				item.classList.remove('keyboard-focused')
+			})
+		})
+	}
+
+	/**
+	 * Trouve l'index de l'élément actuellement sélectionné ou actif
+	 * Utilise lastFocusedIndex comme source de vérité principale
+	 */
+	const findSelectedItemIndex = () => {
+		// Si nous avons un index mémorisé valide, l'utiliser
+		if (lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length) {
+			return lastFocusedIndex.value
+		}
+
+		// Sinon, essayer de récupérer l'index à partir de l'ID ARIA
+		if (activeDescendantId.value) {
+			const activeIndex = parseInt(activeDescendantId.value.split('-')[1])
+			if (!isNaN(activeIndex) && activeIndex >= 0 && activeIndex < formattedItems.value.length) {
+				// Synchroniser lastFocusedIndex avec l'index trouvé
+				lastFocusedIndex.value = activeIndex
+				return activeIndex
+			}
+		}
+
+		return -1
+	}
+
+	// Find the next item that starts with the given character
+	const findItemStartingWith = (char: string) => {
+		const lowerChar = char.toLowerCase()
+		const startIndex = findSelectedItemIndex() + 1
+
+		// Search from current position to end
+		for (let i = startIndex; i < formattedItems.value.length; i++) {
+			const itemTextValue = getItemText(formattedItems?.value[i])
+			// Ensure itemTextValue is string-like before calling toString
+			const itemText = itemTextValue != null ? String(itemTextValue).toLowerCase() : ''
+			if (itemText.startsWith(lowerChar)) {
+				return i
+			}
+		}
+
+		// If not found, search from beginning to current position
+		for (let i = 0; i < startIndex; i++) {
+			const itemTextValue = getItemText(formattedItems?.value[i])
+			// Ensure itemTextValue is string-like before calling toString
+			const itemText = itemTextValue != null ? String(itemTextValue).toLowerCase() : ''
+			if (itemText.startsWith(lowerChar)) {
+				return i
+			}
+		}
+
+		return -1
+	}
+
+	// Keyboard event handlers
+	const handleEnterKey = () => {
+		if (isOpen.value) {
+			const index = findSelectedItemIndex()
+			if (index >= 0) {
+				selectItem(formattedItems.value[index])
+			}
+		}
+		else {
+			// Sinon, ouvrir/fermer le menu
+			toggleMenu()
+		}
+	}
+
+	// Gestionnaire pour la touche Échap
+	const handleEscapeKey = () => {
+		if (isOpen.value) {
+			toggleMenu()
+		}
+	}
+
+	const handleSpaceKey = () => {
+		if (isOpen.value) {
+			const index = findSelectedItemIndex()
+			if (index >= 0) {
+				selectItem(formattedItems.value[index])
+			}
+		}
+		else {
+			toggleMenu()
+		}
+	}
+
+	const handleDownKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				// Sélectionner le premier élément à l'ouverture
+				setActiveDescendant(0)
+			})
+		}
+		else {
+			const currentIndex = findSelectedItemIndex()
+			const nextIndex = currentIndex >= 0 ? Math.min(currentIndex + 1, formattedItems.value.length - 1) : 0
+			setActiveDescendant(nextIndex)
+		}
+	}
+
+	const handleUpKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				setActiveDescendant(formattedItems.value.length - 1)
+			})
+		}
+		else {
+			const currentIndex = findSelectedItemIndex()
+			const prevIndex = currentIndex > 0 ? currentIndex - 1 : formattedItems.value.length - 1
+			setActiveDescendant(prevIndex)
+		}
+	}
+
+	const handleCharacterKey = (key: string) => {
+		// Handle printable characters for keyboard navigation
+		if (key.length === 1 && key.match(/\S/)) {
+			const index = findItemStartingWith(key)
+			if (index >= 0) {
+				if (!isOpen.value) toggleMenu()
+				setActiveDescendant(index)
+			}
+		}
+	}
+
+	// Watch activeDescendantId pour synchroniser lastFocusedIndex
+	watch(activeDescendantId, (newId) => {
+		if (newId) {
+			const index = parseInt(newId.split('-')[1])
+			if (!isNaN(index) && index >= 0 && index < formattedItems.value.length) {
+				// Synchroniser lastFocusedIndex avec l'ID ARIA
+				lastFocusedIndex.value = index
+			}
+		}
+	})
+
+	// Gérer l'ouverture et la fermeture de la liste
+	watch(isOpen, (open) => {
+		if (open) {
+			// Mettre à jour la position de la liste
+			updateListPosition()
+
+			// À l'ouverture, restaurer le dernier focus ou initialiser au premier élément
+			nextTick(() => {
+				if (lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length) {
+					// Restaurer le dernier focus
+					setActiveDescendant(lastFocusedIndex.value)
+				}
+				else {
+					// Initialiser au premier élément
+					setActiveDescendant(0)
+				}
+			})
+		}
+		else {
+			// Conserver lastFocusedIndex mais effacer le focus visuel et ARIA
+			clearActiveDescendant()
+		}
+	})
+
+	// Fonction utilitaire pour restaurer le focus après une action
+	const restoreFocus = () => {
+		if (isOpen.value) {
+			// Si la liste est ouverte, restaurer le focus sur le dernier élément actif ou le premier élément
+			const indexToFocus = lastFocusedIndex.value >= 0 ? lastFocusedIndex.value : 0
+			setActiveDescendant(indexToFocus)
+		}
+	}
+
+	// Return the composable API
+	return {
+		activeDescendantId,
+		lastFocusedIndex,
+		setActiveDescendant,
+		clearActiveDescendant,
+		findSelectedItemIndex,
+		findItemStartingWith,
+		handleEnterKey,
+		handleSpaceKey,
+		handleDownKey,
+		handleUpKey,
+		handleCharacterKey,
+		handleEscapeKey,
+		restoreFocus,
+	}
+}

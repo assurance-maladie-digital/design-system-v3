@@ -1,0 +1,344 @@
+import { Meta, Source } from '@storybook/addon-docs'
+
+<Meta title="Guide du dev/Classes utilitaires/Utilitaires DOM & Navigateur" />
+
+# Utilitaires DOM & Navigateur
+
+Ces utilitaires facilitent les interactions avec le DOM et le navigateur, comme la copie dans le presse-papier, le téléchargement de fichiers et l'optimisation des performances.
+
+## copyToClipboard
+
+Cette fonction permet de copier un texte dans le presse-papier de l'utilisateur.
+
+### Importation
+
+<Source dark code={`import { copyToClipboard } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`// Copier un texte simple
+copyToClipboard('Texte à copier')
+  .then(() => {
+    console.log('Texte copié avec succès')
+  })
+  .catch(error => {
+    console.error('Erreur lors de la copie', error)
+  })
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <div>
+    <v-text-field
+      v-model="referenceCode"
+      label="Code de référence"
+      readonly
+    />
+    <v-btn
+      icon
+      @click="copyCode"
+      :loading="isCopying"
+    >
+      <v-icon>mdi-content-copy</v-icon>
+    </v-btn>
+    <v-snackbar
+      v-model="showSnackbar"
+      :timeout="3000"
+    >
+      Code copié dans le presse-papier
+    </v-snackbar>
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue'
+import { copyToClipboard } from '@cnamts/synpase'
+
+export default {
+  setup() {
+    const referenceCode = ref('REF-12345-ABCDE')
+    const isCopying = ref(false)
+    const showSnackbar = ref(false)
+    
+    const copyCode = async () => {
+      isCopying.value = true
+      
+      try {
+        await copyToClipboard(referenceCode.value)
+        showSnackbar.value = true
+      } catch (error) {
+        console.error('Erreur lors de la copie', error)
+      } finally {
+        isCopying.value = false
+      }
+    }
+    
+    return {
+      referenceCode,
+      isCopying,
+      showSnackbar,
+      copyCode
+    }
+  }
+}
+</script>
+`}/>
+
+## downloadFile
+
+Cette fonction permet de télécharger un fichier à partir d'une URL ou d'un Blob.
+
+### Importation
+
+<Source dark code={`import { downloadFile } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`// Télécharger un fichier à partir d'une URL
+downloadFile('https://example.com/document.pdf', 'mon-document.pdf')
+
+// Télécharger un fichier à partir d'un Blob
+const blob = new Blob(['contenu du fichier'], { type: 'text/plain' })
+downloadFile(blob, 'mon-fichier.txt')
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <div>
+    <v-btn
+      color="primary"
+      @click="downloadReport"
+      :loading="isDownloading"
+    >
+      Télécharger le rapport
+    </v-btn>
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue'
+import { downloadFile } from '@cnamts/synpase'
+
+export default {
+  props: {
+    reportUrl: {
+      type: String,
+      required: true
+    },
+    reportName: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
+    const isDownloading = ref(false)
+    
+    const downloadReport = async () => {
+      isDownloading.value = true
+      
+      try {
+        await downloadFile(props.reportUrl, props.reportName)
+      } catch (error) {
+        console.error('Erreur lors du téléchargement', error)
+      } finally {
+        isDownloading.value = false
+      }
+    }
+    
+    return {
+      isDownloading,
+      downloadReport
+    }
+  }
+}
+</script>
+`}/>
+
+### Génération de fichiers à la volée
+
+Vous pouvez également générer des fichiers à la volée à partir de données :
+
+<Source dark code={`<template>
+  <v-btn @click="exportToCsv">Exporter en CSV</v-btn>
+</template>
+
+<script>
+import { downloadFile } from '@cnamts/synpase'
+
+export default {
+  props: {
+    data: {
+      type: Array,
+      required: true
+    }
+  },
+  setup(props) {
+    const exportToCsv = () => {
+      // Créer l'en-tête du CSV
+      const headers = Object.keys(props.data[0]).join(',')
+      
+      // Créer les lignes de données
+      const rows = props.data.map(item => 
+        Object.values(item).join(',')
+      )
+      
+      // Combiner en-tête et lignes
+      const csvContent = [headers, ...rows].join('\n')
+      
+      // Créer un Blob et télécharger
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+      downloadFile(blob, 'export.csv')
+    }
+    
+    return {
+      exportToCsv
+    }
+  }
+}
+</script>
+`}/>
+
+## throttleDisplayFn
+
+Cette fonction limite le nombre d'appels à une fonction d'affichage pour améliorer les performances, particulièrement utile pour les événements qui se déclenchent fréquemment comme le scroll ou le resize.
+
+### Importation
+
+<Source dark code={`import { throttleDisplayFn } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`// Fonction originale qui pourrait être appelée trop fréquemment
+const updateUI = () => {
+  // Mise à jour de l'interface utilisateur
+  console.log('Mise à jour de l\'UI')
+}
+
+// Création d'une version limitée de la fonction
+const throttledUpdateUI = throttleDisplayFn(updateUI)
+
+// Utilisation dans un événement qui se déclenche fréquemment
+window.addEventListener('scroll', throttledUpdateUI)
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <div>
+    <div class="scroll-container" ref="scrollContainer">
+      <div v-for="item in items" :key="item.id" class="item">
+        {{ item.name }}
+      </div>
+    </div>
+    <div v-if="showScrollIndicator" class="scroll-indicator">
+      Faites défiler pour voir plus
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { throttleDisplayFn } from '@cnamts/synpase'
+
+export default {
+  props: {
+    items: {
+      type: Array,
+      required: true
+    }
+  },
+  setup() {
+    const scrollContainer = ref(null)
+    const showScrollIndicator = ref(true)
+    
+    const checkScroll = () => {
+      if (!scrollContainer.value) return
+      
+      const { scrollTop, scrollHeight, clientHeight } = scrollContainer.value
+      
+      // Masquer l'indicateur si l'utilisateur a défilé jusqu'à un certain point
+      if (scrollTop > 100 || scrollTop + clientHeight >= scrollHeight - 20) {
+        showScrollIndicator.value = false
+      } else {
+        showScrollIndicator.value = true
+      }
+    }
+    
+    // Utilisation de throttleDisplayFn pour limiter les appels
+    const throttledCheckScroll = throttleDisplayFn(checkScroll)
+    
+    onMounted(() => {
+      if (scrollContainer.value) {
+        scrollContainer.value.addEventListener('scroll', throttledCheckScroll)
+      }
+    })
+    
+    onBeforeUnmount(() => {
+      if (scrollContainer.value) {
+        scrollContainer.value.removeEventListener('scroll', throttledCheckScroll)
+      }
+    })
+    
+    return {
+      scrollContainer,
+      showScrollIndicator
+    }
+  }
+}
+</script>
+
+<style scoped>
+.scroll-container {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.item {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.scroll-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 8px 16px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 4px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+</style>
+`}/>
+
+## Bonnes pratiques
+
+### Pour copyToClipboard
+
+- Toujours gérer les erreurs potentielles avec try/catch ou .catch()
+- Fournir un retour visuel à l'utilisateur lorsque la copie est réussie
+- Vérifier que le texte à copier n'est pas vide ou null
+
+### Pour downloadFile
+
+- Utiliser des noms de fichiers descriptifs et incluant l'extension appropriée
+- Gérer les erreurs potentielles lors du téléchargement
+- Indiquer à l'utilisateur que le téléchargement est en cours (loading state)
+- Pour les fichiers générés côté client, utiliser le type MIME approprié
+
+### Pour throttleDisplayFn
+
+- Utiliser pour les événements à haute fréquence (scroll, resize, mousemove)
+- Ne pas l'utiliser pour des événements critiques nécessitant une réponse immédiate
+- Nettoyer les écouteurs d'événements dans onBeforeUnmount pour éviter les fuites de mémoire

@@ -9,7 +9,7 @@ const vuetify = createVuetifyInstance()
 
 setup((app, { globals }) => {
 	app.use(vuetify)
-	
+
 	// Add global mixin to help with SySelect dropdown in docs mode
 	if (typeof window !== 'undefined') {
 		// Wait for DOM to be ready
@@ -19,25 +19,25 @@ setup((app, { globals }) => {
 				// Check if we're in docs mode
 				if (document.body.classList.contains('storybook-docs-mode')) {
 					// Find all dropdowns and make sure they're properly positioned
-					const lists = document.querySelectorAll('.v-list');
-					lists.forEach(list => {
+					const lists = document.querySelectorAll('.v-list')
+					lists.forEach((list) => {
 						if (list instanceof HTMLElement) {
-							list.style.position = 'absolute';
-							list.style.zIndex = '9999';
-							list.style.visibility = 'visible';
+							list.style.position = 'absolute'
+							list.style.zIndex = '9999'
+							list.style.visibility = 'visible'
 						}
-					});
+					})
 				}
-			});
-		});
+			})
+		})
 	}
-	
+
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
 	// Apply theme class to <html> (document.documentElement) instead of #root
 	const applyThemeClass = (theme) => {
 		const rootElement = document.documentElement // Always exists
-		rootElement.classList.remove('theme-cnam', 'theme-pa')
+		rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
 		rootElement.classList.add(`theme-${theme}`)
 	}
 
@@ -65,14 +65,15 @@ setup((app, { globals }) => {
 const globalTypes = {
 	theme: {
 		name: 'Theme',
-		description: 'Switch between CNAM and PA themes',
+		description: 'Switch between CNAM, PA and AP themes',
 		defaultValue: 'cnam',
 		toolbar: {
 			title: 'Thèmes',
 			icon: 'paintbrush',
 			items: [
 				{ value: 'cnam', title: 'Thème CNAM' },
-				{ value: 'pa', title: 'Thème PAG' },
+				{ value: 'pa', title: 'Thème PA' },
+				{ value: 'ap', title: 'Thème AmeliPro' },
 			],
 			dynamicTitle: true,
 		},
@@ -92,21 +93,21 @@ const preview: Preview = {
 			// Handle theme changes
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
 				vuetify.theme.global.name.value = context.globals.theme
-				document.documentElement.classList.remove('theme-cnam', 'theme-pa')
+				document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
 			}
-			
+
 			// Check if we're in docs mode to apply special handling for dropdowns
-			const isInDocs = context.viewMode === 'docs';
-			
+			const isInDocs = context.viewMode === 'docs'
+
 			if (isInDocs) {
 				// Add a special class to help target docs mode in CSS
 				if (typeof document !== 'undefined') {
-					document.body.classList.add('storybook-docs-mode');
+					document.body.classList.add('storybook-docs-mode')
 				}
 			}
-			
+
 			return story()
 		},
 	],
@@ -133,15 +134,15 @@ const preview: Preview = {
 						'Introduction',
 					],
 					'Design Tokens',
-					['Introduction', 'Couleurs', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations', 'Thème Portail Agent'],
+					['Introduction', 'Couleurs', 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations'],
 					'Composants',
 					[
 						'Vue d\'ensemble',
 						'Structure', ['HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 'FooterWrapper'],
 						'Layout', ['PageContainer'],
-						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink'],
+						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink', 'SyPagination'],
 						'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'],
-						'Formulaires', ['SyTextField', 'SySelect', 'SyInputSelect', 'SyBtnSelect', 'SyTextArea', 'DatePicker', ['Introduction', 'DatePicker', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'SelectBtnField', 'UploadWorkflow', 'SyBtnSelect'],
+						'Formulaires', ['SyTextField', 'SyTextArea', 'DatePicker', ['Introduction', 'DatePicker', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'Selects', ['Introduction', 'SelectBtnField', 'SyBtnSelect', 'SyInputSelect', 'SySelect'], 'UploadWorkflow', 'SyBtnSelect'],
 						'Tableaux', ['PaginatedTable', 'TableToolbar', 'SyTable', 'SyServerTable'],
 						'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
@@ -152,12 +153,13 @@ const preview: Preview = {
 						'Migration depuis Bridge',
 						'Migration depuis Vue2',
 						'Breaking changes',
-						'Gestion du thème',
+						'Configuration du thème',
 						'Correspondance composants PAG',
 						'Règles De Validation',
 						'Utiliser les rules',
-						'VuetifyOptions',
 						'Services',
+						'Classes utilitaires',
+						'VuetifyOptions',
 					],
 				],
 			},

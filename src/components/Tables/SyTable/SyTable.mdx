@@ -24,8 +24,10 @@ Pour gérer individuellement le stockage des options pour différents tableaux, 
 ### Tri des colonnes
 
 Le composant permet de trier les données par colonne en cliquant sur l'en-tête de la colonne.
-
 <Canvas story={{height: '550px'}} of={SyTable.SortBy} />
+
+Le multi-tri est également supporté. Vous pouvez activer cette fonctionnalité en utilisant la prop `multi-sort`.
+<Canvas story={{height: '550px'}} of={SyTable.MultiSort} />
 
 ### Filtres des colonnes
 
@@ -46,6 +48,14 @@ Le composant permet de cacher ou réorganiser l'ordre des colonnes en utilisant 
 
 Le composant permet de sélectionner des lignes individuellement ou en masse. Vous pouvez activer la sélection en utilisant la prop `show-select`.
 <Canvas story={{height: '550px'}} of={SyTable.RowSelection} />
+
+### Slot item
+Le composant permet de personnaliser l'affichage des contenus en utilisant le slot `item`. Vous pouvez définir la structure de chaque contenu en fonction de vos besoins.
+<Canvas story={{height: '550px'}} of={SyTable.SlotItem} />
+
+### Slot headers
+Le composant permet de personnaliser l'affichage des en-têtes de colonnes en utilisant le slot `headers`. Vous pouvez définir la structure de chaque en-tête en fonction de vos besoins.
+<Canvas story={{height: '550px'}} of={SyTable.SlotHeaders} />
 
 ### Accessibilité
 

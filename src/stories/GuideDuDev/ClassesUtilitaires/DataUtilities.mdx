@@ -1,0 +1,318 @@
+import { Meta, Source } from '@storybook/addon-docs'
+
+<Meta title="Guide du dev/Classes utilitaires/Utilitaires de données" />
+
+# Utilitaires de données
+
+Ces utilitaires vous aident à manipuler et transformer des données dans vos applications.
+
+## deepCopy
+
+Cette fonction crée une copie profonde d'un objet ou d'un tableau, ce qui permet de dupliquer complètement une structure de données sans conserver de références à l'original.
+
+### Importation
+
+<Source dark code={`import { deepCopy } from '@cnamts/synpase'`}/>
+
+### Utilisation
+
+<Source dark code={`// Copie d'un objet simple
+const originalObject = { name: 'John', age: 30 }
+const copy = deepCopy(originalObject)
+
+// Modification de la copie sans affecter l'original
+copy.age = 31
+console.log(originalObject.age) // 30
+console.log(copy.age) // 31
+
+// Copie d'un objet complexe avec des objets imbriqués
+const complexObject = {
+  user: {
+    name: 'John',
+    settings: {
+      theme: 'dark',
+      notifications: true
+    }
+  },
+  permissions: ['read', 'write']
+}
+
+const complexCopy = deepCopy(complexObject)
+
+// Modification d'une propriété imbriquée
+complexCopy.user.settings.theme = 'light'
+console.log(complexObject.user.settings.theme) // 'dark'
+console.log(complexCopy.user.settings.theme) // 'light'
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <div>
+    <v-form @submit.prevent="saveForm">
+      <v-text-field
+        v-model="formData.name"
+        label="Nom"
+      />
+      
+      <v-select
+        v-model="formData.category"
+        :items="categories"
+        label="Catégorie"
+      />
+      
+      <v-checkbox
+      
+      <v-btn
+        @click="resetForm"
+        text
+      >
+        Réinitialiser
+      </v-btn>
+    </v-form>
+  </div>
+</template>
+
+<script>
+import { ref, reactive } from 'vue'
+import { deepCopy } from '@cnamts/synpase'
+
+export default {
+  props: {
+    initialData: {
+      type: Object,
+      default: () => ({
+        name: '',
+        category: null
+      })
+    }
+  },
+  
+  setup(props) {
+    // Créer une copie profonde des données initiales
+    const originalData = deepCopy(props.initialData)
+    
+    // Utiliser la copie pour initialiser le formulaire
+    const formData = reactive(deepCopy(originalData))
+    
+    const categories = ref(['Produit', 'Service', 'Autre'])
+    
+    // Réinitialiser le formulaire avec les données originales
+    const resetForm = () => {
+      Object.assign(formData, deepCopy(originalData))
+    }
+    
+    const saveForm = () => {
+      // Créer une copie des données du formulaire pour les envoyer
+      const dataToSubmit = deepCopy(formData)
+      
+      // Envoyer les données (simulation)
+      console.log('Données envoyées:', dataToSubmit)
+      
+      // Mettre à jour les données originales avec les nouvelles valeurs
+      Object.assign(originalData, deepCopy(formData))
+    }
+    
+    return {
+      formData,
+      categories,
+      resetForm,
+      saveForm
+    }
+  }
+}
+</script>`}/>
+### Cas d'utilisation courants
+
+#### 1. Sauvegarde de l'état initial
+
+<Source dark code={`import { deepCopy } from '@cnamts/synpase'
+
+export default {
+  setup() {
+    // État initial
+    const initialState = {
+      user: {
+        name: '',
+        email: '',
+        preferences: {
+          theme: 'light',
+          language: 'fr'
+        }
+      },
+      settings: {
+        notifications: true,
+        autoSave: false
+      }
+    }
+    
+    // Création d'une copie de travail
+    const state = reactive(deepCopy(initialState))
+    
+    // Fonction pour réinitialiser l'état
+    const resetState = () => {
+      Object.assign(state, deepCopy(initialState))
+    }
+    
+    return {
+      state,
+      resetState
+    }
+  }
+}`}/>
+
+#### 2. Comparaison avant/après
+
+<Source dark code={`import { deepCopy } from '@cnamts/synpase'
+
+export default {
+  props: {
+    record: {
+      type: Object,
+      required: true
+    }
+  },
+  setup(props) {
+    // Sauvegarde de l'état initial
+    const originalRecord = deepCopy(props.record)
+    
+    // Copie de travail
+    const workingCopy = reactive(deepCopy(props.record))
+    
+    // Vérification des modifications
+    const hasChanges = computed(() => {
+      // Comparaison simplifiée (dans un cas réel, utilisez une fonction de comparaison profonde)
+      return JSON.stringify(workingCopy) !== JSON.stringify(originalRecord)
+    })
+    
+    // Obtention des champs modifiés
+    const getModifiedFields = () => {
+      const modifiedFields = []
+      
+      // Parcours des propriétés de premier niveau
+      for (const key in workingCopy) {
+        if (JSON.stringify(workingCopy[key]) !== JSON.stringify(originalRecord[key])) {
+          modifiedFields.push(key)
+        }
+      }
+      
+      return modifiedFields
+    }
+    
+    return {
+      workingCopy,
+      hasChanges,
+      getModifiedFields
+    }
+  }
+}`}/>
+
+#### 3. Gestion d'un historique d'actions
+
+<Source dark code={`import { deepCopy } from '@cnamts/synpase'
+
+export default {
+  setup() {
+    // État actuel
+    const currentState = reactive({
+      title: 'Mon document',
+      content: 'Contenu initial',
+      tags: ['document', 'brouillon']
+    })
+    
+    // Historique des états
+    const history = ref([deepCopy(currentState)])
+    const historyIndex = ref(0)
+    
+    // Enregistrement d'un nouvel état
+    const saveState = () => {
+      // Suppression des états futurs si on a fait des annulations
+      if (historyIndex.value < history.value.length - 1) {
+        history.value = history.value.slice(0, historyIndex.value + 1)
+      }
+      
+      // Ajout de l'état actuel à l'historique
+      history.value.push(deepCopy(currentState))
+      historyIndex.value = history.value.length - 1
+    }
+    
+    // Annulation (undo)
+    const undo = () => {
+      if (historyIndex.value > 0) {
+        historyIndex.value--
+        Object.assign(currentState, deepCopy(history.value[historyIndex.value]))
+      }
+    }
+    
+    // Rétablissement (redo)
+    const redo = () => {
+      if (historyIndex.value < history.value.length - 1) {
+        historyIndex.value++
+        Object.assign(currentState, deepCopy(history.value[historyIndex.value]))
+      }
+    }
+    
+    return {
+      currentState,
+      saveState,
+      undo,
+      redo
+    }
+  }
+}`}/>
+
+## Bonnes pratiques
+
+### Quand utiliser deepCopy
+
+- Lorsque vous devez créer une copie indépendante d'un objet complexe
+- Pour sauvegarder l'état initial d'un formulaire ou d'une entité
+- Avant de modifier des objets reçus via des props
+- Pour implémenter des fonctionnalités d'annulation/rétablissement
+
+### Limitations
+
+- `deepCopy` peut être coûteux en performance pour de très grands objets
+- Certains types spéciaux (comme Map, Set, Date) peuvent nécessiter un traitement particulier
+- Les références circulaires peuvent causer des problèmes
+
+### Alternatives
+
+- Pour des copies simples d'objets plats : `{ ...object }`
+- Pour des tableaux simples : `[...array]`
+- Pour des cas plus complexes nécessitant des performances optimales, envisagez d'utiliser des bibliothèques spécialisées comme Immer ou Immutable.js
+
+### Exemple avec des types TypeScript
+
+<Source dark code={`interface User {
+  id: number;
+  name: string;
+  preferences: {
+    theme: 'light' | 'dark';
+    notifications: boolean;
+  };
+}
+
+import { deepCopy } from '@cnamts/synpase'
+
+// Fonction qui modifie une copie sans affecter l'original
+function updateUserTheme(user: User, newTheme: 'light' | 'dark'): User {
+  const userCopy = deepCopy(user)
+  userCopy.preferences.theme = newTheme
+  return userCopy
+}
+
+const originalUser: User = {
+  id: 1,
+  name: 'John',
+  preferences: {
+    theme: 'light',
+    notifications: true
+  }
+}
+
+const updatedUser = updateUserTheme(originalUser, 'dark')
+
+console.log(originalUser.preferences.theme) // 'light'
+console.log(updatedUser.preferences.theme) // 'dark'
+`}/>

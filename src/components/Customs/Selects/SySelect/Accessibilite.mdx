@@ -1,0 +1,204 @@
+import { Meta, Story } from '@storybook/addon-docs';
+import * as AccessStories from './Accessibilite.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+
+<Meta of={AccessStories} />
+
+<div className="accessibility-guide">
+  <h1>Guide d'Accessibilité du Composant SySelect</h1>
+  
+  <div className="intro-section">
+    <img 
+      src={AccessibilityIcon} 
+      alt="Icône d'accessibilité" 
+      className="accessibility-icon"
+    />
+    <p className="intro-text">
+      Le composant SySelect a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C, 
+      notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les combobox select-only</a>. 
+      Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
+    </p>
+  </div>
+
+  <div className="criteria-section">
+    <h2>Critères d'accessibilité respectés</h2>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">🔍</span>
+        <h3>Structure sémantique</h3>
+      </div>
+      <ul>
+        <li><strong>Rôles ARIA appropriés</strong> : <code>role="combobox"</code> sur l'input, <code>role="listbox"</code> sur le menu déroulant</li>
+        <li><strong>Relations entre éléments</strong> : <code>aria-controls</code> pour lier le combobox au listbox</li>
+        <li><strong>Type d'interaction</strong> : <code>aria-haspopup="listbox"</code> et <code>aria-autocomplete="list"</code></li>
+        <li><strong>État du menu</strong> : <code>aria-expanded</code> indique si le menu est ouvert ou fermé</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">⌨️</span>
+        <h3>Navigation clavier complète</h3>
+      </div>
+      <ul>
+        <li><strong>Flèches haut/bas</strong> : Navigation entre les options sans modifier la sélection</li>
+        <li><strong>Entrée</strong> : Sélection de l'option active et fermeture du menu</li>
+        <li><strong>Échap</strong> : Fermeture du menu sans modifier la sélection</li>
+        <li><strong>Caractères imprimables</strong> : Navigation vers l'option commençant par le(s) caractère(s) saisi(s)</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">📱</span>
+        <h3>États et retours d'information</h3>
+      </div>
+      <ul>
+        <li><strong>Sélection active</strong> : <code>aria-activedescendant</code> indique l'option active pendant la navigation</li>
+        <li><strong>Option sélectionnée</strong> : <code>aria-selected="true"</code> sur l'option sélectionnée</li>
+        <li><strong>État de validation</strong> : <code>aria-required="true"</code> et <code>aria-invalid="true"</code> pour les champs obligatoires et en erreur</li>
+        <li><strong>Scroll automatique</strong> : Les options sont automatiquement scrollées dans la vue lors de la navigation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div className="keyboard-section">
+    <h2>Détail de la navigation clavier</h2>
+    <Story of={AccessStories.ComboboxKeyboardNavigation} />
+  </div>
+
+  <div className="implementation-section">
+    <h2>Spécificités d'implémentation</h2>
+    <p>
+      Conformément aux recommandations WAI-ARIA pour les combobox select-only, notre implémentation :
+    </p>
+    <ul>
+      <li>Maintient le focus DOM sur l'input combobox pendant toute l'interaction</li>
+      <li>Utilise <code>aria-activedescendant</code> pour indiquer l'option active aux technologies d'assistance</li>
+      <li>Sépare clairement la navigation (flèches) de la sélection (Entrée)</li>
+      <li>Gère correctement les états visuels et programmatiques des options</li>
+    </ul>
+  </div>
+</div>
+
+<br />
+<Story of={AccessStories.AccessibilitePanel} />
+<br />
+
+<style>
+{
+`
+  .accessibility-guide {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+  }
+
+  .intro-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 5px solid #0077cc;
+  }
+
+  .accessibility-icon {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+
+  .intro-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .criteria-section {
+    margin-bottom: 40px;
+  }
+
+  .criteria-section h2,
+  .keyboard-section h2,
+  .implementation-section h2 {
+    border-bottom: 2px solid #eaecef;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #0077cc;
+  }
+
+  .criteria-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .criteria-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .criteria-icon {
+    font-size: 1.8em;
+    margin-right: 15px;
+  }
+
+  .criteria-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #0077cc;
+  }
+
+  .criteria-card ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .criteria-card li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .keyboard-section {
+    background-color: #f0f7ff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .implementation-section {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .implementation-section ul {
+    padding-left: 20px;
+  }
+
+  .implementation-section li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  code {
+    background-color: #f0f0f0;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+  }
+`
+}
+</style>

@@ -1,0 +1,72 @@
+import { Meta, Title, Subtitle, Description, Primary, Controls, Stories, Canvas } from '@storybook/blocks'
+import * as SyIconStories from './SyIcon.stories'
+
+<Meta of={SyIconStories} />
+
+<Title>SyIcon</Title>
+
+<Subtitle>
+	Composant d'icône avec support d'accessibilité RGAA
+</Subtitle>
+
+## Utilisation
+
+Le composant `SyIcon` est un wrapper autour du composant `v-icon` de Vuetify qui ajoute une gestion automatique de l'accessibilité selon les normes RGAA.
+
+<Primary />
+<Controls />
+
+## Accessibilité
+
+Le composant `SyIcon` gère automatiquement les attributs ARIA en fonction de la nature de l'icône :
+
+- **Icônes décoratives** (par défaut) : Invisibles pour les lecteurs d'écran (`role="presentation"`, `aria-hidden="true"`)
+- **Icônes informatives** : Annoncées par les lecteurs d'écran avec un label explicite (`role="img"`, `aria-label="[label]"`)
+
+> **Important :** Tous les éléments SVG ont systématiquement l'attribut `aria-hidden="true"` et n'ont jamais l'attribut `role="img"`, indépendamment du type d'icône. La sémantique d'accessibilité est gérée uniquement au niveau de l'élément conteneur.
+
+Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'accessibilité](/docs/composants-base-syicon-accessibilite--docs).
+
+## API
+
+
+## Exemples
+
+### Icône par défaut
+
+<Canvas of={SyIconStories.Default} />
+
+### Icône avec couleur
+
+<Canvas of={SyIconStories.WithColor} />
+
+### Icône avec taille personnalisée
+
+<Canvas of={SyIconStories.WithSize} />
+
+
+## Exemple d'utilisation
+
+```vue
+<template>
+  <!-- Icône décorative (par défaut) -->
+  <SyIcon icon="mdi-home" />
+  
+  <!-- Icône avec couleur -->
+  <SyIcon icon="mdi-alert" color="error" />
+  
+  <!-- Icône avec taille personnalisée -->
+  <SyIcon icon="mdi-star" size="x-large" />
+  
+  <!-- Icône informative avec label d'accessibilité -->
+  <SyIcon 
+    icon="mdi-information" 
+    :decorative="false" 
+    label="Information importante" 
+  />
+</template>
+
+<script setup>
+  import { SyIcon } from '@cnam/design-system'
+</script>
+```

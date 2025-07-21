@@ -26,6 +26,8 @@
 		density: 'default',
 		striped: false,
 		showSelect: false,
+		multiSort: false,
+		mustSort: false,
 	})
 
 	const emit = defineEmits<{
@@ -207,6 +209,8 @@
 			:show-select="props.showSelect"
 			:item-selectable="(item) => true"
 			:item-value="getItemValue"
+			:multi-sort="props.multiSort"
+			:must-sort="props.mustSort"
 			@update:options="updateOptions"
 		>
 			<template #top>
@@ -354,6 +358,17 @@
 						</td>
 					</tr>
 				</template>
+			</template>
+
+			<!-- Dynamically forward all slots to maintain flexibility -->
+			<template
+				v-for="slotName in Object.keys($slots)"
+				#[slotName]="slotProps"
+			>
+				<slot
+					:name="slotName"
+					v-bind="slotProps ?? {}"
+				/>
 			</template>
 
 			<template #bottom>

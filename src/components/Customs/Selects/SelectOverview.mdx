@@ -1,0 +1,350 @@
+import { Meta, Canvas, Controls, Source } from '@storybook/blocks';
+import { linkTo } from '@storybook/addon-links';
+
+<Meta title="Composants/Formulaires/Selects/Introduction" />
+
+# Select - Vue d'ensemble
+
+Les composants de sélection facilitent le choix d'une ou plusieurs options parmi une liste prédéfinie. Cette page détaille chaque variante disponible et vous guide pour choisir celle qui correspond le mieux à votre cas d'usage.
+
+## Variantes disponibles
+
+Notre système propose quatre modes de sélection, chacun adapté à des besoins spécifiques :
+
+<div className="sb-unstyled" style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '30px' }}>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+  <div 
+    style={{ 
+      flex: '1 1 300px', 
+      border: '1px solid #e0e0e0', 
+      borderRadius: '8px', 
+      padding: '20px',
+      cursor: 'pointer',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+      transition: 'all 0.2s ease',
+      backgroundColor: '#fff'
+    }}
+    onClick={() => linkTo('Composants/Formulaires/Selects/SySelect')()}
+  >
+    <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#1976d2' }}>SySelect</h3>
+    <div>Composant de sélection complet et flexible, supportant la sélection simple ou multiple.</div>
+    <div style={{ marginTop: '10px', color: '#666' }}>
+      <strong>Idéal pour :</strong>
+      <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
+        <li>Sélection d'une ou plusieurs options</li>
+        <li>Affichage sous forme de puces (chips)</li>
+        <li>Interfaces utilisateur standard</li>
+        <li>Support de la validation</li>
+        <li>Support de la recherche par caractères imprimables (Navigation vers l'option commençant par le caractère saisi)</li>
+      </ul>
+    </div>
+    <div style={{ marginTop: '15px' }}>
+      <span style={{ 
+        padding: '5px 10px', 
+        color: '#1976d2', 
+        borderRadius: '4px', 
+        fontSize: '14px' 
+      }}>
+        Voir la documentation →
+      </span>
+    </div>
+  </div>
+
+  <div 
+    style={{ 
+      flex: '1 1 300px', 
+      border: '1px solid #e0e0e0', 
+      borderRadius: '8px', 
+      padding: '20px',
+      cursor: 'pointer',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+      transition: 'all 0.2s ease',
+      backgroundColor: '#fff'
+    }}
+    onClick={() => linkTo('Composants/Formulaires/Selects/SyInputSelect')()}
+  >
+    <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#7b1fa2' }}>SyInputSelect</h3>
+    <div>Un composant de sélection qui ressemble à un champ de texte standard avec validation intégrée.</div>
+    <div style={{ marginTop: '10px', color: '#666' }}>
+      <strong>Idéal pour :</strong>
+      <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
+        <li>Formulaires avec validation stricte</li>
+        <li>Interfaces utilisateur cohérentes</li>
+        <li>Sélection simple</li>
+        <li>Support de la validation</li>
+      </ul>
+    </div>
+    <div style={{ marginTop: '15px' }}>
+      <span style={{ 
+        padding: '5px 10px', 
+        color: '#7b1fa2', 
+        borderRadius: '4px', 
+        fontSize: '14px' 
+      }}>
+        Voir la documentation →
+      </span>
+    </div>
+  </div>
+</div>
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+  <div 
+    style={{ 
+      flex: '1 1 300px', 
+      border: '1px solid #e0e0e0', 
+      borderRadius: '8px', 
+      padding: '20px',
+      cursor: 'pointer',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+      transition: 'all 0.2s ease',
+      backgroundColor: '#fff'
+    }}
+    onClick={() => linkTo('Composants/Formulaires/Selects/SyBtnSelect')()}
+  >
+    <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#00796b' }}>SyBtnSelect</h3>
+    <div>Un composant de sélection sous forme de bouton, idéal pour les menus utilisateur ou les sélecteurs compacts.</div>
+    <div style={{ marginTop: '10px', color: '#666' }}>
+      <strong>Idéal pour :</strong>
+      <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
+        <li>Menus utilisateur</li>
+        <li>Interfaces compactes</li>
+        <li>Affichage d'informations principales et secondaires</li>
+      </ul>
+    </div>
+    <div style={{ marginTop: '15px' }}>
+      <span style={{ 
+        padding: '5px 10px', 
+        color: '#00796b', 
+        borderRadius: '4px', 
+        fontSize: '14px' 
+      }}>
+        Voir la documentation →
+      </span>
+    </div>
+  </div>
+
+  <div 
+    style={{ 
+      flex: '1 1 300px', 
+      border: '1px solid #e0e0e0', 
+      borderRadius: '8px', 
+      padding: '20px',
+      cursor: 'pointer',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+      transition: 'all 0.2s ease',
+      backgroundColor: '#fff'
+    }}
+    onClick={() => linkTo('Composants/Formulaires/Selects/SelectBtnField')()}
+  >
+    <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#e65100' }}>SelectBtnField</h3>
+    <div>Un composant de sélection sous forme de boutons toggle, idéal pour les choix visuels et les options mutuellement exclusives.</div>
+    <div style={{ marginTop: '10px', color: '#666' }}>
+      <strong>Idéal pour :</strong>
+      <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
+        <li>Choix visuels et explicites</li>
+        <li>Options mutuellement exclusives ou multiples</li>
+        <li>Interfaces modernes avec mise en évidence visuelle</li>
+      </ul>
+    </div>
+    <div style={{ marginTop: '15px' }}>
+      <span style={{ 
+        padding: '5px 10px', 
+        color: '#e65100', 
+        borderRadius: '4px', 
+        fontSize: '14px' 
+      }}>
+        Voir la documentation →
+      </span>
+    </div>
+  </div>
+</div>
+</div>
+
+## Tableau comparatif des fonctionnalités
+
+<div className="sb-unstyled">
+  <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '30px' }}>
+    <thead>
+      <tr style={{ backgroundColor: '#f5f5f5' }}>
+        <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #e0e0e0' }}>Fonctionnalité</th>
+        <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>SySelect</th>
+        <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>SyInputSelect</th>
+        <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>SyBtnSelect</th>
+        <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>SelectBtnField</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Sélection multiple</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Affichage de puces (chips)</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Validation intégrée</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Apparence de bouton</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Mode icône uniquement</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Effaçable (clearable)</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Densité personnalisable</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Retourne l'objet complet</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Disposition en ligne/colonne</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Options uniques</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Comment choisir la bonne variante ?
+
+### Utilisez SySelect quand :
+- Vous avez besoin d'une sélection simple ou multiple
+- Vous souhaitez afficher les sélections multiples sous forme de puces (chips)
+- Vous avez besoin de personnaliser la densité d'affichage
+
+### Utilisez SyInputSelect quand :
+- Vous avez besoin d'une interface cohérente avec les autres champs de formulaire
+- La validation des entrées est primordiale
+- Vous préférez une apparence de champ de texte standard
+
+### Utilisez SyBtnSelect quand :
+- Vous créez un menu utilisateur ou un sélecteur compact
+- Vous souhaitez afficher des informations principales et secondaires
+- Vous avez besoin d'un mode icône uniquement pour les interfaces très compactes
+
+### Utilisez SelectBtnField quand :
+- Vous avez besoin d'options visuellement distinctes sous forme de boutons
+- Vous souhaitez permettre la sélection multiple ou unique d'options
+- Vous avez besoin d'une disposition en ligne ou en colonne des options
+
+## Exemple d'implémentation
+
+<Source
+  dark
+  code={`
+// SySelect - Sélection simple
+<SySelect
+  v-model="selectedOption"
+  :items="options"
+  label="Sélectionnez une option"
+  required
+/>
+
+// SySelect - Sélection multiple avec puces
+<SySelect
+  v-model="selectedOptions"
+  :items="options"
+  label="Sélectionnez des options"
+  multiple
+  chips
+/>
+
+// SyInputSelect
+<SyInputSelect
+  v-model="selectedOption"
+  :items="options"
+  label="Sélectionnez une option"
+  required
+  :custom-rules="myValidationRules"
+/>
+
+// SyBtnSelect
+<SyBtnSelect
+  v-model="selectedOption"
+  :menu-items="options"
+  primary-info="Utilisateur"
+  secondary-info="Admin"
+>
+  <template #prepend-icon>
+    <VIcon>mdiAccount</VIcon>
+  </template>
+</SyBtnSelect>
+
+// SelectBtnField - Sélection simple
+<SelectBtnField
+  v-model="selectedOption"
+  :items="[
+    { text: 'Email', value: 'email' },
+    { text: 'Courrier', value: 'courrier' },
+    { text: 'SMS', value: 'sms' }
+  ]"
+  label="Moyen de contact"
+/>
+
+// SelectBtnField - Sélection multiple
+<SelectBtnField
+  v-model="selectedOptions"
+  :items="[
+    { text: 'Email', value: 'email' },
+    { text: 'Courrier', value: 'courrier' },
+    { text: 'SMS', value: 'sms' }
+  ]"
+  label="Moyens de contact"
+  multiple
+  inline
+/>
+`}
+/>
+
+## Bonnes pratiques
+
+- Toujours spécifier un label clair pour indiquer ce que l'utilisateur doit sélectionner
+- Utiliser la propriété `required` lorsqu'une sélection est obligatoire
+- Pour SySelect et SyInputSelect, ajouter `clearable` pour permettre à l'utilisateur d'effacer sa sélection
+- Pour les sélections multiples, préférer l'affichage en puces (chips) pour une meilleure lisibilité
+- Adapter le type de sélecteur au contexte d'utilisation (formulaire standard, menu utilisateur, etc.)
+- Pour SelectBtnField, utiliser la propriété `inline` pour une disposition horizontale des options
+- Pour SelectBtnField, utiliser la propriété `unique` sur certaines options pour qu'elles désélectionnent automatiquement les autres options lorsqu'elles sont sélectionnées

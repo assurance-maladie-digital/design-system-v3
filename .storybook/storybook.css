@@ -139,7 +139,7 @@ pre.prismjs {
 	}
 
 	/* SySelect */
-	.v-list[data-v-3bd0eb8e] {
+	#sy-select-menu {
 		margin-top: -22px !important;
 	}
 
@@ -150,6 +150,13 @@ pre.prismjs {
 		z-index: 9999 !important;
 		visibility: visible !important;
 		opacity: 1 !important;
+	}
+}
+
+#story--composants-formulaires-searchlistfield--default {
+	.v-list {
+		width: 100% !important;
+		position: relative;
 	}
 }
 

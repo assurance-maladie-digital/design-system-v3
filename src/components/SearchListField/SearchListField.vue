@@ -5,7 +5,7 @@
 	import type { SearchListItem } from './types'
 	import { locales } from './locales'
 
-	import { SyTextField } from '@/components'
+	import { SyTextField, SyCheckbox } from '@/components'
 
 	const props = defineProps({
 		modelValue: {
@@ -31,6 +31,7 @@
 	const search = ref<string | null>(null)
 	const internalValue = ref<unknown[]>(props.modelValue)
 	const searchIcon = mdiMagnify
+	const checkboxListRef = ref<HTMLElement | null>(null)
 
 	watch(
 		() => props.modelValue,
@@ -53,10 +54,23 @@
 		emit('update:modelValue', value)
 	}
 
+	const toggleSelection = (itemValue: unknown) => {
+		const newValue = [...internalValue.value]
+		const index = newValue.indexOf(itemValue)
+		if (index === -1) {
+			newValue.push(itemValue)
+		}
+		else {
+			newValue.splice(index, 1)
+		}
+		emitChangeEvent(newValue)
+	}
+
 	defineExpose({
 		filteredItems,
 		search,
 		emitChangeEvent,
+		toggleSelection,
 	})
 </script>
 
@@ -97,6 +111,7 @@
 
 		<VList
 			id="search-list"
+			ref="checkboxListRef"
 			v-model:selected="internalValue"
 			title="search-list"
 			select-strategy="classic"
@@ -118,40 +133,29 @@
 				:value="item.value"
 				role="option"
 				:aria-selected="internalValue.includes(item.value)"
-				:aria-labelledby="`search-list-item-${index}`"
 				:tabindex="0"
 				active-class="text-primary"
 				class="d-flex align-center justify-start mx-4"
 			>
-				<span
-					:id="`search-list-item-label-${index}`"
-					class="d-sr-only"
-				>
-					{{ item.label }}
-				</span>
 				<template #prepend="{ isActive }">
 					<VListItemAction start>
-						<input
+						<SyCheckbox
 							:id="`checkbox-${index}`"
-							type="checkbox"
-							role="option"
-							:checked="isActive"
-							:aria-selected="isActive"
+							:model-value="isActive"
+							label=""
 							:aria-label="`${locales.checkboxLabel} ${item.label}`"
-							:aria-labelledby="`checkbox-${index}`"
 							:title="`${locales.checkboxLabel} ${item.label}`"
-							class="custom-checkbox ml-2"
-						>
-						<!-- eslint-disable-next-line  vuejs-accessibility/label-has-for -->
-						<label
-							:for="`checkbox-${index}`"
-							class="d-sr-only"
-						>
-							{{ locales.checkboxLabel }}
-						</label>
+							:aria-labelledby="`list-item-title-${index}`"
+							hide-details
+							class="ml-2 search-list-checkbox"
+							density="compact"
+							@click="toggleSelection(item.value)"
+						/>
 					</VListItemAction>
 
-					<VListItemTitle>{{ item.label }}</VListItemTitle>
+					<VListItemTitle :id="`list-item-title-${index}`">
+						{{ item.label }}
+					</VListItemTitle>
 				</template>
 			</VListItem>
 		</VList>
@@ -169,31 +173,11 @@
 	opacity: 0;
 }
 
-.custom-checkbox {
-	appearance: none;
-	width: 20px;
-	height: 20px;
-	border: 2px solid rgb(0 0 0 / 50%);
-	border-radius: 2px;
-	outline: none;
-	cursor: pointer;
-	transition: all 0.3s ease;
-}
-
-.custom-checkbox:checked {
-	background-color: tokens.$primary-base !important;
-	border-color: tokens.$primary-base !important;
-
-	&::before {
-		content: '\2713';
-		display: block;
-		text-align: center;
-		line-height: 15px;
-		color: #fff;
+/* Hide duplicate labels for accessibility */
+.search-list-checkbox {
+	/* Hide the label from screen readers but keep the checkbox visible */
+	::v-deep(.v-label) {
+		display: none;
 	}
-}
-
-.custom-checkbox:hover {
-	border-color: tokens.$primary-darker !important;
 }
 </style>

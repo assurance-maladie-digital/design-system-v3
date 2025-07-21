@@ -130,7 +130,7 @@ describe('SyTablePagination.vue', () => {
 		expect(infoText).toContain('1-42')
 	})
 
-	it('emits update:page event when nextPage method is called', async () => {
+	it('emits update:page event when SyPagination emits update:modelValue', async () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
 				page: 1,
@@ -143,8 +143,11 @@ describe('SyTablePagination.vue', () => {
 			},
 		})
 
-		await (wrapper.vm as unknown as { nextPage: () => Promise<void> }).nextPage()
+		// Find the SyPagination component and simulate a page change
+		const pagination = wrapper.findComponent({ name: 'SyPagination' })
+		await pagination.vm.$emit('update:modelValue', 2)
 
+		// Verify the SyTablePagination emits the correct event
 		expect(wrapper.emitted('update:page')).toBeTruthy()
 		expect(wrapper.emitted('update:page')![0]).toEqual([2])
 	})

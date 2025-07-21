@@ -93,6 +93,33 @@ const meta = {
 		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
+		multiSort: {
+			description: 'Permet de trier sur plusieurs colonnes simultanément. Lorsque activé, des indicateurs numériques apparaissent à côté des icônes de tri pour montrer l\'ordre de priorité.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		mustSort: {
+			description: 'Force au moins une colonne à être toujours triée. Si désactivé, toutes les colonnes peuvent être non triées.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
 		},
 		enableColumnControls: {
 			description: 'Allow the users to re-organize the columns',
@@ -572,6 +599,320 @@ export const ServerSortBy: Story = {
 		  :server-items-length="totalUsers"
 		  :loading="state === StateEnum.PENDING"
 		  v-bind="args"
+		  @update:options="fetchData"
+		/>
+	  </div>
+	  `,
+		}
+	},
+}
+
+export const ServerMultiSort: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+		<template>
+		  <div>
+			<p class="mb-4">
+			  Cet exemple montre le tri multiple côté serveur avec des indicateurs d'ordre de priorité.
+			  Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+			</p>
+			<SyServerTable
+			  v-model:options="options"
+			  :items="users"
+			  :headers="headers"
+			  :server-items-length="totalUsers"
+			  :loading="state === StateEnum.PENDING"
+			  suffix="server-multi-sort"
+			  @update:options="fetchData"
+			/>
+		  </div>
+		</template>
+		`,
+			},
+			{
+				name: 'Script',
+				code: `
+		<script setup lang="ts">
+		  import { ref } from 'vue'
+		  import { SyServerTable } from '@cnamts/synapse'
+		  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+		  import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+
+		  interface User {
+			[key: string]: string
+			firstname: string
+			lastname: string
+			email: string
+		  }
+
+		  interface DataObj {
+			items: User[]
+			total: number
+		  }
+
+		  const totalUsers = ref(0)
+		  const users = ref<User[]>([])
+		  const state = ref(StateEnum.IDLE)
+
+		  const options = ref<DataOptions>({
+			itemsPerPage: 5,
+			multiSort: true,
+			sortBy: [
+				{
+					key: 'lastname',
+					order: 'desc',
+				},
+				{
+					key: 'firstname',
+					order: 'asc',
+				},
+			],
+			page: 1,
+		  })
+
+		  const headers = [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		  ]
+
+		  const fetchData = async (): Promise<void> => {
+			const { items, total } = await getDataFromApi(options.value)
+			users.value = items
+			totalUsers.value = total
+		  }
+
+		  const wait = async (ms: number) => {
+			return new Promise(resolve => setTimeout(resolve, ms))
+		  }
+
+		  const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+			state.value = StateEnum.PENDING
+			await wait(1000)
+
+			return new Promise((resolve) => {
+			  let items: User[] = getUsers()
+			  const total = items.length
+
+			  if (sortBy && sortBy.length > 0) {
+					items.sort((a, b) => {
+						for (const sort of sortBy) {
+							const key = sort.key
+							const r = String(a[key]).localeCompare(String(b[key]))
+
+							const order = sort.order === 'asc' ? 1 : -1
+							if (r !== 0) {
+								return r * order
+							}
+						}
+						return 0
+					})
+				}
+
+			  if (itemsPerPage > 0) {
+				items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+			  }
+
+			  resolve({ items, total })
+			  state.value = StateEnum.RESOLVED
+			})
+		  }
+
+		  const getUsers = (): User[] => {
+			return [
+				{
+					firstname: 'Virginie',
+					lastname: 'Beauchesne',
+					email: 'virginie.beauchesne@example.com',
+				},
+				{
+					firstname: 'Simone',
+					lastname: 'Bellefeuille',
+					email: 'simone.bellefeuille@example.com',
+				},
+				{
+					firstname: 'Étienne',
+					lastname: 'Salois',
+					email: 'etienne.salois@example.com',
+				},
+				{
+					firstname: 'Thierry',
+					lastname: 'Bobu',
+					email: 'thierry.bobu@example.com',
+				},
+				{
+					firstname: 'Bernadette',
+					lastname: 'Langelier',
+					email: 'bernadette.langelier@exemple.com'
+				},
+				{
+					firstname: 'Agate',
+					lastname: 'Roy',
+					email: 'agate.roy@exemple.com'
+				},
+				{
+					firstname: 'Agate',
+					lastname: 'Beauchesne',
+					email: 'agate.beauchesne@exemple.com'
+				}
+			]
+		  }
+          
+           // Initialize data
+		  	fetchData()
+		</script>
+		`,
+			},
+		],
+	},
+	args: {
+		'options': {
+			itemsPerPage: 5,
+			multiSort: true,
+			sortBy: [
+				{
+					key: 'lastname',
+					order: 'desc',
+				},
+				{
+					key: 'firstname',
+					order: 'asc',
+				},
+			],
+			page: 1,
+		},
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'caption': '',
+		'suffix': 'server-sort',
+		'density': 'default',
+		'striped': false,
+		'multiSort': true,
+		'serverItemsLength': 7,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const totalUsers = ref(0)
+				const users = ref<User[]>([])
+				const state = ref(StateEnum.IDLE)
+
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
+				const fetchData = async (): Promise<void> => {
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
+					users.value = items
+					totalUsers.value = total
+				}
+
+				const wait = async (ms: number) => {
+					return new Promise(resolve => setTimeout(resolve, ms))
+				}
+
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+					state.value = StateEnum.PENDING
+					await wait(1000)
+
+					return new Promise((resolve) => {
+						let items: User[] = getUsers()
+						const total = items.length
+
+						if (sortBy && sortBy.length > 0) {
+							items.sort((a, b) => {
+								for (const sort of sortBy) {
+									const key = sort.key
+									const r = String(a[key]).localeCompare(String(b[key]))
+
+									const order = sort.order === 'asc' ? 1 : -1
+									if (r !== 0) {
+										return r * order
+									}
+								}
+								return 0
+							})
+						}
+
+						if (itemsPerPage > 0) {
+							items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						}
+
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getUsers = (): User[] => {
+					return [
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com',
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com',
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Beauchesne',
+							email: 'agate.beauchesne@exemple.com',
+						},
+					]
+				}
+
+				// Initialize data
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
+			},
+			template: `
+	  <div>
+		<p class="mb-4">
+		  Cet exemple montre le tri multiple côté serveur avec des indicateurs d'ordre de priorité.
+		  Les chiffres à côté des icônes de tri indiquent l'ordre de priorité du tri.
+		</p>
+		<SyServerTable
+		  v-model:options="options"
+		  :items="users"
+		  :server-items-length="totalUsers"
+		  :loading="state === StateEnum.PENDING"
+		  v-bind="args"
+		  suffix="server-multi-sort"
 		  @update:options="fetchData"
 		/>
 	  </div>
@@ -1477,16 +1818,16 @@ export const ServerFilterBySelectMultiple: Story = {
 				name: 'Template',
 				code: `
 		<template>
-		  <SyServerTable
-			v-model:options="options"
-			:items="filteredUsers"
-			:headers="headers"
-			:server-items-length="totalFilteredUsers"
-			:loading="state === StateEnum.PENDING"
-			suffix="server-filter-select"
-			:show-filters="true"
-			@update:options="fetchData"
-		  />
+			<SyServerTable
+				v-model:options="options"
+				:items="filteredUsers"
+				:headers="headers"
+				:server-items-length="totalFilteredUsers"
+				:loading="state === StateEnum.PENDING"
+				suffix="server-filter-select"
+				:show-filters="true"
+				@update:options="fetchData"
+			/>
 		</template>
 		`,
 			},
@@ -1494,150 +1835,158 @@ export const ServerFilterBySelectMultiple: Story = {
 				name: 'Script',
 				code: `
 		<script setup lang="ts">
-		  import { ref } from 'vue'
-		  import { SyServerTable } from '@cnamts/synapse'
-		  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-		  import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+			import { ref } from 'vue'
+			import { SyServerTable } from '@cnamts/synapse'
+			import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+			import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
 
-		  interface User {
-			name: string
-			department: string
-			status: string
-		  }
-
-		  interface DataObj {
-			items: User[]
-			total: number
-		  }
-
-		  const totalFilteredUsers = ref(0)
-		  const filteredUsers = ref<User[]>([])
-		  const state = ref(StateEnum.IDLE)
-
-		  const options = ref<DataOptions>({
-			itemsPerPage: 5,
-			page: 1,
-			filters: [],
-		  })
-
-		  const headers = [
-			{ 
-			  title: 'Nom', 
-			  key: 'name',
-			  filterable: true,
-			  filterType: 'text'
-			},
-			{ 
-			  title: 'Département', 
-			  key: 'department',
-			  filterable: true,
-			  filterType: 'select',
-			  multiple: true,
-			  chips: true,
-			  hideMessages: true,
-			  filterOptions: [
-				{ text: 'RH', value: 'RH' },
-				{ text: 'IT', value: 'IT' },
-				{ text: 'Finance', value: 'Finance' },
-				{ text: 'Marketing', value: 'Marketing' },
-			  ]
-			},
-			{ 
-			  title: 'Statut', 
-			  key: 'status',
-			  filterable: true,
-			  filterType: 'select',
-			  multiple: true,
-			  chips: true,
-			  hideMessages: true,
-			  filterOptions: [
-				{ text: 'Actif', value: 'Actif' },
-				{ text: 'En congé', value: 'En congé' },
-				{ text: 'Inactif', value: 'Inactif' },
-			  ]
+			interface User {
+				name: string
+				department: string
+				status: string
 			}
-		  ]
 
-		  const fetchData = async (): Promise<void> => {
-			const { items, total } = await getDataFromApi(options.value)
-			filteredUsers.value = items
-			totalFilteredUsers.value = total
-		  }
+			interface DataObj {
+				items: User[]
+				total: number
+			}
 
-		  const wait = async (ms: number) => {
-			return new Promise(resolve => setTimeout(resolve, ms))
-		  }
+			const totalFilteredUsers = ref(0)
+			const filteredUsers = ref<User[]>([])
+			const state = ref(StateEnum.IDLE)
 
-		  const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
-			state.value = StateEnum.PENDING
-			await wait(1000)
-
-			return new Promise((resolve) => {
-			  // Get all users
-			  let items: User[] = getUsers()
-			  
-			  // Apply filters on server side
-			  if (filters && filters.length > 0) {
-				filters.forEach((filter: FilterOption) => {
-				  const { key, value, type } = filter
-				  
-				  items = items.filter(item => {
-					const itemValue = item[key as keyof User]
-					
-					if (type === 'select') {
-					  return itemValue === value
-					} else {
-					  return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
-					}
-				  })
-				})
-			  }
-			  
-			  const total = items.length
-
-			  // Apply sorting
-			  if (sortBy && sortBy.length > 0) {
-				items = items.sort((a, b) => {
-				  const key = sortBy[0].key as keyof User
-				  const order = sortBy[0].order === 'asc' ? 1 : -1
-				  
-				  return String(a[key]) > String(b[key]) ? order : -order
-				})
-			  }
-
-			  // Apply pagination
-			  if (itemsPerPage > 0) {
-				items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-			  }
-
-			  resolve({ items, total })
-			  state.value = StateEnum.RESOLVED
+			const options = ref<DataOptions>({
+				itemsPerPage: 5,
+				page: 1,
+				filters: [],
 			})
-		  }
 
-		  const getUsers = (): User[] => {
-			return [
-			  { name: 'Jean Dupont', department: 'RH', status: 'Actif' },
-			  { name: 'Marie Martin', department: 'IT', status: 'En congé' },
-			  { name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
-			  { name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
-			  { name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
-			  { name: 'Julie Bernard', department: 'RH', status: 'Actif' },
-			  { name: 'Nicolas Moreau', department: 'Finance', status: 'En congé' },
-			  { name: 'Camille Dubois', department: 'Marketing', status: 'Inactif' },
-			  { name: 'Alexandre Lefebvre', department: 'IT', status: 'Actif' },
-			  { name: 'Émilie Girard', department: 'RH', status: 'En congé' },
-			  { name: 'Lucas Roux', department: 'Finance', status: 'Actif' },
-			  { name: 'Chloé Lambert', department: 'Marketing', status: 'Actif' },
-			  { name: 'Maxime Simon', department: 'IT', status: 'Inactif' },
-			  { name: 'Laura Fournier', department: 'RH', status: 'Actif' },
-			  { name: 'Antoine Mercier', department: 'Finance', status: 'En congé' },
+			const headers = [
+				{ 
+				title: 'Nom', 
+				key: 'name',
+				filterable: true,
+				filterType: 'text' as const
+				},
+				{ 
+				title: 'Département', 
+				key: 'department',
+				filterable: true,
+				filterType: 'select' as const,
+				multiple: true,
+				chips: true,
+				hideMessages: true,
+				filterOptions: [
+					{ text: 'RH', value: 'RH' },
+					{ text: 'IT', value: 'IT' },
+					{ text: 'Finance', value: 'Finance' },
+					{ text: 'Marketing', value: 'Marketing' },
+				]
+				},
+				{ 
+				title: 'Statut', 
+				key: 'status',
+				filterable: true,
+				filterType: 'select' as const,
+				multiple: true,
+				chips: true,
+				hideMessages: true,
+				filterOptions: [
+					{ text: 'Actif', value: 'Actif' },
+					{ text: 'En congé', value: 'En congé' },
+					{ text: 'Inactif', value: 'Inactif' },
+				]
+				}
 			]
-		  }
-		  
-		  // Initialize data
-		  fetchData()
-		</script>
+
+			const fetchData = async (): Promise<void> => {
+				const { items, total } = await getDataFromApi(options.value)
+				filteredUsers.value = items
+				totalFilteredUsers.value = total
+			}
+
+			const wait = async (ms: number) => {
+				return new Promise(resolve => setTimeout(resolve, ms))
+			}
+
+			const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
+				state.value = StateEnum.PENDING
+				await wait(1000)
+
+				return new Promise((resolve) => {
+				// Get all users
+				let items: User[] = getUsers()
+				
+				// Apply filters on server side
+				if (filters && filters.length > 0) {
+					filters.forEach((filter: FilterOption) => {
+					const { key, value, type } = filter
+					
+					items = items.filter(item => {
+						const itemValue = item[key as keyof User]
+						
+						if (type === 'select') {
+							if (Array.isArray(value)) {
+								// Empty array means no filter applied
+								if (value.length === 0) return true
+								// Check if item value is in the selected values
+								return value.includes(itemValue)
+							}
+							else {
+								return itemValue === value
+							}
+						} else {
+						return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+						}
+					})
+					})
+				}
+				
+				const total = items.length
+
+				// Apply sorting
+				if (sortBy && sortBy.length > 0) {
+					items = items.sort((a, b) => {
+					const key = sortBy[0].key as keyof User
+					const order = sortBy[0].order === 'asc' ? 1 : -1
+					
+					return String(a[key]) > String(b[key]) ? order : -order
+					})
+				}
+
+				// Apply pagination
+				if (itemsPerPage > 0) {
+					items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+				}
+
+				resolve({ items, total })
+				state.value = StateEnum.RESOLVED
+				})
+			}
+
+			const getUsers = (): User[] => {
+				return [
+				{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+				{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+				{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+				{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+				{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+				{ name: 'Julie Bernard', department: 'RH', status: 'Actif' },
+				{ name: 'Nicolas Moreau', department: 'Finance', status: 'En congé' },
+				{ name: 'Camille Dubois', department: 'Marketing', status: 'Inactif' },
+				{ name: 'Alexandre Lefebvre', department: 'IT', status: 'Actif' },
+				{ name: 'Émilie Girard', department: 'RH', status: 'En congé' },
+				{ name: 'Lucas Roux', department: 'Finance', status: 'Actif' },
+				{ name: 'Chloé Lambert', department: 'Marketing', status: 'Actif' },
+				{ name: 'Maxime Simon', department: 'IT', status: 'Inactif' },
+				{ name: 'Laura Fournier', department: 'RH', status: 'Actif' },
+				{ name: 'Antoine Mercier', department: 'Finance', status: 'En congé' },
+				]
+			}
+			
+			// Initialize data
+			fetchData()
+			</script>
 		`,
 			},
 		],
@@ -4347,6 +4696,524 @@ export const ColumnControls: StoryObj<typeof SyServerTable> = {
 					suffix="server-control-columns"
 					@update:options="fetchData"
 				/>
+			</div>
+			`,
+		}
+	},
+}
+
+export const SlotItem: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyServerTable
+						v-model:options="options"
+						:items="users"
+						:headers="headers"
+						:server-items-length="totalUsers"
+						:loading="state === StateEnum.PENDING"
+						suffix="server-default"
+						@update:options="fetchData"
+					>
+						<template #item="{ item }">
+							<tr>
+								<td>{{ item.lastname }}</td>
+								<td>
+									<a
+										href="#"
+										class="text-primary"
+									>
+										{{ item.firstname }}
+									</a>
+								</td>
+								<td>{{ item.email }}</td>
+							</tr>
+						</template>
+					</SyServerTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref, watch } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+					
+					interface User {
+						[key: string]: string
+						firstname: string
+						lastname: string
+						email: string
+					}
+				
+					interface DataObj {
+						items: User[]
+						total: number
+					}
+				
+					const totalUsers = ref(0)
+					const users = ref<User[]>([])
+					const state = ref(StateEnum.IDLE)
+				
+					const options = ref({
+						itemsPerPage: 5,
+						sortBy: [{ key: 'lastname', order: 'asc' }],
+						page: 1,
+					})
+				
+					const headers = [
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					]
+				
+					const fetchData = async (): Promise<void> => {
+						const { items, total } = await getDataFromApi(options.value)
+						users.value = items
+						totalUsers.value = total
+					}
+				
+					const wait = async (ms: number) => {
+						return new Promise(resolve => setTimeout(resolve, ms))
+					}
+				
+					const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
+						state.value = StateEnum.PENDING
+						await wait(1000)
+				
+						return new Promise((resolve) => {
+							let items: User[] = getUsers()
+							const total = items.length
+				
+							if (sortBy && sortBy.length > 0) {
+								items = items.sort((a, b) => {
+									const key = sortBy[0].key
+									const order = sortBy[0].order === 'asc' ? 1 : -1
+				
+									return a[key] > b[key] ? order : -order
+								})
+							}
+				
+							if (itemsPerPage > 0) {
+								items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							}
+				
+							resolve({ items, total })
+							state.value = StateEnum.RESOLVED
+						})
+					}
+				
+					const getUsers = (): User[] => {
+						return [
+							{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+							{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+							{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+							{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+							{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+							{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+							{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+							{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+							{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+							{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+							{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+							{ firstname: 'Jacques', lastname: 'Demers', email: 'jacques.demers@example.com' },
+							{ firstname: 'Aimée', lastname: 'Josseaume', email: 'aimee.josseaume@example.com' },
+							{ firstname: 'Delphine', lastname: 'Robillard', email: 'delphine.robillard@example.com' },
+							{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
+						]
+					}
+                    
+                      // Initialize data
+		  			fetchData()
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'options': {
+			itemsPerPage: 5,
+			sortBy: [{ key: 'lastname', order: 'asc' }],
+			page: 1,
+		},
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'caption': '',
+		'serverItemsLength': 15,
+		'suffix': 'server-default',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const totalUsers = ref(0)
+				const users = ref<User[]>([])
+				const state = ref(StateEnum.IDLE)
+
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
+				const fetchData = async (): Promise<void> => {
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
+					users.value = items
+					totalUsers.value = total
+				}
+
+				const wait = async (ms: number) => {
+					return new Promise(resolve => setTimeout(resolve, ms))
+				}
+
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+					state.value = StateEnum.PENDING
+					await wait(1000)
+
+					return new Promise((resolve) => {
+						let items: User[] = getUsers()
+						const total = items.length
+
+						if (sortBy && sortBy.length > 0) {
+							items = items.sort((a, b) => {
+								const key = sortBy[0].key
+								const order = sortBy[0].order === 'asc' ? 1 : -1
+
+								return a[key] > b[key] ? order : -order
+							})
+						}
+
+						if (itemsPerPage > 0) {
+							items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						}
+
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getUsers = (): User[] => {
+					return [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+						{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+						{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+						{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+						{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+						{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+						{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+						{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+						{ firstname: 'Jacques', lastname: 'Demers', email: 'jacques.demers@example.com' },
+						{ firstname: 'Aimée', lastname: 'Josseaume', email: 'aimee.josseaume@example.com' },
+						{ firstname: 'Delphine', lastname: 'Robillard', email: 'delphine.robillard@example.com' },
+						{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
+					]
+				}
+
+				// Initialize data
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
+			},
+			template: `
+			<div>
+				<SyServerTable
+					v-model:options="options"
+					:items="users"
+					:server-items-length="totalUsers"
+					:loading="state === StateEnum.PENDING"
+					v-bind="args"
+					suffix="server-slot-item"
+					@update:options="fetchData"
+				>
+					<template #item="{ item }">
+						<tr>
+							<td>{{ item.lastname }}</td>
+							<td>
+								<a
+									href="#"
+									class="text-primary"
+								>
+									{{ item.firstname }}
+								</a>
+							</td>
+							<td>{{ item.email }}</td>
+						</tr>
+					</template>
+				</SyServerTable>
+			</div>
+			`,
+		}
+	},
+}
+
+export const SlotHeaders: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyServerTable
+						v-model:options="options"
+						:items="users"
+						:headers="headers"
+						:server-items-length="totalUsers"
+						:loading="state === StateEnum.PENDING"
+						suffix="server-default"
+						@update:options="fetchData"
+					>
+						<template #headers="{ columns }">
+						  <tr>
+							<th 
+							  v-for="column in columns" 
+							  :key="column.key"
+							>
+							  <span class="font-weight-bold text-primary">
+								{{ column.title }}
+							  </span>
+							</th>
+						  </tr>
+						</template>
+					</SyServerTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref, watch } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+					
+					interface User {
+						[key: string]: string
+						firstname: string
+						lastname: string
+						email: string
+					}
+				
+					interface DataObj {
+						items: User[]
+						total: number
+					}
+				
+					const totalUsers = ref(0)
+					const users = ref<User[]>([])
+					const state = ref(StateEnum.IDLE)
+				
+					const options = ref({
+						itemsPerPage: 5,
+						sortBy: [{ key: 'lastname', order: 'asc' }],
+						page: 1,
+					})
+				
+					const headers = [
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					]
+				
+					const fetchData = async (): Promise<void> => {
+						const { items, total } = await getDataFromApi(options.value)
+						users.value = items
+						totalUsers.value = total
+					}
+				
+					const wait = async (ms: number) => {
+						return new Promise(resolve => setTimeout(resolve, ms))
+					}
+				
+					const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
+						state.value = StateEnum.PENDING
+						await wait(1000)
+				
+						return new Promise((resolve) => {
+							let items: User[] = getUsers()
+							const total = items.length
+				
+							if (sortBy && sortBy.length > 0) {
+								items = items.sort((a, b) => {
+									const key = sortBy[0].key
+									const order = sortBy[0].order === 'asc' ? 1 : -1
+				
+									return a[key] > b[key] ? order : -order
+								})
+							}
+				
+							if (itemsPerPage > 0) {
+								items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							}
+				
+							resolve({ items, total })
+							state.value = StateEnum.RESOLVED
+						})
+					}
+				
+					const getUsers = (): User[] => {
+						return [
+							{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+							{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+							{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+							{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+							{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+							{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+							{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+							{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+							{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+							{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+							{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+							{ firstname: 'Jacques', lastname: 'Demers', email: 'jacques.demers@example.com' },
+							{ firstname: 'Aimée', lastname: 'Josseaume', email: 'aimee.josseaume@example.com' },
+							{ firstname: 'Delphine', lastname: 'Robillard', email: 'delphine.robillard@example.com' },
+							{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
+						]
+					}
+                    
+                      // Initialize data
+		  			fetchData()
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'options': {
+			itemsPerPage: 5,
+			sortBy: [{ key: 'lastname', order: 'asc' }],
+			page: 1,
+		},
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'caption': '',
+		'serverItemsLength': 15,
+		'suffix': 'server-default',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const totalUsers = ref(0)
+				const users = ref<User[]>([])
+				const state = ref(StateEnum.IDLE)
+
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
+				const fetchData = async (): Promise<void> => {
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
+					users.value = items
+					totalUsers.value = total
+				}
+
+				const wait = async (ms: number) => {
+					return new Promise(resolve => setTimeout(resolve, ms))
+				}
+
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+					state.value = StateEnum.PENDING
+					await wait(1000)
+
+					return new Promise((resolve) => {
+						let items: User[] = getUsers()
+						const total = items.length
+
+						if (sortBy && sortBy.length > 0) {
+							items = items.sort((a, b) => {
+								const key = sortBy[0].key
+								const order = sortBy[0].order === 'asc' ? 1 : -1
+
+								return a[key] > b[key] ? order : -order
+							})
+						}
+
+						if (itemsPerPage > 0) {
+							items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						}
+
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getUsers = (): User[] => {
+					return [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+						{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+						{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+						{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+						{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+						{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+						{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+						{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+						{ firstname: 'Jacques', lastname: 'Demers', email: 'jacques.demers@example.com' },
+						{ firstname: 'Aimée', lastname: 'Josseaume', email: 'aimee.josseaume@example.com' },
+						{ firstname: 'Delphine', lastname: 'Robillard', email: 'delphine.robillard@example.com' },
+						{ firstname: 'Alexandre', lastname: 'Lazure', email: 'alexandre.lazure@example.com' },
+					]
+				}
+
+				// Initialize data
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
+			},
+			template: `
+			<div>
+				<SyServerTable
+					v-model:options="options"
+					:items="users"
+					:server-items-length="totalUsers"
+					:loading="state === StateEnum.PENDING"
+					v-bind="args"
+					suffix="server-slot-item"
+					@update:options="fetchData"
+				>
+					<template #headers="{ columns }">
+						<tr>
+							<th
+								v-for="column in columns"
+								:key="column.key"
+							>
+								<span class="font-weight-bold text-primary">
+								{{ column.title }}
+							  </span>
+							</th>
+						</tr>
+					</template>
+				</SyServerTable>
 			</div>
 			`,
 		}

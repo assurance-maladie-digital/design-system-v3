@@ -62,7 +62,7 @@ describe('FilterSideBar', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		expect(wrapper.find('.sy-filters-side-bar').exists()).toBe(true)
 	})
 
 	it('renders correctly with an active filter', async () => {

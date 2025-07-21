@@ -25,6 +25,7 @@ export const itemsChips = [
 	{ text: 'OTP Input ', value: 23 },
 	{ text: 'Range Sliders', value: 24 },
 	{ text: 'Date Input', value: 25 },
+	{ text: 'Icon', value: 26 },
 
 ]
 
@@ -80,15 +81,15 @@ export const VuetifyItems = [
 				solution: [
 					{
 						name: 'SySelect',
-						href: '/?path=/docs/composants-formulaires-syselect--docs',
+						href: '/?path=/docs/composants-formulaires-selects-syselect--docs',
 					},
 					{
 						name: 'SyInputSelect',
-						href: '/?path=/docs/composants-formulaires-syinputselect--docs',
+						href: '/?path=/docs/composants-formulaires-selects-syinputselect--docs',
 					},
 					{
 						name: 'SyBtnSelect',
-						href: '/?path=/docs/composants-formulaires-sybtnselect--docs',
+						href: '/?path=/docs/composants-formulaires-selects-sybtnselect--docs',
 					},
 				],
 			},
@@ -547,6 +548,22 @@ export const VuetifyItems = [
 				solution: [{
 					name: 'DatePicker',
 					href: '/?path=/docs/composants-formulaires-datepicker-introduction--docs',
+				}],
+			},
+			{
+				name: 'Icon',
+				value: 26,
+				errorImportants: [
+					'1.2Chaque image de décoration est-elle correctement ignorée par les technologies d’assistance ? ',
+				],
+				errorSolutionImportant: [],
+
+				errorIndeterminated: [],
+				errorSolutionIndeterminated: [],
+
+				solution: [{
+					name: 'SyIcon',
+					href: '/?path=/docs/composants-formulaires-syicon--docs',
 				}],
 			},
 		],

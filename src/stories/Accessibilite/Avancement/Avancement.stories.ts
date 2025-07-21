@@ -16,7 +16,7 @@ export const PreAudit: StoryObj = {
 					color="success"
 					variant="elevated"
 				>
-					59/59 Composants
+					60/60 Composants
 				</v-chip>
 			`,
 		}
@@ -42,9 +42,9 @@ export const Manuel: StoryObj = {
 					{ composant: 'PageContainer', status: 'Audité' },
 					{ composant: 'SkipLink', status: 'Audité' },
 					{ composant: 'Alerts', status: 'Audité' },
-					{ composant: 'NotificationBar', status: 'Non audité' },
+					{ composant: 'NotificationBar', status: 'Audité' },
 					{ composant: 'BackBtn', status: 'Audité' },
-					{ composant: 'BackToTopBtn', status: 'Audité' },
+					{ composant: 'BackToTopBtn', status: 'Non audité' },
 					{ composant: 'CopyBtn', status: 'Audité' },
 					{ composant: 'LangBtn', status: 'Audité' },
 					{ composant: 'DownloadBtn', status: 'Audité' },
@@ -56,7 +56,7 @@ export const Manuel: StoryObj = {
 					{ composant: 'SubHeader', status: 'Non audité' },
 					{ composant: 'HeaderLoading', status: 'Non audité' },
 					{ composant: 'HeaderToolbar', status: 'Non audité' },
-					{ composant: 'Footer', status: 'Non audité' },
+					{ composant: 'Footer', status: 'En cours' },
 					{ composant: 'SySelect', status: 'En cours' },
 					{ composant: 'SyInputSelect', status: 'Non audité' },
 					{ composant: 'Logo', status: 'Audité' },
@@ -64,10 +64,10 @@ export const Manuel: StoryObj = {
 					{ composant: 'DataList', status: 'Non audité' },
 					{ composant: 'DataListItem', status: 'Non audité' },
 					{ composant: 'DataListLoading', status: 'Non audité' },
-					{ composant: 'ErrorPage', status: 'Non audité' },
+					{ composant: 'ErrorPage', status: 'Audité' },
 					{ composant: 'CookieBanner', status: 'Non audité' },
 					{ composant: 'ExternalLinks', status: 'Non audité' },
-					{ composant: 'ContextualMenu', status: 'Non audité' },
+					{ composant: 'ContextualMenu', status: 'En cours' },
 					{ composant: 'DialogBox', status: 'Non audité' },
 					{ composant: 'PasswordField', status: 'Non audité' },
 					{ composant: 'PhoneField', status: 'Non audité' },
@@ -90,10 +90,11 @@ export const Manuel: StoryObj = {
 					{ composant: 'PaginatedTable', status: 'Non audité' },
 					{ composant: 'TableToolbar', status: 'Non audité' },
 					{ composant: 'ErrorPage', status: 'Audité' },
-					{ composant: 'NotFoundPage', status: 'En cours' },
-					{ composant: 'MaintenancePage', status: 'En cours' },
+					{ composant: 'NotFoundPage', status: 'Audité' },
+					{ composant: 'MaintenancePage', status: 'Audité' },
 					{ composant: 'ContextualMenu', status: 'En cours' },
 					{ composant: 'ExternalLinks', status: 'En cours' },
+					{ composant: 'SyIcon', status: 'Non audité' },
 				]
 
 				// Options de filtrage par statut
@@ -224,7 +225,7 @@ export const Manuel: StoryObj = {
 						</div>
 
 						<div class="pa-2 text-caption text-right">
-							Dernière mise à jour: 20/06/2025
+							Dernière mise à jour: 11/07/2025
 						</div>
 					</div>
 				</div>

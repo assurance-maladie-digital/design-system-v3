@@ -1,0 +1,364 @@
+import { Meta, Source } from '@storybook/addon-docs'
+
+<Meta title="Guide du dev/Classes utilitaires/Utilitaires de validation" />
+
+# Utilitaires de validation
+
+Les utilitaires de validation vous permettent de vérifier la validité des données dans vos applications, notamment les dates et les emails.
+
+## propValidator
+
+Cette fonction facilite la validation des props dans les composants Vue.
+
+### Importation
+
+<Source dark code={`import { propValidator } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`export default {
+  props: {
+    // Valider une prop avec des valeurs spécifiques
+    size: {
+      type: String,
+      validator: propValidator('size', ['small', 'medium', 'large'])
+    },
+    
+    // Valider une prop avec des valeurs numériques
+    priority: {
+      type: Number,
+      validator: propValidator('priority', [1, 2, 3, 4, 5])
+    }
+  }
+}
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <div :class="\`button-\${size}\`">
+    <slot />
+  </div>
+</template>
+
+<script>
+import { propValidator } from '@cnamts/synpase'
+
+export default {
+  name: 'CustomButton',
+  props: {
+    size: {
+      type: String,
+      default: 'medium',
+      validator: propValidator('size', ['small', 'medium', 'large'])
+    },
+    variant: {
+      type: String,
+      default: 'primary',
+      validator: propValidator('variant', ['primary', 'secondary', 'outline', 'text'])
+    }
+  }
+}
+</script>
+`}/>
+
+## ruleMessage
+
+Cette fonction génère un message d'erreur formaté pour les règles de validation.
+
+### Importation
+
+<Source dark code={`import { ruleMessage } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`// Message simple
+ruleMessage('Ce champ est requis') // 'Ce champ est requis'
+
+// Message avec nom de champ
+ruleMessage('Ce champ est requis', 'Email') // 'Email : Ce champ est requis'
+`}/>
+
+### Exemple pratique
+
+<Source dark code={`<template>
+  <v-form ref="form">
+    <v-text-field
+      v-model="email"
+      label="Email"
+      :rules="emailRules"
+    />
+    <v-text-field
+      v-model="password"
+      label="Mot de passe"
+      type="password"
+      :rules="passwordRules"
+    />
+  </v-form>
+</template>
+
+<script>
+import { ref } from 'vue'
+import { ruleMessage } from '@cnamts/synpase'
+
+export default {
+  setup() {
+    const email = ref('')
+    const password = ref('')
+    
+    const emailRules = [
+      v => !!v || ruleMessage('Ce champ est requis', 'Email'),
+      v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || ruleMessage('Format d\'email invalide', 'Email')
+    ]
+    
+    const passwordRules = [
+      v => !!v || ruleMessage('Ce champ est requis', 'Mot de passe'),
+      v => v.length >= 8 || ruleMessage('Le mot de passe doit contenir au moins 8 caractères', 'Mot de passe')
+    ]
+    
+    return {
+      email,
+      password,
+      emailRules,
+      passwordRules
+    }
+  }
+}
+</script>
+`}/>
+
+## Validation de dates
+
+### isDateAfter
+
+Vérifie si une date est postérieure à une autre date.
+
+#### Importation
+
+<Source dark code={`import { isDateAfter } from '@cnamts/synpase'
+`}/>
+
+#### Utilisation
+
+<Source dark code={`// Avec des chaînes de dates (format DD/MM/YYYY)
+isDateAfter('15/02/2023', '10/02/2023') // true
+isDateAfter('10/02/2023', '15/02/2023') // false
+ `}/>
+
+<Source dark code={`// Avec des objets Date
+isDateAfter(new Date('2023-02-15'), new Date('2023-02-10')) // true
+`}/>
+
+### isDateBefore
+
+Vérifie si une date est antérieure à une autre date.
+
+#### Importation
+
+<Source dark code={`import { isDateBefore } from '@cnamts/synpase'
+`}/>
+
+#### Utilisation
+
+<Source dark code={`// Avec des chaînes de dates (format DD/MM/YYYY)
+isDateBefore('10/02/2023', '15/02/2023') // true
+isDateBefore('15/02/2023', '10/02/2023') // false
+
+// Avec des objets Date
+isDateBefore(new Date('2023-02-10'), new Date('2023-02-15')) // true
+`}/>
+
+### isDateInRange
+
+Vérifie si une date est comprise dans une plage de dates.
+
+#### Importation
+
+<Source dark code={`import { isDateInRange } from '@cnamts/synpase'
+`}/>
+
+#### Utilisation
+
+<Source dark code={`// Avec des chaînes de dates (format DD/MM/YYYY)
+isDateInRange('15/02/2023', '10/02/2023', '20/02/2023') // true
+isDateInRange('05/02/2023', '10/02/2023', '20/02/2023') // false
+
+// Avec des objets Date
+isDateInRange(
+  new Date('2023-02-15'),
+  new Date('2023-02-10'),
+  new Date('2023-02-20')
+) // true
+`}/>
+
+### isDateValidUtil
+
+Vérifie si une chaîne de date est valide.
+
+#### Importation
+
+<Source dark code={`import { isDateValidUtil } from '@cnamts/synpase'
+`}/>
+
+#### Utilisation
+
+<Source dark code={`// Dates valides
+isDateValidUtil('15/02/2023') // true
+isDateValidUtil('2023-02-15') // true
+
+// Dates invalides
+isDateValidUtil('31/02/2023') // false (février n'a pas 31 jours)
+isDateValidUtil('date invalide') // false
+`}/>
+
+### isWeekend
+
+Vérifie si une date correspond à un jour de week-end (samedi ou dimanche).
+
+#### Importation
+
+<Source dark code={`import { isWeekend } from '@cnamts/synpase'
+`}/>
+
+#### Utilisation
+
+<Source dark code={`// Avec des objets Date
+isWeekend(new Date('2023-02-18')) // true (samedi)
+isWeekend(new Date('2023-02-19')) // true (dimanche)
+isWeekend(new Date('2023-02-20')) // false (lundi)
+
+// Avec des chaînes de dates (format DD/MM/YYYY)
+isWeekend('18/02/2023') // true (samedi)
+`}/>
+
+## Validation d'email
+
+### isEmailValid
+
+Vérifie si une chaîne est un email valide.
+
+#### Importation
+
+<Source dark code={`import { isEmailValid } from '@cnamts/synpase'
+`}/>
+
+#### Utilisation
+
+<Source dark code={`// Emails valides
+isEmailValid('user@example.com') // true
+isEmailValid('user.name+tag@example.co.uk') // true
+
+// Emails invalides
+isEmailValid('invalid-email') // false
+isEmailValid('user@') // false
+`}/>
+
+## Exemple pratique complet
+
+Voici un exemple de formulaire utilisant plusieurs utilitaires de validation :
+
+<Source dark code={`<template>
+  <v-form ref="form" v-model="isFormValid">
+    <v-text-field
+      v-model="formData.email"
+      label="Email"
+      :rules="emailRules"
+    />
+    
+    <v-text-field
+      v-model="formData.startDate"
+      label="Date de début"
+      placeholder="JJ/MM/AAAA"
+      :rules="startDateRules"
+    />
+    
+    <v-text-field
+      v-model="formData.endDate"
+      label="Date de fin"
+      placeholder="JJ/MM/AAAA"
+      :rules="endDateRules"
+    />
+    
+    <v-btn
+      color="primary"
+      :disabled="!isFormValid"
+      @click="submitForm"
+    >
+      Valider
+    </v-btn>
+  </v-form>
+</template>
+
+<script>
+import { ref, reactive, computed } from 'vue'
+import {
+  isEmailValid,
+  isDateValidUtil,
+  isDateAfter,
+  isWeekend,
+  ruleMessage
+} from '@cnamts/synpase'
+
+export default {
+  setup() {
+    const form = ref(null)
+    const isFormValid = ref(false)
+    
+    const formData = reactive({
+      email: '',
+      startDate: '',
+      endDate: ''
+    })
+    
+    // Règles de validation pour l'email
+    const emailRules = [
+      v => !!v || ruleMessage('Ce champ est requis', 'Email'),
+      v => isEmailValid(v) || ruleMessage('Format d\'email invalide', 'Email')
+    ]
+    
+    // Règles de validation pour la date de début
+    const startDateRules = [
+      v => !!v || ruleMessage('Ce champ est requis', 'Date de début'),
+      v => isDateValidUtil(v) || ruleMessage('Format de date invalide (JJ/MM/AAAA)', 'Date de début'),
+      v => !isWeekend(v) || ruleMessage('La date ne peut pas être un week-end', 'Date de début')
+    ]
+    
+    // Règles de validation pour la date de fin
+    const endDateRules = computed(() => [
+      v => !!v || ruleMessage('Ce champ est requis', 'Date de fin'),
+      v => isDateValidUtil(v) || ruleMessage('Format de date invalide (JJ/MM/AAAA)', 'Date de fin'),
+      v => !isWeekend(v) || ruleMessage('La date ne peut pas être un week-end', 'Date de fin'),
+      v => !formData.startDate || !v || isDateAfter(v, formData.startDate) || 
+        ruleMessage('La date de fin doit être postérieure à la date de début', 'Date de fin')
+    ])
+    
+    const submitForm = () => {
+      if (form.value.validate()) {
+        // Traitement du formulaire
+        console.log('Formulaire valide', formData)
+      }
+    }
+    
+    return {
+      form,
+      isFormValid,
+      formData,
+      emailRules,
+      startDateRules,
+      endDateRules,
+      submitForm
+    }
+  }
+}
+</script>
+`}/>
+
+## Bonnes pratiques
+
+- Utilisez `propValidator` pour valider les props de vos composants avec des valeurs spécifiques
+- Utilisez `ruleMessage` pour créer des messages d'erreur cohérents dans vos formulaires
+- Combinez les différentes fonctions de validation pour créer des règles de validation complexes
+- Validez toujours les dates avant de les utiliser dans des calculs ou des comparaisons
+- Pour les validations de formulaire plus complexes, envisagez d'utiliser les règles de validation fournies par le Design System

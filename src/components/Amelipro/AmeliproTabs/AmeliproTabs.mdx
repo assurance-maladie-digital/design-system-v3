@@ -1,0 +1,23 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as AmeliproTabsStories from './AmeliproTabs.stories';
+
+<Meta of={AmeliproTabsStories} />
+
+# AmeliproTabs
+
+L’élément `AmeliproTabs` est utilisé pour afficher tous les éléments de type Onglets dans la charte Amelipro
+
+<Canvas of={AmeliproTabsStories.Default}  />
+
+## API
+
+<Controls of={AmeliproTabsStories.Default} />
+
+## Usages
+
+Utiliser un système d'onglets plutôt que de simples boutons affichants des contenus est important car ce système intègre plusieurs choses utiles pour l'accessibilité,
+notament des éléments permetant une bonne lecture par les assistants vocaux et tout un système de fonctionnement au clavier.
+
+
+
