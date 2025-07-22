@@ -2,6 +2,7 @@ import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPane
 import type { StoryObj } from '@storybook/vue3'
 import { AccessibiliteItemsIndeterminate, AccessibiliteItemsValidated } from './AccessibiliteItems'
 import { mdiCheckboxMarkedCircle, mdiLink, mdiEye } from '@mdi/js'
+import SyAlert from '../SyAlert/SyAlert.vue'
 
 const checkIcon = mdiCheckboxMarkedCircle
 const iconEye = mdiEye
@@ -193,6 +194,31 @@ export const Legende: StoryObj = {
 				</div>
 			  </div>
             `,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const TanaguruFalsePositives: StoryObj = {
+	render: (args) => {
+		return {
+			components: { SyAlert },
+			setup() {
+				return { args }
+			},
+			template: `
+			<SyAlert
+				type="warning"
+			>
+				L'outil Tanaguru remonte l'erreur suivante sur ce composant : <br />
+				<cite>
+				Interactive elements non reachable with keyboard navigation
+				</cite>
+				<br />
+				Tanaguru se basant sur le markup HTML, il n'est pas en mesure de détecter les éléments rendus interactifs par l'usage de JavaScript.<br>
+				Les éléments de ce composant sont bien accessibles au clavier, l'erreur est donc considérée comme un faux positif et peut être ignorée sans impact sur l'audit d'accessibilité.
+			</SyAlert>
+			`,
 		}
 	},
 	tags: ['!dev'],

@@ -6,7 +6,7 @@
 	} from '@mdi/js'
 
 	import { locales } from './locales'
-	import { computed, ref, watch, nextTick, type CSSProperties } from 'vue'
+	import { computed, ref, watch, nextTick, type CSSProperties, useId } from 'vue'
 	import { convertToUnit } from '@/utils/convertToUnit'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
@@ -24,7 +24,6 @@
 		nudgeBottom?: number | string
 		fixed?: boolean
 		ariaLabel?: string
-		ariaOwns?: string
 	}>(), {
 		position: 'top left',
 		btnText: locales.btnText,
@@ -32,7 +31,6 @@
 		nudgeBottom: 0,
 		fixed: false,
 		ariaLabel: locales.ariaLabel,
-		ariaOwns: 'external-link-btn',
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -40,6 +38,7 @@
 	const menu = ref(false)
 	const hover = ref(false)
 	const open = computed(() => menu.value || hover.value)
+	const menuId = `sy-external-links-menu-${useId()}`
 
 	const left = computed(() => props.position.includes('left'))
 	const top = computed(() => props.position.includes('top'))
@@ -84,16 +83,16 @@
 <template>
 	<div>
 		<VMenu
-			:id="props.ariaOwns"
+			:id="menuId"
 			v-bind="options.menu"
 			v-model="menu"
 			:location="top ? 'bottom' : 'top'"
 			attach
 			transition="fade-transition"
-			class="vd-external-links"
+			class="sy-external-links"
 			:class="{
-				'vd-external-links--left': left,
-				'vd-external-links--right': !left,
+				'sy-external-links--left': left,
+				'sy-external-links--right': !left,
 			}"
 		>
 			<template #activator="{ props: vMenuProps }">
@@ -103,9 +102,9 @@
 						...options.btn,
 					}"
 					:aria-label="props.ariaLabel"
-					:aria-owns="props.ariaOwns"
+					:aria-controls="menu ? menuId : undefined"
 					:style="btnStyle"
-					class="vd-external-links-btn"
+					class="sy-external-links-btn"
 					@mouseenter="hover = true"
 					@mouseleave="hover = false"
 					@focusin="hover = true"
@@ -116,7 +115,7 @@
 							'ml-3': !left,
 							'mr-3': left,
 						}"
-						class="vd-external-links-btn-text white--text"
+						class="sy-external-links-btn-text white--text"
 					>
 						{{ btnText }}
 					</span>
@@ -134,7 +133,7 @@
 				v-bind="options.list"
 				ref="list"
 				v-toolbar
-				class="vd-external-links-list elevation-3"
+				class="sy-external-links-list elevation-3"
 			>
 				<li
 					v-for="(item, index) in items"
@@ -143,7 +142,7 @@
 					<VBtn
 						:href="item.href"
 						block
-						class="vd-external-links-list-item py-2"
+						class="sy-external-links-list-item py-2"
 						v-bind="options.listItem"
 					>
 						<div
@@ -180,7 +179,7 @@
 <style lang="scss" scoped>
 $list-max-height: 248px;
 
-.vd-external-links-btn {
+.sy-external-links-btn {
 	// Allow overgrow on mobile
 	max-width: none;
 	border-radius: 0 !important;
@@ -196,21 +195,21 @@ $list-max-height: 248px;
 	}
 }
 
-.vd-external-links--left :deep(.v-overlay__content) {
+.sy-external-links--left :deep(.v-overlay__content) {
 	left: 0 !important;
 	right: auto !important;
 }
 
-.vd-external-links--right :deep(.v-overlay__content) {
+.sy-external-links--right :deep(.v-overlay__content) {
 	right: 0 !important;
 	left: auto !important;
 }
 
-.vd-external-links > :deep(.v-overlay__content) {
+.sy-external-links > :deep(.v-overlay__content) {
 	border-radius: 0;
 }
 
-.vd-external-links-list {
+.sy-external-links-list {
 	max-height: $list-max-height;
 	overflow-y: auto;
 	border-radius: 0;
@@ -221,7 +220,7 @@ $list-max-height: 248px;
 		0 3px 14px 2px var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
 }
 
-.vd-external-links-list-item {
+.sy-external-links-list-item {
 	padding-block: 4px !important;
 	height: 48px !important;
 	border-radius: 0 !important;
@@ -241,7 +240,7 @@ $list-max-height: 248px;
 	}
 }
 
-.vd-external-links-list-item :deep(.v-btn__content) {
+.sy-external-links-list-item :deep(.v-btn__content) {
 	width: 100%;
 	font-size: 1rem;
 	font-weight: 400;
@@ -249,7 +248,7 @@ $list-max-height: 248px;
 }
 
 @media only screen and (height <= 340px) {
-	.vd-external-links-btn {
+	.sy-external-links-btn {
 		z-index: 4 !important;
 	}
 }

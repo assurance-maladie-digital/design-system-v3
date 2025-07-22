@@ -62,9 +62,9 @@ describe('ExternalLinks', () => {
 		})
 
 		const button = wrapper.find('button')
-		expect(wrapper.find('.vd-external-links-list').exists()).toBe(false)
+		expect(wrapper.find('.sy-external-links-list').exists()).toBe(false)
 		await button.trigger('click')
-		expect(wrapper.find('.vd-external-links-list').exists()).toBe(true)
+		expect(wrapper.find('.sy-external-links-list').exists()).toBe(true)
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
@@ -114,7 +114,7 @@ describe('ExternalLinks', () => {
 		await button.trigger('click')
 
 		expect(wrapper.html()).toMatchSnapshot()
-		expect(wrapper.find('.vd-external-links-btn').attributes('style')).toContain('position: fixed;')
+		expect(wrapper.find('.sy-external-links-btn').attributes('style')).toContain('position: fixed;')
 	})
 
 	it('slides on hover or focus', async () => {
