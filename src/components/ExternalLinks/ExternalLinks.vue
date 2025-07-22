@@ -6,10 +6,12 @@
 	} from '@mdi/js'
 
 	import { locales } from './locales'
-	import { computed, ref, type CSSProperties } from 'vue'
+	import { computed, ref, watch, nextTick, type CSSProperties, useId } from 'vue'
 	import { convertToUnit } from '@/utils/convertToUnit'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
+	import { vToolbar } from '@/directives/Toolbar'
+	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		items: Array<{
@@ -22,15 +24,13 @@
 		nudgeBottom?: number | string
 		fixed?: boolean
 		ariaLabel?: string
-		ariaOwns?: string
 	}>(), {
 		position: 'top left',
 		btnText: locales.btnText,
 		nudgeTop: 0,
 		nudgeBottom: 0,
 		fixed: false,
-		ariaLabel: 'external-link-btn',
-		ariaOwns: 'external-link-btn',
+		ariaLabel: locales.ariaLabel,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -38,6 +38,7 @@
 	const menu = ref(false)
 	const hover = ref(false)
 	const open = computed(() => menu.value || hover.value)
+	const menuId = `sy-external-links-menu-${useId()}`
 
 	const left = computed(() => props.position.includes('left'))
 	const top = computed(() => props.position.includes('top'))
@@ -67,23 +68,31 @@
 		}
 		return left.value ? rightArrowIcon : leftArrowIcon
 	})
+
+	const list = ref<HTMLElement | null>(null)
+
+	watch(menu, async (newValue) => {
+		if (newValue) {
+			await nextTick()
+			const firstItem = list.value?.querySelector<HTMLElement>('li a')
+			firstItem?.focus()
+		}
+	})
 </script>
 
 <template>
-	<div
-		:id="props.ariaOwns"
-	>
+	<div>
 		<VMenu
+			:id="menuId"
 			v-bind="options.menu"
-			:id="props.ariaOwns"
 			v-model="menu"
 			:location="top ? 'bottom' : 'top'"
 			attach
 			transition="fade-transition"
-			class="vd-external-links"
+			class="sy-external-links"
 			:class="{
-				'vd-external-links--left': left,
-				'vd-external-links--right': !left,
+				'sy-external-links--left': left,
+				'sy-external-links--right': !left,
 			}"
 		>
 			<template #activator="{ props: vMenuProps }">
@@ -93,9 +102,9 @@
 						...options.btn,
 					}"
 					:aria-label="props.ariaLabel"
-					:aria-owns="props.ariaOwns"
+					:aria-controls="menu ? menuId : undefined"
 					:style="btnStyle"
-					class="vd-external-links-btn"
+					class="sy-external-links-btn"
 					@mouseenter="hover = true"
 					@mouseleave="hover = false"
 					@focusin="hover = true"
@@ -106,41 +115,54 @@
 							'ml-3': !left,
 							'mr-3': left,
 						}"
-						class="vd-external-links-btn-text white--text"
+						class="sy-external-links-btn-text white--text"
 					>
 						{{ btnText }}
 					</span>
 
-					<VIcon v-bind="options.btnIcon">
-						{{ arrowIcon }}
-					</VIcon>
+					<SyIcon
+						v-bind="options.btnIcon"
+						:icon="arrowIcon"
+						decorative
+					/>
 				</VBtn>
 			</template>
 
-			<VList
+			<ul
 				v-if="items.length"
 				v-bind="options.list"
-				class="vd-external-links-list"
+				ref="list"
+				v-toolbar
+				class="sy-external-links-list elevation-3"
 			>
-				<VListItem
+				<li
 					v-for="(item, index) in items"
 					:key="index"
-					:href="item.href"
-					v-bind="options.listItem"
 				>
-					<div class="d-flex flex-row justify-space-between">
-						<VListItemTitle v-bind="options.listItemTitle">
-							{{ item.text }}
-						</VListItemTitle>
+					<VBtn
+						:href="item.href"
+						block
+						class="sy-external-links-list-item py-2"
+						v-bind="options.listItem"
+					>
+						<div
+							class="w-100 h-100 d-flex justify-space-between align-center"
+						>
+							<div v-bind="options.listItemTitle">
+								{{ item.text }}
+							</div>
 
-						<slot name="link-icon">
-							<VIcon v-bind="options.linkIcon">
-								{{ linkIcon }}
-							</VIcon>
-						</slot>
-					</div>
-				</VListItem>
-			</VList>
+							<slot name="link-icon">
+								<SyIcon
+									v-bind="options.linkIcon"
+									:icon="linkIcon"
+									decorative
+								/>
+							</slot>
+						</div>
+					</VBtn>
+				</li>
+			</ul>
 
 			<VSheet
 				v-else
@@ -157,9 +179,10 @@
 <style lang="scss" scoped>
 $list-max-height: 248px;
 
-.vd-external-links-btn {
+.sy-external-links-btn {
 	// Allow overgrow on mobile
 	max-width: none;
+	border-radius: 0 !important;
 
 	:deep(.v-btn__content) {
 		flex-direction: inherit;
@@ -172,28 +195,60 @@ $list-max-height: 248px;
 	}
 }
 
-.vd-external-links--left :deep(.v-overlay__content) {
+.sy-external-links--left :deep(.v-overlay__content) {
 	left: 0 !important;
 	right: auto !important;
 }
 
-.vd-external-links--right :deep(.v-overlay__content) {
+.sy-external-links--right :deep(.v-overlay__content) {
 	right: 0 !important;
 	left: auto !important;
 }
 
-.vd-external-links > :deep(.v-overlay__content) {
+.sy-external-links > :deep(.v-overlay__content) {
 	border-radius: 0;
 }
 
-.vd-external-links-list {
+.sy-external-links-list {
 	max-height: $list-max-height;
 	overflow-y: auto;
 	border-radius: 0;
+	background-color: white;
+	box-shadow:
+		0 5px 5px -3px var(--v-shadow-key-umbra-opacity, rgb(0 0 0 / 20%)),
+		0 8px 10px 1px var(--v-shadow-key-penumbra-opacity, rgb(0 0 0 / 14%)),
+		0 3px 14px 2px var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
+}
+
+.sy-external-links-list-item {
+	padding-block: 4px !important;
+	height: 48px !important;
+	border-radius: 0 !important;
+
+	&:focus-visible {
+		outline: 0;
+
+		:deep(.v-btn__overlay) {
+			background-color: transparent !important;
+			display: none !important;
+		}
+
+		&::after {
+			opacity: 1;
+			border: 2px solid rgb(var(--v-theme-primary));
+		}
+	}
+}
+
+.sy-external-links-list-item :deep(.v-btn__content) {
+	width: 100%;
+	font-size: 1rem;
+	font-weight: 400;
+	letter-spacing: 0.0094em;
 }
 
 @media only screen and (height <= 340px) {
-	.vd-external-links-btn {
+	.sy-external-links-btn {
 		z-index: 4 !important;
 	}
 }
