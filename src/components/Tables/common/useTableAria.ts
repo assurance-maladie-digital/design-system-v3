@@ -198,11 +198,46 @@ export function useTableAria({
 		statusMessage.value = locales.rowCountStatus(count)
 	}
 
+	// Ensure tabbable elements are never hidden from screen readers
+	const ensureTabbableElementsAccessible = async () => {
+		await nextTick()
+
+		const tableContainer = table.value?.$el
+		if (!tableContainer) return
+
+		// Find all tabbable elements within the table container
+		const tabbableElements = tableContainer.querySelectorAll(
+			'[tabindex]:not([tabindex="-1"]), button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [role="combobox"], [role="button"]',
+		)
+
+		tabbableElements.forEach((element: Element) => {
+			// Check if the element or any of its parents have aria-hidden="true"
+			let current = element as HTMLElement
+			while (current && current !== tableContainer) {
+				if (current.getAttribute('aria-hidden') === 'true') {
+					// Remove aria-hidden from tabbable elements and their containers
+					current.removeAttribute('aria-hidden')
+
+					// Add a data attribute to track that we modified this for accessibility
+					current.setAttribute('data-aria-accessible', 'true')
+				}
+				current = current.parentElement as HTMLElement
+			}
+
+			// Ensure the tabbable element itself is not hidden
+			if ((element as HTMLElement).getAttribute('aria-hidden') === 'true') {
+				(element as HTMLElement).removeAttribute('aria-hidden');
+				(element as HTMLElement).setAttribute('data-aria-accessible', 'true')
+			}
+		})
+	}
+
 	// Setup all ARIA attributes
 	const setupAria = async () => {
 		await updateTableAria()
 		await updateRowAria()
 		await updateHeaderAria()
+		await ensureTabbableElementsAccessible()
 		updateStatusMessage()
 	}
 
