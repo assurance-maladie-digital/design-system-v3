@@ -541,7 +541,6 @@
 </script>
 
 <template>
-	<div>
 		<VTextField
 			:id="inputId"
 			ref="input"
@@ -693,7 +692,6 @@
 				</VListItemTitle>
 			</VListItem>
 		</VList>
-	</div>
 </template>
 
 <style scoped lang="scss">
