@@ -77,11 +77,14 @@ const meta = {
 			},
 		},
 		conformityLevel: {
-			control: { type: 'select', options: ['non', 'partiellement', 'totalement'] },
+			options: ['non', 'partiellement', 'totalement'],
+			control: {
+				type: 'select',
+			},
 			description: 'Niveau de conformité RGAA',
 			table: {
 				type: {
-					summary: 'string',
+					summary: 'select',
 				},
 			},
 		},
