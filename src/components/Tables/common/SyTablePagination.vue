@@ -90,11 +90,11 @@
 		// Use nextTick to ensure the DOM is fully rendered
 		nextTick(() => {
 			if (selectRef.value) {
-				// Access the VTextField component's DOM element
-				const textFieldEl = selectRef.value.$el
-				if (textFieldEl && typeof textFieldEl.querySelector === 'function') {
+				// Access the SySelect component
+				const SySelectEl = selectRef.value.$el
+				if (SySelectEl && typeof SySelectEl.querySelector === 'function') {
 					// Find the input element
-					const inputElement = textFieldEl.querySelector('input')
+					const inputElement = SySelectEl.querySelector('input')
 					if (inputElement) {
 						// Remove the aria-describedby attribute
 						inputElement.removeAttribute('aria-describedby')
