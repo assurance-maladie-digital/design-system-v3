@@ -111,7 +111,9 @@
 		</section>
 
 		<section class="non-accessible-content">
-			<h2>Contenus non accessibles</h2>
+			<h2 v-if="nonConformities && nonConformities.length > 0">
+				Contenus non accessibles
+			</h2>
 
 			<div
 				v-if="nonConformities && nonConformities.length > 0"
