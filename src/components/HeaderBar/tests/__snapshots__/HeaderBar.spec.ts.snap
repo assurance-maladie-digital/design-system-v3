@@ -3,6 +3,7 @@
 exports[`HeaderBar > should render the component 1`] = `
 <header
   class="header"
+  role="banner"
   style="min-height: auto;"
 >
   <div
@@ -21,7 +22,7 @@ exports[`HeaderBar > should render the component 1`] = `
           class="logo"
           href="/"
         ><svg
-          aria-label="Logo de l'Assurance Maladie, cliquez pour revenir à l'accueil"
+          aria-label="Sécurité sociale, l'Assurance Maladie : Agir ensemble, protéger chacun. Retour à l'accueil."
           fill="#0c419a"
           focusable="false"
           height="42"
