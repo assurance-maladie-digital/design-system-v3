@@ -16,6 +16,7 @@
 	import { useTableItems } from '../common/useTableItems'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
+	import { useTableAria } from '../common/useTableAria'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
@@ -137,6 +138,7 @@
 	// Apply accessibility attributes when component is mounted
 	onMounted(() => {
 		accessibilityRowCheckboxes()
+		setupAria()
 	})
 
 	const { getItemValue, toggleAllRows } = useTableCheckbox({
@@ -145,6 +147,19 @@
 		updateModelValue: (value) => {
 			model.value = value
 		},
+	})
+
+	// Use the ARIA accessibility composable
+	const {
+		statusRegionId,
+		statusMessage,
+		setupAria,
+	} = useTableAria({
+		table,
+		items: itemsRef,
+		totalItemsCount: itemsLength,
+		options,
+		uniqueTableId: uniqueTableId.value,
 	})
 
 	defineExpose({ filterItems })
@@ -203,6 +218,15 @@
 		:id="uniqueTableId"
 		:class="['sy-server-table', { 'sy-server-table--striped': props.striped }]"
 	>
+		<!-- ARIA status region for row count announcements -->
+		<div
+			:id="statusRegionId"
+			role="status"
+			aria-live="polite"
+			class="d-sr-only"
+		>
+			{{ statusMessage }}
+		</div>
 		<VDataTableServer
 			ref="table"
 			v-bind="propsFacade"

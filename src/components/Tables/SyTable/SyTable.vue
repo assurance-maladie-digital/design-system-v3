@@ -16,6 +16,7 @@
 	import { useTableHeaders } from '../common/useTableHeaders'
 	import { useTableItems } from '../common/useTableItems'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
+	import { useTableAria } from '../common/useTableAria'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -104,16 +105,26 @@
 		emit,
 	})
 
-	// Create a computed property for items to ensure reactivity
-	const tableItems = computed(() => props.items)
-
 	// Use the table checkbox composable
-	const { getItemValue, toggleAllRows } = useTableCheckbox({
-		items: tableItems,
+	const { toggleAllRows, getItemValue } = useTableCheckbox({
+		items: filteredItems,
 		modelValue: model,
 		updateModelValue: (value) => {
 			model.value = value
 		},
+	})
+
+	// Use the ARIA accessibility composable
+	const {
+		statusRegionId,
+		statusMessage,
+		setupAria,
+	} = useTableAria({
+		table,
+		items: filteredItems,
+		totalItemsCount: itemsLength,
+		options,
+		uniqueTableId: uniqueTableId.value,
 	})
 
 	// Function to add accessibility attributes to row checkboxes
@@ -142,6 +153,7 @@
 	// Apply accessibility attributes when component is mounted
 	onMounted(() => {
 		accessibilityRowCheckboxes()
+		setupAria()
 	})
 
 	setupAccessibility()
@@ -198,6 +210,15 @@
 		:id="uniqueTableId"
 		:class="['sy-table', { 'sy-table--striped': props.striped }]"
 	>
+		<!-- ARIA status region for row count announcements -->
+		<div
+			:id="statusRegionId"
+			role="status"
+			aria-live="polite"
+			class="d-sr-only"
+		>
+			{{ statusMessage }}
+		</div>
 		<VDataTable
 			ref="table"
 			v-model="model"
