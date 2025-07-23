@@ -14,7 +14,11 @@ const serviceDesc = `Array<{
 const meta = {
 	argTypes: {
 		'activator': { description: 'Slot pour gérer le bouton d’ouverture de la fenêtre de menu' },
-		'change': { description: 'Événement émis à la fermeture de le fenêtre de menu. Retourne `false`', type: 'boolean' },
+		'change': {
+			action: 'change',
+			description: 'Événement émis à la fermeture de le fenêtre de menu. Retourne `false`',
+			type: 'boolean',
+		},
 		'closeMenu': { description: 'Fonction permettant de fermer la fenêtre de menu' },
 		'icon': { description: 'Le nom de l’icône d’ouverture' },
 		'message': { description: 'Slot permettant de personnaliser le contenu du message à afficher' },
@@ -48,7 +52,11 @@ const meta = {
 			},
 		},
 		'uniqueId': { description: 'Id unique du composant' },
-		'update:model-value': { description: 'Événement émis au changement d’état de la valeur d’affichage de la fenêtre de menu. Retourne la nouvelle valeur.', type: 'boolean' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement d’état de la valeur d’affichage de la fenêtre de menu. Retourne la nouvelle valeur.',
+			type: 'boolean',
+		},
 	},
 	component: ServiceMenu,
 	title: 'Composants/Amelipro/Mise en page/Sous-composants du header/ServiceMenu',
@@ -187,7 +195,8 @@ export const Default: Story = {
 		:services-patient="servicesPatient"
 		:services-ps="servicesPs"
 		unique-id="service-menu-unique-id"
-
+		@change="args['change']"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>
 				`,
@@ -330,6 +339,8 @@ export const Default: Story = {
 	<ServiceMenu
 		v-bind="args"
 		v-model="model"
+		@change="args['change']"
+		@update:model-value="args['update:model-value']"
 	/>
 </div>
 		`,

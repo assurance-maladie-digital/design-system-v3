@@ -6,8 +6,10 @@ const meta = {
 		alignTopStyle: { description: 'Change l’alignement des éléments de la tuile pour les mettre en haut (les differents éléments ne seront plus forcément alignés cela dépendra du contenu au-dessus)' },
 		borderDash: { description: 'Change la bordure appliquée à la tuile pour une bordure en tirets' },
 		click: {
+			action: 'click',
 			table: { category: 'events' },
 			description: 'Événement émis au click sur le bouton',
+			type: 'string',
 		},
 		complementaryInfoLine1: { description: 'Ligne dédiée à ajouter des informations supplémentaires (les differents éléments ne seront plus forcément alignés cela dépendra du contenu au-dessus)' },
 		complementaryInfoLine2: { description: 'Ligne dédiée à ajouter des informations supplémentaires (les differents éléments ne seront plus forcément alignés cela dépendra du contenu au-dessus)' },
@@ -53,6 +55,7 @@ export const Default: Story = {
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
 			unique-id="tile-btn-example-1"
+			@click="args['click']"
 		/>
 	</li>
 	<li>
@@ -62,6 +65,7 @@ export const Default: Story = {
 			tile-min-height="100%"
 			unique-id="tile-btn-example-2"
 			valid
+			@click="args['click']"
 		/>
 	</li>
 	<li>
@@ -71,6 +75,7 @@ export const Default: Story = {
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
 			unique-id="tile-btn-example-3"
+			@click="args['click']"
 		/>
 	</li>
 </ul>
@@ -102,31 +107,34 @@ export const Default: Story = {
 			<ul class="list-style-none d-flex flex-wrap">
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
+						v-bind="args"
 						img-src="/tile-example.svg"
-						label="Appareil de mesure Tensiomètre"
+						label="Appareil de mesure Tensiomètre 1"
 						tile-min-height="100%"
 						unique-id="tile-btn-example-1"
-						v-bind="args"
+						@click="args['click']"
 					/>
 				</li>
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
+						v-bind="args"
 						img-src="/tile-example.svg"
-						label="Appareil de mesure Tensiomètre"
+						label="Appareil de mesure Tensiomètre 2"
 						tile-min-height="100%"
 						unique-id="tile-btn-example-2"
 						valid
-						v-bind="args"
+						@click="args['click']"
 					/>
 				</li>
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
+						v-bind="args"
 						img-src="/tile-example.svg"
 						invalid
-						label="Appareil de mesure Tensiomètre"
+						label="Appareil de mesure Tensiomètre 3"
 						tile-min-height="100%"
 						unique-id="tile-btn-example-3"
-						v-bind="args"
+						@click="args['click']"
 					/>
 				</li>
 			</ul>
