@@ -106,8 +106,6 @@ function injectOverrideCSS(): void {
 
 	// Append to head
 	document.head.appendChild(styleElement)
-
-
 }
 
 /**
