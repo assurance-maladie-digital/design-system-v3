@@ -113,7 +113,11 @@ const meta: Meta<typeof AmeliproHeader> = {
 				},
 			},
 		},
-		'back-btn-click': { description: 'Événement émis au click sur le bouton retour, attention il ne faut pas que les properties href ou to soient renseignées si vous voulez effectuer des actions sur cet event' },
+		'back-btn-click': {
+			action: 'back-btn-click',
+			description: 'Événement émis au click sur le bouton retour, attention il ne faut pas que les properties href ou to soient renseignées si vous voulez effectuer des actions sur cet event',
+			type: 'void',
+		},
 		'backBtnHref': { description: 'Lien pour le bouton de retour, il doit renvoyer à la page précédente, s’il n’y a pas de page précédente connue, il doit renvoyer à la page d’Accueil Amelipro' },
 		'backBtnLabel': { description: 'Label du bouton de retour' },
 		'backBtnTo': { description: 'Route pour le bouton de retour, elle doit renvoyer à la page précédente, s’il n’y a pas de page précédente connue, elle doit renvoyer à la page d’Accueil Amelipro' },
@@ -402,6 +406,7 @@ export const Default: Story = {
 	<AmeliproHeader
 		:amelipro-header-infos="ameliproHeaderInfos"
 		unique-id="amelipro-header-id"
+		@back-btn-click="args['back-btn-click']"
 	/>
 </template>
 				`,
@@ -650,6 +655,7 @@ export const Default: Story = {
 		template: `
 <AmeliproHeader
 	v-bind="args"
+	@back-btn-click="args['back-btn-click']"
 />
 		`,
 	}),
@@ -670,6 +676,7 @@ export const notLogged: Story = {
 		:no-sub-part="true",
 		unique-id="amelipro-header-not-logged-id"
 		:unlogged="true"
+		@back-btn-click="args['back-btn-click']"
 	/>
 </template>
 				`,
@@ -690,6 +697,7 @@ export const notLogged: Story = {
 		template: `
 <AmeliproHeader
 	v-bind="args"
+	@back-btn-click="args['back-btn-click']"
 />
 		`,
 	}),
@@ -712,6 +720,7 @@ export const other: Story = {
 		no-sub-part
 		service-sub-title="Sous-titre"
 		unique-id="amelipro-header-other-id"
+		@back-btn-click="args['back-btn-click']"
 	>
 		<template #rightPart>
 			[Slot: rightPart]
@@ -736,6 +745,7 @@ export const other: Story = {
 		template: `
 <AmeliproHeader
 	v-bind="args"
+	@back-btn-click="args['back-btn-click']"
 >
 	<template #rightPart>
 		[Slot: rightPart]

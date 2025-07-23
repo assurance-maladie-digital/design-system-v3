@@ -8,6 +8,7 @@ const meta = {
 		badgeColor: { description: 'Gère la couleur de texte du badge.' },
 		bordered: { description: 'Applique une bordure de 1px autour du bouton de la même couleur que hoverColor' },
 		classes: { description: 'Classes personnalisées du bouton' },
+		// L'event click ne fonctionne pas dans la doc/actions
 		click: {
 			table: { category: 'events' },
 			description: 'Événement émis au click sur le bouton',
@@ -67,6 +68,7 @@ export const Default: Story = {
 			template: `
 				<AmeliproBtn
 					v-bind="args"
+					@click="args['click']"
 				>
 					{{ args.default }}
 				</AmeliproBtn>
@@ -76,7 +78,10 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<AmeliproBtn unique-id="my-btn-id">
+	<AmeliproBtn 
+		unique-id="my-btn-id" 
+		@click="args['click']"
+	>
 		My Button
 	</AmeliproBtn>
 </template>
@@ -121,6 +126,7 @@ export const Badge: Story = {
 		icon-bordered
 		icon-name="notifications"
 		unique-id="my-btn-id-2"
+		@click="args['click']"
 	>
 		My Button
 	</AmeliproBtn>
@@ -164,6 +170,7 @@ export const SecundaryBtn: Story = {
 		hover-color="ap-blue-lighten-3"
 		text-color="ap-blue-darken-1"
 		unique-id="my-btn-id-3"
+		@click="args['click']"
 	>
 		My Button
 	</AmeliproBtn>

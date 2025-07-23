@@ -9,7 +9,11 @@ const meta = {
 		'`subItem-${index}`': { description: 'Permet de rajouter un élément sous une checkbox seulement lorsqu’elle est cochée (existe seulement si les props horizontal et fullHorizontal sont à false)' },
 		'append': { description: 'Permet de rajouter un élément après les label de toutes les checkbox' },
 		'ariaRequired': { description: 'Permet de rendre la selection obligatoire' },
-		'change:selected': { description: 'Événement émis au click sur une checkbox retourne les items sélectionnés' },
+		'change:selected': {
+			action: 'change:selected',
+			description: 'Événement émis au click sur une checkbox retourne les items sélectionnés',
+			type: 'AmeliproCheckboxGroupItem[]',
+		},
 		'disabled': { description: 'Permet de désactiver la CheckboxGroup' },
 		'fullHorizontal': { description: 'Permet d’afficher le checkboxGroup ainsi que le label à l’horizontal' },
 		'groupLabel': { description: 'Label du groupe de checkbox' },
@@ -38,7 +42,11 @@ const meta = {
 		'requiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props ariaRequired est active' },
 		'subItem': { description: 'Permet de rajouter un élément sous toutes checkbox seulement lorsqu’elle sont cochées (existe seulement si les props horizontal et fullHorizontal sont à false)' },
 		'uniqueId': { description: 'Id unique du groupe de checkbox' },
-		'update:model-value': { description: 'Événement émis au changement du v-model' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement du v-model. Retourne l’état de toutes les checkbox.',
+			type: 'AmeliproCheckboxGroupItem[]',
+		},
 	},
 	component: AmeliproCheckboxGroup,
 	title: 'Composants/Amelipro/Formulaires/AmeliproCheckboxGroup',
@@ -95,6 +103,8 @@ export const Default: Story = {
 		v-model="value"
 		group-label="Exemple de checkbox"
 		unique-id="checkbox-group"
+		@change:selected="args['change:selected']"
+		@update:model-value="args['update:model-value']"
 	>
 		<template #append-1>
 			<AmeliproTooltips
@@ -163,6 +173,8 @@ export const Default: Story = {
 	:unique-id="args.uniqueId"
 	v-bind="args"
 	v-model="model"
+	@change:selected="args['change:selected']"
+	@update:model-value="args['update:model-value']"
 >
 	<template #append-1>
 		<AmeliproTooltips

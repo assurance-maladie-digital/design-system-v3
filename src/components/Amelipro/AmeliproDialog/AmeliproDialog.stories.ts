@@ -5,27 +5,38 @@ import AmeliproDialog from './AmeliproDialog.vue'
 
 const meta = {
 	argTypes: {
-		attach: { description: 'attache le contenu de la boite de dialogue et son overlay à l\'intérieur de v-app' },
-		cancelBtnLabel: { description: 'Label du bouton annuler' },
-		change: { description: 'Événement émis au click sur les boutons annuler et fermer' },
-		confirm: { description: 'Événement émis au click sur le bouton valider' },
-		default: { description: 'Contenu principal de la fenêtre' },
-		eager: { description: 'Property héritée de Vuetify permettant de charger le contenu de la modale dans le DOM même lorsque la modale est fermée' },
-		footer: { description: 'Contenu du footer de la fenêtre' },
-		fullscreen: { description: 'Affiche la modale en plein écran' },
-		header: { description: 'Titre de la fenêtre' },
-		hiddenCancelBtn: { description: 'Masque le bouton Annuler du footer' },
-		labelledby: { description: 'Id du titre de la modale' },
-		mainContentMaxHeight: { description: 'Hauteur maximale du contenu principal' },
-		mainContentMinHeight: { description: 'Hauteur minimale du contenu principal' },
-		modelValue: { description: 'Valeur d’affichage de la fenêtre de dialogue' },
-		noClickOutside: { description: 'Empêche la fermeture de la modale en cliquant à l’extérieur ou en appuyant sur echap mais la croix de fermeture reste présente' },
-		noFooter: { description: 'Masque le footer par défaut' },
-		persistent: { description: 'Retire la croix de fermeture' },
-		title: { description: 'Titre par défaut' },
-		uniqueId: { description: 'Identifiant unique de la modale' },
-		validationBtnLabel: { description: 'Label du bouton valider' },
-		width: { description: 'Largeur de la fenêtre de dialogue' },
+		'attach': { description: 'attache le contenu de la boite de dialogue et son overlay à l\'intérieur de v-app' },
+		'cancelBtnLabel': { description: 'Label du bouton annuler' },
+		'change': {
+			action: 'change',
+			description: 'Événement émis au click sur les boutons annuler et fermer',
+		},
+		'confirm': {
+			action: 'confirm',
+			description: 'Événement émis au click sur le bouton valider',
+		},
+		'default': { description: 'Contenu principal de la fenêtre' },
+		'eager': { description: 'Property héritée de Vuetify permettant de charger le contenu de la modale dans le DOM même lorsque la modale est fermée' },
+		'footer': { description: 'Contenu du footer de la fenêtre' },
+		'fullscreen': { description: 'Affiche la modale en plein écran' },
+		'header': { description: 'Titre de la fenêtre' },
+		'hiddenCancelBtn': { description: 'Masque le bouton Annuler du footer' },
+		'labelledby': { description: 'Id du titre de la modale' },
+		'mainContentMaxHeight': { description: 'Hauteur maximale du contenu principal' },
+		'mainContentMinHeight': { description: 'Hauteur minimale du contenu principal' },
+		'modelValue': { description: 'Valeur d’affichage de la fenêtre de dialogue' },
+		'noClickOutside': { description: 'Empêche la fermeture de la modale en cliquant à l’extérieur ou en appuyant sur echap mais la croix de fermeture reste présente' },
+		'noFooter': { description: 'Masque le footer par défaut' },
+		'persistent': { description: 'Retire la croix de fermeture' },
+		'title': { description: 'Titre par défaut' },
+		'uniqueId': { description: 'Identifiant unique de la modale' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement de la valeur du modèle',
+			type: 'boolean',
+		},
+		'validationBtnLabel': { description: 'Label du bouton valider' },
+		'width': { description: 'Largeur de la fenêtre de dialogue' },
 	},
 	component: AmeliproDialog,
 	title: 'Composants/Amelipro/Boites de dialogue/AmeliproDialog',
@@ -59,6 +70,9 @@ export const Default: Story = {
 			v-model="value"
 			labelledby="modal-title"
 			unique-id="amelipro-dialog-unique-id"
+			@change="args['change']"
+			@confirm="args['confirm']"
+			@update:model-value="args['update:model-value']"
 		>
 			<template #header>
 				<h2
@@ -111,6 +125,9 @@ export const Default: Story = {
 		labelledby="modal-title"
 		v-bind="args"
 		v-model="value"
+		@change="args['change']"
+		@confirm="args['confirm']"
+		@update:model-value="args['update:model-value']"
 	>
 		<template #header>
 			<h2

@@ -5,7 +5,10 @@ import AmeliproIllustratedRadioGroup from './AmeliproIllustratedRadioGroup.vue'
 const meta = {
 	argTypes: {
 		'ariaRequired': { description: 'Permet de rendre la selection obligatoire' },
-		'change:selected': { description: 'Événement émis au click sur un bouton radio retourne la valeur sélectionnée' },
+		'change:selected': {
+			action: 'change:selected',
+			description: 'Événement émis au click sur un bouton radio retourne la valeur sélectionnée',
+		},
 		'disabled': { description: 'Permet de désactiver le groupe de boutons radios' },
 		'error': { description: 'Permet de mettre le champ en erreur' },
 		'groupLabel': { description: 'Libellé du groupe de boutons radios' },
@@ -91,6 +94,8 @@ export const Default: Story = {
 		v-model="value"
 		group-label="Libellé du groupe"
 		unique-id="unique-id"
+		@change:selected="args['change:selected']"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>`,
 			},
@@ -157,6 +162,8 @@ export const Default: Story = {
 <AmeliproIllustratedRadioGroup
 	v-bind="args"
 	v-model="model"
+	@change:selected="args['change:selected']"
+	@update:model-value="args['update:model-value']"
 />`,
 	}),
 }
