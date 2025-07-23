@@ -160,8 +160,7 @@ pre.prismjs {
 	}
 }
 
-
-/* Fix for Table doc */
+/* Fix for Release doc */
 #story--démarrer-releases--list {
 	table {
 		width: 100%;
