@@ -27,7 +27,10 @@ const meta = {
 		'modelValue': { description: 'Etat de la checkbox' },
 		'requiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props ariaRequired est active' },
 		'uniqueId': { description: 'Id unique de la checkbox' },
-		'update:model-value': { description: 'Événement émit au changement de la valeur de la checkbox' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement de la valeur de la checkbox',
+		},
 	},
 	component: AmeliproCheckbox,
 	title: 'Composants/Amelipro/Formulaires/AmeliproCheckbox',
@@ -55,6 +58,7 @@ export const Default: Story = {
 		v-model="isChecked"
 		:checkbox="checkbox"
 		unique-id="checkbox-example"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>`,
 			},
@@ -91,6 +95,7 @@ export const Default: Story = {
 	:unique-id="args.id"
 	v-bind="args"
 	v-model="model"
+	@update:model-value="args['update:model-value']"
 >
 	<template #append>
 		<AmeliproTooltips

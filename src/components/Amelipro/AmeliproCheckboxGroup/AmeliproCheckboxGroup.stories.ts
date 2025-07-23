@@ -111,6 +111,7 @@ export const Default: Story = {
 				class="ml-2"
 				tooltip-text="contenu de la tooltip"
 				unique-id="ma-tooltip"
+				@update:model-value="args['update:model-value']"
 			/>
 		</template>
 	</AmeliproCheckboxGroup>

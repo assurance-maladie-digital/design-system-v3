@@ -29,7 +29,10 @@ const meta = {
 		},
 		'title': { description: 'Titre de la modale' },
 		'uniqueId': { description: 'Id de la modale' },
-		'update:model-value': { description: 'Événement émis au changement à l’ouverture ou la fermeture du tutoriel quand le v-model est mis à jour. Retourne `value`', type: 'boolean' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement à l’ouverture ou la fermeture du tutoriel quand le v-model est mis à jour. Retourne `value`', type: 'boolean',
+		},
 		'width': { description: 'Largeur de la fenêtre de dialogue' },
 	},
 	component: AmeliproOnboarding,
@@ -81,6 +84,7 @@ export const Default: Story = {
 		<AmeliproBtn
 			unique-id="open-onboarding-btn"
 			@click="model = true"
+			@update:model-value="args['update:model-value']"
 		>
 			Ouvrir le tutoriel
 		</AmeliproBtn>
@@ -146,6 +150,7 @@ export const Default: Story = {
 	<AmeliproBtn
 		unique-id="open-onboarding-btn"
 		@click="model = true"
+		@update:model-value="args['update:model-value']"
 	>
 		Ouvrir le tutoriel
 	</AmeliproBtn>

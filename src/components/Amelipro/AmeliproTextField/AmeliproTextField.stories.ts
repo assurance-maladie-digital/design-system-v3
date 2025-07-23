@@ -14,7 +14,7 @@ const meta = {
 		'classes': { description: 'Classes à appliquer à la racine du composant' },
 		'clearable': { description: 'Affiche un bouton permettant de vider le champ' },
 		'counter': { description: 'Défini la valeur du compteur de caractères' },
-		'disabled': {	description: 'Désactive le champ de texte' },
+		'disabled': { description: 'Désactive le champ de texte' },
 		'fullWidthErrorMsg': { description: 'Donne au messages d’erreurs la largeur totale du composant au lieu de la limiter à la largeur du champ' },
 		'globalMaxWidth': { description: 'Gère la largeur maximale du composant, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
 		'globalMinWidth': { description: 'Gère la largeur minimale du composant, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
@@ -41,7 +41,10 @@ const meta = {
 		},
 		'type': { description: 'Type du champ' },
 		'uniqueId': { description: 'Défini un id pour le champ' },
-		'update:model-value': { description: 'Événement émis au changement du v-model' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement du v-model',
+		},
 		'validateOn': { description: 'Défini le moment où la validation du champ se fait, voir la documentation de Vuetify pour plus d’informtations' },
 	},
 	component: AmeliproTextField,
@@ -67,6 +70,7 @@ export const Default: Story = {
 		v-model="model"
 		label="Label"
 		unique-id="text-example"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>
 				`,
@@ -127,6 +131,7 @@ export const Date: Story = {
 		min-date="2024-01-20"
 		type="date"
 		unique-id="date-example"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>
 				`,
@@ -165,6 +170,7 @@ export const Date: Story = {
 				:unique-id="args.id"
 				v-bind="args"
 				v-model="model"
+				@update:model-value="args['update:model-value']"
 			/>
 		`,
 	}),

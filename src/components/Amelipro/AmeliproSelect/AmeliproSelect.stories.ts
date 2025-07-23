@@ -106,6 +106,7 @@ export const Default: Story = {
 		:items="items"
 		label="Mon label"
 		unique-id="amelipro-select-id"
+		@update:model-value="args['update:model-value']"
 	/>
 </template>`,
 			},
@@ -158,6 +159,7 @@ export const Default: Story = {
 <AmeliproSelect
 	v-bind="args"
 	v-model="model"
+	@update:model-value="args['update:model-value']"
 />`,
 	}),
 

@@ -37,7 +37,10 @@ const meta = {
 		'requiredErrorMessage': { description: 'Message d’erreur qui s’affiche si le champ est obligatoire et qu’aucune valeur n’est sélectionnée' },
 		'subItem': { description: 'Permet de rajouter un élément générique sous un bouton radio seulement lorsqu’il est coché (existe seulement si les props horizontal et fullHorizontal sont à false)' },
 		'uniqueId': { description: 'Id du groupe de boutons radios, il doit être unique' },
-		'update:model-value': { description: 'Événement émis au changement du v-model' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement du v-model',
+		},
 	},
 	component: AmeliproRadioGroup,
 	title: 'Composants/Amelipro/Formulaires/AmeliproRadioGroup',
