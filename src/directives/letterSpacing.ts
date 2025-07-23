@@ -38,12 +38,9 @@ function modifyVuetifyStylesheets(): void {
 						const matchesTypography = typographyClasses.some(cls => rule.selectorText?.includes(cls))
 
 						if (matchesTypography && rule.style.letterSpacing) {
-							console.log(`Found Vuetify rule: ${rule.selectorText} { letter-spacing: ${rule.style.letterSpacing} }`)
-
 							// Try to modify the rule
 							try {
 								rule.style.setProperty('letter-spacing', '0px', '')
-								console.log(`Modified rule: ${rule.selectorText} letter-spacing set to 0px without !important`)
 							}
 							catch (modifyError) {
 								console.log(`Could not modify rule: ${rule.selectorText}`, modifyError)
@@ -110,7 +107,7 @@ function injectOverrideCSS(): void {
 	// Append to head
 	document.head.appendChild(styleElement)
 
-	console.log('Letter-spacing override: Injected high-specificity CSS without !important')
+
 }
 
 /**
@@ -144,48 +141,13 @@ function applyTokenLetterSpacing(element: HTMLElement): void {
 		'--v-typography-button-letter-spacing',
 	]
 
-	// Set each CSS variable and verify design token values are being used
-	console.log('=== Letter-spacing Design Token Verification ===')
+	// Set each CSS variable with design token values
 	typographyVars.forEach((cssVar) => {
 		const tokenValue = rootStyle.getPropertyValue(cssVar).trim()
 		const finalValue = tokenValue || '0px'
 
-		// Enhanced debugging to show what values are being used
-		console.log(`🔍 ${cssVar}:`, {
-			designTokenValue: tokenValue || '(not set)',
-			finalAppliedValue: finalValue,
-			isUsingDesignToken: !!tokenValue && tokenValue !== 'normal',
-			isUsingFallback: !tokenValue || tokenValue === 'normal',
-		})
-
 		rootElement.style.setProperty(cssVar, finalValue)
-
-		// Verify the value was actually set
-		const verifyValue = getComputedStyle(rootElement).getPropertyValue(cssVar).trim()
-		if (verifyValue !== finalValue) {
-			console.warn(`⚠️ Value mismatch for ${cssVar}: expected ${finalValue}, got ${verifyValue}`)
-		}
 	})
-
-	// Summary of what's being used
-	const usingDesignTokens = typographyVars.filter((cssVar) => {
-		const value = rootStyle.getPropertyValue(cssVar).trim()
-		return value && value !== 'normal'
-	})
-
-	console.log(`📊 Summary: ${usingDesignTokens.length}/${typographyVars.length} typography variables are using design token values`)
-	if (usingDesignTokens.length > 0) {
-		console.log('✅ Design tokens being used:', usingDesignTokens)
-	}
-
-	const usingFallback = typographyVars.filter((cssVar) => {
-		const value = rootStyle.getPropertyValue(cssVar).trim()
-		return !value || value === 'normal'
-	})
-
-	if (usingFallback.length > 0) {
-		console.log('⚠️ Variables using 0px fallback (no design token set):', usingFallback)
-	}
 
 	// Add debugging attributes
 	element.setAttribute('data-letter-spacing-override', 'multi-approach')
