@@ -1,49 +1,48 @@
 /* Typography styles for CNAM and PA themes */
 
-/* Theme Typography */
-.v-theme--cnam,
-.v-theme--pa {
+.v-application .v-theme--cnam,
+.v-application .v-theme--pa {
 	/* Headings with Vuetify classes */
 	.text-h1 {
 		font-size: var(--v-typography-h1-font-size) !important;
 		font-weight: var(--v-typography-h1-font-weight) !important;
 		line-height: var(--v-typography-h1-line-height) !important;
-		letter-spacing: var(--v-typography-h1-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h1-letter-spacing, normal);
 	}
 
 	.text-h2 {
 		font-size: var(--v-typography-h2-font-size) !important;
 		font-weight: var(--v-typography-h2-font-weight) !important;
 		line-height: var(--v-typography-h2-line-height) !important;
-		letter-spacing: var(--v-typography-h2-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h2-letter-spacing, normal);
 	}
 
 	.text-h3 {
 		font-size: var(--v-typography-h3-font-size) !important;
 		font-weight: var(--v-typography-h3-font-weight) !important;
 		line-height: var(--v-typography-h3-line-height) !important;
-		letter-spacing: var(--v-typography-h3-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h3-letter-spacing, normal);
 	}
 
 	.text-h4 {
 		font-size: var(--v-typography-h4-font-size) !important;
 		font-weight: var(--v-typography-h4-font-weight) !important;
 		line-height: var(--v-typography-h4-line-height) !important;
-		letter-spacing: var(--v-typography-h4-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h4-letter-spacing, normal);
 	}
 
 	.text-h5 {
 		font-size: var(--v-typography-h5-font-size) !important;
 		font-weight: var(--v-typography-h5-font-weight) !important;
 		line-height: var(--v-typography-h5-line-height) !important;
-		letter-spacing: var(--v-typography-h5-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h5-letter-spacing, normal);
 	}
 
 	.text-h6 {
 		font-size: var(--v-typography-h6-font-size) !important;
 		font-weight: var(--v-typography-h6-font-weight) !important;
 		line-height: var(--v-typography-h6-line-height) !important;
-		letter-spacing: var(--v-typography-h6-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h6-letter-spacing, normal);
 	}
 
 	/* Native HTML heading elements */
@@ -51,7 +50,7 @@
 		font-size: var(--v-typography-h1-font-size) !important;
 		font-weight: var(--v-typography-h1-font-weight) !important;
 		line-height: var(--v-typography-h1-line-height) !important;
-		letter-spacing: var(--v-typography-h1-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h1-letter-spacing, normal);
 		margin-bottom: 0.5rem;
 	}
 
@@ -59,7 +58,7 @@
 		font-size: var(--v-typography-h2-font-size) !important;
 		font-weight: var(--v-typography-h2-font-weight) !important;
 		line-height: var(--v-typography-h2-line-height) !important;
-		letter-spacing: var(--v-typography-h2-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h2-letter-spacing, normal);
 		margin-bottom: 0.5rem;
 	}
 
@@ -67,7 +66,7 @@
 		font-size: var(--v-typography-h3-font-size) !important;
 		font-weight: var(--v-typography-h3-font-weight) !important;
 		line-height: var(--v-typography-h3-line-height) !important;
-		letter-spacing: var(--v-typography-h3-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h3-letter-spacing, normal);
 		margin-bottom: 0.5rem;
 	}
 
@@ -75,7 +74,7 @@
 		font-size: var(--v-typography-h4-font-size) !important;
 		font-weight: var(--v-typography-h4-font-weight) !important;
 		line-height: var(--v-typography-h4-line-height) !important;
-		letter-spacing: var(--v-typography-h4-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h4-letter-spacing, normal);
 		margin-bottom: 0.5rem;
 	}
 
@@ -83,7 +82,7 @@
 		font-size: var(--v-typography-h5-font-size) !important;
 		font-weight: var(--v-typography-h5-font-weight) !important;
 		line-height: var(--v-typography-h5-line-height) !important;
-		letter-spacing: var(--v-typography-h5-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h5-letter-spacing, normal);
 		margin-bottom: 0.5rem;
 	}
 
@@ -91,7 +90,7 @@
 		font-size: var(--v-typography-h6-font-size) !important;
 		font-weight: var(--v-typography-h6-font-weight) !important;
 		line-height: var(--v-typography-h6-line-height) !important;
-		letter-spacing: var(--v-typography-h6-letter-spacing) !important;
+		letter-spacing: var(--v-typography-h6-letter-spacing, normal);
 		margin-bottom: 0.5rem;
 	}
 
@@ -100,14 +99,14 @@
 		font-size: var(--v-typography-body1-font-size) !important;
 		font-weight: var(--v-typography-body1-font-weight) !important;
 		line-height: var(--v-typography-body1-line-height) !important;
-		letter-spacing: var(--v-typography-body1-letter-spacing) !important;
+		letter-spacing: var(--v-typography-body1-letter-spacing, normal);
 	}
 
 	.text-body-2 {
 		font-size: var(--v-typography-body2-font-size) !important;
 		font-weight: var(--v-typography-body2-font-weight) !important;
 		line-height: var(--v-typography-body2-line-height) !important;
-		letter-spacing: var(--v-typography-body2-letter-spacing) !important;
+		letter-spacing: var(--v-typography-body2-letter-spacing, normal);
 	}
 
 	/* Subtitle text */
@@ -115,14 +114,14 @@
 		font-size: var(--v-typography-subtitle1-font-size) !important;
 		font-weight: var(--v-typography-subtitle1-font-weight) !important;
 		line-height: var(--v-typography-subtitle1-line-height) !important;
-		letter-spacing: var(--v-typography-subtitle1-letter-spacing) !important;
+		letter-spacing: var(--v-typography-subtitle1-letter-spacing, normal);
 	}
 
 	.text-subtitle-2 {
 		font-size: var(--v-typography-subtitle2-font-size) !important;
 		font-weight: var(--v-typography-subtitle2-font-weight) !important;
 		line-height: var(--v-typography-subtitle2-line-height) !important;
-		letter-spacing: var(--v-typography-subtitle2-letter-spacing) !important;
+		letter-spacing: var(--v-typography-subtitle2-letter-spacing, normal);
 	}
 
 	/* Other typography */
@@ -130,14 +129,14 @@
 		font-size: var(--v-typography-caption-font-size) !important;
 		font-weight: var(--v-typography-caption-font-weight) !important;
 		line-height: var(--v-typography-caption-line-height) !important;
-		letter-spacing: var(--v-typography-caption-letter-spacing) !important;
+		letter-spacing: var(--v-typography-caption-letter-spacing, normal);
 	}
 
 	.text-overline {
 		font-size: var(--v-typography-overline-font-size) !important;
 		font-weight: var(--v-typography-overline-font-weight) !important;
 		line-height: var(--v-typography-overline-line-height) !important;
-		letter-spacing: var(--v-typography-overline-letter-spacing) !important;
+		letter-spacing: var(--v-typography-overline-letter-spacing, normal);
 		text-transform: var(--v-typography-overline-text-transform, uppercase) !important;
 	}
 
@@ -146,13 +145,13 @@
 		font-size: var(--v-typography-display1-font-size) !important;
 		font-weight: var(--v-typography-display1-font-weight) !important;
 		line-height: var(--v-typography-display1-line-height) !important;
-		letter-spacing: var(--v-typography-display1-letter-spacing) !important;
+		letter-spacing: var(--v-typography-display1-letter-spacing, normal);
 	}
 
 	.text-display-2 {
 		font-size: var(--v-typography-display2-font-size) !important;
 		font-weight: var(--v-typography-display2-font-weight) !important;
 		line-height: var(--v-typography-display2-line-height) !important;
-		letter-spacing: var(--v-typography-display2-letter-spacing) !important;
+		letter-spacing: var(--v-typography-display2-letter-spacing, normal);
 	}
 }
