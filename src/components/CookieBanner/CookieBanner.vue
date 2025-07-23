@@ -8,6 +8,7 @@
 	import { config } from './config'
 	import { locales } from './locales'
 	import CookiesSelection from '../CookiesSelection/CookiesSelection.vue'
+	import { vLetterSpacing } from '@/directives/letterSpacing'
 
 	const props = defineProps<CustomizableOptions & {
 		items?: CookiesItems
@@ -59,13 +60,17 @@
 		to="body"
 	>
 		<VSheet
+			v-letter-spacing
 			v-bind="options.banner"
 			:aria-label="locales.label"
 			class="vd-cookie-banner"
 		>
 			<div class="vd-cookie-banner__inner">
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
-					<h2 class="text-h5 font-weight-bold">
+					<h2
+						v-letter-spacing
+						class="text-h5 font-weight-bold"
+					>
 						{{ locales.title }}
 					</h2>
 
