@@ -8,6 +8,7 @@ const meta = {
 		'change:selected': {
 			action: 'change:selected',
 			description: 'Événement émis au click sur un bouton radio retourne la valeur sélectionnée',
+			type: 'string',
 		},
 		'disabled': { description: 'Permet de désactiver le groupe de boutons radios' },
 		'error': { description: 'Permet de mettre le champ en erreur' },
@@ -30,7 +31,11 @@ const meta = {
 			},
 		},
 		'uniqueId': { description: 'Id du groupe de boutons radios, il doit être unique' },
-		'update:model-value': { description: 'Événement émis au changement du v-model' },
+		'update:model-value': {
+			action: 'update:model-value',
+			description: 'Événement émis au changement du v-model',
+			type: 'AmeliproIllustratedRadioGroupItem[]',
+		},
 	},
 	component: AmeliproIllustratedRadioGroup,
 	title: 'Composants/Amelipro/Formulaires/AmeliproIllustratedRadioGroup',

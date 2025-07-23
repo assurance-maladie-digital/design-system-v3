@@ -4,7 +4,11 @@ import AmeliproPagination from './AmeliproPagination.vue'
 const meta = {
 	argTypes: {
 		activePageDefault: { description: 'Numéro de page active par défaut' },
-		click: { description: 'Événement émis lorsque l’utilisateur clique sur un des boutons. Retourne le numéro de page active', type: 'number' },
+		click: {
+			action: 'click',
+			description: 'Événement émis lorsque l’utilisateur clique sur un des boutons. Retourne le numéro de page active',
+			type: 'number',
+		},
 		items: {
 			description: 'Liste des pages composants la pagination, la propriété key étant le numéro de la page',
 			table: {
@@ -55,6 +59,7 @@ export const Default: Story = {
 		:active-page-default="1"
 		:items="items"
 		unique-id="amelipro-pagination-unique-id"
+		@click="args['click']"
 	/>
 </template>
 				`,
@@ -89,6 +94,7 @@ export const Default: Story = {
 		template: `
 			<AmeliproPagination
 				v-bind="args"
+				@click="args['click']"
 			/>
 		`,
 	}),
