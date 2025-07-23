@@ -8,8 +8,10 @@ const meta = {
 		'ariaLabelledby': { description: 'Id du titre associé au groupe d’onglets (il faut au moins un ariaLabelledby ou un ariaLabel)' },
 		'btnGroupClasses': { description: 'Classes à ajouter autour du groupe de boutons' },
 		'change-tab': {
+			action: 'change-tab',
 			table: { category: 'events' },
 			description: 'Événement émis au click sur un des boutons',
+			type: 'number',
 		},
 		'items': {
 			description: 'Tableau comprenant la liste des onglets et leur valeur activé ou désactivé',
@@ -73,6 +75,7 @@ export const Default: Story = {
 		aria-label="Titre du group d'onglets"
 		:items="items"
 		unique-id="tabs"
+		@change-tab="args['change-tab']"
 	>
 		<template #tabs-tab-panel-0>Contenu de l'onglet 1</template>
 		<template #tabs-tab-panel-1>Contenu de l'onglet 2</template>
@@ -119,6 +122,7 @@ export const Default: Story = {
 				:items="args.items"
 				:unique-id="args.id"
 				v-bind="args"
+				@change-tab="args['change-tab']"
 			>
 				<template #tabs-tab-panel-0>Contenu de l'onglet 1</template>
 				<template #tabs-tab-panel-1>Contenu de l'onglet 2</template>
@@ -146,6 +150,7 @@ export const Pills: Story = {
 		:items="items"
 		pills
 		unique-id="tabs"
+		@change-tab="args['change-tab']"
 	>
 		<template #tabs-tab-panel-0>Contenu de l'onglet 1</template>
 		<template #tabs-tab-panel-1>Contenu de l'onglet 2</template>
@@ -193,6 +198,7 @@ export const Pills: Story = {
 				:pills="args.pills"
 				:unique-id="args.id"
 				v-bind="args"
+				@change-tab="args['change-tab']"
 			>
 				<template #tabs-tab-panel-0>Contenu de l'onglet 1</template>
 				<template #tabs-tab-panel-1>Contenu de l'onglet 2</template>
