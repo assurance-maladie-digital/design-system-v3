@@ -85,4 +85,16 @@ describe('AmeliproCallback', () => {
 	describe('Snapshots', () => {
 		testHelper.snapshots()
 	})
+
+	describe('Properties', () => {
+		testHelper.properties()
+	})
+
+	describe.todo('Setting props should update attributes of inner tags')
+
+	describe.todo('Setting props should update props or attributes of inner components')
+
+	describe.todo('Events')
+
+	describe.todo('Slots')
 })
