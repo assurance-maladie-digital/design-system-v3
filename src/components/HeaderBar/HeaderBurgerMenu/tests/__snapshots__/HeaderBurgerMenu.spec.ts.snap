@@ -1,7 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`HeaderBurgerMenu > should render the component 1`] = `
-<div class="overlay">
+<div
+  aria-label="Menu principal"
+  aria-modal="true"
+  class="overlay"
+  role="dialog"
+>
   <div
     class="menu-wrapper"
     role="menu"
@@ -16,11 +21,11 @@ exports[`HeaderBurgerMenu > should render the component 1`] = `
       id="header-menu-wrapper"
       role="navigation"
     >
-      <div class="header-menu">
+      <ul class="header-menu">
         <div>
           Default slot
         </div>
-      </div>
+      </ul>
     </nav>
   </div>
 </div>

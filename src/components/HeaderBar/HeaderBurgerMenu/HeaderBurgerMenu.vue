@@ -1,74 +1,38 @@
 <script setup lang="ts">
-	import throttleDisplayFn from '@/utils/functions/throttleDisplayFn/throttleDisplayFn'
-	import { computed, inject, nextTick, onMounted, onUnmounted, readonly, ref, watch, type CSSProperties, type Ref } from 'vue'
+	import { inject, nextTick, onMounted, onUnmounted, readonly, ref, watch, type Ref } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
 	import { registerHeaderMenuKey } from '../consts'
-	import useHeaderResponsiveMode from '../useHeaderResponsiveMode'
 	import locals from './locals'
 	import useHandleSubMenus from './useHandleSubMenus'
+	import useMenuPosition from './useMenuPosition'
+	import vLockFocus from '@/directives/lockFocus'
 
 	const headerMenuWrapper = ref<HTMLElement | null>(null)
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
 	const outerBtn = ref<HTMLElement | null>(null)
 	const innerBtn = ref<HTMLElement | null>(null)
-	const menuLeft = ref(0)
-	const menuTop = ref(0)
-	const menuHeight = ref('70vh')
 
-	function positionMenu() {
-		const rect = menuBtnWrapper.value!.getBoundingClientRect()
-		menuLeft.value = rect.left
-		menuTop.value = rect.top
-		menuHeight.value = `calc(100vh - ${rect.top}px - 48px)`
-	}
-	const throttledPositionMenu = throttleDisplayFn(positionMenu, 16)
-	const optimizedPositionMenu = () => {
-		if (menuOpen.value) {
-			throttledPositionMenu()
-		}
-	}
-
-	onMounted(() => {
-		positionMenu()
-		togglePageScroll()
-		window.addEventListener('scroll', optimizedPositionMenu)
-		window.addEventListener('resize', optimizedPositionMenu)
-		window.addEventListener('click', handleClickOutside, { capture: true })
-	})
-
-	onUnmounted(() => {
-		window.removeEventListener('scroll', optimizedPositionMenu)
-		window.removeEventListener('resize', optimizedPositionMenu)
-		window.removeEventListener('click', handleClickOutside, { capture: true })
-
-		document.documentElement.style.overflow = 'auto'
-		document.body.style.overflow = 'auto'
+	withDefaults(defineProps<{
+		innerTag?: string
+	}>(), {
+		innerTag: 'ul',
 	})
 
 	const menuOpen = defineModel<boolean>({
 		default: false,
 	})
 
-	watch(menuOpen, async (newVal) => {
+	onMounted(() => {
 		togglePageScroll()
+		window.addEventListener('click', handleClickOutside, { capture: true })
+	})
 
-		if (newVal) {
-			positionMenu() // the menu position can have changed since the component was mounted
+	onUnmounted(() => {
+		window.removeEventListener('click', handleClickOutside, { capture: true })
 
-			await nextTick()
-			innerBtn.value?.focus()
-		}
-		else {
-			outerBtn.value?.focus()
-		}
-	}, { immediate: true })
-
-	const { isDesktop } = useHeaderResponsiveMode()
-	const menuStyle = computed<CSSProperties>(() => ({
-		left: `${menuLeft.value}px`,
-		top: `${menuTop.value}px`,
-		height: isDesktop.value ? menuHeight.value : undefined,
-	}))
+		document.documentElement.style.overflow = 'auto'
+		document.body.style.overflow = 'auto'
+	})
 
 	function handleClickOutside(event: MouseEvent | KeyboardEvent) {
 		if (!menuOpen.value) return
@@ -84,6 +48,20 @@
 		menuOpen.value = false
 	}
 
+	const { menuStyle } = useMenuPosition(menuBtnWrapper, menuOpen)
+
+	watch(menuOpen, async (newVal) => {
+		togglePageScroll()
+
+		if (newVal) {
+			await nextTick()
+			innerBtn.value?.focus()
+		}
+		else {
+			outerBtn.value?.focus()
+		}
+	}, { immediate: true })
+
 	function togglePageScroll() {
 		if (typeof window !== 'undefined') {
 			document.documentElement.style.overflow = menuOpen.value ? 'hidden' : 'auto'
@@ -96,24 +74,28 @@
 	const registerHeaderMenu = inject<(menuOpen: Ref<boolean>) => void>(registerHeaderMenuKey)
 	if (registerHeaderMenu) registerHeaderMenu(readonly(menuOpen))
 </script>
+<!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
 <template>
 	<div
-		role="dialog"
-		aria-modal="true"
-		:aria-label="locals.mainMenu"
 		class="menu mr-4"
 	>
-		<div ref="menuBtnWrapper">
+		<nav ref="menuBtnWrapper">
 			<HeaderMenuBtn
 				ref="outerBtn"
 				v-model="menuOpen"
 			/>
-		</div>
+		</nav>
 		<Teleport to="body">
 			<Transition name="menu">
 				<div
 					v-if="menuOpen"
+					ref="headerInnerMenu"
+					v-lock-focus
 					class="overlay"
+					role="dialog"
+					aria-modal="true"
+					:aria-label="locals.mainMenu"
+					@keyup.esc="menuOpen = false"
 				>
 					<div
 						role="menu"
@@ -134,9 +116,12 @@
 							role="navigation"
 							:aria-label="locals.publicMenu"
 						>
-							<div class="header-menu">
+							<component
+								:is="innerTag"
+								class="header-menu"
+							>
 								<slot />
-							</div>
+							</component>
 						</nav>
 					</div>
 				</div>

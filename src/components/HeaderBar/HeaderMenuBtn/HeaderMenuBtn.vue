@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiClose, mdiMenu } from '@mdi/js'
+	import { ref } from 'vue'
 	import locals from './locals'
 
 	const btn = ref<HTMLElement | null>(null)
@@ -25,9 +26,11 @@
 		:title="model ? locals.closeMenu : locals.openMenu"
 		@click="() => { model = !model }"
 	>
-		<VIcon size="48">
-			{{ model ? mdiClose : mdiMenu }}
-		</VIcon>
+		<SyIcon
+			:icon="model ? mdiClose : mdiMenu"
+			size="48"
+			:decorative="true"
+		/>
 		<span class="header-menu-btn__label">Menu</span>
 	</button>
 </template>

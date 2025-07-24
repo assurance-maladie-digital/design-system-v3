@@ -1,11 +1,18 @@
 <script setup lang="ts">
-
+	withDefaults(defineProps<{
+		tag?: string
+	}>(), {
+		tag: 'li',
+	})
 </script>
 
 <template>
-	<li class="header-menu-item">
+	<component
+		:is="tag"
+		class="header-menu-item"
+	>
 		<slot />
-	</li>
+	</component>
 </template>
 
 <style lang="scss" scoped>
