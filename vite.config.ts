@@ -97,9 +97,15 @@ export default defineConfig({
 			name: 'DesignSystemV3',
 			fileName: 'design-system-v3',
 		},
+		chunkSizeWarningLimit: 2000,
 		rollupOptions: {
 			external: ['vue', /vuetify/],
 			output: {
+				manualChunks(id) {
+					if (id.includes('amelipro/icons')) {
+						return 'icons'
+					}
+				},
 				globals: {
 					'vue': 'Vue',
 					'vuetify': 'Vuetify',
