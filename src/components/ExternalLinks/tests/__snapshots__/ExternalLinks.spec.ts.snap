@@ -19,7 +19,21 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
       v-btn--variant-elevated
       v-theme--light
     "
-    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row; top: 0px; bottom: auto; left: 0px; right: auto; z-index: 4;"
+    style="
+      background-color: #0c419a;
+      color: #fff;
+      caret-color: #fff;
+      min-height: 48px;
+      min-width: 328px;
+      transform: translateX(0);
+      position: absolute;
+      flex-direction: row;
+      top: 0px;
+      bottom: auto;
+      left: 0px;
+      right: auto;
+      z-index: 4;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -150,7 +164,10 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
                 v-icon--size-large
                 v-theme--light
               "
-              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+              style="
+                color: rgba(0, 0, 0, .54);
+                caret-color: rgba(0, 0, 0, .54);
+              "
             ></i></div></span>
               
             <!---->
@@ -205,7 +222,10 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
                 v-icon--size-large
                 v-theme--light
               "
-              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+              style="
+                color: rgba(0, 0, 0, .54);
+                caret-color: rgba(0, 0, 0, .54);
+              "
             ></i></div></span>
               
             <!---->
@@ -260,7 +280,10 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
                 v-icon--size-large
                 v-theme--light
               "
-              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+              style="
+                color: rgba(0, 0, 0, .54);
+                caret-color: rgba(0, 0, 0, .54);
+              "
             ></i></div></span>
               
             <!---->
@@ -329,7 +352,21 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
       v-btn--variant-elevated
       v-theme--light
     "
-    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: fixed; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="
+      background-color: #0c419a;
+      color: #fff;
+      caret-color: #fff;
+      min-height: 48px;
+      min-width: 328px;
+      transform: translateX(0);
+      position: fixed;
+      flex-direction: row-reverse;
+      top: auto;
+      bottom: 0px;
+      left: auto;
+      right: 0px;
+      z-index: 5;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -460,7 +497,10 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
                 v-icon--size-large
                 v-theme--light
               "
-              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+              style="
+                color: rgba(0, 0, 0, .54);
+                caret-color: rgba(0, 0, 0, .54);
+              "
             ></i></div></span>
               
             <!---->
@@ -515,7 +555,10 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
                 v-icon--size-large
                 v-theme--light
               "
-              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+              style="
+                color: rgba(0, 0, 0, .54);
+                caret-color: rgba(0, 0, 0, .54);
+              "
             ></i></div></span>
               
             <!---->
@@ -570,7 +613,10 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
                 v-icon--size-large
                 v-theme--light
               "
-              style="color: rgba(0, 0, 0, .54); caret-color: rgba(0, 0, 0, .54);"
+              style="
+                color: rgba(0, 0, 0, .54);
+                caret-color: rgba(0, 0, 0, .54);
+              "
             ></i></div></span>
               
             <!---->
@@ -604,7 +650,21 @@ exports[`ExternalLinks > slides on hover or focus 1`] = `
       v-btn--variant-elevated
       v-theme--light
     "
-    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(calc(100% - 48px)); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="
+      background-color: #0c419a;
+      color: #fff;
+      caret-color: #fff;
+      min-height: 48px;
+      min-width: 328px;
+      transform: translateX(calc(100% - 48px));
+      position: absolute;
+      flex-direction: row-reverse;
+      top: auto;
+      bottom: 0px;
+      left: auto;
+      right: 0px;
+      z-index: 5;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -659,7 +719,21 @@ exports[`ExternalLinks > slides on hover or focus 2`] = `
       v-btn--variant-elevated
       v-theme--light
     "
-    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="
+      background-color: #0c419a;
+      color: #fff;
+      caret-color: #fff;
+      min-height: 48px;
+      min-width: 328px;
+      transform: translateX(0);
+      position: absolute;
+      flex-direction: row-reverse;
+      top: auto;
+      bottom: 0px;
+      left: auto;
+      right: 0px;
+      z-index: 5;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -714,7 +788,21 @@ exports[`ExternalLinks > slides on hover or focus 3`] = `
       v-btn--variant-elevated
       v-theme--light
     "
-    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(calc(100% - 48px)); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="
+      background-color: #0c419a;
+      color: #fff;
+      caret-color: #fff;
+      min-height: 48px;
+      min-width: 328px;
+      transform: translateX(calc(100% - 48px));
+      position: absolute;
+      flex-direction: row-reverse;
+      top: auto;
+      bottom: 0px;
+      left: auto;
+      right: 0px;
+      z-index: 5;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -769,7 +857,21 @@ exports[`ExternalLinks > slides on hover or focus 4`] = `
       v-btn--variant-elevated
       v-theme--light
     "
-    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="
+      background-color: #0c419a;
+      color: #fff;
+      caret-color: #fff;
+      min-height: 48px;
+      min-width: 328px;
+      transform: translateX(0);
+      position: absolute;
+      flex-direction: row-reverse;
+      top: auto;
+      bottom: 0px;
+      left: auto;
+      right: 0px;
+      z-index: 5;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -824,7 +926,21 @@ exports[`ExternalLinks > slides on hover or focus 5`] = `
       v-btn--variant-elevated
       v-theme--light
     "
-    style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(calc(100% - 48px)); position: absolute; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;"
+    style="
+      background-color: #0c419a;
+      color: #fff;
+      caret-color: #fff;
+      min-height: 48px;
+      min-width: 328px;
+      transform: translateX(calc(100% - 48px));
+      position: absolute;
+      flex-direction: row-reverse;
+      top: auto;
+      bottom: 0px;
+      left: auto;
+      right: 0px;
+      z-index: 5;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
