@@ -237,13 +237,13 @@ exports[`UploadWorkflow > render the upload list 1`] = `
         pa-4
         sy-file-upload
       "
-      for="file-upload-v-0"
+      for="file-upload-v-2"
       style="width: 100%;"
     >
       <input
         accept=".pdf, .jpg, .jpeg, .png"
         class="sy-file-upload-input"
-        id="file-upload-v-0"
+        id="file-upload-v-2"
         type="file"
       />
       <span class="sy-file-upload-placeholder">

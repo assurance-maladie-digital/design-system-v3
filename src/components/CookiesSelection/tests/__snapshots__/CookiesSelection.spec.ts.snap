@@ -317,14 +317,13 @@ exports[`CookiesSelection > renders correctly 1`] = `
         <div class="v-input__control">
           <label
             class="v-label"
-            id="radio-group-2"
+            id="radio-group-v-2"
           >
             <!---->
             Accepter les cookies de type Cookies fonctionnels, ce champ est requis.
           </label>
           <div
-            aria-describedby="radio-group-2-messages"
-            aria-labelledby="radio-group-2"
+            aria-labelledby="radio-group-v-2"
             class="
               v-selection-control-group
               v-selection-control-group--inline
@@ -356,8 +355,8 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   <input
                     aria-disabled="false"
                     aria-label="Refuser"
-                    id="input-5"
-                    name="radio-group-2"
+                    id="input-v-5"
+                    name="radio-group-v-2"
                     type="radio"
                     value="reject"
                   />
@@ -368,7 +367,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   v-label
                   v-label--clickable
                 "
-                for="input-5"
+                for="input-v-5"
               >
                 <!---->
                 Refuser
@@ -398,8 +397,8 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   <input
                     aria-disabled="false"
                     aria-label="Accepter"
-                    id="input-6"
-                    name="radio-group-2"
+                    id="input-v-6"
+                    name="radio-group-v-2"
                     type="radio"
                     value="accept"
                   />
@@ -410,7 +409,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   v-label
                   v-label--clickable
                 "
-                for="input-6"
+                for="input-v-6"
               >
                 <!---->
                 Accepter
@@ -520,14 +519,13 @@ exports[`CookiesSelection > renders correctly 1`] = `
         <div class="v-input__control">
           <label
             class="v-label"
-            id="radio-group-7"
+            id="radio-group-v-7"
           >
             <!---->
             Accepter les cookies de type Cookies d’analyse, ce champ est requis.
           </label>
           <div
-            aria-describedby="radio-group-7-messages"
-            aria-labelledby="radio-group-7"
+            aria-labelledby="radio-group-v-7"
             class="
               v-selection-control-group
               v-selection-control-group--inline
@@ -559,8 +557,8 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   <input
                     aria-disabled="false"
                     aria-label="Refuser"
-                    id="input-10"
-                    name="radio-group-7"
+                    id="input-v-10"
+                    name="radio-group-v-7"
                     type="radio"
                     value="reject"
                   />
@@ -571,7 +569,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   v-label
                   v-label--clickable
                 "
-                for="input-10"
+                for="input-v-10"
               >
                 <!---->
                 Refuser
@@ -601,8 +599,8 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   <input
                     aria-disabled="false"
                     aria-label="Accepter"
-                    id="input-11"
-                    name="radio-group-7"
+                    id="input-v-11"
+                    name="radio-group-v-7"
                     type="radio"
                     value="accept"
                   />
@@ -613,7 +611,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   v-label
                   v-label--clickable
                 "
-                for="input-11"
+                for="input-v-11"
               >
                 <!---->
                 Accepter

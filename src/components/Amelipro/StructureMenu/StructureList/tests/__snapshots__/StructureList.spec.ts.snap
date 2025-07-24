@@ -25,7 +25,6 @@ exports[`StructureList > render correctly 1`] = `
         mon label
       </label>
       <div
-        aria-describedby="my-name-radio-group-messages"
         aria-labelledby="my-name-radio-group"
         class="v-selection-control-group"
         column=""

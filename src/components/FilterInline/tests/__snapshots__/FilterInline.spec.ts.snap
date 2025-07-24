@@ -9,7 +9,7 @@ exports[`FilterInline > renders correctly with an active filter 1`] = `
   sy-filters-inline
 ">
   <button
-    aria-controls="v-menu-0"
+    aria-controls="v-menu-v-0"
     aria-expanded="false"
     aria-haspopup="menu"
     class="
@@ -91,7 +91,7 @@ exports[`FilterInline > renders correctly with multiple active filters 1`] = `
   sy-filters-inline
 ">
   <button
-    aria-controls="v-menu-0"
+    aria-controls="v-menu-v-0"
     aria-expanded="false"
     aria-haspopup="menu"
     class="
@@ -162,7 +162,7 @@ exports[`FilterInline > renders correctly with multiple active filters 1`] = `
   </button>
   <!---->
   <button
-    aria-controls="v-menu-2"
+    aria-controls="v-menu-v-2"
     aria-expanded="false"
     aria-haspopup="menu"
     class="

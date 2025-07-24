@@ -400,7 +400,6 @@ exports[`StructureMenu > render correctly 1`] = `
                     Je choisis une structure :
                   </label>
                   <div
-                    aria-describedby="structures-0-radio-group-messages"
                     aria-labelledby="structures-0-radio-group"
                     class="v-selection-control-group"
                     column=""
@@ -748,7 +747,6 @@ exports[`StructureMenu > render correctly 1`] = `
                     Je choisis une structure :
                   </label>
                   <div
-                    aria-describedby="structures-1-radio-group-messages"
                     aria-labelledby="structures-1-radio-group"
                     class="v-selection-control-group"
                     column=""

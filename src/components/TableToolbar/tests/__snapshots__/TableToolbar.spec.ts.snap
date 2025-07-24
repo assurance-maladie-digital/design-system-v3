@@ -117,16 +117,15 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
                   v-field-label
                   v-label
                 "
-                for="input-0"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
-                aria-describedby="input-0-messages"
                 class="v-field__input"
-                id="input-0"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -155,7 +154,7 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
                     v-theme--light
                   "
                   role="button"
-                  tabindex="0"
+                  tabindex="-1"
                 ></i>
               </div>
             </transition-stub>
@@ -340,17 +339,16 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-0"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
-                aria-describedby="input-0-messages"
                 class="v-field__input"
                 disabled=""
-                id="input-0"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -535,16 +533,15 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-0"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
-                aria-describedby="input-0-messages"
                 class="v-field__input"
-                id="input-0"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -573,7 +570,7 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
                     v-theme--light
                   "
                   role="button"
-                  tabindex="0"
+                  tabindex="-1"
                 ></i>
               </div>
             </transition-stub>
@@ -755,16 +752,15 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-0"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
-                aria-describedby="input-0-messages"
                 class="v-field__input"
-                id="input-0"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -793,7 +789,7 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
                     v-theme--light
                   "
                   role="button"
-                  tabindex="0"
+                  tabindex="-1"
                 ></i>
               </div>
             </transition-stub>
@@ -967,16 +963,15 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-0"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
-                aria-describedby="input-0-messages"
                 class="v-field__input"
-                id="input-0"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -1005,7 +1000,7 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
                     v-theme--light
                   "
                   role="button"
-                  tabindex="0"
+                  tabindex="-1"
                 ></i>
               </div>
             </transition-stub>
@@ -1188,16 +1183,15 @@ exports[`TableToolbar > should render 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-0"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
-                aria-describedby="input-0-messages"
                 class="v-field__input"
-                id="input-0"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -1226,7 +1220,7 @@ exports[`TableToolbar > should render 1`] = `
                     v-theme--light
                   "
                   role="button"
-                  tabindex="0"
+                  tabindex="-1"
                 ></i>
               </div>
             </transition-stub>

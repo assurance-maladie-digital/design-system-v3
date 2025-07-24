@@ -20,6 +20,7 @@ exports[`SelectBtnField > display correctly in dark mode with an error 1`] = `
             text-primary
             v-btn-group
             v-btn-group--density-default
+            v-btn-group--horizontal
             v-btn-toggle
             v-theme--dark
           "
@@ -172,6 +173,7 @@ exports[`SelectBtnField > display correctly with an error 1`] = `
       text-primary
       v-btn-group
       v-btn-group--density-default
+      v-btn-group--horizontal
       v-btn-toggle
       v-theme--light
     "
@@ -382,6 +384,7 @@ exports[`SelectBtnField > display correctly with in dark mode with an hint 1`] =
             text-primary
             v-btn-group
             v-btn-group--density-default
+            v-btn-group--horizontal
             v-btn-toggle
             v-theme--dark
           "
@@ -531,6 +534,7 @@ exports[`SelectBtnField > render correctly in multiple mode 1`] = `
       text-primary
       v-btn-group
       v-btn-group--density-default
+      v-btn-group--horizontal
       v-btn-toggle
       v-theme--light
     "
@@ -731,6 +735,7 @@ exports[`SelectBtnField > renders correctly 1`] = `
     text-primary
     v-btn-group
     v-btn-group--density-default
+    v-btn-group--horizontal
     v-btn-toggle
     v-theme--light
   "></ul>
@@ -754,6 +759,7 @@ exports[`SelectBtnField > renders correctly with props 1`] = `
       text-primary
       v-btn-group
       v-btn-group--density-default
+      v-btn-group--horizontal
       v-btn-toggle
       v-theme--light
     "
