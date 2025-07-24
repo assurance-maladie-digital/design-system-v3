@@ -2,6 +2,9 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+// Increase max listeners to prevent memory leak warnings during tests
+process.setMaxListeners(20)
+
 // Browser API polyfills to prevent test failures
 Object.defineProperty(window, 'visualViewport', {
 	value: {
@@ -91,6 +94,9 @@ Object.defineProperty(window, 'getComputedStyle', {
 		getPropertyValue: () => '',
 	}),
 })
+
+// Prevent memory leak warnings during concurrent test execution
+// This is safe for test environment where multiple test files run simultaneously
 
 export const vuetify = createVuetify({
 	components,
