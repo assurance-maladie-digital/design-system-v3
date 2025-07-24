@@ -125,7 +125,7 @@ const meta = {
 		tile: true,
 		minHeight: '48px',
 		minWidth: '328px',
-		color: cnamColorsTokens.blue.lighten20,
+		color: cnamColorsTokens.blue.base,
 		class: 'd-flex px-3',
 	},
 	btnIcon: {
@@ -135,8 +135,6 @@ const meta = {
 		color: 'rgba(0, 0, 0, .54)',
 	},
 	list: {
-		border: false,
-		elevation: 0,
 		class: 'py-0',
 	},
 	listItem: {
