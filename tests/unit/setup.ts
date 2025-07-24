@@ -7,6 +7,36 @@ import * as directives from 'vuetify/directives'
 const maxListeners = process.env.CI ? 30 : 20
 process.setMaxListeners(maxListeners)
 
+// ES2022 Array methods polyfill for Node.js 18.x compatibility
+// These methods are used by Vuetify 3.9.x but not available in Node.js 18.x
+if (!(Array.prototype as any).toReversed) {
+	(Array.prototype as any).toReversed = function(this: any[]) {
+		return [...this].reverse()
+	}
+}
+
+if (!(Array.prototype as any).toSorted) {
+	(Array.prototype as any).toSorted = function(this: any[], compareFn?: (a: any, b: any) => number) {
+		return [...this].sort(compareFn)
+	}
+}
+
+if (!(Array.prototype as any).toSpliced) {
+	(Array.prototype as any).toSpliced = function(this: any[], start: number, deleteCount?: number, ...items: any[]) {
+		const copy = [...this]
+		copy.splice(start, deleteCount || 0, ...items)
+		return copy
+	}
+}
+
+if (!(Array.prototype as any).with) {
+	(Array.prototype as any).with = function(this: any[], index: number, value: any) {
+		const copy = [...this]
+		copy[index] = value
+		return copy
+	}
+}
+
 // Browser API polyfills to prevent test failures
 Object.defineProperty(window, 'visualViewport', {
 	value: {
