@@ -48,7 +48,6 @@ function generateVuetifyGlobals() {
 		'transitions',
 		'VProgressLinear',
 		'VLocaleProvider',
-		'VHotkey',
 	]
 
 	const globals: Record<string, string> = {}
@@ -123,6 +122,7 @@ export default defineConfig({
 	},
 	test: {
 		environment: 'happy-dom',
+		setupFiles: ['./tests/unit/setup.ts'],
 		server: {
 			deps: {
 				inline: ['vuetify'],
