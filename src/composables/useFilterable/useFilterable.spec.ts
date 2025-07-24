@@ -628,14 +628,14 @@ describe('Filterable', () => {
 			expect(emitsFunction).toHaveBeenCalledTimes(1)
 			const emittedCall = emitsFunction.mock.calls[0]
 			expect(emittedCall[0]).toBe('update:modelValue')
-			
+
 			// Use JSON serialization for robust comparison in CI environments
 			const emittedArray = emittedCall[1]
 			const expectedArray = [
 				{ name: 'Test', value: undefined },
 				{ name: 'Test 2', value: undefined },
 			]
-			
+
 			// Compare as JSON strings to avoid reference/prototype issues
 			expect(JSON.stringify(emittedArray)).toBe(JSON.stringify(expectedArray))
 		})
