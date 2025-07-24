@@ -100,7 +100,7 @@ function selectNextElement(e: Event & { target: HTMLElement }, tools: HTMLElemen
 
 	const nextIndex = currentIndex < tools.length - 1 ? currentIndex + 1 : 0
 
-	const nextElem = tools.at(nextIndex)
+	const nextElem = tools[nextIndex]
 
 	e.target.setAttribute('tabindex', '-1')
 	nextElem?.setAttribute('tabindex', '0')
@@ -112,7 +112,7 @@ function selectPrevElement(e: Event & { target: HTMLElement }, tools: HTMLElemen
 
 	const prevIndex = currentIndex > 0 ? currentIndex - 1 : tools.length - 1
 
-	const nextElem = tools.at(prevIndex)
+	const nextElem = tools[prevIndex]
 
 	e.target.setAttribute('tabindex', '-1')
 	nextElem?.setAttribute('tabindex', '0')
@@ -120,7 +120,7 @@ function selectPrevElement(e: Event & { target: HTMLElement }, tools: HTMLElemen
 }
 
 function selectFirstElement(tools: HTMLElement[]) {
-	const firstElement = tools.at(0)
+	const firstElement = tools[0]
 	if (!firstElement) {
 		return
 	}
@@ -130,7 +130,7 @@ function selectFirstElement(tools: HTMLElement[]) {
 }
 
 function selectLastElement(tools: HTMLElement[]) {
-	const lastElement = tools.at(-1)
+	const lastElement = tools[tools.length - 1]
 	if (!lastElement) {
 		return
 	}
