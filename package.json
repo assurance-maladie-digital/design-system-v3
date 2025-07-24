@@ -104,7 +104,7 @@
   },
   "peerDependencies": {
     "vue": "^3.5.18",
-    "vuetify": "3.9.2"
+    "vuetify": "^3.9.2"
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",

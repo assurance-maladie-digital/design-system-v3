@@ -128,7 +128,7 @@
 	})
 
 	// Timeout management for cleanup
-	const timeouts = ref<number[]>([])
+	const timeouts = ref<ReturnType<typeof setTimeout>[]>([])
 
 	// Function to add accessibility attributes to row checkboxes
 	const accessibilityRowCheckboxes = () => {

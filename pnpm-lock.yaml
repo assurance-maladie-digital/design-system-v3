@@ -33,7 +33,7 @@ dependencies:
     specifier: ^1.6.6
     version: 1.6.6
   vuetify:
-    specifier: 3.9.2
+    specifier: ^3.9.2
     version: 3.9.2(typescript@5.4.2)(vite-plugin-vuetify@2.1.1)(vue@3.5.18)
 
 devDependencies:
@@ -1944,7 +1944,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.5.18(typescript@5.4.2)
-      vue-component-type-helpers: 3.0.3
+      vue-component-type-helpers: 3.0.4
     dev: true
 
   /@stylistic/eslint-plugin-ts@2.13.0(eslint@9.31.0)(typescript@5.4.2):
@@ -7174,8 +7174,8 @@ packages:
     resolution: {integrity: sha512-YbGqHZ5/eW4SnkPNR44mKVc6ZKQoRs/Rux1sxC6rdwXb4qpbOSYfDr9DsTHolOTGmIKgM9j141mZbBeg05R1pw==}
     dev: true
 
-  /vue-component-type-helpers@3.0.3:
-    resolution: {integrity: sha512-koiBu7lO8e6w/UlbZAAIW11qcFQocYIl7Nh/SVwGZ804ej5KrncU32bRxi2zfU2Kyf6HWuk1CeeVP2rhIL+vyQ==}
+  /vue-component-type-helpers@3.0.4:
+    resolution: {integrity: sha512-WtR3kPk8vqKYfCK/HGyT47lK/T3FaVyWxaCNuosaHYE8h9/k0lYRZ/PI/+T/z2wP+uuNKmL6z30rOcBboOu/YA==}
     dev: true
 
   /vue-docgen-api@4.79.2(vue@3.5.18):
