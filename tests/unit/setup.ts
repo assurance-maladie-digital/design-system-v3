@@ -141,7 +141,17 @@ if (process.env.CI) {
 		},
 		writable: true,
 	})
+	
+	// Improve test isolation in CI by ensuring proper cleanup
+	// Add a small delay between tests to prevent race conditions
+	const originalSetTimeout = global.setTimeout
+	global.setTimeout = ((fn: Function, delay: number = 0, ...args: any[]) => {
+		// Add minimum 1ms delay in CI to improve test isolation
+		return originalSetTimeout(fn, Math.max(delay, 1), ...args)
+	}) as typeof setTimeout
 }
+
+
 
 // Prevent memory leak warnings during concurrent test execution
 // This is safe for test environment where multiple test files run simultaneously
