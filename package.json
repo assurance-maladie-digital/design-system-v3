@@ -108,15 +108,15 @@
     "vuetify": "3.7.16"
   },
   "dependencies": {
-    "@emotion/css": "11.13.5",
-    "@mdi/js": "7.4.47",
-    "dayjs": "1.11.13",
-    "deepmerge": "4.3.1",
-    "iso-639-1": "3.1.5",
-    "maska": "3.1.0",
-    "sass-embedded": "1.85.1",
-    "sass-loader": "16.0.5",
-    "slugify": "1.6.6"
+    "@emotion/css": "^11.13.5",
+    "@mdi/js": "^7.4.47",
+    "dayjs": "^1.11.13",
+    "deepmerge": "^4.3.1",
+    "iso-639-1": "^3.1.5",
+    "maska": "^3.1.0",
+    "sass-embedded": "^1.85.1",
+    "sass-loader": "^16.0.5",
+    "slugify": "^1.6.6"
   },
   "publishConfig": {
     "access": "public"
