@@ -25,7 +25,10 @@ exports[`AmeliproMenu > render correctly 1`] = `
     "
     id="amelipro-menu-id-open-btn"
     plain=""
-    style="height: auto; width: auto;"
+    style="
+      height: auto;
+      width: auto;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -151,7 +154,10 @@ exports[`AmeliproMenu > render correctly 1`] = `
         "
         id="amelipro-menu-id-close-menu-btn"
         plain=""
-        style="height: auto; width: auto;"
+        style="
+          height: auto;
+          width: auto;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -176,7 +182,12 @@ exports[`AmeliproMenu > render correctly 1`] = `
           >
             <span
               class="amelipro-external-icon"
-              style="background-color: transparent; border-radius: 50%; color: #FFFFFF; padding: 0px;"
+              style="
+                background-color: transparent;
+                border-radius: 50%;
+                color: #FFFFFF;
+                padding: 0px;
+              "
             >
               <i
                 aria-hidden="true"
@@ -188,7 +199,12 @@ exports[`AmeliproMenu > render correctly 1`] = `
                   v-icon
                   v-theme--light
                 "
-                style="font-size: 100%; height: 100%; width: 100%; display: block;"
+                style="
+                  font-size: 100%;
+                  height: 100%;
+                  width: 100%;
+                  display: block;
+                "
               ></i>
             </span>
           </span>
@@ -206,7 +222,10 @@ exports[`AmeliproMenu > render correctly 1`] = `
         v-theme--light
       "
       role="separator"
-      style="border-top-width: 1px; opacity: 1 !important;"
+      style="
+        border-top-width: 1px;
+        opacity: 1 !important;
+      "
     />
     <ul
       class="
@@ -238,7 +257,11 @@ exports[`AmeliproMenu > render correctly 1`] = `
               w-100
             "
             id="menu-btn__1"
-            style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
+            style="
+              height: auto;
+              min-height: 2.5rem;
+              color: #FFFFFF !important;
+            "
             type="button"
           >
             <span class="v-btn__overlay"></span>
@@ -265,7 +288,14 @@ exports[`AmeliproMenu > render correctly 1`] = `
                 >
                   <span
                     class="amelipro-external-icon"
-                    style="background-color: transparent; border-radius: 50%; color: #FFFFFF; padding: 0px; height: 1.5rem; width: 1.5rem;"
+                    style="
+                      background-color: transparent;
+                      border-radius: 50%;
+                      color: #FFFFFF;
+                      padding: 0px;
+                      height: 1.5rem;
+                      width: 1.5rem;
+                    "
                   >
                     <i
                       aria-hidden="true"
@@ -277,7 +307,12 @@ exports[`AmeliproMenu > render correctly 1`] = `
                         v-icon
                         v-theme--light
                       "
-                      style="font-size: 100%; height: 100%; width: 100%; display: block;"
+                      style="
+                        font-size: 100%;
+                        height: 100%;
+                        width: 100%;
+                        display: block;
+                      "
                     ></i>
                   </span>
                 </span>
@@ -313,7 +348,11 @@ exports[`AmeliproMenu > render correctly 1`] = `
               w-100
             "
             id="menu-btn__2"
-            style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
+            style="
+              height: auto;
+              min-height: 2.5rem;
+              color: #FFFFFF !important;
+            "
             type="button"
           >
             <span class="v-btn__overlay"></span>
@@ -340,7 +379,14 @@ exports[`AmeliproMenu > render correctly 1`] = `
                 >
                   <span
                     class="amelipro-external-icon"
-                    style="background-color: transparent; border-radius: 50%; color: #FFFFFF; padding: 0px; height: 1.5rem; width: 1.5rem;"
+                    style="
+                      background-color: transparent;
+                      border-radius: 50%;
+                      color: #FFFFFF;
+                      padding: 0px;
+                      height: 1.5rem;
+                      width: 1.5rem;
+                    "
                   >
                     <i
                       aria-hidden="true"
@@ -352,7 +398,12 @@ exports[`AmeliproMenu > render correctly 1`] = `
                         v-icon
                         v-theme--light
                       "
-                      style="font-size: 100%; height: 100%; width: 100%; display: block;"
+                      style="
+                        font-size: 100%;
+                        height: 100%;
+                        width: 100%;
+                        display: block;
+                      "
                     ></i>
                   </span>
                 </span>
@@ -384,7 +435,11 @@ exports[`AmeliproMenu > render correctly 1`] = `
               w-100
             "
             id="menu-btn__3"
-            style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
+            style="
+              height: auto;
+              min-height: 2.5rem;
+              color: #FFFFFF !important;
+            "
             type="button"
           >
             <span class="v-btn__overlay"></span>
@@ -420,7 +475,10 @@ exports[`AmeliproMenu > render correctly 1`] = `
         v-theme--light
       "
       role="separator"
-      style="border-top-width: 1px; opacity: 1 !important;"
+      style="
+        border-top-width: 1px;
+        opacity: 1 !important;
+      "
     />
     <div>
       <button
@@ -441,7 +499,11 @@ exports[`AmeliproMenu > render correctly 1`] = `
           w-100
         "
         id="amelipro-menu-id-return-home-menu-btn"
-        style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #FFFFFF !important;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>

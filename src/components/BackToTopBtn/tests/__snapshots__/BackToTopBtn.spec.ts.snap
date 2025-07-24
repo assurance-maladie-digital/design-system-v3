@@ -20,7 +20,11 @@ exports[`BackToTopBtn > renders correctly 1`] = `
       v-theme--light
       vd-back-to-top-btn
     "
-    style="bottom: 16px; margin-right: 16px; display: none;"
+    style="
+      bottom: 16px;
+      margin-right: 16px;
+      display: none;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -74,7 +78,11 @@ exports[`BackToTopBtn > renders correctly when nudgeBottom and nudgeRight are se
       v-theme--light
       vd-back-to-top-btn
     "
-    style="bottom: 0px; margin-right: 0px; display: none;"
+    style="
+      bottom: 0px;
+      margin-right: 0px;
+      display: none;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>

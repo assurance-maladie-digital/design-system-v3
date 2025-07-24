@@ -33,7 +33,11 @@ exports[`AmeliproDropdownMenu > render correctly 1`] = `
       w-100
     "
     id="my-dropdown-menu-id-btn"
-    style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
+    style="
+      height: auto;
+      min-height: 2.5rem;
+      color: #1A1B1B !important;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -76,7 +80,11 @@ exports[`AmeliproDropdownMenu > render correctly 1`] = `
             "
             focusable="false"
             role="img"
-            style="color: #1A1B1B; height: 8px; width: 8px;"
+            style="
+              color: #1A1B1B;
+              height: 8px;
+              width: 8px;
+            "
           >
             <span>
               <svg
@@ -143,7 +151,11 @@ exports[`AmeliproDropdownMenu > render correctly 1`] = `
         "
         id="my-dropdown-menu-id-btn-0"
         role="menuitem"
-        style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #1A1B1B !important;
+        "
         tabindex="-1"
         type="button"
       >
@@ -196,7 +208,11 @@ exports[`AmeliproDropdownMenu > render correctly 1`] = `
         "
         id="my-dropdown-menu-id-btn-1"
         role="menuitem"
-        style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #1A1B1B !important;
+        "
         tabindex="-1"
         type="button"
       >
@@ -249,7 +265,11 @@ exports[`AmeliproDropdownMenu > render correctly 1`] = `
         "
         id="my-dropdown-menu-id-btn-2"
         role="menuitem"
-        style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #1A1B1B !important;
+        "
         tabindex="-1"
         type="button"
       >

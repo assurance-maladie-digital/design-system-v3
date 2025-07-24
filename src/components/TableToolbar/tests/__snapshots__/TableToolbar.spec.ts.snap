@@ -17,7 +17,11 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
     v-toolbar--flat
   "
   minheight="56px"
-  style="background-color: #FFFFFF; color: #000; caret-color: #000;"
+  style="
+    background-color: #FFFFFF;
+    color: #000;
+    caret-color: #000;
+  "
 >
   <!---->
   <div class="v-toolbar__content">
@@ -67,7 +71,11 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
                   v-theme--light
                 "
                 role="progressbar"
-                style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+                style="
+                  top: 0px;
+                  height: 0px;
+                  --v-progress-linear-height: 2px;
+                "
               >
                 <!---->
                 <div
@@ -82,7 +90,10 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
                     bg-primary
                     v-progress-linear__buffer
                   "
-                  style="opacity: NaN; width: 0%;"
+                  style="
+                    opacity: NaN;
+                    width: 0%;
+                  "
                 ></div>
                 <transition-stub
                   appear="false"
@@ -237,7 +248,11 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
     v-toolbar--flat
   "
   minheight="56px"
-  style="background-color: #FFFFFF; color: #000; caret-color: #000;"
+  style="
+    background-color: #FFFFFF;
+    color: #000;
+    caret-color: #000;
+  "
 >
   <!---->
   <div class="v-toolbar__content">
@@ -290,7 +305,11 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
                   v-theme--light
                 "
                 role="progressbar"
-                style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+                style="
+                  top: 0px;
+                  height: 0px;
+                  --v-progress-linear-height: 2px;
+                "
               >
                 <!---->
                 <div
@@ -305,7 +324,10 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
                     bg-primary
                     v-progress-linear__buffer
                   "
-                  style="opacity: NaN; width: 0%;"
+                  style="
+                    opacity: NaN;
+                    width: 0%;
+                  "
                 ></div>
                 <transition-stub
                   appear="false"
@@ -435,7 +457,11 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
     v-toolbar--flat
   "
   minheight="56px"
-  style="background-color: #FFFFFF; color: #000; caret-color: #000;"
+  style="
+    background-color: #FFFFFF;
+    color: #000;
+    caret-color: #000;
+  "
 >
   <!---->
   <div class="v-toolbar__content">
@@ -485,7 +511,11 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
                   v-theme--light
                 "
                 role="progressbar"
-                style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+                style="
+                  top: 0px;
+                  height: 0px;
+                  --v-progress-linear-height: 2px;
+                "
               >
                 <!---->
                 <div
@@ -500,7 +530,10 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
                     bg-primary
                     v-progress-linear__buffer
                   "
-                  style="opacity: NaN; width: 0%;"
+                  style="
+                    opacity: NaN;
+                    width: 0%;
+                  "
                 ></div>
                 <transition-stub
                   appear="false"
@@ -655,7 +688,11 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
     v-toolbar--flat
   "
   minheight="56px"
-  style="background-color: #FFFFFF; color: #000; caret-color: #000;"
+  style="
+    background-color: #FFFFFF;
+    color: #000;
+    caret-color: #000;
+  "
 >
   <!---->
   <div class="v-toolbar__content">
@@ -705,7 +742,11 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
                   v-theme--light
                 "
                 role="progressbar"
-                style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+                style="
+                  top: 0px;
+                  height: 0px;
+                  --v-progress-linear-height: 2px;
+                "
               >
                 <!---->
                 <div
@@ -720,7 +761,10 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
                     bg-primary
                     v-progress-linear__buffer
                   "
-                  style="opacity: NaN; width: 0%;"
+                  style="
+                    opacity: NaN;
+                    width: 0%;
+                  "
                 ></div>
                 <transition-stub
                   appear="false"
@@ -875,7 +919,11 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
     v-toolbar--flat
   "
   minheight="56px"
-  style="background-color: #FFFFFF; color: #000; caret-color: #000;"
+  style="
+    background-color: #FFFFFF;
+    color: #000;
+    caret-color: #000;
+  "
 >
   <!---->
   <div class="v-toolbar__content">
@@ -917,7 +965,11 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
                   v-theme--light
                 "
                 role="progressbar"
-                style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+                style="
+                  top: 0px;
+                  height: 0px;
+                  --v-progress-linear-height: 2px;
+                "
               >
                 <!---->
                 <div
@@ -932,7 +984,10 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
                     bg-primary
                     v-progress-linear__buffer
                   "
-                  style="opacity: NaN; width: 0%;"
+                  style="
+                    opacity: NaN;
+                    width: 0%;
+                  "
                 ></div>
                 <transition-stub
                   appear="false"
@@ -1088,7 +1143,11 @@ exports[`TableToolbar > should render 1`] = `
   "
   minheight="56px"
   showaddbtn="true"
-  style="background-color: #FFFFFF; color: #000; caret-color: #000;"
+  style="
+    background-color: #FFFFFF;
+    color: #000;
+    caret-color: #000;
+  "
 >
   <!---->
   <div class="v-toolbar__content">
@@ -1138,7 +1197,11 @@ exports[`TableToolbar > should render 1`] = `
                   v-theme--light
                 "
                 role="progressbar"
-                style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+                style="
+                  top: 0px;
+                  height: 0px;
+                  --v-progress-linear-height: 2px;
+                "
               >
                 <!---->
                 <div
@@ -1153,7 +1216,10 @@ exports[`TableToolbar > should render 1`] = `
                     bg-primary
                     v-progress-linear__buffer
                   "
-                  style="opacity: NaN; width: 0%;"
+                  style="
+                    opacity: NaN;
+                    width: 0%;
+                  "
                 ></div>
                 <transition-stub
                   appear="false"

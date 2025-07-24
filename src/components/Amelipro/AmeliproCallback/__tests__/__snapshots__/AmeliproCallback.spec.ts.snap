@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproCallback > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-callback
+    w-100
+  "
+  id="modified-unique-id-container"
+>
+  <amelipro-card-stub
+    bordercolor="ap-grey-lighten-2"
+    bordered="true"
+    cardcolor="ap-white"
+    cardtitle="Modified card title"
+    classes="amelipro-callback__card"
+    divider="true"
+    headerrightwidth="50%"
+    nocardheader="false"
+    rightpart="false"
+    rightpartwidth="25%"
+    titlecolor="ap-grey-darken-1"
+    titlelevel="2"
+    uniqueid="modified-unique-id-card"
+  ></amelipro-card-stub>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`AmeliproCallback > Snapshots > renders the component with only required properties filled in 1`] = `
+<div class="
+  amelipro-callback
+  w-100
+">
+  <amelipro-card-stub
+    bordercolor="ap-grey-lighten-2"
+    bordered="true"
+    cardcolor="ap-white"
+    classes="amelipro-callback__card"
+    divider="true"
+    headerrightwidth="50%"
+    nocardheader="false"
+    rightpart="false"
+    rightpartwidth="25%"
+    titlecolor="ap-grey-darken-1"
+    titlelevel="2"
+  ></amelipro-card-stub>
+  <!-- v-if -->
+</div>
+`;

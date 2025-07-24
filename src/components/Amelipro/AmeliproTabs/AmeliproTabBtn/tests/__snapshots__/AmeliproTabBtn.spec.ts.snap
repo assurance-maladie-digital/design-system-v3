@@ -12,7 +12,11 @@ exports[`AmeliproTabBtn > render correctly 1`] = `
   "
   id="my-tab-btn-id"
   role="tab"
-  style="background-color: #E6F6FC; border: 1px solid #DDDEDE; color: #00749C;"
+  style="
+    background-color: #E6F6FC;
+    border: 1px solid #DDDEDE;
+    color: #00749C;
+  "
   tabindex="0"
   type="button"
 >

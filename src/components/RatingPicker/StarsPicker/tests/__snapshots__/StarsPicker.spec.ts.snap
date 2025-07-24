@@ -60,7 +60,11 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>
@@ -101,7 +105,11 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>
@@ -142,7 +150,11 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>
@@ -183,7 +195,11 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>
@@ -224,7 +240,11 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>

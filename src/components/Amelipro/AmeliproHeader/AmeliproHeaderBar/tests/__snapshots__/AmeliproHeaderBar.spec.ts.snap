@@ -31,7 +31,10 @@ exports[`AmeliproHeaderBar > render correctly 1`] = `
           d-flex
           header-bar-content__container
         "
-        style="width: 100%; max-width: 100%;"
+        style="
+          width: 100%;
+          max-width: 100%;
+        "
       >
         <div
           class="

@@ -64,7 +64,11 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
               v-theme--light
             "
             role="progressbar"
-            style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+            style="
+              top: 0px;
+              height: 0px;
+              --v-progress-linear-height: 2px;
+            "
           >
             <!---->
             <div
@@ -79,7 +83,10 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
                 bg-ap-blue-darken-1
                 v-progress-linear__buffer
               "
-              style="opacity: NaN; width: 0%;"
+              style="
+                opacity: NaN;
+                width: 0%;
+              "
             ></div>
             <transition-stub
               appear="false"
@@ -148,7 +155,10 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
             "
             id="my-AutoCompleteField-id-btn"
             plain=""
-            style="height: auto; width: auto;"
+            style="
+              height: auto;
+              width: auto;
+            "
             tabindex="-1"
             type="button"
           >
@@ -174,7 +184,12 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
               >
                 <span
                   class="amelipro-external-icon"
-                  style="background-color: transparent; border-radius: 50%; color: #00749C; padding: 0px;"
+                  style="
+                    background-color: transparent;
+                    border-radius: 50%;
+                    color: #00749C;
+                    padding: 0px;
+                  "
                 >
                   <i
                     aria-hidden="true"
@@ -186,7 +201,12 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
                       v-icon
                       v-theme--light
                     "
-                    style="font-size: 100%; height: 100%; width: 100%; display: block;"
+                    style="
+                      font-size: 100%;
+                      height: 100%;
+                      width: 100%;
+                      display: block;
+                    "
                   ></i>
                 </span>
               </span>

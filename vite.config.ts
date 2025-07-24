@@ -122,11 +122,13 @@ export default defineConfig({
 	},
 	test: {
 		environment: 'happy-dom',
+		// globals: true,
 		server: {
 			deps: {
 				inline: ['vuetify'],
 			},
 		},
+		setupFiles: ['./tests/unit/setup.ts'],
 		snapshotSerializers: [
 			'./node_modules/vue3-snapshot-serializer/index.js',
 		],
