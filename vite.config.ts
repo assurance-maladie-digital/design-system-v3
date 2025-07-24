@@ -97,7 +97,7 @@ export default defineConfig({
 			name: 'DesignSystemV3',
 			fileName: 'design-system-v3',
 		},
-		chunkSizeWarningLimit: 2000,
+		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
 			external: ['vue', /vuetify/],
 			output: {
