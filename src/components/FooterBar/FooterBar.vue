@@ -11,7 +11,6 @@
 	import { defaultSocialMediaLinks } from './defaultSocialMediaLinks'
 	import type { LinkItem } from './types'
 
-
 	import { mdiArrowUp } from '@mdi/js'
 	import { useDisplay } from 'vuetify'
 	import { config } from './config'
