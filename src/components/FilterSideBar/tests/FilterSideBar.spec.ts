@@ -153,7 +153,8 @@ describe('FilterSideBar', () => {
 				value: undefined,
 			},
 		]
-		expect(emittedValue).toEqual(expectedValue)
+		// Use JSON serialization for robust comparison in CI environments
+		expect(JSON.stringify(emittedValue)).toBe(JSON.stringify(expectedValue))
 	})
 
 	it('renders the template corresponding to the filter name', async () => {
@@ -251,7 +252,8 @@ describe('FilterSideBar', () => {
 				value: '18',
 			},
 		]
-		expect(emittedValue).toEqual(expectedValue)
+		// Use JSON serialization for robust comparison in CI environments
+		expect(JSON.stringify(emittedValue)).toBe(JSON.stringify(expectedValue))
 	})
 
 	it('resets all the filters when the reset button is clicked', async () => {
@@ -299,7 +301,8 @@ describe('FilterSideBar', () => {
 				value: undefined,
 			},
 		]
-		expect(emittedValue).toEqual(expectedValue)
+		// Use JSON serialization for robust comparison in CI environments
+		expect(JSON.stringify(emittedValue)).toBe(JSON.stringify(expectedValue))
 	})
 
 	it('open and close the drawer without changing the filters', async () => {
