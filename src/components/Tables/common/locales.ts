@@ -28,4 +28,11 @@ export const locales = {
 	showColumn: (columnTitle: string) => `Afficher la colonne ${columnTitle}`,
 	moveColumnLeft: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la gauche`,
 	moveColumnRight: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la droite`,
+
+	// Accessibility locales
+	rowCountStatus: (count: number) => count <= 1 ? `${count} ligne trouvée` : `${count} lignes trouvées`,
+	sortAscending: 'Tri croissant',
+	sortDescending: 'Tri décroissant',
+	sortNone: 'Aucun tri',
+	sortOther: 'Tri personnalisé',
 }
