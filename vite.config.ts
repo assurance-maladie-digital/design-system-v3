@@ -122,7 +122,6 @@ export default defineConfig({
 	},
 	test: {
 		environment: 'happy-dom',
-		setupFiles: ['./tests/unit/setup.ts'],
 		server: {
 			deps: {
 				inline: ['vuetify'],
