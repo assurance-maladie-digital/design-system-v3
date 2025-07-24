@@ -101,11 +101,6 @@ export default defineConfig({
 		rollupOptions: {
 			external: ['vue', /vuetify/],
 			output: {
-				manualChunks(id) {
-					if (id.includes('amelipro/icons')) {
-						return 'icons'
-					}
-				},
 				globals: {
 					'vue': 'Vue',
 					'vuetify': 'Vuetify',
