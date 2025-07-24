@@ -145,13 +145,15 @@ describe('FilterSideBar', () => {
 
 		await wrapper.find('button:nth-child(3)').trigger('click')
 
-		expect(wrapper.emitted('update:modelValue')?.[0][0]).toEqual([
+		const emittedValue = wrapper.emitted('update:modelValue')?.[0][0]
+		const expectedValue = [
 			{
 				name: 'name',
 				label: 'Nom',
 				value: undefined,
 			},
-		])
+		]
+		expect(emittedValue).toEqual(expectedValue)
 	})
 
 	it('renders the template corresponding to the filter name', async () => {
@@ -236,7 +238,8 @@ describe('FilterSideBar', () => {
 
 		await wrapper.find('button:nth-child(3)').trigger('click')
 
-		expect(wrapper.emitted('update:modelValue')?.[0][0]).toEqual([
+		const emittedValue = wrapper.emitted('update:modelValue')?.[0][0]
+		const expectedValue = [
 			{
 				name: 'name',
 				title: 'Nom',
@@ -247,7 +250,8 @@ describe('FilterSideBar', () => {
 				title: 'Âge',
 				value: '18',
 			},
-		])
+		]
+		expect(emittedValue).toEqual(expectedValue)
 	})
 
 	it('resets all the filters when the reset button is clicked', async () => {
@@ -282,7 +286,8 @@ describe('FilterSideBar', () => {
 			)
 			.trigger('click')
 
-		expect(wrapper.emitted('update:modelValue')?.[0][0]).toEqual([
+		const emittedValue = wrapper.emitted('update:modelValue')?.[0][0]
+		const expectedValue = [
 			{
 				name: 'name',
 				title: 'Nom',
@@ -293,7 +298,8 @@ describe('FilterSideBar', () => {
 				title: 'Âge',
 				value: undefined,
 			},
-		])
+		]
+		expect(emittedValue).toEqual(expectedValue)
 	})
 
 	it('open and close the drawer without changing the filters', async () => {

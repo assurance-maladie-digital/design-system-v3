@@ -626,7 +626,9 @@ describe('Filterable', () => {
 			resetAllFilters()
 
 			expect(emitsFunction).toHaveBeenCalledTimes(1)
-			expect(emitsFunction).toHaveBeenCalledWith('update:modelValue', [
+			const emittedCall = emitsFunction.mock.calls[0]
+			expect(emittedCall[0]).toBe('update:modelValue')
+			expect(emittedCall[1]).toEqual([
 				{ name: 'Test', value: undefined },
 				{ name: 'Test 2', value: undefined },
 			])
