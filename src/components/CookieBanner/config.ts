@@ -1,3 +1,5 @@
+import { cnamColorsTokens } from '@/designTokens/tokens/cnam/cnamColors'
+
 const commonBtnConfig = {
 	color: 'primary',
 	height: 'auto',
@@ -10,6 +12,7 @@ export const config = {
 		rounded: true,
 		elevation: 2,
 		class: 'pa-8',
+		color: cnamColorsTokens.blue.lighten80,
 	},
 	closeBtn: {
 		icon: true,
