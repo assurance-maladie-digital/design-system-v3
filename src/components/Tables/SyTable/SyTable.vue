@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, onMounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, onMounted, onUnmounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -127,10 +127,16 @@
 		uniqueTableId: uniqueTableId.value,
 	})
 
+	// Timeout management for cleanup
+	const timeouts = ref<number[]>([])
+
 	// Function to add accessibility attributes to row checkboxes
 	const accessibilityRowCheckboxes = () => {
 		nextTick(() => {
-			setTimeout(() => {
+			const timeoutId = setTimeout(() => {
+				// Check if document is available (for test environment)
+				if (typeof document === 'undefined') return
+
 				const tableElement = document.getElementById(uniqueTableId.value)
 				if (!tableElement) return
 
@@ -142,6 +148,9 @@
 					checkbox.setAttribute('title', rowLabel)
 				})
 			}, 100) // Small delay to ensure DOM is updated
+
+			// Track timeout for cleanup
+			timeouts.value.push(timeoutId)
 		})
 	}
 
@@ -154,6 +163,14 @@
 	onMounted(() => {
 		accessibilityRowCheckboxes()
 		setupAria()
+	})
+
+	// Clean up timeouts on unmount to prevent unhandled errors
+	onUnmounted(() => {
+		timeouts.value.forEach((timeoutId) => {
+			clearTimeout(timeoutId)
+		})
+		timeouts.value = []
 	})
 
 	setupAccessibility()

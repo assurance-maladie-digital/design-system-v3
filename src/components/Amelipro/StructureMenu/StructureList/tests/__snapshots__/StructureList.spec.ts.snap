@@ -25,7 +25,6 @@ exports[`StructureList > render correctly 1`] = `
         mon label
       </label>
       <div
-        aria-describedby="my-name-radio-group-messages"
         aria-labelledby="my-name-radio-group"
         class="v-selection-control-group"
         column=""
@@ -80,7 +79,11 @@ exports[`StructureList > render correctly 1`] = `
                   "
                   focusable="false"
                   role="img"
-                  style="color: #01B9F5; border-radius: 50%; border: 1px solid #01B9F5;"
+                  style="
+                    color: #01B9F5;
+                    border-radius: 50%;
+                    border: 1px solid #01B9F5;
+                  "
                 >
                   <span>
                     <svg
@@ -178,7 +181,11 @@ exports[`StructureList > render correctly 1`] = `
                   "
                   focusable="false"
                   role="img"
-                  style="color: #01B9F5; border-radius: 50%; border: 1px solid #01B9F5;"
+                  style="
+                    color: #01B9F5;
+                    border-radius: 50%;
+                    border: 1px solid #01B9F5;
+                  "
                 >
                   <span>
                     <svg
@@ -276,7 +283,11 @@ exports[`StructureList > render correctly 1`] = `
                   "
                   focusable="false"
                   role="img"
-                  style="color: #01B9F5; border-radius: 50%; border: 1px solid #01B9F5;"
+                  style="
+                    color: #01B9F5;
+                    border-radius: 50%;
+                    border: 1px solid #01B9F5;
+                  "
                 >
                   <span>
                     <svg

@@ -19,7 +19,10 @@ exports[`AmeliproIllustratedDataTile > render correctly 1`] = `
       illustrated-data-tile__wrapper
       w-100
     "
-    style="border: 2px solid #EEEEEE !important; padding: 2rem 1rem;"
+    style="
+      border: 2px solid #EEEEEE !important;
+      padding: 2rem 1rem;
+    "
   >
     <!-- v-if -->
     <p
