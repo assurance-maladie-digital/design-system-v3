@@ -27,7 +27,11 @@ exports[`AmeliproMessagingMenuBtn > render correctly 1`] = `
     w-100
   "
   id="my-messaging-menu-btn-id"
-  style="height: auto; min-height: 50px; color: #FFFFFF !important;"
+  style="
+    height: auto;
+    min-height: 50px;
+    color: #FFFFFF !important;
+  "
   type="button"
 >
   <span class="v-btn__overlay"></span>
@@ -63,7 +67,11 @@ exports[`AmeliproMessagingMenuBtn > render correctly 1`] = `
             "
             focusable="false"
             role="img"
-            style="color: #FFFFFF; height: 24px; width: 24px;"
+            style="
+              color: #FFFFFF;
+              height: 24px;
+              width: 24px;
+            "
           >
             <!-- v-if -->
           </span>

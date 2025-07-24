@@ -39,7 +39,11 @@ exports[`AmeliproBreadcrumb > render correctly 1`] = `
           v-theme--light
         "
         id="amelipro-breadcrumb-unique-id-btn-0"
-        style="height: auto; min-height: auto; padding: 0px;"
+        style="
+          height: auto;
+          min-height: auto;
+          padding: 0px;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -92,7 +96,11 @@ exports[`AmeliproBreadcrumb > render correctly 1`] = `
           v-theme--light
         "
         id="amelipro-breadcrumb-unique-id-btn-1"
-        style="height: auto; min-height: auto; padding: 0px;"
+        style="
+          height: auto;
+          min-height: auto;
+          padding: 0px;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -145,7 +153,11 @@ exports[`AmeliproBreadcrumb > render correctly 1`] = `
           v-theme--light
         "
         id="amelipro-breadcrumb-unique-id-btn-2"
-        style="height: auto; min-height: auto; padding: 0px;"
+        style="
+          height: auto;
+          min-height: auto;
+          padding: 0px;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>

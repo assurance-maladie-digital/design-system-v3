@@ -56,7 +56,10 @@ exports[`StructureMenu > render correctly 1`] = `
         "
         id="my-structure-menu-id-structure-menu-close-btn"
         plain=""
-        style="height: auto; width: auto;"
+        style="
+          height: auto;
+          width: auto;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -87,7 +90,11 @@ exports[`StructureMenu > render correctly 1`] = `
               "
               focusable="false"
               role="img"
-              style="color: #00749C; height: 40px; width: 40px;"
+              style="
+                color: #00749C;
+                height: 40px;
+                width: 40px;
+              "
             >
               <span>
                 <svg
@@ -193,7 +200,11 @@ exports[`StructureMenu > render correctly 1`] = `
             "
             dense=""
             id="my-structure-menu-id-structure-message"
-            style="color: #4D547D; caret-color: #4D547D; width: 100%;"
+            style="
+              color: #4D547D;
+              caret-color: #4D547D;
+              width: 100%;
+            "
           >
             <!---->
             <span class="v-alert__underlay"></span>
@@ -216,7 +227,11 @@ exports[`StructureMenu > render correctly 1`] = `
                   "
                   focusable="false"
                   role="img"
-                  style="color: #FFFFFF; border-radius: 50%; border: 1px solid #FFFFFF;"
+                  style="
+                    color: #FFFFFF;
+                    border-radius: 50%;
+                    border: 1px solid #FFFFFF;
+                  "
                 >
                   <span>
                     <svg
@@ -455,7 +470,11 @@ exports[`StructureMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #01B9F5; border-radius: 50%; border: 1px solid #01B9F5;"
+                              style="
+                                color: #01B9F5;
+                                border-radius: 50%;
+                                border: 1px solid #01B9F5;
+                              "
                             >
                               <span>
                                 <svg
@@ -553,7 +572,11 @@ exports[`StructureMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #01B9F5; border-radius: 50%; border: 1px solid #01B9F5;"
+                              style="
+                                color: #01B9F5;
+                                border-radius: 50%;
+                                border: 1px solid #01B9F5;
+                              "
                             >
                               <span>
                                 <svg
@@ -651,7 +674,11 @@ exports[`StructureMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #01B9F5; border-radius: 50%; border: 1px solid #01B9F5;"
+                              style="
+                                color: #01B9F5;
+                                border-radius: 50%;
+                                border: 1px solid #01B9F5;
+                              "
                             >
                               <span>
                                 <svg
@@ -803,7 +830,11 @@ exports[`StructureMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #01B9F5; border-radius: 50%; border: 1px solid #01B9F5;"
+                              style="
+                                color: #01B9F5;
+                                border-radius: 50%;
+                                border: 1px solid #01B9F5;
+                              "
                             >
                               <span>
                                 <svg
@@ -901,7 +932,11 @@ exports[`StructureMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #01B9F5; border-radius: 50%; border: 1px solid #01B9F5;"
+                              style="
+                                color: #01B9F5;
+                                border-radius: 50%;
+                                border: 1px solid #01B9F5;
+                              "
                             >
                               <span>
                                 <svg
@@ -999,7 +1034,11 @@ exports[`StructureMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #01B9F5; border-radius: 50%; border: 1px solid #01B9F5;"
+                              style="
+                                color: #01B9F5;
+                                border-radius: 50%;
+                                border: 1px solid #01B9F5;
+                              "
                             >
                               <span>
                                 <svg
@@ -1139,7 +1178,10 @@ exports[`StructureMenu > render correctly 1`] = `
               "
               id="my-structure-menu-id-default-structure-switch-description-btn"
               plain=""
-              style="height: auto; width: auto;"
+              style="
+                height: auto;
+                width: auto;
+              "
               type="button"
             >
               <span class="v-btn__overlay"></span>
@@ -1177,7 +1219,13 @@ exports[`StructureMenu > render correctly 1`] = `
                       <svg
                         aria-hidden="true"
                         height="34"
-                        style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd"
+                        style="
+                          shape-rendering:geometricPrecision;
+                          text-rendering:geometricPrecision;
+                          image-rendering:optimizeQuality;
+                          fill-rule:evenodd;
+                          clip-rule:evenodd;
+                        "
                         viewBox="0 0 6828 6828"
                         width="34"
                         xml:space="preserve"
@@ -1246,7 +1294,11 @@ exports[`StructureMenu > render correctly 1`] = `
             v-theme--light
           "
           id="my-structure-menu-id-default-structure-confirm-btn"
-          style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
+          style="
+            height: auto;
+            min-height: 2.5rem;
+            color: #FFFFFF !important;
+          "
           type="button"
         >
           <span class="v-btn__overlay"></span>
@@ -1290,7 +1342,13 @@ exports[`StructureMenu > render correctly 1`] = `
             v-theme--light
           "
           id="my-structure-menu-id-default-structure-cancel-btn"
-          style="height: auto; min-height: 2.5rem; color: #00749C !important; border: 2px solid #00749C !important; background-color: white;"
+          style="
+            height: auto;
+            min-height: 2.5rem;
+            color: #00749C !important;
+            border: 2px solid #00749C !important;
+            background-color: white;
+          "
           type="button"
         >
           <span class="v-btn__overlay"></span>

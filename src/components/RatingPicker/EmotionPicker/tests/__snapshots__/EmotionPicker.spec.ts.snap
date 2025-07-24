@@ -58,7 +58,10 @@ exports[`EmotionPicker > renders correctly 1`] = `
               v-btn--variant-text
               v-theme--light
             "
-            style="min-height: 88px; min-width: 88px;"
+            style="
+              min-height: 88px;
+              min-width: 88px;
+            "
             title="Pas du tout"
             type="button"
           >
@@ -128,7 +131,11 @@ exports[`EmotionPicker > renders correctly 1`] = `
                   v-icon
                   v-theme--light
                 "
-                style="font-size: 40px; height: 40px; width: 40px;"
+                style="
+                  font-size: 40px;
+                  height: 40px;
+                  width: 40px;
+                "
               ></i>
               <span class="
                 mt-1
@@ -178,7 +185,10 @@ exports[`EmotionPicker > renders correctly 1`] = `
               v-btn--variant-text
               v-theme--light
             "
-            style="min-height: 88px; min-width: 88px;"
+            style="
+              min-height: 88px;
+              min-width: 88px;
+            "
             title="Peut-être"
             type="button"
           >
@@ -248,7 +258,11 @@ exports[`EmotionPicker > renders correctly 1`] = `
                   v-icon
                   v-theme--light
                 "
-                style="font-size: 40px; height: 40px; width: 40px;"
+                style="
+                  font-size: 40px;
+                  height: 40px;
+                  width: 40px;
+                "
               ></i>
               <span class="
                 mt-1
@@ -298,7 +312,10 @@ exports[`EmotionPicker > renders correctly 1`] = `
               v-btn--variant-text
               v-theme--light
             "
-            style="min-height: 88px; min-width: 88px;"
+            style="
+              min-height: 88px;
+              min-width: 88px;
+            "
             title="Oui super"
             type="button"
           >
@@ -368,7 +385,11 @@ exports[`EmotionPicker > renders correctly 1`] = `
                   v-icon
                   v-theme--light
                 "
-                style="font-size: 40px; height: 40px; width: 40px;"
+                style="
+                  font-size: 40px;
+                  height: 40px;
+                  width: 40px;
+                "
               ></i>
               <span class="
                 mt-1
@@ -455,7 +476,10 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
               v-btn--variant-text
               v-theme--light
             "
-            style="min-height: 88px; min-width: 88px;"
+            style="
+              min-height: 88px;
+              min-width: 88px;
+            "
             title="Pas du tout"
             type="button"
           >
@@ -525,7 +549,11 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
                   v-icon
                   v-theme--light
                 "
-                style="font-size: 40px; height: 40px; width: 40px;"
+                style="
+                  font-size: 40px;
+                  height: 40px;
+                  width: 40px;
+                "
               ></i>
               <span class="
                 mt-1
@@ -575,7 +603,10 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
               v-btn--variant-text
               v-theme--light
             "
-            style="min-height: 88px; min-width: 88px;"
+            style="
+              min-height: 88px;
+              min-width: 88px;
+            "
             title="Oui super"
             type="button"
           >
@@ -645,7 +676,11 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
                   v-icon
                   v-theme--light
                 "
-                style="font-size: 40px; height: 40px; width: 40px;"
+                style="
+                  font-size: 40px;
+                  height: 40px;
+                  width: 40px;
+                "
               ></i>
               <span class="
                 mt-1

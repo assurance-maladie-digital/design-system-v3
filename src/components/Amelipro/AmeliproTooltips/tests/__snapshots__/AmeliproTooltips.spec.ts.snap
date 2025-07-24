@@ -26,7 +26,10 @@ exports[`AmeliproTooltips > render correctly 1`] = `
     "
     id="my-tooltip-id-btn"
     plain=""
-    style="height: auto; width: auto;"
+    style="
+      height: auto;
+      width: auto;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -64,7 +67,13 @@ exports[`AmeliproTooltips > render correctly 1`] = `
             <svg
               aria-hidden="true"
               height="34"
-              style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd"
+              style="
+                shape-rendering:geometricPrecision;
+                text-rendering:geometricPrecision;
+                image-rendering:optimizeQuality;
+                fill-rule:evenodd;
+                clip-rule:evenodd;
+              "
               viewBox="0 0 6828 6828"
               width="34"
               xml:space="preserve"

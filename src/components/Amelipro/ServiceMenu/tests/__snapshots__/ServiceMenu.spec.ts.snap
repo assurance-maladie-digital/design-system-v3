@@ -21,7 +21,10 @@ exports[`ServiceMenu > render correctly 1`] = `
     "
     id="service-menu-id-service-menu-btn"
     plain=""
-    style="height: auto; width: auto;"
+    style="
+      height: auto;
+      width: auto;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -52,7 +55,11 @@ exports[`ServiceMenu > render correctly 1`] = `
           "
           focusable="false"
           role="img"
-          style="color: #FFFFFF; height: 2rem; width: 2rem;"
+          style="
+            color: #FFFFFF;
+            height: 2rem;
+            width: 2rem;
+          "
         >
           <span>
             <svg
@@ -122,7 +129,11 @@ exports[`ServiceMenu > render correctly 1`] = `
       >
         <div
           class="v-overlay__content"
-          style="max-height: 520px; max-width: 900px; min-width: 900px;"
+          style="
+            max-height: 520px;
+            max-width: 900px;
+            min-width: 900px;
+          "
         >
           <nav
             aria-label="Bouquet de services"
@@ -144,7 +155,11 @@ exports[`ServiceMenu > render correctly 1`] = `
                   service-menu__ps
                 "
                 id="service-menu-id-content-desktop-service-menu-ps"
-                style="flex-basis: 50%; max-width: 50%; width: 50%;"
+                style="
+                  flex-basis: 50%;
+                  max-width: 50%;
+                  width: 50%;
+                "
               >
                 <ul
                   class="
@@ -184,7 +199,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                         "
                         id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-0"
                         plain=""
-                        style="height: auto; width: auto;"
+                        style="
+                          height: auto;
+                          width: auto;
+                        "
                         type="button"
                       >
                         <span class="v-btn__overlay"></span>
@@ -211,7 +229,11 @@ exports[`ServiceMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"
+                              style="
+                                color: #FFFFFF;
+                                height: 2.5rem;
+                                width: 2.5rem;
+                              "
                             >
                               <span>
                                 <svg
@@ -283,7 +305,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                         "
                         id="service-menu-id-content-desktop-ps-service-list-service-ps-btn-1"
                         plain=""
-                        style="height: auto; width: auto;"
+                        style="
+                          height: auto;
+                          width: auto;
+                        "
                         type="button"
                       >
                         <span class="v-btn__overlay"></span>
@@ -310,7 +335,11 @@ exports[`ServiceMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"
+                              style="
+                                color: #FFFFFF;
+                                height: 2.5rem;
+                                width: 2.5rem;
+                              "
                             >
                               <span>
                                 <svg
@@ -381,7 +410,11 @@ exports[`ServiceMenu > render correctly 1`] = `
                   service-menu__patient
                 "
                 id="service-menu-id-content-desktop-service-menu-patient"
-                style="flex-basis: 50%; max-width: 50%; width: 50%;"
+                style="
+                  flex-basis: 50%;
+                  max-width: 50%;
+                  width: 50%;
+                "
               >
                 <div>
                   <ul
@@ -422,7 +455,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                           "
                           id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-0"
                           plain=""
-                          style="height: auto; width: auto;"
+                          style="
+                            height: auto;
+                            width: auto;
+                          "
                           type="button"
                         >
                           <span class="v-btn__overlay"></span>
@@ -449,7 +485,11 @@ exports[`ServiceMenu > render correctly 1`] = `
                                 "
                                 focusable="false"
                                 role="img"
-                                style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"
+                                style="
+                                  color: #FFFFFF;
+                                  height: 2.5rem;
+                                  width: 2.5rem;
+                                "
                               >
                                 <span>
                                   <svg
@@ -521,7 +561,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                           "
                           id="service-menu-id-content-desktop-patient-service-list-service-patient-btn-1"
                           plain=""
-                          style="height: auto; width: auto;"
+                          style="
+                            height: auto;
+                            width: auto;
+                          "
                           type="button"
                         >
                           <span class="v-btn__overlay"></span>
@@ -548,7 +591,11 @@ exports[`ServiceMenu > render correctly 1`] = `
                                 "
                                 focusable="false"
                                 role="img"
-                                style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"
+                                style="
+                                  color: #FFFFFF;
+                                  height: 2.5rem;
+                                  width: 2.5rem;
+                                "
                               >
                                 <span>
                                   <svg
@@ -621,7 +668,11 @@ exports[`ServiceMenu > render correctly 1`] = `
                   service-menu__contact
                 "
                 id="service-menu-id-content-desktop-service-menu-contact"
-                style="flex-basis: 50%; max-width: 50%; width: 50%;"
+                style="
+                  flex-basis: 50%;
+                  max-width: 50%;
+                  width: 50%;
+                "
               >
                 <ul
                   class="
@@ -661,7 +712,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                         "
                         id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-0"
                         plain=""
-                        style="height: auto; width: auto;"
+                        style="
+                          height: auto;
+                          width: auto;
+                        "
                         type="button"
                       >
                         <span class="v-btn__overlay"></span>
@@ -688,7 +742,11 @@ exports[`ServiceMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"
+                              style="
+                                color: #FFFFFF;
+                                height: 2.5rem;
+                                width: 2.5rem;
+                              "
                             >
                               <span>
                                 <svg
@@ -760,7 +818,10 @@ exports[`ServiceMenu > render correctly 1`] = `
                         "
                         id="service-menu-id-content-desktop-contact-service-list-service-contact-btn-1"
                         plain=""
-                        style="height: auto; width: auto;"
+                        style="
+                          height: auto;
+                          width: auto;
+                        "
                         type="button"
                       >
                         <span class="v-btn__overlay"></span>
@@ -787,7 +848,11 @@ exports[`ServiceMenu > render correctly 1`] = `
                               "
                               focusable="false"
                               role="img"
-                              style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"
+                              style="
+                                color: #FFFFFF;
+                                height: 2.5rem;
+                                width: 2.5rem;
+                              "
                             >
                               <span>
                                 <svg

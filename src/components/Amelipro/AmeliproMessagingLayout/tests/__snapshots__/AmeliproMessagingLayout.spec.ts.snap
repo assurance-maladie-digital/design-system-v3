@@ -45,7 +45,13 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
           v-theme--light
         "
         id="my-messaging-layout-id-new-message-btn"
-        style="height: auto; min-height: 2.5rem; color: #FFFFFF !important; border: 2px solid #FFFFFF !important; background-color: white;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #FFFFFF !important;
+          border: 2px solid #FFFFFF !important;
+          background-color: white;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -78,7 +84,11 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
                 "
                 focusable="false"
                 role="img"
-                style="color: #FFFFFF; height: 1.5rem; width: auto;"
+                style="
+                  color: #FFFFFF;
+                  height: 1.5rem;
+                  width: auto;
+                "
               >
                 <span>
                   <svg
@@ -141,7 +151,11 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
               w-100
             "
             id="my-messaging-layout-id-menu-btn-0"
-            style="height: auto; min-height: 50px; color: #FFFFFF !important;"
+            style="
+              height: auto;
+              min-height: 50px;
+              color: #FFFFFF !important;
+            "
             type="button"
           >
             <span class="v-btn__overlay"></span>
@@ -177,7 +191,11 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
                       "
                       focusable="false"
                       role="img"
-                      style="color: #FFFFFF; height: 24px; width: 24px;"
+                      style="
+                        color: #FFFFFF;
+                        height: 24px;
+                        width: 24px;
+                      "
                     >
                       <span>
                         <svg
@@ -234,7 +252,11 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
               w-100
             "
             id="my-messaging-layout-id-menu-btn-1"
-            style="height: auto; min-height: 50px; color: #FFFFFF !important;"
+            style="
+              height: auto;
+              min-height: 50px;
+              color: #FFFFFF !important;
+            "
             type="button"
           >
             <span class="v-btn__overlay"></span>
@@ -270,7 +292,11 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
                       "
                       focusable="false"
                       role="img"
-                      style="color: #FFFFFF; height: 24px; width: 24px;"
+                      style="
+                        color: #FFFFFF;
+                        height: 24px;
+                        width: 24px;
+                      "
                     >
                       <span>
                         <svg
@@ -325,7 +351,11 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
               w-100
             "
             id="my-messaging-layout-id-menu-btn-2"
-            style="height: auto; min-height: 50px; color: #FFFFFF !important;"
+            style="
+              height: auto;
+              min-height: 50px;
+              color: #FFFFFF !important;
+            "
             type="button"
           >
             <span class="v-btn__overlay"></span>
@@ -361,7 +391,11 @@ exports[`AmeliproMessagingLayout > render correctly 1`] = `
                       "
                       focusable="false"
                       role="img"
-                      style="color: #FFFFFF; height: 24px; width: 24px;"
+                      style="
+                        color: #FFFFFF;
+                        height: 24px;
+                        width: 24px;
+                      "
                     >
                       <span>
                         <svg

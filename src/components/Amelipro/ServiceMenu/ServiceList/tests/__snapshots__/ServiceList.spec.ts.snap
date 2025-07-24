@@ -39,7 +39,10 @@ exports[`ServiceList > render correctly 1`] = `
         "
         id="service-list-id-service-ps-btn-0"
         plain=""
-        style="height: auto; width: auto;"
+        style="
+          height: auto;
+          width: auto;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -66,7 +69,11 @@ exports[`ServiceList > render correctly 1`] = `
               "
               focusable="false"
               role="img"
-              style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"
+              style="
+                color: #FFFFFF;
+                height: 2.5rem;
+                width: 2.5rem;
+              "
             >
               <span>
                 <svg
@@ -138,7 +145,10 @@ exports[`ServiceList > render correctly 1`] = `
         "
         id="service-list-id-service-ps-btn-1"
         plain=""
-        style="height: auto; width: auto;"
+        style="
+          height: auto;
+          width: auto;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -165,7 +175,11 @@ exports[`ServiceList > render correctly 1`] = `
               "
               focusable="false"
               role="img"
-              style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"
+              style="
+                color: #FFFFFF;
+                height: 2.5rem;
+                width: 2.5rem;
+              "
             >
               <span>
                 <svg
