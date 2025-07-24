@@ -166,8 +166,8 @@
 		to="body"
 	>
 		<VSheet
-			v-letter-spacing
 			ref="vsheetRef"
+			v-letter-spacing
 			v-bind="options.banner"
 			:aria-label="locales.label"
 			class="vd-cookie-banner"

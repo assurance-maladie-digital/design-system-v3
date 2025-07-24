@@ -224,6 +224,14 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
           <!---->
         </div>
       </details>
+      <div
+        aria-level="3"
+        class="vd-cookies-information__heading"
+        id="radio-group-essentials"
+        role="heading"
+      >
+        Accepter les cookies de type Cookies requis, ce champ est requis.
+      </div>
       <!-- v-if -->
     </div>
     <div class="
@@ -310,6 +318,14 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
           <!---->
         </div>
       </details>
+      <div
+        aria-level="3"
+        class="vd-cookies-information__heading"
+        id="radio-group-functional"
+        role="heading"
+      >
+        Accepter les cookies de type Cookies fonctionnels, ce champ est requis.
+      </div>
       <div class="
         v-input
         v-input--center-affix
@@ -322,20 +338,13 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       ">
         <!---->
         <div class="v-input__control">
-          <label
-            class="v-label"
-            id="radio-group-v-7"
-          >
-            <!---->
-            Accepter les cookies de type Cookies fonctionnels, ce champ est requis.
-          </label>
+          <!---->
           <div
-            aria-labelledby="radio-group-v-7"
+            aria-required="true"
             class="
               v-selection-control-group
               v-selection-control-group--inline
             "
-            label="Accepter les cookies de type Cookies fonctionnels, ce champ est requis."
             role="radiogroup"
           >
             <div class="v-spacer"></div>
@@ -360,7 +369,6 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                     "
                   ></i>
                   <input
-                    aria-disabled="false"
                     aria-label="Refuser"
                     id="input-v-10"
                     name="radio-group-v-7"
@@ -402,7 +410,6 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                     "
                   ></i>
                   <input
-                    aria-disabled="false"
                     aria-label="Accepter"
                     id="input-v-11"
                     name="radio-group-v-7"
@@ -512,6 +519,14 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
           <!---->
         </div>
       </details>
+      <div
+        aria-level="3"
+        class="vd-cookies-information__heading"
+        id="radio-group-analytics"
+        role="heading"
+      >
+        Accepter les cookies de type Cookies d’analyse, ce champ est requis.
+      </div>
       <div class="
         v-input
         v-input--center-affix
@@ -524,20 +539,13 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       ">
         <!---->
         <div class="v-input__control">
-          <label
-            class="v-label"
-            id="radio-group-v-12"
-          >
-            <!---->
-            Accepter les cookies de type Cookies d’analyse, ce champ est requis.
-          </label>
+          <!---->
           <div
-            aria-labelledby="radio-group-v-12"
+            aria-required="true"
             class="
               v-selection-control-group
               v-selection-control-group--inline
             "
-            label="Accepter les cookies de type Cookies d’analyse, ce champ est requis."
             role="radiogroup"
           >
             <div class="v-spacer"></div>
@@ -562,7 +570,6 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                     "
                   ></i>
                   <input
-                    aria-disabled="false"
                     aria-label="Refuser"
                     id="input-v-15"
                     name="radio-group-v-12"
@@ -604,7 +611,6 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                     "
                   ></i>
                   <input
-                    aria-disabled="false"
                     aria-label="Accepter"
                     id="input-v-16"
                     name="radio-group-v-12"
