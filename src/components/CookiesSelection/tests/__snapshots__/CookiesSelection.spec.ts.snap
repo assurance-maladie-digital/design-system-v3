@@ -224,6 +224,14 @@ exports[`CookiesSelection > renders correctly 1`] = `
           <!---->
         </div>
       </details>
+      <div
+        aria-level="3"
+        class="vd-cookies-information__heading"
+        id="radio-group-essentials"
+        role="heading"
+      >
+        Accepter les cookies de type Cookies requis, ce champ est requis.
+      </div>
       <!-- v-if -->
     </div>
     <div class="
@@ -310,6 +318,14 @@ exports[`CookiesSelection > renders correctly 1`] = `
           <!---->
         </div>
       </details>
+      <div
+        aria-level="3"
+        class="vd-cookies-information__heading"
+        id="radio-group-functional"
+        role="heading"
+      >
+        Accepter les cookies de type Cookies fonctionnels, ce champ est requis.
+      </div>
       <div class="
         v-input
         v-input--center-affix
@@ -322,21 +338,14 @@ exports[`CookiesSelection > renders correctly 1`] = `
       ">
         <!---->
         <div class="v-input__control">
-          <label
-            class="v-label"
-            id="radio-group-2"
-          >
-            <!---->
-            Accepter les cookies de type Cookies fonctionnels, ce champ est requis.
-          </label>
+          <!---->
           <div
             aria-describedby="radio-group-2-messages"
-            aria-labelledby="radio-group-2"
+            aria-required="true"
             class="
               v-selection-control-group
               v-selection-control-group--inline
             "
-            label="Accepter les cookies de type Cookies fonctionnels, ce champ est requis."
             role="radiogroup"
           >
             <div class="v-spacer"></div>
@@ -513,6 +522,14 @@ exports[`CookiesSelection > renders correctly 1`] = `
           <!---->
         </div>
       </details>
+      <div
+        aria-level="3"
+        class="vd-cookies-information__heading"
+        id="radio-group-analytics"
+        role="heading"
+      >
+        Accepter les cookies de type Cookies d’analyse, ce champ est requis.
+      </div>
       <div class="
         v-input
         v-input--center-affix
@@ -525,21 +542,14 @@ exports[`CookiesSelection > renders correctly 1`] = `
       ">
         <!---->
         <div class="v-input__control">
-          <label
-            class="v-label"
-            id="radio-group-7"
-          >
-            <!---->
-            Accepter les cookies de type Cookies d’analyse, ce champ est requis.
-          </label>
+          <!---->
           <div
             aria-describedby="radio-group-7-messages"
-            aria-labelledby="radio-group-7"
+            aria-required="true"
             class="
               v-selection-control-group
               v-selection-control-group--inline
             "
-            label="Accepter les cookies de type Cookies d’analyse, ce champ est requis."
             role="radiogroup"
           >
             <div class="v-spacer"></div>
