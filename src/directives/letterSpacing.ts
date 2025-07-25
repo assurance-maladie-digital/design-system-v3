@@ -170,7 +170,7 @@ export const vLetterSpacing: Directive<HTMLElement, LetterSpacingOptions | boole
 			: { applyToAll: true, observeChanges: true, ...binding.value }
 
 		// Apply letter-spacing override immediately
-		applyTokenLetterSpacing(el)
+		applyTokenLetterSpacing()
 
 		// Set up mutation observer if enabled
 		if (options.observeChanges !== false) {
@@ -189,7 +189,7 @@ export const vLetterSpacing: Directive<HTMLElement, LetterSpacingOptions | boole
 				})
 
 				if (shouldReapply) {
-					applyTokenLetterSpacing(el)
+					applyTokenLetterSpacing()
 				}
 			})
 
@@ -205,9 +205,9 @@ export const vLetterSpacing: Directive<HTMLElement, LetterSpacingOptions | boole
 		}
 	},
 
-	updated(el: HTMLElement) {
+	updated() {
 		// Reapply letter-spacing override when component updates
-		applyTokenLetterSpacing(el)
+		applyTokenLetterSpacing()
 	},
 
 	beforeUnmount(el: HTMLElement) {
