@@ -6,7 +6,7 @@ import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 import { fn } from '@storybook/test'
 
 const meta = {
-	title: 'Composants/Formulaires/DatePicker/DatePicker',
+	title: 'Composants/Formulaires/DatePicker/CalendarMode',
 	component: DatePicker,
 	decorators: [
 		() => ({
@@ -1201,7 +1201,7 @@ export const BidirectionalValidation: Story = {
 					const startDate = ref<string | null>(null)
 					const endDate = ref<string | null>(null)
 
-					// Références aux composants DatePicker pour accéder à leurs méthodes
+					// Références aux composants CalendarMode pour accéder à leurs méthodes
 					const startDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 					const endDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 
@@ -1315,7 +1315,7 @@ export const BidirectionalValidation: Story = {
 				const startDate = ref<string | null>(null)
 				const endDate = ref<string | null>(null)
 
-				// Références aux composants DatePicker pour accéder à leurs méthodes
+				// Références aux composants CalendarMode pour accéder à leurs méthodes
 				const startDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 				const endDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 

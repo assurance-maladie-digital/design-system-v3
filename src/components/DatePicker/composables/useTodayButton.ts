@@ -13,7 +13,7 @@ export interface TodayButtonReturn {
 }
 
 /**
- * Composable pour gérer le bouton "Aujourd'hui" dans le DatePicker
+ * Composable pour gérer le bouton "Aujourd'hui" dans le CalendarMode
  */
 export function useTodayButton(props: TodayButtonProps): TodayButtonReturn {
 	// Computed pour le format de la date du jour

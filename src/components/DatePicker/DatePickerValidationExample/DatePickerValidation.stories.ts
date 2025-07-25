@@ -9,7 +9,7 @@ export default {
 	parameters: {
 		docs: {
 			description: {
-				component: 'Exemples de validation pour le composant DatePicker.',
+				component: 'Exemples de validation pour le composant CalendarMode.',
 			},
 		},
 	},

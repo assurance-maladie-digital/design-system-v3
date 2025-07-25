@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import DatePicker from '../DatePicker/DatePicker.vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
 

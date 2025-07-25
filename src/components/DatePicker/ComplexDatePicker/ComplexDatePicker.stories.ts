@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import DatePicker from '../DatePicker/DatePicker.vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
 import { fn } from '@storybook/test'
@@ -113,7 +113,7 @@ const meta = {
 		},
 		textFieldActivator: {
 			control: 'boolean',
-			description: 'Utilise le TextField comme activateur du DatePicker',
+			description: 'Utilise le TextField comme activateur du CalendarMode',
 		},
 		displayTodayButton: {
 			control: 'boolean',

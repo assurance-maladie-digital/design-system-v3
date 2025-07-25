@@ -38,7 +38,7 @@
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility } = useDatePickerAccessibility()
 
-	// Variables pour suivre le mois et l'année actuellement affichés dans le DatePicker
+	// Variables pour suivre le mois et l'année actuellement affichés dans le CalendarMode
 	const currentMonth = ref<string | null>(null)
 	const currentYear = ref<string | null>(null)
 	const currentMonthName = ref<string | null>(null)
@@ -480,7 +480,7 @@
 			// Mettre à jour l'affichage formaté pour qu'il corresponde à la date sélectionnée
 			let formattedValue = ''
 
-			// Gérer la fermeture du DatePicker en fonction du mode et de l'état de sélection
+			// Gérer la fermeture du CalendarMode en fonction du mode et de l'état de sélection
 			if (props.displayRange) {
 				// Priorité à rangeBoundaryDates pour les plages
 				if (rangeBoundaryDates.value && rangeBoundaryDates.value[0] && rangeBoundaryDates.value[1]) {
@@ -502,7 +502,7 @@
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
 
-					// Les deux dates de la plage sont sélectionnées, fermer le DatePicker
+					// Les deux dates de la plage sont sélectionnées, fermer le CalendarMode
 					isDatePickerVisible.value = false
 					emit('closed')
 				}
@@ -522,7 +522,7 @@
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
 
-					// Les deux dates de la plage sont sélectionnées, fermer le DatePicker
+					// Les deux dates de la plage sont sélectionnées, fermer le CalendarMode
 					isDatePickerVisible.value = false
 					emit('closed')
 				}
@@ -539,7 +539,7 @@
 				displayFormattedDate.value = formattedValue
 				textInputValue.value = formattedValue
 
-				// En mode date unique, fermer le DatePicker après sélection
+				// En mode date unique, fermer le CalendarMode après sélection
 				isDatePickerVisible.value = false
 				emit('closed')
 				emit('date-selected', formattedDate.value)
@@ -697,7 +697,7 @@
 		currentYearName,
 	)
 
-	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
+	// Utilisation du composable pour gérer le mode d'affichage du CalendarMode
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
 		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
 		() => props.isBirthDate || props.birthDate,

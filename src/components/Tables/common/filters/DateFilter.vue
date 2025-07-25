@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import type { FilterOption, TableColumnHeader } from '../types'
-	import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	const { parseDate } = useDateFormat()

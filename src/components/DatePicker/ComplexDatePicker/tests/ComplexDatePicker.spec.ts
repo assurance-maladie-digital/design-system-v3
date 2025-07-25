@@ -273,15 +273,15 @@ describe('ComplexDatePicker', () => {
 		expect(removeEventListenerSpy).toHaveBeenCalledWith('click', expect.any(Function))
 	})
 
-	it('devrait ouvrir le DatePicker quand openDatePicker est appelé', async () => {
+	it('devrait ouvrir le CalendarMode quand openDatePicker est appelé', async () => {
 		wrapper = createWrapper()
 		await wrapper.vm.toggleDatePicker()
 		expect(wrapper.vm.isDatePickerVisible).toBe(true)
 	})
 
-	it('devrait fermer le DatePicker quand toggleDatePicker est appelé et qu\'il est déjà ouvert', async () => {
+	it('devrait fermer le CalendarMode quand toggleDatePicker est appelé et qu\'il est déjà ouvert', async () => {
 		wrapper = createWrapper()
-		// D'abord ouvrir le DatePicker
+		// D'abord ouvrir le CalendarMode
 		await wrapper.vm.toggleDatePicker()
 		// Puis le fermer
 		await wrapper.vm.toggleDatePicker()
