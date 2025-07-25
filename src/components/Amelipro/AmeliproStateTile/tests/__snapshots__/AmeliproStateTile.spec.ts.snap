@@ -15,7 +15,15 @@ exports[`AmeliproStateTile > render correctly 1`] = `
     v-theme--light
   "
   id="my-state-tile-id"
-  style="height: auto; width: 100%; background-color: #00749C; border: 2px solid #00749C !important; border-radius: 0.5rem; color: #FFFFFF; padding: 0px;"
+  style="
+    height: auto;
+    width: 100%;
+    background-color: #00749C;
+    border: 2px solid #00749C !important;
+    border-radius: 0.5rem;
+    color: #FFFFFF;
+    padding: 0px;
+  "
   type="button"
 >
   <span class="v-btn__overlay"></span>
@@ -33,7 +41,10 @@ exports[`AmeliproStateTile > render correctly 1`] = `
         justify-center
         w-100
       "
-      style="padding: 32px 24px; min-height: 284px;"
+      style="
+        padding: 32px 24px;
+        min-height: 284px;
+      "
     >
       <span class="
         amelipro-state-tile__text

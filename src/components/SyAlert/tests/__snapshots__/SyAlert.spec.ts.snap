@@ -78,7 +78,11 @@ exports[`Alert > render correctly 1`] = `
           v-theme--light
         "
         role="presentation"
-        style="font-size: 1.5rem; height: 1.5rem; width: 1.5rem;"
+        style="
+          font-size: 1.5rem;
+          height: 1.5rem;
+          width: 1.5rem;
+        "
       ></i>
     </div>
     <div class="v-alert__content">

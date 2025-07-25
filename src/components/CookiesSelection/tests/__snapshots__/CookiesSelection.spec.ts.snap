@@ -22,7 +22,11 @@ exports[`CookiesSelection > renders correctly 1`] = `
         v-theme--light
       "
       role="progressbar"
-      style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+      style="
+        top: 0px;
+        height: 0px;
+        --v-progress-linear-height: 2px;
+      "
     >
       <!---->
       <div
@@ -31,7 +35,10 @@ exports[`CookiesSelection > renders correctly 1`] = `
       ></div>
       <div
         class="v-progress-linear__buffer"
-        style="opacity: NaN; width: 0%;"
+        style="
+          opacity: NaN;
+          width: 0%;
+        "
       ></div>
       <transition-stub
         appear="false"
@@ -333,7 +340,6 @@ exports[`CookiesSelection > renders correctly 1`] = `
         <div class="v-input__control">
           <!---->
           <div
-            aria-describedby="radio-group-2-messages"
             aria-required="true"
             class="
               v-selection-control-group
@@ -365,8 +371,8 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   <input
                     aria-disabled="false"
                     aria-label="Refuser"
-                    id="input-5"
-                    name="radio-group-2"
+                    id="input-v-5"
+                    name="radio-group-v-2"
                     type="radio"
                     value="reject"
                   />
@@ -377,7 +383,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   v-label
                   v-label--clickable
                 "
-                for="input-5"
+                for="input-v-5"
               >
                 <!---->
                 Refuser
@@ -407,8 +413,8 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   <input
                     aria-disabled="false"
                     aria-label="Accepter"
-                    id="input-6"
-                    name="radio-group-2"
+                    id="input-v-6"
+                    name="radio-group-v-2"
                     type="radio"
                     value="accept"
                   />
@@ -419,7 +425,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   v-label
                   v-label--clickable
                 "
-                for="input-6"
+                for="input-v-6"
               >
                 <!---->
                 Accepter
@@ -537,7 +543,6 @@ exports[`CookiesSelection > renders correctly 1`] = `
         <div class="v-input__control">
           <!---->
           <div
-            aria-describedby="radio-group-7-messages"
             aria-required="true"
             class="
               v-selection-control-group
@@ -569,8 +574,8 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   <input
                     aria-disabled="false"
                     aria-label="Refuser"
-                    id="input-10"
-                    name="radio-group-7"
+                    id="input-v-10"
+                    name="radio-group-v-7"
                     type="radio"
                     value="reject"
                   />
@@ -581,7 +586,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   v-label
                   v-label--clickable
                 "
-                for="input-10"
+                for="input-v-10"
               >
                 <!---->
                 Refuser
@@ -611,8 +616,8 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   <input
                     aria-disabled="false"
                     aria-label="Accepter"
-                    id="input-11"
-                    name="radio-group-7"
+                    id="input-v-11"
+                    name="radio-group-v-7"
                     type="radio"
                     value="accept"
                   />
@@ -623,7 +628,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
                   v-label
                   v-label--clickable
                 "
-                for="input-11"
+                for="input-v-11"
               >
                 <!---->
                 Accepter

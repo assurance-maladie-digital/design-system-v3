@@ -14,7 +14,14 @@ exports[`AmeliproTileBtn > render correctly 1`] = `
     v-theme--light
   "
   id="my-tile-btn-id"
-  style="height: auto; width: 100%; background-color: #FFFFFF; border: 2px solid #FFFFFF !important; color: #1A1B1B; padding: 2rem 1.5rem;"
+  style="
+    height: auto;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 2px solid #FFFFFF !important;
+    color: #1A1B1B;
+    padding: 2rem 1.5rem;
+  "
   type="button"
 >
   <span class="v-btn__overlay"></span>

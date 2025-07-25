@@ -18,7 +18,7 @@ exports[`StarsPicker > renders correctly 1`] = `
   ">
     <label
       class=""
-      for="v-rating-0-0"
+      for="v-rating-v-0-0"
     >
       <span class="v-rating__hidden">
         Rating 0 of 5
@@ -28,8 +28,8 @@ exports[`StarsPicker > renders correctly 1`] = `
     <input
       checked=""
       class="v-rating__hidden"
-      id="v-rating-0-0"
-      name="v-rating-0"
+      id="v-rating-v-0-0"
+      name="v-rating-v-0"
       tabindex="-1"
       type="radio"
       value="0"
@@ -39,7 +39,7 @@ exports[`StarsPicker > renders correctly 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-1"
+          for="v-rating-v-0-1"
         >
           <span class="v-rating__hidden">
             Rating 1 of 5
@@ -60,14 +60,18 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-1"
-          name="v-rating-0"
+          id="v-rating-v-0-1"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="1"
@@ -80,7 +84,7 @@ exports[`StarsPicker > renders correctly 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-2"
+          for="v-rating-v-0-2"
         >
           <span class="v-rating__hidden">
             Rating 2 of 5
@@ -101,14 +105,18 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-2"
-          name="v-rating-0"
+          id="v-rating-v-0-2"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="2"
@@ -121,7 +129,7 @@ exports[`StarsPicker > renders correctly 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-3"
+          for="v-rating-v-0-3"
         >
           <span class="v-rating__hidden">
             Rating 3 of 5
@@ -142,14 +150,18 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-3"
-          name="v-rating-0"
+          id="v-rating-v-0-3"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="3"
@@ -162,7 +174,7 @@ exports[`StarsPicker > renders correctly 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-4"
+          for="v-rating-v-0-4"
         >
           <span class="v-rating__hidden">
             Rating 4 of 5
@@ -183,14 +195,18 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-4"
-          name="v-rating-0"
+          id="v-rating-v-0-4"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="4"
@@ -203,7 +219,7 @@ exports[`StarsPicker > renders correctly 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-5"
+          for="v-rating-v-0-5"
         >
           <span class="v-rating__hidden">
             Rating 5 of 5
@@ -224,14 +240,18 @@ exports[`StarsPicker > renders correctly 1`] = `
                 v-icon
                 v-theme--light
               "
-              style="font-size: 36px; height: 36px; width: 36px;"
+              style="
+                font-size: 36px;
+                height: 36px;
+                width: 36px;
+              "
             ></i>
           </button>
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-5"
-          name="v-rating-0"
+          id="v-rating-v-0-5"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="5"

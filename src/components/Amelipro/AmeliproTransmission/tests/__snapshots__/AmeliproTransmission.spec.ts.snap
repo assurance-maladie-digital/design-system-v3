@@ -23,7 +23,10 @@ exports[`AmeliproTransmission > render correctly 1`] = `
         w-100
       "
       id="my-transmission-id-card-container"
-      style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
+      style="
+        background-color: #FFFFFF;
+        border: 1px solid #DDDEDE;
+      "
     >
       <div
         class="amelipro-card__left-part"
@@ -46,7 +49,11 @@ exports[`AmeliproTransmission > render correctly 1`] = `
               flex-sm-row
               w-100
             "
-            style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #DDDEDE;"
+            style="
+              border-bottom-width: 1px;
+              border-bottom-style: solid;
+              border-bottom-color: #DDDEDE;
+            "
           >
             <div
               class="amelipro-card__header-slot-wrapper--left"
@@ -107,7 +114,11 @@ exports[`AmeliproTransmission > render correctly 1`] = `
           v-theme--light
         "
         id="my-transmission-id-print-btn"
-        style="height: auto; min-height: auto; padding: 0px;"
+        style="
+          height: auto;
+          min-height: auto;
+          padding: 0px;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -155,7 +166,13 @@ exports[`AmeliproTransmission > render correctly 1`] = `
           v-theme--light
         "
         id="my-transmission-id-alternate-btn"
-        style="height: auto; min-height: 2.5rem; color: #00749C !important; border: 2px solid #00749C !important; background-color: white;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #00749C !important;
+          border: 2px solid #00749C !important;
+          background-color: white;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -195,7 +212,11 @@ exports[`AmeliproTransmission > render correctly 1`] = `
           v-theme--light
         "
         id="my-transmission-id-confirm-btn"
-        style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #FFFFFF !important;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>

@@ -7,7 +7,13 @@ exports[`HeaderBar > should render the component 1`] = `
 >
   <div
     class="sticky-header"
-    style="position: relative; width: 100%; top: auto; transform: none; transition: none;"
+    style="
+      position: relative;
+      width: 100%;
+      top: auto;
+      transform: none;
+      transition: none;
+    "
   >
     <!-- v-if -->
     <div class="inner-header">

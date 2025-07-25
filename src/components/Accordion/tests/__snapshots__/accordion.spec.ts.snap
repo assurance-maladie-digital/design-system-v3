@@ -3,7 +3,11 @@
 exports[`Accordion > renders correctly 1`] = `
 <div
   class="sy-accordion"
-  style="--accordion-hover-color: var(--v-theme-primary); --accordion-focus-color: var(--v-theme-primary); --accordion-active-color: var(--v-theme-primary);"
+  style="
+    --accordion-hover-color: var(--v-theme-primary);
+    --accordion-focus-color: var(--v-theme-primary);
+    --accordion-active-color: var(--v-theme-primary);
+  "
 >
   <div class="
     bg-white

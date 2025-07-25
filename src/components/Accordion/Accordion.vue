@@ -21,7 +21,7 @@
 		disabled?: boolean
 	}
 
-	interface Props extends CustomizableOptions {
+	export interface AccordionProps extends CustomizableOptions {
 		items: AccordionItem[]
 		headingLevel?: number
 		groupId?: string
@@ -36,7 +36,7 @@
 		}
 	}
 
-	const props = withDefaults(defineProps<Props>(), {
+	const props = withDefaults(defineProps<AccordionProps>(), {
 		headingLevel: 3,
 		groupId: 'default',
 		vuetifyOptions: () => ({}),

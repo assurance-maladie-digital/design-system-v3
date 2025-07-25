@@ -36,7 +36,11 @@ exports[`AmeliproPagination > render correctly 1`] = `
           v-theme--light
         "
         id="my-pagination-id-first"
-        style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #FFFFFF !important;
+        "
         title="page active"
         type="button"
       >
@@ -79,7 +83,11 @@ exports[`AmeliproPagination > render correctly 1`] = `
           v-theme--light
         "
         id="my-pagination-id-last"
-        style="height: auto; min-height: 2.5rem; color: #00749C !important;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #00749C !important;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>

@@ -21,7 +21,10 @@ exports[`ServiceBtn > render correctly 1`] = `
     "
     id="service-btn-id"
     plain=""
-    style="height: auto; width: auto;"
+    style="
+      height: auto;
+      width: auto;
+    "
     type="button"
   >
     <span class="v-btn__overlay"></span>
@@ -48,7 +51,11 @@ exports[`ServiceBtn > render correctly 1`] = `
           "
           focusable="false"
           role="img"
-          style="color: #FFFFFF; height: 2.5rem; width: 2.5rem;"
+          style="
+            color: #FFFFFF;
+            height: 2.5rem;
+            width: 2.5rem;
+          "
         >
           <span>
             <svg

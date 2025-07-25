@@ -48,7 +48,10 @@ exports[`AmeliproDialog > render correctly 1`] = `
         "
         id="amelipro-dialog-id-close-btn"
         plain=""
-        style="height: auto; width: auto;"
+        style="
+          height: auto;
+          width: auto;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -79,7 +82,11 @@ exports[`AmeliproDialog > render correctly 1`] = `
               "
               focusable="false"
               role="img"
-              style="color: #00749C; height: 40px; width: 40px;"
+              style="
+                color: #00749C;
+                height: 40px;
+                width: 40px;
+              "
             >
               <span>
                 <svg

@@ -18,7 +18,10 @@ exports[`RangeField component > should render the component 1`] = `
       <div class="tooltip-wrapper">
         <div
           class="tooltip"
-          style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;"
+          style="
+            transform: translateX(calc(-50% + 0px));
+            transition: transform 0.1s;
+          "
         >
           25
         </div>
@@ -40,7 +43,10 @@ exports[`RangeField component > should render the component 1`] = `
       <div class="tooltip-wrapper">
         <div
           class="tooltip"
-          style="transform: translateX(calc(-50% + 0px)); transition: transform 0.1s;"
+          style="
+            transform: translateX(calc(-50% + 0px));
+            transition: transform 0.1s;
+          "
         >
           75
         </div>
@@ -83,7 +89,10 @@ exports[`RangeField component > should render the component 1`] = `
     </div>
     <div
       class="filled-track"
-      style="left: 25%; width: 50%;"
+      style="
+        left: 25%;
+        width: 50%;
+      "
     ></div>
   </div>
 </div>
