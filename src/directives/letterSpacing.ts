@@ -112,7 +112,8 @@ function injectOverrideCSS(): void {
 /**
  * Apply design token letter-spacing values using multiple approaches
  */
-function applyTokenLetterSpacing(element: HTMLElement): void {
+// function applyTokenLetterSpacing(element: HTMLElement): void {
+function applyTokenLetterSpacing(): void {
 	// Try to modify existing Vuetify stylesheets first
 	modifyVuetifyStylesheets()
 
@@ -150,8 +151,8 @@ function applyTokenLetterSpacing(element: HTMLElement): void {
 	})
 
 	// Add debugging attributes
-	element.setAttribute('data-letter-spacing-override', 'multi-approach')
-	element.setAttribute('data-letter-spacing-timestamp', Date.now().toString())
+	// element.setAttribute('data-letter-spacing-override', 'multi-approach')
+	// element.setAttribute('data-letter-spacing-timestamp', Date.now().toString())
 }
 
 /**
@@ -218,17 +219,17 @@ export const vLetterSpacing: Directive<HTMLElement, LetterSpacingOptions | boole
 		}
 
 		// Remove override attributes
-		const elements = el.querySelectorAll('[data-letter-spacing-override]')
-		elements.forEach((element) => {
-			element.removeAttribute('data-letter-spacing-override')
-			element.removeAttribute('data-letter-spacing-timestamp')
-		})
+		// const elements = el.querySelectorAll('[data-letter-spacing-override]')
+		// elements.forEach((element) => {
+		// 	element.removeAttribute('data-letter-spacing-override')
+		// 	element.removeAttribute('data-letter-spacing-timestamp')
+		// })
 
 		// Clean up the main element if it has the override
-		if (el.hasAttribute('data-letter-spacing-override')) {
-			el.removeAttribute('data-letter-spacing-override')
-			el.removeAttribute('data-letter-spacing-timestamp')
-		}
+		// if (el.hasAttribute('data-letter-spacing-override')) {
+		// 	el.removeAttribute('data-letter-spacing-override')
+		// 	el.removeAttribute('data-letter-spacing-timestamp')
+		// }
 	},
 }
 

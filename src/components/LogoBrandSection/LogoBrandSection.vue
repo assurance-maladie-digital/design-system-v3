@@ -244,12 +244,12 @@
 
 			<div
 				v-else-if="showBrandContent"
+				v-letter-spacing
 				class="vd-title-container d-flex justify-center flex-column text-primary"
 			>
 				<slot name="brand-content">
 					<h1
 						v-if="service.title"
-						v-letter-spacing
 						:class="{
 							'vd-compte-entreprise-title': isCompteEntreprise,
 						}"

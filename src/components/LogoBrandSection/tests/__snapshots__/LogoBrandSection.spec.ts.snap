@@ -42,31 +42,20 @@ exports[`LogoBrandSection > renders correctly 1`] = `
     text-primary
     vd-title-container
   ">
-    <h1
-      class="
-        font-weight-medium
-        text-caption
-        text-md-subtitle-1
-        vd-title
-      "
-      data-letter-spacing-override="multi-approach"
-      data-letter-spacing-timestamp="1753433489107"
-    >
-      <span
-        data-letter-spacing-override="multi-approach"
-        data-letter-spacing-timestamp="1753433489099"
-      >
+    <h1 class="
+      font-weight-medium
+      text-caption
+      text-md-subtitle-1
+      vd-title
+    ">
+      <span>
         Service Title
       </span>
     </h1>
-    <h2
-      class="
-        text-caption
-        vd-title
-      "
-      data-letter-spacing-override="multi-approach"
-      data-letter-spacing-timestamp="1753433489113"
-    >
+    <h2 class="
+      text-caption
+      vd-title
+    ">
       Service Sub Title
     </h2>
   </div>
