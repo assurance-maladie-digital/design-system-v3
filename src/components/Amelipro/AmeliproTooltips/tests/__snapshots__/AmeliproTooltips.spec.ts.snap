@@ -40,7 +40,10 @@ exports[`AmeliproTooltips > render correctly 1`] = `
       data-no-activator=""
     >
       <span
-        class="d-sr-only"
+        class="
+          amelipro-btn__label
+          d-sr-only
+        "
         id="my-tooltip-id-btn-btn-label"
       >
         plus d’informations
