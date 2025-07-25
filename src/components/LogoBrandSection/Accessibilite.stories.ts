@@ -178,6 +178,10 @@ export const AccessibilitePanel: StoryObj = {
 						</v-expansion-panels>
 					</v-col>
 				</div>
+				<div class="mt-4">
+				  <p>Rapport d’audit manuel : <a href="/audits/LogoBrandSection.xlsx" style="color:#0C41BD;">Voir le rapport</a></p>
+				  <p style="color: grey; font-size: 14px">Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system/issues/816" target="_blank" style="color:#0C41BD;">issue #816</a>)</p>
+			  </div>
 			`,
 		}
 	},

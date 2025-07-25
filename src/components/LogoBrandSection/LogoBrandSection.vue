@@ -7,6 +7,7 @@
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
 	import { locales } from './locales'
 	import { secondaryLogoMapping } from './secondaryLogoMapping'
+	import { vLetterSpacing } from '@/directives/letterSpacing'
 	import type { Theme } from './types'
 
 	const props = withDefaults(
@@ -248,23 +249,29 @@
 				<slot name="brand-content">
 					<h1
 						v-if="service.title"
+						v-letter-spacing
 						:class="{
 							'vd-compte-entreprise-title': isCompteEntreprise,
 						}"
 						class="vd-title text-caption text-md-subtitle-1 font-weight-medium"
 					>
 						<template v-if="typeof service.title === 'string'">
-							{{ service.title }}
+							<span v-letter-spacing>
+								{{ service.title }}
+							</span>
 						</template>
 
 						<template v-else>
-							{{ service.title.text }}
+							<span v-letter-spacing>
+								{{ service.title.text }}
+							</span>
 							<span>{{ service.title.highlight }}</span>
 						</template>
 					</h1>
 
 					<h2
 						v-if="showServiceSubTitle"
+						v-letter-spacing
 						class="vd-title text-caption"
 					>
 						{{ service.subTitle }}

@@ -33,7 +33,7 @@ function modifyVuetifyStylesheets(): void {
 				rules.forEach((rule) => {
 					if (rule instanceof CSSStyleRule) {
 						// Check if this rule affects typography classes
-						const typographyClasses = ['.text-h1', '.text-h2', '.text-h3', '.text-h4', '.text-h5', '.text-h6', '.text-body-1', '.text-body-2', '.text-subtitle-1', '.text-subtitle-2', '.text-caption', '.text-overline', '.text-button']
+						const typographyClasses = ['.text-h1', '.text-h2', '.text-h3', '.text-h4', '.text-h5', '.text-h6', '.text-body-1', '.text-body-2', '.text-subtitle-1', '.text-subtitle-2', '.text-caption', '.text-overline', '.text-button', '.text-md-subtitle-1']
 
 						const matchesTypography = typographyClasses.some(cls => rule.selectorText?.includes(cls))
 
@@ -94,6 +94,7 @@ function injectOverrideCSS(): void {
 		.v-application .v-application .text-caption { letter-spacing: var(--v-typography-caption-letter-spacing, 0px); }
 		.v-application .v-application .text-overline { letter-spacing: var(--v-typography-overline-letter-spacing, 0px); }
 		.v-application .v-application .text-button { letter-spacing: var(--v-typography-button-letter-spacing, 0px); }
+		.v-application .v-application .text-md-subtitle-1 { letter-spacing: var(--v-typography-md-subtitle1-letter-spacing, 0px); }
 		.v-application .v-application h1 { letter-spacing: var(--v-typography-h1-letter-spacing, 0px); }
 		.v-application .v-application h2 { letter-spacing: var(--v-typography-h2-letter-spacing, 0px); }
 		.v-application .v-application h3 { letter-spacing: var(--v-typography-h3-letter-spacing, 0px); }
@@ -137,6 +138,7 @@ function applyTokenLetterSpacing(element: HTMLElement): void {
 		'--v-typography-caption-letter-spacing',
 		'--v-typography-overline-letter-spacing',
 		'--v-typography-button-letter-spacing',
+		'--v-typography-md-subtitle1-letter-spacing',
 	]
 
 	// Set each CSS variable with design token values
