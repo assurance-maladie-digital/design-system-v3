@@ -10,19 +10,19 @@ process.setMaxListeners(maxListeners)
 // ES2022 Array methods polyfill for Node.js 18.x compatibility
 // These methods are used by Vuetify 3.9.x but not available in Node.js 18.x
 if (!(Array.prototype as any).toReversed) {
-	(Array.prototype as any).toReversed = function(this: any[]) {
+	(Array.prototype as any).toReversed = function (this: any[]) {
 		return [...this].reverse()
 	}
 }
 
 if (!(Array.prototype as any).toSorted) {
-	(Array.prototype as any).toSorted = function(this: any[], compareFn?: (a: any, b: any) => number) {
+	(Array.prototype as any).toSorted = function (this: any[], compareFn?: (a: any, b: any) => number) {
 		return [...this].sort(compareFn)
 	}
 }
 
 if (!(Array.prototype as any).toSpliced) {
-	(Array.prototype as any).toSpliced = function(this: any[], start: number, deleteCount?: number, ...items: any[]) {
+	(Array.prototype as any).toSpliced = function (this: any[], start: number, deleteCount?: number, ...items: any[]) {
 		const copy = [...this]
 		copy.splice(start, deleteCount || 0, ...items)
 		return copy
@@ -30,7 +30,7 @@ if (!(Array.prototype as any).toSpliced) {
 }
 
 if (!(Array.prototype as any).with) {
-	(Array.prototype as any).with = function(this: any[], index: number, value: any) {
+	(Array.prototype as any).with = function (this: any[], index: number, value: any) {
 		const copy = [...this]
 		copy[index] = value
 		return copy
@@ -75,25 +75,25 @@ Object.defineProperty(window, 'matchMedia', {
 		// Extract min-width value from media query
 		const minWidthMatch = query.match(/\(min-width:\s*(\d+)px\)/)
 		const minWidth = minWidthMatch ? parseInt(minWidthMatch[1], 10) : 0
-		
+
 		// Get current window width from HappyDOM
 		const getCurrentWidth = () => {
 			// Try multiple ways to get the current width
 			let width = 1024 // Default fallback
-			
+
 			if ((window as any).happyDOM?.getInnerWidth) {
 				width = (window as any).happyDOM.getInnerWidth()
-			} else if ((window as any).happyDOM?.innerWidth !== undefined) {
+			}
+			else if ((window as any).happyDOM?.innerWidth !== undefined) {
 				width = (window as any).happyDOM.innerWidth
-			} else if (window.innerWidth) {
+			}
+			else if (window.innerWidth) {
 				width = window.innerWidth
 			}
-			
 
-			
 			return width
 		}
-		
+
 		// Create a reactive media query list that updates when accessed
 		const mediaQueryList = {
 			get matches() {
@@ -108,7 +108,7 @@ Object.defineProperty(window, 'matchMedia', {
 			removeEventListener: () => {},
 			dispatchEvent: () => false,
 		}
-		
+
 		return mediaQueryList
 	},
 	writable: true,
@@ -131,7 +131,7 @@ Object.defineProperty(window, 'getComputedStyle', {
 if (process.env.CI) {
 	// Set timezone for consistent date/time behavior in CI
 	process.env.TZ = 'Europe/Paris'
-	
+
 	// Add additional polyfills that might be missing in CI environments
 	Object.defineProperty(global, 'performance', {
 		value: {
@@ -141,7 +141,7 @@ if (process.env.CI) {
 		},
 		writable: true,
 	})
-	
+
 	// Improve test isolation in CI by ensuring proper cleanup
 	// Add a small delay between tests to prevent race conditions
 	const originalSetTimeout = global.setTimeout
