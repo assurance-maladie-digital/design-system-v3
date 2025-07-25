@@ -884,7 +884,7 @@ export const ReadonlyMode: Story = {
 	},
 }
 
-export const WithCustomIcons: Story = {
+export const AppendIcon: Story = {
 	parameters: {
 		sourceCode: [
 			{
