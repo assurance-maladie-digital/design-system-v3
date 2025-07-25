@@ -64,7 +64,7 @@
     "@storybook/vue3-vite": "^8.5.6",
     "@stylistic/eslint-plugin": "^2.9.0",
     "@stylistic/eslint-plugin-ts": "^2.9.0",
-    "@stylistic/stylelint-config": "^2.0.0",
+    "@stylistic/stylelint-config": "^3.0.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.17.1",
     "@typescript-eslint/parser": "^8.11.0",
