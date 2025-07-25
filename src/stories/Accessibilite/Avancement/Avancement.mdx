@@ -187,11 +187,11 @@ import * as AvancementStories from './Avancement.stories';
     }
     
     .stat-success {
-      color: #56c271;
+      color: #56C271;
     }
     
-    .stat-warning {
-      color: #f0b323;
+    .stat-wip {
+      color: #A05BB6;
     }
     
     .stat-info {
@@ -513,12 +513,16 @@ import * as AvancementStories from './Avancement.stories';
         <p className="stat-label">Progression dans l'audit des composants du Design System</p>
         <div className="progress-stats">
           <div className="stat-item">
-            <span className="stat-value stat-success">20</span>
+            <span className="stat-value stat-success">21</span>
             <span className="stat-label">Composants audités</span>
           </div>
           <div className="stat-item">
-            <span className="stat-value stat-warning">3</span>
-            <span className="stat-label">Composants en cours</span>
+            <span className="stat-value stat-wip">3</span>
+            <span className="stat-label">En cours</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-value stat-info">60</span>
+            <span className="stat-label">Total des composants</span>
           </div>
         </div>
       </div>
