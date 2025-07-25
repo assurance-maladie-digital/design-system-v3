@@ -265,7 +265,9 @@
 							<span v-letter-spacing>
 								{{ service.title.text }}
 							</span>
-							<span>{{ service.title.highlight }}</span>
+							<span v-letter-spacing>
+								{{ service.title.highlight }}
+							</span>
 						</template>
 					</h1>
 

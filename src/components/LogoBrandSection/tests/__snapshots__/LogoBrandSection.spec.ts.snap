@@ -50,11 +50,11 @@ exports[`LogoBrandSection > renders correctly 1`] = `
         vd-title
       "
       data-letter-spacing-override="multi-approach"
-      data-letter-spacing-timestamp="1753433380095"
+      data-letter-spacing-timestamp="1753433489107"
     >
       <span
         data-letter-spacing-override="multi-approach"
-        data-letter-spacing-timestamp="1753433380091"
+        data-letter-spacing-timestamp="1753433489099"
       >
         Service Title
       </span>
@@ -65,7 +65,7 @@ exports[`LogoBrandSection > renders correctly 1`] = `
         vd-title
       "
       data-letter-spacing-override="multi-approach"
-      data-letter-spacing-timestamp="1753433380099"
+      data-letter-spacing-timestamp="1753433489113"
     >
       Service Sub Title
     </h2>
