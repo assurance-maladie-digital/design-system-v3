@@ -151,11 +151,6 @@ if (process.env.CI) {
 	}) as typeof setTimeout
 }
 
-
-
-// Prevent memory leak warnings during concurrent test execution
-// This is safe for test environment where multiple test files run simultaneously
-
 export const vuetify = createVuetify({
 	components,
 	directives,
