@@ -21,75 +21,72 @@ dependencies:
     specifier: ^3.1.5
     version: 3.1.5
   maska:
-    specifier: ^3.0.3
+    specifier: ^3.1.0
     version: 3.2.0
   sass-embedded:
-    specifier: ^1.83.0
+    specifier: ^1.85.1
     version: 1.89.2
   sass-loader:
-    specifier: ^16.0.3
+    specifier: ^16.0.5
     version: 16.0.5(sass-embedded@1.89.2)
   slugify:
     specifier: ^1.6.6
     version: 1.6.6
-  vue:
-    specifier: ^3.5.18
-    version: 3.5.18(typescript@5.8.3)
   vuetify:
     specifier: ^3.9.2
     version: 3.9.2(typescript@5.4.2)(vite-plugin-vuetify@2.1.1)(vue@3.5.18)
 
 devDependencies:
   '@chromatic-com/storybook':
-    specifier: ^3.2.2
+    specifier: ^3.2.5
     version: 3.2.7(react@19.1.0)(storybook@8.6.14)
   '@jls-digital/storybook-addon-code':
     specifier: ^1.0.4
     version: 1.0.6(@storybook/components@8.6.14)(@storybook/manager-api@8.6.14)(@storybook/manager@8.6.14)(@storybook/preview@8.6.14)(react@19.1.0)
   '@storybook/addon-docs':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(@types/react@19.1.8)(storybook@8.6.14)
   '@storybook/addon-essentials':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(@types/react@19.1.8)(storybook@8.6.14)
   '@storybook/addon-interactions':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(storybook@8.6.14)
   '@storybook/addon-links':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(react@19.1.0)(storybook@8.6.14)
   '@storybook/addon-onboarding':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(storybook@8.6.14)
   '@storybook/addon-queryparams':
     specifier: ^7.0.1
     version: 7.0.1(@storybook/manager-api@8.6.14)(@storybook/preview-api@8.6.14)
   '@storybook/addon-viewport':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(storybook@8.6.14)
   '@storybook/blocks':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(react-dom@19.1.0)(react@19.1.0)(storybook@8.6.14)
   '@storybook/manager-api':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(storybook@8.6.14)
   '@storybook/test':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(storybook@8.6.14)
   '@storybook/theming':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(storybook@8.6.14)
   '@storybook/vue3':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(storybook@8.6.14)(vue@3.5.18)
   '@storybook/vue3-vite':
-    specifier: ^8.5.6
+    specifier: ^8.6.4
     version: 8.6.14(storybook@8.6.14)(vite@7.0.6)(vue@3.5.18)
   '@stylistic/eslint-plugin':
-    specifier: ^2.9.0
+    specifier: ^2.13.0
     version: 2.13.0(eslint@9.31.0)(typescript@5.4.2)
   '@stylistic/eslint-plugin-ts':
-    specifier: ^2.9.0
+    specifier: ^2.13.0
     version: 2.13.0(eslint@9.31.0)(typescript@5.4.2)
   '@stylistic/stylelint-config':
     specifier: ^2.0.0
@@ -98,14 +95,14 @@ devDependencies:
     specifier: ^20.1.4
     version: 20.1.6
   '@types/node':
-    specifier: ^20.17.1
+    specifier: ^20.17.24
     version: 20.19.9
   '@typescript-eslint/parser':
-    specifier: ^8.11.0
+    specifier: ^8.26.1
     version: 8.38.0(eslint@9.31.0)(typescript@5.4.2)
   '@vitejs/plugin-vue':
-    specifier: ^5.1.4
-    version: 5.2.4(vite@7.0.6)(vue@3.5.18)
+    specifier: 5.2.1
+    version: 5.2.1(vite@7.0.6)(vue@3.5.18)
   '@vitest/coverage-v8':
     specifier: ^2.1.9
     version: 2.1.9(vitest@2.1.9)
@@ -119,16 +116,16 @@ devDependencies:
     specifier: ^2.5.0
     version: 2.5.0
   axios:
-    specifier: ^1.7.7
+    specifier: ^1.8.3
     version: 1.11.0
   eslint:
-    specifier: ^9.13.0
+    specifier: ^9.22.0
     version: 9.31.0
   eslint-plugin-storybook:
-    specifier: ^0.11.3
+    specifier: ^0.11.4
     version: 0.11.6(eslint@9.31.0)(typescript@5.4.2)
   eslint-plugin-vue:
-    specifier: ^9.30.0
+    specifier: ^9.33.0
     version: 9.33.0(eslint@9.31.0)
   eslint-plugin-vuejs-accessibility:
     specifier: ^2.4.1
@@ -155,26 +152,26 @@ devDependencies:
     specifier: ^24.2.3
     version: 24.2.7(typescript@5.4.2)
   storybook:
-    specifier: ^8.5.6
+    specifier: ^8.6.14
     version: 8.6.14
   storybook-addon-vue-mdx:
     specifier: ^1.0.6
     version: 1.0.6(@storybook/blocks@8.6.14)(@storybook/builder-vite@8.6.14)(@storybook/components@8.6.14)(@storybook/core-events@8.6.14)(@storybook/manager-api@8.6.14)(@storybook/mdx2-csf@1.1.0)(@storybook/preview-api@8.6.14)(@storybook/theming@8.6.14)(@storybook/types@8.6.14)(react-dom@19.1.0)(react@19.1.0)(vue@3.5.18)
   stylelint:
-    specifier: ^16.12.0
+    specifier: ^16.16.0
     version: 16.22.0(typescript@5.4.2)
   stylelint-config-recommended-scss:
     specifier: ^14.1.0
     version: 14.1.0(postcss@8.5.6)(stylelint@16.22.0)
   stylelint-config-recommended-vue:
-    specifier: ^1.5.0
+    specifier: ^1.6.0
     version: 1.6.1(postcss-html@1.8.0)(stylelint@16.22.0)
   stylelint-config-standard-scss:
     specifier: ^14.0.0
     version: 14.0.0(postcss@8.5.6)(stylelint@16.22.0)
   typescript:
-    specifier: ^5.4.2
-    version: 5.8.3
+    specifier: 5.4.2
+    version: 5.4.2
   typescript-eslint:
     specifier: ^8.11.0
     version: 8.38.0(eslint@9.31.0)(typescript@5.4.2)
@@ -193,6 +190,9 @@ devDependencies:
   vue:
     specifier: ^3.5.18
     version: 3.5.18(typescript@5.4.2)
+  vue-component-type-helpers:
+    specifier: 2.2.0
+    version: 2.2.0
   vue-router:
     specifier: ^4.4.5
     version: 4.5.1(vue@3.5.18)
@@ -2233,8 +2233,8 @@ packages:
       eslint-visitor-keys: 4.2.1
     dev: true
 
-  /@vitejs/plugin-vue@5.2.4(vite@7.0.6)(vue@3.5.18):
-    resolution: {integrity: sha512-7Yx/SXSOcQq5HiiV3orevHUFn+pmMB4cgbEkDYgnkUWb0WfeQ/wa2yFv6D5ICiCQOVpjA7vYDXrC7AGO8yjDHA==}
+  /@vitejs/plugin-vue@5.2.1(vite@7.0.6)(vue@3.5.18):
+    resolution: {integrity: sha512-cxh314tzaWwOLqVes2gnnCtvBDcM1UMdn+iFR+UjAn411dPT3tOmqrJjbMd7koZpMAmBM/GqeV4n9ge7JSiJJQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       vite: ^5.0.0 || ^6.0.0
@@ -2442,7 +2442,7 @@ packages:
     resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
     dev: true
 
-  /@vue/language-core@2.2.0(typescript@5.8.3):
+  /@vue/language-core@2.2.0(typescript@5.4.2):
     resolution: {integrity: sha512-O1ZZFaaBGkKbsRfnVH1ifOK1/1BUkyK+3SQsfnh6PmMmD4qJcTU8godCeA96jjDRTL6zgnK7YzCHfaUlH2r0Mw==}
     peerDependencies:
       typescript: '*'
@@ -2458,7 +2458,7 @@ packages:
       minimatch: 9.0.5
       muggle-string: 0.4.1
       path-browserify: 1.0.1
-      typescript: 5.8.3
+      typescript: 5.4.2
     dev: true
 
   /@vue/language-core@2.2.12(typescript@5.4.2):
@@ -2477,7 +2477,7 @@ packages:
       minimatch: 9.0.5
       muggle-string: 0.4.1
       path-browserify: 1.0.1
-      typescript: 5.8.3
+      typescript: 5.4.2
     dev: true
 
   /@vue/language-core@2.2.12(typescript@5.8.3):
@@ -2534,7 +2534,7 @@ packages:
     resolution: {integrity: sha512-FMxEjOpYNYiFe0GkaHsnJPXFHxQ6m4t8vI/ElPGpMWxZKpmRvQ33OIrvRXemy6yha03RxhOlQuy+gZMC3CQSow==}
     dependencies:
       js-beautify: 1.15.4
-      vue-component-type-helpers: 2.2.12
+      vue-component-type-helpers: 2.2.0
     dev: true
 
   /@vue/tsconfig@0.5.1:
@@ -3188,7 +3188,7 @@ packages:
       yaml: 1.10.2
     dev: false
 
-  /cosmiconfig@9.0.0(typescript@5.8.3):
+  /cosmiconfig@9.0.0(typescript@5.4.2):
     resolution: {integrity: sha512-itvL5h8RETACmOTFc4UfIyB2RfEHi71Ax6E/PivVxq9NseKbOWpeyHEOIbmAw1rs8Ak0VursQNww7lf7YtUwzg==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -3201,7 +3201,7 @@ packages:
       import-fresh: 3.3.1
       js-yaml: 4.1.0
       parse-json: 5.2.0
-      typescript: 5.8.3
+      typescript: 5.4.2
     dev: true
 
   /cross-spawn@7.0.6:
@@ -6525,7 +6525,7 @@ packages:
       '@dual-bundle/import-meta-resolve': 4.1.0
       balanced-match: 2.0.0
       colord: 2.9.3
-      cosmiconfig: 9.0.0(typescript@5.8.3)
+      cosmiconfig: 9.0.0(typescript@5.4.2)
       css-functions-list: 3.2.3
       css-tree: 3.1.0
       debug: 4.4.1
@@ -6741,7 +6741,7 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
     dependencies:
-      typescript: 5.8.3
+      typescript: 5.4.2
     dev: true
 
   /ts-dedent@2.2.0:
@@ -6803,6 +6803,11 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /typescript@5.4.2:
+    resolution: {integrity: sha512-+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
 
   /typescript@5.8.2:
     resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
@@ -7166,6 +7171,10 @@ packages:
       path-browserify: 1.0.1
       typescript: 5.8.3
       vue-component-type-helpers: 2.2.12
+    dev: true
+
+  /vue-component-type-helpers@2.2.0:
+    resolution: {integrity: sha512-cYrAnv2me7bPDcg9kIcGwjJiSB6Qyi08+jLDo9yuvoFQjzHiPTzML7RnkJB1+3P6KMsX/KbCD4QE3Tv/knEllw==}
     dev: true
 
   /vue-component-type-helpers@2.2.12:
