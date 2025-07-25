@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/vue3'
 import { VBtn } from 'vuetify/components'
 import DialogBox from './DialogBox.vue'
 import { fn } from '@storybook/test'
+import { computed } from 'vue'
 
 const meta: Meta<typeof DialogBox> = {
 	title: 'Composants/Feedback/DialogBox',
@@ -189,7 +190,12 @@ export const Default: Story = {
 		return {
 			components: { DialogBox, VBtn },
 			setup() {
-				return { args }
+				const rest = computed(() => {
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					const { default: _, ...rest } = args
+					return rest
+				})
+				return { args, rest }
 			},
 			template: `
 				<div class="pa-4">
@@ -198,7 +204,7 @@ export const Default: Story = {
 						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
-						v-bind="args"
+						v-bind="rest"
 						@confirm="args.modelValue = false"
 						@cancel="args.modelValue = false"
 						@update:modelValue="args.modelValue = $event"
