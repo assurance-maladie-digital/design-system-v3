@@ -83,11 +83,11 @@ devDependencies:
     specifier: ^8.5.6
     version: 8.6.14(storybook@8.6.14)(vite@7.0.6)(vue@3.5.18)
   '@stylistic/eslint-plugin':
-    specifier: ^2.9.0
-    version: 2.13.0(eslint@9.31.0)(typescript@5.4.2)
+    specifier: ^5.0.0
+    version: 5.2.2(eslint@9.31.0)
   '@stylistic/eslint-plugin-ts':
-    specifier: ^2.9.0
-    version: 2.13.0(eslint@9.31.0)(typescript@5.4.2)
+    specifier: ^4.0.0
+    version: 4.4.1(eslint@9.31.0)(typescript@5.4.2)
   '@stylistic/stylelint-config':
     specifier: ^2.0.0
     version: 2.0.0(stylelint@16.22.0)
@@ -1947,11 +1947,11 @@ packages:
       vue-component-type-helpers: 3.0.4
     dev: true
 
-  /@stylistic/eslint-plugin-ts@2.13.0(eslint@9.31.0)(typescript@5.4.2):
-    resolution: {integrity: sha512-nooe1oTwz60T4wQhZ+5u0/GAu3ygkKF9vPPZeRn/meG71ntQ0EZXVOKEonluAYl/+CV2T+nN0dknHa4evAW13Q==}
+  /@stylistic/eslint-plugin-ts@4.4.1(eslint@9.31.0)(typescript@5.4.2):
+    resolution: {integrity: sha512-2r6cLcmdF6til66lx8esBYvBvsn7xCmLT50gw/n1rGGlTq/OxeNjBIh4c3VEaDGMa/5TybrZTia6sQUHdIWx1w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      eslint: '>=8.40.0'
+      eslint: '>=9.0.0'
     dependencies:
       '@typescript-eslint/utils': 8.38.0(eslint@9.31.0)(typescript@5.4.2)
       eslint: 9.31.0
@@ -1962,21 +1962,19 @@ packages:
       - typescript
     dev: true
 
-  /@stylistic/eslint-plugin@2.13.0(eslint@9.31.0)(typescript@5.4.2):
-    resolution: {integrity: sha512-RnO1SaiCFHn666wNz2QfZEFxvmiNRqhzaMXHXxXXKt+MEP7aajlPxUSMIQpKAaJfverpovEYqjBOXDq6dDcaOQ==}
+  /@stylistic/eslint-plugin@5.2.2(eslint@9.31.0):
+    resolution: {integrity: sha512-bE2DUjruqXlHYP3Q2Gpqiuj2bHq7/88FnuaS0FjeGGLCy+X6a07bGVuwtiOYnPSLHR6jmx5Bwdv+j7l8H+G97A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      eslint: '>=8.40.0'
+      eslint: '>=9.0.0'
     dependencies:
-      '@typescript-eslint/utils': 8.38.0(eslint@9.31.0)(typescript@5.4.2)
+      '@eslint-community/eslint-utils': 4.7.0(eslint@9.31.0)
+      '@typescript-eslint/types': 8.38.0
       eslint: 9.31.0
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
       estraverse: 5.3.0
       picomatch: 4.0.3
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
     dev: true
 
   /@stylistic/stylelint-config@2.0.0(stylelint@16.22.0):
