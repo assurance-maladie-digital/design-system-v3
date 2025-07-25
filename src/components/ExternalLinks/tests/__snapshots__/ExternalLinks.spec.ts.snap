@@ -104,8 +104,8 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
           top: 12px;
           left: 12px;
           min-width: 0px;
-          max-width: 0px;
-          max-height: 0px;
+          max-width: 1000px;
+          max-height: 744px;
         "
       >
         <ul
@@ -313,6 +313,7 @@ exports[`ExternalLinks > renders correctly 1`] = `
     closeoncontentclick="true"
     contained="false"
     disabled="false"
+    disableinitialfocus="false"
     eager="false"
     id="sy-external-links-menu-v-0"
     location="bottom"
@@ -437,8 +438,8 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
           top: 12px;
           left: 12px;
           min-width: 0px;
-          max-width: 0px;
-          max-height: 0px;
+          max-width: 1000px;
+          max-height: 744px;
         "
       >
         <ul

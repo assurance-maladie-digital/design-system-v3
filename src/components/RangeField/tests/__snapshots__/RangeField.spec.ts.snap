@@ -156,17 +156,11 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             >
               <!---->
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -180,12 +174,10 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -205,17 +197,17 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
                 v-field-label
                 v-label
               "
-              for="input-0"
+              for="input-v-0"
             >
               <!---->
               Valeur min
             </label>
             <!---->
             <input
-              aria-describedby="input-0-messages"
+              aria-describedby="input-v-0-messages"
               aria-label="Valeur min"
               class="v-field__input"
-              id="input-0"
+              id="input-v-0"
               inputmode="numeric"
               size="1"
               title="Valeur min"
@@ -230,13 +222,13 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
               <label
-                aria-hidden="true"
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-field-label--floating
                   v-label
                 "
-                for="input-0"
+                for="input-v-0"
               >
                 <!---->
                 Valeur min
@@ -251,7 +243,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
       <div
         aria-live="polite"
         class="v-input__details"
-        id="input-0-messages"
+        id="input-v-0-messages"
         role="alert"
       >
         <transition-group-stub
@@ -311,17 +303,11 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             >
               <!---->
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -335,12 +321,10 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -360,17 +344,17 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
                 v-field-label
                 v-label
               "
-              for="input-2"
+              for="input-v-2"
             >
               <!---->
               Valeur max
             </label>
             <!---->
             <input
-              aria-describedby="input-2-messages"
+              aria-describedby="input-v-2-messages"
               aria-label="Valeur max"
               class="v-field__input"
-              id="input-2"
+              id="input-v-2"
               inputmode="numeric"
               size="1"
               title="Valeur max"
@@ -385,13 +369,13 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
               <label
-                aria-hidden="true"
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-field-label--floating
                   v-label
                 "
-                for="input-2"
+                for="input-v-2"
               >
                 <!---->
                 Valeur max
@@ -406,7 +390,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
       <div
         aria-live="polite"
         class="v-input__details"
-        id="input-2-messages"
+        id="input-v-2-messages"
         role="alert"
       >
         <transition-group-stub
@@ -582,17 +566,11 @@ exports[`RangeField > renders correctly 1`] = `
             >
               <!---->
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -606,12 +584,10 @@ exports[`RangeField > renders correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -631,17 +607,17 @@ exports[`RangeField > renders correctly 1`] = `
                 v-field-label
                 v-label
               "
-              for="input-0"
+              for="input-v-0"
             >
               <!---->
               Valeur min
             </label>
             <!---->
             <input
-              aria-describedby="input-0-messages"
+              aria-describedby="input-v-0-messages"
               aria-label="Valeur min"
               class="v-field__input"
-              id="input-0"
+              id="input-v-0"
               inputmode="numeric"
               size="1"
               title="Valeur min"
@@ -656,13 +632,13 @@ exports[`RangeField > renders correctly 1`] = `
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
               <label
-                aria-hidden="true"
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-field-label--floating
                   v-label
                 "
-                for="input-0"
+                for="input-v-0"
               >
                 <!---->
                 Valeur min
@@ -677,7 +653,7 @@ exports[`RangeField > renders correctly 1`] = `
       <div
         aria-live="polite"
         class="v-input__details"
-        id="input-0-messages"
+        id="input-v-0-messages"
         role="alert"
       >
         <transition-group-stub
@@ -737,17 +713,11 @@ exports[`RangeField > renders correctly 1`] = `
             >
               <!---->
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -761,12 +731,10 @@ exports[`RangeField > renders correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -786,17 +754,17 @@ exports[`RangeField > renders correctly 1`] = `
                 v-field-label
                 v-label
               "
-              for="input-2"
+              for="input-v-2"
             >
               <!---->
               Valeur max
             </label>
             <!---->
             <input
-              aria-describedby="input-2-messages"
+              aria-describedby="input-v-2-messages"
               aria-label="Valeur max"
               class="v-field__input"
-              id="input-2"
+              id="input-v-2"
               inputmode="numeric"
               size="1"
               title="Valeur max"
@@ -811,13 +779,13 @@ exports[`RangeField > renders correctly 1`] = `
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
               <label
-                aria-hidden="true"
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-field-label--floating
                   v-label
                 "
-                for="input-2"
+                for="input-v-2"
               >
                 <!---->
                 Valeur max
@@ -832,7 +800,7 @@ exports[`RangeField > renders correctly 1`] = `
       <div
         aria-live="polite"
         class="v-input__details"
-        id="input-2-messages"
+        id="input-v-2-messages"
         role="alert"
       >
         <transition-group-stub
@@ -1008,17 +976,11 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             >
               <!---->
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -1032,12 +994,10 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -1057,17 +1017,17 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
                 v-field-label
                 v-label
               "
-              for="input-0"
+              for="input-v-0"
             >
               <!---->
               Valeur min
             </label>
             <!---->
             <input
-              aria-describedby="input-0-messages"
+              aria-describedby="input-v-0-messages"
               aria-label="Valeur min"
               class="v-field__input"
-              id="input-0"
+              id="input-v-0"
               inputmode="numeric"
               size="1"
               title="Valeur min"
@@ -1082,13 +1042,13 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
               <label
-                aria-hidden="true"
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-field-label--floating
                   v-label
                 "
-                for="input-0"
+                for="input-v-0"
               >
                 <!---->
                 Valeur min
@@ -1103,7 +1063,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
       <div
         aria-live="polite"
         class="v-input__details"
-        id="input-0-messages"
+        id="input-v-0-messages"
         role="alert"
       >
         <transition-group-stub
@@ -1163,17 +1123,11 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             >
               <!---->
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-primary
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -1187,12 +1141,10 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -1212,17 +1164,17 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
                 v-field-label
                 v-label
               "
-              for="input-2"
+              for="input-v-2"
             >
               <!---->
               Valeur max
             </label>
             <!---->
             <input
-              aria-describedby="input-2-messages"
+              aria-describedby="input-v-2-messages"
               aria-label="Valeur max"
               class="v-field__input"
-              id="input-2"
+              id="input-v-2"
               inputmode="numeric"
               size="1"
               title="Valeur max"
@@ -1237,13 +1189,13 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
               <label
-                aria-hidden="true"
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-field-label--floating
                   v-label
                 "
-                for="input-2"
+                for="input-v-2"
               >
                 <!---->
                 Valeur max
@@ -1258,7 +1210,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
       <div
         aria-live="polite"
         class="v-input__details"
-        id="input-2-messages"
+        id="input-v-2-messages"
         role="alert"
       >
         <transition-group-stub

@@ -123,7 +123,9 @@ export default defineConfig({
 	},
 	test: {
 		environment: 'happy-dom',
-		// globals: true,
+		isolate: true,
+		threads: false,
+		maxConcurrency: process.env.CI ? 1 : 5,
 		server: {
 			deps: {
 				inline: ['vuetify'],

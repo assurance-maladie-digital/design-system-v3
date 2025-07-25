@@ -71,17 +71,11 @@ exports[`AmeliproTextField > render correctly 1`] = `
             >
               <!---->
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -95,12 +89,10 @@ exports[`AmeliproTextField > render correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-ap-blue-darken-1
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-ap-blue-darken-1
                     short
                     v-progress-linear__indeterminate
                   "></div>

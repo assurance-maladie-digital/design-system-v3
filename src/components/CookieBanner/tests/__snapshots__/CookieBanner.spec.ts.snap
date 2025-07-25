@@ -370,8 +370,8 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                   ></i>
                   <input
                     aria-label="Refuser"
-                    id="input-10"
-                    name="radio-group-7"
+                    id="input-v-10"
+                    name="radio-group-v-7"
                     type="radio"
                     value="reject"
                   />
@@ -382,7 +382,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                   v-label
                   v-label--clickable
                 "
-                for="input-10"
+                for="input-v-10"
               >
                 <!---->
                 Refuser
@@ -411,8 +411,8 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                   ></i>
                   <input
                     aria-label="Accepter"
-                    id="input-11"
-                    name="radio-group-7"
+                    id="input-v-11"
+                    name="radio-group-v-7"
                     type="radio"
                     value="accept"
                   />
@@ -423,7 +423,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                   v-label
                   v-label--clickable
                 "
-                for="input-11"
+                for="input-v-11"
               >
                 <!---->
                 Accepter
@@ -571,8 +571,8 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                   ></i>
                   <input
                     aria-label="Refuser"
-                    id="input-15"
-                    name="radio-group-12"
+                    id="input-v-15"
+                    name="radio-group-v-12"
                     type="radio"
                     value="reject"
                   />
@@ -583,7 +583,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                   v-label
                   v-label--clickable
                 "
-                for="input-15"
+                for="input-v-15"
               >
                 <!---->
                 Refuser
@@ -612,8 +612,8 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                   ></i>
                   <input
                     aria-label="Accepter"
-                    id="input-16"
-                    name="radio-group-12"
+                    id="input-v-16"
+                    name="radio-group-v-12"
                     type="radio"
                     value="accept"
                   />
@@ -624,7 +624,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
                   v-label
                   v-label--clickable
                 "
-                for="input-16"
+                for="input-v-16"
               >
                 <!---->
                 Accepter
