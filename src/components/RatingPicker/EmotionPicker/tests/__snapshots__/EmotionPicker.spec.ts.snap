@@ -17,7 +17,7 @@ exports[`EmotionPicker > renders correctly 1`] = `
   ">
     <label
       class=""
-      for="v-rating-0-0"
+      for="v-rating-v-0-0"
     >
       <span class="v-rating__hidden">
         Rating 0 of 3
@@ -27,8 +27,8 @@ exports[`EmotionPicker > renders correctly 1`] = `
     <input
       checked=""
       class="v-rating__hidden"
-      id="v-rating-0-0"
-      name="v-rating-0"
+      id="v-rating-v-0-0"
+      name="v-rating-v-0"
       tabindex="-1"
       type="radio"
       value="0"
@@ -38,7 +38,7 @@ exports[`EmotionPicker > renders correctly 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-1"
+          for="v-rating-v-0-1"
         >
           <span class="v-rating__hidden">
             Rating 1 of 3
@@ -151,8 +151,8 @@ exports[`EmotionPicker > renders correctly 1`] = `
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-1"
-          name="v-rating-0"
+          id="v-rating-v-0-1"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="1"
@@ -165,7 +165,7 @@ exports[`EmotionPicker > renders correctly 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-2"
+          for="v-rating-v-0-2"
         >
           <span class="v-rating__hidden">
             Rating 2 of 3
@@ -278,8 +278,8 @@ exports[`EmotionPicker > renders correctly 1`] = `
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-2"
-          name="v-rating-0"
+          id="v-rating-v-0-2"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="2"
@@ -292,7 +292,7 @@ exports[`EmotionPicker > renders correctly 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-3"
+          for="v-rating-v-0-3"
         >
           <span class="v-rating__hidden">
             Rating 3 of 3
@@ -405,8 +405,8 @@ exports[`EmotionPicker > renders correctly 1`] = `
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-3"
-          name="v-rating-0"
+          id="v-rating-v-0-3"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="3"
@@ -435,7 +435,7 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
   ">
     <label
       class=""
-      for="v-rating-0-0"
+      for="v-rating-v-0-0"
     >
       <span class="v-rating__hidden">
         Rating 0 of 2
@@ -445,8 +445,8 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
     <input
       checked=""
       class="v-rating__hidden"
-      id="v-rating-0-0"
-      name="v-rating-0"
+      id="v-rating-v-0-0"
+      name="v-rating-v-0"
       tabindex="-1"
       type="radio"
       value="0"
@@ -456,7 +456,7 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-1"
+          for="v-rating-v-0-1"
         >
           <span class="v-rating__hidden">
             Rating 1 of 2
@@ -569,8 +569,8 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-1"
-          name="v-rating-0"
+          id="v-rating-v-0-1"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="1"
@@ -583,7 +583,7 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
       <div class="v-rating__item">
         <label
           class=""
-          for="v-rating-0-2"
+          for="v-rating-v-0-2"
         >
           <span class="v-rating__hidden">
             Rating 2 of 2
@@ -696,8 +696,8 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
         </label>
         <input
           class="v-rating__hidden"
-          id="v-rating-0-2"
-          name="v-rating-0"
+          id="v-rating-v-0-2"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="2"

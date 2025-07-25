@@ -35,6 +35,9 @@ describe('BackToTopBtn', () => {
 	})
 
 	it('shows the button when the user scrolls down', async () => {
+		// Initialize scroll position to 0
+		vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0)
+
 		const wrapper = mount(BackToTopBtn, {
 			global: {
 				plugins: [vuetify],
@@ -42,41 +45,66 @@ describe('BackToTopBtn', () => {
 			attachTo: document.body,
 		})
 
-		const buttonElement = wrapper.find('.vd-back-to-top-btn')
-		expect(buttonElement.isVisible()).toBeFalsy()
+		// Wait for component to initialize
+		await wrapper.vm.$nextTick()
 
+		const buttonElement = wrapper.find('.vd-back-to-top-btn')
+		// Button should be hidden initially (v-show="false")
+		expect(buttonElement.exists()).toBe(true)
+		expect((buttonElement.element as HTMLElement).style.display).toBe('none')
+
+		// Simulate scroll down
 		vi.spyOn(window, 'scrollY', 'get').mockReturnValue(500)
 		window.dispatchEvent(new CustomEvent('scroll'))
 		await wrapper.vm.$nextTick()
 
-		expect(buttonElement.isVisible()).toBeTruthy()
+		// Button should now be visible
+		expect((buttonElement.element as HTMLElement).style.display).not.toBe('none')
 	})
 
 	it('shows the button when the user scrolls down and the target is a custom element', async () => {
-		document.body.innerHTML = '<div id="test"></div>'
-		const divContent = document.getElementById('test') as HTMLDivElement
+		const divContent = document.createElement('div')
+		divContent.id = 'test-target'
+		divContent.style.height = '1000px'
+		divContent.style.overflow = 'auto'
+		document.body.appendChild(divContent)
+
+		// Initialize scroll position to 0
+		vi.spyOn(divContent, 'scrollTop', 'get').mockReturnValue(0)
 
 		const wrapper = mount(BackToTopBtn, {
+			props: {
+				target: 'test-target',
+			},
 			global: {
 				plugins: [vuetify],
 			},
-			attachTo: divContent,
-			props: {
-				target: 'test',
-			},
+			attachTo: document.body,
 		})
 
-		const buttonElement = wrapper.find('.vd-back-to-top-btn')
-		expect(buttonElement.isVisible()).toBeFalsy()
+		// Wait for component to initialize
+		await wrapper.vm.$nextTick()
 
+		const buttonElement = wrapper.find('.vd-back-to-top-btn')
+		// Button should be hidden initially (v-show="false")
+		expect(buttonElement.exists()).toBe(true)
+		expect((buttonElement.element as HTMLElement).style.display).toBe('none')
+
+		// Simulate scroll down
 		vi.spyOn(divContent, 'scrollTop', 'get').mockReturnValue(500)
 		divContent.dispatchEvent(new CustomEvent('scroll'))
-
 		await wrapper.vm.$nextTick()
-		expect(buttonElement.isVisible()).toBeTruthy()
+
+		// Button should now be visible
+		expect((buttonElement.element as HTMLElement).style.display).not.toBe('none')
+
+		document.body.removeChild(divContent)
 	})
 
 	it('do not show the button when the user scrolls up', async () => {
+		// Initialize scroll position to 0
+		vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0)
+
 		const wrapper = mount(BackToTopBtn, {
 			global: {
 				plugins: [vuetify],
@@ -84,19 +112,29 @@ describe('BackToTopBtn', () => {
 			attachTo: document.body,
 		})
 
-		const buttonElement = wrapper.find('.vd-back-to-top-btn')
-		expect(buttonElement.isVisible()).toBeFalsy()
+		// Wait for component to initialize
+		await wrapper.vm.$nextTick()
 
+		const buttonElement = wrapper.find('.vd-back-to-top-btn')
+		// Button should be hidden initially (v-show="false")
+		expect(buttonElement.exists()).toBe(true)
+		expect((buttonElement.element as HTMLElement).style.display).toBe('none')
+
+		// Simulate scroll down
 		vi.spyOn(window, 'scrollY', 'get').mockReturnValue(500)
 		window.dispatchEvent(new CustomEvent('scroll'))
 		await wrapper.vm.$nextTick()
-		expect(buttonElement.isVisible()).toBeTruthy()
 
-		vi.spyOn(window, 'scrollY', 'get').mockReturnValue(100)
+		// Button should now be visible
+		expect((buttonElement.element as HTMLElement).style.display).not.toBe('none')
+
+		// Scroll back up
+		vi.spyOn(window, 'scrollY', 'get').mockReturnValue(50)
 		window.dispatchEvent(new CustomEvent('scroll'))
 		await wrapper.vm.$nextTick()
 
-		expect(buttonElement.isVisible()).toBeFalsy()
+		// Button should be hidden again
+		expect((buttonElement.element as HTMLElement).style.display).toBe('none')
 	})
 
 	it('scrolls to the top when the button is clicked', async () => {
