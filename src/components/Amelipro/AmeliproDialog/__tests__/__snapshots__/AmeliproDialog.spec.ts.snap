@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproDialog > Snapshots > renders the component with all properties filled in 1`] = `
+<v-dialog-stub
+  absolute="false"
+  activatorprops="[object Object]"
+  attach="false"
+  class=""
+  closeonback="true"
+  closeoncontentclick="false"
+  contained="false"
+  disabled="false"
+  eager="false"
+  fullscreen="true"
+  location="bottom"
+  locationstrategy="static"
+  modelvalue="true"
+  noclickanimation="false"
+  openonhover="false"
+  origin="center center"
+  persistent="true"
+  retainfocus="true"
+  scrim="true"
+  scrollable="false"
+  scrollstrategy="block"
+  transition="[object Object]"
+  width="700px"
+  zindex="2400"
+></v-dialog-stub>
+`;
+
+exports[`AmeliproDialog > Snapshots > renders the component with only required properties filled in 1`] = `
+<v-dialog-stub
+  absolute="false"
+  activatorprops="[object Object]"
+  attach="false"
+  class="dialog-radius"
+  closeonback="true"
+  closeoncontentclick="false"
+  contained="false"
+  disabled="false"
+  eager="false"
+  fullscreen="false"
+  location="bottom"
+  locationstrategy="static"
+  modelvalue="false"
+  noclickanimation="false"
+  openonhover="false"
+  origin="center center"
+  persistent="false"
+  retainfocus="true"
+  scrim="true"
+  scrollable="false"
+  scrollstrategy="block"
+  transition="[object Object]"
+  width="800px"
+  zindex="2400"
+></v-dialog-stub>
+`;
