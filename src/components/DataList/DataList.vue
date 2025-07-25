@@ -100,17 +100,19 @@
 				:row="row"
 			/>
 
-			<div v-else>
-				<slot name="title">
-					<h4
-						v-if="listTitle"
-						:class="titleClass"
-					>
-						{{ listTitle }}
-					</h4>
-				</slot>
+			<dl v-else>
+				<dt>
+					<slot name="title">
+						<h4
+							v-if="listTitle"
+							:class="titleClass"
+						>
+							{{ listTitle }}
+						</h4>
+					</slot>
+				</dt>
 
-				<ul v-if="items.length">
+				<dd v-if="items.length">
 					<DataListItem
 						v-for="(item, index) in items"
 						:key="index"
@@ -127,8 +129,8 @@
 						class="sy-data-list-item text-body-1"
 						@click:action="emit('click:item-action', index)"
 					/>
-				</ul>
-			</div>
+				</dd>
+			</dl>
 		</VFadeTransition>
 	</div>
 </template>
