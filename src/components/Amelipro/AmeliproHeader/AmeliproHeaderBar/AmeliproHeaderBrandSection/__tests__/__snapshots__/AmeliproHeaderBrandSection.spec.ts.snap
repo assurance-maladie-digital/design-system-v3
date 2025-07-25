@@ -1,0 +1,101 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproHeaderBrandSection > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    d-flex
+    header-brand-section
+  "
+  id="modified-unique-id-container"
+>
+  <a
+    aria-label="Retour à l’accueil, Modified service title Modified sub title"
+    class="
+      align-center
+      d-flex
+      header-home-link
+      w-100
+    "
+    href="/accueil"
+    id="modified-unique-id-logo-link"
+    title="Retour à l’accueil, Modified service title Modified sub title"
+  >
+    <amelipro-logo-am-stub
+    hidesignature="false"
+    size="small"
+    uniqueid="modified-unique-id-logo-am"
+  ></amelipro-logo-am-stub><svg
+    aria-hidden="true"
+    class="header-home-link__divider"
+    fill="#0C419A"
+    focusable="false"
+    height="40"
+    role="img"
+    viewBox="0 0 22 64"
+    width="14"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+      <path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
+    </svg><span
+    class="
+      d-flex
+      flex-column
+      justify-center
+      text-ap-blue-darken-1
+    "
+    id="modified-unique-id-title-wrapper"
+  ><h1
+    class="
+      font-weight-bold
+      header-title
+    "
+    id="modified-unique-id-title"
+  >Modified service title</h1><h2
+    class="header-title"
+    id="modified-unique-id-subtitle"
+  >Modified sub title</h2></span>
+  </a>
+</div>
+`;
+
+exports[`AmeliproHeaderBrandSection > Snapshots > renders the component with only required properties filled in 1`] = `
+<div class="
+  d-flex
+  header-brand-section
+">
+  <routerlink
+    aria-label="Retour à l’accueil"
+    class="
+      align-center
+      d-flex
+      header-home-link
+      w-100
+    "
+    title="Retour à l’accueil"
+    to="/"
+  >
+    <amelipro-logo-am-stub
+      hidesignature="false"
+      size="normal"
+    ></amelipro-logo-am-stub>
+    <svg
+      aria-hidden="true"
+      class="header-home-link__divider"
+      fill="#006386"
+      focusable="false"
+      height="64"
+      role="img"
+      viewBox="0 0 22 64"
+      width="22"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
+    </svg>
+    <img
+      alt="AmeliPro"
+      class="logo-amelipro"
+      src="/src/assets/amelipro/img/amelipro.svg"
+    />
+  </routerlink>
+</div>
+`;
