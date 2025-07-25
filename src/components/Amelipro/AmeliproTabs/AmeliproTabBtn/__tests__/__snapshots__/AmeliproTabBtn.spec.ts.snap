@@ -1,0 +1,81 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproTabBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<button
+  aria-controls="modified-controls"
+  aria-selected="true"
+  class="
+    amelipro-tab__btn
+    amelipro-tab__btn--pills
+    disabled
+    mr-2
+    selected
+  "
+  disabled=""
+  id="modified-unique-id"
+  role="tab"
+  style="
+    background-color: #FFFFFF;
+    border: 1px solid #00749C;
+    color: #00749C;
+    margin-bottom: 8px;
+    position: relative;
+  "
+  tabindex="0"
+  type="button"
+>
+  <span
+    class="
+      align-center
+      amelipro-tab__btn__content
+      d-flex
+    "
+    id="modified-unique-id-notification-content"
+  >
+    <span
+      class="
+        amelipro-tab__btn-notification
+        ap-white--text
+        d-block
+        ml-4
+      "
+      id="modified-unique-id-notification-text"
+    >
+      1
+    </span>
+  </span>
+</button>
+`;
+
+exports[`AmeliproTabBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<button
+  aria-controls="required-controls"
+  aria-selected="false"
+  class="
+    amelipro-tab__btn
+    px-4
+    py-2
+    text-uppercase
+  "
+  id="required-unique-id"
+  role="tab"
+  style="
+    background-color: #E6F6FC;
+    border: 1px solid #DDDEDE;
+    color: #00749C;
+  "
+  tabindex="1"
+  type="button"
+>
+  <span
+    class="
+      align-center
+      amelipro-tab__btn__content
+      d-flex
+    "
+    id="required-unique-id-notification-content"
+  >
+    <!-- v-if -->
+  </span>
+</button>
+`;

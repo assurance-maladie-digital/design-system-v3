@@ -1,0 +1,109 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StructureList > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="structure-list"
+  id="test-name-container"
+>
+  <v-radio-group-stub
+    centeraffix="true"
+    class="w-100"
+    column=""
+    density="default"
+    direction="horizontal"
+    error="false"
+    errormessages=""
+    falseicon="$radioOff"
+    focused="false"
+    glow="false"
+    height="auto"
+    hidedetails="true"
+    hidespinbuttons="false"
+    iconcolor="false"
+    id="test-name-radio-group"
+    inline="false"
+    label="Label liste"
+    maxerrors="1"
+    messages=""
+    modelvalue="valeur"
+    name="test-name"
+    persistenthint="false"
+    ripple="true"
+    rules=""
+    trueicon="$radioOn"
+    type="radio"
+    valuecomparator="[Function]"
+  ></v-radio-group-stub>
+  <div class="
+    d-flex
+    justify-center
+  ">
+    <amelipro-btn-stub
+      badge="false"
+      badgebgcolor="ap-pink"
+      badgecolor="ap-white"
+      bordered="false"
+      class="text-none"
+      color="ap-blue-darken-1"
+      disabled="false"
+      hovercolor="ap-blue-darken-2"
+      hoverunderline="true"
+      iconbgcolor="transparent"
+      iconbordered="false"
+      iconleft="false"
+      infoblock="false"
+      minheight="2.5rem"
+      size="60px"
+      text="true"
+      textcolor="ap-white"
+      type="button"
+      underline="false"
+      uniqueid="test-name-load-more-btn"
+    ></amelipro-btn-stub>
+    <!-- v-if -->
+  </div>
+</div>
+`;
+
+exports[`StructureList > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="structure-list"
+  id="Required name-container"
+>
+  <v-radio-group-stub
+    centeraffix="true"
+    class="w-100"
+    column=""
+    density="default"
+    direction="horizontal"
+    error="false"
+    errormessages=""
+    falseicon="$radioOff"
+    focused="false"
+    glow="false"
+    height="auto"
+    hidedetails="true"
+    hidespinbuttons="false"
+    iconcolor="false"
+    id="Required name-radio-group"
+    inline="false"
+    label="Required label"
+    maxerrors="1"
+    messages=""
+    name="Required name"
+    persistenthint="false"
+    ripple="true"
+    rules=""
+    trueicon="$radioOn"
+    type="radio"
+    valuecomparator="[Function]"
+  ></v-radio-group-stub>
+  <div class="
+    d-flex
+    justify-center
+  ">
+    <!-- v-if -->
+    <!-- v-if -->
+  </div>
+</div>
+`;

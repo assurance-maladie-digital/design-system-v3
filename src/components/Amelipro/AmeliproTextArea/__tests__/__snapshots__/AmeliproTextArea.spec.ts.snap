@@ -1,5 +1,181 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AmeliproTextArea > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-textarea
+    d-flex
+    flex-column
+    flex-md-row
+    modified-classes
+  "
+  id="modified-unique-id-container"
+  style="
+    margin-bottom: 12px;
+    max-width: 300px;
+    min-width: 100px;
+    width: 200px;
+  "
+>
+  <div class="
+    align-start
+    d-inline-flex
+    mr-md-2
+    mt-md-2
+  ">
+    <label
+      class="
+        amelipro-textarea__label
+        mr-2
+      "
+      for="modified-unique-id"
+      id="modified-unique-id-label"
+      style="
+        max-width: 120px;
+        min-width: 60px;
+      "
+    >
+      Modified label
+      <span>
+        <span aria-hidden="true">
+          &nbsp;*
+        </span>
+        <span class="d-sr-only">
+          &nbsp;Champ obligatoire
+        </span>
+      </span>
+    </label>
+  </div>
+  <v-textarea-stub
+    active="false"
+    aria-describedby="modified-unique-id-error"
+    aria-required="true"
+    autofocus="false"
+    autogrow="true"
+    bgcolor="ap-grey-lighten-2"
+    class="amelipro-textarea-input"
+    clearable="false"
+    clearicon="$clear"
+    color="ap-blue-darken-1"
+    counter="100"
+    density="default"
+    details="false"
+    direction="horizontal"
+    dirty="false"
+    disabled="true"
+    error="false"
+    errormessages=""
+    flat="false"
+    focused="false"
+    glow="false"
+    hidedetails="false"
+    hidespinbuttons="false"
+    iconcolor="false"
+    id="modified-unique-id"
+    loading="false"
+    maxerrors="1"
+    messages=""
+    modelvalue="Modified model value"
+    noresize="false"
+    persistentclear="false"
+    persistentcounter="false"
+    persistenthint="false"
+    persistentplaceholder="false"
+    readonly=""
+    reverse="false"
+    rows="5"
+    rules="() => true,(value) => {
+    let valid;
+    if (Array.isArray(value)) {
+      valid = value.length !== 0;
+    } else {
+      valid = Boolean(typeof value === "string" ? value.trim() : value);
+    }
+    return valid || __vite_ssr_import_0__.ruleMessage(errorMessages, "default");
+  }"
+    singleline="false"
+    style="
+      max-width: 150px;
+      min-width: 50px;
+      background-color: transparent;
+    "
+    tile="false"
+    validateon="input"
+    variant="outlined"
+  ></v-textarea-stub>
+</div>
+`;
+
+exports[`AmeliproTextArea > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-textarea
+    d-flex
+    flex-column
+  "
+  id="required-unique-id-container"
+  style="margin-bottom: 12px;"
+>
+  <div class="
+    align-start
+    d-inline-flex
+  ">
+    <label
+      class="
+        amelipro-textarea__label
+        mr-2
+      "
+      for="required-unique-id"
+      id="required-unique-id-label"
+    >
+      Required label
+      <!-- v-if -->
+    </label>
+  </div>
+  <v-textarea-stub
+    active="false"
+    aria-describedby="required-unique-id-error"
+    aria-required="false"
+    autofocus="false"
+    autogrow="true"
+    bgcolor="ap-white"
+    class="amelipro-textarea-input"
+    clearable="false"
+    clearicon="$clear"
+    color="ap-blue-darken-1"
+    counter="255"
+    density="default"
+    details="false"
+    direction="horizontal"
+    dirty="false"
+    disabled="false"
+    error="false"
+    errormessages=""
+    flat="false"
+    focused="false"
+    glow="false"
+    hidedetails="false"
+    hidespinbuttons="false"
+    iconcolor="false"
+    id="required-unique-id"
+    loading="false"
+    maxerrors="1"
+    messages=""
+    noresize="false"
+    persistentclear="false"
+    persistentcounter="false"
+    persistenthint="false"
+    persistentplaceholder="false"
+    reverse="false"
+    rows="5"
+    rules=""
+    singleline="false"
+    tile="false"
+    variant="outlined"
+  ></v-textarea-stub>
+</div>
+`;
+
 exports[`AmeliproTextArea > render correctly 1`] = `
 <div
   class="
