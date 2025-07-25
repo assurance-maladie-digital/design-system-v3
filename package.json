@@ -46,7 +46,7 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^3.2.5",
+    "@chromatic-com/storybook": "^4.0.0",
     "@jls-digital/storybook-addon-code": "^1.0.4",
     "@mdi/js": "^7.4.47",
     "@storybook/addon-docs": "^8.6.4",
@@ -64,7 +64,7 @@
     "@storybook/vue3-vite": "^8.6.4",
     "@stylistic/eslint-plugin": "^2.13.0",
     "@stylistic/eslint-plugin-ts": "^2.13.0",
-    "@stylistic/stylelint-config": "^2.0.0",
+    "@stylistic/stylelint-config": "^3.0.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.17.24",
     "@typescript-eslint/parser": "^8.26.1",
