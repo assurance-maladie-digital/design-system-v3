@@ -7,11 +7,11 @@ describe('throttleDisplayFn', () => {
 
 	beforeEach(() => {
 		vi.useFakeTimers()
-		
+
 		// Mock performance.now to return a controllable time
 		mockPerformanceNow = vi.fn(() => 0)
 		vi.stubGlobal('performance', { now: mockPerformanceNow })
-		
+
 		// Mock window.requestAnimationFrame to execute immediately
 		mockRequestAnimationFrame = vi.fn((fn: () => void) => {
 			fn()
@@ -19,7 +19,7 @@ describe('throttleDisplayFn', () => {
 		})
 		Object.defineProperty(window, 'requestAnimationFrame', {
 			value: mockRequestAnimationFrame,
-			writable: true
+			writable: true,
 		})
 	})
 
