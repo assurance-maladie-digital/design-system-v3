@@ -5,7 +5,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
 import DateFilter from '../DateFilter.vue'
-import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import type { FilterType } from '../../types'
 
 const vuetify = createVuetify({
@@ -42,7 +42,7 @@ describe('DateFilter.vue', () => {
 		expect(wrapper.findComponent(DatePicker).exists()).toBe(true)
 	})
 
-	it('passes the correct props to DatePicker', () => {
+	it('passes the correct props to CalendarMode', () => {
 		const datePicker = wrapper.findComponent(DatePicker)
 		// Use attributes for stubbed components
 		expect(datePicker.attributes('label')).toBe('Test Date')

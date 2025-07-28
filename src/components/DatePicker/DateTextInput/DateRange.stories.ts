@@ -1,7 +1,55 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import DatePicker from '../DatePicker/DatePicker.vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
+
+// Define the props interface for DatePicker component
+interface DatePickerProps {
+	'modelValue'?: string | string[] | null
+	'label'?: string
+	'placeholder'?: string
+	'format'?: string
+	'dateFormatReturn'?: string
+	'isBirthDate'?: boolean
+	'birthDate'?: boolean
+	'showWeekNumber'?: boolean
+	'required'?: boolean
+	'displayRange'?: boolean
+	'displayIcon'?: boolean
+	'displayAppendIcon'?: boolean
+	'displayPrependIcon'?: boolean
+	'customRules'?: { type: string, options: Record<string, unknown> }[]
+	'customWarningRules'?: { type: string, options: Record<string, unknown> }[]
+	'disabled'?: boolean
+	'noIcon'?: boolean
+	'noCalendar'?: boolean
+	'isOutlined'?: boolean
+	'readonly'?: boolean
+	'width'?: string
+	'disableErrorHandling'?: boolean
+	'showSuccessMessages'?: boolean
+	'bgColor'?: string
+	'density'?: 'default' | 'comfortable' | 'compact'
+	'hideDetails'?: boolean | 'auto'
+	'displayWeekendDays'?: boolean
+	'displayTodayButton'?: boolean
+	'displayHolidayDays'?: boolean
+	'useCombinedMode'?: boolean
+	'textFieldActivator'?: boolean
+	'displayAsterisk'?: boolean
+	'period'?: {
+		min?: string
+		max?: string
+	}
+	'autoClamp'?: boolean
+	// Event handlers
+	'onUpdate:modelValue'?: () => void
+	'onFocus'?: () => void
+	'onBlur'?: () => void
+	'onClosed'?: () => void
+	'onInput'?: () => void
+	'onDate-selected'?: () => void
+}
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/DateInput/DateRange',
@@ -91,26 +139,51 @@ const meta = {
 			control: 'boolean',
 			description: 'Sélection de plage de dates',
 		},
+		noCalendar: {
+			control: 'boolean',
+			description: 'Masque le calendrier',
+		},
 	},
-} as Meta<typeof DatePicker>
+} as Meta<DatePickerProps>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="dateRange"
+						format="DD/MM/YYYY"
+						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
+						label="Période"
+						display-range
+						no-calendar
+					/>
+				</template>
+				`,
+			},
+		],
+	},
 	args: {
-		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
 		'label': 'Période',
 		'displayRange': true,
 		'displayIcon': true,
 		'isOutlined': true,
+		'noCalendar': true,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
 		'onBlur': fn(),
 		'onClosed': fn(),
+		'onInput': fn(),
+		'onDate-selected': fn(),
 	},
 	render(args) {
 		const dateRange = ref<string | null>(null)

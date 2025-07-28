@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 
 /**
- * Composable pour gérer la sélection de dates dans les composants DatePicker
+ * Composable pour gérer la sélection de dates dans les composants CalendarMode
  * Gère les plages de dates et la génération des dates intermédiaires
  */
 export function useDateSelection(

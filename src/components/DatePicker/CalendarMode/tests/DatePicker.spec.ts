@@ -4,7 +4,7 @@ import { vuetify } from '@tests/unit/setup'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
 
-describe('DatePicker.vue', () => {
+describe('CalendarMode.vue', () => {
 	let wrapper
 
 	beforeEach(() => {
@@ -47,16 +47,16 @@ describe('DatePicker.vue', () => {
 	})
 
 	it('renders the date picker with proper structure', async () => {
-		// Ouvrir le DatePicker pour que les éléments soient dans le DOM
+		// Ouvrir le CalendarMode pour que les éléments soient dans le DOM
 		wrapper.vm.isDatePickerVisible = true
 		await nextTick()
-		// Simuler un clic pour s'assurer que le DatePicker est complètement initialisé
+		// Simuler un clic pour s'assurer que le CalendarMode est complètement initialisé
 		const input = wrapper.find('input')
 		await input.trigger('click')
 		await nextTick()
 		// Attendre un peu pour que le DOM soit mis à jour
 		await new Promise(resolve => setTimeout(resolve, 100))
-		// Vérifier que le DatePicker est visible
+		// Vérifier que le CalendarMode est visible
 		const datePickerEl = document.querySelector('.v-date-picker')
 		expect(datePickerEl).not.toBeNull()
 		// Vérifier qu'il y a des boutons de navigation

@@ -1,5 +1,5 @@
 /**
- * Fichier contenant toutes les constantes de textes utilisées dans les composants/composables DatePicker
+ * Fichier contenant toutes les constantes de textes utilisées dans les composants/composables CalendarMode
  */
 
 export const DATE_PICKER_MESSAGES = {

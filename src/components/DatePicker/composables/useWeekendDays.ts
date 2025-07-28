@@ -9,7 +9,7 @@ export interface WeekendDaysReturn {
 }
 
 /**
- * Composable pour gérer l'affichage des jours de weekend dans le DatePicker
+ * Composable pour gérer l'affichage des jours de weekend dans le CalendarMode
  */
 export function useWeekendDays(props: WeekendDaysProps): WeekendDaysReturn {
 	// Computed pour l'affichage des jours de weekend

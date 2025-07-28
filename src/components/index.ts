@@ -43,7 +43,7 @@ export { default as UserMenuBtn } from './UserMenuBtn/UserMenuBtn.vue'
 // ===========================
 // Formulaires
 // ===========================
-export { default as DatePicker } from '@/components/DatePicker/DatePicker/DatePicker.vue'
+export { default as DatePicker } from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 export { default as DiacriticPicker } from './DiacriticPicker/DiacriticPicker.vue'
 export { default as FileUpload } from './FileUpload/FileUpload.vue'
 export { default as NirField } from './NirField/NirField.vue'
