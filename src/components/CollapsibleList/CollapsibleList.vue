@@ -2,6 +2,7 @@
 	import { computed } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import type { ListItem } from './types'
+	import { vLetterSpacing } from '@/directives/letterSpacing'
 
 	const props = defineProps<{
 		listTitle: string | null
@@ -55,7 +56,10 @@
 		v-else
 		class="vd-collapse-list"
 	>
-		<h4 class="text-subtitle-1 font-weight-bold mb-3">
+		<h4
+			v-letter-spacing
+			class="text-subtitle-1 font-weight-bold mb-3"
+		>
 			{{ listTitle }}
 		</h4>
 
