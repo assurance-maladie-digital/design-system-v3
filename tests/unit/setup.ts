@@ -38,96 +38,104 @@ if (!(Array.prototype as any).with) {
 }
 
 // Browser API polyfills to prevent test failures
-Object.defineProperty(window, 'visualViewport', {
-	value: {
-		width: 1024,
-		height: 768,
-		scale: 1,
-		offsetLeft: 0,
-		offsetTop: 0,
-		addEventListener: () => {},
-		removeEventListener: () => {},
-	},
-	writable: true,
-})
-
-Object.defineProperty(window, 'ResizeObserver', {
-	value: class ResizeObserver {
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
-
-Object.defineProperty(window, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
-
-// Also add to global scope for Node.js environment
-Object.defineProperty(global, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
-
-Object.defineProperty(window, 'matchMedia', {
-	value: (query: string) => {
-		// Extract min-width value from media query
-		const minWidthMatch = query.match(/\(min-width:\s*(\d+)px\)/)
-		const minWidth = minWidthMatch ? parseInt(minWidthMatch[1], 10) : 0
-
-		// Get current window width from HappyDOM
-		const getCurrentWidth = () => {
-			// Try multiple ways to get the current width
-			let width = 1024 // Default fallback
-
-			if ((window as any).happyDOM?.getInnerWidth) {
-				width = (window as any).happyDOM.getInnerWidth()
-			}
-			else if ((window as any).happyDOM?.innerWidth !== undefined) {
-				width = (window as any).happyDOM.innerWidth
-			}
-			else if (window.innerWidth) {
-				width = window.innerWidth
-			}
-
-			return width
-		}
-
-		// Create a reactive media query list that updates when accessed
-		const mediaQueryList = {
-			get matches() {
-				const currentWidth = getCurrentWidth()
-				return currentWidth >= minWidth
-			},
-			media: query,
-			onchange: null,
-			addListener: () => {},
-			removeListener: () => {},
+// Only apply these polyfills in test environment
+if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
+	Object.defineProperty(window, 'visualViewport', {
+		value: {
+			width: 1024,
+			height: 768,
+			scale: 1,
+			offsetLeft: 0,
+			offsetTop: 0,
 			addEventListener: () => {},
 			removeEventListener: () => {},
-			dispatchEvent: () => false,
-		}
+		},
+		writable: true,
+	})
 
-		return mediaQueryList
-	},
-	writable: true,
-})
+	// Only add ResizeObserver if it doesn't exist
+	if (typeof window.ResizeObserver === 'undefined') {
+		Object.defineProperty(window, 'ResizeObserver', {
+			value: class MockResizeObserver {
+				observe() {}
+				unobserve() {}
+				disconnect() {}
+			},
+			writable: true,
+		})
+	}
+
+	// Only add IntersectionObserver if it doesn't exist
+	if (typeof window.IntersectionObserver === 'undefined') {
+		Object.defineProperty(window, 'IntersectionObserver', {
+			value: class MockIntersectionObserver {
+				constructor() {}
+				observe() {}
+				unobserve() {}
+				disconnect() {}
+			},
+			writable: true,
+		})
+	}
+
+	// Also add to global scope for Node.js environment
+	if (typeof global !== 'undefined' && typeof global.IntersectionObserver === 'undefined') {
+		(global as any).IntersectionObserver = class MockIntersectionObserver {
+			constructor() {}
+			observe() {}
+			unobserve() {}
+			disconnect() {}
+		}
+	}
+
+	Object.defineProperty(window, 'matchMedia', {
+		value: (query: string) => {
+			// Extract min-width value from media query
+			const minWidthMatch = query.match(/\(min-width:\s*(\d+)px\)/)
+			const minWidth = minWidthMatch ? parseInt(minWidthMatch[1], 10) : 0
+
+			// Get current window width from HappyDOM
+			const getCurrentWidth = () => {
+				// Try multiple ways to get the current width
+				let width = 1024 // Default fallback
+
+				if ((window as any).happyDOM?.getInnerWidth) {
+					width = (window as any).happyDOM.getInnerWidth()
+				}
+				else if ((window as any).happyDOM?.innerWidth !== undefined) {
+					width = (window as any).happyDOM.innerWidth
+				}
+				else if (window.innerWidth) {
+					width = window.innerWidth
+				}
+
+				return width
+			}
+
+			// Create a reactive media query list that updates when accessed
+			const mediaQueryList = {
+				get matches() {
+					const currentWidth = getCurrentWidth()
+					return currentWidth >= minWidth
+				},
+				media: query,
+				onchange: null,
+				addListener: () => {},
+				removeListener: () => {},
+				addEventListener: () => {},
+				removeEventListener: () => {},
+				dispatchEvent: () => false,
+			}
+
+			return mediaQueryList
+		},
+		writable: true,
+	})
+}
 
 // Additional polyfills that might be needed
-// HTMLInputElement polyfill for maska library
-if (typeof global.HTMLInputElement === 'undefined') {
+// HTMLInputElement polyfill for maska library - only in test environment
+if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test' && typeof global.HTMLInputElement === 'undefined') {
 	(global as any).HTMLInputElement = class MockHTMLInputElement {
 		type = 'text'
 		value = ''
@@ -141,32 +149,41 @@ if (typeof global.HTMLInputElement === 'undefined') {
 	}
 }
 
-Object.defineProperty(global, 'CSS', {
-	value: {
-		supports: () => false,
-	},
-})
+// Only add CSS and getComputedStyle polyfills in test environment
+if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
+	if (typeof global.CSS === 'undefined') {
+		Object.defineProperty(global, 'CSS', {
+			value: {
+				supports: () => false,
+			},
+		})
+	}
 
-Object.defineProperty(window, 'getComputedStyle', {
-	value: () => ({
-		getPropertyValue: () => '',
-	}),
-})
+	if (typeof window.getComputedStyle === 'undefined') {
+		Object.defineProperty(window, 'getComputedStyle', {
+			value: () => ({
+				getPropertyValue: () => '',
+			}),
+		})
+	}
+}
 
 // CI-specific configurations for better stability
 if (process.env.CI) {
 	// Set timezone for consistent date/time behavior in CI
-	process.env.TZ = 'Europe/Paris'
+	process.env.TZ = 'UTC'
 
-	// Add additional polyfills that might be missing in CI environments
-	Object.defineProperty(global, 'performance', {
-		value: {
-			now: () => Date.now(),
-			mark: () => {},
-			measure: () => {},
-		},
-		writable: true,
-	})
+	// Mock performance API for CI stability
+	if (typeof global.performance === 'undefined') {
+		Object.defineProperty(global, 'performance', {
+			value: {
+				now: () => Date.now(),
+				mark: () => {},
+				measure: () => {},
+			},
+			writable: true,
+		})
+	}
 
 	// Improve test isolation in CI by ensuring proper cleanup
 	// Add a small delay between tests to prevent race conditions
