@@ -38,8 +38,8 @@ if (!(Array.prototype as any).with) {
 }
 
 // Browser API polyfills to prevent test failures
-// Only apply these polyfills in test environment
-if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
+// Apply these polyfills in test environment (Vitest sets NODE_ENV or we're in a test context)
+if (typeof process !== 'undefined' && (process.env.NODE_ENV === 'test' || process.env.VITEST || typeof global.describe !== 'undefined')) {
 	Object.defineProperty(window, 'visualViewport', {
 		value: {
 			width: 1024,
@@ -135,7 +135,7 @@ if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
 
 // Additional polyfills that might be needed
 // HTMLInputElement polyfill for maska library - only in test environment
-if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test' && typeof global.HTMLInputElement === 'undefined') {
+if (typeof process !== 'undefined' && (process.env.NODE_ENV === 'test' || process.env.VITEST || typeof global.describe !== 'undefined') && typeof global.HTMLInputElement === 'undefined') {
 	(global as any).HTMLInputElement = class MockHTMLInputElement {
 		type = 'text'
 		value = ''
@@ -150,7 +150,7 @@ if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test' && typeof 
 }
 
 // Only add CSS and getComputedStyle polyfills in test environment
-if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
+if (typeof process !== 'undefined' && (process.env.NODE_ENV === 'test' || process.env.VITEST || typeof global.describe !== 'undefined')) {
 	if (typeof global.CSS === 'undefined') {
 		Object.defineProperty(global, 'CSS', {
 			value: {
