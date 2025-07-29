@@ -233,10 +233,3 @@ $breakpoints: (
 @include generate-breakpoint-axis-spacing-classes(padding, py, top, bottom);
 @include generate-breakpoint-axis-spacing-classes(margin, mx, left, right);
 @include generate-breakpoint-axis-spacing-classes(margin, my, top, bottom);
-
-// Additional classes for specific spacing
-
-.theme-cnam .v-btn,
-.theme-pa .v-btn {
-	padding: 0 var(--spacing-4) !important;
-}

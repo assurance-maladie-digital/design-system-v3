@@ -1,3 +1,10 @@
+/*
+ * CNAM Design System
+ * Tokens and settings for the CNAM and PA themes.
+ * This file must not contain any styles as it will be duplicated many times.
+ */
+
+
 // Primitives
 $orange-darken-80: #2d100b;
 $orange-darken-60: #5a2017;
@@ -186,6 +193,7 @@ $colors-text: #333;
 $colors-icon: #666;
 $colors-overlay: rgb(0 0 0 / 50%);
 $colors-interactive: #007bff;
+
 $gap-0: 0;
 $gap-1: 4px;
 $gap-2: 8px;
@@ -311,89 +319,7 @@ $heading-2-font-size: 20px;
 $heading-3-font-size: 16px;
 $heading-4-font-size: 14px;
 
-.title {
-	font-size: $font-size-title !important;
-}
-
-.alt-title {
-	font-size: $font-size-alt-title !important;
-}
-
-.body-text {
-	font-size: $font-size-body-text !important;
-}
-
-.link-label {
-	font-size: $font-size-link-label !important;
-}
-
-h1 {
-	font-size: 32px !important;
-	line-height: 130% !important;
-}
-
-.h1-bold {
-	font-size: 32px !important;
-	font-weight: bold !important;
-	line-height: 130% !important;
-}
-
-h2 {
-	font-size: 28px !important;
-	line-height: 130% !important;
-}
-
-.h2-bold {
-	font-size: 28px !important;
-	font-weight: bold !important;
-	line-height: 130% !important;
-}
-
-h3 {
-	font-size: 24px !important;
-	line-height: 130% !important;
-}
-
-.h3-bold {
-	font-size: 24px !important;
-	font-weight: bold !important;
-	line-height: 130% !important;
-}
-
-h4 {
-	font-size: 20px !important;
-	line-height: 130% !important;
-}
-
-.h4-bold {
-	font-size: 20px !important;
-	font-weight: bold !important;
-	line-height: 130% !important;
-}
-
-.display-1 {
-	font-size: 40px !important;
-	line-height: 130% !important;
-}
-
-.display-1-bold {
-	font-size: 40px !important;
-	font-weight: bold !important;
-	line-height: 130% !important;
-}
-
-.display-2 {
-	font-size: 30px !important;
-	line-height: 130% !important;
-}
-
-.display-2-bold {
-	font-size: 30px !important;
-	font-weight: bold !important;
-	line-height: 130% !important;
-}
-
-// espacement verticaux des elements
+// vertical spacing
 
 $spacing-none: 0;
 $spacing-xx-small: 4px;
@@ -406,7 +332,7 @@ $spacing-xx-large: 56px;
 $spacing-xxx-large: 64px;
 $spacing-huge: 80px;
 
-// espacement horizontaux des elements
+// horizontal spacing
 
 $spacing-horizontal-none: 0;
 $spacing-horizontal-xx-small: 4px;
@@ -419,79 +345,8 @@ $spacing-horizontal-xx-large: 56px;
 $spacing-horizontal-xxx-large: 64px;
 $spacing-horizontal-huge: 80px;
 
-.theme-cnam,
-.theme-pa {
-	// Surcharger toutes les élévations pour utiliser uniquement l'élévation 02
-	.elevation-1,
-	.elevation-2,
-	.elevation-3,
-	.elevation-4,
-	.elevation-5,
-	.elevation-6,
-	.elevation-7,
-	.elevation-8,
-	.elevation-9,
-	.elevation-10,
-	.elevation-11,
-	.elevation-12,
-	.elevation-13,
-	.elevation-14,
-	.elevation-15,
-	.elevation-16,
-	.elevation-17,
-	.elevation-18,
-	.elevation-19,
-	.elevation-20,
-	.elevation-21,
-	.elevation-22,
-	.elevation-23,
-	.elevation-24 {
-		box-shadow:
-			0 3px 1px -2px rgb(0 0 0 / 20%),
-			0 2px 2px 0 rgb(0 0 0 / 14%),
-			0 1px 5px 0 rgb(0 0 0 / 12%) !important;
-	}
-}
+// container
 
-// global.scss
-
-// Variables pour les largeurs des conteneurs
 $container-mobile-max-width: 600px;
 $container-tablet-max-width: 960px;
 $container-desktop-max-width: 960px;
-
-// Conteneur général
-.page-container {
-	text-align: center;
-	margin: 0 auto; // Centrer les conteneurs
-	padding: 40px 40px 56px 56px;
-	width: 1160px;
-
-	// Mobile Styles
-	@media (width <= 600px) {
-		max-width: $container-mobile-max-width;
-		padding: 40px 24px 80px;
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		grid-gap: 24px;
-		width: 80%;
-	}
-
-	// Tablet Styles
-	@media (width >= 601px) and (width <= 960px) {
-		max-width: $container-tablet-max-width;
-		width: 80%;
-		display: grid;
-		grid-template-columns: repeat(6, 1fr);
-		grid-gap: 24px;
-	}
-
-	// Desktop Styles
-	@media (width >= 960px) {
-		max-width: $container-desktop-max-width;
-		width: 100%;
-		display: grid;
-		grid-template-columns: repeat(12, 1fr);
-		grid-gap: 24px;
-	}
-}
