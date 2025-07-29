@@ -200,6 +200,7 @@
 	@media #{apTokens.$media-down-sm} {
 		padding: apTokens.$card-padding-mobile;
 	}
+
 	.btn-wrapper {
 		display: inline-block;
 	}
