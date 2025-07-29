@@ -73,13 +73,54 @@ Object.defineProperty(window, 'IntersectionObserver', {
 // Also add to global scope for Node.js environment
 Object.defineProperty(global, 'IntersectionObserver', {
 	value: class IntersectionObserver {
-		constructor() {}
+		constructor(callback) {
+			this.callback = callback;
+		}
 		observe() {}
 		unobserve() {}
 		disconnect() {}
 	},
 	writable: true,
 })
+
+// Make IntersectionObserver available as a global variable with more robust implementation for CI
+class MockIntersectionObserver {
+	private callback: IntersectionObserverCallback;
+	constructor(callback: IntersectionObserverCallback) {
+		this.callback = callback;
+	}
+
+	observe() {
+		// Simulate an empty intersection observation with 0% visibility
+		setTimeout(() => {
+			this.callback([
+				{
+					isIntersecting: false,
+					intersectionRatio: 0,
+					target: {} as Element,
+					intersectionRect: {} as DOMRectReadOnly,
+					boundingClientRect: {} as DOMRectReadOnly,
+					rootBounds: null,
+					time: Date.now(),
+				},
+			], this as any);
+		}, 0);
+	}
+
+	unobserve() {}
+	disconnect() {}
+}
+
+// Apply to global scope
+global.IntersectionObserver = MockIntersectionObserver;
+
+// Also ensure it's available directly for modules that might import it
+try {
+	// @ts-ignore - Override IntersectionObserver in global scope
+	IntersectionObserver = MockIntersectionObserver;
+} catch (e) {
+	// Ignore if it's not writable
+}
 
 Object.defineProperty(window, 'matchMedia', {
 	value: (query: string) => {
