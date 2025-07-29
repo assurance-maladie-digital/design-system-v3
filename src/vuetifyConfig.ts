@@ -21,8 +21,7 @@ import {
 import { createFlattenTheme, createFontVariables } from './designTokens/utils'
 import { fr } from 'vuetify/locale'
 
-// Import typography styles
-import './assets/_typography.scss'
+import './assets/themes.scss'
 
 export const createVuetifyInstance = () => createVuetify({
 	components,

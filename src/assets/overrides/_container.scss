@@ -1,0 +1,36 @@
+@use "src/assets/tokens.scss";
+
+.page-container {
+	text-align: center;
+	margin: 0 auto;
+	padding: 40px 40px 56px 56px;
+	width: 1160px;
+
+	// Mobile Styles
+	@media (width <= 600px) {
+		max-width: $container-mobile-max-width;
+		padding: 40px 24px 80px;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-gap: 24px;
+		width: 80%;
+	}
+
+	// Tablet Styles
+	@media (width >= 601px) and (width <= 960px) {
+		max-width: $container-tablet-max-width;
+		width: 80%;
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		grid-gap: 24px;
+	}
+
+	// Desktop Styles
+	@media (width >= 960px) {
+		max-width: $container-desktop-max-width;
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		grid-gap: 24px;
+	}
+}
