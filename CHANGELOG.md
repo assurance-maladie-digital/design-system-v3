@@ -1,3 +1,89 @@
+## v1.0.4 (29-07-2025)
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 33.33%">Synapse</th>
+      <th style="width: 33.33%">Portail Agent</th>
+      <th style="width: 33.33%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>
+        - Update packages versions to fix security issues and improve performances 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/865">#865</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/856">#856</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/852">#852</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/847">#847</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/844">#844</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/837">#837</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/843">#843</a>
+      </td>
+      <td>
+        - SyTable / SyServerTable : fix RGAA issues and fix keyboard navigation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/829">#829</a>
+      </td>
+      <td>
+       - Ajout du type de tuile doneToCorrect et de la property linkStyleText à AmeliproStateTile
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/861">#861</a> <br />
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - CollapsibleList / FooterBar / CookieBanner / SyTable / SyServerTable / ExternalLinks: fix accessibility after audit
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/838">#838</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/815">#815</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/806">#806</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/829">#829</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/808">#808</a>
+      </td>
+     <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - Documentation: update avancement page
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/848">#848</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - Improve DatePicker documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/855">#855</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr><tr style="vertical-align: top;">
+      <td>
+        - NirField: fix focus issue on key
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/840">#840</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - SySelect: remove useless div 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/826">#826</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>   
+
+Nb : attention des montées de versions de dépendances peuvent engendrer des changements de comportement, Il est donc recommandé de vérifier le bon fonctionnement des composants dans vos applications.<br/>
+Les principaux packages mis à jour sont listés ci-dessous :
+- "vite": "^7.0.6"
+- "vue": "^3.5.18",
+- "vuetify": "^3.9.2"
+- "vitest": "^3.2.4",
+- "vite-plugin-vuetify": "^2.1.1",
+- "@vitest/coverage-v8": "^3.2.4",
+
 ## v1.0.3 (21-07-2025)
 
 <table>
