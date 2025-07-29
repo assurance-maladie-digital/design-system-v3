@@ -1,3 +1,7 @@
+## v1.0.5 (29-07-2025)
+
+Fix style issue export for Starter Kit due to Vite update.
+
 ## v1.0.4 (29-07-2025)
 
 <table>
@@ -77,7 +81,6 @@
 
 Nb : attention des montées de versions de dépendances peuvent engendrer des changements de comportement, Il est donc recommandé de vérifier le bon fonctionnement des composants dans vos applications.<br/>
 Les principaux packages mis à jour sont listés ci-dessous :
-- "vite": "^7.0.6"
 - "vue": "^3.5.18",
 - "vuetify": "^3.9.2"
 - "vitest": "^3.2.4",
