@@ -70,6 +70,17 @@ Object.defineProperty(window, 'IntersectionObserver', {
 	writable: true,
 })
 
+// Also add to global scope for Node.js environment
+Object.defineProperty(global, 'IntersectionObserver', {
+	value: class IntersectionObserver {
+		constructor() {}
+		observe() {}
+		unobserve() {}
+		disconnect() {}
+	},
+	writable: true,
+})
+
 Object.defineProperty(window, 'matchMedia', {
 	value: (query: string) => {
 		// Extract min-width value from media query
@@ -115,6 +126,21 @@ Object.defineProperty(window, 'matchMedia', {
 })
 
 // Additional polyfills that might be needed
+// HTMLInputElement polyfill for maska library
+if (typeof global.HTMLInputElement === 'undefined') {
+	(global as any).HTMLInputElement = class MockHTMLInputElement {
+		type = 'text'
+		value = ''
+		querySelectorAll() { return [] }
+		querySelector() { return null }
+		addEventListener() {}
+		removeEventListener() {}
+		setAttribute() {}
+		getAttribute() { return null }
+		removeAttribute() {}
+	}
+}
+
 Object.defineProperty(global, 'CSS', {
 	value: {
 		supports: () => false,
