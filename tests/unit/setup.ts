@@ -128,7 +128,6 @@ Object.defineProperty(window, 'IntersectionObserver', {
 
 // Définir pour l'objet global également (important pour CI)
 if (typeof global !== 'undefined') {
-	// @ts-ignore - Nécessaire pour la compatibilité entre environnements
 	global.IntersectionObserver = IntersectionObserverMock
 }
 
