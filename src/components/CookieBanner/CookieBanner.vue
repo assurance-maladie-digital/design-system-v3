@@ -177,7 +177,7 @@
 			>
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<h2
-		
+
 						class="text-h5 font-weight-bold"
 					>
 						{{ locales.title }}
