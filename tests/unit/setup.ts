@@ -60,66 +60,38 @@ Object.defineProperty(window, 'ResizeObserver', {
 	writable: true,
 })
 
-Object.defineProperty(window, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
+// Définir l'implémentation du mock pour IntersectionObserver
+class IntersectionObserverMock {
+	readonly root: Element | Document | null = null
+	readonly rootMargin: string = '0px'
+	readonly thresholds: ReadonlyArray<number> = [0]
+	private callback: Function
 
-// Also add to global scope for Node.js environment
-Object.defineProperty(global, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor(callback) {
-			this.callback = callback
+	constructor(callback: Function, options?: any) {
+		this.callback = callback
+		if (options) {
+			this.root = options.root || null
+			this.rootMargin = options.rootMargin || '0px'
+			this.thresholds = Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0]
 		}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
-
-// Make IntersectionObserver available as a global variable with more robust implementation for CI
-class MockIntersectionObserver {
-	private callback: IntersectionObserverCallback;
-	constructor(callback: IntersectionObserverCallback) {
-		this.callback = callback;
 	}
 
-	observe() {
-		// Simulate an empty intersection observation with 0% visibility
-		setTimeout(() => {
-			this.callback([
-				{
-					isIntersecting: false,
-					intersectionRatio: 0,
-					target: {} as Element,
-					intersectionRect: {} as DOMRectReadOnly,
-					boundingClientRect: {} as DOMRectReadOnly,
-					rootBounds: null,
-					time: Date.now(),
-				},
-			], this as any);
-		}, 0);
-	}
-
-	unobserve() {}
-	disconnect() {}
+	observe(): void {}
+	unobserve(): void {}
+	disconnect(): void {}
+	takeRecords(): any[] { return [] }
 }
 
-// Apply to global scope
-global.IntersectionObserver = MockIntersectionObserver;
+// Définir IntersectionObserver comme global pour window et global
+Object.defineProperty(window, 'IntersectionObserver', {
+	value: IntersectionObserverMock,
+	writable: true,
+})
 
-// Also ensure it's available directly for modules that might import it
-try {
-	// @ts-ignore - Override IntersectionObserver in global scope
-	IntersectionObserver = MockIntersectionObserver;
-} catch (e) {
-	// Ignore if it's not writable
+// Définir pour l'objet global également
+if (typeof global !== 'undefined') {
+	// @ts-ignore - Ignorer les erreurs de type pour la compatibilité entre environnements
+	global.IntersectionObserver = IntersectionObserverMock
 }
 
 Object.defineProperty(window, 'matchMedia', {
