@@ -79,4 +79,4 @@ type-check: check-package-manager ## Vérifie les types TypeScript
 	@echo "${GREEN}Vérification des types terminée.${NC}"
 
 # Par défaut, affiche l'aide
-.DEFAULT_GOAL := help
+.DEFAULT_GOAL := help 
