@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
