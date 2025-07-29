@@ -74,7 +74,7 @@ Object.defineProperty(window, 'IntersectionObserver', {
 Object.defineProperty(global, 'IntersectionObserver', {
 	value: class IntersectionObserver {
 		constructor(callback) {
-			this.callback = callback;
+			this.callback = callback
 		}
 		observe() {}
 		unobserve() {}
