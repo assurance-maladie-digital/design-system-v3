@@ -62,10 +62,38 @@ Object.defineProperty(window, 'ResizeObserver', {
 
 Object.defineProperty(window, 'IntersectionObserver', {
 	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
+		root: Element | null = null
+		rootMargin = '0px'
+		thresholds: ReadonlyArray<number> = [0]
+
+		constructor(
+			callback: IntersectionObserverCallback,
+			options?: IntersectionObserverInit
+		) {
+			this.root = (options?.root instanceof Element) ? options.root : null
+			this.rootMargin = options?.rootMargin || '0px'
+			this.thresholds = options?.threshold 
+				? Array.isArray(options.threshold) 
+					? options.threshold 
+					: [options.threshold]
+				: [0]
+		}
+
+		observe(target: Element): void {
+			// Mock implementation - do nothing in test environment
+		}
+
+		unobserve(target: Element): void {
+			// Mock implementation - do nothing in test environment
+		}
+
+		disconnect(): void {
+			// Mock implementation - do nothing in test environment
+		}
+
+		takeRecords(): IntersectionObserverEntry[] {
+			return []
+		}
 	},
 	writable: true,
 })
@@ -73,10 +101,38 @@ Object.defineProperty(window, 'IntersectionObserver', {
 // Also add to global scope for Node.js environment
 Object.defineProperty(global, 'IntersectionObserver', {
 	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
+		root: Element | null = null
+		rootMargin = '0px'
+		thresholds: ReadonlyArray<number> = [0]
+
+		constructor(
+			callback: IntersectionObserverCallback,
+			options?: IntersectionObserverInit
+		) {
+			this.root = (options?.root instanceof Element) ? options.root : null
+			this.rootMargin = options?.rootMargin || '0px'
+			this.thresholds = options?.threshold 
+				? Array.isArray(options.threshold) 
+					? options.threshold 
+					: [options.threshold]
+				: [0]
+		}
+
+		observe(target: Element): void {
+			// Mock implementation - do nothing in test environment
+		}
+
+		unobserve(target: Element): void {
+			// Mock implementation - do nothing in test environment
+		}
+
+		disconnect(): void {
+			// Mock implementation - do nothing in test environment
+		}
+
+		takeRecords(): IntersectionObserverEntry[] {
+			return []
+		}
 	},
 	writable: true,
 })
