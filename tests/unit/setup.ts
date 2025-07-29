@@ -128,7 +128,7 @@ Object.defineProperty(window, 'IntersectionObserver', {
 
 // Définir pour l'objet global également (important pour CI)
 if (typeof global !== 'undefined') {
-	// @ts-expect-error - Nécessaire pour la compatibilité entre environnements
+	// @ts-ignore - Nécessaire pour la compatibilité entre environnements
 	global.IntersectionObserver = IntersectionObserverMock
 }
 
@@ -221,7 +221,7 @@ if (typeof global.HTMLInputElement === 'undefined') {
 
 /**
  * Mock des API CSS
- * 
+ *
  * Ces mocks sont nécessaires pour les composants Vuetify qui utilisent
  * des fonctionnalités CSS avancées comme CSS.supports ou getComputedStyle.
  */
@@ -241,7 +241,7 @@ Object.defineProperty(window, 'getComputedStyle', {
 
 /**
  * Configurations spécifiques pour l'environnement CI (GitHub Actions)
- * 
+ *
  * Ces configurations assurent une exécution cohérente des tests dans
  * l'environnement d'intégration continue, qui peut avoir des différences
  * subtiles par rapport à l'environnement de développement local.
@@ -252,7 +252,7 @@ if (process.env.CI) {
 
 	/**
 	 * Mock de l'API Performance pour les environnements CI
-	 * 
+	 *
 	 * Certains runners CI peuvent ne pas fournir l'API Performance complète
 	 * que Vuetify utilise pour des mesures de performance.
 	 */
@@ -267,7 +267,7 @@ if (process.env.CI) {
 
 	/**
 	 * Modification de setTimeout pour améliorer l'isolation des tests en CI
-	 * 
+	 *
 	 * Ajoute un délai minimal entre les exécutions asynchrones pour éviter
 	 * les conditions de course qui peuvent se produire dans les environnements CI
 	 * où les ressources peuvent être limitées.
@@ -281,7 +281,7 @@ if (process.env.CI) {
 
 /**
  * Création de l'instance Vuetify pour les tests
- * 
+ *
  * Cette instance sera utilisée dans les tests pour monter les composants
  * avec le plugin Vuetify correctement configuré.
  */
