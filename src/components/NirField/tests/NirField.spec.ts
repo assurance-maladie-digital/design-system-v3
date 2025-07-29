@@ -148,8 +148,8 @@ describe('NirField.vue', () => {
 	it('splits modelValue correctly when provided', async () => {
 		await wrapper.setProps({ modelValue: '294037512000591' })
 		await wrapper.vm.$nextTick()
-		const numberInput = wrapper.find('.number-field input').element as HTMLInputElement
-		const keyInput = wrapper.find('.key-field input').element as HTMLInputElement
+		const numberInput = wrapper.find('.number-field input').element as Element & { value: string }
+		const keyInput = wrapper.find('.key-field input').element as Element & { value: string }
 		expect(numberInput.value.replace(/\s/g, '')).toBe('2940375120005')
 		expect(keyInput.value).toBe('91')
 	})
