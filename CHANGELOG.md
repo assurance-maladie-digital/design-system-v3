@@ -1,3 +1,7 @@
+## v1.0.5 (29-07-2025)
+
+Fix style issue export for Starter Kit due to Vite update.
+
 ## v1.0.4 (29-07-2025)
 
 <table>
