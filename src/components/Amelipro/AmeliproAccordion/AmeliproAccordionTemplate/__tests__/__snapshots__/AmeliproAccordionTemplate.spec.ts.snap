@@ -8,7 +8,10 @@ exports[`AmeliproAccordionTemplate > render correctly 1`] = `
     w-100
   "
   id="amelipro-accordion-template-unique-id-container"
-  style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
+  style="
+    background-color: #FFFFFF;
+    border: 1px solid #DDDEDE;
+  "
 >
   <div
     class="
@@ -65,7 +68,11 @@ exports[`AmeliproAccordionTemplate > render correctly 1`] = `
               "
               focusable="false"
               role="img"
-              style="color: #0C419A; height: 11px; width: 11px;"
+              style="
+                color: #0C419A;
+                height: 11px;
+                width: 11px;
+              "
             >
               <span>
                 <svg
@@ -106,7 +113,11 @@ exports[`AmeliproAccordionTemplate > render correctly 1`] = `
         text-ap-grey-darken-1
         w-100
       "
-      style="border-top-width: 1px; border-top-style: solid; border-top-color: #DDDEDE;"
+      style="
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: #DDDEDE;
+      "
     ></div>
   </div>
 </div>
