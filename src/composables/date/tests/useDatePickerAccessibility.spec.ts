@@ -91,7 +91,7 @@ describe('useDatePickerAccessibility', () => {
 		expect(buttons[2].getAttribute('aria-label')).toBe(null) // Pas de chevron-righ
 	})
 
-	it('adds sr-only instructions to the DatePicker', async () => {
+	it('adds sr-only instructions to the CalendarMode', async () => {
 		// Appeler updateAccessibility
 		await updateAccessibility()
 

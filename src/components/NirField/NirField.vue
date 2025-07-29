@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, nextTick, toRef } from 'vue'
+	import { ref, watch, computed, nextTick, toRef, onMounted } from 'vue'
 	import { vMaska } from 'maska/vue'
 	import { checkNIR, isNIRKeyValid } from './nirValidation'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
@@ -439,6 +439,46 @@
 	const handleKeyBlur = () => {
 		validateFields(true)
 	}
+
+	// Gestion des touches pour le champ NIR
+	const handleNumberKeydown = (e: Event) => {
+		const keyEvent = e as KeyboardEvent
+		// Si le NIR est complet et que le champ clé est affiché
+		if (unmaskedNumberValue.value?.length === 13 && props.displayKey) {
+			// Si la touche est un chiffre
+			if (keyEvent.key && keyEvent.key.length === 1 && /[0-9]/.test(keyEvent.key)) {
+				// Ajouter le caractère à la valeur de la clé
+				keyValue.value = (keyValue.value || '') + keyEvent.key
+				// Focus sur le champ clé
+				focusField(keyField)
+				// Empêcher la saisie dans le champ NIR
+				keyEvent.preventDefault()
+			}
+		}
+	}
+
+	// Ajouter des écouteurs d'événements keydown aux champs NIR après le montage du composant
+	onMounted(() => {
+		// Attendre que les refs soient disponibles
+		nextTick(() => {
+			// Ajouter l'écouteur d'événement au premier champ NIR
+			const numberInput = numberField.value?.$el.querySelector('input')
+			if (numberInput) {
+				numberInput.addEventListener('keydown', handleNumberKeydown)
+			}
+
+			// Si le composant est en mode withoutFieldset, ajouter l'écouteur au deuxième champ NIR
+			if (props.withoutFieldset) {
+				// Attendre un peu pour s'assurer que le DOM est complètement rendu
+				setTimeout(() => {
+					const fieldsetNumberInput = document.querySelector('.fieldset-container .number-field input')
+					if (fieldsetNumberInput) {
+						fieldsetNumberInput.addEventListener('keydown', handleNumberKeydown)
+					}
+				}, 100)
+			}
+		})
+	})
 
 	defineExpose({
 		validateOnSubmit,

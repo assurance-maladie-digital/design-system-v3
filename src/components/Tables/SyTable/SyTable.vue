@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, onMounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, onMounted, onUnmounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -16,6 +16,7 @@
 	import { useTableHeaders } from '../common/useTableHeaders'
 	import { useTableItems } from '../common/useTableItems'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
+	import { useTableAria } from '../common/useTableAria'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -104,22 +105,38 @@
 		emit,
 	})
 
-	// Create a computed property for items to ensure reactivity
-	const tableItems = computed(() => props.items)
-
 	// Use the table checkbox composable
-	const { getItemValue, toggleAllRows } = useTableCheckbox({
-		items: tableItems,
+	const { toggleAllRows, getItemValue } = useTableCheckbox({
+		items: filteredItems,
 		modelValue: model,
 		updateModelValue: (value) => {
 			model.value = value
 		},
 	})
 
+	// Use the ARIA accessibility composable
+	const {
+		statusRegionId,
+		statusMessage,
+		setupAria,
+	} = useTableAria({
+		table,
+		items: filteredItems,
+		totalItemsCount: itemsLength,
+		options,
+		uniqueTableId: uniqueTableId.value,
+	})
+
+	// Timeout management for cleanup
+	const timeouts = ref<ReturnType<typeof setTimeout>[]>([])
+
 	// Function to add accessibility attributes to row checkboxes
 	const accessibilityRowCheckboxes = () => {
 		nextTick(() => {
-			setTimeout(() => {
+			const timeoutId = setTimeout(() => {
+				// Check if document is available (for test environment)
+				if (typeof document === 'undefined') return
+
 				const tableElement = document.getElementById(uniqueTableId.value)
 				if (!tableElement) return
 
@@ -131,6 +148,9 @@
 					checkbox.setAttribute('title', rowLabel)
 				})
 			}, 100) // Small delay to ensure DOM is updated
+
+			// Track timeout for cleanup
+			timeouts.value.push(timeoutId)
 		})
 	}
 
@@ -142,6 +162,15 @@
 	// Apply accessibility attributes when component is mounted
 	onMounted(() => {
 		accessibilityRowCheckboxes()
+		setupAria()
+	})
+
+	// Clean up timeouts on unmount to prevent unhandled errors
+	onUnmounted(() => {
+		timeouts.value.forEach((timeoutId) => {
+			clearTimeout(timeoutId)
+		})
+		timeouts.value = []
 	})
 
 	setupAccessibility()
@@ -198,6 +227,15 @@
 		:id="uniqueTableId"
 		:class="['sy-table', { 'sy-table--striped': props.striped }]"
 	>
+		<!-- ARIA status region for row count announcements -->
+		<div
+			:id="statusRegionId"
+			role="status"
+			aria-live="polite"
+			class="d-sr-only"
+		>
+			{{ statusMessage }}
+		</div>
 		<VDataTable
 			ref="table"
 			v-model="model"

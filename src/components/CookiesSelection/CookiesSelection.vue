@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { computed, ref } from 'vue'
-	import type { VForm } from 'vuetify/components'
+	import { computed, ref, onMounted, nextTick } from 'vue'
+	import type { VForm, VBtn } from 'vuetify/components'
 	import CookiesInformation from './CookiesInformation/CookiesInformation.vue'
 	import { locales } from './locales'
 	import type { CookieTypes, CookiesItems, Preferences } from './types'
@@ -19,6 +19,18 @@
 		essentials: undefined,
 		functional: undefined,
 		analytics: undefined,
+	})
+
+	const submitBtnRef = ref<VBtn | null>(null)
+
+	// Mettre le focus sur le bouton de soumission lorsque le composant est monté
+	onMounted(() => {
+		nextTick(() => {
+			// Accéder à l'élément DOM réel via $el
+			if (submitBtnRef.value?.$el instanceof HTMLElement) {
+				submitBtnRef.value.$el.focus()
+			}
+		})
 	})
 
 	const filteredPreferences = computed(() => {
@@ -115,6 +127,7 @@
 				<VSpacer />
 
 				<VBtn
+					ref="submitBtnRef"
 					data-test-id="submit"
 					color="primary"
 					@click="submitForm"

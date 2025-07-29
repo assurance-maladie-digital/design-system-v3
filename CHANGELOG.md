@@ -1,72 +1,407 @@
+## v1.0.4 (29-07-2025)
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 33.33%">Synapse</th>
+      <th style="width: 33.33%">Portail Agent</th>
+      <th style="width: 33.33%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>
+        - Update packages versions to fix security issues and improve performances 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/865">#865</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/856">#856</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/852">#852</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/847">#847</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/844">#844</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/837">#837</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/843">#843</a>
+      </td>
+      <td>
+        - SyTable / SyServerTable : fix RGAA issues and fix keyboard navigation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/829">#829</a>
+      </td>
+      <td>
+       - Ajout du type de tuile doneToCorrect et de la property linkStyleText à AmeliproStateTile
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/861">#861</a> <br />
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - CollapsibleList / FooterBar / CookieBanner / SyTable / SyServerTable / ExternalLinks: fix accessibility after audit
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/838">#838</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/815">#815</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/806">#806</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/829">#829</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/808">#808</a>
+      </td>
+     <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - Documentation: update avancement page
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/848">#848</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - Improve DatePicker documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/855">#855</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr><tr style="vertical-align: top;">
+      <td>
+        - NirField: fix focus issue on key
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/840">#840</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - SySelect: remove useless div 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/826">#826</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>   
+
+Nb : attention des montées de versions de dépendances peuvent engendrer des changements de comportement, Il est donc recommandé de vérifier le bon fonctionnement des composants dans vos applications.<br/>
+Les principaux packages mis à jour sont listés ci-dessous :
+- "vite": "^7.0.6"
+- "vue": "^3.5.18",
+- "vuetify": "^3.9.2"
+- "vitest": "^3.2.4",
+- "vite-plugin-vuetify": "^2.1.1",
+- "@vitest/coverage-v8": "^3.2.4",
+
 ## v1.0.3 (21-07-2025)
 
-| Synapse                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Portail Agent                                                                                                                      | Amelipro                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| - SySelect / ContextualMenu / SocialMediaLinks / CollapsibleList / SearchListField / DatePicker / MaintenancePage: <br/>fix after RGAA audit [`#787`](https://github.com/assurance-maladie-digital/design-system-v3/pull/787), [`#796`](https://github.com/assurance-maladie-digital/design-system-v3/pull/796), [`#790`](https://github.com/assurance-maladie-digital/design-system-v3/pull/790), [`#792`](https://github.com/assurance-maladie-digital/design-system-v3/pull/792), [`#780`](https://github.com/assurance-maladie-digital/design-system-v3/pull/780), [`#772`](https://github.com/assurance-maladie-digital/design-system-v3/pull/772), [`#770`](https://github.com/assurance-maladie-digital/design-system-v3/pull/770) | - SyTable / SyServerTable : add multi-sort option [`#789`](https://github.com/assurance-maladie-digital/design-system-v3/pull/789) | - Ajout du lot 1 [`#803`](https://github.com/assurance-maladie-digital/design-system-v3/pull/803) <br/>AmeliproAutoCompleteField, AmeliproBreadcrumb, AmeliproBtn, AmeliproCard, AmeliproCallback, AmeliproCheckbox, AmeliproCheckboxGroup, AmeliproChips, AmeliproDialog, AmeliproDisclosure, AmeliproFooter, AmeliproHeader, AmeliproIcon, AmeliproIconBtn, AmeliproIllustratedDataTile, AmeliproIllustratedRadioGroup, AmeliproMailTile, AmeliproMenu, AmeliproMessage, AmeliproMultipleFoldingCard, AmeliproNumberedCard, AmeliproOnboarding, AmeliproPageLayout, AmeliproPagination, AmeliproPatientBanner, AmeliproRadioGroup, AmeliproSelect, AmeliproStateTile, AmeliproStatus, AmeliproStepper, AmeliproTabs, AmeliproTextArea, AmeliproTextField, AmeliproTileBtn, AmeliproTooltips, AmeliproTransmission, StructureMenu, ServiceMenu, UserInformationSummary, UserMenu |
-| - Logo: fix after RGAA audit [`#809`](https://github.com/assurance-maladie-digital/design-system-v3/pull/809)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | - SyTable / SyServerTable : add missing slots [`#785`](https://github.com/assurance-maladie-digital/design-system-v3/pull/785)     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| - DatePicker: fix validation issue / fix placeholder / update documentation [`#801`](https://github.com/assurance-maladie-digital/design-system-v3/pull/801), [`#746`](https://github.com/assurance-maladie-digital/design-system-v3/pull/746), [`747`](https://github.com/assurance-maladie-digital/design-system-v3/pull/747)                                                                                                                                                                                                                                                                                                                                                                                                           | - Add SyPagination component [`#771`](https://github.com/assurance-maladie-digital/design-system-v3/pull/771)                      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| - Documentation: improve home [`#800`](https://github.com/assurance-maladie-digital/design-system-v3/pull/800), [`#795`](https://github.com/assurance-maladie-digital/design-system-v3/pull/795)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| - PaginatedTable : add multi-sort option [`#789`](https://github.com/assurance-maladie-digital/design-system-v3/pull/789)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| - Add utilities classes export + documentation [`#786`](https://github.com/assurance-maladie-digital/design-system-v3/pull/786)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| - Add SyIcon component [`#768`](https://github.com/assurance-maladie-digital/design-system-v3/pull/768)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| - FilterSideBar : fix btn display with TableToolbar  [`#777`](https://github.com/assurance-maladie-digital/design-system-v3/pull/777)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| - SearchListField : improve component  [`#780`](https://github.com/assurance-maladie-digital/design-system-v3/pull/780)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+<table>
+  <thead>
+    <tr>
+      <th style="width: 33.33%">Synapse</th>
+      <th style="width: 33.33%">Portail Agent</th>
+      <th style="width: 33.33%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>
+        - SySelect / ContextualMenu / SocialMediaLinks / CollapsibleList / SearchListField / DatePicker / MaintenancePage: <br />
+        fix after RGAA audit
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/787">#787</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/796">#796</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/790">#790</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/792">#792</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/780">#780</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/772">#772</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/770">#770</a>
+      </td>
+      <td>
+        - SyTable / SyServerTable : add multi-sort option
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/789">#789</a>
+      </td>
+      <td>
+        - Ajout du lot 1
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/803">#803</a> <br />
+        AmeliproAutoCompleteField, AmeliproBreadcrumb, AmeliproBtn, AmeliproCard, AmeliproCallback, AmeliproCheckbox, AmeliproCheckboxGroup,
+        AmeliproChips, AmeliproDialog, AmeliproDisclosure, AmeliproFooter, AmeliproHeader, AmeliproIcon, AmeliproIconBtn,
+        AmeliproIllustratedDataTile, AmeliproIllustratedRadioGroup, AmeliproMailTile, AmeliproMenu, AmeliproMessage,
+        AmeliproMultipleFoldingCard, AmeliproNumberedCard, AmeliproOnboarding, AmeliproPageLayout, AmeliproPagination,
+        AmeliproPatientBanner, AmeliproRadioGroup, AmeliproSelect, AmeliproStateTile, AmeliproStatus, AmeliproStepper,
+        AmeliproTabs, AmeliproTextArea, AmeliproTextField, AmeliproTileBtn, AmeliproTooltips, AmeliproTransmission,
+        StructureMenu, ServiceMenu, UserInformationSummary, UserMenu
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - Logo: fix after RGAA audit
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/809">#809</a>
+      </td>
+      <td>
+        - SyTable / SyServerTable : add missing slots
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/785">#785</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - DatePicker: fix validation issue / fix placeholder / update documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/801">#801</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/746">#746</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/747">#747</a>
+      </td>
+      <td>
+        - Add SyPagination component
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/771">#771</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - Documentation: improve home
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/800">#800</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/795">#795</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - PaginatedTable : add multi-sort option
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/789">#789</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - Add utilities classes export + documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/786">#786</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - Add SyIcon component
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/768">#768</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - FilterSideBar : fix btn display with TableToolbar
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/777">#777</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>
+        - SearchListField : improve component
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/780">#780</a>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
 ## v1.0.2 (07-07-2025)
 
-| Synapse                                                                                                                              | Portail Agent                                                                                                                                                                                                                                                                                       |
-|--------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| - DatePicker: improve placeholder documentation [`#767`](https://github.com/assurance-maladie-digital/design-system-v3/pull/767)     | - Documentation: add Portail Agent components mapping [`#734`](https://github.com/assurance-maladie-digital/design-system-v3/pull/734)                                                                                                                                                              |
-| - Inputs components: harmonize bg color [`#765`](https://github.com/assurance-maladie-digital/design-system-v3/pull/765)             | - SyTable / SyServerTable: add organisation colums option [`#730`](https://github.com/assurance-maladie-digital/design-system-v3/pull/730)                                                                                                                                                          |
-| - SyTextField: improve states management [`#764`](https://github.com/assurance-maladie-digital/design-system-v3/pull/764)            | - Documentation: fix typographic styles page [`#744`](https://github.com/assurance-maladie-digital/design-system-v3/pull/744)                                                                                                                                                                       |
-| - SySelect: fix display on documentation [`#762`](https://github.com/assurance-maladie-digital/design-system-v3/pull/762)            | - DatePicker: add holidays [`#731`](https://github.com/assurance-maladie-digital/design-system-v3/pull/731)                                                                                                                                                                                         |
-| - Documentation: improve issue templates [`#758`](https://github.com/assurance-maladie-digital/design-system-v3/pull/758)            | - SyTable / SyServerTable : add selection option [`#726`](https://github.com/assurance-maladie-digital/design-system-v3/pull/726)                                                                                                                                                                   |
-| - DatePicker: fix box displaying [`#759`](https://github.com/assurance-maladie-digital/design-system-v3/pull/759)                    | - SyTable / SyServerTable : add pagination [`#714`](https://github.com/assurance-maladie-digital/design-system-v3/pull/714)                                                                                                                                                                         |
-| - DatePicker: fix label and placeholder [`#746`](https://github.com/assurance-maladie-digital/design-system-v3/pull/746)             | - Accordion: improve  w3c pattern [`#704`](https://github.com/assurance-maladie-digital/design-system-v3/pull/704)                                                                                                                                                                                  |
-| - Documentation: fix some broken links in rgaa page [`#756`](https://github.com/assurance-maladie-digital/design-system-v3/pull/756) | - SyTable / SyServerTable: add filtering rules [`#719`](https://github.com/assurance-maladie-digital/design-system-v3/pull/719), [`#715`](https://github.com/assurance-maladie-digital/design-system-v3/pull/715), [`#708`](https://github.com/assurance-maladie-digital/design-system-v3/pull/708) |
-| - DatePicker :  improve styling [`#754`](https://github.com/assurance-maladie-digital/design-system-v3/pull/754)                     | - SyTable / SyServerTable : date and period filter [`#711`](https://github.com/assurance-maladie-digital/design-system-v3/pull/711)                                                                                                                                                                 |
-| - Documentation : fix SK links [`#752`](https://github.com/assurance-maladie-digital/design-system-v3/pull/752)                      | - SyTable / SyServerTable: improve headers [`#705`](https://github.com/assurance-maladie-digital/design-system-v3/pull/705)                                                                                                                                                                         |
-| - UserMenuBtn: add slot support[`#748`](https://github.com/assurance-maladie-digital/design-system-v3/pull/748)                      | - Add ToolbarContainer comopnent[`#694`](https://github.com/assurance-maladie-digital/design-system-v3/pull/694)                                                                                                                                                                                    |
-| - DatePicker: fix handleBlur in DateTextInput [`#749`](https://github.com/assurance-maladie-digital/design-system-v3/pull/749)       | - SyTable / SyServerTable : add alignment management [`#702`](https://github.com/assurance-maladie-digital/design-system-v3/pull/702)                                                                                                                                                               |
-| - DatePicker: fix breaking changes documentation [`#747`](https://github.com/assurance-maladie-digital/design-system-v3/pull/747)    | - DatePicker: add autoClamp [`#723`](https://github.com/assurance-maladie-digital/design-system-v3/pull/723)                                                                                                                                                                                        |
-| - Add SyCheckbox componant [`#725`](https://github.com/assurance-maladie-digital/design-system-v3/pull/725)                          |                                                                                                                                                                                                                                                                                                     |
-| - NirField: improve component  [`#720`](https://github.com/assurance-maladie-digital/design-system-v3/pull/720)                      |                                                                                                                                                                                                                                                                                                     |
-| - Documentation: improve accessibility pages [`#706`](https://github.com/assurance-maladie-digital/design-system-v3/pull/706)        |                                                                                                                                                                                                                                                                                                     |
-| - NotFoundPage: fix accessibility issues [`#713`](https://github.com/assurance-maladie-digital/design-system-v3/pull/713)            |                                                                                                                                                                                                                                                                                                     |
-| - ErrorPage: fix accessibility issues [`#712`](https://github.com/assurance-maladie-digital/design-system-v3/pull/712)               |                                                                                                                                                                                                                                                                                                     |
-| - SySelect: add Multiple and Chips props [`#710`](https://github.com/assurance-maladie-digital/design-system-v3/pull/710)            |                                                                                                                                                                                                                                                                                                     |
-| - DatePicker:  improve  input management [`#696`](https://github.com/assurance-maladie-digital/design-system-v3/pull/696)            |                                                                                                                                                                                                                                                                                                     |
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Portail Agent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve placeholder documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/767">#767</a></td>
+      <td>- Documentation: add Portail Agent components mapping <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/734">#734</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Inputs components: harmonize bg color <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/765">#765</a></td>
+      <td>- SyTable / SyServerTable: add organisation colums option <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/730">#730</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: improve states management <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/764">#764</a></td>
+      <td>- Documentation: fix typographic styles page <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/744">#744</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix display on documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/762">#762</a></td>
+      <td>- DatePicker: add holidays <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/731">#731</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve issue templates <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/758">#758</a></td>
+      <td>- SyTable / SyServerTable : add selection option <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/726">#726</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix box displaying <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/759">#759</a></td>
+      <td>- SyTable / SyServerTable : add pagination <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/714">#714</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix label and placeholder <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/746">#746</a></td>
+      <td>- Accordion: improve w3c pattern <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/704">#704</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: fix some broken links in rgaa page <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/756">#756</a></td>
+      <td>- SyTable / SyServerTable: add filtering rules
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/719">#719</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/715">#715</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/708">#708</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker : improve styling <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/754">#754</a></td>
+      <td>- SyTable / SyServerTable : date and period filter <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/711">#711</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation : fix SK links <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/752">#752</a></td>
+      <td>- SyTable / SyServerTable: improve headers <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/705">#705</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- UserMenuBtn: add slot support <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/748">#748</a></td>
+      <td>- Add ToolbarContainer comopnent <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/694">#694</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix handleBlur in DateTextInput <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/749">#749</a></td>
+      <td>- SyTable / SyServerTable : add alignment management <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/702">#702</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix breaking changes documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/747">#747</a></td>
+      <td>- DatePicker: add autoClamp <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/723">#723</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Add SyCheckbox componant <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/725">#725</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: improve component <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/720">#720</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve accessibility pages <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/706">#706</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NotFoundPage: fix accessibility issues <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/713">#713</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- ErrorPage: fix accessibility issues <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/712">#712</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: add Multiple and Chips props <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/710">#710</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve input management <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/696">#696</a></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 ## v1.0.1 (16-06-2025)
 
-| Synapse                                                                                                                                | Portail Agent                                                                                                                                                                                                          |
-|----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| - TableToolbar: fix headers [`#693`](https://github.com/assurance-maladie-digital/design-system-v3/pull/693)                           | - DatePicker: improve header and buttons display [`#681`](https://github.com/assurance-maladie-digital/design-system-v3/pull/681)                                                                                      |
-| - DatePicker: improve DateTextInput range [`#684`](https://github.com/assurance-maladie-digital/design-system-v3/pull/684)             | - Add tokens (fonts) [`#692`](https://github.com/assurance-maladie-digital/design-system-v3/pull/692)                                                                                                                  |
-| - Documentation: add Figma link on home [`#691`](https://github.com/assurance-maladie-digital/design-system-v3/pull/691)               | - SyTable / SyServerTable: add resizing columns management [`#666`](https://github.com/assurance-maladie-digital/design-system-v3/pull/666)                                                                            |
-| - PaginatedTable: caption display + fix accessibility [`#690`](https://github.com/assurance-maladie-digital/design-system-v3/pull/690) | - SyTable / SyServerTable: improve props and styles [`#689`](https://github.com/assurance-maladie-digital/design-system-v3/pull/689), [`#688`](https://github.com/assurance-maladie-digital/design-system-v3/pull/688) |
-| - Logo: add audit link on documentation [`#687`](https://github.com/assurance-maladie-digital/design-system-v3/pull/687)               | - SyTable / SyServerTable: add number filter + documentation [`#685`](https://github.com/assurance-maladie-digital/design-system-v3/pull/685)                                                                          |
-| - FilterSideBar: fix element overlapping [`#679`](https://github.com/assurance-maladie-digital/design-system-v3/pull/679)              | - SyTable / SyServerTable: add text filter + documentation [`#680`](https://github.com/assurance-maladie-digital/design-system-v3/pull/680)                                                                            |
-| - FooterBar: fix version color [`#668`](https://github.com/assurance-maladie-digital/design-system-v3/pull/668)                        | - SyTable / SyServerTable: add filters global management [`#665`](https://github.com/assurance-maladie-digital/design-system-v3/pull/665)                                                                              |
-| - SySelect: hide caret color in input field (Firefox) [`#667`](https://github.com/assurance-maladie-digital/design-system-v3/pull/667) | - DatePicker: add custom period [`#669`](https://github.com/assurance-maladie-digital/design-system-v3/pull/669)                                                                                                       |
-|                                                                                                                                        | - DatePicker: improve wording management [`#673`](https://github.com/assurance-maladie-digital/design-system-v3/pull/673)                                                                                              |
-|                                                                                                                                        | - DatePicker: improve documentation [`#671`](https://github.com/assurance-maladie-digital/design-system-v3/pull/671)                                                                                                   |
-|                                                                                                                                        | - DatePicker: add combined mode (complexe DatePicker) [`#582`](https://github.com/assurance-maladie-digital/design-system-v3/pull/582)                                                                                 |
-|                                                                                                                                        | - Add SyTable / SyServerTable (complexe Tables) components [`#615`](https://github.com/assurance-maladie-digital/design-system-v3/pull/615)                                                                            |
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Portail Agent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- TableToolbar: fix headers <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/693">#693</a></td>
+      <td>- DatePicker: improve header and buttons display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/681">#681</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve DateTextInput range <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/684">#684</a></td>
+      <td>- Add tokens (fonts) <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/692">#692</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: add Figma link on home <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/691">#691</a></td>
+      <td>- SyTable / SyServerTable: add resizing columns management <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/666">#666</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PaginatedTable: caption display + fix accessibility <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/690">#690</a></td>
+      <td>- SyTable / SyServerTable: improve props and styles
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/689">#689</a>,
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/688">#688</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Logo: add audit link on documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/687">#687</a></td>
+      <td>- SyTable / SyServerTable: add number filter + documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/685">#685</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FilterSideBar: fix element overlapping <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/679">#679</a></td>
+      <td>- SyTable / SyServerTable: add text filter + documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/680">#680</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FooterBar: fix version color <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/668">#668</a></td>
+      <td>- SyTable / SyServerTable: add filters global management <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/665">#665</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: hide caret color in input field (Firefox) <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/667">#667</a></td>
+      <td>- DatePicker: add custom period <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/669">#669</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- DatePicker: improve wording management <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/673">#673</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- DatePicker: improve documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/671">#671</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- DatePicker: add combined mode (complexe DatePicker) <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/582">#582</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- Add SyTable / SyServerTable (complexe Tables) components <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/615">#615</a></td>
+    </tr>
+  </tbody>
+</table>
 
 ## v1.0.0 (26-05-2025)
 
 ### Composants
 
-| Synapse                                                                                                                                             | Portail Agent                                                                                                                                                                            |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| - TableToolbar: add filters slot and add missing props on SySelect [`#614`](https://github.com/assurance-maladie-digital/design-system-v3/pull/614) | - Add SyTextArea component [`#612`](https://github.com/assurance-maladie-digital/design-system-v3/pull/612)                                                                              |
-| - Fix PaginatedTable + TableToolbar components and stories [`#609`](https://github.com/assurance-maladie-digital/design-system-v3/pull/609)         | - Add Accordion componant [`#608`](https://github.com/assurance-maladie-digital/design-system-v3/pull/608)                                                                               |
-| - Improve success messages management [`#610`](https://github.com/assurance-maladie-digital/design-system-v3/pull/610)                              | - Fix tokens colors [`#607`](https://github.com/assurance-maladie-digital/design-system-v3/pull/607)                                                                                     |
-| - NotificationBar: fix accessibility [`#572`](https://github.com/assurance-maladie-digital/design-system-v3/pull/572)                               | - Add DiacriticPicker [`#595`](https://github.com/assurance-maladie-digital/design-system-v3/pull/595), [`#588`](https://github.com/assurance-maladie-digital/design-system-v3/pull/588) |
-| - Fix readonly prop on some components [`#579`](https://github.com/assurance-maladie-digital/design-system-v3/pull/579)                             | - NirField: add custom rules priority [`#586`](https://github.com/assurance-maladie-digital/design-system-v3/pull/586)                                                                   |
-| - DatePicker: fix display range selection [`#585`](https://github.com/assurance-maladie-digital/design-system-v3/pull/585)                          | - Rules: add holidays management [`#583`](https://github.com/assurance-maladie-digital/design-system-v3/pull/583)                                                                        |
-|                                                                                                                                                     | - CopyBtn: add PA functionnalities [`#587`](https://github.com/assurance-maladie-digital/design-system-v3/pull/587)                                                                      |
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Portail Agent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- TableToolbar: add filters slot and add missing props on SySelect <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/614">#614</a></td>
+      <td>- Add SyTextArea component <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/612">#612</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Fix PaginatedTable + TableToolbar components and stories <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/609">#609</a></td>
+      <td>- Add Accordion componant <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/608">#608</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Improve success messages management <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/610">#610</a></td>
+      <td>- Fix tokens colors <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/607">#607</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NotificationBar: fix accessibility <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/572">#572</a></td>
+      <td>- Add DiacriticPicker <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/595">#595</a>, <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/588">#588</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Fix readonly prop on some components <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/579">#579</a></td>
+      <td>- NirField: add custom rules priority <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/586">#586</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix display range selection <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/585">#585</a></td>
+      <td>- Rules: add holidays management <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/583">#583</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- CopyBtn: add PA functionnalities <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/587">#587</a></td>
+    </tr>
+  </tbody>
+</table>
 
 ### Documentation
 - Fix accessibility introduction page [`#617`](https://github.com/assurance-maladie-digital/design-system-v3/pull/617)

@@ -1,4 +1,4 @@
-// Export all composables from DatePicker/composables
+// Export all composables from CalendarMode/composables
 
 // Date input and editing
 export { useDateInputEditing } from './useDateInputEditing'
@@ -12,7 +12,7 @@ export { useDateFormatValidation } from './useDateFormatValidation'
 export { useDateRangeValidation } from './useDateRangeValidation'
 export { useManualDateValidation } from './useManualDateValidation'
 
-// DatePicker UI and interaction
+// CalendarMode UI and interaction
 export { useDatePickerViewMode } from './useDatePickerViewMode'
 export { useDatePickerVisibility } from './useDatePickerVisibility'
 export { useDisplayedDateString } from './useDisplayedDateString'

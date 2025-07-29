@@ -17,7 +17,12 @@ exports[`AmeliproMessage > render correctly 1`] = `
   "
   dense=""
   id="my-message-id"
-  style="background-color: #4D547D; color: #fff; caret-color: #fff; width: 100%;"
+  style="
+    background-color: #4D547D;
+    color: #fff;
+    caret-color: #fff;
+    width: 100%;
+  "
 >
   <!---->
   <span class="v-alert__underlay"></span>
@@ -40,7 +45,11 @@ exports[`AmeliproMessage > render correctly 1`] = `
         "
         focusable="false"
         role="img"
-        style="color: #FFFFFF; border-radius: 50%; border: 1px solid #FFFFFF;"
+        style="
+          color: #FFFFFF;
+          border-radius: 50%;
+          border: 1px solid #FFFFFF;
+        "
       >
         <span>
           <svg

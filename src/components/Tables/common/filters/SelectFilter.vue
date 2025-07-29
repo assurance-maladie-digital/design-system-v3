@@ -175,8 +175,7 @@
 	// Computed property pour contrôler l'affichage du bouton clear
 	const showClearButton = computed(() => {
 		// En mode test, toujours retourner true pour que les tests passent
-		// eslint-disable-next-line no-undef
-		if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
+		if (import.meta.env?.MODE === 'test' || import.meta.env?.NODE_ENV === 'test') {
 			return true
 		}
 		// En mode normal, cacher le bouton quand l'option par défaut est sélectionnée

@@ -67,7 +67,11 @@ exports[`AmeliproFooter > render correctly 1`] = `
         "
         href="tel:3608"
         id="my-footer-id-contact-link"
-        style="height: auto; min-height: auto; padding: 0px;"
+        style="
+          height: auto;
+          min-height: auto;
+          padding: 0px;
+        "
         type="button"
       ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
         
@@ -133,7 +137,11 @@ exports[`AmeliproFooter > render correctly 1`] = `
             v-theme--light
           "
           id="my-footer-id-site-map-btn"
-          style="height: auto; min-height: auto; padding: 0px;"
+          style="
+            height: auto;
+            min-height: auto;
+            padding: 0px;
+          "
           type="button"
         >
           <span class="v-btn__overlay"></span>
@@ -177,7 +185,11 @@ exports[`AmeliproFooter > render correctly 1`] = `
             v-theme--light
           "
           id="my-footer-id-about-btn"
-          style="height: auto; min-height: auto; padding: 0px;"
+          style="
+            height: auto;
+            min-height: auto;
+            padding: 0px;
+          "
           type="button"
         >
           <span class="v-btn__overlay"></span>
@@ -221,7 +233,11 @@ exports[`AmeliproFooter > render correctly 1`] = `
             v-theme--light
           "
           id="my-footer-id-config-btn"
-          style="height: auto; min-height: auto; padding: 0px;"
+          style="
+            height: auto;
+            min-height: auto;
+            padding: 0px;
+          "
           type="button"
         >
           <span class="v-btn__overlay"></span>
@@ -265,7 +281,11 @@ exports[`AmeliproFooter > render correctly 1`] = `
             v-theme--light
           "
           id="my-footer-id-legal-notice-btn"
-          style="height: auto; min-height: auto; padding: 0px;"
+          style="
+            height: auto;
+            min-height: auto;
+            padding: 0px;
+          "
           type="button"
         >
           <span class="v-btn__overlay"></span>
@@ -309,7 +329,11 @@ exports[`AmeliproFooter > render correctly 1`] = `
             v-theme--light
           "
           id="my-footer-id-cgu-btn"
-          style="height: auto; min-height: auto; padding: 0px;"
+          style="
+            height: auto;
+            min-height: auto;
+            padding: 0px;
+          "
           type="button"
         >
           <span class="v-btn__overlay"></span>
@@ -353,7 +377,11 @@ exports[`AmeliproFooter > render correctly 1`] = `
             v-theme--light
           "
           id="my-footer-id-a11y-btn"
-          style="height: auto; min-height: auto; padding: 0px;"
+          style="
+            height: auto;
+            min-height: auto;
+            padding: 0px;
+          "
           type="button"
         >
           <span class="v-btn__overlay"></span>

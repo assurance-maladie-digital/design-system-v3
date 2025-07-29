@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { ref, computed, watch } from 'vue'
-	import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import { useDateFormat } from '@/composables/date/useDateFormat'
 
 	const { parseDate } = useDateFormat()
@@ -9,7 +9,7 @@
 	const startDate = ref<string | null>(null)
 	const endDate = ref<string | null>(null)
 
-	// Références aux composants DatePicker pour accéder à leurs méthodes
+	// Références aux composants CalendarMode pour accéder à leurs méthodes
 	const startDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 	const endDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 

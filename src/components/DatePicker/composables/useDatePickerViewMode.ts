@@ -11,13 +11,13 @@ export interface ViewModeReturn {
 }
 
 /**
- * Composable pour gérer le mode d'affichage du DatePicker (année, mois, jour)
- * Utilisé pour contrôler le comportement du DatePicker, notamment pour les dates de naissance
+ * Composable pour gérer le mode d'affichage du CalendarMode (année, mois, jour)
+ * Utilisé pour contrôler le comportement du CalendarMode, notamment pour les dates de naissance
  *
  * @param isBirthDateGetter - Une fonction qui retourne la valeur actuelle de isBirthDate
  */
 export function useDatePickerViewMode(isBirthDateGetter: () => boolean): ViewModeReturn {
-	// Variable pour suivre le mode d'affichage actuel du DatePicker
+	// Variable pour suivre le mode d'affichage actuel du CalendarMode
 	const currentViewMode = ref<ViewMode>(isBirthDateGetter() ? 'year' : 'month')
 
 	// Mettre à jour le mode d'affichage quand isBirthDate change
@@ -46,7 +46,7 @@ export function useDatePickerViewMode(isBirthDateGetter: () => boolean): ViewMod
 		}
 	}
 
-	// Fonction pour réinitialiser le mode d'affichage (utile lors de la fermeture du DatePicker)
+	// Fonction pour réinitialiser le mode d'affichage (utile lors de la fermeture du CalendarMode)
 	const resetViewMode = () => {
 		currentViewMode.value = isBirthDateGetter() ? 'year' : 'month'
 	}

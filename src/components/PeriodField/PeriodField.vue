@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	/* eslint-disable @typescript-eslint/no-explicit-any -- Nécessaire pour gérer différents types d'entrée */
 	import { ref, watch, computed, onMounted } from 'vue'
-	import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 
@@ -58,7 +58,7 @@
 
 	const emit = defineEmits(['update:modelValue'])
 
-	// Références aux composants DatePicker
+	// Références aux composants CalendarMode
 	const fromDateRef = ref()
 	const toDateRef = ref()
 
@@ -294,7 +294,7 @@
 
 	// Fonction publique de validation
 	const validateOnSubmit = (): boolean => {
-		// Valider les deux DatePicker
+		// Valider les deux CalendarMode
 		const fromDateValid = fromDateRef.value?.validateOnSubmit() ?? true
 		const toDateValid = toDateRef.value?.validateOnSubmit() ?? true
 

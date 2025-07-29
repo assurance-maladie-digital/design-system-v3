@@ -78,7 +78,11 @@ exports[`AmeliproPatientBanner > render correctly 1`] = `
             v-theme--light
           "
           id="my-patient-banner-id-patient-change-btn"
-          style="height: auto; min-height: auto; padding: 0px;"
+          style="
+            height: auto;
+            min-height: auto;
+            padding: 0px;
+          "
           type="button"
         >
           <span class="v-btn__overlay"></span>
@@ -105,7 +109,14 @@ exports[`AmeliproPatientBanner > render correctly 1`] = `
               >
                 <span
                   class="amelipro-external-icon"
-                  style="background-color: transparent; border-radius: 50%; color: #00749C; padding: 0px; height: 1.5rem; width: 1.5rem;"
+                  style="
+                    background-color: transparent;
+                    border-radius: 50%;
+                    color: #00749C;
+                    padding: 0px;
+                    height: 1.5rem;
+                    width: 1.5rem;
+                  "
                 >
                   <i
                     aria-hidden="true"
@@ -117,7 +128,12 @@ exports[`AmeliproPatientBanner > render correctly 1`] = `
                       v-icon
                       v-theme--light
                     "
-                    style="font-size: 100%; height: 100%; width: 100%; display: block;"
+                    style="
+                      font-size: 100%;
+                      height: 100%;
+                      width: 100%;
+                      display: block;
+                    "
                   ></i>
                 </span>
               </span>
@@ -220,7 +236,13 @@ exports[`AmeliproPatientBanner > render correctly 1`] = `
         "
         href="#"
         id="my-patient-banner-id-more-info-btn"
-        style="height: auto; min-height: 2.5rem; color: #00749C !important; border: 2px solid #00749C !important; background-color: white;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #00749C !important;
+          border: 2px solid #00749C !important;
+          background-color: white;
+        "
         type="button"
       ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
         

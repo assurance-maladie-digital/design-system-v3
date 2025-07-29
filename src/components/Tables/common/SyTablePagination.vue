@@ -89,12 +89,16 @@
 	onMounted(() => {
 		// Use nextTick to ensure the DOM is fully rendered
 		nextTick(() => {
-			if (selectRef.value && selectRef.value.$el) {
-				// Find the input element
-				const inputElement = selectRef.value.$el.querySelector('input')
-				if (inputElement) {
-					// Remove the aria-describedby attribute
-					inputElement.removeAttribute('aria-describedby')
+			if (selectRef.value) {
+				// Access the SySelect component
+				const SySelectEl = selectRef.value.$el
+				if (SySelectEl && typeof SySelectEl.querySelector === 'function') {
+					// Find the input element
+					const inputElement = SySelectEl.querySelector('input')
+					if (inputElement) {
+						// Remove the aria-describedby attribute
+						inputElement.removeAttribute('aria-describedby')
+					}
 				}
 			}
 		})

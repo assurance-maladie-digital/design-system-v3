@@ -37,7 +37,13 @@ exports[`AmeliproStepper > render correctly 1`] = `
           "
           id="my-stepper-id-step-btn-0"
           role="tab"
-          style="background-color: #00749C; border: 1px solid #00749C; color: #FFFFFF; position: relative; z-index: 1;"
+          style="
+            background-color: #00749C;
+            border: 1px solid #00749C;
+            color: #FFFFFF;
+            position: relative;
+            z-index: 1;
+          "
           type="button"
         >
           <span
@@ -80,7 +86,13 @@ exports[`AmeliproStepper > render correctly 1`] = `
           "
           id="my-stepper-id-step-btn-1"
           role="tab"
-          style="background-color: #E6F6FC; border: 1px solid #DDDEDE; color: #00749C; position: relative; z-index: 1;"
+          style="
+            background-color: #E6F6FC;
+            border: 1px solid #DDDEDE;
+            color: #00749C;
+            position: relative;
+            z-index: 1;
+          "
           type="button"
         >
           <span
@@ -121,7 +133,14 @@ exports[`AmeliproStepper > render correctly 1`] = `
           disabled=""
           id="my-stepper-id-step-btn-2"
           role="tab"
-          style="background-color: #DDDEDE; border: 1px solid #DDDEDE; color: #1A1B1B; position: relative; z-index: 1; cursor: default;"
+          style="
+            background-color: #DDDEDE;
+            border: 1px solid #DDDEDE;
+            color: #1A1B1B;
+            position: relative;
+            z-index: 1;
+            cursor: default;
+          "
           type="button"
         >
           <span
@@ -165,7 +184,14 @@ exports[`AmeliproStepper > render correctly 1`] = `
           disabled=""
           id="my-stepper-id-step-btn-3"
           role="tab"
-          style="background-color: #DDDEDE; border: 1px solid #DDDEDE; color: #1A1B1B; position: relative; z-index: 1; cursor: default;"
+          style="
+            background-color: #DDDEDE;
+            border: 1px solid #DDDEDE;
+            color: #1A1B1B;
+            position: relative;
+            z-index: 1;
+            cursor: default;
+          "
           type="button"
         >
           <span
@@ -247,7 +273,11 @@ exports[`AmeliproStepper > render correctly 1`] = `
           v-theme--light
         "
         id="my-stepper-id-footer-next-btn"
-        style="height: auto; min-height: 2.5rem; color: #FFFFFF !important;"
+        style="
+          height: auto;
+          min-height: 2.5rem;
+          color: #FFFFFF !important;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
@@ -274,7 +304,14 @@ exports[`AmeliproStepper > render correctly 1`] = `
             >
               <span
                 class="amelipro-external-icon"
-                style="background-color: transparent; border-radius: 50%; color: #FFFFFF; padding: 0px; height: 1.5rem; width: 1.5rem;"
+                style="
+                  background-color: transparent;
+                  border-radius: 50%;
+                  color: #FFFFFF;
+                  padding: 0px;
+                  height: 1.5rem;
+                  width: 1.5rem;
+                "
               >
                 <i
                   aria-hidden="true"
@@ -286,7 +323,12 @@ exports[`AmeliproStepper > render correctly 1`] = `
                     v-icon
                     v-theme--light
                   "
-                  style="font-size: 100%; height: 100%; width: 100%; display: block;"
+                  style="
+                    font-size: 100%;
+                    height: 100%;
+                    width: 100%;
+                    display: block;
+                  "
                 ></i>
               </span>
             </span>

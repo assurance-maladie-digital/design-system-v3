@@ -64,22 +64,23 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
               v-theme--light
             "
             role="progressbar"
-            style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+            style="
+              top: 0px;
+              height: 0px;
+              --v-progress-linear-height: 2px;
+            "
           >
             <!---->
             <div
-              class="
-                bg-ap-blue-darken-1
-                v-progress-linear__background
-              "
+              class="v-progress-linear__background"
               style="opacity: NaN;"
             ></div>
             <div
-              class="
-                bg-ap-blue-darken-1
-                v-progress-linear__buffer
+              class="v-progress-linear__buffer"
+              style="
+                opacity: NaN;
+                width: 0%;
               "
-              style="opacity: NaN; width: 0%;"
             ></div>
             <transition-stub
               appear="false"
@@ -89,12 +90,10 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
             >
               <div class="v-progress-linear__indeterminate">
                 <div class="
-                  bg-ap-blue-darken-1
                   long
                   v-progress-linear__indeterminate
                 "></div>
                 <div class="
-                  bg-ap-blue-darken-1
                   short
                   v-progress-linear__indeterminate
                 "></div>
@@ -148,7 +147,10 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
             "
             id="my-AutoCompleteField-id-btn"
             plain=""
-            style="height: auto; width: auto;"
+            style="
+              height: auto;
+              width: auto;
+            "
             tabindex="-1"
             type="button"
           >
@@ -174,7 +176,12 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
               >
                 <span
                   class="amelipro-external-icon"
-                  style="background-color: transparent; border-radius: 50%; color: #00749C; padding: 0px;"
+                  style="
+                    background-color: transparent;
+                    border-radius: 50%;
+                    color: #00749C;
+                    padding: 0px;
+                  "
                 >
                   <i
                     aria-hidden="true"
@@ -186,7 +193,12 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
                       v-icon
                       v-theme--light
                     "
-                    style="font-size: 100%; height: 100%; width: 100%; display: block;"
+                    style="
+                      font-size: 100%;
+                      height: 100%;
+                      width: 100%;
+                      display: block;
+                    "
                   ></i>
                 </span>
               </span>
