@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach, beforeAll } from 'vitest'
+import { describe, it, expect, vi, afterEach, beforeAll, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 
 import { vuetify } from '@tests/unit/setup'
@@ -70,11 +70,42 @@ describe('SyServerTable', () => {
 		}
 	})
 
-	afterEach(() => {
-		vi.resetAllMocks()
+	// Store wrapper references to unmount them after each test
+	let activeWrappers: ReturnType<typeof mount>[] = []
+	// Helper pour attendre que les opérations asynchrones soient terminées
+	async function flushPromises() {
+		return new Promise(resolve => setTimeout(resolve, 0))
+	}
+
+	beforeEach(() => {
+		// Reset LocalStorageUtility mock implementation before each test
+		vi.mocked(LocalStorageUtility.prototype.getItem).mockReturnValue(null)
+		vi.mocked(LocalStorageUtility.prototype.setItem).mockImplementation(() => {})
+		vi.mocked(LocalStorageUtility.prototype.removeItem).mockImplementation(() => {})
 	})
 
-	it('renders correctly with default props', () => {
+	afterEach(async () => {
+		// Attendre que toutes les promesses soient résolues avant de démonter
+		await flushPromises()
+
+		// Properly unmount all components to prevent memory leaks
+		for (const wrapper of activeWrappers) {
+			if (wrapper && typeof wrapper.unmount === 'function') {
+				wrapper.unmount()
+				// Attendre après chaque démontage pour permettre le nettoyage
+				await flushPromises()
+			}
+		}
+		activeWrappers = []
+
+		// Reset all mocks
+		vi.resetAllMocks()
+
+		// Attendre une dernière fois pour s'assurer que tout est nettoyé
+		await flushPromises()
+	})
+
+	it('renders correctly with default props', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {
 				options: {} as DataOptions,
@@ -90,12 +121,19 @@ describe('SyServerTable', () => {
 			},
 		})
 
+		// Attendre que tous les effets asynchrones soient terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
 		expect(wrapper.find('.sy-server-table').exists()).toBe(true)
 		expect(wrapper.find('table').exists()).toBe(true)
 		expect(wrapper.text()).toContain('John Doe')
+
+		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
 	})
 
-	it('accepts both old and new headers format', () => {
+	it('accepts both old and new headers format', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {
 				options: {} as DataOptions,
@@ -146,11 +184,20 @@ describe('SyServerTable', () => {
 			},
 		})
 
+		// Attendre que le composant soit monté et les effets initiaux terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		// Modifier les props et attendre la mise à jour
 		await wrapper.setProps({
 			options: {
 				sortBy: [{ key: 'name', order: 'desc' }],
 			},
 		})
+
+		// Attendre que tous les effets asynchrones soient terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
 
 		expect(setItemMock).toHaveBeenCalledWith(
 			'server-table-test-server-storage',
@@ -164,6 +211,9 @@ describe('SyServerTable', () => {
 				itemsLength: 10,
 			}),
 		)
+
+		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
 	})
 
 	it('emits update:options event when sorting changes', async () => {
@@ -182,16 +232,27 @@ describe('SyServerTable', () => {
 			},
 		})
 
+		// Attendre que le composant soit monté et les effets initiaux terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
 		// Simulate a sort event from VDataTableServer
 		await wrapper.findComponent({ name: 'VDataTableServer' }).vm.$emit('update:options', {
 			sortBy: [{ key: 'name', order: 'asc' }],
 		})
 
+		// Attendre que tous les effets asynchrones soient terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
 		const emittedOptions = wrapper.emitted('update:options')
 		expect(emittedOptions).toBeTruthy()
+
+		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
 	})
 
-	it('passes itemsPerPage prop correctly', () => {
+	it('passes itemsPerPage prop correctly', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {
 				options: { itemsPerPage: 5 } as DataOptions,
@@ -207,11 +268,18 @@ describe('SyServerTable', () => {
 			},
 		})
 
+		// Attendre que tous les effets asynchrones soient terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
 		const dataTableServer = wrapper.findComponent({ name: 'VDataTableServer' })
 		expect(dataTableServer.props('itemsPerPage')).toBe(5)
+
+		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
 	})
 
-	it('passes serverItemsLength correctly', () => {
+	it('passes serverItemsLength correctly', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {
 				options: {} as DataOptions,
@@ -227,8 +295,15 @@ describe('SyServerTable', () => {
 			},
 		})
 
+		// Attendre que tous les effets asynchrones soient terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
 		const dataTableServer = wrapper.findComponent({ name: 'VDataTableServer' })
 		expect(dataTableServer.props('itemsLength')).toBe(25)
+
+		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
 	})
 
 	it('should show filters when showFilters prop is true', async () => {
@@ -263,8 +338,14 @@ describe('SyServerTable', () => {
 		})
 
 		await wrapper.vm.$nextTick()
+		// Attendre que tous les effets asynchrones soient terminés
+		await flushPromises()
+
 		const filterComponents = wrapper.findAllComponents({ name: 'SyTableFilter' })
 		expect(filterComponents.length).toBeGreaterThan(0)
+
+		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
 	})
 
 	it('updates filters when SyTableFilter emits update:filters', async () => {
@@ -289,17 +370,29 @@ describe('SyServerTable', () => {
 			},
 		})
 
+		// Attendre que le composant soit monté et les effets initiaux terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
 		const filterComponent = wrapper.findComponent(SyTableFilter)
 		await filterComponent.vm.$emit('update:filters', [{ key: 'name', value: 'Jane', type: 'text' }])
+
+		// Attendre que tous les effets d'émission soient terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
 
 		// Check that the component emitted an update:options event with the correct filters
 		const emitted = wrapper.emitted('update:options')
 		expect(emitted).toBeTruthy()
+
 		if (emitted) {
 			const lastEmitted = emitted[emitted.length - 1][0] as { filters?: FilterOption[] }
 			expect(lastEmitted).toHaveProperty('filters')
 			expect(lastEmitted.filters).toEqual([{ key: 'name', value: 'Jane', type: 'text' }])
 		}
+
+		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
 	})
 
 	it('should show reset filters button when filters are applied', async () => {
@@ -407,6 +500,11 @@ describe('SyServerTable', () => {
 			},
 		})
 
+		// Attendre que le composant soit monté et les effets initiaux terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		// Modifier les props et attendre la mise à jour
 		await wrapper.setProps({
 			serverItemsLength: 20,
 		})

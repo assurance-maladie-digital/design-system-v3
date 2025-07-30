@@ -1,4 +1,4 @@
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 /**
  * Utility function to enhance table accessibility
@@ -8,6 +8,8 @@ export function useTableAccessibility({
 }: {
 	tableId: string
 }) {
+	// Référence pour stocker et nettoyer les timeouts
+	const accessibilityTimeouts = ref<ReturnType<typeof setTimeout>[]>([])
 	function setupAccessibility() {
 		onMounted(() => {
 			const captionElement = document.querySelector(`#${tableId} caption`)
@@ -31,11 +33,12 @@ export function useTableAccessibility({
 				}
 
 				// Check again after a delay
-				setTimeout(() => {
+				const timeoutId = setTimeout(() => {
 					if (element.hasAttribute('aria-controls')) {
 						element.removeAttribute('aria-controls')
 					}
 				}, 500)
+				accessibilityTimeouts.value.push(timeoutId)
 			})
 
 			const fieldLabels = document.querySelectorAll(`#${tableId} .v-field`)
@@ -52,6 +55,14 @@ export function useTableAccessibility({
 			for (let i = 0; i < th.length; i++) {
 				th[i].setAttribute('scope', 'col')
 			}
+		})
+
+		// Nettoyer tous les timeouts lors du démontage du composant
+		onUnmounted(() => {
+			accessibilityTimeouts.value.forEach((timeoutId) => {
+				clearTimeout(timeoutId)
+			})
+			accessibilityTimeouts.value = []
 		})
 	}
 

@@ -1,0 +1,699 @@
+Rapport de détection des fuites mémoire - Wed Jul 30 10:43:32 CEST 2025
+Seuil d'alerte: 10 MB
+Nombre de tests:      230
+---------------------------------------------
+Test: src/composables/date/tests/useDatePickerAccessibility.spec.ts
+✓ OK - Max: 0 MB, Moy: -.29 MB
+---------------------------------------------
+Test: src/composables/date/tests/useDateInitialization.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/composables/date/tests/useDateFormat.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/composables/widthable/tests/widthable.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/composables/rules/tests/useFieldValidation.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/composables/useFilterable/useFilterable.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/composables/validation/tests/useValidation.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/utils/localStorageUtility/tests/localStorageUtility.spec.ts
+✓ OK - Max: 0 MB, Moy: -.01 MB
+---------------------------------------------
+Test: src/utils/amelipro/dateHelper/tests/dateHelper.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/utils/amelipro/rules/minNumber/tests/minNumber.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/utils/amelipro/rules/notBeforeDate/tests/notBeforeDate.spec.ts
+✓ OK - Max: .03125 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/utils/amelipro/rules/notAfterDate/tests/notAfterDate.spec.ts
+✓ OK - Max: 0 MB, Moy: -.01 MB
+---------------------------------------------
+Test: src/utils/amelipro/rules/maxNumber/tests/maxNumber.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/utils/amelipro/numberHelper/tests/numberHelper.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/utils/calcHumanFileSize/tests/calcHumanFileSize.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/utils/ruleMessage/tests/ruleMessages.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/utils/convertToUnit/test/convertToUnit.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/utils/propValidator/tests/propValidator.spec.ts
+✓ OK - Max: 0 MB, Moy: -.01 MB
+---------------------------------------------
+Test: src/utils/rules/isMinLength/tests/isMinLength.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/utils/rules/isNotBeforeDate/tests/IsNotBeforeDate.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/utils/rules/isRequired/tests/isRequred.spec.ts
+✓ OK - Max: 0 MB, Moy: -.11 MB
+---------------------------------------------
+Test: src/utils/rules/isDateValid/tests/isDateValid.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/utils/rules/isNotAfterDate/tests/isNotAfterDate.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/utils/rules/doMatchPattern/tests/matchPattern.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/utils/rules/isNotBeforeToday/tests/notBeforeToday.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/utils/rules/isExactLength/tests/exactLength.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/utils/rules/isHolidayDay/tests/isHolidayDay.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/utils/rules/isNotAfterToday/tests/isNotAfterToday.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/utils/rules/isValidEmail/tests/isValidEmail.spec.ts
+✓ OK - Max: .03124 MB, Moy: .01 MB
+---------------------------------------------
+Test: src/utils/rules/isMaxLength/tests/isMaxLength.spec.ts
+✓ OK - Max: 0 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/utils/functions/downloadFile/tests/downloadFile.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/utils/functions/copyToClipboard/tests/copyToClipboard.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/utils/functions/deepCopy/tests/deepCopy.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/utils/functions/validation/isDateBefore/tests/isDateBefore.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/utils/functions/validation/isDateValid/tests/isDateValid.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/utils/functions/validation/isDateInRange/tests/isDateInRange.spec.ts
+✓ OK - Max: .03126 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/utils/functions/validation/isWeekend/tests/isWeekend.spec.ts
+✓ OK - Max: 0 MB, Moy: -.22 MB
+---------------------------------------------
+Test: src/utils/functions/validation/isDateAfter/tests/isDateAfter.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/utils/functions/validation/isEmailValid/tests/isEmailValid.spec.ts
+✓ OK - Max: .01562 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/utils/functions/throttleDisplayFn/tests/throttleDisplayFn.spec.ts
+✓ OK - Max: .01562 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/utils/parseDate/tests/parseDate.spec.ts
+✓ OK - Max: .03124 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/utils/formatDate/tests/formatDate.spec.ts
+✓ OK - Max: 0 MB, Moy: -.11 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproMenu/tests/AmeliproMenu.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproTooltips/tests/AmeliproTooltips.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproAutoCompleteField/__tests__/AmeliproAutoCompleteField.spec.ts
+✓ OK - Max: 0 MB, Moy: -.16 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproSelect/tests/AmeliproSelect.spec.ts
+✓ OK - Max: 0 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproMultipleFoldingCard/tests/AmeliproMultipleFoldingCard.spec.ts
+✓ OK - Max: .03126 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproBtn/tests/AmeliproBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproStateTile/tests/AmeliproStateTile.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproCallback/tests/AmeliproCallback.spec.ts
+✓ OK - Max: .03126 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproHeader/AmeliproHeaderBar/AmeliproHeaderBrandSection/tests/AmeliproHeaderBrandSection.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproHeader/AmeliproHeaderBar/tests/AmeliproHeaderBar.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproHeader/AmeliproHeaderBar/AmeliproLogoAm/tests/AmeliproLogoAm.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproHeader/tests/AmeliproHeader.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproBreadcrumb/__tests__/AmeliproBreadcrumb.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproDialog/tests/AmeliproDialog.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproIconBtn/tests/AmeliproIconBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproTileBtn/tests/AmeliproTileBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproPageLayout/tests/AmeliproPageLayout.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproOnboarding/tests/AmeliproOnboarding.spec.ts
+✓ OK - Max: .03125 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproTextArea/__tests__/AmeliproTextArea.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Amelipro/StructureMenu/StructureBtn/tests/StructureBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Amelipro/StructureMenu/tests/StructureMenu.spec.ts
+✓ OK - Max: .01562 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Amelipro/StructureMenu/StructureItem/tests/StructureItem.spec.ts
+✓ OK - Max: 0 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/Amelipro/StructureMenu/StructureList/tests/StructureList.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/Amelipro/StructureMenu/StructureTabs/tests/StructureTabs.spec.ts
+✓ OK - Max: .03124 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproIcon/tests/AmeliproIcon.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproPatientBanner/tests/AmeliproPatientBanner.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproCard/tests/AmeliproCard.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproPagination/tests/AmeliproPagination.spec.ts
+✓ OK - Max: 0 MB, Moy: -.13 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproPagination/AmeliproPaginationBtn/tests/AmeliproPaginationBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproRadioGroup/tests/AmeliproRadioGroup.spec.ts
+✓ OK - Max: .01563 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproDisclosure/tests/AmeliproDisclosure.spec.ts
+✓ OK - Max: 0 MB, Moy: -.01 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproTransmission/tests/AmeliproTransmission.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproCheckbox/tests/AmeliproCheckbox.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/components/Amelipro/UserMenu/tests/UserMenu.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/components/Amelipro/UserMenu/UserMenuDetails/tests/UserMenuDetails.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/components/Amelipro/UserInformationSummary/tests/UserInformationSummary.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproTabs/tests/AmeliproTabs.spec.ts
+✓ OK - Max: .03125 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproTabs/AmeliproTabBtn/tests/AmeliproTabBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproStatus/tests/AmeliproStatus.spec.ts
+✓ OK - Max: .03125 MB, Moy: .01 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproChips/tests/AmeliproChips.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Amelipro/ServiceMenu/tests/ServiceMenu.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/components/Amelipro/ServiceMenu/ServiceMenuContent/tests/ServiceMenuContent.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/ServiceMenu/ServiceList/tests/ServiceList.spec.ts
+✓ OK - Max: .03125 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Amelipro/ServiceMenu/ServiceBtn/tests/ServiceBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproCheckboxGroup/tests/AmeliproCheckboxGroup.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproNumberedCard/tests/AmeliproNumberedCard.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproFooter/tests/AmeliproFooter.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproMessagingLayout/tests/AmeliproMessagingLayout.spec.ts
+✓ OK - Max: .03126 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproMessagingLayout/AmeliproDropdownMenu/AmeliproDropdownMenuBtn/tests/AmeliproDropdownMenuBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproMessagingLayout/AmeliproDropdownMenu/tests/AmeliproDropdownMenu.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproMessagingLayout/AmeliproMessagingMenuBtn/tests/AmeliproMessagingMenuBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproIllustratedRadioGroup/tests/AmeliproIllustratedRadioGroup.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproMessage/tests/AmeliproMessage.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproStepper/tests/AmeliproStepper.spec.ts
+✓ OK - Max: 0 MB, Moy: -.12 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproStepper/AmeliproStepBtn/tests/AmeliproStepBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproTextField/tests/AmeliproTextField.spec.ts
+✓ OK - Max: .03125 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproMailTile/tests/AmeliproMailTile.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Amelipro/AmeliproIllustratedDataTile/tests/AmeliproIllustratedDataTile.spec.ts
+✓ OK - Max: .03126 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/FileUpload/tests/FileUpload.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/HeaderLoading/tests/HeaderLoading.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Tables/SyServerTable/tests/SyServerTable.spec.ts
+⚠️ ERREUR - Le test a échoué
+---------------------------------------------
+Test: src/components/Tables/SyTable/tests/SyTable.spec.ts
+⚠️ ERREUR - Le test a échoué
+---------------------------------------------
+Test: src/components/Tables/common/filters/tests/SelectFilter.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Tables/common/filters/tests/DateFilter.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Tables/common/filters/tests/PeriodFilter.spec.ts
+✓ OK - Max: 0 MB, Moy: -.19 MB
+---------------------------------------------
+Test: src/components/Tables/common/filters/tests/NumberFilter.spec.ts
+✓ OK - Max: 0 MB, Moy: -.11 MB
+---------------------------------------------
+Test: src/components/Tables/common/filters/tests/TextFilter.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Tables/common/filters/logics/tests/TextFilterLogic.spec.ts
+✓ OK - Max: 0 MB, Moy: -.13 MB
+---------------------------------------------
+Test: src/components/Tables/common/tests/tableFilterUtils.spec.ts
+✓ OK - Max: 0 MB, Moy: -.12 MB
+---------------------------------------------
+Test: src/components/Tables/common/tests/SyTableFilter.spec.ts
+✓ OK - Max: 0 MB, Moy: -.14 MB
+---------------------------------------------
+Test: src/components/Tables/common/tests/resize.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/components/Tables/common/tests/TableHeader.spec.ts
+✓ OK - Max: 0 MB, Moy: -.14 MB
+---------------------------------------------
+Test: src/components/Tables/common/tests/filterByRange.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Tables/common/tests/SyTablePagination.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/Tables/common/tests/tableUtils.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/FooterBar/tests/FooterBar.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/FooterBar/tests/FooterBarConfig.spec.ts
+✓ OK - Max: 0 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/PaginatedTable/tests/PaginatedTable.spec.ts
+✓ OK - Max: 0 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/ToolbarContainer/tests/ToolbarContainer.spec.ts
+✓ OK - Max: 0 MB, Moy: -.11 MB
+---------------------------------------------
+Test: src/components/RatingPicker/NumberPicker/tests/NumberPicker.spec.ts
+✓ OK - Max: .01562 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/RatingPicker/tests/RatingPicker.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/RatingPicker/tests/Rating.spec.ts
+✓ OK - Max: 0 MB, Moy: -.11 MB
+---------------------------------------------
+Test: src/components/RatingPicker/EmotionPicker/tests/EmotionPicker.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/RatingPicker/StarsPicker/tests/StarsPicker.spec.ts
+✓ OK - Max: 0 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/SearchListField/tests/SearchListField.spec.ts
+✓ OK - Max: 0 MB, Moy: -.13 MB
+---------------------------------------------
+Test: src/components/HeaderNavigationBar/tests/HeaderNavigationBar.spec.ts
+✓ OK - Max: 0 MB, Moy: -.14 MB
+---------------------------------------------
+Test: src/components/SocialMediaLinks/tests/SocialMediaLinks.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/SocialMediaLinks/tests/DefaultSocialMediaLinks.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/components/CookieBanner/tests/CookieBanner.spec.ts
+✓ OK - Max: .01562 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/components/CollapsibleList/tests/CollapsibleList.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Usages/tests/Usages.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/UserMenuBtn/tests/UserMenuBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/Customs/SyPagination/tests/SyPagination.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/components/Customs/SyTextField/tests/SyTextField.spec.ts
+✓ OK - Max: 0 MB, Moy: -.13 MB
+---------------------------------------------
+Test: src/components/Customs/SyIcon/SyIcon.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/components/Customs/Selects/SyInputSelect/tests/SyInputSelect.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/Customs/Selects/SyBtnSelect/tests/SyBtnSelect.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Customs/Selects/SySelect/composables/tests/useSySelectKeyboard.spec.ts
+✓ OK - Max: .01562 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/Customs/Selects/SySelect/tests/SySelect.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/Customs/Selects/SelectBtnField/tests/SelectBtnField.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/Customs/SyCheckbox/tests/SyCheckbox.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/components/Accordion/composables/__tests__/useAccordionState.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/Accordion/composables/__tests__/useAccordionGroupCommunication.spec.ts
+✓ OK - Max: 0 MB, Moy: -.16 MB
+---------------------------------------------
+Test: src/components/Accordion/composables/__tests__/useAccordionKeyboardNavigation.spec.ts
+✓ OK - Max: 0 MB, Moy: -.11 MB
+---------------------------------------------
+Test: src/components/Accordion/tests/accordion.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/MaintenancePage/tests/MaintenancePage.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/DataList/tests/DataList.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/DataList/DataListLoading/tests/DataListLoading.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDateValidation.spec.ts
+✓ OK - Max: 0 MB, Moy: -.11 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDateInputEditing.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDatePickerViewMode.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDateRangeInput.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useIconState.spec.ts
+✓ OK - Max: 0 MB, Moy: -.14 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useManualDateValidation.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useTodayButton.spec.ts
+✓ OK - Max: .03124 MB, Moy: .01 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useInputBlurHandler.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDateRangeValidation.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDisplayedDateString.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDateSelection.spec.ts
+✓ OK - Max: 0 MB, Moy: -.15 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useMonthButtonCustomization.spec.ts
+✓ OK - Max: .01562 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useWeekendDays.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDatePickerVisibility.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDateAutoClamp.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/DatePicker/composables/tests/useDateFormatValidation.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/DatePicker/CalendarMode/tests/DatePicker.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/DatePicker/CalendarMode/tests/DatePicker.events.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/components/DatePicker/ComplexDatePicker/tests/ComplexDatePicker.events.spec.ts
+✓ OK - Max: 0 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/components/DatePicker/ComplexDatePicker/tests/ComplexDatePicker.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/DatePicker/DateTextInput/DateTextInput.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/DatePicker/DateTextInput/DateTextInput.events.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/DatePicker/DateTextInput/DateTextInput.range.spec.ts
+✓ OK - Max: .03126 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/components/ContextualMenu/tests/ContextualMenu.spec.ts
+✓ OK - Max: 0 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/components/FilterInline/tests/FilterInline.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/DataListGroup/tests/DataListGroup.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/components/DataListItem/tests/DataListItem.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/components/PhoneField/tests/PhoneField.additional.spec.ts
+✓ OK - Max: 0 MB, Moy: -.11 MB
+---------------------------------------------
+Test: src/components/PhoneField/tests/PhoneField.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/SyTextArea/tests/SyTextArea.spec.ts
+✓ OK - Max: .01562 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/UploadWorkflow/tests/UploadWorkflow.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/CookiesSelection/CookiesInformation/tests/CookiesInformation.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/CookiesSelection/tests/CookiesSelection.spec.ts
+✓ OK - Max: .01562 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/CookiesSelection/CookiesTable/tests/CookiesTable.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/DialogBox/tests/DialogBox.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/HeaderToolbar/tests/HeaderToolBar.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/BackToTopBtn/tests/BackToTopBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.05 MB
+---------------------------------------------
+Test: src/components/BackBtn/tests/BackBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.01 MB
+---------------------------------------------
+Test: src/components/CopyBtn/tests/CopyBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/PasswordField/tests/PasswordField.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/NotFoundPage/tests/NotFoundPage.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/HeaderBar/HeaderMenuBtn/tests/HeaderMenuBtn.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/HeaderBar/HeaderLogo/tests/HeaderLogo.spec.ts
+✓ OK - Max: .01562 MB, Moy: -.04 MB
+---------------------------------------------
+Test: src/components/HeaderBar/tests/useHeaderResponsiveMode.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/HeaderBar/tests/useScrollDirection.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/HeaderBar/tests/HeaderBar.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/HeaderBar/HeaderBurgerMenu/tests/useHandleSubMenus.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/HeaderBar/HeaderBurgerMenu/tests/HeaderBurgerMenu.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.01 MB
+---------------------------------------------
+Test: src/components/HeaderBar/HeaderBurgerMenu/HeaderMenuItem/tests/HeaderMenuItem.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/HeaderBar/HeaderBurgerMenu/HeaderSubMenu/tests/HeaderSubMenu.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/tests/HeaderMenuSection.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/FranceConnectBtn/tests/FranceConnectBtn.spec.ts
+⚠️ ERREUR - Le test a échoué
+---------------------------------------------
+Test: src/components/PeriodField/tests/PeriodField.spec.ts
+✓ OK - Max: 0 MB, Moy: -.14 MB
+---------------------------------------------
+Test: src/components/Logo/tests/Logo.spec.ts
+✓ OK - Max: .03124 MB, Moy: -.01 MB
+---------------------------------------------
+Test: src/components/FilterSideBar/tests/FilterSideBar.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/ExternalLinks/tests/ExternalLinks.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/SubHeader/tests/SubHeader.spec.ts
+✓ OK - Max: 0 MB, Moy: -.12 MB
+---------------------------------------------
+Test: src/components/ChipList/tests/chipList.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/DiacriticPicker/tests/DiatriticPicker.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/TableToolbar/tests/TableToolbar.spec.ts
+✓ OK - Max: 0 MB, Moy: -.17 MB
+---------------------------------------------
+Test: src/components/SyAlert/tests/SyAlert.spec.ts
+✓ OK - Max: 0 MB, Moy: -.10 MB
+---------------------------------------------
+Test: src/components/SkipLink/tests/skipLink.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/FileList/tests/FileList.spec.ts
+✓ OK - Max: .03124 MB, Moy: .01 MB
+---------------------------------------------
+Test: src/components/DownloadBtn/tests/DownloadBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/PageContainer/tests/PageContainer.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/RangeField/tests/RangeField.spec.ts
+✓ OK - Max: 0 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/RangeField/RangeSlider/tests/rangeSlider.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/RangeField/RangeSlider/tests/useTooltipsNudge.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/RangeField/RangeSlider/tests/useThumb.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/RangeField/RangeSlider/tests/useTrack.spec.ts
+✓ OK - Max: 0 MB, Moy: -.11 MB
+---------------------------------------------
+Test: src/components/RangeField/RangeSlider/tests/useThumbKeyboard.spec.ts
+✓ OK - Max: 0 MB, Moy: -.03 MB
+---------------------------------------------
+Test: src/components/RangeField/RangeSlider/tests/useDoubleSlider.spec.ts
+✓ OK - Max: 0 MB, Moy: -.01 MB
+---------------------------------------------
+Test: src/components/RangeField/RangeSlider/tests/useMouseSlide.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+Test: src/components/RangeField/RangeSlider/tests/vAnimateClick.spec.ts
+✓ OK - Max: 0 MB, Moy: -.06 MB
+---------------------------------------------
+Test: src/components/NirField/tests/NirField.spec.ts
+✓ OK - Max: .01563 MB, Moy: -.02 MB
+---------------------------------------------
+Test: src/components/ErrorPage/tests/ErrorPage.spec.ts
+✓ OK - Max: 0 MB, Moy: -.09 MB
+---------------------------------------------
+Test: src/components/FilePreview/tests/FilePreview.spec.ts
+✓ OK - Max: 0 MB, Moy: -.08 MB
+---------------------------------------------
+Test: src/components/LangBtn/tests/LangBtn.spec.ts
+✓ OK - Max: 0 MB, Moy: -.07 MB
+---------------------------------------------
+Test: src/components/NotificationBar/tests/NotificationBar.spec.ts
+✓ OK - Max: .03126 MB, Moy: .01 MB
+---------------------------------------------
+Test: src/components/LogoBrandSection/tests/LogoBrandSection.spec.ts
+✓ OK - Max: 0 MB, Moy: 0 MB
+---------------------------------------------
+
+RÉSUMÉ DES RÉSULTATS
+     230 tests analysés
+0 tests avec des fuites mémoire
+3 tests avec des erreurs
