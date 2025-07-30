@@ -56,9 +56,8 @@ if (!(Array.prototype as any).with) {
 /**
  * Mocks des APIs de navigateur pour les tests
  *
- * Ces APIs ne sont pas disponibles dans l'environnement Node.js/JSDOM/HappyDOM
- * mais sont utilisées par Vuetify. Nous créons donc des versions minimales
- * pour éviter les erreurs pendant les tests.
+ * Ces polyfills sont essentiels pour que les composants Vuetify fonctionnent
+ * correctement dans l'environnement de test Node.js/happy-dom.
  */
 Object.defineProperty(window, 'visualViewport', {
 	value: {
@@ -108,34 +107,34 @@ class IntersectionObserverMock {
 				this.thresholds = Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0]
 			}
 		} catch (error) {
-			// Silent fallback to avoid errors
+			// Fallback silencieux pour éviter les erreurs
 			this.callback = () => {}
 		}
 	}
 
 	observe(): void {
 		try {
-			// Mock implementation - does nothing but avoids errors
+			// Mock implementation - ne fait rien mais évite les erreurs
 			if (this.isDisconnected) return
 		} catch (error) {
-			// Ignore silently
+			// Ignorer silencieusement
 		}
 	}
 
 	unobserve(): void {
 		try {
-			// Mock implementation - does nothing but avoids errors
+			// Mock implementation - ne fait rien mais évite les erreurs
 		} catch (error) {
-			// Ignore silently
+			// Ignorer silencieusement
 		}
 	}
 
 	disconnect(): void {
 		try {
 			this.isDisconnected = true
-			// Mock implementation - does nothing but avoids errors
+			// Mock implementation - ne fait rien mais évite les erreurs
 		} catch (error) {
-			// Ignore silently
+			// Ignorer silencieusement
 		}
 	}
 
@@ -155,45 +154,50 @@ class IntersectionObserverMock {
  * une disponibilité maximale, car certains modules peuvent accéder à l'API
  * via l'une ou l'autre référence. Cela résout les différences entre
  * environnements local et CI.
+ *
+ * Application multiple pour éviter les unhandled rejections:
+ * - Sur window avec configurable: false pour éviter les écrasements
+ * - Sur global pour la compatibilité Node.js
+ * - Sur globalThis pour la compatibilité moderne
  */
 
-// Apply the polyfill robustly across all global objects
+// Appliquer le polyfill de manière robuste sur tous les objets globaux
 const applyIntersectionObserverPolyfill = () => {
 	try {
-		// On window (browser/happy-dom environment)
+		// Sur window (environnement navigateur/happy-dom)
 		if (typeof window !== 'undefined' && !window.IntersectionObserver) {
 			Object.defineProperty(window, 'IntersectionObserver', {
 				value: IntersectionObserverMock,
 				writable: true,
-				configurable: false, // Prevents overwriting
+				configurable: false, // Empêche l'écrasement
 			})
 		}
 
-		// On global (Node.js environment)
+		// Sur global (environnement Node.js)
 		if (typeof global !== 'undefined' && !global.IntersectionObserver) {
 			(global as any).IntersectionObserver = IntersectionObserverMock
 		}
 
-		// On globalThis (modern compatibility)
+		// Sur globalThis (compatibilité moderne)
 		if (typeof globalThis !== 'undefined' && !globalThis.IntersectionObserver) {
 			(globalThis as any).IntersectionObserver = IntersectionObserverMock
 		}
 	} catch (error) {
-		// Silently ignore polyfill errors to avoid unhandled rejections
+		// Ignorer silencieusement les erreurs de polyfill pour éviter les unhandled rejections
 		console.warn('Failed to apply IntersectionObserver polyfill:', error)
 	}
 }
 
-// Apply immediately
+// Appliquer immédiatement
 applyIntersectionObserverPolyfill()
 
-// Reapply after a short delay to ensure that modules loaded
-// asynchronously have access to the polyfill
+// Réappliquer après un court délai pour s'assurer que les modules chargés
+// de manière asynchrone ont accès au polyfill
 setTimeout(() => {
 	try {
 		applyIntersectionObserverPolyfill()
 	} catch (error) {
-		// Ignore silently to avoid unhandled rejections
+		// Ignorer silencieusement pour éviter les unhandled rejections
 	}
 }, 0)
 
