@@ -24,6 +24,7 @@ describe('HeaderNavigationBar', () => {
 				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
+					RouterLink: true, // Stub pour éviter l'avertissement de résolution de composant
 				},
 			},
 			props: {
@@ -66,6 +67,7 @@ describe('HeaderNavigationBar', () => {
 				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
+					RouterLink: true, // Stub pour éviter l'avertissement de résolution de composant
 				},
 			},
 			props: {
