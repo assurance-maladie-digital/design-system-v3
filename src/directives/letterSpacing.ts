@@ -33,7 +33,7 @@ function modifyVuetifyStylesheets(): void {
 				rules.forEach((rule) => {
 					if (rule instanceof CSSStyleRule) {
 						// Check if this rule affects typography classes
-						const typographyClasses = ['.text-h1', '.text-h2', '.text-h3', '.text-h4', '.text-h5', '.text-h6', '.text-body-1', '.text-body-2', '.text-subtitle-1', '.text-subtitle-2', '.text-caption', '.text-overline', '.text-button']
+						const typographyClasses = ['.text-h1', '.text-h2', '.text-h3', '.text-h4', '.text-h5', '.text-h6', '.text-body-1', '.text-body-2', '.text-subtitle-1', '.text-subtitle-2', '.text-caption', '.text-overline', '.text-button', '.text-md-subtitle-1']
 
 						const matchesTypography = typographyClasses.some(cls => rule.selectorText?.includes(cls))
 
@@ -94,6 +94,7 @@ function injectOverrideCSS(): void {
 		.v-application .v-application .text-caption { letter-spacing: var(--v-typography-caption-letter-spacing, 0px); }
 		.v-application .v-application .text-overline { letter-spacing: var(--v-typography-overline-letter-spacing, 0px); }
 		.v-application .v-application .text-button { letter-spacing: var(--v-typography-button-letter-spacing, 0px); }
+		.v-application .v-application .text-md-subtitle-1 { letter-spacing: var(--v-typography-md-subtitle1-letter-spacing, 0px); }
 		.v-application .v-application h1 { letter-spacing: var(--v-typography-h1-letter-spacing, 0px); }
 		.v-application .v-application h2 { letter-spacing: var(--v-typography-h2-letter-spacing, 0px); }
 		.v-application .v-application h3 { letter-spacing: var(--v-typography-h3-letter-spacing, 0px); }
@@ -111,7 +112,8 @@ function injectOverrideCSS(): void {
 /**
  * Apply design token letter-spacing values using multiple approaches
  */
-function applyTokenLetterSpacing(element: HTMLElement): void {
+// function applyTokenLetterSpacing(element: HTMLElement): void {
+function applyTokenLetterSpacing(): void {
 	// Try to modify existing Vuetify stylesheets first
 	modifyVuetifyStylesheets()
 
@@ -137,6 +139,7 @@ function applyTokenLetterSpacing(element: HTMLElement): void {
 		'--v-typography-caption-letter-spacing',
 		'--v-typography-overline-letter-spacing',
 		'--v-typography-button-letter-spacing',
+		'--v-typography-md-subtitle1-letter-spacing',
 	]
 
 	// Set each CSS variable with design token values
@@ -148,8 +151,8 @@ function applyTokenLetterSpacing(element: HTMLElement): void {
 	})
 
 	// Add debugging attributes
-	element.setAttribute('data-letter-spacing-override', 'multi-approach')
-	element.setAttribute('data-letter-spacing-timestamp', Date.now().toString())
+	// element.setAttribute('data-letter-spacing-override', 'multi-approach')
+	// element.setAttribute('data-letter-spacing-timestamp', Date.now().toString())
 }
 
 /**
@@ -167,7 +170,7 @@ export const vLetterSpacing: Directive<HTMLElement, LetterSpacingOptions | boole
 			: { applyToAll: true, observeChanges: true, ...binding.value }
 
 		// Apply letter-spacing override immediately
-		applyTokenLetterSpacing(el)
+		applyTokenLetterSpacing()
 
 		// Set up mutation observer if enabled
 		if (options.observeChanges !== false) {
@@ -186,7 +189,7 @@ export const vLetterSpacing: Directive<HTMLElement, LetterSpacingOptions | boole
 				})
 
 				if (shouldReapply) {
-					applyTokenLetterSpacing(el)
+					applyTokenLetterSpacing()
 				}
 			})
 
@@ -202,9 +205,9 @@ export const vLetterSpacing: Directive<HTMLElement, LetterSpacingOptions | boole
 		}
 	},
 
-	updated(el: HTMLElement) {
+	updated() {
 		// Reapply letter-spacing override when component updates
-		applyTokenLetterSpacing(el)
+		applyTokenLetterSpacing()
 	},
 
 	beforeUnmount(el: HTMLElement) {
@@ -216,17 +219,17 @@ export const vLetterSpacing: Directive<HTMLElement, LetterSpacingOptions | boole
 		}
 
 		// Remove override attributes
-		const elements = el.querySelectorAll('[data-letter-spacing-override]')
-		elements.forEach((element) => {
-			element.removeAttribute('data-letter-spacing-override')
-			element.removeAttribute('data-letter-spacing-timestamp')
-		})
+		// const elements = el.querySelectorAll('[data-letter-spacing-override]')
+		// elements.forEach((element) => {
+		// 	element.removeAttribute('data-letter-spacing-override')
+		// 	element.removeAttribute('data-letter-spacing-timestamp')
+		// })
 
 		// Clean up the main element if it has the override
-		if (el.hasAttribute('data-letter-spacing-override')) {
-			el.removeAttribute('data-letter-spacing-override')
-			el.removeAttribute('data-letter-spacing-timestamp')
-		}
+		// if (el.hasAttribute('data-letter-spacing-override')) {
+		// 	el.removeAttribute('data-letter-spacing-override')
+		// 	el.removeAttribute('data-letter-spacing-timestamp')
+		// }
 	},
 }
 

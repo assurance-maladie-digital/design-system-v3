@@ -124,7 +124,7 @@ export const WithBrand: Story = {
 				<LogoBrandSection v-bind="args">
 					<img
 						src="/logo-msa.svg"
-						alt="Logo MSA"
+						alt="MSA, sécurité sociale agricole : santé, famille, retraite, services"
 						width="115px"
 						height="52px"
 						class="ml-8 my-auto"
@@ -140,7 +140,7 @@ export const WithBrand: Story = {
 				code: `
 				<template>
 					<LogoBrandSection>
-						<img src="/logo-msa.svg" alt="Logo MSA" width="115px" height="52px" class="ml-8 my-auto">
+						<img src="/logo-msa.svg" alt="MSA, sécurité sociale agricole : santé, famille, retraite, services" width="115px" height="52px" class="ml-8 my-auto">
 					</LogoBrandSection>
 				</template>
 				`,

@@ -7,6 +7,7 @@
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
 	import { locales } from './locales'
 	import { secondaryLogoMapping } from './secondaryLogoMapping'
+	import { vLetterSpacing } from '@/directives/letterSpacing'
 	import type { Theme } from './types'
 
 	const props = withDefaults(
@@ -192,8 +193,8 @@
 
 <template>
 	<div
-		:height="height"
-		class="vd-logo-brand-section d-flex"
+		:style="{ height: height }"
+		class="vd-logo-brand-section d-flex flex-wrap"
 	>
 		<component
 			:is="logoContainerComponent"
@@ -205,7 +206,7 @@
 				:hide-signature="hideSignature"
 				:hide-organism="isCompteAmeliMobile"
 				:risque-pro="isRisquePro"
-				:aria-label="homeLink?.ariaLabel"
+				:aria-label="homeLink?.ariaLabel + ' Retour vers accueil du site'"
 				:avatar="avatar"
 				:size="logoSize"
 				:class="{ 'mr-2': avatar }"
@@ -216,9 +217,8 @@
 			<svg
 				v-if="showDivider"
 				:width="dividerDimensions.width"
-				:height="dividerDimensions.height"
+				:style="{ height: dividerDimensions.height }"
 				:fill="dividerColor"
-				role="img"
 				focusable="false"
 				aria-hidden="true"
 				xmlns="http://www.w3.org/2000/svg"
@@ -244,6 +244,7 @@
 
 			<div
 				v-else-if="showBrandContent"
+				v-letter-spacing
 				class="vd-title-container d-flex justify-center flex-column text-primary"
 			>
 				<slot name="brand-content">
@@ -255,17 +256,24 @@
 						class="vd-title text-caption text-md-subtitle-1 font-weight-medium"
 					>
 						<template v-if="typeof service.title === 'string'">
-							{{ service.title }}
+							<span v-letter-spacing>
+								{{ service.title }}
+							</span>
 						</template>
 
 						<template v-else>
-							{{ service.title.text }}
-							<span>{{ service.title.highlight }}</span>
+							<span v-letter-spacing>
+								{{ service.title.text }}
+							</span>
+							<span v-letter-spacing>
+								{{ service.title.highlight }}
+							</span>
 						</template>
 					</h1>
 
 					<h2
 						v-if="showServiceSubTitle"
+						v-letter-spacing
 						class="vd-title text-caption"
 					>
 						{{ service.subTitle }}
