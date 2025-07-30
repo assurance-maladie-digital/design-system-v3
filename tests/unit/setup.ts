@@ -231,12 +231,27 @@ Object.defineProperty(window, 'matchMedia', {
 	writable: true,
 })
 
-// Additional polyfills that might be needed
 // HTMLInputElement polyfill for maska library
-if (typeof global.HTMLInputElement === 'undefined') {
+// Apply in test environment only
+if (process.env.NODE_ENV === 'test' && typeof global.HTMLInputElement === 'undefined') {
 	(global as any).HTMLInputElement = class MockHTMLInputElement {
 		type = 'text'
 		value = ''
+		selectionStart = 0
+		selectionEnd = 0
+		readOnly = false
+		disabled = false
+		placeholder = ''
+		maxLength = -1
+		minLength = 0
+		pattern = ''
+		title = ''
+		name = ''
+		id = ''
+		className = ''
+		style = {}
+		dataset = {}
+
 		querySelectorAll() { return [] }
 		querySelector() { return null }
 		addEventListener() {}
@@ -244,7 +259,32 @@ if (typeof global.HTMLInputElement === 'undefined') {
 		setAttribute() {}
 		getAttribute() { return null }
 		removeAttribute() {}
+		hasAttribute() { return false }
+		getBoundingClientRect() { return { top: 0, left: 0, bottom: 0, right: 0, width: 0, height: 0, x: 0, y: 0 } }
+		focus() {}
+		blur() {}
+		click() {}
+		select() {}
+		setSelectionRange() {}
+		setRangeText() {}
+		checkValidity() { return true }
+		reportValidity() { return true }
+		setCustomValidity() {}
+		cloneNode() { return new MockHTMLInputElement() }
+		appendChild() { return null }
+		removeChild() { return null }
+		insertBefore() { return null }
+		replaceChild() { return null }
+		contains() { return false }
+		matches() { return false }
+		closest() { return null }
+		dispatchEvent() { return true }
 	}
+}
+
+// Also apply to window scope if it exists
+if (process.env.NODE_ENV === 'test' && typeof window !== 'undefined' && typeof window.HTMLInputElement === 'undefined') {
+	(window as any).HTMLInputElement = (global as any).HTMLInputElement
 }
 
 Object.defineProperty(global, 'CSS', {
