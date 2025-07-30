@@ -156,11 +156,17 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -174,10 +180,12 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -303,11 +311,17 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -321,10 +335,12 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -566,11 +582,17 @@ exports[`RangeField > renders correctly 1`] = `
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -584,10 +606,12 @@ exports[`RangeField > renders correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -713,11 +737,17 @@ exports[`RangeField > renders correctly 1`] = `
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -731,10 +761,12 @@ exports[`RangeField > renders correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -976,11 +1008,17 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -994,10 +1032,12 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -1123,11 +1163,17 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -1141,10 +1187,12 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>

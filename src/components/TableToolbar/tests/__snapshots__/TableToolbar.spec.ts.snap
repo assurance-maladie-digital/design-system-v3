@@ -79,11 +79,17 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
               >
                 <!---->
                 <div
-                  class="v-progress-linear__background"
+                  class="
+                    bg-primary
+                    v-progress-linear__background
+                  "
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="v-progress-linear__buffer"
+                  class="
+                    bg-primary
+                    v-progress-linear__buffer
+                  "
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -97,10 +103,12 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
+                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
+                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -304,11 +312,17 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
               >
                 <!---->
                 <div
-                  class="v-progress-linear__background"
+                  class="
+                    bg-primary
+                    v-progress-linear__background
+                  "
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="v-progress-linear__buffer"
+                  class="
+                    bg-primary
+                    v-progress-linear__buffer
+                  "
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -322,10 +336,12 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
+                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
+                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -501,11 +517,17 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
               >
                 <!---->
                 <div
-                  class="v-progress-linear__background"
+                  class="
+                    bg-primary
+                    v-progress-linear__background
+                  "
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="v-progress-linear__buffer"
+                  class="
+                    bg-primary
+                    v-progress-linear__buffer
+                  "
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -519,10 +541,12 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
+                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
+                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -723,11 +747,17 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
               >
                 <!---->
                 <div
-                  class="v-progress-linear__background"
+                  class="
+                    bg-primary
+                    v-progress-linear__background
+                  "
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="v-progress-linear__buffer"
+                  class="
+                    bg-primary
+                    v-progress-linear__buffer
+                  "
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -741,10 +771,12 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
+                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
+                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -937,11 +969,17 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
               >
                 <!---->
                 <div
-                  class="v-progress-linear__background"
+                  class="
+                    bg-primary
+                    v-progress-linear__background
+                  "
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="v-progress-linear__buffer"
+                  class="
+                    bg-primary
+                    v-progress-linear__buffer
+                  "
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -955,10 +993,12 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
+                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
+                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -1160,11 +1200,17 @@ exports[`TableToolbar > should render 1`] = `
               >
                 <!---->
                 <div
-                  class="v-progress-linear__background"
+                  class="
+                    bg-primary
+                    v-progress-linear__background
+                  "
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="v-progress-linear__buffer"
+                  class="
+                    bg-primary
+                    v-progress-linear__buffer
+                  "
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -1178,10 +1224,12 @@ exports[`TableToolbar > should render 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
+                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
+                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
