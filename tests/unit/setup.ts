@@ -1,5 +1,5 @@
 /**
- * CRITICAL: IntersectionObserver polyfill must be applied BEFORE any imports
+ * Important: IntersectionObserver polyfill must be applied BEFORE any imports
  * to prevent "ReferenceError: IntersectionObserver is not defined" during module loading
  * and persist through test teardown
  */
