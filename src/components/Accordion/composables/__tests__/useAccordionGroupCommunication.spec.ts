@@ -46,19 +46,26 @@ describe('useAccordionGroupCommunication', () => {
 	})
 
 	describe('initialization', () => {
-		it('adds event listener on mount', () => {
-			// Utiliser le composable pour tester son initialisation
-			useAccordionGroupCommunication(
-				instanceId,
-				groupId,
-				mockOnFocusChange,
-			)
+		beforeEach(() => {
+			// Monter le composant de test pour fournir un contexte aux hooks Vue
+			wrapper = mount(TestComponent)
+		})
 
-			// Vérifier que le composable a bien ajouté l'écouteur d'événements
-			// Note: Nous ne pouvons pas vérifier directement l'appel à addEventListener car
-			// il est appelé dans le hook onMounted qui n'est pas exécuté dans le contexte de test
-			// Nous vérifions donc simplement que le test s'exécute sans erreur
-			expect(true).toBe(true)
+		afterEach(() => {
+			// Démonter le composant après chaque test
+			wrapper.unmount()
+		})
+
+		it('adds event listener on mount', () => {
+			// Le composable est maintenant utilisé via le composant de test,
+			// ce qui fournit un contexte valide pour les hooks de cycle de vie
+
+			// Vérifier que le composant est bien monté
+			expect(wrapper.vm).toBeDefined()
+
+			// Si addEventListener a été appelé sur window, cela signifie que
+			// le hook onMounted a été correctement exécuté
+			expect(window.addEventListener).toHaveBeenCalled()
 		})
 	})
 
@@ -93,11 +100,8 @@ describe('useAccordionGroupCommunication', () => {
 		})
 
 		it('dispatches a custom event with null itemId', () => {
-			const { emitFocusChange } = useAccordionGroupCommunication(
-				instanceId,
-				groupId,
-				mockOnFocusChange,
-			)
+			// Utiliser les méthodes exposées par le composant
+			const { emitFocusChange } = wrapper.vm
 
 			emitFocusChange(null)
 
