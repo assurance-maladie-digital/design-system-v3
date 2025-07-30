@@ -30,7 +30,7 @@ describe('useDatePickerAccessibility', () => {
 
 	beforeEach(() => {
 		// Monter le composant de test pour fournir un contexte aux hooks Vue
-		wrapper = mount(TestComponent) as ReturnType<typeof mount<{
+		wrapper = mount(TestComponent) as unknown as ReturnType<typeof mount<{
 			updateAccessibility: ReturnType<typeof useDatePickerAccessibility>['updateAccessibility']
 			handleKeyDown: ReturnType<typeof useDatePickerAccessibility>['handleKeyDown']
 			fixAriaAttributes: ReturnType<typeof useDatePickerAccessibility>['fixAriaAttributes']
