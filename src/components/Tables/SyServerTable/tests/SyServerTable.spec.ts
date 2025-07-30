@@ -88,7 +88,7 @@ describe('SyServerTable', () => {
 		// Attendre que toutes les promesses soient résolues avant de démonter
 		await flushPromises()
 
-		// Properly unmount all components to prevent memory leaks
+		// Properly unmount all components to prevent memory leaks -> attachTo: document.body
 		for (const wrapper of activeWrappers) {
 			if (wrapper && typeof wrapper.unmount === 'function') {
 				wrapper.unmount()
