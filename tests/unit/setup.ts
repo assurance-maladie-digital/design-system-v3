@@ -60,6 +60,7 @@ Object.defineProperty(window, 'ResizeObserver', {
 	writable: true,
 })
 
+<<<<<<< Updated upstream
 Object.defineProperty(window, 'IntersectionObserver', {
 	value: class IntersectionObserver {
 		constructor() {}
@@ -80,6 +81,127 @@ Object.defineProperty(global, 'IntersectionObserver', {
 	},
 	writable: true,
 })
+=======
+/**
+ * Mock pour l'API IntersectionObserver
+ *
+ * Ce mock est essentiel car Vuetify utilise IntersectionObserver dans plusieurs
+ * composants (notamment VProgressLinear). Sans ce mock, les tests échoueraient
+ * avec l'erreur "ReferenceError: IntersectionObserver is not defined".
+ *
+ * Cette implémentation fournit toutes les propriétés et méthodes nécessaires
+ * pour satisfaire à la fois l'interface TypeScript et les besoins d'exécution.
+ */
+class IntersectionObserverMock {
+	readonly root: Element | Document | null = null
+	readonly rootMargin: string = '0px'
+	readonly thresholds: ReadonlyArray<number> = [0]
+	private callback: Function
+	private isDisconnected = false
+
+	constructor(callback: Function, options?: any) {
+		try {
+			this.callback = callback || (() => {})
+			if (options) {
+				this.root = options.root || null
+				this.rootMargin = options.rootMargin || '0px'
+				this.thresholds = Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0]
+			}
+		} catch (error) {
+			// Fallback silencieux pour éviter les erreurs
+			this.callback = () => {}
+		}
+	}
+
+	observe(): void {
+		try {
+			// Mock implementation - ne fait rien mais évite les erreurs
+			if (this.isDisconnected) return
+		} catch (error) {
+			// Ignorer silencieusement
+		}
+	}
+
+	unobserve(): void {
+		try {
+			// Mock implementation - ne fait rien mais évite les erreurs
+		} catch (error) {
+			// Ignorer silencieusement
+		}
+	}
+
+	disconnect(): void {
+		try {
+			this.isDisconnected = true
+			// Mock implementation - ne fait rien mais évite les erreurs
+		} catch (error) {
+			// Ignorer silencieusement
+		}
+	}
+
+	takeRecords(): any[] {
+		try {
+			return []
+		} catch (error) {
+			return []
+		}
+	}
+}
+
+/**
+ * Installer le mock d'IntersectionObserver dans l'environnement
+ *
+ * Nous installons notre mock sur les objets window et global pour assurer
+ * une disponibilité maximale, car certains modules peuvent accéder à l'API
+ * via l'une ou l'autre référence. Cela résout les différences entre
+ * environnements local et CI.
+ *
+ * Application multiple pour éviter les unhandled rejections:
+ * - Sur window avec configurable: false pour éviter les écrasements
+ * - Sur global pour la compatibilité Node.js
+ * - Sur globalThis pour la compatibilité moderne
+ */
+
+// Appliquer le polyfill de manière robuste sur tous les objets globaux
+const applyIntersectionObserverPolyfill = () => {
+	try {
+		// Sur window (environnement navigateur/happy-dom)
+		if (typeof window !== 'undefined' && !window.IntersectionObserver) {
+			Object.defineProperty(window, 'IntersectionObserver', {
+				value: IntersectionObserverMock,
+				writable: true,
+				configurable: false, // Empêche l'écrasement
+			})
+		}
+
+		// Sur global (environnement Node.js)
+		if (typeof global !== 'undefined' && !global.IntersectionObserver) {
+			(global as any).IntersectionObserver = IntersectionObserverMock
+		}
+
+		// Sur globalThis (compatibilité moderne)
+		if (typeof globalThis !== 'undefined' && !globalThis.IntersectionObserver) {
+			(globalThis as any).IntersectionObserver = IntersectionObserverMock
+		}
+	} catch (error) {
+		// Ignorer silencieusement les erreurs de polyfill pour éviter les unhandled rejections
+		console.warn('Failed to apply IntersectionObserver polyfill:', error)
+	}
+}
+>>>>>>> Stashed changes
+
+// Appliquer immédiatement
+applyIntersectionObserverPolyfill()
+
+// Réappliquer après un court délai pour s'assurer que les modules chargés
+// de manière asynchrone ont accès au polyfill
+setTimeout(() => {
+	try {
+		applyIntersectionObserverPolyfill()
+	} catch (error) {
+		// Ignorer silencieusement pour éviter les unhandled rejections
+	}
+}, 0)
 
 Object.defineProperty(window, 'matchMedia', {
 	value: (query: string) => {
