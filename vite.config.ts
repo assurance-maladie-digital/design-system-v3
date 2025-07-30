@@ -125,7 +125,6 @@ export default defineConfig({
 		environment: 'happy-dom',
 		setupFiles: ['./tests/unit/setup.ts'],
 		isolate: true,
-		threads: false,
 		maxConcurrency: process.env.CI ? 1 : 5,
 		server: {
 			deps: {
