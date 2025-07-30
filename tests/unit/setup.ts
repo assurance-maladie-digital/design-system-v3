@@ -1,3 +1,130 @@
+/**
+ * CRITICAL: IntersectionObserver polyfill must be applied BEFORE any imports
+ * to prevent "ReferenceError: IntersectionObserver is not defined" during module loading
+ * and persist through test teardown
+ */
+
+// Define the polyfill class first
+class IntersectionObserverPolyfill {
+	readonly root: Element | Document | null = null
+	readonly rootMargin: string = '0px'
+	readonly thresholds: ReadonlyArray<number> = [0]
+	private callback: Function
+	private isDisconnected = false
+
+	constructor(callback: Function, options?: any) {
+		try {
+			this.callback = callback || (() => {})
+			if (options) {
+				this.root = options.root || null
+				this.rootMargin = options.rootMargin || '0px'
+				this.thresholds = Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0]
+			}
+		} catch (error) {
+			this.callback = () => {}
+		}
+	}
+
+	observe(): void {
+		try {
+			if (this.isDisconnected) return
+		} catch (error) {
+			// Silent
+		}
+	}
+
+	unobserve(): void {
+		try {
+			// Silent
+		} catch (error) {
+			// Silent
+		}
+	}
+
+	disconnect(): void {
+		try {
+			this.isDisconnected = true
+		} catch (error) {
+			// Silent
+		}
+	}
+
+	takeRecords(): any[] {
+		try {
+			return []
+		} catch (error) {
+			return []
+		}
+	}
+}
+
+// Function to apply the polyfill robustly
+const applyIntersectionObserverPolyfill = () => {
+	try {
+		// Apply to global scope (Node.js)
+		if (typeof global !== 'undefined') {
+			Object.defineProperty(global, 'IntersectionObserver', {
+				value: IntersectionObserverPolyfill,
+				writable: true,
+				configurable: true,
+				enumerable: false
+			})
+		}
+		
+		// Apply to window scope (browser/jsdom)
+		if (typeof window !== 'undefined') {
+			Object.defineProperty(window, 'IntersectionObserver', {
+				value: IntersectionObserverPolyfill,
+				writable: true,
+				configurable: true,
+				enumerable: false
+			})
+		}
+		
+		// Apply to globalThis scope (universal)
+		if (typeof globalThis !== 'undefined') {
+			Object.defineProperty(globalThis, 'IntersectionObserver', {
+				value: IntersectionObserverPolyfill,
+				writable: true,
+				configurable: true,
+				enumerable: false
+			})
+		}
+	} catch (error) {
+		console.warn('Failed to apply IntersectionObserver polyfill:', error)
+	}
+}
+
+// Apply polyfill immediately
+applyIntersectionObserverPolyfill()
+
+// Reapply polyfill periodically to handle test teardown/reset
+const polyfillInterval = setInterval(() => {
+	try {
+		// Check if IntersectionObserver is missing from any scope and reapply
+		if (
+			(typeof global !== 'undefined' && !global.IntersectionObserver) ||
+			(typeof window !== 'undefined' && !window.IntersectionObserver) ||
+			(typeof globalThis !== 'undefined' && !globalThis.IntersectionObserver)
+		) {
+			applyIntersectionObserverPolyfill()
+		}
+	} catch (error) {
+		// Silent - don't let polyfill checking break tests
+	}
+}, 100) // Check every 100ms
+
+// Clean up interval after tests (but keep polyfill)
+if (typeof global !== 'undefined' && global.process?.env?.NODE_ENV === 'test') {
+	setTimeout(() => {
+		try {
+			clearInterval(polyfillInterval)
+		} catch (error) {
+			// Silent
+		}
+	}, 30000) // Clean up after 30 seconds
+}
+
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -53,27 +180,6 @@ Object.defineProperty(window, 'visualViewport', {
 
 Object.defineProperty(window, 'ResizeObserver', {
 	value: class ResizeObserver {
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
-
-Object.defineProperty(window, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
-
-// Also add to global scope for Node.js environment
-Object.defineProperty(global, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor() {}
 		observe() {}
 		unobserve() {}
 		disconnect() {}
@@ -152,6 +258,49 @@ Object.defineProperty(window, 'getComputedStyle', {
 		getPropertyValue: () => '',
 	}),
 })
+
+// Document polyfill for Vuetify components
+if (typeof global.document === 'undefined') {
+	// Use the existing window.document from happy-dom if available
+	if (typeof window !== 'undefined' && window.document) {
+		(global as any).document = window.document
+	} else {
+		// Fallback minimal document mock
+		(global as any).document = {
+			createElement: () => ({
+				addEventListener: () => {},
+				removeEventListener: () => {},
+				setAttribute: () => {},
+				getAttribute: () => null,
+				removeAttribute: () => {},
+				className: '',
+				style: {},
+				tagName: 'DIV',
+				parentNode: null,
+				children: [],
+				appendChild: () => {},
+				removeChild: () => {},
+			}),
+			querySelector: () => null,
+			querySelectorAll: () => [],
+			getElementById: () => null,
+			addEventListener: () => {},
+			removeEventListener: () => {},
+			body: {
+				addEventListener: () => {},
+				removeEventListener: () => {},
+				appendChild: () => {},
+				removeChild: () => {},
+				style: {},
+			},
+			documentElement: {
+				style: {},
+				addEventListener: () => {},
+				removeEventListener: () => {},
+			},
+		}
+	}
+}
 
 // CI-specific configurations for better stability
 if (process.env.CI) {
