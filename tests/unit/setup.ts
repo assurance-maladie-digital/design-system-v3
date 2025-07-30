@@ -1,14 +1,30 @@
+/**
+ * Test Environment Setup File
+ *
+ * Ce fichier configure l'environnement de test pour les composants Vue/Vuetify.
+ * Il contient :
+ * - Les polyfills pour APIs du navigateur (IntersectionObserver, ResizeObserver, etc.)
+ * - Les polyfills pour méthodes ES2022 non supportées dans Node.js 18
+ * - La configuration de l'environnement de test global
+ */
+
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-// Increase max listeners to prevent memory leak warnings during tests
-// Set higher limit for CI environments where more concurrent processes may run
+// Augmenter le nombre max d'écouteurs d'événements pour éviter les avertissements
+// de fuites mémoire pendant les tests, surtout sur CI où plusieurs processus
+// peuvent s'exécuter en parallèle
 const maxListeners = process.env.CI ? 30 : 20
 process.setMaxListeners(maxListeners)
 
-// ES2022 Array methods polyfill for Node.js 18.x compatibility
-// These methods are used by Vuetify 3.9.x but not available in Node.js 18.x
+/**
+ * Polyfills pour méthodes de tableau ES2022 utilisées par Vuetify 3.9.x
+ *
+ * Ces méthodes sont nécessaires car Node.js 18.x ne les implémente pas nativement,
+ * mais Vuetify 3.9+ les utilise. Ces polyfills permettent d'exécuter les tests
+ * sans erreurs de référence aux méthodes manquantes.
+ */
 if (!(Array.prototype as any).toReversed) {
 	(Array.prototype as any).toReversed = function (this: any[]) {
 		return [...this].reverse()
@@ -37,7 +53,13 @@ if (!(Array.prototype as any).with) {
 	}
 }
 
-// Browser API polyfills to prevent test failures
+/**
+ * Mocks des APIs de navigateur pour les tests
+ *
+ * Ces APIs ne sont pas disponibles dans l'environnement Node.js/JSDOM/HappyDOM
+ * mais sont utilisées par Vuetify. Nous créons donc des versions minimales
+ * pour éviter les erreurs pendant les tests.
+ */
 Object.defineProperty(window, 'visualViewport', {
 	value: {
 		width: 1024,
@@ -60,28 +82,6 @@ Object.defineProperty(window, 'ResizeObserver', {
 	writable: true,
 })
 
-<<<<<<< Updated upstream
-Object.defineProperty(window, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
-
-// Also add to global scope for Node.js environment
-Object.defineProperty(global, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
-=======
 /**
  * Mock pour l'API IntersectionObserver
  *
@@ -108,34 +108,34 @@ class IntersectionObserverMock {
 				this.thresholds = Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0]
 			}
 		} catch (error) {
-			// Fallback silencieux pour éviter les erreurs
+			// Silent fallback to avoid errors
 			this.callback = () => {}
 		}
 	}
 
 	observe(): void {
 		try {
-			// Mock implementation - ne fait rien mais évite les erreurs
+			// Mock implementation - does nothing but avoids errors
 			if (this.isDisconnected) return
 		} catch (error) {
-			// Ignorer silencieusement
+			// Ignore silently
 		}
 	}
 
 	unobserve(): void {
 		try {
-			// Mock implementation - ne fait rien mais évite les erreurs
+			// Mock implementation - does nothing but avoids errors
 		} catch (error) {
-			// Ignorer silencieusement
+			// Ignore silently
 		}
 	}
 
 	disconnect(): void {
 		try {
 			this.isDisconnected = true
-			// Mock implementation - ne fait rien mais évite les erreurs
+			// Mock implementation - does nothing but avoids errors
 		} catch (error) {
-			// Ignorer silencieusement
+			// Ignore silently
 		}
 	}
 
@@ -155,51 +155,45 @@ class IntersectionObserverMock {
  * une disponibilité maximale, car certains modules peuvent accéder à l'API
  * via l'une ou l'autre référence. Cela résout les différences entre
  * environnements local et CI.
- *
- * Application multiple pour éviter les unhandled rejections:
- * - Sur window avec configurable: false pour éviter les écrasements
- * - Sur global pour la compatibilité Node.js
- * - Sur globalThis pour la compatibilité moderne
  */
 
-// Appliquer le polyfill de manière robuste sur tous les objets globaux
+// Apply the polyfill robustly across all global objects
 const applyIntersectionObserverPolyfill = () => {
 	try {
-		// Sur window (environnement navigateur/happy-dom)
+		// On window (browser/happy-dom environment)
 		if (typeof window !== 'undefined' && !window.IntersectionObserver) {
 			Object.defineProperty(window, 'IntersectionObserver', {
 				value: IntersectionObserverMock,
 				writable: true,
-				configurable: false, // Empêche l'écrasement
+				configurable: false, // Prevents overwriting
 			})
 		}
 
-		// Sur global (environnement Node.js)
+		// On global (Node.js environment)
 		if (typeof global !== 'undefined' && !global.IntersectionObserver) {
 			(global as any).IntersectionObserver = IntersectionObserverMock
 		}
 
-		// Sur globalThis (compatibilité moderne)
+		// On globalThis (modern compatibility)
 		if (typeof globalThis !== 'undefined' && !globalThis.IntersectionObserver) {
 			(globalThis as any).IntersectionObserver = IntersectionObserverMock
 		}
 	} catch (error) {
-		// Ignorer silencieusement les erreurs de polyfill pour éviter les unhandled rejections
+		// Silently ignore polyfill errors to avoid unhandled rejections
 		console.warn('Failed to apply IntersectionObserver polyfill:', error)
 	}
 }
->>>>>>> Stashed changes
 
-// Appliquer immédiatement
+// Apply immediately
 applyIntersectionObserverPolyfill()
 
-// Réappliquer après un court délai pour s'assurer que les modules chargés
-// de manière asynchrone ont accès au polyfill
+// Reapply after a short delay to ensure that modules loaded
+// asynchronously have access to the polyfill
 setTimeout(() => {
 	try {
 		applyIntersectionObserverPolyfill()
 	} catch (error) {
-		// Ignorer silencieusement pour éviter les unhandled rejections
+		// Ignore silently to avoid unhandled rejections
 	}
 }, 0)
 
