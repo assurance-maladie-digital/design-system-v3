@@ -183,6 +183,7 @@
 					<SyIcon
 						v-bind="options.goTopBtnIcon"
 						:icon="arrowTopIcon"
+						decorative
 						class="scroll"
 					/>
 				</VBtn>
