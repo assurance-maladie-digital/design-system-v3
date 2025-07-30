@@ -37,15 +37,15 @@ describe('NirField.vue', () => {
 				outlined: true,
 			},
 		})
-		
+
 		// Ajouter le wrapper à la liste pour le démontage
 		activeWrappers.push(wrapper)
-		
+
 		// Attendre que le montage initial soit terminé
 		await wrapper.vm.$nextTick()
 		await flushPromises()
 	})
-	
+
 	afterEach(async () => {
 		// Attendre que toutes les promesses soient résolues avant de démonter
 		await flushPromises()
