@@ -19,7 +19,8 @@ const maxListeners = process.env.CI ? 30 : 20
 process.setMaxListeners(maxListeners)
 
 /**
- * Polyfills pour méthodes de tableau ES2022 utilisées par Vuetify 3.9.x
+ * Polyfills pour méthodes de tableau ES2023 utilisées par Vuetify 3.9.x
+ * https://node.green/#ES2023
  *
  * Ces méthodes sont nécessaires car Node.js 18.x ne les implémente pas nativement,
  * mais Vuetify 3.9+ les utilise. Ces polyfills permettent d'exécuter les tests
