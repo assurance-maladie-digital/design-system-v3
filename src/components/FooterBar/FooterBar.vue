@@ -183,8 +183,8 @@
 					<SyIcon
 						v-bind="options.goTopBtnIcon"
 						:icon="arrowTopIcon"
-						decorative
 						class="scroll"
+						label="Aller en haut de la page"
 					/>
 				</VBtn>
 			</div>
