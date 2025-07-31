@@ -19,7 +19,8 @@ const maxListeners = process.env.CI ? 30 : 20
 process.setMaxListeners(maxListeners)
 
 /**
- * Polyfills pour méthodes de tableau ES2022 utilisées par Vuetify 3.9.x
+ * Polyfills pour méthodes de tableau ES2023 utilisées par Vuetify 3.9.x
+ * https://node.green/#ES2023
  *
  * Ces méthodes sont nécessaires car Node.js 18.x ne les implémente pas nativement,
  * mais Vuetify 3.9+ les utilise. Ces polyfills permettent d'exécuter les tests
@@ -128,7 +129,14 @@ Object.defineProperty(window, 'IntersectionObserver', {
 
 // Définir pour l'objet global également (important pour CI)
 if (typeof global !== 'undefined') {
-	global.IntersectionObserver = IntersectionObserverMock
+	// Assigner directement à global avant toute autre initialisation
+	// pour garantir sa disponibilité avant l'initialisation des composants Vuetify
+	Object.defineProperty(global, 'IntersectionObserver', {
+		value: IntersectionObserverMock,
+		configurable: true,
+		writable: true,
+		enumerable: false,
+	})
 }
 
 /**

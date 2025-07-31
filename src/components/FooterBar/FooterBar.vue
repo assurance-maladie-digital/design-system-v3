@@ -184,6 +184,7 @@
 						v-bind="options.goTopBtnIcon"
 						:icon="arrowTopIcon"
 						class="scroll"
+						label="Aller en haut de la page"
 					/>
 				</VBtn>
 			</div>
