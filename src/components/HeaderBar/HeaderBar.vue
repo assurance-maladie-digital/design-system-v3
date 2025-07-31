@@ -257,15 +257,17 @@
 	border-bottom: solid 1px $blue-lighten-80;
 }
 
-.header-append, .header-prepend {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  span {
-    max-width: $header-max-width;
-    width: 100%;
-  }
+.header-append,
+.header-prepend {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+
+	span {
+		max-width: $header-max-width;
+		width: 100%;
+	}
 }
 
 .header-side {
