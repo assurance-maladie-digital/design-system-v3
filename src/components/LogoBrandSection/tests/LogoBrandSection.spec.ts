@@ -75,7 +75,7 @@ describe('LogoBrandSection', () => {
 		})
 
 		const mainDiv = wrapper.find('.vd-logo-brand-section')
-		expect(mainDiv.attributes('height')).toBe('64px')
+		expect(mainDiv.attributes('style')).toContain('height: 64px')
 	})
 
 	it('renders correctly with showServiceSubTitle', () => {
