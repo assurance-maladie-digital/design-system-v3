@@ -63,7 +63,7 @@
 		(e: 'update:model-value', value: DateValue): void
 		(e: 'focus'): void
 		(e: 'blur'): void
-		(e: 'input', value: string): void
+		(e: 'input', value: DateValue): void
 		(e: 'date-selected', value: DateValue): void
 	}>()
 
@@ -726,7 +726,7 @@
 				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
 					const parts = inputValue.value.split(' - ')
 					if (parts.length === 2) {
-						emit('update:model-value', inputValue.value)
+						emit('update:model-value', [parts[0], parts[1]])
 					}
 					else {
 						// If we don't have exactly two parts, use original value
