@@ -40,6 +40,17 @@
 	const modalId = `${props.uniqueId}-service-menu-title`
 	const { mdAndUp } = useDisplay()
 
+	// Computed property to safely handle the attach target
+	const attachTarget = computed(() => {
+		const targetId = `#${props.uniqueId}-service-menu`
+		// Check if the element exists in the DOM
+		if (typeof document !== 'undefined' && document.querySelector(targetId)) {
+			return targetId
+		}
+		// Fallback to body or undefined to let Vuetify handle it
+		return undefined
+	})
+
 	const emit = defineEmits(['update:model-value', 'change'])
 	const emitChangeEvent = (): void => {
 		visible.value = false
@@ -103,7 +114,7 @@
 		>
 			<VMenu
 				v-model="visible"
-				:attach="`#${uniqueId}-service-menu`"
+				:attach="attachTarget"
 				:close-on-content-click="false"
 				eager
 				max-height="520px"
