@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch } from 'vue'
 import AmeliproCustomSelector from './AmeliproCustomSelector.vue'
-import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 
 const meta = {
 	argTypes: {
@@ -85,22 +84,14 @@ export const Default: Story = {
 		v-model="value"
 		group-label="Mon label"
 		unique-id="custom-selector-id"
-	>
-		<template #labelInfo>
-			<AmeliproTooltips
-				class="ml-2"
-				tooltip-text="contenu de la tooltip"
-				unique-id="ma-tooltip"
-			/>
-		</template>
-	</AmeliproCustomSelector>
+	/>
 </template>`,
 			},
 			{
 				name: 'Scripts',
 				code: `<script setup lang="ts">
 	import { ref } from 'vue';
-	import { AmeliproCustomSelector, AmeliproTooltips } from '@cnamts/synapse';
+	import { AmeliproCustomSelector } from '@cnamts/synapse';
 
 	const value = ref([
 		{
@@ -133,7 +124,7 @@ export const Default: Story = {
 		],
 	},
 	render: args => ({
-		components: { AmeliproCustomSelector, AmeliproTooltips },
+		components: { AmeliproCustomSelector },
 		setup() {
 			const model = ref(args.modelValue)
 
@@ -147,14 +138,6 @@ export const Default: Story = {
 <AmeliproCustomSelector
 	v-bind="args"
 	v-model="model"
->
-	<template #labelInfo>
-		<AmeliproTooltips
-			class="ml-2"
-			tooltip-text="contenu de la tooltip"
-			unique-id="ma-tooltip"
-		/>
-	</template>
-</AmeliproCustomSelector>`,
+/>`,
 	}),
 }
