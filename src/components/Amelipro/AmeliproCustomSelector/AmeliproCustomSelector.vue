@@ -267,7 +267,7 @@
 
 .amelipro-custom-selector__label {
 	font-size: apTokens.$font-size-sm;
-	font-weight: apTokens.$ap-font-weight-semi-bold;
+	font-weight: apTokens.$ap-font-weight-bold;
 }
 
 .amelipro-custom-selector__item {
