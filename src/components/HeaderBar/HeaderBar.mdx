@@ -18,8 +18,8 @@ Pour voir l'utilisation du menu, veuillez consulter le composant `HeaderBurgerMe
 ### Prepend
 
 Le slot `prepend` permet d'ajouter du contenu en haut du header, il suivra le comportement du header au scroll.
-Il est possible de récupérer le status du Menu de header en utilisant la prop `isMenuOpen` du slot `prepend`. (Fonctionne uniquement pour les menu s'enregistrant via la fonction injectée `registerHeaderMenu`, ce qui est le cas pour le composant `HeaderBurgerMenu`).
-Le contenu du slot prend tout l'espace disponible en en largeur. Pour que le contenu soit de même dimension que le header, il faut lui appliquer une largeur maximale de `1712px`.
+Il est possible de récupérer le status du Menu de header en utilisant la prop `menuOpen` du slot `prepend`. (Fonctionne uniquement pour les menus s'enregistrant via la fonction injectée `registerHeaderMenu`, ce qui est le cas pour le composant `HeaderBurgerMenu`).
+Le contenu du slot prend tout l'espace disponible en largeur. Pour que le contenu soit de même dimension que le header, il faut lui appliquer une largeur maximale de `1712px`.
 
 <Source
   dark
@@ -62,7 +62,11 @@ code:`
 <template>
 	<HeaderBar>
 		<template #prepend>
-			<div style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4">contenu</div>
+			<div style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
+				<div>
+					Contenu
+				</div>
+			</div>
 		</template>
 	</HeaderBar>
 </template>
@@ -72,8 +76,8 @@ code:`
 ### Append
 
 Le slot `append` permet d'ajouter du contenu en bas du header, il suivra le comportement du header au scroll.
-Il est également possible de récupérer le status du Menu de header en utilisant la prop `isMenuOpen` du slot `append`.
-Le contenu du slot prend tout l'espace disponible en en largeur. Pour que le contenu soit de même dimension que le header, il faut lui appliquer une largeur maximale de `1712px`.
+Il est également possible de récupérer le status du Menu de header en utilisant la prop `menuOpen` du slot `append`.
+Le contenu du slot prend tout l'espace disponible en largeur. Pour que le contenu soit de même dimension que le header, il faut lui appliquer une largeur maximale de `1712px`.
 
 <Source
 	dark
@@ -105,7 +109,9 @@ Le contenu du slot prend tout l'espace disponible en en largeur. Pour que le con
 <template>
 	<HeaderBar>
 		<template #append>
-			<div style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4">contenu</div>
+			<div style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
+				<div>contenu</div>
+			</div>
 		</template>
 	</HeaderBar>
 </template>
