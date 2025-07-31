@@ -63,7 +63,7 @@
 		(e: 'update:model-value', value: DateValue): void
 		(e: 'focus'): void
 		(e: 'blur'): void
-		(e: 'input', value: DateValue): void
+		(e: 'input', value: string): void
 		(e: 'date-selected', value: DateValue): void
 	}>()
 
