@@ -248,29 +248,13 @@
 		return validateDateFormatFn(dateStr)
 	}
 
-	// Fonction pour adapter les ValidationRule en CustomRule
-	const adaptValidationRulesToCustomRules = (rules: ValidationRule[] | undefined): CustomRule[] | undefined => {
-		if (!rules) return undefined
-		return rules.map(rule => ({
-			type: rule.type,
-			options: {
-				...rule.options,
-				validate: (value: unknown) => {
-					// Assurer que la fonction validate retourne un booléen
-					const result = rule.options.validate ? rule.options.validate(value) : true
-					return result === true || result === ''
-				},
-			},
-		}))
-	}
-
 	// Initialiser le composable pour la validation manuelle des dates
 	const { validateManualInput } = useManualDateValidation({
 		format: props.format,
 		required: props.required,
 		disableErrorHandling: props.disableErrorHandling,
-		customRules: adaptValidationRulesToCustomRules(props.customRules),
-		customWarningRules: adaptValidationRulesToCustomRules(props.customWarningRules),
+		customRules: props.customRules as CustomRule[],
+		customWarningRules: props.customWarningRules as CustomRule[],
 		hasInteracted,
 		errors,
 		clearValidation,
