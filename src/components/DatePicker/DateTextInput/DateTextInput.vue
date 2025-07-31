@@ -265,7 +265,7 @@
 	})
 
 	const validateRules = (value: string) => {
-		// On ne fait plus de clearValidation() ici pour conserver les erreurs des règles personnalisées
+		clearValidation()
 
 		// Cas spécial : champ vide
 		if (!value && props.required && hasInteracted.value) {
@@ -726,9 +726,7 @@
 				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
 					const parts = inputValue.value.split(' - ')
 					if (parts.length === 2) {
-						// Create a proper tuple [string, string] as required by DateValue type
-						const dateTuple: [string, string] = [parts[0].trim(), parts[1].trim()]
-						emit('update:model-value', dateTuple)
+						emit('update:model-value', inputValue.value)
 					}
 					else {
 						// If we don't have exactly two parts, use original value
