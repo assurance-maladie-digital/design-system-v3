@@ -9,12 +9,12 @@
  * Mock IntersectionObserver for SSR/Node.js environments
  */
 function polyfillIntersectionObserver(): void {
-  // Check if IntersectionObserver is missing in any context (global, window, or globalThis)
-  const needsPolyfill = (typeof global !== 'undefined' && typeof global.IntersectionObserver === 'undefined') ||
-                       (typeof window !== 'undefined' && typeof window.IntersectionObserver === 'undefined') ||
-                       (typeof globalThis !== 'undefined' && typeof globalThis.IntersectionObserver === 'undefined')
-  
-  if (needsPolyfill) {
+	// Check if IntersectionObserver is missing in any context (global, window, or globalThis)
+	const needsPolyfill = (typeof global !== 'undefined' && typeof global.IntersectionObserver === 'undefined')
+		|| (typeof window !== 'undefined' && typeof window.IntersectionObserver === 'undefined')
+		|| (typeof globalThis !== 'undefined' && typeof globalThis.IntersectionObserver === 'undefined')
+
+	if (needsPolyfill) {
 		class MockIntersectionObserver {
 			readonly root: Element | null = null
 			readonly rootMargin: string = '0px'
@@ -50,16 +50,16 @@ function polyfillIntersectionObserver(): void {
 			}
 		}
 
-		    // Apply to all available global contexts
-    if (typeof global !== 'undefined') {
-      ;(global as any).IntersectionObserver = MockIntersectionObserver
-    }
-    if (typeof window !== 'undefined') {
-      ;(window as any).IntersectionObserver = MockIntersectionObserver
-    }
-    if (typeof globalThis !== 'undefined') {
-      ;(globalThis as any).IntersectionObserver = MockIntersectionObserver
-    }
+		// Apply to all available global contexts
+		if (typeof global !== 'undefined') {
+			;(global as any).IntersectionObserver = MockIntersectionObserver
+		}
+		if (typeof window !== 'undefined') {
+			;(window as any).IntersectionObserver = MockIntersectionObserver
+		}
+		if (typeof globalThis !== 'undefined') {
+			;(globalThis as any).IntersectionObserver = MockIntersectionObserver
+		}
 	}
 }
 
@@ -67,12 +67,12 @@ function polyfillIntersectionObserver(): void {
  * Mock ResizeObserver for SSR/Node.js environments
  */
 function polyfillResizeObserver(): void {
-  // Check if ResizeObserver is missing in any context (global, window, or globalThis)
-  const needsPolyfill = (typeof global !== 'undefined' && typeof global.ResizeObserver === 'undefined') ||
-                       (typeof window !== 'undefined' && typeof window.ResizeObserver === 'undefined') ||
-                       (typeof globalThis !== 'undefined' && typeof globalThis.ResizeObserver === 'undefined')
-  
-  if (needsPolyfill) {
+	// Check if ResizeObserver is missing in any context (global, window, or globalThis)
+	const needsPolyfill = (typeof global !== 'undefined' && typeof global.ResizeObserver === 'undefined')
+		|| (typeof window !== 'undefined' && typeof window.ResizeObserver === 'undefined')
+		|| (typeof globalThis !== 'undefined' && typeof globalThis.ResizeObserver === 'undefined')
+
+	if (needsPolyfill) {
 		class MockResizeObserver {
 			/* eslint-disable @typescript-eslint/no-unused-vars */
 			constructor(callback: ResizeObserverCallback) {
@@ -94,16 +94,16 @@ function polyfillResizeObserver(): void {
 			}
 		}
 
-		    // Apply to all available global contexts
-    if (typeof global !== 'undefined') {
-      ;(global as any).ResizeObserver = MockResizeObserver
-    }
-    if (typeof window !== 'undefined') {
-      ;(window as any).ResizeObserver = MockResizeObserver
-    }
-    if (typeof globalThis !== 'undefined') {
-      ;(globalThis as any).ResizeObserver = MockResizeObserver
-    }
+		// Apply to all available global contexts
+		if (typeof global !== 'undefined') {
+			;(global as any).ResizeObserver = MockResizeObserver
+		}
+		if (typeof window !== 'undefined') {
+			;(window as any).ResizeObserver = MockResizeObserver
+		}
+		if (typeof globalThis !== 'undefined') {
+			;(globalThis as any).ResizeObserver = MockResizeObserver
+		}
 	}
 }
 
@@ -216,16 +216,16 @@ function polyfillOtherAPIs(): void {
  * This should be called early in the application lifecycle
  */
 export function initializePolyfills(): void {
-  // Always apply IntersectionObserver and ResizeObserver polyfills if they don't exist
-  // This handles cases where window exists but these APIs are not available
-  polyfillIntersectionObserver()
-  polyfillResizeObserver()
-  
-  // Only apply other polyfills in SSR/Node.js environments
-  if (typeof window === 'undefined') {
-    polyfillHTMLInputElement()
-    polyfillOtherAPIs()
-  }
+	// Always apply IntersectionObserver and ResizeObserver polyfills if they don't exist
+	// This handles cases where window exists but these APIs are not available
+	polyfillIntersectionObserver()
+	polyfillResizeObserver()
+
+	// Only apply other polyfills in SSR/Node.js environments
+	if (typeof window === 'undefined') {
+		polyfillHTMLInputElement()
+		polyfillOtherAPIs()
+	}
 }
 
 // Export individual polyfill functions for manual use if needed
