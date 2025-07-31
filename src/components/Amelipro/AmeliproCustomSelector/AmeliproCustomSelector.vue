@@ -310,7 +310,7 @@ input {
 }
 
 .select-item {
-	input+&,
+	input + &,
 	.checkbox-input & {
 		position: relative;
 		padding: 0.75rem 3rem 0.75rem 1rem;
@@ -320,8 +320,8 @@ input {
 		cursor: pointer;
 	}
 
-	input:checked+&,
-	.checkbox-input[aria-checked="true"] & {
+	input:checked + &,
+	.checkbox-input[aria-checked='true'] & {
 		background-color: apTokens.$ap-blue-lighten3;
 
 		&::after {
@@ -333,12 +333,12 @@ input {
 			border-bottom: 2px solid apTokens.$ap-blue-darken1;
 			border-left: 2px solid apTokens.$ap-blue-darken1;
 			transform: rotate(-50deg);
-			content: "";
+			content: '';
 		}
 	}
 
-	input:disabled+&,
-	.checkbox-input[aria-disabled="true"] & {
+	input:disabled + &,
+	.checkbox-input[aria-disabled='true'] & {
 		background-color: apTokens.$ap-grey-lighten2;
 		cursor: default;
 
