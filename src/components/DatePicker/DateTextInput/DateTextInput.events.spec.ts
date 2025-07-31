@@ -116,7 +116,7 @@ describe('DateTextInput.vue - Events', () => {
 		// Vérifier que l'événement est émis avec un tableau de deux dates
 		const emitted = wrapperWithRange.emitted('update:model-value')
 		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0][0]).toEqual(['01/01/2023', '05/01/2023'])
+		expect(emitted && emitted[0][0]).toEqual('01/01/2023 - 05/01/2023')
 	})
 
 	it('valide les dates selon les règles personnalisées', async () => {
