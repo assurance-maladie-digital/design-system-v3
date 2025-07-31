@@ -265,7 +265,7 @@
 	})
 
 	const validateRules = (value: string) => {
-		clearValidation()
+		// On ne fait plus de clearValidation() ici pour conserver les erreurs des règles personnalisées
 
 		// Cas spécial : champ vide
 		if (!value && props.required && hasInteracted.value) {
@@ -741,7 +741,6 @@
 			}
 			else {
 				// Si le format n'est pas valide ou si la date est invalide, ajouter le message d'erreur
-				clearValidation()
 				errors.value.push(validation.message)
 				emit('update:model-value', props.modelValue)
 			}
