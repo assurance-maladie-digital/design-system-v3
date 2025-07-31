@@ -129,7 +129,14 @@ Object.defineProperty(window, 'IntersectionObserver', {
 
 // Définir pour l'objet global également (important pour CI)
 if (typeof global !== 'undefined') {
-	global.IntersectionObserver = IntersectionObserverMock
+	// Assigner directement à global avant toute autre initialisation
+	// pour garantir sa disponibilité avant l'initialisation des composants Vuetify
+	Object.defineProperty(global, 'IntersectionObserver', {
+		value: IntersectionObserverMock,
+		configurable: true,
+		writable: true,
+		enumerable: false,
+	})
 }
 
 /**
