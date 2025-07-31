@@ -1,3 +1,7 @@
+// Initialize polyfills for SSR/Node.js environments first
+import { initializePolyfills } from './utils/polyfills'
+initializePolyfills()
+
 import '../src/assets/tokens.scss'
 import '../src/assets/settings.scss'
 

@@ -1,4 +1,15 @@
 // ===========================
+// Polyfills
+// ===========================
+export {
+	initializePolyfills,
+	polyfillIntersectionObserver,
+	polyfillResizeObserver,
+	polyfillHTMLInputElement,
+	polyfillOtherAPIs,
+} from './polyfills'
+
+// ===========================
 // Storage utilities
 // ===========================
 export { LocalStorageUtility } from './localStorageUtility'
