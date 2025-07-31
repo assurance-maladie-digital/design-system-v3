@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { ref, onUnmounted } from 'vue'
 	import { mdiContentCopy } from '@mdi/js'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
@@ -28,6 +28,13 @@
 
 	const tooltip = ref(false)
 	const copyIcon = mdiContentCopy
+	let tooltipTimeoutId: ReturnType<typeof setTimeout> | undefined
+
+	onUnmounted(() => {
+		if (tooltipTimeoutId !== undefined) {
+			clearTimeout(tooltipTimeoutId)
+		}
+	})
 
 	function copy(): void {
 		let contentToCopy
@@ -66,7 +73,7 @@
 			return
 		}
 
-		setTimeout(() => {
+		tooltipTimeoutId = setTimeout(() => {
 			tooltip.value = false
 		}, props.tooltipDuration)
 	}
