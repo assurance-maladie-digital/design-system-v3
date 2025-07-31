@@ -167,10 +167,12 @@
 				v-if="$slots['prepend']"
 				class="header-prepend"
 			>
-				<slot
-					name="prepend"
-					:menu-open
-				/>
+				<span>
+					<slot
+						name="prepend"
+						:menu-open
+					/>
+				</span>
 			</div>
 			<div class="inner-header">
 				<slot
@@ -220,10 +222,12 @@
 				v-if="$slots['append']"
 				class="header-append"
 			>
-				<slot
-					name="append"
-					:menu-open
-				/>
+				<span>
+					<slot
+						name="append"
+						:menu-open
+					/>
+				</span>
 			</div>
 		</div>
 	</header>
@@ -251,6 +255,17 @@
 	max-width: $header-max-width;
 	margin: 0 auto;
 	border-bottom: solid 1px $blue-lighten-80;
+}
+
+.header-append, .header-prepend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  span {
+    max-width: $header-max-width;
+    width: 100%;
+  }
 }
 
 .header-side {
