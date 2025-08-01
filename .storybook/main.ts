@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/vue3-vite'
+import vuetify from 'vite-plugin-vuetify'
 
 const config: StorybookConfig = {
 	stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -13,6 +14,14 @@ const config: StorybookConfig = {
 	framework: {
 		name: '@storybook/vue3-vite',
 		options: {},
+	},
+	viteFinal: async (config) => {
+		config.plugins?.push(
+			vuetify({
+				styles: { configFile: 'src/assets/settings.scss' },
+			})
+		)
+		return config
 	},
 }
 export default config
