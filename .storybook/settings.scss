@@ -1,10 +1,11 @@
 /**
- * ! Do not put any style here or il will be duplicated many times
+ * Storybook-specific Vuetify settings
+ * ! Do not put any style here or it will be duplicated many times
  * https://vuetifyjs.com/en/features/sass-variables/#duplicated-css
  */
 
 @forward 'vuetify/settings' with (
-	$layers: true,
+	$layers: false, // Disabled for Storybook compatibility
 	$body-font-family: Arial,
 	$utilities: (
 		'typography': false,
