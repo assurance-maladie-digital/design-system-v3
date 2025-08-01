@@ -1,5 +1,4 @@
-import '../src/assets/tokens.scss'
-import '../src/assets/settings.scss'
+import '../src/assets/themes.scss'
 
 export * from './components'
 export * from './services'

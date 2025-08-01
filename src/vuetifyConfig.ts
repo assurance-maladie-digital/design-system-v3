@@ -1,4 +1,5 @@
-import { createVuetify } from 'vuetify'
+import './assets/themes.scss'
+
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
@@ -21,8 +22,7 @@ import {
 import { createFlattenTheme, createFontVariables } from './designTokens/utils'
 import { fr } from 'vuetify/locale'
 
-// Import typography styles
-import './assets/_typography.scss'
+import { createVuetify } from 'vuetify'
 
 export const createVuetifyInstance = () => createVuetify({
 	components,
