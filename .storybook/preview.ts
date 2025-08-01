@@ -1,7 +1,4 @@
-// Import Storybook-specific settings BEFORE vuetify/styles to ensure $layers: false is applied
 import './settings.scss'
-// Note: Do not import 'vuetify/styles' here as it conflicts with our custom settings
-// The styles will be loaded through the settings.scss @use directive
 import { watch } from 'vue'
 import './storybook.css'
 import type { Preview } from '@storybook/vue3'
