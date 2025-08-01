@@ -13,9 +13,12 @@
  */
 
 @forward 'vuetify/settings' with (
-	$layers: false,
+	$layers: true,
 	$body-font-family: Arial,
 	$utilities: (
 		'typography': false,
 	),
 );
+
+// Import Vuetify styles after settings to ensure our configuration is applied
+@use 'vuetify/styles';
