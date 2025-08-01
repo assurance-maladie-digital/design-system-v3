@@ -206,9 +206,6 @@
 
 .vd-lang-btn {
 	font-size: 16px;
-
-	--hover-color: rgba(tokens.$colors-overlay, 0.5);
-
 	text-transform: none;
 	letter-spacing: inherit;
 

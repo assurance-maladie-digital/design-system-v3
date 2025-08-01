@@ -18,7 +18,7 @@ exports[`RatingPicker > renders correctly 1`] = `
       ">
         <label
           class=""
-          for="v-rating-0-0"
+          for="v-rating-v-0-0"
         >
           <span class="v-rating__hidden">
             Rating 0 of 10
@@ -28,8 +28,8 @@ exports[`RatingPicker > renders correctly 1`] = `
         <input
           checked=""
           class="v-rating__hidden"
-          id="v-rating-0-0"
-          name="v-rating-0"
+          id="v-rating-v-0-0"
+          name="v-rating-v-0"
           tabindex="-1"
           type="radio"
           value="0"
@@ -39,7 +39,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-1"
+              for="v-rating-v-0-1"
             >
               <span class="v-rating__hidden">
                 Rating 1 of 10
@@ -75,8 +75,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-1"
-              name="v-rating-0"
+              id="v-rating-v-0-1"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="1"
@@ -89,7 +89,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-2"
+              for="v-rating-v-0-2"
             >
               <span class="v-rating__hidden">
                 Rating 2 of 10
@@ -125,8 +125,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-2"
-              name="v-rating-0"
+              id="v-rating-v-0-2"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="2"
@@ -139,7 +139,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-3"
+              for="v-rating-v-0-3"
             >
               <span class="v-rating__hidden">
                 Rating 3 of 10
@@ -175,8 +175,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-3"
-              name="v-rating-0"
+              id="v-rating-v-0-3"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="3"
@@ -189,7 +189,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-4"
+              for="v-rating-v-0-4"
             >
               <span class="v-rating__hidden">
                 Rating 4 of 10
@@ -225,8 +225,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-4"
-              name="v-rating-0"
+              id="v-rating-v-0-4"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="4"
@@ -239,7 +239,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-5"
+              for="v-rating-v-0-5"
             >
               <span class="v-rating__hidden">
                 Rating 5 of 10
@@ -275,8 +275,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-5"
-              name="v-rating-0"
+              id="v-rating-v-0-5"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="5"
@@ -289,7 +289,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-6"
+              for="v-rating-v-0-6"
             >
               <span class="v-rating__hidden">
                 Rating 6 of 10
@@ -325,8 +325,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-6"
-              name="v-rating-0"
+              id="v-rating-v-0-6"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="6"
@@ -339,7 +339,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-7"
+              for="v-rating-v-0-7"
             >
               <span class="v-rating__hidden">
                 Rating 7 of 10
@@ -375,8 +375,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-7"
-              name="v-rating-0"
+              id="v-rating-v-0-7"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="7"
@@ -389,7 +389,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-8"
+              for="v-rating-v-0-8"
             >
               <span class="v-rating__hidden">
                 Rating 8 of 10
@@ -425,8 +425,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-8"
-              name="v-rating-0"
+              id="v-rating-v-0-8"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="8"
@@ -439,7 +439,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-9"
+              for="v-rating-v-0-9"
             >
               <span class="v-rating__hidden">
                 Rating 9 of 10
@@ -475,8 +475,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-9"
-              name="v-rating-0"
+              id="v-rating-v-0-9"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="9"
@@ -489,7 +489,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           <div class="v-rating__item">
             <label
               class=""
-              for="v-rating-0-10"
+              for="v-rating-v-0-10"
             >
               <span class="v-rating__hidden">
                 Rating 10 of 10
@@ -525,8 +525,8 @@ exports[`RatingPicker > renders correctly 1`] = `
             </label>
             <input
               class="v-rating__hidden"
-              id="v-rating-0-10"
-              name="v-rating-0"
+              id="v-rating-v-0-10"
+              name="v-rating-v-0"
               tabindex="-1"
               type="radio"
               value="10"

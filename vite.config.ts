@@ -97,6 +97,7 @@ export default defineConfig({
 			name: 'DesignSystemV3',
 			fileName: 'design-system-v3',
 		},
+		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
 			external: ['vue', /vuetify/],
 			output: {
@@ -122,6 +123,9 @@ export default defineConfig({
 	},
 	test: {
 		environment: 'happy-dom',
+		setupFiles: ['./tests/unit/setup.ts'],
+		isolate: true,
+		maxConcurrency: process.env.CI ? 1 : 5,
 		server: {
 			deps: {
 				inline: ['vuetify'],

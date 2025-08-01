@@ -11,7 +11,13 @@ exports[`AmeliproStepBtn > render correctly 1`] = `
   "
   id="my-step-btn-id"
   role="tab"
-  style="background-color: #E6F6FC; border: 1px solid #DDDEDE; color: #00749C; position: relative; z-index: 1;"
+  style="
+    background-color: #E6F6FC;
+    border: 1px solid #DDDEDE;
+    color: #00749C;
+    position: relative;
+    z-index: 1;
+  "
   type="button"
 >
   <span

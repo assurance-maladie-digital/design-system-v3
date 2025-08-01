@@ -2,7 +2,7 @@
 	import { ref, computed } from 'vue'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import { useHolidayDay } from '@/composables/date/useHolidayDay'
-	import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 
 	const selectedDate = ref('')
 	const { isHolidayDay, getJoursFeries } = useHolidayDay()

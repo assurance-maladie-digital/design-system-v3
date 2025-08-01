@@ -18,7 +18,10 @@ exports[`AmeliproCallback > render correctly 1`] = `
       w-100
     "
     id="my-callback-id-card-container"
-    style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
+    style="
+      background-color: #FFFFFF;
+      border: 1px solid #DDDEDE;
+    "
   >
     <div
       class="amelipro-card__left-part"
@@ -41,7 +44,11 @@ exports[`AmeliproCallback > render correctly 1`] = `
             flex-sm-row
             w-100
           "
-          style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #DDDEDE;"
+          style="
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: #DDDEDE;
+          "
         >
           <div
             class="amelipro-card__header-slot-wrapper--left"
@@ -88,7 +95,11 @@ exports[`AmeliproCallback > render correctly 1`] = `
                 "
                 focusable="false"
                 role="img"
-                style="color: #FFFFFF; height: 32px; width: 32px;"
+                style="
+                  color: #FFFFFF;
+                  height: 32px;
+                  width: 32px;
+                "
               >
                 <span>
                   <svg

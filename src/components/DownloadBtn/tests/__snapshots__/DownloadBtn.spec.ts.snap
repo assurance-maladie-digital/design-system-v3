@@ -13,7 +13,10 @@ exports[`DownloadBtn > renders correctly 1`] = `
     v-btn--variant-outlined
     v-theme--light
   "
-  style="height: auto; min-height: 36px;"
+  style="
+    height: auto;
+    min-height: 36px;
+  "
   type="button"
 >
   <span class="v-btn__overlay"></span>
@@ -55,7 +58,10 @@ exports[`DownloadBtn > with slots 1`] = `
     v-btn--variant-outlined
     v-theme--light
   "
-  style="height: auto; min-height: 36px;"
+  style="
+    height: auto;
+    min-height: 36px;
+  "
   type="button"
 >
   <span class="v-btn__overlay"></span>

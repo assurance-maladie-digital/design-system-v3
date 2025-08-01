@@ -1,6 +1,6 @@
+import 'vuetify/styles'
 import { createApp } from 'vue'
 import Playground from './Playground.vue'
-import 'vuetify/styles'
 import { createVuetifyInstance } from '@/vuetifyConfig'
 import { router } from './router'
 

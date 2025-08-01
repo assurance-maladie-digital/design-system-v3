@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref, inject, watch, type Ref } from 'vue'
+	import { computed, nextTick, onMounted, ref, inject, watch, type Ref, onUnmounted } from 'vue'
 	import type { VDataTable, VDataTableServer } from 'vuetify/components'
 	import { locales } from './locales'
 
@@ -106,16 +106,19 @@
 	}
 
 	const tableWidth = ref(0)
+	function updateTableWidth() {
+		if (props.table) {
+			tableWidth.value = props.table.$el.offsetWidth
+		}
+	}
 	onMounted(async () => {
 		await nextTick()
-		if (props.table) {
-			tableWidth.value = props.table.$el.offsetWidth
-		}
+		updateTableWidth()
 	})
-	window.addEventListener('resize', () => {
-		if (props.table) {
-			tableWidth.value = props.table.$el.offsetWidth
-		}
+	window.addEventListener('resize', updateTableWidth)
+
+	onUnmounted(() => {
+		window.removeEventListener('resize', updateTableWidth)
 	})
 
 	function resizeKeyboardColumn(increment: number) {

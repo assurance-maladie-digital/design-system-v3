@@ -1,8 +1,8 @@
 import { ref, nextTick, type Ref } from 'vue'
 
 /**
- * Composable pour personnaliser les boutons du mois et de l'année dans les composants DatePicker
- * @param isPickerVisibleGetter - Fonction qui retourne l'état de visibilité du DatePicker
+ * Composable pour personnaliser les boutons du mois et de l'année dans les composants CalendarMode
+ * @param isPickerVisibleGetter - Fonction qui retourne l'état de visibilité du CalendarMode
  * @param monthName - Référence au nom du mois à utiliser
  * @param yearName - Référence au nom de l'année à utiliser
  */
@@ -112,7 +112,7 @@ export function useMonthButtonCustomization(
 					// Personnalisation des boutons d'année pour tous les DatePickers
 					const yearBtns = document.querySelectorAll('.v-date-picker-controls__mode-btn')
 					yearBtns.forEach((yearBtn) => {
-						// Trouver le parent DatePicker-controls pour ce bouton d'année
+						// Trouver le parent CalendarMode-controls pour ce bouton d'année
 						const parentControl = yearBtn.closest('.v-date-picker-controls')
 						if (!parentControl) return
 

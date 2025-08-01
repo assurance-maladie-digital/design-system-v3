@@ -10,25 +10,50 @@ describe('HeaderLogo', () => {
 	})
 
 	it('should render the component in mobile mode and desktop', async () => {
+		// Test mobile mode
 		// @ts-expect-error  - Property 'happyDOM' does not exist on type 'Window & typeof globalThis'.
 		window.happyDOM.setInnerWidth(600)
-		const wrapper = mount(HeaderLogo, {
+
+		const mobileWrapper = mount(HeaderLogo, {
 			global: {
 				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
-		const mobilMode = wrapper.html()
 
+		// Wait for reactive updates
+		await mobileWrapper.vm.$nextTick()
+		const mobileMode = mobileWrapper.html()
+
+		// Verify mobile mode renders LogoMobile (width="141" height="42")
+		expect(mobileMode).toContain('width="141"')
+		expect(mobileMode).toContain('height="42"')
+		mobileWrapper.unmount()
+
+		// Test desktop mode
 		// @ts-expect-error  - Property 'happyDOM' does not exist on type 'Window & typeof globalThis'.
 		window.happyDOM.setInnerWidth(1200)
-		await wrapper.vm.$nextTick()
 
-		const desktopMode = wrapper.html()
+		const desktopWrapper = mount(HeaderLogo, {
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
 
-		expect(mobilMode).not.toEqual(desktopMode)
+		// Wait for reactive updates
+		await desktopWrapper.vm.$nextTick()
+		const desktopMode = desktopWrapper.html()
 
-		wrapper.unmount()
+		// Verify desktop mode renders Logo (width="211" height="63")
+		expect(desktopMode).toContain('width="211"')
+		expect(desktopMode).toContain('height="63"')
+		// And doesn't contain mobile dimensions
+		expect(desktopMode).not.toContain('width="141"')
+		desktopWrapper.unmount()
+
+		// Ensure they are different
+		expect(mobileMode).not.toEqual(desktopMode)
 	})
 
 	it('sould display the service and the logo aria-label', async () => {

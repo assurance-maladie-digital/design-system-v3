@@ -43,7 +43,7 @@ export { default as UserMenuBtn } from './UserMenuBtn/UserMenuBtn.vue'
 // ===========================
 // Formulaires
 // ===========================
-export { default as DatePicker } from '@/components/DatePicker/DatePicker/DatePicker.vue'
+export { default as DatePicker } from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 export { default as DiacriticPicker } from './DiacriticPicker/DiacriticPicker.vue'
 export { default as FileUpload } from './FileUpload/FileUpload.vue'
 export { default as NirField } from './NirField/NirField.vue'
@@ -116,6 +116,7 @@ export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 // ===========================
 // Amelipro
 // ===========================
+export { default as AmeliproAccordion } from './Amelipro/AmeliproAccordion/AmeliproAccordion.vue'
 export { default as AmeliproAutoCompleteField } from './Amelipro/AmeliproAutoCompleteField/AmeliproAutoCompleteField.vue'
 export { default as AmeliproBreadcrumb } from './Amelipro/AmeliproBreadcrumb/AmeliproBreadcrumb.vue'
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
@@ -124,6 +125,7 @@ export { default as AmeliproCallback } from './Amelipro/AmeliproCallback/Amelipr
 export { default as AmeliproCheckbox } from './Amelipro/AmeliproCheckbox/AmeliproCheckbox.vue'
 export { default as AmeliproCheckboxGroup } from './Amelipro/AmeliproCheckboxGroup/AmeliproCheckboxGroup.vue'
 export { default as AmeliproChips } from './Amelipro/AmeliproChips/AmeliproChips.vue'
+export { default as AmeliproCustomSelector } from './Amelipro/AmeliproCustomSelector/AmeliproCustomSelector.vue'
 export { default as AmeliproDialog } from './Amelipro/AmeliproDialog/AmeliproDialog.vue'
 export { default as AmeliproDisclosure } from './Amelipro/AmeliproDisclosure/AmeliproDisclosure.vue'
 export { default as AmeliproFooter } from './Amelipro/AmeliproFooter/AmeliproFooter.vue'

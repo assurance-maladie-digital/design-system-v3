@@ -95,7 +95,11 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                     "
                     focusable="false"
                     role="img"
-                    style="color: #F0B323; height: 40px; width: 40px;"
+                    style="
+                      color: #F0B323;
+                      height: 40px;
+                      width: 40px;
+                    "
                   >
                     <span>
                       <svg
@@ -189,7 +193,11 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                     "
                     focusable="false"
                     role="img"
-                    style="color: #56C271; height: 40px; width: 40px;"
+                    style="
+                      color: #56C271;
+                      height: 40px;
+                      width: 40px;
+                    "
                   >
                     <span>
                       <svg
@@ -283,7 +291,11 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                     "
                     focusable="false"
                     role="img"
-                    style="color: #B33F2E; height: 40px; width: 40px;"
+                    style="
+                      color: #B33F2E;
+                      height: 40px;
+                      width: 40px;
+                    "
                   >
                     <span>
                       <svg
@@ -377,7 +389,11 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                     "
                     focusable="false"
                     role="img"
-                    style="color: #F0B323; height: 40px; width: 40px;"
+                    style="
+                      color: #F0B323;
+                      height: 40px;
+                      width: 40px;
+                    "
                   >
                     <span>
                       <svg
@@ -471,7 +487,11 @@ exports[`AmeliproIllustratedRadioGroup > render correctly 1`] = `
                     "
                     focusable="false"
                     role="img"
-                    style="color: #F0B323; height: 40px; width: 40px;"
+                    style="
+                      color: #F0B323;
+                      height: 40px;
+                      width: 40px;
+                    "
                   >
                     <span>
                       <svg

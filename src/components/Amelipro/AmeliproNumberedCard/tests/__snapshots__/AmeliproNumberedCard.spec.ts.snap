@@ -47,7 +47,10 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
           amelipro-card--numbered
           w-100
         "
-        style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
+        style="
+          background-color: #FFFFFF;
+          border: 1px solid #DDDEDE;
+        "
       >
         <div
           class="amelipro-card--numbered-content"
@@ -95,7 +98,10 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
           amelipro-card--numbered
           w-100
         "
-        style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
+        style="
+          background-color: #FFFFFF;
+          border: 1px solid #DDDEDE;
+        "
       >
         <div
           class="amelipro-card--numbered-content"
@@ -143,7 +149,10 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
           amelipro-card--numbered
           w-100
         "
-        style="background-color: #FFFFFF; border: 1px solid #DDDEDE;"
+        style="
+          background-color: #FFFFFF;
+          border: 1px solid #DDDEDE;
+        "
       >
         <div
           class="amelipro-card--numbered-content"

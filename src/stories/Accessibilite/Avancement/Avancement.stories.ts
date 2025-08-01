@@ -42,9 +42,9 @@ export const Manuel: StoryObj = {
 					{ composant: 'PageContainer', status: 'Audité' },
 					{ composant: 'SkipLink', status: 'Audité' },
 					{ composant: 'Alerts', status: 'Audité' },
-					{ composant: 'NotificationBar', status: 'Audité' },
+					{ composant: 'NotificationBar', status: 'Non audité' },
 					{ composant: 'BackBtn', status: 'Audité' },
-					{ composant: 'BackToTopBtn', status: 'Non audité' },
+					{ composant: 'BackToTopBtn', status: 'Audité' },
 					{ composant: 'CopyBtn', status: 'Audité' },
 					{ composant: 'LangBtn', status: 'Audité' },
 					{ composant: 'DownloadBtn', status: 'Audité' },
@@ -52,7 +52,7 @@ export const Manuel: StoryObj = {
 					{ composant: 'SyTextField', status: 'Audité' },
 					{ composant: 'HeaderBar', status: 'Non audité' },
 					{ composant: 'HeaderNavigationBar', status: 'Non audité' },
-					{ composant: 'LogoBrandSection', status: 'Non audité' },
+					{ composant: 'LogoBrandSection', status: 'En cours' },
 					{ composant: 'SubHeader', status: 'Non audité' },
 					{ composant: 'HeaderLoading', status: 'Non audité' },
 					{ composant: 'HeaderToolbar', status: 'Non audité' },
@@ -65,9 +65,8 @@ export const Manuel: StoryObj = {
 					{ composant: 'DataListItem', status: 'Non audité' },
 					{ composant: 'DataListLoading', status: 'Non audité' },
 					{ composant: 'ErrorPage', status: 'Audité' },
-					{ composant: 'CookieBanner', status: 'Non audité' },
-					{ composant: 'ExternalLinks', status: 'Non audité' },
-					{ composant: 'ContextualMenu', status: 'En cours' },
+					{ composant: 'CookieBanner', status: 'Audité' },
+					{ composant: 'ContextualMenu', status: 'Audité' },
 					{ composant: 'DialogBox', status: 'Non audité' },
 					{ composant: 'PasswordField', status: 'Non audité' },
 					{ composant: 'PhoneField', status: 'Non audité' },
@@ -92,9 +91,11 @@ export const Manuel: StoryObj = {
 					{ composant: 'ErrorPage', status: 'Audité' },
 					{ composant: 'NotFoundPage', status: 'Audité' },
 					{ composant: 'MaintenancePage', status: 'Audité' },
-					{ composant: 'ContextualMenu', status: 'En cours' },
-					{ composant: 'ExternalLinks', status: 'En cours' },
+					{ composant: 'ContextualMenu', status: 'Audité' },
+					{ composant: 'ExternalLinks', status: 'Audité' },
 					{ composant: 'SyIcon', status: 'Non audité' },
+					{ composant: 'SocialMediaLinks', status: 'Audité' },
+					{ composant: 'CollapsibleList', status: 'Audité' },
 				]
 
 				// Options de filtrage par statut
@@ -225,7 +226,7 @@ export const Manuel: StoryObj = {
 						</div>
 
 						<div class="pa-2 text-caption text-right">
-							Dernière mise à jour: 11/07/2025
+							Dernière mise à jour: 18/07/2025
 						</div>
 					</div>
 				</div>

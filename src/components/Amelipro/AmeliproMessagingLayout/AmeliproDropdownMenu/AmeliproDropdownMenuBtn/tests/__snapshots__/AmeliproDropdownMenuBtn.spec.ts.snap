@@ -24,7 +24,11 @@ exports[`AmeliproDropdownMenuBtn > render correctly 1`] = `
   "
   id="my-btn-id"
   role="menuitem"
-  style="height: auto; min-height: 2.5rem; color: #1A1B1B !important;"
+  style="
+    height: auto;
+    min-height: 2.5rem;
+    color: #1A1B1B !important;
+  "
   tabindex="-1"
   type="button"
 >

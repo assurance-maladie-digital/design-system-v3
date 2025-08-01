@@ -35,6 +35,10 @@
 			type: String,
 			default: undefined,
 		},
+		linkStyleText: {
+			type: String,
+			default: 'Consulter',
+		},
 		noPdfIcon: {
 			type: Boolean,
 			default: false,
@@ -51,7 +55,7 @@
 			default: 'toDo',
 			type: String as PropType<keyof typeof AmeliproStateTileTypes>,
 			validator(value: string): boolean {
-				return ['date', 'done', 'doneNoCertificate', 'doneNoCertificateBlue', 'optionnal', 'toDo', 'toDoNoCertificate', 'toDoNoCertificateBlue'].includes(value)
+				return ['date', 'done', 'doneNoCertificate', 'doneNoCertificateBlue', 'doneToCorrect', 'optionnal', 'toDo', 'toDoNoCertificate', 'toDoNoCertificateBlue'].includes(value)
 			},
 		},
 		tileWidth: {
@@ -92,14 +96,17 @@
 			color: convertToHex(AmeliproStateTileTypes[props.tileType].textColor || 'ap-grey-darken-1'),
 			padding: '0',
 		}
+
 		if (props.disabled) {
 			styles.backgroundColor = `${convertToHex('ap-grey-lighten-2')} !important`
 			styles.borderColor = `${convertToHex('ap-grey')} !important`
 			styles.color = `${convertToHex('ap-grey-darken-1')} !important`
 		}
-		if (props.tileType === 'optionnal') {
+
+		if (props.tileType === 'optionnal' || props.tileType === 'doneToCorrect') {
 			styles.borderStyle = 'dashed'
 		}
+
 		if (props.tileMinHeight) {
 			styles.minHeight = props.tileMinHeight
 		}
@@ -184,8 +191,8 @@
 						'amelipro-state-tile__pdf-download--white': tileType === 'toDo' || tileType === 'done',
 					}"
 				>
-					<span>
-						Consulter
+					<span v-if="linkStyleText !== undefined && linkStyleText !== ''">
+						{{ linkStyleText }}
 					</span>
 
 					<span

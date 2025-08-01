@@ -1,11 +1,11 @@
 /**
- * Composable pour améliorer l'accessibilité du DatePicker
+ * Composable pour améliorer l'accessibilité du CalendarMode
  */
 import { nextTick, onBeforeUnmount, onMounted } from 'vue'
 
 /**
- * Améliore l'accessibilité du DatePicker en ajoutant des attributs ARIA et des instructions pour les lecteurs d'écran
- * @returns Des fonctions pour mettre à jour l'accessibilité du DatePicker et gérer les événements clavier
+ * Améliore l'accessibilité du CalendarMode en ajoutant des attributs ARIA et des instructions pour les lecteurs d'écran
+ * @returns Des fonctions pour mettre à jour l'accessibilité du CalendarMode et gérer les événements clavier
  */
 export function useDatePickerAccessibility() {
 	// Référence pour suivre si l'événement a déjà été traité
@@ -49,7 +49,7 @@ export function useDatePickerAccessibility() {
 	}
 
 	/**
-	 * Met à jour les attributs d'accessibilité du DatePicker
+	 * Met à jour les attributs d'accessibilité du CalendarMode
 	 * Ajoute des attributs ARIA et des instructions pour les lecteurs d'écran
 	 * Corrige également les attributs ARIA invalides
 	 */
@@ -152,7 +152,7 @@ export function useDatePickerAccessibility() {
 	const fixAriaAttributes = () => {
 		try {
 			// Rechercher dans tout le document les éléments avec des attributs ARIA invalides
-			// Cibler les éléments dans les conteneurs DatePicker et DateTextInput
+			// Cibler les éléments dans les conteneurs CalendarMode et DateTextInput
 			const containers = document.querySelectorAll('.date-picker-container, .v-date-picker')
 
 			if (containers.length === 0) {

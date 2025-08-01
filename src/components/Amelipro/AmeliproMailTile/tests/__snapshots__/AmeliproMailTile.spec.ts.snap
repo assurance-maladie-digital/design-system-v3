@@ -130,7 +130,11 @@ exports[`AmeliproMailTile > render correctly 1`] = `
           "
           focusable="false"
           role="img"
-          style="color: #D00063; height: 1rem; width: 1rem;"
+          style="
+            color: #D00063;
+            height: 1rem;
+            width: 1rem;
+          "
         >
           <span>
             <svg

@@ -53,7 +53,7 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 			variables[`typography-${key}-font-size`] = value.fontSize || ''
 			variables[`typography-${key}-font-weight`] = value.fontWeight?.toString() || ''
 			variables[`typography-${key}-line-height`] = value.lineHeight?.toString() || ''
-			variables[`typography-${key}-letter-spacing`] = value.letterSpacing || ''
+			variables[`typography-${key}-letter-spacing`] = value.letterSpacing || 'normal'
 		})
 	}
 
@@ -64,7 +64,7 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 			variables[`typography-${key}-font-size`] = value.fontSize || ''
 			variables[`typography-${key}-font-weight`] = value.fontWeight?.toString() || ''
 			variables[`typography-${key}-line-height`] = value.lineHeight?.toString() || ''
-			variables[`typography-${key}-letter-spacing`] = value.letterSpacing || ''
+			variables[`typography-${key}-letter-spacing`] = value.letterSpacing || 'normal'
 		})
 	}
 
@@ -75,7 +75,7 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 			variables[`typography-${key}-font-size`] = value.fontSize || ''
 			variables[`typography-${key}-font-weight`] = value.fontWeight?.toString() || ''
 			variables[`typography-${key}-line-height`] = value.lineHeight?.toString() || ''
-			variables[`typography-${key}-letter-spacing`] = value.letterSpacing || ''
+			variables[`typography-${key}-letter-spacing`] = value.letterSpacing || 'normal'
 		})
 	}
 
@@ -90,7 +90,7 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 					variables[`typography-${category}-font-size`] = (value as FontProperty).fontSize || ''
 					variables[`typography-${category}-font-weight`] = (value as FontProperty).fontWeight?.toString() || ''
 					variables[`typography-${category}-line-height`] = (value as FontProperty).lineHeight?.toString() || ''
-					variables[`typography-${category}-letter-spacing`] = (value as FontProperty).letterSpacing || ''
+					variables[`typography-${category}-letter-spacing`] = (value as FontProperty).letterSpacing || 'normal'
 
 					// Add text-transform if present
 					if ((value as FontProperty).textTransform) {
@@ -105,7 +105,7 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 						variables[`typography-${category}-font-size`] = nestedValue.fontSize || ''
 						variables[`typography-${category}-font-weight`] = nestedValue.fontWeight?.toString() || ''
 						variables[`typography-${category}-line-height`] = nestedValue.lineHeight?.toString() || ''
-						variables[`typography-${category}-letter-spacing`] = nestedValue.letterSpacing || ''
+						variables[`typography-${category}-letter-spacing`] = nestedValue.letterSpacing || 'normal'
 
 						// Add text-transform if present
 						if (nestedValue.textTransform) {
@@ -129,7 +129,7 @@ export function createFontVariables(fontTokens: FontTokens): Record<string, stri
 				variables[`typography-${key}-font-size`] = value.fontSize || ''
 				variables[`typography-${key}-font-weight`] = value.fontWeight?.toString() || ''
 				variables[`typography-${key}-line-height`] = value.lineHeight?.toString() || ''
-				variables[`typography-${key}-letter-spacing`] = value.letterSpacing || ''
+				variables[`typography-${key}-letter-spacing`] = value.letterSpacing || 'normal'
 
 				// Add text-transform if present
 				if (value.textTransform) {
