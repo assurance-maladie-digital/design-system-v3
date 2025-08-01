@@ -55,7 +55,9 @@
 		v-else
 		class="vd-collapse-list"
 	>
-		<h4 class="text-subtitle-1 font-weight-bold mb-3">
+		<h4
+			class="text-subtitle-1 font-weight-bold mb-3"
+		>
 			{{ listTitle }}
 		</h4>
 

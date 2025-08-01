@@ -38,7 +38,7 @@
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility } = useDatePickerAccessibility()
 
-	// Variables pour suivre le mois et l'année actuellement affichés dans le DatePicker
+	// Variables pour suivre le mois et l'année actuellement affichés dans le CalendarMode
 	const currentMonth = ref<string | null>(null)
 	const currentYear = ref<string | null>(null)
 	const currentMonthName = ref<string | null>(null)
@@ -339,7 +339,27 @@
 	// Assignation des fonctions et variables retournées par le composable
 	// Utiliser une fonction pour wrapper updateSelectedDates afin de maintenir la compatibilité avec le template
 	const updateSelectedDates = (date: Date | null) => {
+		// Avant de mettre à jour la date, vérifier qu'elle est valide selon nos règles personnalisées
+		if (date !== null) {
+			// Appliquer les règles personnalisées directement à la date sélectionnée
+			const validationResult = validateField(date, props.customRules, props.customWarningRules)
+
+			// Si la date est invalide selon nos règles, ne pas mettre à jour et afficher l'erreur
+			if (validationResult.hasError) {
+				// Mettre à jour les messages d'erreur
+				errors.value = validationResult.state.errors
+				return // Ne pas continuer la mise à jour
+			}
+		}
+
+		// Si la date est valide ou null, on poursuit normalement
 		dateSelectionResult.updateSelectedDates(date)
+
+		// Forcer une validation immédiate après la mise à jour des dates
+		// pour s'assurer que les messages s'affichent
+		setTimeout(() => {
+			validateDates(true)
+		}, 0)
 	}
 	// generateDateRange est maintenant utilisé via le composable useInputHandler
 	// Synchroniser notre référence locale avec celle du composable
@@ -480,7 +500,7 @@
 			// Mettre à jour l'affichage formaté pour qu'il corresponde à la date sélectionnée
 			let formattedValue = ''
 
-			// Gérer la fermeture du DatePicker en fonction du mode et de l'état de sélection
+			// Gérer la fermeture du CalendarMode en fonction du mode et de l'état de sélection
 			if (props.displayRange) {
 				// Priorité à rangeBoundaryDates pour les plages
 				if (rangeBoundaryDates.value && rangeBoundaryDates.value[0] && rangeBoundaryDates.value[1]) {
@@ -502,7 +522,7 @@
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
 
-					// Les deux dates de la plage sont sélectionnées, fermer le DatePicker
+					// Les deux dates de la plage sont sélectionnées, fermer le CalendarMode
 					isDatePickerVisible.value = false
 					emit('closed')
 				}
@@ -522,7 +542,7 @@
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
 
-					// Les deux dates de la plage sont sélectionnées, fermer le DatePicker
+					// Les deux dates de la plage sont sélectionnées, fermer le CalendarMode
 					isDatePickerVisible.value = false
 					emit('closed')
 				}
@@ -539,7 +559,7 @@
 				displayFormattedDate.value = formattedValue
 				textInputValue.value = formattedValue
 
-				// En mode date unique, fermer le DatePicker après sélection
+				// En mode date unique, fermer le CalendarMode après sélection
 				isDatePickerVisible.value = false
 				emit('closed')
 				emit('date-selected', formattedDate.value)
@@ -697,7 +717,7 @@
 		currentYearName,
 	)
 
-	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
+	// Utilisation du composable pour gérer le mode d'affichage du CalendarMode
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
 		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
 		() => props.isBirthDate || props.birthDate,
@@ -1178,6 +1198,8 @@
 					:view-mode="currentViewMode"
 					:max="maxDate"
 					:min="minDate"
+					:custom-rules="props.customRules"
+					:custom-warning-rules="props.customWarningRules"
 					:display-holiday-days="props.displayHolidayDays"
 					:display-asterisk="props.displayAsterisk"
 					@update:model-value="updateDisplayFormattedDate"

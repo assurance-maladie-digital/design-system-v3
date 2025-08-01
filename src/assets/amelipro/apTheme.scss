@@ -1,0 +1,149 @@
+@use './apTokens.scss' as *;
+
+.border-0 {
+	border: 0;
+}
+
+// Font Styles
+.theme--ap.v-sheet {
+	color: $ap-grey-darken1;
+}
+
+.theme-ap {
+	p {
+		font-size: $font-size-xs;
+	}
+
+	[class*='text-'] {
+		font-family: Arial, Helvetica, sans-serif !important;
+		font-weight: $ap-font-weight-regular;
+		line-height: 1.3 !important;
+	}
+
+	// sets the service title text style
+	[class*='text-service-title'] {
+		font-family: Arial, Helvetica, sans-serif !important;
+		font-size: $font-size-xxl !important;
+		font-weight: $ap-font-weight-bold !important;
+		text-transform: uppercase !important;
+
+		@media #{$media-down-md} {
+			font-size: $font-size-md !important;
+		}
+	}
+
+	// sets classes font sizes
+	[class*='text-'][class*='-h1'],
+	h1 {
+		font-size: $font-size-xxl !important;
+		font-weight: $ap-font-weight-bold !important;
+	}
+
+	[class*='text-'][class*='-h2'],
+	h2 {
+		font-size: $font-size-lg !important;
+		font-weight: $ap-font-weight-bold;
+	}
+
+	[class*='text-'][class*='-h3'],
+	h3 {
+		font-size: $font-size-md !important;
+	}
+
+	[class*='text-'][class*='-h4'],
+	h4 {
+		font-size: $font-size-sm !important;
+		font-weight: $ap-font-weight-bold;
+	}
+
+	[class*='text-'][class*='-h5'],
+	[class*='text-'][class*='-h6'],
+	h5,
+	h6 {
+		font-size: $font-size-sm !important;
+		font-weight: $ap-font-weight-bold;
+	}
+
+	[class*='text-'][class*='-subtitle-1'],
+	[class*='text-'][class*='-subtitle-2'],
+	[class*='text-'][class*='-body-1'],
+	[class*='text-'][class*='-body-2'],
+	[class*='text-'][class*='-button'],
+	[class*='text-'][class*='-overline'] {
+		font-size: $font-size-xs !important;
+	}
+
+	[class*='text-'][class*='-caption'] {
+		font-size: $font-size-xxs !important;
+	}
+
+	// sets font weight
+	[class*='text-'][class*='-subtitle-1'],
+	[class*='text-'][class*='-subtitle-2'] {
+		font-weight: $ap-font-weight-bold;
+	}
+
+	[class*='font-weight-bold'] {
+		font-weight: $ap-font-weight-bold !important;
+	}
+
+	.font-size-xxs {
+		font-size: $font-size-xxs;
+	}
+
+	.font-size-xs {
+		font-size: $font-size-xs;
+	}
+
+	.font-size-sm {
+		font-size: $font-size-sm;
+	}
+
+	.font-size-md {
+		font-size: $font-size-md;
+	}
+
+	.font-size-lg {
+		font-size: $font-size-lg;
+	}
+
+	.font-size-xl {
+		font-size: $font-size-xl;
+	}
+
+	.font-size-xxl {
+		font-size: $font-size-xxl;
+	}
+
+	.relative {
+		position: relative;
+	}
+
+	.list-style-none {
+		margin: 0;
+		padding: 0 !important;
+		list-style: none !important;
+	}
+
+	.w-100 {
+		width: 100%;
+	}
+
+	.h-100 {
+		height: 100%;
+	}
+
+	.pointer {
+		cursor: pointer;
+	}
+}
+
+.theme-ap a {
+	font-size: $font-size-xs;
+	color: $ap-blue-darken1;
+
+	&:hover {
+		color: $ap-blue-darken2;
+		text-decoration: underline;
+	}
+}

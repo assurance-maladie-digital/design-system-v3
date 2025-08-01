@@ -22,6 +22,11 @@ export const AmeliproStateTileTypes: StateTileTypes = {
 		borderColor: 'ap-blue-darken-1',
 		downloadable: true,
 	},
+	doneToCorrect: {
+		bgColor: 'ap-turquoise lighten-2',
+		borderColor: 'ap-turquoise darken-1',
+		downloadable: true,
+	},
 	optionnal: {
 		bgColor: 'ap-blue-lighten-4',
 		borderColor: 'ap-blue-darken-1',

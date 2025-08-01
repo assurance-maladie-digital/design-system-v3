@@ -8,6 +8,7 @@ describe('SyIcon', () => {
 		const wrapper = mount(SyIcon, {
 			props: {
 				icon: 'mdi-home',
+				decorative: true, // Marquer l'icône comme décorative pour éviter les avertissements d'accessibilité
 			},
 			global: {
 				stubs: {
@@ -82,6 +83,7 @@ describe('SyIcon', () => {
 		const wrapper = mount(SyIcon, {
 			props: {
 				icon: 'mdi-home',
+				decorative: true, // Marquer l'icône comme décorative pour éviter les avertissements d'accessibilité
 				color: 'primary',
 			},
 			global: {
@@ -106,6 +108,7 @@ describe('SyIcon', () => {
 		const wrapper = mount(SyIcon, {
 			props: {
 				icon: 'mdi-home',
+				decorative: true, // Marquer l'icône comme décorative pour éviter les avertissements d'accessibilité
 				size: 'large',
 			},
 			global: {

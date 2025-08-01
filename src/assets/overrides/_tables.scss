@@ -1,0 +1,18 @@
+@use '@/assets/tokens';
+
+.v-data-table thead th .v-data-table-header__content {
+	opacity: 0.65;
+	font-size: 0.875rem;
+	font-weight: 700 !important;
+}
+
+.v-data-table-progress {
+	.v-progress-linear {
+		height: 4px !important;
+	}
+
+	.v-progress-linear__background,
+	.v-progress-linear__indeterminate {
+		background: tokens.$primary-base !important;
+	}
+}

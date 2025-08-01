@@ -57,6 +57,9 @@ describe('FileUpload', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			props: {
+				modelValue: [], // Ajouter la prop modelValue obligatoire
+			},
 		})
 
 		const label = wrapper.find('label')

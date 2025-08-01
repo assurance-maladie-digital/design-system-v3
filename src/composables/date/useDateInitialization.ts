@@ -1,5 +1,5 @@
 /**
- * Composable pour l'initialisation des dates dans le DatePicker
+ * Composable pour l'initialisation des dates dans le CalendarMode
  */
 import { parseDate } from './useDateFormat'
 

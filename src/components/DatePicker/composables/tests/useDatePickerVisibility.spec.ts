@@ -51,7 +51,7 @@ describe('useDatePickerVisibility', () => {
 		document.removeEventListener = originalRemoveEventListener
 	})
 
-	it('devrait enregistrer un écouteur d\'événement pour les clics en dehors du DatePicker', () => {
+	it('devrait enregistrer un écouteur d\'événement pour les clics en dehors du CalendarMode', () => {
 		useDatePickerVisibility({
 			isDatePickerVisible,
 			isManualInputActive,
@@ -66,7 +66,7 @@ describe('useDatePickerVisibility', () => {
 	})
 
 	describe('toggleDatePicker', () => {
-		it('ne devrait pas basculer le DatePicker si disabled=true', () => {
+		it('ne devrait pas basculer le CalendarMode si disabled=true', () => {
 			const { toggleDatePicker } = useDatePickerVisibility({
 				disabled: true,
 				isDatePickerVisible,
@@ -83,7 +83,7 @@ describe('useDatePickerVisibility', () => {
 			expect(isDatePickerVisible.value).toBe(false)
 		})
 
-		it('ne devrait pas basculer le DatePicker si readonly=true', () => {
+		it('ne devrait pas basculer le CalendarMode si readonly=true', () => {
 			const { toggleDatePicker } = useDatePickerVisibility({
 				readonly: true,
 				isDatePickerVisible,
@@ -100,7 +100,7 @@ describe('useDatePickerVisibility', () => {
 			expect(isDatePickerVisible.value).toBe(false)
 		})
 
-		it('devrait basculer le DatePicker de fermé à ouvert', () => {
+		it('devrait basculer le CalendarMode de fermé à ouvert', () => {
 			const { toggleDatePicker } = useDatePickerVisibility({
 				isDatePickerVisible,
 				isManualInputActive,
@@ -117,7 +117,7 @@ describe('useDatePickerVisibility', () => {
 			expect(mockUpdateAccessibility).toHaveBeenCalledTimes(1)
 		})
 
-		it('devrait basculer le DatePicker d\'ouvert à fermé', () => {
+		it('devrait basculer le CalendarMode d\'ouvert à fermé', () => {
 			isDatePickerVisible.value = true
 
 			const { toggleDatePicker } = useDatePickerVisibility({
@@ -139,7 +139,7 @@ describe('useDatePickerVisibility', () => {
 	})
 
 	describe('openDatePicker', () => {
-		it('devrait ouvrir le DatePicker s\'il est fermé', () => {
+		it('devrait ouvrir le CalendarMode s\'il est fermé', () => {
 			const { openDatePicker } = useDatePickerVisibility({
 				isDatePickerVisible,
 				isManualInputActive,
@@ -155,7 +155,7 @@ describe('useDatePickerVisibility', () => {
 			expect(isDatePickerVisible.value).toBe(true)
 		})
 
-		it('ne devrait pas modifier l\'état si le DatePicker est déjà ouvert', () => {
+		it('ne devrait pas modifier l\'état si le CalendarMode est déjà ouvert', () => {
 			isDatePickerVisible.value = true
 
 			const { openDatePicker } = useDatePickerVisibility({
@@ -177,7 +177,7 @@ describe('useDatePickerVisibility', () => {
 	})
 
 	describe('openDatePickerOnClick', () => {
-		it('devrait ouvrir le DatePicker si textFieldActivator=true', () => {
+		it('devrait ouvrir le CalendarMode si textFieldActivator=true', () => {
 			const { openDatePickerOnClick } = useDatePickerVisibility({
 				textFieldActivator: true,
 				isDatePickerVisible,
@@ -194,7 +194,7 @@ describe('useDatePickerVisibility', () => {
 			expect(isDatePickerVisible.value).toBe(true)
 		})
 
-		it('ne devrait pas ouvrir le DatePicker si textFieldActivator=false', () => {
+		it('ne devrait pas ouvrir le CalendarMode si textFieldActivator=false', () => {
 			const { openDatePickerOnClick } = useDatePickerVisibility({
 				textFieldActivator: false,
 				isDatePickerVisible,
@@ -213,7 +213,7 @@ describe('useDatePickerVisibility', () => {
 	})
 
 	describe('openDatePickerOnFocus', () => {
-		it('devrait ouvrir le DatePicker si textFieldActivator=true', () => {
+		it('devrait ouvrir le CalendarMode si textFieldActivator=true', () => {
 			const { openDatePickerOnFocus } = useDatePickerVisibility({
 				textFieldActivator: true,
 				isDatePickerVisible,
@@ -233,7 +233,7 @@ describe('useDatePickerVisibility', () => {
 			expect(hasInteracted.value).toBe(true)
 		})
 
-		it('ne devrait pas ouvrir le DatePicker si textFieldActivator=false', () => {
+		it('ne devrait pas ouvrir le CalendarMode si textFieldActivator=false', () => {
 			const { openDatePickerOnFocus } = useDatePickerVisibility({
 				textFieldActivator: false,
 				isDatePickerVisible,
@@ -255,7 +255,7 @@ describe('useDatePickerVisibility', () => {
 	})
 
 	describe('handleClickOutside', () => {
-		it('ne devrait rien faire si le DatePicker est fermé', () => {
+		it('ne devrait rien faire si le CalendarMode est fermé', () => {
 			const { handleClickOutside } = useDatePickerVisibility({
 				isDatePickerVisible,
 				isManualInputActive,
@@ -275,7 +275,7 @@ describe('useDatePickerVisibility', () => {
 			expect(mockValidateDates).not.toHaveBeenCalled()
 		})
 
-		it('ne devrait rien faire si le clic est à l\'intérieur du DatePicker', () => {
+		it('ne devrait rien faire si le clic est à l\'intérieur du CalendarMode', () => {
 			isDatePickerVisible.value = true
 
 			const { handleClickOutside } = useDatePickerVisibility({
@@ -308,7 +308,7 @@ describe('useDatePickerVisibility', () => {
 			expect(mockValidateDates).not.toHaveBeenCalled()
 		})
 
-		it('devrait fermer le DatePicker si le clic est à l\'extérieur', () => {
+		it('devrait fermer le CalendarMode si le clic est à l\'extérieur', () => {
 			isDatePickerVisible.value = true
 
 			const { handleClickOutside } = useDatePickerVisibility({

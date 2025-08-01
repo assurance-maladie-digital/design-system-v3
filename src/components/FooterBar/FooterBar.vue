@@ -6,6 +6,7 @@
 	import { LogoSize } from '@/components/Logo/LogoSize'
 	import SocialMediaLinks from '@/components/SocialMediaLinks/SocialMediaLinks.vue'
 	import type { SocialMediaLink } from '@/components/SocialMediaLinks/types'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { A11yComplianceEnum } from './A11yCompliance'
 	import { defaultSocialMediaLinks } from './defaultSocialMediaLinks'
 	import type { LinkItem } from './types'
@@ -179,12 +180,12 @@
 					:aria-label="locales.goTopBtnLabel"
 					@click="scrollToTop"
 				>
-					<VIcon
+					<SyIcon
 						v-bind="options.goTopBtnIcon"
+						:icon="arrowTopIcon"
 						class="scroll"
-					>
-						{{ arrowTopIcon }}
-					</VIcon>
+						label="Aller en haut de la page"
+					/>
 				</VBtn>
 			</div>
 
@@ -218,7 +219,6 @@
 						:to="item.to"
 						:aria-label="item.ariaLabel"
 						:target="item.openInNewTab ? '_blank' : undefined"
-						:tabindex="index"
 						:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 						class="my-3 mx-4"
 					>
@@ -359,6 +359,11 @@ a {
 	p {
 		padding: 1px 0;
 	}
+}
+
+#scroll-btn:focus-visible {
+	outline: 2px solid white;
+	outline-offset: 2px;
 }
 
 .v-theme--dark button.v-btn:hover :deep() {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import DatePicker from '../DatePicker/DatePicker.vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
 import { fn } from '@storybook/test'
@@ -113,7 +113,7 @@ const meta = {
 		},
 		textFieldActivator: {
 			control: 'boolean',
-			description: 'Utilise le TextField comme activateur du DatePicker',
+			description: 'Utilise le TextField comme activateur du CalendarMode',
 		},
 		displayTodayButton: {
 			control: 'boolean',
@@ -884,7 +884,7 @@ export const ReadonlyMode: Story = {
 	},
 }
 
-export const WithCustomIcons: Story = {
+export const AppendIcon: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -1304,4 +1304,178 @@ export const WithFormSubmission: Story = {
             `,
 		}
 	},
+}
+
+export const CustomRules: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+					<template>
+						<DatePicker
+							v-model="date"
+							placeholder="Date requise"
+							format="DD/MM/YYYY"
+							required
+							class="mb-4"
+							useCombinedMode
+							:customRules="customRules"
+						/>
+					</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+					<script setup lang="ts">
+						import { DatePicker } from '@cnamts/synapse'
+						import { ref } from 'vue'
+						
+						const date = ref('')
+
+						const customRules = [
+						{
+							type: 'notBeforeToday',
+							options: {
+								message: 'La date ne peut pas être antérieure à aujourd'hui',
+							},
+					},
+				]
+					</script>
+				`,
+			},
+		],
+	},
+	render: () => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const customRules = [
+					{
+						type: 'notBeforeToday',
+						options: {
+							message: 'La date ne peut pas être antérieure à aujourd\'hui',
+						},
+					},
+				]
+
+				// Valeur du DatePicker
+				const date = ref(null)
+
+				return { date, customRules }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<DatePicker
+						v-model="date"
+						:custom-rules="customRules"
+						required
+						use-combined-mode
+						label="Date de rendez-vous"
+				placeholder="JJ/MM/AAAA"
+			/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const CustomWarningRules: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+					<template>
+						<DatePicker
+							v-model="date"
+							placeholder="Date requise"
+							format="DD/MM/YYYY"
+							required
+							class="mb-4"
+							useCombinedMode
+							:customWarningRules="customWarningRules"
+						/>
+					</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+					<script setup lang="ts">
+						import { DatePicker } from '@cnamts/synapse'
+						import { ref } from 'vue'
+						
+						const date = ref('')
+						const customWarningRules = [
+							{
+								type: 'custom',
+								options: {
+									validate: (value: string | Date) => {
+										// check if manual entry
+										if (typeof value === 'string') {
+											return !value.includes('2025')
+										} else {
+											// check if DatePicker selection
+											return !value.getFullYear().toString().includes('2025')
+										}
+									},
+									warningMessage: 'Les dates en 2025 ne sont pas autorisées',
+									successMessage: 'Date hors 2025',
+									fieldIdentifier: 'date',
+								},
+							},
+						]
+					</script>
+				`,
+			},
+		],
+	},
+	render: () => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const customWarningRules = [
+					{
+						type: 'custom',
+						options: {
+							validate: (value: string | Date) => {
+								// check typeof value
+								if (typeof value === 'string') {
+									return !value.includes('2025')
+								}
+								else {
+									// check if value is a Date
+									return !value.getFullYear().toString().includes('2025')
+								}
+							},
+							warningMessage: 'Les dates en 2025 ne sont pas autorisées',
+							successMessage: 'Date hors 2025',
+							fieldIdentifier: 'date',
+							isWarning: true,
+						},
+					},
+				]
+
+				// Valeur du DatePicker
+				const date = ref('')
+
+				return { date, customWarningRules }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<DatePicker
+						v-model="date"
+						:custom-warning-rules="customWarningRules"
+						required
+						use-combined-mode
+						label="Date de rendez-vous"
+						placeholder="JJ/MM/AAAA"
+				/>
+				</div>
+			`,
+		}
+	},
+
 }

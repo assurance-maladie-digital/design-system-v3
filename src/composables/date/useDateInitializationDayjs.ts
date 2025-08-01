@@ -1,5 +1,5 @@
 /**
- * Composable pour l'initialisation des dates dans le DatePicker avec dayjs
+ * Composable pour l'initialisation des dates dans le CalendarMode avec dayjs
  */
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'

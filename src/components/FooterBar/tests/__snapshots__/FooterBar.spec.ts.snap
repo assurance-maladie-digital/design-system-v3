@@ -42,7 +42,6 @@ exports[`FooterBar > renders correctly 1`] = `
             mx-4
             my-3
           "
-          tabindex="0"
           to="[object Object]"
         >
           Plan du site
@@ -54,7 +53,6 @@ exports[`FooterBar > renders correctly 1`] = `
             mx-4
             my-3
           "
-          tabindex="1"
           to="[object Object]"
         >
           Conditions générales d’utilisation
@@ -66,7 +64,6 @@ exports[`FooterBar > renders correctly 1`] = `
             mx-4
             my-3
           "
-          tabindex="2"
           to="[object Object]"
         >
           Gestion des cookies
@@ -78,7 +75,6 @@ exports[`FooterBar > renders correctly 1`] = `
             mx-4
             my-3
           "
-          tabindex="3"
           to="[object Object]"
         >
           Mentions légales
@@ -90,7 +86,6 @@ exports[`FooterBar > renders correctly 1`] = `
             mx-4
             my-3
           "
-          tabindex="4"
           to="[object Object]"
         >
           Accessibilité&nbsp;: non conforme

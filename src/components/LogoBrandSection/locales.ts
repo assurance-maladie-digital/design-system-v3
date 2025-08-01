@@ -6,7 +6,7 @@ export const locales = {
 	logoCompteAmeli: 'Compte ameli',
 	compteEntreprise: {
 		title: {
-			text: 'Compte',
+			text: 'Compte ',
 			highlight: 'entreprise',
 		},
 		subTitle: 'Vos démarches maladie et risques professionnels',

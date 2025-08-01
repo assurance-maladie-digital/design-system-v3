@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import { useHolidayDay } from '@/composables/date/useHolidayDay'
 
 const meta: Meta<typeof DatePicker> = {
@@ -17,7 +17,7 @@ export default meta
 type Story = StoryObj<typeof DatePicker>
 
 /**
- * Exemple d'utilisation de la règle isHolidayDay avec un DatePicker
+ * Exemple d'utilisation de la règle isHolidayDay avec un CalendarMode
  */
 export const Default: Story = {
 	render: () => ({
