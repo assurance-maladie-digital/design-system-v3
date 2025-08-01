@@ -566,10 +566,7 @@ export const TitleSlot: Story = {
 						@cancel="args.modelValue = false"
 					>
 						<template #title>
-							<VBtn
-								color="primary"
-								@click="args.modelValue = false"
-							>Title slot</VBtn>
+							Title slot
 						</template>
 						{{ args.default }}
 					</DialogBox>
@@ -591,10 +588,7 @@ export const TitleSlot: Story = {
 						v-model="dialogOpen"
 					>
 						<template #title>
-							<VBtn 
-								color="primary"
-								@click="dialogOpen = false"
-							>Title slot</VBtn>
+							Title slot
 						</template>
 						DialogBox content
 					</DialogBox>
