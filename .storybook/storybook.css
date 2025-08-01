@@ -1,23 +1,3 @@
-/* Define CSS layers order to ensure proper precedence */
-@layer vuetify-reset, vuetify-base, vuetify-utilities, vuetify-components, custom;
-
-/* Force CSS layers to work in Storybook by re-declaring them */
-@layer vuetify-reset {
-	/* Vuetify reset styles will be placed here by Vuetify */
-}
-
-@layer vuetify-base {
-	/* Vuetify base styles will be placed here by Vuetify */
-}
-
-@layer vuetify-utilities {
-	/* Vuetify utility styles will be placed here by Vuetify */
-}
-
-@layer vuetify-components {
-	/* Vuetify component styles will be placed here by Vuetify */
-}
-
 /* Theme-aware styles for CNAM */
 html.theme-cnam {
 	--title-color: #0c419a;
