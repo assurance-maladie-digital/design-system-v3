@@ -2,10 +2,25 @@
  * Storybook-specific Vuetify settings
  * ! Do not put any style here or it will be duplicated many times
  * https://vuetifyjs.com/en/features/sass-variables/#duplicated-css
+ * 
+ * IMPORTANT: CSS Layers Limitation in Storybook
+ * ============================================
+ * 
+ * Storybook is fundamentally incompatible with Vuetify's CSS Layers ($layers: true).
+ * When CSS Layers are enabled, Storybook's build process doesn't properly handle
+ * the layer ordering, causing style conflicts and broken component rendering.
+ * 
+ * SOLUTION:
+ * - Use $layers: false in this Storybook-specific configuration
+ * - Keep $layers: true in src/assets/settings.scss for local development
+ * - This ensures optimal performance locally while maintaining Storybook compatibility
+ * 
+ * DO NOT change $layers to true unless you have a solution for the Storybook
+ * compatibility issue. This has been tested extensively and is a known limitation.
  */
 
 @forward 'vuetify/settings' with (
-	$layers: true,
+	$layers: false, // REQUIRED: Storybook is incompatible with CSS Layers
 	$body-font-family: Arial,
 	$utilities: (
 		'typography': false,

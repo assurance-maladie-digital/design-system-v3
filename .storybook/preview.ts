@@ -1,4 +1,4 @@
-import './settings.scss'
+import '../src/assets/settings.scss'
 import 'vuetify/styles'
 import { watch } from 'vue'
 import './storybook.css'
