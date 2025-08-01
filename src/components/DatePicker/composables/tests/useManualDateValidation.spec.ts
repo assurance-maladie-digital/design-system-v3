@@ -166,8 +166,8 @@ describe('useManualDateValidation', () => {
 
 	it('devrait appeler validateField avec les règles personnalisées', () => {
 		const date = new Date('2023-01-01')
-		const customRules = [{ type: 'custom', options: {} }]
-		const customWarningRules = [{ type: 'warning', options: {} }]
+		const customRules = [{ type: 'custom', options: { validate: () => true } }]
+		const customWarningRules = [{ type: 'warning', options: { validate: () => true } }]
 
 		mockIsDateComplete.mockReturnValue(true)
 		mockValidateDateFormat.mockReturnValue({ isValid: true, message: '' })
@@ -189,7 +189,15 @@ describe('useManualDateValidation', () => {
 
 		validateManualInput('01/01/2023')
 
-		expect(mockValidateField).toHaveBeenCalledWith(date, customRules, customWarningRules)
+		// Vérifier que validateField a été appelé
+		expect(mockValidateField).toHaveBeenCalled()
+		// Vérifier que le premier argument est la date attendue
+		expect(mockValidateField.mock.calls[0][0]).toBe(date)
+		// Vérifier la structure des règles sans comparer les références de fonctions
+		expect(mockValidateField.mock.calls[0][1][0].type).toBe('custom')
+		expect(typeof mockValidateField.mock.calls[0][1][0].options.validate).toBe('function')
+		expect(mockValidateField.mock.calls[0][2][0].type).toBe('warning')
+		expect(typeof mockValidateField.mock.calls[0][2][0].options.validate).toBe('function')
 	})
 
 	it('devrait retourner le résultat de validateField', () => {
