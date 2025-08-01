@@ -738,9 +738,11 @@
 				}
 			}
 			else {
+				validateRules(inputValue.value)
 				// Si le format n'est pas valide ou si la date est invalide, ajouter le message d'erreur
 				errors.value.push(validation.message)
 				emit('update:model-value', props.modelValue)
+				clearValidation()
 			}
 		}
 
