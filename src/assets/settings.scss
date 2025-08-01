@@ -4,7 +4,7 @@
  */
 
 @forward 'vuetify/settings' with (
-	$layers: false, // Temporarily disabled for Storybook testing
+	$layers: true,
 	$body-font-family: Arial,
 	$utilities: (
 		'typography': false,
