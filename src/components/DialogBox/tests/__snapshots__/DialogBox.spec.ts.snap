@@ -32,7 +32,11 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
           v-theme--light
         "
         role="progressbar"
-        style="top: 0px; height: 0px; --v-progress-linear-height: 2px;"
+        style="
+          top: 0px;
+          height: 0px;
+          --v-progress-linear-height: 2px;
+        "
       >
         <!---->
         <div
@@ -41,7 +45,10 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
         ></div>
         <div
           class="v-progress-linear__buffer"
-          style="opacity: NaN; width: 0%;"
+          style="
+            opacity: NaN;
+            width: 0%;
+          "
         ></div>
         <transition-stub
           appear="false"
@@ -100,7 +107,10 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
           v-btn--variant-elevated
           v-theme--light
         "
-        style="height: 32px; width: 32px;"
+        style="
+          height: 32px;
+          width: 32px;
+        "
         type="button"
       >
         <span class="v-btn__overlay"></span>
