@@ -1,3 +1,6 @@
+/* Define CSS layers order to ensure proper precedence */
+@layer vuetify-reset, vuetify-base, vuetify-utilities, vuetify-components, custom;
+
 /* Theme-aware styles for CNAM */
 html.theme-cnam {
 	--title-color: #0c419a;
