@@ -26,6 +26,10 @@
 			type: String,
 			default: 'text-subtitle-1 font-weight-bold mb-3',
 		},
+		titleTag: {
+			type: String,
+			default: 'h4',
+		},
 		row: {
 			type: Boolean,
 			default: false,
@@ -103,12 +107,13 @@
 			<dl v-else>
 				<dt>
 					<slot name="title">
-						<h4
+						<component
+							:is="titleTag"
 							v-if="listTitle"
 							:class="titleClass"
 						>
 							{{ listTitle }}
-						</h4>
+						</component>
 					</slot>
 				</dt>
 
