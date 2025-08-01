@@ -1,5 +1,5 @@
-import '@/src/assets/settings.scss'
 import 'vuetify/styles'
+import '../src/assets/settings.scss'
 import { watch } from 'vue'
 import './storybook.css'
 import type { Preview } from '@storybook/vue3'
