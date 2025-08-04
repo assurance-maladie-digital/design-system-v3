@@ -524,6 +524,84 @@
 					inputElement.removeAttribute('size')
 					// Remove any tabindex from the input element to prevent it from being tabbable
 					inputElement.removeAttribute('tabindex')
+					// Remove role and ARIA attributes from input since they'll be on parent
+					inputElement.removeAttribute('role')
+					inputElement.removeAttribute('aria-expanded')
+					inputElement.removeAttribute('aria-controls')
+					inputElement.removeAttribute('aria-autocomplete')
+					inputElement.removeAttribute('aria-haspopup')
+					inputElement.removeAttribute('aria-activedescendant')
+				}
+				
+				// Set combobox role and ARIA attributes on the parent element
+				const parentElement = input.value.$el
+				if (parentElement) {
+					// Remove conflicting attributes
+					parentElement.removeAttribute('role')
+					parentElement.removeAttribute('aria-hidden')
+					
+					// Add combobox role and ARIA attributes to parent
+					parentElement.setAttribute('role', 'combobox')
+					parentElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
+					parentElement.setAttribute('aria-controls', props.menuId)
+					parentElement.setAttribute('aria-autocomplete', 'none')
+					parentElement.setAttribute('aria-haspopup', 'listbox')
+					if (isOpen.value && activeDescendantId.value) {
+						parentElement.setAttribute('aria-activedescendant', activeDescendantId.value)
+					}
+					if (isRequired.value) {
+						parentElement.setAttribute('aria-required', 'true')
+					}
+					if (hasError.value) {
+						parentElement.setAttribute('aria-invalid', 'true')
+					}
+				}
+			}
+		})
+	})
+
+	// Watchers to update ARIA attributes dynamically on parent element
+	watch(isOpen, (newValue) => {
+		nextTick(() => {
+			if (input.value && input.value.$el) {
+				const parentElement = input.value.$el
+				if (parentElement) {
+					parentElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
+					if (newValue && activeDescendantId.value) {
+						parentElement.setAttribute('aria-activedescendant', activeDescendantId.value)
+					} else {
+						parentElement.removeAttribute('aria-activedescendant')
+					}
+				}
+			}
+		})
+	})
+
+	watch(activeDescendantId, (newValue) => {
+		nextTick(() => {
+			if (input.value && input.value.$el && isOpen.value) {
+				const parentElement = input.value.$el
+				if (parentElement) {
+					if (newValue) {
+						parentElement.setAttribute('aria-activedescendant', newValue)
+					} else {
+						parentElement.removeAttribute('aria-activedescendant')
+					}
+				}
+			}
+		})
+	})
+
+	watch(hasError, (newValue) => {
+		nextTick(() => {
+			if (input.value && input.value.$el) {
+				const parentElement = input.value.$el
+				if (parentElement) {
+					if (newValue) {
+						parentElement.setAttribute('aria-invalid', 'true')
+					} else {
+						parentElement.removeAttribute('aria-invalid')
+					}
 				}
 			}
 		})
@@ -549,22 +627,12 @@
 		v-rgaa-svg-fix="true"
 		:title="$attrs['aria-label'] || labelWithAsterisk"
 		color="primary"
-		role="combobox"
 		:disabled="disabled"
 		:label="labelWithAsterisk"
 		:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-		:aria-expanded="isOpen ? 'true' : 'false'"
-		:aria-controls="menuId"
-		aria-autocomplete="list"
-		aria-haspopup="listbox"
-		aria-readonly="true"
-		:aria-owns="menuId"
-		:aria-activedescendant="isOpen ? activeDescendantId : undefined"
 		:error-messages="props.disableErrorHandling ? [] : errorMessages"
 		:variant="outlined ? 'outlined' : 'underlined'"
 		:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
-		:aria-required="isRequired ? 'true' : undefined"
-		:aria-invalid="hasError ? 'true' : undefined"
 		:bg-color="props.bgColor"
 		:density="props.density"
 		:active="hasChips || isOpen"
