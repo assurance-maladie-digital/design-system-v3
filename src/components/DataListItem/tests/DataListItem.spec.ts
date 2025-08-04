@@ -66,7 +66,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		const elValue = wrapper.find('.sy-data-list-item-value span')
+		const elValue = wrapper.find('.sy-data-list-item-value div')
 
 		expect(elValue.text()).toBe('<span>Custom Value</span>')
 	})
@@ -83,7 +83,7 @@ describe('DataListItem', () => {
 			},
 		})
 
-		const elValue = wrapper.find('.sy-data-list-item-value span')
+		const elValue = wrapper.find('.sy-data-list-item-value div')
 
 		expect(elValue.text()).toBe('Paul Dupont')
 	})

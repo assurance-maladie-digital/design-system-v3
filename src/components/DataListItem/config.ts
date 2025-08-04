@@ -2,7 +2,7 @@ import type { VariantType } from '@/types/vuetifyTypes'
 
 export const config = {
 	icon: {
-		size: 24,
+		size: '24',
 		class: 'mr-4 mt-2',
 	},
 	chip: {
