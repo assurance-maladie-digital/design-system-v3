@@ -1,10 +1,12 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { mdiClose } from '@mdi/js'
-	import { ref } from 'vue'
+	import { ref, useId, watch } from 'vue'
 	import type { VDialog } from 'vuetify/components'
 	import { config } from './config'
 	import { locales } from './locales'
+	import { useDisplay } from 'vuetify/lib/framework.mjs'
+	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<{
 		title?: string
@@ -33,6 +35,18 @@
 		default: false,
 	})
 
+	// Restor the focus to the last active element when the dialog is closed
+	let activeElement: HTMLElement | null = null
+	watch(dialog, (newValue) => {
+		if (newValue) {
+			activeElement = document.activeElement as HTMLElement
+		}
+		else if (activeElement) {
+			activeElement.focus()
+		}
+	})
+
+	const id = `dialog-${useId()}`
 	const dialogContent = ref<VDialog | undefined>(undefined)
 
 	const options = useCustomizableOptions(config, props)
@@ -75,6 +89,9 @@
 			selectableElements[lastElement].focus()
 		}
 	}
+
+	const display = useDisplay()
+
 </script>
 
 <template>
@@ -86,18 +103,19 @@
 		:retain-focus="false"
 		aria-modal="true"
 		class="sy-dialog-box"
+		:aria-labelledby="id"
 		@keydown.tab="handleFocus"
 	>
 		<VCard
 			v-bind="options.card"
-			id="dialogContent"
+			id="dialog-content"
 			ref="dialogContent"
-			:aria-labelledby="props.title ? props.title : 'dialogContent'"
 		>
 			<VCardTitle v-bind="options.cardTitle">
 				<slot name="title">
 					<h2
 						v-if="title"
+						:id="id"
 						class="text-h6 font-weight-bold"
 					>
 						{{ props.title }}
@@ -108,13 +126,16 @@
 
 				<VBtn
 					v-if="!props.persistent"
+					class="sy-dialog-box-close-btn"
 					v-bind="options.closeBtn"
 					:aria-label="locales.closeBtn"
 					@click="dialog = false"
 				>
-					<VIcon v-bind="options.icon">
-						{{ closeIcon }}
-					</VIcon>
+					<SyIcon
+						:icon="closeIcon"
+						:decorative="true"
+						v-bind="options.icon"
+					/>
 				</VBtn>
 			</VCardTitle>
 			<slot />
@@ -127,20 +148,40 @@
 				<VSpacer v-bind="options.actionsSpacer" />
 
 				<slot name="actions">
-					<VBtn
-						v-bind="options.cancelBtn"
-						@click="$emit('cancel')"
-					>
-						{{ props.cancelBtnText }}
-					</VBtn>
+					<template v-if="display.xs.value">
+						<VBtn
+							v-bind="options.confirmBtn"
+							data-test-id="confirm-btn"
+							@click="$emit('confirm')"
+						>
+							{{ props.confirmBtnText }}
+						</VBtn>
 
-					<VBtn
-						v-bind="options.confirmBtn"
-						data-test-id="confirm-btn"
-						@click="$emit('confirm')"
-					>
-						{{ props.confirmBtnText }}
-					</VBtn>
+						<VBtn
+							v-bind="options.cancelBtn"
+							@click="$emit('cancel')"
+						>
+							{{ props.cancelBtnText }}
+						</VBtn>
+					</template>
+					<template v-else>
+						<VBtn
+							class="sy-dialog-box-cancel-btn"
+							v-bind="options.cancelBtn"
+							@click="$emit('cancel')"
+						>
+							{{ props.cancelBtnText }}
+						</VBtn>
+
+						<VBtn
+							class="sy-dialog-box-confirm-btn"
+							v-bind="options.confirmBtn"
+							data-test-id="confirm-btn"
+							@click="$emit('confirm')"
+						>
+							{{ props.confirmBtnText }}
+						</VBtn>
+					</template>
 				</slot>
 			</div>
 		</VCard>
@@ -165,9 +206,30 @@ h2 {
 	text-wrap: balance;
 }
 
+.sy-dialog-box-close-btn:focus-visible,
+.sy-dialog-box-cancel-btn:focus-visible,
+.sy-dialog-box-confirm-btn:focus-visible {
+	:deep(.v-btn__overlay) {
+		display: none;
+	}
+
+	&::after {
+		opacity: 1;
+		border: transparent;
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
+	}
+}
+
+.sy-dialog-box-confirm-btn:focus-visible {
+	&::after {
+		outline-offset: 2px;
+	}
+}
+
 .sy-dialog-box-actions-ctn {
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	justify-content: stretch;
 	gap: $spacing-small;
 }

@@ -2,6 +2,7 @@
 
 exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
 <div
+  aria-labelledby="dialog-v-0"
   aria-modal="true"
   class="sy-dialog-box"
   modelvalue="true"
@@ -10,7 +11,6 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
   width="600px"
 >
   <div
-    aria-labelledby="Test title"
     class="
       pa-6
       v-card
@@ -18,7 +18,7 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
       v-card--variant-elevated
       v-theme--light
     "
-    id="dialogContent"
+    id="dialog-content"
   >
     <!---->
     <div class="v-card__loader">
@@ -81,10 +81,13 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
       pa-0
       v-card-title
     ">
-      <h2 class="
-        font-weight-bold
-        text-h6
-      ">
+      <h2
+        class="
+          font-weight-bold
+          text-h6
+        "
+        id="dialog-v-0"
+      >
         Test title
       </h2>
       <div class="v-spacer"></div>
@@ -95,6 +98,7 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
           ml-4
           mr-n2
           mt-n2
+          sy-dialog-box-close-btn
           v-btn
           v-btn--density-default
           v-btn--elevated
@@ -141,6 +145,7 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
       <div class="v-spacer"></div>
       <button
         class="
+          sy-dialog-box-cancel-btn
           text-primary
           v-btn
           v-btn--density-default
@@ -165,6 +170,7 @@ exports[`DialogBox > rendering and props > renders correctly with props 1`] = `
       <button
         class="
           bg-primary
+          sy-dialog-box-confirm-btn
           v-btn
           v-btn--density-default
           v-btn--elevated
