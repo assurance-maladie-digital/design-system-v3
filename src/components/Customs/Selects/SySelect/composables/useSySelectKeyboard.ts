@@ -174,8 +174,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 			toggleMenu()
 			nextTick(() => {
 				// Restaurer le dernier item qui avait le focus, ou le premier item par défaut
-				const indexToFocus = lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length 
-					? lastFocusedIndex.value 
+				const indexToFocus = lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length
+					? lastFocusedIndex.value
 					: 0
 				setActiveDescendant(indexToFocus)
 			})
