@@ -173,8 +173,11 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		if (!isOpen.value) {
 			toggleMenu()
 			nextTick(() => {
-				// Sélectionner le premier élément à l'ouverture
-				setActiveDescendant(0)
+				// Restaurer le dernier item qui avait le focus, ou le premier item par défaut
+				const indexToFocus = lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length 
+					? lastFocusedIndex.value 
+					: 0
+				setActiveDescendant(indexToFocus)
 			})
 		}
 		else {
@@ -188,7 +191,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		if (!isOpen.value) {
 			toggleMenu()
 			nextTick(() => {
-				setActiveDescendant(formattedItems.value.length - 1)
+				// Aller au premier item quand on ouvre avec flèche haut (comportement RGAA correct)
+				setActiveDescendant(0)
 			})
 		}
 		else {
