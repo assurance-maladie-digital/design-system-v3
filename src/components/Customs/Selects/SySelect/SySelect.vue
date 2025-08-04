@@ -532,14 +532,14 @@
 					inputElement.removeAttribute('aria-haspopup')
 					inputElement.removeAttribute('aria-activedescendant')
 				}
-				
+
 				// Set combobox role and ARIA attributes on the parent element
 				const parentElement = input.value.$el
 				if (parentElement) {
 					// Remove conflicting attributes
 					parentElement.removeAttribute('role')
 					parentElement.removeAttribute('aria-hidden')
-					
+
 					// Add combobox role and ARIA attributes to parent
 					parentElement.setAttribute('role', 'combobox')
 					parentElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
@@ -569,7 +569,8 @@
 					parentElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
 					if (newValue && activeDescendantId.value) {
 						parentElement.setAttribute('aria-activedescendant', activeDescendantId.value)
-					} else {
+					}
+					else {
 						parentElement.removeAttribute('aria-activedescendant')
 					}
 				}
@@ -584,7 +585,8 @@
 				if (parentElement) {
 					if (newValue) {
 						parentElement.setAttribute('aria-activedescendant', newValue)
-					} else {
+					}
+					else {
 						parentElement.removeAttribute('aria-activedescendant')
 					}
 				}
@@ -599,7 +601,8 @@
 				if (parentElement) {
 					if (newValue) {
 						parentElement.setAttribute('aria-invalid', 'true')
-					} else {
+					}
+					else {
 						parentElement.removeAttribute('aria-invalid')
 					}
 				}
@@ -735,7 +738,7 @@
 			:ref="'options-' + index"
 			role="option"
 			class="v-list-item"
-			:aria-selected="(isItemSelected(item) || `option-${index}` === activeDescendantId) ? 'true' : 'false'"
+			:aria-selected="isItemSelected(item) ? 'true' : 'false'"
 			tabindex="-1"
 			:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
 			@click.stop="(event) => selectItem(item, event)"
