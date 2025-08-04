@@ -18,14 +18,19 @@ describe('HeaderMenuSection', () => {
 		expect(wrapper.find('.header-menu-section-list').element.children.length).toBe(2)
 	})
 
-	it('should render the component with no title', async () => {
+	it('should render show the title only to screen readers when hidden', async () => {
 		const wrapper = mount(HeaderMenuSection, {
 			slots: {
 				default: '<li><a>Test 1</a></li>',
 			},
+			props: {
+				title: 'Section title',
+				showTitle: false,
+			},
 		})
 
-		expect(wrapper.find('.header-menu-section-title').exists()).toBe(false)
+		expect(wrapper.find('.header-menu-section-title').text()).toContain('Section title')
+		expect(wrapper.find('.header-menu-section-title').classes()).toContain('d-sr-only')
 		expect(wrapper.find('.header-menu-section-list').element.children.length).toBe(1)
 	})
 })

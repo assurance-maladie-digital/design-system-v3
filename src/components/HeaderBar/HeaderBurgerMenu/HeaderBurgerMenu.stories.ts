@@ -72,6 +72,7 @@ export const Default: Story = {
 					<template #menu>
 						<HeaderBurgerMenu
 							v-model="args.modelValue"
+							inner-tag="div"
 							@update:modelValue="args['onUpdate:modelValue']"
 						>
 							{{ args.default }}
@@ -89,7 +90,9 @@ export const Default: Story = {
 				<template>
 					<HeaderBar>
 						<template #menu>
-							<HeaderBurgerMenu>
+							<HeaderBurgerMenu
+								tag="div"
+							>
 								<p>lorem ipsum</p>
 							</HeaderBurgerMenu>
 						</template>
@@ -208,21 +211,25 @@ export const Populated: Story = {
 										<template #title>
 											Menu de premier niveau 1
 										</template>
-										<HeaderMenuSection>
+										<HeaderMenuSection
+											title-tag="h3"
+										>
 											<template #title>
 												Section
 											</template>
 											<HeaderMenuItem>
 												<a href="">Item</a>
 											</HeaderMenuItem>
-											<HeaderSubMenu>
-												<template #title>
-													Menu de deuxième niveau 1
-												</template>
-												<HeaderMenuItem>
-													<a href="">Item</a>
-												</HeaderMenuItem>
-											</HeaderSubMenu>
+											<HeaderMenuItem>
+												<HeaderSubMenu>
+													<template #title>
+														Menu de deuxième niveau 1
+													</template>
+													<HeaderMenuItem>
+														<a href="">Item</a>
+													</HeaderMenuItem>
+												</HeaderSubMenu>
+											</HeaderMenuItem>
 										</HeaderMenuSection>
 									</HeaderSubMenu>
 								</headerMenuItem>
@@ -254,7 +261,9 @@ export const Populated: Story = {
 												<template #title>
 													Menu de deuxième niveau 3
 												</template>
-												<HeaderMenuSection>
+												<HeaderMenuSection
+													title-tag="h3"
+												>
 													<template #title>
 														Section 1
 													</template>
@@ -270,10 +279,17 @@ export const Populated: Story = {
 									<a href="">Item 3</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
-							<div class="pa-4">
-								<p class="font-weight-bold">Veillez vous connecter</p>
-								<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
-							</div>
+							<HeaderMenuSection
+								innerTag="div"
+							>
+								<template #title>
+									Section 3
+								</template>
+								<div class="pl-6 pb-6 pt-4">
+									<p class="font-weight-bold">Veillez vous connecter</p>
+									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
+								</div>
+							</HeaderMenuSection>
 						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
@@ -304,21 +320,25 @@ export const Populated: Story = {
 										<template #title>
 											Menu de premier niveau 1
 										</template>
-										<HeaderMenuSection>
+										<HeaderMenuSection
+											title-tag="h3"
+										>
 											<template #title>
 												Section
 											</template>
 											<HeaderMenuItem>
 												<a href="">Item</a>
 											</HeaderMenuItem>
-											<HeaderSubMenu>
-												<template #title>
-													Menu de deuxième niveau 1
-												</template>
-												<HeaderMenuItem>
-													<a href="">Item</a>
-												</HeaderMenuItem>
-											</HeaderSubMenu>
+											<HeaderMenuItem>
+												<HeaderSubMenu>
+													<template #title>
+														Menu de deuxième niveau 1
+													</template>
+													<HeaderMenuItem>
+														<a href="">Item</a>
+													</HeaderMenuItem>
+												</HeaderSubMenu>
+											</HeaderMenuItem>
 										</HeaderMenuSection>
 									</HeaderSubMenu>
 								</headerMenuItem>
@@ -350,7 +370,9 @@ export const Populated: Story = {
 												<template #title>
 													Menu de deuxième niveau 3
 												</template>
-												<HeaderMenuSection>
+												<HeaderMenuSection
+													title-tag="h3"
+												>
 													<template #title>
 														Section 1
 													</template>
@@ -366,10 +388,17 @@ export const Populated: Story = {
 									<a href="">Item 3</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
-							<div class="pa-4">
-								<p class="font-weight-bold">Veillez vous connecter</p>
-								<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
-							</div>
+							<HeaderMenuSection
+								innerTag="div"
+							>
+								<template #title>
+									Section 3
+								</template>
+								<div class="pl-6 pb-6 pt-4">
+									<p class="font-weight-bold">Veillez vous connecter</p>
+									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
+								</div>
+							</HeaderMenuSection>
 						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
@@ -407,14 +436,30 @@ export const WithScroll: Story = {
 						<HeaderBurgerMenu
 							v-model="args.modelValue"
 							@update:modelValue="args['onUpdate:modelValue']"
+							inner-tag="div"
 						>
-							<HeaderMenuSection>
+							<HeaderMenuSection
+								tag="div"
+								:show-title="false"
+							>
+								<template #title>
+									Menu de premier niveau
+								</template>
 								<HeaderMenuItem>
-									<HeaderSubMenu>
+									<HeaderSubMenu
+										inner-tag="div"
+									>
 										<template #title>
 											Sous menu
 										</template>
-										<HeaderMenuSection>
+										<HeaderMenuSection
+											title-tag="h3"
+											:show-title="false"
+											tag="div"
+										>
+											<template #title>
+												sous menu
+											</template>
 											<HeaderMenuItem>
 												<a href="">Item 1</a>
 											</HeaderMenuItem>
@@ -438,16 +483,33 @@ export const WithScroll: Story = {
 				code: `
 				<template>
 					<HeaderToolbar />
-					<HeaderBar>
+					<HeaderBar >
 						<template #menu>
-							<HeaderBurgerMenu>
-								<HeaderMenuSection>
+							<HeaderBurgerMenu
+								inner-tag="div"
+							>
+								<HeaderMenuSection
+									tag="div"
+									:show-title="false"
+								>
+									<template #title>
+										Menu de premier niveau
+									</template>
 									<HeaderMenuItem>
-										<HeaderSubMenu>
+										<HeaderSubMenu
+											inner-tag="div"
+										>
 											<template #title>
 												Sous menu
 											</template>
-											<HeaderMenuSection>
+											<HeaderMenuSection
+												title-tag="h3"
+												:show-title="false"
+												tag="div"
+											>
+												<template #title>
+													Sous menu
+												</template>
 												<HeaderMenuItem>
 													<a href="">Item 1</a>
 												</HeaderMenuItem>
@@ -503,7 +565,7 @@ export const Generated: Story = {
 								subMenuSubtitle: 'selon votre situation',
 								sections: [
 									{
-										title: undefined,
+										title: 'Droits et démarches',
 										items: [
 											{
 												title: 'Les essentiels de l’assuré',
@@ -558,7 +620,7 @@ export const Generated: Story = {
 								subMenuSubtitle: 'prestations et aides',
 								sections: [
 									{
-										title: undefined,
+										title: 'Remboursements',
 										items: [
 											{
 												title: 'Ce qui est remboursé',
@@ -616,7 +678,7 @@ export const Generated: Story = {
 								subMenuTitle: 'Maladies et prévention',
 								sections: [
 									{
-										title: undefined,
+										title: 'Prévention',
 										items: [
 											{
 												title: 'Tous les thèmes de santé',
@@ -724,13 +786,21 @@ export const Generated: Story = {
 									{{ section.title }}
 								</template>
 								<HeaderMenuItem v-for="item in section.items" :key="item.title">
-									<HeaderSubMenu v-if="item.subMenuTitle">
+									<HeaderSubMenu
+										v-if="item.subMenuTitle"
+										inner-tag="div"
+									>
 										<template #title>
 											{{ item.subMenuTitle }}
 											<em v-if="item.subMenuSubtitle" style="font-style: normal; color: #757777;">{{ item.subMenuSubtitle }}</em>
 										</template>
-										<HeaderMenuSection v-for="subSection in item.sections" :key="subSection.title">
-											<template #title v-if="subSection.title">
+										<HeaderMenuSection
+											v-for="subSection in item.sections"
+											:key="subSection.title"
+											tag="div"
+											:show-title="false"
+										>
+											<template #title>
 												{{ subSection.title }}
 											</template>
 											<HeaderMenuItem v-for="subItem in subSection.items" :key="subItem.title">
@@ -744,15 +814,21 @@ export const Generated: Story = {
 									</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
-							<h2 class="border-b-sm mb-2" style="font-size: 1.1rem; padding: 40px 16px 8px 20px;">Votre caisse</h2>
-							<div style="padding: 16px 50px 16px 20px;">
-								<div class="d-flex align-center ga-2 font-weight-bold">
-									<VIcon aria-label="Localisation" role="img" aria-hidden="false" color="primary">{{marker}}</VIcon>
-									<p>Vous n'avez pas sélectionné votre caisse</p>
+							<HeaderMenuSection
+								inner-tag="div"
+							>
+								<template #title>
+									Votre caisse
+								</template>
+								<div style="padding: 16px 50px 16px 20px;">
+									<div class="d-flex align-center ga-2 font-weight-bold">
+										<VIcon aria-label="Localisation" role="img" aria-hidden="false" color="primary">{{marker}}</VIcon>
+										<p>Vous n'avez pas sélectionné votre caisse</p>
+									</div>
+									<VBtn class="mt-3 mb-4 font-weight-bold text-capitalize" base-color="primary" density="comfortable" flat height="37">Sélectionner</VBtn>
+									<p class="mb-8">Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.) </p>
 								</div>
-								<VBtn class="mt-3 mb-4 font-weight-bold text-capitalize" base-color="primary" density="comfortable" flat height="37">Sélectionner</VBtn>
-								<p class="mb-8">Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.) </p>
-							</div>
+							</HeaderMenuSection>
 						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
@@ -790,6 +866,7 @@ export const Generated: Story = {
 											<HeaderMenuSection
 												v-for="subSection in item.sections"
 												:key="subSection.title"
+												:show-title="false"
 											>
 												<template #title>
 													{{ subSection.title }}
@@ -814,37 +891,38 @@ export const Generated: Story = {
 										</a>
 									</HeaderMenuItem>
 								</HeaderMenuSection>
-								<h2
-									class="border-b-sm mb-2"
-									style="font-size: 1.1rem; padding: 40px 16px 8px 20px;"
+								<HeaderMenuSection
+									inner-tag="div"
 								>
-									Votre caisse
-								</h2>
-								<div style="padding: 16px 50px 16px 20px;">
-									<div class="d-flex align-center ga-2 font-weight-bold">
-										<VIcon
-											aria-label="Localisation"
-											role="img"
-											aria-hidden="false"
-											color="primary"
+									<template #title>
+										Votre caisse
+									</template>
+									<div style="padding: 16px 50px 16px 20px;">
+										<div class="d-flex align-center ga-2 font-weight-bold">
+											<VIcon
+												aria-label="Localisation"
+												role="img"
+												aria-hidden="false"
+												color="primary"
+											>
+												{{ marker }}
+											</VIcon>
+											<p>Vous n'avez pas sélectionné votre caisse</p>
+										</div>
+										<VBtn
+											class="mt-3 mb-4 font-weight-bold text-capitalize"
+											base-color="primary"
+											density="comfortable"
+											flat
+											height="37"
 										>
-											{{ marker }}
-										</VIcon>
-										<p>Vous n'avez pas sélectionné votre caisse</p>
+											Sélectionner
+										</VBtn>
+										<p class="mb-8">
+											Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.)
+										</p>
 									</div>
-									<VBtn
-										class="mt-3 mb-4 font-weight-bold text-capitalize"
-										base-color="primary"
-										density="comfortable"
-										flat
-										height="37"
-									>
-										Sélectionner
-									</VBtn>
-									<p class="mb-8">
-										Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.)
-									</p>
-								</div>
+								</HeaderMenuSection>
 							</HeaderBurgerMenu>
 						</template>
 					</HeaderBar>
@@ -874,7 +952,7 @@ export const Generated: Story = {
 								subMenuSubtitle: 'selon votre situation',
 								sections: [
 									{
-										title: undefined,
+										title: 'Droits et démarches',
 										items: [
 											{
 												title: 'Les essentiels de l\\’assuré',
@@ -929,7 +1007,7 @@ export const Generated: Story = {
 								subMenuSubtitle: 'prestations et aides',
 								sections: [
 									{
-										title: undefined,
+										title: 'Remboursements',
 										items: [
 											{
 												title: 'Ce qui est remboursé',
@@ -987,7 +1065,7 @@ export const Generated: Story = {
 								subMenuTitle: 'Maladies et prévention',
 								sections: [
 									{
-										title: undefined,
+										title: 'Prévention',
 										items: [
 											{
 												title: 'Tous les thèmes de santé',

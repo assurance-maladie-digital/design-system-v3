@@ -151,11 +151,12 @@
 	})
 
 </script>
-
+<!-- eslint-disable vuejs-accessibility/no-redundant-roles -->
 <template>
 	<header
 		ref="header"
 		class="header"
+		role="banner"
 		:style="headerStyle"
 	>
 		<div
