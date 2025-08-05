@@ -207,8 +207,16 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		if (key.length === 1 && key.match(/\S/)) {
 			const index = findItemStartingWith(key)
 			if (index >= 0) {
-				if (!isOpen.value) toggleMenu()
-				setActiveDescendant(index)
+				if (!isOpen.value) {
+					toggleMenu()
+					// Attendre que le menu soit ouvert avant de définir le focus
+					nextTick(() => {
+						setActiveDescendant(index)
+					})
+				} else {
+					// Menu déjà ouvert, définir le focus immédiatement
+					setActiveDescendant(index)
+				}
 			}
 		}
 	}
