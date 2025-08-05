@@ -6,3 +6,6 @@ export * from './useCustomizableOptions'
 
 // withable
 export * from './widthable'
+
+// usePagination Amelipro
+export * from './usePagination'
