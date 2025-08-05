@@ -173,7 +173,7 @@
 		<div
 			v-if="!noTableInfos"
 			:id="`${uniqueId}-info-wrapper`"
-			class="d-flex justify-space-between align-end mb-6 amelipro-table__infos"
+			class="d-flex justify-space-between align-end mb-4 amelipro-table__infos"
 		>
 			<p
 				:id="`${uniqueId}-total-counter`"
@@ -196,7 +196,7 @@
 					:items="sortSelectItems"
 					:label="sortSelectLabel"
 					:placeholder="sortSelectPlaceholder"
-					style="padding-top: 0 !important;"
+					style="margin-bottom: 0 !important; padding-top: 0 !important;"
 					:unique-id="`${uniqueId}-sort-select`"
 					@update:model-value="emitSortSelectChange"
 				/>
@@ -210,7 +210,7 @@
 					:items="paginationSelectItems"
 					:label="paginationSelectLabel"
 					:placeholder="paginationSelectPlaceholder"
-					style="padding-top: 0 !important;"
+					style="margin-bottom: 0 !important; padding-top: 0 !important;"
 					:unique-id="`${uniqueId}-pagination-select`"
 					@update:model-value="emitPaginationSelectChange()"
 				/>
