@@ -231,11 +231,11 @@ describe('useSySelectKeyboard', () => {
 			isOpen.value = false
 			keyboard.handleCharacterKey('c')
 			expect(toggleMenu).toHaveBeenCalled()
-			
+
 			// Simuler l'ouverture du menu et attendre nextTick
 			isOpen.value = true
 			await nextTick()
-			
+
 			expect(keyboard.activeDescendantId.value).toBe('option-2') // Cherry
 		})
 
