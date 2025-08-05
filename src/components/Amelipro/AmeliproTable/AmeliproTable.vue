@@ -392,7 +392,7 @@ td {
 
 .vertical-border {
 	td,
- th {
+	th {
 		border-left: 1px solid apTokens.$ap-grey;
 		border-right: 1px solid apTokens.$ap-grey;
 	}
