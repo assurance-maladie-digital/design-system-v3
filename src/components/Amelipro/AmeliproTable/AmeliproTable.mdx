@@ -1,0 +1,22 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as AmeliproTableStories from './AmeliproTable.stories';
+
+<Meta of={AmeliproTableStories} />
+
+# AmeliproTable
+
+L’élément `AmeliproTable` est utilisé pour afficher des tableaux de données dans l’application Amelipro
+
+<Canvas of={AmeliproTableStories.Default}  />
+
+## API
+
+<Controls of={AmeliproTableStories.Default} />
+
+## Usages
+
+Ce composant est a utiliser pour afficher des tableaux de données simples dans les services amelipro, lorsqu'il est affiché en mobile le composant se divise en plusieurs petits tableaux affichant chacune les données d'une ligne.
+
+
+

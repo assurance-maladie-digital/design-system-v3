@@ -148,6 +148,7 @@ export { default as AmeliproSelect } from './Amelipro/AmeliproSelect/AmeliproSel
 export { default as AmeliproStateTile } from './Amelipro/AmeliproStateTile/AmeliproStateTile.vue'
 export { default as AmeliproStatus } from './Amelipro/AmeliproStatus/AmeliproStatus.vue'
 export { default as AmeliproStepper } from './Amelipro/AmeliproStepper/AmeliproStepper.vue'
+export { default as AmeliproTable } from './Amelipro/AmeliproTable/AmeliproTable.vue'
 export { default as AmeliproTabs } from './Amelipro/AmeliproTabs/AmeliproTabs.vue'
 export { default as AmeliproTextArea } from './Amelipro/AmeliproTextArea/AmeliproTextArea.vue'
 export { default as AmeliproTextField } from './Amelipro/AmeliproTextField/AmeliproTextField.vue'
