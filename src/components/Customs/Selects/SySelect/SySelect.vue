@@ -378,6 +378,8 @@
 		handleUpKey,
 		handleCharacterKey,
 		handleEscapeKey,
+		handleHomeKey,
+		handleEndKey,
 		restoreFocus,
 	} = useSySelectKeyboard({
 		isOpen,
@@ -651,6 +653,8 @@
 		@keydown.down.prevent="handleDownKey"
 		@keydown.up.prevent="handleUpKey"
 		@keydown.esc.prevent="handleEscapeKey"
+		@keydown.home.prevent="handleHomeKey"
+		@keydown.end.prevent="handleEndKey"
 		@keydown="(e) => {
 			// Handle printable characters for keyboard navigation
 			if (!e.ctrlKey && !e.altKey && !e.metaKey) {
@@ -729,6 +733,8 @@
 		@keydown.enter.prevent="handleEnterKey"
 		@keydown.down.prevent="handleDownKey"
 		@keydown.up.prevent="handleUpKey"
+		@keydown.home.prevent="handleHomeKey"
+		@keydown.end.prevent="handleEndKey"
 		@click.stop
 	>
 		<VListItem

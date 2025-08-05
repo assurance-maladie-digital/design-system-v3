@@ -222,6 +222,34 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		}
 	}
 
+	const handleHomeKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				// Aller au premier item
+				setActiveDescendant(0)
+			})
+		}
+		else {
+			// Menu déjà ouvert, aller au premier item
+			setActiveDescendant(0)
+		}
+	}
+
+	const handleEndKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				// Aller au dernier item
+				setActiveDescendant(formattedItems.value.length - 1)
+			})
+		}
+		else {
+			// Menu déjà ouvert, aller au dernier item
+			setActiveDescendant(formattedItems.value.length - 1)
+		}
+	}
+
 	// Watch activeDescendantId pour synchroniser lastFocusedIndex
 	watch(activeDescendantId, (newId) => {
 		if (newId) {
@@ -280,6 +308,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		handleUpKey,
 		handleCharacterKey,
 		handleEscapeKey,
+		handleHomeKey,
+		handleEndKey,
 		restoreFocus,
 	}
 }
