@@ -251,6 +251,38 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		}
 	}
 
+	const handlePageUpKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				// Aller au premier item
+				setActiveDescendant(0)
+			})
+		}
+		else {
+			// Menu déjà ouvert, naviguer de 10 items vers le haut
+			const currentIndex = lastFocusedIndex.value >= 0 ? lastFocusedIndex.value : 0
+			const newIndex = Math.max(currentIndex - 10, 0)
+			setActiveDescendant(newIndex)
+		}
+	}
+
+	const handlePageDownKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				// Aller au dernier item
+				setActiveDescendant(formattedItems.value.length - 1)
+			})
+		}
+		else {
+			// Menu déjà ouvert, naviguer de 10 items vers le bas
+			const currentIndex = lastFocusedIndex.value >= 0 ? lastFocusedIndex.value : 0
+			const newIndex = Math.min(currentIndex + 10, formattedItems.value.length - 1)
+			setActiveDescendant(newIndex)
+		}
+	}
+
 	const handleTabKey = () => {
 		if (isOpen.value && activeDescendantId.value) {
 			// Trouver l'item actuellement focusé
@@ -330,6 +362,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		handleEscapeKey,
 		handleHomeKey,
 		handleEndKey,
+		handlePageUpKey,
+		handlePageDownKey,
 		handleTabKey,
 		restoreFocus,
 	}
