@@ -120,6 +120,7 @@ export const FauxPositifsCards: StoryObj = {
 								item-value="value"
 								label="Filtrer par catégorie Tanaguru"
 								hide-details
+								color="primary"
 								class="mr-2 mb-2"
 								style="max-width: 250px; min-width: 250px"
 								density="comfortable"
@@ -131,6 +132,7 @@ export const FauxPositifsCards: StoryObj = {
 								label="Rechercher (composant, problème Tanaguru)"
 								append-inner-icon="mdi-magnify"
 								hide-details
+								color="primary"
 								class="mb-2"
 								style="max-width: 350px; min-width: 350px"
 								density="comfortable"
@@ -162,7 +164,7 @@ export const FauxPositifsCards: StoryObj = {
 											aria-level="3"
 											class="text-truncate"
 											v-html="highlightMatch(item.component, search)"
-										></v-card-title>
+										/>
 									</v-card-item>
 
 									<v-card-text>
