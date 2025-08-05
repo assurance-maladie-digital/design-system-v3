@@ -191,7 +191,7 @@ describe('useSySelectKeyboard', () => {
 	})
 
 	describe('handleUpKey', () => {
-		it('ouvre le menu et sélectionne le dernier élément si le menu est fermé', async () => {
+		it('ouvre le menu et sélectionne le premier élément si le menu est fermé (comportement RGAA)', async () => {
 			isOpen.value = false
 			keyboard.handleUpKey()
 			expect(toggleMenu).toHaveBeenCalled()
@@ -200,7 +200,8 @@ describe('useSySelectKeyboard', () => {
 			isOpen.value = true
 			await nextTick()
 
-			expect(keyboard.activeDescendantId.value).toBe(`option-${mockItems.length - 1}`)
+			// Comportement RGAA correct : flèche haut ouvre et va au premier élément
+			expect(keyboard.activeDescendantId.value).toBe('option-0')
 		})
 
 		it('sélectionne l\'élément précédent si le menu est ouvert', () => {
