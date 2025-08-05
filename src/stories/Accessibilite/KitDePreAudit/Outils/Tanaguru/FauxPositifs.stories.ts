@@ -18,7 +18,7 @@ export const FauxPositifsCards: StoryObj = {
 					{
 						tanaguruCategory: 'mandatory-elements',
 						tanaguruIssue: 'Propriétés ARIA non autorisées sur leur élément.',
-						component: 'Dialog',
+						component: 'DialogBox',
 						explanation: 'Une boîte de dialogue de type modale doit posséder la balise aria-modal="true" pour indiquer qu’elle est modale.',
 					},
 				]
