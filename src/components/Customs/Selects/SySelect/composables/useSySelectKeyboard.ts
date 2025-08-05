@@ -213,7 +213,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 					nextTick(() => {
 						setActiveDescendant(index)
 					})
-				} else {
+				}
+				else {
 					// Menu déjà ouvert, définir le focus immédiatement
 					setActiveDescendant(index)
 				}
