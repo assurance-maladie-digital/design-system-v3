@@ -211,11 +211,12 @@ describe('useSySelectKeyboard', () => {
 			expect(keyboard.activeDescendantId.value).toBe('option-1')
 		})
 
-		it('boucle au dernier élément si on est au premier élément', () => {
+		it('reste au premier élément si on est déjà au premier (pas de bouclage)', () => {
 			isOpen.value = true
 			keyboard.setActiveDescendant(0)
 			keyboard.handleUpKey()
-			expect(keyboard.activeDescendantId.value).toBe(`option-${mockItems.length - 1}`)
+			// Ne doit pas boucler, doit rester au premier élément
+			expect(keyboard.activeDescendantId.value).toBe('option-0')
 		})
 	})
 

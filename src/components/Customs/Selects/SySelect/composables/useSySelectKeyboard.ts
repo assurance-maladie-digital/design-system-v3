@@ -197,7 +197,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		}
 		else {
 			const currentIndex = findSelectedItemIndex()
-			const prevIndex = currentIndex > 0 ? currentIndex - 1 : formattedItems.value.length - 1
+			// Ne pas boucler : rester au premier item si on est déjà au premier
+			const prevIndex = currentIndex >= 0 ? Math.max(currentIndex - 1, 0) : 0
 			setActiveDescendant(prevIndex)
 		}
 	}
@@ -248,6 +249,25 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 			// Menu déjà ouvert, aller au dernier item
 			setActiveDescendant(formattedItems.value.length - 1)
 		}
+	}
+
+	const handleTabKey = () => {
+		if (isOpen.value && activeDescendantId.value) {
+			// Trouver l'item actuellement focusé
+			const currentIndex = parseInt(activeDescendantId.value.split('-')[1])
+			if (!isNaN(currentIndex) && currentIndex >= 0 && currentIndex < formattedItems.value.length) {
+				const currentItem = formattedItems.value[currentIndex]
+				// Sélectionner l'item qui a le focus
+				selectItem(currentItem)
+			}
+		}
+		// Fermer le menu (la navigation Tab normale continuera après)
+		if (isOpen.value) {
+			isOpen.value = false
+			clearActiveDescendant()
+		}
+		// Ne pas empêcher le comportement par défaut de Tab pour permettre
+		// la navigation vers l'élément suivant focusable
 	}
 
 	// Watch activeDescendantId pour synchroniser lastFocusedIndex
@@ -310,6 +330,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		handleEscapeKey,
 		handleHomeKey,
 		handleEndKey,
+		handleTabKey,
 		restoreFocus,
 	}
 }

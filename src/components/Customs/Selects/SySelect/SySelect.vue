@@ -380,6 +380,7 @@
 		handleEscapeKey,
 		handleHomeKey,
 		handleEndKey,
+		handleTabKey,
 		restoreFocus,
 	} = useSySelectKeyboard({
 		isOpen,
@@ -729,7 +730,7 @@
 		tabindex="0"
 		:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
 		@keydown.esc.prevent="closeList"
-		@keydown.tab.prevent="closeList"
+		@keydown.tab="handleTabKey"
 		@keydown.enter.prevent="handleEnterKey"
 		@keydown.down.prevent="handleDownKey"
 		@keydown.up.prevent="handleUpKey"
