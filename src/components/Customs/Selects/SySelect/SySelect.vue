@@ -108,6 +108,10 @@
 			type: Boolean,
 			default: false,
 		},
+		helpText: {
+			type: String,
+			default: '',
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -356,6 +360,23 @@
 	})
 
 	const input = ref<InstanceType<typeof VTextField> | null>(null)
+
+	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
+	const hasMessages = computed(() => {
+		if (props.disableErrorHandling) return false
+		return props.errorMessages.length > 0 || hasError.value
+	})
+
+	// Détermine si le helpText doit être affiché à la position du message ou en dessous
+	const showHelpTextAsMessage = computed(() => {
+		// Afficher à la position du message si pas de messages d'erreur
+		return props.helpText && !hasMessages.value
+	})
+
+	const showHelpTextBelow = computed(() => {
+		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
+		return props.helpText && hasMessages.value && !props.hideMessages
+	})
 
 	const calculatedWidth = computed(() => {
 		const baseWidth = props.width ? Number(props.width) : 0
@@ -645,7 +666,9 @@
 		:density="props.density"
 		:active="hasChips || isOpen"
 		readonly
-		:hide-details="props.hideMessages"
+		:hide-details="props.hideMessages && !showHelpTextAsMessage"
+		:hint="showHelpTextAsMessage ? props.helpText : ''"
+		:persistent-hint="!!showHelpTextAsMessage"
 		class="sy-select"
 		:width="calculatedWidth"
 		:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
@@ -777,6 +800,14 @@
 			</VListItemTitle>
 		</VListItem>
 	</VList>
+
+	<div
+		v-if="showHelpTextBelow"
+		class="help-text-below px-4 mt-1"
+		:class="{ 'text-disabled': props.disabled }"
+	>
+		{{ props.helpText }}
+	</div>
 </template>
 
 <style scoped lang="scss">
@@ -817,6 +848,26 @@
 
 .v-list-item.active {
 	background-color: rgb(0 0 0 / 8%);
+}
+
+.help-text {
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	font-size: 14px;
+	line-height: 1.2;
+}
+
+.help-text.text-disabled {
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+}
+
+.help-text-below {
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	font-size: 14px;
+	line-height: 1.2;
+}
+
+.help-text-below.text-disabled {
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
 }
 
 /* Ensure focus styles match selection styles for keyboard navigation */
