@@ -386,6 +386,7 @@
 		:active="props.isActive"
 		:title="accessibleLabel"
 		:aria-label="accessibleLabel"
+		:aria-required="props.required ? 'true' : undefined"
 		:base-color="props.baseColor"
 		:bg-color="props.bgColor"
 		:center-affix="props.centerAffix"
