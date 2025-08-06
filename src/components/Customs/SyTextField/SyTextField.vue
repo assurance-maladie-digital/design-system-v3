@@ -294,6 +294,23 @@
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
 
+	// Accessible label that includes prefix and suffix content for screen readers
+	const accessibleLabel = computed(() => {
+		let label = labelWithAsterisk.value
+		
+		// Add prefix content if provided
+		if (props.prefix) {
+			label += ` ${props.prefix}`
+		}
+		
+		// Add suffix content if provided
+		if (props.suffix) {
+			label += ` ${props.suffix}`
+		}
+		
+		return label
+	})
+
 	const dividerProps = {
 		thickness: 2,
 		length: '25px',
@@ -367,8 +384,8 @@
 		v-model="model"
 		:autocomplete="props.autocomplete"
 		:active="props.isActive"
-		:title="props.label"
-		:aria-label="props.label"
+		:title="accessibleLabel"
+		:aria-label="accessibleLabel"
 		:base-color="props.baseColor"
 		:bg-color="props.bgColor"
 		:center-affix="props.centerAffix"
