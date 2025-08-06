@@ -297,17 +297,17 @@
 	// Accessible label that includes prefix and suffix content for screen readers
 	const accessibleLabel = computed(() => {
 		let label = labelWithAsterisk.value
-		
+
 		// Add prefix content if provided
 		if (props.prefix) {
 			label += ` ${props.prefix}`
 		}
-		
+
 		// Add suffix content if provided
 		if (props.suffix) {
 			label += ` ${props.suffix}`
 		}
-		
+
 		return label
 	})
 
