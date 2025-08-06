@@ -636,6 +636,34 @@
 		})
 	})
 
+	// Watch for selection changes to enforce correct accessibility attributes
+	// This prevents Vuetify from overriding our combobox attributes
+	watch(selectedItem, () => {
+		nextTick(() => {
+			if (input.value && input.value.$el) {
+				const parentElement = input.value.$el
+				if (parentElement) {
+					// Ensure combobox role is maintained
+					parentElement.setAttribute('role', 'combobox')
+					// Ensure aria-hidden is never set to true
+					parentElement.removeAttribute('aria-hidden')
+					// Maintain other combobox attributes
+					parentElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
+					parentElement.setAttribute('aria-haspopup', 'listbox')
+					parentElement.setAttribute('aria-autocomplete', 'none')
+
+					// Only add aria-required if the component is actually required
+					if (isRequired.value) {
+						parentElement.setAttribute('aria-required', 'true')
+					}
+					else {
+						parentElement.removeAttribute('aria-required')
+					}
+				}
+			}
+		})
+	}, { deep: true })
+
 	onUnmounted(() => {
 		window.removeEventListener('scroll', updateListPosition, true)
 		window.removeEventListener('resize', updateListPosition)
@@ -659,6 +687,10 @@
 		:disabled="disabled"
 		:label="labelWithAsterisk"
 		:aria-label="$attrs['aria-label'] || labelWithAsterisk"
+		role="combobox"
+		:aria-expanded="isOpen"
+		aria-haspopup="listbox"
+		:aria-hidden="false"
 		:error-messages="props.disableErrorHandling ? [] : errorMessages"
 		:variant="outlined ? 'outlined' : 'underlined'"
 		:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"

@@ -216,6 +216,7 @@ export const Required: Story = {
 				name: 'Template',
 				code: `
 				<template>
+					<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
 					<SySelect
 						v-model="value"
 						:items="items"
@@ -255,6 +256,7 @@ export const Required: Story = {
 			},
 			template: `
 				<div class="pa-4">
+					<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
 					<SySelect
 						v-bind="args"
 						:required="args.required"
