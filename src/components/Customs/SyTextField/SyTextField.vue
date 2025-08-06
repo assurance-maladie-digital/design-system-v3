@@ -362,11 +362,81 @@
 			addSrOnlySpan('.v-text-field__prefix')
 			addSrOnlySpan('.v-text-field__suffix')
 
-			// Remove aria-describedby attribute
-			const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
-			if (inputElement) {
-				inputElement.removeAttribute('aria-describedby')
+			// RGAA compliance: Associate error messages with input via aria-describedby
+			const setupAriaDescribedby = () => {
+				const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
+				const messagesContainer = syTextFieldRef.value?.$el?.querySelector('.v-messages')
+				const detailsContainer = syTextFieldRef.value?.$el?.querySelector('.v-input__details')
+
+				if (inputElement && messagesContainer) {
+					// Create unique ID for messages container only
+					const messagesId = `${inputElement.id || 'input'}-messages`
+					messagesContainer.id = messagesId
+
+					// Associate input with messages via aria-describedby
+					inputElement.setAttribute('aria-describedby', messagesId)
+
+					// Remove problematic ARIA attributes from details container (parent)
+					if (detailsContainer) {
+						// Remove any existing ID to avoid duplicates
+						if (detailsContainer.id === messagesId) {
+							detailsContainer.removeAttribute('id')
+						}
+						detailsContainer.removeAttribute('role')
+						detailsContainer.removeAttribute('aria-live')
+						detailsContainer.removeAttribute('aria-atomic')
+					}
+
+					// Also remove from messages container itself
+					messagesContainer.removeAttribute('role')
+					messagesContainer.removeAttribute('aria-live')
+					messagesContainer.removeAttribute('aria-atomic')
+				}
+				else if (inputElement) {
+					// No messages container, remove aria-describedby
+					inputElement.removeAttribute('aria-describedby')
+				}
 			}
+
+			setupAriaDescribedby()
+		})
+
+		// Watch for error state changes to update aria-describedby dynamically
+		watch([hasError, errors], () => {
+			nextTick(() => {
+				const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
+				const messagesContainer = syTextFieldRef.value?.$el?.querySelector('.v-messages')
+				const detailsContainer = syTextFieldRef.value?.$el?.querySelector('.v-input__details')
+
+				if (inputElement && messagesContainer) {
+					// Create unique ID for messages container only
+					const messagesId = `${inputElement.id || 'input'}-messages`
+					messagesContainer.id = messagesId
+
+					// Associate input with messages via aria-describedby
+					inputElement.setAttribute('aria-describedby', messagesId)
+
+					// Remove problematic ARIA attributes from details container (parent)
+					if (detailsContainer) {
+						// Remove any existing ID to avoid duplicates
+						if (detailsContainer.id === messagesId) {
+							detailsContainer.removeAttribute('id')
+						}
+						detailsContainer.removeAttribute('role')
+						detailsContainer.removeAttribute('aria-live')
+						detailsContainer.removeAttribute('aria-atomic')
+					}
+
+					// Also remove from messages container itself
+					messagesContainer.removeAttribute('role')
+					messagesContainer.removeAttribute('aria-live')
+					messagesContainer.removeAttribute('aria-atomic')
+				}
+				else if (inputElement) {
+					// No messages container, remove aria-describedby
+					inputElement.removeAttribute('aria-describedby')
+				}
+			})
 		})
 	})
 
