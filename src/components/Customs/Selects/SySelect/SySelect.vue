@@ -711,6 +711,7 @@
 			<SyIcon
 				v-if="hasError"
 				class="mr-6"
+        color="error"
 				:icon="mdiInformation"
 				:decorative="false"
 				label="Information"
