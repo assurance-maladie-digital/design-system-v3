@@ -393,7 +393,8 @@ export const Required: Story = {
 				return { args, value }
 			},
 			template: `
-    <div class="d-flex flex-wrap align-center">
+    <div>
+		<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
      <SyTextField v-bind="args" v-model="value" />
     </div>
    `,
@@ -413,6 +414,7 @@ Pour afficher l'astérisque sur un champ requis, il faut activer la prop \`displ
 			{
 				name: 'Template',
 				code: `<template>
+	<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
 	<SyTextField
 		v-model="value"
 		required
@@ -451,7 +453,7 @@ export const RequiredWithAsterisk: Story = {
 			},
 			template: `
     <div class="d-flex flex-wrap align-center">
-     <SyTextField v-bind="args" v-model="value" />
+     	<SyTextField v-bind="args" v-model="value" />
     </div>
    `,
 		}
