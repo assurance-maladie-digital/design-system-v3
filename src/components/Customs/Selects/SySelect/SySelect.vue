@@ -124,22 +124,24 @@
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
 
-	const toggleMenu = () => {
+	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
 		isOpen.value = !isOpen.value
 		if (isOpen.value) {
 			updateListPosition()
-			// Initialiser la sélection à l'ouverture
-			nextTick(() => {
-				// Si un élément est déjà sélectionné, l'activer
-				const selectedIndex = formattedItems.value.findIndex(item => isItemSelected(item))
-				if (selectedIndex >= 0) {
-					setActiveDescendant(selectedIndex)
-				}
-				else {
-					setActiveDescendant(0)
-				}
-			})
+			// Initialiser la sélection à l'ouverture seulement si pas ouvert via clavier
+			if (!skipInitialFocus) {
+				nextTick(() => {
+					// Si un élément est déjà sélectionné, l'activer
+					const selectedIndex = formattedItems.value.findIndex(item => isItemSelected(item))
+					if (selectedIndex >= 0) {
+						setActiveDescendant(selectedIndex)
+					}
+					else {
+						setActiveDescendant(0)
+					}
+				})
+			}
 		}
 	}
 
@@ -690,7 +692,6 @@
 		role="combobox"
 		:aria-expanded="isOpen"
 		aria-haspopup="listbox"
-		:aria-hidden="false"
 		:error-messages="props.disableErrorHandling ? [] : errorMessages"
 		:variant="outlined ? 'outlined' : 'underlined'"
 		:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"

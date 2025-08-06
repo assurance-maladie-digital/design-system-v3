@@ -7,7 +7,7 @@ export type ItemType = {
 export interface UseSySelectKeyboardOptions {
 	isOpen: Ref<boolean>
 	formattedItems: Ref<ItemType[]>
-	toggleMenu: () => void
+	toggleMenu: (skipInitialFocus?: boolean) => void
 	selectItem: (item: ItemType | null, event?: Event) => void
 	getItemText: (item: unknown) => unknown
 	updateListPosition: () => void
@@ -75,6 +75,22 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	const clearActiveDescendant = () => {
 		activeDescendantId.value = ''
 		lastFocusedIndex.value = -1
+
+		// Supprimer la classe de focus visuel de tous les éléments
+		nextTick(() => {
+			const allItems = document.querySelectorAll('.v-list-item')
+			allItems.forEach((item) => {
+				item.classList.remove('keyboard-focused')
+			})
+		})
+	}
+
+	/**
+	 * Fonction pour effacer seulement le focus visuel et ARIA sans réinitialiser lastFocusedIndex
+	 * Utilisée quand on ferme le dropdown mais qu'on veut conserver la mémoire du dernier focus
+	 */
+	const clearVisualFocus = () => {
+		activeDescendantId.value = ''
 
 		// Supprimer la classe de focus visuel de tous les éléments
 		nextTick(() => {
@@ -171,7 +187,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 
 	const handleDownKey = () => {
 		if (!isOpen.value) {
-			toggleMenu()
+			// Passer skipInitialFocus=true pour éviter que toggleMenu override notre focus
+			toggleMenu(true)
 			nextTick(() => {
 				// Restaurer le dernier item qui avait le focus, ou le premier item par défaut
 				const indexToFocus = lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length
@@ -181,15 +198,17 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 			})
 		}
 		else {
-			const currentIndex = findSelectedItemIndex()
-			const nextIndex = currentIndex >= 0 ? Math.min(currentIndex + 1, formattedItems.value.length - 1) : 0
+			// Utiliser lastFocusedIndex comme point de départ (pas l'item sélectionné)
+			const currentIndex = lastFocusedIndex.value >= 0 ? lastFocusedIndex.value : 0
+			const nextIndex = Math.min(currentIndex + 1, formattedItems.value.length - 1)
 			setActiveDescendant(nextIndex)
 		}
 	}
 
 	const handleUpKey = () => {
 		if (!isOpen.value) {
-			toggleMenu()
+			// Passer skipInitialFocus=true pour éviter que toggleMenu override notre focus
+			toggleMenu(true)
 			nextTick(() => {
 				// Aller au premier item quand on ouvre avec flèche haut (comportement RGAA correct)
 				setActiveDescendant(0)
@@ -333,7 +352,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		}
 		else {
 			// Conserver lastFocusedIndex mais effacer le focus visuel et ARIA
-			clearActiveDescendant()
+			clearVisualFocus()
 		}
 	})
 
