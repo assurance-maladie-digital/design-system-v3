@@ -34,7 +34,7 @@ export const Default: Story = {
 		modelValue: {
 			audioSrc: '/amelipro/sound/captcha.wav',
 			imgSrc: '/amelipro/img/captcha.png',
-			inputValue: 'input value',
+			inputValue: '',
 		},
 		uniqueId: 'amelipro-captcha-unique-id',
 	},
@@ -59,7 +59,7 @@ export const Default: Story = {
 	const model = ref({
 		audioSrc: '/amelipro/sound/captcha.wav',
 		imgSrc: '/amelipro/img/captcha.png',
-		inputValue: 'input value',
+		inputValue: '',
 	})
 </script>
 				`,
