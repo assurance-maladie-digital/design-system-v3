@@ -555,7 +555,8 @@
 				// Only set aria-controls when menu is open and element exists
 				if (isOpen.value) {
 					inputElement.setAttribute('aria-controls', uniqueMenuId.value)
-				} else {
+				}
+				else {
 					inputElement.removeAttribute('aria-controls')
 				}
 				// Note: aria-autocomplete is omitted for select-only combobox (invalid to set to 'none')
@@ -710,7 +711,8 @@
 					// Only set aria-controls when menu is open and element exists
 					if (isOpen.value) {
 						inputElement.setAttribute('aria-controls', uniqueMenuId.value)
-					} else {
+					}
+					else {
 						inputElement.removeAttribute('aria-controls')
 					}
 
