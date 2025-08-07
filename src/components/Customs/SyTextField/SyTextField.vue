@@ -493,6 +493,7 @@
 		:focused="props.isFocused"
 		:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
 		:hint="showHelpTextAsMessage ? props.helpText : props.hint"
+		:label="labelWithAsterisk"
 		:loading="props.loading"
 		:max-errors="props.maxErrors"
 		:max-width="props.maxWidth"
