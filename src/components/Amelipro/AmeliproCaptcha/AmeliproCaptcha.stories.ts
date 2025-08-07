@@ -57,8 +57,8 @@ export const Default: Story = {
 	import { ref } from 'vue'
 
 	const model = ref({
-		audioSrc: '../../../.storybook/public/sound/captcha.wav',
-		imgSrc: '../../../.storybook/public/img/captcha.png',
+		audioSrc: '../../../../.storybook/public/amelipro/sound/captcha.wav',
+		imgSrc: '../../../../.storybook/public/amelipro/img/captcha.png',
 		inputValue: 'input value',
 	})
 </script>
