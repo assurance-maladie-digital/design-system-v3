@@ -958,7 +958,7 @@
 			// SyTextField peut contenir plusieurs inputs, donc on cible le premier qui n'est pas caché
 			const input = inputRef.value?.$el.querySelector('input:not([type="hidden"])')
 			if (input) {
-				input.focus()
+				input.focus({ preventScroll: true })
 			}
 		},
 		blur() {
