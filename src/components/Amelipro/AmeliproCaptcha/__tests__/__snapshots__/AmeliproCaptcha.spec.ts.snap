@@ -28,7 +28,7 @@ exports[`AmeliproCaptcha > render correctly 1`] = `
       <p
         class="
           amelipro-captcha__title
-          font-weight-semibold
+          font-weight-bold
           mb-4
         "
         id="my-captcha-id-title"
