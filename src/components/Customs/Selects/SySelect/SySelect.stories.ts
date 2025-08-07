@@ -55,6 +55,10 @@ const meta: Meta<typeof SySelect> = {
 			control: 'text',
 			description: 'Permet de définir une largeur personnalisée pour le champ de sélection (en px)',
 		},
+		helpText: {
+			control: 'text',
+			description: 'Texte d\'aide à la saisie',
+		},
 	},
 } as Meta<typeof SySelect>
 
@@ -131,6 +135,80 @@ export const Default: Story = {
 	},
 }
 
+export const HelpText: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SySelect
+						v-model="value"
+						:items="items"
+						help-text="Texte d'aide à la saisie"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import SySelect from '@cnamts/SySelect'
+					
+					const items =  [
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+						{ text: 'Clement', value: 'Clement' },
+						{ text: 'Corentin', value: 'Corentin' },
+						{ text: 'Damien', value: 'Damien' },
+						{ text: 'David', value: 'David' },
+						{ text: 'Eloi', value: 'Eloi' },
+						{ text: 'Louis', value: 'Louis' },
+						{ text: 'Valentin', value: 'Valentin' },
+					],
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Adrien', value: 'Adrien' },
+			{ text: 'Axel', value: 'Axel' },
+			{ text: 'Baptiste', value: 'Baptiste' },
+			{ text: 'Clement', value: 'Clement' },
+			{ text: 'Corentin', value: 'Corentin' },
+			{ text: 'Damien', value: 'Damien' },
+			{ text: 'David', value: 'David' },
+			{ text: 'Eloi', value: 'Eloi' },
+			{ text: 'Louis', value: 'Louis' },
+			{ text: 'Valentin', value: 'Valentin' },
+		],
+		'helpText': 'Texte d\'aide à la saisie',
+		'hideMessages': false,
+		'required': true,
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<SySelect
+						v-bind="args"
+					/>
+				</div>
+				<br/><br/><br/><br/>
+			`,
+		}
+	},
+}
+
 export const Required: Story = {
 	parameters: {
 		sourceCode: [
@@ -138,6 +216,7 @@ export const Required: Story = {
 				name: 'Template',
 				code: `
 				<template>
+					<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
 					<SySelect
 						v-model="value"
 						:items="items"
@@ -177,6 +256,7 @@ export const Required: Story = {
 			},
 			template: `
 				<div class="pa-4">
+					<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
 					<SySelect
 						v-bind="args"
 						:required="args.required"

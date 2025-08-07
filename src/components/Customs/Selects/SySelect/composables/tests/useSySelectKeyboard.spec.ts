@@ -191,7 +191,7 @@ describe('useSySelectKeyboard', () => {
 	})
 
 	describe('handleUpKey', () => {
-		it('ouvre le menu et sélectionne le dernier élément si le menu est fermé', async () => {
+		it('ouvre le menu et sélectionne le premier élément si le menu est fermé (comportement RGAA)', async () => {
 			isOpen.value = false
 			keyboard.handleUpKey()
 			expect(toggleMenu).toHaveBeenCalled()
@@ -200,7 +200,8 @@ describe('useSySelectKeyboard', () => {
 			isOpen.value = true
 			await nextTick()
 
-			expect(keyboard.activeDescendantId.value).toBe(`option-${mockItems.length - 1}`)
+			// Comportement RGAA correct : flèche haut ouvre et va au premier élément
+			expect(keyboard.activeDescendantId.value).toBe('option-0')
 		})
 
 		it('sélectionne l\'élément précédent si le menu est ouvert', () => {
@@ -210,24 +211,32 @@ describe('useSySelectKeyboard', () => {
 			expect(keyboard.activeDescendantId.value).toBe('option-1')
 		})
 
-		it('boucle au dernier élément si on est au premier élément', () => {
+		it('reste au premier élément si on est déjà au premier (pas de bouclage)', () => {
 			isOpen.value = true
 			keyboard.setActiveDescendant(0)
 			keyboard.handleUpKey()
-			expect(keyboard.activeDescendantId.value).toBe(`option-${mockItems.length - 1}`)
+			// Ne doit pas boucler, doit rester au premier élément
+			expect(keyboard.activeDescendantId.value).toBe('option-0')
 		})
 	})
 
 	describe('handleCharacterKey', () => {
 		it('trouve et sélectionne un élément commençant par le caractère donné', () => {
+			// Menu déjà ouvert, pas besoin d'attendre nextTick
+			isOpen.value = true
 			keyboard.handleCharacterKey('b')
 			expect(keyboard.activeDescendantId.value).toBe('option-1') // Banana
 		})
 
-		it('ouvre le menu si fermé et trouve un élément correspondant', () => {
+		it('ouvre le menu si fermé et trouve un élément correspondant', async () => {
 			isOpen.value = false
 			keyboard.handleCharacterKey('c')
 			expect(toggleMenu).toHaveBeenCalled()
+
+			// Simuler l'ouverture du menu et attendre nextTick
+			isOpen.value = true
+			await nextTick()
+
 			expect(keyboard.activeDescendantId.value).toBe('option-2') // Cherry
 		})
 
