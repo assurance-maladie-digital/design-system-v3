@@ -19,7 +19,13 @@ export const FauxPositifsCards: StoryObj = {
 						tanaguruCategory: 'mandatory-elements',
 						tanaguruIssue: 'Propriétés ARIA non autorisées sur leur élément.',
 						component: 'DialogBox',
-						explanation: 'Une boîte de dialogue de type modale doit posséder la balise aria-modal="true" pour indiquer qu’elle est modale.',
+						explanation: 'Une boîte de dialogue de type modale doit posséder la balise aria-modal="true" pour indiquer qu’elle est modale (voir motif de conception \'Dialog\' du W3C).',
+					},
+					{
+						tanaguruCategory: 'navigation',
+						tanaguruIssue: 'Eléments intéractifs non atteignables en navigation clavier.',
+						component: 'Tabs',
+						explanation: 'D\'après le motif de conception \'Tabs\' du W3C, les onglets (autre que celui actif) doivent bien avoir un tabindex="-1". En revanche, il faudra s\'assurer que ce tabindex passe bien à 0 lorsque l\'onglet devient actif.',
 					},
 				]
 
@@ -180,7 +186,7 @@ export const FauxPositifsCards: StoryObj = {
 
 										<dl class="mt-1">
 											<dt class="text-subtitle-3 font-weight-bold">Problème Tanaguru :</dt>
-											<dd class="text-body-3 mb-3" v-html="highlightMatch(item.tanaguruIssue, search)"></dd>
+											<dd class="text-body-3 mb-3" v-html="highlightMatch(item.tanaguruIssue, search)"/>
 											<dt class="text-subtitle-3 font-weight-bold">Explication :</dt>
 											<dd class="text-body-3">{{ item.explanation }}</dd>
 										</dl>
