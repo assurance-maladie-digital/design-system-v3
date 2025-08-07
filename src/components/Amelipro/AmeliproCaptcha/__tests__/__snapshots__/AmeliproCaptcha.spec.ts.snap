@@ -30,6 +30,7 @@ exports[`AmeliproCaptcha > render correctly 1`] = `
           amelipro-captcha__title
           font-weight-bold
           mb-4
+          text-h4
         "
         id="my-captcha-id-title"
       >

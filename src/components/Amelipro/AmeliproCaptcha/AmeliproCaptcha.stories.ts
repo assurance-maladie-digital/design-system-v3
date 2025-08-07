@@ -32,8 +32,8 @@ type Story = StoryObj<typeof AmeliproCaptcha>
 export const Default: Story = {
 	args: {
 		modelValue: {
-			audioSrc: '../../../../.storybook/public/amelipro/sound/captcha.wav',
-			imgSrc: '../../../../.storybook/public/amelipro/img/captcha.png',
+			audioSrc: '/amelipro/sound/captcha.wav',
+			imgSrc: '/amelipro/img/captcha.png',
 			inputValue: 'input value',
 		},
 		uniqueId: 'amelipro-captcha-unique-id',
@@ -57,8 +57,8 @@ export const Default: Story = {
 	import { ref } from 'vue'
 
 	const model = ref({
-		audioSrc: '../../../../.storybook/public/amelipro/sound/captcha.wav',
-		imgSrc: '../../../../.storybook/public/amelipro/img/captcha.png',
+		audioSrc: '/amelipro/sound/captcha.wav',
+		imgSrc: '/amelipro/img/captcha.png',
 		inputValue: 'input value',
 	})
 </script>

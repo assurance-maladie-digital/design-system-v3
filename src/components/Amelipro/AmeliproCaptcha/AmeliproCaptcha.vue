@@ -126,7 +126,7 @@
 	>
 		<p
 			:id="`${uniqueId}-title`"
-			class="mb-4 font-weight-bold amelipro-captcha__title"
+			class="mb-4 font-weight-bold text-h4 amelipro-captcha__title"
 		>
 			{{ captchaTitle }}
 		</p>
