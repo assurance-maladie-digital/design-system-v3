@@ -158,6 +158,8 @@
 		isOpen.value = false
 	}
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
+	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
+	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
 	const listStyles = ref<Record<string, string>>({})
 	const updateListPosition = () => {
 		if (input.value?.$el) {
@@ -535,48 +537,52 @@
 
 	let mutationObserver: MutationObserver | null = null
 
-	// Function to clean up problematic attributes
-	const cleanupAttributes = () => {
+	// Function to set up proper ARIA attributes
+	const setupAriaAttributes = () => {
 		if (input.value && input.value.$el) {
 			// Find the input element
 			const inputElement = input.value.$el.querySelector('input')
 			if (inputElement) {
-				// Remove problematic attributes from input
+				// Remove problematic attributes that shouldn't be on input
 				inputElement.removeAttribute('aria-describedby')
 				inputElement.removeAttribute('size')
 				inputElement.removeAttribute('tabindex')
-				inputElement.removeAttribute('role')
-				inputElement.removeAttribute('aria-expanded')
-				inputElement.removeAttribute('aria-controls')
-				inputElement.removeAttribute('aria-autocomplete')
-				inputElement.removeAttribute('aria-haspopup')
-				inputElement.removeAttribute('aria-activedescendant')
 				inputElement.removeAttribute('aria-hidden')
-			}
 
-			// Set combobox role and ARIA attributes on the parent element
-			const parentElement = input.value.$el
-			if (parentElement) {
-				// Remove conflicting attributes
-				parentElement.removeAttribute('aria-hidden')
-				
-				// Ensure parent has correct attributes
-				if (!parentElement.hasAttribute('role') || parentElement.getAttribute('role') !== 'combobox') {
-					parentElement.setAttribute('role', 'combobox')
+				// Set proper combobox attributes on input element (following CNSA standard)
+				inputElement.setAttribute('role', 'combobox')
+				inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
+				// Only set aria-controls when menu is open and element exists
+				if (isOpen.value) {
+					inputElement.setAttribute('aria-controls', uniqueMenuId.value)
+				} else {
+					inputElement.removeAttribute('aria-controls')
 				}
-				parentElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
-				parentElement.setAttribute('aria-controls', props.menuId)
-				parentElement.setAttribute('aria-autocomplete', 'none')
-				parentElement.setAttribute('aria-haspopup', 'listbox')
+				// Note: aria-autocomplete is omitted for select-only combobox (invalid to set to 'none')
+				inputElement.setAttribute('aria-haspopup', 'listbox')
 				if (isOpen.value && activeDescendantId.value) {
-					parentElement.setAttribute('aria-activedescendant', activeDescendantId.value)
+					inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
 				}
 				if (isRequired.value) {
-					parentElement.setAttribute('aria-required', 'true')
+					inputElement.setAttribute('aria-required', 'true')
 				}
 				if (hasError.value) {
-					parentElement.setAttribute('aria-invalid', 'true')
+					inputElement.setAttribute('aria-invalid', 'true')
 				}
+			}
+
+			// Clean up parent element - remove any conflicting attributes
+			const parentElement = input.value.$el
+			if (parentElement) {
+				// Remove any role or ARIA attributes from parent that should be on input
+				parentElement.removeAttribute('role')
+				parentElement.removeAttribute('aria-expanded')
+				parentElement.removeAttribute('aria-controls')
+				parentElement.removeAttribute('aria-haspopup')
+				parentElement.removeAttribute('aria-activedescendant')
+				parentElement.removeAttribute('aria-required')
+				parentElement.removeAttribute('aria-invalid')
+				parentElement.removeAttribute('aria-hidden')
 			}
 		}
 	}
@@ -590,8 +596,8 @@
 
 		// Use nextTick to ensure the DOM is fully rendered
 		nextTick(() => {
-			// Initial cleanup
-			cleanupAttributes()
+			// Initial setup
+			setupAriaAttributes()
 
 			// Set up MutationObserver to monitor attribute changes
 			if (input.value && input.value.$el) {
@@ -601,28 +607,28 @@
 						if (mutation.type === 'attributes') {
 							const target = mutation.target as HTMLElement
 							const attributeName = mutation.attributeName
-							
+
 							// Check if problematic attributes were added to input
 							if (target.tagName === 'INPUT' && (
-								attributeName === 'role' ||
-								attributeName === 'aria-hidden' ||
-								attributeName === 'aria-expanded' ||
-								attributeName === 'aria-controls' ||
-								attributeName === 'aria-haspopup'
+								attributeName === 'role'
+								|| attributeName === 'aria-hidden'
+								|| attributeName === 'aria-expanded'
+								|| attributeName === 'aria-controls'
+								|| attributeName === 'aria-haspopup'
 							)) {
 								needsCleanup = true
 							}
-							
+
 							// Check if aria-hidden was added to parent
 							if (target === input.value?.$el && attributeName === 'aria-hidden') {
 								needsCleanup = true
 							}
 						}
 					})
-					
+
 					if (needsCleanup) {
 						// Use setTimeout to avoid infinite loops
-						setTimeout(cleanupAttributes, 0)
+						setTimeout(setupAriaAttributes, 0)
 					}
 				})
 
@@ -630,24 +636,24 @@
 				mutationObserver.observe(input.value.$el, {
 					attributes: true,
 					subtree: true,
-					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup']
+					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup'],
 				})
 			}
 		})
 	})
 
-	// Watchers to update ARIA attributes dynamically on parent element
+	// Watchers to update ARIA attributes dynamically on input element
 	watch(isOpen, (newValue) => {
 		nextTick(() => {
 			if (input.value && input.value.$el) {
-				const parentElement = input.value.$el
-				if (parentElement) {
-					parentElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
+				const inputElement = input.value.$el.querySelector('input')
+				if (inputElement) {
+					inputElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
 					if (newValue && activeDescendantId.value) {
-						parentElement.setAttribute('aria-activedescendant', activeDescendantId.value)
+						inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
 					}
 					else {
-						parentElement.removeAttribute('aria-activedescendant')
+						inputElement.removeAttribute('aria-activedescendant')
 					}
 				}
 			}
@@ -657,13 +663,13 @@
 	watch(activeDescendantId, (newValue) => {
 		nextTick(() => {
 			if (input.value && input.value.$el && isOpen.value) {
-				const parentElement = input.value.$el
-				if (parentElement) {
+				const inputElement = input.value.$el.querySelector('input')
+				if (inputElement) {
 					if (newValue) {
-						parentElement.setAttribute('aria-activedescendant', newValue)
+						inputElement.setAttribute('aria-activedescendant', newValue)
 					}
 					else {
-						parentElement.removeAttribute('aria-activedescendant')
+						inputElement.removeAttribute('aria-activedescendant')
 					}
 				}
 			}
@@ -673,13 +679,13 @@
 	watch(hasError, (newValue) => {
 		nextTick(() => {
 			if (input.value && input.value.$el) {
-				const parentElement = input.value.$el
-				if (parentElement) {
+				const inputElement = input.value.$el.querySelector('input')
+				if (inputElement) {
 					if (newValue) {
-						parentElement.setAttribute('aria-invalid', 'true')
+						inputElement.setAttribute('aria-invalid', 'true')
 					}
 					else {
-						parentElement.removeAttribute('aria-invalid')
+						inputElement.removeAttribute('aria-invalid')
 					}
 				}
 			}
@@ -691,24 +697,41 @@
 	watch(selectedItem, () => {
 		nextTick(() => {
 			if (input.value && input.value.$el) {
-				const parentElement = input.value.$el
-				if (parentElement) {
-					// Ensure combobox role is maintained
-					parentElement.setAttribute('role', 'combobox')
+				const inputElement = input.value.$el.querySelector('input')
+				if (inputElement) {
+					// Ensure combobox role is maintained on input
+					inputElement.setAttribute('role', 'combobox')
 					// Ensure aria-hidden is never set to true
-					parentElement.removeAttribute('aria-hidden')
+					inputElement.removeAttribute('aria-hidden')
 					// Maintain other combobox attributes
-					parentElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
-					parentElement.setAttribute('aria-haspopup', 'listbox')
-					parentElement.setAttribute('aria-autocomplete', 'none')
+					inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
+					inputElement.setAttribute('aria-haspopup', 'listbox')
+					// Note: aria-autocomplete is omitted for select-only combobox
+					// Only set aria-controls when menu is open and element exists
+					if (isOpen.value) {
+						inputElement.setAttribute('aria-controls', uniqueMenuId.value)
+					} else {
+						inputElement.removeAttribute('aria-controls')
+					}
 
 					// Only add aria-required if the component is actually required
 					if (isRequired.value) {
-						parentElement.setAttribute('aria-required', 'true')
+						inputElement.setAttribute('aria-required', 'true')
 					}
 					else {
-						parentElement.removeAttribute('aria-required')
+						inputElement.removeAttribute('aria-required')
 					}
+				}
+
+				// Clean up parent element
+				const parentElement = input.value.$el
+				if (parentElement) {
+					parentElement.removeAttribute('role')
+					parentElement.removeAttribute('aria-hidden')
+					parentElement.removeAttribute('aria-expanded')
+					parentElement.removeAttribute('aria-haspopup')
+					parentElement.removeAttribute('aria-controls')
+					parentElement.removeAttribute('aria-required')
 				}
 			}
 		})
@@ -717,7 +740,7 @@
 	onUnmounted(() => {
 		window.removeEventListener('scroll', updateListPosition, true)
 		window.removeEventListener('resize', updateListPosition)
-		
+
 		// Clean up MutationObserver
 		if (mutationObserver) {
 			mutationObserver.disconnect()
@@ -830,7 +853,7 @@
 	>{{ label }}</span>
 	<VList
 		v-if="isOpen"
-		:id="menuId"
+		:id="uniqueMenuId"
 		class="v-list"
 		role="listbox"
 		:aria-multiselectable="props.multiple ? 'true' : undefined"
