@@ -1,0 +1,102 @@
+import { Story, Meta } from '@storybook/blocks';
+import * as FauxPositifsStories from './FauxPositifs.stories';
+
+<Meta of={FauxPositifsStories} />
+
+<style>
+  {`
+    /* Variables CSS */
+    :root {
+      --primary-color: #0C419A;
+      --secondary-color: #006386;
+      --accent-color: #00a5df;
+      --dark-color: #111212;
+      --light-color: #bbbcbd;
+      --success-color: #004439;
+      --warning-color: #60480e;
+      --info-color: #0c419a;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+      --border-radius-sm: 4px;
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+    }
+
+    /* Styles globaux */
+    .tanaguru-page {
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+      line-height: 1.6;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header avec effet glassmorphism */
+    .tanaguru-header {
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .tanaguru-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgzMCkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSI+PC9yZWN0PjwvcGF0dGVybj48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSI+PC9yZWN0Pjwvc3ZnPg==');
+      opacity: 0.1;
+      z-index: 0;
+    }
+
+    .tanaguru-header h1 {
+      font-size: 3rem;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .tanaguru-header p {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .tanaguru-header {
+        padding: 1.5rem;
+      }
+
+      .tanaguru-header h1 {
+        font-size: 2rem;
+      }
+    }
+  `}
+</style>
+
+<div className="tanaguru-page">
+  <div className="tanaguru-header">
+    <h1>Faux positifs de Tanaguru</h1>
+    <p>Au cours de nos analyses avec l’outil Tanaguru, nous avons constaté que certains résultats signalés comme des erreurs étaient en réalité des faux positifs. Cette page a pour objectif de présenter ces cas et de clarifier pourquoi ils ne constituent pas de réels problèmes d’accessibilité.</p>
+  </div>
+
+  <h2 className="section-title">Faux positifs</h2>
+
+  <div className="components-table-container">
+    <div className="components-table">
+      <Story of={FauxPositifsStories.FauxPositifsCards} />
+    </div>
+  </div>
+</div>
