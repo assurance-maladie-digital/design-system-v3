@@ -533,6 +533,54 @@
 		}
 	})
 
+	let mutationObserver: MutationObserver | null = null
+
+	// Function to clean up problematic attributes
+	const cleanupAttributes = () => {
+		if (input.value && input.value.$el) {
+			// Find the input element
+			const inputElement = input.value.$el.querySelector('input')
+			if (inputElement) {
+				// Remove problematic attributes from input
+				inputElement.removeAttribute('aria-describedby')
+				inputElement.removeAttribute('size')
+				inputElement.removeAttribute('tabindex')
+				inputElement.removeAttribute('role')
+				inputElement.removeAttribute('aria-expanded')
+				inputElement.removeAttribute('aria-controls')
+				inputElement.removeAttribute('aria-autocomplete')
+				inputElement.removeAttribute('aria-haspopup')
+				inputElement.removeAttribute('aria-activedescendant')
+				inputElement.removeAttribute('aria-hidden')
+			}
+
+			// Set combobox role and ARIA attributes on the parent element
+			const parentElement = input.value.$el
+			if (parentElement) {
+				// Remove conflicting attributes
+				parentElement.removeAttribute('aria-hidden')
+				
+				// Ensure parent has correct attributes
+				if (!parentElement.hasAttribute('role') || parentElement.getAttribute('role') !== 'combobox') {
+					parentElement.setAttribute('role', 'combobox')
+				}
+				parentElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
+				parentElement.setAttribute('aria-controls', props.menuId)
+				parentElement.setAttribute('aria-autocomplete', 'none')
+				parentElement.setAttribute('aria-haspopup', 'listbox')
+				if (isOpen.value && activeDescendantId.value) {
+					parentElement.setAttribute('aria-activedescendant', activeDescendantId.value)
+				}
+				if (isRequired.value) {
+					parentElement.setAttribute('aria-required', 'true')
+				}
+				if (hasError.value) {
+					parentElement.setAttribute('aria-invalid', 'true')
+				}
+			}
+		}
+	}
+
 	onMounted(() => {
 		if (labelRef.value) {
 			labelWidth.value = labelRef.value.offsetWidth + 64
@@ -542,48 +590,48 @@
 
 		// Use nextTick to ensure the DOM is fully rendered
 		nextTick(() => {
+			// Initial cleanup
+			cleanupAttributes()
+
+			// Set up MutationObserver to monitor attribute changes
 			if (input.value && input.value.$el) {
-				// Find the input element
-				const inputElement = input.value.$el.querySelector('input')
-				if (inputElement) {
-					// Remove the aria-describedby attribute
-					inputElement.removeAttribute('aria-describedby')
-					// fix le critere RGAA 10.1 : Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l'information?
-					inputElement.removeAttribute('size')
-					// Remove any tabindex from the input element to prevent it from being tabbable
-					inputElement.removeAttribute('tabindex')
-					// Remove role and ARIA attributes from input since they'll be on parent
-					inputElement.removeAttribute('role')
-					inputElement.removeAttribute('aria-expanded')
-					inputElement.removeAttribute('aria-controls')
-					inputElement.removeAttribute('aria-autocomplete')
-					inputElement.removeAttribute('aria-haspopup')
-					inputElement.removeAttribute('aria-activedescendant')
-				}
+				mutationObserver = new MutationObserver((mutations) => {
+					let needsCleanup = false
+					mutations.forEach((mutation) => {
+						if (mutation.type === 'attributes') {
+							const target = mutation.target as HTMLElement
+							const attributeName = mutation.attributeName
+							
+							// Check if problematic attributes were added to input
+							if (target.tagName === 'INPUT' && (
+								attributeName === 'role' ||
+								attributeName === 'aria-hidden' ||
+								attributeName === 'aria-expanded' ||
+								attributeName === 'aria-controls' ||
+								attributeName === 'aria-haspopup'
+							)) {
+								needsCleanup = true
+							}
+							
+							// Check if aria-hidden was added to parent
+							if (target === input.value?.$el && attributeName === 'aria-hidden') {
+								needsCleanup = true
+							}
+						}
+					})
+					
+					if (needsCleanup) {
+						// Use setTimeout to avoid infinite loops
+						setTimeout(cleanupAttributes, 0)
+					}
+				})
 
-				// Set combobox role and ARIA attributes on the parent element
-				const parentElement = input.value.$el
-				if (parentElement) {
-					// Remove conflicting attributes
-					parentElement.removeAttribute('role')
-					parentElement.removeAttribute('aria-hidden')
-
-					// Add combobox role and ARIA attributes to parent
-					parentElement.setAttribute('role', 'combobox')
-					parentElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
-					parentElement.setAttribute('aria-controls', props.menuId)
-					parentElement.setAttribute('aria-autocomplete', 'none')
-					parentElement.setAttribute('aria-haspopup', 'listbox')
-					if (isOpen.value && activeDescendantId.value) {
-						parentElement.setAttribute('aria-activedescendant', activeDescendantId.value)
-					}
-					if (isRequired.value) {
-						parentElement.setAttribute('aria-required', 'true')
-					}
-					if (hasError.value) {
-						parentElement.setAttribute('aria-invalid', 'true')
-					}
-				}
+				// Observe both the parent element and its children
+				mutationObserver.observe(input.value.$el, {
+					attributes: true,
+					subtree: true,
+					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup']
+				})
 			}
 		})
 	})
@@ -669,6 +717,12 @@
 	onUnmounted(() => {
 		window.removeEventListener('scroll', updateListPosition, true)
 		window.removeEventListener('resize', updateListPosition)
+		
+		// Clean up MutationObserver
+		if (mutationObserver) {
+			mutationObserver.disconnect()
+			mutationObserver = null
+		}
 	})
 
 	defineExpose({
@@ -689,9 +743,6 @@
 		:disabled="disabled"
 		:label="labelWithAsterisk"
 		:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-		role="combobox"
-		:aria-expanded="isOpen"
-		aria-haspopup="listbox"
 		:error-messages="props.disableErrorHandling ? [] : errorMessages"
 		:variant="outlined ? 'outlined' : 'underlined'"
 		:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
