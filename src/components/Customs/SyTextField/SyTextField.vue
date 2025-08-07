@@ -86,6 +86,7 @@
 			disableErrorHandling?: boolean
 			disableClickButton?: boolean
 			autocomplete?: string
+			helpText?: string
 		}>(),
 		{
 			modelValue: undefined,
@@ -152,6 +153,7 @@
 			disableErrorHandling: false,
 			disableClickButton: true,
 			autocomplete: 'off',
+			helpText: '',
 		},
 	)
 
@@ -292,6 +294,23 @@
 
 	const labelWithAsterisk = computed(() => {
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
+	})
+
+	// Détermine s'il y a des messages d'erreur ou d'état
+	const hasMessages = computed(() => {
+		if (props.disableErrorHandling) return false
+		return (props.errorMessages?.length ?? 0) > 0 || hasError.value || hasWarning.value || hasSuccess.value
+	})
+
+	// Détermine si le helpText doit être affiché à la position du message ou en dessous
+	const showHelpTextAsMessage = computed(() => {
+		// Afficher à la position du message si pas de messages d'erreur
+		return props.helpText && !hasMessages.value
+	})
+
+	const showHelpTextBelow = computed(() => {
+		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
+		return props.helpText && hasMessages.value && !props.areDetailsHidden
 	})
 
 	// Accessible label that includes prefix and suffix content for screen readers
@@ -472,10 +491,8 @@
 		:error-messages="errors"
 		:flat="props.isFlat"
 		:focused="props.isFocused"
-		:hide-details="props.areDetailsHidden"
-		:hide-spin-buttons="props.areSpinButtonsHidden"
-		:hint="props.hint"
-		:label="labelWithAsterisk"
+		:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
+		:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 		:loading="props.loading"
 		:max-errors="props.maxErrors"
 		:max-width="props.maxWidth"
@@ -484,7 +501,7 @@
 		:name="props.name"
 		:persistent-clear="props.displayPersistentClear"
 		:persistent-counter="props.displayPersistentCounter"
-		:persistent-hint="props.displayPersistentHint"
+		:persistent-hint="props.displayPersistentHint || !!showHelpTextAsMessage"
 		:persistent-placeholder="props.displayPersistentPlaceholder"
 		:placeholder="props.placeholder"
 		:prefix="props.prefix"
@@ -627,6 +644,15 @@
 			<slot name="details" />
 		</template>
 	</VTextField>
+
+	<!-- Help text displayed below when there are error messages -->
+	<div
+		v-if="showHelpTextBelow"
+		class="help-text-below px-4 mt-1"
+		:class="{ 'text-disabled': props.disabled }"
+	>
+		{{ props.helpText }}
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -705,4 +731,13 @@
 	}
 }
 
+.help-text-below {
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	font-size: 14px;
+	line-height: 1.2;
+}
+
+.help-text-below.text-disabled {
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+}
 </style>

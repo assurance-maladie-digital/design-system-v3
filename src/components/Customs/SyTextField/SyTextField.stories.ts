@@ -181,6 +181,10 @@ const meta = {
 			description: 'Texte d\'aide affiché sous le champ',
 			control: 'text',
 		},
+		'helpText': {
+			description: 'Texte d\'aide affiché sous le champ',
+			control: 'text',
+		},
 		'loading': {
 			description: 'Affiche un indicateur de chargement',
 			control: 'boolean',
@@ -370,6 +374,58 @@ export const Default: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center">
+					<SyTextField v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const HelpText: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTextField 
+					v-model="value" 
+					help-text="Texte d'aide à la saisie"
+				/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { SyTextField } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		showDivider: false,
+		variantStyle: 'outlined',
+		color: 'primary',
+		isClearable: true,
+		label: 'Label',
+		modelValue: '',
+		helpText: 'Texte d\'aide à la saisie',
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField, VIcon },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div>
 					<SyTextField v-bind="args" v-model="value" />
 				</div>
 			`,
