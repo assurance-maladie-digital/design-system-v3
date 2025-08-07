@@ -1365,6 +1365,7 @@ export const FormValidation: Story = {
 							v-model="nomValue"
 							label="Nom"
 							placeholder="Votre nom"
+							autocomplete="family-name"
 							required
 							show-success-messages
 							class="mb-4"
@@ -1375,6 +1376,7 @@ export const FormValidation: Story = {
 							v-model="prenomValue"
 							label="Prénom"
 							placeholder="Votre prénom"
+							autocomplete="given-name"
 							:custom-rules="prenomRules"
 							show-success-messages
 							class="mb-4"
@@ -1600,6 +1602,7 @@ export const WithoutSuccessMessages: Story = {
               <SyTextField
                 v-model="value1"
                 v-bind="args"
+                autocomplete="email"
                 showSuccessMessages
               />
             </div>
@@ -1609,6 +1612,7 @@ export const WithoutSuccessMessages: Story = {
               <SyTextField
                 v-model="value2"
                 v-bind="args"
+                autocomplete="email"
                 :showSuccessMessages="false"
               />
             </div>
@@ -1641,6 +1645,7 @@ export const WithoutSuccessMessages: Story = {
   <SyTextField
     v-model="email"
     label="Email"
+    autocomplete="email"
     :custom-rules="[{
       type: 'matchPattern',
       options: {
@@ -1655,6 +1660,7 @@ export const WithoutSuccessMessages: Story = {
   <SyTextField
     v-model="email"
     label="Email"
+    autocomplete="email"
     :custom-rules="[{
       type: 'matchPattern',
       options: {
