@@ -778,7 +778,7 @@
 			await nextTick()
 			const firstButton = datePickerRef.value?.$el.querySelector('button')
 			if (firstButton) {
-				firstButton.focus()
+				firstButton.focus({ preventScroll: true })
 			}
 		}
 		else {
@@ -788,7 +788,7 @@
 				requestAnimationFrame(() => {
 					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
 					if (inputElement) {
-						inputElement.focus()
+						inputElement.focus({ preventScroll: true })
 						isDatePickerVisible.value = false
 					}
 				})
