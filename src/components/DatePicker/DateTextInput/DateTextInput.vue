@@ -478,7 +478,7 @@
 				}
 			}
 
-			const input = inputRef.value?.$el.querySelector('input')
+			const input = inputRef.value?.$el?.querySelector?.('input')
 			const cursorPos = input?.selectionStart || 0
 
 			// Utiliser le composable de plage de dates si le mode plage est activé
@@ -956,14 +956,14 @@
 		focus() {
 			// Utiliser un sélecteur plus spécifique pour cibler l'input principal
 			// SyTextField peut contenir plusieurs inputs, donc on cible le premier qui n'est pas caché
-			const input = inputRef.value?.$el.querySelector('input:not([type="hidden"])')
+			const input = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
 			if (input) {
 				input.focus({ preventScroll: true })
 			}
 		},
 		blur() {
 			// Utiliser un sélecteur plus spécifique pour cibler l'input principal
-			const input = inputRef.value?.$el.querySelector('input:not([type="hidden"])')
+			const input = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
 			if (input) {
 				input.blur()
 			}
