@@ -551,7 +551,7 @@
 				</template>
 				<SyIcon
 					v-else-if="props.prependIcon && !props.noIcon"
-					:label="disableClickButton ? (props.label ? props.label : props.prependIcon) : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
+					:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.prependIcon]"
 					:role="disableClickButton ? 'presentation' : 'button'"
@@ -590,7 +590,7 @@
 				</template>
 				<SyIcon
 					v-else-if="props.appendIcon && !props.noIcon"
-					:label="disableClickButton ? (props.label ? props.label : props.appendIcon) : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
+					:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.appendIcon]"
 					:role="disableClickButton ? 'presentation' : 'button'"
