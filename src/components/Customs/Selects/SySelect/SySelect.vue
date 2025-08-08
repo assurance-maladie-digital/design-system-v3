@@ -541,7 +541,7 @@
 	const setupAriaAttributes = () => {
 		if (input.value && input.value.$el) {
 			// Find the input element
-			const inputElement = input.value.$el.querySelector('input')
+			const inputElement = input.value.$el?.querySelector?.('input')
 			if (inputElement) {
 				// Remove problematic attributes that shouldn't be on input
 				inputElement.removeAttribute('aria-describedby')
@@ -647,7 +647,7 @@
 	watch(isOpen, (newValue) => {
 		nextTick(() => {
 			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el.querySelector('input')
+				const inputElement = input.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					inputElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
 					if (newValue && activeDescendantId.value) {
@@ -664,7 +664,7 @@
 	watch(activeDescendantId, (newValue) => {
 		nextTick(() => {
 			if (input.value && input.value.$el && isOpen.value) {
-				const inputElement = input.value.$el.querySelector('input')
+				const inputElement = input.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					if (newValue) {
 						inputElement.setAttribute('aria-activedescendant', newValue)
@@ -680,7 +680,7 @@
 	watch(hasError, (newValue) => {
 		nextTick(() => {
 			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el.querySelector('input')
+				const inputElement = input.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					if (newValue) {
 						inputElement.setAttribute('aria-invalid', 'true')
@@ -698,7 +698,7 @@
 	watch(selectedItem, () => {
 		nextTick(() => {
 			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el.querySelector('input')
+				const inputElement = input.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					// Ensure combobox role is maintained on input
 					inputElement.setAttribute('role', 'combobox')

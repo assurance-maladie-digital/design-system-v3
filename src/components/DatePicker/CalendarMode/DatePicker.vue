@@ -673,7 +673,7 @@
 		if (isVisible) {
 			// set the focus on the date picker
 			await nextTick()
-			const firstButton = datePickerRef.value?.$el.querySelector('button')
+			const firstButton = datePickerRef.value?.$el?.querySelector?.('button')
 			if (firstButton) {
 				firstButton.focus({ preventScroll: true })
 			}
@@ -683,7 +683,7 @@
 			// wait for VMenu to finish DOM updates & transition
 			setTimeout(() => {
 				requestAnimationFrame(() => {
-					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
+					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
 					if (inputElement) {
 						inputElement.focus({ preventScroll: true })
 						isDatePickerVisible.value = false
