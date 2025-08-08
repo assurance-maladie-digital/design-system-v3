@@ -418,8 +418,25 @@
 					messagesContainer.removeAttribute('aria-atomic')
 				}
 				else if (inputElement) {
-					// No messages container, remove aria-describedby
-					inputElement.removeAttribute('aria-describedby')
+					// No messages container, but preserve existing aria-describedby values
+					const existingDescribedby = inputElement.getAttribute('aria-describedby')
+					const messagesId = `${inputElement.id || 'input'}-messages`
+
+					if (existingDescribedby) {
+						// Remove only the messages ID if it exists, keep other IDs
+						const describedbyIds = existingDescribedby
+							.split(' ')
+							.filter(id => id.trim() && id !== messagesId)
+							.join(' ')
+							.trim()
+
+						if (describedbyIds) {
+							inputElement.setAttribute('aria-describedby', describedbyIds)
+						}
+						else {
+							inputElement.removeAttribute('aria-describedby')
+						}
+					}
 				}
 			}
 
@@ -438,8 +455,14 @@
 					const messagesId = `${inputElement.id || 'input'}-messages`
 					messagesContainer.id = messagesId
 
-					// Associate input with messages via aria-describedby
-					inputElement.setAttribute('aria-describedby', messagesId)
+					// Get existing aria-describedby value and combine with messages ID
+					const existingDescribedby = inputElement.getAttribute('aria-describedby')
+					const describedbyIds = existingDescribedby
+						? `${existingDescribedby} ${messagesId}`.trim()
+						: messagesId
+
+					// Associate input with messages via aria-describedby (preserve existing IDs)
+					inputElement.setAttribute('aria-describedby', describedbyIds)
 
 					// Remove problematic ARIA attributes from details container (parent)
 					if (detailsContainer) {
@@ -458,8 +481,25 @@
 					messagesContainer.removeAttribute('aria-atomic')
 				}
 				else if (inputElement) {
-					// No messages container, remove aria-describedby
-					inputElement.removeAttribute('aria-describedby')
+					// No messages container, but preserve existing aria-describedby values
+					const existingDescribedby = inputElement.getAttribute('aria-describedby')
+					const messagesId = `${inputElement.id || 'input'}-messages`
+
+					if (existingDescribedby) {
+						// Remove only the messages ID if it exists, keep other IDs
+						const describedbyIds = existingDescribedby
+							.split(' ')
+							.filter(id => id.trim() && id !== messagesId)
+							.join(' ')
+							.trim()
+
+						if (describedbyIds) {
+							inputElement.setAttribute('aria-describedby', describedbyIds)
+						}
+						else {
+							inputElement.removeAttribute('aria-describedby')
+						}
+					}
 				}
 			})
 		})
