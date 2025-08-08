@@ -98,9 +98,10 @@
 			:row="row"
 		/>
 
-		<section
+		<component
+			:is="listTitle ? 'section' : 'div'"
 			v-else
-			:aria-labelledby="sectionTitleId"
+			:aria-labelledby="listTitle ? sectionTitleId : undefined"
 			:style="widthStyles"
 		>
 			<slot name="title">
@@ -132,7 +133,7 @@
 					@click:action="emit('click:item-action', index)"
 				/>
 			</dl>
-		</section>
+		</component>
 	</VFadeTransition>
 </template>
 

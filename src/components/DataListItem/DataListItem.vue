@@ -33,8 +33,8 @@
 
 	const labelColor = computed(() => {
 		return theme.current.value.dark
-			? 'rgba(255, 255, 255, .7)'
-			: 'rgba(255, 255, 255, .85)'
+			? 'rgba(255, 255, 255, .85)'
+			: 'rgba(0, 0, 0, .6)'
 	})
 
 	const itemValue = computed(() => {
@@ -48,61 +48,80 @@
 </script>
 
 <template>
-	<dt
-		class="sy-data-list-item-label text-caption"
-		:style="{ color: labelColor }"
-	>
-		<slot name="icon">
-			<SyIcon
-				v-if="icon"
-				v-bind="options.icon"
-				:icon="icon"
-				:decorative="true"
-			/>
-		</slot>
-		{{ label }} :
-	</dt>
-
-	<dd class="sy-data-list-item-value mb-2 d-flex align-center ga-2">
-		<slot
-			name="value"
-			v-bind="{ itemValue }"
+	<div :class="{ 'sy-row': row }">
+		<dt
+			class="sy-data-list-item-label text-caption"
+			:style="{ color: labelColor }"
 		>
-			<VChip
-				v-if="chip"
-				v-bind="options.chip"
-			>
-				{{ itemValue }}
-			</VChip>
-
-			<span
-				v-else-if="renderHtmlValue"
-				class="text-body-1"
-				v-html="itemValue"
-			/>
-
-			<span
-				v-else
-				class="text-body-1"
-				v-text="itemValue"
-			/>
-
-			<slot name="action">
-				<VBtn
-					v-if="action"
-					class="sy-data-list-item-action-btn text-body-1 px-2"
-					size="small"
-					variant="text"
-					@click="emits('click:action')"
-				>
-					{{ action }}
-				</VBtn>
+			<slot name="icon">
+				<SyIcon
+					v-if="icon"
+					v-bind="options.icon"
+					:icon="icon"
+					:decorative="true"
+				/>
 			</slot>
-		</slot>
-	</dd>
+			<span>{{ label }} :</span>
+		</dt>
+
+		<dd
+			class="sy-data-list-item-value d-flex align-center ga-2"
+			:class="{ 'has-icon': icon }"
+		>
+			<slot
+				name="value"
+				v-bind="{ itemValue }"
+			>
+				<VChip
+					v-if="chip"
+					v-bind="options.chip"
+				>
+					{{ itemValue }}
+				</VChip>
+
+				<span
+					v-else-if="renderHtmlValue"
+					class="text-body-1"
+					v-html="itemValue"
+				/>
+
+				<span
+					v-else
+					class="text-body-1"
+					v-text="itemValue"
+				/>
+
+				<slot name="action">
+					<VBtn
+						v-if="action"
+						class="sy-data-list-item-action-btn text-body-1 px-2"
+						size="small"
+						variant="text"
+						@click="emits('click:action')"
+					>
+						{{ action }}
+					</VBtn>
+				</slot>
+			</slot>
+		</dd>
+	</div>
 </template>
 
 <style lang="scss" scoped>
+.sy-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+
+	.sy-data-list-item-label {
+		align-self: center;
+	}
+}
+
+.sy-data-list-item-value.has-icon {
+	margin-left: 2.5rem;
+}
+
 .sy-data-list-item-action-btn.v-btn {
 	&:focus-visible::after {
 		opacity: 1;

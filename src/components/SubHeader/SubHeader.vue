@@ -12,6 +12,7 @@
 	import DataListGroup from '../DataListGroup/DataListGroup.vue'
 	import HeaderLoading from '../HeaderLoading/HeaderLoading.vue'
 	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
+	import { VThemeProvider } from 'vuetify/components'
 
 	const props = withDefaults(defineProps<CustomizableOptions & Widthable & {
 		hideBackBtn?: boolean
@@ -148,15 +149,17 @@
 			</div>
 
 			<slot name="right-content">
-				<DataListGroup
-					v-if="dataListGroupItems"
-					:items="dataListGroupItems"
-					:loading="loading"
-					:render-html-value="renderHtmlValue"
-					item-width="auto"
-					:class="renderSingleLine ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
-					@click:list-item="emitItemAction"
-				/>
+				<VThemeProvider theme="dark">
+					<DataListGroup
+						v-if="dataListGroupItems"
+						:items="dataListGroupItems"
+						:loading="loading"
+						:render-html-value="renderHtmlValue"
+						item-width="auto"
+						:class="renderSingleLine ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
+						@click:list-item="emitItemAction"
+					/>
+				</VThemeProvider>
 			</slot>
 		</div>
 	</VSheet>
