@@ -1,3 +1,60 @@
+## v1.0.6 (08-08-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td> - LogoBrandSection / SyTextField / SySelect / DialogBox / DataList & DataListGroup / HeaderBar & HeaderBurgerMenu: fix accessibility after audit
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/816">#816</a> 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/935">#935</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/931">#931</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/853">#853</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/858">#858</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/828">#828</a>
+      </td>
+      <td>- AmeliproCaptcha <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/936">#936</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve audit page <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/938">#938</a></td>
+     <td>- AmeliproTable <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/933">#933</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: add page on Tanaguru false positives <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/934">#934</a></td>
+     <td>- AmeliproCustomSelector <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/888">#888</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix scroll issue on focus <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/937">#937</a></td>
+     <td>- AmeliproAccordion <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/873">#873</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Use of Vuetify Layers and refactoring of tokens to fix accessibility issues (!important) <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/867">#867</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation : add ex colors integration <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/894">#894</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix custom errors on combinedMode / Fix range on dateInput <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/896">#896</a> <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/860">#860</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- HeaderBar: improve prepend and append slots documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/890">#890</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FilterSideBar: fix chips display with v-select without multiple option <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/886">#886</a></td>
+     <td></td>
+    </tr>
+  </tbody>
+</table>
+
+
 ## v1.0.5 (29-07-2025)
 
 Fix style issue export for Starter Kit due to Vite update.
