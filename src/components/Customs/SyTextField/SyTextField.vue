@@ -392,8 +392,14 @@
 					const messagesId = `${inputElement.id || 'input'}-messages`
 					messagesContainer.id = messagesId
 
-					// Associate input with messages via aria-describedby
-					inputElement.setAttribute('aria-describedby', messagesId)
+					// Get existing aria-describedby value and combine with messages ID
+					const existingDescribedby = inputElement.getAttribute('aria-describedby')
+					const describedbyIds = existingDescribedby
+						? `${existingDescribedby} ${messagesId}`.trim()
+						: messagesId
+
+					// Associate input with messages via aria-describedby (preserve existing IDs)
+					inputElement.setAttribute('aria-describedby', describedbyIds)
 
 					// Remove problematic ARIA attributes from details container (parent)
 					if (detailsContainer) {
