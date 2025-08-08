@@ -392,11 +392,16 @@
 					const messagesId = `${inputElement.id || 'input'}-messages`
 					messagesContainer.id = messagesId
 
-					// Get existing aria-describedby value and combine with messages ID
+					// Get existing aria-describedby value and combine with messages ID (avoid duplicates)
 					const existingDescribedby = inputElement.getAttribute('aria-describedby')
-					const describedbyIds = existingDescribedby
-						? `${existingDescribedby} ${messagesId}`.trim()
-						: messagesId
+					const existingIds = existingDescribedby ? existingDescribedby.split(' ').filter(id => id.trim()) : []
+
+					// Only add messagesId if it's not already present
+					if (!existingIds.includes(messagesId)) {
+						existingIds.push(messagesId)
+					}
+
+					const describedbyIds = existingIds.join(' ').trim()
 
 					// Associate input with messages via aria-describedby (preserve existing IDs)
 					inputElement.setAttribute('aria-describedby', describedbyIds)
@@ -455,11 +460,16 @@
 					const messagesId = `${inputElement.id || 'input'}-messages`
 					messagesContainer.id = messagesId
 
-					// Get existing aria-describedby value and combine with messages ID
+					// Get existing aria-describedby value and combine with messages ID (avoid duplicates)
 					const existingDescribedby = inputElement.getAttribute('aria-describedby')
-					const describedbyIds = existingDescribedby
-						? `${existingDescribedby} ${messagesId}`.trim()
-						: messagesId
+					const existingIds = existingDescribedby ? existingDescribedby.split(' ').filter(id => id.trim()) : []
+
+					// Only add messagesId if it's not already present
+					if (!existingIds.includes(messagesId)) {
+						existingIds.push(messagesId)
+					}
+
+					const describedbyIds = existingIds.join(' ').trim()
 
 					// Associate input with messages via aria-describedby (preserve existing IDs)
 					inputElement.setAttribute('aria-describedby', describedbyIds)
