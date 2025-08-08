@@ -895,6 +895,7 @@ Cette story montre l'utilisation des règles de validation standard. Le champ :
 				code: `<SyTextField
 	v-model="value"
 	label="Champ avec validation"
+	helpText="Le champ doit contenir à minima 3 caractères"
 	:customRules="[
 		{
 			type: 'minLength',
@@ -920,6 +921,7 @@ Cette story montre l'utilisation des règles de validation standard. Le champ :
 				v-model="value"
 				v-bind="args"
 				label="Champ avec validation"
+				helpText="Le champ doit contenir à minima 3 caractères"
 				:customRules="[
 					{
 						type: 'minLength',
@@ -1018,12 +1020,13 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 	v-model="value"
 	autocomplete="email"
 	label="Email"
+	helpText="Format attendu : nom@domaine.fr"
 	required
 	:customRules="[
 		{
 			type: 'email',
 			options: {
-				message: 'L'email n'est pas valide (format attendu : exemple@gmail.com)'
+				message: 'L'email n'est pas valide'
 				successMessage: 'L'email est valide'
 			}
 		}
@@ -1044,13 +1047,14 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 				v-model="value"
 				v-bind="args"
 				label="Email"
+				helpText="Format attendu : nom@domaine.fr"
 				autocomplete="email"
 				required
 				:customRules="[
 					{
 						type: 'email',
 						options: {
-							message: 'L\\'email n\\'est pas valide (format attendu : exemple@gmail.com)',
+							message: 'L\\'email n\\'est pas valide',
 							successMessage: 'L\\'email est valide'
 						}
 					}
@@ -1081,6 +1085,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 				code: `<SyTextField
 	v-model="value"
 	label="Code postal"
+	helpText="Exemple : 31000"
 	autocomplete="postal-code"
 	required
 	:customRules="[
@@ -1088,7 +1093,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 			type: 'matchPattern',
 			options: {
 				pattern: /^\\d{5}$/,
-				message: 'Le code postal doit contenir exactement 5 chiffres (format attendu : 00000)',
+				message: 'Le code postal doit contenir exactement 5 chiffres',
 				successMessage: 'Le format du code postal est valide'
 			}
 		}
@@ -1109,6 +1114,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 				v-model="value"
 				v-bind="args"
 				label="Code postal"
+				helpText="Exemple : 31000"
 				autocomplete="postal-code"
 				required
 				:customRules="[
@@ -1116,7 +1122,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 						type: 'matchPattern',
 						options: {
 							pattern: /^\\d{5}$/,
-							message: 'Le code postal doit contenir exactement 5 chiffres (format attendu : 00000)',
+							message: 'Le code postal doit contenir exactement 5 chiffres',
 							successMessage: 'Le format du code postal est valide'
 						}
 					}
@@ -1369,6 +1375,7 @@ export const FormValidation: Story = {
 							required
 							show-success-messages
 							class="mb-4"
+							aria-describedby="nom-rule"
 						/>
 
 						<SyTextField
@@ -1380,6 +1387,7 @@ export const FormValidation: Story = {
 							:custom-rules="prenomRules"
 							show-success-messages
 							class="mb-4"
+							aria-describedby="prenom-rule"
 						/>
 
 						<SyTextField
@@ -1390,15 +1398,16 @@ export const FormValidation: Story = {
 							:custom-rules="ageRules"
 							show-success-messages
 							class="mb-4"
+							aria-describedby="age-rule"
 						/>
 					</div>
 
 					<div class="text-caption mb-4">
 						<strong>Règles de validation :</strong>
 						<ul>
-							<li>Nom : Champ requis</li>
-							<li>Prénom : Minimum 3 caractères</li>
-							<li>Âge : Uniquement des chiffres</li>
+							<li id="nom-rule">Nom : Champ requis</li>
+							<li id="prenom-rule">Prénom : Minimum 3 caractères</li>
+							<li id="age-rule">Âge : Uniquement des chiffres</li>
 						</ul>
 					</div>
 
