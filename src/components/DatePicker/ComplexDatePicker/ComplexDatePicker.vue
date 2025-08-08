@@ -339,7 +339,27 @@
 	// Assignation des fonctions et variables retournées par le composable
 	// Utiliser une fonction pour wrapper updateSelectedDates afin de maintenir la compatibilité avec le template
 	const updateSelectedDates = (date: Date | null) => {
+		// Avant de mettre à jour la date, vérifier qu'elle est valide selon nos règles personnalisées
+		if (date !== null) {
+			// Appliquer les règles personnalisées directement à la date sélectionnée
+			const validationResult = validateField(date, props.customRules, props.customWarningRules)
+
+			// Si la date est invalide selon nos règles, ne pas mettre à jour et afficher l'erreur
+			if (validationResult.hasError) {
+				// Mettre à jour les messages d'erreur
+				errors.value = validationResult.state.errors
+				return // Ne pas continuer la mise à jour
+			}
+		}
+
+		// Si la date est valide ou null, on poursuit normalement
 		dateSelectionResult.updateSelectedDates(date)
+
+		// Forcer une validation immédiate après la mise à jour des dates
+		// pour s'assurer que les messages s'affichent
+		setTimeout(() => {
+			validateDates(true)
+		}, 0)
 	}
 	// generateDateRange est maintenant utilisé via le composable useInputHandler
 	// Synchroniser notre référence locale avec celle du composable
@@ -654,7 +674,7 @@
 		}
 
 		// Si c'est une valeur string (venant du DateTextInput)
-		const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
+		const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
 		if (!inputElement) return
 
 		// Mettre à jour la valeur du modèle directement
@@ -756,9 +776,9 @@
 
 			// set the focus on the date picker
 			await nextTick()
-			const firstButton = datePickerRef.value?.$el.querySelector('button')
+			const firstButton = datePickerRef.value?.$el?.querySelector?.('button')
 			if (firstButton) {
-				firstButton.focus()
+				firstButton.focus({ preventScroll: true })
 			}
 		}
 		else {
@@ -766,9 +786,9 @@
 			// wait for VMenu to finish DOM updates & transition
 			setTimeout(() => {
 				requestAnimationFrame(() => {
-					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
+					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
 					if (inputElement) {
-						inputElement.focus()
+						inputElement.focus({ preventScroll: true })
 						isDatePickerVisible.value = false
 					}
 				})
@@ -1178,6 +1198,8 @@
 					:view-mode="currentViewMode"
 					:max="maxDate"
 					:min="minDate"
+					:custom-rules="props.customRules"
+					:custom-warning-rules="props.customWarningRules"
 					:display-holiday-days="props.displayHolidayDays"
 					:display-asterisk="props.displayAsterisk"
 					@update:model-value="updateDisplayFormattedDate"

@@ -241,7 +241,7 @@ export const WithInitialValue: Story = {
 		'onClosed': fn(),
 	},
 	render(args) {
-		const dateRange = ref<string | null>('01/06/2025 - 30/06/2025')
+		const dateRange = ref<string | [string, string] | null>('01/06/2025 - 30/06/2025')
 		return {
 			components: { DatePicker },
 			setup() {

@@ -1,12 +1,24 @@
 <script setup lang="ts">
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 	import { inject, readonly, ref, useId, type DeepReadonly, type Ref } from 'vue'
 	import { registerSubMenuKey } from '../conts'
+	import locales from '../locals'
 	import useHandleSubMenus from '../useHandleSubMenus'
 
 	const menuOpen = ref(false)
 	const submenuId = useId()
 	const btnId = `${submenuId}-btn`
+	const headerInnerSubMenu = ref<HTMLElement | null>(null)
+	const headerSubMenuBtn = ref<HTMLElement | null>(null)
+
+	withDefaults(defineProps<{
+		innerTag?: string
+		tag?: string
+	}>(), {
+		innerTag: 'ul',
+		tag: 'div',
+	})
 
 	const registerSubMenu = inject<
 		((r: DeepReadonly<Ref<boolean>>, c: () => void) => void) | undefined
@@ -16,48 +28,68 @@
 		menuOpen.value = false
 	})
 
+	function handleFocusOut(e: FocusEvent) {
+		if (!headerInnerSubMenu.value?.contains(e.relatedTarget as HTMLElement)) {
+			menuOpen.value = false
+		}
+	}
+
+	function handleEsc() {
+		menuOpen.value = false
+		headerSubMenuBtn.value?.focus()
+	}
+
 	const { haveOpenSubMenu } = useHandleSubMenus(readonly(menuOpen))
 </script>
 
+<!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
 <template>
-	<div
+	<component
+		:is="tag"
 		class="sub-menu"
 		:class="{
 			'sub-menu--open': menuOpen,
 			'sub-menu--child-open': haveOpenSubMenu,
 		}"
+		@focusout="handleFocusOut"
 	>
 		<button
 			:id="btnId"
+			ref="headerSubMenuBtn"
 			class="sub-menu-btn"
 			type="button"
 			:aria-expanded="menuOpen ? 'true' : 'false'"
 			:aria-controls="submenuId"
-			:title="menuOpen ? 'Close submenu' : 'Open submenu'"
+			:title="menuOpen ? locales.closeSubMenu : locales.openSubMenu"
 			@click="menuOpen = !menuOpen"
 		>
 			<slot name="title" />
 
-			<VIcon
+			<SyIcon
+				:icon="menuOpen ? mdiChevronLeft : mdiChevronRight"
 				size="36"
 				class="sub-menu-btn__icon"
-			>
-				{{ menuOpen ? mdiChevronLeft : mdiChevronRight }}
-			</VIcon>
+				:decorative="true"
+			/>
 		</button>
 		<transition name="slide-fade">
 			<div
 				v-show="menuOpen"
 				:id="submenuId"
+				ref="headerInnerSubMenu"
 				class="sub-menu-content-wrapper"
 				:aria-labelledby="btnId"
+				@keyup.esc.stop="handleEsc"
 			>
-				<div class="sub-menu-content">
+				<component
+					:is="innerTag"
+					class="sub-menu-content"
+				>
 					<slot />
-				</div>
+				</component>
 			</div>
 		</transition>
-	</div>
+	</component>
 </template>
 
 <style lang="scss" scoped>

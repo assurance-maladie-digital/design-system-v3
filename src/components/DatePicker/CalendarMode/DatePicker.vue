@@ -275,8 +275,13 @@
 			try {
 				isUpdatingFromInternal.value = true
 				if (Array.isArray(newValue)) {
-					// Pour les plages de dates, utiliser la première date
-					if (newValue.length > 0) {
+					// Pour les plages de dates, formater correctement la plage complète
+					if (props.displayRange && newValue.length >= 2) {
+						// Formater la plage complète pour l'affichage
+						textInputValue.value = `${formatDate(newValue[0], props.format)} - ${formatDate(newValue[1], props.format)}`
+					}
+					else if (newValue.length > 0) {
+						// Si on n'a qu'une date ou mode non-range, utiliser la première date
 						textInputValue.value = formatDate(newValue[0], props.format)
 					}
 				}
@@ -668,9 +673,9 @@
 		if (isVisible) {
 			// set the focus on the date picker
 			await nextTick()
-			const firstButton = datePickerRef.value?.$el.querySelector('button')
+			const firstButton = datePickerRef.value?.$el?.querySelector?.('button')
 			if (firstButton) {
-				firstButton.focus()
+				firstButton.focus({ preventScroll: true })
 			}
 		}
 		else {
@@ -678,9 +683,9 @@
 			// wait for VMenu to finish DOM updates & transition
 			setTimeout(() => {
 				requestAnimationFrame(() => {
-					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
+					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
 					if (inputElement) {
-						inputElement.focus()
+						inputElement.focus({ preventScroll: true })
 						isDatePickerVisible.value = false
 					}
 				})
@@ -901,7 +906,7 @@
 				location="bottom"
 				:close-on-content-click="false"
 				:open-on-click="false"
-				scroll-strategy="none"
+				scroll-strategy="reposition"
 				transition="fade-transition"
 				attach="body"
 				:offset="[-20, 5]"

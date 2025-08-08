@@ -1,9 +1,19 @@
 <script setup lang="ts">
 	import { useId } from 'vue'
 
-	defineProps<{
+	withDefaults(defineProps<{
 		title?: string
-	}>()
+		innerTag?: string
+		tag?: string
+		titleTag?: string
+		showTitle?: boolean
+	}>(), {
+		title: undefined,
+		innerTag: 'ul',
+		tag: 'li',
+		titleTag: 'h2',
+		showTitle: true,
+	})
 
 	const id = useId()
 	const groupId = `${id}-group`
@@ -11,22 +21,35 @@
 </script>
 
 <template>
-	<div class="header-menu-section">
-		<div
-			v-if="$slots.title"
-			:id="titleId"
-			class="header-menu-section-title"
+	<component
+		:is="tag"
+		class="header-menu-section"
+	>
+		<section
+			:aria-labelledby="titleId"
 		>
-			<slot name="title" />
-		</div>
-		<ul
-			:id="groupId"
-			role="group"
-			class="header-menu-section-list"
-		>
-			<slot />
-		</ul>
-	</div>
+			<component
+				:is="titleTag"
+				:id="titleId"
+				class="header-menu-section-title"
+				:class="{
+					'd-sr-only': !showTitle,
+				}"
+			>
+				<slot name="title">
+					{{ title }}
+				</slot>
+			</component>
+			<component
+				:is="innerTag"
+				:id="groupId"
+				role="group"
+				class="header-menu-section-list"
+			>
+				<slot />
+			</component>
+		</section>
+	</component>
 </template>
 
 <style lang="scss" scoped>
@@ -42,7 +65,7 @@
 .header-menu-section-title {
 	padding: 40px 16px 8px 20px;
 	border-bottom: 1px solid menu.$menu-border-color;
-	font-size: 1.1rem;
+	font-size: 1.1rem !important;
 	margin-bottom: 8px;
 	color: #212529;
 	text-transform: capitalize;

@@ -108,6 +108,10 @@
 			type: Boolean,
 			default: false,
 		},
+		helpText: {
+			type: String,
+			default: '',
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -120,22 +124,24 @@
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
 
-	const toggleMenu = () => {
+	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
 		isOpen.value = !isOpen.value
 		if (isOpen.value) {
 			updateListPosition()
-			// Initialiser la sélection à l'ouverture
-			nextTick(() => {
-				// Si un élément est déjà sélectionné, l'activer
-				const selectedIndex = formattedItems.value.findIndex(item => isItemSelected(item))
-				if (selectedIndex >= 0) {
-					setActiveDescendant(selectedIndex)
-				}
-				else {
-					setActiveDescendant(0)
-				}
-			})
+			// Initialiser la sélection à l'ouverture seulement si pas ouvert via clavier
+			if (!skipInitialFocus) {
+				nextTick(() => {
+					// Si un élément est déjà sélectionné, l'activer
+					const selectedIndex = formattedItems.value.findIndex(item => isItemSelected(item))
+					if (selectedIndex >= 0) {
+						setActiveDescendant(selectedIndex)
+					}
+					else {
+						setActiveDescendant(0)
+					}
+				})
+			}
 		}
 	}
 
@@ -152,6 +158,8 @@
 		isOpen.value = false
 	}
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
+	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
+	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
 	const listStyles = ref<Record<string, string>>({})
 	const updateListPosition = () => {
 		if (input.value?.$el) {
@@ -357,6 +365,23 @@
 
 	const input = ref<InstanceType<typeof VTextField> | null>(null)
 
+	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
+	const hasMessages = computed(() => {
+		if (props.disableErrorHandling) return false
+		return props.errorMessages.length > 0 || hasError.value
+	})
+
+	// Détermine si le helpText doit être affiché à la position du message ou en dessous
+	const showHelpTextAsMessage = computed(() => {
+		// Afficher à la position du message si pas de messages d'erreur
+		return props.helpText && !hasMessages.value
+	})
+
+	const showHelpTextBelow = computed(() => {
+		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
+		return props.helpText && hasMessages.value && !props.hideMessages
+	})
+
 	const calculatedWidth = computed(() => {
 		const baseWidth = props.width ? Number(props.width) : 0
 		const selectedText = typeof selectedItemText.value === 'string' ? selectedItemText.value : ''
@@ -378,6 +403,11 @@
 		handleUpKey,
 		handleCharacterKey,
 		handleEscapeKey,
+		handleHomeKey,
+		handleEndKey,
+		handlePageUpKey,
+		handlePageDownKey,
+		handleTabKey,
 		restoreFocus,
 	} = useSySelectKeyboard({
 		isOpen,
@@ -505,6 +535,59 @@
 		}
 	})
 
+	let mutationObserver: MutationObserver | null = null
+
+	// Function to set up proper ARIA attributes
+	const setupAriaAttributes = () => {
+		if (input.value && input.value.$el) {
+			// Find the input element
+			const inputElement = input.value.$el?.querySelector?.('input')
+			if (inputElement) {
+				// Remove problematic attributes that shouldn't be on input
+				inputElement.removeAttribute('aria-describedby')
+				inputElement.removeAttribute('size')
+				inputElement.removeAttribute('tabindex')
+				inputElement.removeAttribute('aria-hidden')
+
+				// Set proper combobox attributes on input element (following CNSA standard)
+				inputElement.setAttribute('role', 'combobox')
+				inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
+				// Only set aria-controls when menu is open and element exists
+				if (isOpen.value) {
+					inputElement.setAttribute('aria-controls', uniqueMenuId.value)
+				}
+				else {
+					inputElement.removeAttribute('aria-controls')
+				}
+				// Note: aria-autocomplete is omitted for select-only combobox (invalid to set to 'none')
+				inputElement.setAttribute('aria-haspopup', 'listbox')
+				if (isOpen.value && activeDescendantId.value) {
+					inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
+				}
+				if (isRequired.value) {
+					inputElement.setAttribute('aria-required', 'true')
+				}
+				if (hasError.value) {
+					inputElement.setAttribute('aria-invalid', 'true')
+				}
+			}
+
+			// Clean up parent element - remove any conflicting attributes
+			const parentElement = input.value.$el
+			if (parentElement) {
+				// Remove any role or ARIA attributes from parent that should be on input
+				parentElement.removeAttribute('role')
+				parentElement.removeAttribute('aria-expanded')
+				parentElement.removeAttribute('aria-controls')
+				parentElement.removeAttribute('aria-haspopup')
+				parentElement.removeAttribute('aria-activedescendant')
+				parentElement.removeAttribute('aria-required')
+				parentElement.removeAttribute('aria-invalid')
+				parentElement.removeAttribute('aria-hidden')
+			}
+		}
+	}
+
 	onMounted(() => {
 		if (labelRef.value) {
 			labelWidth.value = labelRef.value.offsetWidth + 64
@@ -514,24 +597,157 @@
 
 		// Use nextTick to ensure the DOM is fully rendered
 		nextTick(() => {
+			// Initial setup
+			setupAriaAttributes()
+
+			// Set up MutationObserver to monitor attribute changes
 			if (input.value && input.value.$el) {
-				// Find the input element
-				const inputElement = input.value.$el.querySelector('input')
+				mutationObserver = new MutationObserver((mutations) => {
+					let needsCleanup = false
+					mutations.forEach((mutation) => {
+						if (mutation.type === 'attributes') {
+							const target = mutation.target as HTMLElement
+							const attributeName = mutation.attributeName
+
+							// Check if problematic attributes were added to input
+							if (target.tagName === 'INPUT' && (
+								attributeName === 'role'
+								|| attributeName === 'aria-hidden'
+								|| attributeName === 'aria-expanded'
+								|| attributeName === 'aria-controls'
+								|| attributeName === 'aria-haspopup'
+							)) {
+								needsCleanup = true
+							}
+
+							// Check if aria-hidden was added to parent
+							if (target === input.value?.$el && attributeName === 'aria-hidden') {
+								needsCleanup = true
+							}
+						}
+					})
+
+					if (needsCleanup) {
+						// Use setTimeout to avoid infinite loops
+						setTimeout(setupAriaAttributes, 0)
+					}
+				})
+
+				// Observe both the parent element and its children
+				mutationObserver.observe(input.value.$el, {
+					attributes: true,
+					subtree: true,
+					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup'],
+				})
+			}
+		})
+	})
+
+	// Watchers to update ARIA attributes dynamically on input element
+	watch(isOpen, (newValue) => {
+		nextTick(() => {
+			if (input.value && input.value.$el) {
+				const inputElement = input.value.$el?.querySelector?.('input')
 				if (inputElement) {
-					// Remove the aria-describedby attribute
-					inputElement.removeAttribute('aria-describedby')
-					// fix le critere RGAA 10.1 : Dans le site web, des feuilles de styles sont-elles utilisées pour contrôler la présentation de l'information?
-					inputElement.removeAttribute('size')
-					// Remove any tabindex from the input element to prevent it from being tabbable
-					inputElement.removeAttribute('tabindex')
+					inputElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
+					if (newValue && activeDescendantId.value) {
+						inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
+					}
+					else {
+						inputElement.removeAttribute('aria-activedescendant')
+					}
 				}
 			}
 		})
 	})
 
+	watch(activeDescendantId, (newValue) => {
+		nextTick(() => {
+			if (input.value && input.value.$el && isOpen.value) {
+				const inputElement = input.value.$el?.querySelector?.('input')
+				if (inputElement) {
+					if (newValue) {
+						inputElement.setAttribute('aria-activedescendant', newValue)
+					}
+					else {
+						inputElement.removeAttribute('aria-activedescendant')
+					}
+				}
+			}
+		})
+	})
+
+	watch(hasError, (newValue) => {
+		nextTick(() => {
+			if (input.value && input.value.$el) {
+				const inputElement = input.value.$el?.querySelector?.('input')
+				if (inputElement) {
+					if (newValue) {
+						inputElement.setAttribute('aria-invalid', 'true')
+					}
+					else {
+						inputElement.removeAttribute('aria-invalid')
+					}
+				}
+			}
+		})
+	})
+
+	// Watch for selection changes to enforce correct accessibility attributes
+	// This prevents Vuetify from overriding our combobox attributes
+	watch(selectedItem, () => {
+		nextTick(() => {
+			if (input.value && input.value.$el) {
+				const inputElement = input.value.$el?.querySelector?.('input')
+				if (inputElement) {
+					// Ensure combobox role is maintained on input
+					inputElement.setAttribute('role', 'combobox')
+					// Ensure aria-hidden is never set to true
+					inputElement.removeAttribute('aria-hidden')
+					// Maintain other combobox attributes
+					inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
+					inputElement.setAttribute('aria-haspopup', 'listbox')
+					// Note: aria-autocomplete is omitted for select-only combobox
+					// Only set aria-controls when menu is open and element exists
+					if (isOpen.value) {
+						inputElement.setAttribute('aria-controls', uniqueMenuId.value)
+					}
+					else {
+						inputElement.removeAttribute('aria-controls')
+					}
+
+					// Only add aria-required if the component is actually required
+					if (isRequired.value) {
+						inputElement.setAttribute('aria-required', 'true')
+					}
+					else {
+						inputElement.removeAttribute('aria-required')
+					}
+				}
+
+				// Clean up parent element
+				const parentElement = input.value.$el
+				if (parentElement) {
+					parentElement.removeAttribute('role')
+					parentElement.removeAttribute('aria-hidden')
+					parentElement.removeAttribute('aria-expanded')
+					parentElement.removeAttribute('aria-haspopup')
+					parentElement.removeAttribute('aria-controls')
+					parentElement.removeAttribute('aria-required')
+				}
+			}
+		})
+	}, { deep: true })
+
 	onUnmounted(() => {
 		window.removeEventListener('scroll', updateListPosition, true)
 		window.removeEventListener('resize', updateListPosition)
+
+		// Clean up MutationObserver
+		if (mutationObserver) {
+			mutationObserver.disconnect()
+			mutationObserver = null
+		}
 	})
 
 	defineExpose({
@@ -549,27 +765,19 @@
 		v-rgaa-svg-fix="true"
 		:title="$attrs['aria-label'] || labelWithAsterisk"
 		color="primary"
-		role="combobox"
 		:disabled="disabled"
 		:label="labelWithAsterisk"
 		:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-		:aria-expanded="isOpen ? 'true' : 'false'"
-		:aria-controls="menuId"
-		aria-autocomplete="list"
-		aria-haspopup="listbox"
-		aria-readonly="true"
-		:aria-owns="menuId"
-		:aria-activedescendant="isOpen ? activeDescendantId : undefined"
 		:error-messages="props.disableErrorHandling ? [] : errorMessages"
 		:variant="outlined ? 'outlined' : 'underlined'"
 		:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
-		:aria-required="isRequired ? 'true' : undefined"
-		:aria-invalid="hasError ? 'true' : undefined"
 		:bg-color="props.bgColor"
 		:density="props.density"
 		:active="hasChips || isOpen"
 		readonly
-		:hide-details="props.hideMessages"
+		:hide-details="props.hideMessages && !showHelpTextAsMessage"
+		:hint="showHelpTextAsMessage ? props.helpText : ''"
+		:persistent-hint="!!showHelpTextAsMessage"
 		class="sy-select"
 		:width="calculatedWidth"
 		:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
@@ -580,6 +788,11 @@
 		@keydown.down.prevent="handleDownKey"
 		@keydown.up.prevent="handleUpKey"
 		@keydown.esc.prevent="handleEscapeKey"
+		@keydown.home.prevent="handleHomeKey"
+		@keydown.end.prevent="handleEndKey"
+		@keydown.page-up.prevent="handlePageUpKey"
+		@keydown.page-down.prevent="handlePageDownKey"
+		@keydown.tab="handleTabKey"
 		@keydown="(e) => {
 			// Handle printable characters for keyboard navigation
 			if (!e.ctrlKey && !e.altKey && !e.metaKey) {
@@ -607,6 +820,7 @@
 			<SyIcon
 				v-if="hasError"
 				class="mr-6"
+				color="error"
 				:icon="mdiInformation"
 				:decorative="false"
 				label="Information"
@@ -641,7 +855,7 @@
 	>{{ label }}</span>
 	<VList
 		v-if="isOpen"
-		:id="menuId"
+		:id="uniqueMenuId"
 		class="v-list"
 		role="listbox"
 		:aria-multiselectable="props.multiple ? 'true' : undefined"
@@ -654,10 +868,14 @@
 		tabindex="0"
 		:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
 		@keydown.esc.prevent="closeList"
-		@keydown.tab.prevent="closeList"
+		@keydown.tab="handleTabKey"
 		@keydown.enter.prevent="handleEnterKey"
 		@keydown.down.prevent="handleDownKey"
 		@keydown.up.prevent="handleUpKey"
+		@keydown.home.prevent="handleHomeKey"
+		@keydown.end.prevent="handleEndKey"
+		@keydown.page-up.prevent="handlePageUpKey"
+		@keydown.page-down.prevent="handlePageDownKey"
 		@click.stop
 	>
 		<VListItem
@@ -667,7 +885,7 @@
 			:ref="'options-' + index"
 			role="option"
 			class="v-list-item"
-			:aria-selected="(isItemSelected(item) || `option-${index}` === activeDescendantId) ? 'true' : 'false'"
+			:aria-selected="isItemSelected(item) ? 'true' : 'false'"
 			tabindex="-1"
 			:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
 			@click.stop="(event) => selectItem(item, event)"
@@ -692,6 +910,14 @@
 			</VListItemTitle>
 		</VListItem>
 	</VList>
+
+	<div
+		v-if="showHelpTextBelow"
+		class="help-text-below px-4 mt-1"
+		:class="{ 'text-disabled': props.disabled }"
+	>
+		{{ props.helpText }}
+	</div>
 </template>
 
 <style scoped lang="scss">
@@ -732,6 +958,26 @@
 
 .v-list-item.active {
 	background-color: rgb(0 0 0 / 8%);
+}
+
+.help-text {
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	font-size: 14px;
+	line-height: 1.2;
+}
+
+.help-text.text-disabled {
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+}
+
+.help-text-below {
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	font-size: 14px;
+	line-height: 1.2;
+}
+
+.help-text-below.text-disabled {
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
 }
 
 /* Ensure focus styles match selection styles for keyboard navigation */

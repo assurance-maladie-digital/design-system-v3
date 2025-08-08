@@ -1,14 +1,31 @@
+/**
+ * Test Environment Setup File
+ *
+ * Ce fichier configure l'environnement de test pour les composants Vue/Vuetify.
+ * Il contient :
+ * - Les polyfills pour APIs du navigateur (IntersectionObserver, ResizeObserver, etc.)
+ * - Les polyfills pour méthodes ES2022 non supportées dans Node.js 18
+ * - La configuration de l'environnement de test global
+ */
+
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-// Increase max listeners to prevent memory leak warnings during tests
-// Set higher limit for CI environments where more concurrent processes may run
+// Augmenter le nombre max d'écouteurs d'événements pour éviter les avertissements
+// de fuites mémoire pendant les tests, surtout sur CI où plusieurs processus
+// peuvent s'exécuter en parallèle
 const maxListeners = process.env.CI ? 30 : 20
 process.setMaxListeners(maxListeners)
 
-// ES2022 Array methods polyfill for Node.js 18.x compatibility
-// These methods are used by Vuetify 3.9.x but not available in Node.js 18.x
+/**
+ * Polyfills pour méthodes de tableau ES2023 utilisées par Vuetify 3.9.x
+ * https://node.green/#ES2023
+ *
+ * Ces méthodes sont nécessaires car Node.js 18.x ne les implémente pas nativement,
+ * mais Vuetify 3.9+ les utilise. Ces polyfills permettent d'exécuter les tests
+ * sans erreurs de référence aux méthodes manquantes.
+ */
 if (!(Array.prototype as any).toReversed) {
 	(Array.prototype as any).toReversed = function (this: any[]) {
 		return [...this].reverse()
@@ -37,7 +54,13 @@ if (!(Array.prototype as any).with) {
 	}
 }
 
-// Browser API polyfills to prevent test failures
+/**
+ * Mocks des APIs de navigateur pour les tests
+ *
+ * Ces APIs ne sont pas disponibles dans l'environnement Node.js/JSDOM/HappyDOM
+ * mais sont utilisées par Vuetify. Nous créons donc des versions minimales
+ * pour éviter les erreurs pendant les tests.
+ */
 Object.defineProperty(window, 'visualViewport', {
 	value: {
 		width: 1024,
@@ -60,37 +83,86 @@ Object.defineProperty(window, 'ResizeObserver', {
 	writable: true,
 })
 
+/**
+ * Mock pour l'API IntersectionObserver
+ *
+ * Ce mock est essentiel car Vuetify utilise IntersectionObserver dans plusieurs
+ * composants (notamment VProgressLinear). Sans ce mock, les tests échoueraient
+ * avec l'erreur "ReferenceError: IntersectionObserver is not defined".
+ *
+ * Cette implémentation fournit toutes les propriétés et méthodes nécessaires
+ * pour satisfaire à la fois l'interface TypeScript et les besoins d'exécution.
+ */
+class IntersectionObserverMock {
+	readonly root: Element | Document | null = null
+	readonly rootMargin: string = '0px'
+	readonly thresholds: ReadonlyArray<number> = [0]
+	private callback: Function
+
+	constructor(callback: Function, options?: any) {
+		this.callback = callback
+		if (options) {
+			this.root = options.root || null
+			this.rootMargin = options.rootMargin || '0px'
+			this.thresholds = Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0]
+		}
+	}
+
+	observe(): void {}
+	unobserve(): void {}
+	disconnect(): void {}
+	takeRecords(): any[] { return [] }
+}
+
+/**
+ * Installer le mock d'IntersectionObserver dans l'environnement
+ *
+ * Nous installons notre mock sur les objets window et global pour assurer
+ * une disponibilité maximale, car certains modules peuvent accéder à l'API
+ * via l'une ou l'autre référence. Cela résout les différences entre
+ * environnements local et CI.
+ */
 Object.defineProperty(window, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
+	value: IntersectionObserverMock,
 	writable: true,
 })
 
-// Also add to global scope for Node.js environment
-Object.defineProperty(global, 'IntersectionObserver', {
-	value: class IntersectionObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	},
-	writable: true,
-})
+// Définir pour l'objet global également (important pour CI)
+if (typeof global !== 'undefined') {
+	// Assigner directement à global avant toute autre initialisation
+	// pour garantir sa disponibilité avant l'initialisation des composants Vuetify
+	Object.defineProperty(global, 'IntersectionObserver', {
+		value: IntersectionObserverMock,
+		configurable: true,
+		writable: true,
+		enumerable: false,
+	})
+}
 
+/**
+ * Mock pour window.matchMedia
+ *
+ * Ce mock est crucial pour les tests de composants Vuetify qui utilisent
+ * des media queries pour le responsive design. Notre implémentation est
+ * "réactive" et répond correctement aux requêtes de media query
+ * en fonction de la largeur simulée de la fenêtre.
+ */
 Object.defineProperty(window, 'matchMedia', {
 	value: (query: string) => {
-		// Extract min-width value from media query
+		// Extraction de la valeur min-width depuis la media query
 		const minWidthMatch = query.match(/\(min-width:\s*(\d+)px\)/)
 		const minWidth = minWidthMatch ? parseInt(minWidthMatch[1], 10) : 0
 
-		// Get current window width from HappyDOM
+		/**
+		 * Fonction pour obtenir la largeur actuelle de la fenêtre simulée
+		 *
+		 * Cette fonction essaie plusieurs méthodes pour récupérer la largeur actuelle
+		 * en fonction de l'environnement de test (HappyDOM, JSDOM, etc.)
+		 * et retombe sur une valeur par défaut si aucune méthode ne fonctionne.
+		 */
 		const getCurrentWidth = () => {
-			// Try multiple ways to get the current width
-			let width = 1024 // Default fallback
+			// Tentative de récupération par différentes méthodes
+			let width = 1024 // Largeur par défaut si aucune méthode ne fonctionne
 
 			if ((window as any).happyDOM?.getInnerWidth) {
 				width = (window as any).happyDOM.getInnerWidth()
@@ -105,8 +177,15 @@ Object.defineProperty(window, 'matchMedia', {
 			return width
 		}
 
-		// Create a reactive media query list that updates when accessed
+		/**
+		 * Création d'un MediaQueryList réactif
+		 *
+		 * Ce mock implémente un getter dynamique pour la propriété 'matches'
+		 * qui recalcule le résultat à chaque accès, simulant ainsi un
+		 * comportement réactif aux changements de taille de fenêtre.
+		 */
 		const mediaQueryList = {
+			// Calcule le résultat de la media query à chaque accès à 'matches'
 			get matches() {
 				const currentWidth = getCurrentWidth()
 				return currentWidth >= minWidth
@@ -125,8 +204,14 @@ Object.defineProperty(window, 'matchMedia', {
 	writable: true,
 })
 
-// Additional polyfills that might be needed
-// HTMLInputElement polyfill for maska library
+/**
+ * Polyfills additionnels pour les bibliothèques et plugins
+ *
+ * Ces mocks sont nécessaires pour certaines bibliothèques spécifiques
+ * utilisées dans le projet, comme maska pour les masques d'entrée.
+ */
+
+// Mock de HTMLInputElement pour la bibliothèque maska
 if (typeof global.HTMLInputElement === 'undefined') {
 	(global as any).HTMLInputElement = class MockHTMLInputElement {
 		type = 'text'
@@ -141,24 +226,43 @@ if (typeof global.HTMLInputElement === 'undefined') {
 	}
 }
 
+/**
+ * Mock des API CSS
+ *
+ * Ces mocks sont nécessaires pour les composants Vuetify qui utilisent
+ * des fonctionnalités CSS avancées comme CSS.supports ou getComputedStyle.
+ */
 Object.defineProperty(global, 'CSS', {
 	value: {
+		// Mock simple retournant toujours false pour CSS.supports
 		supports: () => false,
 	},
 })
 
 Object.defineProperty(window, 'getComputedStyle', {
 	value: () => ({
+		// Mock simple retournant une chaîne vide pour toute propriété CSS
 		getPropertyValue: () => '',
 	}),
 })
 
-// CI-specific configurations for better stability
+/**
+ * Configurations spécifiques pour l'environnement CI (GitHub Actions)
+ *
+ * Ces configurations assurent une exécution cohérente des tests dans
+ * l'environnement d'intégration continue, qui peut avoir des différences
+ * subtiles par rapport à l'environnement de développement local.
+ */
 if (process.env.CI) {
-	// Set timezone for consistent date/time behavior in CI
+	// Définition du fuseau horaire pour des comportements date/heure cohérents
 	process.env.TZ = 'Europe/Paris'
 
-	// Add additional polyfills that might be missing in CI environments
+	/**
+	 * Mock de l'API Performance pour les environnements CI
+	 *
+	 * Certains runners CI peuvent ne pas fournir l'API Performance complète
+	 * que Vuetify utilise pour des mesures de performance.
+	 */
 	Object.defineProperty(global, 'performance', {
 		value: {
 			now: () => Date.now(),
@@ -168,15 +272,26 @@ if (process.env.CI) {
 		writable: true,
 	})
 
-	// Improve test isolation in CI by ensuring proper cleanup
-	// Add a small delay between tests to prevent race conditions
+	/**
+	 * Modification de setTimeout pour améliorer l'isolation des tests en CI
+	 *
+	 * Ajoute un délai minimal entre les exécutions asynchrones pour éviter
+	 * les conditions de course qui peuvent se produire dans les environnements CI
+	 * où les ressources peuvent être limitées.
+	 */
 	const originalSetTimeout = global.setTimeout
 	global.setTimeout = ((fn: Function, delay: number = 0, ...args: any[]) => {
-		// Add minimum 1ms delay in CI to improve test isolation
+		// Délai minimal de 1ms pour améliorer l'isolation des tests
 		return originalSetTimeout(fn, Math.max(delay, 1), ...args)
 	}) as typeof setTimeout
 }
 
+/**
+ * Création de l'instance Vuetify pour les tests
+ *
+ * Cette instance sera utilisée dans les tests pour monter les composants
+ * avec le plugin Vuetify correctement configuré.
+ */
 export const vuetify = createVuetify({
 	components,
 	directives,

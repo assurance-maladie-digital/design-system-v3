@@ -1,29 +1,34 @@
-// Pas besoin d'importer Ref car il n'est pas utilisé
+import { useKeyboardEvents } from './useKeyboardEvents'
+import {
+	formatDateInput as formatDateInputUtil,
+	getDateDescription as getDateDescriptionUtil,
+	type FormatDateInputResult,
+} from '../utils/dateFormattingUtils'
 
 /**
  * Options pour le composable useDateInputEditing
  */
 export interface DateInputEditingOptions {
-	// Format de date (ex: 'DD/MM/YYYY')
+	/**
+   * Format de date (ex: 'DD/MM/YYYY')
+   */
 	format: string
-	// Fonction pour mettre à jour la valeur d'affichage
+	/**
+   * Fonction pour mettre à jour la valeur d'affichage
+   */
 	updateDisplayValue: (value: string) => void
-	// Fonction pour mettre à jour l'attribut aria-label (pour l'accessibilité)
+	/**
+   * Fonction pour mettre à jour l'attribut aria-label (pour l'accessibilité)
+   */
 	updateAriaLabel?: (value: string) => void
-	// Caractère à utiliser pour les positions non remplies (défaut: '_')
+	/**
+   * Caractère à utiliser pour les positions non remplies
+   */
 	placeholderChar?: string
-	// Si true, utilise des caractères invisibles pour les lecteurs d'écran
+	/**
+   * Si true, utilise des caractères invisibles pour les lecteurs d'écran
+   */
 	accessiblePlaceholders?: boolean
-}
-
-/**
- * Résultat du formatage d'une date
- */
-export interface FormatDateInputResult {
-	// Valeur formatée
-	formatted: string
-	// Position du curseur après formatage
-	cursorPos: number
 }
 
 /**
@@ -44,162 +49,63 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 	} = options
 
 	/**
-	 * Formate une entrée de date en ajoutant les séparateurs appropriés
-	 *
-	 * @param input - Chaîne de caractères saisie
-	 * @param cursorPosition - Position actuelle du curseur
-	 * @returns Objet contenant la chaîne formatée et la nouvelle position du curseur
-	 */
+   * Détermine le séparateur utilisé dans le format
+   */
+	const separator = format.match(/[^DMY]/)?.[0] || '/'
+
+	/**
+   * Wrapper pour formatDateInput avec les options prédéfinies
+   */
 	const formatDateInput = (input: string, cursorPosition?: number): FormatDateInputResult => {
-		// Nettoyer l'entrée pour ne garder que les chiffres
-		let cleanedInput = input.replace(/[^\d]/g, '')
+		return formatDateInputUtil(input, format, {
+			cursorPosition,
+			placeholderChar,
+		})
+	}
 
-		// Déterminer le séparateur utilisé dans le format
-		const separator = format.match(/[^DMY]/)?.[0] || '/'
-
-		// Calculer la position du curseur dans l'entrée nettoyée (sans séparateurs)
-		const inputBeforeCursor = input.substring(0, cursorPosition || 0)
-		const digitsBeforeCursor = inputBeforeCursor.replace(/[^\d]/g, '').length
-
-		// Extraire les groupes de chiffres du format (DD, MM, YYYY)
-		const digitGroups: string[] = []
-		let currentGroup = ''
-
-		for (const char of format) {
-			if (['D', 'M', 'Y'].includes(char.toUpperCase())) {
-				currentGroup += char
-			}
-			else if (currentGroup) {
-				digitGroups.push(currentGroup)
-				currentGroup = ''
-			}
+	/**
+   * Gère la suppression des séparateurs
+   */
+	const handleBackspace = (event: KeyboardEvent & { target: HTMLInputElement }): void => {
+		const input = event.target
+		if (!input.selectionStart || input.selectionStart !== input.selectionEnd) {
+			return
 		}
 
-		// Ajouter le dernier groupe s'il existe
-		if (currentGroup) {
-			digitGroups.push(currentGroup)
-		}
+		const cursorPos = input.selectionStart
+		const charBeforeCursor = input.value[cursorPos - 1]
 
-		// Calculer le nombre total de chiffres attendus dans le format
-		const expectedDigits = format.replace(/[^DMY]/g, '').length
+		// Si le caractère avant le curseur n'est pas un chiffre
+		if (!/\d/.test(charBeforeCursor)) {
+			event.preventDefault()
 
-		// Limiter le nombre de chiffres saisis au nombre attendu
-		if (cleanedInput.length > expectedDigits) {
-			cleanedInput = cleanedInput.substring(0, expectedDigits)
-		}
+			const newValue = input.value.substring(0, cursorPos - 2) + input.value.substring(cursorPos)
+			updateDisplayValue(newValue)
 
-		// Construire la chaîne formatée
-		let result = ''
-		let digitIndex = 0
-
-		// Parcourir les groupes de chiffres pour construire la date formatée
-		for (let groupIndex = 0; groupIndex < digitGroups.length; groupIndex++) {
-			const group = digitGroups[groupIndex]
-			const groupLength = group.length
-
-			// Ajouter les chiffres pour ce groupe
-			for (let j = 0; j < groupLength; j++) {
-				if (digitIndex < cleanedInput.length) {
-					result += cleanedInput[digitIndex]
-					digitIndex++
-				}
-				else {
-					// Utiliser le caractère de placeholder configuré pour les positions non remplies
-					result += placeholderChar
-				}
-			}
-
-			// Ajouter le séparateur après chaque groupe sauf le dernier
-			if (groupIndex < digitGroups.length - 1) {
-				result += separator
-			}
-		}
-
-		// Calculer la nouvelle position du curseur
-		let newCursorPos = 0
-		let digitCount = 0
-
-		// Parcourir le résultat formaté pour trouver la position du curseur
-		for (let i = 0; i < result.length && digitCount < digitsBeforeCursor; i++) {
-			newCursorPos++
-			if (/\d/.test(result[i])) {
-				digitCount++
-			}
-		}
-
-		return {
-			formatted: result,
-			cursorPos: Math.min(newCursorPos, result.length),
+			// Positionner le curseur après un court délai
+			setTimeout(() => {
+				const newCursorPos = cursorPos - 2
+				input.setSelectionRange(newCursorPos, newCursorPos)
+			}, 0)
 		}
 	}
 
 	/**
-	 * Gère l'événement keydown pour les touches spéciales
-	 *
-	 * @param event - Événement keydown
-	 */
-	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }): void => {
-		// Bloquer la saisie de caractères non numériques
-		// Autoriser uniquement : chiffres, touches de navigation, touches de modification et touches de contrôle
-		if (
-			// Si la touche n'est pas un chiffre
-			!/^\d$/.test(event.key)
-			// Et n'est pas une touche spéciale autorisée
-			&& ![
-				'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
-				'Home', 'End', 'Tab', 'Escape', 'Enter',
-				'Control', 'Alt', 'Shift', 'Meta',
-			].includes(event.key)
-			// Et n'est pas une combinaison de touches (Ctrl+A, Ctrl+C, Ctrl+V, etc.)
-			&& !(event.ctrlKey || event.metaKey)
-		) {
-			// Empêcher la saisie de caractères non numériques
-			event.preventDefault()
-			return
-		}
-
-		// Gérer la suppression des séparateurs
+   * Gestionnaire d'événement keydown personnalisé
+   */
+	const onSpecialKeyDown = (event: KeyboardEvent & { target: HTMLInputElement }): void => {
 		if (event.key === 'Backspace') {
-			const input = event.target
-			if (!input.selectionStart || input.selectionStart !== input.selectionEnd) {
-				return
-			}
-
-			const cursorPos = input.selectionStart
-			const charBeforeCursor = input.value[cursorPos - 1]
-
-			if (!/\d/.test(charBeforeCursor)) {
-				// Si le caractère avant le curseur n'est pas un chiffre, on le supprime aussi
-				// et on supprime le chiffre avant le séparateur
-				event.preventDefault() // Empêcher le comportement par défaut
-
-				const newValue = input.value.substring(0, cursorPos - 2)
-					+ input.value.substring(cursorPos)
-
-				// Mettre à jour la valeur
-				updateDisplayValue(newValue)
-
-				// Positionner le curseur après un court délai
-				setTimeout(() => {
-					const newCursorPos = cursorPos - 2
-					input.setSelectionRange(newCursorPos, newCursorPos)
-				}, 0)
-			}
+			handleBackspace(event)
 		}
-
-		// Gérer les touches de direction pour éviter de se retrouver entre un séparateur et un chiffre
-		if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+		else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+			// Handle arrow key navigation around separators
 			const input = event.target
 			const cursorPos = input.selectionStart || 0
-
-			// Déterminer le séparateur utilisé dans le format
-			const separator = format.match(/[^DMY]/)?.[0] || '/'
 
 			if (event.key === 'ArrowLeft' && cursorPos > 0) {
 				const charBeforeCursor = input.value[cursorPos - 1]
 
 				if (charBeforeCursor === separator) {
-					// Si on se déplace à gauche et qu'on rencontre un séparateur, sauter par-dessus
 					event.preventDefault()
 					input.setSelectionRange(cursorPos - 2, cursorPos - 2)
 				}
@@ -208,7 +114,6 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 				const charAtCursor = input.value[cursorPos]
 
 				if (charAtCursor === separator) {
-					// Si on se déplace à droite et qu'on rencontre un séparateur, sauter par-dessus
 					event.preventDefault()
 					input.setSelectionRange(cursorPos + 2, cursorPos + 2)
 				}
@@ -216,11 +121,16 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 		}
 	}
 
+	// Utiliser le composable commun pour la gestion des événements clavier
+	const keyboardEvents = useKeyboardEvents({
+		allowedCharacters: /^\d$/,
+		onKeyDown: onSpecialKeyDown,
+		separator,
+	})
+
 	/**
-	 * Gère l'événement paste pour formater correctement les dates collées
-	 *
-	 * @param event - Événement paste
-	 */
+   * Gère l'événement paste pour formater correctement les dates collées
+   */
 	const handlePaste = (event: ClipboardEvent): void => {
 		if (!event.clipboardData) return
 
@@ -254,7 +164,7 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 			const accessibleValue = formatted.replace(new RegExp(placeholderChar, 'g'), ' ')
 
 			// Créer un message descriptif pour le lecteur d'écran
-			const dateDescription = getDateDescription(accessibleValue, format)
+			const dateDescription = getDateDescription(accessibleValue)
 			updateAriaLabel(dateDescription)
 		}
 
@@ -265,61 +175,15 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 	}
 
 	/**
-	 * Crée une description accessible de la date pour les lecteurs d'écran
-	 *
-	 * @param dateStr - La chaîne de date à décrire
-	 * @param format - Le format de la date
-	 * @returns Une description de la date adaptée aux lecteurs d'écran
-	 */
-	const getDateDescription = (dateStr: string, format: string): string => {
-		// Si la chaîne est vide, retourner un message simple
-		if (!dateStr.trim()) {
-			return 'Aucune date saisie'
-		}
-
-		// Déterminer le séparateur utilisé dans le format
-		const separator = format.match(/[^DMY]/)?.[0] || '/'
-
-		// Extraire les parties de la date
-		const dateParts = dateStr.split(separator)
-		const formatParts = format.split(separator)
-
-		// Créer une description en fonction du format
-		let description = 'Date en cours de saisie: '
-
-		for (let i = 0; i < formatParts.length; i++) {
-			if (i >= dateParts.length) break
-
-			const part = dateParts[i].trim()
-			const formatPart = formatParts[i].charAt(0).toUpperCase()
-
-			// Ignorer les parties vides ou contenant uniquement des placeholders
-			if (!part || part.replace(new RegExp(placeholderChar, 'g'), '').length === 0) {
-				continue
-			}
-
-			switch (formatPart) {
-				case 'D':
-					description += `jour ${part}, `
-					break
-				case 'M':
-					description += `mois ${part}, `
-					break
-				case 'Y':
-					description += `année ${part}, `
-					break
-			}
-		}
-
-		// Supprimer la virgule finale si elle existe
-		return description.endsWith(', ')
-			? description.slice(0, -2)
-			: description
+   * Wrapper pour getDateDescription avec les options prédéfinies
+   */
+	const getDateDescription = (dateStr: string): string => {
+		return getDateDescriptionUtil(dateStr, format, placeholderChar)
 	}
 
 	return {
 		formatDateInput,
-		handleKeydown,
+		handleKeydown: keyboardEvents.handleKeyDown,
 		handlePaste,
 		getDateDescription,
 	}

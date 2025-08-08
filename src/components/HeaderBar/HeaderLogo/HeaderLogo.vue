@@ -76,7 +76,7 @@
 				:width="22"
 				:height="64"
 				:fill="primary"
-				role="img"
+				role="presentation"
 				focusable="false"
 				aria-hidden="true"
 				xmlns="http://www.w3.org/2000/svg"
@@ -87,9 +87,9 @@
 			</svg>
 
 			<div v-if="serviceTitle">
-				<div class="service-title">
+				<h1 class="service-title">
 					{{ serviceTitle }}
-				</div>
+				</h1>
 				<div
 					v-if="serviceSubtitle"
 					class="service-subtitle"
@@ -122,7 +122,7 @@
 }
 
 .service-title {
-	font-size: 0.875rem;
+	font-size: 0.875rem !important;
 	font-weight: 500;
 }
 
@@ -133,7 +133,7 @@
 
 @media screen and (min-width: $header-breakpoint) {
 	.service-title {
-		font-size: 1.125rem;
+		font-size: 1.125rem !important;
 	}
 
 	.service-subtitle {

@@ -1,4 +1,4 @@
-import { computed, nextTick, onMounted, ref, watch, type Ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch, type Ref } from 'vue'
 import type { VDataTable, VDataTableServer } from 'vuetify/components'
 import { locales } from './locales'
 import type { DataOptions } from './types'
@@ -18,6 +18,8 @@ export function useTableAria({
 	options,
 	uniqueTableId,
 }: UseTableAriaOptions) {
+	// Registre des éléments avec des écouteurs d'événements pour le nettoyage
+	const elementsWithListeners = ref<HTMLElement[]>([])
 	const statusRegionId = `${uniqueTableId}-status`
 	const statusMessage = ref('')
 
@@ -168,6 +170,9 @@ export function useTableAria({
 					// Add event listeners
 					element.addEventListener('focus', handleInteractiveElementFocus)
 					element.addEventListener('blur', handleInteractiveElementBlur)
+
+					// Stocker l'élément pour le nettoyage lors du démontage
+					elementsWithListeners.value.push(element as HTMLElement)
 				})
 			}
 		})
@@ -263,6 +268,17 @@ export function useTableAria({
 	// Setup ARIA attributes when component is mounted
 	onMounted(() => {
 		setupAria()
+	})
+
+	// Nettoyer les écouteurs d'événements lors du démontage du composant
+	onUnmounted(() => {
+		elementsWithListeners.value.forEach((element) => {
+			if (element) {
+				element.removeEventListener('focus', handleInteractiveElementFocus)
+				element.removeEventListener('blur', handleInteractiveElementBlur)
+			}
+		})
+		elementsWithListeners.value = []
 	})
 
 	return {

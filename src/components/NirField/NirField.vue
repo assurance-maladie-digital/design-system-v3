@@ -122,7 +122,7 @@
 	// Fonction pour gérer le focus des champs
 	const focusField = (field: typeof numberField | typeof keyField) => {
 		nextTick(() => {
-			const input = field.value?.$el.querySelector('input')
+			const input = field.value?.$el?.querySelector?.('input')
 			if (input) {
 				// Focus and select all text
 				input.focus()
@@ -350,10 +350,10 @@
 		if (onBlur || shouldValidateOnBlur.value) {
 			await nextTick()
 			if (numberResult.hasError) {
-				numberField.value?.$el.querySelector('input')?.focus()
+				numberField.value?.$el?.querySelector?.('input')?.focus()
 			}
 			else if (keyResult.hasError) {
-				keyField.value?.$el.querySelector('input')?.focus()
+				keyField.value?.$el?.querySelector?.('input')?.focus()
 			}
 			shouldValidateOnBlur.value = false
 		}
@@ -427,7 +427,7 @@
 		// Si on supprime le contenu de la clé, on revient au champ NIR
 		if (unmaskedKeyValue.value.length === 0) {
 			nextTick(() => {
-				numberField.value?.$el.querySelector('input')?.focus()
+				numberField.value?.$el?.querySelector?.('input')?.focus()
 			})
 		}
 	}
@@ -462,7 +462,7 @@
 		// Attendre que les refs soient disponibles
 		nextTick(() => {
 			// Ajouter l'écouteur d'événement au premier champ NIR
-			const numberInput = numberField.value?.$el.querySelector('input')
+			const numberInput = numberField.value?.$el?.querySelector?.('input')
 			if (numberInput) {
 				numberInput.addEventListener('keydown', handleNumberKeydown)
 			}

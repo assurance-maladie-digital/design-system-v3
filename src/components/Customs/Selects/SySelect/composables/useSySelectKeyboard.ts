@@ -7,7 +7,7 @@ export type ItemType = {
 export interface UseSySelectKeyboardOptions {
 	isOpen: Ref<boolean>
 	formattedItems: Ref<ItemType[]>
-	toggleMenu: () => void
+	toggleMenu: (skipInitialFocus?: boolean) => void
 	selectItem: (item: ItemType | null, event?: Event) => void
 	getItemText: (item: unknown) => unknown
 	updateListPosition: () => void
@@ -75,6 +75,22 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	const clearActiveDescendant = () => {
 		activeDescendantId.value = ''
 		lastFocusedIndex.value = -1
+
+		// Supprimer la classe de focus visuel de tous les éléments
+		nextTick(() => {
+			const allItems = document.querySelectorAll('.v-list-item')
+			allItems.forEach((item) => {
+				item.classList.remove('keyboard-focused')
+			})
+		})
+	}
+
+	/**
+	 * Fonction pour effacer seulement le focus visuel et ARIA sans réinitialiser lastFocusedIndex
+	 * Utilisée quand on ferme le dropdown mais qu'on veut conserver la mémoire du dernier focus
+	 */
+	const clearVisualFocus = () => {
+		activeDescendantId.value = ''
 
 		// Supprimer la classe de focus visuel de tous les éléments
 		nextTick(() => {
@@ -171,29 +187,37 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 
 	const handleDownKey = () => {
 		if (!isOpen.value) {
-			toggleMenu()
+			// Passer skipInitialFocus=true pour éviter que toggleMenu override notre focus
+			toggleMenu(true)
 			nextTick(() => {
-				// Sélectionner le premier élément à l'ouverture
-				setActiveDescendant(0)
+				// Restaurer le dernier item qui avait le focus, ou le premier item par défaut
+				const indexToFocus = lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length
+					? lastFocusedIndex.value
+					: 0
+				setActiveDescendant(indexToFocus)
 			})
 		}
 		else {
-			const currentIndex = findSelectedItemIndex()
-			const nextIndex = currentIndex >= 0 ? Math.min(currentIndex + 1, formattedItems.value.length - 1) : 0
+			// Utiliser lastFocusedIndex comme point de départ (pas l'item sélectionné)
+			const currentIndex = lastFocusedIndex.value >= 0 ? lastFocusedIndex.value : 0
+			const nextIndex = Math.min(currentIndex + 1, formattedItems.value.length - 1)
 			setActiveDescendant(nextIndex)
 		}
 	}
 
 	const handleUpKey = () => {
 		if (!isOpen.value) {
-			toggleMenu()
+			// Passer skipInitialFocus=true pour éviter que toggleMenu override notre focus
+			toggleMenu(true)
 			nextTick(() => {
-				setActiveDescendant(formattedItems.value.length - 1)
+				// Aller au premier item quand on ouvre avec flèche haut (comportement RGAA correct)
+				setActiveDescendant(0)
 			})
 		}
 		else {
 			const currentIndex = findSelectedItemIndex()
-			const prevIndex = currentIndex > 0 ? currentIndex - 1 : formattedItems.value.length - 1
+			// Ne pas boucler : rester au premier item si on est déjà au premier
+			const prevIndex = currentIndex >= 0 ? Math.max(currentIndex - 1, 0) : 0
 			setActiveDescendant(prevIndex)
 		}
 	}
@@ -203,10 +227,98 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		if (key.length === 1 && key.match(/\S/)) {
 			const index = findItemStartingWith(key)
 			if (index >= 0) {
-				if (!isOpen.value) toggleMenu()
-				setActiveDescendant(index)
+				if (!isOpen.value) {
+					toggleMenu()
+					// Attendre que le menu soit ouvert avant de définir le focus
+					nextTick(() => {
+						setActiveDescendant(index)
+					})
+				}
+				else {
+					// Menu déjà ouvert, définir le focus immédiatement
+					setActiveDescendant(index)
+				}
 			}
 		}
+	}
+
+	const handleHomeKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				// Aller au premier item
+				setActiveDescendant(0)
+			})
+		}
+		else {
+			// Menu déjà ouvert, aller au premier item
+			setActiveDescendant(0)
+		}
+	}
+
+	const handleEndKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				// Aller au dernier item
+				setActiveDescendant(formattedItems.value.length - 1)
+			})
+		}
+		else {
+			// Menu déjà ouvert, aller au dernier item
+			setActiveDescendant(formattedItems.value.length - 1)
+		}
+	}
+
+	const handlePageUpKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				// Aller au premier item
+				setActiveDescendant(0)
+			})
+		}
+		else {
+			// Menu déjà ouvert, naviguer de 10 items vers le haut
+			const currentIndex = lastFocusedIndex.value >= 0 ? lastFocusedIndex.value : 0
+			const newIndex = Math.max(currentIndex - 10, 0)
+			setActiveDescendant(newIndex)
+		}
+	}
+
+	const handlePageDownKey = () => {
+		if (!isOpen.value) {
+			toggleMenu()
+			nextTick(() => {
+				// Aller au dernier item
+				setActiveDescendant(formattedItems.value.length - 1)
+			})
+		}
+		else {
+			// Menu déjà ouvert, naviguer de 10 items vers le bas
+			const currentIndex = lastFocusedIndex.value >= 0 ? lastFocusedIndex.value : 0
+			const newIndex = Math.min(currentIndex + 10, formattedItems.value.length - 1)
+			setActiveDescendant(newIndex)
+		}
+	}
+
+	const handleTabKey = () => {
+		if (isOpen.value && activeDescendantId.value) {
+			// Trouver l'item actuellement focusé
+			const currentIndex = parseInt(activeDescendantId.value.split('-')[1])
+			if (!isNaN(currentIndex) && currentIndex >= 0 && currentIndex < formattedItems.value.length) {
+				const currentItem = formattedItems.value[currentIndex]
+				// Sélectionner l'item qui a le focus
+				selectItem(currentItem)
+			}
+		}
+		// Fermer le menu (la navigation Tab normale continuera après)
+		if (isOpen.value) {
+			isOpen.value = false
+			clearActiveDescendant()
+		}
+		// Ne pas empêcher le comportement par défaut de Tab pour permettre
+		// la navigation vers l'élément suivant focusable
 	}
 
 	// Watch activeDescendantId pour synchroniser lastFocusedIndex
@@ -240,7 +352,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		}
 		else {
 			// Conserver lastFocusedIndex mais effacer le focus visuel et ARIA
-			clearActiveDescendant()
+			clearVisualFocus()
 		}
 	})
 
@@ -267,6 +379,11 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		handleUpKey,
 		handleCharacterKey,
 		handleEscapeKey,
+		handleHomeKey,
+		handleEndKey,
+		handlePageUpKey,
+		handlePageDownKey,
+		handleTabKey,
 		restoreFocus,
 	}
 }

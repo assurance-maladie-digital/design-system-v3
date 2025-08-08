@@ -17,6 +17,10 @@
 			type: String,
 			default: '200px',
 		},
+		titlesTag: {
+			type: String,
+			default: 'h4',
+		},
 		loading: {
 			type: Boolean,
 			default: false,
@@ -40,20 +44,33 @@
 </script>
 
 <template>
-	<div class="vd-data-list-group d-flex flex-wrap max-width-none ma-n4">
-		<DataList
+	<ul class="sy-data-list-group d-flex flex-wrap max-width-none ma-n4">
+		<li
 			v-for="(dataList, index) in props.items"
-			:key="`vd-data-list-${index}`"
-			:loading="props.loading"
-			:render-html-value="props.renderHtmlValue"
-			:list-title="dataList.title"
-			:items="dataList.items"
-			:items-number-loading="dataList.itemsNumberLoading"
-			:heading-loading="dataList.headingLoading"
-			:width="props.itemWidth"
-			:icons="props.icons"
-			class="ma-4"
-			@click:item-action="emitItemAction(index, $event)"
-		/>
-	</div>
+			:key="`sy-data-list-${index}`"
+			class="sy-data-list-group-item"
+		>
+			<DataList
+				:loading="props.loading"
+				:render-html-value="props.renderHtmlValue"
+				:list-title="dataList.title"
+				:items="dataList.items"
+				:items-number-loading="dataList.itemsNumberLoading"
+				:heading-loading="dataList.headingLoading"
+				:title-tag="props.titlesTag"
+				:width="props.itemWidth"
+				:icons="props.icons"
+				class="ma-4"
+				@click:item-action="emitItemAction(index, $event)"
+			/>
+		</li>
+	</ul>
 </template>
+
+<style lang="scss" scoped>
+	.sy-data-list-group {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+</style>

@@ -88,7 +88,19 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 				]
 			}
 
-			// Any object
+			// Handle single select objects (VSelect with return-object but without multiple)
+			// Check if this looks like a select option object with title/text and value properties
+			const hasSelectStructure = (typedValue.title !== undefined || typedValue.text !== undefined) && typedValue.value !== undefined
+			if (hasSelectStructure) {
+				return [
+					{
+						text: typedValue.title || typedValue.text || typedValue.value.toString(),
+						value: typedValue,
+					},
+				]
+			}
+
+			// Any other object - iterate over keys
 			return Object.keys(typedValue).map((key) => {
 				// Use text property if it exists, else use value property or default to key value
 				const text

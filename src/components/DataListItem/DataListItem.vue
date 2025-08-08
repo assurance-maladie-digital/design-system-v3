@@ -1,9 +1,8 @@
 <script lang="ts" setup>
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { computed } from 'vue'
 	import { useTheme } from 'vuetify'
-
-	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
-
+	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { config } from './config'
 	import { locales } from './locales'
 
@@ -49,14 +48,14 @@
 </script>
 
 <template>
-	<li class="sy-data-list-item d-flex flex-wrap">
+	<div class="sy-data-list-item d-flex flex-wrap">
 		<slot name="icon">
-			<VIcon
+			<SyIcon
 				v-if="icon"
 				v-bind="options.icon"
-			>
-				{{ icon }}
-			</VIcon>
+				:icon="icon"
+				:decorative="true"
+			/>
 		</slot>
 
 		<div class="sy-data-list-item-content">
@@ -80,13 +79,13 @@
 							{{ itemValue }}
 						</VChip>
 
-						<span
+						<div
 							v-else-if="renderHtmlValue"
 							class="text-body-1"
 							v-html="itemValue"
 						/>
 
-						<span
+						<div
 							v-else
 							class="text-body-1"
 							v-text="itemValue"
@@ -106,7 +105,7 @@
 				</VBtn>
 			</slot>
 		</div>
-	</li>
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -127,6 +126,10 @@
 .sy-data-list-item-action-btn.v-btn {
 	min-width: 0;
 	margin: 0 -1px;
+
+	&:focus-visible::after {
+		opacity: 1;
+	}
 }
 
 .v-icon.v-theme--light {

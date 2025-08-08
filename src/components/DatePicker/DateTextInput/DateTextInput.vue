@@ -3,6 +3,7 @@
 	import { nextTick } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import { useValidation, type ValidationRule, type ValidationResult } from '@/composables/validation/useValidation'
+	import { type CustomRule } from '../utils/validationUtils'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { useDateRangeInput, useDateRangeValidation, useDateFormatValidation, useDateValidation, useDateInputEditing, useManualDateValidation, useDateAutoClamp } from '../composables'
@@ -252,8 +253,8 @@
 		format: props.format,
 		required: props.required,
 		disableErrorHandling: props.disableErrorHandling,
-		customRules: props.customRules,
-		customWarningRules: props.customWarningRules,
+		customRules: props.customRules as CustomRule[],
+		customWarningRules: props.customWarningRules as CustomRule[],
 		hasInteracted,
 		errors,
 		clearValidation,
@@ -477,7 +478,7 @@
 				}
 			}
 
-			const input = inputRef.value?.$el.querySelector('input')
+			const input = inputRef.value?.$el?.querySelector?.('input')
 			const cursorPos = input?.selectionStart || 0
 
 			// Utiliser le composable de plage de dates si le mode plage est activé
@@ -545,21 +546,8 @@
 					// Si la plage est complète (deux dates)
 					if (result.isComplete && result.dates[1]) {
 						const [startDate, endDate] = result.dates
-
 						// Vérifier si la plage est valide
-						if (isValidRange(startDate, endDate)) {
-							// Formater les dates pour le modèle
-							const returnFormat = props.dateFormatReturn || props.format
-							const modelValue: [string, string] = [
-								formatDate(startDate, returnFormat),
-								formatDate(endDate, returnFormat),
-							]
-
-							// Émettre les événements
-							emit('update:model-value', modelValue)
-							emit('date-selected', modelValue)
-						}
-						else {
+						if (!isValidRange(startDate, endDate)) {
 							errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 						}
 					}
@@ -571,9 +559,6 @@
 
 						// Émettre l'événement date-selected pour la première date
 						emit('date-selected', formattedDate)
-
-						// Note: Nous n'émettons pas update:model-value avec un tableau contenant null
-						// car le type DateValue n'accepte que [string, string] pour les plages
 					}
 				}
 				else {
@@ -729,18 +714,35 @@
 			const validation = validateDateFormat(inputValue.value)
 			// check si pas d'erreur des rules
 			const checkRules = validateField(inputValue.value, props.customRules, props.customWarningRules)
-			if (validation.isValid && !checkRules.hasError) {
+			if (validation.isValid && !checkRules.hasError && !props.displayRange) {
 				// Si le format est valide, la date est également valide grâce à notre correction dans useDateFormatValidation
 				const formattedDate = props.dateFormatReturn
 					? dayjs(inputValue.value, props.format).format(props.dateFormatReturn)
 					: inputValue.value
 				emit('update:model-value', formattedDate)
 			}
+			else if (validation.isValid && !checkRules.hasError && props.displayRange) {
+				// If the input is a range (contains ' - '), split it into a tuple [string, string]
+				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
+					const parts = inputValue.value.split(' - ')
+					if (parts.length === 2) {
+						emit('update:model-value', [parts[0], parts[1]])
+					}
+					else {
+						// If we don't have exactly two parts, use original value
+						emit('update:model-value', inputValue.value)
+					}
+				}
+				else {
+					emit('update:model-value', inputValue.value)
+				}
+			}
 			else {
+				validateRules(inputValue.value)
 				// Si le format n'est pas valide ou si la date est invalide, ajouter le message d'erreur
-				clearValidation()
 				errors.value.push(validation.message)
 				emit('update:model-value', props.modelValue)
+				clearValidation()
 			}
 		}
 
@@ -828,7 +830,6 @@
 		if (props.displayRange && inputValue.value) {
 			// Utiliser le composable pour analyser la plage de dates
 			const [startDate, endDate] = parseRangeInput(inputValue.value)
-
 			// Si nous avons une plage complète (deux dates)
 			if (startDate && endDate) {
 				// Vérifier si la plage est valide (date de fin >= date de début)
@@ -848,11 +849,8 @@
 
 				// Plage valide, mettre à jour le modèle
 				const returnFormat = props.dateFormatReturn || props.format
-				const modelValue: [string, string] = [
-					formatDate(startDate, returnFormat),
-					formatDate(endDate, returnFormat),
-				]
-				emit('update:model-value', modelValue)
+
+				emit('update:model-value', [formatDate(startDate, returnFormat), formatDate(endDate, returnFormat)])
 				validateRules(inputValue.value)
 				return
 			}
@@ -958,14 +956,14 @@
 		focus() {
 			// Utiliser un sélecteur plus spécifique pour cibler l'input principal
 			// SyTextField peut contenir plusieurs inputs, donc on cible le premier qui n'est pas caché
-			const input = inputRef.value?.$el.querySelector('input:not([type="hidden"])')
+			const input = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
 			if (input) {
-				input.focus()
+				input.focus({ preventScroll: true })
 			}
 		},
 		blur() {
 			// Utiliser un sélecteur plus spécifique pour cibler l'input principal
-			const input = inputRef.value?.$el.querySelector('input:not([type="hidden"])')
+			const input = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
 			if (input) {
 				input.blur()
 			}
