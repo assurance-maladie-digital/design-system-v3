@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-	import { computed } from 'vue'
 	import type { PropType } from 'vue'
 
-	import { locales } from './locales'
 	import DataListItem from '@/components/DataListItem/DataListItem.vue'
 	import DataListLoading from './DataListLoading/DataListLoading.vue'
 
@@ -68,11 +66,13 @@
 		},
 	})
 
+	const uniqueId = Math.random().toString(36).substr(2, 9)
+
+	const sectionTitleId = `data-list-section-title-${uniqueId}`
+
 	const { widthStyles } = useWidthable(props)
 
 	const emit = defineEmits(['click:item-action'])
-
-	const label = computed(() => (props.loading ? locales.loadingLabel : undefined))
 
 	const getIcon = (iconName?: string): string | undefined => {
 		if (!iconName || !props.icons) {
@@ -90,54 +90,50 @@
 </script>
 
 <template>
-	<div
-		:aria-label="label"
-		:style="widthStyles"
-		class="sy-data-list"
-	>
-		<VFadeTransition mode="out-in">
-			<DataListLoading
-				v-if="loading"
-				:items-number="itemsNumberLoading"
-				:heading="headingLoading"
-				:title-class="titleClass"
-				:row="row"
-			/>
+	<VFadeTransition mode="out-in">
+		<DataListLoading
+			v-if="loading"
+			:items-number="itemsNumberLoading"
+			:heading="headingLoading"
+			:row="row"
+		/>
 
-			<dl v-else>
-				<dt>
-					<slot name="title">
-						<component
-							:is="titleTag"
-							v-if="listTitle"
-							:class="titleClass"
-						>
-							{{ listTitle }}
-						</component>
-					</slot>
-				</dt>
+		<section
+			v-else
+			:aria-labelledby="sectionTitleId"
+			:style="widthStyles"
+		>
+			<slot name="title">
+				<component
+					:is="titleTag"
+					v-if="listTitle"
+					:id="sectionTitleId"
+					:class="titleClass"
+				>
+					{{ listTitle }}
+				</component>
+			</slot>
 
-				<dd v-if="items.length">
-					<DataListItem
-						v-for="(item, index) in items"
-						:key="index"
-						:label="item.key"
-						:value="item.value"
-						:action="item.action"
-						:chip="item.chip"
-						:row="row"
-						:render-html-value="renderHtmlValue"
-						:icon="getIcon(item.icon)"
-						:placeholder="placeholder"
-						:vuetify-options="item.options"
-						:class="getItemClass(index, item.class)"
-						class="sy-data-list-item text-body-1"
-						@click:action="emit('click:item-action', index)"
-					/>
-				</dd>
+			<dl v-if="items.length">
+				<DataListItem
+					v-for="(item, index) in items"
+					:key="index"
+					:label="item.key"
+					:value="item.value"
+					:action="item.action"
+					:chip="item.chip"
+					:row="row"
+					:render-html-value="renderHtmlValue"
+					:icon="getIcon(item.icon)"
+					:placeholder="placeholder"
+					:vuetify-options="item.options"
+					:class="getItemClass(index, item.class)"
+					class="sy-data-list-item text-body-1"
+					@click:action="emit('click:item-action', index)"
+				/>
 			</dl>
-		</VFadeTransition>
-	</div>
+		</section>
+	</VFadeTransition>
 </template>
 
 <style lang="scss" scoped>

@@ -34,7 +34,7 @@
 	const labelColor = computed(() => {
 		return theme.current.value.dark
 			? 'rgba(255, 255, 255, .7)'
-			: 'rgba(0, 0, 0, .6)'
+			: 'rgba(255, 255, 255, .85)'
 	})
 
 	const itemValue = computed(() => {
@@ -48,7 +48,10 @@
 </script>
 
 <template>
-	<div class="sy-data-list-item d-flex flex-wrap">
+	<dt
+		class="sy-data-list-item-label text-caption"
+		:style="{ color: labelColor }"
+	>
 		<slot name="icon">
 			<SyIcon
 				v-if="icon"
@@ -57,76 +60,50 @@
 				:decorative="true"
 			/>
 		</slot>
+		{{ label }} :
+	</dt>
 
-		<div class="sy-data-list-item-content">
-			<div :class="{ 'sy-row': row }">
-				<div
-					class="sy-data-list-item-label text-caption"
-					:style="{ color: labelColor }"
-				>
-					{{ label }}
-				</div>
+	<dd class="sy-data-list-item-value mb-2 d-flex align-center ga-2">
+		<slot
+			name="value"
+			v-bind="{ itemValue }"
+		>
+			<VChip
+				v-if="chip"
+				v-bind="options.chip"
+			>
+				{{ itemValue }}
+			</VChip>
 
-				<div class="sy-data-list-item-value">
-					<slot
-						name="value"
-						v-bind="{ itemValue }"
-					>
-						<VChip
-							v-if="chip"
-							v-bind="options.chip"
-						>
-							{{ itemValue }}
-						</VChip>
+			<span
+				v-else-if="renderHtmlValue"
+				class="text-body-1"
+				v-html="itemValue"
+			/>
 
-						<div
-							v-else-if="renderHtmlValue"
-							class="text-body-1"
-							v-html="itemValue"
-						/>
-
-						<div
-							v-else
-							class="text-body-1"
-							v-text="itemValue"
-						/>
-					</slot>
-				</div>
-			</div>
+			<span
+				v-else
+				class="text-body-1"
+				v-text="itemValue"
+			/>
 
 			<slot name="action">
 				<VBtn
 					v-if="action"
-					v-bind="options.actionBtn"
-					class="sy-data-list-item-action-btn"
+					class="sy-data-list-item-action-btn text-body-1 px-2"
+					size="small"
+					variant="text"
 					@click="emits('click:action')"
 				>
 					{{ action }}
 				</VBtn>
 			</slot>
-		</div>
-	</div>
+		</slot>
+	</dd>
 </template>
 
 <style lang="scss" scoped>
-.sy-row {
-	display: flex;
-	flex-wrap: wrap;
-
-	.sy-data-list-item-label {
-		align-self: center;
-
-		&::after {
-			content: ':';
-			margin: 0 4px;
-		}
-	}
-}
-
 .sy-data-list-item-action-btn.v-btn {
-	min-width: 0;
-	margin: 0 -1px;
-
 	&:focus-visible::after {
 		opacity: 1;
 	}

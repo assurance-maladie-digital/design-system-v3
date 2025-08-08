@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref } from 'vue'
+	import { computed, ref } from 'vue'
 	import { mdiKeyboardBackspace } from '@mdi/js'
 
 	import { config } from './config'
@@ -8,6 +8,7 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useWidthable, type Widthable } from '@/composables/widthable'
 
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import DataListGroup from '../DataListGroup/DataListGroup.vue'
 	import HeaderLoading from '../HeaderLoading/HeaderLoading.vue'
 	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
@@ -15,19 +16,27 @@
 	const props = withDefaults(defineProps<CustomizableOptions & Widthable & {
 		hideBackBtn?: boolean
 		backBtnText?: string
+		backBtnAccessibleName?: string
 		titleText?: string
+		titleAccessibleName?: string
 		subTitleText?: string
+		subTitleAccessibleName?: string
 		dataListGroupItems?: DataListGroupItems | undefined
 		loading?: boolean
 		renderHtmlValue?: boolean
+		renderSingleLine?: boolean
 	}>(), {
 		hideBackBtn: false,
 		backBtnText: locales.backBtnText,
+		backBtnAccessibleName: undefined,
 		titleText: undefined,
+		titleAccessibleName: undefined,
 		subTitleText: undefined,
+		subTitleAccessibleName: undefined,
 		dataListGroupItems: undefined,
 		loading: false,
 		renderHtmlValue: false,
+		renderSingleLine: false,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -40,6 +49,13 @@
 	function emitItemAction(eventValue: DataListActionEvent) {
 		emit('click:list-item', eventValue)
 	}
+
+	// Add the accessible name of the back button only if the default button label has been filled in.
+	const effectiveBackBtnAccessibleName = computed(() => {
+		return props.backBtnAccessibleName ?? (
+			props.backBtnText === locales.backBtnText ? locales.backBtnAccessibleName : undefined
+		)
+	})
 </script>
 
 <template>
@@ -64,20 +80,29 @@
 					v-else
 					v-bind="options.backBtn"
 					class="vd-sub-header-back-btn mb-1"
+					:aria-label="effectiveBackBtnAccessibleName"
 					@click="$emit('back')"
 				>
 					<slot name="back-btn-icon">
-						<VIcon class="mr-2">
-							{{ backArrowIcon }}
-						</VIcon>
+						<SyIcon
+							class="mr-2"
+							:icon="backArrowIcon"
+							:decorative="true"
+						/>
 					</slot>
 					{{ backBtnText }}
 				</VBtn>
 			</VFadeTransition>
 		</slot>
 
-		<div class="vd-sub-header-content d-flex justify-space-between">
-			<div class="vd-sub-header-informations d-flex flex-column flex-shrink-0 mr-10">
+		<div
+			class="vd-sub-header-content d-flex justify-space-between flex-wrap ga-8"
+			:class="renderSingleLine ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
+		>
+			<div
+				class="vd-sub-header-informations d-flex flex-column mr-10"
+				:class="{ 'flex-shrink-0': renderSingleLine }"
+			>
 				<slot name="title">
 					<VFadeTransition mode="out-in">
 						<HeaderLoading
@@ -89,6 +114,7 @@
 						<h2
 							v-else-if="titleText"
 							class="text-h5 font-weight-bold"
+							:aria-label="titleAccessibleName"
 						>
 							{{ titleText }}
 						</h2>
@@ -111,6 +137,7 @@
 							v-else
 							class="text-h6 font-weight-bold mt-1 mb-0"
 							:style="{ color: 'rgba(255, 255, 255, .7)' }"
+							:aria-label="subTitleAccessibleName"
 						>
 							{{ subTitleText }}
 						</p>
@@ -127,7 +154,7 @@
 					:loading="loading"
 					:render-html-value="renderHtmlValue"
 					item-width="auto"
-					class="flex-nowrap flex-shrink-0"
+					:class="renderSingleLine ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
 					@click:list-item="emitItemAction"
 				/>
 			</slot>
