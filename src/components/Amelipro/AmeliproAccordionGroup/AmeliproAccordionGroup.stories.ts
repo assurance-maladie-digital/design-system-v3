@@ -72,7 +72,15 @@ export const Default: Story = {
 		class="w-100"
 		:items="items"
 		unique-id="amelipro-accordion-group"
-	/>
+	>
+		<template #accordion-header-right>
+			[Slot: accordion-header-right]
+		</template>
+
+		<template #accordion-content>
+			[Slot: accordion-content]
+		</template>
+	</AmeliproAccordionGroup>
 </template>`,
 			},
 			{
@@ -112,6 +120,14 @@ export const Default: Story = {
 	<AmeliproAccordionGroup
 		class="w-100"
 		v-bind="args"
-	/>`,
+	>
+		<template #accordion-header-right>
+			[Slot: accordion-header-right]
+		</template>
+
+		<template #accordion-content>
+			[Slot: accordion-content]
+		</template>
+	</AmeliproAccordionGroup>`,
 	}),
 }
