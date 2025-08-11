@@ -25,7 +25,7 @@
 		dataListGroupItems?: DataListGroupItems | undefined
 		loading?: boolean
 		renderHtmlValue?: boolean
-		renderSingleLine?: boolean
+		renderFixedHeight?: boolean
 	}>(), {
 		hideBackBtn: false,
 		backBtnText: locales.backBtnText,
@@ -37,7 +37,7 @@
 		dataListGroupItems: undefined,
 		loading: false,
 		renderHtmlValue: false,
-		renderSingleLine: false,
+		renderFixedHeight: false,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -98,11 +98,11 @@
 
 		<div
 			class="vd-sub-header-content d-flex justify-space-between flex-wrap ga-8"
-			:class="renderSingleLine ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
+			:class="renderFixedHeight ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
 		>
 			<div
 				class="vd-sub-header-informations d-flex flex-column mr-10"
-				:class="{ 'flex-shrink-0': renderSingleLine }"
+				:class="{ 'flex-shrink-0': renderFixedHeight }"
 			>
 				<slot name="title">
 					<VFadeTransition mode="out-in">
@@ -156,7 +156,7 @@
 						:loading="loading"
 						:render-html-value="renderHtmlValue"
 						item-width="auto"
-						:class="renderSingleLine ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
+						:class="renderFixedHeight ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
 						@click:list-item="emitItemAction"
 					/>
 				</VThemeProvider>

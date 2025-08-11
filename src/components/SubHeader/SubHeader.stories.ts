@@ -58,7 +58,7 @@ const meta = {
 			control: { type: 'boolean' },
 			default: false,
 		},
-		'renderSingleLine': {
+		'renderFixedHeight': {
 			type: 'boolean',
 			control: { type: 'boolean' },
 			default: false,
@@ -183,7 +183,7 @@ export const Default: Story = {
 
 export const DataList: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -274,7 +274,7 @@ export const DataList: Story = {
 	},
 }
 
-export const DataListSingleLine: Story = {
+export const DataListFixedHeight: Story = {
 	parameters: {
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
@@ -287,7 +287,7 @@ export const DataListSingleLine: Story = {
 						sub-title-text="1 69 08 75 125 456 75"
 						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
-						:render-single-line="true"
+						:render-fixed-height="true"
 					/>
 				</template>
 				`,
@@ -333,7 +333,7 @@ export const DataListSingleLine: Story = {
 		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: false,
 		renderHtmlValue: false,
-		renderSingleLine: true,
+		renderFixedHeight: true,
 		dataListGroupItems: [
 			{
 				title: 'Informations patient',
@@ -371,7 +371,7 @@ export const DataListSingleLine: Story = {
 
 export const ActionBtn: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -482,7 +482,7 @@ export const ActionBtn: Story = {
 
 export const HtmlValue: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -576,7 +576,7 @@ export const HtmlValue: Story = {
 
 export const Loading: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'additional-informations', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'additional-informations', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -669,7 +669,7 @@ export const Loading: Story = {
 
 export const SlotAdditionalInformations: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -761,7 +761,7 @@ export const SlotAdditionalInformations: Story = {
 
 export const SlotBackBtn: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'additional-informations', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -838,7 +838,7 @@ export const SlotBackBtn: Story = {
 
 export const SlotBackBtnIcon: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'title', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -907,7 +907,7 @@ export const SlotBackBtnIcon: Story = {
 
 export const SlotTitle: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -971,7 +971,7 @@ export const SlotTitle: Story = {
 
 export const SlotSubTitle: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1034,7 +1034,7 @@ export const SlotSubTitle: Story = {
 
 export const SlotRightContent: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderSingleLine', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'sub-title'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'sub-title'] },
 		sourceCode: [
 			{
 				name: 'Template',
