@@ -5,6 +5,7 @@
 	import { computed, ref } from 'vue'
 	import { locales } from './locales'
 	import type { ChipItem, ChipState } from './types'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	type NonEmptyChipState = Exclude<ChipState, undefined>
 	type VuetifyVariant = 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
@@ -150,19 +151,21 @@
 			>
 				<div class="d-flex align-center justify-center ga-sm-1">
 					<template v-if="displayPrependStateIcon">
-						<VIcon
+						<SyIcon
 							v-bind="options.icon"
 							:icon="customIcon || getIcon(item.state)"
 							:color="item.state"
+							decorative
 						/>
 					</template>
 
 					<span>{{ item.text }}</span>
 
 					<template v-if="displayAppendStateIcon">
-						<VIcon
+						<SyIcon
 							v-bind="options.icon"
 							:icon="customIcon || getIcon(item.state)"
+							decorative
 						/>
 					</template>
 
@@ -174,10 +177,11 @@
 						class="remove-chip"
 						@click="emitRemoveEvent(item)"
 					>
-						<VIcon
+						<SyIcon
 							v-bind="options.icon"
 							:icon="deleteIcon"
 							:color="item.state"
+							decorative
 						/>
 					</VBtn>
 				</div>
