@@ -103,6 +103,7 @@
 			v-else
 			:aria-labelledby="listTitle ? sectionTitleId : undefined"
 			:style="widthStyles"
+      class="sy-data-list"
 		>
 			<slot name="title">
 				<component

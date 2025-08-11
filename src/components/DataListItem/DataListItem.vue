@@ -48,7 +48,10 @@
 </script>
 
 <template>
-	<div :class="{ 'sy-row': row }">
+	<div
+		:class="{ 'sy-row': row }"
+		class="sy-data-list-item"
+	>
 		<dt
 			class="sy-data-list-item-label text-caption"
 			:style="{ color: labelColor }"
