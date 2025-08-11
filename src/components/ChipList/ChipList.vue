@@ -249,7 +249,40 @@
 	display: none;
 }
 
+// Bouton "Réinitialiser le filtre" - améliorer le contraste de la bordure de focus
+.overflow-btn:focus-visible {
+	outline: 2px solid tokens.$primary-base !important;
+	outline-offset: -2px !important;
+}
+
 .remove-chip {
 	padding: 0 !important;
+
+	// Améliorer le contraste des bordures de focus pour les boutons de suppression
+	&:focus-visible {
+		outline: 2px solid tokens.$primary-base !important;
+		outline-offset: -2px !important;
+	}
+}
+
+// Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
+.sy-chip-success .remove-chip:focus-visible {
+	outline: 2px solid tokens.$colors-border-success !important;
+	outline-offset: -2px !important;
+}
+
+.sy-chip-info .remove-chip:focus-visible {
+	outline: 2px solid tokens.$colors-border-info !important;
+	outline-offset: -2px !important;
+}
+
+.sy-chip-warning .remove-chip:focus-visible {
+	outline: 2px solid tokens.$colors-border-warning !important;
+	outline-offset: -2px !important;
+}
+
+.sy-chip-error .remove-chip:focus-visible {
+	outline: 2px solid tokens.$colors-border-error !important;
+	outline-offset: -2px !important;
 }
 </style>
