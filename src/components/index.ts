@@ -117,6 +117,7 @@ export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 // Amelipro
 // ===========================
 export { default as AmeliproAccordion } from './Amelipro/AmeliproAccordion/AmeliproAccordion.vue'
+export { default as AmeliproAccordionGroup } from './Amelipro/AmeliproAccordionGroup/AmeliproAccordionGroup.vue'
 export { default as AmeliproAutoCompleteField } from './Amelipro/AmeliproAutoCompleteField/AmeliproAutoCompleteField.vue'
 export { default as AmeliproBreadcrumb } from './Amelipro/AmeliproBreadcrumb/AmeliproBreadcrumb.vue'
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
