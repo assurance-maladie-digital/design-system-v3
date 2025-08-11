@@ -45,6 +45,10 @@
 		}
 		return props.value || props.placeholder
 	})
+
+	const actionButtonColor = computed(() => {
+		return theme.current.value.dark ? 'white' : 'primary'
+	})
 </script>
 
 <template>
@@ -97,9 +101,10 @@
 				<slot name="action">
 					<VBtn
 						v-if="action"
-						class="sy-data-list-item-action-btn text-body-1 px-2"
+						class="sy-data-list-item-action-btn px-2"
 						size="small"
-						variant="text"
+						variant="tonal"
+						:color="actionButtonColor"
 						@click="emits('click:action')"
 					>
 						{{ action }}
