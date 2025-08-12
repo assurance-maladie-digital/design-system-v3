@@ -1,0 +1,127 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproAccordionResultTemplate > render correctly 1`] = `
+<div
+  accordiontitle="titre accordion"
+  class="
+    amelipro-accordion--result
+    mb-4
+    w-100
+  "
+  id="amelipro-accordion-result-template-unique-id-container"
+  style="
+    background-color: #FFFFFF;
+    border: 1px solid #545859;
+  "
+>
+  <div
+    class="
+      align-center
+      amelipro-accordion--result__header
+      d-flex
+      flex-column
+      flex-md-row
+      justify-md-space-between
+    "
+    id="amelipro-accordion-result-template-unique-id-header"
+  >
+    <div class="heading-content">
+      <h3>
+        Titre du dépliant
+      </h3>
+    </div>
+    <button
+      aria-controls="amelipro-accordion-result-template-unique-id"
+      aria-expanded="false"
+      class="
+        btn--icon
+        elevation-0
+        heading-content-btn
+        rounded-0
+        v-btn
+        v-btn--density-default
+        v-btn--elevated
+        v-btn--icon
+        v-btn--size-default
+        v-btn--variant-elevated
+        v-theme--light
+      "
+      id="amelipro-accordion-result-template-unique-id-header-btn-open-close"
+      plain=""
+      style="
+        height: auto;
+        width: auto;
+      "
+      type="button"
+    >
+      <span class="v-btn__overlay"></span>
+      <span class="v-btn__underlay"></span>
+      <!---->
+      <span
+        class="v-btn__content"
+        data-no-activator=""
+      >
+        <span
+          class="d-sr-only"
+          id="amelipro-accordion-result-template-unique-id-header-btn-open-close-btn-label"
+        >
+          Déplier
+        </span>
+        <span
+          class="
+            amelipro-icon
+            icon-custom
+          "
+          id="amelipro-accordion-result-template-unique-id-header-btn-open-close-icon"
+        >
+          <span
+            aria-hidden="true"
+            class="
+              amelipro-custom-icon
+              custom-color
+            "
+            focusable="false"
+            role="img"
+            style="color: #00749C;"
+          >
+            <span>
+              <svg
+                aria-hidden="true"
+                style="enable-background:new 0 0 24.1 14.9;"
+                version="1.1"
+                viewBox="0 0 24.1 14.9"
+                x="0px"
+                xml:space="preserve"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                y="0px"
+              >
+                <path
+                  class="shape-color"
+                  d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
+                />
+              </svg>
+            </span>
+          </span>
+        </span>
+      </span>
+      <!---->
+      <!---->
+    </button>
+  </div>
+  <div
+    aria-labelledby="amelipro-accordion-result-template-unique-idtitle"
+    class="
+      amelipro-accordion--result__content
+      text-ap-grey-darken-1
+    "
+    id="amelipro-accordion-result-template-unique-id"
+    role="region"
+    style="display: none;"
+  >
+    <p>
+      Contenu du dépliant
+    </p>
+  </div>
+</div>
+`;

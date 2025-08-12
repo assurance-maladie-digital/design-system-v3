@@ -60,8 +60,10 @@ const items = [
 
 export const Default: Story = {
 	args: {
+		'accordion-content': '[Slot: accordion-content]',
+		'accordion-header-right': '[Slot: accordion-header-right]',
 		items,
-		uniqueId: 'amelipro-accordion-group',
+		'uniqueId': 'amelipro-accordion-group',
 	},
 	parameters: {
 		sourceCode: [
