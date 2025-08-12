@@ -383,10 +383,19 @@
 	})
 
 	const calculatedWidth = computed(() => {
-		const baseWidth = props.width ? Number(props.width) : 0
-		const selectedText = typeof selectedItemText.value === 'string' ? selectedItemText.value : ''
-		const clearableAdjustment = props.clearable ? 4 : 0
-		return `${baseWidth + selectedText.length * (4 + clearableAdjustment)}px`
+		// If width prop is provided and not 'undefined', return it directly as a CSS value
+		if (props.width && props.width !== 'undefined') {
+			// Check if it's a pure number (for backward compatibility)
+			const numericValue = Number(props.width)
+			if (!isNaN(numericValue) && props.width === numericValue.toString()) {
+				// It's a pure number, add 'px' unit
+				return `${numericValue}px`
+			}
+			// It's already a CSS value (like "300px", "50%", "auto"), return as-is
+			return props.width
+		}
+		// No width specified, return undefined for auto-sizing
+		return undefined
 	})
 
 	watch(() => props.modelValue, (newValue) => {
