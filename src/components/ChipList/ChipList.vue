@@ -371,8 +371,6 @@
 	outline-offset: -2px !important;
 }
 
-
-
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
 	outline: 2px solid tokens.$colors-border-success !important;
