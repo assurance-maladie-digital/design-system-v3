@@ -18,6 +18,8 @@
 		displayPrependStateIcon?: boolean
 		displayAppendStateIcon?: boolean
 		customIcon?: string
+		listAriaLabel?: string
+		listAriaLabelledby?: string
 		vuetifyOptions?: {
 			chip?: {
 				color?: string
@@ -42,6 +44,8 @@
 		displayPrependStateIcon: false,
 		displayAppendStateIcon: false,
 		customIcon: undefined,
+		listAriaLabel: undefined,
+		listAriaLabelledby: undefined,
 		vuetifyOptions: () => ({}),
 	})
 
@@ -93,6 +97,10 @@
 		}
 		const count = overflowCount.value
 		return locale.value.showMoreFilters.replace('{count}', count.toString())
+	})
+
+	const listAccessibleName = computed(() => {
+		return props.listAriaLabel ?? locale.value.chipGroupLabel
 	})
 
 	const resetButtonText = computed(() => {
@@ -172,93 +180,98 @@
 <template>
 	<div
 		v-if="items.length"
-		:class="{
-			'flex-row': showOverflowChip,
-		}"
-		class="chip-list d-flex flex-wrap max-width-none mx-n1 mt-n1"
-		role="list"
+		class="sy-chip-list"
 	>
-		<div
-			class="d-flex flex-wrap align-center"
-			role="group"
-			:aria-label="locale.chipGroupLabel"
+		<ul
+			:class="{
+				'flex-row': showOverflowChip,
+			}"
+			class="d-flex flex-wrap max-width-none mx-n1 mt-n1"
+			:aria-label="props.listAriaLabelledby ? undefined : listAccessibleName"
+			:aria-labelledby="props.listAriaLabelledby"
 		>
-			<VChip
+			<li
 				v-for="item in filteredItems"
-				v-bind="options.chip"
 				:key="item.text"
-				:color="getBackgroundColor(item.state)"
-				:class="{
-					'sy-chip-success': item.state === 'success',
-					'sy-chip-info': item.state === 'info',
-					'sy-chip-warning': item.state === 'warning',
-					'sy-chip-error': item.state === 'error',
-				}"
-				role="listitem"
+				class="d-inline-flex"
 			>
-				<template v-if="displayPrependStateIcon">
-					<SyIcon
-						v-bind="options.icon"
-						:icon="customIcon || getIcon(item.state)"
-						:color="item.state"
-						decorative
-					/>
-				</template>
-
-				<span>{{ item.text }}</span>
-
-				<template v-if="displayAppendStateIcon">
-					<SyIcon
-						v-bind="options.icon"
-						:icon="customIcon || getIcon(item.state)"
-						decorative
-					/>
-				</template>
-
-				<VBtn
-					v-if="!readonly"
-					v-bind="options.btn"
-					:aria-label="`Supprimer le filtre ${item.text}`"
-					icon
-					class="remove-chip"
-					@click="emitRemoveEvent(item)"
+				<VChip
+					v-bind="options.chip"
+					:color="getBackgroundColor(item.state)"
+					:class="{
+						'sy-chip-success': item.state === 'success',
+						'sy-chip-info': item.state === 'info',
+						'sy-chip-warning': item.state === 'warning',
+						'sy-chip-error': item.state === 'error',
+					}"
 				>
-					<SyIcon
-						v-bind="options.icon"
-						:icon="deleteIcon"
-						:color="item.state"
-						decorative
-					/>
-				</VBtn>
-			</VChip>
+					<template v-if="displayPrependStateIcon">
+						<SyIcon
+							v-bind="options.icon"
+							:icon="customIcon || getIcon(item.state)"
+							:color="item.state"
+							decorative
+						/>
+					</template>
 
-			<!-- Élément +N intégré dans la liste à puces (critère RGAA 9.3) -->
-			<VChip
+					<span>{{ item.text }}</span>
+
+					<template v-if="displayAppendStateIcon">
+						<SyIcon
+							v-bind="options.icon"
+							:icon="customIcon || getIcon(item.state)"
+							decorative
+						/>
+					</template>
+
+					<VBtn
+						v-if="!readonly"
+						v-bind="options.btn"
+						:aria-label="`Supprimer le filtre ${item.text}`"
+						icon
+						class="remove-chip"
+						@click="emitRemoveEvent(item)"
+					>
+						<SyIcon
+							v-bind="options.icon"
+							:icon="deleteIcon"
+							:color="item.state"
+							decorative
+						/>
+					</VBtn>
+				</VChip>
+			</li>
+
+			<!-- Élément +N intégré dans la liste HTML -->
+			<li
 				v-if="showOverflowChip"
-				v-bind="options.chip"
-				class="overflow-chip text-cyan-darken-40 ma-1"
-				role="listitem"
-				tabindex="0"
-				:aria-label="overflowAriaLabel"
-				@click="toggleShowAllItems"
-				@keydown.enter="toggleShowAllItems"
-				@keydown.space.prevent="toggleShowAllItems"
+				class="d-inline-flex"
 			>
-				{{ overflowText }}
-			</VChip>
-		</div>
+				<VChip
+					v-bind="options.chip"
+					class="overflow-chip text-cyan-darken-40 ma-1"
+					tabindex="0"
+					:aria-label="overflowAriaLabel"
+					@click="toggleShowAllItems"
+					@keydown.enter="toggleShowAllItems"
+					@keydown.space.prevent="toggleShowAllItems"
+				>
+					{{ overflowText }}
+				</VChip>
+			</li>
+		</ul>
 
-		<!-- Boutons d'action (hors de la liste à puces) -->
+		<!-- Boutons d'action (hors de la liste) -->
 		<div
 			v-if="showAllItems || !readonly"
-			class="d-flex align-center"
+			class="d-flex align-center mt-2"
 		>
 			<VBtn
 				v-if="showAllItems"
 				variant="text"
 				color="primary"
 				size="small"
-				class="hide-extra-btn px-1 ml-1 my-1"
+				class="hide-extra-btn px-1 mr-2"
 				@click="toggleShowAllItems"
 			>
 				{{ toggleButtonText }}
@@ -270,7 +283,7 @@
 				color="primary"
 				size="small"
 				data-test-id="reset-btn"
-				class="overflow-btn px-1 ml-1 my-1"
+				class="overflow-btn px-1"
 				@click="emitResetEvent"
 			>
 				{{ resetButtonText }}
@@ -281,6 +294,18 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+
+// Styles pour la liste HTML native
+.sy-chip-list ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.sy-chip-list li {
+	margin: 0;
+	padding: 0;
+}
 
 .sy-chip-success {
 	color: tokens.$colors-text-success !important;
