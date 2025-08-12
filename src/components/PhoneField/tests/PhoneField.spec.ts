@@ -1,6 +1,6 @@
-import { mount } from '@vue/test-utils'
+import { mount, VueWrapper } from '@vue/test-utils'
 import PhoneField from '../PhoneField.vue'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -567,5 +567,56 @@ describe('PhoneField', () => {
 		expect(isValidNotReadonly).toBe(false)
 
 		expect(wrapperNotReadonly.vm.hasError).toBe(true)
+	})
+
+	// Tests pour les formats d'affichage avec abréviations encapsulées
+	describe('Display formats with abbreviations', () => {
+		let wrapper: VueWrapper<InstanceType<typeof PhoneField>>
+
+		beforeEach(() => {
+			wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					withCountryCode: true,
+					displayFormat: 'code',
+				},
+			})
+		})
+
+		it('formats display text as code by default', () => {
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			expect(firstItem.displayText).toBe(firstItem.code)
+		})
+
+		it('formats display text as code-abbreviation', async () => {
+			await wrapper.setProps({ displayFormat: 'code-abbreviation' })
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			expect(firstItem.displayText).toBe(`${firstItem.code} (<abbr title="${firstItem.country}">${firstItem.abbreviation}</abbr>)`)
+		})
+
+		it('formats display text as code-country', async () => {
+			await wrapper.setProps({ displayFormat: 'code-country' })
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			expect(firstItem.displayText).toBe(`${firstItem.code} ${firstItem.country}`)
+		})
+
+		it('formats display text as country', async () => {
+			await wrapper.setProps({ displayFormat: 'country' })
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			expect(firstItem.displayText).toBe(firstItem.country)
+		})
+
+		it('formats display text as abbreviation', async () => {
+			await wrapper.setProps({ displayFormat: 'abbreviation' })
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			expect(firstItem.displayText).toBe(`<abbr title="${firstItem.country}">${firstItem.abbreviation}</abbr>`)
+		})
 	})
 })

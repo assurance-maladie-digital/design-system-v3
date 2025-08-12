@@ -60,6 +60,10 @@
 			type: String,
 			default: 'text',
 		},
+		plainTextKey: {
+			type: String,
+			default: '',
+		},
 		valueKey: {
 			type: String,
 			default: 'value',
@@ -111,6 +115,10 @@
 		helpText: {
 			type: String,
 			default: '',
+		},
+		allowHtml: {
+			type: Boolean,
+			default: false,
 		},
 	})
 
@@ -297,6 +305,16 @@
 		return (item as Record<string, any>)[props.textKey]
 	}
 
+	const getPlainItemText = (item: unknown) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+		const itemObj = item as Record<string, any>
+		// Use plainTextKey if available and allowHtml is true, otherwise use textKey
+		if (props.plainTextKey && props.allowHtml && itemObj[props.plainTextKey]) {
+			return itemObj[props.plainTextKey]
+		}
+		return itemObj[props.textKey]
+	}
+
 	const selectedItemText = computed(() => {
 		// If chips are enabled and we have selected items, return empty string to hide text
 		if (hasChips.value) {
@@ -309,7 +327,7 @@
 				// Find default option and return its text
 				const defaultOption = props.items.find(item => isDefaultOption(item))
 				if (defaultOption) {
-					return defaultOption[props.textKey] as string
+					return getPlainItemText(defaultOption) as string
 				}
 				return ''
 			}
@@ -319,9 +337,10 @@
 
 			return selectedArray.map((selected) => {
 				if (props.returnObject) {
-					return selected?.[props.textKey]
+					return getPlainItemText(selected)
 				}
-				return props.items.find((item: ItemType) => item[props.valueKey] === selected)?.[props.textKey] || ''
+				const foundItem = props.items.find((item: ItemType) => item[props.valueKey] === selected)
+				return foundItem ? getPlainItemText(foundItem) : ''
 			}).join(', ')
 		}
 		else {
@@ -329,10 +348,11 @@
 			if (!selectedItem.value) return ''
 
 			if (props.returnObject) {
-				return selectedItem.value[props.textKey]
+				return getPlainItemText(selectedItem.value)
 			}
 
-			return props.items.find(item => item[props.valueKey] === selectedItem.value)?.[props.textKey] || ''
+			const foundItem = props.items.find(item => item[props.valueKey] === selectedItem.value)
+			return foundItem ? getPlainItemText(foundItem) : ''
 		}
 	})
 
@@ -915,7 +935,11 @@
 				/>
 			</template>
 			<VListItemTitle>
-				{{ getItemText(item) }}
+				<span
+					v-if="allowHtml"
+					v-html="getItemText(item)"
+				/>
+				<span v-else>{{ getItemText(item) }}</span>
 			</VListItemTitle>
 		</VListItem>
 	</VList>

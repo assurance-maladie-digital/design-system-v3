@@ -89,6 +89,7 @@
 		mergedDialCodes.value.map(ind => ({
 			...ind,
 			displayText: generateDisplayText(ind),
+			plainDisplayText: generatePlainDisplayText(ind),
 		})),
 	)
 
@@ -128,6 +129,17 @@
 	}, { immediate: true })
 
 	function generateDisplayText(ind: Indicatif): string {
+		const format = {
+			'code': ind.code,
+			'code-abbreviation': `${ind.code} (<abbr title="${ind.country}">${ind.abbreviation}</abbr>)`,
+			'code-country': `${ind.code} ${ind.country}`,
+			'country': ind.country,
+			'abbreviation': `<abbr title="${ind.country}">${ind.abbreviation}</abbr>`,
+		}
+		return format[props.displayFormat] || ind.code
+	}
+
+	function generatePlainDisplayText(ind: Indicatif): string {
 		const format = {
 			'code': ind.code,
 			'code-abbreviation': `${ind.code} (${ind.abbreviation})`,
@@ -260,9 +272,11 @@
 			:bg-color="bgColor"
 			:readonly="readonly"
 			:disabled="disabled"
+			:allow-html="displayFormat === 'code-abbreviation' || displayFormat === 'abbreviation'"
 			width="30%"
 			class="custom-select mr-4"
 			text-key="displayText"
+			plain-text-key="plainDisplayText"
 			value-key="code"
 		/>
 		<SyTextField
@@ -289,6 +303,7 @@
 			}"
 			width="70%"
 			color="primary"
+			type="tel"
 			@blur="validateInputOnBlur"
 			@input="handlePhoneInput"
 		>
