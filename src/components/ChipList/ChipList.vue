@@ -196,42 +196,40 @@
 				}"
 				role="listitem"
 			>
-				<div class="d-flex align-center justify-center ga-sm-1">
-					<template v-if="displayPrependStateIcon">
-						<SyIcon
-							v-bind="options.icon"
-							:icon="customIcon || getIcon(item.state)"
-							:color="item.state"
-							decorative
-						/>
-					</template>
+				<template v-if="displayPrependStateIcon">
+					<SyIcon
+						v-bind="options.icon"
+						:icon="customIcon || getIcon(item.state)"
+						:color="item.state"
+						decorative
+					/>
+				</template>
 
-					<span>{{ item.text }}</span>
+				<span>{{ item.text }}</span>
 
-					<template v-if="displayAppendStateIcon">
-						<SyIcon
-							v-bind="options.icon"
-							:icon="customIcon || getIcon(item.state)"
-							decorative
-						/>
-					</template>
+				<template v-if="displayAppendStateIcon">
+					<SyIcon
+						v-bind="options.icon"
+						:icon="customIcon || getIcon(item.state)"
+						decorative
+					/>
+				</template>
 
-					<VBtn
-						v-if="!readonly"
-						v-bind="options.btn"
-						:aria-label="`Supprimer le filtre ${item.text}`"
-						icon
-						class="remove-chip"
-						@click="emitRemoveEvent(item)"
-					>
-						<SyIcon
-							v-bind="options.icon"
-							:icon="deleteIcon"
-							:color="item.state"
-							decorative
-						/>
-					</VBtn>
-				</div>
+				<VBtn
+					v-if="!readonly"
+					v-bind="options.btn"
+					:aria-label="`Supprimer le filtre ${item.text}`"
+					icon
+					class="remove-chip"
+					@click="emitRemoveEvent(item)"
+				>
+					<SyIcon
+						v-bind="options.icon"
+						:icon="deleteIcon"
+						:color="item.state"
+						decorative
+					/>
+				</VBtn>
 			</VChip>
 
 			<!-- Élément +N intégré dans la liste à puces (critère RGAA 9.3) -->
