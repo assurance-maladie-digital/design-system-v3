@@ -180,13 +180,13 @@
 <template>
 	<div
 		v-if="items.length"
-		class="sy-chip-list"
+		class="sy-chip-list d-flex flex-wrap align-center ga-1"
 	>
 		<ul
 			:class="{
 				'flex-row': showOverflowChip,
+				'd-flex flex-wrap align-center ga-1': true
 			}"
-			class="d-flex flex-wrap max-width-none mx-n1 mt-n1"
 			:aria-label="props.listAriaLabelledby ? undefined : listAccessibleName"
 			:aria-labelledby="props.listAriaLabelledby"
 		>
@@ -264,7 +264,7 @@
 		<!-- Boutons d'action (hors de la liste) -->
 		<div
 			v-if="showAllItems || !readonly"
-			class="d-flex align-center mt-2"
+			class="d-flex align-center"
 		>
 			<VBtn
 				v-if="showAllItems"
