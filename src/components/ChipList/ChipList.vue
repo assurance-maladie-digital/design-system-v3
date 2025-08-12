@@ -68,7 +68,11 @@
 	})
 
 	const resetButtonText = computed(() => {
-		return props.resetText ?? locale.value.reset
+		if (props.resetText) {
+			return props.resetText
+		}
+		// Utiliser le pluriel si plus d'un filtre
+		return props.items.length > 1 ? locale.value.resetMultiple : locale.value.reset
 	})
 
 	/**
@@ -172,7 +176,7 @@
 					<VBtn
 						v-if="!readonly"
 						v-bind="options.btn"
-						:aria-label="locale.closeBtnLabel"
+						:aria-label="`Supprimer le filtre ${item.text}`"
 						icon
 						class="remove-chip"
 						@click="emitRemoveEvent(item)"
