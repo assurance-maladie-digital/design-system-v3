@@ -307,6 +307,29 @@
 	padding: 0;
 }
 
+// Styles pour le bouton de suppression
+.remove-chip {
+	padding: 0 !important;
+	min-width: auto !important;
+	width: auto !important;
+	height: auto !important;
+	flex-shrink: 0 !important;
+
+	// Assurer que l'icône reste visible en zoom texte 200%
+	:deep(.v-icon) {
+		font-size: 1rem !important;
+		width: 1rem !important;
+		height: 1rem !important;
+		flex-shrink: 0 !important;
+	}
+
+	// Améliorer le contraste des bordures de focus pour les boutons de suppression
+	&:focus-visible {
+		outline: 2px solid tokens.$primary-base !important;
+		outline-offset: -2px !important;
+	}
+}
+
 .sy-chip-success {
 	color: tokens.$colors-text-success !important;
 	border: 1px solid tokens.$colors-border-success !important;
@@ -348,15 +371,7 @@
 	outline-offset: -2px !important;
 }
 
-.remove-chip {
-	padding: 0 !important;
 
-	// Améliorer le contraste des bordures de focus pour les boutons de suppression
-	&:focus-visible {
-		outline: 2px solid tokens.$primary-base !important;
-		outline-offset: -2px !important;
-	}
-}
 
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
