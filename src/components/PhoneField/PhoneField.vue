@@ -7,6 +7,7 @@
 	import { locales } from './locales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import {
 		mdiAlertOutline,
@@ -293,30 +294,30 @@
 		>
 			<template #append-inner>
 				<div class="d-flex align-center">
-					<VIcon
+					<SyIcon
 						v-if="hasError && !shouldDisableErrorHandling"
 						color="error"
 						:icon="mdiInformation"
-						role="presentation"
+						decorative
 					/>
-					<VIcon
+					<SyIcon
 						v-else-if="hasWarning && !shouldDisableErrorHandling"
 						color="warning"
 						:icon="mdiAlertOutline"
-						role="presentation"
+						decorative
 					/>
-					<VIcon
+					<SyIcon
 						v-else-if="hasSuccess && !shouldDisableErrorHandling"
 						color="success"
 						:icon="mdiCheck"
-						role="presentation"
+						decorative
 					/>
-					<VIcon
+					<SyIcon
 						class="ml-2"
 						:color="iconColor"
-					>
-						{{ mdiPhone }}
-					</VIcon>
+						:icon="mdiPhone"
+						decorative
+					/>
 				</div>
 			</template>
 		</SyTextField>
