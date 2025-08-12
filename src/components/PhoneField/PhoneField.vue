@@ -259,7 +259,8 @@
 			:bg-color="bgColor"
 			:readonly="readonly"
 			:disabled="disabled"
-			class="custom-select"
+			width="30%"
+			class="custom-select mr-4"
 			text-key="displayText"
 			value-key="code"
 		/>
@@ -285,6 +286,7 @@
 				'warning-field': hasWarning,
 				'success-field': hasSuccess
 			}"
+			width="70%"
 			color="primary"
 			@blur="validateInputOnBlur"
 			@input="handlePhoneInput"
@@ -333,10 +335,6 @@
 	width: 100%;
 }
 
-.custom-select {
-	width: 30%;
-}
-
 @media (width >= 600px) {
 	.phone-field-container {
 		flex-direction: row;
@@ -344,7 +342,6 @@
 	}
 
 	.custom-select {
-		margin-right: 1rem;
 		margin-bottom: 0;
 		min-width: 144px;
 	}

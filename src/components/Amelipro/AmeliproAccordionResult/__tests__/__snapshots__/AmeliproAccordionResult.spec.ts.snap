@@ -4,7 +4,7 @@ exports[`AmeliproAccordionResult > render correctly 1`] = `
 <div
   accordiontitle="titre accordion"
   class="
-    amelipro-accordion--result
+    amelipro-accordion-result
     mb-4
     w-100
   "
@@ -17,7 +17,7 @@ exports[`AmeliproAccordionResult > render correctly 1`] = `
   <div
     class="
       align-center
-      amelipro-accordion--result__header
+      amelipro-accordion-result__header
       d-flex
       flex-column
       flex-md-row
@@ -108,7 +108,7 @@ exports[`AmeliproAccordionResult > render correctly 1`] = `
   <div
     aria-labelledby="amelipro-accordion-result-unique-idtitle"
     class="
-      amelipro-accordion--result__content
+      amelipro-accordion-result__content
       text-ap-grey-darken-1
     "
     id="amelipro-accordion-result-unique-id"
