@@ -54,17 +54,45 @@
 
 	const locale = ref(locales)
 	const deleteIcon = ref(mdiWindowClose)
+	const showAllItems = ref(false)
 
 	const filteredItems = computed(() => {
+		if (showAllItems.value) {
+			return props.items
+		}
 		return props.items.slice(0, props.overflowLimit - 1)
 	})
 
 	const showOverflowChip = computed(() => {
-		return props.items.length >= props.overflowLimit
+		return props.items.length >= props.overflowLimit && !showAllItems.value
+	})
+
+	const overflowCount = computed(() => {
+		return props.items.length - props.overflowLimit + 1
 	})
 
 	const overflowText = computed(() => {
-		return `+${props.items.length - props.overflowLimit + 1}`
+		return `+${overflowCount.value}`
+	})
+
+	const hiddenItems = computed(() => {
+		return props.items.slice(props.overflowLimit - 1)
+	})
+
+	const overflowAriaLabel = computed(() => {
+		const count = overflowCount.value
+		const itemsText = hiddenItems.value.map(item => item.text).join(', ')
+		return locale.value.overflowAriaLabel
+			.replace('{count}', count.toString())
+			.replace('{items}', itemsText)
+	})
+
+	const toggleButtonText = computed(() => {
+		if (showAllItems.value) {
+			return locale.value.hideExtraFilters
+		}
+		const count = overflowCount.value
+		return locale.value.showMoreFilters.replace('{count}', count.toString())
 	})
 
 	const resetButtonText = computed(() => {
@@ -113,12 +141,27 @@
 		}
 	}
 
+	/**
+	 * Bascule l'affichage de tous les éléments ou seulement les premiers
+	 */
+	function toggleShowAllItems(): void {
+		showAllItems.value = !showAllItems.value
+	}
+
+	/**
+	 * Émet l'événement de suppression d'un élément
+	 *
+	 * @param item - L'élément à supprimer
+	 */
 	function emitRemoveEvent(item: ChipItem): void {
 		if (!props.readonly) {
 			emits('remove', item)
 		}
 	}
 
+	/**
+	 * Émet l'événement de réinitialisation
+	 */
 	function emitResetEvent(): void {
 		if (!props.readonly) {
 			emits('reset')
@@ -130,7 +173,7 @@
 	<div
 		v-if="items.length"
 		:class="{
-			'flex-column': showOverflowChip,
+			'flex-row': showOverflowChip,
 		}"
 		class="chip-list d-flex flex-wrap max-width-none mx-n1 mt-n1"
 		role="list"
@@ -193,18 +236,33 @@
 		</div>
 
 		<div
-			v-if="showOverflowChip || !readonly"
+			v-if="showOverflowChip || showAllItems || !readonly"
 			class="d-flex align-center"
 		>
 			<VChip
 				v-if="showOverflowChip"
 				v-bind="options.chip"
 				class="overflow-chip text-cyan-darken-40 ma-1"
-				role="status"
-				:aria-label="locale.overflowLabel"
+				role="listitem"
+				tabindex="0"
+				:aria-label="overflowAriaLabel"
+				@click="toggleShowAllItems"
+				@keydown.enter="toggleShowAllItems"
+				@keydown.space.prevent="toggleShowAllItems"
 			>
 				{{ overflowText }}
 			</VChip>
+
+			<VBtn
+				v-if="showAllItems"
+				variant="text"
+				color="primary"
+				size="small"
+				class="hide-extra-btn px-1 ml-1 my-1"
+				@click="toggleShowAllItems"
+			>
+				{{ toggleButtonText }}
+			</VBtn>
 
 			<VBtn
 				v-if="!readonly"
@@ -246,6 +304,12 @@
 
 .overflow-chip {
 	border: 1px solid tokens.$cyan-lighten-90 !important;
+	cursor: pointer;
+
+	&:focus-visible {
+		outline: 2px solid tokens.$primary-base !important;
+		outline-offset: -2px !important;
+	}
 }
 
 // Disable overflow button hover state
