@@ -188,11 +188,11 @@
 	const hasSuccess = computed(() => validation.hasSuccess.value)
 
 	const iconColor = computed(() => {
-		if (shouldDisableErrorHandling.value) return '#76797a'
+		if (shouldDisableErrorHandling.value) return '#222324'
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
 		if (hasSuccess.value) return 'success'
-		return '#76797a'
+		return '#222324'
 	})
 
 	const errors = computed(() => validation.errors.value)
@@ -347,7 +347,6 @@
 	flex-direction: column;
 	align-items: flex-start;
 	width: 100%;
-
 }
 
 .phone-field {
