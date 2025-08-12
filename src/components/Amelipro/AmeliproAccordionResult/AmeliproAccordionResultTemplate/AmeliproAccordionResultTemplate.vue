@@ -135,10 +135,11 @@
 
 .heading-content-btn {
 	padding: 1rem;
+
 	@media #{apTokens.$media-down-md} {
 		width: 100% !important;
 		margin-top: 0.5rem;
-		padding: 0.5rem 1rem 1rem 1rem;
+		padding: 0.5rem 1rem 1rem;
 	}
 }
 </style>
