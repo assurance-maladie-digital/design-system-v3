@@ -188,11 +188,11 @@
 	const hasSuccess = computed(() => validation.hasSuccess.value)
 
 	const iconColor = computed(() => {
-		if (shouldDisableErrorHandling.value) return '#222324'
+		if (shouldDisableErrorHandling.value) return '#76797a'
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
 		if (hasSuccess.value) return 'success'
-		return '#222324'
+		return '#76797a'
 	})
 
 	const errors = computed(() => validation.errors.value)
@@ -339,12 +339,15 @@
 	</div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@use '@/assets/tokens';
+
 .phone-field-container {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	width: 100%;
+
 }
 
 .phone-field {
