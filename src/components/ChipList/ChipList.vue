@@ -227,7 +227,7 @@
 					<VBtn
 						v-if="!readonly"
 						v-bind="options.btn"
-						:aria-label="`Supprimer le filtre ${item.text}`"
+						:aria-label="`Supprimer le filtre '${item.text}'`"
 						icon
 						class="remove-chip"
 						@click="emitRemoveEvent(item)"
