@@ -226,10 +226,13 @@ describe('ChipList', () => {
 			},
 		})
 
-		// Vérifie la présence des rôles ARIA
-		expect(wrapper.find('[role="list"]').exists()).toBe(true)
-		expect(wrapper.find('[role="group"]').exists()).toBe(true)
-		expect(wrapper.findAll('[role="listitem"]')).toHaveLength(defaultItems.length)
+		// Vérifie la présence de la structure HTML native
+		expect(wrapper.find('ul').exists()).toBe(true)
+		expect(wrapper.findAll('li')).toHaveLength(defaultItems.length)
+
+		// Vérifie l'aria-label sur la liste
+		const list = wrapper.find('ul')
+		expect(list.attributes('aria-label')).toBeTruthy()
 
 		// Vérifie les labels ARIA des boutons
 		const removeButton = wrapper.find('.remove-chip')
