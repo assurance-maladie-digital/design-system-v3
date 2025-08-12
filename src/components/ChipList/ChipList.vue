@@ -233,12 +233,8 @@
 					</VBtn>
 				</div>
 			</VChip>
-		</div>
 
-		<div
-			v-if="showOverflowChip || showAllItems || !readonly"
-			class="d-flex align-center"
-		>
+			<!-- Élément +N intégré dans la liste à puces (critère RGAA 9.3) -->
 			<VChip
 				v-if="showOverflowChip"
 				v-bind="options.chip"
@@ -252,7 +248,13 @@
 			>
 				{{ overflowText }}
 			</VChip>
+		</div>
 
+		<!-- Boutons d'action (hors de la liste à puces) -->
+		<div
+			v-if="showAllItems || !readonly"
+			class="d-flex align-center"
+		>
 			<VBtn
 				v-if="showAllItems"
 				variant="text"
