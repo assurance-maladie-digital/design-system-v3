@@ -60,12 +60,12 @@
 <template>
 	<div
 		:id="`${uniqueId}-container`"
-		class="amelipro-accordion--result w-100 mb-4"
+		class="amelipro-accordion-result w-100 mb-4"
 		:style="generalAccordionStyles"
 	>
 		<div
 			:id="`${uniqueId}-header`"
-			class="d-flex flex-column flex-md-row align-center justify-md-space-between amelipro-accordion--result__header"
+			class="d-flex flex-column flex-md-row align-center justify-md-space-between amelipro-accordion-result__header"
 			:style="accordionHeaderStyles"
 		>
 			<div class="heading-content">
@@ -95,7 +95,7 @@
 			v-show="isOpen === true"
 			:id="uniqueId"
 			:aria-labelledby="uniqueId + 'title'"
-			class="amelipro-accordion--result__content text-ap-grey-darken-1"
+			class="amelipro-accordion-result__content text-ap-grey-darken-1"
 			role="region"
 		>
 			<slot />
@@ -106,7 +106,7 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokens';
 
-.amelipro-accordion--result {
+.amelipro-accordion-result {
 	display: block;
 	position: relative;
 	max-width: 100%;
@@ -116,7 +116,7 @@
 	white-space: normal;
 }
 
-.amelipro-accordion--result__content {
+.amelipro-accordion-result__content {
 	width: 100%;
 	padding: 1rem;
 	font-size: apTokens.$font-size-xs;
