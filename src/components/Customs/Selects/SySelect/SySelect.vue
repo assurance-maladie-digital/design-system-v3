@@ -613,6 +613,13 @@
 				parentElement.removeAttribute('aria-required')
 				parentElement.removeAttribute('aria-invalid')
 				parentElement.removeAttribute('aria-hidden')
+
+				// Remove role="alert" and aria-live from message containers to prevent screen reader interruption
+				const messagesElements = parentElement.querySelectorAll('[role="alert"]')
+				messagesElements.forEach((element: Element) => {
+					element.removeAttribute('role')
+					element.removeAttribute('aria-live')
+				})
 			}
 		}
 	}
@@ -653,6 +660,14 @@
 							if (target === input.value?.$el && attributeName === 'aria-hidden') {
 								needsCleanup = true
 							}
+
+							// Check if role="alert" or aria-live was added to any element (error messages)
+							if (attributeName === 'role' && (target as HTMLElement).getAttribute('role') === 'alert') {
+								needsCleanup = true
+							}
+							if (attributeName === 'aria-live') {
+								needsCleanup = true
+							}
 						}
 					})
 
@@ -666,7 +681,7 @@
 				mutationObserver.observe(input.value.$el, {
 					attributes: true,
 					subtree: true,
-					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup'],
+					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup', 'aria-live'],
 				})
 			}
 		})
