@@ -235,7 +235,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -248,7 +248,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -343,7 +343,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-0title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-0"
@@ -359,7 +359,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -372,7 +372,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -467,7 +467,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-1title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-1"
@@ -483,7 +483,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -496,7 +496,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -591,7 +591,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-2title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-2"
@@ -607,7 +607,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -620,7 +620,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -715,7 +715,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-3title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-3"
@@ -731,7 +731,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -744,7 +744,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -839,7 +839,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-4title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-4"
@@ -855,7 +855,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -868,7 +868,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -963,7 +963,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-5title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-5"
@@ -979,7 +979,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -992,7 +992,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -1087,7 +1087,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-6title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-6"
@@ -1103,7 +1103,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -1116,7 +1116,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -1211,7 +1211,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-7title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-7"
@@ -1227,7 +1227,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -1240,7 +1240,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -1335,7 +1335,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-8title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-8"
@@ -1351,7 +1351,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <li class="amelipro-accordion-result-list__item">
         <div
           class="
-            amelipro-accordion--result
+            amelipro-accordion-result
             mb-4
             w-100
           "
@@ -1364,7 +1364,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             class="
               align-center
-              amelipro-accordion--result__header
+              amelipro-accordion-result__header
               d-flex
               flex-column
               flex-md-row
@@ -1459,7 +1459,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           <div
             aria-labelledby="accordion-result-9title"
             class="
-              amelipro-accordion--result__content
+              amelipro-accordion-result__content
               text-ap-grey-darken-1
             "
             id="accordion-result-9"
