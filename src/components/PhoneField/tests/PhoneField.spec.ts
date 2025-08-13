@@ -496,8 +496,6 @@ describe('PhoneField', () => {
 		expect(dialCode.displayText).toContain('+44')
 	})
 
-
-
 	it('should display helpText below by default when helpText is provided', async () => {
 		const wrapper = mount(PhoneField, {
 			global: {
