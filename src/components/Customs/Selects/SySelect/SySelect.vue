@@ -120,6 +120,10 @@
 			type: Boolean,
 			default: false,
 		},
+		autocomplete: {
+			type: String,
+			default: '',
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -822,6 +826,7 @@
 		:hide-details="props.hideMessages && !showHelpTextAsMessage"
 		:hint="showHelpTextAsMessage ? props.helpText : ''"
 		:persistent-hint="!!showHelpTextAsMessage"
+		:autocomplete="props.autocomplete"
 		class="sy-select"
 		:width="calculatedWidth"
 		:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"

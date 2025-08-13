@@ -44,6 +44,8 @@
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
 		helpText: { type: String, default: '' },
+		autocompleteCountryCode: { type: String, default: 'tel-country-code' },
+		autocompletePhone: { type: String, default: 'tel-national' },
 	})
 
 	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
@@ -289,6 +291,7 @@
 				:readonly="readonly"
 				:disabled="disabled"
 				:allow-html="displayFormat === 'code-abbreviation' || displayFormat === 'abbreviation'"
+				:autocomplete="autocompleteCountryCode"
 				width="30%"
 				class="custom-select mr-4"
 				text-key="displayText"
@@ -312,7 +315,7 @@
 				:readonly="readonly"
 				:bg-color="bgColor"
 				:disabled="disabled"
-
+				:autocomplete="autocompletePhone"
 				:class="{
 					'phone-field': true,
 					'error-field': hasError,

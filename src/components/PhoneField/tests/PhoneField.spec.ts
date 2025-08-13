@@ -559,6 +559,117 @@ describe('PhoneField', () => {
 		expect(helpTextDiv.exists()).toBe(false)
 	})
 
+	it('should apply default autocomplete attributes correctly', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				withCountryCode: true,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that phone input has default tel-national autocomplete
+		const phoneInput = wrapper.find('input[type="tel"]')
+		expect(phoneInput.attributes('autocomplete')).toBe('tel-national')
+
+		// Check that country code select has default tel-country-code autocomplete
+		const selectInput = wrapper.find('.custom-select input')
+		expect(selectInput.attributes('autocomplete')).toBe('tel-country-code')
+	})
+
+	it('should apply custom autocomplete attributes when provided', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				withCountryCode: true,
+				autocompleteCountryCode: 'tel-country-code',
+				autocompletePhone: 'tel-extension',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that phone input has custom autocomplete
+		const phoneInput = wrapper.find('input[type="tel"]')
+		expect(phoneInput.attributes('autocomplete')).toBe('tel-extension')
+
+		// Check that country code select has custom autocomplete
+		const selectInput = wrapper.find('.custom-select input')
+		expect(selectInput.attributes('autocomplete')).toBe('tel-country-code')
+	})
+
+	it('should verify autocomplete attributes are present in the actual DOM', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				withCountryCode: true,
+				autocompleteCountryCode: 'tel-country-code',
+				autocompletePhone: 'tel-national',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Log HTML for debugging
+		console.log('PhoneField HTML:', wrapper.html())
+
+		// Find all inputs and log their autocomplete attributes
+		const inputs = wrapper.findAll('input')
+		console.log('Found inputs:', inputs.length)
+		inputs.forEach((input, index) => {
+			const autocomplete = input.attributes('autocomplete')
+			const type = input.attributes('type')
+			console.log(`Input ${index}: type="${type}", autocomplete="${autocomplete}"`)
+		})
+
+		// Verify tel input has correct autocomplete
+		const telInput = wrapper.find('input[type="tel"]')
+		expect(telInput.exists()).toBe(true)
+		const telAutocomplete = telInput.attributes('autocomplete')
+		console.log('Tel input autocomplete:', telAutocomplete)
+		expect(telAutocomplete).toBe('tel-national')
+
+		// Verify country select input has correct autocomplete
+		const selectInput = wrapper.find('.custom-select input')
+		expect(selectInput.exists()).toBe(true)
+		const selectAutocomplete = selectInput.attributes('autocomplete')
+		console.log('Select input autocomplete:', selectAutocomplete)
+		expect(selectAutocomplete).toBe('tel-country-code')
+	})
+
+	it('should apply autocomplete to phone field only when no country code', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				withCountryCode: false,
+				autocompletePhone: 'tel',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that phone input has autocomplete
+		const phoneInput = wrapper.find('input[type="tel"]')
+		expect(phoneInput.attributes('autocomplete')).toBe('tel')
+
+		// Check that country code select doesn't exist
+		const selectInput = wrapper.find('.custom-select input')
+		expect(selectInput.exists()).toBe(false)
+	})
+
 	it('works correctly with standard indicatifs imported from indicatifs.ts', async () => {
 		const franceIndicatif = indicatifs.find(ind => ind.country === 'France')
 		expect(franceIndicatif).toBeDefined()
