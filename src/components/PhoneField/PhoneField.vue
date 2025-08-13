@@ -259,91 +259,118 @@
 </script>
 
 <template>
-	<div class="phone-field-container">
-		<SySelect
-			v-if="withCountryCode"
-			v-model="dialCode"
-			:items="dialCodeOptions"
-			:label="locales.indicatifLabel"
-			:outlined="outlinedIndicatif"
-			:required="countryCodeRequired"
-			:error="hasError"
-			:error-messages="errors[1]"
-			:display-asterisk="displayAsterisk"
-			:disable-error-handling="shouldDisableErrorHandling"
-			:return-object="true"
-			:bg-color="bgColor"
-			:readonly="readonly"
-			:disabled="disabled"
-			:allow-html="displayFormat === 'code-abbreviation' || displayFormat === 'abbreviation'"
-			width="30%"
-			class="custom-select mr-4"
-			text-key="displayText"
-			plain-text-key="plainDisplayText"
-			value-key="code"
-		/>
-		<SyTextField
-			v-model="phoneNumber"
-			v-maska="phoneMask"
-			:counter="counter"
-			:counter-value="(value: string) => value.replace(/\s/g, '').length"
-			:label="locales.label"
-			:required="required"
-			:error="hasError"
-			:error-messages="errors"
-			:warning-messages="warnings"
-			:success-messages="successes"
-			:variant="outlined ? 'outlined' : 'underlined'"
-			:display-asterisk="displayAsterisk"
-			:readonly="readonly"
-			:bg-color="bgColor"
-			:disabled="disabled"
-			:class="{
-				'phone-field': true,
-				'error-field': hasError,
-				'warning-field': hasWarning,
-				'success-field': hasSuccess
-			}"
-			width="70%"
-			color="primary"
-			type="tel"
-			@blur="validateInputOnBlur"
-			@input="handlePhoneInput"
-		>
-			<template #append-inner>
-				<div class="d-flex align-center">
-					<SyIcon
-						v-if="hasError && !shouldDisableErrorHandling"
-						color="error"
-						:icon="mdiInformation"
-						decorative
-					/>
-					<SyIcon
-						v-else-if="hasWarning && !shouldDisableErrorHandling"
-						color="warning"
-						:icon="mdiAlertOutline"
-						decorative
-					/>
-					<SyIcon
-						v-else-if="hasSuccess && !shouldDisableErrorHandling"
-						color="success"
-						:icon="mdiCheck"
-						decorative
-					/>
-					<SyIcon
-						class="ml-2"
-						:color="iconColor"
-						:icon="mdiPhone"
-						decorative
-					/>
-				</div>
-			</template>
-		</SyTextField>
-	</div>
+	<fieldset class="phone-field-fieldset">
+		<legend class="phone-field-legend">
+			{{ locales.label }}
+		</legend>
+		<div class="phone-field-container">
+			<SySelect
+				v-if="withCountryCode"
+				v-model="dialCode"
+				:items="dialCodeOptions"
+				:label="locales.indicatifLabel"
+				:outlined="outlinedIndicatif"
+				:required="countryCodeRequired"
+				:error="hasError"
+				:error-messages="errors[1]"
+				:display-asterisk="displayAsterisk"
+				:disable-error-handling="shouldDisableErrorHandling"
+				:return-object="true"
+				:bg-color="bgColor"
+				:readonly="readonly"
+				:disabled="disabled"
+				:allow-html="displayFormat === 'code-abbreviation' || displayFormat === 'abbreviation'"
+				width="30%"
+				class="custom-select mr-4"
+				text-key="displayText"
+				plain-text-key="plainDisplayText"
+				value-key="code"
+			/>
+			<SyTextField
+				v-model="phoneNumber"
+				v-maska="phoneMask"
+				:counter="counter"
+				:counter-value="(value: string) => value.replace(/\s/g, '').length"
+				:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
+				:required="required"
+				:error="hasError"
+				:error-messages="errors"
+				:warning-messages="warnings"
+				:success-messages="successes"
+				:variant="outlined ? 'outlined' : 'underlined'"
+				:display-asterisk="displayAsterisk"
+				:readonly="readonly"
+				:bg-color="bgColor"
+				:disabled="disabled"
+				:class="{
+					'phone-field': true,
+					'error-field': hasError,
+					'warning-field': hasWarning,
+					'success-field': hasSuccess
+				}"
+				width="70%"
+				color="primary"
+				type="tel"
+				@blur="validateInputOnBlur"
+				@input="handlePhoneInput"
+			>
+				<template #append-inner>
+					<div class="d-flex align-center">
+						<SyIcon
+							v-if="hasError && !shouldDisableErrorHandling"
+							color="error"
+							:icon="mdiInformation"
+							decorative
+						/>
+						<SyIcon
+							v-else-if="hasWarning && !shouldDisableErrorHandling"
+							color="warning"
+							:icon="mdiAlertOutline"
+							decorative
+						/>
+						<SyIcon
+							v-else-if="hasSuccess && !shouldDisableErrorHandling"
+							color="success"
+							:icon="mdiCheck"
+							decorative
+						/>
+						<SyIcon
+							class="ml-2"
+							:color="iconColor"
+							:icon="mdiPhone"
+							decorative
+						/>
+					</div>
+				</template>
+			</SyTextField>
+		</div>
+	</fieldset>
 </template>
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+
+.phone-field-fieldset {
+	border: 1px solid #b9b9b9;
+	border-radius: 4px;
+	padding: 25px;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	min-width: 0;
+}
+
+.phone-field-legend {
+	padding: 0 8px;
+	font-weight: 500;
+	color: #666;
+}
+
+.required-asterisk {
+	color: #d32f2f;
+	margin-left: 4px;
+}
 
 .phone-field-container {
 	display: flex;

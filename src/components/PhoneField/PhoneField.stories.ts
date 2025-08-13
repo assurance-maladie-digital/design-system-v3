@@ -104,7 +104,7 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="pa-4">
 				<PhoneField
 					v-model="args.modelValue"
 					:required="args.required"
