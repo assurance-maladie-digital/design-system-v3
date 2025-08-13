@@ -22,6 +22,14 @@ const meta: Meta<typeof SySelect> = {
 			control: 'text',
 			description: 'Nom de la propriété qui contient le texte à afficher',
 		},
+		plainTextKey: {
+			control: 'text',
+			description: 'Nom de la propriété qui contient le texte à afficher en mode texte brut (utile dans le cas de données HTML)',
+		},
+		allowHtml: {
+			control: 'boolean',
+			description: 'Permet d\'afficher du texte en HTML',
+		},
 		valueKey: {
 			control: 'text',
 			description: 'Nom de la propriété qui contient la valeur à retourner',

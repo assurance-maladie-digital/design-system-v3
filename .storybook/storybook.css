@@ -160,6 +160,16 @@ pre.prismjs {
 	}
 }
 
+#story--composants-formulaires-phonefield--default {
+	.v-list {
+		top: 0 !important;
+		left: auto;
+		margin-top: 121px !important;
+		width: auto;
+		position: absolute !important;
+	}
+}
+
 /* Fix for Release doc */
 #story--démarrer-releases--list {
 	table {

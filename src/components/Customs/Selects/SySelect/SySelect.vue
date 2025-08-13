@@ -60,6 +60,10 @@
 			type: String,
 			default: 'text',
 		},
+		plainTextKey: {
+			type: String,
+			default: '',
+		},
 		valueKey: {
 			type: String,
 			default: 'value',
@@ -109,6 +113,14 @@
 			default: false,
 		},
 		helpText: {
+			type: String,
+			default: '',
+		},
+		allowHtml: {
+			type: Boolean,
+			default: false,
+		},
+		autocomplete: {
 			type: String,
 			default: '',
 		},
@@ -297,6 +309,16 @@
 		return (item as Record<string, any>)[props.textKey]
 	}
 
+	const getPlainItemText = (item: unknown) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+		const itemObj = item as Record<string, any>
+		// Use plainTextKey if available and allowHtml is true, otherwise use textKey
+		if (props.plainTextKey && props.allowHtml && itemObj[props.plainTextKey]) {
+			return itemObj[props.plainTextKey]
+		}
+		return itemObj[props.textKey]
+	}
+
 	const selectedItemText = computed(() => {
 		// If chips are enabled and we have selected items, return empty string to hide text
 		if (hasChips.value) {
@@ -309,7 +331,7 @@
 				// Find default option and return its text
 				const defaultOption = props.items.find(item => isDefaultOption(item))
 				if (defaultOption) {
-					return defaultOption[props.textKey] as string
+					return getPlainItemText(defaultOption) as string
 				}
 				return ''
 			}
@@ -319,9 +341,10 @@
 
 			return selectedArray.map((selected) => {
 				if (props.returnObject) {
-					return selected?.[props.textKey]
+					return getPlainItemText(selected)
 				}
-				return props.items.find((item: ItemType) => item[props.valueKey] === selected)?.[props.textKey] || ''
+				const foundItem = props.items.find((item: ItemType) => item[props.valueKey] === selected)
+				return foundItem ? getPlainItemText(foundItem) : ''
 			}).join(', ')
 		}
 		else {
@@ -329,10 +352,11 @@
 			if (!selectedItem.value) return ''
 
 			if (props.returnObject) {
-				return selectedItem.value[props.textKey]
+				return getPlainItemText(selectedItem.value)
 			}
 
-			return props.items.find(item => item[props.valueKey] === selectedItem.value)?.[props.textKey] || ''
+			const foundItem = props.items.find(item => item[props.valueKey] === selectedItem.value)
+			return foundItem ? getPlainItemText(foundItem) : ''
 		}
 	})
 
@@ -593,6 +617,13 @@
 				parentElement.removeAttribute('aria-required')
 				parentElement.removeAttribute('aria-invalid')
 				parentElement.removeAttribute('aria-hidden')
+
+				// Remove role="alert" and aria-live from message containers to prevent screen reader interruption
+				const messagesElements = parentElement.querySelectorAll('[role="alert"]')
+				messagesElements.forEach((element: Element) => {
+					element.removeAttribute('role')
+					element.removeAttribute('aria-live')
+				})
 			}
 		}
 	}
@@ -633,6 +664,14 @@
 							if (target === input.value?.$el && attributeName === 'aria-hidden') {
 								needsCleanup = true
 							}
+
+							// Check if role="alert" or aria-live was added to any element (error messages)
+							if (attributeName === 'role' && (target as HTMLElement).getAttribute('role') === 'alert') {
+								needsCleanup = true
+							}
+							if (attributeName === 'aria-live') {
+								needsCleanup = true
+							}
 						}
 					})
 
@@ -646,7 +685,7 @@
 				mutationObserver.observe(input.value.$el, {
 					attributes: true,
 					subtree: true,
-					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup'],
+					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup', 'aria-live'],
 				})
 			}
 		})
@@ -787,6 +826,7 @@
 		:hide-details="props.hideMessages && !showHelpTextAsMessage"
 		:hint="showHelpTextAsMessage ? props.helpText : ''"
 		:persistent-hint="!!showHelpTextAsMessage"
+		:autocomplete="props.autocomplete"
 		class="sy-select"
 		:width="calculatedWidth"
 		:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
@@ -915,7 +955,11 @@
 				/>
 			</template>
 			<VListItemTitle>
-				{{ getItemText(item) }}
+				<span
+					v-if="allowHtml"
+					v-html="getItemText(item)"
+				/>
+				<span v-else>{{ getItemText(item) }}</span>
 			</VListItemTitle>
 		</VListItem>
 	</VList>

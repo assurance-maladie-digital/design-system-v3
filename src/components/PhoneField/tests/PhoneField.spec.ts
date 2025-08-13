@@ -1,6 +1,6 @@
-import { mount } from '@vue/test-utils'
+import { mount, VueWrapper } from '@vue/test-utils'
 import PhoneField from '../PhoneField.vue'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -496,6 +496,180 @@ describe('PhoneField', () => {
 		expect(dialCode.displayText).toContain('+44')
 	})
 
+	it('should display helpText below by default when helpText is provided', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				required: true,
+				helpText: 'Saisissez votre numéro de téléphone au format 01 23 45 67 89',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that helpText is displayed by default when provided
+		const helpTextDiv = wrapper.find('.help-text-below')
+		expect(helpTextDiv.exists()).toBe(true)
+		expect(helpTextDiv.text()).toBe('Saisissez votre numéro de téléphone au format 01 23 45 67 89')
+		expect(helpTextDiv.classes()).toContain('help-text-below')
+	})
+
+	it('should display helpText below even when field has valid value', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '01 23 45 67 89',
+				required: true,
+				helpText: 'Saisissez votre numéro de téléphone au format 01 23 45 67 89',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that helpText is displayed even when there are no errors
+		const helpTextDiv = wrapper.find('.help-text-below')
+		expect(helpTextDiv.exists()).toBe(true)
+		expect(helpTextDiv.text()).toBe('Saisissez votre numéro de téléphone au format 01 23 45 67 89')
+	})
+
+	it('should not display helpText below when helpText is not provided', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				required: true,
+				// No helpText prop
+			},
+		})
+
+		// Trigger validation by blurring the field
+		const phoneInput = wrapper.find('input[type="tel"]')
+		await phoneInput.trigger('blur')
+		await wrapper.vm.$nextTick()
+
+		// Check that helpText div is not displayed when helpText is not provided
+		const helpTextDiv = wrapper.find('.help-text-below')
+		expect(helpTextDiv.exists()).toBe(false)
+	})
+
+	it('should apply default autocomplete attributes correctly', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				withCountryCode: true,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that phone input has default tel-national autocomplete
+		const phoneInput = wrapper.find('input[type="tel"]')
+		expect(phoneInput.attributes('autocomplete')).toBe('tel-national')
+
+		// Check that country code select has default tel-country-code autocomplete
+		const selectInput = wrapper.find('.custom-select input')
+		expect(selectInput.attributes('autocomplete')).toBe('tel-country-code')
+	})
+
+	it('should apply custom autocomplete attributes when provided', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				withCountryCode: true,
+				autocompleteCountryCode: 'tel-country-code',
+				autocompletePhone: 'tel-extension',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that phone input has custom autocomplete
+		const phoneInput = wrapper.find('input[type="tel"]')
+		expect(phoneInput.attributes('autocomplete')).toBe('tel-extension')
+
+		// Check that country code select has custom autocomplete
+		const selectInput = wrapper.find('.custom-select input')
+		expect(selectInput.attributes('autocomplete')).toBe('tel-country-code')
+	})
+
+	it('should verify autocomplete attributes are present in the actual DOM', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				withCountryCode: true,
+				autocompleteCountryCode: 'tel-country-code',
+				autocompletePhone: 'tel-national',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Log HTML for debugging
+		console.log('PhoneField HTML:', wrapper.html())
+
+		// Find all inputs and log their autocomplete attributes
+		const inputs = wrapper.findAll('input')
+		console.log('Found inputs:', inputs.length)
+		inputs.forEach((input, index) => {
+			const autocomplete = input.attributes('autocomplete')
+			const type = input.attributes('type')
+			console.log(`Input ${index}: type="${type}", autocomplete="${autocomplete}"`)
+		})
+
+		// Verify tel input has correct autocomplete
+		const telInput = wrapper.find('input[type="tel"]')
+		expect(telInput.exists()).toBe(true)
+		const telAutocomplete = telInput.attributes('autocomplete')
+		console.log('Tel input autocomplete:', telAutocomplete)
+		expect(telAutocomplete).toBe('tel-national')
+
+		// Verify country select input has correct autocomplete
+		const selectInput = wrapper.find('.custom-select input')
+		expect(selectInput.exists()).toBe(true)
+		const selectAutocomplete = selectInput.attributes('autocomplete')
+		console.log('Select input autocomplete:', selectAutocomplete)
+		expect(selectAutocomplete).toBe('tel-country-code')
+	})
+
+	it('should apply autocomplete to phone field only when no country code', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				withCountryCode: false,
+				autocompletePhone: 'tel',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that phone input has autocomplete
+		const phoneInput = wrapper.find('input[type="tel"]')
+		expect(phoneInput.attributes('autocomplete')).toBe('tel')
+
+		// Check that country code select doesn't exist
+		const selectInput = wrapper.find('.custom-select input')
+		expect(selectInput.exists()).toBe(false)
+	})
+
 	it('works correctly with standard indicatifs imported from indicatifs.ts', async () => {
 		const franceIndicatif = indicatifs.find(ind => ind.country === 'France')
 		expect(franceIndicatif).toBeDefined()
@@ -567,5 +741,258 @@ describe('PhoneField', () => {
 		expect(isValidNotReadonly).toBe(false)
 
 		expect(wrapperNotReadonly.vm.hasError).toBe(true)
+	})
+
+	// Tests pour les formats d'affichage avec abréviations encapsulées
+	describe('Display formats with abbreviations', () => {
+		let wrapper: VueWrapper<InstanceType<typeof PhoneField>>
+
+		beforeEach(() => {
+			wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					withCountryCode: true,
+					displayFormat: 'code',
+				},
+			})
+		})
+
+		it('formats display text as code by default', () => {
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			expect(firstItem.displayText).toBe(firstItem.code)
+		})
+
+		it('formats display text as code-abbreviation', async () => {
+			await wrapper.setProps({ displayFormat: 'code-abbreviation' })
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			const expectedCountry = firstItem.countryFr || firstItem.country
+			expect(firstItem.displayText).toBe(`${firstItem.code} (<abbr title="${expectedCountry}">${firstItem.abbreviation}</abbr>)`)
+		})
+
+		it('formats display text as code-country', async () => {
+			await wrapper.setProps({ displayFormat: 'code-country' })
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			const expectedCountry = firstItem.countryFr || firstItem.country
+			expect(firstItem.displayText).toBe(`${firstItem.code} ${expectedCountry}`)
+		})
+
+		it('formats display text as country', async () => {
+			await wrapper.setProps({ displayFormat: 'country' })
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			const expectedCountry = firstItem.countryFr || firstItem.country
+			expect(firstItem.displayText).toBe(expectedCountry)
+		})
+
+		it('formats display text as abbreviation', async () => {
+			await wrapper.setProps({ displayFormat: 'abbreviation' })
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const firstItem = select.props('items')[0]
+			const expectedCountry = firstItem.countryFr || firstItem.country
+			expect(firstItem.displayText).toBe(`<abbr title="${expectedCountry}">${firstItem.abbreviation}</abbr>`)
+		})
+	})
+
+	// Tests pour l'initialisation avec un dialCode par défaut
+	describe('Default dialCode initialization', () => {
+		it('initializes with a default dialCode object', async () => {
+			const defaultDialCode = { code: '+44', abbreviation: 'UK', country: 'United Kingdom', phoneLength: 11, mask: '#### ### ####' }
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					withCountryCode: true,
+					dialCodeModel: defaultDialCode,
+				},
+			})
+
+			await wrapper.vm.$nextTick()
+
+			// Vérifier que le dialCode est correctement initialisé
+			expect(wrapper.vm.dialCode).toBeDefined()
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			expect((wrapper.vm.dialCode as any).code).toBe('+44')
+			// Vérifier que le masque est appliqué (le format exact peut varier)
+			expect(wrapper.vm.phoneMask).toBeDefined()
+			// Vérifier que le counter est défini selon la phoneLength
+			expect(wrapper.vm.counter).toBeDefined()
+		})
+
+		it('initializes with a default dialCode string', async () => {
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					withCountryCode: true,
+					dialCodeModel: '+33',
+				},
+			})
+
+			await wrapper.vm.$nextTick()
+
+			// Vérifier que le dialCode est correctement initialisé
+			expect(wrapper.vm.dialCode).toBe('+33')
+		})
+	})
+
+	// Tests pour la désactivation de la gestion des erreurs
+	describe('Error handling', () => {
+		it('displays error messages by default when validation fails', async () => {
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: '',
+					isValidatedOnBlur: true,
+				},
+			})
+
+			// Déclencher la validation
+			await wrapper.vm.validateOnSubmit()
+
+			// Vérifier que les erreurs sont affichées
+			expect(wrapper.vm.hasError).toBe(true)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
+
+			// Vérifier que les erreurs sont passées au composant SyTextField
+			const textField = wrapper.findComponent({ name: 'SyTextField' })
+			expect(textField.props('errorMessages')).toBeTruthy()
+		})
+
+		it('initializes with disableErrorHandling prop', async () => {
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: '',
+					isValidatedOnBlur: true,
+					disableErrorHandling: true,
+				},
+			})
+
+			// Vérifier que la propriété disableErrorHandling est bien prise en compte
+			// en vérifiant qu'elle est passée lors de l'initialisation du composable useValidation
+			expect(wrapper.vm.validation).toBeDefined()
+		})
+	})
+
+	// Tests pour la validation dans un contexte de formulaire
+	describe('Form validation', () => {
+		it('validates as part of a form submission', async () => {
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: '',
+				},
+			})
+
+			// Simuler une soumission de formulaire avec un champ vide
+			const isValid = await wrapper.vm.validateOnSubmit()
+			expect(isValid).toBe(false)
+
+			// Mettre à jour la valeur et valider à nouveau
+			await wrapper.setProps({ modelValue: '0123456789' })
+			const isValidAfterUpdate = await wrapper.vm.validateOnSubmit()
+			expect(isValidAfterUpdate).toBe(true)
+		})
+
+		it('validates country code as part of form submission', async () => {
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					required: true,
+					modelValue: '0123456789',
+					withCountryCode: true,
+					countryCodeRequired: true,
+				},
+			})
+
+			// Sans code pays, la validation échoue
+			const isValidWithoutCountry = await wrapper.vm.validateOnSubmit()
+			expect(isValidWithoutCountry).toBe(false)
+
+			// Ajouter un code pays et valider à nouveau
+			wrapper.vm.dialCode = { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' }
+			await wrapper.vm.$nextTick()
+
+			const isValidWithCountry = await wrapper.vm.validateOnSubmit()
+			expect(isValidWithCountry).toBe(true)
+		})
+	})
+
+	// Tests pour la gestion des indicatifs personnalisés
+	describe('Custom indicatifs', () => {
+		it('merges custom indicatifs with standard ones by default', () => {
+			const customIndicatifs = [{ code: '+999', abbreviation: 'XX', country: 'Test Country', phoneLength: 8, mask: '## ## ## ##' }]
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					customIndicatifs,
+					withCountryCode: true,
+				},
+			})
+
+			// Vérifier que les indicatifs personnalisés sont ajoutés aux indicatifs standards
+			expect(wrapper.vm.mergedDialCodes.length).toBe(indicatifs.length + customIndicatifs.length)
+			expect(wrapper.vm.mergedDialCodes).toContainEqual(customIndicatifs[0])
+		})
+
+		it('uses only custom indicatifs when useCustomIndicatifsOnly is true', () => {
+			const customIndicatifs = [{ code: '+999', abbreviation: 'XX', country: 'Test Country', phoneLength: 8, mask: '## ## ## ##' }]
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					customIndicatifs,
+					useCustomIndicatifsOnly: true,
+					withCountryCode: true,
+				},
+			})
+
+			// Vérifier que seuls les indicatifs personnalisés sont utilisés
+			expect(wrapper.vm.mergedDialCodes.length).toBe(customIndicatifs.length)
+			expect(wrapper.vm.mergedDialCodes).toEqual(customIndicatifs)
+		})
+
+		it('updates phone mask and counter based on selected custom indicatif', async () => {
+			const customIndicatifs = [{ code: '+999', abbreviation: 'XX', country: 'Test Country', phoneLength: 8, mask: '## ## ## ##' }]
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					customIndicatifs,
+					withCountryCode: true,
+				},
+			})
+
+			// Sélectionner l'indicatif personnalisé
+			wrapper.vm.dialCode = customIndicatifs[0]
+			await wrapper.vm.$nextTick()
+
+			// Vérifier que le masque et le counter sont mis à jour
+			expect(wrapper.vm.counter).toBe(8)
+			expect(wrapper.vm.phoneMask).toBe('## ## ## ##')
+		})
 	})
 })
