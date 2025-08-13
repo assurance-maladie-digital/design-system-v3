@@ -496,6 +496,71 @@ describe('PhoneField', () => {
 		expect(dialCode.displayText).toContain('+44')
 	})
 
+
+
+	it('should display helpText below by default when helpText is provided', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				required: true,
+				helpText: 'Saisissez votre numéro de téléphone au format 01 23 45 67 89',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that helpText is displayed by default when provided
+		const helpTextDiv = wrapper.find('.help-text-below')
+		expect(helpTextDiv.exists()).toBe(true)
+		expect(helpTextDiv.text()).toBe('Saisissez votre numéro de téléphone au format 01 23 45 67 89')
+		expect(helpTextDiv.classes()).toContain('help-text-below')
+	})
+
+	it('should display helpText below even when field has valid value', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '01 23 45 67 89',
+				required: true,
+				helpText: 'Saisissez votre numéro de téléphone au format 01 23 45 67 89',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Check that helpText is displayed even when there are no errors
+		const helpTextDiv = wrapper.find('.help-text-below')
+		expect(helpTextDiv.exists()).toBe(true)
+		expect(helpTextDiv.text()).toBe('Saisissez votre numéro de téléphone au format 01 23 45 67 89')
+	})
+
+	it('should not display helpText below when helpText is not provided', async () => {
+		const wrapper = mount(PhoneField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '',
+				required: true,
+				// No helpText prop
+			},
+		})
+
+		// Trigger validation by blurring the field
+		const phoneInput = wrapper.find('input[type="tel"]')
+		await phoneInput.trigger('blur')
+		await wrapper.vm.$nextTick()
+
+		// Check that helpText div is not displayed when helpText is not provided
+		const helpTextDiv = wrapper.find('.help-text-below')
+		expect(helpTextDiv.exists()).toBe(false)
+	})
+
 	it('works correctly with standard indicatifs imported from indicatifs.ts', async () => {
 		const franceIndicatif = indicatifs.find(ind => ind.country === 'France')
 		expect(franceIndicatif).toBeDefined()

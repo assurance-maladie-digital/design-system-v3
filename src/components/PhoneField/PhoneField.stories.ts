@@ -31,6 +31,10 @@ const meta = {
 			control: 'boolean',
 			description: 'Permet d\'utiliser uniquement les indicatifs que vous renseignez dans la props customIndicatifs',
 		},
+		helpText: {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ. Lorsque présent, les messages d\'erreur incluent un exemple concret distinct du texte d\'aide.',
+		},
 		isValidatedOnBlur: { control: 'boolean' },
 		displayAsterisk: { control: 'boolean' },
 		disableErrorHandling: { control: 'boolean' },
@@ -276,6 +280,126 @@ const phoneNumber = ref('')
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const HelpText: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="pa-4">
+		<div class="mb-6">
+			<h4 class="mb-2">Avec aide à la saisie</h4>
+			<PhoneField
+				v-model="phoneValue1"
+				required
+				help-text="Saisissez votre numéro de téléphone au format 01 23 45 67 89"
+				label="Numéro de téléphone"
+			/>
+			<p class="text-caption mt-2">
+				Essayez de laisser le champ vide ou de saisir un numéro incorrect pour voir 
+				l'exemple dans le message d'erreur (différent de l'aide).
+			</p>
+		</div>
+
+		<div class="mb-6">
+			<h4 class="mb-2">Avec aide à la saisie et indicatif pays</h4>
+			<PhoneField
+				v-model="phoneValue2"
+				v-model:selected-dial-code="selectedDialCode"
+				required
+				with-country-code
+				help-text="Choisissez votre pays et saisissez votre numéro de téléphone"
+				label="Numéro de téléphone international"
+			/>
+			<p class="text-caption mt-2">
+				L'exemple dans le message d'erreur s'adapte au format du pays sélectionné.
+			</p>
+		</div>
+
+		<div class="mt-4">
+			<h4>Valeurs actuelles :</h4>
+			<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
+			<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
+			<pre class="text-caption">selectedDialCode: {{ selectedDialCode }}</pre>
+		</div>
+	</div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import PhoneField from './PhoneField.vue'
+
+const phoneValue1 = ref('')
+const phoneValue2 = ref('')
+const selectedDialCode = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		required: true,
+		helpText: 'Saisissez votre numéro de téléphone français au format 01 23 45 67 89',
+	},
+	render(args) {
+		return {
+			components: { PhoneField },
+			setup() {
+				const phoneValue1 = ref('')
+				const phoneValue2 = ref('')
+				const selectedDialCode = ref('')
+
+				return {
+					args,
+					phoneValue1,
+					phoneValue2,
+					selectedDialCode,
+				}
+			},
+			template: `
+				<div class="pa-4">
+					<div class="mb-6">
+						<h4 class="mb-2">Avec aide à la saisie</h4>
+						<PhoneField
+							v-model="phoneValue1"
+							required
+							help-text="Saisissez votre numéro de téléphone au format 01 23 45 67 89"
+							label="Numéro de téléphone"
+						/>
+						<p class="text-caption mt-2">
+							Essayez de laisser le champ vide ou de saisir un numéro incorrect pour voir 
+							l'exemple dans le message d'erreur (différent de l'aide).
+						</p>
+					</div>
+
+					<div class="mb-6">
+						<h4 class="mb-2">Avec aide à la saisie et indicatif pays</h4>
+						<PhoneField
+							v-model="phoneValue2"
+							v-model:selected-dial-code="selectedDialCode"
+							required
+							with-country-code
+							help-text="Choisissez votre pays et saisissez votre numéro de téléphone"
+							label="Numéro de téléphone international"
+						/>
+						<p class="text-caption mt-2">
+							L'exemple dans le message d'erreur s'adapte au format du pays sélectionné.
+						</p>
+					</div>
+
+					<div class="mt-4">
+						<h4>Valeurs actuelles :</h4>
+						<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
+						<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
+						<pre class="text-caption">selectedDialCode: {{ selectedDialCode }}</pre>
+					</div>
 				</div>
 			`,
 		}

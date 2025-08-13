@@ -43,6 +43,7 @@
 		bgColor: { type: String, default: 'white' },
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
+		helpText: { type: String, default: '' },
 	})
 
 	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
@@ -158,22 +159,24 @@
 			type: 'exactLength',
 			options: {
 				length: counter.value,
-				ignoreSpace: true, // Ignorer les espaces dans la validation
+				ignoreSpace: true,
 				message: `Le numéro de téléphone doit contenir ${counter.value} chiffres.`,
 				fieldIdentifier: locales.label,
 			},
-		}]
+		}] as ValidationRule[]
+
 		if (props.required) {
 			rules.unshift({
 				type: 'required',
 				options: {
 					length: counter.value,
-					ignoreSpace: true, // Ignorer les espaces dans la validation
+					ignoreSpace: true,
 					message: `Le champ ${locales.label} est requis.`,
 					fieldIdentifier: locales.label,
 				},
 			})
 		}
+
 		return rules
 	})
 
@@ -201,6 +204,11 @@
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
+
+	const showHelpTextBelow = computed(() => {
+		// Display help text below by default if it exists
+		return props.helpText && props.helpText.trim() !== ''
+	})
 
 	function validateInputOnBlur() {
 		if (!props.isValidatedOnBlur || shouldDisableErrorHandling.value) return
@@ -304,6 +312,7 @@
 				:readonly="readonly"
 				:bg-color="bgColor"
 				:disabled="disabled"
+
 				:class="{
 					'phone-field': true,
 					'error-field': hasError,
@@ -347,6 +356,14 @@
 			</SyTextField>
 		</div>
 	</fieldset>
+
+	<div
+		v-if="showHelpTextBelow"
+		class="help-text-below px-4 mt-1"
+		:class="{ 'text-disabled': disabled }"
+	>
+		{{ helpText }}
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -411,5 +428,16 @@
 	border-radius: 4px;
 	overflow-y: auto;
 	z-index: 2;
+}
+
+.help-text-below {
+	font-size: 0.75rem;
+	line-height: 1.25rem;
+	color: rgb(var(--v-theme-on-surface));
+	opacity: 0.6;
+
+	&.text-disabled {
+		opacity: 0.38;
+	}
 }
 </style>
