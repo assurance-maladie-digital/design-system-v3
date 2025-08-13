@@ -20,6 +20,7 @@
 		code: string
 		abbreviation: string
 		country: string
+		countryFr?: string
 		mask?: string
 		phoneLength: number
 	}
@@ -129,22 +130,24 @@
 	}, { immediate: true })
 
 	function generateDisplayText(ind: Indicatif): string {
+		const countryName = ind.countryFr || ind.country
 		const format = {
 			'code': ind.code,
-			'code-abbreviation': `${ind.code} (<abbr title="${ind.country}">${ind.abbreviation}</abbr>)`,
-			'code-country': `${ind.code} ${ind.country}`,
-			'country': ind.country,
-			'abbreviation': `<abbr title="${ind.country}">${ind.abbreviation}</abbr>`,
+			'code-abbreviation': `${ind.code} (<abbr title="${countryName}">${ind.abbreviation}</abbr>)`,
+			'code-country': `${ind.code} ${countryName}`,
+			'country': countryName,
+			'abbreviation': `<abbr title="${countryName}">${ind.abbreviation}</abbr>`,
 		}
 		return format[props.displayFormat] || ind.code
 	}
 
 	function generatePlainDisplayText(ind: Indicatif): string {
+		const countryName = ind.countryFr || ind.country
 		const format = {
 			'code': ind.code,
 			'code-abbreviation': `${ind.code} (${ind.abbreviation})`,
-			'code-country': `${ind.code} ${ind.country}`,
-			'country': ind.country,
+			'code-country': `${ind.code} ${countryName}`,
+			'country': countryName,
 			'abbreviation': ind.abbreviation,
 		}
 		return format[props.displayFormat] || ind.code
