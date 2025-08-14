@@ -1,4 +1,4 @@
-import type { IndexedObject } from '@/components/Amelipro/types'
+import type { IndexedObject } from '../../../components/Amelipro/types'
 
 export const apColorsTokens = {
 	apBlack: { base: '#000000' },
