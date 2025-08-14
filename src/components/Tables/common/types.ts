@@ -76,6 +76,7 @@ export type SyTableProps = {
 	showSelect?: boolean
 	multiSort?: boolean
 	mustSort?: boolean
+	itemsPerPageOptions?: number[]
 }
 
 export type SyServerTableProps = {
@@ -93,4 +94,5 @@ export type SyServerTableProps = {
 	showSelect?: boolean
 	multiSort?: boolean
 	mustSort?: boolean
+	itemsPerPageOptions?: number[]
 }
