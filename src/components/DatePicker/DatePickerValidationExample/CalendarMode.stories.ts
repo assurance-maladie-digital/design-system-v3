@@ -93,7 +93,6 @@ export const Required: StoryObj = {
 				<form @submit.prevent="handleSubmit" style="width: 100%;">
 					<div style="display: flex; flex-direction: column; gap: 16px;">
 						<div>
-							<h3 class="mb-4">Avec soumission de formulaire:</h3>
 							<DatePicker
 								ref="datePicker1"
 								v-model="date1"
@@ -194,14 +193,12 @@ export const WithCustomRulesAndRequired: StoryObj = {
 				<form @submit.prevent="handleSubmit" style="width: 100%;">
 					<div style="display: flex; flex-direction: column; gap: 16px;">
 						<div>
-							<h3 class="mb-4">Avec soumission de formulaire:</h3>
 							<DatePicker
 								ref="datePicker1"
 								v-model="date1"
 								required
 								format="DD/MM/YYYY"
 								placeholder="Date requise"
-								required
 								:custom-rules="[
 			{ 		type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourdhui' } },
 		]"
