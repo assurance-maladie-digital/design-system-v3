@@ -550,6 +550,7 @@
 	})
 
 	const validateOnSubmit = () => {
+		// Si le mode noCalendar est activé, on délègue la validation au DateTextInput
 		if (props.noCalendar) {
 			return dateTextInputRef.value?.validateOnSubmit()
 		}

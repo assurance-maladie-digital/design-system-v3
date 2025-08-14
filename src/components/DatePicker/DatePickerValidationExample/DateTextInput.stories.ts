@@ -74,7 +74,6 @@ export const Required: StoryObj = {
 
 			const handleSubmit = () => {
 				const isValid1 = datePicker1.value?.validateOnSubmit()
-
 				if (!isValid1) {
 					alert('Corrigez les erreurs avant de soumettre !')
 				}
@@ -204,7 +203,6 @@ export const WithCustomRulesAndRequired: StoryObj = {
                                 required
                                 format="DD/MM/YYYY"
                                 placeholder="Date requise"
-                                required
                                 noCalendar
                                 :custom-rules="[
             { 		type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourdhui' } },

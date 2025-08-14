@@ -922,33 +922,27 @@
 
 	const isValidating = ref(false)
 
-	const validateOnSubmit = async (): Promise<boolean> => {
+	const validateOnSubmit = () => {
 		isValidating.value = true
 		hasInteracted.value = true
+		// Valider le format de la date
+		const isFormatValid = validateRules(inputValue.value)
 
-		try {
-			// Valider le format de la date
-			const isFormatValid = validateRules(inputValue.value)
-
-			if (!isFormatValid) {
-				return false
-			}
-
-			// Vérifier si nous avons des erreurs après la validation du format
-			if (hasError.value) {
-				return false
-			}
-
-			// Ajouter des messages de succès si nécessaire
-			if (props.showSuccessMessages && inputValue.value && !hasError.value && !hasWarning.value) {
-				successMessages.value.push(DATE_PICKER_MESSAGES.SUCCESS_VALID_DATE)
-			}
-
-			return !hasError.value
+		if (!isFormatValid) {
+			return false
 		}
-		finally {
-			isValidating.value = false
+
+		// Vérifier si nous avons des erreurs après la validation du format
+		if (hasError.value) {
+			return false
 		}
+
+		// Ajouter des messages de succès si nécessaire
+		if (props.showSuccessMessages && inputValue.value && !hasError.value && !hasWarning.value) {
+			successMessages.value.push(DATE_PICKER_MESSAGES.SUCCESS_VALID_DATE)
+		}
+
+		return !hasError.value
 	}
 
 	defineExpose({
