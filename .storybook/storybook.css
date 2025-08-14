@@ -170,6 +170,16 @@ pre.prismjs {
 	}
 }
 
+#story--composants-tableaux-sytable--default, #story--composants-tableaux-syservertable--default {
+	.v-list {
+		top: 284px !important;
+		margin-top: 121px !important;
+		margin-left: -58px;
+		width: auto;
+		position: absolute !important;
+	}
+}
+
 /* Fix for Release doc */
 #story--démarrer-releases--list {
 	table {
