@@ -170,4 +170,161 @@ describe('SyTablePagination.vue', () => {
 		const labelText = wrapper.find('.rows-per-page-label').text()
 		expect(labelText).toContain('Lignes par page')
 	})
+
+	// Tests for itemsPerPageOptions functionality
+	describe('itemsPerPageOptions', () => {
+		it('should use default options when itemsPerPageOptions is not provided', () => {
+			const wrapper = mount(SyTablePagination, {
+				props: {
+					page: 1,
+					pageCount: 5,
+					itemsPerPage: 10,
+					itemsLength: 50,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Should have default options: 5, 10, 25, 50, 100, and "Tous" (-1)
+			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.itemsPerPageOptions
+			expect(selectOptions).toHaveLength(6)
+			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 25, 50, 100, -1])
+		})
+
+		it('should limit options when itemsPerPageOptions is provided', () => {
+			const wrapper = mount(SyTablePagination, {
+				props: {
+					page: 1,
+					pageCount: 5,
+					itemsPerPage: 10,
+					itemsLength: 50,
+					itemsPerPageOptions: [5, 10, 25],
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Should only have the limited options, no "Tous" option
+			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.itemsPerPageOptions
+			expect(selectOptions).toHaveLength(3)
+			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 25])
+			expect(selectOptions.map(opt => opt.text)).toEqual(['5', '10', '25'])
+		})
+
+		it('should include "Tous" option when explicitly allowed in itemsPerPageOptions', () => {
+			const wrapper = mount(SyTablePagination, {
+				props: {
+					page: 1,
+					pageCount: 5,
+					itemsPerPage: 10,
+					itemsLength: 50,
+					itemsPerPageOptions: [5, 10, 25, -1],
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Should have the limited options plus "Tous"
+			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.itemsPerPageOptions
+			expect(selectOptions).toHaveLength(4)
+			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 25, -1])
+
+			// Check that the last option is "Tous"
+			const lastOption = selectOptions[selectOptions.length - 1]
+			expect(lastOption.value).toBe(-1)
+			expect(lastOption.text).toBe('Tous')
+		})
+
+		it('should add current itemsPerPage to options if not already included', () => {
+			const wrapper = mount(SyTablePagination, {
+				props: {
+					page: 1,
+					pageCount: 5,
+					itemsPerPage: 15, // Not in the itemsPerPageOptions
+					itemsLength: 50,
+					itemsPerPageOptions: [5, 10, 25],
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Should include the current itemsPerPage value and sort numerically
+			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.itemsPerPageOptions
+			expect(selectOptions).toHaveLength(4)
+			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 15, 25])
+		})
+
+		it('should not add current itemsPerPage if it is -1 (Tous)', () => {
+			const wrapper = mount(SyTablePagination, {
+				props: {
+					page: 1,
+					pageCount: 5,
+					itemsPerPage: -1, // "Tous" option
+					itemsLength: 50,
+					itemsPerPageOptions: [5, 10, 25],
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Should not add -1 to the options since itemsPerPageOptions doesn't include it
+			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.itemsPerPageOptions
+			expect(selectOptions).toHaveLength(3)
+			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 25])
+			expect(selectOptions.find(opt => opt.value === -1)).toBeUndefined()
+		})
+
+		it('should work with very restrictive options', () => {
+			const wrapper = mount(SyTablePagination, {
+				props: {
+					page: 1,
+					pageCount: 5,
+					itemsPerPage: 5,
+					itemsLength: 50,
+					itemsPerPageOptions: [5], // Only one option
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Should only have one option
+			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.itemsPerPageOptions
+			expect(selectOptions).toHaveLength(1)
+			expect(selectOptions.map(opt => opt.value)).toEqual([5])
+			expect(selectOptions.map(opt => opt.text)).toEqual(['5'])
+		})
+
+		it('should handle empty itemsPerPageOptions array', () => {
+			const wrapper = mount(SyTablePagination, {
+				props: {
+					page: 1,
+					pageCount: 5,
+					itemsPerPage: 10,
+					itemsLength: 50,
+					itemsPerPageOptions: [], // Empty array
+				},
+				global: {
+					plugins: [vuetify],
+				},
+			})
+
+			// Should only include the current itemsPerPage since base options are empty
+			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.itemsPerPageOptions
+			expect(selectOptions).toHaveLength(1)
+			expect(selectOptions.map(opt => opt.value)).toEqual([10])
+		})
+	})
 })

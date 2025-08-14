@@ -61,6 +61,15 @@ const meta = {
 				type: { summary: 'DataOptions', detail: '{ page: number, itemsPerPage: number, sortBy: SortOptions[], groupBy?: SortOptions[], multiSort?: boolean, mustSort?: boolean, filters?: FilterOption[] }' },
 			},
 		},
+		itemsPerPageOptions: {
+			description: 'Limite les options disponibles dans le sélecteur "itemsPerPage"',
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+				type: { summary: 'number[]' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
 		suffix: {
 			description: 'Suffixe permettant de gérer individuellement le stockage des options d\'un tableau d\'une page à l\'autre. Ce prop est obligatoire pour garantir un stockage unique pour chaque tableau.',
 			control: { type: 'text' },
@@ -3355,6 +3364,239 @@ export const SlotHeaders: Story = {
 						</tr>
 					</template>
 				</SyTable>
+			`,
+		}
+	},
+}
+
+export const ItemsPerPageOptions: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						:items-per-page-options="[5, 10, 15]"
+						suffix="items-per-page-options-table"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 5,
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+                            title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com',
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com',
+						},
+						{
+                            firstname: 'Théo',
+							lastname: 'Garnier',
+							email: 'theo.garnier@exemple.com',
+						},
+						{
+                            firstname: 'Clara',
+							lastname: 'Moreau',
+							email: 'clara.moreau@exemple.com',
+						},
+						{
+							firstname: 'Lucas',
+							lastname: 'Lefebvre',
+							email: 'lucas.lefebre@exemple.com',
+						},
+						{
+							firstname: 'Emma',
+							lastname: 'Dubois',
+							email: 'emma.dubois@exemple.com',
+						},
+						{
+							firstname: 'Julien',
+							lastname: 'Martin',
+							email: 'julien.martin@exemple.com',
+						},
+						{
+							firstname: 'Sophie',
+							lastname: 'Bernard',
+							email: 'sophie.bernard@exemple.com',
+						},
+						{
+							firstname: 'Antoine',
+							lastname: 'Lemoine',
+							email: 'antoine.lemoine@exemple.com',
+						},
+						{
+							firstname: 'Camille',
+							lastname: 'Rousseau',
+							email: 'camille.rousseau@exemple.com',
+						},
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		'items': [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+			{
+				firstname: 'Théo',
+				lastname: 'Garnier',
+				email: 'theo.garnier@exemple.com',
+			},
+			{
+				firstname: 'Clara',
+				lastname: 'Moreau',
+				email: 'clara.moreau@exemple.com',
+			},
+			{
+				firstname: 'Lucas',
+				lastname: 'Lefebvre',
+				email: 'lucas.lefebre@exemple.com',
+			},
+			{
+				firstname: 'Emma',
+				lastname: 'Dubois',
+				email: 'emma.dubois@exemple.com',
+			},
+			{
+				firstname: 'Julien',
+				lastname: 'Martin',
+				email: 'julien.martin@exemple.com',
+			},
+			{
+				firstname: 'Sophie',
+				lastname: 'Bernard',
+				email: 'sophie.bernard@exemple.com',
+			},
+			{
+				firstname: 'Antoine',
+				lastname: 'Lemoine',
+				email: 'antoine.lemoine@exemple.com',
+			},
+			{
+				firstname: 'Camille',
+				lastname: 'Rousseau',
+				email: 'camille.rousseau@exemple.com',
+			},
+		],
+		'options': {
+			itemsPerPage: 5,
+		},
+		'itemsPerPageOptions': [5, 10, 15],
+		'caption': '',
+		'suffix': 'default-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<SyTable
+					v-model:options="args.options"
+					v-bind="args"
+				/>
 			`,
 		}
 	},
