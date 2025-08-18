@@ -4,6 +4,7 @@
 	import { mdiPhone } from '@mdi/js'
 	import { indicatifs } from './indicatifs'
 	import { vMaska } from 'maska/vue'
+	import { Mask } from 'maska'
 	import { locales } from './locales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -66,7 +67,8 @@
 	const computedValue = computed(() => formatPhoneNumber(phoneNumber.value))
 
 	watch(() => props.modelValue, (newVal) => {
-		phoneNumber.value = (newVal || '').replace(/\s/g, '')
+		// Preserve the formatting of the incoming value
+		phoneNumber.value = newVal || ''
 	}, { immediate: true })
 
 	watch(dialCode, (newVal) => {
@@ -79,10 +81,13 @@
 
 	function handlePhoneInput(event: Event) {
 		const input = (event.target as HTMLInputElement).value
-		const cleanedInput = input.replace(/\D/g, '')
-		phoneNumber.value = cleanedInput
-		emit('update:modelValue', cleanedInput)
-		emit('change', cleanedInput)
+		// Apply mask manually if needed
+		const mask = new Mask({ mask: phoneMask.value })
+		const maskaValue = mask.masked(input)
+		// Update the internal phoneNumber value with the formatted value
+		phoneNumber.value = maskaValue
+		emit('update:modelValue', maskaValue)
+		emit('change', maskaValue)
 	}
 
 	const mergedDialCodes = computed(() =>
