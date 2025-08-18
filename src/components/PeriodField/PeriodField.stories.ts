@@ -1086,12 +1086,7 @@ export const FormValidation: Story = {
 						
 						<v-row v-if="formStatus">
 							<v-col cols="12">
-								<v-alert
-									:type="isFormSubmitted ? 'success' : 'error'"
-									class="mt-4"
-								>
 									{{ formStatus }}
-								</v-alert>
 								<pre v-if="formData">{{ formData }}</pre>
 							</v-col>
 						</v-row>
