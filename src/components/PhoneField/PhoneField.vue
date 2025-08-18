@@ -3,7 +3,6 @@
 	import type { PropType } from 'vue'
 	import { mdiPhone } from '@mdi/js'
 	import { indicatifs } from './indicatifs'
-	import { vMaska } from 'maska/vue'
 	import { Mask } from 'maska'
 	import { locales } from './locales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
@@ -67,8 +66,13 @@
 	const computedValue = computed(() => formatPhoneNumber(phoneNumber.value))
 
 	watch(() => props.modelValue, (newVal) => {
-		// Preserve the formatting of the incoming value
-		phoneNumber.value = newVal || ''
+		if (newVal) {
+			// Apply mask to incoming value to ensure consistent formatting
+			const mask = new Mask({ mask: phoneMask.value })
+			phoneNumber.value = mask.masked(newVal)
+		} else {
+			phoneNumber.value = ''
+		}
 	}, { immediate: true })
 
 	watch(dialCode, (newVal) => {
@@ -76,18 +80,19 @@
 		if (typeof newVal === 'object' && newVal !== null) {
 			counter.value = newVal.phoneLength || 10
 			phoneMask.value = newVal.mask || '#'.repeat(newVal.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
+			emit('update:modelValue', null)
 		}
 	})
 
-	function handlePhoneInput(event: Event) {
+	const handlePhoneInput = (event: Event) => {
 		const input = (event.target as HTMLInputElement).value
-		// Apply mask manually if needed
+		// Apply mask manually since we're not using v-maska directive anymore
 		const mask = new Mask({ mask: phoneMask.value })
-		const maskaValue = mask.masked(input)
+		const maskedValue = mask.masked(input)
 		// Update the internal phoneNumber value with the formatted value
-		phoneNumber.value = maskaValue
-		emit('update:modelValue', maskaValue)
-		emit('change', maskaValue)
+		phoneNumber.value = maskedValue
+		emit('update:modelValue', maskedValue)
+		emit('change', maskedValue)
 	}
 
 	const mergedDialCodes = computed(() =>
@@ -304,8 +309,8 @@
 				value-key="code"
 			/>
 			<SyTextField
-				v-model="phoneNumber"
-				v-maska="phoneMask"
+				ref="phoneField"
+				:model-value="phoneNumber"
 				:counter="counter"
 				:counter-value="(value: string) => value.replace(/\s/g, '').length"
 				:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
