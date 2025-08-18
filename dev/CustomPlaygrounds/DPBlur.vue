@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 	import { ref, nextTick } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 
@@ -273,4 +273,4 @@ h3 {
 .instructions li {
   margin-bottom: 8px;
 }
-</style>
+</style> -->
