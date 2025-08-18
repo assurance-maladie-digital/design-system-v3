@@ -33,6 +33,8 @@
 		height: 100%;
 		border-radius: 35px;
 		margin: 0;
+		/* Use #E6E6E6 for a contrast ratio of ~1.5:1 against white background */
+		background-color: #E6E6E6 !important;
 	}
 }
 
