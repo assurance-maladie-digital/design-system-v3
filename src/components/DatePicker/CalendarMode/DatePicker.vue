@@ -68,6 +68,7 @@
 			max?: string
 		}
 		autoClamp?: boolean
+		isValidateOnBlur?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
@@ -106,6 +107,7 @@
 			max: '',
 		}),
 		autoClamp: false,
+		isValidateOnBlur: true,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -207,7 +209,7 @@
 
 		// Vérifier si le champ est requis et vide
 		if ((forceValidation || !isUpdatingFromInternal.value) && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
-			if (props.readonly) {
+			if (props.readonly || !props.isValidateOnBlur) {
 				return
 			}
 			// Ne pas afficher d'erreur si on est dans le contexte du mounted initial
@@ -658,7 +660,9 @@
 
 	const handleInputBlur = () => {
 		emit('blur')
-		validateDates(true)
+		if (props.isValidateOnBlur) {
+			validateDates(true)
+		}
 	}
 
 	watch(isDatePickerVisible, async (isVisible) => {
