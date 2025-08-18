@@ -36,6 +36,7 @@
 		bgColor?: string
 		displayRange?: boolean
 		autoClamp?: boolean
+		isValidateOnBlur?: boolean
 	}>(), {
 		modelValue: null,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -57,6 +58,7 @@
 		bgColor: 'white',
 		displayRange: false,
 		autoClamp: true,
+		isValidateOnBlur: true,
 	})
 
 	const emit = defineEmits<{
@@ -706,6 +708,9 @@
 	}
 
 	const handleBlur = () => {
+		if (!props.isValidateOnBlur) {
+			return
+		}
 		isFocused.value = false
 		hasInteracted.value = true
 
@@ -1031,6 +1036,7 @@
 		is-clearable
 		:display-persistent-placeholder="true"
 		:aria-label="ariaLabel || props.placeholder"
+		:is-validate-on-blur="props.isValidateOnBlur"
 		title="Date text input"
 		@focus="handleFocus"
 		@blur="handleBlur"

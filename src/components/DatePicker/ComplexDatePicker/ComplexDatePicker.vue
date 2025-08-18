@@ -147,6 +147,7 @@
 			max?: string
 		}
 		autoClamp?: boolean
+		isValidateOnBlur?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -182,6 +183,7 @@
 		}),
 		autoClamp: false,
 		label: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
+		isValidateOnBlur: true,
 	})
 
 	// Computed properties pour period
@@ -1172,6 +1174,7 @@
 						:bg-color="props.bgColor"
 						:display-range="props.displayRange"
 						:display-persistent-placeholder="true"
+						:is-validate-on-blur="props.isValidateOnBlur"
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
 						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
