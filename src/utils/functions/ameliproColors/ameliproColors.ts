@@ -14,7 +14,7 @@ export const AmeliproColors: AmeliproColorsTypes = {
 	apGreendarken1: { hexColor: '#459B5A' },
 	apGreendarken2: { hexColor: '#337343' },
 	apGreenlighten1: { hexColor: '#78CE8D' },
-	apGreenlighten2: { hexColor: '#DDF3F3' },
+	apGreenlighten2: { hexColor: '#DDF3E3' },
 	apGrey: { hexColor: '#545859' },
 	apGreydarken1: { hexColor: '#1A1B1B' },
 	apGreylighten1: { hexColor: '#CCCDCE' },
