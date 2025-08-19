@@ -1097,7 +1097,6 @@
 </script>
 
 <template>
-	{{ props.isValidateOnBlur }}
 	<div
 		class="date-picker-container"
 	>
@@ -1180,7 +1179,6 @@
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
 						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
-						:is-validate-on-submit="props.isValidateOnSubmit"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
@@ -1208,7 +1206,6 @@
 					:custom-warning-rules="props.customWarningRules"
 					:display-holiday-days="props.displayHolidayDays"
 					:display-asterisk="props.displayAsterisk"
-					:is-validate-on-submit="props.isValidateOnSubmit"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"
