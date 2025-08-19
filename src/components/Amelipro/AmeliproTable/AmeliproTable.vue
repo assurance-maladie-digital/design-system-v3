@@ -100,6 +100,9 @@
 
 	watch(() => props.dataList, () => {
 		updatePagination(props.dataList, itemToDisplay.value)
+		if (currentPage.value > paginationTable.value.length) {
+			currentPage.value = Math.max(1, paginationTable.value.length)
+		}
 	})
 
 	onMounted(() => {
@@ -179,7 +182,7 @@
 				:id="`${uniqueId}-total-counter`"
 				class="d-inline-block mb-0 total-counter font-weight-semibold"
 			>
-				<span class="d-sr-only">Nombre de ligne dans le tableau ci-après :</span>
+				<span class="d-sr-only">Nombre de lignes dans le tableau ci-après :</span>
 				{{ dataList.length }} {{ counterLabel }}
 			</p>
 

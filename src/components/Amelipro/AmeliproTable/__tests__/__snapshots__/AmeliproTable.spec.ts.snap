@@ -25,7 +25,7 @@ exports[`AmeliproTable > render correctly 1`] = `
       id="amelipro-table-id-total-counter"
     >
       <span class="d-sr-only">
-        Nombre de ligne dans le tableau ci-après :
+        Nombre de lignes dans le tableau ci-après :
       </span>
       4 item(s)
     </p>
