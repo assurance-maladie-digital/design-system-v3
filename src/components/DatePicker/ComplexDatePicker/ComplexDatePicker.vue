@@ -1078,13 +1078,14 @@
 		if (props.noCalendar) {
 			// En mode noCalendar, déléguer au DateTextInput
 			return dateTextInputRef.value?.validateOnSubmit() || false
-		} else {
+		}
+		else {
 			// En mode combiné, déléguer au DateTextInput du calendrier
 			const textInputValid = dateCalendarTextInputRef.value?.validateOnSubmit() || false
-			
+
 			// Également vérifier avec useDateValidation
 			validateDates(true)
-			
+
 			return textInputValid && errors.value.length === 0
 		}
 	}
