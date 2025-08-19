@@ -1341,7 +1341,7 @@ export const FormValidation: Story = {
 					.map(({ name }) => name)
 
 				if (invalidFields.length > 0) {
-					alert(`Les champs suivants sont invalides :\n${invalidFields.join('\n')}`)
+					alert(`Les champs suivants sont invalides: ${invalidFields.join('\\n')}`)
 				}
 				else {
 					alert('Formulaire soumis avec succès !')
@@ -1384,6 +1384,7 @@ export const FormValidation: Story = {
 							label="Prénom"
 							placeholder="Votre prénom"
 							autocomplete="given-name"
+							required
 							:custom-rules="prenomRules"
 							show-success-messages
 							class="mb-4"
@@ -1394,6 +1395,7 @@ export const FormValidation: Story = {
 							ref="ageField"
 							v-model="ageValue"
 							label="Âge"
+							required
 							placeholder="Votre âge"
 							:custom-rules="ageRules"
 							show-success-messages
@@ -1429,6 +1431,145 @@ export const FormValidation: Story = {
 			</div>
 		`,
 	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple de champ avec validation désactivée au blur. La validation ne se déclenche que lors de la soumission du formulaire.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<div>
+			<div style="max-width: 500px;">
+				<h3>Validation de formulaire</h3>
+				<form @submit.prevent="handleSubmit">
+					<div class="mb-4">
+						<SyTextField
+							ref="nomField"
+							v-model="nomValue"
+							label="Nom"
+							placeholder="Votre nom"
+							autocomplete="family-name"
+							required
+							show-success-messages
+							class="mb-4"
+							aria-describedby="nom-rule"
+						/>
+
+						<SyTextField
+							ref="prenomField"
+							v-model="prenomValue"
+							label="Prénom"
+							placeholder="Votre prénom"
+							autocomplete="given-name"
+							required
+							:custom-rules="prenomRules"
+							show-success-messages
+							class="mb-4"
+							aria-describedby="prenom-rule"
+						/>
+
+						<SyTextField
+							ref="ageField"
+							v-model="ageValue"
+							label="Âge"
+							required
+							placeholder="Votre âge"
+							:custom-rules="ageRules"
+							show-success-messages
+							class="mb-4"
+							aria-describedby="age-rule"
+						/>
+					</div>
+
+					<div class="text-caption mb-4">
+						<strong>Règles de validation :</strong>
+						<ul>
+							<li id="nom-rule">Nom : Champ requis</li>
+							<li id="prenom-rule">Prénom : Minimum 3 caractères</li>
+							<li id="age-rule">Âge : Uniquement des chiffres</li>
+						</ul>
+					</div>
+
+					<button
+						type="submit"
+						style="
+							background-color: #1976d2;
+							color: white;
+							padding: 8px 16px;
+							border: none;
+							border-radius: 4px;
+							cursor: pointer;
+							font-size: 1rem;
+						"
+					>
+						Soumettre
+					</button>
+				</form>
+			</div>
+	</div>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+const nomField = ref()
+			const prenomField = ref()
+			const ageField = ref()
+			const nomValue = ref('')
+			const prenomValue = ref('')
+			const ageValue = ref('')
+
+			// Règle minLength pour le prénom
+			const prenomRules = [{
+				type: 'minLength',
+				options: {
+					length: 3,
+					message: 'Le prénom doit contenir au moins 3 caractères',
+					successMessage: 'Le prénom est valide',
+					fieldIdentifier: 'prénom',
+				},
+			}]
+
+			// Règle pattern pour l'âge (uniquement des chiffres)
+			const ageRules = [{
+				type: 'matchPattern',
+				options: {
+					pattern: /^d+$/,
+					message: 'L'âge doit contenir uniquement des chiffres',
+					successMessage: 'L'âge est valide',
+					fieldIdentifier: 'âge',
+				},
+			}]
+
+			const handleSubmit = () => {
+				const fields = [
+					{ ref: nomField, name: 'Nom' },
+					{ ref: prenomField, name: 'Prénom' },
+					{ ref: ageField, name: 'Âge' },
+				]
+
+				const invalidFields = fields
+					.filter(({ ref }) => !ref.value?.validateOnSubmit())
+					.map(({ name }) => name)
+
+				if (invalidFields.length > 0) {
+					alert('Les champs suivants sont invalides: ' + invalidFields.join('\\n'))
+				}
+				else {
+					alert('Formulaire soumis avec succès !')
+				}
+			}
+</script>
+				`,
+			},
+		],
+	},
 }
 
 export const WithPrefixAndSuffix: Story = {

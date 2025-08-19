@@ -36,6 +36,7 @@
 		bgColor?: string
 		displayRange?: boolean
 		autoClamp?: boolean
+		isValidateOnBlur?: boolean
 	}>(), {
 		modelValue: null,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -57,6 +58,7 @@
 		bgColor: 'white',
 		displayRange: false,
 		autoClamp: true,
+		isValidateOnBlur: true,
 	})
 
 	const emit = defineEmits<{
@@ -706,6 +708,9 @@
 	}
 
 	const handleBlur = () => {
+		if (!props.isValidateOnBlur) {
+			return
+		}
 		isFocused.value = false
 		hasInteracted.value = true
 
@@ -922,33 +927,27 @@
 
 	const isValidating = ref(false)
 
-	const validateOnSubmit = async (): Promise<boolean> => {
+	const validateOnSubmit = () => {
 		isValidating.value = true
 		hasInteracted.value = true
+		// Valider le format de la date
+		const isFormatValid = validateRules(inputValue.value)
 
-		try {
-			// Valider le format de la date
-			const isFormatValid = validateRules(inputValue.value)
-
-			if (!isFormatValid) {
-				return false
-			}
-
-			// Vérifier si nous avons des erreurs après la validation du format
-			if (hasError.value) {
-				return false
-			}
-
-			// Ajouter des messages de succès si nécessaire
-			if (props.showSuccessMessages && inputValue.value && !hasError.value && !hasWarning.value) {
-				successMessages.value.push(DATE_PICKER_MESSAGES.SUCCESS_VALID_DATE)
-			}
-
-			return !hasError.value
+		if (!isFormatValid) {
+			return false
 		}
-		finally {
-			isValidating.value = false
+
+		// Vérifier si nous avons des erreurs après la validation du format
+		if (hasError.value) {
+			return false
 		}
+
+		// Ajouter des messages de succès si nécessaire
+		if (props.showSuccessMessages && inputValue.value && !hasError.value && !hasWarning.value) {
+			successMessages.value.push(DATE_PICKER_MESSAGES.SUCCESS_VALID_DATE)
+		}
+
+		return !hasError.value
 	}
 
 	defineExpose({
@@ -1037,6 +1036,7 @@
 		is-clearable
 		:display-persistent-placeholder="true"
 		:aria-label="ariaLabel || props.placeholder"
+		:is-validate-on-blur="props.isValidateOnBlur"
 		title="Date text input"
 		@focus="handleFocus"
 		@blur="handleBlur"

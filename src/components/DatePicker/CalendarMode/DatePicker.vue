@@ -68,6 +68,7 @@
 			max?: string
 		}
 		autoClamp?: boolean
+		isValidateOnBlur?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
@@ -106,6 +107,7 @@
 			max: '',
 		}),
 		autoClamp: false,
+		isValidateOnBlur: true,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -125,9 +127,12 @@
 		todayInString,
 	})
 
+	const onblur = ref(false)
+
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
@@ -208,6 +213,10 @@
 		// Vérifier si le champ est requis et vide
 		if ((forceValidation || !isUpdatingFromInternal.value) && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
 			if (props.readonly) {
+				return
+			}
+			// Ne pas afficher d'erreur si on est sur une perte de focus et si isValidateOnBlur est false
+			if (onblur.value && !props.isValidateOnBlur) {
 				return
 			}
 			// Ne pas afficher d'erreur si on est dans le contexte du mounted initial
@@ -550,8 +559,13 @@
 	})
 
 	const validateOnSubmit = () => {
+		// Si le mode noCalendar est activé, on délègue la validation au DateTextInput
 		if (props.noCalendar) {
 			return dateTextInputRef.value?.validateOnSubmit()
+		}
+		// Si le mode combiné est activé, on délègue la validation au ComplexDatePicker
+		else if (props.useCombinedMode) {
+			return complexDatePickerRef.value?.validateOnSubmit()
 		}
 		// Forcer la validation pour ignorer les conditions de validation interactive
 		validateDates(true)
@@ -657,7 +671,10 @@
 
 	const handleInputBlur = () => {
 		emit('blur')
-		validateDates(true)
+		onblur.value = true
+		if (props.isValidateOnBlur) {
+			validateDates(true)
+		}
 	}
 
 	watch(isDatePickerVisible, async (isVisible) => {
@@ -852,6 +869,7 @@
 				:period="props.period"
 				:auto-clamp="props.autoClamp"
 				:display-asterisk="props.displayAsterisk"
+				:is-validate-on-blur="props.isValidateOnBlur"
 				@update:model-value="handleDateTextInputUpdate"
 				@date-selected="handleDateTextInputSelection"
 				@blur="handleInputBlur"
@@ -860,6 +878,7 @@
 		</template>
 		<template v-else-if="props.useCombinedMode">
 			<ComplexDatePicker
+				ref="complexDatePickerRef"
 				:model-value="props.modelValue"
 				:format="props.format"
 				:date-format-return="props.dateFormatReturn"
@@ -891,6 +910,7 @@
 				:auto-clamp="props.autoClamp"
 				:label="props.label"
 				:placeholder="props.placeholder"
+				:is-validate-on-blur="props.isValidateOnBlur"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"

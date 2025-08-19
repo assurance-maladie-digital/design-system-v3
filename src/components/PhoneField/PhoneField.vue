@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-	import { computed, ref, watch } from 'vue'
+	import { computed, ref, watch, nextTick } from 'vue'
 	import type { PropType } from 'vue'
 	import { mdiPhone } from '@mdi/js'
 	import { indicatifs } from './indicatifs'
-	import { vMaska } from 'maska/vue'
+	import { Mask } from 'maska'
 	import { locales } from './locales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -66,7 +66,14 @@
 	const computedValue = computed(() => formatPhoneNumber(phoneNumber.value))
 
 	watch(() => props.modelValue, (newVal) => {
-		phoneNumber.value = (newVal || '').replace(/\s/g, '')
+		if (newVal) {
+			// Apply mask to incoming value to ensure consistent formatting
+			const mask = new Mask({ mask: phoneMask.value })
+			phoneNumber.value = mask.masked(newVal)
+		}
+		else {
+			phoneNumber.value = ''
+		}
 	}, { immediate: true })
 
 	watch(dialCode, (newVal) => {
@@ -74,15 +81,63 @@
 		if (typeof newVal === 'object' && newVal !== null) {
 			counter.value = newVal.phoneLength || 10
 			phoneMask.value = newVal.mask || '#'.repeat(newVal.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
+			const mask = new Mask({ mask: phoneMask.value })
+			const maskedValue = mask.masked(phoneNumber.value)
+			emit('update:modelValue', maskedValue)
 		}
 	})
 
-	function handlePhoneInput(event: Event) {
-		const input = (event.target as HTMLInputElement).value
-		const cleanedInput = input.replace(/\D/g, '')
-		phoneNumber.value = cleanedInput
-		emit('update:modelValue', cleanedInput)
-		emit('change', cleanedInput)
+	/**
+	 * Calcule la position ajustée du curseur en tenant compte des espaces ajoutés par le masque
+	 * @param cursorPosition - Position originale du curseur
+	 * @param originalValue - Valeur avant application du masque
+	 * @param maskedValue - Valeur après application du masque
+	 * @returns Position ajustée du curseur
+	 */
+	const calculateAdjustedPosition = (cursorPosition: number, originalValue: string, maskedValue: string): number => {
+		// Compte combien de caractères non-espace se trouvent avant la position du curseur dans la valeur originale
+		const digitsBeforeCursor = originalValue.substring(0, cursorPosition).replace(/\s/g, '').length
+
+		// Parcours la valeur masquée pour trouver la position qui contient le même nombre de caractères non-espace
+		let newPosition = 0
+		let digitCount = 0
+
+		for (let i = 0; i < maskedValue.length; i++) {
+			if (maskedValue[i] !== ' ') {
+				digitCount++
+			}
+
+			if (digitCount > digitsBeforeCursor) {
+				break
+			}
+
+			newPosition = i + 1
+		}
+
+		return newPosition
+	}
+
+	const handlePhoneInput = (event: Event) => {
+		const inputElement = event.target as HTMLInputElement
+		const input = inputElement.value
+
+		// Sauvegarder la position du curseur
+		const cursorPosition = inputElement.selectionStart || 0
+
+		// Appliquer le masque
+		const mask = new Mask({ mask: phoneMask.value })
+		const maskedValue = mask.masked(input)
+
+		// Mettre à jour la valeur
+		phoneNumber.value = maskedValue
+		emit('update:modelValue', maskedValue)
+		emit('change', maskedValue)
+
+		// Restaurer la position du curseur sur le prochain cycle de rendu
+		nextTick(() => {
+			const adjustedPosition = calculateAdjustedPosition(cursorPosition, input, maskedValue)
+			inputElement.setSelectionRange(adjustedPosition, adjustedPosition)
+		})
 	}
 
 	const mergedDialCodes = computed(() =>
@@ -299,8 +354,8 @@
 				value-key="code"
 			/>
 			<SyTextField
-				v-model="phoneNumber"
-				v-maska="phoneMask"
+				ref="phoneField"
+				:model-value="phoneNumber"
 				:counter="counter"
 				:counter-value="(value: string) => value.replace(/\s/g, '').length"
 				:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
