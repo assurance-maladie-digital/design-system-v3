@@ -25,7 +25,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       id="amelipro-accordion-result-unique-id-result-counter"
     >
       <span class="d-sr-only">
-        Nombre de ligne dans la liste ci-après :
+        Nombre de lignes dans la liste ci-après :
       </span>
       12 résultat(s)
     </p>

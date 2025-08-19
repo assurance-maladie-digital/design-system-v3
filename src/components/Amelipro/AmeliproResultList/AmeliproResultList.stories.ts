@@ -240,6 +240,7 @@ export const Default: Story = {
 			return { args }
 		},
 		template: `
+<div>
 <AmeliproResultList
 	v-bind="args"
 >
@@ -255,6 +256,8 @@ export const Default: Story = {
 		</AmeliproCard>
 	</template>
 </AmeliproResultList>
+<button @click="toto()"
+</div>
 		`,
 	}),
 

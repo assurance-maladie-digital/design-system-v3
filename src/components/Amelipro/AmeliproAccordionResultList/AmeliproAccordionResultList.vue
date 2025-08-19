@@ -113,6 +113,9 @@
 
 	watch(() => props.items, () => {
 		updatePagination(props.items, paginationSelectModel.value)
+		if (currentPage.value > paginationTable.value.length) {
+			currentPage.value = Math.max(1, paginationTable.value.length)
+		}
 	})
 
 	const openClose = (id: number): void => {
@@ -169,7 +172,7 @@
 				:id="`${uniqueId}-result-counter`"
 				class="d-inline-block mb-0 total-counter font-weight-semibold"
 			>
-				<span class="d-sr-only">Nombre de ligne dans la liste ci-après :</span>
+				<span class="d-sr-only">Nombre de lignes dans la liste ci-après :</span>
 				{{ items.length }} {{ counterLabel }}
 			</p>
 

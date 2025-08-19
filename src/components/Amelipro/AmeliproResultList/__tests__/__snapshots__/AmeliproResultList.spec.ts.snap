@@ -26,7 +26,7 @@ exports[`AmeliproResultList > render correctly 1`] = `
       id="amelipro-result-unique-id-result-counter"
     >
       <span class="d-sr-only">
-        Nombre de ligne dans le tableau ci-après :
+        Nombre de lignes dans la liste ci-après :
       </span>
       12 résultat(s)
     </p>
@@ -40,12 +40,12 @@ exports[`AmeliproResultList > render correctly 1`] = `
         class="
           amelipro-result-list__pagination-select
           ml-2
+          pt-0
         "
         id="amelipro-result-unique-id-pagination-select-container"
         style="
           margin-bottom: 12px;
           max-width: 170px;
-          padding-top: 0px !important;
         "
       >
         <div class="
@@ -70,26 +70,24 @@ exports[`AmeliproResultList > render correctly 1`] = `
               <!-- v-if -->
             </label>
           </div>
-          <div
-            class="
-              amelipro-result-list__pagination-select
-              amelipro-select
-              ml-2
-              pt-0
-              v-input
-              v-input--center-affix
-              v-input--density-compact
-              v-input--dirty
-              v-input--horizontal
-              v-locale--is-ltr
-              v-select
-              v-select--selected
-              v-select--single
-              v-text-field
-              v-theme--light
-            "
-            style="padding-top: 0px !important;"
-          >
+          <div class="
+            amelipro-result-list__pagination-select
+            amelipro-select
+            ml-2
+            pt-0
+            pt-0
+            v-input
+            v-input--center-affix
+            v-input--density-compact
+            v-input--dirty
+            v-input--horizontal
+            v-locale--is-ltr
+            v-select
+            v-select--selected
+            v-select--single
+            v-text-field
+            v-theme--light
+          ">
             <!---->
             <div class="v-input__control">
               <div

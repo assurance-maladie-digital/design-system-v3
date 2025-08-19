@@ -87,6 +87,9 @@
 
 	watch(() => props.items, () => {
 		updatePagination(props.items, paginationSelectModel.value)
+		if (currentPage.value > paginationTable.value.length) {
+			currentPage.value = Math.max(1, paginationTable.value.length)
+		}
 	})
 
 	onMounted(() => {
@@ -148,7 +151,7 @@
 				:id="`${uniqueId}-result-counter`"
 				class="d-inline-block align-center mb-0 total-counter font-weight-semibold"
 			>
-				<span class="d-sr-only">Nombre de ligne dans le tableau ci-après :</span>
+				<span class="d-sr-only">Nombre de lignes dans la liste ci-après :</span>
 				{{ items.length }} {{ counterLabel }}
 			</p>
 
@@ -156,13 +159,12 @@
 				<AmeliproSelect
 					v-if="sortSelectItems.length > 0 && sortSelect"
 					v-model="sortSelectModel"
-					class="ml-2 amelipro-result-list__sort-select"
+					class="ml-2 pt-0 amelipro-result-list__sort-select"
 					global-max-width="170px"
 					:hide-error-message="true"
 					:items="sortSelectItems"
 					:label="sortSelectLabel"
 					:placeholder="sortSelectPlaceholder"
-					style="padding-top: 0 !important;"
 					:unique-id="`${uniqueId}-sort-select`"
 					@update:model-value="emitSortSelectChange()"
 				/>
@@ -170,13 +172,12 @@
 				<AmeliproSelect
 					v-if="mdAndUp && paginationSelect"
 					v-model="paginationSelectModel"
-					class="ml-2 amelipro-result-list__pagination-select"
+					class="ml-2 pt-0 amelipro-result-list__pagination-select"
 					global-max-width="170px"
 					:hide-error-message="true"
 					:items="paginationSelectItems"
 					:label="paginationSelectLabel"
 					:placeholder="paginationSelectPlaceholder"
-					style="padding-top: 0 !important;"
 					:unique-id="`${uniqueId}-pagination-select`"
 					@update:model-value="emitPaginationSelectChange()"
 				/>
