@@ -904,6 +904,7 @@
 				:auto-clamp="props.autoClamp"
 				:label="props.label"
 				:placeholder="props.placeholder"
+				:is-validate-on-blur="props.isValidateOnBlur"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
