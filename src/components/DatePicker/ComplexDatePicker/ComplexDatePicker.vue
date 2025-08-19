@@ -246,7 +246,8 @@
 	})
 
 	// pour valider les dates
-	const { validateDates, validateOnSubmit } = useDateValidation({
+	// On récupère validateDates depuis le composable mais on va redéfinir validateOnSubmit
+	const { validateDates } = useDateValidation({
 		noCalendar: props.noCalendar,
 		required: props.required,
 		displayRange: props.displayRange,
@@ -1072,6 +1073,22 @@
 		selectToday(selectedDates)
 	}
 
+	// Redéfinition de validateOnSubmit pour propager aux composants enfants
+	const validateOnSubmit = (): boolean => {
+		if (props.noCalendar) {
+			// En mode noCalendar, déléguer au DateTextInput
+			return dateTextInputRef.value?.validateOnSubmit() || false
+		} else {
+			// En mode combiné, déléguer au DateTextInput du calendrier
+			const textInputValid = dateCalendarTextInputRef.value?.validateOnSubmit() || false
+			
+			// Également vérifier avec useDateValidation
+			validateDates(true)
+			
+			return textInputValid && errors.value.length === 0
+		}
+	}
+
 	defineExpose({
 		validateOnSubmit,
 		isDatePickerVisible,
@@ -1206,6 +1223,7 @@
 					:custom-warning-rules="props.customWarningRules"
 					:display-holiday-days="props.displayHolidayDays"
 					:display-asterisk="props.displayAsterisk"
+					:is-validate-on-blur="props.isValidateOnBlur"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"

@@ -132,6 +132,7 @@
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
@@ -562,6 +563,10 @@
 		if (props.noCalendar) {
 			return dateTextInputRef.value?.validateOnSubmit()
 		}
+		// Si le mode combiné est activé, on délègue la validation au ComplexDatePicker
+		else if (props.useCombinedMode) {
+			return complexDatePickerRef.value?.validateOnSubmit()
+		}
 		// Forcer la validation pour ignorer les conditions de validation interactive
 		validateDates(true)
 		// Retourner directement un booléen pour maintenir la compatibilité avec les tests existants
@@ -873,6 +878,7 @@
 		</template>
 		<template v-else-if="props.useCombinedMode">
 			<ComplexDatePicker
+				ref="complexDatePickerRef"
 				:model-value="props.modelValue"
 				:format="props.format"
 				:date-format-return="props.dateFormatReturn"
