@@ -50,7 +50,7 @@ setup((app, { globals }) => {
 		() => globals.theme,
 		(newTheme) => {
 			// Update Vuetify theme
-			vuetify.theme.global.name.value = newTheme
+			vuetify.theme.change(newTheme)
 
 			// Apply the new theme class
 			applyThemeClass(newTheme)
@@ -92,7 +92,7 @@ const preview: Preview = {
 		(story, context) => {
 			// Handle theme changes
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
-				vuetify.theme.global.name.value = context.globals.theme
+				vuetify.theme.change(context.globals.theme)
 				document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
