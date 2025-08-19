@@ -687,15 +687,7 @@
 			resetViewMode()
 		}
 
-		if (isVisible) {
-			// set the focus on the date picker
-			await nextTick()
-			const firstButton = datePickerRef.value?.$el?.querySelector?.('button')
-			if (firstButton) {
-				firstButton.focus({ preventScroll: true })
-			}
-		}
-		else {
+		if (!isVisible) {
 			// set the focus on the text input
 			// wait for VMenu to finish DOM updates & transition
 			setTimeout(() => {
@@ -815,13 +807,30 @@
 		customizeMonthButton()
 	}
 
+	// Ne plus ouvrir automatiquement le calendrier au focus, juste émettre l'événement
 	const openDatePickerOnFocus = () => {
-		openDatePicker()
+		// openDatePicker() - désactivé pour améliorer l'accessibilité
 		emit('focus')
 	}
 
 	const openDatePickerOnIconClick = () => {
 		toggleDatePicker()
+	}
+
+	// Gestionnaire d'événement clavier pour l'input
+	const handleInputKeydown = (event: KeyboardEvent) => {
+		// Ouvrir le calendrier uniquement lorsque la touche Entrée est pressée
+		if (event.key === 'Enter') {
+			openDatePicker()
+			event.preventDefault() // Empêcher la soumission du formulaire
+		}
+		// Fermer le calendrier lorsque la touche Escape est pressée
+		else if ((event.key === 'Escape' || event.key === 'Esc') && isDatePickerVisible.value) {
+			isDatePickerVisible.value = false
+			emit('closed')
+			validateDates() // Valider les dates à la fermeture
+			event.preventDefault()
+		}
 	}
 
 	defineExpose({
@@ -963,6 +972,7 @@
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
+						@keydown="handleInputKeydown"
 						@update:model-value="updateSelectedDates"
 						@prepend-icon-click="openDatePickerOnIconClick"
 						@append-icon-click="openDatePickerOnIconClick"
