@@ -864,6 +864,7 @@
 				:period="props.period"
 				:auto-clamp="props.autoClamp"
 				:display-asterisk="props.displayAsterisk"
+				:is-validate-on-blur="props.isValidateOnBlur"
 				@update:model-value="handleDateTextInputUpdate"
 				@date-selected="handleDateTextInputSelection"
 				@blur="handleInputBlur"

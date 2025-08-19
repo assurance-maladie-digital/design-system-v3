@@ -99,7 +99,6 @@ export const Required: StoryObj = {
 								required
 								format="DD/MM/YYYY"
 								placeholder="Date requise"
-								:is-validate-on-blur="true" 
 							/>
 						</div>
 					</div>

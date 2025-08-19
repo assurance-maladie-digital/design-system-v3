@@ -32,6 +32,7 @@ export const Required: StoryObj = {
                                     format="DD/MM/YYYY"
                                     placeholder="Date requise"
                                     noCalendar
+                                    :is-validate-on-blur="false"
                                 />
                             </div>
                         </div>
