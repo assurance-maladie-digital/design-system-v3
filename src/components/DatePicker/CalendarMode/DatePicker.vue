@@ -127,6 +127,8 @@
 		todayInString,
 	})
 
+	const onblur = ref(false)
+
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
@@ -209,7 +211,11 @@
 
 		// Vérifier si le champ est requis et vide
 		if ((forceValidation || !isUpdatingFromInternal.value) && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
-			if (props.readonly || !props.isValidateOnBlur) {
+			if (props.readonly) {
+				return
+			}
+			// Ne pas afficher d'erreur si on est sur une perte de focus et si isValidateOnBlur est false
+			if (onblur.value && !props.isValidateOnBlur) {
 				return
 			}
 			// Ne pas afficher d'erreur si on est dans le contexte du mounted initial
@@ -660,6 +666,7 @@
 
 	const handleInputBlur = () => {
 		emit('blur')
+		onblur.value = true
 		if (props.isValidateOnBlur) {
 			validateDates(true)
 		}
