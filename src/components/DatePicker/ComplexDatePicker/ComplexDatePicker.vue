@@ -1097,7 +1097,7 @@
 </script>
 
 <template>
-	{{  props.isValidateOnBlur }}
+	{{ props.isValidateOnBlur }}
 	<div
 		class="date-picker-container"
 	>

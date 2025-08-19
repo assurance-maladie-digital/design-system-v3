@@ -3,12 +3,12 @@ import { ref } from 'vue'
 import DatePicker from '../../DatePicker/CalendarMode/DatePicker.vue'
 
 export default {
-	title: 'Composants/Formulaires/DatePicker/Validation/Submit/DateTextInput',
+	title: 'Composants/Formulaires/DatePicker/Validation/Submit/ComnbinedMode',
 	component: DatePicker,
 	parameters: {
 		docs: {
 			description: {
-				component: 'Exemples de validation pour le composant DatePicker avec calendrier.',
+				component: 'Exemples de validation pour le ComnbinedMode.',
 			},
 		},
 	},
@@ -31,7 +31,7 @@ export const Required: StoryObj = {
                                     required
                                     format="DD/MM/YYYY"
                                     placeholder="Date requise"
-                                    noCalendar
+                                    useCombinedMode
                                 />
                             </div>
                         </div>
@@ -70,10 +70,11 @@ export const Required: StoryObj = {
 		components: { DatePicker },
 		setup() {
 			const datePicker1 = ref()
-			const date1 = ref('')
+			const date1 = ref(null)
 
 			const handleSubmit = () => {
 				const isValid1 = datePicker1.value?.validateOnSubmit()
+
 				if (!isValid1) {
 					alert('Corrigez les erreurs avant de soumettre !')
 				}
@@ -97,9 +98,10 @@ export const Required: StoryObj = {
                                 ref="datePicker1"
                                 v-model="date1"
                                 required
-                                noCalendar
                                 format="DD/MM/YYYY"
                                 placeholder="Date requise"
+                                useCombinedMode
+                                :is-validate-on-blur="false"
                             />
                         </div>
                     </div>
@@ -129,7 +131,6 @@ export const WithCustomRulesAndRequired: StoryObj = {
                                     required
                                     format="DD/MM/YYYY"
                                     placeholder="Date requise"
-                                    noCalendar
                                     :customRules="[
             { type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } },
         ]"
@@ -201,7 +202,6 @@ export const WithCustomRulesAndRequired: StoryObj = {
                                 required
                                 format="DD/MM/YYYY"
                                 placeholder="Date requise"
-                                noCalendar
                                 :custom-rules="[
             { 		type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourdhui' } },
         ]"
