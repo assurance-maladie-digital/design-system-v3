@@ -1,0 +1,65 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    modified-class
+    test-component
+  "
+  id="modified-modified-unique-id"
+  style="border: 1px solid black;"
+>
+  <h1>
+    modified-required-prop
+  </h1>
+  <!-- v-if -->
+  <!-- v-if -->
+  <p class="test-string-prop">
+    Modified string prop value
+  </p>
+  <p class="test-boolean-false">
+    Boolean prop is false
+  </p>
+  <p class="test-bordered-true">
+    Bordered is true
+  </p>
+  <!-- v-if -->
+  <p class="test-color-set">
+    Color is set to modified-color
+  </p>
+  <!-- v-if -->
+  <!-- v-if -->
+</div>
+`;
+
+exports[`snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="test-component"
+  id="required-required-unique-id"
+>
+  <h1>
+    required-required-prop
+  </h1>
+  <p class="test-null-string">
+    Null string prop is null
+  </p>
+  <p class="test-undefined-string">
+    Undefined string prop is undefined
+  </p>
+  <p class="test-string-prop">
+    String prop default value
+  </p>
+  <!-- v-if -->
+  <!-- v-if -->
+  <p class="test-bordered-false">
+    Bordered is false
+  </p>
+  <!-- v-if -->
+  <p class="test-color-not-set">
+    Color is not set
+  </p>
+  <div class="test-required-boolean">
+    Required boolean is true
+  </div>
+</div>
+`;
