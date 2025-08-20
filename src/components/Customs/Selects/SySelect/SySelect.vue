@@ -1071,7 +1071,8 @@
 }
 
 :deep(.v-field__input) {
-	color: tokens.$grey-darken-20;
+	opacity: 1;
+	color: tokens.$grey-darken-20 !important;
 	cursor: pointer;
 	caret-color: transparent;
 }
