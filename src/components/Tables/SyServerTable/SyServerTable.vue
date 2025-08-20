@@ -13,7 +13,7 @@
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
 	import { useTableHeaders } from '../common/useTableHeaders'
-	import { useTableItems } from '../common/useTableItems'
+	// import { useTableItems } from '../common/useTableItems'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
 	import { useTableAria } from '../common/useTableAria'
@@ -93,13 +93,15 @@
 	// For server-side tables, we don't use the filteredItems from useTableItems
 	// Instead, we use the items directly from props as they are already filtered server-side
 	// But we still need the createEmptyItemWithStructure function
-	const { createEmptyItemWithStructure } = useTableItems({
-		items: itemsRef,
-		headers,
-		filters,
-		options,
-		filterItems,
-	})
+
+	// TODO:  A voir avec @David
+	// const { createEmptyItemWithStructure } = useTableItems({
+	// 	items: itemsRef,
+	// 	headers,
+	// 	filters,
+	// 	options,
+	// 	filterItems,
+	// })
 
 	// Use the pagination composable with serverItemsLength
 	const itemsLength = computed(() => props.serverItemsLength)
@@ -251,7 +253,7 @@
 			v-model="model"
 			:headers="displayHeaders"
 			color="primary"
-			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
+			:items="processItems(props.items)"
 			:items-length="props.serverItemsLength || 0"
 			:density="props.density"
 			:show-select="props.showSelect"
