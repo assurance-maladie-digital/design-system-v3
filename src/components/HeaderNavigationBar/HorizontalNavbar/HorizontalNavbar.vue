@@ -1,5 +1,12 @@
 <script setup lang="ts">
-	import type { NavigationItem } from '../types'
+	import { VSheet } from 'vuetify/components'
+	import { computed, ref, watch, onMounted } from 'vue'
+	import { useRouter, useRoute } from 'vue-router'
+
+	import SyTabs from '../../Customs/SyTabs/SyTabs.vue'
+	import type { TabItem } from '../../Customs/SyTabs/types'
+
+	import { type NavigationItem } from '../types'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
 
@@ -14,32 +21,178 @@
 	}>()
 
 	const options = useCustomizableOptions(config, props)
+	const route = useRoute()
+	const router = useRouter()
 
+	// État pour suivre l'élément actif
+	const activeTab = ref<number>(0)
+	const activeItemIndex = ref<number>(-1)
+
+	// Convertir les items de navigation en format TabItem pour SyTabs
+	const tabItems = computed<TabItem[]>(() => {
+		if (!Array.isArray(props.items)) return []
+		return props.items.map((item, index) => ({
+			label: item.label,
+			value: index,
+			content: '',
+		}))
+	})
+
+	// Fonction pour déterminer si un élément de navigation est actif
+	function isActive(item: NavigationItem, index: number): boolean {
+		// Si l'élément est explicitement activé par un clic ou initialisé
+		if (activeItemIndex.value === index) {
+			return true
+		}
+
+		// Pour les liens internes (router-link)
+		if (item.to && route) {
+			// Gestion des objets de route
+			if (typeof item.to === 'object') {
+				// Comparer avec le chemin de la route actuelle
+				const path = item.to.path || ''
+				const isActiveRoute = route.path === path
+				if (isActiveRoute) activeItemIndex.value = index
+				return isActiveRoute
+			}
+
+			// Gestion des chaînes de caractères
+			if (typeof item.to === 'string') {
+				// Comparer exactement ou vérifier si c'est un sous-chemin
+				const isActiveRoute = route.path === item.to || (item.to !== '/' && route.path.startsWith(item.to))
+				if (isActiveRoute) activeItemIndex.value = index
+				return isActiveRoute
+			}
+		}
+
+		// Pour les liens externes, on pourrait comparer avec window.location.href
+		if (item.href && typeof window !== 'undefined') {
+			const isActiveLink = window.location.href === item.href
+			if (isActiveLink) activeItemIndex.value = index
+			return isActiveLink
+		}
+
+		return false
+	}
+
+	// Fonction pour activer un élément au clic
+	function setActiveItem(index: number) {
+		activeItemIndex.value = index
+		activeTab.value = index
+	}
+
+	// Fonction pour gérer la navigation lors d'un changement d'onglet
+	function handleTabChange(index: number) {
+		// Mettre à jour l'élément actif
+		setActiveItem(index)
+
+		// Récupérer l'élément correspondant à cet index
+		const item = props.items?.[index]
+		if (!item) return
+
+		// Navigation vers la destination si nécessaire
+		if (item.to) {
+			router.push(item.to)
+			return
+		}
+
+		// Gestion des liens externes avec href si nécessaire
+		if (item.href && item.href.trim() !== '') {
+			window.location.href = item.href
+		}
+	}
+
+	// Initialiser l'élément actif au montage
+	onMounted(() => {
+		// Si les items ne sont pas un tableau ou vides, ne rien faire
+		if (!Array.isArray(props.items) || props.items.length === 0) return
+
+		let foundActiveItem = false
+
+		// Ne vérifier les routes que si route est défini
+		if (route) {
+			// Trouver l'élément actif basé sur la route courante
+			for (let i = 0; i < props.items.length; i++) {
+				if (isActive(props.items[i], i)) {
+					activeItemIndex.value = i
+					activeTab.value = i
+					foundActiveItem = true
+					break
+				}
+			}
+		}
+
+		// Si aucun élément n'est actif, sélectionner le premier par défaut
+		if (!foundActiveItem && props.items.length > 0) {
+			activeItemIndex.value = 0
+			activeTab.value = 0
+		}
+	})
+
+	// Surveiller les changements de route pour mettre à jour l'élément actif
+	watch(() => route?.path, () => {
+		// Si route est undefined, ne rien faire
+		if (!route) return
+		if (Array.isArray(props.items)) {
+			// Reset activeItemIndex
+			activeItemIndex.value = -1
+
+			// Trouver l'élément actif basé sur la nouvelle route
+			for (let i = 0; i < props.items.length; i++) {
+				if (isActive(props.items[i], i)) {
+					activeItemIndex.value = i
+					activeTab.value = i
+					break
+				}
+			}
+		}
+	})
 </script>
 
 <template>
-	<VSheet v-bind="options.sheet">
+	<VSheet
+		v-bind="{
+			theme: options.sheet.theme,
+			color: options.sheet.color,
+			class: { 'v-sheet--dense': options.sheet.dense }
+		}"
+	>
 		<div class="horizontal-menu px-xl-0 px-14">
 			<slot name="navigation-bar-prepend" />
 			<slot>
-				<VTabs
+				<SyTabs
 					class="horizontal-menu__tabs"
-					v-bind="options.tabs"
+					:items="tabItems"
+					:model-value="Number(activeTab)"
+					:vuetify-options="{
+						sheet: { theme: 'dark', color: '#07275C' },
+						tab: { 'base-color': '#B5BECE', 'active-color': '#ffffff', 'slider-color': '#fff' },
+						tabs: { height: '60' }
+					}"
+					@update:model-value="(val) => {
+						activeTab = Number(val);
+						handleTabChange(Number(val));
+					}"
 				>
-					<VTab
-						v-for="(item, index) in items"
+					<!-- Ajout des slots pour le contenu personnalisé -->
+					<template #tabs-prepend>
+						<!-- Contenu optionnel avant les onglets -->
+					</template>
+
+					<template #default>
+						<!-- Contenu personnalisé pour les onglets si nécessaire -->
+					</template>
+
+					<!-- Utiliser v-for directement sur les slots dynamiques sans template imbriqués -->
+					<template
+						v-for="(item, index) in props.items"
+						#[`panel-${index}`]
 						:key="index"
-						:href="item.href"
-						:to="item.to"
-						v-bind="options.tab"
-						tabindex="0"
-						class="horizontal-menu__item"
 					>
-						<span class="horizontal-menu__item-link">
-							{{ item.label }}
-						</span>
-					</VTab>
-				</VTabs>
+						<!-- Le contenu du panneau est intentionnellement vide -->
+						<!-- Les liens sont générés directement dans les onglets, pas besoin de contenu dans les panneaux -->
+					</template>
+				</SyTabs>
 			</slot>
 			<slot name="navigation-bar-append" />
 		</div>
@@ -57,20 +210,77 @@
 	margin: 0 auto;
 }
 
-.horizontal-menu__tabs {
+.horizontal-menu__nav {
 	flex: 1 1 0;
+	width: 100%;
+}
+
+.horizontal-menu__list {
+	display: flex;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
 }
 
 .horizontal-menu__item {
 	cursor: pointer;
+	display: flex;
+	align-items: stretch;
 }
 
-.horizontal-menu__item-link {
+.horizontal-menu__link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 16px;
+	min-height: 53px; /* Correspond à la hauteur définie dans config.ts */
 	font-size: 0.875rem;
 	font-weight: 700;
+	text-decoration: none;
+	color: v-bind("options.tab['base-color']"); /* Utilise la couleur du texte définie dans les options */
+	transition: color 0.2s ease;
+
+	&:hover {
+		color: #fff;
+	}
+
+	&:focus-visible {
+		outline: 3px solid #fff; /* Bordure blanche pour un ratio de contraste élevé */
+		outline-offset: -3px;
+		box-shadow: 0 0 0 1px #07275c; /* Contour secondaire pour améliorer la visibilité */
+	}
+
+	&--active,
+	&[aria-current='page'] {
+		color: #fff;
+		border-bottom: 3px solid #fff; /* Bordure solide et plus visible pour les éléments actifs */
+		box-shadow: 0 3px 0 0 #fff; /* Double effet pour être sûr que la bordure est bien visible */
+
+		&:focus-visible {
+			outline: 3px solid #fff;
+			outline-offset: 12px;
+		}
+	}
 }
 
-.v-tab-item--selected span {
+.horizontal-menu__panel-link {
+	display: inline-block;
+	padding: 8px 16px;
+	margin-top: 8px;
+	background-color: v-bind('options.sheet.color');
 	color: #fff;
+	text-decoration: none;
+	border-radius: 4px;
+	transition: background-color 0.2s ease;
+
+	&:hover {
+		filter: brightness(90%);
+	}
+
+	&:focus-visible {
+		outline: 3px solid #fff;
+		outline-offset: 2px;
+	}
 }
 </style>
