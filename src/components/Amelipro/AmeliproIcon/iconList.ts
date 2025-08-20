@@ -107,6 +107,8 @@ export const iconList: IconItem[] = [
 	{ name: 'notePencil' },
 	{ name: 'signature' },
 	{ name: 'signature2' },
+	{ name: 'shieldPlus' },
+	{ name: 'delegation' },
 	{
 		name: 'chevronLeft',
 		noBackground: true,
@@ -225,6 +227,10 @@ export const iconList: IconItem[] = [
 	},
 	{
 		name: 'arrowRight',
+		noBackground: true,
+	},
+	{
+		name: 'diamondNoCircle',
 		noBackground: true,
 	},
 ]
