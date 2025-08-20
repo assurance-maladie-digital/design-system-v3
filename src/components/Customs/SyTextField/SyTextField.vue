@@ -219,13 +219,19 @@
 		: [],
 	)
 
+	// Check if customRules contains a 'required' rule
+	const hasCustomRequiredRule = () => {
+		return props.customRules.some(rule => rule.type === 'required')
+	}
+
 	const validateField = (value: string | number | null) => {
 		if (props.readonly) {
 			validation.clearValidation()
 			return true
 		}
 
-		if (!value && !props.required) {
+		// Don't short-circuit if a custom required rule exists
+		if (!value && !props.required && !hasCustomRequiredRule()) {
 			validation.clearValidation()
 			return true
 		}
