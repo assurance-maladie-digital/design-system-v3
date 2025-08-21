@@ -1,0 +1,342 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+<Meta title="Guide Du Dev/Guide de Validation des Formulaires"/>
+
+# Guide de Validation des Formulaires
+
+Ce guide pratique explique comment utiliser le système de validation des formulaires du Design System dans vos applications.
+
+## Les bases de la validation
+
+Le système de validation offre un mécanisme complet et intuitif pour valider les entrées utilisateur avec trois niveaux de retour :
+
+- **Erreurs** 🔴 : Empêchent la soumission du formulaire
+- **Avertissements** 🟠 : Informent l'utilisateur sans bloquer la soumission
+- **Succès** 🟢 : Confirment la validité de l'entrée
+
+## Mise en place simple
+
+Voici comment mettre en place une validation basique sur un champ :
+
+<Source dark code={`
+<template>
+  <SyTextField
+    v-model="email"
+    label="Email"
+    :custom-rules="emailRules"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { SyTextField } from '@cnamts/synapse';
+
+const email = ref('');
+
+const emailRules = [
+  { 
+    type: 'required',
+    options: { message: "L'email est obligatoire" }
+  },
+  { 
+    type: 'email',
+    options: { message: "L'email n'est pas valide" }
+  }
+];
+</script>
+`}/>
+
+## Validation complète avec les 3 niveaux
+
+Utilisez les différents types de règles pour une expérience utilisateur riche :
+
+<Source dark code={`
+<script setup>
+	import { ref } from 'vue'
+	import PasswordField from '@/components/PasswordField/PasswordField.vue'
+
+	const password = ref('')
+
+	// Règles d'erreur (bloquantes)
+	const passwordRules = [
+		{
+			type: 'required',
+			options: { 
+        message: 'Le mot de passe est obligatoire',
+      },
+		},
+		{
+			type: 'minLength',
+			options: { 
+        length: 8, 
+        message: 'Le mot de passe doit contenir au moins 8 caractères',
+      // si pas de successMessage, le message par defaut est affiché
+        successMessage: 'Le mot de passe est sécurisé',
+         },
+		},
+	]
+
+	// Règles d'avertissement (non-bloquantes)
+	const passwordWarningRules = [
+		{
+			type: 'custom',
+			options: {
+				validate: (value) => {
+					const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
+					if (!hasSpecialChar) {
+						return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux'
+					}
+					return true
+				},
+				fieldIdentifier: 'password',
+			},
+		},
+	]
+
+  </script>
+
+<template>
+	<PasswordField
+		v-model="password"
+		label="Mot de passe"
+		:custom-warning-rules="passwordWarningRules"
+		:custom-rules="passwordRules"
+	/>
+</template>
+
+`}/>
+
+## Validation à la soumission avec validateOnSubmit
+
+La méthode `validateOnSubmit` est essentielle pour valider l'ensemble du formulaire lors de sa soumission :
+
+<Source dark code={`
+<template>
+  <form @submit.prevent="handleSubmit">
+    <SyTextField
+      ref="emailField"
+      v-model="email"
+      label="Email"
+      :custom-rules="emailRules"
+    />
+    
+    <PasswordField
+      ref="passwordField"
+      v-model="password"
+      label="Mot de passe"
+      type="password"
+      :custom-rules="passwordRules"
+    />
+    
+    <VBtn type="submit">Se connecter</VBtn>
+    
+    <p v-if="formError" class="error-message">{{ formError }}</p>
+  </form>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { SyTextField, PasswordField } from '@cnamts/synapse';
+
+const email = ref('');
+const password = ref('');
+const formError = ref('');
+
+const emailField = ref();
+const passwordField = ref();
+
+const emailRules = [
+  { type: 'required', options: { message: "L'email est obligatoire" } },
+  { type: 'email', options: { message: "L'email n'est pas valide" } }
+];
+
+const passwordRules = [
+  { type: 'required', options: { message: 'Le mot de passe est obligatoire' } }
+];
+
+const handleSubmit = async () => {
+  formError.value = '';
+  
+  // Validation de tous les champs
+  const isEmailValid = await emailField.value.validateOnSubmit();
+  const isPasswordValid = await passwordField.value.validateOnSubmit();
+  
+  if (isEmailValid && isPasswordValid) {
+    // Soumettre le formulaire
+    console.log('Formulaire soumis avec succès !');
+    // loginUser(email.value, password.value);
+  } else {
+    formError.value = 'Veuillez corriger les erreurs dans le formulaire';
+  }
+};
+</script>
+`}/>
+
+## Validation croisée entre champs
+
+Parfois, la validation d'un champ dépend de la valeur d'un autre champ. Voici comment gérer ce cas :
+
+<Source dark code={`
+<template>
+  <form @submit.prevent="handleSubmit">
+    <PasswordField
+      ref="passwordField"
+      v-model="password"
+      label="Mot de passe"
+      type="password"
+      :custom-rules="passwordRules"
+    />
+    
+    <PasswordField
+      ref="confirmPasswordField"
+      v-model="confirmPassword"
+      label="Confirmer le mot de passe"
+      type="password"
+      :custom-rules="confirmPasswordRules"
+    />
+    
+    <VBtn type="submit">S'inscrire</VBtn>
+  </form>
+</template>
+
+<script setup>
+import { ref, watch } from 'vue';
+import { PasswordField } from '@cnamts/synapse';
+
+const password = ref('');
+const confirmPassword = ref('');
+
+const passwordField = ref();
+const confirmPasswordField = ref();
+
+const passwordRules = [
+  { type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
+  { type: 'minLength', options: { length: 8, message: 'Le mot de passe doit contenir au moins 8 caractères' } }
+];
+
+const confirmPasswordRules = [
+  { type: 'required', options: { message: 'La confirmation du mot de passe est obligatoire' } },
+  {
+    type: 'custom',
+    options: {
+      validate: (value) => {
+        if (value !== password.value) {
+          return 'Les mots de passe ne correspondent pas';
+        }
+        return true;
+      }
+    }
+  }
+];
+
+// Revalider la confirmation lorsque le mot de passe change
+watch(password, () => {
+  if (confirmPassword.value && confirmPasswordField.value) {
+    // Forcer la validation du champ de confirmation
+    confirmPasswordField.value.validateOnSubmit();
+  }
+});
+
+const handleSubmit = async () => {
+  // Validation de tous les champs
+  const isPasswordValid = await passwordField.value.validateOnSubmit();
+  const isConfirmValid = await confirmPasswordField.value.validateOnSubmit();
+  
+  if (isPasswordValid && isConfirmValid) {
+    // Soumettre le formulaire
+    console.log('Inscription réussie !');
+  }
+};
+</script>
+`}/>
+
+## Composants avec validation intégrée
+
+Plusieurs composants du Design System intègrent déjà la validation :
+
+- **SyTextField** : Pour les champs texte
+- **NirField** : Pour les numéros de sécurité sociale
+- **DatePicker** : Pour les dates
+- **PeriodField** : Pour les périodes (deux dates liées)
+- **PasswordField** : Pour les mots de passe sécurisés
+
+### Exemple avec NirField
+
+<Source dark code={`
+<template>
+  <form @submit.prevent="handleSubmit">
+    <NirField
+      ref="nirFieldRef"
+      v-model="nirValue"
+      label="Numéro de sécurité sociale"
+    />
+    
+    <SyButton type="submit">Valider</SyButton>
+  </form>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { NirField, SyButton } from '@cnamts/synapse';
+
+const nirValue = ref('');
+const nirFieldRef = ref();
+
+const handleSubmit = async () => {
+  const isValid = await nirFieldRef.value.validateOnSubmit();
+  
+  if (isValid) {
+    console.log('NIR valide :', nirValue.value);
+  }
+};
+</script>
+`}/>
+
+## Règles de validation disponibles
+
+### Règles génériques
+- `required` : Champ obligatoire
+- `minLength` / `maxLength` : Longueur minimale/maximale
+- `min` / `max` : Valeur minimale/maximale pour les nombres
+- `email` : Format d'email valide
+- `matchPattern` : Correspondance à une expression régulière
+
+### Règles de dates
+- `notBeforeToday` / `notAfterToday` : Date après/avant aujourd'hui
+- `notBeforeDate` / `notAfterDate` : Date après/avant une date spécifique
+- `notWeekend` : Jour ouvrable
+- `isHolidayDay` : Jour non férié
+
+### Règles personnalisées
+Utilisez le type `custom` avec une fonction `validate` pour créer vos propres règles :
+
+<Source dark code={`
+const customRule = {
+  type: 'custom',
+  options: {
+    validate: (value) => {
+      // Votre logique personnalisée
+      if (!condition) {
+        return 'Message d\'erreur personnalisé';
+      }
+      return true; // Valide
+    },
+    // Optionnel : traiter comme avertissement au lieu d'erreur
+    isWarning: false
+  }
+};
+`}/>
+
+## Bonnes pratiques
+
+1. **Validation progressive** : Validez pendant la saisie pour une rétroaction immédiate
+2. **Messages clairs** : Utilisez des messages d'erreur explicites et constructifs
+3. **Validation côté client ET serveur** : Ne vous fiez jamais uniquement à la validation côté client
+4. **Utilisez validateOnSubmit** : Assurez-vous que tous les champs sont validés à la soumission
+5. **Hiérarchisez les erreurs** : Affichez d'abord les erreurs les plus importantes
+6. **Utilisez les avertissements** pour les recommandations non-bloquantes
+7. **Célébrez la réussite** avec des messages de succès pour renforcer les bonnes pratiques
+
+## Conclusion
+
+Le système de validation du Design System vous permet de créer des formulaires intuitifs avec des retours utilisateur riches. En combinant validation à la saisie et validation à la soumission, vous offrez une expérience utilisateur optimale tout en garantissant l'intégrité des données.
