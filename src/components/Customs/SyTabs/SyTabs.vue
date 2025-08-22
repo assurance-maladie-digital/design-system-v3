@@ -14,7 +14,7 @@
 	}>(), {
 		modelValue: undefined,
 		confirmTabChange: false,
-		confirmationMessage: 'Êtes-vous sûr de vouloir changer d\'onglet? Les changements non enregistrés seront perdus.'
+		confirmationMessage: 'Êtes-vous sûr de vouloir changer d\'onglet? Les changements non enregistrés seront perdus.',
 	})
 
 	const emit = defineEmits(['update:modelValue', 'cancel-navigation'])
