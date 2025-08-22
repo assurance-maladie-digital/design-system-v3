@@ -55,6 +55,8 @@
 			label: item.label,
 			value: index,
 			content: '',
+			href: item.href,
+			to: item.to,
 		}))
 	})
 
@@ -105,6 +107,12 @@
 	function handleTabChange(index: number) {
 		// Mettre à jour l'élément actif
 		setActiveItem(index)
+
+		// Si confirmTabChange est activé, ne pas gérer la navigation ici
+		// car c'est SyTabs qui s'en charge après la confirmation
+		if (props.confirmTabChange) {
+			return
+		}
 
 		// Récupérer l'élément correspondant à cet index
 		const item = props.items?.[index]

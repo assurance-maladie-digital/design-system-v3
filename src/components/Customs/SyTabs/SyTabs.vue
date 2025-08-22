@@ -53,6 +53,10 @@
 		// Si l'index est déjà actif, ne rien faire
 		if (index === activeItemIndex.value) return
 
+		// Récupérer l'item pour la navigation potentielle
+		const item = props.items[index]
+		const hasHref = item && (item.href || item.to)
+
 		// Si la confirmation est activée, demander confirmation
 		if (props.confirmTabChange) {
 			const confirmMessage = props.confirmationMessage || 'Êtes-vous sûr de vouloir changer d\'onglet?'
@@ -63,6 +67,24 @@
 				emit('cancel-navigation')
 				return
 			}
+
+			// Si l'utilisateur a confirmé et qu'il y a un href, naviguer
+			if (hasHref) {
+				if (item.href) {
+					window.location.href = item.href
+					return // Arrêter ici car on navigue ailleurs
+				}
+				else if (item.to) {
+					// Pour les cas où vue-router est utilisé
+					// Notez que cela nécessiterait un accès au router,
+					// donc on se limite au href pour l'instant
+				}
+			}
+		}
+		// Sinon pas de confirmation nécessaire, naviguer directement si href présent
+		else if (hasHref && item.href) {
+			window.location.href = item.href
+			return
 		}
 
 		// Mettre à jour l'onglet actif
