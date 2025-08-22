@@ -81,6 +81,9 @@
 		activeTab.value = index
 	}
 
+	// Référence vers le composant SyTabs
+	const syTabsRef = ref<InstanceType<typeof SyTabs> | null>(null)
+
 	// Fonction pour gérer la navigation lors d'un changement d'onglet
 	function handleTabChange(index: number) {
 		// Mettre à jour l'élément actif
@@ -100,6 +103,50 @@
 		if (item.href && item.href.trim() !== '') {
 			window.location.href = item.href
 		}
+	}
+
+	// Fonction pour gérer l'annulation d'un changement d'onglet
+	function handleTabChangeCanceled() {
+		// Restaurer l'onglet précédent en utilisant la méthode exposée par SyTabs
+		if (syTabsRef.value) {
+			syTabsRef.value.restorePreviousTab()
+		}
+	}
+
+	// Implémentation de l'interface UrlValidator pour vérifier si l'URL correspond à l'onglet
+	const urlValidator = {
+		validateUrl: (tabValue: string | number) => {
+			// Conversion de la valeur d'onglet en index
+			const index = typeof tabValue === 'number' ? tabValue : tabItems.value.findIndex(item => item.value === tabValue)
+			if (index === -1) return false
+
+			// Récupérer l'item de navigation correspondant
+			const navigationItem = props.items[index]
+			if (!navigationItem) return false
+
+			// Pour les liens internes (router-link), comparer avec la route actuelle
+			if (navigationItem.to && route) {
+				// Gestion des objets de route
+				if (typeof navigationItem.to === 'object') {
+					const path = navigationItem.to.path || ''
+					return route.path === path
+				}
+
+				// Gestion des chaînes de caractères
+				if (typeof navigationItem.to === 'string') {
+					return route.path === navigationItem.to
+						|| (navigationItem.to !== '/' && route.path.startsWith(navigationItem.to))
+				}
+			}
+
+			// Pour les liens externes, comparer avec window.location.href
+			if (navigationItem.href && typeof window !== 'undefined') {
+				return window.location.href === navigationItem.href
+			}
+
+			// Si aucun lien n'est défini, retourner true par défaut
+			return true
+		},
 	}
 
 	// Initialiser l'élément actif au montage
@@ -161,6 +208,7 @@
 			<slot name="navigation-bar-prepend" />
 			<slot>
 				<SyTabs
+					ref="syTabsRef"
 					class="horizontal-menu__tabs"
 					:items="tabItems"
 					:model-value="Number(activeTab)"
@@ -169,10 +217,13 @@
 						tab: { 'base-color': '#B5BECE', 'active-color': '#ffffff', 'slider-color': '#fff' },
 						tabs: { height: '60' }
 					}"
+					:url-validator="urlValidator"
+					:sync-with-url="true"
 					@update:model-value="(val) => {
 						activeTab = Number(val);
 						handleTabChange(Number(val));
 					}"
+					@tab-change-canceled="handleTabChangeCanceled"
 				>
 					<!-- Ajout des slots pour le contenu personnalisé -->
 					<template #tabs-prepend>

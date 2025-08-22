@@ -267,3 +267,287 @@ const items = [
 		],
 	},
 }
+
+/**
+ * Exemple démontrant la fonctionnalité de validation d'URL.
+ * Cette story simule un scénario où la validation d'URL est activée pour vérifier
+ * si l'onglet sélectionné correspond à l'URL actuelle avant de permettre le changement d'onglet.
+ */
+export const WithUrlValidation: Story = {
+	render: () => ({
+		components: { SyTabs },
+		setup() {
+			const activeTab = ref('tab1')
+			const currentUrl = ref('/page1')
+			const tabItems = [
+				{ label: 'Page 1', value: 'tab1', content: 'Contenu de la page 1' },
+				{ label: 'Page 2', value: 'tab2', content: 'Contenu de la page 2' },
+				{ label: 'Page 3', value: 'tab3', content: 'Contenu de la page 3' },
+			]
+
+			const messages = ref([
+				{ type: 'info', text: 'Démonstration de la validation d\'URL avec les onglets.' },
+			])
+
+			// Simulateur d'URL pour la démonstration
+			const urlValidator = {
+				validateUrl: (tabValue: string | number) => {
+					// Correspondance entre les valeurs d'onglet et les URLs simulées
+					const urlMap: Record<string, string> = {
+						tab1: '/page1',
+						tab2: '/page2',
+						tab3: '/page3',
+					}
+
+					// Vérifier si l'URL actuelle correspond à l'onglet
+					const tabUrl = urlMap[String(tabValue)] || ''
+					return tabUrl === currentUrl.value
+				},
+			}
+
+			// Simulation de changement d'URL
+			function changeUrl(url: string) {
+				currentUrl.value = url
+
+				// Mettre à jour l'onglet actif en fonction de l'URL
+				const urlMap: Record<string, string> = {
+					'/page1': 'tab1',
+					'/page2': 'tab2',
+					'/page3': 'tab3',
+				}
+
+				activeTab.value = urlMap[url] || 'tab1'
+
+				messages.value.push({
+					type: 'success',
+					text: `URL changée pour: ${url}`,
+				})
+			}
+
+			function handleTabChangeAttempt(newValue: string) {
+				// Utiliser la même validation que dans le composant
+				const isValid = urlValidator.validateUrl(newValue)
+
+				if (isValid) {
+					activeTab.value = newValue
+					messages.value.push({
+						type: 'success',
+						text: `Onglet changé pour: ${newValue}`,
+					})
+				}
+				else {
+					messages.value.push({
+						type: 'error',
+						text: `⚠️ Changement d"onglet bloqué: l"URL actuelle (${currentUrl.value}) ne correspond pas à l"onglet ${newValue}`,
+					})
+				}
+			}
+
+			function handleTabCanceled(value: string) {
+				messages.value.push({
+					type: 'warning',
+					text: `Changement d"onglet annulé pour: ${value}`,
+				})
+			}
+
+			return {
+				activeTab,
+				tabItems,
+				urlValidator,
+				currentUrl,
+				changeUrl,
+				messages,
+				handleTabCanceled,
+				handleTabChangeAttempt,
+			}
+		},
+		template: `
+      <div class="demo-container">
+        <div class="url-bar mb-4 p-2 border rounded">
+          <strong>URL actuelle:</strong> {{ currentUrl }}
+          <div class="mt-2 d-flex gap-2">
+            <button 
+              class="px-3 py-1 rounded" 
+              :class="currentUrl === '/page1' ? 'bg-primary text-white' : 'bg-grey-lighten-3'" 
+              @click="changeUrl('/page1')">Page 1</button>
+            <button 
+              class="px-3 py-1 rounded" 
+              :class="currentUrl === '/page2' ? 'bg-primary text-white' : 'bg-grey-lighten-3'" 
+              @click="changeUrl('/page2')">Page 2</button>
+            <button 
+              class="px-3 py-1 rounded" 
+              :class="currentUrl === '/page3' ? 'bg-primary text-white' : 'bg-grey-lighten-3'" 
+              @click="changeUrl('/page3')">Page 3</button>
+          </div>
+        </div>
+        
+        <div class="demo-tabs mb-4">
+          <h4>Navigation par onglets (avec vérification d'URL)</h4>
+          <p>Essayez de changer d'onglet sans changer d'URL pour voir l'effet de la validation.</p>
+          <SyTabs 
+            v-model="activeTab" 
+            :items="tabItems" 
+            :url-validator="urlValidator" 
+            :sync-with-url="true"
+            @tab-change-canceled="handleTabCanceled"
+            @update:model-value="handleTabChangeAttempt"
+          />
+        </div>
+        
+        <div class="log-container p-3 border rounded bg-grey-lighten-4" style="max-height: 200px; overflow-y: auto;">
+          <h4>Journal des événements:</h4>
+          <div 
+            v-for="(msg, index) in messages" 
+            :key="index" 
+            class="log-entry py-1 px-2 my-1 rounded" 
+            :class="{
+              'bg-success-lighten-4': msg.type === 'success',
+              'bg-error-lighten-4': msg.type === 'error',
+              'bg-warning-lighten-4': msg.type === 'warning',
+              'bg-info-lighten-4': msg.type === 'info'
+            }">
+            {{ msg.text }}
+          </div>
+        </div>
+      </div>
+    `,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <div class="demo-container">
+    <div class="url-bar mb-4 p-2 border rounded">
+      <strong>URL actuelle:</strong> {{ currentUrl }}
+      <div class="mt-2 d-flex gap-2">
+        <button 
+          class="px-3 py-1 rounded" 
+          :class="currentUrl === '/page1' ? 'bg-primary text-white' : 'bg-grey-lighten-3'" 
+          @click="changeUrl('/page1')">Page 1</button>
+        <button 
+          class="px-3 py-1 rounded" 
+          :class="currentUrl === '/page2' ? 'bg-primary text-white' : 'bg-grey-lighten-3'" 
+          @click="changeUrl('/page2')">Page 2</button>
+        <button 
+          class="px-3 py-1 rounded" 
+          :class="currentUrl === '/page3' ? 'bg-primary text-white' : 'bg-grey-lighten-3'" 
+          @click="changeUrl('/page3')">Page 3</button>
+      </div>
+    </div>
+    
+    <div class="demo-tabs mb-4">
+      <h4>Navigation par onglets (avec vérification d'URL)</h4>
+      <p>Essayez de changer d'onglet sans changer d'URL pour voir l'effet de la validation.</p>
+      <SyTabs 
+        v-model="activeTab" 
+        :items="tabItems" 
+        :url-validator="urlValidator" 
+        :sync-with-url="true"
+        @tab-change-canceled="handleTabCanceled"
+        @update:model-value="handleTabChangeAttempt"
+      />
+    </div>
+    
+    <div class="log-container p-3 border rounded bg-grey-lighten-4" style="max-height: 200px; overflow-y: auto;">
+      <h4>Journal des événements:</h4>
+      <div 
+        v-for="(msg, index) in messages" 
+        :key="index" 
+        class="log-entry py-1 px-2 my-1 rounded" 
+        :class="{
+          'bg-success-lighten-4': msg.type === 'success',
+          'bg-error-lighten-4': msg.type === 'error',
+          'bg-warning-lighten-4': msg.type === 'warning',
+          'bg-info-lighten-4': msg.type === 'info'
+        }">
+        {{ msg.text }}
+      </div>
+    </div>
+  </div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup>
+import { ref } from 'vue'
+
+const activeTab = ref('tab1')
+const currentUrl = ref('/page1')
+const tabItems = [
+  { label: 'Page 1', value: 'tab1', content: 'Contenu de la page 1' },
+  { label: 'Page 2', value: 'tab2', content: 'Contenu de la page 2' },
+  { label: 'Page 3', value: 'tab3', content: 'Contenu de la page 3' },
+]
+
+const messages = ref([
+  { type: 'info', text: "Démonstration de la validation d'URL avec les onglets." }
+])
+
+// Simulateur d'URL pour la démonstration
+const urlValidator = {
+  validateUrl: (tabValue) => {
+    // Correspondance entre les valeurs d'onglet et les URLs simulées
+    const urlMap = {
+      tab1: '/page1',
+      tab2: '/page2',
+      tab3: '/page3',
+    }
+    
+    // Vérifier si l'URL actuelle correspond à l'onglet
+    const tabUrl = urlMap[String(tabValue)] || ''
+    return tabUrl === currentUrl.value
+  }
+}
+
+// Simulation de changement d'URL
+function changeUrl(url) {
+  currentUrl.value = url
+  
+  // Mettre à jour l'onglet actif en fonction de l'URL
+  const urlMap = {
+    '/page1': 'tab1',
+    '/page2': 'tab2',
+    '/page3': 'tab3',
+  }
+  
+  activeTab.value = urlMap[url] || 'tab1'
+  
+  messages.value.push({
+    type: 'success',
+    text: 'URL changée pour: ' + url
+  })
+}
+
+function handleTabChangeAttempt(newValue) {
+  // Utiliser la même validation que dans le composant
+  const isValid = urlValidator.validateUrl(newValue)
+  
+  if (isValid) {
+    activeTab.value = newValue
+    messages.value.push({
+      type: 'success',
+      text: 'Onglet changé pour: ' + newValue
+    })
+  }
+  else {
+    messages.value.push({
+      type: 'error',
+      text: "⚠️ Changement d'onglet bloqué: l'URL actuelle (" + currentUrl.value + ") ne correspond pas à l'onglet " + newValue
+    })
+  }
+}
+
+function handleTabCanceled(value) {
+  messages.value.push({
+    type: 'warning',
+    text: "Changement d'onglet annulé pour: " + value
+  })
+}
+</script>`,
+			},
+		],
+	},
+}

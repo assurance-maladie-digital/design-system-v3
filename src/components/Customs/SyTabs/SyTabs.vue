@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import type { TabItem } from './types'
+	import type { TabItem, UrlValidator } from './types'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
 	import { ref, watch, onMounted, onUnmounted } from 'vue'
@@ -7,10 +7,13 @@
 	const props = defineProps<CustomizableOptions & {
 		items: TabItem[]
 		modelValue?: number | string
+		urlValidator?: UrlValidator
+		syncWithUrl?: boolean
 	}>()
 
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: number | string): void
+		(e: 'tab-change-canceled', value: number | string, previousValue: number | string): void
 	}>()
 
 	defineSlots<{
@@ -25,9 +28,29 @@
 	const activeItemIndex = ref<number>(0)
 	// Élément actuellement focusé (pour la navigation clavier)
 	const focusedItemIndex = ref<number>(-1)
+	// Mémorisation de l'index actif précédent (pour restauration en cas d'annulation)
+	const previousActiveItemIndex = ref<number>(0)
 
 	// Fonction pour activer un élément au clic
 	function setActiveItem(index: number) {
+		// Mémoriser l'index actif précédent avant de changer
+		previousActiveItemIndex.value = activeItemIndex.value
+
+		// Vérification de l'URL si la synchronisation avec l'URL est activée
+		if (props.syncWithUrl && props.urlValidator) {
+			const tabValue = props.items[index].value
+
+			// Vérifier si l'onglet correspond à l'URL actuelle
+			const isValidUrl = props.urlValidator.validateUrl(tabValue)
+
+			// Si l'onglet ne correspond pas à l'URL actuelle, émettre un événement d'annulation
+			if (!isValidUrl) {
+				emit('tab-change-canceled', tabValue, props.items[activeItemIndex.value].value)
+				return
+			}
+		}
+
+		// Si la validation d'URL passe ou n'est pas activée, mettre à jour l'index actif
 		activeItemIndex.value = index
 		emit('update:modelValue', typeof props.modelValue === 'string' ? props.items[index].value : index)
 	}
@@ -124,15 +147,30 @@
 	watch(() => props.modelValue, (newValue) => {
 		if (newValue !== undefined) {
 			if (typeof newValue === 'number') {
+				// Mémoriser l'index actif précédent avant de changer
+				previousActiveItemIndex.value = activeItemIndex.value
 				activeItemIndex.value = newValue
 			}
 			else {
 				const index = props.items.findIndex(item => item.value === newValue)
 				if (index !== -1) {
+					// Mémoriser l'index actif précédent avant de changer
+					previousActiveItemIndex.value = activeItemIndex.value
 					activeItemIndex.value = index
 				}
 			}
 		}
+	})
+
+	// Méthode publique pour restaurer l'onglet précédent
+	const restorePreviousTab = () => {
+		activeItemIndex.value = previousActiveItemIndex.value
+		emit('update:modelValue', typeof props.modelValue === 'string' ? props.items[previousActiveItemIndex.value].value : previousActiveItemIndex.value)
+	}
+
+	// Exposer les méthodes publiques
+	defineExpose({
+		restorePreviousTab,
 	})
 </script>
 
