@@ -14,6 +14,9 @@ import { ref } from 'vue'
 const meta = {
 	title: 'Composants/Navigation/SyTabs',
 	component: SyTabs,
+	docs: {
+		controls: { exclude: ['confirmationMessage'] },
+	},
 	argTypes: {
 		items: {
 			description: 'Liste des éléments à afficher dans les onglets',
@@ -263,6 +266,85 @@ const items = [
   { label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
   { label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
+</script>
+`,
+			},
+		],
+	},
+}
+
+/**
+ * Exemple avec confirmation avant changement d'onglet.
+ * Démontre comment utiliser la propriété confirmTabChange et gérer l'événement confirm-tab-change.
+ */
+export const WithTabConfirmation: Story = {
+	render: args => ({
+		components: { SyTabs },
+		setup() {
+			return {
+				args,
+				showConfirmDialog: (message: string, callback: (confirmed: boolean) => void) => {
+					// Dans un cas réel, vous afficheriez une boîte de dialogue personnalisée
+					// Ici nous utilisons window.confirm pour la démonstration
+					const confirmed = window.confirm('Voulez-vous vraiment changer d\'onglet ?')
+					// Appelons le callback avec le résultat de la confirmation
+					callback(confirmed)
+				},
+			}
+		},
+		template: `
+      <div>
+        <div class="mb-4 pa-2 bg-warning-light">
+          <strong>Note :</strong> Essayez de changer d'onglet. Une boîte de dialogue de confirmation s'affichera.
+        </div>
+
+        <SyTabs
+          :items="args.items"
+          :confirmTabChange="true"
+          @confirm-tab-change="showConfirmDialog"
+        />
+      </div>
+    `,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <div>
+    <div class="mb-4 pa-2 bg-warning-light">
+      <strong>Note :</strong> Essayez de changer d'onglet. Une boîte de dialogue de confirmation s'affichera.
+    </div>
+      <SyTabs 
+      :items="items" 
+      :confirmTabChange="true"
+      @confirm-tab-change="showConfirmDialog"
+    />
+  </div>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup>
+import { ref } from 'vue'
+
+const items = [
+  { label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
+  { label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
+  { label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" }
+]
+
+// Fonction pour afficher une boîte de dialogue de confirmation
+function showConfirmDialog(message, callback) {
+  // Dans un cas réel, vous afficheriez une boîte de dialogue personnalisée
+  // Ici nous utilisons window.confirm pour la démonstration
+  const confirmed = window.confirm("Voulez-vous vraiment changer d'onglet ?")
+  // Appelons le callback avec le résultat de la confirmation
+  callback(confirmed)
+}
 </script>
 `,
 			},
