@@ -27,7 +27,7 @@
 	})
 
 	// Définition des événements émis
-	const emit = defineEmits(['cancel-navigation'])
+	const emit = defineEmits(['cancel-navigation', 'confirm-tab-change'])
 
 	defineSlots<{
 		'navigation-bar-prepend': () => unknown
@@ -122,6 +122,13 @@
 		}
 	}
 
+	// Fonction pour gérer les confirmations de changement d'onglet
+	function handleConfirmTabChange(message: string, callback: (confirmed: boolean) => void) {
+		// Transmettre l'événement au composant parent HeaderNavigationBar
+		// en passant le callback qui sera appelé plus tard avec le résultat
+		emit('confirm-tab-change', message, callback)
+	}
+
 	// Fonction pour synchroniser l'onglet actif avec l'URL courante
 	function resetTabSelection() {
 		// Si les items ne sont pas un tableau ou vides, ne rien faire
@@ -202,6 +209,7 @@
 						handleTabChange(Number(val));
 					}"
 					@cancel-navigation="emit('cancel-navigation')"
+					@confirm-tab-change="handleConfirmTabChange"
 				>
 					<!-- Ajout des slots pour le contenu personnalisé -->
 					<template #tabs-prepend>

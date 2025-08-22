@@ -17,7 +17,7 @@
 		confirmationMessage: 'Êtes-vous sûr de vouloir changer d\'onglet? Les changements non enregistrés seront perdus.',
 	})
 
-	const emit = defineEmits(['update:modelValue', 'cancel-navigation'])
+	const emit = defineEmits(['update:modelValue', 'cancel-navigation', 'confirm-tab-change'])
 
 	defineSlots<{
 		'tabs-prepend': () => unknown
@@ -32,9 +32,20 @@
 	// Élément actuellement focusé (pour la navigation clavier)
 	const focusedItemIndex = ref<number>(-1)
 
-	// Affiche une boîte de dialogue de confirmation
+	// Émet un événement pour gérer la confirmation de changement d'onglet
 	async function showConfirmationDialog(message: string): Promise<boolean> {
-		return window.confirm(message)
+		// Émettre l'événement avec le message et retourner une promesse
+		let resolver: (value: boolean) => void
+		const promise = new Promise<boolean>((resolve) => {
+			resolver = resolve
+		})
+
+		// Émettre l'événement avec le message et un callback pour résoudre la promesse
+		emit('confirm-tab-change', message, (confirmed: boolean) => {
+			resolver(confirmed)
+		})
+
+		return promise
 	}
 
 	// Fonction pour activer un élément au clic avec confirmation si nécessaire

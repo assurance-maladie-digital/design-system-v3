@@ -41,10 +41,10 @@
 			confirmationMessage?: string
 		}>(),
 		{
+			// Confirmation related defaults
 			confirmTabChange: false,
 			confirmationMessage: 'Êtes-vous sûr de vouloir changer d\'onglet ?',
-		},
-		{
+			// Navigation related defaults
 			homeAriaLabel: undefined,
 			serviceTitle: undefined,
 			serviceSubtitle: undefined,
@@ -54,6 +54,9 @@
 			maxHorizontalMenuItems: 6,
 			items: undefined,
 		})
+
+	// Définition des événements émis
+	const emit = defineEmits(['confirm-tab-change'])
 
 	type SlotProps = {
 		menuOpen: boolean | undefined
@@ -105,6 +108,15 @@
 				&& props.items.length > props.maxHorizontalMenuItems)
 		)
 	})
+
+	// Fonction qui gère la confirmation de changement d'onglet
+	// Cette fonction est appelée quand un utilisateur essaie de changer d'onglet
+	// et que la confirmation est activée
+	function handleConfirmTabChange(message: string, callback: (confirmed: boolean) => void) {
+		// Émettre un événement avec le message et le callback
+		// Le composant parent pourra écouter cet événement et afficher sa propre UI de confirmation
+		emit('confirm-tab-change', message, callback)
+	}
 </script>
 
 <template>
@@ -193,6 +205,7 @@
 				:vuetify-options
 				:confirm-tab-change="confirmTabChange"
 				:confirmation-message="confirmationMessage"
+				@confirm-tab-change="handleConfirmTabChange"
 			>
 				<template #navigation-bar-prepend>
 					<slot name="navigation-bar-prepend" />
