@@ -305,6 +305,9 @@ export const WithUrlValidation: Story = {
 				},
 			}
 
+			// État pour contrôler si les validations doivent être automatiquement acceptées ou rejetées
+			const allowChangesWithoutValidUrl = ref(false)
+
 			// Simulation de changement d'URL
 			function changeUrl(url: string) {
 				currentUrl.value = url
@@ -324,23 +327,44 @@ export const WithUrlValidation: Story = {
 				})
 			}
 
-			function handleTabChangeAttempt(newValue: string) {
-				// Utiliser la même validation que dans le composant
-				const isValid = urlValidator.validateUrl(newValue)
+			// Nouvelle méthode pour gérer l'événement validate-url
+			function handleValidateUrl(tabValue: string | number, callback: (isValid: boolean) => void) {
+				// Vérifier si l'URL correspond à l'onglet
+				const isValidUrl = urlValidator.validateUrl(tabValue)
 
-				if (isValid) {
-					activeTab.value = newValue
+				if (isValidUrl) {
+					// Si l'URL est valide, toujours autoriser
+					callback(true)
 					messages.value.push({
 						type: 'success',
-						text: `Onglet changé pour: ${newValue}`,
+						text: `URL valide: autorisation du changement vers ${tabValue}`,
+					})
+				}
+				else if (allowChangesWithoutValidUrl.value) {
+					// Si l'option de dérogation est activée, autoriser malgré l'URL invalide
+					callback(true)
+					messages.value.push({
+						type: 'warning',
+						text: `⚠️ URL non valide mais dérogation accordée pour ${tabValue}`,
 					})
 				}
 				else {
+					// Sinon, bloquer le changement
+					callback(false)
 					messages.value.push({
 						type: 'error',
-						text: `⚠️ Changement d"onglet bloqué: l"URL actuelle (${currentUrl.value}) ne correspond pas à l"onglet ${newValue}`,
+						text: `⛔ URL non valide: blocage du changement vers ${tabValue}`,
 					})
 				}
+			}
+
+			function handleTabChangeAttempt(newValue: string) {
+				// Cette fonction est maintenant utilisée principalement pour enregistrer le changement effectif
+				messages.value.push({
+					type: 'success',
+					text: `Onglet changé pour: ${newValue}`,
+				})
+				activeTab.value = newValue
 			}
 
 			function handleTabCanceled(value: string) {
@@ -359,6 +383,8 @@ export const WithUrlValidation: Story = {
 				messages,
 				handleTabCanceled,
 				handleTabChangeAttempt,
+				handleValidateUrl,
+				allowChangesWithoutValidUrl,
 			}
 		},
 		template: `
@@ -384,6 +410,12 @@ export const WithUrlValidation: Story = {
         <div class="demo-tabs mb-4">
           <h4>Navigation par onglets (avec vérification d'URL)</h4>
           <p>Essayez de changer d'onglet sans changer d'URL pour voir l'effet de la validation.</p>
+          <div class="mb-3">
+            <label class="d-flex align-center">
+              <input type="checkbox" v-model="allowChangesWithoutValidUrl" class="mr-2">
+              Autoriser les changements d'onglets même si l'URL ne correspond pas
+            </label>
+          </div>
           <SyTabs 
             v-model="activeTab" 
             :items="tabItems" 
@@ -391,6 +423,7 @@ export const WithUrlValidation: Story = {
             :sync-with-url="true"
             @tab-change-canceled="handleTabCanceled"
             @update:model-value="handleTabChangeAttempt"
+            @validate-url="handleValidateUrl"
           />
         </div>
         
@@ -440,6 +473,12 @@ export const WithUrlValidation: Story = {
     <div class="demo-tabs mb-4">
       <h4>Navigation par onglets (avec vérification d'URL)</h4>
       <p>Essayez de changer d'onglet sans changer d'URL pour voir l'effet de la validation.</p>
+      <div class="mb-3">
+        <label class="d-flex align-center">
+          <input type="checkbox" v-model="allowChangesWithoutValidUrl" class="mr-2">
+          Autoriser les changements d'onglets même si l'URL ne correspond pas
+        </label>
+      </div>
       <SyTabs 
         v-model="activeTab" 
         :items="tabItems" 
@@ -447,6 +486,7 @@ export const WithUrlValidation: Story = {
         :sync-with-url="true"
         @tab-change-canceled="handleTabCanceled"
         @update:model-value="handleTabChangeAttempt"
+        @validate-url="handleValidateUrl"
       />
     </div>
     

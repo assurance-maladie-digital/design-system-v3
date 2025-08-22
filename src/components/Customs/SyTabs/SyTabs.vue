@@ -14,6 +14,7 @@
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: number | string): void
 		(e: 'tab-change-canceled', value: number | string, previousValue: number | string): void
+		(e: 'validate-url', value: number | string, callback: (isValid: boolean) => void): void
 	}>()
 
 	defineSlots<{
@@ -39,13 +40,26 @@
 		// Vérification de l'URL si la synchronisation avec l'URL est activée
 		if (props.syncWithUrl && props.urlValidator) {
 			const tabValue = props.items[index].value
+			const currentValue = props.items[activeItemIndex.value].value
 
-			// Vérifier si l'onglet correspond à l'URL actuelle
+			// Émettre un événement pour permettre au parent de décider de la validation
+			emit('validate-url', tabValue, (isValid) => {
+				if (isValid) {
+					// Si le parent valide le changement, mettre à jour l'index actif
+					activeItemIndex.value = index
+					emit('update:modelValue', typeof props.modelValue === 'string' ? tabValue : index)
+				}
+				else {
+					// Si le parent invalide, émettre un événement d'annulation
+					emit('tab-change-canceled', tabValue, currentValue)
+				}
+			})
+
+			// Vérifier si l'onglet correspond à l'URL actuelle (comportement par défaut)
+			// Ce code s'exécutera uniquement si le parent n'écoute pas l'événement validate-url
 			const isValidUrl = props.urlValidator.validateUrl(tabValue)
-
-			// Si l'onglet ne correspond pas à l'URL actuelle, émettre un événement d'annulation
 			if (!isValidUrl) {
-				emit('tab-change-canceled', tabValue, props.items[activeItemIndex.value].value)
+				emit('tab-change-canceled', tabValue, currentValue)
 				return
 			}
 		}
