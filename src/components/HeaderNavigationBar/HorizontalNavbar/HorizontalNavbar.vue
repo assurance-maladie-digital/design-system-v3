@@ -10,15 +10,35 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
 
-	const props = defineProps<CustomizableOptions & {
+	// Type des méthodes exposées
+	type ExposedMethods = {
+		resetTabSelection: () => { activeTab: number, activeItemIndex: number }
+	}
+
+	const props = withDefaults(defineProps<CustomizableOptions & {
 		items: NavigationItem[]
-	}>()
+		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
+		confirmTabChange?: boolean
+		/** Message affiché dans la boîte de dialogue de confirmation */
+		confirmationMessage?: string
+	}>(), {
+		confirmTabChange: false,
+		confirmationMessage: 'Êtes-vous sûr de vouloir changer d\'onglet? Les changements non enregistrés seront perdus.',
+	})
+
+	// Définition des événements émis
+	const emit = defineEmits(['cancel-navigation'])
 
 	defineSlots<{
 		'navigation-bar-prepend': () => unknown
 		'navigation-bar-append': () => unknown
 		'default': () => unknown
 	}>()
+
+	// Exposer les méthodes pour permettre au composant parent d'interagir
+	defineExpose<ExposedMethods>({
+		resetTabSelection,
+	})
 
 	const options = useCustomizableOptions(config, props)
 	const route = useRoute()
@@ -102,23 +122,22 @@
 		}
 	}
 
-	// Initialiser l'élément actif au montage
-	onMounted(() => {
+	// Fonction pour synchroniser l'onglet actif avec l'URL courante
+	function resetTabSelection() {
 		// Si les items ne sont pas un tableau ou vides, ne rien faire
-		if (!Array.isArray(props.items) || props.items.length === 0) return
+		if (!Array.isArray(props.items) || props.items.length === 0 || !route) {
+			return { activeTab: activeTab.value, activeItemIndex: activeItemIndex.value }
+		}
 
 		let foundActiveItem = false
 
-		// Ne vérifier les routes que si route est défini
-		if (route) {
-			// Trouver l'élément actif basé sur la route courante
-			for (let i = 0; i < props.items.length; i++) {
-				if (isActive(props.items[i], i)) {
-					activeItemIndex.value = i
-					activeTab.value = i
-					foundActiveItem = true
-					break
-				}
+		// Trouver l'élément actif basé sur la route courante
+		for (let i = 0; i < props.items.length; i++) {
+			if (isActive(props.items[i], i)) {
+				activeItemIndex.value = i
+				activeTab.value = i
+				foundActiveItem = true
+				break
 			}
 		}
 
@@ -127,6 +146,13 @@
 			activeItemIndex.value = 0
 			activeTab.value = 0
 		}
+
+		return { activeTab: activeTab.value, activeItemIndex: activeItemIndex.value }
+	}
+
+	// Initialiser l'élément actif au montage
+	onMounted(() => {
+		resetTabSelection()
 	})
 
 	// Surveiller les changements de route pour mettre à jour l'élément actif
@@ -164,6 +190,8 @@
 					class="horizontal-menu__tabs"
 					:items="tabItems"
 					:model-value="Number(activeTab)"
+					:confirm-tab-change="props.confirmTabChange"
+					:confirmation-message="props.confirmationMessage"
 					:vuetify-options="{
 						sheet: { theme: 'dark', color: '#07275C' },
 						tab: { 'base-color': '#B5BECE', 'active-color': '#ffffff', 'slider-color': '#fff' },
@@ -173,6 +201,7 @@
 						activeTab = Number(val);
 						handleTabChange(Number(val));
 					}"
+					@cancel-navigation="emit('cancel-navigation')"
 				>
 					<!-- Ajout des slots pour le contenu personnalisé -->
 					<template #tabs-prepend>

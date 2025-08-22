@@ -4,14 +4,20 @@
 	import { config } from './config'
 	import { ref, watch, onMounted, onUnmounted } from 'vue'
 
-	const props = defineProps<CustomizableOptions & {
+	const props = withDefaults(defineProps<CustomizableOptions & {
 		items: TabItem[]
 		modelValue?: number | string
-	}>()
+		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
+		confirmTabChange?: boolean
+		/** Message affiché dans la boîte de dialogue de confirmation */
+		confirmationMessage?: string
+	}>(), {
+		modelValue: undefined,
+		confirmTabChange: false,
+		confirmationMessage: 'Êtes-vous sûr de vouloir changer d\'onglet? Les changements non enregistrés seront perdus.'
+	})
 
-	const emit = defineEmits<{
-		(e: 'update:modelValue', value: number | string): void
-	}>()
+	const emit = defineEmits(['update:modelValue', 'cancel-navigation'])
 
 	defineSlots<{
 		'tabs-prepend': () => unknown
@@ -26,8 +32,29 @@
 	// Élément actuellement focusé (pour la navigation clavier)
 	const focusedItemIndex = ref<number>(-1)
 
-	// Fonction pour activer un élément au clic
-	function setActiveItem(index: number) {
+	// Affiche une boîte de dialogue de confirmation
+	async function showConfirmationDialog(message: string): Promise<boolean> {
+		return window.confirm(message)
+	}
+
+	// Fonction pour activer un élément au clic avec confirmation si nécessaire
+	async function setActiveItem(index: number) {
+		// Si l'index est déjà actif, ne rien faire
+		if (index === activeItemIndex.value) return
+
+		// Si la confirmation est activée, demander confirmation
+		if (props.confirmTabChange) {
+			const confirmMessage = props.confirmationMessage || 'Êtes-vous sûr de vouloir changer d\'onglet?'
+			const confirmed = await showConfirmationDialog(confirmMessage)
+
+			if (!confirmed) {
+				// L'utilisateur a annulé, émettre un événement d'annulation
+				emit('cancel-navigation')
+				return
+			}
+		}
+
+		// Mettre à jour l'onglet actif
 		activeItemIndex.value = index
 		emit('update:modelValue', typeof props.modelValue === 'string' ? props.items[index].value : index)
 	}
@@ -36,7 +63,7 @@
 	function handleKeyPress(event: KeyboardEvent, index: number) {
 		if (event.key === 'Enter' || event.key === ' ') {
 			event.preventDefault()
-			setActiveItem(index)
+			void setActiveItem(index) // void pour ignorer la promesse
 		}
 	}
 

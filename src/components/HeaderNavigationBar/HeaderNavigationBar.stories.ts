@@ -247,6 +247,26 @@ const meta = {
 				},
 			},
 		},
+		'confirmTabChange': {
+			control: { type: 'boolean' },
+			description: 'Si activé, une confirmation sera demandée avant de changer d\'onglet',
+			table: {
+				category: 'props',
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		'confirmationMessage': {
+			control: { type: 'text' },
+			description: 'Message affiché dans la boîte de dialogue de confirmation',
+			table: {
+				category: 'props',
+				type: {
+					summary: 'string',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof HeaderNavigationBar>
 

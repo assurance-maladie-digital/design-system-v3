@@ -5,7 +5,7 @@
 	import HeaderMenuSection from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.vue'
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
 	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
-	import { computed } from 'vue'
+	import { computed, ref } from 'vue'
 	import { type RouteLocationRaw } from 'vue-router'
 	import HorizontalNavbar from './HorizontalNavbar/HorizontalNavbar.vue'
 	import type { NavigationItem } from './types'
@@ -35,7 +35,15 @@
 			 * The items to show in the horizontal menu
 			 */
 			items?: NavigationItem[]
+			/** Si activé, une confirmation sera demandée avant de changer d'onglet */
+			confirmTabChange?: boolean
+			/** Message affiché dans la boîte de dialogue de confirmation */
+			confirmationMessage?: string
 		}>(),
+		{
+			confirmTabChange: false,
+			confirmationMessage: 'Êtes-vous sûr de vouloir changer d\'onglet ?',
+		},
 		{
 			homeAriaLabel: undefined,
 			serviceTitle: undefined,
@@ -75,6 +83,19 @@
 	)
 
 	const { isDesktop } = useHeaderResponsiveMode()
+
+	const horizontalNavbarRef = ref<InstanceType<typeof HorizontalNavbar> | null>(null)
+
+	// Exposer une méthode pour réinitialiser la sélection d'onglet
+	defineExpose({
+		resetTabSelection: () => {
+			// Déléguer au composant HorizontalNavbar si disponible
+			if (horizontalNavbarRef.value && !verticalMenu.value) {
+				return horizontalNavbarRef.value.resetTabSelection()
+			}
+			return null
+		},
+	})
 
 	const verticalMenu = computed<boolean>(() => {
 		return (
@@ -167,8 +188,11 @@
 		<template #append>
 			<HorizontalNavbar
 				v-if="props.items && !verticalMenu"
+				ref="horizontalNavbarRef"
 				:items="items"
 				:vuetify-options
+				:confirm-tab-change="confirmTabChange"
+				:confirmation-message="confirmationMessage"
 			>
 				<template #navigation-bar-prepend>
 					<slot name="navigation-bar-prepend" />
