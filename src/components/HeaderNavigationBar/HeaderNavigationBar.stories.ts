@@ -257,16 +257,6 @@ const meta = {
 				},
 			},
 		},
-		'confirmationMessage': {
-			control: { type: 'text' },
-			description: 'Message affiché dans la boîte de dialogue de confirmation',
-			table: {
-				category: 'props',
-				type: {
-					summary: 'string',
-				},
-			},
-		},
 	},
 } satisfies Meta<typeof HeaderNavigationBar>
 
@@ -883,7 +873,6 @@ export const WithTabConfirmation: Story = {
 			{ label: 'Test sans href', href: '' },
 		],
 		confirmTabChange: true,
-		confirmationMessage: 'Voulez-vous vraiment changer d\'onglet ?',
 	},
 	render: (args) => {
 		return {
@@ -893,7 +882,7 @@ export const WithTabConfirmation: Story = {
 					// Simulation d'une boîte de dialogue personnalisée
 					// Dans un cas réel, vous afficheriez votre propre composant de dialogue
 					// Pour cette démo, on utilise encore window.confirm mais avec un préfixe
-					const confirmed = window.confirm('Dialogue personnalisé: ' + message)
+					const confirmed = window.confirm('Changer d\'onglet ?')
 					console.log('Réponse de l\'utilisateur:', confirmed ? 'Accepté' : 'Refusé')
 					callback(confirmed)
 				}
@@ -927,7 +916,6 @@ export const WithTabConfirmation: Story = {
 			{ label: 'About', href: '/about' },
 		]"
 		:confirmTabChange="true"
-		:confirmationMessage="'Voulez-vous vraiment changer d'onglet ?'"
 		@confirm-tab-change="showCustomConfirmDialog"
 	/>
 </template>
@@ -943,7 +931,8 @@ const showCustomConfirmDialog = (message: string, callback: (confirmed: boolean)
 	// Dans un cas réel, vous afficheriez votre propre composant de dialogue modal
 	// Par exemple avec v-dialog de Vuetify
 					// Pour cette démo, on utilise encore window.confirm mais avec un préfixe
-	const confirmed = window.confirm('Dialogue personnalisé: ' + message)
+				const confirmed = window.confirm('Changer d'onglet ?')
+
 	
 	// Appel du callback avec la décision (true/false)
 	callback(confirmed)

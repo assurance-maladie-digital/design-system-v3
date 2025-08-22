@@ -20,10 +20,10 @@
 		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
 		confirmTabChange?: boolean
 		/** Message affiché dans la boîte de dialogue de confirmation */
-		confirmationMessage?: string
+		confirmationMessage?: boolean
 	}>(), {
 		confirmTabChange: false,
-		confirmationMessage: 'Êtes-vous sûr de vouloir changer d\'onglet? Les changements non enregistrés seront perdus.',
+		confirmationMessage: false,
 	})
 
 	// Définition des événements émis

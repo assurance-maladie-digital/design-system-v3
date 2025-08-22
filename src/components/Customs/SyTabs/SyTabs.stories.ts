@@ -27,10 +27,6 @@ const meta = {
 			description: 'Si activé, une confirmation sera demandée avant de changer d\'onglet',
 			control: 'boolean',
 		},
-		confirmationMessage: {
-			description: 'Message affiché dans la boîte de dialogue de confirmation',
-			control: 'text',
-		},
 		// Les événements sont gérés différemment dans Storybook Vue 3
 		// Les slots ne peuvent pas être définis directement dans argTypes
 	},

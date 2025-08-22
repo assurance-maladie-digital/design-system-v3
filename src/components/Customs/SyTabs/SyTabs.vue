@@ -10,11 +10,11 @@
 		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
 		confirmTabChange?: boolean
 		/** Message affiché dans la boîte de dialogue de confirmation */
-		confirmationMessage?: string
+		confirmationMessage?: boolean
 	}>(), {
 		modelValue: undefined,
 		confirmTabChange: false,
-		confirmationMessage: 'Êtes-vous sûr de vouloir changer d\'onglet? Les changements non enregistrés seront perdus.',
+		confirmationMessage: false,
 	})
 
 	const emit = defineEmits(['update:modelValue', 'cancel-navigation', 'confirm-tab-change'])
@@ -33,7 +33,7 @@
 	const focusedItemIndex = ref<number>(-1)
 
 	// Émet un événement pour gérer la confirmation de changement d'onglet
-	async function showConfirmationDialog(message: string): Promise<boolean> {
+	async function handleTabChangeConfirmation(message: string): Promise<boolean> {
 		// Émettre l'événement avec le message et retourner une promesse
 		let resolver: (value: boolean) => void
 		const promise = new Promise<boolean>((resolve) => {
@@ -59,8 +59,8 @@
 
 		// Si la confirmation est activée, demander confirmation
 		if (props.confirmTabChange) {
-			const confirmMessage = props.confirmationMessage || 'Êtes-vous sûr de vouloir changer d\'onglet?'
-			const confirmed = await showConfirmationDialog(confirmMessage)
+			const confirmMessage = props.confirmationMessage
+			const confirmed = await handleTabChangeConfirmation(confirmMessage.toString())
 
 			if (!confirmed) {
 				// L'utilisateur a annulé, émettre un événement d'annulation
