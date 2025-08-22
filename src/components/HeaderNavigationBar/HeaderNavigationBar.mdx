@@ -121,8 +121,24 @@ Pour plus d'information sur la manière de construire un menu avec le composant 
 <Canvas of={HeaderNavigationBarStories.WithNavigationMenuAppendSlot} />
 
 
-## Configuration des composants Vuetify internes.
+## Confirmation de changement d'onglet
 
-Le composant `HeaderNavigationBar` utilise les composants `VSheet`, `VTabs` et `VTab` de Vuetify pour construire le menu horizontal. Il est possible de configurer ces composants en utilisant la props `vuetifyOptions`.
+Le composant `HeaderNavigationBar` intègre une fonctionnalité de confirmation avant la navigation entre les onglets. Cela peut être utile pour prévenir une perte de données non sauvegardées ou pour s'assurer que l'utilisateur souhaite vraiment quitter la page actuelle.
+
+Pour activer cette fonctionnalité, utilisez les propriétés suivantes :
+- `confirmTabChange` : active la confirmation de changement d'onglet (booléen)
+- `confirmationMessage` : message de confirmation personnalisé (string)
+
+Vous pouvez également intercepter l'événement `confirm-tab-change` pour implémenter votre propre logique de confirmation (par exemple, avec une boîte de dialogue personnalisée).
+
+<Canvas of={HeaderNavigationBarStories.WithTabConfirmation} />
+
+## Composants internes et personnalisation
+
+> **Note importante** : Le composant `HeaderNavigationBar` utilise désormais notre composant `SyTabs` du Design System au lieu des composants `VTabs` et `VTab` de Vuetify. Ce changement permet une meilleure accessibilité et une expérience utilisateur plus cohérente avec les standards RGAA.
+
+Vous pouvez consulter la documentation complète du composant [SyTabs](/docs/composants-customs-sytabs--docs) pour plus d'informations sur ses fonctionnalités et son API.
+
+Pour la personnalisation des autres composants internes comme `VSheet`, vous pouvez toujours utiliser la props `vuetifyOptions`.
 
 <Canvas of={HeaderNavigationBarStories.WithVuetifyOptions} />

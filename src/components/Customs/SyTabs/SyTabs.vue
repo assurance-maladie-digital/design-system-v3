@@ -73,7 +73,7 @@
 				if (item.href) {
 					window.location.href = item.href
 					return // Arrêter ici car on navigue ailleurs
-				}
+				} 
 				else if (item.to) {
 					// Pour les cas où vue-router est utilisé
 					// Notez que cela nécessiterait un accès au router,
