@@ -27,8 +27,6 @@ const meta = {
 			description: 'Si activé, une confirmation sera demandée avant de changer d\'onglet',
 			control: 'boolean',
 		},
-		// Les événements sont gérés différemment dans Storybook Vue 3
-		// Les slots ne peuvent pas être définis directement dans argTypes
 	},
 	args: {
 		items: [
