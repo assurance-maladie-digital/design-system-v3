@@ -14,7 +14,8 @@ import { ref } from 'vue'
 const meta = {
 	title: 'Composants/Navigation/SyTabs',
 	component: SyTabs,
-	docs: {
+	parameters: {
+		layout: 'fullscreen',
 		controls: { exclude: ['confirmationMessage'] },
 	},
 	argTypes: {
