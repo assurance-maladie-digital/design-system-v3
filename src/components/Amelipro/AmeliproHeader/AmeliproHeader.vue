@@ -165,6 +165,12 @@
 			structureValue.value.dialog = false
 		}
 	}
+
+	const clickSignature = (event: Event): void => {
+		if (props.ameliproHeaderInfos?.signatureInfos?.clickFn) {
+			props.ameliproHeaderInfos?.signatureInfos?.clickFn(event)
+		}
+	}
 </script>
 
 <template>
@@ -358,7 +364,7 @@
 										size="2rem"
 										:to="signatureInfos.to ? signatureInfos.to : undefined"
 										:unique-id="`${uniqueId}-signature-btn`"
-										@click="signatureInfos.clickFn ? signatureInfos.clickFn : undefined"
+										@click="clickSignature"
 									/>
 								</slot>
 							</li>
