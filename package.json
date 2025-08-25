@@ -121,10 +121,12 @@
     "access": "public"
   },
   "overrides": {
-    "esbuild": "^0.25.0",
-    "undici": "7.15.0"
+    "esbuild": "^0.25.0"
   },
   "pnpm": {
+    "overrides": {
+      "undici": "7.15.0"
+    },
     "patchedDependencies": {
       "undici@7.15.0": "patches/undici@7.15.0.patch"
     }
