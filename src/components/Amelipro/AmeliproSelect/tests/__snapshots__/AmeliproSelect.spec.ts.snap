@@ -126,6 +126,7 @@ exports[`AmeliproSelect > render correctly 1`] = `
                 aria-required="false"
                 id="my-select-id"
                 inputmode="none"
+                role="combobox"
                 size="1"
                 title="Open"
                 type="text"

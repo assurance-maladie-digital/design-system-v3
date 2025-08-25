@@ -182,6 +182,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                       aria-required="false"
                       id="amelipro-accordion-result-unique-id-pagination-select"
                       inputmode="none"
+                      role="combobox"
                       size="1"
                       title="Open"
                       type="text"
