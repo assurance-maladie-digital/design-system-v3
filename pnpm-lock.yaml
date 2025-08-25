@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  undici: 7.15.0
+
 patchedDependencies:
   undici@7.15.0:
     hash: lbjqnmsiluc2yw26h75qnkpplq
