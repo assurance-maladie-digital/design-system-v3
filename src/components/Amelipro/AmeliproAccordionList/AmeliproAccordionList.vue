@@ -1,9 +1,9 @@
 <script setup lang="ts">
 	import { type PropType, onMounted, onUpdated, ref, watch } from 'vue'
-	import AmeliproAccordionResultTemplate from '../AmeliproAccordionResult/AmeliproAccordionResultTemplate/AmeliproAccordionResultTemplate.vue'
-	import type { IDataListItem } from '../types'
+	import AmeliproAccordionTemplate from '../AmeliproAccordion/AmeliproAccordionTemplate/AmeliproAccordionTemplate.vue'
 	import AmeliproPagination from '../AmeliproPagination/AmeliproPagination.vue'
 	import AmeliproSelect from '../AmeliproSelect/AmeliproSelect.vue'
+	import type { IDataListItem } from '../types'
 	import type { SelectItem } from '../AmeliproSelect/types'
 	import { useDisplay } from 'vuetify'
 	import { usePagination } from '../../../composables'
@@ -19,7 +19,7 @@
 		},
 		groupBorderColor: {
 			type: String,
-			default: 'ap-grey',
+			default: 'ap-grey-lighten-2',
 		},
 		groupBordered: {
 			type: Boolean,
@@ -77,6 +77,14 @@
 			type: String,
 			required: true,
 		},
+		titleLevel: {
+			type: Number,
+			default: 2,
+		},
+		titleUppercase: {
+			type: Boolean,
+			default: false,
+		},
 		uniqueId: {
 			type: String,
 			required: true,
@@ -113,9 +121,6 @@
 
 	watch(() => props.items, () => {
 		updatePagination(props.items, paginationSelectModel.value)
-		if (currentPage.value > paginationTable.value.length) {
-			currentPage.value = Math.max(1, paginationTable.value.length)
-		}
 	})
 
 	const openClose = (id: number): void => {
@@ -129,7 +134,7 @@
 		}
 	}
 
-	const emit = defineEmits(['click', 'change:sort-select', 'change:pagination-select', 'open-close'])
+	const emit = defineEmits(['click', 'change:sort-select', 'change:pagination-select'])
 	const emitClickEvent = (newCurrentPage: number): void => {
 		emit('click')
 		if (newCurrentPage !== null && newCurrentPage !== undefined) {
@@ -156,75 +161,80 @@
 
 	// Rendre publique la méthode openClose permet à un bouton ou à un composant externe de fermer/ouvrir l'accordéon
 	defineExpose({ openClose })
+
 </script>
 
 <template>
 	<div
 		:id="`${uniqueId}-container`"
-		class="amelipro-accordion-result-list"
+		class="amelipro-accordion-list"
 	>
 		<div
 			v-if="!noResultListInfos"
 			:id="`${uniqueId}-header`"
-			class="amelipro-accordion-result-list__headings d-flex justify-space-between align-end mb-6"
+			class="amelipro-accordion-list__header d-flex justify-space-between align-end mb-6"
 		>
 			<p
 				:id="`${uniqueId}-result-counter`"
 				class="d-inline-block mb-0 total-counter font-weight-semibold"
 			>
-				<span class="d-sr-only">Nombre de lignes dans la liste ci-après :</span>
+				<span class="d-sr-only">Nombre de ligne dans la liste ci-après :</span>
 				{{ items.length }} {{ counterLabel }}
 			</p>
 
-			<div class="d-inline-flex align-center amelipro-accordion-result-list__selects">
+			<div class="d-inline-flex align-center">
 				<AmeliproSelect
 					v-if="sortSelectItems.length > 0"
 					v-model="sortSelectModel"
-					class="ml-2 mb-0 pt-0 amelipro-accordion-result-list__sort-select"
+					class="ml-2 mb-0 pt-0 amelipro-accordion-list__sort-select"
 					global-max-width="170px"
 					:hide-error-message="true"
 					:items="sortSelectItems"
 					:label="sortSelectLabel"
 					:placeholder="sortSelectPlaceholder"
 					:unique-id="`${uniqueId}-sort-select`"
-					@update:model-value="emitSortSelectChange"
+					@update:model-value="emitSortSelectChange()"
 				/>
 
 				<AmeliproSelect
 					v-if="mdAndUp"
 					v-model="paginationSelectModel"
-					class="ml-2 mb-0 pt-0 amelipro-accordion-result-list__pagination-select"
+					class="ml-2 mb-0 pt-0 amelipro-accordion-list__pagination-select"
 					global-max-width="170px"
 					:hide-error-message="true"
 					:items="paginationSelectItems"
 					:label="paginationSelectLabel"
 					:placeholder="paginationSelectPlaceholder"
 					:unique-id="`${uniqueId}-pagination-select`"
-					@update:model-value="emitPaginationSelectChange"
+					@update:model-value="emitPaginationSelectChange()"
 				/>
 			</div>
 		</div>
-		<div class="amelipro-accordion-result-list__list-wrapper">
+		<div>
 			<ul
 				:id="`${uniqueId}-list`"
 				:aria-label="title"
-				class="list-style-none amelipro-accordion-result-list__list"
+				class="list-style-none amelipro-accordion-list__list"
 			>
 				<li
 					v-for="(accordion, index) in currentPageItems(items)"
 					:key="index"
-					class="amelipro-accordion-result-list__item"
+					class="amelipro-accordion-list__item"
 				>
-					<AmeliproAccordionResultTemplate
+					<AmeliproAccordionTemplate
+						:accordion-title="String(accordion.accordionTitle)"
 						:border-color="groupBorderColor"
 						:bordered="groupBordered"
 						:card-color="groupColor"
+						:header-right-width="String(accordion.headerRightWidth)"
 						:hide-separator="hideSeparator"
 						:is-open="`accordion-result-${accordion.id}` === openId"
+						:title-level="titleLevel"
+						:title-uppercase="titleUppercase"
 						:unique-id="`accordion-result-${accordion.id}`"
 						@open-close="openClose"
 					>
-						<template #headingContent>
+						<template #headerRight>
 							<slot
 								:name="`headingContent-${accordion.id}`"
 								v-bind="accordion"
@@ -247,7 +257,7 @@
 								/>
 							</slot>
 						</template>
-					</AmeliproAccordionResultTemplate>
+					</AmeliproAccordionTemplate>
 				</li>
 			</ul>
 		</div>

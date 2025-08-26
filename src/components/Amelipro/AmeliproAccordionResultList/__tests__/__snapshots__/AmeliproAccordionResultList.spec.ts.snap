@@ -38,13 +38,14 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       <div
         class="
           amelipro-accordion-result-list__pagination-select
+          mb-0
           ml-2
+          pt-0
         "
         id="amelipro-accordion-result-unique-id-pagination-select-container"
         style="
           margin-bottom: 12px;
           max-width: 170px;
-          padding-top: 0px !important;
         "
       >
         <div class="
@@ -69,26 +70,25 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
               <!-- v-if -->
             </label>
           </div>
-          <div
-            class="
-              amelipro-accordion-result-list__pagination-select
-              amelipro-select
-              ml-2
-              pt-0
-              v-input
-              v-input--center-affix
-              v-input--density-compact
-              v-input--dirty
-              v-input--horizontal
-              v-locale--is-ltr
-              v-select
-              v-select--selected
-              v-select--single
-              v-text-field
-              v-theme--light
-            "
-            style="padding-top: 0px !important;"
-          >
+          <div class="
+            amelipro-accordion-result-list__pagination-select
+            amelipro-select
+            mb-0
+            ml-2
+            pt-0
+            pt-0
+            v-input
+            v-input--center-affix
+            v-input--density-compact
+            v-input--dirty
+            v-input--horizontal
+            v-locale--is-ltr
+            v-select
+            v-select--selected
+            v-select--single
+            v-text-field
+            v-theme--light
+          ">
             <!---->
             <div class="v-input__control">
               <div
