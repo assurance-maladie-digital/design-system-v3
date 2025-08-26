@@ -3,7 +3,7 @@
 exports[`AmeliproAccordionResultList > render correctly 1`] = `
 <div
   class="amelipro-accordion-result-list"
-  id="amelipro-accordion-result-unique-id-container"
+  id="amelipro-accordion-list-unique-id-container"
 >
   <div
     class="
@@ -13,7 +13,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       justify-space-between
       mb-6
     "
-    id="amelipro-accordion-result-unique-id-header"
+    id="amelipro-accordion-list-unique-id-header"
   >
     <p
       class="
@@ -22,7 +22,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
         mb-0
         total-counter
       "
-      id="amelipro-accordion-result-unique-id-result-counter"
+      id="amelipro-accordion-list-unique-id-result-counter"
     >
       <span class="d-sr-only">
         Nombre de lignes dans la liste ci-après :
@@ -42,7 +42,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           ml-2
           pt-0
         "
-        id="amelipro-accordion-result-unique-id-pagination-select-container"
+        id="amelipro-accordion-list-unique-id-pagination-select-container"
         style="
           margin-bottom: 12px;
           max-width: 170px;
@@ -63,8 +63,8 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 amelipro-select__label
                 mr-2
               "
-              for="amelipro-accordion-result-unique-id-pagination-select"
-              id="amelipro-accordion-result-unique-id-pagination-select-label"
+              for="amelipro-accordion-list-unique-id-pagination-select"
+              id="amelipro-accordion-list-unique-id-pagination-select-label"
             >
               Nb lignes/page :
               <!-- v-if -->
@@ -180,7 +180,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     <input
                       aria-label="Open"
                       aria-required="false"
-                      id="amelipro-accordion-result-unique-id-pagination-select"
+                      id="amelipro-accordion-list-unique-id-pagination-select"
                       inputmode="none"
                       size="1"
                       title="Open"
@@ -230,7 +230,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
         amelipro-accordion-result-list__list
         list-style-none
       "
-      id="amelipro-accordion-result-unique-id-list"
+      id="amelipro-accordion-list-unique-id-list"
     >
       <li class="amelipro-accordion-result-list__item">
         <div
@@ -1483,7 +1483,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
       justify-center
       mt-2
     "
-    id="amelipro-accordion-result-unique-id-pagination-container"
+    id="amelipro-accordion-list-unique-id-pagination-container"
   >
     <ol
       class="
@@ -1491,7 +1491,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
         d-flex
         list-style-none
       "
-      id="amelipro-accordion-result-unique-id-pagination-list"
+      id="amelipro-accordion-list-unique-id-pagination-list"
     >
       <li class="amelipro-pagination__item">
         <button
@@ -1509,7 +1509,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
             v-btn--variant-flat
             v-theme--light
           "
-          id="amelipro-accordion-result-unique-id-pagination-first"
+          id="amelipro-accordion-list-unique-id-pagination-first"
           style="
             height: auto;
             min-height: 2.5rem;
@@ -1557,7 +1557,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
             v-btn--variant-flat
             v-theme--light
           "
-          id="amelipro-accordion-result-unique-id-pagination-last"
+          id="amelipro-accordion-list-unique-id-pagination-last"
           style="
             height: auto;
             min-height: 2.5rem;
