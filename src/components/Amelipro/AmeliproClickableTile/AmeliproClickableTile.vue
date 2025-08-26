@@ -67,7 +67,7 @@
 			padding: '1rem',
 		}
 		if ((hover.value || focus.value) && !props.disabled) {
-			btnStyles.border = `1px solid ${convertToHex('ap-blue darken-2')} !important`
+			btnStyles.border = `1px solid ${convertToHex('ap-blue-darken-2')} !important`
 		}
 		if (props.disabled) {
 			btnStyles.color = `${convertToHex('ap-grey-darken-1')} !important`
@@ -142,7 +142,7 @@
 		:to="to"
 		:width="tileWidth"
 		@blur="focus = false"
-		@click="emitClickEvent()"
+		@click="emitClickEvent"
 		@focus="focus = true"
 		@mouseenter="hover = true"
 		@mouseleave="hover = false"
