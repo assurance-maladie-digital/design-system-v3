@@ -1006,6 +1006,7 @@
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
 							{{ selectedDates ? displayedDateString : headerDate }}
+							{{ displayedDateString }}
 						</h3>
 					</template>
 					<template

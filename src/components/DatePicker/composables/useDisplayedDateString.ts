@@ -29,7 +29,11 @@ export function useDisplayedDateString(props: DisplayedDateStringProps): Display
 
 			if (startDate.isValid() && endDate.isValid()) {
 				// Format court pour la date de début, format complet pour la date de fin
-				return `${startDate.format('D MMMM')} - ${endDate.format('D MMMM YYYY')}`
+				return `${startDate.format('D MMMM').split(' ')
+					.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+					.join(' ')} - ${endDate.format('D MMMM YYYY').split(' ')
+					.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+					.join(' ')}`
 			}
 		}
 
@@ -42,14 +46,21 @@ export function useDisplayedDateString(props: DisplayedDateStringProps): Display
 
 				if (startDate.isValid() && endDate.isValid()) {
 					// Format court pour la date de début, format complet pour la date de fin
-					return `${startDate.format('D MMMM')} - ${endDate.format('D MMMM YYYY')}`
+					return `${startDate.format('D MMMM').split(' ')
+						.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+						.join(' ')} - ${endDate.format('D MMMM YYYY').split(' ')
+							.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+							.join(' ')}`
 				}
 			}
 			// Si nous n'avons qu'une seule date dans le tableau
 			else if (props.selectedDates.value.length === 1) {
 				const date = dayjs(props.selectedDates.value[0])
 				if (date.isValid()) {
-					return date.format('dddd D MMMM YYYY')
+					return dayjs(date).locale('fr').format('dddd DD MMMM YYYY')
+						.split(' ')
+						.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+						.join(' ')
 				}
 			}
 			return props.todayInString.value
@@ -58,7 +69,10 @@ export function useDisplayedDateString(props: DisplayedDateStringProps): Display
 		else {
 			const date = dayjs(props.selectedDates.value)
 			if (date.isValid()) {
-				return date.format('dddd D MMMM YYYY')
+				return dayjs(date).locale('fr').format('dddd DD MMMM YYYY')
+					.split(' ')
+					.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+					.join(' ')
 			}
 			return props.todayInString.value
 		}

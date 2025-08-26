@@ -19,11 +19,17 @@ export interface TodayButtonReturn {
 export function useTodayButton(props: TodayButtonProps): TodayButtonReturn {
 	// Computed pour le format de la date du jour
 	const todayInString = computed(() => {
-		return dayjs().locale('fr').format('dddd D MMMM').replace(/\b\w/g, l => l.toUpperCase())
+		return dayjs().locale('fr').format('dddd DD MMMM YYYY')
+			.split(' ')
+			.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(' ')
 	})
 
 	const headerDate = computed(() => {
 		return dayjs().locale('fr').format('dddd DD MMMM YYYY')
+			.split(' ')
+			.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(' ')
 	})
 
 	// Fonction pour sélectionner la date du jour
