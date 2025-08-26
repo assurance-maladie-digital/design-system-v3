@@ -114,7 +114,7 @@
 
 	// Utilisation des composables pour les fonctionnalités du CalendarMode
 	const { displayWeekendDays } = useWeekendDays(props)
-	const { todayInString } = useTodayButton(props)
+	const { todayInString, headerDate } = useTodayButton(props)
 	const { labelWithAsterisk } = useAsteriskDisplay(props)
 
 	const selectedDates = ref<Date | Date[] | null>(
@@ -1005,7 +1005,7 @@
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ displayedDateString }}
+							{{ selectedDates ? displayedDateString : headerDate }}
 						</h3>
 					</template>
 					<template
