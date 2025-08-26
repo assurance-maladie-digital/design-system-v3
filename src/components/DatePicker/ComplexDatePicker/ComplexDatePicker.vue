@@ -1071,6 +1071,17 @@
 	// Wrapper pour la fonction selectToday du composable
 	const handleSelectToday = () => {
 		selectToday(selectedDates)
+
+		// Mettre à jour le mois et l'année courants après avoir sélectionné aujourd'hui
+		const today = new Date()
+		const todayMonth = today.getMonth().toString()
+		const todayYear = today.getFullYear().toString()
+
+		// Mettre à jour les variables pour que le mois et l'année affichés soient corrects à la réouverture
+		currentMonth.value = todayMonth
+		currentYear.value = todayYear
+		currentMonthName.value = dayjs().month(parseInt(todayMonth, 10)).format('MMMM')
+		currentYearName.value = todayYear
 	}
 
 	// Redéfinition de validateOnSubmit pour propager aux composants enfants
