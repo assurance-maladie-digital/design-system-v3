@@ -9,7 +9,10 @@
 
 	// Items per page options - standard options and current value
 	const itemsPerPageOptions = computed(() => {
-		const standardOptions = [5, 10, 25, 50, 100]
+		// Use provided itemsPerPageOptions or default standard options
+		const baseOptions = props.itemsPerPageOptions || [5, 10, 25, 50, 100]
+		// Filter out -1 from base options since we'll handle it separately
+		const standardOptions = [...baseOptions.filter(option => option !== -1)]
 
 		// Add the current itemsPerPage if it's not already in the standard options
 		// and it's not -1 (which represents "Tous")
@@ -25,11 +28,14 @@
 			value,
 		}))
 
-		// Add "Tous" option to display all elements
-		options.push({
-			text: locales.pagination.all,
-			value: -1,
-		})
+		// Add "Tous" option only if not limited by itemsPerPageOptions
+		// or if explicitly allowed (by including -1 in itemsPerPageOptions)
+		if (!props.itemsPerPageOptions || props.itemsPerPageOptions.includes(-1)) {
+			options.push({
+				text: locales.pagination.all,
+				value: -1,
+			})
+		}
 
 		return options
 	})
@@ -39,6 +45,7 @@
 		pageCount: number
 		itemsPerPage: number
 		itemsLength: number
+		itemsPerPageOptions?: number[]
 	}>()
 
 	const emit = defineEmits<{

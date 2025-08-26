@@ -1,0 +1,15 @@
+.v-btn {
+	text-transform: inherit !important;
+	font-weight: 700 !important;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.theme-cnam .v-btn,
+.theme-pa .v-btn {
+	padding: 0 var(--spacing-4) !important;
+}
+
+.v-btn.v-tab {
+	text-transform: uppercase !important;
+}

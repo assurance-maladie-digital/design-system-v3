@@ -47,21 +47,33 @@ export const Default: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu>
-							<HeaderMenuSection>
+							<HeaderMenuSection
+								:show-title="false"
+							>
+								<template #title>
+									Section 1
+								</template>
 								<HeaderMenuItem>
 									<a>Item</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
 									<a>Item</a>
 								</HeaderMenuItem>
-								<headerMenuItem>
+								<HeaderMenuItem>
 									<HeaderSubMenu v-bind="args">
 										<template #title>
 											{{ args.title }}
 										</template>
-										<HeaderMenuItem>
-											<a>Item</a>
-										</HeaderMenuItem>
+										<HeaderMenuSection
+											:show-title="false"
+										>
+											<template #title>
+												{{ args.title }}
+											</template>
+											<HeaderMenuItem>
+												<a>Item</a>
+											</HeaderMenuItem>
+										</HeaderMenuSection>
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
@@ -88,14 +100,19 @@ export const Default: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu>
-							<HeaderMenuSection>
+							<HeaderMenuSection
+								:show-title="false"
+							>
+								<template #title>
+									Section 1
+								</template>
 								<HeaderMenuItem>
 									<a>Item</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
 									<a>Item</a>
 								</HeaderMenuItem>
-								<headerMenuItem>
+								<HeaderMenuItem>
 									<HeaderSubMenu>
 										<template #title>
 											Menu de premier niveau
@@ -141,7 +158,12 @@ export const Deep: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu>
-							<HeaderMenuSection>
+							<HeaderMenuSection
+								:show-title="false"
+							>
+								<template #title>
+									Section 1
+								</template>
 								<HeaderMenuItem>
 									<a>Item 1</a>
 								</HeaderMenuItem>
@@ -205,7 +227,12 @@ export const Deep: Story = {
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>
-								<HeaderMenuSection>
+								<HeaderMenuSection
+									:show-title="false"
+								>
+									<template #title>
+										Section 1
+									</template>
 									<HeaderMenuItem>
 										<a>Item 1</a>
 									</HeaderMenuItem>

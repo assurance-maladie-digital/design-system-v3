@@ -37,6 +37,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproStateTile> = {
 		type: String,
 		default: undefined,
 	},
+	linkStyleText: {
+		type: String,
+		default: 'Consulter',
+	},
 	noPdfIcon: {
 		type: Boolean,
 		default: false,
@@ -53,7 +57,7 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproStateTile> = {
 		default: 'toDo',
 		type: String as PropType<keyof typeof AmeliproStateTileTypes>,
 		validator(value: string): boolean {
-			return ['date', 'done', 'doneNoCertificate', 'doneNoCertificateBlue', 'optionnal', 'toDo', 'toDoNoCertificate', 'toDoNoCertificateBlue'].includes(value)
+			return ['date', 'done', 'doneNoCertificate', 'doneNoCertificateBlue', 'doneToCorrect', 'optionnal', 'toDo', 'toDoNoCertificate', 'toDoNoCertificateBlue'].includes(value)
 		},
 	},
 	tileWidth: {
@@ -80,6 +84,7 @@ const modifiedPropValues = (): ComponentProps<typeof AmeliproStateTile> => ({
 	labelFirstLine: 'Modified first line',
 	labelSecondLine: 'Modified second line',
 	labelThirdLine: 'Modified third line',
+	linkStyleText: 'Modified link style text',
 	noPdfIcon: true,
 	tileMinHeight: '350px',
 	tilePaddingX: '32px',

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { ref } from 'vue'
-	import DatePicker from '@/components/DatePicker/DatePicker/DatePicker.vue'
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 
 	// Valeurs pour les différents exemples
 	const standardDate = ref<string | null>(null)

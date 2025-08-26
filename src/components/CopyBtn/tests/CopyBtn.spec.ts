@@ -66,6 +66,7 @@ describe('CopyBtn', () => {
 			propsData: {
 				label: 'test',
 				textToCopy: 'test',
+				tooltipDuration: 100,
 			},
 			global: {
 				plugins: [vuetify],
@@ -76,7 +77,8 @@ describe('CopyBtn', () => {
 
 		expect(wrapper.vm.tooltip).toBeTruthy()
 
-		vi.runAllTimers()
+		vi.advanceTimersByTime(101) // tooltipDuration + 1ms pour être sûr
+
 		expect(wrapper.vm.tooltip).toBeFalsy()
 	})
 

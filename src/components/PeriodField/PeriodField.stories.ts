@@ -2,6 +2,17 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import PeriodField from './PeriodField.vue'
 import { ref } from 'vue'
 
+// Type pour les méthodes exposées par PeriodField
+type ValidationMessage = { type: string, message: string }[]
+
+interface PeriodFieldExpose {
+	validateOnSubmit: () => boolean
+	errors: Record<string, ValidationMessage>
+	successes: Record<string, ValidationMessage>
+	warnings: Record<string, ValidationMessage>
+	isValid: boolean
+}
+
 const meta: Meta<typeof PeriodField> = {
 	title: 'Composants/Formulaires/PeriodField',
 	component: PeriodField,
@@ -897,6 +908,190 @@ const periodNoValidation = ref({ from: null, to: null })
 					:disable-error-handling="true"
 					:show-success-messages="false"
 				/>
+			</div>
+		`,
+	}),
+}
+
+export const FormValidation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<v-form @submit.prevent="submitForm" ref="formRef">
+						<v-container>
+							<v-row>
+								<v-col cols="12">
+									<h3>Formulaire avec validation</h3>
+								</v-col>
+								<v-col cols="12" md="6">
+									<PeriodField
+										v-model="form.period"
+										ref="periodFieldRef"
+										required
+										:custom-rules="periodRules"
+										placeholder-from="Début de l'événement"
+										placeholder-to="Fin de l'événement"
+									/>
+								</v-col>
+								<v-col cols="12">
+									<v-btn type="submit" color="primary" :disabled="isSubmitting">Valider</v-btn>
+								</v-col>
+							</v-row>
+							
+							<v-row v-if="isFormSubmitted">
+								<v-col cols="12">
+									<v-alert
+										type="success"
+										class="mt-4"
+									>
+										Formulaire envoyé avec succès !
+									</v-alert>
+									<pre>{{ formData }}</pre>
+								</v-col>
+							</v-row>
+						</v-container>
+					</v-form>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+				import { ref } from 'vue'
+				import { PeriodField } from '@cnamts/synapse'
+				
+				// Référence au formulaire
+				const formRef = ref(null)
+				const isSubmitting = ref(false)
+				const isFormSubmitted = ref(false)
+				const formData = ref(null)
+				
+				// Données du formulaire
+				const form = {
+					name: '',
+					period: { from: null, to: null }
+				}
+				
+				// Règles de validation pour le champ période
+				const periodRules = [
+					{ 
+						type: 'custom', 
+						options: { 
+							validator: (value) => {
+								if (!value.from || !value.to) return 'Les deux dates sont obligatoires'
+								return true
+							},
+							successMessage: 'Période valide'
+						}
+					},
+					{
+						type: 'notAfterToday',
+						options: { message: "La date ne peut pas être après aujourd'hui" }
+					}
+				]
+				
+				// Soumission du formulaire
+				const submitForm = () => {
+				if (periodFieldRef.value) {
+					const isValid = periodFieldRef.value.validateOnSubmit()
+					if (isValid) {
+						formStatus.value = 'Formulaire soumis avec succès !'
+						isFormSubmitted.value = true
+						formData.value = JSON.stringify(form.value)
+					}
+					else {
+						formStatus.value = 'Erreur de validation, veuillez corriger les champs'
+					}
+				}
+			}
+				</script>
+				`,
+			},
+		],
+	},
+	render: () => ({
+		components: { PeriodField },
+		setup() {
+			// Référence au formulaire
+			const formRef = ref(null)
+			const periodFieldRef = ref<PeriodFieldExpose | null>(null)
+			const isSubmitting = ref(false)
+			const isFormSubmitted = ref(false)
+			const formData = ref<string | null>(null)
+			const formStatus = ref('')
+
+			// Données du formulaire
+			const form = ref({
+				period: { from: null, to: null },
+			})
+
+			// Règles de validation pour le champ période
+			const periodRules = [
+				{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourdhui' } },
+			]
+
+			// Soumission du formulaire
+			const submitForm = () => {
+				if (periodFieldRef.value) {
+					const isValid = periodFieldRef.value.validateOnSubmit()
+					if (isValid) {
+						formStatus.value = 'Formulaire soumis avec succès !'
+						isFormSubmitted.value = true
+						formData.value = JSON.stringify(form.value)
+					}
+					else {
+						formStatus.value = 'Erreur de validation, veuillez corriger les champs'
+					}
+				}
+			}
+
+			return {
+				formRef,
+				periodFieldRef,
+				isSubmitting,
+				isFormSubmitted,
+				formData,
+				form,
+				periodRules,
+				formStatus,
+				submitForm,
+			}
+		},
+		template: `
+			<div class="pa-4">
+				<v-form @submit.prevent="submitForm" ref="formRef">
+					<v-container>
+						<v-row>
+							<v-col cols="12">
+								<h3>Formulaire avec validation</h3>
+							</v-col>
+							<v-col cols="12" md="6">
+								<PeriodField
+									v-model="form.period"
+									ref="periodFieldRef"
+									required
+									:custom-rules="periodRules"
+									placeholder-from="Début de l'événement"
+									placeholder-to="Fin de l'événement"
+								/>
+							</v-col>
+							<v-col cols="12">
+								<v-btn type="submit" color="primary" :disabled="isSubmitting">Valider</v-btn>
+							</v-col>
+						</v-row>
+						
+						<v-row v-if="formStatus">
+							<v-col cols="12">
+									{{ formStatus }}
+								<pre v-if="formData">{{ formData }}</pre>
+							</v-col>
+						</v-row>
+					</v-container>
+				</v-form>
 			</div>
 		`,
 	}),

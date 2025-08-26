@@ -1,9 +1,8 @@
 <script lang="ts" setup>
+	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { computed } from 'vue'
 	import { useTheme } from 'vuetify'
-
-	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
-
+	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { config } from './config'
 	import { locales } from './locales'
 
@@ -34,7 +33,7 @@
 
 	const labelColor = computed(() => {
 		return theme.current.value.dark
-			? 'rgba(255, 255, 255, .7)'
+			? 'rgba(255, 255, 255, .85)'
 			: 'rgba(0, 0, 0, .6)'
 	})
 
@@ -46,87 +45,95 @@
 		}
 		return props.value || props.placeholder
 	})
+
+	const actionButtonColor = computed(() => {
+		return theme.current.value.dark ? 'white' : 'primary'
+	})
 </script>
 
 <template>
-	<li class="sy-data-list-item d-flex flex-wrap">
-		<slot name="icon">
-			<VIcon
-				v-if="icon"
-				v-bind="options.icon"
-			>
-				{{ icon }}
-			</VIcon>
-		</slot>
-
-		<div class="sy-data-list-item-content">
-			<div :class="{ 'sy-row': row }">
-				<div
-					class="sy-data-list-item-label text-caption"
-					:style="{ color: labelColor }"
-				>
-					{{ label }}
-				</div>
-
-				<div class="sy-data-list-item-value">
-					<slot
-						name="value"
-						v-bind="{ itemValue }"
-					>
-						<VChip
-							v-if="chip"
-							v-bind="options.chip"
-						>
-							{{ itemValue }}
-						</VChip>
-
-						<span
-							v-else-if="renderHtmlValue"
-							class="text-body-1"
-							v-html="itemValue"
-						/>
-
-						<span
-							v-else
-							class="text-body-1"
-							v-text="itemValue"
-						/>
-					</slot>
-				</div>
-			</div>
-
-			<slot name="action">
-				<VBtn
-					v-if="action"
-					v-bind="options.actionBtn"
-					class="sy-data-list-item-action-btn"
-					@click="emits('click:action')"
-				>
-					{{ action }}
-				</VBtn>
+	<div
+		:class="{ 'sy-row': row }"
+		class="sy-data-list-item"
+	>
+		<dt
+			class="sy-data-list-item-label text-caption"
+			:style="{ color: labelColor }"
+		>
+			<slot name="icon">
+				<SyIcon
+					v-if="icon"
+					v-bind="options.icon"
+					:icon="icon"
+					:decorative="true"
+				/>
 			</slot>
-		</div>
-	</li>
+			<span>{{ label }} :</span>
+		</dt>
+
+		<dd
+			class="sy-data-list-item-value d-flex align-center ga-2"
+			:class="{ 'has-icon': icon }"
+		>
+			<slot
+				name="value"
+				v-bind="{ itemValue }"
+			>
+				<VChip
+					v-if="chip"
+					v-bind="options.chip"
+				>
+					{{ itemValue }}
+				</VChip>
+
+				<span
+					v-else-if="renderHtmlValue"
+					class="text-body-1"
+					v-html="itemValue"
+				/>
+
+				<span
+					v-else
+					class="text-body-1"
+					v-text="itemValue"
+				/>
+
+				<slot name="action">
+					<VBtn
+						v-if="action"
+						class="sy-data-list-item-action-btn px-2"
+						size="small"
+						variant="tonal"
+						:color="actionButtonColor"
+						@click="emits('click:action')"
+					>
+						{{ action }}
+					</VBtn>
+				</slot>
+			</slot>
+		</dd>
+	</div>
 </template>
 
 <style lang="scss" scoped>
 .sy-row {
 	display: flex;
 	flex-wrap: wrap;
+	gap: 0.25rem;
 
 	.sy-data-list-item-label {
 		align-self: center;
-
-		&::after {
-			content: ':';
-			margin: 0 4px;
-		}
 	}
 }
 
+.sy-data-list-item-value.has-icon {
+	margin-left: 2.5rem;
+}
+
 .sy-data-list-item-action-btn.v-btn {
-	min-width: 0;
-	margin: 0 -1px;
+	&:focus-visible::after {
+		opacity: 1;
+	}
 }
 
 .v-icon.v-theme--light {

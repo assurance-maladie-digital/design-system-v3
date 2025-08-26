@@ -38,7 +38,7 @@
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility } = useDatePickerAccessibility()
 
-	// Variables pour suivre le mois et l'année actuellement affichés dans le DatePicker
+	// Variables pour suivre le mois et l'année actuellement affichés dans le CalendarMode
 	const currentMonth = ref<string | null>(null)
 	const currentYear = ref<string | null>(null)
 	const currentMonthName = ref<string | null>(null)
@@ -147,6 +147,7 @@
 			max?: string
 		}
 		autoClamp?: boolean
+		isValidateOnBlur?: boolean
 	}>(), {
 		modelValue: undefined,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -182,6 +183,7 @@
 		}),
 		autoClamp: false,
 		label: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
+		isValidateOnBlur: true,
 	})
 
 	// Computed properties pour period
@@ -244,7 +246,8 @@
 	})
 
 	// pour valider les dates
-	const { validateDates, validateOnSubmit } = useDateValidation({
+	// On récupère validateDates depuis le composable mais on va redéfinir validateOnSubmit
+	const { validateDates } = useDateValidation({
 		noCalendar: props.noCalendar,
 		required: props.required,
 		displayRange: props.displayRange,
@@ -339,7 +342,27 @@
 	// Assignation des fonctions et variables retournées par le composable
 	// Utiliser une fonction pour wrapper updateSelectedDates afin de maintenir la compatibilité avec le template
 	const updateSelectedDates = (date: Date | null) => {
+		// Avant de mettre à jour la date, vérifier qu'elle est valide selon nos règles personnalisées
+		if (date !== null) {
+			// Appliquer les règles personnalisées directement à la date sélectionnée
+			const validationResult = validateField(date, props.customRules, props.customWarningRules)
+
+			// Si la date est invalide selon nos règles, ne pas mettre à jour et afficher l'erreur
+			if (validationResult.hasError) {
+				// Mettre à jour les messages d'erreur
+				errors.value = validationResult.state.errors
+				return // Ne pas continuer la mise à jour
+			}
+		}
+
+		// Si la date est valide ou null, on poursuit normalement
 		dateSelectionResult.updateSelectedDates(date)
+
+		// Forcer une validation immédiate après la mise à jour des dates
+		// pour s'assurer que les messages s'affichent
+		setTimeout(() => {
+			validateDates(true)
+		}, 0)
 	}
 	// generateDateRange est maintenant utilisé via le composable useInputHandler
 	// Synchroniser notre référence locale avec celle du composable
@@ -480,7 +503,7 @@
 			// Mettre à jour l'affichage formaté pour qu'il corresponde à la date sélectionnée
 			let formattedValue = ''
 
-			// Gérer la fermeture du DatePicker en fonction du mode et de l'état de sélection
+			// Gérer la fermeture du CalendarMode en fonction du mode et de l'état de sélection
 			if (props.displayRange) {
 				// Priorité à rangeBoundaryDates pour les plages
 				if (rangeBoundaryDates.value && rangeBoundaryDates.value[0] && rangeBoundaryDates.value[1]) {
@@ -502,7 +525,7 @@
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
 
-					// Les deux dates de la plage sont sélectionnées, fermer le DatePicker
+					// Les deux dates de la plage sont sélectionnées, fermer le CalendarMode
 					isDatePickerVisible.value = false
 					emit('closed')
 				}
@@ -522,7 +545,7 @@
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
 
-					// Les deux dates de la plage sont sélectionnées, fermer le DatePicker
+					// Les deux dates de la plage sont sélectionnées, fermer le CalendarMode
 					isDatePickerVisible.value = false
 					emit('closed')
 				}
@@ -539,7 +562,7 @@
 				displayFormattedDate.value = formattedValue
 				textInputValue.value = formattedValue
 
-				// En mode date unique, fermer le DatePicker après sélection
+				// En mode date unique, fermer le CalendarMode après sélection
 				isDatePickerVisible.value = false
 				emit('closed')
 				emit('date-selected', formattedDate.value)
@@ -654,7 +677,7 @@
 		}
 
 		// Si c'est une valeur string (venant du DateTextInput)
-		const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
+		const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
 		if (!inputElement) return
 
 		// Mettre à jour la valeur du modèle directement
@@ -697,7 +720,7 @@
 		currentYearName,
 	)
 
-	// Utilisation du composable pour gérer le mode d'affichage du DatePicker
+	// Utilisation du composable pour gérer le mode d'affichage du CalendarMode
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
 		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
 		() => props.isBirthDate || props.birthDate,
@@ -756,9 +779,9 @@
 
 			// set the focus on the date picker
 			await nextTick()
-			const firstButton = datePickerRef.value?.$el.querySelector('button')
+			const firstButton = datePickerRef.value?.$el?.querySelector?.('button')
 			if (firstButton) {
-				firstButton.focus()
+				firstButton.focus({ preventScroll: true })
 			}
 		}
 		else {
@@ -766,9 +789,9 @@
 			// wait for VMenu to finish DOM updates & transition
 			setTimeout(() => {
 				requestAnimationFrame(() => {
-					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector('input')
+					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
 					if (inputElement) {
-						inputElement.focus()
+						inputElement.focus({ preventScroll: true })
 						isDatePickerVisible.value = false
 					}
 				})
@@ -1050,6 +1073,23 @@
 		selectToday(selectedDates)
 	}
 
+	// Redéfinition de validateOnSubmit pour propager aux composants enfants
+	const validateOnSubmit = (): boolean => {
+		if (props.noCalendar) {
+			// En mode noCalendar, déléguer au DateTextInput
+			return dateTextInputRef.value?.validateOnSubmit() || false
+		}
+		else {
+			// En mode combiné, déléguer au DateTextInput du calendrier
+			const textInputValid = dateCalendarTextInputRef.value?.validateOnSubmit() || false
+
+			// Également vérifier avec useDateValidation
+			validateDates(true)
+
+			return textInputValid && errors.value.length === 0
+		}
+	}
+
 	defineExpose({
 		validateOnSubmit,
 		isDatePickerVisible,
@@ -1109,6 +1149,7 @@
 				:bg-color="props.bgColor"
 				:auto-clamp="props.autoClamp"
 				:display-asterisk="props.displayAsterisk"
+				:is-validate-on-blur="props.isValidateOnBlur"
 				title="Date text input"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -1152,6 +1193,7 @@
 						:bg-color="props.bgColor"
 						:display-range="props.displayRange"
 						:display-persistent-placeholder="true"
+						:is-validate-on-blur="props.isValidateOnBlur"
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
 						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
@@ -1178,8 +1220,11 @@
 					:view-mode="currentViewMode"
 					:max="maxDate"
 					:min="minDate"
+					:custom-rules="props.customRules"
+					:custom-warning-rules="props.customWarningRules"
 					:display-holiday-days="props.displayHolidayDays"
 					:display-asterisk="props.displayAsterisk"
+					:is-validate-on-blur="props.isValidateOnBlur"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"

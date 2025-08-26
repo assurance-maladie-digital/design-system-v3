@@ -6,6 +6,8 @@
 	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+
 	import {
 		mdiAlertOutline,
 		mdiCheck,
@@ -84,6 +86,7 @@
 			disableErrorHandling?: boolean
 			disableClickButton?: boolean
 			autocomplete?: string
+			helpText?: string
 		}>(),
 		{
 			modelValue: undefined,
@@ -150,6 +153,7 @@
 			disableErrorHandling: false,
 			disableClickButton: true,
 			autocomplete: 'off',
+			helpText: '',
 		},
 	)
 
@@ -215,13 +219,19 @@
 		: [],
 	)
 
+	// Check if customRules contains a 'required' rule
+	const hasCustomRequiredRule = () => {
+		return props.customRules.some(rule => rule.type === 'required')
+	}
+
 	const validateField = (value: string | number | null) => {
 		if (props.readonly) {
 			validation.clearValidation()
 			return true
 		}
 
-		if (!value && !props.required) {
+		// Don't short-circuit if a custom required rule exists
+		if (!value && !props.required && !hasCustomRequiredRule()) {
 			validation.clearValidation()
 			return true
 		}
@@ -292,6 +302,40 @@
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
 
+	// Détermine s'il y a des messages d'erreur ou d'état
+	const hasMessages = computed(() => {
+		if (props.disableErrorHandling) return false
+		return (props.errorMessages?.length ?? 0) > 0 || hasError.value || hasWarning.value || hasSuccess.value
+	})
+
+	// Détermine si le helpText doit être affiché à la position du message ou en dessous
+	const showHelpTextAsMessage = computed(() => {
+		// Afficher à la position du message si pas de messages d'erreur
+		return props.helpText && !hasMessages.value
+	})
+
+	const showHelpTextBelow = computed(() => {
+		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
+		return props.helpText && hasMessages.value && !props.areDetailsHidden
+	})
+
+	// Accessible label that includes prefix and suffix content for screen readers
+	const accessibleLabel = computed(() => {
+		let label = labelWithAsterisk.value
+
+		// Add prefix content if provided
+		if (props.prefix) {
+			label += ` ${props.prefix}`
+		}
+
+		// Add suffix content if provided
+		if (props.suffix) {
+			label += ` ${props.suffix}`
+		}
+
+		return label
+	})
+
 	const dividerProps = {
 		thickness: 2,
 		length: '25px',
@@ -343,11 +387,137 @@
 			addSrOnlySpan('.v-text-field__prefix')
 			addSrOnlySpan('.v-text-field__suffix')
 
-			// Remove aria-describedby attribute
-			const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
-			if (inputElement) {
-				inputElement.removeAttribute('aria-describedby')
+			// RGAA compliance: Associate error messages with input via aria-describedby
+			const setupAriaDescribedby = () => {
+				const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
+				const messagesContainer = syTextFieldRef.value?.$el?.querySelector('.v-messages')
+				const detailsContainer = syTextFieldRef.value?.$el?.querySelector('.v-input__details')
+
+				if (inputElement && messagesContainer) {
+					// Create unique ID for messages container only
+					const messagesId = `${inputElement.id || 'input'}-messages`
+					messagesContainer.id = messagesId
+
+					// Get existing aria-describedby value and combine with messages ID (avoid duplicates)
+					const existingDescribedby = inputElement.getAttribute('aria-describedby')
+					const existingIds = existingDescribedby ? existingDescribedby.split(' ').filter(id => id.trim()) : []
+
+					// Only add messagesId if it's not already present
+					if (!existingIds.includes(messagesId)) {
+						existingIds.push(messagesId)
+					}
+
+					const describedbyIds = existingIds.join(' ').trim()
+
+					// Associate input with messages via aria-describedby (preserve existing IDs)
+					inputElement.setAttribute('aria-describedby', describedbyIds)
+
+					// Remove problematic ARIA attributes from details container (parent)
+					if (detailsContainer) {
+						// Remove any existing ID to avoid duplicates
+						if (detailsContainer.id === messagesId) {
+							detailsContainer.removeAttribute('id')
+						}
+						detailsContainer.removeAttribute('role')
+						detailsContainer.removeAttribute('aria-live')
+						detailsContainer.removeAttribute('aria-atomic')
+					}
+
+					// Also remove from messages container itself
+					messagesContainer.removeAttribute('role')
+					messagesContainer.removeAttribute('aria-live')
+					messagesContainer.removeAttribute('aria-atomic')
+				}
+				else if (inputElement) {
+					// No messages container, but preserve existing aria-describedby values
+					const existingDescribedby = inputElement.getAttribute('aria-describedby')
+					const messagesId = `${inputElement.id || 'input'}-messages`
+
+					if (existingDescribedby) {
+						// Remove only the messages ID if it exists, keep other IDs
+						const describedbyIds = existingDescribedby
+							.split(' ')
+							.filter(id => id.trim() && id !== messagesId)
+							.join(' ')
+							.trim()
+
+						if (describedbyIds) {
+							inputElement.setAttribute('aria-describedby', describedbyIds)
+						}
+						else {
+							inputElement.removeAttribute('aria-describedby')
+						}
+					}
+				}
 			}
+
+			setupAriaDescribedby()
+		})
+
+		// Watch for error state changes to update aria-describedby dynamically
+		watch([hasError, errors], () => {
+			nextTick(() => {
+				const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
+				const messagesContainer = syTextFieldRef.value?.$el?.querySelector('.v-messages')
+				const detailsContainer = syTextFieldRef.value?.$el?.querySelector('.v-input__details')
+
+				if (inputElement && messagesContainer) {
+					// Create unique ID for messages container only
+					const messagesId = `${inputElement.id || 'input'}-messages`
+					messagesContainer.id = messagesId
+
+					// Get existing aria-describedby value and combine with messages ID (avoid duplicates)
+					const existingDescribedby = inputElement.getAttribute('aria-describedby')
+					const existingIds = existingDescribedby ? existingDescribedby.split(' ').filter(id => id.trim()) : []
+
+					// Only add messagesId if it's not already present
+					if (!existingIds.includes(messagesId)) {
+						existingIds.push(messagesId)
+					}
+
+					const describedbyIds = existingIds.join(' ').trim()
+
+					// Associate input with messages via aria-describedby (preserve existing IDs)
+					inputElement.setAttribute('aria-describedby', describedbyIds)
+
+					// Remove problematic ARIA attributes from details container (parent)
+					if (detailsContainer) {
+						// Remove any existing ID to avoid duplicates
+						if (detailsContainer.id === messagesId) {
+							detailsContainer.removeAttribute('id')
+						}
+						detailsContainer.removeAttribute('role')
+						detailsContainer.removeAttribute('aria-live')
+						detailsContainer.removeAttribute('aria-atomic')
+					}
+
+					// Also remove from messages container itself
+					messagesContainer.removeAttribute('role')
+					messagesContainer.removeAttribute('aria-live')
+					messagesContainer.removeAttribute('aria-atomic')
+				}
+				else if (inputElement) {
+					// No messages container, but preserve existing aria-describedby values
+					const existingDescribedby = inputElement.getAttribute('aria-describedby')
+					const messagesId = `${inputElement.id || 'input'}-messages`
+
+					if (existingDescribedby) {
+						// Remove only the messages ID if it exists, keep other IDs
+						const describedbyIds = existingDescribedby
+							.split(' ')
+							.filter(id => id.trim() && id !== messagesId)
+							.join(' ')
+							.trim()
+
+						if (describedbyIds) {
+							inputElement.setAttribute('aria-describedby', describedbyIds)
+						}
+						else {
+							inputElement.removeAttribute('aria-describedby')
+						}
+					}
+				}
+			})
 		})
 	})
 
@@ -365,8 +535,9 @@
 		v-model="model"
 		:autocomplete="props.autocomplete"
 		:active="props.isActive"
-		:title="props.label"
-		:aria-label="props.label"
+		:title="accessibleLabel"
+		:aria-label="accessibleLabel"
+		:aria-required="props.required ? 'true' : undefined"
 		:base-color="props.baseColor"
 		:bg-color="props.bgColor"
 		:center-affix="props.centerAffix"
@@ -382,9 +553,8 @@
 		:error-messages="errors"
 		:flat="props.isFlat"
 		:focused="props.isFocused"
-		:hide-details="props.areDetailsHidden"
-		:hide-spin-buttons="props.areSpinButtonsHidden"
-		:hint="props.hint"
+		:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
+		:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 		:label="labelWithAsterisk"
 		:loading="props.loading"
 		:max-errors="props.maxErrors"
@@ -394,7 +564,7 @@
 		:name="props.name"
 		:persistent-clear="props.displayPersistentClear"
 		:persistent-counter="props.displayPersistentCounter"
-		:persistent-hint="props.displayPersistentHint"
+		:persistent-hint="props.displayPersistentHint || !!showHelpTextAsMessage"
 		:persistent-placeholder="props.displayPersistentPlaceholder"
 		:placeholder="props.placeholder"
 		:prefix="props.prefix"
@@ -430,24 +600,29 @@
 						:location="props.tooltipLocation"
 					>
 						<template #activator="{ props: tooltipProps }">
-							<VIcon
+							<SyIcon
 								v-bind="tooltipProps"
-								:aria-label="props.label ? `${props.label} - info` : 'Info'"
+								:label="props.label ? `${props.label} - info` : 'Info'"
 								:color="appendInnerIconColor"
 								:icon="ICONS.info"
 								role="button"
+								:decorative="false"
 							/>
 						</template>
 					</VTooltip>
 				</template>
-				<VIcon
+				<SyIcon
 					v-else-if="props.prependIcon && !props.noIcon"
-					:aria-label="disableClickButton ? (props.label ? props.label : props.prependIcon) : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
+					:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.prependIcon]"
 					:role="disableClickButton ? 'presentation' : 'button'"
 					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
+					:decorative="disableClickButton"
+					:tabindex="disableClickButton ? undefined : '0'"
 					@click="handlePrependIconClick"
+					@keydown.enter.prevent="handlePrependIconClick"
+					@keydown.space.prevent="handlePrependIconClick"
 				/>
 			</slot>
 		</template>
@@ -464,24 +639,29 @@
 						:location="props.tooltipLocation"
 					>
 						<template #activator="{ props: tooltipProps }">
-							<VIcon
+							<SyIcon
 								v-bind="tooltipProps"
-								:aria-label="props.label ? `${props.label} - info` : 'Info'"
+								:label="props.label ? `${props.label} - info` : 'Info'"
 								:color="appendInnerIconColor"
 								:icon="ICONS.info"
 								role="button"
+								:decorative="false"
 							/>
 						</template>
 					</VTooltip>
 				</template>
-				<VIcon
+				<SyIcon
 					v-else-if="props.appendIcon && !props.noIcon"
-					:aria-label="disableClickButton ? (props.label ? props.label : props.appendIcon) : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
+					:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
 					:color="appendInnerIconColor"
 					:icon="ICONS[props.appendIcon]"
 					:role="disableClickButton ? 'presentation' : 'button'"
 					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
+					:decorative="disableClickButton"
+					:tabindex="disableClickButton ? undefined : '0'"
 					@click="handleAppendIconClick"
+					@keydown.enter.prevent="handleAppendIconClick"
+					@keydown.space.prevent="handleAppendIconClick"
 				/>
 			</slot>
 		</template>
@@ -489,10 +669,11 @@
 		<!-- Prepend inner -->
 		<template #prepend-inner>
 			<slot name="prepend-inner">
-				<VIcon
+				<SyIcon
 					v-if="props.prependInnerIcon && !props.noIcon"
 					:icon="ICONS[props.prependInnerIcon]"
 					role="presentation"
+					:decorative="true"
 				/>
 				<VDivider
 					v-if="props.showDivider"
@@ -506,18 +687,19 @@
 		<!-- Append inner -->
 		<template #append-inner>
 			<slot name="append-inner">
-				<VIcon
+				<SyIcon
 					v-if="validationIcon && !props.appendInnerIcon"
 					:icon="validationIcon"
 					role="presentation"
+					:decorative="true"
 				/>
-				<VIcon
+				<SyIcon
 					v-if="props.appendInnerIcon && !props.noIcon"
 					:color="appendInnerIconColor"
 					role="presentation"
-				>
-					{{ ICONS[props.appendInnerIcon] }}
-				</VIcon>
+					:icon="ICONS[props.appendInnerIcon]"
+					:decorative="true"
+				/>
 			</slot>
 		</template>
 
@@ -525,6 +707,15 @@
 			<slot name="details" />
 		</template>
 	</VTextField>
+
+	<!-- Help text displayed below when there are error messages -->
+	<div
+		v-if="showHelpTextBelow"
+		class="help-text-below px-4 mt-1"
+		:class="{ 'text-disabled': props.disabled }"
+	>
+		{{ props.helpText }}
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -599,8 +790,17 @@
 
 .basic-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(0 0 0 / 100%);
+		fill: rgb(0 0 0 / 70%);
 	}
 }
 
+.help-text-below {
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	font-size: 14px;
+	line-height: 1.2;
+}
+
+.help-text-below.text-disabled {
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+}
 </style>

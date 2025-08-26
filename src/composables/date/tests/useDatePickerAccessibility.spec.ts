@@ -1,14 +1,43 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useDatePickerAccessibility } from '../useDatePickerAccessibility'
+import { mount } from '@vue/test-utils'
+// Créer un composant vide pour servir de contexte à l'exécution des hooks
+import { defineComponent } from 'vue'
+
+// Composant vide qui servira de contexte pour les hooks Vue
+const TestComponent = defineComponent({
+	setup() {
+		const { updateAccessibility, handleKeyDown, fixAriaAttributes } = useDatePickerAccessibility()
+		return {
+			updateAccessibility,
+			handleKeyDown,
+			fixAriaAttributes,
+		}
+	},
+	template: '<div></div>',
+})
 
 describe('useDatePickerAccessibility', () => {
-	let { updateAccessibility, handleKeyDown } = useDatePickerAccessibility()
+	// Variables pour stocker les méthodes du composable
+	let updateAccessibility: ReturnType<typeof useDatePickerAccessibility>['updateAccessibility']
+	let handleKeyDown: ReturnType<typeof useDatePickerAccessibility>['handleKeyDown']
+	// Wrapper pour le composant de test
+	let wrapper: ReturnType<typeof mount<{
+		updateAccessibility: ReturnType<typeof useDatePickerAccessibility>['updateAccessibility']
+		handleKeyDown: ReturnType<typeof useDatePickerAccessibility>['handleKeyDown']
+		fixAriaAttributes: ReturnType<typeof useDatePickerAccessibility>['fixAriaAttributes']
+	}>>
 
 	beforeEach(() => {
-		// Réinitialiser la fonction pour chaque test
-		const { updateAccessibility: newUpdateAccessibility, handleKeyDown: newHandleKeyDown } = useDatePickerAccessibility()
-		updateAccessibility = newUpdateAccessibility
-		handleKeyDown = newHandleKeyDown
+		// Monter le composant de test pour fournir un contexte aux hooks Vue
+		wrapper = mount(TestComponent) as unknown as ReturnType<typeof mount<{
+			updateAccessibility: ReturnType<typeof useDatePickerAccessibility>['updateAccessibility']
+			handleKeyDown: ReturnType<typeof useDatePickerAccessibility>['handleKeyDown']
+			fixAriaAttributes: ReturnType<typeof useDatePickerAccessibility>['fixAriaAttributes']
+		}>>
+		// Obtenir les fonctions du composable directement depuis le composant monté
+		updateAccessibility = wrapper.vm.updateAccessibility
+		handleKeyDown = wrapper.vm.handleKeyDown
 
 		// Créer une structure DOM simulée pour les tests
 		document.body.innerHTML = `
@@ -91,7 +120,7 @@ describe('useDatePickerAccessibility', () => {
 		expect(buttons[2].getAttribute('aria-label')).toBe(null) // Pas de chevron-righ
 	})
 
-	it('adds sr-only instructions to the DatePicker', async () => {
+	it('adds sr-only instructions to the CalendarMode', async () => {
 		// Appeler updateAccessibility
 		await updateAccessibility()
 

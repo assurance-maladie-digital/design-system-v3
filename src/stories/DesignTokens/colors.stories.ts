@@ -5,6 +5,7 @@ import { paColorsTokens } from '@/designTokens/tokens/pa/paColors'
 import { apLightTheme } from '@/designTokens/tokens/amelipro/apLightTheme'
 import { apColorsTokens } from '@/designTokens/tokens/amelipro/apColors'
 import ColorDisplay from './ColorDisplay.vue'
+import ColorIntegrationExample from './ColorIntegrationExample.vue'
 
 import type { StoryObj } from '@storybook/vue3'
 import { computed } from 'vue'
@@ -29,6 +30,14 @@ export const Theme: StoryObj = {
 			`,
 		}
 	},
+	tags: ['!dev'],
+}
+
+export const ColorIntegration: StoryObj = {
+	render: () => ({
+		components: { ColorIntegrationExample },
+		template: '<ColorIntegrationExample />',
+	}),
 	tags: ['!dev'],
 }
 

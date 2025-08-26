@@ -181,6 +181,10 @@ const meta = {
 			description: 'Texte d\'aide affiché sous le champ',
 			control: 'text',
 		},
+		'helpText': {
+			description: 'Texte d\'aide affiché sous le champ',
+			control: 'text',
+		},
 		'loading': {
 			description: 'Affiche un indicateur de chargement',
 			control: 'boolean',
@@ -377,6 +381,58 @@ export const Default: Story = {
 	},
 }
 
+export const HelpText: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTextField 
+					v-model="value" 
+					help-text="Texte d'aide à la saisie"
+				/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { SyTextField } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		showDivider: false,
+		variantStyle: 'outlined',
+		color: 'primary',
+		isClearable: true,
+		label: 'Label',
+		modelValue: '',
+		helpText: 'Texte d\'aide à la saisie',
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField, VIcon },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div>
+					<SyTextField v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}
+
 export const Required: Story = {
 	args: {
 		...Default.args,
@@ -393,7 +449,8 @@ export const Required: Story = {
 				return { args, value }
 			},
 			template: `
-    <div class="d-flex flex-wrap align-center">
+    <div>
+		<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
      <SyTextField v-bind="args" v-model="value" />
     </div>
    `,
@@ -413,6 +470,7 @@ Pour afficher l'astérisque sur un champ requis, il faut activer la prop \`displ
 			{
 				name: 'Template',
 				code: `<template>
+	<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
 	<SyTextField
 		v-model="value"
 		required
@@ -451,7 +509,7 @@ export const RequiredWithAsterisk: Story = {
 			},
 			template: `
     <div class="d-flex flex-wrap align-center">
-     <SyTextField v-bind="args" v-model="value" />
+     	<SyTextField v-bind="args" v-model="value" />
     </div>
    `,
 		}
@@ -837,6 +895,7 @@ Cette story montre l'utilisation des règles de validation standard. Le champ :
 				code: `<SyTextField
 	v-model="value"
 	label="Champ avec validation"
+	helpText="Le champ doit contenir à minima 3 caractères"
 	:customRules="[
 		{
 			type: 'minLength',
@@ -862,6 +921,7 @@ Cette story montre l'utilisation des règles de validation standard. Le champ :
 				v-model="value"
 				v-bind="args"
 				label="Champ avec validation"
+				helpText="Le champ doit contenir à minima 3 caractères"
 				:customRules="[
 					{
 						type: 'minLength',
@@ -960,12 +1020,13 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 	v-model="value"
 	autocomplete="email"
 	label="Email"
+	helpText="Format attendu : nom@domaine.fr"
 	required
 	:customRules="[
 		{
 			type: 'email',
 			options: {
-				message: 'L'email n'est pas valide',
+				message: 'L'email n'est pas valide'
 				successMessage: 'L'email est valide'
 			}
 		}
@@ -986,6 +1047,7 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 				v-model="value"
 				v-bind="args"
 				label="Email"
+				helpText="Format attendu : nom@domaine.fr"
 				autocomplete="email"
 				required
 				:customRules="[
@@ -1023,6 +1085,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 				code: `<SyTextField
 	v-model="value"
 	label="Code postal"
+	helpText="Exemple : 31000"
 	autocomplete="postal-code"
 	required
 	:customRules="[
@@ -1051,6 +1114,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 				v-model="value"
 				v-bind="args"
 				label="Code postal"
+				helpText="Exemple : 31000"
 				autocomplete="postal-code"
 				required
 				:customRules="[
@@ -1277,7 +1341,7 @@ export const FormValidation: Story = {
 					.map(({ name }) => name)
 
 				if (invalidFields.length > 0) {
-					alert(`Les champs suivants sont invalides :\n${invalidFields.join('\n')}`)
+					alert(`Les champs suivants sont invalides: ${invalidFields.join('\\n')}`)
 				}
 				else {
 					alert('Formulaire soumis avec succès !')
@@ -1307,9 +1371,11 @@ export const FormValidation: Story = {
 							v-model="nomValue"
 							label="Nom"
 							placeholder="Votre nom"
+							autocomplete="family-name"
 							required
 							show-success-messages
 							class="mb-4"
+							aria-describedby="nom-rule"
 						/>
 
 						<SyTextField
@@ -1317,28 +1383,33 @@ export const FormValidation: Story = {
 							v-model="prenomValue"
 							label="Prénom"
 							placeholder="Votre prénom"
+							autocomplete="given-name"
+							required
 							:custom-rules="prenomRules"
 							show-success-messages
 							class="mb-4"
+							aria-describedby="prenom-rule"
 						/>
 
 						<SyTextField
 							ref="ageField"
 							v-model="ageValue"
 							label="Âge"
+							required
 							placeholder="Votre âge"
 							:custom-rules="ageRules"
 							show-success-messages
 							class="mb-4"
+							aria-describedby="age-rule"
 						/>
 					</div>
 
 					<div class="text-caption mb-4">
 						<strong>Règles de validation :</strong>
 						<ul>
-							<li>Nom : Champ requis</li>
-							<li>Prénom : Minimum 3 caractères</li>
-							<li>Âge : Uniquement des chiffres</li>
+							<li id="nom-rule">Nom : Champ requis</li>
+							<li id="prenom-rule">Prénom : Minimum 3 caractères</li>
+							<li id="age-rule">Âge : Uniquement des chiffres</li>
 						</ul>
 					</div>
 
@@ -1360,6 +1431,145 @@ export const FormValidation: Story = {
 			</div>
 		`,
 	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple de champ avec validation désactivée au blur. La validation ne se déclenche que lors de la soumission du formulaire.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<div>
+			<div style="max-width: 500px;">
+				<h3>Validation de formulaire</h3>
+				<form @submit.prevent="handleSubmit">
+					<div class="mb-4">
+						<SyTextField
+							ref="nomField"
+							v-model="nomValue"
+							label="Nom"
+							placeholder="Votre nom"
+							autocomplete="family-name"
+							required
+							show-success-messages
+							class="mb-4"
+							aria-describedby="nom-rule"
+						/>
+
+						<SyTextField
+							ref="prenomField"
+							v-model="prenomValue"
+							label="Prénom"
+							placeholder="Votre prénom"
+							autocomplete="given-name"
+							required
+							:custom-rules="prenomRules"
+							show-success-messages
+							class="mb-4"
+							aria-describedby="prenom-rule"
+						/>
+
+						<SyTextField
+							ref="ageField"
+							v-model="ageValue"
+							label="Âge"
+							required
+							placeholder="Votre âge"
+							:custom-rules="ageRules"
+							show-success-messages
+							class="mb-4"
+							aria-describedby="age-rule"
+						/>
+					</div>
+
+					<div class="text-caption mb-4">
+						<strong>Règles de validation :</strong>
+						<ul>
+							<li id="nom-rule">Nom : Champ requis</li>
+							<li id="prenom-rule">Prénom : Minimum 3 caractères</li>
+							<li id="age-rule">Âge : Uniquement des chiffres</li>
+						</ul>
+					</div>
+
+					<button
+						type="submit"
+						style="
+							background-color: #1976d2;
+							color: white;
+							padding: 8px 16px;
+							border: none;
+							border-radius: 4px;
+							cursor: pointer;
+							font-size: 1rem;
+						"
+					>
+						Soumettre
+					</button>
+				</form>
+			</div>
+	</div>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+const nomField = ref()
+			const prenomField = ref()
+			const ageField = ref()
+			const nomValue = ref('')
+			const prenomValue = ref('')
+			const ageValue = ref('')
+
+			// Règle minLength pour le prénom
+			const prenomRules = [{
+				type: 'minLength',
+				options: {
+					length: 3,
+					message: 'Le prénom doit contenir au moins 3 caractères',
+					successMessage: 'Le prénom est valide',
+					fieldIdentifier: 'prénom',
+				},
+			}]
+
+			// Règle pattern pour l'âge (uniquement des chiffres)
+			const ageRules = [{
+				type: 'matchPattern',
+				options: {
+					pattern: /^d+$/,
+					message: 'L'âge doit contenir uniquement des chiffres',
+					successMessage: 'L'âge est valide',
+					fieldIdentifier: 'âge',
+				},
+			}]
+
+			const handleSubmit = () => {
+				const fields = [
+					{ ref: nomField, name: 'Nom' },
+					{ ref: prenomField, name: 'Prénom' },
+					{ ref: ageField, name: 'Âge' },
+				]
+
+				const invalidFields = fields
+					.filter(({ ref }) => !ref.value?.validateOnSubmit())
+					.map(({ name }) => name)
+
+				if (invalidFields.length > 0) {
+					alert('Les champs suivants sont invalides: ' + invalidFields.join('\\n'))
+				}
+				else {
+					alert('Formulaire soumis avec succès !')
+				}
+			}
+</script>
+				`,
+			},
+		],
+	},
 }
 
 export const WithPrefixAndSuffix: Story = {
@@ -1542,6 +1752,7 @@ export const WithoutSuccessMessages: Story = {
               <SyTextField
                 v-model="value1"
                 v-bind="args"
+                autocomplete="email"
                 showSuccessMessages
               />
             </div>
@@ -1551,6 +1762,7 @@ export const WithoutSuccessMessages: Story = {
               <SyTextField
                 v-model="value2"
                 v-bind="args"
+                autocomplete="email"
                 :showSuccessMessages="false"
               />
             </div>
@@ -1583,6 +1795,7 @@ export const WithoutSuccessMessages: Story = {
   <SyTextField
     v-model="email"
     label="Email"
+    autocomplete="email"
     :custom-rules="[{
       type: 'matchPattern',
       options: {
@@ -1597,6 +1810,7 @@ export const WithoutSuccessMessages: Story = {
   <SyTextField
     v-model="email"
     label="Email"
+    autocomplete="email"
     :custom-rules="[{
       type: 'matchPattern',
       options: {

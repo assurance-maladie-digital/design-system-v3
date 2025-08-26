@@ -1,3 +1,3 @@
 export const locales = {
-	homeAriaLabel: 'Logo de l\'Assurance Maladie, cliquez pour revenir à l\'accueil',
+	homeAriaLabel: 'Sécurité sociale, l\'Assurance Maladie : Agir ensemble, protéger chacun. Retour à l\'accueil.',
 }

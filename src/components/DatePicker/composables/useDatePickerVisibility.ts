@@ -1,10 +1,10 @@
 import { type Ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
 
 /**
- * Composable pour gérer la visibilité et les interactions avec le DatePicker
+ * Composable pour gérer la visibilité et les interactions avec le CalendarMode
  *
  * @param options - Options de configuration
- * @returns Fonctions pour gérer la visibilité du DatePicker
+ * @returns Fonctions pour gérer la visibilité du CalendarMode
  */
 export const useDatePickerVisibility = (options: {
 	// Propriétés de configuration
@@ -39,7 +39,7 @@ export const useDatePickerVisibility = (options: {
 	} = options
 
 	/**
-	 * Bascule l'affichage du DatePicker
+	 * Bascule l'affichage du CalendarMode
 	 */
 	const toggleDatePicker = () => {
 		if (disabled || readonly) return
@@ -47,7 +47,7 @@ export const useDatePickerVisibility = (options: {
 		isDatePickerVisible.value = !isDatePickerVisible.value
 
 		if (isDatePickerVisible.value) {
-			// Mettre à jour l'accessibilité après l'ouverture du DatePicker
+			// Mettre à jour l'accessibilité après l'ouverture du CalendarMode
 			nextTick(() => {
 				updateAccessibility()
 			})
@@ -59,7 +59,7 @@ export const useDatePickerVisibility = (options: {
 	}
 
 	/**
-	 * Ouvre le DatePicker s'il n'est pas déjà visible
+	 * Ouvre le CalendarMode s'il n'est pas déjà visible
 	 */
 	const openDatePicker = () => {
 		if (!isDatePickerVisible.value) {
@@ -68,7 +68,7 @@ export const useDatePickerVisibility = (options: {
 	}
 
 	/**
-	 * Ouvre le DatePicker lors d'un clic sur le champ de texte
+	 * Ouvre le CalendarMode lors d'un clic sur le champ de texte
 	 */
 	const openDatePickerOnClick = () => {
 		if (textFieldActivator) {
@@ -80,7 +80,7 @@ export const useDatePickerVisibility = (options: {
 	 * Gère le focus sur le champ de texte
 	 */
 	const openDatePickerOnFocus = () => {
-		// Only open the DatePicker if textFieldActivator is true
+		// Only open the CalendarMode if textFieldActivator is true
 		if (textFieldActivator) {
 			openDatePicker()
 		}
@@ -91,14 +91,14 @@ export const useDatePickerVisibility = (options: {
 	}
 
 	/**
-	 * Gère le clic sur l'icône du DatePicker
+	 * Gère le clic sur l'icône du CalendarMode
 	 */
 	const openDatePickerOnIconClick = () => {
 		toggleDatePicker()
 	}
 
 	/**
-	 * Gère les clics en dehors du DatePicker pour le fermer
+	 * Gère les clics en dehors du CalendarMode pour le fermer
 	 */
 	const handleClickOutside = (event: MouseEvent) => {
 		if (!isDatePickerVisible.value) return
@@ -106,14 +106,14 @@ export const useDatePickerVisibility = (options: {
 		const target = event.target as HTMLElement
 		const container = target.closest('.date-picker-container')
 
-		// Si on clique dans le conteneur du DatePicker, on ne fait rien
+		// Si on clique dans le conteneur du CalendarMode, on ne fait rien
 		if (container) return
 		emitClosed()
 		// Déclencher la validation à la fermeture
 		validateDates()
 	}
 
-	// Gestion des événements de clic en dehors du DatePicker
+	// Gestion des événements de clic en dehors du CalendarMode
 	onMounted(() => {
 		document.addEventListener('click', handleClickOutside)
 	})
@@ -123,7 +123,7 @@ export const useDatePickerVisibility = (options: {
 	})
 
 	/**
-	 * Gère l'ouverture du DatePicker lors de l'appui sur Entrée ou Espace
+	 * Gère l'ouverture du CalendarMode lors de l'appui sur Entrée ou Espace
 	 */
 	const handleKeyboardNavigation = (event: KeyboardEvent) => {
 		if ((event.key === 'Enter' || event.key === ' ') && !disabled && !readonly) {

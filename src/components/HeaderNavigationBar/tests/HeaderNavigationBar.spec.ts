@@ -24,6 +24,7 @@ describe('HeaderNavigationBar', () => {
 				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
+					RouterLink: true, // Stub pour éviter l'avertissement de résolution de composant
 				},
 			},
 			props: {
@@ -42,8 +43,8 @@ describe('HeaderNavigationBar', () => {
 		})
 
 		await wrapper.vm.$nextTick()
-
-		expect(wrapper.html()).toContain('Home')
+		// le vtabs generait des btn dans lesquels le text etait en majuscule ici cela se via le code de SyTabs (toUpperCase() sur les items)
+		expect(wrapper.html()).toContain('HOME')
 		expect(wrapper.findComponent(HeaderBurgerMenu).exists()).toBe(false)
 		expect(wrapper.findComponent(HorizontalNavbar).exists()).toBe(true)
 
@@ -66,6 +67,7 @@ describe('HeaderNavigationBar', () => {
 				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
+					RouterLink: true, // Stub pour éviter l'avertissement de résolution de composant
 				},
 			},
 			props: {

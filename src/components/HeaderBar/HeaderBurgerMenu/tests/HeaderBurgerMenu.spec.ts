@@ -157,7 +157,7 @@ describe('HeaderBurgerMenu', () => {
 
 		const btn = wrapper.find('button')
 		await btn.trigger('click')
-		const menuBtnWrapper = wrapper.find('[role="dialog"]>div')
+		const menuBtnWrapper = wrapper.find('.menu>nav')
 
 		vi.spyOn(menuBtnWrapper.element, 'getBoundingClientRect').mockReturnValue(new DOMRect(50, 50, 0, 0))
 

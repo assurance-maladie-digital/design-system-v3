@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import { mdiAccountCircleOutline, mdiMagnify } from '@mdi/js'
+import { mdiAccountCircleOutline, mdiMagnify, mdiMenu } from '@mdi/js'
 import { VBtn, VListItem, VListItemTitle } from 'vuetify/components'
 import HeaderToolbar from '../HeaderToolbar/HeaderToolbar.vue'
 import LogoBrandSection from '../LogoBrandSection/LogoBrandSection.vue'
 import SubHeader from '../SubHeader/SubHeader.vue'
 import UserMenuBtn from '../UserMenuBtn/UserMenuBtn.vue'
 import HeaderBar from './HeaderBar.vue'
+import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar',
@@ -194,20 +195,23 @@ export const WithRightMenu: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { HeaderBar, VBtn },
+			components: { HeaderBar, VBtn, SyIcon },
 			setup() {
 				const searchIcon = mdiMagnify
 				const accountIcon = mdiAccountCircleOutline
-				return { args, searchIcon, accountIcon }
+				const menuIcon = mdiMenu
+
+				return { args, searchIcon, accountIcon, menuIcon }
 			},
 			template: `<div class="position: relative">
 				<HeaderBar v-bind="args">
 					<template #header-side="{ menuOpen }">
-						<div class="d-flex justify-center h-100 ga-4 pr-4">
+						<nav class="d-none d-md-flex justify-center h-100 ga-4 pr-4">
 							<VBtn
 								variant="text"
 								:prepend-icon="searchIcon"
 								color="primary"
+								role="search"
 							>
 								Rechercher
 							</VBtn>
@@ -217,7 +221,17 @@ export const WithRightMenu: Story = {
 							>
 								Login
 							</VBtn>
-						</div>
+						</nav>
+						<VBtn
+							class="d-md-none"
+							variant="text"
+						>
+							<SyIcon
+								size="x-large"
+								:icon="menuIcon"
+								aria-label="Ouvrir le menu"
+							/>
+						</VBtn>
 					</template>
 				</HeaderBar>
 			</div>`,
@@ -234,11 +248,12 @@ export const WithRightMenu: Story = {
 						service-subtitle="Design System"
 					>
 						<template #header-side="{ menuOpen }">
-							<div class="d-flex justify-center h-100 ga-4 pr-4">
+							<nav class="d-none d-md-flex justify-center h-100 ga-4 pr-4">
 								<VBtn
 									variant="text"
 									:prepend-icon="mdiMagnify"
 									color="primary"
+									role="search"
 								>
 									Rechercher
 								</VBtn>
@@ -248,7 +263,17 @@ export const WithRightMenu: Story = {
 								>
 									Login
 								</VBtn>
-							</div>
+							</nav>
+							<VBtn
+								class="d-md-none"
+								variant="text"
+							>
+								<SyIcon
+									size="x-large"
+									:icon="mdiMenu"
+									aria-label="Ouvrir le menu"
+								/>
+							</VBtn>
 						</template>
 					</HeaderBar>
 				</template>
@@ -258,9 +283,9 @@ export const WithRightMenu: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { HeaderBar } from '@cnamts/synapse'
+					import { HeaderBar, SyIcon } from '@cnamts/synapse'
 					import { VBtn } from 'vuetify/components'
-					import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
+					import { mdiMagnify, mdiAccountCircleOutline, mdiMenu } from '@mdi/js'
 				</script>
 				`,
 			},
@@ -689,7 +714,11 @@ export const PrependSlot: Story = {
 			template: `
 				<HeaderBar v-bind="args">
 					<template #prepend>
-						<div style="height: 26px; background-color: #0c419a;"></div>
+						<div style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
+							<div>
+								contenu
+							</div>
+						</div>
 					</template>
 				</HeaderBar>
 			`,
@@ -703,7 +732,11 @@ export const PrependSlot: Story = {
 				<template>
 					<HeaderBar>
 						<template #prepend>
-							<div style="height: 26px; background-color: #0c419a;"></div>
+							<div style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
+								<div>
+									contenu
+								</div>
+							</div>
 						</template>
 					</HeaderBar>
 				</template>
@@ -735,7 +768,11 @@ export const AppendSlot: Story = {
 			template: `
 				<HeaderBar v-bind="args">
 					<template #append>
-						<div style="height: 26px; background-color: #0c419a;"></div>
+						<div style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
+							<div>
+								contenu
+							</div>
+						</div>
 					</template>
 				</HeaderBar>
 			`,
@@ -749,7 +786,11 @@ export const AppendSlot: Story = {
 				<template>
 					<HeaderBar>
 						<template #append>
-							<div style="height: 26px; background-color: #0c419a;"></div>
+							<div style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
+								<div>
+									contenu
+								</div>
+							</div>
 						</template>
 					</HeaderBar>
 				</template>

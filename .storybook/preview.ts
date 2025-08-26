@@ -50,7 +50,7 @@ setup((app, { globals }) => {
 		() => globals.theme,
 		(newTheme) => {
 			// Update Vuetify theme
-			vuetify.theme.global.name.value = newTheme
+			vuetify.theme.change(newTheme)
 
 			// Apply the new theme class
 			applyThemeClass(newTheme)
@@ -92,7 +92,7 @@ const preview: Preview = {
 		(story, context) => {
 			// Handle theme changes
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
-				vuetify.theme.global.name.value = context.globals.theme
+				vuetify.theme.change(context.globals.theme)
 				document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
@@ -124,10 +124,9 @@ const preview: Preview = {
 					[
 						'Introduction',
 						'Aculturation', ['Sensibilisation à l’accessibilité numérique'],
-						'Kit de pré-audit', ['Introduction', 'Échantillonnage', 'Pré-audit', 'Outils', ['Introduction', 'Tanaguru']],
+						'Kit de pré-audit', ['Introduction', 'Échantillonnage', 'Pré-audit', 'Outils', ['Introduction', 'Tanaguru', ['Utilisation', 'Faux positifs']]],
 						'Audit', ['RGAA'],
-						'Avancement',
-						'Vuetify',
+						'Design System', ['Audit du Design System', 'Avancement', 'Vuetify'],
 					],
 					'Éco-conception',
 					[
@@ -142,7 +141,7 @@ const preview: Preview = {
 						'Layout', ['PageContainer'],
 						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink', 'SyPagination'],
 						'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'],
-						'Formulaires', ['SyTextField', 'SyTextArea', 'DatePicker', ['Introduction', 'DatePicker', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'Selects', ['Introduction', 'SelectBtnField', 'SyBtnSelect', 'SyInputSelect', 'SySelect'], 'UploadWorkflow', 'SyBtnSelect'],
+						'Formulaires', ['SyTextField', 'SyTextArea', 'DatePicker', ['Introduction', 'CalendarMode', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'Selects', ['Introduction', 'SelectBtnField', 'SyBtnSelect', 'SyInputSelect', 'SySelect'], 'UploadWorkflow', 'SyBtnSelect'],
 						'Tableaux', ['PaginatedTable', 'TableToolbar', 'SyTable', 'SyServerTable'],
 						'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
