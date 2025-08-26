@@ -156,6 +156,12 @@
 
 		// Mettre à jour l'affichage formaté
 		updateDisplayFormattedDate()
+
+		// Mettre à jour les variables currentMonth et currentYear pour refléter la date d'aujourd'hui
+		currentMonth.value = today.getMonth().toString()
+		currentYear.value = today.getFullYear().toString()
+		currentMonthName.value = dayjs(today).format('MMMM')
+		currentYearName.value = today.getFullYear().toString()
 	}
 
 	const emit = defineEmits<{
