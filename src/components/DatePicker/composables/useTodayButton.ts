@@ -10,6 +10,7 @@ export interface TodayButtonProps {
 export interface TodayButtonReturn {
 	todayInString: ComputedRef<string>
 	selectToday: (selectedDates: { value: DateObjectValue }) => void
+	headerDate: ComputedRef<string>
 }
 
 /**
@@ -19,6 +20,10 @@ export function useTodayButton(props: TodayButtonProps): TodayButtonReturn {
 	// Computed pour le format de la date du jour
 	const todayInString = computed(() => {
 		return dayjs().locale('fr').format('dddd D MMMM').replace(/\b\w/g, l => l.toUpperCase())
+	})
+
+	const headerDate = computed(() => {
+		return dayjs().locale('fr').format('dddd DD MMMM YYYY')
 	})
 
 	// Fonction pour sélectionner la date du jour
@@ -39,5 +44,6 @@ export function useTodayButton(props: TodayButtonProps): TodayButtonReturn {
 	return {
 		todayInString,
 		selectToday,
+		headerDate,
 	}
 }

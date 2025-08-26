@@ -1058,7 +1058,7 @@
 		}
 	})
 
-	const { todayInString, selectToday } = useTodayButton(props)
+	const { todayInString, selectToday, headerDate } = useTodayButton(props)
 	const { labelWithAsterisk } = useAsteriskDisplay(props)
 
 	// Utilisation du composable pour l'affichage formaté des dates
@@ -1238,7 +1238,7 @@
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ displayedDateString }}
+							{{ selectedDates ? displayedDateString : headerDate }}
 						</h3>
 					</template>
 					<template
