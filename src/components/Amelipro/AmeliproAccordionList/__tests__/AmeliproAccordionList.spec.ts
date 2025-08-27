@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
-import AmeliproAccordionResultList from '../AmeliproAccordionResultList.vue'
+import AmeliproAccordionList from '../AmeliproAccordionList.vue'
 
-describe('AmeliproAccordionResultList', () => {
+describe('AmeliproAccordionList', () => {
 	it('render correctly', async () => {
-		const wrapper = mount(AmeliproAccordionResultList, {
+		const wrapper = mount(AmeliproAccordionList, {
 			global: {
 				plugins: [vuetify],
 			},
@@ -25,7 +25,7 @@ describe('AmeliproAccordionResultList', () => {
 					{ id: 11 },
 				],
 				title: 'Exemple de liste de résultats',
-				uniqueId: 'amelipro-accordion-list-unique-id',
+				uniqueId: 'amelipro-accordion-result-unique-id',
 			},
 			slots: {
 				accordionContent: '<p>Contenu du dépliant</p>',
