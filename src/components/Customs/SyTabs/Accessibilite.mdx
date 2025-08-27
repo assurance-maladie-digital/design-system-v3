@@ -13,11 +13,11 @@ import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
       alt="Icône d'accessibilité" 
       className="accessibility-icon"
     />
-    <p className="intro-text">
+    <div className="intro-text">
       Le composant SyTabs a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C, 
       notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les onglets</a>. 
       Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
-    </p>
+    </div>
   </div>
 
   <div className="criteria-section">
@@ -80,17 +80,17 @@ import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 
   <div className="automatic-section">
     <h2>Activation automatique des onglets</h2>
-    <p>
+    <div className="section-description">
       Le composant SyTabs implémente un modèle d'activation automatique, ce qui signifie que :
-    </p>
+    </div>
     <ul>
       <li>La sélection d'un nouvel onglet via la navigation par flèches active immédiatement cet onglet</li>
       <li>Le contenu du panneau associé est affiché sans nécessiter une action supplémentaire</li>
       <li>Le focus reste sur l'onglet activé pour permettre de continuer la navigation par clavier</li>
     </ul>
-    <p>
+    <div className="section-description">
       Cette implémentation suit les meilleures pratiques WAI-ARIA pour les interfaces à onglets :
-    </p>
+    </div>
     <ul>
       <li>Réduction du nombre d'actions nécessaires pour naviguer entre les contenus</li>
       <li>Mise à jour dynamique de l'attribut <code>aria-selected</code> pour informer des changements</li>
@@ -101,30 +101,32 @@ import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 
   <div className="demo-section">
     <h2>Démonstration interactive</h2>
-    <p>
+    <div className="section-description">
       Explorez ci-dessous un exemple de SyTabs entièrement accessible. 
       Essayez de naviguer en utilisant uniquement votre clavier (Tab pour accéder à la barre d'onglets, flèches gauche/droite pour naviguer entre les onglets) pour tester l'accessibilité.
-    </p>
+    </div>
     <Primary />
   </div>
 
   <div className="tab-panel-section">
     <h2>Relation onglet-panneau</h2>
-    <p>
+    <div className="section-description">
       Le composant SyTabs établit une relation claire entre chaque onglet et son panneau de contenu associé :
-    </p>
+    </div>
     <ul>
       <li>Chaque onglet (<code>role="tab"</code>) est associé à un panneau de contenu via <code>aria-controls</code></li>
       <li>Chaque panneau de contenu (<code>role="tabpanel"</code>) est associé à son onglet via <code>aria-labelledby</code></li>
-      <li>Les identifiants uniques garantissent que ces associations sont clairement établies :</li>
-      <ul>
-        <li>Onglets : <code>id="tab-&#123;index&#125;"</code></li>
-        <li>Panneaux : <code>id="panel-&#123;index&#125;"</code></li>
-      </ul>
+      <li>
+        Les identifiants uniques garantissent que ces associations sont clairement établies :
+        <ul>
+          <li>Onglets : <code>id="tab-&#123;index&#125;"</code></li>
+          <li>Panneaux : <code>id="panel-&#123;index&#125;"</code></li>
+        </ul>
+      </li>
     </ul>
-    <p>
+    <div className="section-description">
       Cette structure garantit que les utilisateurs de technologies d'assistance comprennent clairement la relation entre les onglets et leur contenu associé, améliorant ainsi la navigation et la compréhension de l'interface.
-    </p>
+    </div>
   </div>
 
   <div className="best-practices">

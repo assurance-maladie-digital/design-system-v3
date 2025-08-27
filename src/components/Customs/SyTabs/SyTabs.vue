@@ -4,14 +4,20 @@
 	import { config } from './config'
 	import { ref, watch, onMounted, onUnmounted } from 'vue'
 
-	const props = defineProps<CustomizableOptions & {
+	const props = withDefaults(defineProps<CustomizableOptions & {
 		items: TabItem[]
 		modelValue?: number | string
-	}>()
+		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
+		confirmTabChange?: boolean
+		/** Message affiché dans la boîte de dialogue de confirmation */
+		confirmationMessage?: boolean
+	}>(), {
+		modelValue: undefined,
+		confirmTabChange: false,
+		confirmationMessage: false,
+	})
 
-	const emit = defineEmits<{
-		(e: 'update:modelValue', value: number | string): void
-	}>()
+	const emit = defineEmits(['update:modelValue', 'cancel-navigation', 'confirm-tab-change'])
 
 	defineSlots<{
 		'tabs-prepend': () => unknown
@@ -26,8 +32,62 @@
 	// Élément actuellement focusé (pour la navigation clavier)
 	const focusedItemIndex = ref<number>(-1)
 
-	// Fonction pour activer un élément au clic
-	function setActiveItem(index: number) {
+	// Émet un événement pour gérer la confirmation de changement d'onglet
+	async function handleTabChangeConfirmation(message: string): Promise<boolean> {
+		// Émettre l'événement avec le message et retourner une promesse
+		let resolver: (value: boolean) => void
+		const promise = new Promise<boolean>((resolve) => {
+			resolver = resolve
+		})
+
+		// Émettre l'événement avec le message et un callback pour résoudre la promesse
+		emit('confirm-tab-change', message, (confirmed: boolean) => {
+			resolver(confirmed)
+		})
+
+		return promise
+	}
+
+	// Fonction pour activer un élément au clic avec confirmation si nécessaire
+	async function setActiveItem(index: number) {
+		// Si l'index est déjà actif, ne rien faire
+		if (index === activeItemIndex.value) return
+
+		// Récupérer l'item pour la navigation potentielle
+		const item = props.items[index]
+		const hasHref = item && (item.href || item.to)
+
+		// Si la confirmation est activée, demander confirmation
+		if (props.confirmTabChange) {
+			const confirmMessage = props.confirmationMessage
+			const confirmed = await handleTabChangeConfirmation(confirmMessage.toString())
+
+			if (!confirmed) {
+				// L'utilisateur a annulé, émettre un événement d'annulation
+				emit('cancel-navigation')
+				return
+			}
+
+			// Si l'utilisateur a confirmé et qu'il y a un href, naviguer
+			if (hasHref) {
+				if (item.href) {
+					window.location.href = item.href
+					return // Arrêter ici car on navigue ailleurs
+				}
+				else if (item.to) {
+					// Pour les cas où vue-router est utilisé
+					// Notez que cela nécessiterait un accès au router,
+					// donc on se limite au href pour l'instant
+				}
+			}
+		}
+		// Sinon pas de confirmation nécessaire, naviguer directement si href présent
+		else if (hasHref && item.href) {
+			window.location.href = item.href
+			return
+		}
+
+		// Mettre à jour l'onglet actif
 		activeItemIndex.value = index
 		emit('update:modelValue', typeof props.modelValue === 'string' ? props.items[index].value : index)
 	}
@@ -36,7 +96,7 @@
 	function handleKeyPress(event: KeyboardEvent, index: number) {
 		if (event.key === 'Enter' || event.key === ' ') {
 			event.preventDefault()
-			setActiveItem(index)
+			void setActiveItem(index) // void pour ignorer la promesse
 		}
 	}
 
