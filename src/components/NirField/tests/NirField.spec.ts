@@ -201,13 +201,34 @@ describe('NirField.vue', () => {
 	})
 
 	it('emits undefined when both fields are empty', async () => {
+		// Réinitialiser les émissions précédentes
+		wrapper = mount(NirField, {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				modelValue: '123', // Commencer avec une valeur non vide
+				required: true,
+				showSuccessMessages: true,
+				outlined: true,
+			},
+		})
+		activeWrappers.push(wrapper)
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		// Vider les champs
 		const numberField = wrapper.find('.number-field input')
 		const keyField = wrapper.find('.key-field input')
 		await numberField.setValue('')
 		await keyField.setValue('')
 		await wrapper.vm.$nextTick()
 		await flushPromises()
-		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([undefined])
+
+		// Vérifier le dernier événement émis
+		const emitted = wrapper.emitted('update:modelValue')
+		const lastEvent = emitted ? emitted[emitted.length - 1] : undefined
+		expect(lastEvent).toEqual([undefined])
 	})
 
 	it('splits modelValue correctly when provided', async () => {
