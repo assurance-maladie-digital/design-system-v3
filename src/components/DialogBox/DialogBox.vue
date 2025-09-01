@@ -182,10 +182,10 @@
 						</VBtn>
 
 						<VBtn
-							class="sy-dialog-box-confirm-btn"
 							v-bind="options.confirmBtn"
-							data-test-id="confirm-btn"
 							ref="confirmBtn"
+							class="sy-dialog-box-confirm-btn"
+							data-test-id="confirm-btn"
 							@click="$emit('confirm')"
 						>
 							{{ props.confirmBtnText }}
