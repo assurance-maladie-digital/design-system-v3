@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { mdiClose } from '@mdi/js'
-	import { ref, useId, watch } from 'vue'
-	import type { VDialog } from 'vuetify/components'
+	import { ref, useId, watch, nextTick } from 'vue'
+	import type { VBtn, VDialog } from 'vuetify/components'
 	import { config } from './config'
 	import { locales } from './locales'
 	import { useDisplay } from 'vuetify/lib/framework.mjs'
@@ -15,6 +15,7 @@
 		confirmBtnText?: string
 		hideActions?: boolean
 		persistent?: boolean
+		autofocusValidateBtn?: boolean
 	} & CustomizableOptions>(), {
 		title: undefined,
 		width: '800px',
@@ -22,6 +23,7 @@
 		confirmBtnText: locales.confirmBtn,
 		hideActions: false,
 		persistent: false,
+		autofocusValidateBtn: false,
 	})
 
 	defineEmits(['cancel', 'confirm', 'update:modelValue'])
@@ -35,16 +37,22 @@
 		default: false,
 	})
 
+	const confirmBtn = ref<VBtn | null>(null)
 	// Restor the focus to the last active element when the dialog is closed
 	let activeElement: HTMLElement | null = null
 	watch(dialog, (newValue) => {
 		if (newValue) {
 			activeElement = document.activeElement as HTMLElement
+			if (props.autofocusValidateBtn) {
+				nextTick(() => {
+					confirmBtn.value?.$el.focus()
+				})
+			}
 		}
 		else if (activeElement) {
 			activeElement.focus()
 		}
-	})
+	}, { immediate: true })
 
 	const id = `dialog-${useId()}`
 	const dialogContent = ref<VDialog | undefined>(undefined)
@@ -177,6 +185,7 @@
 							class="sy-dialog-box-confirm-btn"
 							v-bind="options.confirmBtn"
 							data-test-id="confirm-btn"
+							ref="confirmBtn"
 							@click="$emit('confirm')"
 						>
 							{{ props.confirmBtnText }}
