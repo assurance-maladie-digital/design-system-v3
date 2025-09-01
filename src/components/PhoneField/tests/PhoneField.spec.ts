@@ -629,6 +629,14 @@ describe('PhoneField', () => {
 		expect(telInput.exists()).toBe(true)
 		const telAutocomplete = telInput.attributes('autocomplete')
 		expect(telAutocomplete).toBe('tel-national')
+		// Find all inputs and verify their autocomplete attributes
+		const inputs = wrapper.findAll('input')
+		expect(inputs.length).toBeGreaterThanOrEqual(2) // At least country code and phone inputs
+
+		// Find phone input (type="tel") and verify autocomplete attribute
+		const phoneInput = wrapper.find('input[type="tel"]')
+		expect(phoneInput.exists()).toBe(true)
+		expect(phoneInput.attributes('autocomplete')).toBe('tel-national')
 
 		// Verify country select input has correct autocomplete
 		const selectInput = wrapper.find('.custom-select input')
