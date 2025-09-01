@@ -129,6 +129,12 @@
 	display: none;
 }
 
+:deep(.v-alert__prepend),
+:deep(.v-alert__close) {
+	grid-row: 1 / span 2;
+	height: 100%;
+}
+
 :deep(.v-alert__close) {
 	align-self: center;
 }
