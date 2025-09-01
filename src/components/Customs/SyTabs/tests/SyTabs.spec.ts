@@ -397,12 +397,14 @@ describe('SyTabs', () => {
 			const wrapper = createWrapper({
 				props: {
 					...defaultMountOptions.props,
-					sheet: {
-						dense: true,
-						color: 'primary',
-					},
-					tabs: {
-						height: '60',
+					vuetifyOptions: {
+						sheet: {
+							dense: true,
+							color: 'primary',
+						},
+						tabs: {
+							height: '60',
+						},
 					},
 				},
 			})

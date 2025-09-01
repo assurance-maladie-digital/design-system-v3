@@ -28,6 +28,7 @@ export { default as HeaderNavigationBar } from './HeaderNavigationBar/HeaderNavi
 export { default as SkipLink } from './SkipLink/SkipLink.vue'
 export { default as SocialMediaLinks } from './SocialMediaLinks/SocialMediaLinks.vue'
 export { default as SyPagination } from './Customs/SyPagination/SyPagination.vue'
+export { default as SyTabs } from './Customs/SyTabs/SyTabs.vue'
 
 // ===========================
 // Boutons
