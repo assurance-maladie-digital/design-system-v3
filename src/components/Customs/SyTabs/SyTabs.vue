@@ -23,10 +23,10 @@
 				showArrows?: boolean
 			}
 			tab?: {
-				baseColor?: string
-				activeColor?: string
-				sliderColor?: string
-				ripple?: boolean
+				'base-color'?: string
+				'active-color'?: string
+				'slider-color'?: string
+				'ripple'?: boolean
 			}
 		}
 	}>(), {
