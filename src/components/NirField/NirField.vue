@@ -732,6 +732,7 @@
 
 .key-field {
 	min-width: 110px;
+
 	:deep(.v-messages .v-messages__message) {
 		min-width: 100px !important;
 		margin-left: -10px !important;
