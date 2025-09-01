@@ -48,7 +48,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 
 const primaryInfo = 'Mes options'
 const items = [
@@ -105,7 +105,7 @@ export const MobileView: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 
 const primaryInfo = 'Mes options'
 const items = ['Option 1', 'Option 2']
@@ -156,7 +156,7 @@ export const WithSlotPrependIcon: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
@@ -214,7 +214,7 @@ export const WithSlotAppendIcon: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
@@ -270,7 +270,7 @@ export const WithIconOnly: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
@@ -328,7 +328,7 @@ export const WithLogoutItemSlot: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 
 const primaryInfo = 'Mes options'
 const items = ['Option 1', 'Option 2']
@@ -385,7 +385,7 @@ export const WithCustomKeys: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
@@ -454,7 +454,7 @@ export const WithMultipleSlots: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
@@ -517,7 +517,7 @@ export const WithCustomStyles: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
@@ -577,7 +577,7 @@ export const WithStyledOptions: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import SyBtnSelect from './SyBtnSelect.vue'
+import { SyBtnSelect } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'

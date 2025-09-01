@@ -7,7 +7,7 @@
 	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
-	import type { VTextField } from 'vuetify/components'
+	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -135,6 +135,7 @@
 
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
+	const list = ref<VList | null>(null)
 
 	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
@@ -160,7 +161,7 @@
 	const closeList = (event?: Event) => {
 		// Check if the click is inside the dropdown list
 		const target = event?.target as HTMLElement
-		const listElement = document.querySelector('.v-list')
+		const listElement = list.value?.$el
 
 		// In multiple selection mode, don't close the dropdown when clicking on list items
 		if (props.multiple && listElement && listElement.contains(target)) {
@@ -222,7 +223,7 @@
 				// S'assurer que le focus DOM revient à l'input et restaurer le focus visuel
 				nextTick(() => {
 					// Focus DOM sur l'input
-					const inputElement = document.querySelector('.v-field__input')
+					const inputElement = input.value!.$el.querySelector('input')
 					if (inputElement) {
 						(inputElement as HTMLInputElement).focus()
 					}
@@ -905,6 +906,7 @@
 	<VList
 		v-if="isOpen"
 		:id="uniqueMenuId"
+		ref="list"
 		class="v-list"
 		role="listbox"
 		:aria-multiselectable="props.multiple ? 'true' : undefined"
