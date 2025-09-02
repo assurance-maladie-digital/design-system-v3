@@ -122,6 +122,7 @@ export { default as AmeliproAccordionList } from './Amelipro/AmeliproAccordionLi
 export { default as AmeliproAccordionResult } from './Amelipro/AmeliproAccordionResult/AmeliproAccordionResult.vue'
 export { default as AmeliproAccordionResultList } from './Amelipro/AmeliproAccordionResultList/AmeliproAccordionResultList.vue'
 export { default as AmeliproAutoCompleteField } from './Amelipro/AmeliproAutoCompleteField/AmeliproAutoCompleteField.vue'
+export { default as AmeliproBadge } from './Amelipro/AmeliproBadge/AmeliproBadge.vue'
 export { default as AmeliproBreadcrumb } from './Amelipro/AmeliproBreadcrumb/AmeliproBreadcrumb.vue'
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
 export { default as AmeliproCard } from './Amelipro/AmeliproCard/AmeliproCard.vue'

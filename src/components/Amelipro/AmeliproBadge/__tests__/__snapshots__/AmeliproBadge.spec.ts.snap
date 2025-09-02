@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproBadge > render correctly 1`] = `
+<p
+  class="
+    amelipro-badge
+    round-classic
+  "
+  id="my-badge-id"
+  style="background-color: #00749C;"
+>
+  <span
+    class="amelipro-badge__content"
+    style="color: #FFFFFF;"
+  >
+    contenu du badge
+  </span>
+</p>
+`;
