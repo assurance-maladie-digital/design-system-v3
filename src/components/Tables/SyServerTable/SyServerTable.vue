@@ -415,7 +415,7 @@
 						v-model:headers="headers"
 					/>
 					<SyTablePagination
-						v-if="props.serverItemsLength > 0"
+						v-if="props.items.length > 0 ? props.serverItemsLength : 0"
 						:page="page"
 						:items-per-page="itemsPerPageValue"
 						:page-count="pageCount"
