@@ -357,6 +357,13 @@
 							</VBtn>
 						</td>
 					</tr>
+					<tr v-if="props.items.length === 0 || props.serverItemsLength === 0">
+						<td colspan="100%">
+							<div class="text-center text-grey">
+								toto
+							</div>
+						</td>
+					</tr>
 				</template>
 				<!-- Repli lorsque les colonnes ne sont pas définies -->
 				<template v-else>
@@ -393,6 +400,13 @@
 								</template>
 							</SyTableFilter>
 						</th>
+					</tr>
+					<tr v-if="props.items.length === 0 || props.serverItemsLength === 0">
+						<td colspan="100%">
+							<div class="text-center text-grey">
+								toto
+							</div>
+						</td>
 					</tr>
 				</template>
 			</template>
