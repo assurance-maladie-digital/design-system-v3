@@ -718,7 +718,7 @@
 
 /* Styles pour le mode fieldset */
 .nir-field--fieldset .number-field-container {
-	flex: v-bind('props.clearable ? "0 0 70%" : "0 0 78%"');
+	flex: v-bind('props.clearable ? "0 0 70%" : "0 0 75%"');
 }
 
 .nir-field--fieldset .key-field-container {
