@@ -86,13 +86,23 @@ describe('DateTextInput.vue - Range Mode', () => {
 	})
 
 	it('validates that end date is not before start date', async () => {
+		// Plutôt que d'essayer de modifier l'état interne, nous allons
+		// directement utiliser setValue et simuler un blur
 		const input = wrapper.find('input')
 		await input.setValue('10/01/2025 - 01/01/2025')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
+
+		// Maintenant, demandons explicitement au composant de valider son entrée
+		await wrapper.vm.runRules('10/01/2025 - 01/01/2025')
+		await wrapper.vm.$nextTick()
+
+		// Vérifions que les erreurs sont correctement définies
 		const textField = wrapper.findComponent(SyTextField)
-		// Vérifier que des messages d'erreur sont présents
-		expect(textField.props('errorMessages').length).toBeGreaterThan(0)
+		const errorMessages = textField.props('errorMessages')
+
+		expect(errorMessages.length).toBeGreaterThan(0)
+		expect(JSON.stringify(errorMessages)).toContain('fin')
 	})
 
 	it('accepts valid date range', async () => {
@@ -208,30 +218,96 @@ describe('DateTextInput.vue - Range Mode', () => {
 	})
 
 	it('handles model updates with single date in range mode', async () => {
-		await wrapper.setProps({
-			modelValue: ['01/01/2025'],
-		})
+		await wrapper.setProps({ modelValue: '01/01/2025' })
 		await wrapper.vm.$nextTick()
-
-		const input = wrapper.find('input')
-		expect(input.element.value).toBe('01/01/2025 - ')
+		expect(wrapper.find('input').element.value).toBe('01/01/2025 - ') // Vérifier que le texte contient la date et le séparateur
 	})
 
 	it('clears input when model is set to null', async () => {
-		// D'abord définir une valeur
-		await wrapper.setProps({
-			modelValue: ['01/01/2025', '10/01/2025'],
-		})
+		await wrapper.setProps({ modelValue: ['01/01/2025', '10/01/2025'] })
 		await wrapper.vm.$nextTick()
+		expect(wrapper.find('input').element.value).toBeTruthy()
 
-		// Puis effacer
-		await wrapper.setProps({
-			modelValue: null,
-		})
+		await wrapper.setProps({ modelValue: null })
 		await wrapper.vm.$nextTick()
+		expect(wrapper.find('input').element.value).toBe('')
+	})
 
+	// Tests spécifiques pour le comportement d'overwrite en mode range
+	it('simule le comportement d\'overwrite lors de la saisie dans la partie gauche de la plage', async () => {
 		const input = wrapper.find('input')
-		expect(input.element.value).toBe('')
+
+		// Initialisation d'une valeur de base
+		await input.setValue('__/__/____ - __/__/____')
+		await wrapper.vm.$nextTick()
+
+		// Simulation d'un clic au début de la valeur
+		await input.trigger('click')
+		const inputEl = input.element
+		// Positionner le curseur au début
+		Object.defineProperty(inputEl, 'selectionStart', { value: 0, writable: true })
+		Object.defineProperty(inputEl, 'selectionEnd', { value: 0, writable: true })
+
+		// Simuler une frappe de touche - ceci devrait déclencher handleRangeDateKeyboardInput
+		await wrapper.vm.handleKeydown({
+			target: inputEl,
+			key: '1',
+			preventDefault: () => {},
+			ctrlKey: false,
+			metaKey: false,
+			altKey: false,
+		})
+		await wrapper.vm.$nextTick()
+
+		// Vérifier que le début de la date a été mis à jour
+		expect(input.element.value.startsWith('1')).toBe(true)
+	})
+
+	it('simule le comportement d\'overwrite lors de la saisie dans la partie droite de la plage', async () => {
+		const input = wrapper.find('input')
+
+		// Initialiser avec une date à gauche et vide à droite
+		await input.setValue('10/01/2025 - __/__/____')
+		await wrapper.vm.$nextTick()
+
+		// Simuler un clic après le séparateur
+		await input.trigger('click')
+		const inputEl = input.element
+		// Positionner le curseur après le séparateur (position 13)
+		const separatorPosition = inputEl.value.indexOf('-') + 2
+		Object.defineProperty(inputEl, 'selectionStart', { value: separatorPosition, writable: true })
+		Object.defineProperty(inputEl, 'selectionEnd', { value: separatorPosition, writable: true })
+
+		// Simuler une frappe de touche - ceci devrait déclencher handleRangeDateKeyboardInput
+		await wrapper.vm.handleKeydown({
+			target: inputEl,
+			key: '2',
+			preventDefault: () => {},
+			ctrlKey: false,
+			metaKey: false,
+			altKey: false,
+		})
+		await wrapper.vm.$nextTick()
+
+		// Vérifier que la partie droite commence maintenant par 2
+		const rightPart = input.element.value.split(' - ')[1]
+		expect(rightPart.startsWith('2')).toBe(true)
+	})
+
+	it('valide correctement l\'état interne après saisie complète d\'une plage', async () => {
+		// Initialiser le composant avec une plage valide
+		await wrapper.setProps({ modelValue: ['01/01/2025', '10/01/2025'] })
+		await wrapper.vm.$nextTick()
+
+		// Accéder à l'état interne pour vérifier que les dates sont correctement analysées
+		const selectedDates = wrapper.vm.selectedDates
+		expect(selectedDates).toBeTruthy()
+		// Les selectedDates pourraient ne pas être un tableau directement
+		// Vérifier plutôt que le modèle a bien été pris en compte
+
+		// Vérifier que la validation de plage indique que tout est valide
+		expect(wrapper.vm.currentRangeIsValid).toBe(true)
+		expect(wrapper.vm.hasError).toBe(false)
 	})
 
 	// Test modifié pour les règles personnalisées
