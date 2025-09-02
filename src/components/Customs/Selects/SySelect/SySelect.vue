@@ -7,7 +7,7 @@
 	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
-	import type { VTextField } from 'vuetify/components'
+	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -135,6 +135,7 @@
 
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
+	const list = ref<VList | null>(null)
 
 	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
@@ -160,7 +161,7 @@
 	const closeList = (event?: Event) => {
 		// Check if the click is inside the dropdown list
 		const target = event?.target as HTMLElement
-		const listElement = document.querySelector('.v-list')
+		const listElement = list.value?.$el
 
 		// In multiple selection mode, don't close the dropdown when clicking on list items
 		if (props.multiple && listElement && listElement.contains(target)) {
@@ -174,8 +175,8 @@
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
 	const listStyles = ref<Record<string, string>>({})
 	const updateListPosition = () => {
-		if (input.value?.$el) {
-			const rect = input.value.$el.getBoundingClientRect()
+		if (textInput.value?.$el) {
+			const rect = textInput.value.$el.getBoundingClientRect()
 			listStyles.value = {
 				position: 'fixed',
 				top: props.density === 'compact' ? `${rect.bottom + 22}px` : `${rect.bottom}px`,
@@ -222,7 +223,7 @@
 				// S'assurer que le focus DOM revient à l'input et restaurer le focus visuel
 				nextTick(() => {
 					// Focus DOM sur l'input
-					const inputElement = document.querySelector('.v-field__input')
+					const inputElement = textInput.value!.$el.querySelector('input')
 					if (inputElement) {
 						(inputElement as HTMLInputElement).focus()
 					}
@@ -387,7 +388,7 @@
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
-	const input = ref<InstanceType<typeof VTextField> | null>(null)
+	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 
 	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
 	const hasMessages = computed(() => {
@@ -572,9 +573,9 @@
 
 	// Function to set up proper ARIA attributes
 	const setupAriaAttributes = () => {
-		if (input.value && input.value.$el) {
+		if (textInput.value && textInput.value.$el) {
 			// Find the input element
-			const inputElement = input.value.$el?.querySelector?.('input')
+			const inputElement = textInput.value.$el?.querySelector?.('input')
 			if (inputElement) {
 				// Remove problematic attributes that shouldn't be on input
 				inputElement.removeAttribute('aria-describedby')
@@ -606,7 +607,7 @@
 			}
 
 			// Clean up parent element - remove any conflicting attributes
-			const parentElement = input.value.$el
+			const parentElement = textInput.value.$el
 			if (parentElement) {
 				// Remove any role or ARIA attributes from parent that should be on input
 				parentElement.removeAttribute('role')
@@ -641,7 +642,7 @@
 			setupAriaAttributes()
 
 			// Set up MutationObserver to monitor attribute changes
-			if (input.value && input.value.$el) {
+			if (textInput.value && textInput.value.$el) {
 				mutationObserver = new MutationObserver((mutations) => {
 					let needsCleanup = false
 					mutations.forEach((mutation) => {
@@ -661,7 +662,7 @@
 							}
 
 							// Check if aria-hidden was added to parent
-							if (target === input.value?.$el && attributeName === 'aria-hidden') {
+							if (target === textInput.value?.$el && attributeName === 'aria-hidden') {
 								needsCleanup = true
 							}
 
@@ -682,7 +683,7 @@
 				})
 
 				// Observe both the parent element and its children
-				mutationObserver.observe(input.value.$el, {
+				mutationObserver.observe(textInput.value.$el, {
 					attributes: true,
 					subtree: true,
 					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup', 'aria-live'],
@@ -694,8 +695,8 @@
 	// Watchers to update ARIA attributes dynamically on input element
 	watch(isOpen, (newValue) => {
 		nextTick(() => {
-			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el?.querySelector?.('input')
+			if (textInput.value && textInput.value.$el) {
+				const inputElement = textInput.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					inputElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
 					if (newValue && activeDescendantId.value) {
@@ -711,8 +712,8 @@
 
 	watch(activeDescendantId, (newValue) => {
 		nextTick(() => {
-			if (input.value && input.value.$el && isOpen.value) {
-				const inputElement = input.value.$el?.querySelector?.('input')
+			if (textInput.value && textInput.value.$el && isOpen.value) {
+				const inputElement = textInput.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					if (newValue) {
 						inputElement.setAttribute('aria-activedescendant', newValue)
@@ -727,8 +728,8 @@
 
 	watch(hasError, (newValue) => {
 		nextTick(() => {
-			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el?.querySelector?.('input')
+			if (textInput.value && textInput.value.$el) {
+				const inputElement = textInput.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					if (newValue) {
 						inputElement.setAttribute('aria-invalid', 'true')
@@ -745,8 +746,8 @@
 	// This prevents Vuetify from overriding our combobox attributes
 	watch(selectedItem, () => {
 		nextTick(() => {
-			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el?.querySelector?.('input')
+			if (textInput.value && textInput.value.$el) {
+				const inputElement = textInput.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					// Ensure combobox role is maintained on input
 					inputElement.setAttribute('role', 'combobox')
@@ -774,7 +775,7 @@
 				}
 
 				// Clean up parent element
-				const parentElement = input.value.$el
+				const parentElement = textInput.value.$el
 				if (parentElement) {
 					parentElement.removeAttribute('role')
 					parentElement.removeAttribute('aria-hidden')
@@ -807,7 +808,7 @@
 <template>
 	<VTextField
 		:id="inputId"
-		ref="input"
+		ref="textInput"
 		v-model="selectedItemText"
 		v-click-outside="closeList"
 		v-rgaa-svg-fix="true"
@@ -880,7 +881,7 @@
 				v-if="props.clearable && selectedItemText"
 				type="button"
 				class="sy-select__clear-button"
-				:style="{ right: hasError ? '38px' : '32px' }"
+				:style="{ right: hasError ? '62px' : '42px' }"
 				:aria-label="locales.clear"
 				@keydown.enter.prevent="$event => selectItem(null, $event)"
 				@keydown.space.prevent="$event => selectItem(null, $event)"
@@ -906,12 +907,13 @@
 	<VList
 		v-if="isOpen"
 		:id="uniqueMenuId"
+		ref="list"
 		class="v-list"
 		role="listbox"
 		:aria-multiselectable="props.multiple ? 'true' : undefined"
 		:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 		:style="{
-			minWidth: `${input?.$el.offsetWidth}px`,
+			minWidth: `${textInput?.$el.offsetWidth}px`,
 			...listStyles
 		}"
 		bg-color="white"
@@ -1064,7 +1066,11 @@
 	justify-content: center;
 	top: 50%;
 	transform: translateY(-50%);
-	right: 10px;
+	right: 20px;
+
+	.v-icon {
+		position: static;
+	}
 }
 
 .v-chip {
