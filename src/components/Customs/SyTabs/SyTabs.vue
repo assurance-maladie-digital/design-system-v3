@@ -1,20 +1,39 @@
 <script setup lang="ts">
 	import type { TabItem } from './types'
-	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import { config } from './config'
 	import { ref, watch, onMounted, onUnmounted } from 'vue'
 
-	const props = withDefaults(defineProps<CustomizableOptions & {
+	const props = withDefaults(defineProps<{
 		items: TabItem[]
 		modelValue?: number | string
 		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
 		confirmTabChange?: boolean
 		/** Message affiché dans la boîte de dialogue de confirmation */
 		confirmationMessage?: boolean
+		/** Options personnalisées pour les composants Vuetify */
+		vuetifyOptions?: {
+			sheet?: {
+				theme?: string
+				dense?: boolean
+				color?: string
+			}
+			tabs?: {
+				height?: string
+				showArrows?: boolean
+			}
+			tab?: {
+				'base-color'?: string
+				'active-color'?: string
+				'slider-color'?: string
+				'ripple'?: boolean
+			}
+		}
 	}>(), {
 		modelValue: undefined,
 		confirmTabChange: false,
 		confirmationMessage: false,
+		vuetifyOptions: () => ({}),
 	})
 
 	const emit = defineEmits(['update:modelValue', 'cancel-navigation', 'confirm-tab-change'])
@@ -25,7 +44,7 @@
 		'default': () => unknown
 	}>()
 
-	const options = useCustomizableOptions(config, props)
+	const options = useCustomizableOptions(config, { vuetifyOptions: props.vuetifyOptions })
 
 	// État pour suivre l'élément activement sélectionné
 	const activeItemIndex = ref<number>(0)
