@@ -880,7 +880,7 @@
 				v-if="props.clearable && selectedItemText"
 				type="button"
 				class="sy-select__clear-button"
-				:style="{ right: hasError ? '38px' : '32px' }"
+				:style="{ right: hasError ? '62px' : '42px' }"
 				:aria-label="locales.clear"
 				@keydown.enter.prevent="$event => selectItem(null, $event)"
 				@keydown.space.prevent="$event => selectItem(null, $event)"
@@ -1065,7 +1065,11 @@
 	justify-content: center;
 	top: 50%;
 	transform: translateY(-50%);
-	right: 10px;
+	right: 20px;
+
+	.v-icon {
+		position: static;
+	}
 }
 
 .v-chip {
