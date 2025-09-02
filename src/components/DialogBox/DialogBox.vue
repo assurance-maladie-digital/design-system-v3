@@ -185,6 +185,7 @@
 							v-bind="options.confirmBtn"
 							ref="confirmBtn"
 							class="sy-dialog-box-confirm-btn"
+							:class="props.autofocusValidateBtn ? 'sy-dialog-box-confirm-btn--autofocus' : ''"
 							data-test-id="confirm-btn"
 							@click="$emit('confirm')"
 						>
@@ -217,7 +218,8 @@ h2 {
 
 .sy-dialog-box-close-btn:focus-visible,
 .sy-dialog-box-cancel-btn:focus-visible,
-.sy-dialog-box-confirm-btn:focus-visible {
+.sy-dialog-box-confirm-btn:focus-visible,
+.sy-dialog-box-confirm-btn--autofocus:focus {
 	:deep(.v-btn__overlay) {
 		display: none;
 	}
@@ -226,12 +228,6 @@ h2 {
 		opacity: 1;
 		border: transparent;
 		outline: 2px solid rgb(var(--v-theme-primary));
-		outline-offset: 2px;
-	}
-}
-
-.sy-dialog-box-confirm-btn:focus-visible {
-	&::after {
 		outline-offset: 2px;
 	}
 }
