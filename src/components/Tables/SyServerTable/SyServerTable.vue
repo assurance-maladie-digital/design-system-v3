@@ -13,7 +13,7 @@
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
 	import { useTableHeaders } from '../common/useTableHeaders'
-	import { useTableItems } from '../common/useTableItems'
+	// import { useTableItems } from '../common/useTableItems'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
 	import { useTableAria } from '../common/useTableAria'
@@ -93,13 +93,15 @@
 	// For server-side tables, we don't use the filteredItems from useTableItems
 	// Instead, we use the items directly from props as they are already filtered server-side
 	// But we still need the createEmptyItemWithStructure function
-	const { createEmptyItemWithStructure } = useTableItems({
-		items: itemsRef,
-		headers,
-		filters,
-		options,
-		filterItems,
-	})
+
+	// TODO:  A voir avec @David
+	// const { createEmptyItemWithStructure } = useTableItems({
+	// 	items: itemsRef,
+	// 	headers,
+	// 	filters,
+	// 	options,
+	// 	filterItems,
+	// })
 
 	// Use the pagination composable with serverItemsLength
 	const itemsLength = computed(() => props.serverItemsLength)
@@ -251,7 +253,8 @@
 			v-model="model"
 			:headers="displayHeaders"
 			color="primary"
-			:items="processItems(props.items.length > 0 ? props.items : createEmptyItemWithStructure())"
+			hide-no-data
+			:items="processItems(props.items)"
 			:items-length="props.serverItemsLength || 0"
 			:density="props.density"
 			:show-select="props.showSelect"
@@ -355,6 +358,13 @@
 							</VBtn>
 						</td>
 					</tr>
+					<tr v-if="props.items.length === 0 || props.serverItemsLength === 0">
+						<td colspan="100%">
+							<div class="text-center text-grey">
+								{{ locales.noData }}
+							</div>
+						</td>
+					</tr>
 				</template>
 				<!-- Repli lorsque les colonnes ne sont pas définies -->
 				<template v-else>
@@ -392,6 +402,13 @@
 							</SyTableFilter>
 						</th>
 					</tr>
+					<tr v-if="props.items.length === 0 || props.serverItemsLength === 0">
+						<td colspan="100%">
+							<div class="text-center text-grey">
+								{{ locales.noData }}
+							</div>
+						</td>
+					</tr>
 				</template>
 			</template>
 
@@ -413,7 +430,7 @@
 						v-model:headers="headers"
 					/>
 					<SyTablePagination
-						v-if="props.serverItemsLength > 0"
+						v-if="props.items.length > 0 ? props.serverItemsLength : 0"
 						:page="page"
 						:items-per-page="itemsPerPageValue"
 						:page-count="pageCount"
