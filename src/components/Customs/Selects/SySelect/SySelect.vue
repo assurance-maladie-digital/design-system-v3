@@ -828,6 +828,7 @@
 		:persistent-hint="!!showHelpTextAsMessage"
 		:autocomplete="props.autocomplete"
 		class="sy-select"
+		:class="{ 'sy-select--clearable': props.clearable }"
 		:width="calculatedWidth"
 		:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 		v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
@@ -1075,6 +1076,16 @@
 	color: tokens.$grey-darken-20 !important;
 	cursor: pointer;
 	caret-color: transparent;
+	padding-right: 25px;
+}
+
+.sy-select--clearable :deep(.v-field__input),
+.sy-select :deep(.v-field--error .v-field__input) {
+	padding-right: 55px;
+}
+
+:deep(.v-field__input input) {
+	text-overflow: ellipsis;
 }
 
 .hidden-label {
