@@ -360,7 +360,7 @@
 					<tr v-if="props.items.length === 0 || props.serverItemsLength === 0">
 						<td colspan="100%">
 							<div class="text-center text-grey">
-								toto
+								{{ locales.noData }}
 							</div>
 						</td>
 					</tr>
@@ -404,7 +404,7 @@
 					<tr v-if="props.items.length === 0 || props.serverItemsLength === 0">
 						<td colspan="100%">
 							<div class="text-center text-grey">
-								toto
+								{{ locales.noData }}
 							</div>
 						</td>
 					</tr>
