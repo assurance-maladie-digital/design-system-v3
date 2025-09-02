@@ -3,11 +3,6 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
-	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
-	import type { IconType, VariantStyle, ColorType } from './types'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-
 	import {
 		mdiAlertOutline,
 		mdiCheck,
@@ -16,6 +11,10 @@
 		mdiInformation,
 		mdiCalendar,
 	} from '@mdi/js'
+	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
+	import type { IconType, VariantStyle, ColorType } from './types'
+	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(
 		defineProps<{
@@ -705,17 +704,15 @@
 
 		<template #details>
 			<slot name="details" />
+			<div
+				v-if="showHelpTextBelow"
+				class="help-text-below px-4 mt-1"
+				:class="{ 'text-disabled': props.disabled }"
+			>
+				{{ props.helpText }}
+			</div>
 		</template>
 	</VTextField>
-
-	<!-- Help text displayed below when there are error messages -->
-	<div
-		v-if="showHelpTextBelow"
-		class="help-text-below px-4 mt-1"
-		:class="{ 'text-disabled': props.disabled }"
-	>
-		{{ props.helpText }}
-	</div>
 </template>
 
 <style lang="scss" scoped>
