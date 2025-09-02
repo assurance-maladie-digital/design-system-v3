@@ -253,6 +253,7 @@
 			v-model="model"
 			:headers="displayHeaders"
 			color="primary"
+			hide-no-data
 			:items="processItems(props.items)"
 			:items-length="props.serverItemsLength || 0"
 			:density="props.density"
