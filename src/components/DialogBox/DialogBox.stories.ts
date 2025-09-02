@@ -101,6 +101,18 @@ const meta: Meta<typeof DialogBox> = {
 				},
 			},
 		},
+		'autofocusValidateBtn': {
+			control: 'boolean',
+			description: 'Focus automatique sur le bouton de validation à l\'ouverture',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
 		'vuetifyOptions': {
 			control: 'object',
 			description: 'Personnalisation des composants Vuetify internes',
