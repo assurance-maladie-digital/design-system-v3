@@ -31,8 +31,8 @@ describe('useDateInputEditing', () => {
 
 			// Test avec une entrée vide
 			result = formatDateInput('')
-			expect(result.formatted).toBe('__/__/____')
-			expect(result.cursorPos).toBe(10) // Le curseur est positionné à la fin du masque
+			expect(result.formatted).toBe('')
+			expect(result.cursorPos).toBe(0) // Le curseur est positionné au début pour une entrée vide
 		})
 
 		it('devrait formater correctement une entrée de date avec le format MM/DD/YYYY', () => {

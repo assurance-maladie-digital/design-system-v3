@@ -1,8 +1,8 @@
-import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
-import DateTextInput from './DateTextInput.vue'
+import { flushPromises, mount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it } from 'vitest'
 import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
+import DateTextInput from './DateTextInput.vue'
 
 describe('DateTextInput.vue - Range Mode', () => {
 	let wrapper
@@ -37,6 +37,12 @@ describe('DateTextInput.vue - Range Mode', () => {
 
 	it('formats single date input with range separator', async () => {
 		const input = wrapper.find('input')
+
+		// Wait for bootstrapping to complete
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
 		await input.setValue('01/01/2025')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
@@ -139,6 +145,12 @@ describe('DateTextInput.vue - Range Mode', () => {
 
 	it('preserves range separator when only first date is entered', async () => {
 		const input = wrapper.find('input')
+
+		// Wait for bootstrapping to complete
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
 		await input.setValue('01/01/2025')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
@@ -218,9 +230,14 @@ describe('DateTextInput.vue - Range Mode', () => {
 	})
 
 	it('handles model updates with single date in range mode', async () => {
+		// Wait for bootstrapping to complete
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
 		await wrapper.setProps({ modelValue: '01/01/2025' })
 		await wrapper.vm.$nextTick()
-		expect(wrapper.find('input').element.value).toBe('01/01/2025 - ') // Vérifier que le texte contient la date et le séparateur
+		expect(wrapper.find('input').element.value).toBe('01/01/2025 - ')
 	})
 
 	it('clears input when model is set to null', async () => {

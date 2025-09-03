@@ -49,6 +49,14 @@ export const formatDateInput = (
 		placeholderChar = '_',
 	} = options
 
+	// Handle completely empty input
+	if (!input || input.trim() === '') {
+		return {
+			formatted: '',
+			cursorPos: 0,
+		}
+	}
+
 	// Créer une carte de correspondance entre les positions avant et après formatage
 	const positionMap: number[] = []
 	let cleanedIndex = 0
@@ -92,8 +100,20 @@ export const formatDateInput = (
 		digitGroups.push(currentGroup)
 	}
 
+	// Calculate expected digits based on original format
+	const originalExpectedDigits = digitGroups.join('').length
+
+	// Expand 2-digit year to 4-digit for placeholder purposes only when input is incomplete
+	const shouldExpandYear = cleanedInput.length < originalExpectedDigits
+	const expandedDigitGroups = digitGroups.map((group) => {
+		if (group.toUpperCase() === 'YY' && shouldExpandYear) {
+			return 'YYYY'
+		}
+		return group
+	})
+
 	// Calculer le nombre total de chiffres attendus dans le format
-	const expectedDigits = format.replace(/[^DMY]/g, '').length
+	const expectedDigits = shouldExpandYear ? expandedDigitGroups.join('').length : originalExpectedDigits
 
 	// Limiter le nombre de chiffres saisis au nombre attendu
 	if (cleanedInput.length > expectedDigits) {
@@ -107,9 +127,12 @@ export const formatDateInput = (
 	// Carte inverse pour suivre où chaque chiffre du résultat se retrouve dans la sortie formatée
 	const resultPositionMap: number[] = []
 
+	// Use the appropriate digit groups based on whether we're expanding
+	const groupsToUse = shouldExpandYear ? expandedDigitGroups : digitGroups
+
 	// Parcourir les groupes de chiffres pour construire la date formatée
-	for (let groupIndex = 0; groupIndex < digitGroups.length; groupIndex++) {
-		const group = digitGroups[groupIndex]
+	for (let groupIndex = 0; groupIndex < groupsToUse.length; groupIndex++) {
+		const group = groupsToUse[groupIndex]
 		const groupLength = group.length
 
 		// Ajouter les chiffres pour ce groupe
@@ -126,7 +149,7 @@ export const formatDateInput = (
 		}
 
 		// Ajouter le séparateur après chaque groupe sauf le dernier
-		if (groupIndex < digitGroups.length - 1) {
+		if (groupIndex < groupsToUse.length - 1) {
 			result += separator
 		}
 	}
