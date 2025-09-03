@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproCarouselItem > render correctly 1`] = `
+<div
+  aria-roledescription="slide"
+  class="carousel-item"
+  id="carousel-item-unique-id"
+  role="group"
+>
+  <div class="carousel-image">
+    <a
+      class="
+        carousel-img-btn
+        elevation-0
+        v-btn
+        v-btn--density-default
+        v-btn--elevated
+        v-btn--size-default
+        v-btn--variant-elevated
+        v-theme--light
+      "
+      href="modified-href"
+      id="carousel-item-unique-id-btn"
+      tabindex="0"
+      title="modified-img-alt"
+    ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+      
+    <!----><span
+      class="v-btn__content"
+      data-no-activator=""
+    ><img
+      alt="modified-img-alt"
+      class="w-100"
+      src="modified-img-src"
+    /></span>
+      
+    <!---->
+      
+    <!---->
+    </a>
+  </div>
+</div>
+`;

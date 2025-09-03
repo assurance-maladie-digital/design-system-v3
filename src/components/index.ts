@@ -128,6 +128,7 @@ export { default as AmeliproBreadcrumb } from './Amelipro/AmeliproBreadcrumb/Ame
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
 export { default as AmeliproCard } from './Amelipro/AmeliproCard/AmeliproCard.vue'
 export { default as AmeliproCallback } from './Amelipro/AmeliproCallback/AmeliproCallback.vue'
+export { default as AmeliproCarousel } from './Amelipro/AmeliproCarousel/AmeliproCarousel.vue'
 export { default as AmeliproCaptcha } from './Amelipro/AmeliproCaptcha/AmeliproCaptcha.vue'
 export { default as AmeliproCheckbox } from './Amelipro/AmeliproCheckbox/AmeliproCheckbox.vue'
 export { default as AmeliproCheckboxGroup } from './Amelipro/AmeliproCheckboxGroup/AmeliproCheckboxGroup.vue'
