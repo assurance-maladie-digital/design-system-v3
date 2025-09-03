@@ -584,7 +584,7 @@
 	 */
 	function handleKeydown(evt: KeyboardEvent & { target: HTMLInputElement }) {
 		if (props.readonly) return
-		
+
 		if (isRange.value) {
 			handleRangeDateKeyboardInput(evt)
 		}
@@ -595,7 +595,7 @@
 
 	function handlePaste(evt: ClipboardEvent) {
 		if (props.readonly) return
-		
+
 		if (isRange.value) handlePasteRange(evt)
 		else handlePasteSingle(evt)
 	}

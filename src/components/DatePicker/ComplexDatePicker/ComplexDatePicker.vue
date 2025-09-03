@@ -266,7 +266,7 @@
 	// Keep and expose this so consumers can listen to `date-selected`
 	const handleDateSelected = (value: DateValue) => {
 		if (props.readonly) return
-		
+
 		// 1) Update v-model
 		updateModel(value)
 
@@ -573,7 +573,7 @@
 
 	const handleInput = (eventOrValue: Event | string) => {
 		if (props.readonly) return
-		
+
 		if (eventOrValue instanceof Event) {
 			inputHandler.handleInput(eventOrValue)
 			return
@@ -764,7 +764,7 @@
 
 	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
 		if (props.readonly) return
-		
+
 		if (!props.noCalendar && handleKeyboardNavigation(event)) return
 
 		if (event.key === 'Backspace') {
