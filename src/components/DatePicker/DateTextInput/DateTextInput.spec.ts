@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { vuetify } from '@tests/unit/setup'
 import DateTextInput from './DateTextInput.vue'
@@ -148,9 +148,12 @@ describe('DateTextInput.vue', () => {
 	it('formats input while typing', async () => {
 		const input = wrapper.find('input')
 		// Wait for bootstrapping to complete
-		await new Promise(resolve => setTimeout(resolve, 50))
-		input.element.value = '01012025'
-		await input.trigger('input')
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		await input.setValue('01012025')
+
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/01/2025')
 	})
@@ -181,9 +184,10 @@ describe('DateTextInput.vue', () => {
 	it('formats date during input', async () => {
 		const input = wrapper.find('input')
 		// Wait for bootstrapping to complete
-		await new Promise(resolve => setTimeout(resolve, 50))
-		input.element.value = '01012025'
-		await input.trigger('input')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		await input.setValue('01012025')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/01/2025')
 	})
@@ -272,10 +276,12 @@ describe('DateTextInput.vue', () => {
 	it('preserves cursor position during formatting', async () => {
 		const input = wrapper.find('input')
 		// Wait for bootstrapping to complete
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
 		// Directly set the input value and trigger input event
-		input.element.value = '01'
-		await input.trigger('input')
+		await input.setValue('01')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/__/____')
 
@@ -302,9 +308,12 @@ describe('DateTextInput.vue', () => {
 
 		const input = customWrapper.find('input')
 		// Wait for bootstrapping to complete
-		await new Promise(resolve => setTimeout(resolve, 50))
-		input.element.value = '0'
-		await input.trigger('input')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		await input.setValue('0')
+
 		await customWrapper.vm.$nextTick()
 		expect(input.element.value).toBe('0_/__/____')
 		expect(customWrapper.emitted('update:model-value')).toBeFalsy()
@@ -326,10 +335,14 @@ describe('DateTextInput.vue', () => {
 		})
 
 		const input = customWrapper.find('input')
+
 		// Wait for bootstrapping to complete
-		await new Promise(resolve => setTimeout(resolve, 50))
-		input.element.value = '2025-'
-		await input.trigger('input')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		await input.setValue('2025')
+
 		await customWrapper.vm.$nextTick()
 		expect(input.element.value).toBe('2025-__-__')
 		expect(customWrapper.emitted('update:model-value')).toBeFalsy()
@@ -453,9 +466,12 @@ describe('DateTextInput.vue', () => {
 	it('handles partial date input correctly', async () => {
 		const input = wrapper.find('input')
 		// Wait for bootstrapping to complete
-		await new Promise(resolve => setTimeout(resolve, 50))
-		input.element.value = '01'
-		await input.trigger('input')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		await input.setValue('01')
+
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/__/____')
 
@@ -520,7 +536,7 @@ describe('DateTextInput.vue', () => {
 		await customWrapper.vm.$nextTick() // Double nextTick for reliability
 
 		// Force manual validation
-		await customWrapper.vm.validateOnSubmit()
+		customWrapper.vm.validateOnSubmit()
 		await customWrapper.vm.$nextTick()
 
 		const textField = customWrapper.findComponent(SyTextField)
