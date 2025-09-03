@@ -204,10 +204,8 @@
 @use '@/assets/amelipro/apTokens';
 
 .v-btn {
-
 	&.btn-previous,
 	&.btn-next {
-
 		&:disabled {
 			color: apTokens.$ap-blue-darken1 !important;
 			background-color: transparent !important;

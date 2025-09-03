@@ -75,6 +75,7 @@
 			display: none !important;
 		}
 	}
+
 	.carousel-item {
 		visibility: visible;
 		top: 0;
