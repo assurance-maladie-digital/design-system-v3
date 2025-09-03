@@ -10,7 +10,7 @@ export const Header: StoryObj = {
 		return {
 			template: `
         <div class="mb-8">
-          <h1 class="text-h4 font-weight-bold mb-4">Templates</h1>
+          <h1 class="mb-4">Templates</h1>
           <p class="text-body-1">Découvrez notre collection de templates conçus pour accélérer le développement de vos IHM.</p>
         </div>
       `,
