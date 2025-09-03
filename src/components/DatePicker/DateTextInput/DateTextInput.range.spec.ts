@@ -37,7 +37,12 @@ describe('DateTextInput.vue - Range Mode', () => {
 
 	it('formats single date input with range separator', async () => {
 		const input = wrapper.find('input')
-		await input.setValue('01/01/2025')
+
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+
+		input.element.value = '01/01/2025'
+		await input.trigger('input')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		// Vérifier que la date est suivie du séparateur de plage
@@ -139,7 +144,12 @@ describe('DateTextInput.vue - Range Mode', () => {
 
 	it('preserves range separator when only first date is entered', async () => {
 		const input = wrapper.find('input')
-		await input.setValue('01/01/2025')
+
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+
+		input.element.value = '01/01/2025'
+		await input.trigger('input')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		// Vérifier que le séparateur de plage est préservé
@@ -218,9 +228,12 @@ describe('DateTextInput.vue - Range Mode', () => {
 	})
 
 	it('handles model updates with single date in range mode', async () => {
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+
 		await wrapper.setProps({ modelValue: '01/01/2025' })
 		await wrapper.vm.$nextTick()
-		expect(wrapper.find('input').element.value).toBe('01/01/2025 - ') // Vérifier que le texte contient la date et le séparateur
+		expect(wrapper.find('input').element.value).toBe('01/01/2025 - ')
 	})
 
 	it('clears input when model is set to null', async () => {

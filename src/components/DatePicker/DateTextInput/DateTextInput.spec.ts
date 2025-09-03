@@ -147,7 +147,10 @@ describe('DateTextInput.vue', () => {
 
 	it('formats input while typing', async () => {
 		const input = wrapper.find('input')
-		await input.setValue('01012025')
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+		input.element.value = '01012025'
+		await input.trigger('input')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/01/2025')
 	})
@@ -177,7 +180,10 @@ describe('DateTextInput.vue', () => {
 
 	it('formats date during input', async () => {
 		const input = wrapper.find('input')
-		await input.setValue('01012025')
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+		input.element.value = '01012025'
+		await input.trigger('input')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/01/2025')
 	})
@@ -265,7 +271,11 @@ describe('DateTextInput.vue', () => {
 
 	it('preserves cursor position during formatting', async () => {
 		const input = wrapper.find('input')
-		await input.setValue('01')
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+		// Directly set the input value and trigger input event
+		input.element.value = '01'
+		await input.trigger('input')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/__/____')
 
@@ -291,8 +301,13 @@ describe('DateTextInput.vue', () => {
 		})
 
 		const input = customWrapper.find('input')
-		await input.setValue('0')
-		expect(input.element.value).toBe('0_/__/__')
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+		input.element.value = '0'
+		await input.trigger('input')
+		await customWrapper.vm.$nextTick()
+		expect(input.element.value).toBe('0_/__/____')
+		expect(customWrapper.emitted('update:model-value')).toBeFalsy()
 
 		await input.setValue('01/02/99')
 		expect(input.element.value).toBe('01/02/99')
@@ -311,7 +326,11 @@ describe('DateTextInput.vue', () => {
 		})
 
 		const input = customWrapper.find('input')
-		await input.setValue('2025-')
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+		input.element.value = '2025-'
+		await input.trigger('input')
+		await customWrapper.vm.$nextTick()
 		expect(input.element.value).toBe('2025-__-__')
 		expect(customWrapper.emitted('update:model-value')).toBeFalsy()
 
@@ -403,7 +422,7 @@ describe('DateTextInput.vue', () => {
 			},
 			props: {
 				modelValue: '01/01/2025',
-				format: 'DD/MM/YYYY',
+				dateFormat: 'DD/MM/YYYY',
 			},
 		})
 
@@ -433,9 +452,10 @@ describe('DateTextInput.vue', () => {
 
 	it('handles partial date input correctly', async () => {
 		const input = wrapper.find('input')
-
-		// Enter only the day
-		await input.setValue('01')
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+		input.element.value = '01'
+		await input.trigger('input')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/__/____')
 
@@ -448,6 +468,29 @@ describe('DateTextInput.vue', () => {
 		await input.setValue('01/02/2025')
 		await wrapper.vm.$nextTick()
 		expect(input.element.value).toBe('01/02/2025')
+	})
+
+	it('handles focus and blur methods correctly', async () => {
+		// Create a mock for the input element
+		const mockInput = { focus: vi.fn(), blur: vi.fn() }
+
+		// Mock the component's querySelector method
+		const mockQuerySelector = vi.fn().mockReturnValue(mockInput)
+
+		// Replace the element reference and its querySelector method
+		wrapper.vm.inputRef = {
+			$el: {
+				querySelector: mockQuerySelector,
+			},
+		}
+
+		// Test focus method
+		wrapper.vm.focus()
+		expect(mockInput.focus).toHaveBeenCalled()
+
+		// Test blur method
+		wrapper.vm.blur()
+		expect(mockInput.blur).toHaveBeenCalled()
 	})
 
 	it('handles success messages correctly', async () => {

@@ -13,6 +13,7 @@
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { useValidation, type ValidationRule, type ValidationResult } from '@/composables/validation/useValidation'
+	import { formatDateInput as formatDateInputUtil } from '../utils/dateFormattingUtils'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
@@ -191,7 +192,7 @@
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => (ariaLabel.value = ariaLabelText)
 
-	const { formatDateInput, handlePaste: handlePasteSingle, isHandlingBackspace } = useDateInputEditing({
+	const { handlePaste: handlePasteSingle, isHandlingBackspace } = useDateInputEditing({
 		format: displayFormat.value,
 		updateDisplayValue,
 		updateAriaLabel,
@@ -274,8 +275,8 @@
 
 		isBootstrapping.value = true
 
-		// Injecte le squelette si vide
-		if (!inputValue.value) {
+		// Only inject skeleton when focused, not on initial load
+		if (!inputValue.value && options.focus) {
 			inputValue.value = isRange.value
 				? `${skeletonFromFormat(displayFormat.value)} - ${skeletonFromFormat(displayFormat.value)}`
 				: skeletonFromFormat(displayFormat.value)
@@ -284,14 +285,20 @@
 		await nextTick()
 		if (options.focus) inputElement.focus({ preventScroll: true })
 
-		const cursorPosition = nextEditableIndex(displayFormat.value, 0)
-		// double rAF pour laisser Vuetify finir ses mises à jour
-		requestAnimationFrame(() => {
+		// Only set cursor position if we have content
+		if (inputValue.value) {
+			const cursorPosition = nextEditableIndex(displayFormat.value, 0)
+			// double rAF pour laisser Vuetify finir ses mises à jour
 			requestAnimationFrame(() => {
-				inputElement.setSelectionRange(cursorPosition, cursorPosition)
-				isBootstrapping.value = false
+				requestAnimationFrame(() => {
+					inputElement.setSelectionRange(cursorPosition, cursorPosition)
+					isBootstrapping.value = false
+				})
 			})
-		})
+		}
+		else {
+			isBootstrapping.value = false
+		}
 	}
 
 	// Handlers overwrite (single)
@@ -599,9 +606,20 @@
 	}
 
 	function onBlur() {
-		if (!props.isValidateOnBlur) return
 		isFocused.value = false
 		hasInteracted.value = true
+
+		// Always emit blur event first
+		emit('blur')
+
+		if (!props.isValidateOnBlur) return
+
+		// Handle empty input
+		if (!inputValue.value || inputValue.value.trim() === '' || !inputValue.value.replace(/[_\s/-]/g, '')) {
+			emitModel(null)
+			runRules('')
+			return
+		}
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
@@ -622,7 +640,8 @@
 			else {
 				runRules(inputValue.value)
 				if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
-				emitModel(props.modelValue)
+				// For invalid input, emit null instead of previous value
+				emitModel(null)
 			}
 		}
 
@@ -641,7 +660,6 @@
 		}
 
 		runRules(inputValue.value)
-		emit('blur')
 	}
 
 	/**
@@ -650,11 +668,12 @@
 	 * =====================
 	 */
 	watch(inputValue, async (nv, ov) => {
+		// Prevent infinite loops but allow formatting
 		if (isFormatting.value || nv === ov || isHandlingBackspace.value || isBootstrapping.value) return
 		try {
 			isFormatting.value = true
 
-			if (!nv) {
+			if (!nv || nv.trim() === '' || nv.match(/^[_/\-.\s]+$/)) {
 				emitModel(null)
 				runRules('')
 				if (isRange.value) {
@@ -712,14 +731,15 @@
 
 				if (typeof nv !== 'string') return
 				let formatted = ''
+				const currentFormat = props.format || 'DD/MM/YYYY'
 				if (nv.includes(' - ')) {
 					const [startDateText, endDateText = ''] = nv.split(' - ')
-					const formattedStartDate = startDateText ? formatDateInput(startDateText).formatted : ''
-					const formattedEndDate = endDateText ? formatDateInput(endDateText).formatted : ''
+					const formattedStartDate = startDateText ? formatDateInputUtil(startDateText, currentFormat).formatted : ''
+					const formattedEndDate = endDateText ? formatDateInputUtil(endDateText, currentFormat).formatted : ''
 					formatted = `${formattedStartDate} - ${formattedEndDate}`
 				}
 				else {
-					formatted = formatDateInput(nv).formatted
+					formatted = formatDateInputUtil(nv, currentFormat).formatted
 				}
 
 				const result = !ov ? handleRangeInput('', formatted) : handleRangeInput(ov, formatted, cursor)
@@ -771,39 +791,20 @@
 			}
 			else {
 				// --- Branche SINGLE ---
-				if (isOverwriteEditing.value) {
-					const formatted = inputValue.value
-					const complete = formatted && !formatted.includes('_')
-					if (complete) {
-						const formatValidationResult = validateDateFormatForSingleOrRange(formatted)
-						if (formatValidationResult.isValid) {
-							const parsedDate = parseDate(formatted, displayFormat.value)
-							if (parsedDate) {
-								const formattedDateOutput = returnFormat.value !== displayFormat.value
-									? formatDate(parsedDate, returnFormat.value)
-									: formatDate(parsedDate, displayFormat.value)
-								await nextTick()
-								emitModel(formattedDateOutput)
-								emit('date-selected', formattedDateOutput)
-							}
-						}
-						runRules(formatted)
-					}
-					else {
-						clearValidation()
-					}
-					return
-				}
+				// Format the input for both complete and partial dates
+				const { formatted, cursorPos } = formatDateInputUtil(nv, props.format || 'DD/MM/YYYY', { cursorPosition: cursor })
 
-				const { formatted, cursorPos } = formatDateInput(nv, cursor)
-				if (formatted !== nv) {
+				// Always update the input value with formatted version
+				// But don't format if it would result in just placeholders (let the HTML placeholder show instead)
+				if (formatted !== nv && !formatted.match(/^[_/\-.\s]+$/)) {
 					inputValue.value = formatted
-					if (!isHandlingBackspace.value) {
+					if (!isHandlingBackspace.value && inputEl) {
 						await nextTick()
-						inputEl?.setSelectionRange(cursorPos, cursorPos)
+						inputEl.setSelectionRange(cursorPos, cursorPos)
 					}
 				}
 
+				// Only emit model value for complete dates
 				const complete = !formatted.includes('_')
 				if (complete) {
 					const formatValidationResult = validateDateFormatForSingleOrRange(formatted)
@@ -820,6 +821,7 @@
 					runRules(formatted)
 				}
 				else {
+					// For incomplete dates, clear validation but don't emit model value
 					clearValidation()
 				}
 			}
@@ -943,10 +945,8 @@
 			}
 		}
 
-		// Si aucun chiffre n'est saisi (champ vide ou squelette), place le caret au début
-		if (!/\d/.test(inputValue.value || '')) {
-			await initializeCursorAtFirstEditablePosition({ focus: false })
-		}
+		// Don't initialize skeleton on mount - let the native placeholder show
+		// Only initialize cursor position when user focuses on the input
 	})
 
 	/**
