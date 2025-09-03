@@ -583,6 +583,8 @@
 	 * =====================
 	 */
 	function handleKeydown(evt: KeyboardEvent & { target: HTMLInputElement }) {
+		if (props.readonly) return
+		
 		if (isRange.value) {
 			handleRangeDateKeyboardInput(evt)
 		}
@@ -592,6 +594,8 @@
 	}
 
 	function handlePaste(evt: ClipboardEvent) {
+		if (props.readonly) return
+		
 		if (isRange.value) handlePasteRange(evt)
 		else handlePasteSingle(evt)
 	}
@@ -976,7 +980,7 @@
 			'warning-field': isOnWarning,
 			'success-field': isOnSuccess,
 		}"
-		:disabled="props.disabled"
+		:disabled="props.disabled || props.readonly"
 		:error-messages="errorMessages"
 		:label="props.label || ''"
 		:placeholder="props.placeholder"
