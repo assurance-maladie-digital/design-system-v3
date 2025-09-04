@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { mdiClose } from '@mdi/js'
-	import { ref, useId, watch } from 'vue'
-	import type { VDialog } from 'vuetify/components'
+	import { ref, useId, watch, nextTick } from 'vue'
+	import type { VBtn, VDialog } from 'vuetify/components'
 	import { config } from './config'
 	import { locales } from './locales'
 	import { useDisplay } from 'vuetify/lib/framework.mjs'
@@ -15,6 +15,7 @@
 		confirmBtnText?: string
 		hideActions?: boolean
 		persistent?: boolean
+		autofocusValidateBtn?: boolean
 	} & CustomizableOptions>(), {
 		title: undefined,
 		width: '800px',
@@ -22,6 +23,7 @@
 		confirmBtnText: locales.confirmBtn,
 		hideActions: false,
 		persistent: false,
+		autofocusValidateBtn: false,
 	})
 
 	defineEmits(['cancel', 'confirm', 'update:modelValue'])
@@ -35,16 +37,22 @@
 		default: false,
 	})
 
+	const confirmBtn = ref<VBtn | null>(null)
 	// Restor the focus to the last active element when the dialog is closed
 	let activeElement: HTMLElement | null = null
 	watch(dialog, (newValue) => {
 		if (newValue) {
 			activeElement = document.activeElement as HTMLElement
+			if (props.autofocusValidateBtn) {
+				nextTick(() => {
+					confirmBtn.value?.$el.focus()
+				})
+			}
 		}
 		else if (activeElement) {
 			activeElement.focus()
 		}
-	})
+	}, { immediate: true })
 
 	const id = `dialog-${useId()}`
 	const dialogContent = ref<VDialog | undefined>(undefined)
@@ -174,8 +182,10 @@
 						</VBtn>
 
 						<VBtn
-							class="sy-dialog-box-confirm-btn"
 							v-bind="options.confirmBtn"
+							ref="confirmBtn"
+							class="sy-dialog-box-confirm-btn"
+							:class="props.autofocusValidateBtn ? 'sy-dialog-box-confirm-btn--autofocus' : ''"
 							data-test-id="confirm-btn"
 							@click="$emit('confirm')"
 						>
@@ -208,7 +218,8 @@ h2 {
 
 .sy-dialog-box-close-btn:focus-visible,
 .sy-dialog-box-cancel-btn:focus-visible,
-.sy-dialog-box-confirm-btn:focus-visible {
+.sy-dialog-box-confirm-btn:focus-visible,
+.sy-dialog-box-confirm-btn--autofocus:focus {
 	:deep(.v-btn__overlay) {
 		display: none;
 	}
@@ -217,12 +228,6 @@ h2 {
 		opacity: 1;
 		border: transparent;
 		outline: 2px solid rgb(var(--v-theme-primary));
-		outline-offset: 2px;
-	}
-}
-
-.sy-dialog-box-confirm-btn:focus-visible {
-	&::after {
 		outline-offset: 2px;
 	}
 }

@@ -30,7 +30,12 @@ describe('DateTextInput.vue - Events', () => {
 
 	it('émet date-selected lors de la sélection d\'une date valide', async () => {
 		const input = wrapper.find('input')
-		await input.setValue('01/01/2023')
+
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+
+		input.element.value = '01/01/2023'
+		await input.trigger('input')
 		await input.trigger('blur')
 
 		expect(wrapper.emitted('date-selected')).toBeTruthy()
@@ -64,8 +69,12 @@ describe('DateTextInput.vue - Events', () => {
 	it('formate automatiquement la date pendant la saisie', async () => {
 		const input = wrapper.find('input')
 
-		// Simuler la saisie de chiffres sans séparateurs
-		await input.setValue('0101')
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+
+		// Simuler la saisie de chiffres sans séparateurs en utilisant l'événement input
+		input.element.value = '0101'
+		await input.trigger('input')
 		await nextTick()
 
 		// Vérifier que le séparateur a été ajouté automatiquement
@@ -86,8 +95,12 @@ describe('DateTextInput.vue - Events', () => {
 
 		const input = wrapperWithDashFormat.find('input')
 
+		// Wait for bootstrapping to complete
+		await new Promise(resolve => setTimeout(resolve, 50))
+
 		// Simuler la saisie de chiffres sans séparateurs
-		await input.setValue('2023')
+		input.element.value = '2023'
+		await input.trigger('input')
 		await nextTick()
 
 		// Vérifier que le bon séparateur a été ajouté automatiquement

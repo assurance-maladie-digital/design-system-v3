@@ -622,8 +622,8 @@ export const WithError: Story = {
 						v-model="date"
 						placeholder="notAfterToday"
 						:custom-rules="[
-							{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } }
-						]"
+			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } },
+		]"
 					/>
 				</template>
 				`,
@@ -656,7 +656,7 @@ export const WithError: Story = {
 		'noCalendar': false,
 		'modelValue': '01/01/2100',
 		'customRules': [
-			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
+			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd hui' } },
 		],
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),

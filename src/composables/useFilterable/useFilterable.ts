@@ -173,6 +173,16 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 				return
 			}
 
+			// Handle single select objects (VSelect with return-object but without multiple)
+			const hasSelectStructure = (typedValue.title !== undefined || typedValue.text !== undefined) && typedValue.value !== undefined
+			if (hasSelectStructure) {
+				// For single select objects, clear the entire value
+				filter.value = undefined
+				updateValue()
+				return
+			}
+
+			// For other object types, delete the specific property
 			delete typedValue[chipValue]
 			filter.value = typedValue
 		}

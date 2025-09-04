@@ -68,6 +68,7 @@
 			max?: string
 		}
 		autoClamp?: boolean
+		isValidateOnBlur?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
@@ -106,13 +107,14 @@
 			max: '',
 		}),
 		autoClamp: false,
+		isValidateOnBlur: true,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
 
 	// Utilisation des composables pour les fonctionnalités du CalendarMode
 	const { displayWeekendDays } = useWeekendDays(props)
-	const { todayInString } = useTodayButton(props)
+	const { todayInString, headerDate } = useTodayButton(props)
 	const { labelWithAsterisk } = useAsteriskDisplay(props)
 
 	const selectedDates = ref<Date | Date[] | null>(
@@ -125,9 +127,12 @@
 		todayInString,
 	})
 
+	const onblur = ref(false)
+
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
@@ -151,6 +156,12 @@
 
 		// Mettre à jour l'affichage formaté
 		updateDisplayFormattedDate()
+
+		// Mettre à jour les variables currentMonth et currentYear pour refléter la date d'aujourd'hui
+		currentMonth.value = today.getMonth().toString()
+		currentYear.value = today.getFullYear().toString()
+		currentMonthName.value = dayjs(today).format('MMMM')
+		currentYearName.value = today.getFullYear().toString()
 	}
 
 	const emit = defineEmits<{
@@ -208,6 +219,10 @@
 		// Vérifier si le champ est requis et vide
 		if ((forceValidation || !isUpdatingFromInternal.value) && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
 			if (props.readonly) {
+				return
+			}
+			// Ne pas afficher d'erreur si on est sur une perte de focus et si isValidateOnBlur est false
+			if (onblur.value && !props.isValidateOnBlur) {
 				return
 			}
 			// Ne pas afficher d'erreur si on est dans le contexte du mounted initial
@@ -550,8 +565,13 @@
 	})
 
 	const validateOnSubmit = () => {
+		// Si le mode noCalendar est activé, on délègue la validation au DateTextInput
 		if (props.noCalendar) {
 			return dateTextInputRef.value?.validateOnSubmit()
+		}
+		// Si le mode combiné est activé, on délègue la validation au ComplexDatePicker
+		else if (props.useCombinedMode) {
+			return complexDatePickerRef.value?.validateOnSubmit()
 		}
 		// Forcer la validation pour ignorer les conditions de validation interactive
 		validateDates(true)
@@ -657,7 +677,10 @@
 
 	const handleInputBlur = () => {
 		emit('blur')
-		validateDates(true)
+		onblur.value = true
+		if (props.isValidateOnBlur) {
+			validateDates(true)
+		}
 	}
 
 	watch(isDatePickerVisible, async (isVisible) => {
@@ -670,15 +693,7 @@
 			resetViewMode()
 		}
 
-		if (isVisible) {
-			// set the focus on the date picker
-			await nextTick()
-			const firstButton = datePickerRef.value?.$el?.querySelector?.('button')
-			if (firstButton) {
-				firstButton.focus({ preventScroll: true })
-			}
-		}
-		else {
+		if (!isVisible) {
 			// set the focus on the text input
 			// wait for VMenu to finish DOM updates & transition
 			setTimeout(() => {
@@ -798,13 +813,30 @@
 		customizeMonthButton()
 	}
 
+	// Ne plus ouvrir automatiquement le calendrier au focus, juste émettre l'événement
 	const openDatePickerOnFocus = () => {
-		openDatePicker()
+		// openDatePicker() - désactivé pour améliorer l'accessibilité
 		emit('focus')
 	}
 
 	const openDatePickerOnIconClick = () => {
 		toggleDatePicker()
+	}
+
+	// Gestionnaire d'événement clavier pour l'input
+	const handleInputKeydown = (event: KeyboardEvent) => {
+		// Ouvrir le calendrier uniquement lorsque la touche Entrée est pressée
+		if (event.key === 'Enter') {
+			openDatePicker()
+			event.preventDefault() // Empêcher la soumission du formulaire
+		}
+		// Fermer le calendrier lorsque la touche Escape est pressée
+		else if ((event.key === 'Escape' || event.key === 'Esc') && isDatePickerVisible.value) {
+			isDatePickerVisible.value = false
+			emit('closed')
+			validateDates() // Valider les dates à la fermeture
+			event.preventDefault()
+		}
 	}
 
 	defineExpose({
@@ -852,6 +884,7 @@
 				:period="props.period"
 				:auto-clamp="props.autoClamp"
 				:display-asterisk="props.displayAsterisk"
+				:is-validate-on-blur="props.isValidateOnBlur"
 				@update:model-value="handleDateTextInputUpdate"
 				@date-selected="handleDateTextInputSelection"
 				@blur="handleInputBlur"
@@ -860,6 +893,7 @@
 		</template>
 		<template v-else-if="props.useCombinedMode">
 			<ComplexDatePicker
+				ref="complexDatePickerRef"
 				:model-value="props.modelValue"
 				:format="props.format"
 				:date-format-return="props.dateFormatReturn"
@@ -891,6 +925,7 @@
 				:auto-clamp="props.autoClamp"
 				:label="props.label"
 				:placeholder="props.placeholder"
+				:is-validate-on-blur="props.isValidateOnBlur"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -943,6 +978,7 @@
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
+						@keydown="handleInputKeydown"
 						@update:model-value="updateSelectedDates"
 						@prepend-icon-click="openDatePickerOnIconClick"
 						@append-icon-click="openDatePickerOnIconClick"
@@ -975,7 +1011,7 @@
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ displayedDateString }}
+							{{ selectedDates ? displayedDateString : headerDate }}
 						</h3>
 					</template>
 					<template

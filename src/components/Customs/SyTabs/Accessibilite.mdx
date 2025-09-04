@@ -1,0 +1,309 @@
+import { Meta, Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
+import * as SyTabsStories from './SyTabs.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+
+<Meta of={SyTabsStories} />
+
+<div className="accessibility-guide">
+  <Title>Guide d'Accessibilité du Composant SyTabs</Title>
+  
+  <div className="intro-section">
+    <img 
+      src={AccessibilityIcon} 
+      alt="Icône d'accessibilité" 
+      className="accessibility-icon"
+    />
+    <div className="intro-text">
+      Le composant SyTabs a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C, 
+      notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les onglets</a>. 
+      Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
+    </div>
+  </div>
+
+  <div className="criteria-section">
+    <h2>Critères d'accessibilité respectés</h2>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">🔍</span>
+        <h3>Structure sémantique</h3>
+      </div>
+      <ul>
+        <li><strong>Rôles ARIA appropriés</strong> : <code>role="tablist"</code> pour la liste d'onglets, <code>role="tab"</code> pour chaque onglet et <code>role="tabpanel"</code> pour chaque panneau de contenu</li>
+        <li><strong>État des onglets</strong> : <code>aria-selected</code> avec les valeurs <code>true</code> ou <code>false</code> pour indiquer l'onglet actif</li>
+        <li><strong>Relations entre éléments</strong> : <code>aria-controls</code> pour associer chaque onglet à son panneau, et <code>aria-labelledby</code> pour associer chaque panneau à son onglet</li>
+        <li><strong>Navigation structurée</strong> : Utilisation d'éléments <code>&lt;nav&gt;</code> et <code>&lt;ul&gt;</code> pour créer une structure de navigation sémantique et accessible</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">⌨️</span>
+        <h3>Navigation clavier complète</h3>
+      </div>
+      <ul>
+        <li><strong>Touche Tab</strong> : Navigation vers la liste d'onglets et sortie de celle-ci</li>
+        <li><strong>Touches fléchées</strong> : Navigation entre les onglets (gauche/droite)</li>
+        <li><strong>Touches Home/End</strong> : Accès direct au premier/dernier onglet</li>
+        <li><strong>Touche Espace/Entrée</strong> : Activation de l'onglet actuellement focalisé</li>
+        <li><strong>Touche Escape</strong> : Sortie du contexte de navigation des onglets</li>
+        <li><strong>Focus visible</strong> : Contour visuel distinct pour indiquer l'onglet actuellement focalisé</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">📱</span>
+        <h3>États et retours d'information</h3>
+      </div>
+      <ul>
+        <li><strong>État de sélection</strong> : <code>aria-selected="true"</code> indique l'onglet actif aux technologies d'assistance</li>
+        <li><strong>Visibilité des panneaux</strong> : L'attribut <code>hidden</code> sur les panneaux inactifs les rend invisibles aux lecteurs d'écran</li>
+        <li><strong>Indication visuelle</strong> : Styles distinctifs pour l'onglet actif (couleur, bordure inférieure)</li>
+        <li><strong>Association explicite</strong> : Chaque panneau de contenu est clairement associé à son onglet via <code>aria-labelledby</code></li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">🎨</span>
+        <h3>Personnalisation accessible</h3>
+      </div>
+      <ul>
+        <li><strong>Contraste configurable</strong> : Options de couleurs pour garantir un contraste suffisant entre les onglets actifs/inactifs</li>
+        <li><strong>Taille et espacement</strong> : Dimensions adaptées pour faciliter l'interaction tactile avec une hauteur minimale de 44px</li>
+        <li><strong>Compatibilité avec le mode contraste élevé</strong> : Utilisation de variables CSS pour s'adapter aux paramètres système</li>
+        <li><strong>Densité et thème</strong> : Options de personnalisation pour s'adapter aux différents contextes d'utilisation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div className="automatic-section">
+    <h2>Activation automatique des onglets</h2>
+    <div className="section-description">
+      Le composant SyTabs implémente un modèle d'activation automatique, ce qui signifie que :
+    </div>
+    <ul>
+      <li>La sélection d'un nouvel onglet via la navigation par flèches active immédiatement cet onglet</li>
+      <li>Le contenu du panneau associé est affiché sans nécessiter une action supplémentaire</li>
+      <li>Le focus reste sur l'onglet activé pour permettre de continuer la navigation par clavier</li>
+    </ul>
+    <div className="section-description">
+      Cette implémentation suit les meilleures pratiques WAI-ARIA pour les interfaces à onglets :
+    </div>
+    <ul>
+      <li>Réduction du nombre d'actions nécessaires pour naviguer entre les contenus</li>
+      <li>Mise à jour dynamique de l'attribut <code>aria-selected</code> pour informer des changements</li>
+      <li>Gestion efficace du focus pour éviter les sauts d'interface désorientants</li>
+      <li>Mise à jour de l'affichage des panneaux avec l'attribut <code>hidden</code> pour les panneaux inactifs</li>
+    </ul>
+  </div>
+
+  <div className="demo-section">
+    <h2>Démonstration interactive</h2>
+    <div className="section-description">
+      Explorez ci-dessous un exemple de SyTabs entièrement accessible. 
+      Essayez de naviguer en utilisant uniquement votre clavier (Tab pour accéder à la barre d'onglets, flèches gauche/droite pour naviguer entre les onglets) pour tester l'accessibilité.
+    </div>
+    <Primary />
+  </div>
+
+  <div className="tab-panel-section">
+    <h2>Relation onglet-panneau</h2>
+    <div className="section-description">
+      Le composant SyTabs établit une relation claire entre chaque onglet et son panneau de contenu associé :
+    </div>
+    <ul>
+      <li>Chaque onglet (<code>role="tab"</code>) est associé à un panneau de contenu via <code>aria-controls</code></li>
+      <li>Chaque panneau de contenu (<code>role="tabpanel"</code>) est associé à son onglet via <code>aria-labelledby</code></li>
+      <li>
+        Les identifiants uniques garantissent que ces associations sont clairement établies :
+        <ul>
+          <li>Onglets : <code>id="tab-&#123;index&#125;"</code></li>
+          <li>Panneaux : <code>id="panel-&#123;index&#125;"</code></li>
+        </ul>
+      </li>
+    </ul>
+    <div className="section-description">
+      Cette structure garantit que les utilisateurs de technologies d'assistance comprennent clairement la relation entre les onglets et leur contenu associé, améliorant ainsi la navigation et la compréhension de l'interface.
+    </div>
+  </div>
+
+  <div className="best-practices">
+    <h2>Bonnes pratiques d'utilisation</h2>
+    <ul>
+      <li>Utilisez des libellés clairs et concis pour chaque onglet, évitez les textes trop longs ou ambiguës</li>
+      <li>Limitez le nombre d'onglets pour éviter de surcharger l'interface et la navigation par clavier</li>
+      <li>Organisez les onglets dans un ordre logique, avec les informations les plus importantes en premier</li>
+      <li>Assurez-vous que la taille des onglets est suffisante pour faciliter l'interaction tactile (au moins 44px de hauteur)</li>
+      <li>Maintenez une distinction visuelle claire entre l'onglet actif et les onglets inactifs</li>
+      <li>Évitez d'utiliser des onglets imbriqués qui pourraient compliquer la navigation</li>
+      <li>Conservez une cohérence dans le comportement et l'apparence des onglets à travers l'application</li>
+    </ul>
+  </div>
+
+  <div className="resources-section">
+    <h2>Ressources supplémentaires</h2>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener noreferrer">Guide des pratiques d'auteur WAI-ARIA pour les onglets</a></li>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-automatic/" target="_blank" rel="noopener noreferrer">Exemple d'onglets WAI-ARIA à activation automatique</a></li>
+      <li><a href="https://www.w3.org/TR/wai-aria-practices-1.2/#tabpanel" target="_blank" rel="noopener noreferrer">Pratiques recommandées WAI-ARIA 1.2 pour les panneaux à onglets</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+      <li><a href="https://www.w3.org/TR/wai-aria-1.2/#tab" target="_blank" rel="noopener noreferrer">Spécification WAI-ARIA 1.2 pour le rôle tab</a></li>
+    </ul>
+  </div>
+</div>
+
+<style>
+{`
+  .accessibility-guide {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+  }
+
+  .intro-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 5px solid #0077cc;
+  }
+
+  .accessibility-icon {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+
+  .intro-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .criteria-section {
+    margin-bottom: 40px;
+  }
+
+  .criteria-section h2,
+  .demo-section h2,
+  .tri-state-section h2,
+  .parent-child-section h2,
+  .best-practices h2,
+  .resources-section h2 {
+    border-bottom: 2px solid #eaecef;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #0077cc;
+  }
+
+  .criteria-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .criteria-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .criteria-icon {
+    font-size: 1.8em;
+    margin-right: 15px;
+  }
+
+  .criteria-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #0077cc;
+  }
+
+  .criteria-card ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .criteria-card li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .demo-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+  }
+
+  .tri-state-section,
+  .parent-child-section {
+    background-color: #f0f7ff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .tri-state-section p,
+  .parent-child-section p {
+    line-height: 1.6;
+  }
+
+  .best-practices {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .best-practices ul {
+    padding-left: 20px;
+  }
+
+  .best-practices li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .resources-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .resources-section ul {
+    padding-left: 20px;
+  }
+
+  .resources-section li {
+    margin-bottom: 10px;
+  }
+
+  .resources-section a {
+    color: #0077cc;
+    text-decoration: none;
+  }
+
+  .resources-section a:hover {
+    text-decoration: underline;
+  }
+
+  code {
+    background-color: #f0f0f0;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+  }
+`}
+</style>

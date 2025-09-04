@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-	import { computed, ref, watch } from 'vue'
+	import { computed, ref, watch, nextTick } from 'vue'
 	import type { PropType } from 'vue'
 	import { mdiPhone } from '@mdi/js'
 	import { indicatifs } from './indicatifs'
-	import { vMaska } from 'maska/vue'
+	import { Mask } from 'maska'
 	import { locales } from './locales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import {
 		mdiAlertOutline,
@@ -19,6 +20,7 @@
 		code: string
 		abbreviation: string
 		country: string
+		countryFr?: string
 		mask?: string
 		phoneLength: number
 	}
@@ -41,6 +43,9 @@
 		bgColor: { type: String, default: 'white' },
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
+		helpText: { type: String, default: '' },
+		autocompleteCountryCode: { type: String, default: 'tel-country-code' },
+		autocompletePhone: { type: String, default: 'tel-national' },
 	})
 
 	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
@@ -61,7 +66,14 @@
 	const computedValue = computed(() => formatPhoneNumber(phoneNumber.value))
 
 	watch(() => props.modelValue, (newVal) => {
-		phoneNumber.value = (newVal || '').replace(/\s/g, '')
+		if (newVal) {
+			// Apply mask to incoming value to ensure consistent formatting
+			const mask = new Mask({ mask: phoneMask.value })
+			phoneNumber.value = mask.masked(newVal)
+		}
+		else {
+			phoneNumber.value = ''
+		}
 	}, { immediate: true })
 
 	watch(dialCode, (newVal) => {
@@ -69,15 +81,63 @@
 		if (typeof newVal === 'object' && newVal !== null) {
 			counter.value = newVal.phoneLength || 10
 			phoneMask.value = newVal.mask || '#'.repeat(newVal.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
+			const mask = new Mask({ mask: phoneMask.value })
+			const maskedValue = mask.masked(phoneNumber.value)
+			emit('update:modelValue', maskedValue)
 		}
 	})
 
-	function handlePhoneInput(event: Event) {
-		const input = (event.target as HTMLInputElement).value
-		const cleanedInput = input.replace(/\D/g, '')
-		phoneNumber.value = cleanedInput
-		emit('update:modelValue', cleanedInput)
-		emit('change', cleanedInput)
+	/**
+	 * Calcule la position ajustée du curseur en tenant compte des espaces ajoutés par le masque
+	 * @param cursorPosition - Position originale du curseur
+	 * @param originalValue - Valeur avant application du masque
+	 * @param maskedValue - Valeur après application du masque
+	 * @returns Position ajustée du curseur
+	 */
+	const calculateAdjustedPosition = (cursorPosition: number, originalValue: string, maskedValue: string): number => {
+		// Compte combien de caractères non-espace se trouvent avant la position du curseur dans la valeur originale
+		const digitsBeforeCursor = originalValue.substring(0, cursorPosition).replace(/\s/g, '').length
+
+		// Parcours la valeur masquée pour trouver la position qui contient le même nombre de caractères non-espace
+		let newPosition = 0
+		let digitCount = 0
+
+		for (let i = 0; i < maskedValue.length; i++) {
+			if (maskedValue[i] !== ' ') {
+				digitCount++
+			}
+
+			if (digitCount > digitsBeforeCursor) {
+				break
+			}
+
+			newPosition = i + 1
+		}
+
+		return newPosition
+	}
+
+	const handlePhoneInput = (event: Event) => {
+		const inputElement = event.target as HTMLInputElement
+		const input = inputElement.value
+
+		// Sauvegarder la position du curseur
+		const cursorPosition = inputElement.selectionStart || 0
+
+		// Appliquer le masque
+		const mask = new Mask({ mask: phoneMask.value })
+		const maskedValue = mask.masked(input)
+
+		// Mettre à jour la valeur
+		phoneNumber.value = maskedValue
+		emit('update:modelValue', maskedValue)
+		emit('change', maskedValue)
+
+		// Restaurer la position du curseur sur le prochain cycle de rendu
+		nextTick(() => {
+			const adjustedPosition = calculateAdjustedPosition(cursorPosition, input, maskedValue)
+			inputElement.setSelectionRange(adjustedPosition, adjustedPosition)
+		})
 	}
 
 	const mergedDialCodes = computed(() =>
@@ -88,6 +148,7 @@
 		mergedDialCodes.value.map(ind => ({
 			...ind,
 			displayText: generateDisplayText(ind),
+			plainDisplayText: generatePlainDisplayText(ind),
 		})),
 	)
 
@@ -127,11 +188,24 @@
 	}, { immediate: true })
 
 	function generateDisplayText(ind: Indicatif): string {
+		const countryName = ind.countryFr || ind.country
+		const format = {
+			'code': ind.code,
+			'code-abbreviation': `${ind.code} (<abbr title="${countryName}">${ind.abbreviation}</abbr>)`,
+			'code-country': `${ind.code} ${countryName}`,
+			'country': countryName,
+			'abbreviation': `<abbr title="${countryName}">${ind.abbreviation}</abbr>`,
+		}
+		return format[props.displayFormat] || ind.code
+	}
+
+	function generatePlainDisplayText(ind: Indicatif): string {
+		const countryName = ind.countryFr || ind.country
 		const format = {
 			'code': ind.code,
 			'code-abbreviation': `${ind.code} (${ind.abbreviation})`,
-			'code-country': `${ind.code} ${ind.country}`,
-			'country': ind.country,
+			'code-country': `${ind.code} ${countryName}`,
+			'country': countryName,
 			'abbreviation': ind.abbreviation,
 		}
 		return format[props.displayFormat] || ind.code
@@ -142,22 +216,24 @@
 			type: 'exactLength',
 			options: {
 				length: counter.value,
-				ignoreSpace: true, // Ignorer les espaces dans la validation
+				ignoreSpace: true,
 				message: `Le numéro de téléphone doit contenir ${counter.value} chiffres.`,
 				fieldIdentifier: locales.label,
 			},
-		}]
+		}] as ValidationRule[]
+
 		if (props.required) {
 			rules.unshift({
 				type: 'required',
 				options: {
 					length: counter.value,
-					ignoreSpace: true, // Ignorer les espaces dans la validation
+					ignoreSpace: true,
 					message: `Le champ ${locales.label} est requis.`,
 					fieldIdentifier: locales.label,
 				},
 			})
 		}
+
 		return rules
 	})
 
@@ -185,6 +261,11 @@
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
+
+	const showHelpTextBelow = computed(() => {
+		// Display help text below by default if it exists
+		return props.helpText && props.helpText.trim() !== ''
+	})
 
 	function validateInputOnBlur() {
 		if (!props.isValidatedOnBlur || shouldDisableErrorHandling.value) return
@@ -243,85 +324,131 @@
 </script>
 
 <template>
-	<div class="phone-field-container">
-		<SySelect
-			v-if="withCountryCode"
-			v-model="dialCode"
-			:items="dialCodeOptions"
-			:label="locales.indicatifLabel"
-			:outlined="outlinedIndicatif"
-			:required="countryCodeRequired"
-			:error="hasError"
-			:error-messages="errors[1]"
-			:display-asterisk="displayAsterisk"
-			:disable-error-handling="shouldDisableErrorHandling"
-			:return-object="true"
-			:bg-color="bgColor"
-			:readonly="readonly"
-			:disabled="disabled"
-			class="custom-select"
-			text-key="displayText"
-			value-key="code"
-		/>
-		<SyTextField
-			v-model="phoneNumber"
-			v-maska="phoneMask"
-			:counter="counter"
-			:counter-value="(value: string) => value.replace(/\s/g, '').length"
-			:label="locales.label"
-			:required="required"
-			:error="hasError"
-			:error-messages="errors"
-			:warning-messages="warnings"
-			:success-messages="successes"
-			:variant="outlined ? 'outlined' : 'underlined'"
-			:display-asterisk="displayAsterisk"
-			:readonly="readonly"
-			:bg-color="bgColor"
-			:disabled="disabled"
-			:class="{
-				'phone-field': true,
-				'error-field': hasError,
-				'warning-field': hasWarning,
-				'success-field': hasSuccess
-			}"
-			color="primary"
-			@blur="validateInputOnBlur"
-			@input="handlePhoneInput"
-		>
-			<template #append-inner>
-				<div class="d-flex align-center">
-					<VIcon
-						v-if="hasError && !shouldDisableErrorHandling"
-						color="error"
-						:icon="mdiInformation"
-						role="presentation"
-					/>
-					<VIcon
-						v-else-if="hasWarning && !shouldDisableErrorHandling"
-						color="warning"
-						:icon="mdiAlertOutline"
-						role="presentation"
-					/>
-					<VIcon
-						v-else-if="hasSuccess && !shouldDisableErrorHandling"
-						color="success"
-						:icon="mdiCheck"
-						role="presentation"
-					/>
-					<VIcon
-						class="ml-2"
-						:color="iconColor"
-					>
-						{{ mdiPhone }}
-					</VIcon>
-				</div>
-			</template>
-		</SyTextField>
+	<fieldset class="phone-field-fieldset">
+		<legend class="phone-field-legend">
+			{{ locales.label }}
+		</legend>
+		<div class="phone-field-container">
+			<SySelect
+				v-if="withCountryCode"
+				v-model="dialCode"
+				:items="dialCodeOptions"
+				:label="locales.indicatifLabel"
+				:outlined="outlinedIndicatif"
+				:required="countryCodeRequired"
+				:aria-required="countryCodeRequired"
+				:error="hasError"
+				:error-messages="errors[1]"
+				:display-asterisk="displayAsterisk"
+				:disable-error-handling="shouldDisableErrorHandling"
+				:return-object="true"
+				:bg-color="bgColor"
+				:readonly="readonly"
+				:disabled="disabled"
+				:allow-html="displayFormat === 'code-abbreviation' || displayFormat === 'abbreviation'"
+				:autocomplete="autocompleteCountryCode"
+				width="30%"
+				class="custom-select mr-4"
+				text-key="displayText"
+				plain-text-key="plainDisplayText"
+				value-key="code"
+			/>
+			<SyTextField
+				ref="phoneField"
+				:model-value="phoneNumber"
+				:counter="counter"
+				:counter-value="(value: string) => value.replace(/\s/g, '').length"
+				:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
+				:required="required"
+				:aria-required="required"
+				:error="hasError"
+				:error-messages="errors"
+				:warning-messages="warnings"
+				:success-messages="successes"
+				:variant="outlined ? 'outlined' : 'underlined'"
+				:display-asterisk="displayAsterisk"
+				:readonly="readonly"
+				:bg-color="bgColor"
+				:disabled="disabled"
+				:autocomplete="autocompletePhone"
+				:class="{
+					'phone-field': true,
+					'error-field': hasError,
+					'warning-field': hasWarning,
+					'success-field': hasSuccess
+				}"
+				width="70%"
+				color="primary"
+				type="tel"
+				@blur="validateInputOnBlur"
+				@input="handlePhoneInput"
+			>
+				<template #append-inner>
+					<div class="d-flex align-center">
+						<SyIcon
+							v-if="hasError && !shouldDisableErrorHandling"
+							color="error"
+							:icon="mdiInformation"
+							decorative
+						/>
+						<SyIcon
+							v-else-if="hasWarning && !shouldDisableErrorHandling"
+							color="warning"
+							:icon="mdiAlertOutline"
+							decorative
+						/>
+						<SyIcon
+							v-else-if="hasSuccess && !shouldDisableErrorHandling"
+							color="success"
+							:icon="mdiCheck"
+							decorative
+						/>
+						<SyIcon
+							class="ml-2"
+							:color="iconColor"
+							:icon="mdiPhone"
+							decorative
+						/>
+					</div>
+				</template>
+			</SyTextField>
+		</div>
+	</fieldset>
+
+	<div
+		v-if="showHelpTextBelow"
+		class="help-text-below px-4 mt-1"
+		:class="{ 'text-disabled': disabled }"
+	>
+		{{ helpText }}
 	</div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@use '@/assets/tokens';
+
+.phone-field-fieldset {
+	border: 1px solid #b9b9b9;
+	border-radius: 4px;
+	padding: 25px;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	min-width: 0;
+}
+
+.phone-field-legend {
+	padding: 0 8px;
+	font-weight: 500;
+	color: #666;
+}
+
+.required-asterisk {
+	color: #d32f2f;
+	margin-left: 4px;
+}
+
 .phone-field-container {
 	display: flex;
 	flex-direction: column;
@@ -333,10 +460,6 @@
 	width: 100%;
 }
 
-.custom-select {
-	width: 30%;
-}
-
 @media (width >= 600px) {
 	.phone-field-container {
 		flex-direction: row;
@@ -344,7 +467,6 @@
 	}
 
 	.custom-select {
-		margin-right: 1rem;
 		margin-bottom: 0;
 		min-width: 144px;
 	}
@@ -364,5 +486,16 @@
 	border-radius: 4px;
 	overflow-y: auto;
 	z-index: 2;
+}
+
+.help-text-below {
+	font-size: 0.75rem;
+	line-height: 1.25rem;
+	color: rgb(var(--v-theme-on-surface));
+	opacity: 0.6;
+
+	&.text-disabled {
+		opacity: 0.38;
+	}
 }
 </style>

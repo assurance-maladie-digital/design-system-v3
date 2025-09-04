@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 	import { locales } from './locales'
-	import { nextTick, ref, onMounted } from 'vue'
-	import { getCurrentInstance } from 'vue'
-	import type { Router } from 'vue-router'
+	import { ref } from 'vue'
 
 	withDefaults(
 		defineProps<{
@@ -17,34 +15,8 @@
 
 	const skipLinkSpan = ref<HTMLLinkElement | null>(null)
 
-	onMounted(() => {
-		const instance = getCurrentInstance()
-		if (!instance) return
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- we test the existence of Nuxt
-		const nuxtApp = (instance?.appContext.app as any)?.$nuxt
-		let router: undefined | Router
-		if (nuxtApp && nuxtApp.$router) {
-			router = nuxtApp.$router as Router
-		}
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- we test the existence of vue-router
-		const vueRouter = (instance.appContext.app.config.globalProperties as any)?.$router
-		if (vueRouter) {
-			router = vueRouter as Router
-		}
-
-		if (router && router.afterEach) {
-			router.afterEach((to, from, fail) => {
-				if (fail) return
-				if (to.path === from.path) return
-				nextTick(() => {
-					const link = document.querySelector('a.sy-skip-link') as HTMLAnchorElement
-					if (link) link.focus()
-				})
-			})
-		}
-	})
+	// La ref du skip link est disponible si besoin
+	const skipLink = ref<HTMLAnchorElement | null>(null)
 </script>
 
 <template>

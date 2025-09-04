@@ -28,6 +28,7 @@ export { default as HeaderNavigationBar } from './HeaderNavigationBar/HeaderNavi
 export { default as SkipLink } from './SkipLink/SkipLink.vue'
 export { default as SocialMediaLinks } from './SocialMediaLinks/SocialMediaLinks.vue'
 export { default as SyPagination } from './Customs/SyPagination/SyPagination.vue'
+export { default as SyTabs } from './Customs/SyTabs/SyTabs.vue'
 
 // ===========================
 // Boutons
@@ -117,15 +118,22 @@ export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 // Amelipro
 // ===========================
 export { default as AmeliproAccordion } from './Amelipro/AmeliproAccordion/AmeliproAccordion.vue'
+export { default as AmeliproAccordionGroup } from './Amelipro/AmeliproAccordionGroup/AmeliproAccordionGroup.vue'
+export { default as AmeliproAccordionList } from './Amelipro/AmeliproAccordionList/AmeliproAccordionList.vue'
+export { default as AmeliproAccordionResult } from './Amelipro/AmeliproAccordionResult/AmeliproAccordionResult.vue'
+export { default as AmeliproAccordionResultList } from './Amelipro/AmeliproAccordionResultList/AmeliproAccordionResultList.vue'
 export { default as AmeliproAutoCompleteField } from './Amelipro/AmeliproAutoCompleteField/AmeliproAutoCompleteField.vue'
+export { default as AmeliproBadge } from './Amelipro/AmeliproBadge/AmeliproBadge.vue'
 export { default as AmeliproBreadcrumb } from './Amelipro/AmeliproBreadcrumb/AmeliproBreadcrumb.vue'
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
 export { default as AmeliproCard } from './Amelipro/AmeliproCard/AmeliproCard.vue'
 export { default as AmeliproCallback } from './Amelipro/AmeliproCallback/AmeliproCallback.vue'
+export { default as AmeliproCarousel } from './Amelipro/AmeliproCarousel/AmeliproCarousel.vue'
 export { default as AmeliproCaptcha } from './Amelipro/AmeliproCaptcha/AmeliproCaptcha.vue'
 export { default as AmeliproCheckbox } from './Amelipro/AmeliproCheckbox/AmeliproCheckbox.vue'
 export { default as AmeliproCheckboxGroup } from './Amelipro/AmeliproCheckboxGroup/AmeliproCheckboxGroup.vue'
 export { default as AmeliproChips } from './Amelipro/AmeliproChips/AmeliproChips.vue'
+export { default as AmeliproClickableTile } from './Amelipro/AmeliproClickableTile/AmeliproClickableTile.vue'
 export { default as AmeliproCustomSelector } from './Amelipro/AmeliproCustomSelector/AmeliproCustomSelector.vue'
 export { default as AmeliproDialog } from './Amelipro/AmeliproDialog/AmeliproDialog.vue'
 export { default as AmeliproDisclosure } from './Amelipro/AmeliproDisclosure/AmeliproDisclosure.vue'
@@ -145,6 +153,7 @@ export { default as AmeliproPageLayout } from './Amelipro/AmeliproPageLayout/Ame
 export { default as AmeliproPagination } from './Amelipro/AmeliproPagination/AmeliproPagination.vue'
 export { default as AmeliproPatientBanner } from './Amelipro/AmeliproPatientBanner/AmeliproPatientBanner.vue'
 export { default as AmeliproRadioGroup } from './Amelipro/AmeliproRadioGroup/AmeliproRadioGroup.vue'
+export { default as AmeliproResultList } from './Amelipro/AmeliproResultList/AmeliproResultList.vue'
 export { default as AmeliproSelect } from './Amelipro/AmeliproSelect/AmeliproSelect.vue'
 export { default as AmeliproStateTile } from './Amelipro/AmeliproStateTile/AmeliproStateTile.vue'
 export { default as AmeliproStatus } from './Amelipro/AmeliproStatus/AmeliproStatus.vue'

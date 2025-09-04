@@ -348,4 +348,26 @@ describe('DialogBox', () => {
 			expect(result).toEqual([])
 		})
 	})
+
+	it('focus the confirm button on open if autofocusValidateBtn is true', async () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				autofocusValidateBtn: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const modal = wrapper.getComponent(VCard)
+
+		const confirmBtn = modal.find('[data-test-id="confirm-btn"]')
+
+		await wrapper.vm.$nextTick()
+
+		expect(confirmBtn.element).toEqual(document.activeElement)
+		wrapper.unmount()
+	})
 })

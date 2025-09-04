@@ -44,7 +44,7 @@
 </script>
 
 <template>
-	<ul class="sy-data-list-group d-flex flex-wrap max-width-none ma-n4">
+	<ul class="sy-data-list-group d-flex max-width-none ma-n4">
 		<li
 			v-for="(dataList, index) in props.items"
 			:key="`sy-data-list-${index}`"

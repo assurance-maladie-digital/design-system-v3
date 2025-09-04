@@ -32,6 +32,7 @@
 			trueValue?: unknown
 			falseValue?: unknown
 			controlsIds?: string[]
+			displayAsterisk?: boolean
 		}>(),
 		{
 			modelValue: false,
@@ -53,7 +54,7 @@
 			customWarningRules: () => [],
 			customSuccessRules: () => [],
 			showSuccessMessages: true,
-			isValidateOnBlur: true,
+			isValidateOnBlur: false,
 			disableErrorHandling: false,
 			id: undefined,
 			name: undefined,
@@ -61,12 +62,17 @@
 			trueValue: () => true,
 			falseValue: () => false,
 			controlsIds: () => [],
+			displayAsterisk: false,
 		},
 	)
 
 	const emit = defineEmits(['update:modelValue', 'update:indeterminate', 'change'])
 
 	const internalIndeterminate = ref(props.indeterminate)
+
+	const generatedLabel = computed(() => {
+		return (props.label || '') + (props.displayAsterisk ? '*' : '')
+	})
 
 	const model = computed({
 		get() {
@@ -87,6 +93,9 @@
 	})
 
 	// Initialisation du composable de validation
+	// Variable pour suivre si le formulaire a été soumis
+	const isSubmitted = ref(false)
+
 	const validation = useValidation({
 		customRules: props.customRules,
 		warningRules: props.customWarningRules,
@@ -153,6 +162,7 @@
 	}
 
 	const validateOnSubmit = () => {
+		isSubmitted.value = true
 		return validateField(model.value)
 	}
 
@@ -162,12 +172,21 @@
 
 	watch(model, (newValue) => {
 		if (!props.isValidateOnBlur) {
-			// Valider le champ et s'assurer que l'état d'erreur est correctement mis à jour
-			const isValid = validateField(newValue)
-
-			// Si la validation réussit, s'assurer que les erreurs sont effacées
-			if (isValid && validation.hasError.value) {
-				validation.clearValidation()
+			// Si le formulaire a été soumis et que la valeur change, on valide à nouveau
+			if (isSubmitted.value) {
+				const isValid = validateField(newValue)
+				if (isValid) {
+					// La validation a réussi, effacer les erreurs
+					validation.clearValidation()
+				}
+			}
+			else {
+				// Comportement normal (hors soumission)
+				const isValid = validateField(newValue)
+				// Si la validation réussit, s'assurer que les erreurs sont effacées
+				if (isValid && validation.hasError.value) {
+					validation.clearValidation()
+				}
 			}
 		}
 	})
@@ -279,7 +298,7 @@
 			:id="props.id"
 			v-model="model"
 			:name="props.name"
-			:label="props.label"
+			:label="generatedLabel"
 			:aria-label="props.ariaLabel"
 			:aria-labelledby="props.ariaLabelledby"
 			:title="props.title"
@@ -316,7 +335,7 @@
 				:id="messageId"
 				class="d-sr-only"
 			>
-				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label }}</span>.
+				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '') }}</span>.
 			</span>
 		</VCheckbox>
 	</div>

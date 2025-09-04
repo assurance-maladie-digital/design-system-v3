@@ -1,0 +1,117 @@
+import { Meta, Canvas, Controls, Source, Story } from '@storybook/blocks';
+import * as SyTabsStories from "./SyTabs.stories";
+
+<Meta of={SyTabsStories} />
+
+# SyTabs
+
+Le composant `SyTabs` est un système de navigation par onglets conforme au Design System qui respecte les règles d'accessibilité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. Il permet d'organiser le contenu en sections navigables facilement via une interface à onglets.
+
+Il implémente les fonctionnalités suivantes :
+
+- Navigation complète au clavier
+- Attributs ARIA appropriés
+- Gestion du focus accessible
+- Structure HTML sémantique
+- Design personnalisable
+
+<Canvas of={SyTabsStories.Default} />
+
+## API
+
+<Controls of={SyTabsStories.Default} />
+
+## Structure des données
+
+Le composant `SyTabs` attend un tableau d'objets `TabItem` avec la structure suivante :
+
+```typescript
+export interface TabItem {
+  label: string       // Texte affiché dans l'onglet
+  value: string | number  // Valeur unique utilisée pour v-model
+  content?: string    // Contenu textuel de l'onglet (optionnel)
+  disabled?: boolean  // État désactivé (optionnel)
+}
+```
+
+## Accessibilité
+
+Le composant `SyTabs` respecte les critères d'accessibilité RGAA suivants :
+
+### Structure sémantique
+
+- Utilise les éléments `<nav>`, `<ul>` et `<li>` pour une structure de navigation sémantique
+- Associe chaque onglet à son panneau de contenu via les attributs `aria-controls` et `aria-labelledby`
+- Utilise l'attribut `aria-label="Onglets de navigation"` sur l'élément `<nav>` pour identifier la navigation
+
+### Rôles ARIA
+
+- `role="tablist"` sur le conteneur de navigation
+- `role="presentation"` sur les éléments de liste
+- `role="tab"` sur les boutons d'onglets
+- `role="tabpanel"` sur les panneaux de contenu
+
+### États et propriétés
+
+- `aria-selected="true|false"` indique l'onglet actif
+- Attribut `hidden` sur les panneaux non actifs
+- Focus visible avec outline adapté au design system
+
+### Navigation au clavier
+
+Le composant implémente toutes les interactions clavier recommandées par les [Pratiques Authoring WAI-ARIA 1.2](https://www.w3.org/WAI/ARIA/apg/patterns/tabpanel/) :
+
+- **Flèches gauche/droite** : Navigation entre les onglets
+- **Touches Home/End** : Accès au premier/dernier onglet
+- **Entrée/Espace** : Activation de l'onglet
+- **Échap** : Gestion du focus
+
+### Contraste et visibilité
+
+- Contraste suffisant entre le texte et le fond (minimum 4.5:1)
+- Indication visuelle claire de l'onglet actif (changement de couleur et bordure)
+- Focus visible conforme aux exigences RGAA
+
+### Tests d'accessibilité
+
+Le composant a été testé avec :
+- Lecteurs d'écran (NVDA, VoiceOver)
+- Navigation clavier
+- Outils de vérification de contraste
+
+<Canvas of={SyTabsStories.Default} />
+
+## Personnalisation
+
+Le composant peut être personnalisé via l'objet `vuetifyOptions` qui permet de modifier l'apparence des onglets :
+
+> **Important** : Ces options de personnalisation doivent être passées via la prop `vuetifyOptions` et non comme props directes du composant. Par exemple, utilisez `:vuetify-options="{ sheet: { dense: true } }"` plutôt que `:sheet="{ dense: true }"`.
+
+```javascript
+{
+  sheet: { 
+    theme: 'default|dark|light',  // Thème de l'arrière-plan
+    color: '#fff',                // Couleur d'arrière-plan
+    dense: false                  // Mode compact
+  },
+  tabs: {
+    height: '48',                 // Hauteur des onglets
+    'show-arrows': true           // Affichage des flèches de défilement
+  },
+  tab: {
+    'base-color': '#0C419A',      // Couleur de base des onglets
+    'active-color': '#0C419A',    // Couleur de l'onglet actif
+    'slider-color': '#0C419A',    // Couleur de l'indicateur actif
+    'ripple': false               // Effet de ripple
+  }
+}
+```
+
+<Canvas of={SyTabsStories.CustomTheme} />
+
+## Bonnes pratiques
+
+- Limitez le nombre d'onglets pour éviter une surcharge cognitive
+- Utilisez des libellés courts et descriptifs
+- Assurez une cohérence visuelle entre les onglets et leur contenu
+- Préservez l'état des onglets lors de la navigation entre pages si nécessaire

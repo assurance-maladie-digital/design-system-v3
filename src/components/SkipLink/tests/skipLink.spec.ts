@@ -28,27 +28,6 @@ describe('SkipLink', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
-	it('focuses the skip link on route change', async () => {
-		// Monter le composant
-		mount(SkipLink, {
-			global: {
-				plugins: [router],
-			},
-		})
-
-		// Espionner querySelector et focus
-		const linkElement = document.createElement('a')
-		const focusSpy = vi.spyOn(linkElement, 'focus')
-		vi.spyOn(document, 'querySelector').mockImplementation(() => linkElement)
-
-		// Déclencher le changement de route
-		await router.push('/about')
-		await router.isReady()
-		await new Promise(resolve => setTimeout(resolve, 0))
-
-		expect(focusSpy).toHaveBeenCalled()
-	})
-
 	it('accepte des props personnalisées', () => {
 		const customLabel = 'Accéder au contenu'
 		const customTarget = '#content'

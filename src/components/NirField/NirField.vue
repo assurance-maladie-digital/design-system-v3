@@ -718,7 +718,7 @@
 
 /* Styles pour le mode fieldset */
 .nir-field--fieldset .number-field-container {
-	flex: v-bind('props.clearable ? "0 0 70%" : "0 0 78%"');
+	flex: v-bind('props.clearable ? "0 0 70%" : "0 0 75%"');
 }
 
 .nir-field--fieldset .key-field-container {
@@ -728,5 +728,14 @@
 .number-field,
 .key-field {
 	width: 100%;
+}
+
+.key-field {
+	min-width: 110px;
+
+	:deep(.v-messages .v-messages__message) {
+		min-width: 100px !important;
+		margin-left: -10px !important;
+	}
 }
 </style>

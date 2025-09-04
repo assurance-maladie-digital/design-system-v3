@@ -7,7 +7,7 @@
 	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
-	import type { VTextField } from 'vuetify/components'
+	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -59,6 +59,10 @@
 		textKey: {
 			type: String,
 			default: 'text',
+		},
+		plainTextKey: {
+			type: String,
+			default: '',
 		},
 		valueKey: {
 			type: String,
@@ -112,6 +116,14 @@
 			type: String,
 			default: '',
 		},
+		allowHtml: {
+			type: Boolean,
+			default: false,
+		},
+		autocomplete: {
+			type: String,
+			default: '',
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -123,6 +135,7 @@
 
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
+	const list = ref<VList | null>(null)
 
 	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
@@ -148,7 +161,7 @@
 	const closeList = (event?: Event) => {
 		// Check if the click is inside the dropdown list
 		const target = event?.target as HTMLElement
-		const listElement = document.querySelector('.v-list')
+		const listElement = list.value?.$el
 
 		// In multiple selection mode, don't close the dropdown when clicking on list items
 		if (props.multiple && listElement && listElement.contains(target)) {
@@ -162,8 +175,8 @@
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
 	const listStyles = ref<Record<string, string>>({})
 	const updateListPosition = () => {
-		if (input.value?.$el) {
-			const rect = input.value.$el.getBoundingClientRect()
+		if (textInput.value?.$el) {
+			const rect = textInput.value.$el.getBoundingClientRect()
 			listStyles.value = {
 				position: 'fixed',
 				top: props.density === 'compact' ? `${rect.bottom + 22}px` : `${rect.bottom}px`,
@@ -210,7 +223,7 @@
 				// S'assurer que le focus DOM revient à l'input et restaurer le focus visuel
 				nextTick(() => {
 					// Focus DOM sur l'input
-					const inputElement = document.querySelector('.v-field__input')
+					const inputElement = textInput.value!.$el.querySelector('input')
 					if (inputElement) {
 						(inputElement as HTMLInputElement).focus()
 					}
@@ -297,6 +310,16 @@
 		return (item as Record<string, any>)[props.textKey]
 	}
 
+	const getPlainItemText = (item: unknown) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+		const itemObj = item as Record<string, any>
+		// Use plainTextKey if available and allowHtml is true, otherwise use textKey
+		if (props.plainTextKey && props.allowHtml && itemObj[props.plainTextKey]) {
+			return itemObj[props.plainTextKey]
+		}
+		return itemObj[props.textKey]
+	}
+
 	const selectedItemText = computed(() => {
 		// If chips are enabled and we have selected items, return empty string to hide text
 		if (hasChips.value) {
@@ -309,7 +332,7 @@
 				// Find default option and return its text
 				const defaultOption = props.items.find(item => isDefaultOption(item))
 				if (defaultOption) {
-					return defaultOption[props.textKey] as string
+					return getPlainItemText(defaultOption) as string
 				}
 				return ''
 			}
@@ -319,9 +342,10 @@
 
 			return selectedArray.map((selected) => {
 				if (props.returnObject) {
-					return selected?.[props.textKey]
+					return getPlainItemText(selected)
 				}
-				return props.items.find((item: ItemType) => item[props.valueKey] === selected)?.[props.textKey] || ''
+				const foundItem = props.items.find((item: ItemType) => item[props.valueKey] === selected)
+				return foundItem ? getPlainItemText(foundItem) : ''
 			}).join(', ')
 		}
 		else {
@@ -329,10 +353,11 @@
 			if (!selectedItem.value) return ''
 
 			if (props.returnObject) {
-				return selectedItem.value[props.textKey]
+				return getPlainItemText(selectedItem.value)
 			}
 
-			return props.items.find(item => item[props.valueKey] === selectedItem.value)?.[props.textKey] || ''
+			const foundItem = props.items.find(item => item[props.valueKey] === selectedItem.value)
+			return foundItem ? getPlainItemText(foundItem) : ''
 		}
 	})
 
@@ -363,7 +388,7 @@
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
-	const input = ref<InstanceType<typeof VTextField> | null>(null)
+	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 
 	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
 	const hasMessages = computed(() => {
@@ -383,10 +408,19 @@
 	})
 
 	const calculatedWidth = computed(() => {
-		const baseWidth = props.width ? Number(props.width) : 0
-		const selectedText = typeof selectedItemText.value === 'string' ? selectedItemText.value : ''
-		const clearableAdjustment = props.clearable ? 4 : 0
-		return `${baseWidth + selectedText.length * (4 + clearableAdjustment)}px`
+		// If width prop is provided and not 'undefined', return it directly as a CSS value
+		if (props.width && props.width !== 'undefined') {
+			// Check if it's a pure number (for backward compatibility)
+			const numericValue = Number(props.width)
+			if (!isNaN(numericValue) && props.width === numericValue.toString()) {
+				// It's a pure number, add 'px' unit
+				return `${numericValue}px`
+			}
+			// It's already a CSS value (like "300px", "50%", "auto"), return as-is
+			return props.width
+		}
+		// No width specified, return undefined for auto-sizing
+		return undefined
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -539,9 +573,9 @@
 
 	// Function to set up proper ARIA attributes
 	const setupAriaAttributes = () => {
-		if (input.value && input.value.$el) {
+		if (textInput.value && textInput.value.$el) {
 			// Find the input element
-			const inputElement = input.value.$el?.querySelector?.('input')
+			const inputElement = textInput.value.$el?.querySelector?.('input')
 			if (inputElement) {
 				// Remove problematic attributes that shouldn't be on input
 				inputElement.removeAttribute('aria-describedby')
@@ -573,7 +607,7 @@
 			}
 
 			// Clean up parent element - remove any conflicting attributes
-			const parentElement = input.value.$el
+			const parentElement = textInput.value.$el
 			if (parentElement) {
 				// Remove any role or ARIA attributes from parent that should be on input
 				parentElement.removeAttribute('role')
@@ -584,6 +618,13 @@
 				parentElement.removeAttribute('aria-required')
 				parentElement.removeAttribute('aria-invalid')
 				parentElement.removeAttribute('aria-hidden')
+
+				// Remove role="alert" and aria-live from message containers to prevent screen reader interruption
+				const messagesElements = parentElement.querySelectorAll('[role="alert"]')
+				messagesElements.forEach((element: Element) => {
+					element.removeAttribute('role')
+					element.removeAttribute('aria-live')
+				})
 			}
 		}
 	}
@@ -601,7 +642,7 @@
 			setupAriaAttributes()
 
 			// Set up MutationObserver to monitor attribute changes
-			if (input.value && input.value.$el) {
+			if (textInput.value && textInput.value.$el) {
 				mutationObserver = new MutationObserver((mutations) => {
 					let needsCleanup = false
 					mutations.forEach((mutation) => {
@@ -621,7 +662,15 @@
 							}
 
 							// Check if aria-hidden was added to parent
-							if (target === input.value?.$el && attributeName === 'aria-hidden') {
+							if (target === textInput.value?.$el && attributeName === 'aria-hidden') {
+								needsCleanup = true
+							}
+
+							// Check if role="alert" or aria-live was added to any element (error messages)
+							if (attributeName === 'role' && (target as HTMLElement).getAttribute('role') === 'alert') {
+								needsCleanup = true
+							}
+							if (attributeName === 'aria-live') {
 								needsCleanup = true
 							}
 						}
@@ -634,10 +683,10 @@
 				})
 
 				// Observe both the parent element and its children
-				mutationObserver.observe(input.value.$el, {
+				mutationObserver.observe(textInput.value.$el, {
 					attributes: true,
 					subtree: true,
-					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup'],
+					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup', 'aria-live'],
 				})
 			}
 		})
@@ -646,8 +695,8 @@
 	// Watchers to update ARIA attributes dynamically on input element
 	watch(isOpen, (newValue) => {
 		nextTick(() => {
-			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el?.querySelector?.('input')
+			if (textInput.value && textInput.value.$el) {
+				const inputElement = textInput.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					inputElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
 					if (newValue && activeDescendantId.value) {
@@ -663,8 +712,8 @@
 
 	watch(activeDescendantId, (newValue) => {
 		nextTick(() => {
-			if (input.value && input.value.$el && isOpen.value) {
-				const inputElement = input.value.$el?.querySelector?.('input')
+			if (textInput.value && textInput.value.$el && isOpen.value) {
+				const inputElement = textInput.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					if (newValue) {
 						inputElement.setAttribute('aria-activedescendant', newValue)
@@ -679,8 +728,8 @@
 
 	watch(hasError, (newValue) => {
 		nextTick(() => {
-			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el?.querySelector?.('input')
+			if (textInput.value && textInput.value.$el) {
+				const inputElement = textInput.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					if (newValue) {
 						inputElement.setAttribute('aria-invalid', 'true')
@@ -697,8 +746,8 @@
 	// This prevents Vuetify from overriding our combobox attributes
 	watch(selectedItem, () => {
 		nextTick(() => {
-			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el?.querySelector?.('input')
+			if (textInput.value && textInput.value.$el) {
+				const inputElement = textInput.value.$el?.querySelector?.('input')
 				if (inputElement) {
 					// Ensure combobox role is maintained on input
 					inputElement.setAttribute('role', 'combobox')
@@ -726,7 +775,7 @@
 				}
 
 				// Clean up parent element
-				const parentElement = input.value.$el
+				const parentElement = textInput.value.$el
 				if (parentElement) {
 					parentElement.removeAttribute('role')
 					parentElement.removeAttribute('aria-hidden')
@@ -759,7 +808,7 @@
 <template>
 	<VTextField
 		:id="inputId"
-		ref="input"
+		ref="textInput"
 		v-model="selectedItemText"
 		v-click-outside="closeList"
 		v-rgaa-svg-fix="true"
@@ -778,7 +827,9 @@
 		:hide-details="props.hideMessages && !showHelpTextAsMessage"
 		:hint="showHelpTextAsMessage ? props.helpText : ''"
 		:persistent-hint="!!showHelpTextAsMessage"
+		:autocomplete="props.autocomplete"
 		class="sy-select"
+		:class="{ 'sy-select--clearable': props.clearable }"
 		:width="calculatedWidth"
 		:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 		v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
@@ -830,7 +881,7 @@
 				v-if="props.clearable && selectedItemText"
 				type="button"
 				class="sy-select__clear-button"
-				:style="{ right: hasError ? '38px' : '32px' }"
+				:style="{ right: hasError ? '62px' : '42px' }"
 				:aria-label="locales.clear"
 				@keydown.enter.prevent="$event => selectItem(null, $event)"
 				@keydown.space.prevent="$event => selectItem(null, $event)"
@@ -856,12 +907,13 @@
 	<VList
 		v-if="isOpen"
 		:id="uniqueMenuId"
+		ref="list"
 		class="v-list"
 		role="listbox"
 		:aria-multiselectable="props.multiple ? 'true' : undefined"
 		:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 		:style="{
-			minWidth: `${input?.$el.offsetWidth}px`,
+			minWidth: `${textInput?.$el.offsetWidth}px`,
 			...listStyles
 		}"
 		bg-color="white"
@@ -906,7 +958,11 @@
 				/>
 			</template>
 			<VListItemTitle>
-				{{ getItemText(item) }}
+				<span
+					v-if="allowHtml"
+					v-html="getItemText(item)"
+				/>
+				<span v-else>{{ getItemText(item) }}</span>
 			</VListItemTitle>
 		</VListItem>
 	</VList>
@@ -1010,7 +1066,11 @@
 	justify-content: center;
 	top: 50%;
 	transform: translateY(-50%);
-	right: 10px;
+	right: 20px;
+
+	.v-icon {
+		position: static;
+	}
 }
 
 .v-chip {
@@ -1018,9 +1078,20 @@
 }
 
 :deep(.v-field__input) {
-	color: tokens.$grey-darken-20;
+	opacity: 1;
+	color: tokens.$grey-darken-20 !important;
 	cursor: pointer;
 	caret-color: transparent;
+	padding-right: 25px;
+}
+
+.sy-select--clearable :deep(.v-field__input),
+.sy-select :deep(.v-field--error .v-field__input) {
+	padding-right: 55px;
+}
+
+:deep(.v-field__input input) {
+	text-overflow: ellipsis;
 }
 
 .hidden-label {

@@ -29,6 +29,7 @@
 		showSelect: false,
 		multiSort: false,
 		mustSort: false,
+		itemsPerPageOptions: undefined,
 	})
 
 	const emit = defineEmits<{
@@ -421,6 +422,7 @@
 						:items-per-page="itemsPerPageValue"
 						:page-count="pageCount"
 						:items-length="filteredItems.length"
+						:items-per-page-options="props.itemsPerPageOptions"
 						@update:page="page = $event"
 						@update:items-per-page="updateItemsPerPage"
 					/>

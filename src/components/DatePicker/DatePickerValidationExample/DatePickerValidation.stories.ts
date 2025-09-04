@@ -1,4 +1,4 @@
-import { type Meta, type StoryFn } from '@storybook/vue3'
+import type { Meta, StoryFn } from '@storybook/vue3'
 import DatePickerValidationExamples from '../docExamples/DatePickerValidationExamples.vue'
 import DatePickerBidirectionalValidation from '../docExamples/DatePickerBidirectionalValidation.vue'
 

@@ -14,64 +14,101 @@ const meta = {
 			type: 'boolean',
 			control: { type: 'boolean' },
 			default: false,
+			description: 'Masque le bouton de retour dans l\'en-tête',
 		},
 		'backBtnText': {
 			type: 'string',
 			control: { type: 'text' },
 			default: 'Retour',
+			description: 'Texte affiché sur le bouton de retour',
+		},
+		'backBtnAccessibleName': {
+			type: 'string',
+			control: { type: 'text' },
+			default: 'Retour',
+			description: 'Nom accessible pour le bouton de retour (aria-label)',
 		},
 		'titleText': {
 			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
+			description: 'Texte du titre principal affiché dans l\'en-tête',
+		},
+		'titleAccessibleName': {
+			type: 'string',
+			control: { type: 'text' },
+			default: undefined,
+			description: 'Nom accessible pour le titre principal (aria-label)',
 		},
 		'subTitleText': {
 			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
+			description: 'Texte du sous-titre affiché sous le titre principal',
+		},
+		'subTitleAccessibleName': {
+			type: 'string',
+			control: { type: 'text' },
+			default: undefined,
+			description: 'Nom accessible pour le sous-titre (aria-label)',
 		},
 		'dataListGroupItems': {
 			control: { type: 'object' },
+			description: 'Éléments de données à afficher dans la liste groupée sous l\'en-tête',
 		},
 		'loading': {
 			type: 'boolean',
 			control: { type: 'boolean' },
 			default: false,
+			description: 'Affiche un indicateur de chargement à la place du contenu',
 		},
 		'renderHtmlValue': {
 			type: 'boolean',
 			control: { type: 'boolean' },
 			default: false,
+			description: 'Permet le rendu HTML dans les valeurs des éléments de données',
+		},
+		'renderFixedHeight': {
+			type: 'boolean',
+			control: { type: 'boolean' },
+			default: false,
+			description: 'Applique une hauteur fixe au conteneur et ajoute une scrollbar horizontale si nécessaire',
 		},
 		'additional-informations': {
 			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
+			description: 'Slot pour afficher des informations supplémentaires sous l\'en-tête',
 		},
 		'back-btn': {
 			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
+			description: 'Slot pour personnaliser complètement le bouton de retour',
 		},
 		'back-btn-icon': {
 			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
+			description: 'Slot pour personnaliser l\'icône du bouton de retour',
 		},
 		'title': {
 			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
+			description: 'Slot pour personnaliser l\'affichage du titre principal',
 		},
 		'sub-title': {
 			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
+			description: 'Slot pour personnaliser l\'affichage du sous-titre',
 		},
 		'right-content': {
 			type: 'string',
 			control: { type: 'text' },
 			default: undefined,
+			description: 'Slot pour ajouter du contenu à droite de l\'en-tête',
 		},
 		'vuetifyOptions': {
 			control: { type: 'object' },
@@ -109,6 +146,7 @@ export const Default: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					/>
 				</template>
 				`,
@@ -128,6 +166,7 @@ export const Default: Story = {
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
 		'subTitleText': '1 69 08 75 125 456 75',
+		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
 		'renderHtmlValue': false,
 		'dataListGroupItems': [],
@@ -154,32 +193,14 @@ export const Default: Story = {
 			setup() {
 				return { args }
 			},
-			template: `
-				<SubHeader 
-					v-bind="args"
-					:back-btn-text="args.backBtnText"
-					:title-text="args.titleText"
-					:hide-back-btn="args.hideBackBtn"
-					:sub-title-text="args.subTitleText"
-					:loading="args.loading"
-					:render-html-value="args.renderHtmlValue"
-					:data-list-group-items="args.dataListGroupItems"
-					:additional-informations="args.additionalInformations"
-					:back-btn="args.backBtn"
-					:back-btn-icon="args.backBtnIcon"
-					:title="args.title"
-					:sub-title="args.subTitle"
-					:right-content="args.rightContent"
-					:vuetify-options="args.vuetifyOptions"
-				/>
-		`,
+			template: '<SubHeader v-bind="args" />',
 		}
 	},
 }
 
 export const DataList: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -188,6 +209,7 @@ export const DataList: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
 					/>
 				</template>
@@ -198,7 +220,7 @@ export const DataList: Story = {
 				code: `
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
-										
+
 					const items = [
 						{
 							title: 'Informations patient',
@@ -231,6 +253,7 @@ export const DataList: Story = {
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
 		subTitleText: '1 69 08 75 125 456 75',
+		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: false,
 		renderHtmlValue: false,
 		dataListGroupItems: [
@@ -263,19 +286,14 @@ export const DataList: Story = {
 			setup() {
 				return { args }
 			},
-			template: `
-				<SubHeader 
-					v-bind="args"
-					:data-list-group-items="args.dataListGroupItems"
-				/>
-			`,
+			template: '<SubHeader v-bind="args" />',
 		}
 	},
 }
 
-export const ActionBtn: Story = {
+export const DataListFixedHeight: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -284,6 +302,102 @@ export const ActionBtn: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						:data-list-group-items="items"
+						:render-fixed-height="true"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { SubHeader } from '@cnamts/synapse'
+
+					const items = [
+						{
+							title: 'Informations patient',
+							items: [
+								{ key: 'Date de naissance', value: '24/09/1970' },
+								{ key: 'Adresse', value: '50 Avenue du Professeur André Lemierre 75020 Paris' },
+							],
+						},
+						{
+							title: 'Médecin traitant',
+							items: [
+								{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
+								{ key: 'N° RPPS', value: 'XXXXX' },
+							],
+						},
+						{
+							title: 'Autres informations',
+							items: [
+								{ key: 'Dernière modification', value: '04/06/2020' },
+							],
+						},
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		backBtnText: 'Retour',
+		hideBackBtn: false,
+		titleText: 'Paul Dupont',
+		subTitleText: '1 69 08 75 125 456 75',
+		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
+		loading: false,
+		renderHtmlValue: false,
+		renderFixedHeight: true,
+		dataListGroupItems: [
+			{
+				title: 'Informations patient',
+				items: [
+					{ key: 'Date de naissance', value: '24/09/1970' },
+					{ key: 'Adresse', value: '50 Avenue du Professeur André Lemierre 75020 Paris' },
+				],
+			},
+			{
+				title: 'Médecin traitant',
+				items: [
+					{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
+					{ key: 'N° RPPS', value: 'XXXXX' },
+				],
+			},
+			{
+				title: 'Autres informations',
+				items: [
+					{ key: 'Dernière modification', value: '04/06/2020' },
+				],
+			},
+		],
+
+	},
+	render: (args) => {
+		return {
+			components: { SubHeader },
+			setup() {
+				return { args }
+			},
+			template: '<SubHeader v-bind="args" />',
+		}
+	},
+}
+
+export const ActionBtn: Story = {
+	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SubHeader
+						title-text="Paul Dupont"
+						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
 						@click:list-item="updateInfo"
 					/>
@@ -296,7 +410,7 @@ export const ActionBtn: Story = {
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
 					import { ref } from 'vue'
-										
+
 					const items = ref([
 						{
 							title: 'Informations patient',
@@ -319,7 +433,7 @@ export const ActionBtn: Story = {
 							],
 						},
 					])
-					
+
 					const updateInfo = (eventValue: { dataListIndex: number, itemIndex: number }) => {
                         if (items) {
 							items[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
@@ -335,6 +449,7 @@ export const ActionBtn: Story = {
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
 		subTitleText: '1 69 08 75 125 456 75',
+		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: false,
 		renderHtmlValue: false,
 		dataListGroupItems: [
@@ -367,15 +482,14 @@ export const ActionBtn: Story = {
 			setup() {
 				const updateInfo = (eventValue: { dataListIndex: number, itemIndex: number }) => {
 					if (args.dataListGroupItems) {
-						args.dataListGroupItems[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
+						args.dataListGroupItems[eventValue.dataListIndex].items[eventValue.itemIndex].value = '12/01/2003'
 					}
 				}
 				return { args, updateInfo }
 			},
 			template: `
-				<SubHeader 
+				<SubHeader
 					v-bind="args"
-					:data-list-group-items="args.dataListGroupItems"
 					@click:list-item="updateInfo"
 				/>
 			`,
@@ -385,7 +499,7 @@ export const ActionBtn: Story = {
 
 export const HtmlValue: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -394,6 +508,7 @@ export const HtmlValue: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
 						render-html-value
 					/>
@@ -405,7 +520,7 @@ export const HtmlValue: Story = {
 				code: `
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
-										
+
 					const items = [
 						{
 							title: 'Informations patient',
@@ -438,6 +553,7 @@ export const HtmlValue: Story = {
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
 		subTitleText: '1 69 08 75 125 456 75',
+		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: false,
 		renderHtmlValue: true,
 		dataListGroupItems: [
@@ -470,20 +586,14 @@ export const HtmlValue: Story = {
 			setup() {
 				return { args }
 			},
-			template: `
-				<SubHeader 
-					v-bind="args"
-					:data-list-group-items="args.dataListGroupItems"
-					:render-html-value="args.renderHtmlValue"
-				/>
-			`,
+			template: '<SubHeader v-bind="args" />',
 		}
 	},
 }
 
 export const Loading: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'additional-informations', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'additional-informations', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -492,6 +602,7 @@ export const Loading: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
 						loading
 					>
@@ -503,7 +614,7 @@ export const Loading: Story = {
 				code: `
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
-					
+
 					const items = [
 						{
 							title: 'Informations patient',
@@ -536,6 +647,7 @@ export const Loading: Story = {
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
 		subTitleText: '1 69 08 75 125 456 75',
+		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: true,
 		renderHtmlValue: false,
 		dataListGroupItems: [
@@ -567,20 +679,14 @@ export const Loading: Story = {
 			setup() {
 				return { args }
 			},
-			template: `
-				<SubHeader 
-					v-bind="args"
-					:data-list-group-items="args.dataListGroupItems"
-					:loading="args.loading"
-				/>
-			`,
+			template: '<SubHeader v-bind="args" />',
 		}
 	},
 }
 
 export const SlotAdditionalInformations: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -589,6 +695,7 @@ export const SlotAdditionalInformations: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
 						<template #additional-informations>
 							<VSpacer />
@@ -623,6 +730,7 @@ export const SlotAdditionalInformations: Story = {
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
 		'subTitleText': '1 69 08 75 125 456 75',
+		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
 		'renderHtmlValue': false,
 		'additional-informations': `<template #additional-informations>
@@ -670,7 +778,7 @@ export const SlotAdditionalInformations: Story = {
 
 export const SlotBackBtn: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -679,6 +787,7 @@ export const SlotBackBtn: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
 						<template #back-btn>
 							<VBtn
@@ -708,6 +817,7 @@ export const SlotBackBtn: Story = {
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
 		'subTitleText': '1 69 08 75 125 456 75',
+		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
 		'renderHtmlValue': false,
 		'back-btn': `<template #back-btn>
@@ -745,7 +855,7 @@ export const SlotBackBtn: Story = {
 
 export const SlotBackBtnIcon: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'title', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -754,6 +864,7 @@ export const SlotBackBtnIcon: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
 						<template #back-btn-icon>
 							<VIcon class="mr-2">
@@ -770,7 +881,7 @@ export const SlotBackBtnIcon: Story = {
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
 					import { mdiStepBackward } from '@mdi/js'
-					
+
 					const backArrowIcon = ref(mdiStepBackward)
 				</script>
 				`,
@@ -782,6 +893,7 @@ export const SlotBackBtnIcon: Story = {
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
 		'subTitleText': '1 69 08 75 125 456 75',
+		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
 		'renderHtmlValue': false,
 		'back-btn-icon': `<template #back-btn-icon>
@@ -812,13 +924,16 @@ export const SlotBackBtnIcon: Story = {
 
 export const SlotTitle: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'sub-title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 				<template>
-					<SubHeader sub-title-text="1 69 08 75 125 456 75">
+					<SubHeader
+						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+					>
 						<template #title>
 							<h3 class="headline font-weight-bold mt-2">
 								Dossier n°42
@@ -843,6 +958,7 @@ export const SlotTitle: Story = {
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
 		subTitleText: '1 69 08 75 125 456 75',
+		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: false,
 		renderHtmlValue: false,
 		title: `<template #title>
@@ -872,7 +988,7 @@ export const SlotTitle: Story = {
 
 export const SlotSubTitle: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'right-content'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -905,6 +1021,7 @@ export const SlotSubTitle: Story = {
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
 		'subTitleText': '1 69 08 75 125 456 75',
+		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
 		'renderHtmlValue': false,
 		'sub-title': `<template #sub-title>
@@ -934,7 +1051,7 @@ export const SlotSubTitle: Story = {
 
 export const SlotRightContent: Story = {
 	parameters: {
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'hideBackBtn', 'titleText', 'subTitleText', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'sub-title'] },
+		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'sub-title'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -943,6 +1060,7 @@ export const SlotRightContent: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
+						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
 						<template #sub-title>
 							<h4 class="title mt-1">
@@ -958,7 +1076,7 @@ export const SlotRightContent: Story = {
 				code: `
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
-					
+
 					import { mdiClose, mdiContentCopy } from '@mdi/js'
 				</script>
 				`,
@@ -970,6 +1088,7 @@ export const SlotRightContent: Story = {
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
 		'subTitleText': '1 69 08 75 125 456 75',
+		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
 		'renderHtmlValue': false,
 		'right-content': `<template #right-content>

@@ -31,6 +31,18 @@ const meta = {
 			control: 'boolean',
 			description: 'Permet d\'utiliser uniquement les indicatifs que vous renseignez dans la props customIndicatifs',
 		},
+		helpText: {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ. Lorsque présent, les messages d\'erreur incluent un exemple concret distinct du texte d\'aide.',
+		},
+		autocompleteCountryCode: {
+			control: 'text',
+			description: 'Valeur de l\'attribut autocomplete pour le champ indicatif pays (par défaut: "tel-country-code")',
+		},
+		autocompletePhone: {
+			control: 'text',
+			description: 'Valeur de l\'attribut autocomplete pour le champ numéro de téléphone (par défaut: "tel-national")',
+		},
 		isValidatedOnBlur: { control: 'boolean' },
 		displayAsterisk: { control: 'boolean' },
 		disableErrorHandling: { control: 'boolean' },
@@ -104,7 +116,7 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
+				<div class="pa-4">
 				<PhoneField
 					v-model="args.modelValue"
 					:required="args.required"
@@ -276,6 +288,278 @@ const phoneNumber = ref('')
 						:disabled="args.disabled"
 						:bg-color="args.bgColor"
 					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const HelpText: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="pa-4">
+		<div class="mb-6">
+			<h4 class="mb-2">Avec aide à la saisie</h4>
+			<PhoneField
+				v-model="phoneValue1"
+				required
+				help-text="Saisissez votre numéro de téléphone au format 01 23 45 67 89"
+				label="Numéro de téléphone"
+			/>
+			<p class="text-caption mt-2">
+				Essayez de laisser le champ vide ou de saisir un numéro incorrect pour voir 
+				l'exemple dans le message d'erreur (différent de l'aide).
+			</p>
+		</div>
+
+		<div class="mb-6">
+			<h4 class="mb-2">Avec aide à la saisie et indicatif pays</h4>
+			<PhoneField
+				v-model="phoneValue2"
+				v-model:selected-dial-code="selectedDialCode"
+				required
+				with-country-code
+				help-text="Choisissez votre pays et saisissez votre numéro de téléphone"
+				label="Numéro de téléphone international"
+			/>
+			<p class="text-caption mt-2">
+				L'exemple dans le message d'erreur s'adapte au format du pays sélectionné.
+			</p>
+		</div>
+
+		<div class="mt-4">
+			<h4>Valeurs actuelles :</h4>
+			<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
+			<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
+			<pre class="text-caption">selectedDialCode: {{ selectedDialCode }}</pre>
+		</div>
+	</div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import PhoneField from './PhoneField.vue'
+
+const phoneValue1 = ref('')
+const phoneValue2 = ref('')
+const selectedDialCode = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		required: true,
+		helpText: 'Saisissez votre numéro de téléphone français au format 01 23 45 67 89',
+	},
+	render(args) {
+		return {
+			components: { PhoneField },
+			setup() {
+				const phoneValue1 = ref('')
+				const phoneValue2 = ref('')
+				const selectedDialCode = ref('')
+
+				return {
+					args,
+					phoneValue1,
+					phoneValue2,
+					selectedDialCode,
+				}
+			},
+			template: `
+				<div class="pa-4">
+					<div class="mb-6">
+						<h4 class="mb-2">Avec aide à la saisie</h4>
+						<PhoneField
+							v-model="phoneValue1"
+							required
+							help-text="Saisissez votre numéro de téléphone au format 01 23 45 67 89"
+							label="Numéro de téléphone"
+						/>
+						<p class="text-caption mt-2">
+							Essayez de laisser le champ vide ou de saisir un numéro incorrect pour voir 
+							l'exemple dans le message d'erreur (différent de l'aide).
+						</p>
+					</div>
+
+					<div class="mb-6">
+						<h4 class="mb-2">Avec aide à la saisie et indicatif pays</h4>
+						<PhoneField
+							v-model="phoneValue2"
+							v-model:selected-dial-code="selectedDialCode"
+							required
+							with-country-code
+							help-text="Choisissez votre pays et saisissez votre numéro de téléphone"
+							label="Numéro de téléphone international"
+						/>
+						<p class="text-caption mt-2">
+							L'exemple dans le message d'erreur s'adapte au format du pays sélectionné.
+						</p>
+					</div>
+
+					<div class="mt-4">
+						<h4>Valeurs actuelles :</h4>
+						<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
+						<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
+						<pre class="text-caption">selectedDialCode: {{ selectedDialCode }}</pre>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const Autocomplete: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="pa-4">
+		<p class="mb-4">
+			Les attributs <code>autocomplete</code> permettent aux navigateurs de remplir automatiquement 
+			les champs avec les bonnes informations utilisateur.
+		</p>
+		
+		<div class="mb-6">
+			<h4 class="mb-2">Avec indicatif pays (autocomplete="tel-country-code")</h4>
+			<PhoneField
+				v-model="phoneValue1"
+				v-model:selected-dial-code="selectedDialCode1"
+				required
+				with-country-code
+				autocomplete-country-code="tel-country-code"
+				autocomplete-phone="tel-national"
+				help-text="L'indicatif utilise tel-country-code, le numéro utilise tel-national"
+				label="Numéro de téléphone avec indicatif"
+			/>
+		</div>
+
+		<div class="mb-6">
+			<h4 class="mb-2">Numéro complet (autocomplete="tel")</h4>
+			<PhoneField
+				v-model="phoneValue2"
+				required
+				autocomplete-phone="tel"
+				help-text="Pour un numéro complet avec indicatif intégré"
+				label="Numéro de téléphone complet"
+			/>
+		</div>
+
+		<div class="mb-6">
+			<h4 class="mb-2">Extension téléphonique (autocomplete="tel-extension")</h4>
+			<PhoneField
+				v-model="phoneValue3"
+				required
+				autocomplete-phone="tel-extension"
+				help-text="Pour les extensions ou postes téléphoniques"
+				label="Extension téléphonique"
+			/>
+		</div>
+
+		<div class="mt-4">
+			<h4>Valeurs actuelles :</h4>
+			<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
+			<pre class="text-caption">selectedDialCode1: {{ selectedDialCode1 }}</pre>
+			<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
+			<pre class="text-caption">phoneValue3: {{ phoneValue3 }}</pre>
+		</div>
+	</div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import PhoneField from './PhoneField.vue'
+
+const phoneValue1 = ref('')
+const selectedDialCode1 = ref('')
+const phoneValue2 = ref('')
+const phoneValue3 = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		required: true,
+		withCountryCode: true,
+		autocompleteCountryCode: 'tel-country-code',
+		autocompletePhone: 'tel-national',
+		helpText: 'Utilisez les valeurs autocomplete appropriées pour l\'accessibilité',
+	},
+	render(args) {
+		return {
+			components: { PhoneField },
+			setup() {
+				const phoneValue1 = ref('')
+				const selectedDialCode1 = ref('')
+				const phoneValue2 = ref('')
+				const phoneValue3 = ref('')
+
+				return {
+					args,
+					phoneValue1,
+					selectedDialCode1,
+					phoneValue2,
+					phoneValue3,
+				}
+			},
+			template: `
+				<div class="pa-4">
+					<p class="mb-4">
+						Les attributs <code>autocomplete</code> permettent aux navigateurs de remplir automatiquement 
+						les champs avec les bonnes informations utilisateur.
+					</p>
+					
+					<div class="mb-6">
+						<h4 class="mb-2">Avec indicatif pays (autocomplete="tel-country-code")</h4>
+						<PhoneField
+							v-model="phoneValue1"
+							v-model:selected-dial-code="selectedDialCode1"
+							required
+							with-country-code
+							autocomplete-country-code="tel-country-code"
+							autocomplete-phone="tel-national"
+							help-text="L'indicatif utilise tel-country-code, le numéro utilise tel-national"
+							label="Numéro de téléphone avec indicatif"
+						/>
+					</div>
+
+					<div class="mb-6">
+						<h4 class="mb-2">Numéro complet (autocomplete="tel")</h4>
+						<PhoneField
+							v-model="phoneValue2"
+							required
+							autocomplete-phone="tel"
+							help-text="Pour un numéro complet avec indicatif intégré"
+							label="Numéro de téléphone complet"
+						/>
+					</div>
+
+					<div class="mb-6">
+						<h4 class="mb-2">Extension téléphonique (autocomplete="tel-extension")</h4>
+						<PhoneField
+							v-model="phoneValue3"
+							required
+							autocomplete-phone="tel-extension"
+							help-text="Pour les extensions ou postes téléphoniques"
+							label="Extension téléphonique"
+						/>
+					</div>
+
+					<div class="mt-4">
+						<h4>Valeurs actuelles :</h4>
+						<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
+						<pre class="text-caption">selectedDialCode1: {{ selectedDialCode1 }}</pre>
+						<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
+						<pre class="text-caption">phoneValue3: {{ phoneValue3 }}</pre>
+					</div>
 				</div>
 			`,
 		}
