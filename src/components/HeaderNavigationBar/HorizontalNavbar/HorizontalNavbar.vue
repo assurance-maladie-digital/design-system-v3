@@ -41,7 +41,7 @@
 	})
 
 	const options = useCustomizableOptions(config, props)
-	
+
 	// Safely get route and router through getCurrentInstance - they might not be available in all contexts
 	const instance = getCurrentInstance()
 	const route = instance?.appContext.config.globalProperties.$route as RouteLocationNormalizedLoaded | null || null
@@ -125,7 +125,8 @@
 		if (item.to && router) {
 			try {
 				await router.push(item.to)
-			} catch (error) {
+			}
+			catch (error) {
 				console.error('Erreur de navigation:', error)
 			}
 			return

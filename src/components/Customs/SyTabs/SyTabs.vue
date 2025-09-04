@@ -39,7 +39,7 @@
 
 	// Disable automatic attribute inheritance since we handle it manually
 	defineOptions({
-		inheritAttrs: false
+		inheritAttrs: false,
 	})
 
 	const emit = defineEmits(['update:modelValue', 'cancel-navigation', 'confirm-tab-change'])
@@ -51,7 +51,7 @@
 	}>()
 
 	const options = useCustomizableOptions(config, { vuetifyOptions: props.vuetifyOptions })
-	
+
 	// Safely get router through getCurrentInstance - it might not be available in all contexts
 	const instance = getCurrentInstance()
 	const router = instance?.appContext.config.globalProperties.$router as Router | null || null
@@ -102,7 +102,7 @@
 		// Mettre à jour l'onglet actif
 		activeItemIndex.value = index
 		emit('update:modelValue', typeof props.modelValue === 'string' ? props.items[index].value : index)
-		
+
 		// Pour les éléments sans navigation (ni href ni to), on ne fait que mettre à jour l'état
 		// La navigation pour RouterLink et href se fait automatiquement via les éléments HTML
 	}
