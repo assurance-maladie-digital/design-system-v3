@@ -1,21 +1,30 @@
-import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
-import SySelect from '../SySelect.vue'
 import { vuetify } from '@tests/unit/setup'
+import { flushPromises, mount } from '@vue/test-utils'
+import { describe, expect, it, afterEach } from 'vitest'
+import { VList } from 'vuetify/components'
+import SySelect from '../SySelect.vue'
 
 type ItemType = {
 	[key: string]: unknown
 }
 
 describe('SySelect.vue', () => {
+	afterEach(async () => {
+		await flushPromises()
+		document.body.innerHTML = ''
+	})
+
 	it('renders the component with default props', () => {
 		const wrapper = mount(SySelect, {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		expect(wrapper.exists()).toBe(true)
 		expect(wrapper.find('.sy-select').exists()).toBe(true)
+
+		wrapper.unmount()
 	})
 
 	it('displays the selected item text', async () => {
@@ -25,13 +34,16 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		await wrapper.find('.sy-select').trigger('click')
-		const firstItem = wrapper.findAll('.v-list-item').at(0)
-		if (firstItem) {
-			await firstItem.trigger('click')
-		}
+		const firstItem = wrapper
+			.findComponent(VList)
+			.findAll('.v-list-item').at(0)
+		await firstItem!.trigger('click')
 		expect(wrapper.find('input').element.value).toBe('Option 1')
+
+		wrapper.unmount()
 	})
 
 	it('closes the menu on escape key press', async () => {
@@ -41,10 +53,15 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		await wrapper.find('.sy-select').trigger('click')
-		await wrapper.find('.v-list').trigger('keydown.esc')
+		await wrapper
+			.findComponent(VList)
+			.find('.v-list').trigger('keydown.esc')
 		expect(wrapper.find('.v-list').exists()).toBe(false)
+
+		wrapper.unmount()
 	})
 
 	it('renders error messages when provided', () => {
@@ -54,10 +71,13 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		const message = wrapper.find('.v-messages__message')
 		expect(message.exists()).toBe(true)
 		expect(message.text()).toContain('Error 1')
+
+		wrapper.unmount()
 	})
 
 	it('does not render error messages when not provided', () => {
@@ -65,8 +85,11 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+		wrapper.unmount()
 	})
 
 	it('returns the correct item text using getItemText', () => {
@@ -75,11 +98,14 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		const item = { text: 'Option 1', value: '1' }
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const instance = wrapper.vm as any
 		expect(instance.getItemText(item)).toBe('Option 1')
+
+		wrapper.unmount()
 	})
 
 	it('returns default text when selectedItem is null', () => {
@@ -87,10 +113,13 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const instance = wrapper.vm as any
 		expect(instance.selectedItemText).toBe('')
+
+		wrapper.unmount()
 	})
 
 	it('returns the correct text when selectedItem is an object', async () => {
@@ -103,11 +132,14 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const instance = wrapper.vm as any
 		await wrapper.setProps({ modelValue: { text: 'Option 1', value: '1' } })
 		expect(instance.selectedItemText).toBe('Option 1')
+
+		wrapper.unmount()
 	})
 
 	it('returns the correct text when selectedItem is a value', async () => {
@@ -120,12 +152,15 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const instance = wrapper.vm as any
 		await wrapper.setProps({ modelValue: '2' })
 		await wrapper.vm.$nextTick()
 		expect(instance.selectedItemText).toBe('Option 2')
+
+		wrapper.unmount()
 	})
 
 	it('formats items correctly', () => {
@@ -135,6 +170,7 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const formattedItems = (wrapper.vm as any).formattedItems
@@ -142,6 +178,8 @@ describe('SySelect.vue', () => {
 			{ text: 'Option 1', value: 'Option 1' },
 			{ text: 'Option 2', value: 'Option 2' },
 		])
+
+		wrapper.unmount()
 	})
 
 	it('applies the correct button class when outlined is true', () => {
@@ -150,8 +188,11 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		expect(wrapper.find('.v-field--variant-outlined').exists()).toBe(true)
+
+		wrapper.unmount()
 	})
 
 	it('does not apply the outlined button class when outlined is false', () => {
@@ -160,8 +201,11 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		expect(wrapper.find('.sy-select').classes()).not.toContain('v-btn--variant-outlined')
+
+		wrapper.unmount()
 	})
 
 	it('updates selectedItem when v-model changes', async () => {
@@ -170,6 +214,7 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const instance = wrapper.vm as any
@@ -177,6 +222,8 @@ describe('SySelect.vue', () => {
 
 		await wrapper.setProps({ modelValue: { text: 'Option 2', value: '2' } })
 		expect(instance.selectedItem).toEqual({ text: 'Option 2', value: '2' })
+
+		wrapper.unmount()
 	})
 
 	it('emits update:modelValue when selectedItem changes', async () => {
@@ -186,12 +233,15 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const instance = wrapper.vm as any
 		instance.selectItem({ text: 'Option 1', value: '1' })
 		await wrapper.vm.$nextTick()
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['1'])
+
+		wrapper.unmount()
 	})
 
 	it('ferme le menu avec la méthode closeList', async () => {
@@ -202,6 +252,7 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 
 		await wrapper.find('.sy-select').trigger('click')
@@ -215,6 +266,8 @@ describe('SySelect.vue', () => {
 		await wrapper.vm.$nextTick()
 
 		expect(instance.isOpen).toBe(false)
+
+		wrapper.unmount()
 	})
 
 	describe('Affichage de l\'astérisque', () => {
@@ -228,10 +281,13 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const html = wrapper.html()
 			expect(html).toContain('Test Label *')
+
+			wrapper.unmount()
 		})
 
 		it('n\'affiche pas l\'astérisque quand displayAsterisk est false', () => {
@@ -244,11 +300,14 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const html = wrapper.html()
 			expect(html).not.toContain('Test Label *')
 			expect(html).toContain('Test Label')
+
+			wrapper.unmount()
 		})
 
 		it('n\'affiche pas l\'astérisque quand required est false', () => {
@@ -261,11 +320,14 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const html = wrapper.html()
 			expect(html).not.toContain('Test Label *')
 			expect(html).toContain('Test Label')
+
+			wrapper.unmount()
 		})
 	})
 
@@ -279,6 +341,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			await wrapper.find('.sy-select').trigger('click')
@@ -289,6 +352,8 @@ describe('SySelect.vue', () => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
 			expect(instance.isOpen).toBe(false)
+
+			wrapper.unmount()
 		})
 
 		it('affiche correctement le champ en mode readonly', () => {
@@ -302,11 +367,14 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			expect(wrapper.find('.v-input--readonly').exists()).toBe(true)
 
 			expect(wrapper.html()).toContain('Option 1')
+
+			wrapper.unmount()
 		})
 	})
 
@@ -321,9 +389,12 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			expect(wrapper.find('.sy-select__clear-icon').exists()).toBe(true)
+
+			wrapper.unmount()
 		})
 
 		it('n\'affiche pas l\'icône de suppression quand clearable est false', () => {
@@ -336,9 +407,12 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			expect(wrapper.find('.v-icon.mdi-close-circle').exists()).toBe(false)
+
+			wrapper.unmount()
 		})
 
 		it('efface la valeur sélectionnée avec la méthode selectItem', async () => {
@@ -351,6 +425,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -359,6 +434,8 @@ describe('SySelect.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			expect(wrapper.emitted()['update:modelValue'][0]).toEqual([null])
+
+			wrapper.unmount()
 		})
 	})
 
@@ -373,6 +450,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			await wrapper.find('.sy-select').trigger('click')
@@ -383,6 +461,8 @@ describe('SySelect.vue', () => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
 			expect(instance.hasError).toBe(true)
+
+			wrapper.unmount()
 		})
 
 		it('n\'affiche pas d\'erreur pour un champ requis avec une valeur', async () => {
@@ -396,6 +476,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			await wrapper.find('.sy-select').trigger('click')
@@ -406,6 +487,8 @@ describe('SySelect.vue', () => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
 			expect(instance.hasError).toBe(false)
+
+			wrapper.unmount()
 		})
 
 		it('n\'affiche pas d\'erreur quand disableErrorHandling est true', async () => {
@@ -419,6 +502,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			await wrapper.find('.sy-select').trigger('click')
@@ -429,6 +513,8 @@ describe('SySelect.vue', () => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
 			expect(instance.hasError).toBe(false)
+
+			wrapper.unmount()
 		})
 	})
 
@@ -441,19 +527,45 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
+			})
+			function findList() {
+				return wrapper.findComponent(VList)
+			}
+			expect(findList().exists()).toBe(false)
+
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			expect(findList().exists()).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('ouvre et ferme le menu au clic2', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [{ text: 'Option 1', value: '1' }],
+				},
+				global: {
+					plugins: [vuetify],
+				},
+				attachTo: document.body,
 			})
 
-			expect(wrapper.find('.v-list').exists()).toBe(false)
+			expect(wrapper.findComponent(VList).exists()).toBe(false)
 
 			await wrapper.find('.sy-select').trigger('click')
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.find('.v-list').exists()).toBe(true)
+			expect(wrapper.findComponent(VList).exists()).toBe(true)
 
 			await wrapper.find('.sy-select').trigger('click')
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.find('.v-list').exists()).toBe(false)
+			expect(wrapper.vm.isOpen).toBe(false)
+
+			wrapper.unmount()
 		})
 
 		it('met à jour isOpen quand on ouvre le menu', async () => {
@@ -464,6 +576,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -474,6 +587,8 @@ describe('SySelect.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			expect(instance.isOpen).toBe(true)
+
+			wrapper.unmount()
 		})
 	})
 
@@ -485,17 +600,22 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 
 		await wrapper.find('.sy-select').trigger('click')
 		await wrapper.vm.$nextTick()
-		expect(wrapper.find('.v-list').exists()).toBe(true)
+		expect(wrapper
+			.findComponent(VList)
+			.find('.v-list').exists()).toBe(true)
 
 		await wrapper.find('.sy-select').trigger('mouseleave')
 		await wrapper.find('.sy-select').trigger('click')
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.find('.v-list').exists()).toBe(false)
+		expect(wrapper.vm.isOpen).toBe(false)
+
+		wrapper.unmount()
 	})
 
 	it('use closeList method', async () => {
@@ -503,9 +623,12 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
-		await wrapper.vm.closeList()
+		wrapper.vm.closeList()
 		expect(wrapper.vm.isOpen).toBe(false)
+
+		wrapper.unmount()
 	})
 
 	it('emit the value when returnObject is false', async () => {
@@ -517,16 +640,19 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		await wrapper.find('.sy-select').trigger('click')
-		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['1'])
 
 		await wrapper.find('.sy-select').trigger('click')
-		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][1]).toEqual(['2'])
+
+		wrapper.unmount()
 	})
 
 	it('emit the object when returnObject is true', async () => {
@@ -538,17 +664,21 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+
+			attachTo: document.body,
 		})
 
 		await wrapper.find('.sy-select').trigger('click')
-		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([{ text: 'Option 1', value: '1' }])
 
 		await wrapper.find('.sy-select').trigger('click')
-		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][1]).toEqual([{ text: 'Option 2', value: '2' }])
+
+		wrapper.unmount()
 	})
 
 	it('emit the value when returnObject is false with textKey and keyValue set', async () => {
@@ -562,16 +692,19 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 		await wrapper.find('.sy-select').trigger('click')
-		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['1'])
 
 		await wrapper.find('.sy-select').trigger('click')
-		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][1]).toEqual(['2'])
+
+		wrapper.unmount()
 	})
 
 	it('emit the object when returnObject is true with textKey and keyValue set', async () => {
@@ -585,17 +718,20 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 
 		await wrapper.find('.sy-select').trigger('click')
-		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([{ theText: 'Option 1', theValue: '1' }])
 
 		await wrapper.find('.sy-select').trigger('click')
-		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][1]).toEqual([{ theText: 'Option 2', theValue: '2' }])
+
+		wrapper.unmount()
 	})
 
 	it('emit the value when items is an array of string', async () => {
@@ -606,17 +742,21 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+
+			attachTo: document.body,
 		})
 
 		await wrapper.find('.sy-select').trigger('click')
-		const firstItem = wrapper.findAll('.v-list-item').at(0)
+		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['Option 1'])
 
 		await wrapper.find('.sy-select').trigger('click')
-		const secondItem = wrapper.findAll('.v-list-item').at(1)
+		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][1]).toEqual(['Option 2'])
+
+		wrapper.unmount()
 	})
 
 	it('is clearable when clearable is true', async () => {
@@ -629,12 +769,14 @@ describe('SySelect.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
+			attachTo: document.body,
 		})
 
 		const clearBtn = wrapper.find('.sy-select__clear-icon')
 		expect(clearBtn.exists()).toBe(true)
 		await clearBtn.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([null])
+		wrapper.unmount()
 	})
 
 	describe('Multiple selection mode', () => {
@@ -656,6 +798,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			// Open the select menu
@@ -663,7 +806,7 @@ describe('SySelect.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			// Select Option 1
-			const listItems = wrapper.findAll('.v-list-item')
+			const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
 			await listItems[1].trigger('click')
 			await wrapper.vm.$nextTick()
 
@@ -676,6 +819,8 @@ describe('SySelect.vue', () => {
 
 			// Check that both options are selected
 			expect(wrapper.emitted()['update:modelValue'][1]).toEqual([['1', '2']])
+
+			wrapper.unmount()
 		})
 
 		it('clears all selections when default option is clicked', async () => {
@@ -695,6 +840,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			// Open the select menu
@@ -702,12 +848,14 @@ describe('SySelect.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			// Click on the default option
-			const defaultOption = wrapper.findAll('.v-list-item')[0]
+			const defaultOption = wrapper.findComponent(VList).findAll('.v-list-item')[0]
 			await defaultOption.trigger('click')
 			await wrapper.vm.$nextTick()
 
 			// Check that all selections are cleared
 			expect(wrapper.emitted()['update:modelValue'][0]).toEqual([[]])
+
+			wrapper.unmount()
 		})
 
 		it('treats default option as selected when no items are selected', async () => {
@@ -727,6 +875,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -741,6 +890,8 @@ describe('SySelect.vue', () => {
 
 			// Check that isItemSelected returns true for the default item when no selections
 			expect(instance.isItemSelected(defaultItem)).toBe(true)
+
+			wrapper.unmount()
 		})
 	})
 
@@ -763,6 +914,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			// Check that chips are rendered
@@ -770,6 +922,8 @@ describe('SySelect.vue', () => {
 			expect(chips.length).toBe(2)
 			expect(chips[0].text()).toBe('Option 1')
 			expect(chips[1].text()).toBe('Option 2')
+
+			wrapper.unmount()
 		})
 
 		it('removes a chip when close button is clicked', async () => {
@@ -790,6 +944,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			// Find the first chip's close button and click it
@@ -799,6 +954,8 @@ describe('SySelect.vue', () => {
 
 			// Check that the chip was removed from the model
 			expect(wrapper.emitted()['update:modelValue'][0]).toEqual([['2']])
+
+			wrapper.unmount()
 		})
 
 		it('handles chip text correctly for object items', async () => {
@@ -819,6 +976,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			// Check that chips display the correct text
@@ -826,6 +984,8 @@ describe('SySelect.vue', () => {
 			expect(chips.length).toBe(2)
 			expect(chips[0].text()).toBe('Option 1')
 			expect(chips[1].text()).toBe('Option 2')
+
+			wrapper.unmount()
 		})
 
 		it('safely handles different item types in chips', async () => {
@@ -846,6 +1006,7 @@ describe('SySelect.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			// Check that chips are rendered without errors
@@ -864,6 +1025,8 @@ describe('SySelect.vue', () => {
 			expect(stringResult).toBe('test')
 			expect(numberResult).toBe(123)
 			expect(typeof objectResult).toBe('object')
+
+			wrapper.unmount()
 		})
 	})
 })

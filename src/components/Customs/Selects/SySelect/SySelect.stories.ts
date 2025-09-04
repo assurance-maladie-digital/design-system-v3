@@ -694,7 +694,7 @@ export const FormValidation: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SySelect from '@cnamts/synapse'
+import { SySelect } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const formData = ref({

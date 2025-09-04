@@ -270,12 +270,5 @@ describe('useSySelectKeyboard', () => {
 			// Vérifier que activeDescendantId est réinitialisé
 			expect(keyboard.activeDescendantId.value).toBe('')
 		})
-
-		it('met à jour la position de la liste quand le menu s\'ouvre', async () => {
-			isOpen.value = false
-			isOpen.value = true
-			await nextTick()
-			expect(updateListPosition).toHaveBeenCalled()
-		})
 	})
 })
