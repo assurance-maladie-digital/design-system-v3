@@ -1,3 +1,71 @@
+## v1.0.7 (04-09-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td> - SubHeader / ChipList / PhoneField / HeaderNavigationBar: fix accessibility after audit
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/942">#942</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/948">#948</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/954">#954</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/994">#994</a>
+      </td>
+      <td>- AmeliproAccordionGroup <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/943">#943</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyCheckbox: handle undefined label <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1059">#1059</a></td>
+     <td>- AmeliproAccordionResult <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/949">#949</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: fix display bugs 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1061">#1061</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1054">#1054</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1060">#1060</a>
+    </td>
+     <td>- AmeliproAccordionResultList <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/955">#955</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix DateTextInput issue on edition
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1029">#1029</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1056">#1056</a>
+    </td>
+     <td>- AmeliproResultList <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/968">#968</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix focus issue <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1044">#1044</a></td>
+      <td>- AmeliproAccordionList <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1022">#1022</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect : fix width prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/953">#953</a></td>
+     <td>- AmeliproClickableTile <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1004">#1004</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix color when an option is selected <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/995">#995</a></td>
+      <td>- AmeliproBadge <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1031">#1031</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: fix display 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1033">#1033</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1050">#1050</a>
+     </td>
+     <td>- AmeliproCarousel <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1057">#1057</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTabs: add component + improves <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1046">#1046</a></td>
+     <td>- Add 3 Amelipro icons <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/976">#976</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SkipLink: fix focus issue on page change <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/999">#999</a></td>
+     <td>- Fix path issue <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/958">#958</a></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.6 (08-08-2025)
 
 <table>
@@ -53,7 +121,6 @@
     </tr>
   </tbody>
 </table>
-
 
 ## v1.0.5 (29-07-2025)
 
