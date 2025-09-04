@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { VSheet } from 'vuetify/components'
-	import { computed, ref, watch, onMounted } from 'vue'
-	import { useRouter, useRoute } from 'vue-router'
+	import { computed, ref, watch, onMounted, getCurrentInstance } from 'vue'
+	import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 
 	import SyTabs from '../../Customs/SyTabs/SyTabs.vue'
 	import type { TabItem } from '../../Customs/SyTabs/types'
@@ -41,8 +41,11 @@
 	})
 
 	const options = useCustomizableOptions(config, props)
-	const route = useRoute()
-	const router = useRouter()
+	
+	// Safely get route and router through getCurrentInstance - they might not be available in all contexts
+	const instance = getCurrentInstance()
+	const route = instance?.appContext.config.globalProperties.$route as RouteLocationNormalizedLoaded | null || null
+	const router = instance?.appContext.config.globalProperties.$router as Router | null || null
 
 	// État pour suivre l'élément actif
 	const activeTab = ref<number>(0)
@@ -104,7 +107,7 @@
 	}
 
 	// Fonction pour gérer la navigation lors d'un changement d'onglet
-	function handleTabChange(index: number) {
+	async function handleTabChange(index: number) {
 		// Mettre à jour l'élément actif
 		setActiveItem(index)
 
@@ -119,8 +122,12 @@
 		if (!item) return
 
 		// Navigation vers la destination si nécessaire
-		if (item.to) {
-			router.push(item.to)
+		if (item.to && router) {
+			try {
+				await router.push(item.to)
+			} catch (error) {
+				console.error('Erreur de navigation:', error)
+			}
 			return
 		}
 
@@ -212,9 +219,9 @@
 						tab: { 'base-color': '#B5BECE', 'active-color': '#ffffff', 'slider-color': '#fff' },
 						tabs: { height: '60' }
 					}"
-					@update:model-value="(val) => {
+					@update:model-value="async (val) => {
 						activeTab = Number(val);
-						handleTabChange(Number(val));
+						await handleTabChange(Number(val));
 					}"
 					@cancel-navigation="emit('cancel-navigation')"
 					@confirm-tab-change="handleConfirmTabChange"
