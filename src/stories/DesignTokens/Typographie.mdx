@@ -1,7 +1,14 @@
 import { Meta, Typeset } from '@storybook/addon-docs';
+import '../styles/shared.css';
 
 <Meta title="Design Tokens/Typographie" />
-
+<style>
+{
+`
+      
+    `
+}
+</style>
 export const typography = {
     type: {
         primary: 'Arial',
@@ -28,7 +35,10 @@ export const typography = {
 
 export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-# Typographie
+<div className="header">
+  <h1>Typographie</h1>
+  <p>Les grands principes typographiques du Design System.</p>
+</div>
 
 Impulsé par les travaux réalisés sur [Ameli.fr](https://www.ameli.fr/), le Design System fournit un ensemble limité et ciblé de styles typographiques que nous utilisons pour présenter l'interface utilisateur et le contenu de la manière la plus claire et la plus efficace possible tout en assurant la cohérence de la marque sur l’ensemble des plateformes.
 

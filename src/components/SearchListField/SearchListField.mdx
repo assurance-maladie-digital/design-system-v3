@@ -1,12 +1,14 @@
 import {Canvas, Meta, Controls, Source} from '@storybook/blocks';
+import '../../stories/styles/shared.css';
 import * as SearchListFieldStories from './SearchListField.stories';
 import SearchListField from './SearchListField.vue';
 
 <Meta title="Composants/Formulaires/SearchListField" component={SearchListField}/>
 
-# SearchListField
-
-Le composant `SearchListField` est utilisé pour permettre à l’utilisateur de sélectionner des valeurs dans une liste.
+<div className="header">
+  <h1>SearchListField</h1>
+  <p>Le composant `SearchListField` est utilisé pour permettre à l’utilisateur de sélectionner des valeurs dans une liste.</p>
+</div>
 
 <Canvas story={{height: '450px'}} of={SearchListFieldStories.Default}/>
 
@@ -52,7 +54,8 @@ Le composant `SearchListField` est utilisé pour permettre à l’utilisateur de
     },
     ]
 
-    const value = ref<string | null>(null)
+    const value = ref<string | null>
+(null)
 
     const selectChoice = (choice: string) => {
     value.value = choice
@@ -69,5 +72,4 @@ Le composant `SearchListField` est utilisé pour permettre à l’utilisateur de
 </template>
 `}
 />
-
 

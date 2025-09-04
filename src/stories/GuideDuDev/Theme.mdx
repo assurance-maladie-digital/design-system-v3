@@ -2,7 +2,17 @@ import {Meta, Source} from '@storybook/blocks';
 
 <Meta title="Guide Du Dev/Configuration du thème" />
 
-# Configuration du thème
+<style>
+{
+`
+      
+    `
+}
+</style>
+
+<div className="header">
+  <h1>Configuration du thème</h1>
+</div>
 
 Le thème par défaut du Starter kit est celui de la Cnam par défaut.
 Si votre projet dépend du Portail Agent, il vous faudra modifier la configuration pour appliquer le thème spécifique à votre ligne de fabrication.
@@ -18,7 +28,8 @@ Si votre projet dépend du Portail Agent, il vous faudra modifier la configurati
 - `ap` : Amelipro
 
 <Source dark code={`
-import { createApp } from 'vue';
+import { createApp } from '
+import '../styles/shared.css';vue';
 ...
 
 const vuetify = createVuetify({

@@ -4,6 +4,7 @@ import BackBtn from './BackBtn.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 
 import { VSheet } from 'vuetify/components'
+import '../../stories/styles/shared.css'
 
 const meta = {
 	title: 'Composants/Boutons/BackBtn',

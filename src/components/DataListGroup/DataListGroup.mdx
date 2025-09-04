@@ -3,9 +3,10 @@ import * as DataListGroup from './DataListGroup.stories';
 
 <Meta of={DataListGroup} />
 
-# DataListGroup
-
-L’élément `DataListGroup` est utilisé pour afficher une liste de DataList.
+<div className="header">
+  <h1>DataListGroup</h1>
+  <p>L’élément `DataListGroup` est utilisé pour afficher une liste de DataList.</p>
+</div>
 
 <Canvas of={DataListGroup.Default} />
 
@@ -70,6 +71,7 @@ L’élément `DataListGroup` est utilisé pour afficher une liste de DataList.
 		},
 	]
 </script>
+import '../../stories/styles/shared.css';
 
 <template>
 	<DataListGroup :items="items" />

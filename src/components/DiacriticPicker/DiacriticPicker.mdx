@@ -4,9 +4,10 @@ import * as DiacriticPickerStories from './DiacriticPicker.stories';
 
 <Meta of={DiacriticPickerStories} />
 
-# DiacriticPicker
-
-Le composant `DiacriticPicker` permet d'ajouter facilement des caractères diacritiques (accents, cédilles, etc.) à un champ de texte ou un textarea. Il ajoute un bouton à côté du champ qui ouvre une boîte de dialogue avec des caractères diacritiques à insérer.
+<div className="header">
+  <h1>DiacriticPicker</h1>
+  <p>Le composant `DiacriticPicker` permet d'ajouter facilement des caractères diacritiques (accents, cédilles, etc.) à un champ de texte ou un textarea. Il ajoute un bouton à côté du champ qui ouvre une boîte de dialogue avec des caractères diacritiques à insérer.</p>
+</div>
 
 <Canvas of={DiacriticPickerStories.Default} />
 
@@ -89,6 +90,7 @@ Vous pouvez personnaliser la liste des caractères diacritiques affichés dans l
   import { ref } from 'vue'
   
   const text = ref('')
+import '../../stories/styles/shared.css';
   const caracteres = ['é', 'è', 'ê', 'à', 'ç', 'ù']
 </script>
 

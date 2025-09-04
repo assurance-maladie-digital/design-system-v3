@@ -4,9 +4,10 @@ import * as SocialMediaLinksStories from './SocialMediaLinks.stories.ts';
 
 <Meta of={SocialMediaLinksStories} />
 
-# SocialMediaLinks
-
-Le composant `SocialMediaLinks` est utilisé pour afficher des liens de réseaux sociaux dans le composant `Footer`.
+<div className="header">
+  <h1>SocialMediaLinks</h1>
+  <p>Le composant `SocialMediaLinks` est utilisé pour afficher des liens de réseaux sociaux dans le composant `Footer`.</p>
+</div>
 
 <Canvas of={SocialMediaLinksStories.Default}  />
 
@@ -39,6 +40,7 @@ const links = [
 	},
 ]
 </script>
+import '../../stories/styles/shared.css';
 
 <template>
     <SocialMediaLinks :links="links" />

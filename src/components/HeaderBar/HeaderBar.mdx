@@ -3,7 +3,9 @@ import * as HeaderBarStories from "./HeaderBar.stories";
 
 <Meta of={HeaderBarStories} />
 
-# HeaderBar
+<div className="header">
+  <h1>HeaderBar</h1>
+</div>
 
 <Canvas of={HeaderBarStories.Default} />
 
@@ -118,8 +120,6 @@ Le contenu du slot prend tout l'espace disponible en largeur. Pour que le conten
 	`}}
 />
 
-
-
 ### Menu
 
 Le slot `menu` permet d'ajouter un menu au header. Il est recommandé d'utiliser le composant `HeaderBurgerMenu` du design system.
@@ -213,7 +213,6 @@ code:`
 	`}}
 />
 
-
 ### CustomBrand
 
 Le slot `custom-brand` permet d'ajouter un contenu personnalisé à la place du logo. Il est possible d'ajouter plusieurs éléments dans ce slot.
@@ -255,6 +254,7 @@ Il est nécessaire de faire attention à la place que prendront les éléments e
 	<script setup lang="ts">
 		import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
 	</script>
+import '../../stories/styles/shared.css';
 
 	<template>
 		<HeaderBar>

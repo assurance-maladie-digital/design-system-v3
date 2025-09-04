@@ -2,9 +2,18 @@ import { Meta, Source } from '@storybook/addon-docs'
 
 <Meta title="Guide du dev/Classes utilitaires/Utilitaires de validation" />
 
-# Utilitaires de validation
+<style>
+{
+`
+      
+    `
+}
+</style>
 
-Les utilitaires de validation vous permettent de vérifier la validité des données dans vos applications, notamment les dates et les emails.
+<div className="header">
+  <h1>Utilitaires de validation</h1>
+  <p>Les utilitaires de validation vous permettent de vérifier la validité des données dans vos applications, notamment les dates et les emails.</p>
+</div>
 
 ## propValidator
 
@@ -292,7 +301,8 @@ Voici un exemple de formulaire utilisant plusieurs utilitaires de validation :
 </template>
 
 <script>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed } from '
+import '../../styles/shared.css';vue'
 import {
   isEmailValid,
   isDateValidUtil,

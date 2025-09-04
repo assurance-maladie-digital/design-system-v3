@@ -1,10 +1,14 @@
 import { Meta, Story } from '@storybook/addon-docs';
 import * as AccessStories from './Accessibilite.stories.ts';
+import '../../stories/styles/shared.css';
 
 <Meta of={AccessStories} />
 
-Accessibilité
-=============
+<div className="header">
+  <h1>Accessibilité</h1>
+  <p>Informations sur l'accessibilité du composant</p>
+</div>
+
 <Story of={AccessStories.Legende} />
 <br />
 

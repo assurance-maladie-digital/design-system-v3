@@ -1,17 +1,17 @@
 import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import '../../../../stories/styles/shared.css';
 import * as HeaderMenuSectionStories from "./HeaderMenuSection.stories";
 
 <Meta of={HeaderMenuSectionStories} />
 
-# HeaderMenuSection
-
-Le composant `HeaderMenuSection` permet de regrouper des éléments de menu dans une section. Il s'utilise dans le composant `HeaderComplexMenu` ou `HeaderSubMenu` et doit contenir des éléments de menu (`HeaderMenuItem`).
-
+<div className="header">
+  <h1>HeaderMenuSection</h1>
+  <p>Le composant `HeaderMenuSection` permet de regrouper des éléments de menu dans une section. Il s'utilise dans le composant `HeaderComplexMenu` ou `HeaderSubMenu` et doit contenir des éléments de menu (`HeaderMenuItem`).</p>
+</div>
 
 <Canvas of={HeaderMenuSectionStories.Default} />
 
 ## API
 
 <Controls of={HeaderMenuSectionStories.Default} />
-
 

@@ -1,12 +1,14 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import '../../stories/styles/shared.css';
 
 import * as FileUploadStories from './FileUpload.stories.ts';
 
 <Meta of={FileUploadStories} />
 
-# FileUpload
-
-Le composant `FileUpload` est un champ d'upload de fichier par glisser-déposer ou par sélection de fichier.
+<div className="header">
+  <h1>FileUpload</h1>
+  <p>Le composant `FileUpload` est un champ d'upload de fichier par glisser-déposer ou par sélection de fichier.</p>
+</div>
 
 <Canvas of={FileUploadStories.Default} />
 
@@ -115,7 +117,8 @@ import express from "express";
 import fileUpload from "express-fileupload";
 import cors from "cors";
 import { join } from "path";
-import { existsSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync } from "
+fs";
 
 const app = express();
 

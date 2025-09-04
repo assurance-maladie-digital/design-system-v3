@@ -1,4 +1,5 @@
 import {Meta} from '@storybook/blocks';
+import '../../styles/shared.css';
 
 <Meta title="Accessibilité/Aculturation/Sensibilisation à l’accessibilité numérique"/>
 
@@ -29,45 +30,7 @@ import {Meta} from '@storybook/blocks';
     --transition: all 0.3s ease;
   }
 
-  .header {
-    color: white;
-    padding: 2.5rem;
-    border-radius: var(--radius-lg);
-    margin-bottom: 2.5rem;
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    z-index: 0;
-  }
-  
-  .header h1 {
-    margin-top: 0;
-    font-size: 2.75rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .header p {
-    font-size: 1.2rem;
-    margin-bottom: 0;
-    opacity: 0.9;
-    position: relative;
-    z-index: 1;
-    font-weight: 300;
-  }
+      
   
   .section {
     margin: 2.5rem 0;
@@ -77,11 +40,6 @@ import {Meta} from '@storybook/blocks';
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     border: 1px solid var(--neutral-300);
-  }
-  
-  .section:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
   }
   
   .section h2 {
@@ -144,11 +102,6 @@ import {Meta} from '@storybook/blocks';
     transition: var(--transition);
   }
   
-  .image-container:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-3px);
-  }
-  
   .image-container img {
     width: 100%;
     display: block;
@@ -182,11 +135,6 @@ import {Meta} from '@storybook/blocks';
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--neutral-300);
     transition: var(--transition);
-  }
-  
-  .feature-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
   }
   
   .feature-card h3 {
@@ -224,11 +172,6 @@ import {Meta} from '@storybook/blocks';
     padding: 1rem;
     border: 1px solid var(--primary);
     transition: var(--transition);
-  }
-  
-  .disability-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
   }
   
   .disability-card strong {
@@ -289,12 +232,6 @@ import {Meta} from '@storybook/blocks';
     font-weight: 500;
     margin-top: 1rem;
     transition: var(--transition);
-  }
-  
-  .cta-box .button:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
   }
 
   .cta-list {

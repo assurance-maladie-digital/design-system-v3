@@ -1,5 +1,6 @@
 import { Meta, Story } from '@storybook/addon-docs';
 import * as AccessStories from './Vuetify.stories';
+import '../../styles/shared.css';
 
 <Meta of={AccessStories} />
 
@@ -30,16 +31,7 @@ import * as AccessStories from './Vuetify.stories';
       padding: 0 1rem;
     }
     
-    /* Header avec effet glassmorphism */
-    .vuetify-header {
-      padding: 2rem;
-      border-radius: var(--border-radius);
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--card-shadow);
-    }
-    
+       
     .section-title {
       color: var(--primary-color);
       font-size: 1.5rem;
@@ -128,7 +120,7 @@ import * as AccessStories from './Vuetify.stories';
 </style>
 
 <div className="vuetify-container">
-  <div className="vuetify-header">
+  <div className="header">
     <h1>Audit d'accessibilité des composants Vuetify</h1>
     <p>Tableau de bord de l'état d'accessibilité des composants Vuetify</p>
   </div>

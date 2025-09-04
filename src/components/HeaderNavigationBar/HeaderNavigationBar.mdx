@@ -1,4 +1,5 @@
 import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import '../../stories/styles/shared.css';
 import * as HeaderNavigationBarStories from "./HeaderNavigationBar.stories";
 
 <Meta of={HeaderNavigationBarStories} />
@@ -20,7 +21,6 @@ Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 
 ## API
 
 <Controls of={HeaderNavigationBarStories.Default} />
-
 
 ## Exemple d'utilisation
 
@@ -81,7 +81,6 @@ Il est nécessaire de faire attention à la place que prendront les éléments e
 
 ### Les slots concernant le menu
 
-
 <Canvas of={HeaderNavigationBarStories.WithSlots} />
 
 #### le slot `logo-brand-section`
@@ -94,24 +93,19 @@ Quand le menu est en mode horizontal, les slots `navigation-bar-prepend` et `nav
 
 Le slot `navigation-bar-content`, quant à lui, remplace les items du menu tels que générés avec la prop `items`. Il n'écrase pas les slots `navigation-bar-prepend` et `navigation-bar-append`.
 
-
 ##### Slot `Navigation-bar-prepend`
 
 <Canvas of={HeaderNavigationBarStories.WithNavigationBarPrependSlot} />
-
 
 ##### Slot `Navigation-bar-append`
 
 <Canvas of={HeaderNavigationBarStories.WithNavigationBarAppendSlot} />
 
-
 #### Les slots concernant le menu burger
 
 Le menu burger est généré automatiquement à partir des items passés en props, il utilise en interne le composant `HeaderBurgerMenu`.
 
-
 les slots `burger-menu-prepend` et `burger-menu-append` permettent d'ajouter du contenu en haut et en bas du menu burger.
-
 
 Le slot `burger-menu-content` permet de remplacer le contenu du menu burger. Il n'écrase pas les slots `burger-menu-prepend` et `burger-menu-append` et permet d'utiliser les composants `HeaderMenuItem` et `HeaderMenuGroup` pour construire le menu.
 Pour plus d'information sur la manière de construire un menu avec le composant `HeaderBurgerMenu`, vous pouvez consulter la documentation de ce [composant](/docs/components-headerbar-headerburgermenu--docs).
@@ -119,7 +113,6 @@ Pour plus d'information sur la manière de construire un menu avec le composant 
 ##### Slot `burger-menu-append`
 
 <Canvas of={HeaderNavigationBarStories.WithNavigationMenuAppendSlot} />
-
 
 ## Confirmation de changement d'onglet
 

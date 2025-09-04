@@ -1,11 +1,14 @@
 import { Meta, Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
 import * as AccordionStories from '../Accordion.stories';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import '../../../stories/styles/shared.css';
 
 <Meta of={AccordionStories} />
 
 <div className="accessibility-guide">
-  <Title>Guide d'Accessibilité du Composant Accordion</Title>
+<div className="header">
+  <h1>Guide d'Accessibilité du Composant Accordion</h1>
+</div>
   
   <div className="intro-section">
     <img 
@@ -18,7 +21,7 @@ import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
       notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices</a>. 
       Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
     </p>
-  </div>
+</div>
 
   <div className="criteria-section">
     <h2>Critères d'accessibilité respectés</h2>
