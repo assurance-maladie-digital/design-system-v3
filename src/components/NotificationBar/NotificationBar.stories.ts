@@ -160,9 +160,9 @@ Default.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-import { NotificationBar } from '@cnamts/synapse';pse'
+                import { NotificationBar } from '@cnamts/synapse''
 				import { ref } from 'vue'
-import { useNotificationService } from '@cnamts/synpase';ase'
+                import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
 				const showNotification = ref(false)
