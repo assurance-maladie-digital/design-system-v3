@@ -183,7 +183,28 @@
 		// Si modelValue est défini, utiliser cette valeur pour déterminer l'index actif
 		if (props.modelValue !== undefined) {
 			if (typeof props.modelValue === 'number') {
-				activeItemIndex.value = props.modelValue
+				try {
+					const currentPath = window.location?.pathname
+					const index = currentPath ? props.items.findIndex(item => item.to === currentPath) : -1
+
+					// Si un index valide est trouvé, l'utiliser
+					if (index >= 0) {
+						activeItemIndex.value = index
+					}
+					// Sinon utiliser props.modelValue comme index direct si c'est valide
+					else if (props.modelValue >= 0 && props.modelValue < props.items.length) {
+						activeItemIndex.value = props.modelValue
+					}
+				}
+				catch (error) {
+					// En cas d'erreur (par exemple dans un environnement sans window.location)
+					console.warn('Erreur lors de la détermination de l\'index actif:', error)
+
+					// Utiliser props.modelValue comme fallback si c'est dans la plage valide
+					if (props.modelValue >= 0 && props.modelValue < props.items.length) {
+						activeItemIndex.value = props.modelValue
+					}
+				}
 			}
 			else {
 				// Chercher l'index de l'item avec la valeur correspondante
