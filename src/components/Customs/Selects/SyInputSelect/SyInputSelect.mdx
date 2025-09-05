@@ -1,9 +1,27 @@
 import { Canvas, Meta, Controls, Story, Source } from '@storybook/blocks';
 import * as SyInputSelectStories from "./SyInputSelect.stories.ts";
+import { linkTo } from '@storybook/addon-links';
 
 <Meta of={SyInputSelectStories} />
 
 # SyInputSelect
+
+<div style={{ background: '#ffeef4ff', padding: '15px', borderRadius: '5px', borderLeft: '4px solid #f50057', marginBottom: '20px' }}>
+  <h4 style={{ marginTop: '0' }}>🗑️ Ce composant est déprécié</h4>
+  <div style={{ paddingLeft: '20px' }}>
+    Ce composant est déprécié et ne sera plus maintenu à l'avenir. Nous vous recommandons d'utiliser le composant <code>SySelect</code> à la place.<br/>
+
+    <p style={{ marginTop: '15px' }}>
+      <span style={{
+        borderRadius: '4px', 
+        fontSize: '14px', 
+        cursor: 'pointer',
+      }} onClick={() => linkTo('Composants/Formulaires/Selects/SySelect')()}>
+        <p style={{ color: '#1976d2', }}>Voir la documentation du composant SySelect →</p>
+      </span>
+    </p>
+  </div>
+</div>
 
 Le composant `SyInputSelect` est utilisé pour proposer une alternative au `v-select` de Vuetify qui ne respecte pas les règles <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>.<br/>
 Il est basé sur un `v-input`.
