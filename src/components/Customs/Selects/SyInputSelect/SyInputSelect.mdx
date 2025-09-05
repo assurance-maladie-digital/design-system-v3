@@ -1,9 +1,12 @@
 import { Canvas, Meta, Controls, Story, Source } from '@storybook/blocks';
 import * as SyInputSelectStories from "./SyInputSelect.stories.ts";
+import { linkTo } from '@storybook/addon-links';
 
 <Meta of={SyInputSelectStories} />
 
 # SyInputSelect
+
+<Story of={SyInputSelectStories.DeprecationNotice} />
 
 Le composant `SyInputSelect` est utilisé pour proposer une alternative au `v-select` de Vuetify qui ne respecte pas les règles <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>.<br/>
 Il est basé sur un `v-input`.
