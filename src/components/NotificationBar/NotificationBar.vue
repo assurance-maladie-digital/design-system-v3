@@ -23,7 +23,14 @@
 
 	const display = useDisplay()
 
-	const { notificationQueue, removeNotification } = useNotificationService()
+	const { notificationQueue, clearAllEvent, removeNotification } = useNotificationService()
+
+	// Fonction pour fermer la notification active
+	function closeAllNotifications() {
+		clearTimeout(timeoutID)
+		isNotificationVisible.value = false
+		currentNotification.value = undefined
+	}
 
 	const instance = getCurrentInstance()
 
@@ -73,7 +80,15 @@
 
 	const smallCloseBtn = computed(() => isMobileVersion.value && !hasLongContent.value && !hasActionSlot.value)
 
+	// Observer le signal de fermeture des notifications
+	watch(() => clearAllEvent.value, (shouldClear) => {
+		if (shouldClear) {
+			closeAllNotifications()
+		}
+	})
+
 	watch(() => notificationQueue.value.length, async (queueLength) => {
+		// Cas normal: afficher la première notification si aucune n'est affichée
 		if (queueLength > 0 && currentNotification.value === undefined) {
 			openNotification(notificationQueue.value[0])
 		}
