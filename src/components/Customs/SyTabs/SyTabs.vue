@@ -196,10 +196,7 @@
 						activeItemIndex.value = props.modelValue
 					}
 				}
-				catch (error) {
-					// En cas d'erreur (par exemple dans un environnement sans window.location)
-					console.warn('Erreur lors de la détermination de l\'index actif:', error)
-
+				catch {
 					// Utiliser props.modelValue comme fallback si c'est dans la plage valide
 					if (props.modelValue >= 0 && props.modelValue < props.items.length) {
 						activeItemIndex.value = props.modelValue
