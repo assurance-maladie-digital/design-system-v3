@@ -136,6 +136,7 @@
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
 	const list = ref<VList | null>(null)
+	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 
 	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
@@ -373,8 +374,6 @@
 		if (props.readonly) return
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
-
-	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 
 	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
 	const hasMessages = computed(() => {
@@ -779,6 +778,16 @@
 		closeList,
 	})
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	function initializeActivatorProps(activatorProps: Record<string, any>) {
+		return {
+			// the ref is needed by Vuetify to position the menu and by us for accessibility
+			ref: (el) => {
+				textInput.value = el
+				activatorProps.ref?.(el)
+			},
+		}
+	}
 </script>
 
 <template>
@@ -789,7 +798,6 @@
 		<template #activator="{ props: activatorProps }">
 			<VTextField
 				:id="inputId"
-				ref="textInput"
 				v-model="selectedItemText"
 				v-click-outside="closeList"
 				v-rgaa-svg-fix="true"
@@ -815,7 +823,7 @@
 				:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
 				v-bind="{
 					...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
-					...Object.fromEntries(Object.entries(activatorProps).filter(([key]) => key === 'ref')),
+					...initializeActivatorProps(activatorProps),
 				}"
 				@click="toggleMenu"
 				@keydown.enter.prevent="handleEnterKey"

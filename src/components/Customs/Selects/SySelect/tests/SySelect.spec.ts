@@ -1,6 +1,6 @@
 import { vuetify } from '@tests/unit/setup'
-import { flushPromises, mount } from '@vue/test-utils'
-import { describe, expect, it, afterEach } from 'vitest'
+import { mount } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 import { VList } from 'vuetify/components'
 import SySelect from '../SySelect.vue'
 
@@ -9,11 +9,6 @@ type ItemType = {
 }
 
 describe('SySelect.vue', () => {
-	afterEach(async () => {
-		await flushPromises()
-		document.body.innerHTML = ''
-	})
-
 	it('renders the component with default props', () => {
 		const wrapper = mount(SySelect, {
 			global: {
@@ -776,6 +771,7 @@ describe('SySelect.vue', () => {
 		expect(clearBtn.exists()).toBe(true)
 		await clearBtn.trigger('click')
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual([null])
+
 		wrapper.unmount()
 	})
 
