@@ -160,7 +160,7 @@ Default.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-                import { NotificationBar } from '@cnamts/synapse''
+                import { NotificationBar } from '@cnamts/synapse'
 				import { ref } from 'vue'
                 import { useNotificationService } from '@cnamts/synpase'
 
