@@ -1,6 +1,6 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import PhoneField from '../PhoneField.vue'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -11,6 +11,10 @@ const vuetify = createVuetify({
 	directives,
 })
 describe('PhoneField', () => {
+	afterEach(() => {
+		vi.clearAllMocks()
+		document.body.innerHTML = ''
+	})
 	it('renders correctly with default props', () => {
 		const wrapper = mount(PhoneField, {
 			global: {
@@ -620,30 +624,16 @@ describe('PhoneField', () => {
 
 		await wrapper.vm.$nextTick()
 
-		// Log HTML for debugging
-		console.log('PhoneField HTML:', wrapper.html())
-
-		// Find all inputs and log their autocomplete attributes
-		const inputs = wrapper.findAll('input')
-		console.log('Found inputs:', inputs.length)
-		inputs.forEach((input, index) => {
-			const autocomplete = input.attributes('autocomplete')
-			const type = input.attributes('type')
-			console.log(`Input ${index}: type="${type}", autocomplete="${autocomplete}"`)
-		})
-
 		// Verify tel input has correct autocomplete
 		const telInput = wrapper.find('input[type="tel"]')
 		expect(telInput.exists()).toBe(true)
 		const telAutocomplete = telInput.attributes('autocomplete')
-		console.log('Tel input autocomplete:', telAutocomplete)
 		expect(telAutocomplete).toBe('tel-national')
 
 		// Verify country select input has correct autocomplete
 		const selectInput = wrapper.find('.custom-select input')
 		expect(selectInput.exists()).toBe(true)
 		const selectAutocomplete = selectInput.attributes('autocomplete')
-		console.log('Select input autocomplete:', selectAutocomplete)
 		expect(selectAutocomplete).toBe('tel-country-code')
 	})
 
