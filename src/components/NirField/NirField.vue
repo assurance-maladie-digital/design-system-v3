@@ -433,11 +433,15 @@
 	}
 
 	const handleNumberBlur = () => {
-		validateFields(true)
+		// Valider sans forcer le focus, pour permettre de quitter le champ
+		validateFields(false)
+		// On permet à l'utilisateur de quitter le champ même si la saisie est incomplète
 	}
 
 	const handleKeyBlur = () => {
-		validateFields(true)
+		// Valider sans forcer le focus, pour permettre de quitter le champ
+		validateFields(false)
+		// On permet à l'utilisateur de quitter le champ même si la saisie est incomplète
 	}
 
 	// Gestion des touches pour le champ NIR
