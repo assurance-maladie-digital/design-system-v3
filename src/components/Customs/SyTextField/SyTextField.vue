@@ -749,13 +749,26 @@
 }
 
 .error-field {
-	:deep(.v-input__control),
-	:deep(.v-messages__message) {
-		color: tokens.$colors-text-error !important;
+	:deep(.v-input__details > .v-icon),
+	:deep(.v-input__prepend > .v-icon),
+	:deep(.v-input__append > .v-icon) {
+		opacity: 1 !important;
 	}
 
-	.v-field--active & {
+	:deep(.v-field) {
 		color: tokens.$colors-border-error !important;
+
+		.v-field__outline {
+			color: tokens.$colors-border-error !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: tokens.$colors-border-error !important;
+		}
 	}
 }
 

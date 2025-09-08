@@ -1081,7 +1081,6 @@
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
 		color: tokens.$colors-text-success !important;
-
 		--v-medium-emphasis-opacity: 1;
 	}
 
@@ -1091,13 +1090,18 @@
 }
 
 .v-messages__message--error {
-	:deep(.v-input__control),
+	:deep(.v-input__control) {
+		color: tokens.$colors-text-error !important;
+
+		--v-medium-emphasis-opacity: 1;
+	}
+
 	:deep(.v-messages__message) {
 		color: tokens.$colors-text-error !important;
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-border-error !important;
+		color: tokens.$colors-text-error !important;
 	}
 }
 
@@ -1127,8 +1131,6 @@
 }
 
 :deep(.v-field--dirty) {
-	opacity: 1 !important;
-
 	--v-medium-emphasis-opacity: 1;
 }
 

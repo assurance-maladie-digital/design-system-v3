@@ -1100,8 +1100,6 @@
 
 :deep(.v-field--dirty),
 :deep(.v-field--focused) {
-	opacity: 1 !important;
-
 	--v-medium-emphasis-opacity: 1;
 }
 
