@@ -59,7 +59,6 @@ export const Default: Story = {
 	parameters: {
 		sourceCode: [
 			{
-				language: 'vue',
 				name: 'Template',
 				code: `
 				<template>
