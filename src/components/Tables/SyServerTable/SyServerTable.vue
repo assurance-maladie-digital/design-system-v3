@@ -13,10 +13,11 @@
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
 	import { useTableHeaders } from '../common/useTableHeaders'
-	// import { useTableItems } from '../common/useTableItems'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
 	import { useTableAria } from '../common/useTableAria'
+	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
+	import useStoredOptions from '../common/useStoredOptions'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
@@ -62,46 +63,32 @@
 	// Generate a unique ID for this table instance
 	const uniqueTableId = ref(`sy-server-table-${Math.random().toString(36).substr(2, 9)}`)
 
+	const { storedOptions, storeOptions } = useStoredOptions({
+		key: computed(() => props.suffix ? `table-${props.suffix}` : 'table'),
+	})
+
 	const {
 		propsFacade,
 		updateOptions,
-		setupAccessibility,
-		setupLocalStorage,
-		columnWidths,
-		updateColumnWidth,
-		headers: storageHeaders,
 	} = useTableUtils({
-		tableId: uniqueTableId.value,
-		prefix: 'server-table',
-		suffix: props.suffix,
-		caption: props.caption,
-		serverItemsLength: props.serverItemsLength,
 		componentAttributes,
 		options,
-		density: props.density,
+		storedOptions: storedOptions.options,
+	})
+
+	const { setupAccessibility } = useTableAccessibility({
+		tableId: uniqueTableId.value,
 	})
 
 	// Use the table headers composable
 	const { headers, displayHeaders, getEnhancedHeader } = useTableHeaders({
-		headersProp: storageHeaders.value ? storageHeaders : toRef(props, 'headers'),
+		headersProp: toRef(props, 'headers'),
+		storedHeaders: storedOptions.headers,
 		filterInputConfig: props.filterInputConfig,
 	})
 
 	// Create a reactive reference for items
 	const itemsRef = computed(() => props.items)
-
-	// For server-side tables, we don't use the filteredItems from useTableItems
-	// Instead, we use the items directly from props as they are already filtered server-side
-	// But we still need the createEmptyItemWithStructure function
-
-	// TODO:  A voir avec @David
-	// const { createEmptyItemWithStructure } = useTableItems({
-	// 	items: itemsRef,
-	// 	headers,
-	// 	filters,
-	// 	options,
-	// 	filterItems,
-	// })
 
 	// Use the pagination composable with serverItemsLength
 	const itemsLength = computed(() => props.serverItemsLength)
@@ -186,51 +173,32 @@
 
 	setupAccessibility()
 
-	const { watchOptions, saveHeaders } = setupLocalStorage()
-
 	// Create a reactive reference to column widths that will be provided to children
-	const reactiveColumnWidths = ref(columnWidths.value)
+	const reactiveColumnWidths = ref(storedOptions.columnWidths || {})
 
 	// Provide column widths and update function to child components
 	provide('columnWidths', reactiveColumnWidths)
 	provide('updateColumnWidth', (key: string, width: number | string) => {
 		// Update both the local reactive reference and call the storage utility
 		reactiveColumnWidths.value[key] = width
-		updateColumnWidth(key, width)
 	})
 
-	// Watch for changes to columnWidths from storage and update the reactive reference
+	// Save options, headers, and column widths to local storage whenever they change
 	watch(
-		() => columnWidths.value,
-		(newWidths) => {
-			reactiveColumnWidths.value = { ...newWidths }
-		},
-		{ deep: true, immediate: true },
-	)
-
-	watch(
-		() => options.value,
+		[
+			() => options.value,
+			() => headers.value,
+			() => reactiveColumnWidths.value,
+		],
 		() => {
-			// Call watchOptions to update localStorage
-			watchOptions()
-
-			// We need to use nextTick to ensure the table has re-rendered
-			nextTick(() => {
-				// Update the reactive reference directly, which will update the provided value
-				reactiveColumnWidths.value = { ...columnWidths.value }
+			storeOptions({
+				options: options.value,
+				headers: headers.value,
+				columnWidths: reactiveColumnWidths.value,
 			})
 		},
 		{ deep: true },
 	)
-
-	watch(
-		headers,
-		() => {
-			saveHeaders(headers.value)
-		},
-		{ deep: true },
-	)
-
 </script>
 
 <template>
