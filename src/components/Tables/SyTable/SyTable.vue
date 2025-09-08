@@ -89,7 +89,7 @@
 	const itemsRef = computed(() => props.items)
 
 	// Use the table items composable
-	const { filteredItems, createEmptyItemWithStructure } = useTableItems({
+	const { filteredItems } = useTableItems({
 		items: itemsRef,
 		headers,
 		filters,
@@ -243,7 +243,7 @@
 			color="primary"
 			:headers="displayHeaders"
 			v-bind="propsFacade"
-			:items="processItems(filteredItems.length > 0 ? filteredItems : createEmptyItemWithStructure())"
+			:items="processItems(filteredItems)"
 			:density="props.density"
 			:show-select="props.showSelect"
 			:item-selectable="(item) => true"
@@ -268,7 +268,9 @@
 							v-for="column in slotProps.columns"
 							:key="column.key"
 						>
-							<th>
+							<th
+								class="checkbox-column"
+							>
 								<template v-if="column.key === 'data-table-select' && props.showSelect">
 									<SyCheckbox
 										:model-value="slotProps.allSelected"
@@ -345,13 +347,6 @@
 							</VBtn>
 						</td>
 					</tr>
-					<tr v-if="filteredItems.length === 0">
-						<td colspan="100%">
-							<div class="text-center text-grey">
-								{{ locales.noData }}
-							</div>
-						</td>
-					</tr>
 				</template>
 				<!-- Repli lorsque les colonnes ne sont pas définies -->
 				<template v-else>
@@ -388,13 +383,6 @@
 								</template>
 							</SyTableFilter>
 						</th>
-					</tr>
-					<tr v-if="filteredItems.length === 0">
-						<td colspan="100%">
-							<div class="text-center text-grey">
-								{{ locales.noData }}
-							</div>
-						</td>
 					</tr>
 				</template>
 			</template>
@@ -449,4 +437,9 @@
 .sy-table--striped :deep() {
 	@include striped-rows;
 }
+
+.checkbox-column {
+	max-width: fit-content;
+}
+
 </style>

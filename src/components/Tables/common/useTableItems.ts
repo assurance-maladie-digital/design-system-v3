@@ -59,29 +59,9 @@ export function useTableItems({
 		return filteredItems.value.slice(start, end)
 	})
 
-	/**
-   * Create an empty item that maintains the structure of columns
-   * Useful for displaying empty state with correct column structure
-   */
-	function createEmptyItemWithStructure(): Record<string, unknown>[] {
-		if (!headers.value || !headers.value.length) return []
-
-		const emptyItem: Record<string, unknown> = {}
-
-		// Create an empty object with all header keys
-		headers.value.forEach((header) => {
-			if (header.key) {
-				emptyItem[header.key] = ''
-			}
-		})
-
-		return [emptyItem]
-	}
-
 	return {
 		processedItems,
 		filteredItems,
 		paginatedItems,
-		createEmptyItemWithStructure,
 	}
 }
