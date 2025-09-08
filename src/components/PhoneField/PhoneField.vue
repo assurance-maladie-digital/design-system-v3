@@ -46,6 +46,7 @@
 		helpText: { type: String, default: '' },
 		autocompleteCountryCode: { type: String, default: 'tel-country-code' },
 		autocompletePhone: { type: String, default: 'tel-national' },
+		withoutFieldset: { type: Boolean, default: false },
 	})
 
 	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
@@ -324,8 +325,14 @@
 </script>
 
 <template>
-	<fieldset class="phone-field-fieldset">
-		<legend class="phone-field-legend">
+	<component
+		:is="!withoutFieldset ? 'fieldset' : 'div'"
+		:class="!withoutFieldset ? 'phone-field-fieldset' : ''"
+	>
+		<legend
+			v-if="!withoutFieldset"
+			class="phone-field-legend"
+		>
 			{{ locales.label }}
 		</legend>
 		<div class="phone-field-container">
@@ -413,15 +420,14 @@
 				</template>
 			</SyTextField>
 		</div>
-	</fieldset>
-
-	<div
-		v-if="showHelpTextBelow"
-		class="help-text-below px-4 mt-1"
-		:class="{ 'text-disabled': disabled }"
-	>
-		{{ helpText }}
-	</div>
+		<div
+			v-if="showHelpTextBelow"
+			class="help-text-below px-4 mt-1"
+			:class="{ 'text-disabled': disabled }"
+		>
+			{{ helpText }}
+		</div>
+	</component>
 </template>
 
 <style lang="scss" scoped>
