@@ -1081,6 +1081,7 @@
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
 		color: tokens.$colors-text-success !important;
+
 		--v-medium-emphasis-opacity: 1;
 	}
 
