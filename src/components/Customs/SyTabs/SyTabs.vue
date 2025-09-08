@@ -2,7 +2,8 @@
 	import type { TabItem } from './types'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import { config } from './config'
-	import { ref, watch, onMounted, onUnmounted } from 'vue'
+	import { ref, watch, onMounted, onUnmounted, getCurrentInstance } from 'vue'
+	import type { Router } from 'vue-router'
 
 	const props = withDefaults(defineProps<{
 		items: TabItem[]
@@ -36,6 +37,11 @@
 		vuetifyOptions: () => ({}),
 	})
 
+	// Disable automatic attribute inheritance since we handle it manually
+	defineOptions({
+		inheritAttrs: false,
+	})
+
 	const emit = defineEmits(['update:modelValue', 'cancel-navigation', 'confirm-tab-change'])
 
 	defineSlots<{
@@ -45,6 +51,10 @@
 	}>()
 
 	const options = useCustomizableOptions(config, { vuetifyOptions: props.vuetifyOptions })
+
+	// Safely get router through getCurrentInstance - it might not be available in all contexts
+	const instance = getCurrentInstance()
+	const router = instance?.appContext.config.globalProperties.$router as Router | null || null
 
 	// État pour suivre l'élément activement sélectionné
 	const activeItemIndex = ref<number>(0)
@@ -77,7 +87,7 @@
 		const hasHref = item && (item.href || item.to)
 
 		// Si la confirmation est activée, demander confirmation
-		if (props.confirmTabChange) {
+		if (props.confirmTabChange && hasHref) {
 			const confirmMessage = props.confirmationMessage
 			const confirmed = await handleTabChangeConfirmation(confirmMessage.toString())
 
@@ -86,35 +96,25 @@
 				emit('cancel-navigation')
 				return
 			}
-
-			// Si l'utilisateur a confirmé et qu'il y a un href, naviguer
-			if (hasHref) {
-				if (item.href) {
-					window.location.href = item.href
-					return // Arrêter ici car on navigue ailleurs
-				}
-				else if (item.to) {
-					// Pour les cas où vue-router est utilisé
-					// Notez que cela nécessiterait un accès au router,
-					// donc on se limite au href pour l'instant
-				}
-			}
-		}
-		// Sinon pas de confirmation nécessaire, naviguer directement si href présent
-		else if (hasHref && item.href) {
-			window.location.href = item.href
-			return
+			// Si confirmé, laisser la navigation se faire naturellement (RouterLink ou href)
 		}
 
 		// Mettre à jour l'onglet actif
 		activeItemIndex.value = index
 		emit('update:modelValue', typeof props.modelValue === 'string' ? props.items[index].value : index)
+
+		// Pour les éléments sans navigation (ni href ni to), on ne fait que mettre à jour l'état
+		// La navigation pour RouterLink et href se fait automatiquement via les éléments HTML
 	}
 
 	// Fonction pour gérer les touches Enter et Space
 	function handleKeyPress(event: KeyboardEvent, index: number) {
 		if (event.key === 'Enter' || event.key === ' ') {
-			event.preventDefault()
+			const item = props.items[index]
+			// Don't prevent default for external links - let them navigate naturally
+			if (!item.href) {
+				event.preventDefault()
+			}
 			void setActiveItem(index) // void pour ignorer la promesse
 		}
 	}
@@ -183,7 +183,25 @@
 		// Si modelValue est défini, utiliser cette valeur pour déterminer l'index actif
 		if (props.modelValue !== undefined) {
 			if (typeof props.modelValue === 'number') {
-				activeItemIndex.value = props.modelValue
+				try {
+					const currentPath = window.location?.pathname
+					const index = currentPath ? props.items.findIndex(item => item.to === currentPath) : -1
+
+					// Si un index valide est trouvé, l'utiliser
+					if (index >= 0) {
+						activeItemIndex.value = index
+					}
+					// Sinon utiliser props.modelValue comme index direct si c'est valide
+					else if (props.modelValue >= 0 && props.modelValue < props.items.length) {
+						activeItemIndex.value = props.modelValue
+					}
+				}
+				catch {
+					// Utiliser props.modelValue comme fallback si c'est dans la plage valide
+					if (props.modelValue >= 0 && props.modelValue < props.items.length) {
+						activeItemIndex.value = props.modelValue
+					}
+				}
 			}
 			else {
 				// Chercher l'index de l'item avec la valeur correspondante
@@ -219,7 +237,8 @@
 	<VSheet
 		:theme="options.sheet.theme"
 		:color="options.sheet.color"
-		:class="{ 'v-sheet--dense': options.sheet.dense }"
+		:class="[{ 'v-sheet--dense': options.sheet.dense }, $attrs.class]"
+		v-bind="$attrs"
 	>
 		<div class="sy-tabs px-xl-0 px-4">
 			<slot name="tabs-prepend" />
@@ -238,7 +257,50 @@
 							class="sy-tabs__item"
 							role="presentation"
 						>
+							<!-- Use RouterLink for internal navigation -->
+							<RouterLink
+								v-if="item.to && router"
+								:id="`tab-${index}`"
+								:to="item.to"
+								class="sy-tabs__button"
+								:class="{ 'sy-tabs__button--active': activeItemIndex === index }"
+								role="tab"
+								:aria-selected="activeItemIndex === index"
+								:aria-controls="`panel-${index}`"
+								tabindex="0"
+								@click="setActiveItem(index)"
+								@keydown="(event) => {
+									handleKeyPress(event, index);
+									handleArrowNavigation(event, index);
+								}"
+							>
+								{{ item.label.toUpperCase() }}
+							</RouterLink>
+							<!-- Use regular anchor for external links -->
 							<a
+								v-else-if="item.href"
+								:id="`tab-${index}`"
+								:href="item.href"
+								class="sy-tabs__button"
+								:class="{ 'sy-tabs__button--active': activeItemIndex === index }"
+								role="tab"
+								:aria-selected="activeItemIndex === index"
+								:aria-controls="`panel-${index}`"
+								tabindex="0"
+								@click="(event) => {
+									// Don't prevent default for external links - let them navigate naturally
+									setActiveItem(index);
+								}"
+								@keydown="(event) => {
+									handleKeyPress(event, index);
+									handleArrowNavigation(event, index);
+								}"
+							>
+								{{ item.label.toUpperCase() }}
+							</a>
+							<!-- Fallback button for items without navigation -->
+							<button
+								v-else
 								:id="`tab-${index}`"
 								class="sy-tabs__button"
 								:class="{ 'sy-tabs__button--active': activeItemIndex === index }"
@@ -253,7 +315,7 @@
 								}"
 							>
 								{{ item.label.toUpperCase() }}
-							</a>
+							</button>
 						</li>
 					</ul>
 				</nav>
@@ -322,6 +384,7 @@
 	border: none;
 	color: v-bind("options.tab['base-color']");
 	transition: color 0.2s ease;
+	text-decoration: none; /* For RouterLink elements */
 
 	&:hover {
 		color: v-bind("options.tab['active-color']");

@@ -1,3 +1,24 @@
+## v1.0.8 (08-09-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: improve dropdown position <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1068">#1068</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NotificationBar: improve ClearQueue management  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1072">#1072</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NavigationBar: fix router nav  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1064">#1064</a></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.7 (04-09-2025)
 
 <table>

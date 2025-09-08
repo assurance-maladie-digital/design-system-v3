@@ -17,7 +17,6 @@ describe('useSySelectKeyboard', () => {
 	let toggleMenu: ReturnType<typeof vi.fn>
 	let selectItem: ReturnType<typeof vi.fn>
 	let getItemText: ReturnType<typeof vi.fn>
-	let updateListPosition: ReturnType<typeof vi.fn>
 	let keyboard: ReturnType<typeof useSySelectKeyboard>
 
 	// Mock des éléments DOM
@@ -45,7 +44,6 @@ describe('useSySelectKeyboard', () => {
 		selectItem = vi.fn()
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- generic type
 		getItemText = vi.fn((item: any) => item.text)
-		updateListPosition = vi.fn()
 
 		// Mock des méthodes DOM
 		document.getElementById = vi.fn().mockReturnValue(mockElement as unknown as HTMLElement)
@@ -58,7 +56,6 @@ describe('useSySelectKeyboard', () => {
 			toggleMenu,
 			selectItem,
 			getItemText,
-			updateListPosition,
 		})
 	})
 
@@ -269,13 +266,6 @@ describe('useSySelectKeyboard', () => {
 
 			// Vérifier que activeDescendantId est réinitialisé
 			expect(keyboard.activeDescendantId.value).toBe('')
-		})
-
-		it('met à jour la position de la liste quand le menu s\'ouvre', async () => {
-			isOpen.value = false
-			isOpen.value = true
-			await nextTick()
-			expect(updateListPosition).toHaveBeenCalled()
 		})
 	})
 })

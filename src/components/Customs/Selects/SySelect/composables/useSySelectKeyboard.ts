@@ -10,7 +10,6 @@ export interface UseSySelectKeyboardOptions {
 	toggleMenu: (skipInitialFocus?: boolean) => void
 	selectItem: (item: ItemType | null, event?: Event) => void
 	getItemText: (item: unknown) => unknown
-	updateListPosition: () => void
 }
 
 export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
@@ -20,7 +19,6 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		toggleMenu,
 		selectItem,
 		getItemText,
-		updateListPosition,
 	} = options
 
 	// État central pour le focus et la navigation
@@ -335,9 +333,6 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	// Gérer l'ouverture et la fermeture de la liste
 	watch(isOpen, (open) => {
 		if (open) {
-			// Mettre à jour la position de la liste
-			updateListPosition()
-
 			// À l'ouverture, restaurer le dernier focus ou initialiser au premier élément
 			nextTick(() => {
 				if (lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length) {
