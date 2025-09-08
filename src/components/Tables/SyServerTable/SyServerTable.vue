@@ -90,19 +90,6 @@
 	// Create a reactive reference for items
 	const itemsRef = computed(() => props.items)
 
-	// For server-side tables, we don't use the filteredItems from useTableItems
-	// Instead, we use the items directly from props as they are already filtered server-side
-	// But we still need the createEmptyItemWithStructure function
-
-	// TODO:  A voir avec @David
-	// const { createEmptyItemWithStructure } = useTableItems({
-	// 	items: itemsRef,
-	// 	headers,
-	// 	filters,
-	// 	options,
-	// 	filterItems,
-	// })
-
 	// Use the pagination composable with serverItemsLength
 	const itemsLength = computed(() => props.serverItemsLength)
 	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
@@ -253,7 +240,6 @@
 			v-model="model"
 			:headers="displayHeaders"
 			color="primary"
-			hide-no-data
 			:items="processItems(props.items)"
 			:items-length="props.serverItemsLength || 0"
 			:density="props.density"
@@ -280,7 +266,9 @@
 							v-for="column in slotProps.columns"
 							:key="column.key"
 						>
-							<th>
+							<th
+								class="checkbox-column"
+							>
 								<template v-if="column.key === 'data-table-select' && props.showSelect">
 									<SyCheckbox
 										:model-value="slotProps.allSelected"
@@ -358,13 +346,6 @@
 							</VBtn>
 						</td>
 					</tr>
-					<tr v-if="props.items.length === 0 || props.serverItemsLength === 0">
-						<td colspan="100%">
-							<div class="text-center text-grey">
-								{{ locales.noData }}
-							</div>
-						</td>
-					</tr>
 				</template>
 				<!-- Repli lorsque les colonnes ne sont pas définies -->
 				<template v-else>
@@ -401,13 +382,6 @@
 								</template>
 							</SyTableFilter>
 						</th>
-					</tr>
-					<tr v-if="props.items.length === 0 || props.serverItemsLength === 0">
-						<td colspan="100%">
-							<div class="text-center text-grey">
-								{{ locales.noData }}
-							</div>
-						</td>
 					</tr>
 				</template>
 			</template>
@@ -461,5 +435,9 @@
 
 .sy-server-table--striped :deep() {
 	@include striped-rows;
+}
+
+.checkbox-column {
+	max-width: fit-content;
 }
 </style>
