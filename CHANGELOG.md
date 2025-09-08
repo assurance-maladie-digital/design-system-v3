@@ -14,7 +14,7 @@
       <td>- NotificationBar: improve ClearQueue management  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1072">#1072</a></td>
     </tr>
     <tr style="vertical-align: top;">
-      <td>- NavigationBar:  fix router nav  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1064">#1064</a></td>
+      <td>- NavigationBar: fix router nav  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1064">#1064</a></td>
     </tr>
   </tbody>
 </table>
