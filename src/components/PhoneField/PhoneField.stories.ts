@@ -59,6 +59,7 @@ export const Default: Story = {
 	parameters: {
 		sourceCode: [
 			{
+				language: 'vue',
 				name: 'Template',
 				code: `
 				<template>
@@ -118,19 +119,7 @@ export const Default: Story = {
 			template: `
 				<div class="pa-4">
 				<PhoneField
-					v-model="args.modelValue"
-					:required="args.required"
-					:outlined="args.outlined"
-					:outlinedIndicatif="args.outlinedIndicatif"
-					:withCountryCode="args.withCountryCode"
-					:countryCodeRequired="args.countryCodeRequired"
-					:displayFormat="args.displayFormat"
-					:customIndicatifs="args.customIndicatifs"
-					:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-					:isValidatedOnBlur="args.isValidatedOnBlur"
-					:bg-color="args.bgColor"
-					:readonly="args.readonly"
-					:disabled="args.disabled"
+					v-bind="args"
 				/>
 				</div>
 				<br><br><br><br><br>
@@ -202,19 +191,7 @@ export const Required: Story = {
 			template: `
 				<div class="pa-4">
     <PhoneField
-     v-model="args.modelValue"
-     :required="args.required"
-     :outlined="args.outlined"
-     :outlinedIndicatif="args.outlinedIndicatif"
-     :withCountryCode="args.withCountryCode"
-     :countryCodeRequired="args.countryCodeRequired"
-     :displayFormat="args.displayFormat"
-     :customIndicatifs="args.customIndicatifs"
-     :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-     :isValidatedOnBlur="args.isValidatedOnBlur"
-     :bg-color="args.bgColor"
-	 :readonly="args.readonly"
-	 :disabled="args.disabled"
+     v-bind="args"
     />
 				</div>
    `,
@@ -273,20 +250,7 @@ const phoneNumber = ref('')
 			template: `
 				<div class="pa-4">
 					<PhoneField
-						v-model="args.modelValue"
-						:required="args.required"
-						:outlined="args.outlined"
-						:outlinedIndicatif="args.outlinedIndicatif"
-						:withCountryCode="args.withCountryCode"
-						:countryCodeRequired="args.countryCodeRequired"
-						:displayFormat="args.displayFormat"
-						:customIndicatifs="args.customIndicatifs"
-						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-						:isValidatedOnBlur="args.isValidatedOnBlur"
-						:display-asterisk="args.displayAsterisk"
-						:readonly="args.readonly"
-						:disabled="args.disabled"
-						:bg-color="args.bgColor"
+						v-bind="args"
 					/>
 				</div>
 			`,
@@ -639,19 +603,7 @@ export const CustomIndicatifs: Story = {
 			template: `
 				<div class="pa-4">
     <PhoneField
-     v-model="args.modelValue"
-     :required="args.required"
-     :outlined="args.outlined"
-     :outlinedIndicatif="args.outlinedIndicatif"
-     :withCountryCode="args.withCountryCode"
-     :countryCodeRequired="args.countryCodeRequired"
-     :displayFormat="args.displayFormat"
-     :customIndicatifs="args.customIndicatifs"
-     :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-     :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readonly="args.readonly"
-	 :disabled="args.disabled"
-     :bg-color="args.bgColor"
+     	v-bind="args"
     />
 				</div>
    `,
@@ -667,7 +619,7 @@ export const NotValidatedOnBlur: Story = {
 				code: `
 				<template>
 					<PhoneField
-						v-model="modelValue"
+						v-bind="args"
 						:required="required"
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
@@ -722,19 +674,7 @@ export const NotValidatedOnBlur: Story = {
 			template: `
 				<div class="pa-4">
     <PhoneField
-     v-model="args.modelValue"
-     :required="args.required"
-     :outlined="args.outlined"
-     :outlinedIndicatif="args.outlinedIndicatif"
-     :withCountryCode="args.withCountryCode"
-     :countryCodeRequired="args.countryCodeRequired"
-     :displayFormat="args.displayFormat"
-     :customIndicatifs="args.customIndicatifs"
-     :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-     :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readonly="args.readonly"
-	 :disabled="args.disabled"
-     :bg-color="args.bgColor"
+     v-bind="args"
     />
 				</div>
    `,
@@ -805,19 +745,7 @@ export const DisplayFormatCode: Story = {
 			template: `
 				<div class="pa-4">
     <PhoneField
-     v-model="args.modelValue"
-     :required="args.required"
-     :outlined="args.outlined"
-     :outlinedIndicatif="args.outlinedIndicatif"
-     :withCountryCode="args.withCountryCode"
-     :countryCodeRequired="args.countryCodeRequired"
-     :displayFormat="args.displayFormat"
-     :customIndicatifs="args.customIndicatifs"
-     :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-     :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readonly="args.readonly"
-	 :disabled="args.disabled"
-     :bg-color="args.bgColor"
+     v-bind="args"
     />
 				</div>
    `,
@@ -888,19 +816,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 			template: `
 				<div class="pa-4">
     <PhoneField
-     v-model="args.modelValue"
-     :required="args.required"
-     :outlined="args.outlined"
-     :outlinedIndicatif="args.outlinedIndicatif"
-     :withCountryCode="args.withCountryCode"
-     :countryCodeRequired="args.countryCodeRequired"
-     :displayFormat="args.displayFormat"
-     :customIndicatifs="args.customIndicatifs"
-     :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-     :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readonly="args.readonly"
-	 :disabled="args.disabled"
-     :bg-color="args.bgColor"
+     v-bind="args"
     />
 				</div>
    `,
@@ -971,19 +887,7 @@ export const DisplayFormatCodeCountry: Story = {
 			template: `
 				<div class="pa-4">
     <PhoneField
-     v-model="args.modelValue"
-     :required="args.required"
-     :outlined="args.outlined"
-     :outlinedIndicatif="args.outlinedIndicatif"
-     :withCountryCode="args.withCountryCode"
-     :countryCodeRequired="args.countryCodeRequired"
-     :displayFormat="args.displayFormat"
-     :customIndicatifs="args.customIndicatifs"
-     :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-     :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readonly="args.readonly"
-	 :disabled="args.disabled"
-     :bg-color="args.bgColor"
+     v-bind="args"
     />
 				</div>
    `,
@@ -1054,19 +958,7 @@ export const DisplayFormatCountry: Story = {
 			template: `
 				<div class="pa-4">
     <PhoneField
-     v-model="args.modelValue"
-     :required="args.required"
-     :outlined="args.outlined"
-     :outlinedIndicatif="args.outlinedIndicatif"
-     :withCountryCode="args.withCountryCode"
-     :countryCodeRequired="args.countryCodeRequired"
-     :displayFormat="args.displayFormat"
-     :customIndicatifs="args.customIndicatifs"
-     :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-     :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readonly="args.readonly"
-	 :disabled="args.disabled"
-     :bg-color="args.bgColor"
+     v-bind="args"
     />
 				</div>
    `,
@@ -1137,19 +1029,7 @@ export const DisplayFormatAbbreviation: Story = {
 			template: `
 				<div class="pa-4">
     <PhoneField
-     v-model="args.modelValue"
-     :required="args.required"
-     :outlined="args.outlined"
-     :outlinedIndicatif="args.outlinedIndicatif"
-     :withCountryCode="args.withCountryCode"
-     :countryCodeRequired="args.countryCodeRequired"
-     :displayFormat="args.displayFormat"
-     :customIndicatifs="args.customIndicatifs"
-     :useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-     :isValidatedOnBlur="args.isValidatedOnBlur"
-	 :readonly="args.readonly"
-	 :disabled="args.disabled"
-     :bg-color="args.bgColor"
+     v-bind="args"
     />
 							</div>
    `,
@@ -1239,20 +1119,7 @@ export const DefaultDialCode: Story = {
 					<h3>PhoneField avec indicatif pré-rempli</h3>
 					<p>Cette story montre comment pré-remplir l'indicatif téléphonique avec des indicatifs personnalisés.</p>
 					<PhoneField
-						v-model="args.modelValue"
-						:dial-code-model="args.dialCodeModel"
-						:required="args.required"
-						:outlined="args.outlined"
-						:outlinedIndicatif="args.outlinedIndicatif"
-						:withCountryCode="args.withCountryCode"
-						:countryCodeRequired="args.countryCodeRequired"
-						:displayFormat="args.displayFormat"
-						:customIndicatifs="args.customIndicatifs"
-						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-						:isValidatedOnBlur="args.isValidatedOnBlur"
-						:readonly="args.readonly"
-						:disabled="args.disabled"
-						:bg-color="args.bgColor"
+						v-bind="args"
 					/>
 				</div>
 			`,
@@ -1327,20 +1194,7 @@ export const DefaultDialCodeStandard: Story = {
 						<strong>Indicatif sélectionné :</strong> {{ args.dialCodeModel ? args.dialCodeModel.code + ' ' + args.dialCodeModel.country : 'Aucun' }}
 					</div>
 					<PhoneField
-						v-model="args.modelValue"
-						:dial-code-model="args.dialCodeModel"
-						:required="args.required"
-						:outlined="args.outlined"
-						:outlinedIndicatif="args.outlinedIndicatif"
-						:withCountryCode="args.withCountryCode"
-						:countryCodeRequired="args.countryCodeRequired"
-						:displayFormat="args.displayFormat"
-						:customIndicatifs="args.customIndicatifs"
-						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-						:isValidatedOnBlur="args.isValidatedOnBlur"
-						:readonly="args.readonly"
-						:disabled="args.disabled"
-						:bg-color="args.bgColor"
+						v-bind="args"
 					/>
 				</div>
 			`,
@@ -1419,20 +1273,7 @@ export const DisplayModels: Story = {
 						{{ args.dialCodeModel }} - {{ args.modelValue }}
 					</div>
 					<PhoneField
-						v-model="args.modelValue"
-						v-model:selected-dial-code="args.dialCodeModel"
-						:required="args.required"
-						:outlined="args.outlined"
-						:outlinedIndicatif="args.outlinedIndicatif"
-						:withCountryCode="args.withCountryCode"
-						:countryCodeRequired="args.countryCodeRequired"
-						:displayFormat="args.displayFormat"
-						:customIndicatifs="args.customIndicatifs"
-						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-						:isValidatedOnBlur="args.isValidatedOnBlur"
-						:readonly="args.readonly"
-						:disabled="args.disabled"
-						:bg-color="args.bgColor"
+						v-bind="args"
 					/>
 				</div>
 			`,
@@ -1508,39 +1349,13 @@ export const DisabledErrorHandling: Story = {
 					<h3>Gestion des erreurs désactivée</h3>
 					<p>Ce champ est requis mais n'affichera pas d'erreur même s'il est vide.</p>
 					<PhoneField
-						v-model="args.modelValue"
-						:required="args.required"
-						:outlined="args.outlined"
-						:outlinedIndicatif="args.outlinedIndicatif"
-						:withCountryCode="args.withCountryCode"
-						:countryCodeRequired="args.countryCodeRequired"
-						:displayFormat="args.displayFormat"
-						:customIndicatifs="args.customIndicatifs"
-						:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-						:isValidatedOnBlur="args.isValidatedOnBlur"
-						:disableErrorHandling="args.disableErrorHandling"
-						:readonly="args.readonly"
-						:disabled="args.disabled"
-						:bg-color="args.bgColor"
+						v-bind="args"
 					/>
 					<div class="mt-6">
 						<h3>Comparaison avec gestion des erreurs activée</h3>
 						<p>Ce champ est requis et affichera une erreur s'il est vide.</p>
 						<PhoneField
-							v-model="args.modelValue"
-							:required="args.required"
-							:outlined="args.outlined"
-							:outlinedIndicatif="args.outlinedIndicatif"
-							:withCountryCode="args.withCountryCode"
-							:countryCodeRequired="args.countryCodeRequired"
-							:displayFormat="args.displayFormat"
-							:customIndicatifs="args.customIndicatifs"
-							:useCustomIndicatifsOnly="args.useCustomIndicatifsOnly"
-							:isValidatedOnBlur="args.isValidatedOnBlur"
-							:disableErrorHandling="false"
-							:readonly="args.readonly"
-							:disabled="args.disabled"
-							:bg-color="args.bgColor"
+							v-bind="args"
 						/>
 					</div>
 				</div>
@@ -1654,22 +1469,7 @@ export const FormValidation: Story = {
 				<div class="pa-4">
 					<form @submit.prevent="submitForm" class="d-flex flex-column">
 						<PhoneField
-							ref="phoneFieldRef"
-							v-model="phoneNumber"
-							:required="args.required"
-							:outlined="args.outlined"
-							:outlinedIndicatif="args.outlinedIndicatif"
-							:withCountryCode="args.withCountryCode"
-							:country-code-required="args.countryCodeRequired"
-							:isValidatedOnBlur="args.isValidatedOnBlur"
-							:readonly="args.readonly"
-							:disabled="args.disabled"
-							:bg-color="args.bgColor"
-							:display-format="args.displayFormat"
-							:custom-indicatifs="args.customIndicatifs"
-							:use-custom-indicatifs-only="args.useCustomIndicatifsOnly"
-							:display-asterisk="args.displayAsterisk"
-							:disable-error-handling="args.disableErrorHandling"
+							v-bind="args"
 						/>
 						<v-btn type="submit" color="primary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
 						<div v-if="formSubmitted" class="mt-4 pa-2" :class="{ 'bg-success': formIsValid, 'bg-error': !formIsValid }" style="width: fit-content;">
