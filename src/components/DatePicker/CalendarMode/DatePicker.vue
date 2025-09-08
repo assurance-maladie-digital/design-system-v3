@@ -1102,7 +1102,7 @@
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-text-error !important;
+		color: tokens.$colors-border-error !important;
 	}
 }
 
