@@ -32,11 +32,10 @@ export function useTableProps({
 
 	// When the table options are updated, merge them into localOptions
 	function updateOptions(tableOptions: Partial<DataOptions>): void {
-		localOptions.value = {
-			...localOptions.value,
+		options.value = {
+			...options.value,
 			...tableOptions,
 		}
-		console.log('updated localOptions', localOptions.value)
 	}
 
 	// Watch for external changes to options and update localOptions accordingly
