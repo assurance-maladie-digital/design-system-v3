@@ -22,6 +22,7 @@
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
+		saveState: true,
 		showFilters: false,
 		resizableColumns: false,
 		items: () => [],
@@ -65,6 +66,7 @@
 
 	const { storedOptions, storeOptions } = useStoredOptions({
 		key: computed(() => props.suffix ? `table-${props.suffix}` : 'table'),
+		saveState: toRef(props, 'saveState'),
 	})
 
 	const {

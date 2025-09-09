@@ -10,18 +10,23 @@ export type TableOptions = {
 
 export default function useStoredOptions({
 	key,
+	saveState,
 }: {
 	key: Ref<string>
+	saveState: Ref<boolean>
 }): {
 		storedOptions: TableOptions
 		storeOptions: (options: TableOptions) => void
 	} {
 	const localStorageUtility = new LocalStorageUtility()
 
-	const storedOptions: TableOptions = localStorageUtility.getItem(toValue(key)) || {}
+	const storedOptions: TableOptions
+		= (saveState.value ? localStorageUtility.getItem(toValue(key)) : {}) || {}
 
 	function storeOptions(options: TableOptions): void {
-		localStorageUtility.setItem(toValue(key), options)
+		if (saveState.value) {
+			localStorageUtility.setItem(toValue(key), options)
+		}
 	}
 
 	return {

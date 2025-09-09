@@ -73,6 +73,7 @@ export type TableColumnHeader = {
 export type SyTableProps = {
 	items?: Record<string, unknown>[]
 	suffix: string
+	saveState?: boolean
 	caption?: string
 	showFilters?: boolean
 	filterInputConfig?: Record<string, unknown>
@@ -91,6 +92,7 @@ export type SyServerTableProps = {
 	serverItemsLength: number
 	items?: Record<string, unknown>[]
 	suffix: string
+	saveState?: boolean
 	caption?: string
 	showFilters?: boolean
 	resizableColumns?: boolean

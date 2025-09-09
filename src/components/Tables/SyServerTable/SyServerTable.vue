@@ -21,6 +21,7 @@
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
+		saveState: true,
 		showFilters: false,
 		items: () => [],
 		serverItemsLength: 0,
@@ -64,7 +65,8 @@
 	const uniqueTableId = ref(`sy-server-table-${Math.random().toString(36).substr(2, 9)}`)
 
 	const { storedOptions, storeOptions } = useStoredOptions({
-		key: computed(() => props.suffix ? `server-table-${props.suffix}` : 'table'),
+		key: computed(() => props.suffix ? `server-table-${props.suffix}` : 'server-table'),
+		saveState: toRef(props, 'saveState'),
 	})
 
 	const {
@@ -191,6 +193,7 @@
 			() => reactiveColumnWidths.value,
 		],
 		() => {
+			if (!props.saveState) return
 			storeOptions({
 				options: options.value,
 				headers: headers.value,
