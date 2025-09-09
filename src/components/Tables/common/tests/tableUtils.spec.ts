@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest'
 import { ref } from 'vue'
-import { useTableUtils } from '../tableUtils'
+import { useTableProps } from '../tableProps'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions } from '../types'
 
@@ -28,7 +28,7 @@ describe('tableUtils', () => {
 			'onUpdate:options': vi.fn(),
 		}
 
-		const { propsFacade } = useTableUtils({
+		const { propsFacade } = useTableProps({
 			componentAttributes,
 			options,
 		})
@@ -45,7 +45,7 @@ describe('tableUtils', () => {
 			items: [{ id: 1 }],
 		}
 
-		const { propsFacade } = useTableUtils({
+		const { propsFacade } = useTableProps({
 			serverItemsLength: 100,
 			componentAttributes,
 			options,
@@ -64,7 +64,7 @@ describe('tableUtils', () => {
 		})
 		const componentAttributes = {}
 
-		const { updateOptions } = useTableUtils({
+		const { updateOptions } = useTableProps({
 			componentAttributes,
 			options,
 		})

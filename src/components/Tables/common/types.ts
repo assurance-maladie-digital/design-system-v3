@@ -4,12 +4,20 @@ export type SortOptions = {
 }
 
 export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select' | 'custom'
-
+type FilterValue =
+	| string
+	| number
+	| Date
+	| Array<string | number | Date>
+	| { from: string | null, to: string | null }
+	| Record<string, unknown>
+	| null
+	| undefined
 export type TableDensityType = 'default' | 'comfortable' | 'compact'
 
 export interface FilterOption {
 	key: string
-	value: string | number | Date | Array<string | number | Date> | { from: string | null, to: string | null } | Record<string, unknown> | null | undefined
+	value: FilterValue
 	type: FilterType
 }
 

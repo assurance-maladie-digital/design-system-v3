@@ -7,7 +7,7 @@
 	import SyTablePagination from '../common/SyTablePagination.vue'
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
-	import { useTableUtils } from '../common/tableUtils'
+	import { useTableProps } from '../common/tableProps'
 	import type { DataOptions, SyServerTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
 	import { usePagination } from '../common/usePagination'
@@ -64,13 +64,13 @@
 	const uniqueTableId = ref(`sy-server-table-${Math.random().toString(36).substr(2, 9)}`)
 
 	const { storedOptions, storeOptions } = useStoredOptions({
-		key: computed(() => props.suffix ? `table-${props.suffix}` : 'table'),
+		key: computed(() => props.suffix ? `server-table-${props.suffix}` : 'table'),
 	})
 
 	const {
 		propsFacade,
 		updateOptions,
-	} = useTableUtils({
+	} = useTableProps({
 		componentAttributes,
 		options,
 		storedOptions: storedOptions.options,

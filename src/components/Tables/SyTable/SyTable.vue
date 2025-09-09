@@ -8,7 +8,7 @@
 	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
-	import { useTableUtils } from '../common/tableUtils'
+	import { useTableProps } from '../common/tableProps'
 	import type { DataOptions, SyTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
 	import { usePagination } from '../common/usePagination'
@@ -70,7 +70,7 @@
 	const {
 		propsFacade,
 		updateOptions,
-	} = useTableUtils({
+	} = useTableProps({
 		componentAttributes,
 		options,
 		storedOptions: storedOptions.options,
@@ -220,6 +220,7 @@
 		>
 			{{ statusMessage }}
 		</div>
+		<p>props façade : {{ propsFacade }}</p>
 		<VDataTable
 			ref="table"
 			v-model="model"
