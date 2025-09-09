@@ -1,0 +1,62 @@
+# Cartographie des autres composants
+
+Liste des composants présents dans `src/components` (hors Amelipro) :
+
+- Accordion
+- BackBtn
+- BackToTopBtn
+- ChipList
+- CollapsibleList
+- ContextualMenu
+- CookieBanner
+- CookiesSelection
+- CopyBtn
+- Customs
+- DataList
+- DataListGroup
+- DataListItem
+- DatePicker
+- DiacriticPicker
+- DialogBox
+- DownloadBtn
+- ErrorPage
+- ExternalLinks
+- FileList
+- FilePreview
+- FileUpload
+- FilterInline
+- FilterSideBar
+- FooterBar
+- FranceConnectBtn
+- HeaderBar
+- HeaderLoading
+- HeaderNavigationBar
+- HeaderToolbar
+- LangBtn
+- Logo
+- LogoBrandSection
+- MaintenancePage
+- NirField
+- NotFoundPage
+- NotificationBar
+- PageContainer
+- PaginatedTable
+- PasswordField
+- PeriodField
+- PhoneField
+- RangeField
+- RatingPicker
+- SearchListField
+- SkipLink
+- SocialMediaLinks
+- SubHeader
+- SyAlert
+- SyTextArea
+- Tables
+- TableToolbar
+- ToolbarContainer
+- UploadWorkflow
+- Usages
+- UserMenuBtn
+
+Fichier généré le 05/09/2025.
