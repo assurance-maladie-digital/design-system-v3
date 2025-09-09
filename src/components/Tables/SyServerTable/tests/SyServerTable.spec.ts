@@ -217,6 +217,44 @@ describe('SyServerTable', () => {
 		activeWrappers.push(wrapper)
 	})
 
+	it('do not store options when saveState is false', async () => {
+		const setItemMock = vi.spyOn(LocalStorageUtility.prototype, 'setItem')
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {
+					sortBy: [{ key: 'name', order: 'asc' }],
+				},
+				serverItemsLength: 10,
+				suffix: 'test-no-storage',
+				saveState: false,
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		// Attendre que le composant soit monté et les effets initiaux terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+		// Modifier les props et attendre la mise à jour
+		await wrapper.setProps({
+			options: {
+				sortBy: [{ key: 'name', order: 'desc' }],
+			},
+		})
+		// Attendre que tous les effets asynchrones soient terminés
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+		expect(setItemMock).not.toHaveBeenCalled()
+		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
+	})
+
 	it('emits update:options event when sorting changes', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {

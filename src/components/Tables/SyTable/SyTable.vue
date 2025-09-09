@@ -222,7 +222,6 @@
 		>
 			{{ statusMessage }}
 		</div>
-		<p>props façade : {{ propsFacade }}</p>
 		<VDataTable
 			ref="table"
 			v-model="model"

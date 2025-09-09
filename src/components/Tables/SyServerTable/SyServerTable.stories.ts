@@ -87,6 +87,10 @@ const meta = {
 			description: 'Nombre total d\'éléments à afficher',
 			control: { type: 'number' },
 		},
+		saveState: {
+			description: 'Permet d\'activer ou non la sauvegarde des options (pagination, tris, ordre des colonnes) du tableau dans le localStorage. Par défaut, cette fonctionnalité est activée.',
+			control: { type: 'boolean' },
+		},
 		suffix: {
 			description: 'Suffixe permettant de gérer individuellement le stockage des options d\'un tableau d\'une page à l\'autre. Ce prop est obligatoire pour garantir un stockage unique pour chaque tableau.',
 			control: { type: 'text' },
