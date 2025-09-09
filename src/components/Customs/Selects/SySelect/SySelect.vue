@@ -136,7 +136,7 @@
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
 	const list = ref<VList | null>(null)
-	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
+	const sySelectTextInput = ref<InstanceType<typeof VTextField> | null>(null)
 
 	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
@@ -159,9 +159,25 @@
 	}
 
 	const closeList = (event?: Event) => {
+		// Ne rien faire si l'événement est null ou undefined
+		if (!event) {
+			isOpen.value = false
+			return
+		}
+
 		// Check if the click is inside the dropdown list
-		const target = event?.target as HTMLElement
+		const target = event.target as HTMLElement
 		const listElement = list.value?.$el
+		const selectElement = sySelectTextInput.value?.$el
+
+		// Si le clic est sur un élément extérieur à ce composant, ne pas interférer
+		if (!selectElement || (!selectElement.contains(target) && !listElement?.contains(target))) {
+			// Vérifier si le clic est sur un autre composant qui utilise les événements de clic
+			if (target.closest('[role="dialog"]') || target.closest('.v-menu__content') || target.closest('.v-date-picker')) {
+				// Si le clic est sur un autre dialogue/menu/datepicker, ne pas fermer pour éviter les interférences
+				return
+			}
+		}
 
 		// In multiple selection mode, don't close the dropdown when clicking on list items
 		if (props.multiple && listElement && listElement.contains(target)) {
@@ -210,7 +226,7 @@
 				// S'assurer que le focus DOM revient à l'input et restaurer le focus visuel
 				nextTick(() => {
 					// Focus DOM sur l'input
-					const inputElement = textInput.value!.$el.querySelector('input')
+					const inputElement = sySelectTextInput.value!.$el.querySelector('input')
 					if (inputElement) {
 						(inputElement as HTMLInputElement).focus()
 					}
@@ -548,64 +564,131 @@
 		}
 	})
 
+	// Variable pour indiquer que nous n'utilisons pas de MutationObserver
 	let mutationObserver: MutationObserver | null = null
 
-	// Function to set up proper ARIA attributes
-	const setupAriaAttributes = () => {
-		if (textInput.value && textInput.value.$el) {
-			// Find the input element
-			const inputElement = textInput.value.$el?.querySelector?.('input')
-			if (inputElement) {
-				// Remove problematic attributes that shouldn't be on input
-				inputElement.removeAttribute('aria-describedby')
-				inputElement.removeAttribute('size')
-				inputElement.removeAttribute('tabindex')
-				inputElement.removeAttribute('aria-hidden')
+	// Fonction pour configurer les attributs ARIA sur l'élément input
+	const updateInputAriaAttributes = () => {
+		if (!sySelectTextInput.value || !sySelectTextInput.value.$el) return
 
-				// Set proper combobox attributes on input element (following CNSA standard)
-				inputElement.setAttribute('role', 'combobox')
-				inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
-				// Only set aria-controls when menu is open and element exists
-				if (isOpen.value) {
-					inputElement.setAttribute('aria-controls', uniqueMenuId.value)
-				}
-				else {
-					inputElement.removeAttribute('aria-controls')
-				}
-				// Note: aria-autocomplete is omitted for select-only combobox (invalid to set to 'none')
-				inputElement.setAttribute('aria-haspopup', 'listbox')
-				if (isOpen.value && activeDescendantId.value) {
-					inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
-				}
-				if (isRequired.value) {
-					inputElement.setAttribute('aria-required', 'true')
-				}
-				if (hasError.value) {
-					inputElement.setAttribute('aria-invalid', 'true')
-				}
-			}
+		const inputElement = sySelectTextInput.value.$el.querySelector('input')
+		if (!inputElement) return
 
-			// Clean up parent element - remove any conflicting attributes
-			const parentElement = textInput.value.$el
-			if (parentElement) {
-				// Remove any role or ARIA attributes from parent that should be on input
-				parentElement.removeAttribute('role')
-				parentElement.removeAttribute('aria-expanded')
-				parentElement.removeAttribute('aria-controls')
-				parentElement.removeAttribute('aria-haspopup')
-				parentElement.removeAttribute('aria-activedescendant')
-				parentElement.removeAttribute('aria-required')
-				parentElement.removeAttribute('aria-invalid')
-				parentElement.removeAttribute('aria-hidden')
+		// Configuration RGAA des attributs ARIA essentiels
+		inputElement.setAttribute('role', 'combobox')
+		inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
+		inputElement.setAttribute('aria-haspopup', 'listbox')
 
-				// Remove role="alert" and aria-live from message containers to prevent screen reader interruption
-				const messagesElements = parentElement.querySelectorAll('[role="alert"]')
-				messagesElements.forEach((element: Element) => {
-					element.removeAttribute('role')
-					element.removeAttribute('aria-live')
-				})
-			}
+		// Attributs conditionnels
+		if (isOpen.value) {
+			inputElement.setAttribute('aria-controls', uniqueMenuId.value)
 		}
+		else {
+			inputElement.removeAttribute('aria-controls')
+		}
+
+		if (isOpen.value && activeDescendantId.value) {
+			inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
+		}
+		else {
+			inputElement.removeAttribute('aria-activedescendant')
+		}
+
+		if (isRequired.value) {
+			inputElement.setAttribute('aria-required', 'true')
+		}
+		else {
+			inputElement.removeAttribute('aria-required')
+		}
+
+		if (hasError.value) {
+			inputElement.setAttribute('aria-invalid', 'true')
+		}
+		else {
+			inputElement.removeAttribute('aria-invalid')
+		}
+	}
+
+	// Fonction pour nettoyer les attributs ARIA qui ne devraient pas être sur l'élément parent
+	const cleanParentAriaAttributes = () => {
+		if (!sySelectTextInput.value || !sySelectTextInput.value.$el) return
+
+		const parentElement = sySelectTextInput.value.$el
+
+		// Supprimer les attributs ARIA qui devraient être uniquement sur l'input
+		parentElement.removeAttribute('role')
+		parentElement.removeAttribute('aria-expanded')
+		parentElement.removeAttribute('aria-controls')
+		parentElement.removeAttribute('aria-haspopup')
+		parentElement.removeAttribute('aria-activedescendant')
+		parentElement.removeAttribute('aria-required')
+		parentElement.removeAttribute('aria-invalid')
+		parentElement.removeAttribute('aria-hidden')
+
+		// Supprimer les attributs role="alert" et aria-live des conteneurs de messages
+		const messagesElements = parentElement.querySelectorAll('[role="alert"]')
+		messagesElements.forEach((element: Element) => {
+			element.removeAttribute('role')
+			element.removeAttribute('aria-live')
+		})
+	}
+
+	// Watchers pour maintenir l'accessibilité ARIA
+	watch(isOpen, () => {
+		nextTick(updateInputAriaAttributes)
+	})
+
+	watch(activeDescendantId, () => {
+		if (isOpen.value) {
+			nextTick(updateInputAriaAttributes)
+		}
+	})
+
+	watch(isRequired, () => {
+		nextTick(updateInputAriaAttributes)
+	})
+
+	watch(hasError, () => {
+		nextTick(updateInputAriaAttributes)
+	})
+
+	// Configuration complète des attributs ARIA
+	const setupAriaAttributes = () => {
+		updateInputAriaAttributes()
+		cleanParentAriaAttributes()
+	}
+
+	// Global click handler to replace v-click-outside
+	const handleDocumentClick = (event: MouseEvent) => {
+		// Si le select n'est pas ouvert, ne rien faire
+		if (!isOpen.value) return
+
+		// Vérifier si le clic est à l'intérieur du composant
+		const target = event.target as HTMLElement
+		const selectElement = sySelectTextInput.value?.$el
+		const dropdownElement = list.value?.$el
+
+		// Éviter de fermer si le clic est à l'intérieur du composant
+		if (
+			(selectElement && selectElement.contains(target))
+			|| (dropdownElement && dropdownElement.contains(target))
+			|| target.closest('.v-menu__content')
+		) {
+			return
+		}
+
+		// Si c'est un DatePicker ou un autre composant interactif, ne pas interférer
+		if (
+			target.closest('.date-picker-container')
+			|| target.closest('.v-date-picker')
+			|| target.closest('[role="dialog"]')
+			|| target.closest('.v-overlay')
+		) {
+			return
+		}
+
+		// Si on arrive ici, le clic est à l'extérieur, on ferme le select
+		isOpen.value = false
 	}
 
 	onMounted(() => {
@@ -613,155 +696,30 @@
 			labelWidth.value = labelRef.value.offsetWidth + 64
 		}
 
+		// Ajouter l'écouteur d'événements global pour remplacer v-click-outside
+		document.addEventListener('click', handleDocumentClick)
+
 		// Use nextTick to ensure the DOM is fully rendered
 		nextTick(() => {
-			// Initial setup
+			// Configurer tous les attributs ARIA pour l'accessibilité RGAA
 			setupAriaAttributes()
-
-			// Set up MutationObserver to monitor attribute changes
-			if (textInput.value && textInput.value.$el) {
-				mutationObserver = new MutationObserver((mutations) => {
-					let needsCleanup = false
-					mutations.forEach((mutation) => {
-						if (mutation.type === 'attributes') {
-							const target = mutation.target as HTMLElement
-							const attributeName = mutation.attributeName
-
-							// Check if problematic attributes were added to input
-							if (target.tagName === 'INPUT' && (
-								attributeName === 'role'
-								|| attributeName === 'aria-hidden'
-								|| attributeName === 'aria-expanded'
-								|| attributeName === 'aria-controls'
-								|| attributeName === 'aria-haspopup'
-							)) {
-								needsCleanup = true
-							}
-
-							// Check if aria-hidden was added to parent
-							if (target === textInput.value?.$el && attributeName === 'aria-hidden') {
-								needsCleanup = true
-							}
-
-							// Check if role="alert" or aria-live was added to any element (error messages)
-							if (attributeName === 'role' && (target as HTMLElement).getAttribute('role') === 'alert') {
-								needsCleanup = true
-							}
-							if (attributeName === 'aria-live') {
-								needsCleanup = true
-							}
-						}
-					})
-
-					if (needsCleanup) {
-						// Use setTimeout to avoid infinite loops
-						setTimeout(setupAriaAttributes, 0)
-					}
-				})
-
-				// Observe both the parent element and its children
-				mutationObserver.observe(textInput.value.$el, {
-					attributes: true,
-					subtree: true,
-					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup', 'aria-live'],
-				})
-			}
 		})
 	})
 
-	// Watchers to update ARIA attributes dynamically on input element
-	watch(isOpen, (newValue) => {
-		nextTick(() => {
-			if (textInput.value && textInput.value.$el) {
-				const inputElement = textInput.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					inputElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
-					if (newValue && activeDescendantId.value) {
-						inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
-					}
-					else {
-						inputElement.removeAttribute('aria-activedescendant')
-					}
-				}
-			}
-		})
-	})
+	// Les watchers pour isOpen, activeDescendantId, isRequired et hasError sont déjà définis plus haut
+	// Ils mettent à jour les attributs ARIA via updateInputAriaAttributes()
 
-	watch(activeDescendantId, (newValue) => {
-		nextTick(() => {
-			if (textInput.value && textInput.value.$el && isOpen.value) {
-				const inputElement = textInput.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					if (newValue) {
-						inputElement.setAttribute('aria-activedescendant', newValue)
-					}
-					else {
-						inputElement.removeAttribute('aria-activedescendant')
-					}
-				}
-			}
-		})
-	})
+	// Watcher déjà défini plus haut
 
-	watch(hasError, (newValue) => {
-		nextTick(() => {
-			if (textInput.value && textInput.value.$el) {
-				const inputElement = textInput.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					if (newValue) {
-						inputElement.setAttribute('aria-invalid', 'true')
-					}
-					else {
-						inputElement.removeAttribute('aria-invalid')
-					}
-				}
-			}
-		})
-	})
+	// Watcher déjà défini plus haut
 
 	// Watch for selection changes to enforce correct accessibility attributes
 	// This prevents Vuetify from overriding our combobox attributes
 	watch(selectedItem, () => {
 		nextTick(() => {
-			if (textInput.value && textInput.value.$el) {
-				const inputElement = textInput.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					// Ensure combobox role is maintained on input
-					inputElement.setAttribute('role', 'combobox')
-					// Ensure aria-hidden is never set to true
-					inputElement.removeAttribute('aria-hidden')
-					// Maintain other combobox attributes
-					inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
-					inputElement.setAttribute('aria-haspopup', 'listbox')
-					// Note: aria-autocomplete is omitted for select-only combobox
-					// Only set aria-controls when menu is open and element exists
-					if (isOpen.value) {
-						inputElement.setAttribute('aria-controls', uniqueMenuId.value)
-					}
-					else {
-						inputElement.removeAttribute('aria-controls')
-					}
-
-					// Only add aria-required if the component is actually required
-					if (isRequired.value) {
-						inputElement.setAttribute('aria-required', 'true')
-					}
-					else {
-						inputElement.removeAttribute('aria-required')
-					}
-				}
-
-				// Clean up parent element
-				const parentElement = textInput.value.$el
-				if (parentElement) {
-					parentElement.removeAttribute('role')
-					parentElement.removeAttribute('aria-hidden')
-					parentElement.removeAttribute('aria-expanded')
-					parentElement.removeAttribute('aria-haspopup')
-					parentElement.removeAttribute('aria-controls')
-					parentElement.removeAttribute('aria-required')
-				}
-			}
+			// Réutilise la fonction qui met à jour les attributs ARIA
+			updateInputAriaAttributes()
+			cleanParentAriaAttributes()
 		})
 	}, { deep: true })
 
@@ -771,11 +729,15 @@
 			mutationObserver.disconnect()
 			mutationObserver = null
 		}
+
+		// Remove global click event listener
+		document.removeEventListener('click', handleDocumentClick)
 	})
 
 	defineExpose({
 		isOpen,
 		closeList,
+		SySelectRef: sySelectTextInput,
 	})
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -783,7 +745,7 @@
 		return {
 			// the ref is needed by Vuetify to position the menu and by us for accessibility
 			ref: (el) => {
-				textInput.value = el
+				sySelectTextInput.value = el
 				activatorProps.ref?.(el)
 			},
 		}
@@ -799,7 +761,6 @@
 			<VTextField
 				:id="inputId"
 				v-model="selectedItemText"
-				v-click-outside="closeList"
 				v-rgaa-svg-fix="true"
 				:title="$attrs['aria-label'] || labelWithAsterisk"
 				color="primary"
@@ -905,7 +866,7 @@
 			:aria-multiselectable="props.multiple ? 'true' : undefined"
 			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 			:style="{
-				minWidth: `${textInput?.$el.offsetWidth}px`,
+				minWidth: `${sySelectTextInput?.$el.offsetWidth}px`,
 			}"
 			bg-color="white"
 			tabindex="0"
