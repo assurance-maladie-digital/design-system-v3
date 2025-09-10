@@ -8,7 +8,7 @@
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import type { VList, VTextField } from 'vuetify/components'
-	import { VChip, VDialogTransition } from 'vuetify/components'
+	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
@@ -723,7 +723,7 @@
 <template>
 	<VMenu
 		v-model="isOpen"
-		:transition="{ component: VDialogTransition }"
+		transition="slide-y-transition"
 		max-height="300px"
 	>
 		<template #activator="{ props: activatorProps }">
