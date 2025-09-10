@@ -4,12 +4,20 @@ export type SortOptions = {
 }
 
 export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select' | 'custom'
-
+type FilterValue =
+	| string
+	| number
+	| Date
+	| Array<string | number | Date>
+	| { from: string | null, to: string | null }
+	| Record<string, unknown>
+	| null
+	| undefined
 export type TableDensityType = 'default' | 'comfortable' | 'compact'
 
 export interface FilterOption {
 	key: string
-	value: string | number | Date | Array<string | number | Date> | { from: string | null, to: string | null } | Record<string, unknown> | null | undefined
+	value: FilterValue
 	type: FilterType
 }
 
@@ -65,6 +73,7 @@ export type TableColumnHeader = {
 export type SyTableProps = {
 	items?: Record<string, unknown>[]
 	suffix: string
+	saveState?: boolean
 	caption?: string
 	showFilters?: boolean
 	filterInputConfig?: Record<string, unknown>
@@ -83,6 +92,7 @@ export type SyServerTableProps = {
 	serverItemsLength: number
 	items?: Record<string, unknown>[]
 	suffix: string
+	saveState?: boolean
 	caption?: string
 	showFilters?: boolean
 	resizableColumns?: boolean

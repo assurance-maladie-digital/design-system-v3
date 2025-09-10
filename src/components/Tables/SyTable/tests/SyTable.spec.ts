@@ -153,12 +153,14 @@ describe('SyTable', () => {
 		expect(setItemMock).toHaveBeenCalledWith(
 			'table-test-storage',
 			expect.objectContaining({
-				sortBy: [
-					{
-						key: 'name',
-						order: 'desc',
-					},
-				],
+				options: expect.objectContaining({
+					sortBy: [
+						{
+							key: 'name',
+							order: 'desc',
+						},
+					],
+				}),
 			}),
 		)
 	})
