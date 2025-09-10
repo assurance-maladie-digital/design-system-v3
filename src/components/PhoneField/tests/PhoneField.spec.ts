@@ -985,4 +985,50 @@ describe('PhoneField', () => {
 			expect(wrapper.vm.phoneMask).toBe('## ## ## ##')
 		})
 	})
+
+	describe('Fieldset rendering', () => {
+		it('renders with fieldset and legend by default', () => {
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					// withoutFieldset par défaut est false
+				},
+			})
+
+			// Vérifier que le composant utilise un fieldset
+			const fieldset = wrapper.find('fieldset')
+			expect(fieldset.exists()).toBe(true)
+			expect(fieldset.classes()).toContain('phone-field-fieldset')
+
+			// Vérifier que le legend existe
+			const legend = wrapper.find('legend')
+			expect(legend.exists()).toBe(true)
+			expect(legend.classes()).toContain('phone-field-legend')
+		})
+
+		it('renders without fieldset and legend when withoutFieldset is true', () => {
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					withoutFieldset: true,
+				},
+			})
+
+			// Vérifier que le composant n'utilise pas de fieldset
+			const fieldset = wrapper.find('fieldset')
+			expect(fieldset.exists()).toBe(false)
+
+			// Vérifier que le composant utilise un div à la place
+			const container = wrapper.find('div').element
+			expect(container.tagName.toLowerCase()).toBe('div')
+
+			// Vérifier que le legend n'existe pas
+			const legend = wrapper.find('legend')
+			expect(legend.exists()).toBe(false)
+		})
+	})
 })
