@@ -724,6 +724,7 @@
 	<VMenu
 		v-model="isOpen"
 		transition="slide-y-transition"
+		max-height="300px"
 	>
 		<template #activator="{ props: activatorProps }">
 			<VTextField
@@ -836,6 +837,7 @@
 			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 			:style="{
 				minWidth: `${textInput?.$el.offsetWidth}px`,
+				marginTop: props.hideMessages ? '0' : '-22px',
 			}"
 			bg-color="white"
 			tabindex="0"
@@ -914,16 +916,6 @@
 	.v-icon.arrow {
 		transform: rotateX(180deg);
 	}
-}
-
-.v-list {
-	margin-top: -22px;
-	max-height: 300px;
-	padding: 0;
-	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
-	border-radius: 4px;
-	overflow-y: auto;
-	z-index: 2;
 }
 
 .v-list-item:hover {
