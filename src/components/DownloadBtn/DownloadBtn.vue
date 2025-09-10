@@ -96,7 +96,7 @@
 		:loading="state === 'loading'"
 		class="sy-download-btn"
 		:color="buttonColor"
-		:class="`bg-${buttonBgColor}`"
+		:style="`background-color: ${buttonBgColor}`"
 		data-testid="download-btn"
 		@click="download"
 	>
