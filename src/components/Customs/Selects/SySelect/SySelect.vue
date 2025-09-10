@@ -8,7 +8,7 @@
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import type { VList, VTextField } from 'vuetify/components'
-	import { VChip } from 'vuetify/components'
+	import { VChip, VDialogTransition } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
@@ -723,7 +723,8 @@
 <template>
 	<VMenu
 		v-model="isOpen"
-		transition="slide-y-transition"
+		:transition="{ component: VDialogTransition }"
+		max-height="300px"
 	>
 		<template #activator="{ props: activatorProps }">
 			<VTextField
@@ -836,6 +837,7 @@
 			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 			:style="{
 				minWidth: `${textInput?.$el.offsetWidth}px`,
+				marginTop: props.hideMessages ? '0' : '-22px',
 			}"
 			bg-color="white"
 			tabindex="0"
@@ -914,16 +916,6 @@
 	.v-icon.arrow {
 		transform: rotateX(180deg);
 	}
-}
-
-.v-list {
-	margin-top: -22px;
-	max-height: 300px;
-	padding: 0;
-	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
-	border-radius: 4px;
-	overflow-y: auto;
-	z-index: 2;
 }
 
 .v-list-item:hover {
