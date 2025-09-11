@@ -1,3 +1,3 @@
-import AmeliproContentLayout from './AmeliproContentLayout.vue';
+import AmeliproContentLayout from './AmeliproContentLayout.vue'
 
-export default AmeliproContentLayout;
+export default AmeliproContentLayout
