@@ -511,20 +511,7 @@ import * as AvancementStories from './Avancement.stories';
       <div className="progress-card">
           <h3 className="stat-label">Statistiques détaillées</h3>
         <p className="stat-label">Progression dans l'audit des composants du Design System</p>
-        <div className="progress-stats">
-          <div className="stat-item">
-            <span className="stat-value stat-success">21</span>
-            <span className="stat-label">Composants audités</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value stat-wip">3</span>
-            <span className="stat-label">En cours</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value stat-info">60</span>
-            <span className="stat-label">Total des composants</span>
-          </div>
-        </div>
+        <Story of={AvancementStories.Stats} />
       </div>
     </div>
     

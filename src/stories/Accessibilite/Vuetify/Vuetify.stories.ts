@@ -92,7 +92,7 @@ export const VuetifyPanel: StoryObj = {
 
 				// Détermine l'icône du composant selon son statut
 				const getComponentIcon = (item) => {
-					return getComponentStatus(item) === 'conform' ? checkIcon : iconAlert
+					return getComponentStatus(item) === 'conform' || getComponentStatus(item) === 'alternative' ? checkIcon : iconAlert
 				}
 
 				// Filtrage des composants par conformité
@@ -213,7 +213,7 @@ export const VuetifyPanel: StoryObj = {
 								Composant natif non conforme
 							</VChip>
 							<VChip class="mr-2 mb-2" color="#a05bb6" variant="outlined">
-								<VIcon size="small" class="mr-1" :icon="iconAlert"></VIcon>
+								<VIcon size="small" class="mr-1" :icon="checkIcon"></VIcon>
 								Composant alternatif conforme
 							</VChip>
 						</div>
