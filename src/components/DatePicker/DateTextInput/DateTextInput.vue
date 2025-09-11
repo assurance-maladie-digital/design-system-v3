@@ -13,7 +13,6 @@
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { useValidation, type ValidationRule, type ValidationResult } from '@/composables/validation/useValidation'
-	import { formatDateInput as formatDateInputUtil } from '../utils/dateFormattingUtils'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
@@ -192,7 +191,7 @@
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => (ariaLabel.value = ariaLabelText)
 
-	const { handlePaste: handlePasteSingle, isHandlingBackspace } = useDateInputEditing({
+	const { formatDateInput, handlePaste: handlePasteSingle, isHandlingBackspace } = useDateInputEditing({
 		format: displayFormat.value,
 		updateDisplayValue,
 		updateAriaLabel,
@@ -285,20 +284,14 @@
 		await nextTick()
 		if (options.focus) inputElement.focus({ preventScroll: true })
 
-		// Only set cursor position if we have content
-		if (inputValue.value) {
-			const cursorPosition = nextEditableIndex(displayFormat.value, 0)
-			// double rAF pour laisser Vuetify finir ses mises à jour
+		const cursorPosition = nextEditableIndex(displayFormat.value, 0)
+		// double rAF pour laisser Vuetify finir ses mises à jour
+		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
-				requestAnimationFrame(() => {
-					inputElement.setSelectionRange(cursorPosition, cursorPosition)
-					isBootstrapping.value = false
-				})
+				inputElement.setSelectionRange(cursorPosition, cursorPosition)
+				isBootstrapping.value = false
 			})
-		}
-		else {
-			isBootstrapping.value = false
-		}
+		})
 	}
 
 	// Handlers overwrite (single)
@@ -735,15 +728,14 @@
 
 				if (typeof nv !== 'string') return
 				let formatted = ''
-				const currentFormat = props.format || 'DD/MM/YYYY'
 				if (nv.includes(' - ')) {
 					const [startDateText, endDateText = ''] = nv.split(' - ')
-					const formattedStartDate = startDateText ? formatDateInputUtil(startDateText, currentFormat).formatted : ''
-					const formattedEndDate = endDateText ? formatDateInputUtil(endDateText, currentFormat).formatted : ''
+					const formattedStartDate = startDateText ? formatDateInput(startDateText).formatted : ''
+					const formattedEndDate = endDateText ? formatDateInput(endDateText).formatted : ''
 					formatted = `${formattedStartDate} - ${formattedEndDate}`
 				}
 				else {
-					formatted = formatDateInputUtil(nv, currentFormat).formatted
+					formatted = formatDateInput(nv).formatted
 				}
 
 				const result = !ov ? handleRangeInput('', formatted) : handleRangeInput(ov, formatted, cursor)
@@ -794,17 +786,35 @@
 				}
 			}
 			else {
-				// --- Branche SINGLE ---
-				// Format the input for both complete and partial dates
-				const { formatted, cursorPos } = formatDateInputUtil(nv, props.format || 'DD/MM/YYYY', { cursorPosition: cursor })
-
-				// Always update the input value with formatted version
-				// But don't format if it would result in just placeholders (let the HTML placeholder show instead)
-				if (formatted !== nv && !formatted.match(/^[_/\-.\s]+$/)) {
+				if (isOverwriteEditing.value) {
+					const formatted = inputValue.value
+					const complete = formatted && !formatted.includes('_')
+					if (complete) {
+						const formatValidationResult = validateDateFormatForSingleOrRange(formatted)
+						if (formatValidationResult.isValid) {
+							const parsedDate = parseDate(formatted, displayFormat.value)
+							if (parsedDate) {
+								const formattedDateOutput = returnFormat.value !== displayFormat.value
+									? formatDate(parsedDate, returnFormat.value)
+									: formatDate(parsedDate, displayFormat.value)
+								await nextTick()
+								emitModel(formattedDateOutput)
+								emit('date-selected', formattedDateOutput)
+							}
+						}
+						runRules(formatted)
+					}
+					else {
+						clearValidation()
+					}
+					return
+				}
+				const { formatted, cursorPos } = formatDateInput(nv, cursor)
+				if (formatted !== nv) {
 					inputValue.value = formatted
-					if (!isHandlingBackspace.value && inputEl) {
+					if (!isHandlingBackspace.value) {
 						await nextTick()
-						inputEl.setSelectionRange(cursorPos, cursorPos)
+						inputEl?.setSelectionRange(cursorPos, cursorPos)
 					}
 				}
 
