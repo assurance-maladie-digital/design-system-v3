@@ -134,6 +134,7 @@ export { default as AmeliproCheckbox } from './Amelipro/AmeliproCheckbox/Amelipr
 export { default as AmeliproCheckboxGroup } from './Amelipro/AmeliproCheckboxGroup/AmeliproCheckboxGroup.vue'
 export { default as AmeliproChips } from './Amelipro/AmeliproChips/AmeliproChips.vue'
 export { default as AmeliproClickableTile } from './Amelipro/AmeliproClickableTile/AmeliproClickableTile.vue'
+export { default as AmeliproContentLayout } from './Amelipro/AmeliproContentLayout/AmeliproContentLayout.vue'
 export { default as AmeliproCustomSelector } from './Amelipro/AmeliproCustomSelector/AmeliproCustomSelector.vue'
 export { default as AmeliproDialog } from './Amelipro/AmeliproDialog/AmeliproDialog.vue'
 export { default as AmeliproDisclosure } from './Amelipro/AmeliproDisclosure/AmeliproDisclosure.vue'
