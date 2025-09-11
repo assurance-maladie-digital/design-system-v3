@@ -93,8 +93,7 @@ export const Default: Story = {
 			})
 			return { args, model }
 		},
-		template: `
-		<p>Exemple de champ texte simple.</p>
+		template: `<p>Exemple de champ texte simple.</p>
 <AmeliproTextField
 	v-bind="args"
 	v-model="model"
@@ -116,7 +115,8 @@ export const Date: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<template>
+				code: `<p>Exemple de champ texte de type date.</p>
+<template>
 	<AmeliproTextField
 		v-model="model"
 		aria-required
@@ -152,6 +152,7 @@ export const Date: Story = {
 			return { args, model }
 		},
 		template: `
+<p>Exemple de champ texte de type date.</p>
 <AmeliproTextField
 	v-bind="args"
 	v-model="model"
@@ -173,7 +174,8 @@ export const Number: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<template>
+				code: `<p>Exemple de champ texte de type number.</p>
+<template>
 	<AmeliproTextField
 		v-model="model"
 		aria-required
@@ -208,7 +210,7 @@ export const Number: Story = {
 			})
 			return { args, model }
 		},
-		template: `
+		template: `<p>Exemple de champ texte de type number.</p>
 <AmeliproTextField
 	v-bind="args"
 	v-model="model"
@@ -253,7 +255,7 @@ export const Clearable: Story = {
 		setup() {
 			const model = ref('Texte à effacer')
 			watch(() => args.modelValue, (newValue) => {
-				model.value = newValue
+				model.value = String(newValue)
 			})
 			return { args, model }
 		},
@@ -424,8 +426,9 @@ export const FullWidthErrorMsg: Story = {
 		label: 'Message d’erreur pleine largeur',
 		modelValue: '',
 		uniqueId: 'text-fullwidth-error',
-		rules: [v => !!v || 'Erreur obligatoire'],
+		rules: [v => !!v || 'Affichage d’un long message d’erreur pour la démonstration'],
 		fullWidthErrorMsg: true,
+		inputMaxWidth: '100px',
 	},
 	parameters: {
 		sourceCode: [
@@ -437,8 +440,9 @@ export const FullWidthErrorMsg: Story = {
 		v-model="model"
 		label="Message d’erreur pleine largeur"
 		unique-id="text-fullwidth-error"
-		:rules="[v => !!v || 'Erreur obligatoire']"
+		:rules="[v => !!v || 'Affichage d’un long message d’erreur pour la démonstration']"
 		:full-width-error-msg="true"
+		input-max-width="100px"
 	/>
 </template>`,
 			},
@@ -715,7 +719,7 @@ export const Readonly: Story = {
 		setup() {
 			const model = ref('Valeur non modifiable')
 			watch(() => args.modelValue, (newValue) => {
-				model.value = newValue
+				model.value = String(newValue)
 			})
 			return { args, model }
 		},
