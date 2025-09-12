@@ -62,8 +62,7 @@ export const Default: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<p>Exemple de champ texte simple.</p>
-<template>
+				code: `<template>
 	<AmeliproTextField
 		v-model="model"
 		label="Label"
@@ -93,8 +92,7 @@ export const Default: Story = {
 			})
 			return { args, model }
 		},
-		template: `<p>Exemple de champ texte simple.</p>
-<AmeliproTextField
+		template: `<AmeliproTextField
 	v-bind="args"
 	v-model="model"
 />`,

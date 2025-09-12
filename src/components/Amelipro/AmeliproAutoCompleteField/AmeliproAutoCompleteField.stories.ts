@@ -369,7 +369,7 @@ export const LectureSeule: Story = {
 		setup() {
 			const model = ref('Bordeaux')
 			watch(() => args.modelValue, (newValue) => {
-				model.value = newValue
+				model.value = String(newValue)
 			})
 			return { args, model }
 		},
@@ -446,6 +446,7 @@ export const Disabled: Story = {
 			{
 				name: 'Template',
 				code: `<template>
+	<p>Le champ est désactivé grâce à la prop <code>disabled</code>.</p>
 	<AmeliproAutoCompleteField
 		v-model="model"
 		:items="items"
@@ -477,7 +478,7 @@ export const Disabled: Story = {
 			})
 			return { args, model }
 		},
-		template: `
+		template: `<p>Le champ est désactivé grâce à la prop <code>disabled</code>.</p>
 <AmeliproAutoCompleteField
 	v-bind="args"
 	v-model="model"
@@ -497,6 +498,7 @@ export const Required: Story = {
 			{
 				name: 'Template',
 				code: `<template>
+	<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
 	<AmeliproAutoCompleteField
 		v-model="model"
 		:items="items"
@@ -528,7 +530,7 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-		template: `
+		template: `<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
 <AmeliproAutoCompleteField
 	v-bind="args"
 	v-model="model"
@@ -547,6 +549,7 @@ export const Horizontal: Story = {
 			{
 				name: 'Template',
 				code: `<template>
+	<p>Le champ est affiché en horizontal grâce à la prop <code>horizontal</code>.</p>
 	<AmeliproAutoCompleteField
 		v-model="model"
 		:items="items"
@@ -578,7 +581,7 @@ export const Horizontal: Story = {
 			})
 			return { args, model }
 		},
-		template: `
+		template: `<p>Le champ est affiché en horizontal grâce à la prop <code>horizontal</code>.</p>
 <AmeliproAutoCompleteField
 	v-bind="args"
 	v-model="model"

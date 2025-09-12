@@ -176,7 +176,7 @@ export const LectureSeule: Story = {
 		setup() {
 			const model = ref('Valeur en lecture seule')
 			watch(() => args.modelValue, (newValue) => {
-				model.value = newValue
+				model.value = String(newValue)
 			})
 			return { args, model }
 		},
@@ -384,55 +384,6 @@ export const Validation: Story = {
 		},
 		template: `
 <p>Ce champ est obligatoire et la valeur doit commencer par la lettre "B".</p>
-<AmeliproTextArea
-	v-bind="args"
-	v-model="model"
-/>`,
-	}),
-}
-
-export const AvecPlaceholder: Story = {
-	args: {
-		label: 'Avec placeholder',
-		uniqueId: 'text-area-placeholder',
-		placeholder: 'Saisissez votre texte ici…',
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<p>Un texte d’aide s’affiche dans le champ grâce à la prop <code>placeholder</code>.</p>
-	<AmeliproTextArea
-		v-model="model"
-		label="Avec placeholder"
-		unique-id="text-area-placeholder"
-		placeholder="Saisissez votre texte ici…"
-	/>
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-	import { AmeliproTextArea } from '@cnamts/synapse'
-	import { ref } from 'vue'
-
-	const model = ref()
-</script>`,
-			},
-		],
-	},
-	render: args => ({
-		components: { AmeliproTextArea },
-		setup() {
-			const model = ref()
-			watch(() => args.modelValue, (newValue) => {
-				model.value = newValue
-			})
-			return { args, model }
-		},
-		template: `
-<p>Un texte d’aide s’affiche dans le champ grâce à la prop <code>placeholder</code>.</p>
 <AmeliproTextArea
 	v-bind="args"
 	v-model="model"
