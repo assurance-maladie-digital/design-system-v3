@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
+	import AmeliproIconBtn from '../AmeliproIconBtn/AmeliproIconBtn.vue'
 
 	const props = defineProps({
 		textToCopy: {
@@ -55,6 +56,7 @@
 
 	.amelipro-copy-btn-wrapper {
 		position: relative;
+		display: inline-block;
 	}
 
 	.validation-msg {
