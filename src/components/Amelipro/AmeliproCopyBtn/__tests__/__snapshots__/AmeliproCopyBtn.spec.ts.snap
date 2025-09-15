@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproCopyBtn > render correctly 1`] = `
+<div
+  class="amelipro-copy-btn-wrapper"
+  id="my-btn-id"
+>
+  <ameliproiconbtn
+    btn-label="Copier le texte"
+    class="
+      amelipro-copy-btn
+      ml-4
+    "
+    icon="copy"
+    icon-color="ap-blue-darken-1"
+    icon-hover-color="ap-blue-darken-2"
+    large=""
+    title="Copier le texte"
+    unique-id="my-btn-id-copy-btn"
+  ></ameliproiconbtn>
+  <!-- v-if -->
+</div>
+`;
