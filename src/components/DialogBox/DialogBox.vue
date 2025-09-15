@@ -133,12 +133,12 @@
 				'sy-dialog-box-draggable--active': props.draggable && isGrabbing,
 			}"
 			:aria-label="props.draggable ? locales.draggable : undefined"
-			@mousedown="startDragging"
 		>
 			<VCardTitle
 				class="sy-dialog-box-title"
 				v-bind="options.cardTitle"
 				:title="props.draggable ? locales.dragInstruction : undefined"
+				@mousedown="startDragging"
 			>
 				<slot name="title">
 					<h2
