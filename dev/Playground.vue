@@ -32,7 +32,7 @@ import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 					return 'Veuillez d\'abord sélectionner une date de début'
 
 				const start = parseFrDate(startDate.value)
-				const end = parseFrDate(formattedDate(value))
+				const end = parseFrDate(value)
 
 				if (!start || !end) return true
 
