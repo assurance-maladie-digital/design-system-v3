@@ -20,31 +20,22 @@ export const Default: Story = {
 		uniqueId: 'my-btn-id',
 	},
 	parameters: {
-		render: args => ({
-			components: { AmeliproCopyBtn },
-			setup() {
-				return { args }
-			},
-			template: `
-				<AmeliproCopyBtn
-					v-bind="args"
-				>
-					{{ args.default }}
-				</AmeliproCopyBtn>
-			`,
-		}),
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<template>
-	<AmeliproCopyBtn
-		text-to-copy="texte à copier"
-		unique-id="my-btn-id"
-	>
-		My Button
-	</AmeliproCopyBtn>
-</template>
-				`,
+				code: `
+	<div style="display: flex; align-items: center;">
+		<p>
+			Texte à copier
+		</p>
+
+		<AmeliproCopyBtn
+			text-to-copy="texte à copier"
+			unique-id="my-btn-id"
+		>
+			My Button
+		</AmeliproCopyBtn>
+	</div>`,
 			},
 			{
 				name: 'Script',
@@ -55,4 +46,23 @@ export const Default: Story = {
 			},
 		],
 	},
+	render: args => ({
+		components: { AmeliproCopyBtn },
+		setup() {
+			return { args }
+		},
+		template: `
+			<div style="display: flex; align-items: center;">
+				<p>
+					Texte à copier
+				</p>
+				
+				<AmeliproCopyBtn
+					v-bind="args"
+				>
+					{{ args.default }}
+				</AmeliproCopyBtn>
+			</div>
+		`,
+	}),
 }
