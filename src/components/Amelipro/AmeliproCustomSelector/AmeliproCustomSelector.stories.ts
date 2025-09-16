@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch } from 'vue'
 import AmeliproCustomSelector from './AmeliproCustomSelector.vue'
+import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 
 const meta = {
 	argTypes: {
@@ -416,7 +417,7 @@ export const ItemsPerLine: Story = {
 
 export const LabelInfo: Story = {
 	args: {
-		groupLabel: 'Label avec information',
+		groupLabel: 'Label avec info-bulle',
 		modelValue: items,
 		uniqueId: 'custom-selector-labelinfo',
 	},
@@ -425,15 +426,18 @@ export const LabelInfo: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-  <p>Le slot <code>labelInfo</code> permet d’ajouter une information au label du groupe.</p>
+  <p>Le slot <code>labelInfo</code> permet d’ajouter une info-bulle au label du groupe.</p>
   <AmeliproCustomSelector
     v-model="value"
-    group-label="Label avec information"
+    group-label="Label avec info-bulle"
     unique-id="custom-selector-labelinfo"
   >
-    <template #labelInfo>
-      <span style="color: #1976d2;">ℹ️ information personnalisée</span>
-    </template>
+	<template #labelInfo>
+		<AmeliproTooltips
+			tooltip-text="Info-bulle personnalisée"
+			unique-id="amelipro-tooltip-id"
+		/>
+	</template>
   </AmeliproCustomSelector>
 </template>`,
 			},
@@ -448,7 +452,7 @@ export const LabelInfo: Story = {
 		],
 	},
 	render: args => ({
-		components: { AmeliproCustomSelector },
+		components: { AmeliproCustomSelector, AmeliproTooltips },
 		setup() {
 			const model = ref(args.modelValue)
 			watch(() => args.modelValue, (newValue) => {
@@ -456,11 +460,14 @@ export const LabelInfo: Story = {
 			})
 			return { args, model }
 		},
-		template: `<p class="mb-2">Le slot <code>labelInfo</code> permet d’ajouter une information au label du groupe.</p>
+		template: `<p class="mb-2">Le slot <code>labelInfo</code> permet d’ajouter une info-bulle au label du groupe.</p>
 <AmeliproCustomSelector v-bind="args" v-model="model">
-  <template #labelInfo>
-    <span style="color: #1976d2;">ℹ️ information personnalisée</span>
-  </template>
+	<template #labelInfo>
+		<AmeliproTooltips
+			tooltip-text="Info-bulle personnalisée"
+			unique-id="amelipro-tooltip-id"
+		/>
+	</template>
 </AmeliproCustomSelector>`,
 	}),
 }
