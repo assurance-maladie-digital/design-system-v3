@@ -430,7 +430,6 @@
 						<li
 							v-for="(item, index) in props.leftMenu"
 							:key="index"
-							:value="index"
 							:class="{
 								active: getCurrentPageIndex() === index && selectedSubItemText !== 'Professionnel de santé',
 								'menu-open': index === 1 && menuOpen,
@@ -439,7 +438,7 @@
 						>
 							<component
 								:is="getLinkComponent(item as MenuItem)"
-								:aria-label="item.title"
+								:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + ', Menu déroulant' : item.title"
 								:href="item.href"
 								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 								:tabindex="0"
@@ -447,6 +446,9 @@
 								:title="item.title"
 								:to="item.to"
 								:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
+								:aria-expanded="itemsSelectMenu && index === 1 ? (menuOpen ? 'true' : 'false') : undefined"
+								:aria-haspopup="itemsSelectMenu && index === 1 ? 'menu' : undefined"
+								:aria-activedescendant="itemsSelectMenu && index === 1 ? (activeDescendantId || undefined) : undefined"
 								@click="checkActiveLink(index)"
 								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
@@ -462,22 +464,15 @@
 									scroll-strategy="none"
 									:offset="[-2,16]"
 									:close-on-content-click="true"
-									containment
 									@update:model-value="(val) => val === false && hideOverlay()"
 								>
 									<template #activator="{ props: activatorProps }">
-										<button
+										<span
 											ref="menuButtonRef"
 											v-bind="activatorProps"
-											:aria-label="dropdownMenuTitle + ', Menu déroulant'"
 											:class="{ 'link-active': activeIndex === index, 'menu-open': menuOpen }"
 											:style="smAndDown ? {minWidth: '136px'} : {minWidth: '236px'}"
-											:aria-expanded="menuOpen ? 'true' : 'false'"
-											:aria-haspopup="'menu'"
-											:aria-activedescendant="activeDescendantId || undefined"
 											class="sy-header-button d-flex justify-space-between"
-											tabindex="-1"
-											@click="handleLink(index); checkActiveLink(index)"
 										>
 											{{ dropdownMenuTitle }}
 											<v-icon
@@ -485,10 +480,9 @@
 												size="small"
 												class="ml-1"
 											/>
-										</button>
+										</span>
 									</template>
 									<v-list
-										dense
 										role="menu"
 										tabindex="-1"
 										:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
@@ -509,7 +503,10 @@
 											}"
 											@click="handleSubMenuItemClick(subItem)"
 										>
-											<v-list-item-title class="text-primary">
+											<v-list-item-title
+												class="text-primary"
+												role="presentation"
+											>
 												<v-icon
 													:icon="mdiChevronRight"
 													size="small"
