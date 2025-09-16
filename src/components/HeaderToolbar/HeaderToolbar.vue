@@ -341,6 +341,35 @@
 				(menuItems[currentIndex] as HTMLElement).click()
 			}
 			return
+		default: {
+			// Navigation par caractère - recherche d'un item qui commence par la lettre tapée
+			if (event.key.length === 1 && /^[a-zA-ZÀ-ÿ]$/.test(event.key)) {
+				event.preventDefault()
+				const searchChar = event.key.toLowerCase()
+
+				// Commencer la recherche à partir de l'élément suivant le focus actuel
+				const startIndex = currentIndex >= 0 ? currentIndex + 1 : 0
+
+				// Rechercher d'abord à partir de l'index de départ jusqu'à la fin
+				for (let i = startIndex; i < menuItems.length; i++) {
+					const itemText = (menuItems[i] as HTMLElement).textContent?.trim().toLowerCase()
+					if (itemText && itemText.startsWith(searchChar)) {
+						activeDescendantId.value = menuItems[i].id
+						return
+					}
+				}
+
+				// Si rien trouvé, rechercher du début jusqu'à l'index de départ
+				for (let i = 0; i < startIndex; i++) {
+					const itemText = (menuItems[i] as HTMLElement).textContent?.trim().toLowerCase()
+					if (itemText && itemText.startsWith(searchChar)) {
+						activeDescendantId.value = menuItems[i].id
+						return
+					}
+				}
+			}
+			break
+		}
 		}
 
 		if (newIndex !== currentIndex && newIndex >= 0) {
@@ -353,16 +382,13 @@
 		menuOpen.value = true
 		showOverlay.value = true
 		nextTick(() => {
-			// Placer le focus sur le v-list
-			const menuList = document.querySelector('[role="menu"]') as HTMLElement
-			if (menuList) {
-				menuList.focus()
-			}
-
 			// Définir le premier item comme actif pour aria-activedescendant
 			const menuItems = document.querySelectorAll('[role="menuitem"]')
 			if (menuItems.length > 0) {
-				activeDescendantId.value = menuItems[0].id
+				const firstMenuItem = menuItems[0] as HTMLElement
+				activeDescendantId.value = firstMenuItem.id
+				// Placer le focus directement sur le premier item du menu
+				firstMenuItem.focus()
 			}
 		})
 	}
@@ -464,7 +490,7 @@
 									<v-list
 										dense
 										role="menu"
-										tabindex="0"
+										tabindex="-1"
 										:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
 										:style="smAndDown ? {width: '110vh'} : {width: elementWidth >= 260 ? elementWidth + 'px' : '236px'}"
 										@keydown="handleMenuKeydown"
@@ -475,7 +501,7 @@
 											:key="subIndex"
 											:value="subIndex"
 											role="menuitem"
-											tabindex="-1"
+											tabindex="0"
 											:aria-current="subItem.text === selectedSubItemText && getCurrentPageIndex() === 1 ? 'page' : undefined"
 											:class="{
 												'subitem-selected': subItem.text === selectedSubItemText,
