@@ -184,6 +184,8 @@
 	const showOverlay = ref(false)
 	const highlightMenu = ref(false)
 	const activeIndex = ref<number | null>(null)
+	const activeDescendantId = ref<string | null>(null)
+	const menuButtonRef = ref<HTMLElement | null>(null)
 
 	const hideOverlay = () => {
 		const activeSelected = document.querySelector('.custom-select > span')?.textContent
@@ -192,6 +194,7 @@
 		}
 		showOverlay.value = false
 		menuOpen.value = false // S'assurer que le menu se ferme aussi
+		activeDescendantId.value = null
 	}
 	const handleLink = (index: number) => {
 		if (index === 1) {
@@ -219,8 +222,8 @@
 
 	const handleKeyboardEnter = (item: MenuItem, index: number) => {
 		if (index === 1) {
-			// Pour le menu déroulant, basculer l'état du menu
-			menuOpen.value = !menuOpen.value
+			// Pour le menu déroulant, ouvrir le menu et l'overlay
+			openMenuWithKeyboard()
 		}
 		else if (item.href) {
 			// Pour les liens, naviguer vers la destination
@@ -246,6 +249,17 @@
 		dropdownMenuTitle.value = subItem.text
 		activeIndex.value = 1
 		selectedSubItemText.value = subItem.text // Update selected sub-item tracker
+
+		// Fermer le menu et rediriger le focus sur le bouton
+		menuOpen.value = false
+		activeDescendantId.value = null
+
+		// Rediriger le focus sur le bouton après sélection
+		nextTick(() => {
+			if (menuButtonRef.value) {
+				menuButtonRef.value.focus()
+			}
+		})
 
 		if (subItem.href) {
 			if (subItem.openInNewTab) {
@@ -280,6 +294,79 @@
 		window.removeEventListener('resize', updateWidth)
 	})
 
+	// Gestion de la navigation clavier dans le menu
+	const handleMenuKeydown = (event: KeyboardEvent) => {
+		const menuItems = document.querySelectorAll('[role="menuitem"]')
+		if (!menuItems.length) return
+
+		const currentIndex = activeDescendantId.value
+			? Array.from(menuItems).findIndex(item => item.id === activeDescendantId.value)
+			: -1
+
+		let newIndex = currentIndex
+
+		switch (event.key) {
+		case 'ArrowDown':
+			event.preventDefault()
+			newIndex = currentIndex < menuItems.length - 1 ? currentIndex + 1 : 0
+			break
+		case 'ArrowUp':
+			event.preventDefault()
+			newIndex = currentIndex > 0 ? currentIndex - 1 : menuItems.length - 1
+			break
+		case 'Home':
+			event.preventDefault()
+			newIndex = 0
+			break
+		case 'End':
+			event.preventDefault()
+			newIndex = menuItems.length - 1
+			break
+		case 'Escape': {
+			event.preventDefault()
+			menuOpen.value = false
+			showOverlay.value = false
+			activeDescendantId.value = null
+			// Retourner le focus sur le lien du 2ème menu (Professionnel de santé)
+			const secondMenuItem = document.querySelector('#left-menu li:nth-child(2) a') as HTMLElement
+			if (secondMenuItem) {
+				secondMenuItem.focus()
+			}
+			return
+		}
+		case 'Enter':
+		case ' ':
+			event.preventDefault()
+			if (currentIndex >= 0) {
+				(menuItems[currentIndex] as HTMLElement).click()
+			}
+			return
+		}
+
+		if (newIndex !== currentIndex && newIndex >= 0) {
+			activeDescendantId.value = menuItems[newIndex].id
+		}
+	}
+
+	// Ouvrir le menu et placer le focus sur le premier élément
+	const openMenuWithKeyboard = () => {
+		menuOpen.value = true
+		showOverlay.value = true
+		nextTick(() => {
+			// Placer le focus sur le v-list
+			const menuList = document.querySelector('[role="menu"]') as HTMLElement
+			if (menuList) {
+				menuList.focus()
+			}
+
+			// Définir le premier item comme actif pour aria-activedescendant
+			const menuItems = document.querySelectorAll('[role="menuitem"]')
+			if (menuItems.length > 0) {
+				activeDescendantId.value = menuItems[0].id
+			}
+		})
+	}
+
 	defineExpose({
 		hideOverlay,
 		handleLink,
@@ -291,6 +378,8 @@
 		getLinkComponent,
 		handleSubMenuItemClick,
 		handleKeyboardEnter,
+		openMenuWithKeyboard,
+		handleMenuKeydown,
 	})
 </script>
 
@@ -316,8 +405,8 @@
 							v-for="(item, index) in props.leftMenu"
 							:key="index"
 							:value="index"
-							:class="{ 
-								active: getCurrentPageIndex() === index && selectedSubItemText !== 'Professionnel de santé', 
+							:class="{
+								active: getCurrentPageIndex() === index && selectedSubItemText !== 'Professionnel de santé',
 								'menu-open': index === 1 && menuOpen,
 								'current-page': getCurrentPageIndex() === index
 							}"
@@ -336,6 +425,8 @@
 								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 								@keydown.enter.prevent="handleKeyboardEnter(item, index)"
+								@keydown.space.prevent="index === 1 ? openMenuWithKeyboard() : null"
+								@keydown.arrow-down.prevent="index === 1 ? openMenuWithKeyboard() : null"
 							>
 								<v-menu
 									v-if="itemsSelectMenu && index === 1"
@@ -350,13 +441,16 @@
 								>
 									<template #activator="{ props: activatorProps }">
 										<button
+											ref="menuButtonRef"
 											v-bind="activatorProps"
 											:aria-label="dropdownMenuTitle + ', Menu déroulant'"
 											:class="{ 'link-active': activeIndex === index, 'menu-open': menuOpen }"
 											:style="smAndDown ? {minWidth: '136px'} : {minWidth: '236px'}"
 											:aria-expanded="menuOpen ? 'true' : 'false'"
-											:aria-haspopup="'true'"
+											:aria-haspopup="'menu'"
+											:aria-activedescendant="activeDescendantId || undefined"
 											class="sy-header-button d-flex justify-space-between"
+											tabindex="-1"
 											@click="handleLink(index); checkActiveLink(index)"
 										>
 											{{ dropdownMenuTitle }}
@@ -369,15 +463,24 @@
 									</template>
 									<v-list
 										dense
+										role="menu"
+										tabindex="0"
 										:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
 										:style="smAndDown ? {width: '110vh'} : {width: elementWidth >= 260 ? elementWidth + 'px' : '236px'}"
+										@keydown="handleMenuKeydown"
 									>
 										<v-list-item
 											v-for="(subItem, subIndex) in itemsSelectMenu"
+											:id="`menu-item-${subIndex}`"
 											:key="subIndex"
 											:value="subIndex"
+											role="menuitem"
+											tabindex="-1"
 											:aria-current="subItem.text === selectedSubItemText && getCurrentPageIndex() === 1 ? 'page' : undefined"
-											:class="{ 'subitem-selected': subItem.text === selectedSubItemText }"
+											:class="{
+												'subitem-selected': subItem.text === selectedSubItemText,
+												'menu-item-focused': activeDescendantId === `menu-item-${subIndex}`
+											}"
 											@click="handleSubMenuItemClick(subItem)"
 										>
 											<v-list-item-title class="text-primary">
@@ -552,6 +655,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 			// Indicateur visuel non-colorimétrique pour la page actuelle
 			&.current-page {
 				position: relative;
+
 				a {
 					font-weight: 900;
 					text-decoration: underline;
@@ -602,6 +706,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 			// Indicateur visuel non-colorimétrique pour la page actuelle
 			&.current-page {
 				position: relative;
+
 				a,
 				button,
 				.sy-header-button {
@@ -625,6 +730,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 			// Indicateur visuel non-colorimétrique pour la page actuelle
 			&.current-page {
 				position: relative;
+
 				a {
 					font-weight: 900;
 					text-decoration: underline;
@@ -714,6 +820,13 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 
 	&.v-list-item--link:hover {
 		background-color: transparent;
+	}
+
+	// Style pour l'élément ayant le focus via aria-activedescendant
+	&.menu-item-focused {
+		background-color: rgb(25 118 210 / 12%);
+		outline: 2px solid #1976d2;
+		outline-offset: -2px;
 	}
 }
 
