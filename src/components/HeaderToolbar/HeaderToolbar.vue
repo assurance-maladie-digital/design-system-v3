@@ -27,6 +27,10 @@
 				},
 			],
 		},
+		currentPageIndex: {
+			type: Number,
+			default: null,
+		},
 		rightMenu: {
 			type: Array as PropType<MenuItem[]>,
 			default: () => [
@@ -195,10 +199,18 @@
 		}
 	}
 	const checkActiveLink = (index: number) => {
-		activeIndex.value = index
+		// Ne pas changer l'activeIndex si currentPageIndex est défini
+		if (props.currentPageIndex === null) {
+			activeIndex.value = index
+		}
 		if (index !== 1) {
 			highlightMenu.value = false
 		}
+	}
+
+	// Computed pour déterminer quel élément doit avoir aria-current
+	const getCurrentPageIndex = () => {
+		return props.currentPageIndex !== null ? props.currentPageIndex : activeIndex.value
 	}
 
 	const deleteActiveLink = () => {
@@ -304,8 +316,11 @@
 							v-for="(item, index) in props.leftMenu"
 							:key="index"
 							:value="index"
-							:class="{ active: activeIndex === index && selectedSubItemText !== 'Professionnel de santé', 'menu-open': index === 1 && menuOpen }"
-							:aria-current="activeIndex === index ? 'page' : undefined"
+							:class="{ 
+								active: getCurrentPageIndex() === index && selectedSubItemText !== 'Professionnel de santé', 
+								'menu-open': index === 1 && menuOpen,
+								'current-page': getCurrentPageIndex() === index
+							}"
 						>
 							<component
 								:is="getLinkComponent(item as MenuItem)"
@@ -316,7 +331,7 @@
 								:target="item.openInNewTab ? '_blank' : undefined"
 								:title="item.title"
 								:to="item.to"
-								:aria-current="activeIndex === index ? 'page' : undefined"
+								:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
 								@click="checkActiveLink(index)"
 								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
@@ -361,7 +376,7 @@
 											v-for="(subItem, subIndex) in itemsSelectMenu"
 											:key="subIndex"
 											:value="subIndex"
-											:aria-current="subItem.text === selectedSubItemText ? 'true' : undefined"
+											:aria-current="subItem.text === selectedSubItemText && getCurrentPageIndex() === 1 ? 'page' : undefined"
 											:class="{ 'subitem-selected': subItem.text === selectedSubItemText }"
 											@click="handleSubMenuItemClick(subItem)"
 										>
@@ -406,7 +421,6 @@
 								:href="item.href"
 								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 								:tabindex="0"
-								:aria-current="activeIndex === index ? 'page' : undefined"
 								:target="item.openInNewTab ? '_blank' : undefined"
 								:title="item.title"
 								:to="item.to"
@@ -534,6 +548,15 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 			a:hover {
 				background: $user-assure;
 			}
+
+			// Indicateur visuel non-colorimétrique pour la page actuelle
+			&.current-page {
+				position: relative;
+				a {
+					font-weight: 900;
+					text-decoration: underline;
+				}
+			}
 		}
 
 		// Deuxième élément (Professionnel de santé)
@@ -575,6 +598,17 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 					text-decoration: underline;
 				}
 			}
+
+			// Indicateur visuel non-colorimétrique pour la page actuelle
+			&.current-page {
+				position: relative;
+				a,
+				button,
+				.sy-header-button {
+					font-weight: 900;
+					text-decoration: underline;
+				}
+			}
 		}
 
 		// Troisième élément (Entreprise)
@@ -586,6 +620,15 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 			&.active,
 			a:hover {
 				background: $user-entreprise;
+			}
+
+			// Indicateur visuel non-colorimétrique pour la page actuelle
+			&.current-page {
+				position: relative;
+				a {
+					font-weight: 900;
+					text-decoration: underline;
+				}
 			}
 		}
 	}

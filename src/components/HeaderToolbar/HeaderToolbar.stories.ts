@@ -21,6 +21,10 @@ const meta: Meta<typeof HeaderToolbar> = {
 			control: 'object',
 			description: 'Menu de sélection.',
 		},
+		currentPageIndex: {
+			control: 'number',
+			description: 'Index de la page actuelle.',
+		},
 	},
 }
 
