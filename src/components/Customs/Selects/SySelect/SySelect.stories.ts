@@ -61,7 +61,7 @@ const meta: Meta<typeof SySelect> = {
 		},
 		width: {
 			control: 'text',
-			description: 'Permet de définir une largeur personnalisée pour le champ de sélection (en px)',
+			description: 'Permet de définir une largeur personnalisée pour le champ de sélection',
 		},
 		helpText: {
 			control: 'text',
