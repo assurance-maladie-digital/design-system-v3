@@ -157,13 +157,13 @@
 				},
 			],
 		},
-		ariaLeftMenu: {
+		ariaLeftLabel: {
 			type: String,
-			default: 'left-menu',
+			default: 'Choix du public',
 		},
-		ariaRightMenu: {
+		ariaRightLabel: {
 			type: String,
-			default: 'right-menu',
+			default: 'Menu institutionnel',
 		},
 	})
 
@@ -416,155 +416,159 @@
 </script>
 
 <template>
-	<div class="toolbar">
+	<header class="toolbar">
 		<div class="container">
-			<slot name="left-menu">
-				<button
-					v-if="showOverlay"
-					aria-label="Close overlay"
-					class="overlay"
-					@click="hideOverlay"
-					@keydown.enter="hideOverlay"
-					@keydown.esc="hideOverlay"
-				/>
-				<nav
-					id="left-menu"
-					:aria-labelledby="props.ariaLeftMenu"
-					role="navigation"
-				>
-					<ul ref="secondLiRef">
-						<li
-							v-for="(item, index) in props.leftMenu"
-							:key="index"
-							:class="{
-								active: getCurrentPageIndex() === index && selectedSubItemText !== 'Professionnel de santé',
-								'menu-open': index === 1 && menuOpen,
-								'current-page': getCurrentPageIndex() === index
-							}"
-						>
-							<component
-								:is="getLinkComponent(item as MenuItem)"
-								:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + ', Menu déroulant' : item.title"
-								:href="item.href"
-								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
-								:tabindex="0"
-								:target="item.openInNewTab ? '_blank' : undefined"
-								:title="item.title"
-								:to="item.to"
-								:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
-								:aria-expanded="itemsSelectMenu && index === 1 ? (menuOpen ? 'true' : 'false') : undefined"
-								:aria-haspopup="itemsSelectMenu && index === 1 ? 'menu' : undefined"
-								:aria-activedescendant="itemsSelectMenu && index === 1 ? (activeDescendantId || undefined) : undefined"
-								@click="checkActiveLink(index)"
-								@focus="index === 1 && showOverlay ? highlightMenu = true : null"
-								@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
-								@keydown.enter.prevent="handleKeyboardEnter(item, index)"
-								@keydown.space.prevent="index === 1 ? openMenuWithKeyboard() : null"
-								@keydown.arrow-down.prevent="index === 1 ? openMenuWithKeyboard() : null"
+			<section class="left-section">
+				<slot name="left-menu">
+					<button
+						v-if="showOverlay"
+						aria-label="Close overlay"
+						class="overlay"
+						@click="hideOverlay"
+						@keydown.enter="hideOverlay"
+						@keydown.esc="hideOverlay"
+					/>
+					<nav
+						id="left-menu"
+						:aria-label="props.ariaLeftLabel"
+						role="navigation"
+					>
+						<ul ref="secondLiRef">
+							<li
+								v-for="(item, index) in props.leftMenu"
+								:key="index"
+								:class="{
+									active: getCurrentPageIndex() === index && selectedSubItemText !== 'Professionnel de santé',
+									'menu-open': index === 1 && menuOpen,
+									'current-page': getCurrentPageIndex() === index
+								}"
 							>
-								<span
-									v-if="itemsSelectMenu && index === 1"
-									ref="menuButtonRef"
-									:class="{ 'link-active': activeIndex === index, 'menu-open': menuOpen }"
-									:style="smAndDown ? {minWidth: '136px'} : {minWidth: '236px'}"
-									class="sy-header-button d-flex justify-space-between"
+								<component
+									:is="getLinkComponent(item as MenuItem)"
+									:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + ', Menu déroulant' : item.title"
+									:href="item.href"
+									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
+									:tabindex="0"
+									:target="item.openInNewTab ? '_blank' : undefined"
+									:title="item.title"
+									:to="item.to"
+									:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
+									:aria-expanded="itemsSelectMenu && index === 1 ? (menuOpen ? 'true' : 'false') : undefined"
+									:aria-haspopup="itemsSelectMenu && index === 1 ? 'menu' : undefined"
+									:aria-activedescendant="itemsSelectMenu && index === 1 ? (activeDescendantId || undefined) : undefined"
+									@click="checkActiveLink(index)"
+									@focus="index === 1 && showOverlay ? highlightMenu = true : null"
+									@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
+									@keydown.enter.prevent="handleKeyboardEnter(item, index)"
+									@keydown.space.prevent="index === 1 ? openMenuWithKeyboard() : null"
+									@keydown.arrow-down.prevent="index === 1 ? openMenuWithKeyboard() : null"
 								>
-									{{ dropdownMenuTitle }}
-									<v-icon
-										:icon="mdiChevronDown"
-										size="small"
-										class="ml-1"
-									/>
-								</span>
-								<v-menu
-									v-if="itemsSelectMenu && index === 1"
-									v-model="menuOpen"
-									location="bottom"
-									attach="body"
-									scroll-strategy="none"
-									:offset="[-12,0]"
-									:close-on-content-click="true"
-									activator="parent"
-									@update:model-value="(val) => { if (val) { showOverlay = true } else { hideOverlay() } }"
-								>
-									<v-list
-										role="menu"
-										tabindex="-1"
-										:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
-										:style="smAndDown ? {width: '110vh'} : {width: elementWidth >= 260 ? elementWidth + 'px' : '236px'}"
-										@keydown="handleMenuKeydown"
+									<span
+										v-if="itemsSelectMenu && index === 1"
+										ref="menuButtonRef"
+										:class="{ 'link-active': activeIndex === index, 'menu-open': menuOpen }"
+										:style="smAndDown ? {minWidth: '136px'} : {minWidth: '236px'}"
+										class="sy-header-button d-flex justify-space-between"
 									>
-										<v-list-item
-											v-for="(subItem, subIndex) in itemsSelectMenu"
-											:id="`menu-item-${subIndex}`"
-											:key="subIndex"
-											:value="subIndex"
-											role="menuitem"
-											tabindex="0"
-											:aria-current="subItem.text === selectedSubItemText && getCurrentPageIndex() === 1 ? 'page' : undefined"
-											:class="{
-												'subitem-selected': subItem.text === selectedSubItemText,
-												'menu-item-focused': activeDescendantId === `menu-item-${subIndex}`
-											}"
-											@click="handleSubMenuItemClick(subItem)"
+										{{ dropdownMenuTitle }}
+										<v-icon
+											:icon="mdiChevronDown"
+											size="small"
+											class="ml-1"
+										/>
+									</span>
+									<v-menu
+										v-if="itemsSelectMenu && index === 1"
+										v-model="menuOpen"
+										location="bottom"
+										attach="body"
+										scroll-strategy="none"
+										:offset="[-12,0]"
+										:close-on-content-click="true"
+										activator="parent"
+										@update:model-value="(val) => { if (val) { showOverlay = true } else { hideOverlay() } }"
+									>
+										<v-list
+											role="menu"
+											tabindex="-1"
+											:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
+											:style="smAndDown ? {width: '110vh'} : {width: elementWidth >= 260 ? elementWidth + 'px' : '236px'}"
+											@keydown="handleMenuKeydown"
 										>
-											<v-list-item-title
-												class="text-primary"
-												role="presentation"
+											<v-list-item
+												v-for="(subItem, subIndex) in itemsSelectMenu"
+												:id="`menu-item-${subIndex}`"
+												:key="subIndex"
+												:value="subIndex"
+												role="menuitem"
+												tabindex="0"
+												:aria-current="subItem.text === selectedSubItemText && getCurrentPageIndex() === 1 ? 'page' : undefined"
+												:class="{
+													'subitem-selected': subItem.text === selectedSubItemText,
+													'menu-item-focused': activeDescendantId === `menu-item-${subIndex}`
+												}"
+												@click="handleSubMenuItemClick(subItem)"
 											>
-												<v-icon
-													:icon="mdiChevronRight"
-													size="small"
-													class="ml-1"
-												/>
-												<span>
-													{{ subItem.text }}
-												</span>
-											</v-list-item-title>
-										</v-list-item>
-									</v-list>
-								</v-menu>
-								<span
-									v-else
-									class="link"
-								>
-									{{ item.title }}
-								</span>
-							</component>
-						</li>
-					</ul>
-				</nav>
-			</slot>
-			<slot name="right-menu">
-				<nav
-					id="right-menu"
-					:aria-labelledby="props.ariaRightMenu"
-					role="navigation"
-				>
-					<ul>
-						<li
-							v-for="(item, index) in props.rightMenu"
-							:key="index"
-						>
-							<component
-								:is="getLinkComponent(item as MenuItem)"
-								:aria-label="item.title"
-								:href="item.href"
-								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
-								:tabindex="0"
-								:target="item.openInNewTab ? '_blank' : undefined"
-								:title="item.title"
-								:to="item.to"
-								@click="deleteActiveLink()"
+												<v-list-item-title
+													class="text-primary"
+													role="presentation"
+												>
+													<v-icon
+														:icon="mdiChevronRight"
+														size="small"
+														class="ml-1"
+													/>
+													<span>
+														{{ subItem.text }}
+													</span>
+												</v-list-item-title>
+											</v-list-item>
+										</v-list>
+									</v-menu>
+									<span
+										v-else
+										class="link"
+									>
+										{{ item.title }}
+									</span>
+								</component>
+							</li>
+						</ul>
+					</nav>
+				</slot>
+			</section>
+			<section class="right-section">
+				<slot name="right-menu">
+					<nav
+						id="right-menu"
+						:aria-label="props.ariaRightLabel"
+						role="navigation"
+					>
+						<ul>
+							<li
+								v-for="(item, index) in props.rightMenu"
+								:key="index"
 							>
-								<span class="right-menu-item">{{ item.title }}</span>
-							</component>
-						</li>
-					</ul>
-				</nav>
-			</slot>
+								<component
+									:is="getLinkComponent(item as MenuItem)"
+									:aria-label="item.title"
+									:href="item.href"
+									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
+									:tabindex="0"
+									:target="item.openInNewTab ? '_blank' : undefined"
+									:title="item.title"
+									:to="item.to"
+									@click="deleteActiveLink()"
+								>
+									<span class="right-menu-item">{{ item.title }}</span>
+								</component>
+							</li>
+						</ul>
+					</nav>
+				</slot>
+			</section>
 		</div>
-	</div>
+	</header>
 </template>
 
 <style lang="scss" scoped>
