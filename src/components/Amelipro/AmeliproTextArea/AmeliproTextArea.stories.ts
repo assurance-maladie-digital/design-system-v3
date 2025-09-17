@@ -88,3 +88,354 @@ export const Default: Story = {
 />`,
 	}),
 }
+
+export const Disabled: Story = {
+	args: {
+		label: 'Champ désactivé',
+		uniqueId: 'text-area-disabled',
+		disabled: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le champ est désactivé grâce à la prop <code>disabled</code>.</p>
+	<AmeliproTextArea
+		v-model="model"
+		label="Champ désactivé"
+		unique-id="text-area-disabled"
+		disabled
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproTextArea } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const model = ref()
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTextArea },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>Le champ est désactivé grâce à la prop <code>disabled</code>.</p>
+<AmeliproTextArea
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const LectureSeule: Story = {
+	args: {
+		label: 'Lecture seule',
+		uniqueId: 'text-area-readonly',
+		readonly: true,
+		modelValue: 'Valeur en lecture seule',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le champ est en lecture seule grâce à la prop <code>readonly</code>.</p>
+	<AmeliproTextArea
+		v-model="model"
+		label="Lecture seule"
+		unique-id="text-area-readonly"
+		readonly
+		model-value="Valeur en lecture seule"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproTextArea } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const model = ref('Valeur en lecture seule')
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTextArea },
+		setup() {
+			const model = ref('Valeur en lecture seule')
+			watch(() => args.modelValue, (newValue) => {
+				model.value = String(newValue)
+			})
+			return { args, model }
+		},
+		template: `
+<p>Le champ est en lecture seule grâce à la prop <code>readonly</code>.</p>
+<AmeliproTextArea
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const Required: Story = {
+	args: {
+		label: 'Champ obligatoire',
+		uniqueId: 'text-area-required',
+		ariaRequired: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+	<AmeliproTextArea
+		v-model="model"
+		label="Champ obligatoire"
+		unique-id="text-area-required"
+		aria-required
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproTextArea } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const model = ref()
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTextArea },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+<AmeliproTextArea
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const LargeurPersonnalisee: Story = {
+	args: {
+		label: 'Largeur personnalisée',
+		uniqueId: 'text-area-largeur',
+		globalWidth: '400px',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>La largeur du champ est fixée à 400px via la prop <code>globalWidth</code>.</p>
+	<AmeliproTextArea
+		v-model="model"
+		label="Largeur personnalisée"
+		unique-id="text-area-largeur"
+		global-width="400px"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproTextArea } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const model = ref()
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTextArea },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>La largeur du champ est fixée à 400px via la prop <code>globalWidth</code>.</p>
+<AmeliproTextArea
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const Horizontal: Story = {
+	args: {
+		label: 'Affichage horizontal',
+		uniqueId: 'text-area-horizontal',
+		horizontal: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le champ est affiché en horizontal grâce à la prop <code>horizontal</code>.</p>
+	<AmeliproTextArea
+		v-model="model"
+		label="Affichage horizontal"
+		unique-id="text-area-horizontal"
+		horizontal
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproTextArea } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const model = ref()
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTextArea },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>Le champ est affiché en horizontal grâce à la prop <code>horizontal</code>.</p>
+<AmeliproTextArea
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const Validation: Story = {
+	args: {
+		label: 'Validation personnalisée',
+		uniqueId: 'text-area-validation',
+		rules: [
+			v => !!v || 'Ce champ est obligatoire',
+			v => (v ? v.startsWith('B') : true) || 'La valeur doit commencer par "B"',
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Ce champ est obligatoire et la valeur doit commencer par la lettre "B".</p>
+	<AmeliproTextArea
+		v-model="model"
+		label="Validation personnalisée"
+		unique-id="text-area-validation"
+		:rules="[
+			v => !!v || 'Ce champ est obligatoire',
+			v => (v ? v.startsWith('B') : true) || 'La valeur doit commencer par "B"',
+		]"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproTextArea } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const model = ref()
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTextArea },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>Ce champ est obligatoire et la valeur doit commencer par la lettre "B".</p>
+<AmeliproTextArea
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const LargeurLabel: Story = {
+	args: {
+		label: 'Un très long label dont la largeur est personnalisée',
+		uniqueId: 'text-area-label-width',
+		labelMaxWidth: '200px',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>La largeur du label est fixée à 200px via la prop <code>labelMaxWidth</code>.</p>
+	<AmeliproTextArea
+		v-model="model"
+		label="Un très long label dont la largeur est personnalisée"
+		unique-id="text-area-label-width"
+		label-max-width="200px"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproTextArea } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const model = ref()
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTextArea },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>La largeur du label est fixée à 200px via la prop <code>labelMaxWidth</code>.</p>
+<AmeliproTextArea
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}

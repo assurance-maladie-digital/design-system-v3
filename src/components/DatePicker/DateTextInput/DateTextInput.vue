@@ -918,11 +918,6 @@
 		hasInteracted.value = true
 		const ok = runRules(inputValue.value)
 		if (!ok || hasError.value) return false
-		if (props.showSuccessMessages && inputValue.value && !hasError.value && warningMessages.value.length === 0) {
-			if (!successMessages.value.includes(DATE_PICKER_MESSAGES.SUCCESS_VALID_DATE)) {
-				successMessages.value.push(DATE_PICKER_MESSAGES.SUCCESS_VALID_DATE)
-			}
-		}
 		return !hasError.value
 	}
 

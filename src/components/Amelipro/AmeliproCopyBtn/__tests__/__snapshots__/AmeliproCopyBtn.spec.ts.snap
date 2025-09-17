@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproCopyBtn > render correctly 1`] = `
+<div
+  class="amelipro-copy-btn-wrapper"
+  id="my-btn-id"
+>
+  <button
+    class="
+      amelipro-copy-btn
+      btn--icon
+      elevation-0
+      ml-4
+      rounded-0
+      v-btn
+      v-btn--density-default
+      v-btn--elevated
+      v-btn--icon
+      v-btn--size-default
+      v-btn--variant-elevated
+      v-theme--light
+    "
+    id="my-btn-id-copy-btn"
+    plain=""
+    style="
+      height: auto;
+      width: auto;
+    "
+    title="Copier le texte"
+    type="button"
+  >
+    <span class="v-btn__overlay"></span>
+    <span class="v-btn__underlay"></span>
+    <!---->
+    <span
+      class="v-btn__content"
+      data-no-activator=""
+    >
+      <span
+        class="d-sr-only"
+        id="my-btn-id-copy-btn-btn-label"
+      >
+        Copier le texte
+      </span>
+      <span
+        class="
+          amelipro-icon
+          icon-custom
+        "
+        id="my-btn-id-copy-btn-icon"
+      >
+        <span
+          aria-hidden="true"
+          class="
+            amelipro-custom-icon
+            custom-color
+            large
+          "
+          focusable="false"
+          role="img"
+          style="color: #00749C;"
+        >
+          <span>
+            <svg
+              aria-hidden="true"
+              version="1.1"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="shape-color"
+                d="M8.4,0c-.6,0-1.2.3-1.7.7-.5.5-.7,1.1-.7,1.7v2.4h2.4v-2.4h13.2v13.2h-2.4v2.4h2.4c.6,0,1.2-.3,1.7-.7.5-.5.7-1.1.7-1.7V2.4c0-.6-.3-1.2-.7-1.7-.5-.5-1.1-.7-1.7-.7h-13.2ZM2.4,6c-.6,0-1.2.3-1.7.7C.3,7.2,0,7.8,0,8.4v13.2C0,22.2.3,22.8.7,23.3c.5.5,1.1.7,1.7.7h13.2c.6,0,1.2-.3,1.7-.7.5-.5.7-1.1.7-1.7v-13.2c0-.6-.3-1.2-.7-1.7-.5-.5-1.1-.7-1.7-.7H2.4Z"
+              />
+            </svg>
+          </span>
+        </span>
+      </span>
+    </span>
+    <!---->
+    <!---->
+  </button>
+  <!-- v-if -->
+</div>
+`;
