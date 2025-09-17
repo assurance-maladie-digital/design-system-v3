@@ -616,14 +616,18 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	// Container for toolbar content
 	.container {
 		width: 100%;
-		max-height: $container-max-height;
+
+		/* Use min-height to allow growth with large text instead of clipping */
+		min-height: $container-max-height;
+		height: auto;
 		max-width: $header-max-width;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 
 		@media (width <= $header-breakpoint-sm) {
-			max-height: $container-max-height-mobile;
+			min-height: $container-max-height-mobile;
+			height: auto;
 		}
 
 		// Common list styling
@@ -631,6 +635,9 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 			display: flex;
 			align-items: center;
 			justify-content: flex-start;
+
+			/* Allow wrapping when text is zoomed so items don't overflow */
+			flex-wrap: wrap;
 			list-style: none;
 			text-decoration: none;
 		}
@@ -698,20 +705,23 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		// Deuxième élément (Professionnel de santé)
 		li:nth-child(2) {
 			z-index: $z-menu-item; // Augmenté pour rester au-dessus de l'overlay
-			max-height: $second-item-max-height;
+
+			/* Allow height to grow with larger text sizes */
+			min-height: $second-item-max-height;
 			position: relative; // Ajout pour garantir l'effet du z-index
 
 			@media (width <= $header-breakpoint-sm) {
-				max-height: $second-item-max-height-mobile;
+				min-height: $second-item-max-height-mobile;
 			}
 
 			a {
-				max-height: $second-item-max-height;
+				/* Let the link grow in height with text zoom */
+				min-height: $second-item-max-height;
 				position: relative; // Garantit l'application du z-index
 				z-index: $z-button; // S'assure que le lien reste visible
 
 				@media (width <= $header-breakpoint-sm) {
-					max-height: $second-item-max-height-mobile;
+					min-height: $second-item-max-height-mobile;
 				}
 			}
 
@@ -721,7 +731,9 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 				.sy-header-button {
 					text-align: left;
 					text-decoration: underline;
-					white-space: nowrap;
+
+					/* Allow wrapping to avoid clipping on text zoom */
+					white-space: normal;
 				}
 			}
 
@@ -780,11 +792,14 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		}
 
 		ul {
-			white-space: nowrap;
-			overflow: hidden;
+			/* Allow wrapping on text zoom to keep content visible and maintain contrast */
+			display: flex;
+			flex-wrap: wrap;
+			white-space: normal;
+			overflow: visible;
 
 			li {
-				display: inline-block;
+				display: inline-flex;
 			}
 		}
 	}
