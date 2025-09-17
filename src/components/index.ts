@@ -139,6 +139,7 @@ export { default as AmeliproCopyBtn } from './Amelipro/AmeliproCopyBtn/AmeliproC
 export { default as AmeliproCustomSelector } from './Amelipro/AmeliproCustomSelector/AmeliproCustomSelector.vue'
 export { default as AmeliproDialog } from './Amelipro/AmeliproDialog/AmeliproDialog.vue'
 export { default as AmeliproDisclosure } from './Amelipro/AmeliproDisclosure/AmeliproDisclosure.vue'
+export { default as AmeliproErrorTemplate } from './Amelipro/AmeliproErrorTemplate/AmeliproErrorTemplate.vue'
 export { default as AmeliproFooter } from './Amelipro/AmeliproFooter/AmeliproFooter.vue'
 export { default as AmeliproHeader } from './Amelipro/AmeliproHeader/AmeliproHeader.vue'
 export { default as AmeliproIcon } from './Amelipro/AmeliproIcon/AmeliproIcon.vue'
