@@ -1,0 +1,23 @@
+import { Controls, Canvas, Meta } from '@storybook/blocks';
+
+import * as AmeliproErrorTemplateStories from './AmeliproErrorTemplate.stories';
+
+<Meta of={AmeliproErrorTemplateStories} />
+
+# AmeliproErrorTemplate
+
+L’élément `AmeliproErrorTemplate` est utilisé pour afficher les différents messages d’alertes ou d’information.
+
+Malgré tous vos efforts, certaines erreurs seront inévitables. Pour entretenir une bonne expérience utilisateur vous devez afficher les bons messages au bon moment en fonction du type de problème. Si vous ne trouvez pas de message adapté parmi les messages de vie listés ci-dessous, veuillez prendre celui qui indique “erreur technique”.
+
+Pour les messages contenant un retour à la page d’accueil ou de connexion, il est possible de prévoir une redirection automatique au bout d’un temps défini. Dans ce cas précisez dans le message le texte suivant « Vous allez être redirigé vers (_"la page d’accueil"_ ou _"la page de connexion"_). Si la redirection ne se fait pas automatiquement, veuillez cliquer sur le lien suivant (_"Page d’accueil"_ ou _"Se reconnecter"_) ».
+
+## Règles d’usage
+
+Ce code est renvoyé par le serveur pour indiquer à l’utilisateur qu’aucune ressource (généralement une page web) n’a été trouvée à l’adresse demandée. L’entête de la page devrait être dynamique car même si dans la majorité des cas, l’utilisateur est connecté, l’affichage devrait être possible également dans le cas où il n’est pas connecté.
+
+<Canvas of={AmeliproErrorTemplateStories.Default} />
+
+## API
+
+<Controls of={AmeliproErrorTemplateStories.Default} />
