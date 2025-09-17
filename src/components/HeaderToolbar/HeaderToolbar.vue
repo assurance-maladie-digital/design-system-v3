@@ -198,7 +198,9 @@
 	}
 	const handleLink = (index: number) => {
 		if (index === 1) {
-			showOverlay.value = !showOverlay.value
+			// L'ouverture/fermeture du menu est gérée par v-menu via v-model
+			// Ici on s'assure seulement que l'overlay est visible quand on clique
+			showOverlay.value = true
 		}
 	}
 	const checkActiveLink = (index: number) => {
@@ -208,6 +210,10 @@
 		}
 		if (index !== 1) {
 			highlightMenu.value = false
+		}
+		// Déclencher l'overlay pour le menu déroulant (index 1)
+		if (index === 1) {
+			handleLink(index)
 		}
 	}
 
@@ -456,32 +462,31 @@
 								@keydown.space.prevent="index === 1 ? openMenuWithKeyboard() : null"
 								@keydown.arrow-down.prevent="index === 1 ? openMenuWithKeyboard() : null"
 							>
+								<span
+									v-if="itemsSelectMenu && index === 1"
+									ref="menuButtonRef"
+									:class="{ 'link-active': activeIndex === index, 'menu-open': menuOpen }"
+									:style="smAndDown ? {minWidth: '136px'} : {minWidth: '236px'}"
+									class="sy-header-button d-flex justify-space-between"
+								>
+									{{ dropdownMenuTitle }}
+									<v-icon
+										:icon="mdiChevronDown"
+										size="small"
+										class="ml-1"
+									/>
+								</span>
 								<v-menu
 									v-if="itemsSelectMenu && index === 1"
 									v-model="menuOpen"
 									location="bottom"
 									attach="body"
 									scroll-strategy="none"
-									:offset="[-2,16]"
+									:offset="[-12,0]"
 									:close-on-content-click="true"
-									@update:model-value="(val) => val === false && hideOverlay()"
+									activator="parent"
+									@update:model-value="(val) => { if (val) { showOverlay = true } else { hideOverlay() } }"
 								>
-									<template #activator="{ props: activatorProps }">
-										<span
-											ref="menuButtonRef"
-											v-bind="activatorProps"
-											:class="{ 'link-active': activeIndex === index, 'menu-open': menuOpen }"
-											:style="smAndDown ? {minWidth: '136px'} : {minWidth: '236px'}"
-											class="sy-header-button d-flex justify-space-between"
-										>
-											{{ dropdownMenuTitle }}
-											<v-icon
-												:icon="mdiChevronDown"
-												size="small"
-												class="ml-1"
-											/>
-										</span>
-									</template>
 									<v-list
 										role="menu"
 										tabindex="-1"
