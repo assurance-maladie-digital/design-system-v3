@@ -588,7 +588,7 @@
 									:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
 									:aria-expanded="itemsSelectMenu && index === 1 ? (menuOpen ? 'true' : 'false') : undefined"
 									:aria-haspopup="itemsSelectMenu && index === 1 ? 'menu' : undefined"
-									:aria-activedescendant="itemsSelectMenu && index === 1 ? (activeDescendantId || undefined) : undefined"
+									:aria-controls="itemsSelectMenu && index === 1 && menuOpen ? 'left-dropdown-menu' : undefined"
 									@click="checkActiveLink(index)"
 									@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 									@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
@@ -623,9 +623,11 @@
 										@update:model-value="onLeftMenuModel"
 									>
 										<v-list
+											id="left-dropdown-menu"
 											ref="leftMenuListRef"
 											role="menu"
 											tabindex="-1"
+											:aria-activedescendant="activeDescendantId || undefined"
 											:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
 											:style="smAndDown ? { width: '100vw', maxWidth: '100vw' } : { width: elementWidth >= 260 ? elementWidth + 'px' : '236px' }"
 											@keydown="handleMenuKeydown"
