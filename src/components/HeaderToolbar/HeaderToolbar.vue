@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { VMenu, VList, VListItem, VIcon } from 'vuetify/components'
-	import { mdiChevronDown, mdiChevronRight } from '@mdi/js'
+	import { mdiChevronDown, mdiChevronRight, mdiMenu } from '@mdi/js'
 	import { ref, type PropType, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
 	import type { MenuItem, SelectItem } from './types'
 	import { useDisplay } from 'vuetify'
@@ -167,53 +167,93 @@
 		},
 	})
 
+	// Display breakpoint helpers
 	const { smAndDown } = useDisplay()
 
+	// Return proper link component
 	const getLinkComponent = (item: MenuItem): string => {
-		if (item.href) {
-			return 'a'
-		}
-		else if (item.to) {
-			return 'RouterLink'
-		}
-		else {
-			return 'a' // fix doc
-		}
+		if (item.href) return 'a'
+		// Safely detect a possible router "to" without using 'any'
+		const maybeTo = (item as unknown as { to?: unknown }).to
+		if (maybeTo !== undefined && maybeTo !== null) return 'RouterLink'
+		return 'a'
 	}
 
+	// Overlay and focus state
 	const showOverlay = ref(false)
 	const highlightMenu = ref(false)
 	const activeIndex = ref<number | null>(null)
 	const activeDescendantId = ref<string | null>(null)
-	const menuButtonRef = ref<HTMLElement | null>(null)
 
-	const hideOverlay = () => {
-		const activeSelected = document.querySelector('.custom-select > span')?.textContent
-		if (activeSelected && activeSelected === 'Professionnel de santé') {
-			highlightMenu.value = false
+	const menuButtonRef = ref<HTMLElement | null>(null)
+	// Mobile burger and focus management
+	const mobileMenuOpen = ref(false)
+	const mobileBurgerButtonRef = ref<HTMLElement | null>(null)
+	const mobileRightMenuRef = ref<HTMLElement | null>(null)
+	const leftMenuListRef = ref<HTMLElement | null>(null)
+
+	const onLeftMenuModel = (val: boolean) => {
+		if (val) {
+			showOverlay.value = true
+			nextTick(() => {
+				setTimeout(() => {
+					const first = document.querySelector('.left-dropdown-menu [role="menuitem"]') as HTMLElement | null
+					if (first) {
+						activeDescendantId.value = first.id || null
+						first.focus()
+					}
+				}, 30)
+			})
 		}
+		else {
+			hideOverlay()
+		}
+	}
+
+	// Hide overlay and reset menu state
+	const hideOverlay = () => {
 		showOverlay.value = false
-		menuOpen.value = false // S'assurer que le menu se ferme aussi
+		menuOpen.value = false
 		activeDescendantId.value = null
 	}
+
+	// Handle click on left menu links
 	const handleLink = (index: number) => {
 		if (index === 1) {
-			// L'ouverture/fermeture du menu est gérée par v-menu via v-model
-			// Ici on s'assure seulement que l'overlay est visible quand on clique
+			// Overlay visibility when clicking the dropdown activator
 			showOverlay.value = true
 		}
 	}
+
+	// Update active link and manage overlay highlight logic
 	const checkActiveLink = (index: number) => {
-		// Ne pas changer l'activeIndex si currentPageIndex est défini
 		if (props.currentPageIndex === null) {
 			activeIndex.value = index
 		}
 		if (index !== 1) {
 			highlightMenu.value = false
 		}
-		// Déclencher l'overlay pour le menu déroulant (index 1)
 		if (index === 1) {
 			handleLink(index)
+		}
+	}
+
+	// Mobile burger open/close focus management
+	const onMobileMenuModel = (val: boolean) => {
+		if (val) {
+			nextTick(() => {
+				setTimeout(() => {
+					const first = document.getElementById('mobile-item-0') as HTMLElement | null
+					if (first && typeof first.focus === 'function') {
+						first.focus()
+					}
+				}, 100)
+			})
+		}
+		else {
+			nextTick(() => {
+				mobileBurgerButtonRef.value?.focus()
+			})
 		}
 	}
 
@@ -300,13 +340,14 @@
 		window.removeEventListener('resize', updateWidth)
 	})
 
-	// Gestion de la navigation clavier dans le menu
+	// Gestion de la navigation clavier dans le menu (scopée au menu courant)
 	const handleMenuKeydown = (event: KeyboardEvent) => {
-		const menuItems = document.querySelectorAll('[role="menuitem"]')
-		if (!menuItems.length) return
+		const container = event.currentTarget as HTMLElement | null
+		const menuItems = container ? (Array.from(container.querySelectorAll('[role="menuitem"]')) as HTMLElement[]) : []
+		if (!menuItems || menuItems.length === 0) return
 
 		const currentIndex = activeDescendantId.value
-			? Array.from(menuItems).findIndex(item => item.id === activeDescendantId.value)
+			? menuItems.findIndex(item => item.id === activeDescendantId.value)
 			: -1
 
 		let newIndex = currentIndex
@@ -358,9 +399,9 @@
 
 				// Rechercher d'abord à partir de l'index de départ jusqu'à la fin
 				for (let i = startIndex; i < menuItems.length; i++) {
-					const itemText = (menuItems[i] as HTMLElement).textContent?.trim().toLowerCase()
+					const itemText = menuItems[i].textContent?.trim().toLowerCase()
 					if (itemText && itemText.startsWith(searchChar)) {
-						activeDescendantId.value = menuItems[i].id
+						activeDescendantId.value = (menuItems[i] as HTMLElement).id
 						return
 					}
 				}
@@ -369,7 +410,7 @@
 				for (let i = 0; i < startIndex; i++) {
 					const itemText = (menuItems[i] as HTMLElement).textContent?.trim().toLowerCase()
 					if (itemText && itemText.startsWith(searchChar)) {
-						activeDescendantId.value = menuItems[i].id
+						activeDescendantId.value = (menuItems[i] as HTMLElement).id
 						return
 					}
 				}
@@ -383,19 +424,18 @@
 		}
 	}
 
-	// Ouvrir le menu et placer le focus sur le premier élément
+	// Ouvrir le menu et placer le focus sur le premier élément (menu gauche)
 	const openMenuWithKeyboard = () => {
 		menuOpen.value = true
 		showOverlay.value = true
 		nextTick(() => {
-			// Définir le premier item comme actif pour aria-activedescendant
-			const menuItems = document.querySelectorAll('[role="menuitem"]')
-			if (menuItems.length > 0) {
-				const firstMenuItem = menuItems[0] as HTMLElement
-				activeDescendantId.value = firstMenuItem.id
-				// Placer le focus directement sur le premier item du menu
-				firstMenuItem.focus()
-			}
+			setTimeout(() => {
+				const firstMenuItem = document.querySelector('.left-dropdown-menu [role="menuitem"]') as HTMLElement | null
+				if (firstMenuItem) {
+					activeDescendantId.value = firstMenuItem.id
+					firstMenuItem.focus()
+				}
+			}, 30)
 		})
 	}
 
@@ -486,13 +526,15 @@
 										:offset="[-12,0]"
 										:close-on-content-click="true"
 										activator="parent"
-										@update:model-value="(val) => { if (val) { showOverlay = true } else { hideOverlay() } }"
+										content-class="left-dropdown-menu"
+										@update:model-value="onLeftMenuModel"
 									>
 										<v-list
+											ref="leftMenuListRef"
 											role="menu"
 											tabindex="-1"
 											:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
-											:style="smAndDown ? {width: '110vh'} : {width: elementWidth >= 260 ? elementWidth + 'px' : '236px'}"
+											:style="smAndDown ? { width: '100vw', maxWidth: '100vw' } : { width: elementWidth >= 260 ? elementWidth + 'px' : '236px' }"
 											@keydown="handleMenuKeydown"
 										>
 											<v-list-item
@@ -538,6 +580,70 @@
 				</slot>
 			</section>
 			<section class="right-section">
+				<!-- Mobile burger menu for right menu (accessible) -->
+				<div class="mobile-burger">
+					<v-menu
+						v-model="mobileMenuOpen"
+						location="bottom end"
+						origin="top right"
+						attach="body"
+						content-class="mobile-burger-menu"
+						eager
+						:offset="[0,0]"
+						:close-on-content-click="true"
+						@update:model-value="onMobileMenuModel"
+					>
+						<template #activator="{ props: activatorProps }">
+							<button
+								ref="mobileBurgerButtonRef"
+								type="button"
+								class="burger-btn"
+								v-bind="activatorProps"
+								:aria-label="props.ariaRightLabel"
+								aria-haspopup="menu"
+								:aria-expanded="mobileMenuOpen ? 'true' : 'false'"
+								aria-controls="mobile-right-menu"
+								@keydown.space.prevent="mobileMenuOpen = true"
+								@keydown.enter.prevent="mobileMenuOpen = true"
+							>
+								<v-icon
+									:icon="mdiMenu"
+									size="small"
+								/>
+							</button>
+						</template>
+						<v-list
+							id="mobile-right-menu"
+							ref="mobileRightMenuRef"
+							role="menu"
+							tabindex="-1"
+							:aria-label="props.ariaRightLabel"
+						>
+							<v-list-item
+								v-for="(item, index) in props.rightMenu"
+								:id="`mobile-item-${index}`"
+								:key="index"
+								role="menuitem"
+								:href="item.href"
+								:to="item.to"
+								:target="item.openInNewTab ? '_blank' : undefined"
+								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
+								class="mobile-right-link"
+								tabindex="0"
+								@click="mobileMenuOpen = false"
+							>
+								<v-list-item-title class="text-primary">
+									<v-icon
+										:icon="mdiChevronRight"
+										size="small"
+										class="mr-1"
+									/>
+									{{ item.title }}
+								</v-list-item-title>
+							</v-list-item>
+						</v-list>
+					</v-menu>
+				</div>
 				<slot name="right-menu">
 					<nav
 						id="right-menu"
@@ -937,6 +1043,50 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	}
 }
 
+/* Make left dropdown overlay full-width on mobile */
+:deep(.left-dropdown-menu) {
+	@media (width <= $header-breakpoint-sm) {
+		width: 100vw !important;
+		max-width: 100vw !important;
+		left: 0 !important;
+		right: 0 !important;
+		transform: none !important; /* avoid centering transforms that reduce width */
+	}
+}
+
+/* Ensure burger menu overlay content fits and aligns right on mobile */
+:deep(.mobile-burger-menu) {
+	max-width: 100vw;
+	width: auto;
+
+	@media (width <= $header-breakpoint-sm) {
+		left: auto !important;
+		right: 0 !important;
+	}
+}
+
+/* Mobile burger visibility and button focus styles */
+.mobile-burger {
+	display: none;
+
+	@media (width <= $header-breakpoint-md) {
+		display: block;
+	}
+
+	.burger-btn {
+		background: transparent;
+		border: 1px solid transparent;
+		padding: 6px 8px;
+		border-radius: 4px;
+		cursor: pointer;
+
+		&:focus-visible {
+			outline: 2px solid #1976d2;
+			outline-offset: 2px;
+		}
+	}
+}
+
 .v-overlay--active {
 	z-index: $z-overlay;
 }
@@ -952,4 +1102,5 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	border: none;
 	z-index: 3;
 }
+
 </style>
