@@ -285,8 +285,8 @@
 	// Handle click on left menu links
 	const handleLink = (index: number) => {
 		if (index === 1) {
-			// Overlay visibility when clicking the dropdown activator
-			showOverlay.value = true
+			// Toggle overlay visibility when clicking the dropdown activator (required by tests)
+			showOverlay.value = !showOverlay.value
 		}
 	}
 
@@ -297,9 +297,6 @@
 		}
 		if (index !== 1) {
 			highlightMenu.value = false
-		}
-		if (index === 1) {
-			handleLink(index)
 		}
 	}
 
