@@ -1,10 +1,10 @@
 /* eslint-disable vue/one-component-per-file */
-import { describe, it, expect } from 'vitest'
-import { mount, shallowMount } from '@vue/test-utils'
 import { vuetify } from '@tests/unit/setup'
+import { mount, shallowMount } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
-import { VCard } from 'vuetify/components'
 import { defineComponent } from 'vue'
+import { VCard } from 'vuetify/components'
 import DialogBox from '../DialogBox.vue'
 
 const defaultProps = {
@@ -369,5 +369,134 @@ describe('DialogBox', () => {
 
 		expect(confirmBtn.element).toEqual(document.activeElement)
 		wrapper.unmount()
+	})
+
+	describe('draggable dialog', () => {
+		it('renders the dialog as draggable when the draggable prop is true', async () => {
+			const wrapper = mount(DialogBox, {
+				props: {
+					...defaultProps,
+					draggable: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+				attachTo: document.body,
+			})
+
+			const card = wrapper.getComponent(VCard)
+			const titleBar = card.find<HTMLElement>('.sy-dialog-box-title')
+
+			expect(card.classes()).toContain('sy-dialog-box-draggable')
+
+			titleBar.trigger('mousedown', { clientX: 100, clientY: 100 })
+			await wrapper.vm.$nextTick()
+
+			expect(card.classes()).toContain('sy-dialog-box-draggable--active')
+
+			await wrapper.trigger('mousemove', { clientX: 200, clientY: 200 })
+			await wrapper.vm.$nextTick()
+
+			const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
+
+			expect(overlayElement.style.left).toBe('100px') // Check that left style has been set
+			expect(overlayElement.style.top).toBe('100px') // Check that top style has been set
+
+			await wrapper.trigger('mouseup')
+
+			expect(card.classes()).not.toContain('sy-dialog-box-draggable--active')
+			wrapper.unmount()
+		})
+
+		it('do not allow the dialog to be dragged outside the viewport', async () => {
+			const wrapper = mount(DialogBox, {
+				props: {
+					...defaultProps,
+					draggable: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+				attachTo: document.body,
+			})
+
+			const card = wrapper.getComponent(VCard)
+			const titleBar = card.find<HTMLElement>('.sy-dialog-box-title')
+
+			titleBar.trigger('mousedown', { clientX: 100, clientY: 100 })
+			await wrapper.vm.$nextTick()
+
+			await wrapper.trigger('mousemove', { clientX: -1000, clientY: -1000 })
+			await wrapper.vm.$nextTick()
+
+			const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
+
+			expect(parseInt(overlayElement.style.left, 10)).toBe(0)
+			expect(parseInt(overlayElement.style.top, 10)).toBe(0)
+
+			await wrapper.trigger('mousemove', { clientX: 10000, clientY: 10000 })
+			await wrapper.vm.$nextTick()
+
+			const windowWidth = window.innerWidth
+			const windowHeight = window.innerHeight
+			const overlayWidth = overlayElement.offsetWidth
+			const overlayHeight = overlayElement.offsetHeight
+
+			expect(parseInt(overlayElement.style.left, 10)).toBe(windowWidth - overlayWidth)
+			expect(parseInt(overlayElement.style.top, 10)).toBe(windowHeight - overlayHeight)
+
+			await wrapper.trigger('mouseup')
+
+			wrapper.unmount()
+		})
+
+		it('move the dialog to the left when the left arrow is pressed', async () => {
+			const wrapper = mount(DialogBox, {
+				props: {
+					...defaultProps,
+					draggable: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+				attachTo: document.body,
+			})
+
+			const card = wrapper.getComponent(VCard)
+
+			await card.trigger('keydown', { key: 'ArrowLeft' })
+			await wrapper.vm.$nextTick()
+
+			const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
+
+			expect(overlayElement.style.position).toBe('absolute')
+			expect(overlayElement.style.left).toBe(`0px`)
+		})
+
+		it('move the dialog to the right when the right arrow is pressed', async () => {
+			const wrapper = mount(DialogBox, {
+				props: {
+					...defaultProps,
+					draggable: true,
+				},
+				global: {
+					plugins: [vuetify],
+				},
+				attachTo: document.body,
+			})
+
+			const card = wrapper.getComponent(VCard)
+
+			await card.trigger('keydown', { key: 'ArrowRight' })
+			await wrapper.vm.$nextTick()
+
+			const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
+			const computedStyle = getComputedStyle(overlayElement)
+			const marginLeft = parseFloat(computedStyle.marginLeft) || 0
+			const positionToLeft = window.innerWidth - overlayElement.offsetWidth - marginLeft * 2
+
+			expect(overlayElement.style.position).toBe('absolute')
+			expect(overlayElement.style.left).toBe(`${positionToLeft}px`)
+		})
 	})
 })
