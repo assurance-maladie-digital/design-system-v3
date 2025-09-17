@@ -186,11 +186,76 @@
 	const activeDescendantId = ref<string | null>(null)
 
 	const menuButtonRef = ref<HTMLElement | null>(null)
-	// Mobile burger and focus management
+	// Mobile burger and focus management (no auto-focus on open)
 	const mobileMenuOpen = ref(false)
 	const mobileBurgerButtonRef = ref<HTMLElement | null>(null)
 	const mobileRightMenuRef = ref<HTMLElement | null>(null)
 	const leftMenuListRef = ref<HTMLElement | null>(null)
+
+	// Mobile ARIA tracking
+	const mobileActiveIndex = ref<number | null>(null)
+	const mobileActiveDescendantId = ref<string | null>(null)
+
+	const isCurrentRightLink = (item: MenuItem): boolean => {
+		if (!item.href) return false
+		try {
+			const target = new URL(item.href, window.location.href)
+			const current = new URL(window.location.href)
+			return target.origin === current.origin && target.pathname === current.pathname
+		}
+		catch {
+			return false
+		}
+	}
+
+	const handleMobileMenuKeydown = (event: KeyboardEvent) => {
+		const items = Array.from(document.querySelectorAll('#mobile-right-menu [role="menuitem"]')) as HTMLElement[]
+		if (items.length === 0) return
+		const currentIdx = mobileActiveDescendantId.value
+			? items.findIndex(el => el.id === mobileActiveDescendantId.value!)
+			: -1
+
+		let newIndex = currentIdx
+		switch (event.key) {
+		case 'ArrowDown':
+			event.preventDefault()
+			newIndex = currentIdx < items.length - 1 ? currentIdx + 1 : 0
+			break
+		case 'ArrowUp':
+			event.preventDefault()
+			newIndex = currentIdx > 0 ? currentIdx - 1 : items.length - 1
+			break
+		case 'Home':
+			event.preventDefault()
+			newIndex = 0
+			break
+		case 'End':
+			event.preventDefault()
+			newIndex = items.length - 1
+			break
+		case 'Escape': {
+			event.preventDefault()
+			mobileMenuOpen.value = false
+			nextTick(() => mobileBurgerButtonRef.value?.focus())
+			return
+		}
+		case 'Enter':
+		case ' ': {
+			event.preventDefault()
+			const idx = currentIdx >= 0 ? currentIdx : 0
+			items[idx]?.click()
+			return
+		}
+		default:
+			return
+		}
+
+		if (newIndex !== currentIdx && newIndex >= 0) {
+			mobileActiveIndex.value = newIndex
+			mobileActiveDescendantId.value = items[newIndex].id
+			items[newIndex].focus()
+		}
+	}
 
 	const onLeftMenuModel = (val: boolean) => {
 		if (val) {
@@ -241,13 +306,23 @@
 	// Mobile burger open/close focus management
 	const onMobileMenuModel = (val: boolean) => {
 		if (val) {
+			// Mark first item as active so the highlight class applies immediately
+			mobileActiveIndex.value = 0
+			mobileActiveDescendantId.value = 'mobile-item-0'
 			nextTick(() => {
-				setTimeout(() => {
+				let attempts = 0
+				const tryFocus = () => {
 					const first = document.getElementById('mobile-item-0') as HTMLElement | null
-					if (first && typeof first.focus === 'function') {
-						first.focus()
+					const inner = first?.querySelector('a,button,[tabindex]:not([tabindex="-1"])') as HTMLElement | null
+					const target = (inner ?? first) as HTMLElement | null
+					if (target) {
+						target.focus()
+						return
 					}
-				}, 100)
+					if (++attempts < 10) requestAnimationFrame(tryFocus)
+				}
+				// Give the overlay a brief moment to mount, then start trying to focus
+				setTimeout(() => requestAnimationFrame(tryFocus), 200)
 			})
 		}
 		else {
@@ -255,6 +330,27 @@
 				mobileBurgerButtonRef.value?.focus()
 			})
 		}
+	}
+
+	// Explicitly open mobile menu and focus first item (for keyboard activations)
+	const openMobileMenuAndFocus = () => {
+		mobileMenuOpen.value = true
+		mobileActiveIndex.value = 0
+		mobileActiveDescendantId.value = 'mobile-item-0'
+		nextTick(() => {
+			let attempts = 0
+			const tryFocus = () => {
+				const first = document.getElementById('mobile-item-0') as HTMLElement | null
+				const inner = first?.querySelector('a,button,[tabindex]:not([tabindex="-1"])') as HTMLElement | null
+				const target = (inner ?? first) as HTMLElement | null
+				if (target) {
+					target.focus()
+					return
+				}
+				if (++attempts < 10) requestAnimationFrame(tryFocus)
+			}
+			setTimeout(() => requestAnimationFrame(tryFocus), 150)
+		})
 	}
 
 	// Computed pour déterminer quel élément doit avoir aria-current
@@ -603,8 +699,8 @@
 								aria-haspopup="menu"
 								:aria-expanded="mobileMenuOpen ? 'true' : 'false'"
 								aria-controls="mobile-right-menu"
-								@keydown.space.prevent="mobileMenuOpen = true"
-								@keydown.enter.prevent="mobileMenuOpen = true"
+								@keydown.space.prevent="openMobileMenuAndFocus()"
+								@keydown.enter.prevent="openMobileMenuAndFocus()"
 							>
 								<v-icon
 									:icon="mdiMenu"
@@ -617,18 +713,22 @@
 							ref="mobileRightMenuRef"
 							role="menu"
 							tabindex="-1"
+							:aria-activedescendant="mobileActiveDescendantId || undefined"
 							:aria-label="props.ariaRightLabel"
+							@keydown="handleMobileMenuKeydown"
 						>
 							<v-list-item
 								v-for="(item, index) in props.rightMenu"
 								:id="`mobile-item-${index}`"
 								:key="index"
+								link
 								role="menuitem"
+								:aria-current="isCurrentRightLink(item) ? 'page' : undefined"
 								:href="item.href"
 								:to="item.to"
 								:target="item.openInNewTab ? '_blank' : undefined"
 								:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
-								class="mobile-right-link"
+								:class="{ 'mobile-right-link': true, 'menu-item-focused': mobileActiveDescendantId === `mobile-item-${index}` }"
 								tabindex="0"
 								@click="mobileMenuOpen = false"
 							>
@@ -1101,6 +1201,13 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	background: rgb(0 0 0 / 60%);
 	border: none;
 	z-index: 3;
+}
+
+/* Ensure focused menu item styles also apply to teleported overlay content */
+:deep(.menu-item-focused) {
+	background-color: rgb(25 118 210 / 12%);
+	outline: 2px solid #1976d2;
+	outline-offset: -2px;
 }
 
 </style>
