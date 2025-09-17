@@ -3,8 +3,8 @@ import AmeliproErrorTemplate from './AmeliproErrorTemplate.vue'
 
 const meta = {
 	argTypes: {
-		btnHref: { description: 'Href du bouton' },
-		btnTo: { description: 'Route du bouton' },
+		btnHref: { description: 'Href du bouton situé sous le texte principal si le slot "button est inutilisé"' },
+		btnTo: { description: 'Route du bouton situé sous le texte principal si le slot "button est inutilisé"' },
 		button: { description: 'Bouton sous le texte principal' },
 		click: { description: 'Événement émis au clic sur le bouton', type: 'void' },
 		contentTitle: { description: 'Titre du contenu' },
