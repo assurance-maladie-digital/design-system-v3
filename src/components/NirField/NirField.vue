@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, nextTick, toRef, onMounted } from 'vue'
+	import { ref, watch, computed, nextTick, toRef, onMounted, useId } from 'vue'
 	import { vMaska } from 'maska/vue'
 	import { checkNIR, isNIRKeyValid } from './nirValidation'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
@@ -44,9 +44,9 @@
 		withoutFieldset?: boolean
 	}>(), {
 		modelValue: undefined,
-		label: 'NirField',
+		label: 'Identifiant d\'assuré',
 		numberLabel: 'Numéro de sécurité sociale',
-		keyLabel: 'Clé',
+		keyLabel: 'Clé de validation',
 		displayKey: true,
 		outlined: true,
 		nirTooltip: undefined,
@@ -119,6 +119,14 @@
 		},
 	}
 
+	const fieldWidth = computed(() => props.width || '100%')
+	const nirFieldWidth = computed(() => props.clearable ? '0 0 calc(70% - 8px)' : '0 0 calc(72% - 8px)')
+	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(29% - 8px)' : '0 0 calc(25% - 8px)')
+
+	const fieldId = useId()
+	const numberFieldErrorId = `nir-number-error-${fieldId}`
+	const keyFieldErrorId = `nir-key-error-${fieldId}`
+
 	// Fonction pour gérer le focus des champs
 	const focusField = (field: typeof numberField | typeof keyField) => {
 		nextTick(() => {
@@ -175,12 +183,12 @@
 	// Règles de validation
 	const defaultNumberRules = computed(() => {
 		const rules: ValidationRule[] = []
-		if (props.readonly) return
+		if (props.readonly && props.disabled) return
 		if (props.required) {
 			rules.push({
 				type: 'required',
 				options: {
-					message: `Le champ ${props.numberLabel} est requis.`,
+					message: locales.errorRequiredNumber,
 					fieldIdentifier: props.numberLabel,
 				},
 			})
@@ -202,13 +210,13 @@
 					if (!value) return true
 					// Ne valider que si tous les caractères sont saisis
 					if (value.length < 13) {
-						return 'Le numéro de sécurité sociale est invalide.'
+						return locales.erreurInvalidNumber
 					}
 					const result = checkNIR(value, props.nirType)
-					return result === true ? true : 'Le numéro de sécurité sociale est invalide.'
+					return result === true ? true : locales.erreurInvalidNumber
 				},
-				message: 'Le numéro de sécurité sociale est invalide.',
-				successMessage: 'Le numéro de sécurité sociale est valide.',
+				message: locales.erreurInvalidNumber,
+				successMessage: locales.successNumberValid,
 				fieldIdentifier: props.numberLabel,
 			},
 		})
@@ -226,12 +234,12 @@
 
 	const defaultKeyRules = computed(() => {
 		const rules: ValidationRule[] = []
-		if (props.readonly) return
+		if (props.readonly && props.disabled) return
 		if (props.required) {
 			rules.push({
 				type: 'required',
 				options: {
-					message: `Le champ ${props.keyLabel} est requis.`,
+					message: locales.errorRequiredKey,
 					fieldIdentifier: props.keyLabel,
 				},
 			})
@@ -255,8 +263,8 @@
 				type: 'custom',
 				options: {
 					validate: validateKey,
-					message: 'Le numéro de sécurité sociale est invalide.',
-					successMessage: 'Le numéro de sécurité sociale est valide.',
+					message: locales.errorInvalidKey,
+					successMessage: locales.successKeyValid,
 					fieldIdentifier: props.keyLabel,
 				},
 			})
@@ -368,11 +376,9 @@
 
 	const hasNumberErrors = computed(() => numberValidation.hasError.value)
 	const hasNumberWarning = computed(() => !hasNumberErrors.value && numberValidation.hasWarning.value)
-	const hasNumberSuccess = computed(() => !hasNumberErrors.value && !hasNumberWarning.value && numberValidation.hasSuccess.value)
+	//const hasNumberSuccess = computed(() => !hasNumberErrors.value && !hasNumberWarning.value && numberValidation.hasSuccess.value)
 
 	const hasKeyErrors = computed(() => keyValidation.hasError.value)
-	const hasKeyWarning = computed(() => !hasKeyErrors.value && keyValidation.hasWarning.value)
-	const hasKeySuccess = computed(() => !hasKeyErrors.value && !hasKeyWarning.value && keyValidation.hasSuccess.value)
 
 	// Propriétés calculées pour les attributs ARIA et les états d'erreur
 	const hasFieldErrors = computed(() => hasNumberErrors.value || hasKeyErrors.value)
@@ -500,17 +506,10 @@
 				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
 				:append-tooltip="nirTooltip && nirTooltipPosition === 'append' ? nirTooltip : undefined"
-				:max-errors="2"
-				:error-messages="[...new Set([...numberValidation.errors.value, ...keyValidation.errors.value])]"
 				:warning-messages="numberValidation.warnings.value"
 				:success-messages="numberValidation.successes.value"
 				:show-success-messages="showSuccessMessages"
-				:has-warning="hasNumberWarning"
-				:has-success="hasNumberSuccess"
-				:error="hasNumberErrors || hasKeyErrors"
-				:messages="hasNumberErrors || hasKeyErrors ? numberValidation.errors.value ?? keyValidation.errors.value : (hasNumberWarning ? numberValidation.warnings.value : (hasNumberSuccess && props.showSuccessMessages ? numberValidation.successes.value : []))"
-				:has-error="hasNumberErrors || hasKeyErrors"
-				:required="required"
+				:error="hasNumberErrors"
 				:aria-required="ariaRequired"
 				:aria-invalid="ariaInvalidNumber"
 				:disabled="disabled"
@@ -528,6 +527,7 @@
 				:hint="props.hint || locales.numberHint"
 				class="number-field"
 				:display-asterisk="false"
+				:aria-describedby="numberFieldErrorId"
 				@input="handleNumberInput"
 				@blur="handleNumberBlur"
 			/>
@@ -549,10 +549,7 @@
 				:error-messages="keyValidation.errors.value.length > 0 ? [''] : []"
 				:warning-messages="keyValidation.warnings.value"
 				:show-success-messages="false"
-				:has-warning="hasKeyWarning"
-				:has-success="hasKeySuccess"
 				:hint="props.hint || locales.keyHint"
-				:has-error="hasKeyErrors"
 				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
@@ -569,23 +566,52 @@
 				:aria-invalid="ariaInvalidKey"
 				class="key-field"
 				:display-asterisk="false"
+				:aria-describedby="keyFieldErrorId"
 				@input="handleKeyInput"
 				@blur="handleKeyBlur"
 			/>
+		</div>
+		<div
+			class="sy-error-messages"
+			style="flex: 1 0 100%;"
+		>
+			<div
+				:id="numberFieldErrorId"
+				class="sy-number-errors"
+			>
+				<VMessages
+					v-show="hasNumberErrors"
+					:active="hasNumberErrors"
+					:messages="numberValidation.errors.value"
+				/>
+			</div>
+			<div
+				:id="keyFieldErrorId"
+				class="sy-key-errors"
+			>
+				<VMessages
+					v-show="hasKeyErrors"
+					:active="hasKeyErrors"
+					:messages="keyValidation.errors.value"
+				/>
+			</div>
 		</div>
 	</component>
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/tokens';
+
 .nir-field {
 	display: flex;
+	flex-wrap: wrap;
 	gap: 16px;
-	width: calc(v-bind('props.width || "100%"') - 16px);
+	width: calc(v-bind(fieldWidth) - 16px);
 	align-items: flex-start;
 }
 
 .nir-field--fieldset {
-	width: calc(v-bind('props.width || "100%"') + 5px);
+	width: calc(v-bind(fieldWidth) + 5px);
 	border: 1px solid #b9b9b9;
 	border-radius: 4px;
 	padding: 25px;
@@ -613,11 +639,11 @@
 
 /* Styles pour le mode fieldset */
 .nir-field--fieldset .number-field-container {
-	flex: v-bind('props.clearable ? "0 0 70%" : "0 0 72%"');
+	flex: v-bind(nirFieldWidth);
 }
 
 .nir-field--fieldset .key-field-container {
-	flex: v-bind('props.clearable ? "0 0 29%" : "0 0 25%"');
+	flex: v-bind(keyFieldWidth);
 }
 
 .number-field,
@@ -627,10 +653,24 @@
 
 .key-field {
 	min-width: 110px;
+	flex-wrap: wrap;
 
 	:deep(.v-messages .v-messages__message) {
 		min-width: 100px !important;
 		margin-left: -10px !important;
+	}
+}
+
+.sy-error-messages {
+	padding-inline: 16px;
+	color: tokens.$colors-text-error;
+	font-size: 0.875rem;
+	font-weight: 400;
+	letter-spacing: 0.0333em;
+	line-height: 16px;
+
+	:deep(.v-messages) {
+		opacity: 1;
 	}
 }
 </style>
