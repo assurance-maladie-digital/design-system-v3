@@ -1,10 +1,11 @@
 import {Meta, Story} from '@storybook/addon-docs/blocks';
 import * as ComponentStories from './components.stories.ts';
+import '../styles/shared.css';
 
 <Meta of={ComponentStories}/>
 
-<div class="d-flex justify-space-between align-center">
-    <h1 class="title font-weight-medium mb-5">Créer une issue</h1>
+<div className="header">
+    <h1>Créer une issue</h1>
 </div>
 
 ## Introduction
