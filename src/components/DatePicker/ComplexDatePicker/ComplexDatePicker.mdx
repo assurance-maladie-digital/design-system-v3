@@ -3,9 +3,10 @@ import * as DatePickerStories from "./ComplexDatePicker.stories.ts";
 
 <Meta of={DatePickerStories}/>
 
-# DatePicker - Mode combiné
-
-Le DatePicker en mode combiné (`useCombinedMode: true`) permet d'utiliser à la fois le calendrier interactif et la saisie manuelle avec formatage automatique.
+<div className="header">
+  <h1>DatePicker - Mode combiné</h1>
+  <p>Le DatePicker en mode combiné (`useCombinedMode: true`) permet d'utiliser à la fois le calendrier interactif et la saisie manuelle avec formatage automatique.</p>
+</div>
 
 ## Description
 
@@ -23,7 +24,6 @@ Le formatage automatique intelligent ajoute les séparateurs (/, -, etc.) pendan
 Propriétés applicables pour le mode combiné :
 
 <Controls of={DatePickerStories.Default}/>
-
 
 # Fonctionnalités spécifiques
 
@@ -59,7 +59,6 @@ Le composant permet la sélection de plages de dates avec validation automatique
 
 ### DatePicker avec période personnalisée
 
-
 <div
     style={{
         border: '2px solid #FF0000',
@@ -88,7 +87,6 @@ Vous pouvez personnaliser la position de l'icône du calendrier (au début ou à
 La propriété `textFieldActivator` permet d'ouvrir le calendrier en cliquant n'importe où sur le champ de texte.
 
 <Canvas of={DatePickerStories.WithTextFieldActivator}/>
-
 
 # Validation et règles personnalisées
 
@@ -172,6 +170,7 @@ Le composant expose plusieurs méthodes qui peuvent être utilisées via une ré
 	import { DatePicker } from '@cnamts/synapse'
 
 	const date = ref('')
+import '../../../stories/styles/shared.css';
 </script>
 
 <template>

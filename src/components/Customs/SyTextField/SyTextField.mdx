@@ -3,9 +3,10 @@ import * as SyTextFieldStories from "./SyTextField.stories.ts";
 
 <Meta of={SyTextFieldStories} />
 
-# SyTextField
-
-Le composant `SyTextField` est utilisé pour proposer une alternative au `TextField` de Vuetify, conforme au style du Design System et qui respecte les règles d'accessibilité <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>.
+<div className="header">
+  <h1>SyTextField</h1>
+  <p>Le composant `SyTextField` est utilisé pour proposer une alternative au `TextField` de Vuetify, conforme au style du Design System et qui respecte les règles d'accessibilité <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>.</p>
+</div>
 
 Il étend les fonctionnalités de base de Vuetify avec :
 
@@ -16,12 +17,9 @@ Il étend les fonctionnalités de base de Vuetify avec :
 
 <Canvas of={SyTextFieldStories.Default} />
 
-
 # API
 
 <Controls of={SyTextFieldStories.Default} />
-
-
 
 ## Validation
 
@@ -45,6 +43,7 @@ Le champ adapte automatiquement son apparence selon son état :
 	import { SyTextField } from '@cnamts/synapse'
 
 	const model = ref('')
+import '../../../stories/styles/shared.css';
 
 </script>
 

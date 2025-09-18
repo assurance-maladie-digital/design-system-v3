@@ -4,9 +4,10 @@ import NirField from './NirField.vue';
 
 <Meta title="Composants/Formulaires/NirField" component={NirField}/>
 
-# NirField
-
-Le composant `NirField` est utilisé pour afficher un champ de saisie de numéro de sécurité sociale.
+<div className="header">
+  <h1>NirField</h1>
+  <p>Le composant `NirField` est utilisé pour afficher un champ de saisie de numéro de sécurité sociale.</p>
+</div>
 
 <Canvas story={{
     height: '150px',
@@ -92,9 +93,6 @@ Le composant `NirField` utilise des règles de validation par défaut pour le nu
 - La clé doit être composée de 2 chiffres.
 - La clé doit être valide en fonction du calcul de la clé NIR.
 
-
-
-
 ### Règles de gestion personnalisées
 
 Vous pouvez définir des règles de gestion personnalisées pour le numéro NIR et la Clé via les props `custom-number-rules` et `custom-key-rules`.
@@ -128,7 +126,6 @@ Pour les regles de gestion personnalisées, vous pouvez utiliser les règles de 
 
     `}
 />
-
 
 ### Exemple d'utilisation
 
@@ -189,6 +186,7 @@ Pour utiliser cette méthode, vous devez ajouter une référence Vue au composan
     import { NirField } from '@cnamts/synapse'
 
     const model = ref('')
+import '../../stories/styles/shared.css';
     const nirFieldRef = ref() // Référence Vue pour accéder au composant enfant
     const handleSubmit = () => {
     // Appeler la méthode exposée validateOnSubmit via la référence

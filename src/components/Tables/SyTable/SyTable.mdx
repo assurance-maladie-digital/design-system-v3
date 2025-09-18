@@ -3,9 +3,10 @@ import * as SyTable from './SyTable.stories';
 
 <Meta of={SyTable} />
 
-# SyTable
-
-Le composant `SyTable` est utilisé pour afficher des données tabulaires côté client. Il s'appuie sur le composant `VDataTable` de Vuetify et offre des fonctionnalités supplémentaires comme le stockage local des options de tableau et des améliorations d'accessibilité.
+<div className="header">
+  <h1>SyTable</h1>
+  <p>Le composant `SyTable` est utilisé pour afficher des données tabulaires côté client. Il s'appuie sur le composant `VDataTable` de Vuetify et offre des fonctionnalités supplémentaires comme le stockage local des options de tableau et des améliorations d'accessibilité.</p>
+</div>
 
 <Canvas story={{height: '550px'}} of={SyTable.Default} />
 
@@ -79,6 +80,7 @@ Le composant améliore l'accessibilité en ajoutant automatiquement :
   const options = ref({
     itemsPerPage: 4,
   })
+import '../../../stories/styles/shared.css';
   
   const headers = ref([
     {

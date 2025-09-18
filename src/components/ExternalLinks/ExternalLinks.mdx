@@ -4,25 +4,22 @@ import * as ExternalLinksStories from './ExternalLinks.stories.ts'
 
 <Meta of={ExternalLinksStories} />
 
-
-# ExternalLinks
-
-L'élément `ExternalLinks` est utilisé pour afficher un menu avec une liste vers des liens externes.
+<div className="header">
+  <h1>ExternalLinks</h1>
+  <p>L'élément `ExternalLinks` est utilisé pour afficher un menu avec une liste vers des liens externes.</p>
+</div>
 
 <Canvas of={ExternalLinksStories.Default} />
-
 
 # API
 
 <Controls of={ExternalLinksStories.Default} />
-
 
 ## Décalage
 
 Vous pouvez décaler le composant vers le haut ou vers le bas en utilisant les props `nudge-top` et `nude-bottom`.
 
 <Canvas of={ExternalLinksStories.NudgeTop} />
-
 
 ## Absence de données
 
@@ -35,7 +32,6 @@ Lorsqu'il n'y a pas de données, un message par défaut est affiché.
 Il est possibles de personnalisé les props passé aux composants utilisés en interne en utilisant la props `vuetifyOptions`.
 
 <Canvas of={ExternalLinksStories.VuetifyOptions} />
-
 
 ## Slot `link-icon`
 
@@ -69,6 +65,7 @@ Vous pouvez utiliser le slot `link-icon` pour remplacer l'icône dans les liens.
 
 			const arrowIcon = mdiArrowTopRight
 		</script>
+import '../../stories/styles/shared.css';
 
 		<template>
 			<ExternalLinks

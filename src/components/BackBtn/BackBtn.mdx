@@ -3,9 +3,10 @@ import * as BackBtnStories from './BackBtn.stories';
 
 <Meta of={BackBtnStories} />
 
-# BackBtn
-
-L’élément `BackBtn` est utilisé pour permettre à l’utilisateur de revenir à la page précédente.
+<div className="header">
+  <h1>BackBtn</h1>
+  <p>L’élément `BackBtn` est utilisé pour permettre à l’utilisateur de revenir à la page précédente.</p>
+</div>
 
 <Story of={BackBtnStories.Info} />
 
@@ -19,6 +20,7 @@ L’élément `BackBtn` est utilisé pour permettre à l’utilisateur de reveni
 <script setup lang="ts">
 import { BackBtn } from '@cnamts/synapse'
 </script>
+import '../../stories/styles/shared.css';
 
 <template>
     <BackBtn/>

@@ -4,7 +4,10 @@ import * as NotificationBarStories from './NotificationBar.stories';
 
 <Meta of={NotificationBarStories} />
 
-# NotificationBar
+<div className="header">
+  <h1>Accessibilité du composant SyIcon</h1>
+  <p>Le composant `SyIcon` est un wrapper autour du composant `v-icon` de Vuetify qui ajoute une gestion automatique de l'accessibilité selon les normes RGAA.</p>
+</div>
 
 ##### Les NotificationsBar servent à notifier l’utilisateur soit d’un retour d’action.
 
@@ -35,6 +38,7 @@ import * as NotificationBarStories from './NotificationBar.stories';
 	import type { Notification } from '@cnamts/synapse'
 
 	const { addNotification } = useNotificationService()
+import '../../stories/styles/shared.css';
 
 	const envoyerNotification = (message: string, type: Notification['type']) => {
 		const notification: Notification = {

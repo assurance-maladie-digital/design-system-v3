@@ -1,4 +1,5 @@
 import {Meta} from '@storybook/blocks';
+import '../../../styles/shared.css';
 
 <Meta title="Accessibilité/Kit de pré-audit/Outils/Lecteurs d'écran"/>
 
@@ -33,44 +34,7 @@ import {Meta} from '@storybook/blocks';
       margin: 0 auto;
     }
     
-    /* Header avec effet glassmorphism */
-    .screen-reader-header {
-      border-radius: var(--border-radius-lg);
-      padding: 2rem;
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .screen-reader-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgzMCkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSI+PC9yZWN0PjwvcGF0dGVybj48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSI+PC9yZWN0Pjwvc3ZnPg==');
-      opacity: 0.1;
-      z-index: 0;
-    }
-    
-    .screen-reader-header h1 {
-      font-size: 3rem;
-      margin: 0;
-      position: relative;
-      z-index: 1;
-      font-weight: 700;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    
-    .screen-reader-header p {
-      font-size: 1.2rem;
-      margin-top: 1rem;
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-    }
+          
     
     /* Sections */
     .screen-reader-section {
@@ -79,11 +43,9 @@ import {Meta} from '@storybook/blocks';
       border-radius: var(--border-radius-lg);
       padding: 2rem;
       box-shadow: var(--shadow-md);
-      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
     }
     
     .screen-reader-section:hover {
-      transform: translateY(-5px);
       box-shadow: var(--shadow-lg);
     }
     
@@ -157,7 +119,6 @@ import {Meta} from '@storybook/blocks';
       text-decoration: none;
       font-weight: 500;
       position: relative;
-      transition: color var(--transition-normal);
     }
     
     .screen-reader-link::after {
@@ -170,7 +131,6 @@ import {Meta} from '@storybook/blocks';
       background: linear-gradient(90deg, var(--primary-color), transparent);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform var(--transition-normal);
     }
     
     .screen-reader-link:hover {
@@ -194,13 +154,11 @@ import {Meta} from '@storybook/blocks';
       border-radius: var(--border-radius-md);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
-      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
       display: flex;
       flex-direction: column;
     }
     
     .screen-reader-card:hover {
-      transform: translateY(-5px);
       box-shadow: var(--shadow-md);
     }
     
@@ -240,7 +198,6 @@ import {Meta} from '@storybook/blocks';
       margin-bottom: 0.75rem;
       padding: 0.5rem;
       border-radius: var(--border-radius-sm);
-      transition: background-color var(--transition-fast);
     }
     
     .shortcut-item:hover {
@@ -300,7 +257,7 @@ import {Meta} from '@storybook/blocks';
 </style>
 
 <div className="screen-reader-page">
-  <div className="screen-reader-header">
+  <div className="header">
     <h1>Guide lecteurs d'écran</h1>
     <p>Comprendre et utiliser les lecteurs d'écran pour tester l'accessibilité de vos interfaces</p>
   </div>

@@ -4,9 +4,10 @@ import * as UploadWorkflowStories from './UploadWorkflow.stories';
 
 <Meta of={UploadWorkflowStories} />
 
-# UploadWorkflow
-
-<Canvas of={UploadWorkflowStories.Default} />
+<div className="header">
+  <h1>UploadWorkflow</h1>
+  
+</div><Canvas of={UploadWorkflowStories.Default} />
 
 # API
 
@@ -20,13 +21,11 @@ Vous pouvez réagir lorsque la liste des fichiers est mise à jour en utilisant 
 
 <Canvas of={UploadWorkflowStories.Events} />
 
-
 ## Un seul fichier
 
 Lorsque que la liste ne contient qu’un seul fichier, la boîte de dialogue demandant à l’utilisateur de choisir quel fichier il a sélectionné ne sera pas affichée.
 
 <Canvas of={UploadWorkflowStories.OneFile} />
-
 
 ## Fichiers optionnels
 
@@ -34,13 +33,11 @@ Vous pouvez spécifier des fichiers optionnels en utilisant la propriété `opti
 
 <Canvas of={UploadWorkflowStories.OptionalDocument} />
 
-
 ## Prévisualisation des fichiers
 
 Vous pouvez permettre à l’utilisateur de prévisualiser le fichier qu’il vient de sélectionner avant de valider en utilisant la prop `show-file-preview`.
 
 <Canvas of={UploadWorkflowStories.WithPreviewStep} />
-
 
 ## Exemple d'utilisation
 
@@ -52,6 +49,7 @@ Vous pouvez permettre à l’utilisateur de prévisualiser le fichier qu’il vi
 	import { UploadWorkflow } from '@cnamts/synapse'
 
 	const files = ref([])
+import '../../stories/styles/shared.css';
 
 	const uploadList = [
 		{

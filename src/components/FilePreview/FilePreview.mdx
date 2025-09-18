@@ -1,21 +1,20 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import '../../stories/styles/shared.css';
 
 import * as FilePreviewStories from './FilePreview.stories.ts'
 
 <Meta of={FilePreviewStories} />
 
-
-# FilePreview
-
-L'élément `FilePreview` est utilisé pour afficher l'aperçu d'un fichier.
+<div className="header">
+  <h1>FilePreview</h1>
+  <p>L'élément `FilePreview` est utilisé pour afficher l'aperçu d'un fichier.</p>
+</div>
 
 <Canvas of={FilePreviewStories.Default} />
-
 
 # API
 
 <Controls of={FilePreviewStories.Default} />
-
 
 # Exemple
 
@@ -69,7 +68,8 @@ Vous pouvez utiliser ce composant en combinaison avec `FileUpload` pour afficher
 			import { ref } from 'vue'
 			import { FilePreview, FileUpload } from '@cnamts/synapse'
 
-			const files = ref<File[]>([])
+			const files = ref<File[]>
+([])
 		</script>
 		<template>
 			<div>

@@ -1,10 +1,13 @@
 import { Meta, Source } from '@storybook/addon-docs'
+import '../../styles/shared.css';
 
 <Meta title="Guide du dev/Classes utilitaires/Utilitaires de données" />
 
-# Utilitaires de données
 
-Ces utilitaires vous aident à manipuler et transformer des données dans vos applications.
+<div className="header">
+  <h1>Utilitaires de données</h1>
+  <p>Ces utilitaires vous aident à manipuler et transformer des données dans vos applications.</p>
+</div>
 
 ## deepCopy
 
@@ -293,7 +296,8 @@ export default {
   };
 }
 
-import { deepCopy } from '@cnamts/synpase'
+import { deepCopy } from '
+import '../../styles/shared.css';@cnamts/synpase'
 
 // Fonction qui modifie une copie sans affecter l'original
 function updateUserTheme(user: User, newTheme: 'light' | 'dark'): User {

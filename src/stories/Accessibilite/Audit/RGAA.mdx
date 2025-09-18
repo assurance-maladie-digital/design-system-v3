@@ -1,4 +1,5 @@
 import {Meta} from '@storybook/blocks';
+import '../../styles/shared.css';
 
 <Meta title="Accessibilité/Audit/RGAA"/>
 
@@ -29,16 +30,6 @@ import {Meta} from '@storybook/blocks';
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1rem;
-    }
-    
-    /* Header avec effet glassmorphism */
-    .rgaa-header {
-      padding: 2rem;
-      border-radius: var(--border-radius);
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--card-shadow);
     }
     
     .section-title {
@@ -72,11 +63,6 @@ import {Meta} from '@storybook/blocks';
       border-radius: var(--border-radius);
       transition: all var(--transition-speed) ease;
       box-shadow: var(--card-shadow);
-    }
-    
-    .link-card:hover {
-      background-color: var(--primary-color);
-      transform: translateY(-2px);
     }
     
     .conformity-cards {
@@ -127,10 +113,6 @@ import {Meta} from '@storybook/blocks';
       transition: transform var(--transition-speed) ease;
     }
     
-    .principle-card:hover {
-      transform: translateY(-5px);
-    }
-    
     .principle-card h4 {
       color: var(--primary-color);
       margin-top: 0;
@@ -150,7 +132,7 @@ import {Meta} from '@storybook/blocks';
 </style>
 
 <div className="rgaa-container">
-  <div className="rgaa-header">
+  <div className="header">
     <h1>Le RGAA, le référentiel français d'accessibilité numérique</h1>
     <p>Référentiel Général d'Amélioration de l'Accessibilité - Version 4.1</p>
   </div>

@@ -3,9 +3,10 @@ import * as FooterBarStories from './FooterBar.stories.ts';
 
 <Meta of={FooterBarStories} />
 
-# FooterBar
-
-Le composant `FooterBar` est utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.
+<div className="header">
+  <h1>FooterBar</h1>
+  <p>Le composant `FooterBar` est utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.</p>
+</div>
 
 <Canvas of={FooterBarStories.Default} />
 
@@ -63,6 +64,7 @@ Le composant `FooterBar` est utilisé pour afficher une barre de pied de page av
 		},
 	]
 	const { smAndDown } = useDisplay()
+import '../../stories/styles/shared.css';
 	const isMobile = computed(() => smAndDown.value)
 </script>
 

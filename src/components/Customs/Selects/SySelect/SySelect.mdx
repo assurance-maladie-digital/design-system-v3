@@ -3,10 +3,11 @@ import * as SySelectStories from "./SySelect.stories.ts";
 
 <Meta of={SySelectStories} />
 
-# SySelect
-
-Le composant `SySelect` est utilisé pour proposer une alternative au `v-select` de Vuetify qui ne respecte pas les règles d'accessibilité <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>.<br/>
-Il est basé sur un `v-textfield`.
+<div className="header">
+  <h1>SySelect</h1>
+  <p>Le composant `SySelect` est utilisé pour proposer une alternative au `v-select` de Vuetify qui ne respecte pas les règles d'accessibilité <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>.<br/>
+Il est basé sur un `v-textfield`.</p>
+</div>
 
 <Canvas of={SySelectStories.Default} />
 
@@ -24,6 +25,7 @@ Il est basé sur un `v-textfield`.
 	import { SySelect } from '@cnamts/synapse'
 
 	const selectedValue = ref(undefined)
+import '../../../../stories/styles/shared.css';
 
 	const items = [
 		{ text: 'Option 1', value: '1' },

@@ -1,11 +1,13 @@
 import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import '../../stories/styles/shared.css';
 import * as MaintenancePageStories from "./MaintenancePage.stories";
 
 <Meta of={MaintenancePageStories} />
 
-# MaintenancePage
-
-Le composant `MaintenancePage` permet d'afficher une page de maintenance.
-Il est basé sur le composant `ErrorPage` du design system.
+<div className="header">
+  <h1>MaintenancePage</h1>
+  <p>Le composant `MaintenancePage` permet d'afficher une page de maintenance.
+Il est basé sur le composant `ErrorPage` du design system.</p>
+</div>
 
 <Canvas of={MaintenancePageStories.Default} />
