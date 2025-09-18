@@ -264,9 +264,9 @@
 				setTimeout(() => {
 					const first = document.querySelector('.left-dropdown-menu [role="menuitem"]') as HTMLElement | null
 					if (first) {
-						activeDescendantId.value = first.id || null
-						first.focus()
+						activeDescendantId.value = first.id || 'menu-item-0'
 					}
+					leftMenuListRef.value?.focus()
 				}, 30)
 			})
 		}
@@ -525,9 +525,9 @@
 			setTimeout(() => {
 				const firstMenuItem = document.querySelector('.left-dropdown-menu [role="menuitem"]') as HTMLElement | null
 				if (firstMenuItem) {
-					activeDescendantId.value = firstMenuItem.id
-					firstMenuItem.focus()
+					activeDescendantId.value = firstMenuItem.id || 'menu-item-0'
 				}
+				leftMenuListRef.value?.focus()
 			}, 30)
 		})
 	}
@@ -626,7 +626,7 @@
 											id="left-dropdown-menu"
 											ref="leftMenuListRef"
 											role="menu"
-											tabindex="-1"
+											tabindex="0"
 											:aria-activedescendant="activeDescendantId || undefined"
 											:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
 											:style="smAndDown ? { width: '100vw', maxWidth: '100vw' } : { width: elementWidth >= 260 ? elementWidth + 'px' : '236px' }"
@@ -636,9 +636,9 @@
 												v-for="(subItem, subIndex) in itemsSelectMenu"
 												:id="`menu-item-${subIndex}`"
 												:key="subIndex"
-												:value="subIndex"
 												role="menuitem"
-												tabindex="0"
+												tabindex="-1"
+												:aria-selected="undefined"
 												:aria-current="subItem.text === selectedSubItemText && getCurrentPageIndex() === 1 ? 'page' : undefined"
 												:class="{
 													'subitem-selected': subItem.text === selectedSubItemText,
@@ -1137,14 +1137,14 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 }
 
 :deep(.v-overlay__content) {
-	@media (width <= $header-breakpoint-sm) {
+	@media (width <= $header-breakpoint-md) {
 		left: 0 !important;
 	}
 }
 
 /* Make left dropdown overlay full-width on mobile */
 :deep(.left-dropdown-menu) {
-	@media (width <= $header-breakpoint-sm) {
+	@media (width <= $header-breakpoint-md) {
 		width: 100vw !important;
 		max-width: 100vw !important;
 		left: 0 !important;
