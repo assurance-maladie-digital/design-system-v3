@@ -593,7 +593,7 @@ export const WithValidation: Story = {
 							options: {
 								validate: (value: string) => {
 									if (!value || !/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
-										return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux'
+										return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux (ex: ! @ &)'
 									}
 									return true
 								},
