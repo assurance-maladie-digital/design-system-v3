@@ -88,7 +88,7 @@ exports[`AmeliproErrorTemplate > render correctly 1`] = `
           />
           <h2
             class="
-              amelipro-error-template__content__title
+              amelipro-error-template-content-title
               ap-parme--text
               font-weight-semibold
               text--darken-1
@@ -101,8 +101,8 @@ exports[`AmeliproErrorTemplate > render correctly 1`] = `
           <a
             class="
               amelipro-btn
-              amelipro-error-template__content__btn
-              amelipro-error-template__content__btn
+              amelipro-error-template-content-btn
+              amelipro-error-template-content-btn
               elevation-0
               mt-2
               mt-2
