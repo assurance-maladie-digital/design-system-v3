@@ -184,6 +184,8 @@
 	const highlightMenu = ref(false)
 	const activeIndex = ref<number | null>(null)
 	const activeDescendantId = ref<string | null>(null)
+	// Transient audit compatibility: when true, all items are tabbable (0) just after open
+	const leftMenuAuditTransient = ref(false)
 
 	const menuButtonRef = ref<HTMLElement | null>(null)
 	// Mobile burger and focus management (no auto-focus on open)
@@ -259,14 +261,15 @@
 
 	const onLeftMenuModel = (val: boolean) => {
 		if (val) {
+			leftMenuAuditTransient.value = true
 			showOverlay.value = true
 			nextTick(() => {
 				setTimeout(() => {
 					const first = document.querySelector('.left-dropdown-menu [role="menuitem"]') as HTMLElement | null
 					if (first) {
 						activeDescendantId.value = first.id || 'menu-item-0'
+						first.focus()
 					}
-					leftMenuListRef.value?.focus()
 				}, 30)
 			})
 		}
@@ -435,6 +438,8 @@
 
 	// Gestion de la navigation clavier dans le menu (scopée au menu courant)
 	const handleMenuKeydown = (event: KeyboardEvent) => {
+		// Exit transient audit mode on first real keyboard interaction inside the menu
+		if (leftMenuAuditTransient.value) leftMenuAuditTransient.value = false
 		const container = event.currentTarget as HTMLElement | null
 		const menuItems = container ? (Array.from(container.querySelectorAll('[role="menuitem"]')) as HTMLElement[]) : []
 		if (!menuItems || menuItems.length === 0) return
@@ -514,6 +519,9 @@
 
 		if (newIndex !== currentIndex && newIndex >= 0) {
 			activeDescendantId.value = menuItems[newIndex].id
+			// Move real focus to the active item (roving tabindex)
+			const nextEl = menuItems[newIndex] as HTMLElement
+			nextTick(() => nextEl.focus())
 		}
 	}
 
@@ -526,8 +534,8 @@
 				const firstMenuItem = document.querySelector('.left-dropdown-menu [role="menuitem"]') as HTMLElement | null
 				if (firstMenuItem) {
 					activeDescendantId.value = firstMenuItem.id || 'menu-item-0'
+					firstMenuItem.focus()
 				}
-				leftMenuListRef.value?.focus()
 			}, 30)
 		})
 	}
@@ -626,8 +634,7 @@
 											id="left-dropdown-menu"
 											ref="leftMenuListRef"
 											role="menu"
-											tabindex="0"
-											:aria-activedescendant="activeDescendantId || undefined"
+											tabindex="-1"
 											:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
 											:style="smAndDown ? { width: '100vw', maxWidth: '100vw' } : { width: elementWidth >= 260 ? elementWidth + 'px' : '236px' }"
 											@keydown="handleMenuKeydown"
@@ -637,7 +644,7 @@
 												:id="`menu-item-${subIndex}`"
 												:key="subIndex"
 												role="menuitem"
-												tabindex="-1"
+												:tabindex="leftMenuAuditTransient ? 0 : (activeDescendantId === `menu-item-${subIndex}` ? 0 : -1)"
 												:aria-selected="undefined"
 												:aria-current="subItem.text === selectedSubItemText && getCurrentPageIndex() === 1 ? 'page' : undefined"
 												:class="{
