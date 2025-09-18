@@ -121,7 +121,7 @@
 					<slot name="contentTitle">
 						<h2
 							:id="uniqueId ? `${uniqueId}-content-title` : undefined"
-							class="ap-parme--text text--darken-1 font-weight-semibold amelipro-error-template__content__title"
+							class="ap-parme--text text--darken-1 font-weight-semibold amelipro-error-template-content-title"
 						>
 							{{ customContentTitle || contentTitle }}
 						</h2>
@@ -140,7 +140,7 @@
 					<slot name="button">
 						<AmeliproBtn
 							v-if="!noButton && (customBtnText || btnText)"
-							class="mt-2 text-none amelipro-error-template__content__btn"
+							class="mt-2 text-none amelipro-error-template-content-btn"
 							hover-underline
 							:href="btnHref"
 							text
@@ -177,11 +177,11 @@
 }
 
 .amelipro-error-template__title,
-.amelipro-error-template__content__title {
+.amelipro-error-template-content-title {
 	font-size: apTokens.$font-size-md;
 }
 
-.amelipro-error-template__content__btn {
+.amelipro-error-template-content-btn {
 	font-size: apTokens.$font-size-sm;
 }
 </style>
