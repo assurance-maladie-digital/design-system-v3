@@ -15,7 +15,7 @@ const meta = {
 		uniqueId: { description: 'Identifiant unique' },
 	},
 	component: AmeliproFilePreview,
-	title: 'Composants/AmeliproFilePreview',
+	title: 'Composants/Amelipro/AmeliproFilePreview',
 } as Meta<typeof AmeliproFilePreview>
 export default meta
 
