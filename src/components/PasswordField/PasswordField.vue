@@ -6,7 +6,7 @@
 		mdiAlert,
 		mdiCheckCircle,
 	} from '@mdi/js'
-	import { ref, computed, watch, nextTick, onMounted } from 'vue'
+	import { ref, computed, watch, nextTick } from 'vue'
 	import { config } from './config'
 	import { locales } from './locales'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
@@ -14,6 +14,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import type { ColorType } from '@/components/Customs/SyTextField/types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | null
@@ -198,25 +199,8 @@
 		}
 	}
 
-	// Initialize aria connections when component is mounted
-	onMounted(() => {
-		nextTick(() => {
-			// Make sure the status element is properly connected to the input
-			const inputElement = document.getElementById(passwordFieldId.value)
-			const statusId = `${passwordFieldId.value}-status`
-
-			if (inputElement) {
-				// Set initial aria attributes
-				const describedby = inputElement.getAttribute('aria-describedby') || ''
-				const ids = describedby.split(' ').filter(id => id && id !== statusId)
-				ids.push(statusId) // Add our status ID
-				inputElement.setAttribute('aria-describedby', ids.join(' '))
-			}
-		})
-	})
-
-	const validateOnSubmit = () => {
-		if (props.readonly) return
+	const validateOnSubmit = (): boolean => {
+		if (props.readonly) return true // Retourner true au lieu de undefined
 		validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
 		const isValid = errors.value.length === 0
 		if (isValid) {
@@ -224,6 +208,9 @@
 		}
 		return isValid
 	}
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
 
 	defineExpose({
 		showEyeIcon,
