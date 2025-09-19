@@ -52,7 +52,7 @@
 	const showFilters = ref(true)
 
 	const page = ref(1)
-	const itemsPerPage = ref(8)
+	const itemsPerPage = ref(6)
 
 	const hasDataForCategory = computed(() => !!DATA_SOURCES[selectedCategory.value])
 
@@ -204,7 +204,10 @@
 				<div v-show="showFilters">
 					<v-card-text class="pa-2">
 						<v-row class="mb-1">
-							<v-col cols="12">
+							<v-col
+								cols="12"
+								md="6"
+							>
 								<v-select
 									v-model="selectedCategory"
 									:items="categories"
@@ -217,10 +220,10 @@
 									color="primary"
 								/>
 							</v-col>
-						</v-row>
-
-						<v-row class="mb-1">
-							<v-col cols="12">
+							<v-col
+								cols="12"
+								md="6"
+							>
 								<v-select
 									v-model="selectedTheme"
 									:items="themes"
@@ -237,8 +240,10 @@
 							</v-col>
 						</v-row>
 
-						<v-row>
-							<v-col cols="12">
+						<v-row class="mb-1">
+							<v-col
+								cols="12"
+							>
 								<v-text-field
 									v-model="search"
 									label="Rechercher"
@@ -248,7 +253,7 @@
 									:prepend-inner-icon="mdiMagnifyIcon"
 									clearable
 									color="primary"
-									placeholder="Rechercher par critères, actions ou numéro"
+									placeholder="Rechercher par critères, actions ou numéro de règle ou de thème"
 									:disabled="!hasDataForCategory"
 								/>
 							</v-col>
@@ -279,7 +284,10 @@
 				v-if="!hasDataForCategory"
 				class="pa-4"
 			>
-				<v-col cols="12">
+				<v-col
+					cols="12"
+					md="6"
+				>
 					<v-alert
 						type="info"
 						title="Contenu à venir"
@@ -378,20 +386,16 @@
 				elevation="3"
 			>
 				<v-card-item>
-					<div class="d-flex align-center mb-2">
+					<div class="d-flex justify-space-between mb-2">
+						<h3>
+							{{ selectedRule.finalite3mots }}
+						</h3>
 						<v-chip
 							:color="getBadgeColor(selectedRule.theme)"
 							size="small"
-							class="mr-3"
 						>
-							{{ extractThemeNumber(selectedRule.theme) }}
+							Regle:	{{ selectedRule.numero }}
 						</v-chip>
-						<span
-							v-if="selectedRule.finalite3mots"
-							class="text-h5 font-weight-medium"
-						>
-							{{ selectedRule.finalite3mots }}
-						</span>
 					</div>
 
 					<!-- <h3 class="text-h6 mb-4 mt-4">
@@ -434,31 +438,6 @@
 								{{ selectedRule.actions }}
 							</div>
 						</div>
-
-						<div
-							v-if="selectedRule.principes_directeurs"
-							class="detail-item"
-						>
-							<div class="detail-label">
-								Principes directeurs
-							</div>
-							<div class="detail-content">
-								{{ selectedRule.principes_directeurs }}
-							</div>
-						</div>
-
-						<div
-							v-if="selectedRule.principe_finalite"
-							class="detail-item"
-						>
-							<div class="detail-label">
-								Principe de finalité
-							</div>
-							<div class="detail-content">
-								{{ selectedRule.principe_finalite }}
-							</div>
-						</div>
-
 						<div
 							v-if="selectedRule.precisions"
 							class="detail-item"
@@ -483,6 +462,29 @@
 									class="formatted-tests"
 									v-html="formatTestsWithBullets(selectedRule.tests)"
 								/>
+							</div>
+						</div>
+						<div
+							v-if="selectedRule.principes_directeurs"
+							class="detail-item"
+						>
+							<div class="detail-label">
+								Principes directeurs
+							</div>
+							<div class="detail-content">
+								{{ selectedRule.principes_directeurs }}
+							</div>
+						</div>
+
+						<div
+							v-if="selectedRule.principe_finalite"
+							class="detail-item"
+						>
+							<div class="detail-label">
+								Principe de finalité
+							</div>
+							<div class="detail-content">
+								{{ selectedRule.principe_finalite }}
 							</div>
 						</div>
 					</div>
