@@ -23,7 +23,7 @@ const meta: Meta<typeof HeaderToolbar> = {
 		},
 		currentPageIndex: {
 			control: 'number',
-			description: 'Index de la page actuelle.',
+			description: 'Permet de contrôler explicitement quel élément du menu de gauche est marqué comme la page actuelle',
 		},
 	},
 }
