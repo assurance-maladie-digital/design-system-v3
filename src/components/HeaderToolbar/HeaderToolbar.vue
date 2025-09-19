@@ -612,6 +612,7 @@
 								class="burger-btn"
 								v-bind="activatorProps"
 								:aria-label="props.ariaRightLabel"
+								:title="props.ariaRightLabel"
 								aria-haspopup="menu"
 								:aria-expanded="mobileMenuOpen ? 'true' : 'false'"
 								aria-controls="mobile-right-menu"
