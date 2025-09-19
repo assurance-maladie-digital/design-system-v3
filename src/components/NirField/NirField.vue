@@ -375,9 +375,6 @@
 	}
 
 	const hasNumberErrors = computed(() => numberValidation.hasError.value)
-	const hasNumberWarning = computed(() => !hasNumberErrors.value && numberValidation.hasWarning.value)
-	//const hasNumberSuccess = computed(() => !hasNumberErrors.value && !hasNumberWarning.value && numberValidation.hasSuccess.value)
-
 	const hasKeyErrors = computed(() => keyValidation.hasError.value)
 
 	// Propriétés calculées pour les attributs ARIA et les états d'erreur
@@ -605,19 +602,19 @@
 .nir-field {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 16px;
+	gap: 0 16px;
 	width: calc(v-bind(fieldWidth) - 16px);
 	align-items: flex-start;
 }
 
 .nir-field--fieldset {
 	width: calc(v-bind(fieldWidth) + 5px);
-	border: 1px solid #b9b9b9;
+	border: 1px solid #949494;
 	border-radius: 4px;
 	padding: 25px;
 	margin: 0;
 	display: flex;
-	gap: 16px;
+	gap: 0 16px;
 	align-items: flex-start;
 	box-sizing: border-box;
 }
