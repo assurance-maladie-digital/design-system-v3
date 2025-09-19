@@ -4,6 +4,7 @@
 	import { ref, type PropType, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
 	import type { MenuItem, SelectItem } from './types'
 	import { useDisplay } from 'vuetify'
+	import { useMobileRightMenu } from './useMobileRightMenu'
 
 	const elementWidth = ref(0)
 	const menuOpen = ref(false)
@@ -188,15 +189,17 @@
 	const leftMenuAuditTransient = ref(false)
 
 	const menuButtonRef = ref<HTMLElement | null>(null)
-	// Mobile burger and focus management (no auto-focus on open)
-	const mobileMenuOpen = ref(false)
-	const mobileBurgerButtonRef = ref<HTMLElement | null>(null)
-	const mobileRightMenuRef = ref<HTMLElement | null>(null)
+	// Mobile burger and focus management via composable
+	const {
+		mobileMenuOpen,
+		mobileBurgerButtonRef,
+		mobileRightMenuRef,
+		mobileActiveDescendantId,
+		handleMobileMenuKeydown,
+		onMobileMenuModel,
+		openMobileMenuAndFocus,
+	} = useMobileRightMenu()
 	const leftMenuListRef = ref<HTMLElement | null>(null)
-
-	// Mobile ARIA tracking
-	const mobileActiveIndex = ref<number | null>(null)
-	const mobileActiveDescendantId = ref<string | null>(null)
 
 	const isCurrentRightLink = (item: MenuItem): boolean => {
 		if (!item.href) return false
@@ -210,54 +213,7 @@
 		}
 	}
 
-	const handleMobileMenuKeydown = (event: KeyboardEvent) => {
-		const items = Array.from(document.querySelectorAll('#mobile-right-menu [role="menuitem"]')) as HTMLElement[]
-		if (items.length === 0) return
-		const currentIdx = mobileActiveDescendantId.value
-			? items.findIndex(el => el.id === mobileActiveDescendantId.value!)
-			: -1
-
-		let newIndex = currentIdx
-		switch (event.key) {
-		case 'ArrowDown':
-			event.preventDefault()
-			newIndex = currentIdx < items.length - 1 ? currentIdx + 1 : 0
-			break
-		case 'ArrowUp':
-			event.preventDefault()
-			newIndex = currentIdx > 0 ? currentIdx - 1 : items.length - 1
-			break
-		case 'Home':
-			event.preventDefault()
-			newIndex = 0
-			break
-		case 'End':
-			event.preventDefault()
-			newIndex = items.length - 1
-			break
-		case 'Escape': {
-			event.preventDefault()
-			mobileMenuOpen.value = false
-			nextTick(() => mobileBurgerButtonRef.value?.focus())
-			return
-		}
-		case 'Enter':
-		case ' ': {
-			event.preventDefault()
-			const idx = currentIdx >= 0 ? currentIdx : 0
-			items[idx]?.click()
-			return
-		}
-		default:
-			return
-		}
-
-		if (newIndex !== currentIdx && newIndex >= 0) {
-			mobileActiveIndex.value = newIndex
-			mobileActiveDescendantId.value = items[newIndex].id
-			items[newIndex].focus()
-		}
-	}
+	// Mobile handlers are provided by the composable
 
 	const onLeftMenuModel = (val: boolean) => {
 		if (val) {
@@ -303,55 +259,9 @@
 		}
 	}
 
-	// Mobile burger open/close focus management
-	const onMobileMenuModel = (val: boolean) => {
-		if (val) {
-			// Mark first item as active so the highlight class applies immediately
-			mobileActiveIndex.value = 0
-			mobileActiveDescendantId.value = 'mobile-item-0'
-			nextTick(() => {
-				let attempts = 0
-				const tryFocus = () => {
-					const first = document.getElementById('mobile-item-0') as HTMLElement | null
-					const inner = first?.querySelector('a,button,[tabindex]:not([tabindex="-1"])') as HTMLElement | null
-					const target = (inner ?? first) as HTMLElement | null
-					if (target) {
-						target.focus()
-						return
-					}
-					if (++attempts < 10) requestAnimationFrame(tryFocus)
-				}
-				// Give the overlay a brief moment to mount, then start trying to focus
-				setTimeout(() => requestAnimationFrame(tryFocus), 200)
-			})
-		}
-		else {
-			nextTick(() => {
-				mobileBurgerButtonRef.value?.focus()
-			})
-		}
-	}
+	// onMobileMenuModel provided by composable
 
-	// Explicitly open mobile menu and focus first item (for keyboard activations)
-	const openMobileMenuAndFocus = () => {
-		mobileMenuOpen.value = true
-		mobileActiveIndex.value = 0
-		mobileActiveDescendantId.value = 'mobile-item-0'
-		nextTick(() => {
-			let attempts = 0
-			const tryFocus = () => {
-				const first = document.getElementById('mobile-item-0') as HTMLElement | null
-				const inner = first?.querySelector('a,button,[tabindex]:not([tabindex="-1"])') as HTMLElement | null
-				const target = (inner ?? first) as HTMLElement | null
-				if (target) {
-					target.focus()
-					return
-				}
-				if (++attempts < 10) requestAnimationFrame(tryFocus)
-			}
-			setTimeout(() => requestAnimationFrame(tryFocus), 150)
-		})
-	}
+	// openMobileMenuAndFocus provided by composable
 
 	// Computed pour déterminer quel élément doit avoir aria-current
 	const getCurrentPageIndex = () => {
@@ -686,7 +596,7 @@
 				<div class="mobile-burger">
 					<v-menu
 						v-model="mobileMenuOpen"
-						location="bottom end"
+						location="bottom right"
 						origin="top right"
 						attach="body"
 						content-class="mobile-burger-menu"
@@ -1165,10 +1075,10 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	max-width: 100vw;
 	width: auto;
 
-	@media (width <= $header-breakpoint-sm) {
-		left: auto !important;
-		right: 0 !important;
-	}
+	/* Always align to the right edge when attached to body */
+	left: auto !important;
+	right: 0 !important;
+	transform: none !important;
 }
 
 /* Mobile burger visibility and button focus styles */
