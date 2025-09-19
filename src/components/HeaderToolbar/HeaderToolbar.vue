@@ -309,9 +309,8 @@
 
 		// Rediriger le focus sur le bouton après sélection
 		nextTick(() => {
-			if (menuButtonRef.value) {
-				menuButtonRef.value.focus()
-			}
+			const focusTarget = menuButtonRef.value?.closest('a,button,[tabindex]:not([tabindex="-1"])') as HTMLElement | null
+			focusTarget?.focus()
 		})
 
 		if (subItem.href) {
