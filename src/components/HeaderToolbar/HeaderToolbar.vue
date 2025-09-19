@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-	import { VMenu, VList, VListItem, VIcon } from 'vuetify/components'
+	import { VMenu, VList, VListItem } from 'vuetify/components'
 	import { mdiChevronDown, mdiChevronRight, mdiMenu } from '@mdi/js'
 	import { ref, type PropType, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
 	import type { MenuItem, SelectItem } from './types'
 	import { useDisplay } from 'vuetify'
 	import { useMobileRightMenu } from './useMobileRightMenu'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const elementWidth = ref(0)
 	const menuOpen = ref(false)
@@ -522,9 +523,10 @@
 										class="sy-header-button d-flex justify-space-between"
 									>
 										{{ dropdownMenuTitle }}
-										<v-icon
+										<SyIcon
 											:icon="mdiChevronDown"
 											size="small"
+											decorative
 											class="ml-1"
 										/>
 									</span>
@@ -567,9 +569,10 @@
 													class="text-primary"
 													role="presentation"
 												>
-													<v-icon
+													<SyIcon
 														:icon="mdiChevronRight"
 														size="small"
+														decorative
 														class="ml-1"
 													/>
 													<span>
@@ -619,9 +622,10 @@
 								@keydown.space.prevent="openMobileMenuAndFocus()"
 								@keydown.enter.prevent="openMobileMenuAndFocus()"
 							>
-								<v-icon
+								<SyIcon
 									:icon="mdiMenu"
 									size="small"
+									decorative
 								/>
 							</button>
 						</template>
@@ -650,9 +654,10 @@
 								@click="mobileMenuOpen = false"
 							>
 								<v-list-item-title class="text-primary">
-									<v-icon
+									<SyIcon
 										:icon="mdiChevronRight"
 										size="small"
+										decorative
 										class="mr-1"
 									/>
 									{{ item.title }}
