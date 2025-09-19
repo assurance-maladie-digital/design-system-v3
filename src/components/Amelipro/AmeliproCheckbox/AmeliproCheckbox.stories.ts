@@ -46,7 +46,6 @@ export const Default: Story = {
 		uniqueId: 'checkbox-example',
 	},
 	parameters: {
-		args: {},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -59,7 +58,7 @@ export const Default: Story = {
 </template>`,
 			},
 			{
-				name: 'Scripts',
+				name: 'Script',
 				code: `<script setup lang="ts">
 	import { ref } from 'vue'
 	import { AmeliproCheckbox } from '@cnamts/synapse'
@@ -78,8 +77,6 @@ export const Default: Story = {
 		components: { AmeliproCheckbox },
 		setup() {
 			const model = ref<boolean | undefined>(false)
-
-			// Optional: Keeps v-model in sync with storybook args
 			watch(() => args.modelValue, (newValue) => {
 				model.value = newValue
 			})
@@ -87,8 +84,6 @@ export const Default: Story = {
 		},
 		template: `
 <AmeliproCheckbox
-	:checkbox="args.checkbox"
-	:unique-id="args.id"
 	v-bind="args"
 	v-model="model"
 >
@@ -98,6 +93,292 @@ export const Default: Story = {
 			tooltip-text="contenu de la tooltip"
 			unique-id="ma-tooltip"
 		/>
+	</template>
+</AmeliproCheckbox>`,
+	}),
+}
+
+export const Disabled: Story = {
+	args: {
+		checkbox: {
+			label: 'Désactivée',
+			value: 'disabled',
+		},
+		uniqueId: 'checkbox-disabled',
+		disabled: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Exemple de case à cocher désactivée grâce à la prop <code>disabled</code>.</p>
+	<AmeliproCheckbox
+		v-model="isChecked"
+		:checkbox="checkbox"
+		unique-id="checkbox-disabled"
+		disabled
+	/>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckbox },
+		setup() {
+			const model = ref(false)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = !!newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Exemple de case à cocher désactivée grâce à la prop <code>disabled</code>.</p>
+<AmeliproCheckbox
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const Switch: Story = {
+	args: {
+		checkbox: {
+			label: 'Switch',
+			value: 'switch',
+		},
+		uniqueId: 'checkbox-switch',
+		isSwitch: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>La checkbox est affichée sous forme de switch grâce à la prop <code>isSwitch</code>.</p>
+	<AmeliproCheckbox
+		v-model="isChecked"
+		:checkbox="checkbox"
+		unique-id="checkbox-switch"
+		is-switch
+	/>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckbox },
+		setup() {
+			const model = ref(false)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = !!newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">La checkbox est affichée sous forme de switch grâce à la prop <code>isSwitch</code>.</p>
+<AmeliproCheckbox v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const LabelLeft: Story = {
+	args: {
+		checkbox: {
+			label: 'Label à gauche',
+			value: 'label-left',
+		},
+		uniqueId: 'checkbox-label-left',
+		labelLeft: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le label est positionné à gauche grâce à la prop <code>labelLeft</code>.</p>
+	<AmeliproCheckbox
+		v-model="isChecked"
+		:checkbox="checkbox"
+		unique-id="checkbox-label-left"
+		label-left
+	/>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckbox },
+		setup() {
+			const model = ref(false)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = !!newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Le label est positionné à gauche grâce à la prop <code>labelLeft</code>.</p>
+<AmeliproCheckbox v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const Required: Story = {
+	args: {
+		checkbox: {
+			label: 'Obligatoire',
+			value: 'required',
+		},
+		uniqueId: 'checkbox-required',
+		ariaRequired: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>La sélection est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+	<AmeliproCheckbox
+		v-model="isChecked"
+		:checkbox="checkbox"
+		unique-id="checkbox-required"
+		aria-required
+	/>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckbox },
+		setup() {
+			const model = ref(false)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = !!newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">La sélection est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+<AmeliproCheckbox v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const ErrorDefault: Story = {
+	args: {
+		checkbox: {
+			label: 'Erreur au chargement',
+			value: 'error-default',
+		},
+		uniqueId: 'checkbox-error-default',
+		ariaRequired: true,
+		errorDefault: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>La checkbox affiche une erreur dès le chargement grâce à la prop <code>errorDefault</code>.</p>
+	<AmeliproCheckbox
+		v-model="isChecked"
+		:checkbox="checkbox"
+		unique-id="checkbox-error-default"
+		aria-required
+		error-default
+	/>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckbox },
+		setup() {
+			const model = ref(false)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = !!newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">La checkbox affiche une erreur dès le chargement grâce à la prop <code>errorDefault</code>.</p>
+<AmeliproCheckbox v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const CustomErrorMessage: Story = {
+	args: {
+		checkbox: {
+			label: 'Erreur personnalisée',
+			value: 'custom-error',
+		},
+		uniqueId: 'checkbox-custom-error',
+		ariaRequired: true,
+		requiredErrorMessage: 'Veuillez cocher cette case pour continuer',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Message d’erreur personnalisé via la prop <code>requiredErrorMessage</code>.</p>
+	<AmeliproCheckbox
+		v-model="isChecked"
+		:checkbox="checkbox"
+		unique-id="checkbox-custom-error"
+		aria-required
+		required-error-message="Veuillez cocher cette case pour continuer"
+	/>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckbox },
+		setup() {
+			const model = ref(false)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = !!newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Message d’erreur personnalisé via la prop <code>requiredErrorMessage</code>.</p>
+<AmeliproCheckbox v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const Append: Story = {
+	args: {
+		checkbox: {
+			label: 'Avec append',
+			value: 'with-append',
+		},
+		uniqueId: 'checkbox-with-append',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Exemple avec slot append.</p>
+	<AmeliproCheckbox
+		v-model="isChecked"
+		:checkbox="checkbox"
+		unique-id="checkbox-with-append"
+	>
+		<template #append>
+			<span>Texte supplémentaire</span>
+		</template>
+	</AmeliproCheckbox>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckbox },
+		setup() {
+			const model = ref(false)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = !!newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Exemple avec slot append.</p>
+<AmeliproCheckbox v-bind="args" v-model="model">
+	<template #append>
+		<span>Texte supplémentaire</span>
 	</template>
 </AmeliproCheckbox>`,
 	}),
