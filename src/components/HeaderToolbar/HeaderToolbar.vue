@@ -485,7 +485,7 @@
 						:aria-label="props.ariaLeftLabel"
 						role="navigation"
 					>
-						<ul ref="secondLiRef">
+						<ul>
 							<li
 								v-for="(item, index) in props.leftMenu"
 								:key="index"
