@@ -190,6 +190,17 @@
 	const leftMenuAuditTransient = ref(false)
 
 	const menuButtonRef = ref<HTMLElement | null>(null)
+
+	// Resolve the interactive ancestor (a/button/focusable) for the left menu activator span
+	const getLeftActivatorInteractiveEl = (): HTMLElement | null => {
+		const raw = menuButtonRef.value as unknown as { $el?: unknown } | HTMLElement | null
+		const baseEl = (raw && (raw as { $el?: unknown }).$el) ? (raw as { $el: unknown }).$el as HTMLElement : (raw as HTMLElement | null)
+		const elem = baseEl instanceof HTMLElement ? baseEl : null
+		const target = elem?.closest('a,button,[tabindex]:not([tabindex="-1"])') as HTMLElement | null
+		if (target) return target
+		// Fallback to DOM query if ref resolution fails
+		return document.querySelector('#left-menu li:nth-child(2) a') as HTMLElement | null
+	}
 	// Mobile burger and focus management via composable
 	const {
 		mobileMenuOpen,
@@ -201,6 +212,16 @@
 		openMobileMenuAndFocus,
 	} = useMobileRightMenu()
 	const leftMenuListRef = ref<HTMLElement | null>(null)
+	const leftMenuRef = ref<HTMLElement | null>(null)
+
+	// Resolve the actual HTMLElement of the left dropdown list (works with Vuetify component refs and teleported content)
+	const getLeftDropdownEl = (): HTMLElement | null => {
+		const refVal = leftMenuListRef.value as unknown as { $el?: unknown } | HTMLElement | null
+		const maybeEl = (refVal && (refVal as { $el?: unknown }).$el) ?? refVal
+		// If we got a real HTMLElement, return it; otherwise fallback to the id in the DOM
+		if (maybeEl instanceof HTMLElement) return maybeEl
+		return document.getElementById('left-dropdown-menu')
+	}
 
 	const isCurrentRightLink = (item: MenuItem): boolean => {
 		if (!item.href) return false
@@ -222,7 +243,8 @@
 			showOverlay.value = true
 			nextTick(() => {
 				setTimeout(() => {
-					const first = document.querySelector('.left-dropdown-menu [role="menuitem"]') as HTMLElement | null
+					const container = getLeftDropdownEl()
+					const first = container?.querySelector('[role="menuitem"]') as HTMLElement | null
 					if (first) {
 						activeDescendantId.value = first.id || 'menu-item-0'
 						first.focus()
@@ -309,7 +331,7 @@
 
 		// Rediriger le focus sur le bouton après sélection
 		nextTick(() => {
-			const focusTarget = menuButtonRef.value?.closest('a,button,[tabindex]:not([tabindex="-1"])') as HTMLElement | null
+			const focusTarget = getLeftActivatorInteractiveEl()
 			focusTarget?.focus()
 		})
 
@@ -325,9 +347,12 @@
 
 	const updateWidth = async () => {
 		await nextTick()
-		const element = document.querySelector('.toolbar #left-menu li:nth-child(2)') as HTMLElement
-		if (element) {
-			elementWidth.value = element.offsetWidth
+		// Measure second left-menu item width using the leftMenuRef (nav > ul > li:nth-child(2))
+		const navLike = leftMenuRef.value as unknown as { $el?: unknown } | HTMLElement | null
+		const navEl = (navLike && (navLike as { $el?: unknown }).$el) ? (navLike as { $el: unknown }).$el as HTMLElement : (navLike as HTMLElement | null)
+		const secondLi = navEl?.querySelector('ul > li:nth-child(2)') as HTMLElement | null
+		if (secondLi) {
+			elementWidth.value = secondLi.offsetWidth || 0
 		}
 	}
 
@@ -382,11 +407,9 @@
 			menuOpen.value = false
 			showOverlay.value = false
 			activeDescendantId.value = null
-			// Retourner le focus sur le lien du 2ème menu (Professionnel de santé)
-			const secondMenuItem = document.querySelector('#left-menu li:nth-child(2) a') as HTMLElement
-			if (secondMenuItem) {
-				secondMenuItem.focus()
-			}
+			// Retourner le focus sur le lien du 2ème menu (Professionnel de santé) via ref robuste
+			const secondMenuItem = getLeftActivatorInteractiveEl()
+			secondMenuItem?.focus()
 			return
 		}
 		case 'Enter':
@@ -441,7 +464,8 @@
 		showOverlay.value = true
 		nextTick(() => {
 			setTimeout(() => {
-				const firstMenuItem = document.querySelector('.left-dropdown-menu [role="menuitem"]') as HTMLElement | null
+				const container = getLeftDropdownEl()
+				const firstMenuItem = container?.querySelector('[role="menuitem"]') as HTMLElement | null
 				if (firstMenuItem) {
 					activeDescendantId.value = firstMenuItem.id || 'menu-item-0'
 					firstMenuItem.focus()
@@ -481,6 +505,7 @@
 					/>
 					<nav
 						id="left-menu"
+            ref="leftMenuRef"
 						:aria-label="props.ariaLeftLabel"
 						role="navigation"
 					>
