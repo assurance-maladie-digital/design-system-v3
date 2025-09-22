@@ -978,7 +978,7 @@
 						:density="props.density"
 						:hide-details="props.hideDetails"
 						:display-asterisk="props.displayAsterisk"
-						is-clearable
+						:is-clearable="!props.readonly"
 						:auto-clamp="props.autoClamp"
 						title="Date Picker"
 						@click="openDatePickerOnClick"
