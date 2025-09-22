@@ -505,7 +505,7 @@
 					/>
 					<nav
 						id="left-menu"
-            ref="leftMenuRef"
+						ref="leftMenuRef"
 						:aria-label="props.ariaLeftLabel"
 						role="navigation"
 					>
