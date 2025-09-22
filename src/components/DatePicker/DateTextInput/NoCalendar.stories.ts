@@ -568,6 +568,7 @@ export const AutoClampFeature: Story = {
 							placeholder="Saisie avec auto clamp - séparateur -"
 							format="DD-MM-YYYY"
 							noCalendar
+							autoClamp
 
 						/>
 						
@@ -577,6 +578,7 @@ export const AutoClampFeature: Story = {
 							placeholder="Saisie avec auto clamp - séparateur ."
 							format="YYYY.MM.DD"
 							noCalendar
+							autoClamp
 						/>
 						
 						<h4 class="mt-4">Mode plage de dates (séparateur /)</h4>
@@ -649,6 +651,7 @@ export const AutoClampFeature: Story = {
                   placeholder="Saisie avec auto clamp - séparateur ."
                   format="YYYY.MM.DD"
                   noCalendar
+                  autoClamp
                 />
                 <div class="caption mb-4">Valeur actuelle: {{ dateDot || 'aucune date saisie' }}</div>
                 

@@ -3,9 +3,10 @@ import * as LangBtnStories from './LangBtn.stories';
 
 <Meta of={LangBtnStories} />
 
-# LangBtn
-
-Le composant `LangBtn` est utilisé pour afficher une alerte à l’utilisateur.
+<div className="header">
+  <h1>LangBtn</h1>
+  <p>Le composant `LangBtn` est utilisé pour afficher une alerte à l’utilisateur.</p>
+</div>
 
 <Canvas of={LangBtnStories.Default} />
 
@@ -21,6 +22,7 @@ Le composant `LangBtn` est utilisé pour afficher une alerte à l’utilisateur.
  import { ref } from 'vue'
 
  const value = ref('fr')
+import '../../stories/styles/shared.css';
  const items = ['fr', 'en', 'co']
  const ariaLabel = 'Choix de la langue'
 </script>

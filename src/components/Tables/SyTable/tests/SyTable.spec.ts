@@ -153,12 +153,14 @@ describe('SyTable', () => {
 		expect(setItemMock).toHaveBeenCalledWith(
 			'table-test-storage',
 			expect.objectContaining({
-				sortBy: [
-					{
-						key: 'name',
-						order: 'desc',
-					},
-				],
+				options: expect.objectContaining({
+					sortBy: [
+						{
+							key: 'name',
+							order: 'desc',
+						},
+					],
+				}),
 			}),
 		)
 	})
@@ -367,7 +369,7 @@ describe('SyTable', () => {
 		})
 
 		await wrapper.vm.$nextTick()
-		expect(wrapper.text()).toContain('Aucune donnée disponible')
+		expect(wrapper.text()).toContain('No data available')
 	})
 
 	it('enables selection when showSelect is true', async () => {

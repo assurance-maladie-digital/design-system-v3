@@ -4,7 +4,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
-	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
+	import { ref, watch, onMounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import type { VList, VTextField } from 'vuetify/components'
@@ -548,63 +548,95 @@
 		}
 	})
 
-	let mutationObserver: MutationObserver | null = null
+	const ariaManager = {
+		cleanInputAttributes(inputElement: HTMLElement): void {
+			if (!inputElement) return
 
-	// Function to set up proper ARIA attributes
+			inputElement.removeAttribute('aria-describedby')
+			inputElement.removeAttribute('size')
+			inputElement.removeAttribute('tabindex')
+			inputElement.removeAttribute('aria-hidden')
+		},
+
+		updateInputState(inputElement: HTMLElement, isOpenValue: boolean, menuId: string, activeDescendant?: string): void {
+			if (!inputElement) return
+
+			inputElement.setAttribute('role', 'combobox')
+			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
+			inputElement.setAttribute('aria-haspopup', 'listbox')
+
+			if (isOpenValue) {
+				inputElement.setAttribute('aria-controls', menuId)
+			}
+			else {
+				inputElement.removeAttribute('aria-controls')
+			}
+
+			if (isOpenValue && activeDescendant) {
+				inputElement.setAttribute('aria-activedescendant', activeDescendant)
+			}
+			else {
+				inputElement.removeAttribute('aria-activedescendant')
+			}
+		},
+
+		updateValidationAttributes(inputElement: HTMLElement, isRequiredValue: boolean, hasErrorValue: boolean): void {
+			if (!inputElement) return
+
+			if (isRequiredValue) {
+				inputElement.setAttribute('aria-required', 'true')
+			}
+			else {
+				inputElement.removeAttribute('aria-required')
+			}
+
+			if (hasErrorValue) {
+				inputElement.setAttribute('aria-invalid', 'true')
+			}
+			else {
+				inputElement.removeAttribute('aria-invalid')
+			}
+		},
+
+		cleanParentAttributes(parentElement: HTMLElement): void {
+			if (!parentElement) return
+
+			parentElement.removeAttribute('role')
+			parentElement.removeAttribute('aria-expanded')
+			parentElement.removeAttribute('aria-controls')
+			parentElement.removeAttribute('aria-haspopup')
+			parentElement.removeAttribute('aria-activedescendant')
+			parentElement.removeAttribute('aria-required')
+			parentElement.removeAttribute('aria-invalid')
+			parentElement.removeAttribute('aria-hidden')
+		},
+
+		cleanAlertAttributes(parentElement: HTMLElement): void {
+			if (!parentElement) return
+
+			const messagesElements = parentElement.querySelectorAll('[role="alert"]')
+			messagesElements.forEach((element: Element) => {
+				element.removeAttribute('role')
+				element.removeAttribute('aria-live')
+			})
+		},
+	}
+
 	const setupAriaAttributes = () => {
-		if (textInput.value && textInput.value.$el) {
-			// Find the input element
-			const inputElement = textInput.value.$el?.querySelector?.('input')
-			if (inputElement) {
-				// Remove problematic attributes that shouldn't be on input
-				inputElement.removeAttribute('aria-describedby')
-				inputElement.removeAttribute('size')
-				inputElement.removeAttribute('tabindex')
-				inputElement.removeAttribute('aria-hidden')
+		if (!textInput.value || !textInput.value.$el) return
 
-				// Set proper combobox attributes on input element (following CNSA standard)
-				inputElement.setAttribute('role', 'combobox')
-				inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
-				// Only set aria-controls when menu is open and element exists
-				if (isOpen.value) {
-					inputElement.setAttribute('aria-controls', uniqueMenuId.value)
-				}
-				else {
-					inputElement.removeAttribute('aria-controls')
-				}
-				// Note: aria-autocomplete is omitted for select-only combobox (invalid to set to 'none')
-				inputElement.setAttribute('aria-haspopup', 'listbox')
-				if (isOpen.value && activeDescendantId.value) {
-					inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
-				}
-				if (isRequired.value) {
-					inputElement.setAttribute('aria-required', 'true')
-				}
-				if (hasError.value) {
-					inputElement.setAttribute('aria-invalid', 'true')
-				}
-			}
+		const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
+		const parentElement = textInput.value.$el as HTMLElement
 
-			// Clean up parent element - remove any conflicting attributes
-			const parentElement = textInput.value.$el
-			if (parentElement) {
-				// Remove any role or ARIA attributes from parent that should be on input
-				parentElement.removeAttribute('role')
-				parentElement.removeAttribute('aria-expanded')
-				parentElement.removeAttribute('aria-controls')
-				parentElement.removeAttribute('aria-haspopup')
-				parentElement.removeAttribute('aria-activedescendant')
-				parentElement.removeAttribute('aria-required')
-				parentElement.removeAttribute('aria-invalid')
-				parentElement.removeAttribute('aria-hidden')
+		if (inputElement) {
+			ariaManager.cleanInputAttributes(inputElement)
+			ariaManager.updateInputState(inputElement, isOpen.value, uniqueMenuId.value, activeDescendantId.value)
+			ariaManager.updateValidationAttributes(inputElement, Boolean(isRequired.value), Boolean(hasError.value))
+		}
 
-				// Remove role="alert" and aria-live from message containers to prevent screen reader interruption
-				const messagesElements = parentElement.querySelectorAll('[role="alert"]')
-				messagesElements.forEach((element: Element) => {
-					element.removeAttribute('role')
-					element.removeAttribute('aria-live')
-				})
-			}
+		if (parentElement) {
+			ariaManager.cleanParentAttributes(parentElement)
+			ariaManager.cleanAlertAttributes(parentElement)
 		}
 	}
 
@@ -613,91 +645,36 @@
 			labelWidth.value = labelRef.value.offsetWidth + 64
 		}
 
-		// Use nextTick to ensure the DOM is fully rendered
 		nextTick(() => {
-			// Initial setup
 			setupAriaAttributes()
 
-			// Set up MutationObserver to monitor attribute changes
-			if (textInput.value && textInput.value.$el) {
-				mutationObserver = new MutationObserver((mutations) => {
-					let needsCleanup = false
-					mutations.forEach((mutation) => {
-						if (mutation.type === 'attributes') {
-							const target = mutation.target as HTMLElement
-							const attributeName = mutation.attributeName
-
-							// Check if problematic attributes were added to input
-							if (target.tagName === 'INPUT' && (
-								attributeName === 'role'
-								|| attributeName === 'aria-hidden'
-								|| attributeName === 'aria-expanded'
-								|| attributeName === 'aria-controls'
-								|| attributeName === 'aria-haspopup'
-							)) {
-								needsCleanup = true
-							}
-
-							// Check if aria-hidden was added to parent
-							if (target === textInput.value?.$el && attributeName === 'aria-hidden') {
-								needsCleanup = true
-							}
-
-							// Check if role="alert" or aria-live was added to any element (error messages)
-							if (attributeName === 'role' && (target as HTMLElement).getAttribute('role') === 'alert') {
-								needsCleanup = true
-							}
-							if (attributeName === 'aria-live') {
-								needsCleanup = true
-							}
-						}
-					})
-
-					if (needsCleanup) {
-						// Use setTimeout to avoid infinite loops
-						setTimeout(setupAriaAttributes, 0)
-					}
-				})
-
-				// Observe both the parent element and its children
-				mutationObserver.observe(textInput.value.$el, {
-					attributes: true,
-					subtree: true,
-					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup', 'aria-live'],
-				})
-			}
+			setTimeout(setupAriaAttributes, 100)
+			setTimeout(setupAriaAttributes, 300)
 		})
 	})
 
-	// Watchers to update ARIA attributes dynamically on input element
 	watch(isOpen, (newValue) => {
 		nextTick(() => {
-			if (textInput.value && textInput.value.$el) {
-				const inputElement = textInput.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					inputElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
-					if (newValue && activeDescendantId.value) {
-						inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
-					}
-					else {
-						inputElement.removeAttribute('aria-activedescendant')
-					}
-				}
+			if (!textInput.value || !textInput.value.$el) return
+
+			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
+			if (inputElement) {
+				ariaManager.updateInputState(inputElement, newValue, uniqueMenuId.value, activeDescendantId.value)
 			}
 		})
 	})
 
 	watch(activeDescendantId, (newValue) => {
 		nextTick(() => {
-			if (textInput.value && textInput.value.$el && isOpen.value) {
-				const inputElement = textInput.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					if (newValue) {
-						inputElement.setAttribute('aria-activedescendant', newValue)
-					}
-					else {
-						inputElement.removeAttribute('aria-activedescendant')
-					}
+			if (!textInput.value || !textInput.value.$el || !isOpen.value) return
+
+			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
+			if (inputElement) {
+				if (newValue) {
+					inputElement.setAttribute('aria-activedescendant', newValue)
+				}
+				else {
+					inputElement.removeAttribute('aria-activedescendant')
 				}
 			}
 		})
@@ -705,73 +682,26 @@
 
 	watch(hasError, (newValue) => {
 		nextTick(() => {
-			if (textInput.value && textInput.value.$el) {
-				const inputElement = textInput.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					if (newValue) {
-						inputElement.setAttribute('aria-invalid', 'true')
-					}
-					else {
-						inputElement.removeAttribute('aria-invalid')
-					}
-				}
+			if (!textInput.value || !textInput.value.$el) return
+
+			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
+			if (inputElement) {
+				ariaManager.updateValidationAttributes(
+					inputElement,
+					Boolean(isRequired.value),
+					Boolean(newValue),
+				)
 			}
 		})
 	})
 
-	// Watch for selection changes to enforce correct accessibility attributes
-	// This prevents Vuetify from overriding our combobox attributes
 	watch(selectedItem, () => {
 		nextTick(() => {
-			if (textInput.value && textInput.value.$el) {
-				const inputElement = textInput.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					// Ensure combobox role is maintained on input
-					inputElement.setAttribute('role', 'combobox')
-					// Ensure aria-hidden is never set to true
-					inputElement.removeAttribute('aria-hidden')
-					// Maintain other combobox attributes
-					inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
-					inputElement.setAttribute('aria-haspopup', 'listbox')
-					// Note: aria-autocomplete is omitted for select-only combobox
-					// Only set aria-controls when menu is open and element exists
-					if (isOpen.value) {
-						inputElement.setAttribute('aria-controls', uniqueMenuId.value)
-					}
-					else {
-						inputElement.removeAttribute('aria-controls')
-					}
+			if (!textInput.value || !textInput.value.$el) return
 
-					// Only add aria-required if the component is actually required
-					if (isRequired.value) {
-						inputElement.setAttribute('aria-required', 'true')
-					}
-					else {
-						inputElement.removeAttribute('aria-required')
-					}
-				}
-
-				// Clean up parent element
-				const parentElement = textInput.value.$el
-				if (parentElement) {
-					parentElement.removeAttribute('role')
-					parentElement.removeAttribute('aria-hidden')
-					parentElement.removeAttribute('aria-expanded')
-					parentElement.removeAttribute('aria-haspopup')
-					parentElement.removeAttribute('aria-controls')
-					parentElement.removeAttribute('aria-required')
-				}
-			}
+			setupAriaAttributes()
 		})
 	}, { deep: true })
-
-	onUnmounted(() => {
-		// Clean up MutationObserver
-		if (mutationObserver) {
-			mutationObserver.disconnect()
-			mutationObserver = null
-		}
-	})
 
 	defineExpose({
 		isOpen,
@@ -794,6 +724,7 @@
 	<VMenu
 		v-model="isOpen"
 		transition="slide-y-transition"
+		max-height="300px"
 	>
 		<template #activator="{ props: activatorProps }">
 			<VTextField
@@ -906,6 +837,7 @@
 			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 			:style="{
 				minWidth: `${textInput?.$el.offsetWidth}px`,
+				marginTop: props.hideMessages ? '0' : '-22px',
 			}"
 			bg-color="white"
 			tabindex="0"
@@ -984,16 +916,6 @@
 	.v-icon.arrow {
 		transform: rotateX(180deg);
 	}
-}
-
-.v-list {
-	margin-top: -22px;
-	max-height: 300px;
-	padding: 0;
-	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
-	border-radius: 4px;
-	overflow-y: auto;
-	z-index: 2;
 }
 
 .v-list-item:hover {

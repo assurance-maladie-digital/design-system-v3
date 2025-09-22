@@ -1,12 +1,14 @@
 import { Controls, Canvas, Meta } from '@storybook/blocks';
 
 import * as ServiceMenuStories from './ServiceMenu.stories';
+import '../../../stories/styles/shared.css';
 
 <Meta of={ServiceMenuStories} />
 
-# ServiceMenu
-
-L’élément `ServiceMenu` est utilisé pour afficher le menu de choix de service dans une fenêtre de dialogue.
+<div className="header">
+  <h1>ServiceMenu</h1>
+  <p>L’élément `ServiceMenu` est utilisé pour afficher le menu de choix de service dans une fenêtre de dialogue.</p>
+</div>
 
 <Canvas of={ServiceMenuStories.Default} />
 

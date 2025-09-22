@@ -25,15 +25,13 @@ exports[`AmeliproCustomSelector > render correctly 1`] = `
   </div>
   <div
     aria-labelledby="my-custom-selector-group-id"
-    class="
-      amelipro-custom-selector__group
-      d-flex
-      flex-wrap
-      justify-start
-    "
+    class="amelipro-custom-selector__group"
     role="group"
   >
     <ul class="
+      d-flex
+      flex-wrap
+      justify-start
       list-style-none
       w-100
     ">

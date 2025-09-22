@@ -10,6 +10,9 @@ export const Default: StoryObj = {
 		return {
 			components: { VCard },
 			template: `
+			    <div class="d-flex justify-space-between align-center">
+                  <h1 class="title font-weight-medium mb-5">Politique de confidentialité</h1>
+              </div>
                <VCard class="mt-4 pa-2">
                 <iframe src="https://assurancemaladiesec.github.io/abuse/reporting/" width="100%" height="800px" frameBorder="0"></iframe>
                </VCard>

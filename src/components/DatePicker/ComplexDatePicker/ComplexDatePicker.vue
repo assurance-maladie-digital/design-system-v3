@@ -535,10 +535,10 @@
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 
 	onMounted(() => {
+		setupMonthButtonObserver()
 		document.addEventListener('click', handleClickOutside)
 		if (displayFormattedDateComputed.value) displayFormattedDate.value = displayFormattedDateComputed.value
 		validateDates()
-		setupMonthButtonObserver()
 	})
 
 	onBeforeUnmount(() => {
@@ -708,6 +708,19 @@
 			withInternalUpdate(() => syncFromModelValue(newValue))
 		},
 		{ immediate: true },
+	)
+
+	// Observer pour personnaliser les boutons dès que le DatePicker devient visible
+	watch(
+		isDatePickerVisible,
+		(visible) => {
+			if (visible) {
+				nextTick(() => {
+					customizeMonthButton()
+					markHolidayDays()
+				})
+			}
+		},
 	)
 
 	/**
@@ -1100,8 +1113,6 @@
 
 :deep(.v-field--dirty),
 :deep(.v-field--focused) {
-	opacity: 1 !important;
-
 	--v-medium-emphasis-opacity: 1;
 }
 

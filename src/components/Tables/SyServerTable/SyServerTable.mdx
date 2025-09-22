@@ -3,9 +3,10 @@ import * as SyServerTable from './SyServerTable.stories';
 
 <Meta of={SyServerTable} />
 
-# SyServerTable
-
-Le composant `SyServerTable` est utilisé pour afficher des données tabulaires chargées depuis un serveur. Il s'appuie sur le composant `VDataTableServer` de Vuetify et offre des fonctionnalités supplémentaires comme le stockage local des options de tableau et des améliorations d'accessibilité.
+<div className="header">
+  <h1>SyServerTable</h1>
+  <p>Le composant `SyServerTable` est utilisé pour afficher des données tabulaires chargées depuis un serveur. Il s'appuie sur le composant `VDataTableServer` de Vuetify et offre des fonctionnalités supplémentaires comme le stockage local des options de tableau et des améliorations d'accessibilité.</p>
+</div>
 
 <Canvas story={{height: '550px'}} of={SyServerTable.Default} />
 
@@ -102,6 +103,7 @@ Le composant améliore l'accessibilité en ajoutant automatiquement:
   }
 
   const totalUsers = ref(0)
+import '../../../stories/styles/shared.css';
   const users = ref<User[]>([])
   const state = ref(StateEnum.IDLE)
 

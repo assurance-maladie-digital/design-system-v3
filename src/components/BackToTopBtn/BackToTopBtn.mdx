@@ -3,10 +3,10 @@ import * as BackToTopBtnStories from './BackToTopBtn.stories';
 
 <Meta of={BackToTopBtnStories} />
 
-
-# BackToTopBtn
-
-Le composant `BackToTopBtn` est utilisé pour afficher un bouton permettant à l’utilisateur de remonter en haut de la page.
+<div className="header">
+  <h1>BackToTopBtn</h1>
+  <p>Le composant `BackToTopBtn` est utilisé pour afficher un bouton permettant à l’utilisateur de remonter en haut de la page. </p>
+</div>
 
 Le bouton apparaît lorsque l'utilisateur scroll en dessous d'une certaine hauteur de la page. Cette hauteur est définie par la prop `threshold`, elle est de 120px par defaut.
 
@@ -27,6 +27,7 @@ Ce composant peut être utilisé à la racine de la page ou bien dans un composa
 import { BackToTopBtn } from '@cnamts/synapse'
 import { VCard, VSheet } from 'vuetify/components'
 </script>
+import '../../stories/styles/shared.css';
 
 <template>
   <VCard

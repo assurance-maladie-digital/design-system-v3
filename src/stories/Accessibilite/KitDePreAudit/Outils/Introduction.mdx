@@ -1,4 +1,5 @@
 import { Meta } from '@storybook/blocks';
+import '../../../styles/shared.css';
 
 <Meta title="Accessibilité/Kit de pré-audit/Outils/Introduction" />
 
@@ -32,7 +33,6 @@ import { Meta } from '@storybook/blocks';
       color: white;
       position: relative;
       overflow: hidden;
-      box-shadow: var(--shadow-lg);
     }
     
     .header-container::before {
@@ -46,32 +46,7 @@ import { Meta } from '@storybook/blocks';
       opacity: 0.3;
     }
     
-    .header-title {
-      font-size: 3.5rem;
-      font-weight: 800;
-      margin: 0;
-      line-height: 1.1;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .header-title::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 0;
-      width: 80px;
-      height: 4px;
-    border-radius: 3px;
-    }
-    
-    .header-subtitle {
-      font-size: 1.2rem;
-      margin-top: 1.5rem;
-      max-width: 80%;
-      line-height: 1.6;
-      opacity: 0.9;
-    }
+       
     
     /* Card styles */
     .tool-cards-container {
@@ -84,16 +59,9 @@ import { Meta } from '@storybook/blocks';
     .tool-card {
       background: white;
       border-radius: var(--border-radius-md);
-      box-shadow: var(--shadow-sm);
       padding: 1.5rem;
-      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
       position: relative;
       overflow: hidden;
-    }
-    
-    .tool-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-md);
     }
     
     .tool-card::before {
@@ -104,7 +72,6 @@ import { Meta } from '@storybook/blocks';
       width: 100%;
       height: 100%;
       opacity: 0;
-      transition: opacity var(--transition-normal);
       z-index: 0;
     }
     
@@ -163,7 +130,6 @@ import { Meta } from '@storybook/blocks';
       color: var(--primary-color);
       text-decoration: none;
       font-weight: 500;
-      transition: color var(--transition-fast);
       position: relative;
     }
     
@@ -176,26 +142,15 @@ import { Meta } from '@storybook/blocks';
       height: 2px;
       background-color: var(--primary-color);
       transform: scaleX(0);
-      transform-origin: right;
-      transition: transform var(--transition-normal);
     }
     
     .tool-card-link:hover {
       color: var(--secondary-color);
     }
     
-    .tool-card-link:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-    
     .tool-card-link-icon {
       margin-left: 0.5rem;
       transition: transform var(--transition-fast);
-    }
-    
-    .tool-card-link:hover .tool-card-link-icon {
-      transform: translateX(3px);
     }
     
     /* Section styles */
@@ -311,9 +266,9 @@ import { Meta } from '@storybook/blocks';
   `}
 </style>
 
-<div className="header-container">
-  <h1 className="header-title">Outils d'accessibilité</h1>
-  <p className="header-subtitle">
+<div className="header">
+  <h1>Outils d'accessibilité</h1>
+  <p>
     Découvrez les outils essentiels pour vérifier la conformité de vos interfaces aux normes d'accessibilité dans le cadre du pré-audit et de l'audit.
   </p>
 </div>

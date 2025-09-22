@@ -1,4 +1,5 @@
 import {Meta} from '@storybook/blocks';
+import '../../styles/shared.css';
 
 <Meta title="Accessibilité/Kit de pré-audit/Pré-audit"/>
 
@@ -29,45 +30,7 @@ import {Meta} from '@storybook/blocks';
     --transition: all 0.3s ease;
   }
 
-  .preaudit-header {
-    color: white;
-    padding: 2.5rem;
-    border-radius: var(--radius-lg);
-    margin-bottom: 2.5rem;
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .preaudit-header::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    z-index: 0;
-  }
-  
-  .preaudit-header h1 {
-    margin-top: 0;
-    font-size: 2.75rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .preaudit-header p {
-    font-size: 1.2rem;
-    margin-bottom: 0;
-    opacity: 0.9;
-    position: relative;
-    z-index: 1;
-    font-weight: 300;
-  }
+        
   
   .info-section {
     margin: 2.5rem 0;
@@ -77,11 +40,6 @@ import {Meta} from '@storybook/blocks';
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     border: 1px solid var(--neutral-300);
-  }
-  
-  .info-section:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
   }
   
   .info-section h2 {
@@ -128,11 +86,6 @@ import {Meta} from '@storybook/blocks';
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     position: relative;
-  }
-  
-  .verification-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
   }
   
   .verification-card::before {
@@ -232,8 +185,8 @@ import {Meta} from '@storybook/blocks';
 }
 </style>
 
-<div className="preaudit-header">
-  <h1>📝 Pré-audit d'accessibilité</h1>
+<div className="header">
+  <h1>Pré-audit d'accessibilité</h1>
   <p>Vérifiez la conformité de votre service web avant l'audit officiel</p>
 </div>
 

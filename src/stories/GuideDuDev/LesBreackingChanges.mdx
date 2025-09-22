@@ -1,8 +1,13 @@
 import { Meta, Source } from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
 
 <Meta title="Guide Du Dev/Breaking changes"/>
 
-# Les breaking changes
+
+
+<div className="header">
+  <h1>Les breakings changes</h1>
+</div>
 
 ## Stores
 
@@ -47,7 +52,6 @@ La props `locales` a été ajoutée afin de gérer la localisation des messages 
  - La props `nir-length` a été renomée en `displayKey`.
  - La props `tooltip` a été supprimée au profit des props `nirTooltip` et `keyTooltip`, ainsi que `nirTooltipPosition` et `keyTooltipPosition`.
  - Ajout de nouvelles props pour la gestion des erreurs: `disableErrorHandling`, `customNumberRules` et `customKeyRules`
-
 
 [Voir l'API du composant](https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-nirfield--docs#api)
 

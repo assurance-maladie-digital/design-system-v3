@@ -1,12 +1,14 @@
 import { Meta, Story} from "@storybook/blocks";
+import '../../stories/styles/shared.css';
 import * as HeaderBarStories from "./HeaderBar.stories.ts";
 import * as UsagesStories from "./Usages.stories.ts";
 
 <Meta of={HeaderBarStories} />
 
-# Usages
-
-<Story of={UsagesStories.UsagePage} />
+<div className="header">
+  <h1>Usages</h1>
+  
+</div><Story of={UsagesStories.UsagePage} />
 
 <br />
 

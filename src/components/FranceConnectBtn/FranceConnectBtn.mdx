@@ -4,9 +4,10 @@ import * as FranceConnectBtnStories from './FranceConnectBtn.stories';
 
 <Meta of={FranceConnectBtnStories} />
 
-# FranceConnectBtn
-
-Le composant `FranceConnectBtn` est utilisé pour afficher un bouton permettant à l’utilisateur de se connecter à FranceConnect.
+<div className="header">
+  <h1>FranceConnectBtn</h1>
+  <p>Le composant `FranceConnectBtn` est utilisé pour afficher un bouton permettant à l’utilisateur de se connecter à FranceConnect.</p>
+</div>
 
 <Canvas of={FranceConnectBtnStories.Default}  />
 
@@ -20,6 +21,7 @@ Le composant `FranceConnectBtn` est utilisé pour afficher un bouton permettant 
 <script setup lang="ts">
 	import { FranceConnectBtn } from '@cnamts/synapse'
 </script>
+import '../../stories/styles/shared.css';
 
 <template>
 	<FranceConnectBtn href="/" />

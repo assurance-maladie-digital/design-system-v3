@@ -214,10 +214,10 @@
 			:aria-invalid="checkErrorCondition ? true : undefined"
 			:aria-labelledby="uniqueId"
 			:aria-required="ariaRequired || multipleRequired ? true : undefined"
-			class="d-flex flex-wrap justify-start amelipro-custom-selector__group"
+			class="amelipro-custom-selector__group"
 			role="group"
 		>
-			<ul class="list-style-none w-100">
+			<ul class="d-flex flex-wrap justify-start list-style-none w-100">
 				<li
 					v-for="(item, index) in currentValue"
 					:key="index"

@@ -3,12 +3,12 @@ import * as SyIconStoriesAccessibility from './Accessibilite.stories'
 import SyIconAccessibility from './SyIconAccessibility.vue'
 
 <Meta of={SyIconStoriesAccessibility} />
+import '../../../stories/styles/shared.css';
 
-# 🌐 Accessibilité des icônes
-
-<Subtitle>
-	Guide d'accessibilité pour l'utilisation des icônes dans le Design System
-</Subtitle>
+<div className="header">
+  <h1>Accessibilité du composant SyIcon</h1>
+  <p>Le composant `SyIcon` est un wrapper autour du composant `v-icon` de Vuetify qui ajoute une gestion automatique de l'accessibilité selon les normes RGAA.</p>
+</div>
 
 <div className="tip-wrapper" style={{ background: '#f8f9fa', padding: '20px', borderRadius: '5px', marginBottom: '20px' }}>
   <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>💡 Pourquoi l'accessibilité des icônes est importante</div>

@@ -1,12 +1,14 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
 
 import * as SkipLinkStories from './SkipLink.stories';
+import '../../stories/styles/shared.css';
 
 <Meta of={SkipLinkStories} />
 
-# SkipLink
-
-Le composant `SkipLink` est utilisé pour permettre à l'utilisateur utilisant la navigation au clavier de passer directement à une section de contenu.
+<div className="header">
+  <h1>SkipLink</h1>
+  <p>Le composant `SkipLink` est utilisé pour permettre à l'utilisateur utilisant la navigation au clavier de passer directement à une section de contenu.</p>
+</div>
 
 Il est généralement placé en haut de la page et est caché visuellement. Lorsqu'il est activé, il devient visible et permet à l'utilisateur de sauter directement à une section de contenu.
 

@@ -5,9 +5,10 @@ import * as ChipListStories from './ChipList.stories';
 
 <Meta title="Composants/Données/ChipList" component={ChipList}/>
 
-# ChipList
-
-Le composant `ChipList` est utilisé pour afficher une liste de puces.
+<div className="header">
+  <h1>ChipList</h1>
+  <p>Le composant `ChipList` est utilisé pour afficher une liste de puces.</p>
+</div>
 
 <Canvas of={ChipListStories.Default}  />
 
@@ -48,6 +49,7 @@ Le composant `ChipList` est utilisé pour afficher une liste de puces.
 	]
 
 </script>
+import '../../stories/styles/shared.css';
 
 <template>
 	<ChipList

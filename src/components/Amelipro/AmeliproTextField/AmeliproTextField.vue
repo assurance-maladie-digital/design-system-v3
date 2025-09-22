@@ -131,7 +131,7 @@
 	})
 
 	const inputTextField = ref<InputTextField>({ errorMessages: [], isValid: true })
-	const messagesToDisplay = computed(() => inputTextField.value.errorMessages[0])
+	const messagesToDisplay = computed(() => inputTextField.value.errorMessages)
 	defineExpose({ messagesToDisplay })
 
 	const inputValue = computed({

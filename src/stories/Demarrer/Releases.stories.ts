@@ -46,6 +46,9 @@ export const List = {
 				}
 			},
 			template: `
+			   <div class="d-flex justify-space-between align-center">
+                  <h1 class="title font-weight-medium mb-5">Releases</h1>
+              </div>
 				<div class="releases">
 					<SyAlert type="info" variant="tonal" :closable="false">
 						<template #default>Nous faisons des nouvelles release (correction de bugs ou nouvelles fonctionnalités) régulièrement. Vous pouvez retrouver la liste des dernières releases ci-dessous.</template>

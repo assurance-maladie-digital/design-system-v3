@@ -1,10 +1,13 @@
 import { Meta, Source } from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
 
 <Meta title="Guide Du Dev/Guide de Validation des Formulaires"/>
 
-# Guide de Validation des Formulaires
 
-Ce guide pratique explique comment utiliser le système de validation des formulaires du Design System dans vos applications.
+<div className="header">
+  <h1>Guide de Validation des Formulaires</h1>
+  <p>Ce guide pratique explique comment utiliser le système de validation des formulaires du Design System dans vos applications.</p>
+</div>
 
 ## Les bases de la validation
 
@@ -277,7 +280,8 @@ Plusieurs composants du Design System intègrent déjà la validation :
 
 <script setup>
 import { ref } from 'vue';
-import { NirField, SyButton } from '@cnamts/synapse';
+import { NirField, SyButton } from '
+import '../styles/shared.css';@cnamts/synapse';
 
 const nirValue = ref('');
 const nirFieldRef = ref();

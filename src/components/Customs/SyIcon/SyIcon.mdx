@@ -3,11 +3,10 @@ import * as SyIconStories from './SyIcon.stories'
 
 <Meta of={SyIconStories} />
 
-<Title>SyIcon</Title>
-
-<Subtitle>
-	Composant d'icône avec support d'accessibilité RGAA
-</Subtitle>
+<div className="header">
+  <h1>SyIcon</h1>
+  <p>	Composant d'icône avec support d'accessibilité RGAA</p>
+</div>
 
 ## Utilisation
 
@@ -29,7 +28,6 @@ Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'
 
 ## API
 
-
 ## Exemples
 
 ### Icône par défaut
@@ -43,7 +41,6 @@ Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'
 ### Icône avec taille personnalisée
 
 <Canvas of={SyIconStories.WithSize} />
-
 
 ## Exemple d'utilisation
 
@@ -69,4 +66,5 @@ Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'
 <script setup>
   import { SyIcon } from '@cnam/design-system'
 </script>
+import '../../../stories/styles/shared.css';
 ```

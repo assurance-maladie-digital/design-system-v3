@@ -4,9 +4,10 @@ import RatingPicker from './RatingPicker.vue';
 
 <Meta title="Composants/Feedback/RatingPicker" component={RatingPicker}/>
 
-# RatingPicker
-
-L’élément `RatingPicker` permet de recueillir l’avis d’un utilisateur.
+<div className="header">
+  <h1>RatingPicker</h1>
+  <p>L’élément `RatingPicker` permet de recueillir l’avis d’un utilisateur.</p>
+</div>
 
 <Canvas story={{height: '150px'}} of={RatingPickerStories.Default}/>
 
@@ -24,6 +25,7 @@ L’élément `RatingPicker` permet de recueillir l’avis d’un utilisateur.
     import { RatingPicker } from '@cnamts/synapse'
 
     const ratingEmotion = ref(-1)
+import '../../stories/styles/shared.css';
     const ratingNumber = ref(-1)
     const ratingStars = ref(-1)
 </script>
@@ -52,5 +54,4 @@ L’élément `RatingPicker` permet de recueillir l’avis d’un utilisateur.
 </template>
 `}
 />
-
 

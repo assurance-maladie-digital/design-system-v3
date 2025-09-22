@@ -77,4 +77,8 @@
 	.v-checkbox-btn .v-selection-control__input::before {
 		border-color: rgb(var(--v-theme-primary)) !important;
 	}
+
+	.v-data-table-rows-no-data {
+		color: tokens.$grey-base;
+	}
 }
