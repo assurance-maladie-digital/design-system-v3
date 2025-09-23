@@ -748,6 +748,7 @@ $user-assure: tokens.$user-assure;
 $user-professionnel: tokens.$user-professionnel;
 $user-entreprise: tokens.$user-entreprise;
 $first-item-width: 95px;
+$first-item-max-width: 320px;
 $first-item-width-mobile: 32px;
 $second-item-max-height: 44px;
 $second-item-max-height-mobile: 38px;
@@ -837,6 +838,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		// Premier élément (Assuré)
 		li:first-child {
 			min-width: $first-item-width;
+      max-width: $first-item-max-width;
 			background: transparent;
 			text-align: center;
 			z-index: 1; // Position basse pour passer sous l'overlay
@@ -878,6 +880,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 				min-height: $second-item-max-height;
 				position: relative; // Garantit l'application du z-index
 				z-index: $z-button; // S'assure que le lien reste visible
+        max-width: $first-item-max-width;
 
 				@media (width <= $header-breakpoint-sm) {
 					min-height: $second-item-max-height-mobile;
@@ -1091,14 +1094,14 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 }
 
 :deep(.v-overlay__content) {
-	@media (width <= $header-breakpoint-md) {
+	@media (width <= $header-breakpoint-sm) {
 		left: 0 !important;
 	}
 }
 
 /* Make left dropdown overlay full-width on mobile */
 :deep(.left-dropdown-menu) {
-	@media (width <= $header-breakpoint-md) {
+	@media (width <= $header-breakpoint-sm) {
 		width: 100vw !important;
 		max-width: 100vw !important;
 		left: 0 !important;
