@@ -8,6 +8,7 @@ exports[`AmeliproDialog > render correctly 1`] = `
   fullscreen="false"
   modelvalue="true"
   persistent="false"
+  scroll-strategy="none"
   width="800px"
 >
   <div
