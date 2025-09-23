@@ -233,7 +233,6 @@
 		}
 	})
 
-	// style
 	const tablist = ref<HTMLElement | null>(null)
 	const { xPosition, width } = useTabTransition(tablist, activeItemIndex)
 
