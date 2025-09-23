@@ -40,7 +40,7 @@ const ITEMS: AuditItem[] = [
 	{ composant: 'CookieBanner', status: STATUS.AUDITED },
 	{ composant: 'ContextualMenu', status: STATUS.AUDITED },
 	{ composant: 'DialogBox', status: STATUS.NOT_AUDITED },
-	{ composant: 'PasswordField', status: STATUS.IN_PROGRESS },
+	{ composant: 'PasswordField', status: STATUS.AUDITED },
 	{ composant: 'PhoneField', status: STATUS.AUDITED },
 	{ composant: 'UserMenuBtn', status: STATUS.NOT_AUDITED },
 	{ composant: 'SyBtnSelect', status: STATUS.NOT_AUDITED },
