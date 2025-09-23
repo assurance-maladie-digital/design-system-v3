@@ -189,3 +189,141 @@ export const Default: Story = {
 		`,
 	}),
 }
+
+// --- Carrousel avec rotation infinie et durée personnalisée ---
+export const RotationEtDuree: Story = {
+	name: 'Rotation infinie et durée personnalisée',
+	args: {
+		items: [{}, {}, {}],
+		title: 'Carrousel infini',
+		uniqueId: 'amelipro-carousel-infini',
+		infiniteRotation: true,
+		duration: 1.5,
+		labelNextBtn: 'Suivant',
+		labelPreviousBtn: 'Précédent',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproCarousel
+    :items="items"
+    title="Carrousel infini"
+    unique-id="amelipro-carousel-infini"
+    :infinite-rotation="true"
+    :duration="1.5"
+    label-next-btn="Suivant"
+    label-previous-btn="Précédent"
+  >
+    <template #amelipro-carousel-infini-slot-item-0>
+      <AmeliproCard card-title="Slide 1">
+        <template #default>
+          <p class="mb-0">Première slide du carrousel infini.</p>
+        </template>
+      </AmeliproCard>
+    </template>
+    <template #amelipro-carousel-infini-slot-item-1>
+      <AmeliproCard card-title="Slide 2">
+        <template #default>
+          <p class="mb-0">Deuxième slide du carrousel infini.</p>
+        </template>
+      </AmeliproCard>
+    </template>
+    <template #amelipro-carousel-infini-slot-item-2>
+      <AmeliproCard card-title="Slide 3">
+        <template #default>
+          <p class="mb-0">Troisième slide du carrousel infini.</p>
+        </template>
+      </AmeliproCard>
+    </template>
+  </AmeliproCarousel>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { AmeliproCarousel, AmeliproCard } from '@cnamts/synapse'
+const items = [{}, {}, {}]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCarousel, AmeliproCard },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Carrousel avec <code>infiniteRotation</code> activé et une durée de transition personnalisée (<code>duration</code>).</p>
+<AmeliproCarousel v-bind="args">
+  <template #amelipro-carousel-infini-slot-item-0>
+    <AmeliproCard card-title="Slide 1">
+      <template #default>
+        <p class="mb-0">Première slide du carrousel infini.</p>
+      </template>
+    </AmeliproCard>
+  </template>
+  <template #amelipro-carousel-infini-slot-item-1>
+    <AmeliproCard card-title="Slide 2">
+      <template #default>
+        <p class="mb-0">Deuxième slide du carrousel infini.</p>
+      </template>
+    </AmeliproCard>
+  </template>
+  <template #amelipro-carousel-infini-slot-item-2>
+    <AmeliproCard card-title="Slide 3">
+      <template #default>
+        <p class="mb-0">Troisième slide du carrousel infini.</p>
+      </template>
+    </AmeliproCard>
+  </template>
+</AmeliproCarousel>
+`,
+	}),
+}
+
+// --- Carrousel avec images et liens ---
+export const AvecImagesEtLiens: Story = {
+	name: 'Avec images et liens',
+	args: {
+		items: [
+			{ imgSrc: '/logos/logo-assurance-maladie.svg', imgAlt: 'Logo 1', href: 'https://ameli.fr' },
+			{ imgSrc: '/logos/logo-amelipro.svg', imgAlt: 'Logo 2', href: 'https://espacepro.ameli.fr' },
+			{ imgSrc: '/logos/logo-assurance-maladie.svg', imgAlt: 'Logo 3', href: 'https://ameli.fr/partenaires' },
+		],
+		title: 'Carrousel avec images',
+		uniqueId: 'amelipro-carousel-images',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproCarousel
+    :items="items"
+    title="Carrousel avec images"
+    unique-id="amelipro-carousel-images"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { AmeliproCarousel } from '@cnamts/synapse'
+const items = [
+  { imgSrc: '/logos/logo-assurance-maladie.svg', imgAlt: 'Logo 1', href: 'https://ameli.fr' },
+  { imgSrc: '/logos/logo-amelipro.svg', imgAlt: 'Logo 2', href: 'https://espacepro.ameli.fr' },
+  { imgSrc: '/logos/logo-assurance-maladie.svg', imgAlt: 'Logo 3', href: 'https://ameli.fr/partenaires' },
+]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCarousel },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Carrousel utilisant la configuration <code>imgSrc</code>, <code>imgAlt</code> et <code>href</code> sur chaque slide.</p>
+<AmeliproCarousel v-bind="args" />
+`,
+	}),
+}
