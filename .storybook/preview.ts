@@ -131,6 +131,7 @@ const preview: Preview = {
 					'Éco-conception',
 					[
 						'Introduction',
+						'Reférentiel',
 					],
 					'Design Tokens',
 					['Introduction', 'Couleurs', 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations'],

@@ -1,3 +1,90 @@
+## v1.0.9 (22-09-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Documentation : improve eco-conception section <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1121">#1121</a>
+      </td>
+      <td>- AmeliproFilePreview <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1130">#1130</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation : improve pages display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1074">#1074</a></td>
+     <td>- Mise à jour de la documentation des composants 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1117">#1117</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1126">#1126</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1123">#1123</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1116">#1116</a>
+    </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DialogBox: add draggable option <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1109">#1109</a>
+    </td>
+     <td>- AmeliproErrorTemplate <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1115">#1115</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: update dependency vite to v5.4.20 <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1103">#1103</a>
+    </td>
+     <td>- AmeliproCopyBtn <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1110">#1110</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix validation message <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1105">#1105</a></td>
+      <td>- AmeliproContentLayout <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1102">#1102</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker : fix regression edition on dateTextInput <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1104">#1104</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix month name on combinedMode <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1097">#1097</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: refacto + improve key with tooltip display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1096">#1096</a>
+     </td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DownloadBtn: fix btn color <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1093">#1093</a>
+     </td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix some regressions <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1091">#1091</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable / SyServerTable:  add option to set optional localStorage management <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1084">#1084</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix conflict with DatePicker use <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1090">#1090</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix colors on disabled <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1083">#1083</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField:  fix focus on edition <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1085">#1085</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable: fix no-data slot <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1076">#1076</a></td>
+     <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PhoneField: add withoutFieldSet prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1081">#1081</a></td>
+     <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.8 (08-09-2025)
 
 <table>
