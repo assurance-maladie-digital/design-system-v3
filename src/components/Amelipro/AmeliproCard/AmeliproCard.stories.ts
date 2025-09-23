@@ -323,7 +323,7 @@ export const ImagePleineLargeur: Story = {
     unique-id="amelipro-card-full-img"
   >
     <template #fullSizeImg>
-      <img src=".storybook/public/logos/logo-assurance-maladie.svg" alt="Image large" style="width: 100%;" />
+      <img src="/ameli-pro.svg" alt="Image large" style="width: 100%;" />
     </template>
     <template #default>
       <p class="mb-0">[Slot: default]</p>
@@ -346,7 +346,7 @@ export const ImagePleineLargeur: Story = {
 <p class="mb-2">Le slot <code>fullSizeImg</code> permet d’ajouter une image qui couvre toute la largeur de la carte.</p>
 <AmeliproCard v-bind="args">
   <template #fullSizeImg>
-    <img src=".storybook/public/logos/logo-assurance-maladie.svg" alt="Image large" style="width: 100%;" />
+    <img src="/ameli-pro.svg" alt="Image large" style="width: 100%;" />
   </template>
   <template #default>
     <p class="mb-0">[Slot: default]</p>
