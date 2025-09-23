@@ -1,9 +1,10 @@
 <script setup lang="ts">
-	import type { TabItem } from './types'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
-	import { config } from './config'
-	import { ref, watch, onMounted, onUnmounted, getCurrentInstance } from 'vue'
+	import { getCurrentInstance, onMounted, onUnmounted, ref, watch } from 'vue'
 	import type { Router } from 'vue-router'
+	import { config } from './config'
+	import type { TabItem } from './types'
+	import { useTabTransition } from './useTabTransition'
 
 	const props = withDefaults(defineProps<{
 		items: TabItem[]
@@ -231,6 +232,10 @@
 			}
 		}
 	})
+
+	const tablist = ref<HTMLElement | null>(null)
+	const { xPosition, width } = useTabTransition(tablist, activeItemIndex)
+
 </script>
 
 <template>
@@ -249,6 +254,7 @@
 					class="sy-tabs__nav"
 				>
 					<ul
+						ref="tablist"
 						class="sy-tabs__list"
 					>
 						<li
@@ -360,10 +366,23 @@
 
 .sy-tabs__list {
 	display: flex;
+	position: relative;
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 	width: 100%;
+}
+
+.sy-tabs__list::after {
+	content: '';
+	width: v-bind("width + 'px'");
+	height: 3px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	translate: v-bind("xPosition + 'px'");
+	transition: translate 0.2s ease-in-out, width 0.2s ease-in-out;
+	background-color: v-bind("options.tab['slider-color']");
 }
 
 .sy-tabs__item {
@@ -397,8 +416,11 @@
 
 	&--active {
 		color: v-bind("options.tab['active-color']");
-		border-bottom: 3px solid v-bind("options.tab['slider-color']");
 	}
+}
+
+.sy-tabs__button--active::after {
+	scale: 1 1;
 }
 
 .sy-tabs-panels {
@@ -410,4 +432,5 @@
 		display: none;
 	}
 }
+
 </style>
