@@ -202,6 +202,7 @@
 		:eager="eager"
 		:fullscreen="fullscreen"
 		:persistent="persistent || noClickOutside"
+		scroll-strategy="none"
 		:width="width"
 		@click:outside="noClickOutside ? emitCloseEvent(false) : emitCloseEvent"
 		@keydown.escape="emitCloseEvent"
