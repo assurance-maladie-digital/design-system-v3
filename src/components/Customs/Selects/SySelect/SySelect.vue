@@ -883,9 +883,15 @@
 				<VListItemTitle>
 					<span
 						v-if="allowHtml"
+						class="item-text"
 						v-html="getItemText(item)"
 					/>
-					<span v-else>{{ getItemText(item) }}</span>
+					<span
+						v-else
+						class="item-text"
+					>
+						{{ getItemText(item) }}
+					</span>
 				</VListItemTitle>
 			</VListItem>
 		</VList>
@@ -956,6 +962,21 @@
 	outline: 2px solid tokens.$primary-base;
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
+}
+
+/* Permettre le passage à la ligne pour les textes longs dans la liste déroulante */
+.v-list-item-title {
+	white-space: normal;
+	word-wrap: break-word;
+	word-break: break-word;
+	line-height: 1.2;
+	padding: 4px 0;
+}
+
+/* Style spécifique pour le contenu texte des éléments de liste */
+.item-text {
+	display: block;
+	padding: 2px 0;
 }
 
 .v-icon {
