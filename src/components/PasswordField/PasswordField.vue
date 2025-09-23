@@ -167,7 +167,7 @@
 
 	function togglePasswordVisibility() {
 		showEyeIcon.value = !showEyeIcon.value
-		alertMessage.value = showEyeIcon.value ? 'Le mot de passe est visible' : 'Le mot de passe est caché'
+		alertMessage.value = showEyeIcon.value ? locales.showedPassword : locales.hidedPassword
 		nextTick(() => {
 			// Connect input to status message via aria-describedby
 			const inputElement = document.getElementById(passwordFieldId.value)
@@ -295,7 +295,7 @@
 			</div>
 			<div
 				:id="`${passwordFieldId}-status`"
-				class="sr-only"
+				class="d-sr-only"
 				role="alert"
 				aria-live="assertive"
 			>
@@ -336,18 +336,6 @@
 	&:hover {
 		background-color: rgb(0 0 0 / 4%);
 	}
-}
-
-.sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border-width: 0;
 }
 
 .warning-field {
