@@ -278,7 +278,9 @@
 			activeIndex.value = index
 		}
 		if (index !== 1) {
+			// Clicking a normal link should close any overlay/menu
 			highlightMenu.value = false
+			hideOverlay()
 		}
 	}
 
@@ -293,6 +295,8 @@
 
 	const deleteActiveLink = () => {
 		activeIndex.value = null
+		// Close any overlay when navigating via right menu
+		hideOverlay()
 	}
 
 	const handleKeyboardEnter = (item: MenuItem, index: number) => {
@@ -303,6 +307,8 @@
 		else if (item.href) {
 			// Pour les liens, naviguer vers la destination
 			checkActiveLink(index)
+			// Ensure overlay is closed when navigating via keyboard
+			hideOverlay()
 			if (item.openInNewTab) {
 				window.open(item.href, '_blank', 'noopener,noreferrer')
 			}
@@ -314,6 +320,8 @@
 			// Pour les liens RouterLink, on ne fait que mettre à jour l'activeIndex
 			// car Vue Router gérera la navigation
 			checkActiveLink(index)
+			// Ensure overlay is closed when navigating via router
+			hideOverlay()
 		}
 	}
 
@@ -325,9 +333,8 @@
 		activeIndex.value = 1
 		selectedSubItemText.value = subItem.text // Update selected sub-item tracker
 
-		// Fermer le menu et rediriger le focus sur le bouton
-		menuOpen.value = false
-		activeDescendantId.value = null
+		// Fermer le menu et l'overlay puis rediriger le focus sur le bouton
+		hideOverlay()
 
 		// Rediriger le focus sur le bouton après sélection
 		nextTick(() => {
