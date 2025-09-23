@@ -648,8 +648,9 @@ export const Default: Story = {
 			return { args }
 		},
 		template: `
+<p class="mb-2">Header complet avec toutes les informations, menus et structures (version connectée).</p>
 <AmeliproHeader
-	v-bind="args"
+    v-bind="args"
 />
 		`,
 	}),
@@ -688,10 +689,11 @@ export const notLogged: Story = {
 			return { args }
 		},
 		template: `
+<p class="mb-2">Header en version déconnectée, sans sous-partie.</p>
 <AmeliproHeader
-	v-bind="args"
+    v-bind="args"
 />
-		`,
+        `,
 	}),
 }
 
@@ -734,13 +736,14 @@ export const other: Story = {
 			return { args }
 		},
 		template: `
+<p class="mb-2">Header avec titre personnalisé, sous-titre et slot <code>rightPart</code> utilisé.</p>
 <AmeliproHeader
-	v-bind="args"
+    v-bind="args"
 >
-	<template #rightPart>
-		[Slot: rightPart]
-	</template>
+    <template #rightPart>
+        [Slot: rightPart]
+    </template>
 </AmeliproHeader>
-		`,
+        `,
 	}),
 }
