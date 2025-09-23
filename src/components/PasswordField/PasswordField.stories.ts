@@ -93,6 +93,12 @@ const meta = {
 			control: 'color',
 			description: 'Couleur de fond du champ',
 		},
+		autocompleteType: {
+			control: 'select',
+			options: ['current-password', 'new-password'],
+			description: 'Type d\'auto-complétion',
+			default: 'current-password',
+		},
 	},
 	args: {
 		modelValue: '',
@@ -112,6 +118,7 @@ const meta = {
 		showSuccessMessages: true,
 		displayAsterisk: false,
 		isValidateOnBlur: true,
+		bgColor: 'white',
 	},
 } satisfies Meta<typeof PasswordField>
 
