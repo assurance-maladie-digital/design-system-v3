@@ -287,7 +287,7 @@
 @use '@/assets/amelipro/apTokens';
 
 .rounded {
-	border-radius: 2.50rem !important;
+	border-radius: 2.5rem !important;
 }
 
 .custom-sized-icon {
@@ -315,7 +315,7 @@
 
 .custom-marker {
 	& li::before {
-		content: "";
+		content: '';
 		display: block;
 		width: 7px;
 		height: 7px;
