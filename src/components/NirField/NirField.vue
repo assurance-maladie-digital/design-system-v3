@@ -127,6 +127,8 @@
 	const numberFieldErrorId = `nir-number-error-${fieldId}`
 	const keyFieldErrorId = `nir-key-error-${fieldId}`
 
+	const container = ref<HTMLElement | null>(null)
+
 	// Fonction pour gérer le focus des champs
 	const focusField = (field: typeof numberField | typeof keyField) => {
 		nextTick(() => {
@@ -458,7 +460,7 @@
 			if (props.withoutFieldset) {
 				// Attendre un peu pour s'assurer que le DOM est complètement rendu
 				setTimeout(() => {
-					const fieldsetNumberInput = document.querySelector('.fieldset-container .number-field input')
+					const fieldsetNumberInput = container.value?.querySelector('.number-field input')
 					if (fieldsetNumberInput) {
 						fieldsetNumberInput.addEventListener('keydown', handleNumberKeydown)
 					}
@@ -487,6 +489,7 @@
 <template>
 	<component
 		:is="displayKey && !withoutFieldset ? 'fieldset' : 'div'"
+		ref="container"
 		:class="displayKey && !withoutFieldset ? 'nir-field nir-field--fieldset' : 'nir-field'"
 	>
 		<legend v-if="label && displayKey && !withoutFieldset">
@@ -527,7 +530,13 @@
 				:aria-describedby="numberFieldErrorId"
 				@input="handleNumberInput"
 				@blur="handleNumberBlur"
-			/>
+			>
+				<template #append>
+					<div>
+						lorem ipsum
+					</div>
+				</template>
+			</SyTextField>
 		</div>
 		<div
 			v-if="displayKey"
@@ -543,7 +552,7 @@
 				:append-icon="keyTooltip && keyTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
 				:append-tooltip="keyTooltip && keyTooltipPosition === 'append' ? keyTooltip : undefined"
-				:error-messages="keyValidation.errors.value.length > 0 ? [''] : []"
+				:error="keyValidation.errors.value.length > 0"
 				:warning-messages="keyValidation.warnings.value"
 				:show-success-messages="false"
 				:hint="props.hint || locales.keyHint"
@@ -627,11 +636,11 @@
 
 /* Styles pour le mode standard (div) */
 .nir-field:not(.nir-field--fieldset) .number-field-container {
-	flex: 0 0 80%;
+	flex: 0 0 calc(75% - 8px);
 }
 
 .nir-field:not(.nir-field--fieldset) .key-field-container {
-	flex: 0 0 20%;
+	flex: 0 0 calc(25% - 8px);
 }
 
 /* Styles pour le mode fieldset */
@@ -669,5 +678,9 @@
 	:deep(.v-messages) {
 		opacity: 1;
 	}
+}
+
+:deep(.v-input__details:not(:has(.v-messages__message))) {
+	display: none;
 }
 </style>
