@@ -126,13 +126,11 @@ export const Default: Story = {
 		},
 		template: `
 <UserMenu
+	style="margin-left: 200px"
 	v-bind="args"
-/>
-		`,
+/>`,
 	}),
 }
-
-// ...existing code...
 
 export const AvecSlotComplementaryInfo: Story = {
 	name: 'Avec slot complementaryInfo',
@@ -191,7 +189,7 @@ const userMenuInfos = {
 		setup() { return { args } },
 		template: `
 <p class="mb-2">Menu utilisateur avec slot <code>complementaryInfo</code> personnalisé.</p>
-<UserMenu v-bind="args">
+<UserMenu style="margin-left: 200px" v-bind="args">
     <template #complementaryInfo>
         <div style="color: #1976d2; font-weight: bold;">
             Informations complémentaires personnalisées
@@ -258,7 +256,7 @@ const userMenuInfos = {
 		setup() { return { args } },
 		template: `
 <p class="mb-2">Menu utilisateur avec slot <code>default</code> personnalisé (remplace le contenu standard).</p>
-<UserMenu v-bind="args">
+<UserMenu style="margin-left: 200px" v-bind="args">
     <template #default>
         <div>
             Contenu personnalisé via le slot <code>default</code> (remplace le contenu standard).
@@ -325,7 +323,7 @@ const userMenuInfos = {
 		setup() { return { args } },
 		template: `
 <p class="mb-2">Menu utilisateur avec slot <code>structureMenu</code> personnalisé (affiché en mobile).</p>
-<UserMenu v-bind="args">
+<UserMenu style="margin-left: 200px" v-bind="args">
     <template #structureMenu>
         <div>
             StructureMenu personnalisé pour le mode mobile.
