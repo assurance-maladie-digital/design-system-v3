@@ -57,12 +57,12 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<AmeliproErrorTemplate
-		error-type="technical"
-		img-min-width="200"
-		img-width="200"
-		:no-button="false"
-	/>
+  <AmeliproErrorTemplate
+    error-type="technical"
+    img-min-width="200"
+    img-width="200"
+    :no-button="false"
+  />
 </template>
 				`,
 			},
@@ -73,9 +73,10 @@ export const Default: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur technique par défaut.</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
 
@@ -107,9 +108,10 @@ export const Disconnect: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur de déconnexion (<code>disconnect</code>).</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
 
@@ -141,9 +143,10 @@ export const Obsolete: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur obsolète (<code>obsolete</code>).</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
 
@@ -175,9 +178,10 @@ export const Inactive: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur inactive (<code>inactive</code>).</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
 
@@ -209,9 +213,10 @@ export const Maintenance: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur de maintenance (<code>maintenance</code>).</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
 
@@ -243,9 +248,10 @@ export const Error401: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur 401.</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
 
@@ -277,9 +283,10 @@ export const Error403: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur 403.</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
 
@@ -311,9 +318,10 @@ export const Error404: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur 404.</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
 
@@ -345,9 +353,10 @@ export const Error500: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur 500.</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
 
@@ -379,8 +388,9 @@ export const Error503: Story = {
 		setup() {
 			return { args }
 		},
-		template: `<AmeliproErrorTemplate
-	v-bind="args"
-/>`,
+		template: `
+<p class="mb-2">Affichage du template d’erreur 503.</p>
+<AmeliproErrorTemplate v-bind="args" />
+		`,
 	}),
 }
