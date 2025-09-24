@@ -131,3 +131,206 @@ export const Default: Story = {
 		`,
 	}),
 }
+
+// ...existing code...
+
+export const AvecSlotComplementaryInfo: Story = {
+	name: 'Avec slot complementaryInfo',
+	args: {
+		userMenuInfos,
+		uniqueId: 'user-menu-slot-complementary',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <UserMenu
+        :user-menu-infos="userMenuInfos"
+        unique-id="user-menu-slot-complementary"
+    >
+        <template #complementaryInfo>
+            <div style="color: #1976d2; font-weight: bold;">
+                Informations complémentaires personnalisées
+            </div>
+        </template>
+    </UserMenu>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { UserMenu } from '@cnamts/synapse'
+
+const userMenuInfos = {
+    lastConnexion: '01/01/2024',
+    userMenuDetailsInfos: {
+        adeli: 'ADELI',
+        adresse: {
+            codePostal: '35000',
+            commune: 'Rennes',
+            complement: 'bis',
+            nom: 'de la Mayenne',
+            numero: '3',
+            type: 'rue',
+        },
+        denomination: 'denomination',
+        email: 'email',
+        finess: 'FINESS',
+        profil: 'profil',
+        rpps: 'RPPS',
+        userName: 'userName',
+    },
+}
+</script>  `,
+			},
+		],
+	},
+	render: args => ({
+		components: { UserMenu },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Menu utilisateur avec slot <code>complementaryInfo</code> personnalisé.</p>
+<UserMenu v-bind="args">
+    <template #complementaryInfo>
+        <div style="color: #1976d2; font-weight: bold;">
+            Informations complémentaires personnalisées
+        </div>
+    </template>
+</UserMenu>`,
+	}),
+}
+
+export const AvecSlotDefault: Story = {
+	name: 'Avec slot default',
+	args: {
+		userMenuInfos,
+		uniqueId: 'user-menu-slot-default',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <UserMenu
+        :user-menu-infos="userMenuInfos"
+        unique-id="user-menu-slot-default"
+    >
+        <template #default>
+            <div>
+                Contenu personnalisé via le slot <code>default</code> (remplace le contenu standard).
+            </div>
+        </template>
+    </UserMenu>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { UserMenu } from '@cnamts/synapse'
+
+const userMenuInfos = {
+    lastConnexion: '01/01/2024',
+    userMenuDetailsInfos: {
+        adeli: 'ADELI',
+        adresse: {
+            codePostal: '35000',
+            commune: 'Rennes',
+            complement: 'bis',
+            nom: 'de la Mayenne',
+            numero: '3',
+            type: 'rue',
+        },
+        denomination: 'denomination',
+        email: 'email',
+        finess: 'FINESS',
+        profil: 'profil',
+        rpps: 'RPPS',
+        userName: 'userName',
+    },
+}
+</script>  `,
+			},
+		],
+	},
+	render: args => ({
+		components: { UserMenu },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Menu utilisateur avec slot <code>default</code> personnalisé (remplace le contenu standard).</p>
+<UserMenu v-bind="args">
+    <template #default>
+        <div>
+            Contenu personnalisé via le slot <code>default</code> (remplace le contenu standard).
+        </div>
+    </template>
+</UserMenu>`,
+	}),
+}
+
+export const AvecSlotStructureMenu: Story = {
+	name: 'Avec slot structureMenu',
+	args: {
+		userMenuInfos,
+		uniqueId: 'user-menu-slot-structure',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <UserMenu
+        :user-menu-infos="userMenuInfos"
+        unique-id="user-menu-slot-structure"
+    >
+        <template #structureMenu>
+            <div>
+                StructureMenu personnalisé pour le mode mobile.
+            </div>
+        </template>
+    </UserMenu>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { UserMenu } from '@cnamts/synapse'
+
+const userMenuInfos = {
+    lastConnexion: '01/01/2024',
+    userMenuDetailsInfos: {
+        adeli: 'ADELI',
+        adresse: {
+            codePostal: '35000',
+            commune: 'Rennes',
+            complement: 'bis',
+            nom: 'de la Mayenne',
+            numero: '3',
+            type: 'rue',
+        },
+        denomination: 'denomination',
+        email: 'email',
+        finess: 'FINESS',
+        profil: 'profil',
+        rpps: 'RPPS',
+        userName: 'userName',
+    },
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { UserMenu },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Menu utilisateur avec slot <code>structureMenu</code> personnalisé (affiché en mobile).</p>
+<UserMenu v-bind="args">
+    <template #structureMenu>
+        <div>
+            StructureMenu personnalisé pour le mode mobile.
+        </div>
+    </template>
+</UserMenu>`,
+	}),
+}
