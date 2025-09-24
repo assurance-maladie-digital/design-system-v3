@@ -336,3 +336,171 @@ export const Default: Story = {
 	}),
 
 }
+
+// --- Menu de services avec slot activator personnalisé ---
+export const AvecSlotActivator: Story = {
+	name: 'Avec slot activator',
+	args: {
+		messageToDisplay: 'Message avec slot activator',
+		modelValue: false,
+		servicesContact,
+		servicesPatient,
+		servicesPs,
+		uniqueId: 'service-menu-slot-activator',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <ServiceMenu
+    v-model="model"
+    message-to-display="Message avec slot activator"
+    :services-contact="servicesContact"
+    :services-patient="servicesPatient"
+    :services-ps="servicesPs"
+    unique-id="service-menu-slot-activator"
+  >
+    <template #activator>
+      <button type="button" @click="onClick" class="btn btn-primary">
+        Ouvrir le menu personnalisé
+      </button>
+    </template>
+  </ServiceMenu>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref, watch } from 'vue'
+import { ServiceMenu } from '@cnamts/synapse'
+
+const model = ref(false)
+
+function onClick() {
+  model.value = !model.value
+}
+
+const servicesContact = [
+  { href: '#', icon: 'paiements', label: 'Contact 1' },
+  { href: '#', icon: 'optam2', label: 'Contact 2' },
+  { href: '#', icon: 'patientele', label: 'Contact 3' },
+  { href: '#', icon: 'paiements', label: 'Contact 4' },
+  { href: '#', icon: 'convention', label: 'Contact 5' },
+]
+
+const servicesPs = [
+  { href: '#', icon: 'paiements', label: 'Paiements' },
+  { href: '#', icon: 'convention', label: 'Conventions' },
+  { href: '#', icon: 'patientele', label: 'Patientèle' },
+  { href: '#', icon: 'perteActiviteCovid', label: 'Perte d’activité (Covid)' },
+  { href: '#', icon: 'horairesCabinet', label: 'Horaires du cabinet' },
+  { href: '#', icon: 'pillules', label: 'Patientèle SOPHIA' },
+  { href: '#', icon: 'commandes', label: 'Commandes d’imprimés' },
+]
+
+const servicesPatient = [
+  { href: '#', icon: 'brasCasse', label: 'Arrêt de travail' },
+  { href: '#', icon: 'chute', label: 'Certificat ATMP' },
+  { href: '#', icon: 'prescription', label: 'Affection de longue durée' },
+  { href: '#', icon: 'contactCovid', label: 'Contact COVID' },
+  { href: '#', icon: 'vaccination', label: 'Vaccination COVID' },
+  { href: '#', icon: 'ambulance', label: 'Transport' },
+  { href: '#', icon: 'horlogeFlecheGauche', label: 'Historique' },
+  { href: '#', icon: 'seringue', label: 'Bilan soins infirmiers' },
+]
+
+</script>`,
+			},
+		],
+
+	},
+	render: args => ({
+		components: { ServiceMenu },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			function onClick() {
+				model.value = !model.value
+			}
+			return { args, model, onClick }
+		},
+		template: `
+<p class="mb-2">Menu de services avec bouton d’activation personnalisé via le slot <code>activator</code>.</p>
+<div class="d-flex justify-end">
+    <ServiceMenu
+        v-bind="args"
+        v-model="model"
+    >
+        <template #activator>
+            <button type="button" @click="onClick" class="btn btn-primary">
+                Ouvrir le menu personnalisé
+            </button>
+        </template>
+    </ServiceMenu>
+</div>
+        `,
+
+	}),
+}
+
+// --- Menu de services avec message personnalisé via slot ---
+export const AvecSlotMessage: Story = {
+	name: 'Avec slot message',
+	args: {
+		modelValue: false,
+		servicesContact,
+		servicesPatient,
+		servicesPs,
+		uniqueId: 'service-menu-slot-message',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <ServiceMenu
+    v-model="model"
+    :services-contact="servicesContact"
+    :services-patient="servicesPatient"
+    :services-ps="servicesPs"
+    unique-id="service-menu-slot-message"
+  >
+    <template #message>
+      <div style="color: #1976d2; font-weight: bold;">
+        Message personnalisé via slot
+      </div>
+    </template>
+  </ServiceMenu>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { ServiceMenu },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p class="mb-2">Menu de services avec message personnalisé via le slot <code>message</code>.</p>
+<div class="d-flex justify-end">
+    <ServiceMenu
+        v-bind="args"
+        v-model="model"
+    >
+        <template #message>
+            <div style="color: #1976d2; font-weight: bold;">
+                Message personnalisé via slot
+            </div>
+        </template>
+    </ServiceMenu>
+</div>
+        `,
+	}),
+}
