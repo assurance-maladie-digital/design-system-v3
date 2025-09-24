@@ -143,3 +143,163 @@ export const Default: Story = {
 	}),
 
 }
+
+// --- Stepper centré et changement manuel d’étape aveLc interception des événements ---
+export const CentreEtManuel: Story = {
+	name: 'Centré et changement manuel',
+	args: {
+		items: [
+			{ disabled: false, label: 'Mes Informations' },
+			{ disabled: false, label: 'Ma démarche' },
+			{ disabled: false, label: 'Ma demande' },
+			{ label: 'Récapitulatif', disabled: true },
+			{ disabled: false, label: 'Validation' }, // Onglet supplémentaire
+		],
+		centered: true,
+		manualChangeStep: true,
+		uniqueId: 'amelipro-stepper-centre-manuel',
+		value: 1, // Sélectionne par défaut le 2ème onglet (index 1)
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproStepper
+    :items="items"
+    :centered="true"
+    :manual-change-step="true"
+    :value="1"
+    unique-id="stepper-centre-manuel"
+    @previous-step="onPreviousStep"
+    @next-step="onNextStep"
+    @change-step="onChangeStep"
+  >
+    <template #stepContent>
+      <AmeliproCard
+        card-title="Étape centrée"
+        unique-id="step-card-centre"
+      >
+        Contenu d'une étape avec boutons centrés et changement manuel.
+      </AmeliproCard>
+    </template>
+  </AmeliproStepper>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { AmeliproCard, AmeliproStepper } from '@cnamts/synapse'
+
+const items = [
+  { disabled: false, label: 'Mes Informations' },
+  { disabled: false, label: 'Ma démarche' },
+  { disabled: false, label: 'Ma demande' },
+  { label: 'Récapitulatif', disabled: true },
+  { disabled: false, label: 'Validation' },
+]
+
+function onPreviousStep(index: number) {
+  alert('Événement previous-step déclenché, index : ' + index)
+}
+function onNextStep(index: number) {
+  alert('Événement next-step déclenché, index : ' + index)
+}
+function onChangeStep(index: number) {
+  alert('Événement change-step déclenché, index : ' + index)
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCard, AmeliproStepper },
+		setup() {
+			function onPreviousStep(index: number) {
+				alert('Événement previous-step déclenché, index : ' + index)
+			}
+			function onNextStep(index: number) {
+				alert('Événement next-step déclenché, index : ' + index)
+			}
+			function onChangeStep(index: number) {
+				alert('Événement change-step déclenché, index : ' + index)
+			}
+			return { args, onPreviousStep, onNextStep, onChangeStep }
+		},
+		template: `
+<p class="mb-2">
+  Stepper avec 5 onglets, boutons centrés (<code>centered</code>), changement manuel d’étape (<code>manualChangeStep</code>), 
+  sélection par défaut du 2<sup>ème</sup> onglet et interception des événements <code>previous-step</code> et <code>next-step</code>.
+</p>
+<AmeliproStepper
+  v-bind="args"
+  @previous-step="onPreviousStep"
+  @next-step="onNextStep"
+  @change-step="onChangeStep"
+>
+  <template #stepContent>
+    <AmeliproCard
+      card-title="Étape centrée"
+      unique-id="step-card-centre"
+    >
+      Contenu d'une étape avec boutons centrés et changement manuel.
+    </AmeliproCard>
+  </template>
+</AmeliproStepper>
+    `,
+	}),
+}
+// --- Stepper avec bouton retour personnalisé ---
+export const AvecBoutonRetour: Story = {
+	name: 'Avec bouton retour personnalisé',
+	args: {
+		items,
+		uniqueId: 'amelipro-stepper-retour',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproStepper
+    :items="items"
+    unique-id="stepper-retour"
+  >
+    <template #backBtn>
+      <button type="button">Retour personnalisé</button>
+    </template>
+    <template #stepContent>
+      <AmeliproCard
+        card-title="Étape avec retour"
+        unique-id="step-card-retour"
+      >
+        Étape avec bouton retour personnalisé.
+      </AmeliproCard>
+    </template>
+  </AmeliproStepper>
+</template>
+                `,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCard, AmeliproStepper },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Stepper avec un bouton retour personnalisé via le slot <code>backBtn</code>.</p>
+<AmeliproStepper v-bind="args">
+    <template #backBtn>
+        <button type="button">Retour personnalisé</button>
+    </template>
+    <template #stepContent>
+        <AmeliproCard
+            card-title="Étape avec retour"
+            unique-id="step-card-retour"
+        >
+            Étape avec bouton retour personnalisé.
+        </AmeliproCard>
+    </template>
+</AmeliproStepper>
+        `,
+	}),
+}
