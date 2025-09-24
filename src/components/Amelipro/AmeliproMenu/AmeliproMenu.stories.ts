@@ -201,5 +201,98 @@ export const Default: Story = {
 	</VApp>
 		`,
 	}),
+}
 
+// --- Menu avec lien d’accueil personnalisé ---
+export const AvecLienAccueil: Story = {
+	name: 'Avec lien accueil',
+	args: {
+		uniqueId: 'amelipro-menu-home',
+		items: [
+			{
+				id: '1',
+				name: 'Menu 1',
+			},
+			{
+				id: '2',
+				name: 'Menu 2',
+			},
+		] as AmeliproMenuItem[],
+		homeHref: 'https://ameli.fr',
+		menuHeader: 'Menu avec lien accueil',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproMenu
+    :items="items"
+    unique-id="amelipro-menu-home"
+    home-href="https://ameli.fr"
+    menu-header="Menu avec lien accueil"
+  />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproMenu },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Menu avec un lien d’accueil personnalisé (<code>homeHref</code>) et un header de menu.</p>
+<VApp>
+    <div class="bg-ap-blue-darken-1">
+        <AmeliproMenu v-bind="args" />
+    </div>
+</VApp>
+        `,
+	}),
+}
+
+// --- Menu avec route d’accueil interne ---
+export const AvecRouteAccueil: Story = {
+	name: 'Avec route accueil (to)',
+	args: {
+		uniqueId: 'amelipro-menu-home-to',
+		items: [
+			{
+				id: '1',
+				name: 'Menu 1',
+			},
+			{
+				id: '2',
+				name: 'Menu 2',
+			},
+		] as AmeliproMenuItem[],
+		homeTo: '/accueil',
+		menuHeader: 'Menu avec route accueil',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproMenu
+    :items="items"
+    unique-id="amelipro-menu-home-to"
+    home-to="/accueil"
+    menu-header="Menu avec route accueil"
+  />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproMenu },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Menu avec une route d’accueil interne (<code>homeTo</code>).</p>
+<VApp>
+    <div class="bg-ap-blue-darken-1">
+        <AmeliproMenu v-bind="args" />
+    </div>
+</VApp>
+        `,
+	}),
 }
