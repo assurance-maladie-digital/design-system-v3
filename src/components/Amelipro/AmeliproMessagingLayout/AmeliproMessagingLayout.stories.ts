@@ -148,8 +148,6 @@ export const Default: Story = {
 	}),
 }
 
-// ...existing code...
-
 // --- Mise en page avec bouton "Nouveau message" désactivé ---
 export const NouveauMessageDesactive: Story = {
 	name: 'Bouton "Nouveau message" désactivé',
