@@ -76,3 +76,135 @@ export const Default: Story = {
 	}),
 
 }
+
+// --- Bandeau sans bouton "plus d’informations" ---
+export const SansPlusInfos: Story = {
+	name: 'Sans bouton "plus d’informations"',
+	args: {
+		birthName: 'Martin',
+		birthdate: '01/01/1980',
+		name: 'Paul',
+		patientDoctorInfos: 'Médecin traitant inconnu',
+		patientNir: 'NIR patient',
+		patientOrganism: 'CPAM de Paris',
+		patientStatus: 'Ayant droit',
+		patientSystem: 'Régime Général',
+		noMoreInformation: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproPatientBanner
+    birth-name="Martin"
+    birthdate="01/01/1980"
+    name="Paul"
+    patient-doctor-infos="Médecin traitant inconnu"
+    patient-nir="NIR patient"
+    patient-organism="CPAM de Paris"
+    patient-status="Ayant droit"
+    patient-system="Régime Général"
+    :no-more-information="true"
+  />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproPatientBanner },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Bandeau patient sans bouton "plus d’informations" (<code>noMoreInformation</code>).</p>
+<AmeliproPatientBanner v-bind="args" />
+`,
+	}),
+}
+
+// --- Bandeau sans bouton "changer de patient" ---
+export const SansChangementPatient: Story = {
+	name: 'Sans bouton "changer de patient"',
+	args: {
+		birthName: 'Durand',
+		birthdate: '15/05/1975',
+		name: 'Lucie',
+		patientDoctorInfos: 'Vous êtes le médecin traitant',
+		patientNir: 'NIR patient',
+		patientOrganism: 'CPAM de Lyon',
+		patientStatus: 'Assuré(e)',
+		patientSystem: 'Régime Général',
+		noPatientChange: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproPatientBanner
+    birth-name="Durand"
+    birthdate="15/05/1975"
+    name="Lucie"
+    patient-doctor-infos="Vous êtes le médecin traitant"
+    patient-nir="NIR patient"
+    patient-organism="CPAM de Lyon"
+    patient-status="Assuré(e)"
+    patient-system="Régime Général"
+    :no-patient-change="true"
+  />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproPatientBanner },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Bandeau patient sans bouton "changer de patient" (<code>noPatientChange</code>).</p>
+<AmeliproPatientBanner v-bind="args" />
+`,
+	}),
+}
+
+// --- Bandeau avec lien interne pour "plus d’informations" ---
+export const PlusInfosRouteInterne: Story = {
+	name: 'Plus d’infos avec route interne',
+	args: {
+		birthName: 'Bernard',
+		birthdate: '22/08/1990',
+		name: 'Sophie',
+		patientDoctorInfos: 'Médecin traitant inconnu',
+		patientNir: 'NIR patient',
+		patientOrganism: 'CPAM de Lille',
+		patientStatus: 'Assuré(e)',
+		patientSystem: 'Régime Général',
+		moreInformationTo: '/patient/infos',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproPatientBanner
+    birth-name="Bernard"
+    birthdate="22/08/1990"
+    name="Sophie"
+    patient-doctor-infos="Médecin traitant inconnu"
+    patient-nir="NIR patient"
+    patient-organism="CPAM de Lille"
+    patient-status="Assuré(e)"
+    patient-system="Régime Général"
+    more-information-to="/patient/infos"
+  />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproPatientBanner },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Bandeau patient avec lien interne pour "plus d’informations" (<code>moreInformationTo</code>).</p>
+<AmeliproPatientBanner v-bind="args" />
+`,
+	}),
+}
