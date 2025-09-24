@@ -243,9 +243,7 @@ export const Default: Story = {
 			// Optional: Keeps v-model in sync with storybook args
 			watch(() => args.modelValue, (newValue) => {
 				if (newValue !== undefined) {
-					if (newValue !== undefined) {
-						model.value = newValue
-					}
+					model.value = newValue
 				}
 			})
 
@@ -340,9 +338,7 @@ export const PlusieursStructures: Story = {
 			const model = ref({ ...args.modelValue })
 			watch(() => args.modelValue, (newValue) => {
 				if (newValue !== undefined) {
-					if (newValue !== undefined) {
-						model.value = newValue
-					}
+					model.value = newValue
 				}
 			})
 			return { args, model }
@@ -428,9 +424,7 @@ export const SwitchValuePersonnalise: Story = {
 			const model = ref({ ...args.modelValue })
 			watch(() => args.modelValue, (newValue) => {
 				if (newValue !== undefined) {
-					if (newValue !== undefined) {
-						model.value = newValue
-					}
+					model.value = newValue
 				}
 			})
 			return { args, model }
@@ -518,9 +512,7 @@ export const AvecSlotSearchBar: Story = {
 			const model = ref({ ...args.modelValue })
 			watch(() => args.modelValue, (newValue) => {
 				if (newValue !== undefined) {
-					if (newValue !== undefined) {
-						model.value = newValue
-					}
+					model.value = newValue
 				}
 			})
 			return { args, model }
