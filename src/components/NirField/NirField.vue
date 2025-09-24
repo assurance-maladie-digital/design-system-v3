@@ -378,6 +378,10 @@
 
 	const hasNumberErrors = computed(() => numberValidation.hasError.value)
 	const hasKeyErrors = computed(() => keyValidation.hasError.value)
+	const hasNumberWarnings = computed(() => numberValidation.hasWarning.value)
+	const hasKeyWarnings = computed(() => keyValidation.hasWarning.value)
+	const hasNumberSuccess = computed(() => numberValidation.hasSuccess.value && props.showSuccessMessages)
+	const hasKeySuccess = computed(() => keyValidation.hasSuccess.value && props.showSuccessMessages)
 
 	// Propriétés calculées pour les attributs ARIA et les états d'erreur
 	const hasFieldErrors = computed(() => hasNumberErrors.value || hasKeyErrors.value)
@@ -506,11 +510,11 @@
 				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
 				:append-tooltip="nirTooltip && nirTooltipPosition === 'append' ? nirTooltip : undefined"
-				:warning-messages="numberValidation.warnings.value"
-				:success-messages="numberValidation.successes.value"
-				:show-success-messages="showSuccessMessages"
 				:error="hasNumberErrors"
 				:aria-required="ariaRequired"
+				:has-error="hasNumberErrors"
+				:has-warning="hasNumberWarnings"
+				:has-success="hasNumberSuccess"
 				:aria-invalid="ariaInvalidNumber"
 				:disabled="disabled"
 				:bg-color="bgColor"
@@ -522,21 +526,15 @@
 				:variant="props.variant"
 				:clearable="props.clearable"
 				:counter="props.counter"
-				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
 				:hint="props.hint || locales.numberHint"
 				class="number-field"
 				:display-asterisk="false"
 				:aria-describedby="numberFieldErrorId"
+				:show-success-messages="false"
 				@input="handleNumberInput"
 				@blur="handleNumberBlur"
-			>
-				<template #append>
-					<div>
-						lorem ipsum
-					</div>
-				</template>
-			</SyTextField>
+			/>
 		</div>
 		<div
 			v-if="displayKey"
@@ -553,8 +551,6 @@
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
 				:append-tooltip="keyTooltip && keyTooltipPosition === 'append' ? keyTooltip : undefined"
 				:error="keyValidation.errors.value.length > 0"
-				:warning-messages="keyValidation.warnings.value"
-				:show-success-messages="false"
 				:hint="props.hint || locales.keyHint"
 				:disabled="disabled"
 				:bg-color="bgColor"
@@ -569,16 +565,20 @@
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
 				:aria-required="ariaRequired"
+				:has-error="hasKeyErrors"
+				:has-warning="hasKeyWarnings"
+				:has-success="hasKeySuccess"
 				:aria-invalid="ariaInvalidKey"
 				class="key-field"
 				:display-asterisk="false"
 				:aria-describedby="keyFieldErrorId"
+				:show-success-messages="false"
 				@input="handleKeyInput"
 				@blur="handleKeyBlur"
 			/>
 		</div>
 		<div
-			class="sy-error-messages"
+			class="sy-messages"
 			style="flex: 1 0 100%;"
 		>
 			<div
@@ -599,6 +599,46 @@
 					v-show="hasKeyErrors"
 					:active="hasKeyErrors"
 					:messages="keyValidation.errors.value"
+				/>
+			</div>
+			<div
+				:id="numberFieldErrorId"
+				class="sy-number-warnings"
+			>
+				<VMessages
+					v-show="hasNumberWarnings"
+					:active="hasNumberWarnings"
+					:messages="numberValidation.warnings.value"
+				/>
+			</div>
+			<div
+				:id="keyFieldErrorId"
+				class="sy-key-warnings"
+			>
+				<VMessages
+					v-show="hasKeyWarnings"
+					:active="hasKeyWarnings"
+					:messages="keyValidation.warnings.value"
+				/>
+			</div>
+			<div
+				:id="numberFieldErrorId"
+				class="sy-number-success"
+			>
+				<VMessages
+					v-show="hasNumberSuccess && showSuccessMessages"
+					:active="hasNumberSuccess"
+					:messages="numberValidation.successes.value"
+				/>
+			</div>
+			<div
+				:id="keyFieldErrorId"
+				class="sy-key-success"
+			>
+				<VMessages
+					v-show="hasKeySuccess && showSuccessMessages"
+					:active="hasKeySuccess"
+					:messages="keyValidation.successes.value"
 				/>
 			</div>
 		</div>
@@ -667,20 +707,31 @@
 	}
 }
 
-.sy-error-messages {
-	padding-inline: 16px;
-	color: tokens.$colors-text-error;
+.sy-messages {
 	font-size: 0.875rem;
 	font-weight: 400;
 	letter-spacing: 0.0333em;
 	line-height: 16px;
+	padding-inline: 16px;
 
 	:deep(.v-messages) {
 		opacity: 1;
 	}
 }
 
-:deep(.v-input__details:not(:has(.v-messages__message))) {
-	display: none;
+.sy-number-errors,
+.sy-key-errors {
+	color: tokens.$colors-text-error;
 }
+
+.sy-number-warnings,
+.sy-key-warnings {
+	color: tokens.$colors-text-warning;
+}
+
+.sy-number-success,
+.sy-key-success {
+	color: tokens.$colors-text-success;
+}
+
 </style>

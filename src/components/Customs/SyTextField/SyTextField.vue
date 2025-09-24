@@ -69,6 +69,8 @@
 			isReversed?: boolean
 			role?: string
 			rounded?: string | number | boolean
+			hasError?: boolean
+			hasWarning?: boolean
 			isOnSingleLine?: boolean
 			suffix?: string
 			theme?: string
@@ -127,6 +129,8 @@
 			messages: undefined,
 			minWidth: undefined,
 			name: undefined,
+			hasError: false,
+			hasWarning: false,
 			displayPersistentClear: false,
 			displayPersistentCounter: false,
 			displayPersistentHint: false,
@@ -264,8 +268,8 @@
 		}
 	})
 
-	const hasError = computed(() => validation.hasError.value)
-	const hasWarning = computed(() => validation.hasWarning.value)
+	const hasError = computed(() => validation.hasError.value || props.hasError)
+	const hasWarning = computed(() => validation.hasWarning.value || props.hasWarning)
 	const hasSuccess = computed(() => validation.hasSuccess.value && !hasError.value && !hasWarning.value)
 
 	const errors = computed(() => validation.errors.value)
