@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 import AmeliproTable from './AmeliproTable.vue'
+import type { AmeliproTableHeader } from './types'
+import type { IDataListItem } from '../types'
+import { ref, computed } from 'vue'
 const meta = {
 	argTypes: {
 		'`item-${headers[cellIndex].name}`': { description: 'Slot généré automatiquement pour chaque colonne (`name` nom de la colonne dans headers) vous devez y bind la ligne, pour permettre de renseigner autres chose que des données textuelles si besoin. Le contenu du slot apparaît seulement si la valeur de la cellule concernée est `undefined`.' },
@@ -74,7 +77,7 @@ export default meta
 
 type Story = StoryObj<typeof AmeliproTable>
 
-const headers = [
+const headers: AmeliproTableHeader[] = [
 	{
 		align: 'left',
 		maxWidth: '25%',
@@ -101,7 +104,7 @@ const headers = [
 	},
 ]
 
-const dataList = [
+const dataList: IDataListItem[] = [
 	{
 		email: 'jean.bernard@gmail.com',
 		firstname: 'Jean',
@@ -228,7 +231,7 @@ export const Default: Story = {
 
 // Story n°2
 
-const headersAdvanced = [
+const headersAdvanced: AmeliproTableHeader[] = [
 	{
 		align: 'left',
 		maxWidth: '25%',
@@ -263,7 +266,7 @@ const headersAdvanced = [
 	},
 ]
 
-const dataListAdvanced = [
+const dataListAdvanced: IDataListItem[] = [
 	{
 		actions: undefined,
 		email: 'jean.bernard@gmail.com',
@@ -546,5 +549,230 @@ export const Advanced: Story = {
 				</template>
 			</AmeliproTable>
 		`,
+	}),
+}
+
+export const PaginationEtTri: Story = {
+	name: 'Pagination et tri',
+	args: {
+		dataList,
+		headers,
+		title: 'Tableau avec pagination et tri',
+		uniqueId: 'table-pagination-tri',
+		itemsToDisplayDesktop: 2,
+		itemsToDisplayMobile: 1,
+		sortSelectItems: [
+			{ title: 'Nom croissant', value: 'name-asc' },
+			{ title: 'Nom décroissant', value: 'name-desc' },
+		],
+		sortSelectLabel: 'Trier par',
+		sortSelectPlaceholder: 'Choisir un tri',
+		paginationSelectLabel: 'Résultats par page',
+		paginationSelectPlaceholder: 'Sélectionner',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <AmeliproTable
+        :data-list="sortedDataList"
+        :headers="headers"
+        title="Tableau avec pagination et tri"
+        unique-id="table-pagination-tri"
+        :items-to-display-desktop="2"
+        :items-to-display-mobile="1"
+        :sort-select-items="[
+            { title: 'Nom croissant', value: 'name-asc' },
+            { title: 'Nom décroissant', value: 'name-desc' }
+        ]"
+        sort-select-label="Trier par"
+        sort-select-placeholder="Choisir un tri"
+        pagination-select-label="Résultats par page"
+        pagination-select-placeholder="Sélectionner"
+        @change:sort-select="onSortChange"
+    />
+</template>
+                `,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { AmeliproTable } from '@cnamts/synapse'
+
+const headers = [
+    { align: 'left', maxWidth: '25%', minWidth: '20%', name: 'name', title: 'Nom', width: '25%' },
+    { align: 'left', maxWidth: '25%', minWidth: '20%', name: 'firstname', title: 'Prénom', width: '25%' },
+    { align: 'left', maxWidth: '25%', minWidth: '20%', name: 'email', title: 'E-mail', width: '25%' },
+]
+
+const dataList = [
+    { email: 'jean.bernard@gmail.com', firstname: 'Jean', id: 0, name: 'Bernard' },
+    { email: 'simon.pierre@gmail.com', firstname: 'Simon', id: 1, name: 'Pierre' },
+    { email: 'michel.souris@gmail.com', firstname: 'Michel', id: 2, name: 'Souris' },
+    { email: 'amandine.jabot@gmail.com', firstname: 'Amandine', id: 3, name: 'Jabot' },
+]
+
+const sortValue = ref('name-asc')
+
+const sortedDataList = computed(() => {
+	const list = [...(args.dataList ?? [])]
+	if (sortValue.value === 'name-asc') {
+		return list.sort((a, b) => (String(a.name ?? '')).localeCompare(String(b.name ?? '')))
+	}
+	if (sortValue.value === 'name-desc') {
+		return list.sort((a, b) => (String(b.name ?? '')).localeCompare(String(a.name ?? '')))
+	}
+	return list
+})
+
+function onSortChange(val: string) {
+    sortValue.value = val
+}
+</script>
+                `,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTable },
+		setup() {
+			const sortValue = ref('name-asc')
+			const sortedDataList = computed(() => {
+				const list = [...(args.dataList ?? [])]
+				if (sortValue.value === 'name-asc') {
+					return list.sort((a, b) => (String(a.name ?? '')).localeCompare(String(b.name ?? '')))
+				}
+				if (sortValue.value === 'name-desc') {
+					return list.sort((a, b) => (String(b.name ?? '')).localeCompare(String(a.name ?? '')))
+				}
+				return list
+			})
+			function onSortChange(val: string) {
+				sortValue.value = val
+			}
+			return { args, sortedDataList, onSortChange }
+		},
+		template: `
+<p class="mb-2">Tableau avec pagination personnalisée et options de tri. Le tri est appliqué via l'événement <code>change:sort-select</code>.</p>
+<AmeliproTable
+    v-bind="args"
+    :data-list="sortedDataList"
+    @change:sort-select="onSortChange"
+/>
+        `,
+	}),
+}
+
+export const LargeurPersonnalisee: Story = {
+	name: 'Largeur personnalisée',
+	args: {
+		dataList,
+		headers,
+		title: 'Tableau largeur personnalisée',
+		uniqueId: 'table-largeur',
+		tableMinWidth: '600px',
+		tableMaxWidth: '900px',
+		tableWidth: '80%',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <AmeliproTable
+        :data-list="dataList"
+        :headers="headers"
+        title="Tableau largeur personnalisée"
+        unique-id="table-largeur"
+        table-min-width="600px"
+        table-max-width="900px"
+        table-width="80%"
+    />
+</template>
+                `,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTable },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Tableau avec largeur personnalisée (<code>tableMinWidth</code>, <code>tableMaxWidth</code>, <code>tableWidth</code>).</p>
+<AmeliproTable v-bind="args" />
+        `,
+	}),
+}
+
+export const SansInfosEtFiltres: Story = {
+	name: 'Sans infos et filtres',
+	args: {
+		dataList,
+		headers,
+		title: 'Tableau sans infos ni filtres',
+		uniqueId: 'table-no-infos',
+		noTableInfos: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <AmeliproTable
+        :data-list="dataList"
+        :headers="headers"
+        title="Tableau sans infos ni filtres"
+        unique-id="table-no-infos"
+        no-table-infos
+    />
+</template>
+                `,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTable },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Tableau sans affichage des informations et filtres au-dessus du tableau (<code>noTableInfos</code>).</p>
+<AmeliproTable v-bind="args" />
+        `,
+	}),
+}
+
+export const BorduresVerticales: Story = {
+	name: 'Bordures verticales',
+	args: {
+		dataList,
+		headers,
+		title: 'Tableau avec bordures verticales',
+		uniqueId: 'table-vertical-border',
+		verticalBorder: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <AmeliproTable
+        :data-list="dataList"
+        :headers="headers"
+        title="Tableau avec bordures verticales"
+        unique-id="table-vertical-border"
+        vertical-border
+    />
+</template>
+                `,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTable },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Tableau avec bordures verticales entre les colonnes (<code>verticalBorder</code>).</p>
+<AmeliproTable v-bind="args" />
+        `,
 	}),
 }
