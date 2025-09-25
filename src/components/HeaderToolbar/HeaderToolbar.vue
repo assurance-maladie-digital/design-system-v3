@@ -838,7 +838,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		// Premier élément (Assuré)
 		li:first-child {
 			min-width: $first-item-width;
-      max-width: $first-item-max-width;
+			max-width: $first-item-max-width;
 			background: transparent;
 			text-align: center;
 			z-index: 1; // Position basse pour passer sous l'overlay
@@ -880,7 +880,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 				min-height: $second-item-max-height;
 				position: relative; // Garantit l'application du z-index
 				z-index: $z-button; // S'assure que le lien reste visible
-        max-width: $first-item-max-width;
+				max-width: $first-item-max-width;
 
 				@media (width <= $header-breakpoint-sm) {
 					min-height: $second-item-max-height-mobile;
