@@ -150,11 +150,11 @@
 	margin-left: 4px;
 	margin-right: 4px;
 
-	@media (max-width: 1239.999px) {
+	@media (width <= 1239.999px) {
 		width: 2.5rem;
 	}
 
-	@media (min-width: 1240px) {
+	@media (width >= 1240px) {
 		width: 3.125rem;
 		margin-left: 8px;
 		margin-right: 8px;
