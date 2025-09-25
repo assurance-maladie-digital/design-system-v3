@@ -35,7 +35,7 @@
 	}
 
 	function isFilled(index: number): boolean {
-		const isHovered = hoverIndex.value !== null && hoverIndex.value >= index
+		const isHovered = hoverIndex.value !== null && hoverIndex.value >= index && !props.readonly
 		const isActive = props.modelValue >= index
 		return (isHovered && !hasAnswered.value) || isActive
 	}
@@ -99,7 +99,7 @@
 				ref="ratingElement"
 				class="sy-stars-picker__item d-flex align-center justify-center"
 				role="radio"
-				:disabled="props.readonly || hasAnswered"
+				:disabled="props.readonly || hasAnswered ? true : null"
 				:aria-checked="isActive(index)"
 				:aria-label="`${index} star`"
 				@mouseover="hoverIndex = index"
@@ -135,7 +135,7 @@
 	border: 0;
 }
 
-.sy-stars-picker__item {
+.sy-stars-picker__item:not([disabled]) {
 	cursor: pointer;
 }
 

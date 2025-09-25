@@ -31,7 +31,6 @@ exports[`EmotionPicker > renders correctly 1`] = `
         sad
         sy-emotion-picker__item
       "
-      disabled="false"
       role="radio"
       style="
         min-height: 88px;
@@ -123,7 +122,6 @@ exports[`EmotionPicker > renders correctly 1`] = `
         rounded-lg
         sy-emotion-picker__item
       "
-      disabled="false"
       role="radio"
       style="
         min-height: 88px;
@@ -215,7 +213,6 @@ exports[`EmotionPicker > renders correctly 1`] = `
         rounded-lg
         sy-emotion-picker__item
       "
-      disabled="false"
       role="radio"
       style="
         min-height: 88px;
@@ -331,7 +328,6 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
         sad
         sy-emotion-picker__item
       "
-      disabled="false"
       role="radio"
       style="
         min-height: 88px;
@@ -423,7 +419,6 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
         rounded-lg
         sy-emotion-picker__item
       "
-      disabled="false"
       role="radio"
       style="
         min-height: 88px;

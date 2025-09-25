@@ -26,7 +26,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="0"
         >
@@ -40,7 +39,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="-1"
         >
@@ -54,7 +52,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="-1"
         >
@@ -68,7 +65,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="-1"
         >
@@ -82,7 +78,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="-1"
         >
@@ -96,7 +91,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="-1"
         >
@@ -110,7 +104,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="-1"
         >
@@ -124,7 +117,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="-1"
         >
@@ -138,7 +130,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="-1"
         >
@@ -152,7 +143,6 @@ exports[`RatingPicker > renders correctly 1`] = `
             sy-number-picker__item
             text-body-2
           "
-          disabled="false"
           role="radio"
           tabindex="-1"
         >

@@ -132,7 +132,7 @@
 						:aria-checked="props.modelValue === index"
 						:aria-label="locales.ariaLabel(index, props.length)"
 						class="sy-number-picker__item text-body-2 pa-0"
-						:disabled="props.readonly || hasAnswered"
+						:disabled="props.readonly || hasAnswered ? true : null"
 						@click="emitInputEvent(index); setFocus(index - 1)"
 						@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
 						@keyup.space="emitInputEvent(index); setFocus(index - 1)"
@@ -198,7 +198,6 @@
 }
 
 .sy-number-picker__item {
-	cursor: pointer;
 	color: rgb(var(--v-theme-primary));
 	border: 1px solid rgb(var(--v-theme-primary));
 	display: flex;
@@ -208,6 +207,17 @@
 	height: 36px;
 	font-weight: 700;
 	border-radius: 3px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.sy-number-picker__item[disabled] {
+	pointer-events: none;
+	opacity: 0.26;
+
+	&:hover {
+		background-color: transparent;
+	}
 }
 
 .sy-number-picker__item:hover,

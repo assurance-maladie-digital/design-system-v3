@@ -150,7 +150,7 @@
 				ref="ratingElement"
 				v-ripple="!(props.readonly || hasAnswered)"
 				role="radio"
-				:disabled="props.readonly || hasAnswered"
+				:disabled="(props.readonly || hasAnswered) ? true : null"
 				:aria-checked="isActive(index)"
 				:class="[getColor(index - 1), { 'sy-emotion-picker__item--active': isActive(index) }]"
 				:style="{
@@ -192,6 +192,10 @@
 	border: 0;
 }
 
+.sy-emotion-picker__item:not([disabled]) {
+	cursor: pointer;
+}
+
 .sy-emotion-picker__item {
 	transition: 0.2s;
 	border: 1px solid transparent;
@@ -201,7 +205,6 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	cursor: pointer;
 
 	.text-secondary {
 		color: tokens.$grey-darken-20 !important;
