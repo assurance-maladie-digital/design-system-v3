@@ -49,7 +49,7 @@ export const Default: Story = {
 				code: `<ul class="list-style-none d-flex flex-wrap">
 	<li>
 		<AmeliproTileBtn
-			img-src="/tile-example.svg"
+			img-src="/amelipro/img/tile-example.svg"
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
 			unique-id="tile-btn-example-1"
@@ -57,7 +57,7 @@ export const Default: Story = {
 	</li>
 	<li>
 		<AmeliproTileBtn
-			img-src="/tile-example.svg"
+			img-src="/amelipro/img/tile-example.svg"
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
 			unique-id="tile-btn-example-2"
@@ -66,7 +66,7 @@ export const Default: Story = {
 	</li>
 	<li>
 		<AmeliproTileBtn
-			img-src="/tile-example.svg"
+			img-src="/amelipro/img/tile-example.svg"
 			invalid
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
@@ -102,7 +102,7 @@ export const Default: Story = {
 			<ul class="list-style-none d-flex flex-wrap">
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
-						img-src="/tile-example.svg"
+						img-src="/amelipro/img/tile-example.svg"
 						label="Appareil de mesure Tensiomètre"
 						tile-min-height="100%"
 						unique-id="tile-btn-example-1"
@@ -111,7 +111,7 @@ export const Default: Story = {
 				</li>
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
-						img-src="/tile-example.svg"
+						img-src="/amelipro/img/tile-example.svg"
 						label="Appareil de mesure Tensiomètre"
 						tile-min-height="100%"
 						unique-id="tile-btn-example-2"
@@ -121,7 +121,7 @@ export const Default: Story = {
 				</li>
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
-						img-src="/tile-example.svg"
+						img-src="/amelipro/img/tile-example.svg"
 						invalid
 						label="Appareil de mesure Tensiomètre"
 						tile-min-height="100%"

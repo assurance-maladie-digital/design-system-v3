@@ -120,7 +120,7 @@ export const AvecImage: Story = {
 		cardTitle: 'Carte avec image',
 		contentText: 'Une image personnalisée est affichée.',
 		contentTitle: 'Image',
-		imgUrl: '/tile-example.svg',
+		imgUrl: '/amelipro/img/tile-example.svg',
 		imgWidth: '80px',
 		imgMinWidth: '80px',
 		uniqueId: 'amelipro-callback-image',
@@ -135,7 +135,7 @@ export const AvecImage: Story = {
     card-title="Carte avec image"
     content-text="Une image personnalisée est affichée."
     content-title="Image"
-    img-url="/tile-example.svg"
+    img-url="/amelipro/img/tile-example.svg"
     :img-width="80px"
     :img-min-width="80px"
     unique-id="amelipro-callback-image"
