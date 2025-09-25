@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, onMounted } from 'vue'
+	import { computed, onMounted, ref } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import type { PropType } from 'vue'
@@ -58,10 +58,44 @@
 			(input as HTMLElement).setAttribute('aria-hidden', 'true')
 		})
 	})
+
+	const ratingElement = ref<HTMLDivElement[]>([])
+	function focusNextElement(index: number) {
+		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
+		const nextIndex = currentIndex < (props.length - 1) ? currentIndex + 1 : 0
+		const nextElem = ratingElement.value?.[nextIndex]
+		nextElem?.focus()
+	}
+
+	function focusPrevElement(index: number) {
+		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
+		const prevIndex = currentIndex > 0 ? currentIndex - 1 : (props.length - 1)
+		const prevElem = ratingElement.value?.[prevIndex]
+		prevElem?.focus()
+	}
+
+	function setFocus(index: number) {
+		ratingElement.value.forEach((el, i) => {
+			if (i === index) {
+				el.setAttribute('tabindex', '0')
+				el.focus()
+			}
+			else {
+				el.setAttribute('tabindex', '-1')
+			}
+		})
+	}
+
+	onMounted(() => {
+		ratingElement.value[0]?.setAttribute('tabindex', '0')
+		for (let i = 1; i < ratingElement.value.length; i++) {
+			ratingElement.value[i]?.setAttribute('tabindex', '-1')
+		}
+	})
 </script>
 
 <template>
-	<fieldset class="vd-number-picker">
+	<fieldset class="sy-number-picker">
 		<legend class="d-sr-only">
 			<slot name="label">
 				{{ props.label }}
@@ -85,28 +119,28 @@
 				v-if="!hasAnswered"
 				class="d-inline-block"
 			>
-				<VRating
-					:model-value="props.modelValue"
-					:length="props.length"
-					:readonly="props.readonly || hasAnswered"
-					class="d-flex flex-wrap max-width-none"
-					@update:model-value="(value) => emit('update:modelValue', value)"
+				<div
+					role="radiogroup"
+					class="d-flex ga-2 flex-wrap max-width-none"
 				>
-					<template #item="{ index }">
-						<VBtn
-							:aria-label="locales.ariaLabel(index + 1, props.length)"
-							:disabled="props.readonly"
-							size="x-small"
-							variant="outlined"
-							color="primary"
-							height="36px"
-							class="text-body-2 pa-0 mr-2"
-							@click="emitInputEvent(index + 1)"
-						>
-							{{ index + 1 }}
-						</VBtn>
-					</template>
-				</VRating>
+					<div
+						v-for="index in props.length"
+						:key="index"
+						ref="ratingElement"
+						role="radio"
+						:aria-checked="props.modelValue === index"
+						:aria-label="locales.ariaLabel(index, props.length)"
+						class="sy-number-picker__item text-body-2 pa-0"
+						:disabled="props.readonly || hasAnswered"
+						@click="emitInputEvent(index); setFocus(index - 1)"
+						@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
+						@keyup.space="emitInputEvent(index); setFocus(index - 1)"
+						@keyup.right="focusNextElement(index - 1)"
+						@keyup.left="focusPrevElement(index - 1)"
+					>
+						{{ index }}
+					</div>
+				</div>
 				<div
 					v-if="shouldDisplayLabels"
 					class="d-flex justify-space-between mt-1"
@@ -127,34 +161,60 @@
 					/>
 				</div>
 			</div>
-			<p
+			<div
 				v-else
 				:aria-label="locales.ariaLabel(props.modelValue, props.length)"
 				class="mb-0 d-flex align-center"
 			>
-				<VBtn
-					aria-hidden="true"
-					:disabled="true"
-					size="x-small"
-					variant="outlined"
-					color="primary"
-					height="36px"
-					class="vd-btn-answer text-body-2 mr-1 pa-0"
+				<div
+					class="sy-btn-answer text-body-2 mr-1 pa-0"
 				>
 					{{ props.modelValue }}
-				</VBtn>
-				/ {{ props.length }}
-			</p>
+				</div>
+				<span>
+					/ {{ props.length }}
+				</span>
+			</div>
 		</template>
 	</fieldset>
 </template>
 
 <style lang="scss" scoped>
-.vd-number-picker {
+.sy-number-picker {
 	border: 0;
 }
 
-.vd-btn-answer.v-btn.v-btn--disabled {
-	opacity: 1;
+.sy-btn-answer {
+	color: rgb(var(--v-theme-primary));
+	border: 1px solid rgb(var(--v-theme-primary));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	font-weight: 700;
+	border-radius: 3px;
+}
+
+.sy-number-picker__item {
+	cursor: pointer;
+	color: rgb(var(--v-theme-primary));
+	border: 1px solid rgb(var(--v-theme-primary));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	font-weight: 700;
+	border-radius: 3px;
+}
+
+.sy-number-picker__item:hover,
+.sy-number-picker__item:focus-visible {
+	background-color: rgba(var(--v-theme-primary), 0.1);
+}
+
+.sy-number-picker__item:focus-visible {
+	outline: 1px solid currentcolor;
 }
 </style>

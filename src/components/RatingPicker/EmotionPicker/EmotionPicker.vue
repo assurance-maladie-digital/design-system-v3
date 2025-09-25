@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { type PropType, computed, onMounted } from 'vue'
+	import { type PropType, computed, onMounted, ref } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import { propValidator } from '@/utils/propValidator'
@@ -10,6 +10,7 @@
 	} from '@mdi/js'
 
 	import { useDisplay } from 'vuetify'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const { smAndDown } = useDisplay()
 	const isMobile = computed(() => smAndDown.value)
@@ -47,10 +48,10 @@
 	})
 
 	const emit = defineEmits(['update:modelValue'])
-	const { hasAnswered, emitInputEvent } = useRating(props, emit)
+	const { internalValue, hasAnswered, emitInputEvent } = useRating(props, emit)
 
 	const isActive = (index: number) => {
-		return index === props.modelValue - 1
+		return index === internalValue.value
 	}
 
 	const getIcon = (index: number) => {
@@ -86,72 +87,120 @@
 			(input as HTMLElement).setAttribute('aria-hidden', 'true')
 		})
 	})
+
+	const ratingElement = ref<HTMLDivElement[]>([])
+	function focusNextElement(index: number) {
+		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
+		const nextIndex = currentIndex < (props.length - 1) ? currentIndex + 1 : 0
+		const nextElem = ratingElement.value?.[nextIndex]
+
+		ratingElement.value[index]?.setAttribute('tabindex', '-1')
+		nextElem?.setAttribute('tabindex', '0')
+		nextElem?.focus()
+	}
+
+	function focusPrevElement(index: number) {
+		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
+		const prevIndex = currentIndex > 0 ? currentIndex - 1 : (props.length - 1)
+		const prevElem = ratingElement.value?.[prevIndex]
+
+		ratingElement.value[index]?.setAttribute('tabindex', '-1')
+		prevElem?.setAttribute('tabindex', '0')
+		prevElem?.focus()
+	}
+
+	function setFocus(index: number) {
+		ratingElement.value.forEach((el, i) => {
+			if (i === index) {
+				el?.setAttribute('tabindex', '0')
+			}
+			else {
+				el?.setAttribute('tabindex', '-1')
+			}
+		})
+	}
+
+	onMounted(() => {
+		ratingElement.value[0]?.setAttribute('tabindex', '0')
+		for (let i = 1; i < ratingElement.value.length; i++) {
+			ratingElement.value[i]?.setAttribute('tabindex', '-1')
+		}
+	})
+
 </script>
 
 <template>
-	<fieldset class="vd-emotion-picker">
+	<fieldset
+		class="sy-emotion-picker"
+		:aria-label="internalValue === -1 ? locales.toValidate : locales.validated"
+	>
 		<legend class="text-h6 mb-6">
 			<slot name="label">
 				{{ props.label }}
 			</slot>
 		</legend>
 
-		<VRating
-			:model-value="props.modelValue"
-			:length="props.length"
-			:readonly="props.readonly"
-			class="max-width-none mx-n1 mx-sm-n2"
-			@update:model-value="(value) => emit('update:modelValue', value)"
+		<div
+			role="radiogroup"
+			class="d-flex max-width-none mx-n1 mx-sm-n2"
 		>
-			<template #item="{ index }">
-				<VBtn
-					:disabled="props.readonly || hasAnswered"
-					:title="getEmotionLabel(index)"
-					:aria-pressed="isActive(index).toString()"
-					:class="[getColor(index), { 'v-btn--active': isActive(index) }]"
-					:min-height="btnSize"
-					:min-width="btnSize"
-					variant="text"
-					class="rounded-lg px-1 px-sm-4 mx-1 mx-sm-2"
-					@click="emitInputEvent(index + 1)"
-				>
-					<VIcon
-						size="40"
-						color="currentColor"
-						class="pa-0"
-					>
-						{{ getIcon(index) }}
-					</VIcon>
+			<div
+				v-for="index in props.length"
+				:key="index"
+				ref="ratingElement"
+				role="radio"
+				:disabled="props.readonly || hasAnswered"
+				:aria-checked="isActive(index)"
+				:class="[getColor(index - 1), { 'sy-emotion-picker__item--active': isActive(index) }]"
+				:style="{
+					'min-height': btnSize,
+					'min-width': btnSize
+				}"
+				class="sy-emotion-picker__item rounded-lg px-1 px-sm-4 mx-1 mx-sm-2"
+				@click="emitInputEvent(index); setFocus(index - 1)"
+				@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
+				@keyup.space="emitInputEvent(index); setFocus(index - 1)"
+				@keyup.right="focusNextElement(index - 1)"
+				@keyup.left="focusPrevElement(index - 1)"
+			>
+				<SyIcon
+					:icon="getIcon(index - 1)"
+					size="40"
+					color="currentColor"
+					class="pa-0"
+					decorative
+				/>
 
-					<span
-						v-if="getEmotionLabel(index)"
-						:class="{ 'text-secondary': !isActive(index) }"
-						class="text-subtitle-2 mt-1"
-					>
-						{{ getEmotionLabel(index) }}
-					</span>
-				</VBtn>
-			</template>
-		</VRating>
+				<span
+					v-if="getEmotionLabel(index - 1)"
+					:class="{ 'text-secondary': !isActive(index) }"
+					class="text-subtitle-2 mt-1"
+				>
+					{{ getEmotionLabel(index - 1) }}
+				</span>
+			</div>
+		</div>
 	</fieldset>
 </template>
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
-.vd-emotion-picker {
+.sy-emotion-picker {
+	display: flex;
 	border: 0;
 }
 
-.v-rating .v-btn {
+.sy-emotion-picker__item {
 	transition: 0.2s;
 	border: 1px solid transparent;
 	opacity: 1;
 	background: transparent;
-
-	:deep(.v-btn__content) {
-		flex-direction: column;
-	}
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	cursor: pointer;
 
 	.text-secondary {
 		color: tokens.$grey-darken-20 !important;
@@ -169,21 +218,16 @@
 		color: tokens.$turquoise-darken-40 !important;
 	}
 
-	&--active.v-btn--disabled .v-icon {
+	&--active.sy-emotion-picker__item--disabled .v-icon {
 		color: currentcolor !important;
 	}
 
-	&:focus,
-	&--active {
-		border-color: currentcolor !important;
+	&:focus-visible {
+		outline: 2px solid currentcolor;
 	}
 
-	&:hover,
-	&:focus,
 	&--active {
-		:deep(.v-btn__overlay, .v-btn__underlay) {
-			display: none;
-		}
+		border-color: currentcolor !important;
 
 		&.sad {
 			background: tokens.$orange-lighten-90;
@@ -199,7 +243,4 @@
 	}
 }
 
-.v-theme--light.v-btn--disabled :deep(.v-icon) {
-	color: tokens.$grey-lighten-20 !important;
-}
 </style>

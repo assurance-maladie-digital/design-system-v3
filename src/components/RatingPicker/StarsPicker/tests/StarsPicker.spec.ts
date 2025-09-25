@@ -27,7 +27,7 @@ describe('StarsPicker', () => {
 			},
 		})
 
-		await wrapper.findAll('button')!.at(3)!.trigger('click')
+		await wrapper.findAll('[role="radio"]')!.at(3)!.trigger('click')
 
 		expect(wrapper.emitted('update:modelValue')![0]).toEqual([4])
 	})
@@ -43,14 +43,14 @@ describe('StarsPicker', () => {
 		})
 
 		await wrapper.setProps({ modelValue: 4 })
-		expect(wrapper.findAll('button')[3].attributes('aria-pressed')).toBe(
+		expect(wrapper.findAll('[role="radio"]')[3].attributes('aria-checked')).toBe(
 			'true',
 		)
 		await wrapper.setProps({ modelValue: 1 })
-		expect(wrapper.findAll('button')[3].attributes('aria-pressed')).toBe(
+		expect(wrapper.findAll('[role="radio"]')[3].attributes('aria-checked')).toBe(
 			'false',
 		)
-		expect(wrapper.findAll('button')[0].attributes('aria-pressed')).toBe(
+		expect(wrapper.findAll('[role="radio"]')[0].attributes('aria-checked')).toBe(
 			'true',
 		)
 	})
@@ -62,7 +62,7 @@ describe('StarsPicker', () => {
 			},
 		})
 
-		const buttons = wrapper.findAll('button')
+		const buttons = wrapper.findAll('[role="radio"]')
 		await buttons.at(3)!.trigger('mouseover')
 
 		const icon = buttons!.at(3)!.findComponent(VIcon)
@@ -81,7 +81,7 @@ describe('StarsPicker', () => {
 			},
 		})
 
-		const buttons = wrapper.findAll('button')
+		const buttons = wrapper.findAll('[role="radio"]')
 		await buttons.at(3)!.trigger('focus')
 
 		const icon = buttons!.at(3)!.findComponent(VIcon)

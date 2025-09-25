@@ -1,263 +1,181 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`StarsPicker > renders correctly 1`] = `
-<fieldset class="vd-stars-picker">
+<fieldset class="sy-stars-picker">
   <legend class="
     mb-6
     text-h6
   ">
     Pourriez-vous donner une note ?
   </legend>
-  <div class="
-    d-flex
-    flex-wrap
-    max-width-none
-    mx-n3
-    v-rating
-    v-theme--light
-  ">
-    <label
-      class=""
-      for="v-rating-v-0-0"
+  <div
+    class="
+      d-flex
+      max-width-none
+      mx-n1
+      mx-sm-n2
+    "
+    role="radiogroup"
+  >
+    <div
+      aria-checked="false"
+      aria-label="1 star"
+      class="
+        align-center
+        d-flex
+        justify-center
+        sy-stars-picker__item
+      "
+      disabled="false"
+      role="radio"
+      tabindex="0"
     >
-      <span class="v-rating__hidden">
-        Rating 0 of 5
-      </span>
-      <!---->
-    </label>
-    <input
-      checked=""
-      class="v-rating__hidden"
-      id="v-rating-v-0-0"
-      name="v-rating-v-0"
+      <i
+        aria-hidden="true"
+        class="
+          M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
+          mdi
+          notranslate
+          px-2
+          py-0
+          text-blue-lighten
+          v-icon
+          v-theme--light
+        "
+        style="
+          font-size: 36px;
+          height: 36px;
+          width: 36px;
+        "
+      ></i>
+    </div>
+    <div
+      aria-checked="false"
+      aria-label="2 star"
+      class="
+        align-center
+        d-flex
+        justify-center
+        sy-stars-picker__item
+      "
+      disabled="false"
+      role="radio"
       tabindex="-1"
-      type="radio"
-      value="0"
-    />
-    <div class="v-rating__wrapper">
-      <!---->
-      <div class="v-rating__item">
-        <label
-          class=""
-          for="v-rating-v-0-1"
-        >
-          <span class="v-rating__hidden">
-            Rating 1 of 5
-          </span>
-          <button
-            aria-label="1 star"
-            aria-pressed="false"
-          >
-            <i
-              aria-hidden="true"
-              class="
-                M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
-                mdi
-                notranslate
-                px-2
-                py-0
-                text-blue-lighten
-                v-icon
-                v-theme--light
-              "
-              style="
-                font-size: 36px;
-                height: 36px;
-                width: 36px;
-              "
-            ></i>
-          </button>
-        </label>
-        <input
-          class="v-rating__hidden"
-          id="v-rating-v-0-1"
-          name="v-rating-v-0"
-          tabindex="-1"
-          type="radio"
-          value="1"
-        />
-      </div>
-      <!---->
+    >
+      <i
+        aria-hidden="true"
+        class="
+          M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
+          mdi
+          notranslate
+          px-2
+          py-0
+          text-blue-lighten
+          v-icon
+          v-theme--light
+        "
+        style="
+          font-size: 36px;
+          height: 36px;
+          width: 36px;
+        "
+      ></i>
     </div>
-    <div class="v-rating__wrapper">
-      <!---->
-      <div class="v-rating__item">
-        <label
-          class=""
-          for="v-rating-v-0-2"
-        >
-          <span class="v-rating__hidden">
-            Rating 2 of 5
-          </span>
-          <button
-            aria-label="2 star"
-            aria-pressed="false"
-          >
-            <i
-              aria-hidden="true"
-              class="
-                M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
-                mdi
-                notranslate
-                px-2
-                py-0
-                text-blue-lighten
-                v-icon
-                v-theme--light
-              "
-              style="
-                font-size: 36px;
-                height: 36px;
-                width: 36px;
-              "
-            ></i>
-          </button>
-        </label>
-        <input
-          class="v-rating__hidden"
-          id="v-rating-v-0-2"
-          name="v-rating-v-0"
-          tabindex="-1"
-          type="radio"
-          value="2"
-        />
-      </div>
-      <!---->
+    <div
+      aria-checked="false"
+      aria-label="3 star"
+      class="
+        align-center
+        d-flex
+        justify-center
+        sy-stars-picker__item
+      "
+      disabled="false"
+      role="radio"
+      tabindex="-1"
+    >
+      <i
+        aria-hidden="true"
+        class="
+          M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
+          mdi
+          notranslate
+          px-2
+          py-0
+          text-blue-lighten
+          v-icon
+          v-theme--light
+        "
+        style="
+          font-size: 36px;
+          height: 36px;
+          width: 36px;
+        "
+      ></i>
     </div>
-    <div class="v-rating__wrapper">
-      <!---->
-      <div class="v-rating__item">
-        <label
-          class=""
-          for="v-rating-v-0-3"
-        >
-          <span class="v-rating__hidden">
-            Rating 3 of 5
-          </span>
-          <button
-            aria-label="3 star"
-            aria-pressed="false"
-          >
-            <i
-              aria-hidden="true"
-              class="
-                M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
-                mdi
-                notranslate
-                px-2
-                py-0
-                text-blue-lighten
-                v-icon
-                v-theme--light
-              "
-              style="
-                font-size: 36px;
-                height: 36px;
-                width: 36px;
-              "
-            ></i>
-          </button>
-        </label>
-        <input
-          class="v-rating__hidden"
-          id="v-rating-v-0-3"
-          name="v-rating-v-0"
-          tabindex="-1"
-          type="radio"
-          value="3"
-        />
-      </div>
-      <!---->
+    <div
+      aria-checked="false"
+      aria-label="4 star"
+      class="
+        align-center
+        d-flex
+        justify-center
+        sy-stars-picker__item
+      "
+      disabled="false"
+      role="radio"
+      tabindex="-1"
+    >
+      <i
+        aria-hidden="true"
+        class="
+          M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
+          mdi
+          notranslate
+          px-2
+          py-0
+          text-blue-lighten
+          v-icon
+          v-theme--light
+        "
+        style="
+          font-size: 36px;
+          height: 36px;
+          width: 36px;
+        "
+      ></i>
     </div>
-    <div class="v-rating__wrapper">
-      <!---->
-      <div class="v-rating__item">
-        <label
-          class=""
-          for="v-rating-v-0-4"
-        >
-          <span class="v-rating__hidden">
-            Rating 4 of 5
-          </span>
-          <button
-            aria-label="4 star"
-            aria-pressed="false"
-          >
-            <i
-              aria-hidden="true"
-              class="
-                M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
-                mdi
-                notranslate
-                px-2
-                py-0
-                text-blue-lighten
-                v-icon
-                v-theme--light
-              "
-              style="
-                font-size: 36px;
-                height: 36px;
-                width: 36px;
-              "
-            ></i>
-          </button>
-        </label>
-        <input
-          class="v-rating__hidden"
-          id="v-rating-v-0-4"
-          name="v-rating-v-0"
-          tabindex="-1"
-          type="radio"
-          value="4"
-        />
-      </div>
-      <!---->
-    </div>
-    <div class="v-rating__wrapper">
-      <!---->
-      <div class="v-rating__item">
-        <label
-          class=""
-          for="v-rating-v-0-5"
-        >
-          <span class="v-rating__hidden">
-            Rating 5 of 5
-          </span>
-          <button
-            aria-label="5 star"
-            aria-pressed="false"
-          >
-            <i
-              aria-hidden="true"
-              class="
-                M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
-                mdi
-                notranslate
-                px-2
-                py-0
-                text-blue-lighten
-                v-icon
-                v-theme--light
-              "
-              style="
-                font-size: 36px;
-                height: 36px;
-                width: 36px;
-              "
-            ></i>
-          </button>
-        </label>
-        <input
-          class="v-rating__hidden"
-          id="v-rating-v-0-5"
-          name="v-rating-v-0"
-          tabindex="-1"
-          type="radio"
-          value="5"
-        />
-      </div>
-      <!---->
+    <div
+      aria-checked="false"
+      aria-label="5 star"
+      class="
+        align-center
+        d-flex
+        justify-center
+        sy-stars-picker__item
+      "
+      disabled="false"
+      role="radio"
+      tabindex="-1"
+    >
+      <i
+        aria-hidden="true"
+        class="
+          M12,15.39L8.24,17.66L9.23,13.38L5.91,10.5L10.29,10.13L12,6.09L13.71,10.13L18.09,10.5L14.77,13.38L15.76,17.66M22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.45,13.97L5.82,21L12,17.27L18.18,21L16.54,13.97L22,9.24Z
+          mdi
+          notranslate
+          px-2
+          py-0
+          text-blue-lighten
+          v-icon
+          v-theme--light
+        "
+        style="
+          font-size: 36px;
+          height: 36px;
+          width: 36px;
+        "
+      ></i>
     </div>
   </div>
 </fieldset>

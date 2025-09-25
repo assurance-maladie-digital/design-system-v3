@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, ref } from 'vue'
+	import { type PropType, computed, ref, watch } from 'vue'
 
 	import EmotionPicker from './EmotionPicker/EmotionPicker.vue'
 	import NumberPicker from './NumberPicker/NumberPicker.vue'
@@ -85,10 +85,14 @@
 		showAdditionalContent(value)
 		emit('update:modelValue', value)
 	}
+
+	watch(() => props.modelValue, (newVal) => {
+		internalValue.value = newVal
+	}, { immediate: true })
 </script>
 
 <template>
-	<div class="vd-rating-picker">
+	<div class="sy-rating-picker">
 		<component
 			:is="ratingComponent"
 			:model-value="internalValue"
