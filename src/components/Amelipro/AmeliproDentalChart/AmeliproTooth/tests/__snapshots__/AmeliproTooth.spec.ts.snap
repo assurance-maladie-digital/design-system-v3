@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproTooth > render correctly 1`] = `
+<button
+  class="
+    align-center
+    d-inline-flex
+    flex-column
+    py-2
+    tooth-btn
+  "
+  id="my-tooth-id"
+  title="dent 36"
+>
+  <span class="d-sr-only">
+    dent 36
+  </span>
+  <span
+    aria-hidden="true"
+    class="font-weight-semibold"
+    id="my-tooth-id-number"
+  >
+    36
+  </span>
+  <img
+    alt=""
+    id="my-tooth-id-img"
+    src="src/assets/amelipro/img/dental-chart-img/tooth-36.svg"
+  />
+  <span
+    class=""
+    id="my-tooth-id-status"
+  >
+    <!-- v-if -->
+    <!-- v-if -->
+    <!-- v-if -->
+  </span>
+</button>
+`;

@@ -1,0 +1,2590 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproDentalChart > render correctly 1`] = `
+<div
+  class="amelipro-dental-chart"
+  id="my-btn-id"
+>
+  <div class="
+    d-flex
+    justify-center
+  ">
+    <div
+      class="
+        amelipro-radio-group
+        pills
+      "
+      id="my-btn-id-filters-container"
+    >
+      <div class="
+        d-flex
+        flex-column
+        radio-group
+      ">
+        <div class="
+          align-center
+          d-flex
+          mr-2
+          radio-group__label-wrapper
+        ">
+          <p
+            class="
+              d-inline-flex
+              d-sr-only
+              mb-0
+              mb-md-4
+              radio-group__label
+            "
+            id="my-btn-id-filters"
+          >
+            Choisissez le statut à modifier
+            <!-- v-if -->
+            <!-- v-if -->
+          </p>
+        </div>
+        <div
+          aria-labelledby="my-btn-id-filters"
+          aria-required="false"
+          class="
+            mt-2
+            radio-group__wrapper
+          "
+          role="radiogroup"
+        >
+          <ul
+            class="
+              d-flex
+              flex-wrap
+              list-style-none
+              radio-group__list
+            "
+            id="my-btn-id-filters-list"
+          >
+            <li
+              class="
+                mb-2
+                radio-group__item
+              "
+              id="my-btn-id-filters-item-0"
+            >
+              <div class="
+                align-center
+                amelipro-radio-group__label-wrapper
+                d-flex
+                mr-2
+              ">
+                <label
+                  class="
+                    align-center
+                    d-inline-flex
+                    flex-row
+                    mr-0
+                    radio-group__item__label
+                    text-body-1
+                  "
+                  id="my-btn-id-filters-label-0"
+                >
+                  <input
+                    aria-checked="true"
+                    checked=""
+                    id="my-btn-id-filters-input-0"
+                    name="my-btn-id-filters-name"
+                    type="radio"
+                    value="decayed"
+                  />
+                  <span
+                    class="text-ap-blue-darken-1"
+                    id="my-btn-id-filters-label-text-0"
+                  >
+                    Dent cariée
+                  </span>
+                </label>
+              </div>
+              <!-- v-if -->
+            </li>
+            <li
+              class="
+                mb-2
+                radio-group__item
+              "
+              id="my-btn-id-filters-item-1"
+            >
+              <div class="
+                align-center
+                amelipro-radio-group__label-wrapper
+                d-flex
+                mr-2
+              ">
+                <label
+                  class="
+                    align-center
+                    d-inline-flex
+                    flex-row
+                    mr-0
+                    radio-group__item__label
+                    text-body-1
+                  "
+                  id="my-btn-id-filters-label-1"
+                >
+                  <input
+                    aria-checked="false"
+                    id="my-btn-id-filters-input-1"
+                    name="my-btn-id-filters-name"
+                    type="radio"
+                    value="missing"
+                  />
+                  <span
+                    class="text-ap-blue-darken-1"
+                    id="my-btn-id-filters-label-text-1"
+                  >
+                    Dent absente
+                  </span>
+                </label>
+              </div>
+              <!-- v-if -->
+            </li>
+            <li
+              class="
+                mb-2
+                radio-group__item
+              "
+              id="my-btn-id-filters-item-2"
+            >
+              <div class="
+                align-center
+                amelipro-radio-group__label-wrapper
+                d-flex
+                mr-2
+              ">
+                <label
+                  class="
+                    align-center
+                    d-inline-flex
+                    flex-row
+                    mr-0
+                    radio-group__item__label
+                    text-body-1
+                  "
+                  id="my-btn-id-filters-label-2"
+                >
+                  <input
+                    aria-checked="false"
+                    id="my-btn-id-filters-input-2"
+                    name="my-btn-id-filters-name"
+                    type="radio"
+                    value="filled"
+                  />
+                  <span
+                    class="text-ap-blue-darken-1"
+                    id="my-btn-id-filters-label-text-2"
+                  >
+                    Dent obturée
+                  </span>
+                </label>
+              </div>
+              <!-- v-if -->
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- v-if -->
+    </div>
+  </div>
+  <ul
+    class="
+      list-style-none
+      w-100
+    "
+    id="my-btn-id-list"
+  >
+    <li
+      class="w-100"
+      id="my-btn-id-item-0"
+    >
+      <ul
+        class="
+          d-flex
+          flex-wrap
+          justify-center
+          list-style-none
+          w-100
+        "
+        id="my-btn-id-sublist-0"
+      >
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-0"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-0"
+            style="border: 1px solid #00749C;"
+            title="dent 18 cariée"
+          >
+            <span class="d-sr-only">
+              dent 18 cariée
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-0-number"
+            >
+              18
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-0-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-18.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-0-status"
+            >
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                c
+              </span>
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-1"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-1"
+            style="border: 1px solid #00749C;"
+            title="dent 17 obturée"
+          >
+            <span class="d-sr-only">
+              dent 17 obturée
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-1-number"
+            >
+              17
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-1-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-17.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-1-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                o
+              </span>
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-2"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-2"
+            style="border: 1px solid #00749C;"
+            title="dent 16 absente"
+          >
+            <span class="d-sr-only">
+              dent 16 absente
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-2-number"
+            >
+              16
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-2-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-16.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-2-status"
+            >
+              <!-- v-if -->
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                a
+              </span>
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-3"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-3"
+            style="border: 1px solid #00749C;"
+            title="dent 15 cariée obturée"
+          >
+            <span class="d-sr-only">
+              dent 15 cariée obturée
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-3-number"
+            >
+              15
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-3-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-15.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-3-status"
+            >
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                c
+              </span>
+              <!-- v-if -->
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                o
+              </span>
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-4"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-4"
+            style="border: 1px solid #00749C;"
+            title="dent 14 cariée"
+          >
+            <span class="d-sr-only">
+              dent 14 cariée
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-4-number"
+            >
+              14
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-4-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-14.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-4-status"
+            >
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                c
+              </span>
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-5"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-5"
+            style="border: 1px solid #00749C;"
+            title="dent 13 obturée"
+          >
+            <span class="d-sr-only">
+              dent 13 obturée
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-5-number"
+            >
+              13
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-5-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-13.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-5-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                o
+              </span>
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-6"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-6"
+            style="border: 1px solid #00749C;"
+            title="dent 12 absente"
+          >
+            <span class="d-sr-only">
+              dent 12 absente
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-6-number"
+            >
+              12
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-6-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-12.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-6-status"
+            >
+              <!-- v-if -->
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                a
+              </span>
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-7"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-7"
+            style="border: 1px solid #00749C;"
+            title="dent 11 cariée obturée"
+          >
+            <span class="d-sr-only">
+              dent 11 cariée obturée
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-7-number"
+            >
+              11
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-7-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-11.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-7-status"
+            >
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                c
+              </span>
+              <!-- v-if -->
+              <span
+                aria-hidden="true"
+                class="
+                  text-body-1
+                  text-uppercase
+                "
+              >
+                o
+              </span>
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-8"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-8"
+            title="dent 21"
+          >
+            <span class="d-sr-only">
+              dent 21
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-8-number"
+            >
+              21
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-8-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-21.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-8-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-9"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-9"
+            title="dent 22"
+          >
+            <span class="d-sr-only">
+              dent 22
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-9-number"
+            >
+              22
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-9-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-22.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-9-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-10"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-10"
+            title="dent 23"
+          >
+            <span class="d-sr-only">
+              dent 23
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-10-number"
+            >
+              23
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-10-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-23.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-10-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-11"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-11"
+            title="dent 24"
+          >
+            <span class="d-sr-only">
+              dent 24
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-11-number"
+            >
+              24
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-11-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-24.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-11-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-12"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-12"
+            title="dent 25"
+          >
+            <span class="d-sr-only">
+              dent 25
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-12-number"
+            >
+              25
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-12-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-25.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-12-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-13"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-13"
+            title="dent 26"
+          >
+            <span class="d-sr-only">
+              dent 26
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-13-number"
+            >
+              26
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-13-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-26.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-13-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-14"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-14"
+            title="dent 27"
+          >
+            <span class="d-sr-only">
+              dent 27
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-14-number"
+            >
+              27
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-14-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-27.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-14-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-0-15"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-0-15"
+            title="dent 28"
+          >
+            <span class="d-sr-only">
+              dent 28
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-0-15-number"
+            >
+              28
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-0-15-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-28.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-0-15-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+      </ul>
+    </li>
+    <li
+      class="w-100"
+      id="my-btn-id-item-1"
+    >
+      <ul
+        class="
+          d-flex
+          flex-wrap
+          justify-center
+          list-style-none
+          w-100
+        "
+        id="my-btn-id-sublist-1"
+      >
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-0"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-0"
+            title="dent 55"
+          >
+            <span class="d-sr-only">
+              dent 55
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-0-number"
+            >
+              55
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-0-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-55.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-0-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-1"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-1"
+            title="dent 54"
+          >
+            <span class="d-sr-only">
+              dent 54
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-1-number"
+            >
+              54
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-1-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-54.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-1-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-2"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-2"
+            title="dent 53"
+          >
+            <span class="d-sr-only">
+              dent 53
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-2-number"
+            >
+              53
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-2-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-53.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-2-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-3"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-3"
+            title="dent 52"
+          >
+            <span class="d-sr-only">
+              dent 52
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-3-number"
+            >
+              52
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-3-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-52.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-3-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-4"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-4"
+            title="dent 51"
+          >
+            <span class="d-sr-only">
+              dent 51
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-4-number"
+            >
+              51
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-4-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-51.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-4-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-5"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-5"
+            title="dent 61"
+          >
+            <span class="d-sr-only">
+              dent 61
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-5-number"
+            >
+              61
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-5-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-61.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-5-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-6"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-6"
+            title="dent 62"
+          >
+            <span class="d-sr-only">
+              dent 62
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-6-number"
+            >
+              62
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-6-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-62.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-6-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-7"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-7"
+            title="dent 63"
+          >
+            <span class="d-sr-only">
+              dent 63
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-7-number"
+            >
+              63
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-7-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-63.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-7-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-8"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-8"
+            title="dent 64"
+          >
+            <span class="d-sr-only">
+              dent 64
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-8-number"
+            >
+              64
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-8-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-64.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-8-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-1-9"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-1-9"
+            title="dent 65"
+          >
+            <span class="d-sr-only">
+              dent 65
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-1-9-number"
+            >
+              65
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-1-9-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-65.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-1-9-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+      </ul>
+    </li>
+    <li
+      class="w-100"
+      id="my-btn-id-item-2"
+    >
+      <ul
+        class="
+          d-flex
+          flex-wrap
+          justify-center
+          list-style-none
+          w-100
+        "
+        id="my-btn-id-sublist-2"
+      >
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-0"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-0"
+            title="dent 85"
+          >
+            <span class="d-sr-only">
+              dent 85
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-0-number"
+            >
+              85
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-0-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-85.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-0-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-1"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-1"
+            title="dent 84"
+          >
+            <span class="d-sr-only">
+              dent 84
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-1-number"
+            >
+              84
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-1-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-84.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-1-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-2"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-2"
+            title="dent 83"
+          >
+            <span class="d-sr-only">
+              dent 83
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-2-number"
+            >
+              83
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-2-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-83.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-2-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-3"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-3"
+            title="dent 82"
+          >
+            <span class="d-sr-only">
+              dent 82
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-3-number"
+            >
+              82
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-3-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-82.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-3-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-4"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-4"
+            title="dent 81"
+          >
+            <span class="d-sr-only">
+              dent 81
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-4-number"
+            >
+              81
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-4-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-81.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-4-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-5"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-5"
+            title="dent 71"
+          >
+            <span class="d-sr-only">
+              dent 71
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-5-number"
+            >
+              71
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-5-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-71.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-5-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-6"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-6"
+            title="dent 72"
+          >
+            <span class="d-sr-only">
+              dent 72
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-6-number"
+            >
+              72
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-6-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-72.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-6-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-7"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-7"
+            title="dent 73"
+          >
+            <span class="d-sr-only">
+              dent 73
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-7-number"
+            >
+              73
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-7-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-73.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-7-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-8"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-8"
+            title="dent 74"
+          >
+            <span class="d-sr-only">
+              dent 74
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-8-number"
+            >
+              74
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-8-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-74.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-8-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-2-9"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-2-9"
+            title="dent 75"
+          >
+            <span class="d-sr-only">
+              dent 75
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-2-9-number"
+            >
+              75
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-2-9-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-75.svg"
+            />
+            <span
+              class=""
+              id="my-btn-id-tooth-2-9-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+      </ul>
+    </li>
+    <li
+      class="w-100"
+      id="my-btn-id-item-3"
+    >
+      <ul
+        class="
+          d-flex
+          flex-wrap
+          justify-center
+          list-style-none
+          w-100
+        "
+        id="my-btn-id-sublist-3"
+      >
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-0"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-0"
+            title="dent 48"
+          >
+            <span class="d-sr-only">
+              dent 48
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-0-number"
+            >
+              48
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-0-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-48.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-0-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-1"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-1"
+            title="dent 47"
+          >
+            <span class="d-sr-only">
+              dent 47
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-1-number"
+            >
+              47
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-1-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-47.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-1-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-2"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-2"
+            title="dent 46"
+          >
+            <span class="d-sr-only">
+              dent 46
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-2-number"
+            >
+              46
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-2-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-46.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-2-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-3"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-3"
+            title="dent 45"
+          >
+            <span class="d-sr-only">
+              dent 45
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-3-number"
+            >
+              45
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-3-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-45.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-3-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-4"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-4"
+            title="dent 44"
+          >
+            <span class="d-sr-only">
+              dent 44
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-4-number"
+            >
+              44
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-4-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-44.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-4-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-5"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-5"
+            title="dent 43"
+          >
+            <span class="d-sr-only">
+              dent 43
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-5-number"
+            >
+              43
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-5-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-43.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-5-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-6"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-6"
+            title="dent 42"
+          >
+            <span class="d-sr-only">
+              dent 42
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-6-number"
+            >
+              42
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-6-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-42.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-6-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-7"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-7"
+            title="dent 41"
+          >
+            <span class="d-sr-only">
+              dent 41
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-7-number"
+            >
+              41
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-7-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-41.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-7-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-8"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-8"
+            title="dent 31"
+          >
+            <span class="d-sr-only">
+              dent 31
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-8-number"
+            >
+              31
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-8-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-31.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-8-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-9"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-9"
+            title="dent 32"
+          >
+            <span class="d-sr-only">
+              dent 32
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-9-number"
+            >
+              32
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-9-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-32.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-9-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-10"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-10"
+            title="dent 33"
+          >
+            <span class="d-sr-only">
+              dent 33
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-10-number"
+            >
+              33
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-10-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-33.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-10-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-11"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-11"
+            title="dent 34"
+          >
+            <span class="d-sr-only">
+              dent 34
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-11-number"
+            >
+              34
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-11-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-34.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-11-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-12"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-12"
+            title="dent 35"
+          >
+            <span class="d-sr-only">
+              dent 35
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-12-number"
+            >
+              35
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-12-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-35.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-12-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-13"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-13"
+            title="dent 36"
+          >
+            <span class="d-sr-only">
+              dent 36
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-13-number"
+            >
+              36
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-13-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-36.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-13-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-14"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-14"
+            title="dent 37"
+          >
+            <span class="d-sr-only">
+              dent 37
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-14-number"
+            >
+              37
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-14-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-37.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-14-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+        <li
+          class="
+            mb-4
+            tooth-item
+          "
+          id="my-btn-id-subitem-3-15"
+        >
+          <button
+            class="
+              align-center
+              d-inline-flex
+              flex-column
+              py-2
+              tooth-btn
+            "
+            id="my-btn-id-tooth-3-15"
+            title="dent 38"
+          >
+            <span class="d-sr-only">
+              dent 38
+            </span>
+            <span
+              aria-hidden="true"
+              class="font-weight-semibold"
+              id="my-btn-id-tooth-3-15-number"
+            >
+              38
+            </span>
+            <img
+              alt=""
+              id="my-btn-id-tooth-3-15-img"
+              src="src/assets/amelipro/img/dental-chart-img/tooth-38.svg"
+            />
+            <span
+              class="text-uppercase"
+              id="my-btn-id-tooth-3-15-status"
+            >
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+            </span>
+          </button>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+`;
