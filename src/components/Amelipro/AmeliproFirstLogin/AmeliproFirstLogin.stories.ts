@@ -88,3 +88,202 @@ export const Default: Story = {
 </div>`,
 	}),
 }
+
+// ...existing code...
+
+export const AvecLienPlusInfos: Story = {
+	name: 'Avec lien "Plus d\'informations"',
+	args: {
+		modelValue: false,
+		uniqueId: 'amelipro-first-login-plus-info',
+		moreInfoHref: 'https://ameli.fr',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <div class="d-flex flex-wrap align-center justify-center w-100">
+        <AmeliproBtn
+            unique-id="amelipro-first-login-plus-info-btn"
+            @click="value = true"
+        >
+            Ouvrir la modale avec lien "Plus d'informations"
+        </AmeliproBtn>
+        <AmeliproFirstLogin
+            v-model="value"
+            unique-id="amelipro-first-login-plus-info"
+            more-info-href="https://ameli.fr"
+        />
+    </div>
+</template>`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { AmeliproBtn, AmeliproFirstLogin } from '@cnamts/synapse'
+
+const value = ref(false)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproFirstLogin, AmeliproBtn },
+		setup() {
+			const value = ref<boolean | undefined>(false)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+			return { args, value }
+		},
+		template: `
+<p class="mb-2">Modale avec un bouton "Plus d'informations" redirigeant vers une URL (<code>moreInfoHref</code>).</p>
+<div class="d-flex flex-wrap align-center justify-center w-100">
+    <AmeliproBtn
+        unique-id="amelipro-first-login-plus-info-btn"
+        @click="value = true"
+    >
+        Ouvrir la modale avec lien "Plus d'informations"
+    </AmeliproBtn>
+    <AmeliproFirstLogin
+        v-bind="args"
+        v-model="value"
+    />
+</div>
+        `,
+	}),
+}
+
+export const AvecRoutePlusInfos: Story = {
+	name: 'Avec route interne "Plus d\'informations"',
+	args: {
+		modelValue: false,
+		uniqueId: 'amelipro-first-login-plus-info-to',
+		moreInfoTo: '/plus-d-infos',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <div class="d-flex flex-wrap align-center justify-center w-100">
+        <AmeliproBtn
+            unique-id="amelipro-first-login-plus-info-to-btn"
+            @click="value = true"
+        >
+            Ouvrir la modale avec route interne "Plus d'informations"
+        </AmeliproBtn>
+        <AmeliproFirstLogin
+            v-model="value"
+            unique-id="amelipro-first-login-plus-info-to"
+            more-info-to="/plus-d-infos"
+        />
+    </div>
+</template>`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { AmeliproBtn, AmeliproFirstLogin } from '@cnamts/synapse'
+
+const value = ref(false)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproFirstLogin, AmeliproBtn },
+		setup() {
+			const value = ref<boolean | undefined>(false)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+			return { args, value }
+		},
+		template: `
+<p class="mb-2">Modale avec un bouton "Plus d'informations" utilisant une route interne (<code>moreInfoTo</code>).</p>
+<div class="d-flex flex-wrap align-center justify-center w-100">
+    <AmeliproBtn
+        unique-id="amelipro-first-login-plus-info-to-btn"
+        @click="value = true"
+    >
+        Ouvrir la modale avec route interne "Plus d'informations"
+    </AmeliproBtn>
+    <AmeliproFirstLogin
+        v-bind="args"
+        v-model="value"
+    />
+</div>
+        `,
+	}),
+}
+
+export const HauteurContenuPersonnalisee: Story = {
+	name: 'Hauteur du contenu personnalisée',
+	args: {
+		modelValue: false,
+		uniqueId: 'amelipro-first-login-content-height',
+		mainContentMinHeight: '200px',
+		mainContentMaxHeight: '400px',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <div class="d-flex flex-wrap align-center justify-center w-100">
+        <AmeliproBtn
+            unique-id="amelipro-first-login-content-height-btn"
+            @click="value = true"
+        >
+            Ouvrir la modale avec hauteur personnalisée
+        </AmeliproBtn>
+        <AmeliproFirstLogin
+            v-model="value"
+            unique-id="amelipro-first-login-content-height"
+            :main-content-min-height="200px"
+            :main-content-max-height="400px"
+        />
+    </div>
+</template>`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { AmeliproBtn, AmeliproFirstLogin } from '@cnamts/synapse'
+
+const value = ref(false)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproFirstLogin, AmeliproBtn },
+		setup() {
+			const value = ref<boolean | undefined>(false)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+			return { args, value }
+		},
+		template: `
+<p class="mb-2">Modale avec hauteur de contenu personnalisée (<code>mainContentMinHeight</code> et <code>mainContentMaxHeight</code>).</p>
+<div class="d-flex flex-wrap align-center justify-center w-100">
+    <AmeliproBtn
+        unique-id="amelipro-first-login-content-height-btn"
+        @click="value = true"
+    >
+        Ouvrir la modale avec hauteur personnalisée
+    </AmeliproBtn>
+    <AmeliproFirstLogin
+        v-bind="args"
+        v-model="value"
+    />
+</div>
+        `,
+	}),
+}
