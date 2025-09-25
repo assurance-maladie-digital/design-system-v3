@@ -205,7 +205,7 @@ export const List: StoryObj = {
 			setup() {
 				return {
 					githubIcon: mdiGithub,
-                    npmIcon: mdiNpm,
+					npmIcon: mdiNpm,
 					version,
 				}
 			},
