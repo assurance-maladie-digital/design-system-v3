@@ -165,27 +165,27 @@ Permet de créer une règle de validation personnalisée avec une fonction de va
     dark code={`
 <DatePicker
   v-model="date"
-					:custom-rules="[{
-						type: 'custom',
-						options: {
-							validate: (value) => {
-								// Si pas de valeur, c'est valide
-								if (!value) return true
-								// Convertir en chaîne si ce n'est pas déjà le cas
-								const dateStr = value.toString()
-								// Vérifier si c'est une Date et extraire l'année
-								if (value instanceof Date) {
-									return value.getFullYear() !== 2024
-								}
-								// Fallback sur la vérification de chaîne
-								return !dateStr.includes('2024')
-							},
-							message: 'Les dates en 2024 ne sont pas autorisées',
-							successMessage: 'Date valide (hors 2024)',
-							fieldIdentifier: 'date'
-						}
-					}]"
-/>
+  :custom-rules="[{
+    type: 'custom',
+    options: {
+      validate: (value) => {
+        // Si pas de valeur, c'est valide
+        if (!value) return true
+        // Convertir en chaîne si ce n'est pas déjà le cas
+        const dateStr = value.toString()
+        // Vérifier si c'est une Date et extraire l'année
+        if (value instanceof Date) {
+          return value.getFullYear() !== 2024
+        }
+        // Fallback sur la vérification de chaîne
+        return !dateStr.includes('2024')
+      },
+      message: 'Les dates en 2024 ne sont pas autorisées',
+      successMessage: 'Date valide (hors 2024)',
+      fieldIdentifier: 'date'
+    }
+  }]"
+/>				
 `}/>
 
 La fonction `validate` reçoit la valeur de la date (au format spécifié par la prop `format`) et doit retourner :
