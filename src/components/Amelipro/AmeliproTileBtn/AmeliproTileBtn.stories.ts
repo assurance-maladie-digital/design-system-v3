@@ -49,7 +49,7 @@ export const Default: Story = {
 				code: `<ul class="list-style-none d-flex flex-wrap">
 	<li>
 		<AmeliproTileBtn
-			img-src="/tile-example.svg"
+			img-src="/amelipro/img/tile-example.svg"
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
 			unique-id="tile-btn-example-1"
@@ -57,7 +57,7 @@ export const Default: Story = {
 	</li>
 	<li>
 		<AmeliproTileBtn
-			img-src="/tile-example.svg"
+			img-src="/amelipro/img/tile-example.svg"
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
 			unique-id="tile-btn-example-2"
@@ -66,7 +66,7 @@ export const Default: Story = {
 	</li>
 	<li>
 		<AmeliproTileBtn
-			img-src="/tile-example.svg"
+			img-src="/amelipro/img/tile-example.svg"
 			invalid
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
@@ -102,7 +102,7 @@ export const Default: Story = {
 			<ul class="list-style-none d-flex flex-wrap">
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
-						img-src="/tile-example.svg"
+						img-src="/amelipro/img/tile-example.svg"
 						label="Appareil de mesure Tensiomètre"
 						tile-min-height="100%"
 						unique-id="tile-btn-example-1"
@@ -111,7 +111,7 @@ export const Default: Story = {
 				</li>
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
-						img-src="/tile-example.svg"
+						img-src="/amelipro/img/tile-example.svg"
 						label="Appareil de mesure Tensiomètre"
 						tile-min-height="100%"
 						unique-id="tile-btn-example-2"
@@ -121,7 +121,7 @@ export const Default: Story = {
 				</li>
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
-						img-src="/tile-example.svg"
+						img-src="/amelipro/img/tile-example.svg"
 						invalid
 						label="Appareil de mesure Tensiomètre"
 						tile-min-height="100%"
@@ -138,7 +138,7 @@ export const Default: Story = {
 export const Desactivee: Story = {
 	name: 'Désactivée',
 	args: {
-		imgSrc: '/tile-example.svg',
+		imgSrc: '/amelipro/img/tile-example.svg',
 		label: 'Bouton désactivé',
 		tileMinHeight: '100%',
 		uniqueId: 'tile-btn-disabled',
@@ -150,7 +150,7 @@ export const Desactivee: Story = {
 				name: 'Template',
 				code: `
 <AmeliproTileBtn
-  img-src="/tile-example.svg"
+  img-src="/amelipro/img/tile-example.svg"
   label="Bouton désactivé"
   tile-min-height="100%"
   unique-id="tile-btn-disabled"
@@ -173,7 +173,7 @@ export const Desactivee: Story = {
 export const AvecMessageInfo: Story = {
 	name: 'Avec message informatif',
 	args: {
-		imgSrc: '/tile-example.svg',
+		imgSrc: '/amelipro/img/tile-example.svg',
 		label: 'Bouton avec info',
 		tileMinHeight: '100%',
 		uniqueId: 'tile-btn-info',
@@ -186,7 +186,7 @@ export const AvecMessageInfo: Story = {
 				name: 'Template',
 				code: `
 <AmeliproTileBtn
-  img-src="/tile-example.svg"
+  img-src="/amelipro/img/tile-example.svg"
   label="Bouton avec info"
   tile-min-height="100%"
   unique-id="tile-btn-info"
@@ -210,7 +210,7 @@ export const AvecMessageInfo: Story = {
 export const AvecMessageErreur: Story = {
 	name: 'Avec message d’erreur',
 	args: {
-		imgSrc: '/tile-example.svg',
+		imgSrc: '/amelipro/img/tile-example.svg',
 		label: 'Bouton avec erreur',
 		tileMinHeight: '100%',
 		uniqueId: 'tile-btn-error',
@@ -223,7 +223,7 @@ export const AvecMessageErreur: Story = {
 				name: 'Template',
 				code: `
 <AmeliproTileBtn
-  img-src="/tile-example.svg"
+  img-src="/amelipro/img/tile-example.svg"
   label="Bouton avec erreur"
   tile-min-height="100%"
   unique-id="tile-btn-error"
@@ -247,7 +247,7 @@ export const AvecMessageErreur: Story = {
 export const AvecInfosComplements: Story = {
 	name: 'Avec infos complémentaires',
 	args: {
-		imgSrc: '/tile-example.svg',
+		imgSrc: '/amelipro/img/tile-example.svg',
 		label: 'Bouton avec infos',
 		tileMinHeight: '100%',
 		uniqueId: 'tile-btn-complement',
@@ -260,7 +260,7 @@ export const AvecInfosComplements: Story = {
 				name: 'Template',
 				code: `
 <AmeliproTileBtn
-  img-src="/tile-example.svg"
+  img-src="/amelipro/img/tile-example.svg"
   label="Bouton avec infos"
   tile-min-height="100%"
   unique-id="tile-btn-complement"
@@ -284,7 +284,7 @@ export const AvecInfosComplements: Story = {
 export const AvecLien: Story = {
 	name: 'Avec lien externe',
 	args: {
-		imgSrc: '/tile-example.svg',
+		imgSrc: '/amelipro/img/tile-example.svg',
 		label: 'Bouton avec lien',
 		tileMinHeight: '100%',
 		uniqueId: 'tile-btn-href',
@@ -296,7 +296,7 @@ export const AvecLien: Story = {
 				name: 'Template',
 				code: `
 <AmeliproTileBtn
-  img-src="/tile-example.svg"
+  img-src="/amelipro/img/tile-example.svg"
   label="Bouton avec lien"
   tile-min-height="100%"
   unique-id="tile-btn-href"
@@ -319,7 +319,7 @@ export const AvecLien: Story = {
 export const AvecRouteInterne: Story = {
 	name: 'Avec route interne',
 	args: {
-		imgSrc: '/tile-example.svg',
+		imgSrc: '/amelipro/img/tile-example.svg',
 		label: 'Bouton avec route',
 		tileMinHeight: '100%',
 		uniqueId: 'tile-btn-to',
@@ -331,7 +331,7 @@ export const AvecRouteInterne: Story = {
 				name: 'Template',
 				code: `
 <AmeliproTileBtn
-  img-src="/tile-example.svg"
+  img-src="/amelipro/img/tile-example.svg"
   label="Bouton avec route"
   tile-min-height="100%"
   unique-id="tile-btn-to"
