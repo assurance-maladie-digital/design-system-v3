@@ -1,7 +1,7 @@
 import { VBtn, VIcon, VRow, VCol, VCard, VCardText, VCardTitle } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
 
-import { mdiGithub, mdiArrowRight, mdiNpm } from '@mdi/js'
+import { mdiArrowRight, mdiNpm } from '@mdi/js'
 
 import { version } from '../../../package.json'
 
@@ -204,7 +204,6 @@ export const List: StoryObj = {
 			components: { VRow, VCol },
 			setup() {
 				return {
-					githubIcon: mdiGithub,
 					npmIcon: mdiNpm,
 					version,
 				}
