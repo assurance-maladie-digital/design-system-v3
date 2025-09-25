@@ -89,8 +89,6 @@ export const Default: Story = {
 	}),
 }
 
-// ...existing code...
-
 export const AvecLienPlusInfos: Story = {
 	name: 'Avec lien "Plus d\'informations"',
 	args: {

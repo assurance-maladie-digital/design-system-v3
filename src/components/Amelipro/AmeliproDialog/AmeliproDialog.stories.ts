@@ -129,8 +129,6 @@ export const Default: Story = {
 	}),
 }
 
-// ...existing code...
-
 export const Fullscreen: Story = {
 	name: 'Plein écran',
 	args: {

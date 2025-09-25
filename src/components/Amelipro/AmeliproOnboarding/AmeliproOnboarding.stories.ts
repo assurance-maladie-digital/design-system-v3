@@ -159,8 +159,6 @@ export const Default: Story = {
 	}),
 }
 
-// ...existing code...
-
 export const AvecBoutonFinalPersonnalise: Story = {
 	name: 'Avec bouton final personnalisé',
 	args: {
