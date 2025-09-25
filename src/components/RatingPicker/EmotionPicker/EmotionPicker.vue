@@ -148,6 +148,7 @@
 				v-for="index in props.length"
 				:key="index"
 				ref="ratingElement"
+				v-ripple="!(props.readonly || hasAnswered)"
 				role="radio"
 				:disabled="props.readonly || hasAnswered"
 				:aria-checked="isActive(index)"

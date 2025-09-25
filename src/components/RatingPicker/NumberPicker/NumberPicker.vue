@@ -127,6 +127,7 @@
 						v-for="index in props.length"
 						:key="index"
 						ref="ratingElement"
+						v-ripple="!(props.readonly || hasAnswered)"
 						role="radio"
 						:aria-checked="props.modelValue === index"
 						:aria-label="locales.ariaLabel(index, props.length)"
