@@ -627,7 +627,10 @@
 			</section>
 			<section class="right-section">
 				<!-- Mobile burger menu for right menu (accessible) -->
-				<div class="mobile-burger" v-if="smAndDown">
+				<div
+					v-if="smAndDown"
+					class="mobile-burger"
+				>
 					<v-menu
 						v-model="mobileMenuOpen"
 						location="bottom right"
