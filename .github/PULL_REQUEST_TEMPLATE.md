@@ -52,5 +52,5 @@
 - [ ] Testé avec lecteur d'écran
 - [ ] Testé avec différentes tailles d'écran
 - [ ] Pas de régression visuelle
-- [ ] Documentation mise à jour
+- [ ] Documentation mise à jour (ajout du doc + maj avancement) 
 - [ ] Breaking changes documentés
