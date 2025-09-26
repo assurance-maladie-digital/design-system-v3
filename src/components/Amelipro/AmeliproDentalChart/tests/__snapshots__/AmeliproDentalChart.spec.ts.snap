@@ -243,7 +243,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-0-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-18.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -295,7 +295,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-1-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-17.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -347,7 +347,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-2-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-16.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -399,7 +399,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-3-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-15.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -459,7 +459,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-4-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-14.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -511,7 +511,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-5-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-13.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -563,7 +563,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-6-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-12.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -615,7 +615,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-7-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-11.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -674,7 +674,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-8-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-21.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -717,7 +717,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-9-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-22.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -760,7 +760,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-10-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-23.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -803,7 +803,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-11-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-24.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -846,7 +846,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-12-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-25.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -889,7 +889,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-13-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-26.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -932,7 +932,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-14-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-27.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -975,7 +975,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-0-15-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-28.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -1034,7 +1034,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-0-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-55.svg"
+              src=""
             />
             <span
               class=""
@@ -1077,7 +1077,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-1-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-54.svg"
+              src=""
             />
             <span
               class=""
@@ -1120,7 +1120,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-2-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-53.svg"
+              src=""
             />
             <span
               class=""
@@ -1163,7 +1163,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-3-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-52.svg"
+              src=""
             />
             <span
               class=""
@@ -1206,7 +1206,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-4-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-51.svg"
+              src=""
             />
             <span
               class=""
@@ -1249,7 +1249,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-5-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-61.svg"
+              src=""
             />
             <span
               class=""
@@ -1292,7 +1292,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-6-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-62.svg"
+              src=""
             />
             <span
               class=""
@@ -1335,7 +1335,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-7-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-63.svg"
+              src=""
             />
             <span
               class=""
@@ -1378,7 +1378,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-8-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-64.svg"
+              src=""
             />
             <span
               class=""
@@ -1421,7 +1421,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-1-9-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-65.svg"
+              src=""
             />
             <span
               class=""
@@ -1480,7 +1480,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-0-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-85.svg"
+              src=""
             />
             <span
               class=""
@@ -1523,7 +1523,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-1-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-84.svg"
+              src=""
             />
             <span
               class=""
@@ -1566,7 +1566,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-2-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-83.svg"
+              src=""
             />
             <span
               class=""
@@ -1609,7 +1609,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-3-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-82.svg"
+              src=""
             />
             <span
               class=""
@@ -1652,7 +1652,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-4-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-81.svg"
+              src=""
             />
             <span
               class=""
@@ -1695,7 +1695,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-5-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-71.svg"
+              src=""
             />
             <span
               class=""
@@ -1738,7 +1738,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-6-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-72.svg"
+              src=""
             />
             <span
               class=""
@@ -1781,7 +1781,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-7-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-73.svg"
+              src=""
             />
             <span
               class=""
@@ -1824,7 +1824,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-8-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-74.svg"
+              src=""
             />
             <span
               class=""
@@ -1867,7 +1867,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-2-9-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-75.svg"
+              src=""
             />
             <span
               class=""
@@ -1926,7 +1926,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-0-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-48.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -1969,7 +1969,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-1-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-47.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2012,7 +2012,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-2-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-46.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2055,7 +2055,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-3-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-45.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2098,7 +2098,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-4-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-44.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2141,7 +2141,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-5-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-43.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2184,7 +2184,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-6-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-42.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2227,7 +2227,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-7-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-41.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2270,7 +2270,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-8-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-31.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2313,7 +2313,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-9-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-32.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2356,7 +2356,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-10-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-33.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2399,7 +2399,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-11-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-34.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2442,7 +2442,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-12-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-35.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2485,7 +2485,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-13-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-36.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2528,7 +2528,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-14-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-37.svg"
+              src=""
             />
             <span
               class="text-uppercase"
@@ -2571,7 +2571,7 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
             <img
               alt=""
               id="my-btn-id-tooth-3-15-img"
-              src="src/assets/amelipro/img/dental-chart-img/tooth-38.svg"
+              src=""
             />
             <span
               class="text-uppercase"

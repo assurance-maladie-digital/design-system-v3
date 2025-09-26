@@ -25,7 +25,7 @@ exports[`AmeliproTooth > render correctly 1`] = `
   <img
     alt=""
     id="my-tooth-id-img"
-    src="src/assets/amelipro/img/dental-chart-img/tooth-36.svg"
+    src=""
   />
   <span
     class=""

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, onMounted, ref } from 'vue'
 	import type { IndexedObject } from '../../types'
 	import { convertToHex } from '@/utils/functions/convertToHex'
 
@@ -75,6 +75,13 @@
 	const emitClickEvent = (): void => {
 		emit('click')
 	}
+
+	const svgUrl = ref('')
+
+	onMounted(async () => {
+		const module = await import(`@/assets/amelipro/img/dental-chart-img/tooth-${props.toothNumber}.svg`)
+		svgUrl.value = module.default
+	})
 </script>
 
 <template>
@@ -101,7 +108,7 @@
 		<img
 			:id="`${uniqueId}-img`"
 			alt=""
-			:src="`src/assets/amelipro/img/dental-chart-img/tooth-${toothNumber}.svg`"
+			:src="svgUrl"
 		>
 
 		<span
