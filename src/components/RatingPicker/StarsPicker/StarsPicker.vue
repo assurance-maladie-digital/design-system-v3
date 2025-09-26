@@ -99,6 +99,7 @@
 				ref="ratingElement"
 				class="sy-stars-picker__item d-flex align-center justify-center"
 				role="radio"
+				:aria-disabled="(props.readonly || hasAnswered) ? true : false"
 				:disabled="props.readonly || hasAnswered ? true : null"
 				:aria-checked="isActive(index)"
 				:aria-label="`${index} star`"

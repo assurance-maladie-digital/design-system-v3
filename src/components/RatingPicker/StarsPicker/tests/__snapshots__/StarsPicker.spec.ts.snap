@@ -19,6 +19,7 @@ exports[`StarsPicker > renders correctly 1`] = `
   >
     <div
       aria-checked="false"
+      aria-disabled="false"
       aria-label="1 star"
       class="
         align-center
@@ -50,6 +51,7 @@ exports[`StarsPicker > renders correctly 1`] = `
     </div>
     <div
       aria-checked="false"
+      aria-disabled="false"
       aria-label="2 star"
       class="
         align-center
@@ -81,6 +83,7 @@ exports[`StarsPicker > renders correctly 1`] = `
     </div>
     <div
       aria-checked="false"
+      aria-disabled="false"
       aria-label="3 star"
       class="
         align-center
@@ -112,6 +115,7 @@ exports[`StarsPicker > renders correctly 1`] = `
     </div>
     <div
       aria-checked="false"
+      aria-disabled="false"
       aria-label="4 star"
       class="
         align-center
@@ -143,6 +147,7 @@ exports[`StarsPicker > renders correctly 1`] = `
     </div>
     <div
       aria-checked="false"
+      aria-disabled="false"
       aria-label="5 star"
       class="
         align-center

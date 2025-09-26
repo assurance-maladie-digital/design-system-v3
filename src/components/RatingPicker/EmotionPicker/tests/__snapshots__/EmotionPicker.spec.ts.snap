@@ -22,6 +22,7 @@ exports[`EmotionPicker > renders correctly 1`] = `
   >
     <div
       aria-checked="false"
+      aria-disabled="false"
       class="
         mx-1
         mx-sm-2
@@ -105,14 +106,14 @@ exports[`EmotionPicker > renders correctly 1`] = `
       ></i>
       <span class="
         mt-1
-        text-secondary
-        text-subtitle-2
+        sy-emotion-picker__item-title
       ">
         Pas du tout
       </span>
     </div>
     <div
       aria-checked="false"
+      aria-disabled="false"
       class="
         mx-1
         mx-sm-2
@@ -196,14 +197,14 @@ exports[`EmotionPicker > renders correctly 1`] = `
       ></i>
       <span class="
         mt-1
-        text-secondary
-        text-subtitle-2
+        sy-emotion-picker__item-title
       ">
         Peut-être
       </span>
     </div>
     <div
       aria-checked="false"
+      aria-disabled="false"
       class="
         happy
         mx-1
@@ -287,8 +288,7 @@ exports[`EmotionPicker > renders correctly 1`] = `
       ></i>
       <span class="
         mt-1
-        text-secondary
-        text-subtitle-2
+        sy-emotion-picker__item-title
       ">
         Oui super
       </span>
@@ -319,6 +319,7 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
   >
     <div
       aria-checked="false"
+      aria-disabled="false"
       class="
         mx-1
         mx-sm-2
@@ -402,14 +403,14 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
       ></i>
       <span class="
         mt-1
-        text-secondary
-        text-subtitle-2
+        sy-emotion-picker__item-title
       ">
         Pas du tout
       </span>
     </div>
     <div
       aria-checked="false"
+      aria-disabled="false"
       class="
         happy
         mx-1
@@ -493,8 +494,7 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
       ></i>
       <span class="
         mt-1
-        text-secondary
-        text-subtitle-2
+        sy-emotion-picker__item-title
       ">
         Oui super
       </span>

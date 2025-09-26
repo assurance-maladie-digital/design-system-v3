@@ -150,6 +150,7 @@
 				ref="ratingElement"
 				v-ripple="!(props.readonly || hasAnswered)"
 				role="radio"
+				:aria-disabled="(props.readonly || hasAnswered) ? true : false"
 				:disabled="(props.readonly || hasAnswered) ? true : null"
 				:aria-checked="isActive(index)"
 				:class="[getColor(index - 1), { 'sy-emotion-picker__item--active': isActive(index) }]"
@@ -174,8 +175,7 @@
 
 				<span
 					v-if="getEmotionLabel(index - 1)"
-					:class="{ 'text-secondary': !isActive(index) }"
-					class="text-subtitle-2 mt-1"
+					class="sy-emotion-picker__item-title mt-1"
 				>
 					{{ getEmotionLabel(index - 1) }}
 				</span>
@@ -206,20 +206,16 @@
 	justify-content: center;
 	flex-direction: column;
 
-	.text-secondary {
-		color: tokens.$grey-darken-20 !important;
-	}
-
 	&.sad {
-		color: tokens.$orange-darken-40 !important;
+		color: tokens.$orange-darken-20 !important;
 	}
 
 	&.neutral {
-		color: tokens.$yellow-darken-40 !important;
+		color: tokens.$yellow-darken-60 !important;
 	}
 
 	&.happy {
-		color: tokens.$turquoise-darken-40 !important;
+		color: tokens.$turquoise-darken-60 !important;
 	}
 
 	&--active.sy-emotion-picker__item--disabled .v-icon {
@@ -232,7 +228,11 @@
 
 	&--active {
 		border-color: currentcolor !important;
+	}
 
+	&--active,
+	&:focus,
+	&:hover {
 		&.sad {
 			background: tokens.$orange-lighten-90;
 		}
@@ -245,6 +245,22 @@
 			background: tokens.$turquoise-lighten-90;
 		}
 	}
+
+	&:hover[disabled="true"]:not([aria-checked="true"]),
+	&:focus[disabled="true"]:not([aria-checked="true"]) {
+		background-color: transparent;
+	}
+}
+
+.sy-emotion-picker__item-title {
+	font-weight: 700;
+	font-size: 1rem;
+	line-height: 150%;
+	color: tokens.$colors-text-base;
+}
+
+.sy-emotion-picker__item--active .sy-emotion-picker__item-title {
+	color: currentColor;
 }
 
 </style>

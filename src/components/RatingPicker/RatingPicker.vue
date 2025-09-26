@@ -115,6 +115,7 @@
 				:class="{ 'mb-4': displayAdditionalContent }"
 				outlined
 				:type="alertTypeEnumRef.SUCCESS"
+				role="status"
 				class="mt-4"
 			>
 				{{ locales.thanks }}

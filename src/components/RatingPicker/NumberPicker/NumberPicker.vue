@@ -132,6 +132,7 @@
 						:aria-checked="props.modelValue === index"
 						:aria-label="locales.ariaLabel(index, props.length)"
 						class="sy-number-picker__item text-body-2 pa-0"
+						:aria-disabled="(props.readonly || hasAnswered) ? true : false"
 						:disabled="props.readonly || hasAnswered ? true : null"
 						@click="emitInputEvent(index); setFocus(index - 1)"
 						@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
