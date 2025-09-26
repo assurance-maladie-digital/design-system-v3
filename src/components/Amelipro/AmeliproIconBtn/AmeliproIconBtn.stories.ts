@@ -79,3 +79,177 @@ export const Default: Story = {
 />`,
 	}),
 }
+
+export const BadgeTexte: Story = {
+	name: 'Badge texte',
+	args: {
+		icon: 'utilisateur',
+		iconColor: 'ap-blue-darken-1',
+		iconHoverColor: 'ap-blue-darken-2',
+		badge: 'Nouveau',
+		badgeBgColor: 'ap-green',
+		badgeColor: 'ap-white',
+		btnLabel: 'Voir les nouveautés',
+		uniqueId: 'icon-btn-badge-texte',
+		large: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Bouton icône avec badge texte personnalisé.</p>
+    <AmeliproIconBtn
+        icon="utilisateur"
+        icon-color="ap-blue-darken-1"
+        icon-hover-color="ap-blue-darken-2"
+        badge="Nouveau"
+        badge-bg-color="ap-green"
+        badge-color="ap-white"
+        btn-label="Voir les nouveautés"
+        large
+        unique-id="icon-btn-badge-texte"
+    />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIconBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Bouton icône avec badge texte personnalisé.</p>
+<AmeliproIconBtn v-bind="args" />
+        `,
+	}),
+}
+
+export const NavigationInterne: Story = {
+	name: 'Navigation interne',
+	args: {
+		icon: 'parametres',
+		iconColor: 'ap-grey-darken-2',
+		iconHoverColor: 'ap-blue-darken-1',
+		btnLabel: 'Aller aux paramètres',
+		to: '/parametres',
+		uniqueId: 'icon-btn-to',
+		medium: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Bouton icône qui utilise la prop <code>to</code> pour une navigation interne.</p>
+    <AmeliproIconBtn
+        icon="parametres"
+        icon-color="ap-grey-darken-2"
+        icon-hover-color="ap-blue-darken-1"
+        btn-label="Aller aux paramètres"
+        to="/parametres"
+        medium
+        unique-id="icon-btn-to"
+    />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIconBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Bouton icône qui utilise la prop <code>to</code> pour une navigation interne.</p>
+<AmeliproIconBtn v-bind="args" />
+        `,
+	}),
+}
+
+export const AvecPrependAppend: Story = {
+	name: 'Avec slot prepend et append',
+	args: {
+		icon: 'utilisateur',
+		iconColor: 'ap-blue-darken-1',
+		iconHoverColor: 'ap-blue-darken-2',
+		btnLabel: 'Bouton avec slots',
+		uniqueId: 'icon-btn-slots',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Bouton icône avec contenu dans les slots <code>prepend</code> et <code>append</code>.</p>
+    <AmeliproIconBtn
+        icon="utilisateur"
+        icon-color="ap-blue-darken-1"
+        icon-hover-color="ap-blue-darken-2"
+        btn-label="Bouton avec slots"
+        unique-id="icon-btn-slots"
+    >
+        <template #prepend>
+            <span style="font-size: 0.9em; color: #1976d2;">Avant</span>
+        </template>
+        <template #append>
+            <span style="font-size: 0.9em; color: #1976d2;">Après</span>
+        </template>
+    </AmeliproIconBtn>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIconBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Bouton icône avec contenu dans les slots <code>prepend</code> et <code>append</code>.</p>
+<AmeliproIconBtn v-bind="args">
+    <template #prepend>
+        <span style="font-size: 0.9em; color: #1976d2;">Avant</span>
+    </template>
+    <template #append>
+        <span style="font-size: 0.9em; color: #1976d2;">Après</span>
+    </template>
+</AmeliproIconBtn>
+        `,
+	}),
+}
+
+export const Accessibilite: Story = {
+	name: 'Accessibilité (label et title)',
+	args: {
+		icon: 'aide',
+		iconColor: 'ap-blue-darken-1',
+		iconHoverColor: 'ap-blue-darken-2',
+		btnLabel: 'Aide',
+		btnTitle: 'Ouvrir l’aide',
+		uniqueId: 'icon-btn-access',
+		small: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Bouton icône avec label et title pour l’accessibilité.</p>
+    <AmeliproIconBtn
+        icon="aide"
+        icon-color="ap-blue-darken-1"
+        icon-hover-color="ap-blue-darken-2"
+        btn-label="Aide"
+        btn-title="Ouvrir l’aide"
+        small
+        unique-id="icon-btn-access"
+    />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIconBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Bouton icône avec label et title pour l’accessibilité.</p>
+<AmeliproIconBtn v-bind="args" />
+        `,
+	}),
+}
