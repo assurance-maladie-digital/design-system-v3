@@ -246,8 +246,8 @@
 		}
 	}
 
-	&:hover[disabled="true"]:not([aria-checked="true"]),
-	&:focus[disabled="true"]:not([aria-checked="true"]) {
+	&:hover[disabled='true']:not([aria-checked='true']),
+	&:focus[disabled='true']:not([aria-checked='true']) {
 		background-color: transparent;
 	}
 }
@@ -260,7 +260,7 @@
 }
 
 .sy-emotion-picker__item--active .sy-emotion-picker__item-title {
-	color: currentColor;
+	color: currentcolor;
 }
 
 </style>
