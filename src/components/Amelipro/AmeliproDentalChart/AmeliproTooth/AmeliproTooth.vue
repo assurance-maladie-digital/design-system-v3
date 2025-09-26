@@ -80,7 +80,9 @@
 
 	onMounted(async () => {
 		const module = await import(`@/assets/amelipro/img/dental-chart-img/tooth-${props.toothNumber}.svg`)
-		svgUrl.value = module.default
+		if (module.default !== null && module.default !== undefined) {
+			svgUrl.value = module.default
+		}
 	})
 </script>
 
