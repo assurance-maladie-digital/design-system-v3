@@ -627,7 +627,7 @@
 			</section>
 			<section class="right-section">
 				<!-- Mobile burger menu for right menu (accessible) -->
-				<div class="mobile-burger">
+				<div class="mobile-burger" v-if="smAndDown">
 					<v-menu
 						v-model="mobileMenuOpen"
 						location="bottom right"
@@ -697,7 +697,10 @@
 						</v-list>
 					</v-menu>
 				</div>
-				<slot name="right-menu">
+				<slot
+					v-if="!smAndDown"
+					name="right-menu"
+				>
 					<nav
 						id="right-menu"
 						:aria-label="props.ariaRightLabel"
