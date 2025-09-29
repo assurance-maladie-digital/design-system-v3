@@ -69,7 +69,7 @@
 			<template #activator="{ props: tooltipProps }">
 				<slot
 					name="tooltipActivator"
-					v-bind="{ props }"
+					v-bind="{ props, show }"
 				>
 					<AmeliproIconBtn
 						:aria-describedby="uniqueId"

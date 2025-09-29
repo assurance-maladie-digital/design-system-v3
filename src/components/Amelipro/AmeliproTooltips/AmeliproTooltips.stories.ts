@@ -226,3 +226,47 @@ import { AmeliproTooltips } from '@cnamts/synapse'
         `,
 	}),
 }
+
+export const SlotActivator: Story = {
+	name: 'Slot tooltipActivator',
+	args: {
+		tooltipText: 'Info-bulle déclenchée par un bouton personnalisé',
+		uniqueId: 'tooltip-activator',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Utilisation du slot <code>tooltipActivator</code> pour personnaliser l’élément déclencheur de l’info-bulle.</p>
+    <AmeliproTooltips
+        tooltip-text="Info-bulle déclenchée par un bouton personnalisé"
+        unique-id="tooltip-activator"
+    >
+        <template #tooltipActivator="{ props, show }">
+            <button class="btn btn-primary" @click="show = !show">Survolez-moi</button>
+        </template>
+    </AmeliproTooltips>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { AmeliproTooltips } from '@cnamts/synapse'
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTooltips },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Utilisation du slot <code>tooltipActivator</code> pour personnaliser l’élément déclencheur de l’info-bulle.</p>
+<AmeliproTooltips v-bind="args">
+    <template #tooltipActivator="{ props, show }">
+        <button class="btn btn-primary" @click="show = !show">Survolez-moi</button>
+    </template>
+</AmeliproTooltips>
+        `,
+	}),
+}
