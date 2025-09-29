@@ -209,7 +209,7 @@ export const AvecIconeAGauche: Story = {
 	name: 'Icône à gauche',
 	args: {
 		default: 'Bouton avec icône à gauche',
-		iconName: 'arrow_back',
+		iconName: 'chrono',
 		iconLeft: true,
 		uniqueId: 'btn-icon-left',
 		color: 'ap-blue-darken-1',
@@ -221,7 +221,7 @@ export const AvecIconeAGauche: Story = {
 				name: 'Template',
 				code: `<template>
     <AmeliproBtn
-        icon-name="arrow_back"
+        icon-name="chrono"
         icon-left
         unique-id="btn-icon-left"
         color="ap-blue-darken-1"
