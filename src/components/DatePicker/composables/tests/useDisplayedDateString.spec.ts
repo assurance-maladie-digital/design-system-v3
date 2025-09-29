@@ -10,25 +10,32 @@ vi.mock('dayjs', () => {
 			return {
 				isValid: () => false,
 				format: vi.fn(),
+				locale: () => ({
+					isValid: () => false,
+					format: vi.fn(),
+				}),
 			}
 		}
 
-		// Simuler différents formats de date en fonction de l'entrée
-		return {
+		// Créer l'objet mock de base avec les méthodes nécessaires
+		const obj = {
 			isValid: () => true,
 			format: (format: string) => {
 				if (format === 'D MMMM') {
-					return '1 janvier'
+					return '1 Janvier'
 				}
 				if (format === 'D MMMM YYYY') {
-					return '1 janvier 2025'
+					return '1 Janvier 2025'
 				}
-				if (format === 'dddd D MMMM YYYY') {
-					return 'jeudi 1 janvier 2025'
+				if (format === 'dddd DD MMMM YYYY') {
+					return 'Jeudi 1 Janvier 2025'
 				}
 				return 'date formatée'
 			},
+			// La méthode locale retourne le même objet pour permettre le chaînage
+			locale: () => obj,
 		}
+		return obj
 	}
 
 	return {
@@ -60,7 +67,7 @@ describe('useDisplayedDateString', () => {
 			selectedDates: { value: new Date('2025-01-01') },
 			todayInString,
 		})
-		expect(displayedDateString.value).toBe('jeudi 1 janvier 2025')
+		expect(displayedDateString.value).toBe('Jeudi 1 Janvier 2025')
 	})
 
 	it('devrait formater correctement une plage de dates avec deux dates', () => {
@@ -68,7 +75,7 @@ describe('useDisplayedDateString', () => {
 			selectedDates: { value: [new Date('2025-01-01'), new Date('2025-01-15')] },
 			todayInString,
 		})
-		expect(displayedDateString.value).toBe('1 janvier - 1 janvier 2025')
+		expect(displayedDateString.value).toBe('1 Janvier - 1 Janvier 2025')
 	})
 
 	it('devrait formater correctement une plage de dates avec une seule date', () => {
@@ -76,7 +83,7 @@ describe('useDisplayedDateString', () => {
 			selectedDates: { value: [new Date('2025-01-01')] },
 			todayInString,
 		})
-		expect(displayedDateString.value).toBe('jeudi 1 janvier 2025')
+		expect(displayedDateString.value).toBe('Jeudi 1 Janvier 2025')
 	})
 
 	it('devrait retourner la date du jour si la date est invalide', () => {
@@ -85,7 +92,7 @@ describe('useDisplayedDateString', () => {
 			selectedDates: { value: new Date('invalid date') },
 			todayInString,
 		})
-		expect(displayedDateString.value).toBe('jeudi 1 janvier 2025')
+		expect(displayedDateString.value).toBe('Jeudi 1 Janvier 2025')
 	})
 
 	it('devrait retourner la date du jour si la plage de dates est vide', () => {

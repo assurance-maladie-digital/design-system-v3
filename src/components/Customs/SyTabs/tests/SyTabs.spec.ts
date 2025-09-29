@@ -4,6 +4,13 @@ import { nextTick } from 'vue'
 import SyTabs from '@/components/Customs/SyTabs/SyTabs.vue'
 import { vuetify } from '@tests/unit/setup'
 
+// Mock RouterLink component
+const RouterLink = {
+	name: 'RouterLink',
+	props: ['to'],
+	template: '<a :href="to"><slot /></a>',
+}
+
 describe('SyTabs', () => {
 	// Données de test
 	const testItems = [
@@ -19,6 +26,17 @@ describe('SyTabs', () => {
 		},
 		global: {
 			plugins: [vuetify],
+			// Mock vue-router and provide RouterLink component
+			components: {
+				RouterLink,
+			},
+			// Mock $router used in the component
+			mocks: {
+				$router: {
+					push: vi.fn(),
+					replace: vi.fn(),
+				},
+			},
 		},
 	}
 
@@ -397,12 +415,14 @@ describe('SyTabs', () => {
 			const wrapper = createWrapper({
 				props: {
 					...defaultMountOptions.props,
-					sheet: {
-						dense: true,
-						color: 'primary',
-					},
-					tabs: {
-						height: '60',
+					vuetifyOptions: {
+						sheet: {
+							dense: true,
+							color: 'primary',
+						},
+						tabs: {
+							height: '60',
+						},
 					},
 				},
 			})

@@ -1,29 +1,12 @@
 import {Meta} from '@storybook/blocks';
+import '../../styles/shared.css';
 
 <Meta title="Accessibilité/Kit de pré-audit/Échantillonnage"/>
 
 <style>
 {
 `
-  .header-container {
-    color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .header-container h1 {
-    margin-top: 0;
-    font-size: 2.5rem;
-    font-weight: 700;
-  }
-  
-  .header-container p {
-    font-size: 1.1rem;
-    margin-bottom: 0;
-    opacity: 0.9;
-  }
+      
   
   .info-card {
     background-color: #f8f9fa;
@@ -142,8 +125,8 @@ import {Meta} from '@storybook/blocks';
 }
 </style>
 
-<div className="header-container">
-  <h1>📊 Échantillonnage</h1>
+<div className="header">
+  <h1>Échantillonnage</h1>
   <p>Définir un périmètre représentatif pour votre audit d'accessibilité</p>
 </div>
 

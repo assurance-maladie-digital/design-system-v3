@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { VSheet } from 'vuetify/components'
-	import { computed, ref, watch, onMounted } from 'vue'
-	import { useRouter, useRoute } from 'vue-router'
+	import { computed, ref, watch, onMounted, getCurrentInstance } from 'vue'
+	import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 
 	import SyTabs from '../../Customs/SyTabs/SyTabs.vue'
 	import type { TabItem } from '../../Customs/SyTabs/types'
@@ -10,9 +10,24 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
 
-	const props = defineProps<CustomizableOptions & {
+	// Type des méthodes exposées
+	type ExposedMethods = {
+		resetTabSelection: () => { activeTab: number, activeItemIndex: number }
+	}
+
+	const props = withDefaults(defineProps<CustomizableOptions & {
 		items: NavigationItem[]
-	}>()
+		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
+		confirmTabChange?: boolean
+		/** Message affiché dans la boîte de dialogue de confirmation */
+		confirmationMessage?: boolean
+	}>(), {
+		confirmTabChange: false,
+		confirmationMessage: false,
+	})
+
+	// Définition des événements émis
+	const emit = defineEmits(['cancel-navigation', 'confirm-tab-change'])
 
 	defineSlots<{
 		'navigation-bar-prepend': () => unknown
@@ -20,9 +35,17 @@
 		'default': () => unknown
 	}>()
 
+	// Exposer les méthodes pour permettre au composant parent d'interagir
+	defineExpose<ExposedMethods>({
+		resetTabSelection,
+	})
+
 	const options = useCustomizableOptions(config, props)
-	const route = useRoute()
-	const router = useRouter()
+
+	// Safely get route and router through getCurrentInstance - they might not be available in all contexts
+	const instance = getCurrentInstance()
+	const route = instance?.appContext.config.globalProperties.$route as RouteLocationNormalizedLoaded | null || null
+	const router = instance?.appContext.config.globalProperties.$router as Router | null || null
 
 	// État pour suivre l'élément actif
 	const activeTab = ref<number>(0)
@@ -35,6 +58,8 @@
 			label: item.label,
 			value: index,
 			content: '',
+			href: item.href,
+			to: item.to,
 		}))
 	})
 
@@ -82,17 +107,28 @@
 	}
 
 	// Fonction pour gérer la navigation lors d'un changement d'onglet
-	function handleTabChange(index: number) {
+	async function handleTabChange(index: number) {
 		// Mettre à jour l'élément actif
 		setActiveItem(index)
+
+		// Si confirmTabChange est activé, ne pas gérer la navigation ici
+		// car c'est SyTabs qui s'en charge après la confirmation
+		if (props.confirmTabChange) {
+			return
+		}
 
 		// Récupérer l'élément correspondant à cet index
 		const item = props.items?.[index]
 		if (!item) return
 
 		// Navigation vers la destination si nécessaire
-		if (item.to) {
-			router.push(item.to)
+		if (item.to && router) {
+			try {
+				await router.push(item.to)
+			}
+			catch (error) {
+				console.error('Erreur de navigation:', error)
+			}
 			return
 		}
 
@@ -102,23 +138,29 @@
 		}
 	}
 
-	// Initialiser l'élément actif au montage
-	onMounted(() => {
+	// Fonction pour gérer les confirmations de changement d'onglet
+	function handleConfirmTabChange(message: string, callback: (confirmed: boolean) => void) {
+		// Transmettre l'événement au composant parent HeaderNavigationBar
+		// en passant le callback qui sera appelé plus tard avec le résultat
+		emit('confirm-tab-change', message, callback)
+	}
+
+	// Fonction pour synchroniser l'onglet actif avec l'URL courante
+	function resetTabSelection() {
 		// Si les items ne sont pas un tableau ou vides, ne rien faire
-		if (!Array.isArray(props.items) || props.items.length === 0) return
+		if (!Array.isArray(props.items) || props.items.length === 0 || !route) {
+			return { activeTab: activeTab.value, activeItemIndex: activeItemIndex.value }
+		}
 
 		let foundActiveItem = false
 
-		// Ne vérifier les routes que si route est défini
-		if (route) {
-			// Trouver l'élément actif basé sur la route courante
-			for (let i = 0; i < props.items.length; i++) {
-				if (isActive(props.items[i], i)) {
-					activeItemIndex.value = i
-					activeTab.value = i
-					foundActiveItem = true
-					break
-				}
+		// Trouver l'élément actif basé sur la route courante
+		for (let i = 0; i < props.items.length; i++) {
+			if (isActive(props.items[i], i)) {
+				activeItemIndex.value = i
+				activeTab.value = i
+				foundActiveItem = true
+				break
 			}
 		}
 
@@ -127,6 +169,13 @@
 			activeItemIndex.value = 0
 			activeTab.value = 0
 		}
+
+		return { activeTab: activeTab.value, activeItemIndex: activeItemIndex.value }
+	}
+
+	// Initialiser l'élément actif au montage
+	onMounted(() => {
+		resetTabSelection()
 	})
 
 	// Surveiller les changements de route pour mettre à jour l'élément actif
@@ -164,15 +213,19 @@
 					class="horizontal-menu__tabs"
 					:items="tabItems"
 					:model-value="Number(activeTab)"
+					:confirm-tab-change="props.confirmTabChange"
+					:confirmation-message="props.confirmationMessage"
 					:vuetify-options="{
 						sheet: { theme: 'dark', color: '#07275C' },
 						tab: { 'base-color': '#B5BECE', 'active-color': '#ffffff', 'slider-color': '#fff' },
 						tabs: { height: '60' }
 					}"
-					@update:model-value="(val) => {
+					@update:model-value="async (val) => {
 						activeTab = Number(val);
-						handleTabChange(Number(val));
+						await handleTabChange(Number(val));
 					}"
+					@cancel-navigation="emit('cancel-navigation')"
+					@confirm-tab-change="handleConfirmTabChange"
 				>
 					<!-- Ajout des slots pour le contenu personnalisé -->
 					<template #tabs-prepend>

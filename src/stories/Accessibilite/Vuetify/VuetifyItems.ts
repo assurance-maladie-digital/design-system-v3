@@ -163,9 +163,12 @@ export const VuetifyItems = [
 				errorIndeterminated: [
 
 				],
-				solution: [{
-					name: 'En étude',
-				}],
+				solution: [
+					{
+						name: 'SyTabs',
+						href: '/?path=/docs/composants-navigation-sytabs--docs',
+					},
+				],
 			},
 			{
 				name: 'Textarea',

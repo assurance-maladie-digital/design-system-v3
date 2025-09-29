@@ -1,0 +1,342 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproCarousel > render correctly 1`] = `
+<section
+  aria-label="exemple de carrousel"
+  aria-roledescription="carousel"
+  class="carousel"
+  id="carousel-unique-id"
+>
+  <button
+    aria-controls="carousel-unique-id-items"
+    class="
+      btn--icon
+      btn-previous
+      elevation-0
+      rounded-0
+      v-btn
+      v-btn--density-default
+      v-btn--disabled
+      v-btn--icon
+      v-btn--size-default
+      v-btn--variant-elevated
+      v-theme--light
+    "
+    disabled=""
+    id="carousel-unique-id-previous"
+    plain=""
+    style="
+      height: auto;
+      width: auto;
+    "
+    title="Slide précédente"
+    type="button"
+  >
+    <span class="v-btn__overlay"></span>
+    <span class="v-btn__underlay"></span>
+    <!---->
+    <span
+      class="v-btn__content"
+      data-no-activator=""
+    >
+      <!-- v-if -->
+      <span
+        class="
+          amelipro-icon
+          icon-custom
+        "
+        id="carousel-unique-id-previous-icon"
+      >
+        <span
+          aria-hidden="true"
+          class="
+            amelipro-custom-icon
+            custom-color
+            large
+          "
+          focusable="false"
+          role="img"
+          style="color: #00749C;"
+        >
+          <span>
+            <svg
+              aria-hidden="true"
+              style="enable-background:new 0 0 14.8 24;"
+              version="1.1"
+              viewBox="0 0 14.8 24"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <path
+                class="shape-color"
+                d="M14.8,21.2L5.7,12l9.2-9.2L12,0L0,12l12,12L14.8,21.2z"
+              />
+            </svg>
+          </span>
+        </span>
+      </span>
+    </span>
+    <!---->
+    <!---->
+  </button>
+  <button
+    aria-controls="carousel-unique-id-items"
+    class="
+      btn--icon
+      btn-next
+      elevation-0
+      rounded-0
+      v-btn
+      v-btn--density-default
+      v-btn--elevated
+      v-btn--icon
+      v-btn--size-default
+      v-btn--variant-elevated
+      v-theme--light
+    "
+    id="carousel-unique-id-next"
+    plain=""
+    style="
+      height: auto;
+      width: auto;
+    "
+    title="Slide suivante"
+    type="button"
+  >
+    <span class="v-btn__overlay"></span>
+    <span class="v-btn__underlay"></span>
+    <!---->
+    <span
+      class="v-btn__content"
+      data-no-activator=""
+    >
+      <!-- v-if -->
+      <span
+        class="
+          amelipro-icon
+          icon-custom
+        "
+        id="carousel-unique-id-next-icon"
+      >
+        <span
+          aria-hidden="true"
+          class="
+            amelipro-custom-icon
+            custom-color
+            large
+          "
+          focusable="false"
+          role="img"
+          style="color: #00749C;"
+        >
+          <span>
+            <svg
+              aria-hidden="true"
+              style="enable-background:new 0 0 14.8 24;"
+              version="1.1"
+              viewBox="0 0 14.8 24"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <path
+                class="shape-color"
+                d="M0,2.8L9.2,12L0,21.2L2.8,24l12-12L2.8,0L0,2.8z"
+              />
+            </svg>
+          </span>
+        </span>
+      </span>
+    </span>
+    <!---->
+    <!---->
+  </button>
+  <div
+    aria-live="polite"
+    class="carousel-items"
+    id="carousel-unique-id-items"
+  >
+    <div
+      class="
+        align-center
+        carousel__track
+        d-flex
+      "
+      style="
+        max-width: calc(100% * 3);
+        transform: translateX(calc((-0 / 3) * 100%));
+        transition: all 0.3s ease-out;
+        width: calc(100% * 3);
+      "
+    >
+      <div
+        aria-label="1 sur 3"
+        aria-roledescription="slide"
+        class="carousel-item"
+        id="carousel-unique-id-item-0"
+        role="group"
+      >
+        <div class="carousel-image">
+          <a
+            class="
+              carousel-img-btn
+              elevation-0
+              v-btn
+              v-btn--density-default
+              v-btn--elevated
+              v-btn--size-default
+              v-btn--variant-elevated
+              v-theme--light
+            "
+            href="href item 1"
+            id="carousel-unique-id-item-0-btn"
+            tabindex="0"
+            title="imgAlt item 1"
+          ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+            
+          <!----><span
+            class="v-btn__content"
+            data-no-activator=""
+          ><img
+            alt="imgAlt item 1"
+            class="w-100"
+            src="imgSrc item 1"
+          /></span>
+            
+          <!---->
+            
+          <!---->
+          </a>
+        </div>
+      </div>
+      <div
+        aria-hidden="true"
+        aria-label="2 sur 3"
+        aria-roledescription="slide"
+        class="
+          carousel-item
+          hide
+        "
+        id="carousel-unique-id-item-1"
+        role="group"
+      >
+        <div class="carousel-image">
+          <a
+            class="
+              carousel-img-btn
+              elevation-0
+              v-btn
+              v-btn--density-default
+              v-btn--disabled
+              v-btn--size-default
+              v-btn--variant-elevated
+              v-theme--light
+            "
+            disabled="true"
+            href="href item 2"
+            id="carousel-unique-id-item-1-btn"
+            tabindex="-1"
+            title="imgAlt item 2"
+          ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+            
+          <!----><span
+            class="v-btn__content"
+            data-no-activator=""
+          ><img
+            alt="imgAlt item 2"
+            class="w-100"
+            src="imgSrc item 2"
+          /></span>
+            
+          <!---->
+            
+          <!---->
+          </a>
+        </div>
+      </div>
+      <div
+        aria-hidden="true"
+        aria-label="3 sur 3"
+        aria-roledescription="slide"
+        class="
+          carousel-item
+          hide
+        "
+        id="carousel-unique-id-item-2"
+        role="group"
+      >
+        <div class="carousel-image">
+          <a
+            class="
+              carousel-img-btn
+              elevation-0
+              v-btn
+              v-btn--density-default
+              v-btn--disabled
+              v-btn--size-default
+              v-btn--variant-elevated
+              v-theme--light
+            "
+            disabled="true"
+            href="href item 3"
+            id="carousel-unique-id-item-2-btn"
+            tabindex="-1"
+            title="imgAlt item 3"
+          ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
+            
+          <!----><span
+            class="v-btn__content"
+            data-no-activator=""
+          ><img
+            alt="imgAlt item 3"
+            class="w-100"
+            src="imgSrc item 3"
+          /></span>
+            
+          <!---->
+            
+          <!---->
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="
+      align-center
+      carousel-dots
+      d-flex
+      justify-center
+    "
+    id="carousel-unique-id-dots"
+  >
+    <span
+      aria-hidden="true"
+      class="
+        active-dot
+        carousel-dot
+        mx-2
+      "
+    ></span>
+    <span
+      aria-hidden="true"
+      class="
+        carousel-dot
+        mx-2
+      "
+    ></span>
+    <span
+      aria-hidden="true"
+      class="
+        carousel-dot
+        mx-2
+      "
+    ></span>
+  </div>
+</section>
+`;

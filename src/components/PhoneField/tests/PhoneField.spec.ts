@@ -1,6 +1,6 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import PhoneField from '../PhoneField.vue'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -11,6 +11,10 @@ const vuetify = createVuetify({
 	directives,
 })
 describe('PhoneField', () => {
+	afterEach(() => {
+		vi.clearAllMocks()
+		document.body.innerHTML = ''
+	})
 	it('renders correctly with default props', () => {
 		const wrapper = mount(PhoneField, {
 			global: {
@@ -620,30 +624,16 @@ describe('PhoneField', () => {
 
 		await wrapper.vm.$nextTick()
 
-		// Log HTML for debugging
-		console.log('PhoneField HTML:', wrapper.html())
-
-		// Find all inputs and log their autocomplete attributes
-		const inputs = wrapper.findAll('input')
-		console.log('Found inputs:', inputs.length)
-		inputs.forEach((input, index) => {
-			const autocomplete = input.attributes('autocomplete')
-			const type = input.attributes('type')
-			console.log(`Input ${index}: type="${type}", autocomplete="${autocomplete}"`)
-		})
-
 		// Verify tel input has correct autocomplete
 		const telInput = wrapper.find('input[type="tel"]')
 		expect(telInput.exists()).toBe(true)
 		const telAutocomplete = telInput.attributes('autocomplete')
-		console.log('Tel input autocomplete:', telAutocomplete)
 		expect(telAutocomplete).toBe('tel-national')
 
 		// Verify country select input has correct autocomplete
 		const selectInput = wrapper.find('.custom-select input')
 		expect(selectInput.exists()).toBe(true)
 		const selectAutocomplete = selectInput.attributes('autocomplete')
-		console.log('Select input autocomplete:', selectAutocomplete)
 		expect(selectAutocomplete).toBe('tel-country-code')
 	})
 
@@ -993,6 +983,52 @@ describe('PhoneField', () => {
 			// Vérifier que le masque et le counter sont mis à jour
 			expect(wrapper.vm.counter).toBe(8)
 			expect(wrapper.vm.phoneMask).toBe('## ## ## ##')
+		})
+	})
+
+	describe('Fieldset rendering', () => {
+		it('renders with fieldset and legend by default', () => {
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					// withoutFieldset par défaut est false
+				},
+			})
+
+			// Vérifier que le composant utilise un fieldset
+			const fieldset = wrapper.find('fieldset')
+			expect(fieldset.exists()).toBe(true)
+			expect(fieldset.classes()).toContain('phone-field-fieldset')
+
+			// Vérifier que le legend existe
+			const legend = wrapper.find('legend')
+			expect(legend.exists()).toBe(true)
+			expect(legend.classes()).toContain('phone-field-legend')
+		})
+
+		it('renders without fieldset and legend when withoutFieldset is true', () => {
+			const wrapper = mount(PhoneField, {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					withoutFieldset: true,
+				},
+			})
+
+			// Vérifier que le composant n'utilise pas de fieldset
+			const fieldset = wrapper.find('fieldset')
+			expect(fieldset.exists()).toBe(false)
+
+			// Vérifier que le composant utilise un div à la place
+			const container = wrapper.find('div').element
+			expect(container.tagName.toLowerCase()).toBe('div')
+
+			// Vérifier que le legend n'existe pas
+			const legend = wrapper.find('legend')
+			expect(legend.exists()).toBe(false)
 		})
 	})
 })

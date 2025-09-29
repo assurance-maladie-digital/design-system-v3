@@ -1,12 +1,13 @@
 import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import '../../../stories/styles/shared.css';
 import * as HeaderBurgerMenuStories from "./HeaderBurgerMenu.stories";
 
 <Meta of={HeaderBurgerMenuStories} />
 
-
-# HeaderBurgerMenu
-
-L'utilisation de ce menu est à privilégier pour les application à destination du publique ou pour créer des menus contenant plus de six éléments.
+<div className="header">
+  <h1>HeaderBurgerMenu</h1>
+  <p>L'utilisation de ce menu est à privilégier pour les application à destination du publique ou pour créer des menus contenant plus de six éléments.</p>
+</div>
 
 ## Utilisation
 
@@ -32,7 +33,6 @@ Ce menu s'utilise conjointement avec les composants `HeaderMenuSection` et `Head
 Un composant `HeaderMenuSection` peut contenir plusieurs `HeaderMenuItem`.
 
 Un Composant `HeaderMenuItem` doit obligatoirement être contenu dans un `HeaderMenuSection`.
-
 
 <Canvas of={HeaderBurgerMenuStories.Default} />
 
@@ -98,14 +98,11 @@ Il est possible d'utiliser des liens de navigation avec les composants `RouterLi
             `}
       />
 
-
-
 ## Menu à plusieurs niveaux
 
 Vous pouvez également constituer votre menu avec plusieurs niveaux de profondeur. Dans ce cas là, il convient d'utiliser le composant `HeaderSubMenu` pour définir les sous-menus.
 
 Pour conserver la logique sémantique du menu, le composant `HeaderSubMenu` doit être contenu dans un `HeaderMenuItem`.
-
 
 <Canvas
 	of={HeaderBurgerMenuStories.Populated}
@@ -201,7 +198,6 @@ code:`
 </HeaderBar>
 	`}}
 />
-
 
 ## Construire un menu de façon dynamique
 
@@ -311,7 +307,8 @@ code:`
 					href: 'https://www.ameli.fr/assure/adresses-contacts',
 				},
 				{
-					title: 'Télécharger un formulaire (ex: cerfa)',
+					title: 'Télécharger un formulaire (ex: cerfa)
+',
 					href: 'https://www.ameli.fr/assure/droits-demarches/formulaires',
 				},
 				{
@@ -390,7 +387,7 @@ code:`
 							{{ marker }}
 						</VIcon>
 						<p>Vous n'avez pas sélectionné votre caisse</p>
-					</div>
+</div>
 					<VBtn
 						class="mt-3 mb-4 font-weight-bold text-capitalize"
 						base-color="primary"
@@ -403,7 +400,7 @@ code:`
 					<p class="mb-8">
 						Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.)
 					</p>
-				</div>
+</div>
 			</HeaderBurgerMenu>
 		</template>
 	</HeaderBar>
@@ -411,7 +408,6 @@ code:`
 
 `}}
 />
-
 
 ## Gérer la navigation avec un RouterLink
 

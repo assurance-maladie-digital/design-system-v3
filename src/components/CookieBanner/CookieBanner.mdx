@@ -3,16 +3,16 @@ import * as CookieBannerStories from './CookieBanner.stories';
 
 <Meta of={CookieBannerStories} />
 
-# CookieBanner
-
-Le composant `CookieBanner` est utilisé pour afficher une bannière de consentement pour les cookies.
+<div className="header">
+  <h1>CookieBanner</h1>
+  <p>Le composant `CookieBanner` est utilisé pour afficher une bannière de consentement pour les cookies.</p>
+</div>
 
 <Canvas of={CookieBannerStories.Default} />
 
 # API
 
 <Controls of={CookieBannerStories.Default} />
-
 
 ## Personnalisation des cookies
 
@@ -26,7 +26,6 @@ L'utilisateur peut choisir d'accepter ou de refuser les cookies de chaque catég
 Si la props `items` n'est pas renseigné, le menu de selection des categories de cookies ne sera pas affiché.
 Si une catégorie n'est pas définie, elle n’apparaîtra pas dans le composant.
 Si l'utilisateur choisi de personnaliser ses cookies un évènement `subit` sera émit avec les catégories de cookies acceptés par l'utilisateur. Les cookies non essentiels doivent être chargés après l'événement `submit` pour respecter le RGPD.
-
 
 ## Sans selection des cookies
 
@@ -137,12 +136,9 @@ Une propriété `cookie` est passée au slot contenant les informations du cooki
 	}}
 />
 
-
-
 ## Personnalisation des composants Vuetify
 
 Vous pouvez personnaliser les composants Vuetify utilisés par le composant `CookieBanner` en utilisant la props `vuetifyOptions`.
-
 
 <Canvas
 	of={CookieBannerStories.Customization}
@@ -154,6 +150,7 @@ Vous pouvez personnaliser les composants Vuetify utilisés par le composant `Coo
 			import { CookieBanner } from '@cnamts/synapse'
 
 			const openBanner = ref(true)
+import '../../stories/styles/shared.css';
 
 			const items = {
 				essentials: [

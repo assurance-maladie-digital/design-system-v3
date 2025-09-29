@@ -172,9 +172,9 @@ pre.prismjs {
 
 #story--composants-tableaux-sytable--default, #story--composants-tableaux-syservertable--default {
 	.v-list {
-		top: 284px !important;
-		margin-top: 121px !important;
-		margin-left: -58px;
+		margin-top: -217px !important;
+		left: auto !important;
+		margin-left: 112px;
 		width: auto;
 		position: absolute !important;
 	}

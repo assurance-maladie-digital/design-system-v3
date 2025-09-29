@@ -3,9 +3,10 @@ import * as CollapsibleListStories from './CollapsibleList.stories';
 
 <Meta of={CollapsibleListStories} />
 
-# CollapsibleList
-
-L’élément `CollapsibleList` est utilisé pour afficher des listes de liens. Cette liste affiche tout le contenu sur les grands écrans et une liste accordéon sur mobile.
+<div className="header">
+  <h1>CollapsibleList</h1>
+  <p>L’élément `CollapsibleList` est utilisé pour afficher des listes de liens. Cette liste affiche tout le contenu sur les grands écrans et une liste accordéon sur mobile.</p>
+</div>
 
 <Canvas of={CollapsibleListStories.Default}  />
 
@@ -37,6 +38,7 @@ L’élément `CollapsibleList` est utilisé pour afficher des listes de liens. 
 		},
 	] as ListItem[]
 </script>
+import '../../stories/styles/shared.css';
 
 <template>
 	<CollapsibleList

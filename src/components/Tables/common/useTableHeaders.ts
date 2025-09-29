@@ -11,17 +11,20 @@ import { sortHeaders } from './organizeColumns/sortHeaders'
  */
 export function useTableHeaders({
 	headersProp,
+	storedHeaders,
 	filterInputConfig = {},
 }: {
-	headersProp: Ref<DataTableHeaders[] | undefined>
+	headersProp: Readonly<Ref<DataTableHeaders[] | undefined>>
+	storedHeaders?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
 }) {
 	// Process headers to ensure they have title property
 	const normalizedHeaders = computed(() => {
-		if (!Array.isArray(headersProp?.value)) {
+		const headers = storedHeaders ?? headersProp?.value
+		if (!Array.isArray(headers)) {
 			return undefined
 		}
-		return headersProp.value.map(header => ({
+		return headers.map(header => ({
 			...header,
 			title: header.title ?? header.text,
 		}))
@@ -34,8 +37,8 @@ export function useTableHeaders({
 	})
 
 	/**
-   * Enhance header with filter type and configuration
-   */
+	 * Enhance header with filter type and configuration
+	 */
 	function getEnhancedHeader(column: TableColumnHeader): TableColumnHeader {
 		// If column is not filterable, return as is
 		if (!column.filterable) return column
@@ -63,8 +66,8 @@ export function useTableHeaders({
 	}, { immediate: true, deep: true })
 
 	/**
-   * Get header by key
-   */
+	 * Get header by key
+	 */
 	function getHeaderByKey(key: string): TableColumnHeader | undefined {
 		return normalizedHeaders.value?.find(header => header.key === key)
 	}

@@ -25,7 +25,7 @@ describe('AmeliproAccordionResultList', () => {
 					{ id: 11 },
 				],
 				title: 'Exemple de liste de résultats',
-				uniqueId: 'amelipro-accordion-result-unique-id',
+				uniqueId: 'amelipro-accordion-list-unique-id',
 			},
 			slots: {
 				accordionContent: '<p>Contenu du dépliant</p>',

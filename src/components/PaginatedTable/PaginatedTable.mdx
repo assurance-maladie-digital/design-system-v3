@@ -3,9 +3,10 @@ import * as PaginatedTableStories from "./PaginatedTable.stories.ts";
 
 <Meta of={PaginatedTableStories}/>
 
-# PaginatedTable
-
-Le composant `PaginatedTable` est utilisé pour afficher une `VDataTable` de Vuetify avec une pagination persistante.
+<div className="header">
+  <h1>PaginatedTable</h1>
+  <p>Le composant `PaginatedTable` est utilisé pour afficher une `VDataTable` de Vuetify avec une pagination persistante.</p>
+</div>
 
 > **⚠️ Attention** : Ce composant est déprécié au profit des composants [SyTable](?path=/docs/composants-tableaux-sytable--docs) et [SyServerTable](?path=/docs/composants-tableaux-syservertable--docs).
 
@@ -27,6 +28,7 @@ Le composant `PaginatedTable` est utilisé pour afficher une `VDataTable` de Vue
 		itemsPerPage: 4,
 		sortBy: [{ key: 'calories', order: 'desc' }],
 	})
+import '../../stories/styles/shared.css';
 
 	const headers = reactive([
 		{ text: 'Dessert (100g serving)', value: 'name' },

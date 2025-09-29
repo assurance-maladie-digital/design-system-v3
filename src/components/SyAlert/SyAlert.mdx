@@ -1,12 +1,14 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import '../../stories/styles/shared.css';
 
 import * as SyAlertStories from './SyAlert.stories';
 
 <Meta of={SyAlertStories} />
 
-# SyAlert
-
-Le composant `SyAlert` est utilisé pour afficher une alerte à l’utilisateur.
+<div className="header">
+  <h1>SyAlert</h1>
+  <p>Le composant `SyAlert` est utilisé pour afficher une alerte à l’utilisateur.</p>
+</div>
 
 <Canvas of={SyAlertStories.Default}  />
 
@@ -21,7 +23,8 @@ Le composant `SyAlert` est utilisé pour afficher une alerte à l’utilisateur.
 import { SyAlert } from '@cnamts/synapse'
 import { ref } from 'vue'
 
-const showAlert = ref(true);
+const showAlert = ref(true)
+;
 </script>
 
 <template>

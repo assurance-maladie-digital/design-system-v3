@@ -131,6 +131,7 @@ const preview: Preview = {
 					'Éco-conception',
 					[
 						'Introduction',
+						'Reférentiel',
 					],
 					'Design Tokens',
 					['Introduction', 'Couleurs', 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations'],
@@ -149,9 +150,8 @@ const preview: Preview = {
 					],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
 					'Guide Du Dev', [
-						'Migration depuis Bridge',
-						'Migration depuis Vue2',
-						'Breaking changes',
+						'Installation',
+						'Migration', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes',],
 						'Configuration du thème',
 						'Correspondance composants PAG',
 						'Règles De Validation',

@@ -1,11 +1,13 @@
 import { Meta, Canvas, Controls, Source, Story } from '@storybook/blocks';
+import '../../../stories/styles/shared.css';
 import * as SyTabsStories from "./SyTabs.stories";
 
 <Meta of={SyTabsStories} />
 
-# SyTabs
-
-Le composant `SyTabs` est un système de navigation par onglets conforme au Design System qui respecte les règles d'accessibilité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. Il permet d'organiser le contenu en sections navigables facilement via une interface à onglets.
+<div className="header">
+  <h1>SyTabs</h1>
+  <p>Le composant `SyTabs` est un système de navigation par onglets conforme au Design System qui respecte les règles d'accessibilité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. Il permet d'organiser le contenu en sections navigables facilement via une interface à onglets.</p>
+</div>
 
 Il implémente les fonctionnalités suivantes :
 
@@ -84,6 +86,8 @@ Le composant a été testé avec :
 ## Personnalisation
 
 Le composant peut être personnalisé via l'objet `vuetifyOptions` qui permet de modifier l'apparence des onglets :
+
+> **Important** : Ces options de personnalisation doivent être passées via la prop `vuetifyOptions` et non comme props directes du composant. Par exemple, utilisez `:vuetify-options="{ sheet: { dense: true } }"` plutôt que `:sheet="{ dense: true }"`.
 
 ```javascript
 {

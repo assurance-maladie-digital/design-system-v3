@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -42,6 +42,11 @@ describe('SelectFilter.vue', () => {
 				filterValue: undefined,
 			},
 		})
+	})
+
+	afterEach(() => {
+		vi.clearAllMocks()
+		document.body.innerHTML = ''
 	})
 
 	it('renders correctly with default props', () => {

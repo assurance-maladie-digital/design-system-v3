@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproContentLayout > render correctly 1`] = `
+<div
+  class="
+    amelipro-content-layout
+    w-100
+  "
+  id="my-content-layout-id-container"
+  style="background-color: #0C419A;"
+>
+  <div
+    class="
+      amelipro-content-layout__content
+      mx-auto
+    "
+    id="my-content-layout-id-content"
+    style="
+      max-width: 100%;
+      padding: 24px 10px;
+    "
+  ></div>
+</div>
+`;

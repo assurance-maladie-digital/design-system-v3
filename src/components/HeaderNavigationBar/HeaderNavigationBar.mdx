@@ -1,4 +1,5 @@
 import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import '../../stories/styles/shared.css';
 import * as HeaderNavigationBarStories from "./HeaderNavigationBar.stories";
 
 <Meta of={HeaderNavigationBarStories} />
@@ -20,7 +21,6 @@ Il est conseillé de ne pas utiliser le menu horizontal pour afficher plus de 6 
 ## API
 
 <Controls of={HeaderNavigationBarStories.Default} />
-
 
 ## Exemple d'utilisation
 
@@ -81,7 +81,6 @@ Il est nécessaire de faire attention à la place que prendront les éléments e
 
 ### Les slots concernant le menu
 
-
 <Canvas of={HeaderNavigationBarStories.WithSlots} />
 
 #### le slot `logo-brand-section`
@@ -94,24 +93,19 @@ Quand le menu est en mode horizontal, les slots `navigation-bar-prepend` et `nav
 
 Le slot `navigation-bar-content`, quant à lui, remplace les items du menu tels que générés avec la prop `items`. Il n'écrase pas les slots `navigation-bar-prepend` et `navigation-bar-append`.
 
-
 ##### Slot `Navigation-bar-prepend`
 
 <Canvas of={HeaderNavigationBarStories.WithNavigationBarPrependSlot} />
-
 
 ##### Slot `Navigation-bar-append`
 
 <Canvas of={HeaderNavigationBarStories.WithNavigationBarAppendSlot} />
 
-
 #### Les slots concernant le menu burger
 
 Le menu burger est généré automatiquement à partir des items passés en props, il utilise en interne le composant `HeaderBurgerMenu`.
 
-
 les slots `burger-menu-prepend` et `burger-menu-append` permettent d'ajouter du contenu en haut et en bas du menu burger.
-
 
 Le slot `burger-menu-content` permet de remplacer le contenu du menu burger. Il n'écrase pas les slots `burger-menu-prepend` et `burger-menu-append` et permet d'utiliser les composants `HeaderMenuItem` et `HeaderMenuGroup` pour construire le menu.
 Pour plus d'information sur la manière de construire un menu avec le composant `HeaderBurgerMenu`, vous pouvez consulter la documentation de ce [composant](/docs/components-headerbar-headerburgermenu--docs).
@@ -120,9 +114,23 @@ Pour plus d'information sur la manière de construire un menu avec le composant 
 
 <Canvas of={HeaderNavigationBarStories.WithNavigationMenuAppendSlot} />
 
+## Confirmation de changement d'onglet
 
-## Configuration des composants Vuetify internes.
+Le composant `HeaderNavigationBar` intègre une fonctionnalité de confirmation avant la navigation entre les onglets. Cela peut être utile pour prévenir une perte de données non sauvegardées ou pour s'assurer que l'utilisateur souhaite vraiment quitter la page actuelle.
 
-Le composant `HeaderNavigationBar` utilise les composants `VSheet`, `VTabs` et `VTab` de Vuetify pour construire le menu horizontal. Il est possible de configurer ces composants en utilisant la props `vuetifyOptions`.
+Pour activer cette fonctionnalité, utilisez les propriétés suivantes :
+- `confirmTabChange` : active la confirmation de changement d'onglet (booléen)
+
+Vous pouvez intercepter l'événement `confirm-tab-change` pour implémenter votre propre logique de confirmation (par exemple, avec une boîte de dialogue personnalisée).
+
+<Canvas of={HeaderNavigationBarStories.WithTabConfirmation} />
+
+## Composants internes et personnalisation
+
+> **Note importante** : Le composant `HeaderNavigationBar` utilise désormais notre composant `SyTabs` du Design System au lieu des composants `VTabs` et `VTab` de Vuetify. Ce changement permet une meilleure accessibilité et une expérience utilisateur plus cohérente avec les standards RGAA.
+
+Vous pouvez consulter la documentation complète du composant [SyTabs](/docs/composants-customs-sytabs--docs) pour plus d'informations sur ses fonctionnalités et son API.
+
+Pour la personnalisation des autres composants internes comme `VSheet`, vous pouvez toujours utiliser la props `vuetifyOptions`.
 
 <Canvas of={HeaderNavigationBarStories.WithVuetifyOptions} />

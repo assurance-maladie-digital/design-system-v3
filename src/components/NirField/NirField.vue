@@ -380,26 +380,6 @@
 	const ariaInvalidNumber = computed(() => hasFieldErrors.value ? 'true' : undefined)
 	const ariaInvalidKey = computed(() => hasKeyErrors.value ? 'true' : undefined)
 
-	// Propriétés calculées pour les messages
-	const numberMessages = computed(() => {
-		if (hasNumberErrors.value) {
-			return numberValidation.errors.value
-		}
-		else if (hasNumberWarning.value) {
-			return numberValidation.warnings.value
-		}
-		else if (hasNumberSuccess.value && props.showSuccessMessages) {
-			return numberValidation.successes.value
-		}
-		return []
-	})
-
-	// Messages d'erreur combinés pour le champ numéro
-	const combinedErrorMessages = computed(() => [
-		...numberValidation.errors.value,
-		...keyValidation.errors.value,
-	])
-
 	const numberLabelWithAsterisk = computed(() => {
 		return props.required && props.displayAsterisk ? `${props.numberLabel} *` : props.numberLabel
 	})
@@ -433,11 +413,15 @@
 	}
 
 	const handleNumberBlur = () => {
-		validateFields(true)
+		// Valider sans forcer le focus, pour permettre de quitter le champ
+		validateFields(false)
+		// On permet à l'utilisateur de quitter le champ même si la saisie est incomplète
 	}
 
 	const handleKeyBlur = () => {
-		validateFields(true)
+		// Valider sans forcer le focus, pour permettre de quitter le champ
+		validateFields(false)
+		// On permet à l'utilisateur de quitter le champ même si la saisie est incomplète
 	}
 
 	// Gestion des touches pour le champ NIR
@@ -498,11 +482,11 @@
 </script>
 
 <template>
-	<fieldset
-		v-if="displayKey && !withoutFieldset"
-		class="nir-field nir-field--fieldset"
+	<component
+		:is="displayKey && !withoutFieldset ? 'fieldset' : 'div'"
+		:class="displayKey && !withoutFieldset ? 'nir-field nir-field--fieldset' : 'nir-field'"
 	>
-		<legend v-if="label">
+		<legend v-if="label && displayKey && !withoutFieldset">
 			{{ label }}
 		</legend>
 		<div class="number-field-container">
@@ -589,96 +573,7 @@
 				@blur="handleKeyBlur"
 			/>
 		</div>
-	</fieldset>
-	<div
-		v-else
-		class="nir-field"
-	>
-		<div class="number-field-container">
-			<SyTextField
-				ref="numberField"
-				v-model="numberValue"
-				v-maska="numberMask"
-				:label="numberLabelWithAsterisk"
-				:variant-style="outlined ? 'outlined' : 'underlined'"
-				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'info' : undefined"
-				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
-				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
-				:append-tooltip="nirTooltip && nirTooltipPosition === 'append' ? nirTooltip : undefined"
-				:max-errors="2"
-				:error-messages="combinedErrorMessages"
-				:warning-messages="numberValidation.warnings.value"
-				:success-messages="numberValidation.successes.value"
-				:show-success-messages="showSuccessMessages"
-				:has-warning="hasNumberWarning"
-				:has-success="hasNumberSuccess"
-				:error="hasNumberErrors || hasKeyErrors"
-				:messages="numberMessages"
-				:has-error="hasNumberErrors || hasKeyErrors"
-				:required="required"
-				:aria-required="ariaRequired"
-				:aria-invalid="ariaInvalidNumber"
-				:disabled="disabled"
-				:bg-color="bgColor"
-				:density="props.density"
-				:hide-details="props.hideDetails"
-				:hide-spin-buttons="props.hideSpinButtons"
-				:placeholder="props.placeholder"
-				:readonly="props.readonly"
-				:variant="props.variant"
-				:clearable="props.clearable"
-				:counter="props.counter"
-				:persistent-hint="props.persistentHint"
-				:persistent-placeholder="props.persistentPlaceholder"
-				:hint="props.hint || locales.numberHint"
-				class="number-field"
-				:display-asterisk="false"
-				@input="handleNumberInput"
-				@blur="handleNumberBlur"
-			/>
-		</div>
-		<div
-			v-if="displayKey"
-			class="key-field-container"
-		>
-			<SyTextField
-				ref="keyField"
-				v-model="keyValue"
-				v-maska="keyMask"
-				:label="keyLabelWithAsterisk"
-				:variant-style="outlined ? 'outlined' : 'underlined'"
-				:prepend-icon="keyTooltip && keyTooltipPosition === 'prepend' ? 'info' : undefined"
-				:append-icon="keyTooltip && keyTooltipPosition === 'append' ? 'info' : undefined"
-				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
-				:append-tooltip="keyTooltip && keyTooltipPosition === 'append' ? keyTooltip : undefined"
-				:error-messages="keyValidation.errors.value.length > 0 ? [''] : []"
-				:warning-messages="keyValidation.warnings.value"
-				:show-success-messages="false"
-				:has-warning="hasKeyWarning"
-				:has-success="hasKeySuccess"
-				:hint="props.hint || locales.keyHint"
-				:has-error="hasKeyErrors"
-				:disabled="disabled"
-				:bg-color="bgColor"
-				:density="props.density"
-				:hide-details="props.hideDetails"
-				:hide-spin-buttons="props.hideSpinButtons"
-				:placeholder="props.placeholder"
-				:readonly="props.readonly"
-				:variant="props.variant"
-				:clearable="props.clearable"
-				:counter="props.counter"
-				:persistent-hint="props.persistentHint"
-				:persistent-placeholder="props.persistentPlaceholder"
-				:aria-required="ariaRequired"
-				:aria-invalid="ariaInvalidKey"
-				class="key-field"
-				:display-asterisk="false"
-				@input="handleKeyInput"
-				@blur="handleKeyBlur"
-			/>
-		</div>
-	</div>
+	</component>
 </template>
 
 <style lang="scss" scoped>
@@ -718,15 +613,24 @@
 
 /* Styles pour le mode fieldset */
 .nir-field--fieldset .number-field-container {
-	flex: v-bind('props.clearable ? "0 0 70%" : "0 0 78%"');
+	flex: v-bind('props.clearable ? "0 0 70%" : "0 0 72%"');
 }
 
 .nir-field--fieldset .key-field-container {
-	flex: v-bind('props.clearable ? "0 0 29%" : "0 0 18%"');
+	flex: v-bind('props.clearable ? "0 0 29%" : "0 0 25%"');
 }
 
 .number-field,
 .key-field {
 	width: 100%;
+}
+
+.key-field {
+	min-width: 110px;
+
+	:deep(.v-messages .v-messages__message) {
+		min-width: 100px !important;
+		margin-left: -10px !important;
+	}
 }
 </style>
