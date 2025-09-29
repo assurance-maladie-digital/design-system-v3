@@ -133,7 +133,7 @@ export const NavigationInterne: Story = {
 		btnLabel: 'Aller aux paramètres',
 		to: '/parametres',
 		uniqueId: 'icon-btn-to',
-		medium: true,
+		xLarge: true,
 	},
 	parameters: {
 		sourceCode: [
@@ -147,7 +147,7 @@ export const NavigationInterne: Story = {
         icon-hover-color="ap-blue-darken-1"
         btn-label="Aller aux paramètres"
         to="/parametres"
-        medium
+        x-large
         unique-id="icon-btn-to"
     />
 </template>`,
@@ -223,7 +223,7 @@ export const Accessibilite: Story = {
 		btnLabel: 'Aide',
 		btnTitle: 'Ouvrir l’aide',
 		uniqueId: 'icon-btn-access',
-		small: true,
+		xLarge: true,
 	},
 	parameters: {
 		sourceCode: [
@@ -237,7 +237,7 @@ export const Accessibilite: Story = {
         icon-hover-color="ap-blue-darken-2"
         btn-label="Aide"
         btn-title="Ouvrir l’aide"
-        small
+        x-large
         unique-id="icon-btn-access"
     />
 </template>`,
