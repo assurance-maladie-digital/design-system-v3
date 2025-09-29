@@ -24,8 +24,7 @@ export const Default: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-<AmeliproCopyBtn
+				code: `<AmeliproCopyBtn
 	text-to-copy="texte à copier"
 	unique-id="my-btn-id"
 >
@@ -46,7 +45,7 @@ export const Default: Story = {
 		setup() {
 			return { args }
 		},
-		template: `
+		template: `<div style="min-height: 200px;">
 	<p>
 		Cliquer sur le bouton pour copier le texte dans le presse-papier.
 	</p>
@@ -54,7 +53,7 @@ export const Default: Story = {
 		Copier
 	</AmeliproCopyBtn>
 	<AmeliproTextArea style="width: 100%; height: 100px; margin-top: 1rem;" placeholder="Vous pouvez coller ici le texte copié pour vérifier que cela a bien fonctionné." />
-		`,
+</div>`,
 	}),
 }
 
