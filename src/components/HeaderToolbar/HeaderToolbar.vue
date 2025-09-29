@@ -1032,6 +1032,10 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		}
 	}
 
+  span {
+    white-space: normal !important; // Override Vuetify nowrap
+  }
+
 	&.v-list-item--link:hover {
 		background-color: transparent;
 	}
