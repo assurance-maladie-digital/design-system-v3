@@ -86,12 +86,12 @@ export const BadgeTexte: Story = {
 		icon: 'utilisateur',
 		iconColor: 'ap-blue-darken-1',
 		iconHoverColor: 'ap-blue-darken-2',
-		badge: 'Nouveau',
+		badge: 'A',
 		badgeBgColor: 'ap-green',
 		badgeColor: 'ap-white',
 		btnLabel: 'Voir les nouveautés',
 		uniqueId: 'icon-btn-badge-texte',
-		large: true,
+		xLarge: true,
 	},
 	parameters: {
 		sourceCode: [
@@ -103,11 +103,11 @@ export const BadgeTexte: Story = {
         icon="utilisateur"
         icon-color="ap-blue-darken-1"
         icon-hover-color="ap-blue-darken-2"
-        badge="Nouveau"
+        badge="A"
         badge-bg-color="ap-green"
         badge-color="ap-white"
         btn-label="Voir les nouveautés"
-        large
+        x-large
         unique-id="icon-btn-badge-texte"
     />
 </template>`,
