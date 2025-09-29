@@ -528,7 +528,7 @@
 							>
 								<component
 									:is="getLinkComponent(item as MenuItem)"
-									:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + ', Menu déroulant' : item.title"
+									:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + '' : item.title"
 									:href="item.href"
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 									:tabindex="0"
