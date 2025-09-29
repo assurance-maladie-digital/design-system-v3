@@ -127,7 +127,7 @@ export const BadgeTexte: Story = {
 export const NavigationInterne: Story = {
 	name: 'Navigation interne',
 	args: {
-		icon: 'parametres',
+		icon: 'applications',
 		iconColor: 'ap-grey-darken-2',
 		iconHoverColor: 'ap-blue-darken-1',
 		btnLabel: 'Aller aux paramètres',
@@ -142,7 +142,7 @@ export const NavigationInterne: Story = {
 				code: `<template>
     <p>Bouton icône qui utilise la prop <code>to</code> pour une navigation interne.</p>
     <AmeliproIconBtn
-        icon="parametres"
+        icon="applications"
         icon-color="ap-grey-darken-2"
         icon-hover-color="ap-blue-darken-1"
         btn-label="Aller aux paramètres"
