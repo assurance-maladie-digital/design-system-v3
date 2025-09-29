@@ -7,7 +7,7 @@
 	import { useMobileRightMenu } from './useMobileRightMenu'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
-  import { locales } from './locales'
+	import { locales } from './locales'
 
 	const elementWidth = ref(0)
 	const menuOpen = ref(false)
@@ -581,7 +581,7 @@
 											tabindex="-1"
 											:class="smAndDown ? 'mt-2 smAndDown' : 'mt-3'"
 											:style="smAndDown ? { width: '100vw', maxWidth: '100vw' } : { width: elementWidth >= 260 ? elementWidth + 'px' : '236px' }"
-                      :aria-activedescendant="activeDescendantId || undefined"
+											:aria-activedescendant="activeDescendantId || undefined"
 											@keydown="handleMenuKeydown"
 										>
 											<v-list-item
