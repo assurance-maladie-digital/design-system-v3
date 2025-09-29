@@ -922,7 +922,6 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 				a,
 				button,
 				.sy-header-button {
-					font-weight: 900;
 					text-decoration: underline;
 				}
 			}
