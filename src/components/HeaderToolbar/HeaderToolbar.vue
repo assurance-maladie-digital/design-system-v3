@@ -533,7 +533,6 @@
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 									:tabindex="0"
 									:target="item.openInNewTab ? '_blank' : undefined"
-									:title="item.title"
 									:to="item.to"
 									:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
 									:aria-expanded="itemsSelectMenu && index === 1 ? (menuOpen ? 'true' : 'false') : undefined"
