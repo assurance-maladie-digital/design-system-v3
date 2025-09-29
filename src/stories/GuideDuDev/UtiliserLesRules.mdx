@@ -1,10 +1,13 @@
 import { Meta, Source } from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
 
 <Meta title="Guide Du Dev/Utiliser le système de validation"/>
 
-# Utiliser le système de validation
 
-Ce guide décrit comment utiliser le système de validation de formulaires du Design System pour créer des validations flexibles et intuitives.
+<div className="header">
+  <h1>Utiliser le système de validation</h1>
+  <p>Ce guide décrit comment utiliser le système de validation de formulaires du Design System pour créer des validations flexibles et intuitives. </p>
+</div>
 
 ## Introduction
 
@@ -243,7 +246,8 @@ Voici un exemple plus avancé avec une validation personnalisée :
 <Source dark code={`
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { SyTextField } from '@cnamts/synapse'
+import { SyTextField } from '
+import '../styles/shared.css';@cnamts/synapse'
 
 const email = ref('')
 

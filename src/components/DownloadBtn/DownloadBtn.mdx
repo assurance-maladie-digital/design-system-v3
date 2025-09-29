@@ -1,12 +1,14 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import '../../stories/styles/shared.css';
 
 import * as DownloadBtnStories from './DownloadBtn.stories';
 
 <Meta of={DownloadBtnStories} />
 
-# DownloadBtn
-
-L'élément `DownloadBtn` est utilisé pour permettre à l'utilisateur de télécharger un document provenant d'une API.
+<div className="header">
+  <h1>DownloadBtn</h1>
+  <p>L'élément `DownloadBtn` est utilisé pour permettre à l'utilisateur de télécharger un document provenant d'une API.</p>
+</div>
 
 <Canvas of={DownloadBtnStories.Default} />
 
@@ -56,7 +58,8 @@ Exemple :
 	import type { Notification } from '@cnamts/synapse/src/components/NotificationBar/types'
 	import axios from 'axios'
 
-	function download() {
+	function download()
+{
 		return axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f')
 	}
 

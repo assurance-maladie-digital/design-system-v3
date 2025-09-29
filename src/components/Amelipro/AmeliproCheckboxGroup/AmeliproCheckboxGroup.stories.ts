@@ -48,6 +48,12 @@ export default meta
 
 type Story = StoryObj<typeof AmeliproCheckboxGroup>
 
+const baseItems = [
+	{ isChecked: false, label: 'Option 1', value: '1' },
+	{ isChecked: false, label: 'Option 2', value: '2' },
+	{ isChecked: false, label: 'Option 3', value: '3' },
+]
+
 const items = [
 	{
 		disabled: true,
@@ -172,5 +178,432 @@ export const Default: Story = {
 		/>
 	</template>
 </AmeliproCheckboxGroup>`,
+	}),
+}
+
+export const Disabled: Story = {
+	args: {
+		groupLabel: 'Groupe désactivé',
+		modelValue: baseItems.map(i => ({ ...i, disabled: true })),
+		uniqueId: 'checkbox-group-disabled',
+		disabled: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le groupe de checkbox est désactivé grâce à la prop <code>disabled</code>.</p>
+	<AmeliproCheckboxGroup
+		v-model="value"
+		group-label="Groupe désactivé"
+		unique-id="checkbox-group-disabled"
+		:model-value="items"
+		disabled
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	const items = [
+		{ isChecked: false, label: 'Option 1', value: '1', disabled: true },
+		{ isChecked: false, label: 'Option 2', value: '2', disabled: true },
+		{ isChecked: false, label: 'Option 3', value: '3', disabled: true },
+	]
+	const value = ref(items)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckboxGroup },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Le groupe de checkbox est désactivé grâce à la prop <code>disabled</code>.</p>
+<AmeliproCheckboxGroup v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const Required: Story = {
+	args: {
+		groupLabel: 'Groupe obligatoire',
+		modelValue: baseItems,
+		uniqueId: 'checkbox-group-required',
+		ariaRequired: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>La sélection d’au moins une option est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+	<AmeliproCheckboxGroup
+		v-model="value"
+		group-label="Groupe obligatoire"
+		unique-id="checkbox-group-required"
+		:model-value="items"
+		aria-required
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	const items = [
+		{ isChecked: false, label: 'Option 1', value: '1' },
+		{ isChecked: false, label: 'Option 2', value: '2' },
+		{ isChecked: false, label: 'Option 3', value: '3' },
+	]
+	const value = ref(items)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckboxGroup },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">La sélection d’au moins une option est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+<AmeliproCheckboxGroup 
+	v-bind="args" 
+	v-model="model" 
+/>`,
+	}),
+}
+
+export const MultipleRequired: Story = {
+	args: {
+		groupLabel: 'Sélection multiple obligatoire',
+		modelValue: [
+			{ isChecked: false, label: 'Option 1', value: '1' },
+			{ isChecked: false, label: 'Option 2', value: '2' },
+			{ isChecked: false, label: 'Option 3', value: '3' },
+		],
+		uniqueId: 'checkbox-group-multiple-required',
+		multipleRequired: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>La sélection d’au moins deux options est obligatoire grâce à la prop <code>multipleRequired</code>.</p>
+  <AmeliproCheckboxGroup
+	v-model="value"
+	group-label="Sélection multiple obligatoire"
+	unique-id="checkbox-group-multiple-required"
+	:model-value="items"
+	multiple-required
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  const items = [
+	{ isChecked: false, label: 'Option 1', value: '1' },
+	{ isChecked: false, label: 'Option 2', value: '2' },
+	{ isChecked: false, label: 'Option 3', value: '3' },
+  ]
+  const value = ref(items)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckboxGroup },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">La sélection d’au moins deux options est obligatoire grâce à la prop <code>multipleRequired</code>.</p>
+<AmeliproCheckboxGroup v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const Horizontal: Story = {
+	args: {
+		groupLabel: 'Affichage horizontal',
+		modelValue: [
+			{ isChecked: false, label: 'Option 1', value: '1' },
+			{ isChecked: false, label: 'Option 2', value: '2' },
+			{ isChecked: false, label: 'Option 3', value: '3' },
+		],
+		uniqueId: 'checkbox-group-horizontal',
+		horizontal: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le groupe de checkbox est affiché horizontalement grâce à la prop <code>horizontal</code>.</p>
+	<AmeliproCheckboxGroup
+		v-model="value"
+		group-label="Affichage horizontal"
+		unique-id="checkbox-group-horizontal"
+		:model-value="items"
+		horizontal
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	const items = [
+		{ isChecked: false, label: 'Option 1', value: '1' },
+		{ isChecked: false, label: 'Option 2', value: '2' },
+		{ isChecked: false, label: 'Option 3', value: '3' },
+	]
+	const value = ref(items)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckboxGroup },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Le groupe de checkbox est affiché horizontalement grâce à la prop <code>horizontal</code>.</p>
+<AmeliproCheckboxGroup v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const FullHorizontal: Story = {
+	args: {
+		groupLabel: 'Affichage fullHorizontal',
+		modelValue: [
+			{ isChecked: false, label: 'Option 1', value: '1' },
+			{ isChecked: false, label: 'Option 2', value: '2' },
+			{ isChecked: false, label: 'Option 3', value: '3' },
+		],
+		uniqueId: 'checkbox-group-full-horizontal',
+		fullHorizontal: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>Le groupe de checkbox et son label sont affichés à l’horizontal grâce à la prop <code>fullHorizontal</code>.</p>
+  <AmeliproCheckboxGroup
+    v-model="value"
+    group-label="Affichage fullHorizontal"
+    unique-id="checkbox-group-full-horizontal"
+    :model-value="items"
+    full-horizontal
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  const items = [
+    { isChecked: false, label: 'Option 1', value: '1' },
+    { isChecked: false, label: 'Option 2', value: '2' },
+    { isChecked: false, label: 'Option 3', value: '3' }
+  ]
+  const value = ref(items)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckboxGroup },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Le groupe de checkbox et son label sont affichés à l’horizontal grâce à la prop <code>fullHorizontal</code>.</p>
+<AmeliproCheckboxGroup v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const HorizontalLabel: Story = {
+	args: {
+		groupLabel: 'Affichage horizontalLabel',
+		modelValue: [
+			{ isChecked: false, label: 'Option 1', value: '1' },
+			{ isChecked: false, label: 'Option 2', value: '2' },
+			{ isChecked: false, label: 'Option 3', value: '3' },
+		],
+		uniqueId: 'checkbox-group-horizontal-label',
+		horizontalLabel: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le label du groupe est affiché à l’horizontal grâce à la prop <code>horizontalLabel</code>, tandis que les checkbox restent en colonnes.</p>
+	<AmeliproCheckboxGroup
+		v-model="value"
+		group-label="Affichage horizontalLabel"
+		unique-id="checkbox-group-horizontal-label"
+		:model-value="items"
+		horizontal-label
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	const items = [
+		{ isChecked: false, label: 'Option 1', value: '1' },
+		{ isChecked: false, label: 'Option 2', value: '2' },
+		{ isChecked: false, label: 'Option 3', value: '3' }
+	]
+	const value = ref(items)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckboxGroup },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Le label du groupe est affiché à l’horizontal grâce à la prop <code>horizontalLabel</code>, tandis que les checkbox restent en colonnes.</p>
+<AmeliproCheckboxGroup v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const Pills: Story = {
+	args: {
+		groupLabel: 'Affichage en mode pills',
+		modelValue: [
+			{ isChecked: false, label: 'Option 1', value: '1' },
+			{ isChecked: false, label: 'Option 2', value: '2' },
+			{ isChecked: false, label: 'Option 3', value: '3' },
+		],
+		uniqueId: 'checkbox-group-pills',
+		pills: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>Le groupe de checkbox utilise le style <code>pills</code> pour un rendu visuel différent.</p>
+  <AmeliproCheckboxGroup
+    v-model="value"
+    group-label="Affichage en mode pills"
+    unique-id="checkbox-group-pills"
+    :model-value="items"
+    pills
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  const items = [
+    { isChecked: false, label: 'Option 1', value: '1' },
+    { isChecked: false, label: 'Option 2', value: '2' },
+    { isChecked: false, label: 'Option 3', value: '3' }
+  ]
+  const value = ref(items)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckboxGroup },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Le groupe de checkbox utilise le style <code>pills</code> pour un rendu visuel différent.</p>
+<AmeliproCheckboxGroup v-bind="args" v-model="model" />`,
+	}),
+}
+
+export const HiddenLabel: Story = {
+	args: {
+		groupLabel: 'Label masqué',
+		modelValue: [
+			{ isChecked: false, label: 'Option 1', value: '1' },
+			{ isChecked: false, label: 'Option 2', value: '2' },
+			{ isChecked: false, label: 'Option 3', value: '3' },
+		],
+		uniqueId: 'checkbox-group-hidden-label',
+		hiddenLabel: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le label du groupe est masqué grâce à la prop <code>hiddenLabel</code>.</p>
+	<AmeliproCheckboxGroup
+		v-model="value"
+		group-label="Label masqué"
+		unique-id="checkbox-group-hidden-label"
+		:model-value="items"
+		hidden-label
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	const items = [
+		{ isChecked: false, label: 'Option 1', value: '1' },
+		{ isChecked: false, label: 'Option 2', value: '2' },
+		{ isChecked: false, label: 'Option 3', value: '3' }
+	]
+	const value = ref(items)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproCheckboxGroup },
+		setup() {
+			const model = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p class="mb-2">Le label du groupe est masqué grâce à la prop <code>hiddenLabel</code>.</p>
+<AmeliproCheckboxGroup v-bind="args" v-model="model" />`,
 	}),
 }

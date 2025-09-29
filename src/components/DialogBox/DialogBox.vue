@@ -1,12 +1,13 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { mdiClose } from '@mdi/js'
-	import { ref, useId, watch } from 'vue'
-	import type { VDialog } from 'vuetify/components'
-	import { config } from './config'
-	import { locales } from './locales'
+	import { nextTick, ref, toRef, useId, watch } from 'vue'
+	import type { VBtn, VDialog } from 'vuetify/components'
 	import { useDisplay } from 'vuetify/lib/framework.mjs'
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
+	import { config } from './config'
+	import { locales } from './locales'
+	import { useDraggable } from './useDraggable'
 
 	const props = withDefaults(defineProps<{
 		title?: string
@@ -15,6 +16,8 @@
 		confirmBtnText?: string
 		hideActions?: boolean
 		persistent?: boolean
+		autofocusValidateBtn?: boolean
+		draggable?: boolean
 	} & CustomizableOptions>(), {
 		title: undefined,
 		width: '800px',
@@ -22,6 +25,7 @@
 		confirmBtnText: locales.confirmBtn,
 		hideActions: false,
 		persistent: false,
+		autofocusValidateBtn: false,
 	})
 
 	defineEmits(['cancel', 'confirm', 'update:modelValue'])
@@ -35,16 +39,22 @@
 		default: false,
 	})
 
+	const confirmBtn = ref<VBtn | null>(null)
 	// Restor the focus to the last active element when the dialog is closed
 	let activeElement: HTMLElement | null = null
 	watch(dialog, (newValue) => {
 		if (newValue) {
 			activeElement = document.activeElement as HTMLElement
+			if (props.autofocusValidateBtn) {
+				nextTick(() => {
+					confirmBtn.value?.$el.focus()
+				})
+			}
 		}
 		else if (activeElement) {
 			activeElement.focus()
 		}
-	})
+	}, { immediate: true })
 
 	const id = `dialog-${useId()}`
 	const dialogContent = ref<VDialog | undefined>(undefined)
@@ -92,11 +102,18 @@
 
 	const display = useDisplay()
 
+	const {
+		isGrabbing,
+		startDragging,
+		moveToLeft,
+		moveToRight,
+	} = useDraggable(toRef(props, 'draggable'), dialogContent)
 </script>
 
 <template>
 	<VDialog
 		v-model="dialog"
+		:scrim="props.draggable ? false : true"
 		v-bind="$attrs"
 		:width="props.width"
 		:persistent="props.persistent"
@@ -105,13 +122,24 @@
 		class="sy-dialog-box"
 		:aria-labelledby="id"
 		@keydown.tab="handleFocus"
+		@keydown.left="moveToLeft"
+		@keydown.right="moveToRight"
 	>
 		<VCard
 			v-bind="options.card"
-			id="dialog-content"
 			ref="dialogContent"
+			:class="{
+				'sy-dialog-box-draggable': props.draggable,
+				'sy-dialog-box-draggable--active': props.draggable && isGrabbing,
+			}"
+			:aria-label="props.draggable ? locales.draggable : undefined"
 		>
-			<VCardTitle v-bind="options.cardTitle">
+			<VCardTitle
+				class="sy-dialog-box-title"
+				v-bind="options.cardTitle"
+				:title="props.draggable ? locales.dragInstruction : undefined"
+				@mousedown="startDragging"
+			>
 				<slot name="title">
 					<h2
 						v-if="title"
@@ -138,7 +166,13 @@
 					/>
 				</VBtn>
 			</VCardTitle>
-			<slot />
+
+			<div
+				class="px-6"
+				v-bind="options.cardText"
+			>
+				<slot />
+			</div>
 
 			<div
 				v-if="!props.hideActions"
@@ -174,8 +208,10 @@
 						</VBtn>
 
 						<VBtn
-							class="sy-dialog-box-confirm-btn"
 							v-bind="options.confirmBtn"
+							ref="confirmBtn"
+							class="sy-dialog-box-confirm-btn"
+							:class="props.autofocusValidateBtn ? 'sy-dialog-box-confirm-btn--autofocus' : ''"
 							data-test-id="confirm-btn"
 							@click="$emit('confirm')"
 						>
@@ -208,7 +244,8 @@ h2 {
 
 .sy-dialog-box-close-btn:focus-visible,
 .sy-dialog-box-cancel-btn:focus-visible,
-.sy-dialog-box-confirm-btn:focus-visible {
+.sy-dialog-box-confirm-btn:focus-visible,
+.sy-dialog-box-confirm-btn--autofocus:focus {
 	:deep(.v-btn__overlay) {
 		display: none;
 	}
@@ -221,17 +258,20 @@ h2 {
 	}
 }
 
-.sy-dialog-box-confirm-btn:focus-visible {
-	&::after {
-		outline-offset: 2px;
-	}
-}
-
 .sy-dialog-box-actions-ctn {
 	display: flex;
 	flex-direction: column;
 	justify-content: stretch;
 	gap: $spacing-small;
+}
+
+.sy-dialog-box-draggable .sy-dialog-box-title {
+	cursor: grab;
+}
+
+.sy-dialog-box-draggable--active .sy-dialog-box-title {
+	cursor: grabbing;
+	user-select: none;
 }
 
 @media screen and (min-width: $container-mobile-max-width) {

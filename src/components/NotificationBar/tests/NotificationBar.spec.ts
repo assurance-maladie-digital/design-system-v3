@@ -12,8 +12,10 @@ vi.mock('@/services/NotificationService')
 describe('NotificationBar.vue', () => {
 	interface NotificationServiceMock {
 		notificationQueue: Ref<Notification[]>
+		clearAllEvent: Ref<boolean>
 		addNotification: (notification: Notification) => void
 		removeNotification: (id: string) => void
+		clearQueue: () => void
 	}
 
 	let notificationServiceMock: NotificationServiceMock
@@ -21,8 +23,10 @@ describe('NotificationBar.vue', () => {
 		vi.useFakeTimers()
 		notificationServiceMock = {
 			notificationQueue: ref([]),
+			clearAllEvent: ref(false),
 			addNotification: vi.fn(),
 			removeNotification: vi.fn(),
+			clearQueue: vi.fn(),
 		};
 		// @ts-expect-error on vi.Mock
 		(useNotificationService as vi.Mock).mockReturnValue(notificationServiceMock)
@@ -31,6 +35,67 @@ describe('NotificationBar.vue', () => {
 	afterEach(() => {
 		vi.restoreAllMocks()
 		vi.useRealTimers()
+	})
+
+	it('should close notification when clearAllEvent is true', async () => {
+		// Setup a visible notification
+		const notification: Notification = {
+			id: '1',
+			message: 'Test message',
+			type: 'info',
+			timeout: -1,
+			icon: null,
+		}
+		const wrapper = mount(NotificationBar, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+		wrapper.vm.openNotification(notification)
+		await nextTick()
+		expect(wrapper.vm.isNotificationVisible).toBe(true)
+
+		// Simulate triggering clearAllEvent
+		notificationServiceMock.clearAllEvent.value = true
+		await nextTick()
+
+		// Check that notification was closed
+		expect(wrapper.vm.isNotificationVisible).toBe(false)
+
+		// Reset for test isolation
+		notificationServiceMock.clearAllEvent.value = false
+	})
+
+	it('should handle clearQueue functionality', () => {
+		// Setup clearQueue mock implementation
+		notificationServiceMock.clearQueue = vi.fn().mockImplementation(() => {
+			notificationServiceMock.clearAllEvent.value = true
+			setTimeout(() => {
+				notificationServiceMock.clearAllEvent.value = false
+			}, 100)
+			notificationServiceMock.notificationQueue.value = []
+		})
+
+		// Setup component
+		mount(NotificationBar, {
+			global: {
+				plugins: [vuetify],
+			},
+		})
+
+		// Call the clearQueue method
+		notificationServiceMock.clearQueue()
+
+		// Check that clearAllEvent was set to true
+		expect(notificationServiceMock.clearAllEvent.value).toBe(true)
+
+		// Wait for the timeout to complete
+		vi.runAllTimers()
+
+		// Verify it's reset back to false
+		expect(notificationServiceMock.clearAllEvent.value).toBe(false)
+		// Verify queue was cleared
+		expect(notificationServiceMock.notificationQueue.value).toEqual([])
 	})
 
 	it('should render notification bar', async () => {

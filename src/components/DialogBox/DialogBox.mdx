@@ -3,9 +3,10 @@ import * as DialogBoxStories from './DialogBox.stories';
 
 <Meta of={DialogBoxStories} />
 
-# DialogBox
-
-L’élément `DialogBox` est utilisé pour afficher une boîte de dialogue avec des boutons d'action.
+<div className="header">
+  <h1>DialogBox</h1>
+  <p>L’élément `DialogBox` est utilisé pour afficher une boîte de dialogue avec des boutons d'action.</p>
+</div>
 
 <Canvas of={DialogBoxStories.Default}  />
 
@@ -21,6 +22,7 @@ L’élément `DialogBox` est utilisé pour afficher une boîte de dialogue avec
     import { ref } from 'vue'
 
     const dialogOpen = ref(false)
+import '../../stories/styles/shared.css';
 </script>
 
 <template>

@@ -1,11 +1,14 @@
 import { Meta, Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
 import * as SyCheckboxStories from './SyCheckbox.stories';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import '../../../stories/styles/shared.css';
 
 <Meta of={SyCheckboxStories} />
 
 <div className="accessibility-guide">
-  <Title>Guide d'Accessibilité du Composant SyCheckbox</Title>
+<div className="header">
+  <h1>Guide d'Accessibilité du Composant SyCheckbox</h1>
+</div>
   
   <div className="intro-section">
     <img 
@@ -18,7 +21,7 @@ import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
       notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/examples/checkbox-mixed/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les cases à cocher tri-état</a>. 
       Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
     </p>
-  </div>
+</div>
 
   <div className="criteria-section">
     <h2>Critères d'accessibilité respectés</h2>
@@ -123,7 +126,7 @@ import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
     <p>
       Cette relation est établie via la propriété <code>controlsIds</code> qui liste les identifiants des cases à cocher enfants.
     </p>
-  </div>
+</div>
 
   <div className="best-practices">
     <h2>Bonnes pratiques d'utilisation</h2>

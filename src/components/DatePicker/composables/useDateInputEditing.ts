@@ -4,6 +4,7 @@ import {
 	getDateDescription as getDateDescriptionUtil,
 	type FormatDateInputResult,
 } from '../utils/dateFormattingUtils'
+import { ref } from 'vue'
 
 /**
  * Options pour le composable useDateInputEditing
@@ -48,6 +49,9 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 		accessiblePlaceholders = true,
 	} = options
 
+	// Flag to prevent competing cursor position updates
+	const isHandlingBackspace = ref(false)
+
 	/**
    * Détermine le séparateur utilisé dans le format
    */
@@ -64,7 +68,7 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 	}
 
 	/**
-   * Gère la suppression des séparateurs
+   * Gère la suppression des caractères avec la touche Backspace
    */
 	const handleBackspace = (event: KeyboardEvent & { target: HTMLInputElement }): void => {
 		const input = event.target
@@ -75,18 +79,30 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 		const cursorPos = input.selectionStart
 		const charBeforeCursor = input.value[cursorPos - 1]
 
-		// Si le caractère avant le curseur n'est pas un chiffre
-		if (!/\d/.test(charBeforeCursor)) {
+		// Si on est sur un séparateur, supprimer le séparateur et le chiffre qui le précède
+		if (!/\d/.test(charBeforeCursor) && cursorPos > 1 && separator === charBeforeCursor) {
 			event.preventDefault()
+			isHandlingBackspace.value = true
 
 			const newValue = input.value.substring(0, cursorPos - 2) + input.value.substring(cursorPos)
 			updateDisplayValue(newValue)
 
-			// Positionner le curseur après un court délai
 			setTimeout(() => {
 				const newCursorPos = cursorPos - 2
 				input.setSelectionRange(newCursorPos, newCursorPos)
+				isHandlingBackspace.value = false
 			}, 0)
+		}
+		// Si on supprime un chiffre
+		else if (cursorPos > 0 && /[\d_]/.test(charBeforeCursor)) {
+			// Laisser le comportement par défaut se produire (suppression simple)
+			// et empêcher tout reformatage supplémentaire
+			isHandlingBackspace.value = true
+
+			// Réinitialiser le flag après un court délai
+			setTimeout(() => {
+				isHandlingBackspace.value = false
+			}, 50)
 		}
 	}
 
@@ -98,24 +114,39 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 			handleBackspace(event)
 		}
 		else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-			// Handle arrow key navigation around separators
 			const input = event.target
 			const cursorPos = input.selectionStart || 0
 
 			if (event.key === 'ArrowLeft' && cursorPos > 0) {
 				const charBeforeCursor = input.value[cursorPos - 1]
 
-				if (charBeforeCursor === separator) {
+				// Sauter par-dessus les séparateurs en naviguant vers la gauche
+				if (!/\d/.test(charBeforeCursor)) {
 					event.preventDefault()
-					input.setSelectionRange(cursorPos - 2, cursorPos - 2)
+
+					// Trouver la position du prochain chiffre à gauche
+					let newPos = cursorPos - 1
+					while (newPos > 0 && !/\d/.test(input.value[newPos - 1])) {
+						newPos--
+					}
+
+					input.setSelectionRange(newPos, newPos)
 				}
 			}
 			else if (event.key === 'ArrowRight' && cursorPos < input.value.length) {
 				const charAtCursor = input.value[cursorPos]
 
-				if (charAtCursor === separator) {
+				// Sauter par-dessus les séparateurs en naviguant vers la droite
+				if (!/\d/.test(charAtCursor)) {
 					event.preventDefault()
-					input.setSelectionRange(cursorPos + 2, cursorPos + 2)
+
+					// Trouver la position du prochain chiffre à droite
+					let newPos = cursorPos + 1
+					while (newPos < input.value.length && !/\d/.test(input.value[newPos])) {
+						newPos++
+					}
+
+					input.setSelectionRange(newPos, newPos)
 				}
 			}
 		}
@@ -137,33 +168,31 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 		const pastedText = event.clipboardData.getData('text')
 		if (!pastedText) return
 
-		// Empêcher le comportement par défaut
 		event.preventDefault()
 
-		// Récupérer l'élément input
 		const input = event.target as HTMLInputElement
 		const cursorPos = input.selectionStart || 0
+		const selectionEnd = input.selectionEnd || cursorPos
 
-		// Récupérer la valeur actuelle
 		const currentValue = input.value
 
-		// Insérer le texte collé à la position du curseur
+		// Remplacer uniquement les caractères numériques pour le collage
+		// Si nous sommes en mode édition d'une date existante
+		const cleanedPastedText = pastedText.replace(/[^\d]/g, '')
+
+		// Construire la nouvelle valeur en tenant compte d'une possible sélection
 		const newValue = currentValue.substring(0, cursorPos)
-			+ pastedText
-			+ currentValue.substring(input.selectionEnd || cursorPos)
+			+ cleanedPastedText
+			+ currentValue.substring(selectionEnd)
 
-		// Formater la nouvelle valeur
-		const { formatted, cursorPos: newCursorPos } = formatDateInput(newValue, cursorPos + pastedText.length)
+		// Formater la nouvelle valeur et calculer la nouvelle position du curseur
+		const { formatted, cursorPos: newCursorPos } = formatDateInput(newValue, cursorPos + cleanedPastedText.length)
 
-		// Mettre à jour la valeur
 		updateDisplayValue(formatted)
 
-		// Mettre à jour l'aria-label si la fonction est fournie
+		// Mettre à jour l'étiquette aria pour l'accessibilité
 		if (updateAriaLabel && accessiblePlaceholders) {
-			// Créer une version accessible pour les lecteurs d'écran (sans les caractères de placeholder)
 			const accessibleValue = formatted.replace(new RegExp(placeholderChar, 'g'), ' ')
-
-			// Créer un message descriptif pour le lecteur d'écran
 			const dateDescription = getDateDescription(accessibleValue)
 			updateAriaLabel(dateDescription)
 		}
@@ -186,5 +215,6 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 		handleKeydown: keyboardEvents.handleKeyDown,
 		handlePaste,
 		getDateDescription,
+		isHandlingBackspace, // Exporter le flag pour le composant parent
 	}
 }

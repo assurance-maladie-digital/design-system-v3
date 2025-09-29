@@ -1,12 +1,14 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
 
 import * as SyTextAreaStories from './SyTextArea.stories';
+import '../../stories/styles/shared.css';
 
 <Meta of={SyTextAreaStories} />
 
-# SyTextArea
-
-Le composant `SyTextArea` étend les fonctionnalitées du composants `VTextArea` de `Vuetify` en ajoutant des contraintes.
+<div className="header">
+  <h1>SyTextArea</h1>
+  <p>Le composant `SyTextArea` étend les fonctionnalitées du composants `VTextArea` de `Vuetify` en ajoutant des contraintes.</p>
+</div>
 
 <Canvas of={SyTextAreaStories.Default}  />
 

@@ -1,8 +1,12 @@
 import {Meta, Source} from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
 
-<Meta title="Guide Du Dev/Migration depuis Vue2"/>
+<Meta title="Guide Du Dev/Migration/Migration depuis Vue2"/>
 
-# Migrer de Vue-dot (Vue2) vers Synapse
+
+<div className="header">
+  <h1>Migrer de Vue-dot (Vue2) vers Synapse</h1>
+</div>
 
 ## 1 - Commencer la migration
 
@@ -376,7 +380,8 @@ Le plugin `vue-i18n` a été remplacé par [`@nuxtjs/i18n`]( https://v8.i18n.nux
 - Créer un fichier `nuxt-i18n.ts` à la racine du projet, importer les traductions et les configurer.
 
 <Source dark code={`
-import translationFR from "@/translations/fr";
+import translationFR from "
+import '../styles/shared.css';@/translations/fr";
 
 export default {
 	legacy: false,

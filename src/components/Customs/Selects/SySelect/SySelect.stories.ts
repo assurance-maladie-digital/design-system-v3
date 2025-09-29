@@ -61,7 +61,7 @@ const meta: Meta<typeof SySelect> = {
 		},
 		width: {
 			control: 'text',
-			description: 'Permet de définir une largeur personnalisée pour le champ de sélection (en px)',
+			description: 'Permet de définir une largeur personnalisée pour le champ de sélection',
 		},
 		helpText: {
 			control: 'text',
@@ -91,7 +91,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SySelect from '@cnamts/SySelect'
+					import { SySelect } from '@cnamts/synapse'
 					
 					const items =  [
 						{ text: 'Adrien', value: 'Adrien' },
@@ -162,7 +162,7 @@ export const HelpText: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SySelect from '@cnamts/SySelect'
+					import { SySelect } from '@cnamts/synapse'
 					
 					const items =  [
 						{ text: 'Adrien', value: 'Adrien' },
@@ -237,7 +237,7 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SySelect from '@cnamts/SySelect'
+					import { SySelect } from '@cnamts/synapse'
 					
 					const items =  [
 						{ text: 'Option 1', value: '1' },
@@ -526,7 +526,7 @@ export const withCustomError: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SySelect from '@cnamts/SySelect'
+					import { SySelect } from '@cnamts/synapse'
 					import { ref } from 'vue'
 					
 					const items =  [
@@ -598,7 +598,7 @@ export const withCustomKey: Story = {
 				name: 'Script',
 				code: `
 					<script setup lang="ts">
-						import SySelect from '@cnamts/SySelect'
+						import { SySelect } from '@cnamts/synapse'
 						
 						const items =  [
 							{ customKey: 'Choix 1', value: '1' },
@@ -694,7 +694,7 @@ export const FormValidation: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SySelect from '@cnamts/synapse'
+import { SySelect } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const formData = ref({

@@ -39,6 +39,7 @@ exports[`AmeliproResultList > render correctly 1`] = `
       <div
         class="
           amelipro-result-list__pagination-select
+          mb-0
           ml-2
           pt-0
         "
@@ -73,6 +74,7 @@ exports[`AmeliproResultList > render correctly 1`] = `
           <div class="
             amelipro-result-list__pagination-select
             amelipro-select
+            mb-0
             ml-2
             pt-0
             pt-0

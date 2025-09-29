@@ -4,10 +4,10 @@
 		inheritAttrs: false,
 	})
 	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
-	import { ref, watch, onMounted, onUnmounted, computed, nextTick, type PropType } from 'vue'
+	import { ref, watch, onMounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
-	import type { VTextField } from 'vuetify/components'
+	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -135,12 +135,13 @@
 
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
+	const list = ref<VList | null>(null)
+	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 
 	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
 		isOpen.value = !isOpen.value
 		if (isOpen.value) {
-			updateListPosition()
 			// Initialiser la sélection à l'ouverture seulement si pas ouvert via clavier
 			if (!skipInitialFocus) {
 				nextTick(() => {
@@ -160,7 +161,7 @@
 	const closeList = (event?: Event) => {
 		// Check if the click is inside the dropdown list
 		const target = event?.target as HTMLElement
-		const listElement = document.querySelector('.v-list')
+		const listElement = list.value?.$el
 
 		// In multiple selection mode, don't close the dropdown when clicking on list items
 		if (props.multiple && listElement && listElement.contains(target)) {
@@ -172,18 +173,6 @@
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
-	const listStyles = ref<Record<string, string>>({})
-	const updateListPosition = () => {
-		if (input.value?.$el) {
-			const rect = input.value.$el.getBoundingClientRect()
-			listStyles.value = {
-				position: 'fixed',
-				top: props.density === 'compact' ? `${rect.bottom + 22}px` : `${rect.bottom}px`,
-				left: `${rect.left}px`,
-				zIndex: '999',
-			}
-		}
-	}
 
 	const selectItem = (item: ItemType | null, event?: Event) => {
 		// Prevent default action if event is provided
@@ -216,13 +205,12 @@
 			if (event?.type === 'keydown' || event?.type === 'click') {
 				if (!isOpen.value) {
 					isOpen.value = true
-					updateListPosition()
 				}
 
 				// S'assurer que le focus DOM revient à l'input et restaurer le focus visuel
 				nextTick(() => {
 					// Focus DOM sur l'input
-					const inputElement = document.querySelector('.v-field__input')
+					const inputElement = textInput.value!.$el.querySelector('input')
 					if (inputElement) {
 						(inputElement as HTMLInputElement).focus()
 					}
@@ -387,8 +375,6 @@
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
-	const input = ref<InstanceType<typeof VTextField> | null>(null)
-
 	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
@@ -448,7 +434,6 @@
 		toggleMenu,
 		selectItem,
 		getItemText,
-		updateListPosition,
 	})
 
 	// Function to check if an item is the default option (e.g., "-choisir-")
@@ -540,11 +525,6 @@
 
 			// Then emit the update to the parent
 			emit('update:modelValue', updatedArray)
-
-			// Force update of the UI
-			nextTick(() => {
-				updateListPosition()
-			})
 		}
 	}
 
@@ -568,63 +548,95 @@
 		}
 	})
 
-	let mutationObserver: MutationObserver | null = null
+	const ariaManager = {
+		cleanInputAttributes(inputElement: HTMLElement): void {
+			if (!inputElement) return
 
-	// Function to set up proper ARIA attributes
+			inputElement.removeAttribute('aria-describedby')
+			inputElement.removeAttribute('size')
+			inputElement.removeAttribute('tabindex')
+			inputElement.removeAttribute('aria-hidden')
+		},
+
+		updateInputState(inputElement: HTMLElement, isOpenValue: boolean, menuId: string, activeDescendant?: string): void {
+			if (!inputElement) return
+
+			inputElement.setAttribute('role', 'combobox')
+			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
+			inputElement.setAttribute('aria-haspopup', 'listbox')
+
+			if (isOpenValue) {
+				inputElement.setAttribute('aria-controls', menuId)
+			}
+			else {
+				inputElement.removeAttribute('aria-controls')
+			}
+
+			if (isOpenValue && activeDescendant) {
+				inputElement.setAttribute('aria-activedescendant', activeDescendant)
+			}
+			else {
+				inputElement.removeAttribute('aria-activedescendant')
+			}
+		},
+
+		updateValidationAttributes(inputElement: HTMLElement, isRequiredValue: boolean, hasErrorValue: boolean): void {
+			if (!inputElement) return
+
+			if (isRequiredValue) {
+				inputElement.setAttribute('aria-required', 'true')
+			}
+			else {
+				inputElement.removeAttribute('aria-required')
+			}
+
+			if (hasErrorValue) {
+				inputElement.setAttribute('aria-invalid', 'true')
+			}
+			else {
+				inputElement.removeAttribute('aria-invalid')
+			}
+		},
+
+		cleanParentAttributes(parentElement: HTMLElement): void {
+			if (!parentElement) return
+
+			parentElement.removeAttribute('role')
+			parentElement.removeAttribute('aria-expanded')
+			parentElement.removeAttribute('aria-controls')
+			parentElement.removeAttribute('aria-haspopup')
+			parentElement.removeAttribute('aria-activedescendant')
+			parentElement.removeAttribute('aria-required')
+			parentElement.removeAttribute('aria-invalid')
+			parentElement.removeAttribute('aria-hidden')
+		},
+
+		cleanAlertAttributes(parentElement: HTMLElement): void {
+			if (!parentElement) return
+
+			const messagesElements = parentElement.querySelectorAll('[role="alert"]')
+			messagesElements.forEach((element: Element) => {
+				element.removeAttribute('role')
+				element.removeAttribute('aria-live')
+			})
+		},
+	}
+
 	const setupAriaAttributes = () => {
-		if (input.value && input.value.$el) {
-			// Find the input element
-			const inputElement = input.value.$el?.querySelector?.('input')
-			if (inputElement) {
-				// Remove problematic attributes that shouldn't be on input
-				inputElement.removeAttribute('aria-describedby')
-				inputElement.removeAttribute('size')
-				inputElement.removeAttribute('tabindex')
-				inputElement.removeAttribute('aria-hidden')
+		if (!textInput.value || !textInput.value.$el) return
 
-				// Set proper combobox attributes on input element (following CNSA standard)
-				inputElement.setAttribute('role', 'combobox')
-				inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
-				// Only set aria-controls when menu is open and element exists
-				if (isOpen.value) {
-					inputElement.setAttribute('aria-controls', uniqueMenuId.value)
-				}
-				else {
-					inputElement.removeAttribute('aria-controls')
-				}
-				// Note: aria-autocomplete is omitted for select-only combobox (invalid to set to 'none')
-				inputElement.setAttribute('aria-haspopup', 'listbox')
-				if (isOpen.value && activeDescendantId.value) {
-					inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
-				}
-				if (isRequired.value) {
-					inputElement.setAttribute('aria-required', 'true')
-				}
-				if (hasError.value) {
-					inputElement.setAttribute('aria-invalid', 'true')
-				}
-			}
+		const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
+		const parentElement = textInput.value.$el as HTMLElement
 
-			// Clean up parent element - remove any conflicting attributes
-			const parentElement = input.value.$el
-			if (parentElement) {
-				// Remove any role or ARIA attributes from parent that should be on input
-				parentElement.removeAttribute('role')
-				parentElement.removeAttribute('aria-expanded')
-				parentElement.removeAttribute('aria-controls')
-				parentElement.removeAttribute('aria-haspopup')
-				parentElement.removeAttribute('aria-activedescendant')
-				parentElement.removeAttribute('aria-required')
-				parentElement.removeAttribute('aria-invalid')
-				parentElement.removeAttribute('aria-hidden')
+		if (inputElement) {
+			ariaManager.cleanInputAttributes(inputElement)
+			ariaManager.updateInputState(inputElement, isOpen.value, uniqueMenuId.value, activeDescendantId.value)
+			ariaManager.updateValidationAttributes(inputElement, Boolean(isRequired.value), Boolean(hasError.value))
+		}
 
-				// Remove role="alert" and aria-live from message containers to prevent screen reader interruption
-				const messagesElements = parentElement.querySelectorAll('[role="alert"]')
-				messagesElements.forEach((element: Element) => {
-					element.removeAttribute('role')
-					element.removeAttribute('aria-live')
-				})
-			}
+		if (parentElement) {
+			ariaManager.cleanParentAttributes(parentElement)
+			ariaManager.cleanAlertAttributes(parentElement)
 		}
 	}
 
@@ -632,94 +644,37 @@
 		if (labelRef.value) {
 			labelWidth.value = labelRef.value.offsetWidth + 64
 		}
-		window.addEventListener('scroll', updateListPosition, true)
-		window.addEventListener('resize', updateListPosition)
 
-		// Use nextTick to ensure the DOM is fully rendered
 		nextTick(() => {
-			// Initial setup
 			setupAriaAttributes()
 
-			// Set up MutationObserver to monitor attribute changes
-			if (input.value && input.value.$el) {
-				mutationObserver = new MutationObserver((mutations) => {
-					let needsCleanup = false
-					mutations.forEach((mutation) => {
-						if (mutation.type === 'attributes') {
-							const target = mutation.target as HTMLElement
-							const attributeName = mutation.attributeName
-
-							// Check if problematic attributes were added to input
-							if (target.tagName === 'INPUT' && (
-								attributeName === 'role'
-								|| attributeName === 'aria-hidden'
-								|| attributeName === 'aria-expanded'
-								|| attributeName === 'aria-controls'
-								|| attributeName === 'aria-haspopup'
-							)) {
-								needsCleanup = true
-							}
-
-							// Check if aria-hidden was added to parent
-							if (target === input.value?.$el && attributeName === 'aria-hidden') {
-								needsCleanup = true
-							}
-
-							// Check if role="alert" or aria-live was added to any element (error messages)
-							if (attributeName === 'role' && (target as HTMLElement).getAttribute('role') === 'alert') {
-								needsCleanup = true
-							}
-							if (attributeName === 'aria-live') {
-								needsCleanup = true
-							}
-						}
-					})
-
-					if (needsCleanup) {
-						// Use setTimeout to avoid infinite loops
-						setTimeout(setupAriaAttributes, 0)
-					}
-				})
-
-				// Observe both the parent element and its children
-				mutationObserver.observe(input.value.$el, {
-					attributes: true,
-					subtree: true,
-					attributeFilter: ['role', 'aria-hidden', 'aria-expanded', 'aria-controls', 'aria-haspopup', 'aria-live'],
-				})
-			}
+			setTimeout(setupAriaAttributes, 100)
+			setTimeout(setupAriaAttributes, 300)
 		})
 	})
 
-	// Watchers to update ARIA attributes dynamically on input element
 	watch(isOpen, (newValue) => {
 		nextTick(() => {
-			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					inputElement.setAttribute('aria-expanded', newValue ? 'true' : 'false')
-					if (newValue && activeDescendantId.value) {
-						inputElement.setAttribute('aria-activedescendant', activeDescendantId.value)
-					}
-					else {
-						inputElement.removeAttribute('aria-activedescendant')
-					}
-				}
+			if (!textInput.value || !textInput.value.$el) return
+
+			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
+			if (inputElement) {
+				ariaManager.updateInputState(inputElement, newValue, uniqueMenuId.value, activeDescendantId.value)
 			}
 		})
 	})
 
 	watch(activeDescendantId, (newValue) => {
 		nextTick(() => {
-			if (input.value && input.value.$el && isOpen.value) {
-				const inputElement = input.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					if (newValue) {
-						inputElement.setAttribute('aria-activedescendant', newValue)
-					}
-					else {
-						inputElement.removeAttribute('aria-activedescendant')
-					}
+			if (!textInput.value || !textInput.value.$el || !isOpen.value) return
+
+			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
+			if (inputElement) {
+				if (newValue) {
+					inputElement.setAttribute('aria-activedescendant', newValue)
+				}
+				else {
+					inputElement.removeAttribute('aria-activedescendant')
 				}
 			}
 		})
@@ -727,242 +682,220 @@
 
 	watch(hasError, (newValue) => {
 		nextTick(() => {
-			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					if (newValue) {
-						inputElement.setAttribute('aria-invalid', 'true')
-					}
-					else {
-						inputElement.removeAttribute('aria-invalid')
-					}
-				}
+			if (!textInput.value || !textInput.value.$el) return
+
+			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
+			if (inputElement) {
+				ariaManager.updateValidationAttributes(
+					inputElement,
+					Boolean(isRequired.value),
+					Boolean(newValue),
+				)
 			}
 		})
 	})
 
-	// Watch for selection changes to enforce correct accessibility attributes
-	// This prevents Vuetify from overriding our combobox attributes
 	watch(selectedItem, () => {
 		nextTick(() => {
-			if (input.value && input.value.$el) {
-				const inputElement = input.value.$el?.querySelector?.('input')
-				if (inputElement) {
-					// Ensure combobox role is maintained on input
-					inputElement.setAttribute('role', 'combobox')
-					// Ensure aria-hidden is never set to true
-					inputElement.removeAttribute('aria-hidden')
-					// Maintain other combobox attributes
-					inputElement.setAttribute('aria-expanded', isOpen.value ? 'true' : 'false')
-					inputElement.setAttribute('aria-haspopup', 'listbox')
-					// Note: aria-autocomplete is omitted for select-only combobox
-					// Only set aria-controls when menu is open and element exists
-					if (isOpen.value) {
-						inputElement.setAttribute('aria-controls', uniqueMenuId.value)
-					}
-					else {
-						inputElement.removeAttribute('aria-controls')
-					}
+			if (!textInput.value || !textInput.value.$el) return
 
-					// Only add aria-required if the component is actually required
-					if (isRequired.value) {
-						inputElement.setAttribute('aria-required', 'true')
-					}
-					else {
-						inputElement.removeAttribute('aria-required')
-					}
-				}
-
-				// Clean up parent element
-				const parentElement = input.value.$el
-				if (parentElement) {
-					parentElement.removeAttribute('role')
-					parentElement.removeAttribute('aria-hidden')
-					parentElement.removeAttribute('aria-expanded')
-					parentElement.removeAttribute('aria-haspopup')
-					parentElement.removeAttribute('aria-controls')
-					parentElement.removeAttribute('aria-required')
-				}
-			}
+			setupAriaAttributes()
 		})
 	}, { deep: true })
-
-	onUnmounted(() => {
-		window.removeEventListener('scroll', updateListPosition, true)
-		window.removeEventListener('resize', updateListPosition)
-
-		// Clean up MutationObserver
-		if (mutationObserver) {
-			mutationObserver.disconnect()
-			mutationObserver = null
-		}
-	})
 
 	defineExpose({
 		isOpen,
 		closeList,
 	})
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	function initializeActivatorProps(activatorProps: Record<string, any>) {
+		return {
+			// the ref is needed by Vuetify to position the menu and by us for accessibility
+			ref: (el) => {
+				textInput.value = el
+				activatorProps.ref?.(el)
+			},
+		}
+	}
 </script>
 
 <template>
-	<VTextField
-		:id="inputId"
-		ref="input"
-		v-model="selectedItemText"
-		v-click-outside="closeList"
-		v-rgaa-svg-fix="true"
-		:title="$attrs['aria-label'] || labelWithAsterisk"
-		color="primary"
-		:disabled="disabled"
-		:label="labelWithAsterisk"
-		:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-		:error-messages="props.disableErrorHandling ? [] : errorMessages"
-		:variant="outlined ? 'outlined' : 'underlined'"
-		:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
-		:bg-color="props.bgColor"
-		:density="props.density"
-		:active="hasChips || isOpen"
-		readonly
-		:hide-details="props.hideMessages && !showHelpTextAsMessage"
-		:hint="showHelpTextAsMessage ? props.helpText : ''"
-		:persistent-hint="!!showHelpTextAsMessage"
-		:autocomplete="props.autocomplete"
-		class="sy-select"
-		:width="calculatedWidth"
-		:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
-		v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
-		@click="toggleMenu"
-		@keydown.enter.prevent="handleEnterKey"
-		@keydown.space.prevent="handleSpaceKey"
-		@keydown.down.prevent="handleDownKey"
-		@keydown.up.prevent="handleUpKey"
-		@keydown.esc.prevent="handleEscapeKey"
-		@keydown.home.prevent="handleHomeKey"
-		@keydown.end.prevent="handleEndKey"
-		@keydown.page-up.prevent="handlePageUpKey"
-		@keydown.page-down.prevent="handlePageDownKey"
-		@keydown.tab="handleTabKey"
-		@keydown="(e) => {
-			// Handle printable characters for keyboard navigation
-			if (!e.ctrlKey && !e.altKey && !e.metaKey) {
-				handleCharacterKey(e.key)
-			}
-		}"
+	<VMenu
+		v-model="isOpen"
+		transition="slide-y-transition"
+		max-height="300px"
 	>
-		<div
-			v-if="hasChips"
-			class="d-flex flex-wrap gap-1"
-		>
-			<VChip
-				v-for="item in selectedItem"
-				:key="props.returnObject ? item[props.valueKey] : item"
-				size="small"
-				class="ma-1"
-				closable
-				:close-label="`Supprimer ${getChipText(item)}`"
-				@click:close="removeChip(item)"
+		<template #activator="{ props: activatorProps }">
+			<VTextField
+				:id="inputId"
+				v-model="selectedItemText"
+				v-click-outside="closeList"
+				v-rgaa-svg-fix="true"
+				:title="$attrs['aria-label'] || labelWithAsterisk"
+				color="primary"
+				:disabled="disabled"
+				:label="labelWithAsterisk"
+				:aria-label="$attrs['aria-label'] || labelWithAsterisk"
+				:error-messages="props.disableErrorHandling ? [] : errorMessages"
+				:variant="outlined ? 'outlined' : 'underlined'"
+				:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
+				:bg-color="props.bgColor"
+				:density="props.density"
+				:active="hasChips || isOpen"
+				readonly
+				:hide-details="props.hideMessages && !showHelpTextAsMessage"
+				:hint="showHelpTextAsMessage ? props.helpText : ''"
+				:persistent-hint="!!showHelpTextAsMessage"
+				:autocomplete="props.autocomplete"
+				class="sy-select"
+				:class="{ 'sy-select--clearable': props.clearable }"
+				:width="calculatedWidth"
+				:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
+				v-bind="{
+					...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
+					...initializeActivatorProps(activatorProps),
+				}"
+				@click="toggleMenu"
+				@keydown.enter.prevent="handleEnterKey"
+				@keydown.space.prevent="handleSpaceKey"
+				@keydown.down.prevent="handleDownKey"
+				@keydown.up.prevent="handleUpKey"
+				@keydown.esc.prevent="handleEscapeKey"
+				@keydown.home.prevent="handleHomeKey"
+				@keydown.end.prevent="handleEndKey"
+				@keydown.page-up.prevent="handlePageUpKey"
+				@keydown.page-down.prevent="handlePageDownKey"
+				@keydown.tab="handleTabKey"
+				@keydown="(e) => {
+					// Handle printable characters for keyboard navigation
+					if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+						handleCharacterKey(e.key)
+					}
+				}"
 			>
-				{{ getChipText(item) }}
-			</VChip>
-		</div>
-		<template #append-inner>
-			<SyIcon
-				v-if="hasError"
-				class="mr-6"
-				color="error"
-				:icon="mdiInformation"
-				:decorative="false"
-				label="Information"
-				role="img"
-			/>
-			<button
-				v-if="props.clearable && selectedItemText"
-				type="button"
-				class="sy-select__clear-button"
-				:style="{ right: hasError ? '38px' : '32px' }"
-				:aria-label="locales.clear"
-				@keydown.enter.prevent="$event => selectItem(null, $event)"
-				@keydown.space.prevent="$event => selectItem(null, $event)"
-				@click.stop.prevent="$event => selectItem(null, $event)"
-			>
-				<SyIcon
-					class="sy-select__clear-icon"
-					:icon="mdiCloseCircle"
-					:decorative="true"
-				/>
-			</button>
-			<SyIcon
-				class="arrow"
-				:icon="mdiMenuDown"
-				:decorative="true"
-			/>
+				<div
+					v-if="hasChips"
+					class="d-flex flex-wrap gap-1"
+				>
+					<VChip
+						v-for="item in selectedItem"
+						:key="props.returnObject ? item[props.valueKey] : item"
+						size="small"
+						class="ma-1"
+						closable
+						:close-label="`Supprimer ${getChipText(item)}`"
+						@click:close="removeChip(item)"
+					>
+						{{ getChipText(item) }}
+					</VChip>
+				</div>
+				<template #append-inner>
+					<SyIcon
+						v-if="hasError"
+						class="mr-6"
+						color="error"
+						:icon="mdiInformation"
+						:decorative="false"
+						label="Information"
+						role="img"
+					/>
+					<button
+						v-if="props.clearable && selectedItemText"
+						type="button"
+						class="sy-select__clear-button"
+						:style="{ right: hasError ? '62px' : '42px' }"
+						:aria-label="locales.clear"
+						@keydown.enter.prevent="$event => selectItem(null, $event)"
+						@keydown.space.prevent="$event => selectItem(null, $event)"
+						@click.stop.prevent="$event => selectItem(null, $event)"
+					>
+						<SyIcon
+							class="sy-select__clear-icon"
+							:icon="mdiCloseCircle"
+							:decorative="true"
+						/>
+					</button>
+					<SyIcon
+						class="arrow"
+						:icon="mdiMenuDown"
+						:decorative="true"
+					/>
+				</template>
+			</VTextField>
+			<span
+				ref="labelRef"
+				class="hidden-label"
+			>{{ label }}</span>
 		</template>
-	</VTextField>
-	<span
-		ref="labelRef"
-		class="hidden-label"
-	>{{ label }}</span>
-	<VList
-		v-if="isOpen"
-		:id="uniqueMenuId"
-		class="v-list"
-		role="listbox"
-		:aria-multiselectable="props.multiple ? 'true' : undefined"
-		:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-		:style="{
-			minWidth: `${input?.$el.offsetWidth}px`,
-			...listStyles
-		}"
-		bg-color="white"
-		tabindex="0"
-		:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
-		@keydown.esc.prevent="closeList"
-		@keydown.tab="handleTabKey"
-		@keydown.enter.prevent="handleEnterKey"
-		@keydown.down.prevent="handleDownKey"
-		@keydown.up.prevent="handleUpKey"
-		@keydown.home.prevent="handleHomeKey"
-		@keydown.end.prevent="handleEndKey"
-		@keydown.page-up.prevent="handlePageUpKey"
-		@keydown.page-down.prevent="handlePageDownKey"
-		@click.stop
-	>
-		<VListItem
-			v-for="(item, index) in formattedItems"
-			:id="`option-${index}`"
-			:key="index"
-			:ref="'options-' + index"
-			role="option"
-			class="v-list-item"
-			:aria-selected="isItemSelected(item) ? 'true' : 'false'"
-			tabindex="-1"
-			:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
-			@click.stop="(event) => selectItem(item, event)"
+		<VList
+			:id="uniqueMenuId"
+			ref="list"
+			class="v-list"
+			role="listbox"
+			:aria-multiselectable="props.multiple ? 'true' : undefined"
+			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
+			:style="{
+				minWidth: `${textInput?.$el.offsetWidth}px`,
+				marginTop: props.hideMessages ? '0' : '-22px',
+			}"
+			bg-color="white"
+			tabindex="0"
+			:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
+			@keydown.esc.prevent="closeList"
+			@keydown.tab="handleTabKey"
+			@keydown.enter.prevent="handleEnterKey"
+			@keydown.down.prevent="handleDownKey"
+			@keydown.up.prevent="handleUpKey"
+			@keydown.home.prevent="handleHomeKey"
+			@keydown.end.prevent="handleEndKey"
+			@keydown.page-up.prevent="handlePageUpKey"
+			@keydown.page-down.prevent="handlePageDownKey"
+			@click.stop
 		>
-			<template
-				v-if="props.multiple && !isDefaultOption(item)"
-				#prepend
+			<VListItem
+				v-for="(item, index) in formattedItems"
+				:id="`option-${index}`"
+				:key="index"
+				:ref="'options-' + index"
+				role="option"
+				class="v-list-item"
+				:aria-selected="isItemSelected(item) ? 'true' : 'false'"
+				tabindex="-1"
+				:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
+				@click.stop="(event) => selectItem(item, event)"
 			>
-				<SyCheckbox
-					:model-value="isItemSelected(item)"
-					density="compact"
-					hide-details
-					color="primary"
-					class="mt-0 pt-0 mr-1"
-					:title="getItemText(item)"
-					:aria-label="getItemText(item)"
-					@click.stop="(event) => selectItem(item, event)"
-				/>
-			</template>
-			<VListItemTitle>
-				<span
-					v-if="allowHtml"
-					v-html="getItemText(item)"
-				/>
-				<span v-else>{{ getItemText(item) }}</span>
-			</VListItemTitle>
-		</VListItem>
-	</VList>
+				<template
+					v-if="props.multiple && !isDefaultOption(item)"
+					#prepend
+				>
+					<SyCheckbox
+						:model-value="isItemSelected(item)"
+						density="compact"
+						hide-details
+						color="primary"
+						class="mt-0 pt-0 mr-1"
+						:title="getItemText(item)"
+						:aria-label="getItemText(item)"
+						@click.stop="(event) => selectItem(item, event)"
+					/>
+				</template>
+				<VListItemTitle>
+					<span
+						v-if="allowHtml"
+						class="item-text"
+						v-html="getItemText(item)"
+					/>
+					<span
+						v-else
+						class="item-text"
+					>
+						{{ getItemText(item) }}
+					</span>
+				</VListItemTitle>
+			</VListItem>
+		</VList>
+	</VMenu>
 
 	<div
 		v-if="showHelpTextBelow"
@@ -989,16 +922,6 @@
 	.v-icon.arrow {
 		transform: rotateX(180deg);
 	}
-}
-
-.v-list {
-	margin-top: -22px;
-	max-height: 300px;
-	padding: 0;
-	box-shadow: 0 2px 5px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 8%);
-	border-radius: 4px;
-	overflow-y: auto;
-	z-index: 2;
 }
 
 .v-list-item:hover {
@@ -1041,6 +964,21 @@
 	background-color: rgb(0 0 0 / 8%);
 }
 
+/* Permettre le passage à la ligne pour les textes longs dans la liste déroulante */
+.v-list-item-title {
+	white-space: normal;
+	word-wrap: break-word;
+	word-break: break-word;
+	line-height: 1.2;
+	padding: 4px 0;
+}
+
+/* Style spécifique pour le contenu texte des éléments de liste */
+.item-text {
+	display: block;
+	padding: 2px 0;
+}
+
 .v-icon {
 	position: absolute;
 	right: 10px;
@@ -1063,7 +1001,11 @@
 	justify-content: center;
 	top: 50%;
 	transform: translateY(-50%);
-	right: 10px;
+	right: 20px;
+
+	.v-icon {
+		position: static;
+	}
 }
 
 .v-chip {
@@ -1075,6 +1017,16 @@
 	color: tokens.$grey-darken-20 !important;
 	cursor: pointer;
 	caret-color: transparent;
+	padding-right: 25px;
+}
+
+.sy-select--clearable :deep(.v-field__input),
+.sy-select :deep(.v-field--error .v-field__input) {
+	padding-right: 55px;
+}
+
+:deep(.v-field__input input) {
+	text-overflow: ellipsis;
 }
 
 .hidden-label {

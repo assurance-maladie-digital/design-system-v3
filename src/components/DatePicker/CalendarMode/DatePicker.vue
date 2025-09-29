@@ -114,7 +114,7 @@
 
 	// Utilisation des composables pour les fonctionnalités du CalendarMode
 	const { displayWeekendDays } = useWeekendDays(props)
-	const { todayInString } = useTodayButton(props)
+	const { todayInString, headerDate } = useTodayButton(props)
 	const { labelWithAsterisk } = useAsteriskDisplay(props)
 
 	const selectedDates = ref<Date | Date[] | null>(
@@ -156,6 +156,12 @@
 
 		// Mettre à jour l'affichage formaté
 		updateDisplayFormattedDate()
+
+		// Mettre à jour les variables currentMonth et currentYear pour refléter la date d'aujourd'hui
+		currentMonth.value = today.getMonth().toString()
+		currentYear.value = today.getFullYear().toString()
+		currentMonthName.value = dayjs(today).format('MMMM')
+		currentYearName.value = today.getFullYear().toString()
 	}
 
 	const emit = defineEmits<{
@@ -574,6 +580,7 @@
 	}
 
 	const openDatePicker = () => {
+		if (props.disabled || props.readonly) return
 		if (!isDatePickerVisible.value) {
 			toggleDatePicker()
 		}
@@ -803,6 +810,7 @@
 	}
 
 	const openDatePickerOnClick = () => {
+		if (props.disabled || props.readonly) return
 		openDatePicker()
 		customizeMonthButton()
 	}
@@ -814,11 +822,15 @@
 	}
 
 	const openDatePickerOnIconClick = () => {
+		if (props.disabled || props.readonly) return
 		toggleDatePicker()
 	}
 
 	// Gestionnaire d'événement clavier pour l'input
 	const handleInputKeydown = (event: KeyboardEvent) => {
+		// Ne rien faire si le composant est en readonly
+		if (props.readonly) return
+
 		// Ouvrir le calendrier uniquement lorsque la touche Entrée est pressée
 		if (event.key === 'Enter') {
 			openDatePicker()
@@ -966,7 +978,7 @@
 						:density="props.density"
 						:hide-details="props.hideDetails"
 						:display-asterisk="props.displayAsterisk"
-						is-clearable
+						:is-clearable="!props.readonly"
 						:auto-clamp="props.autoClamp"
 						title="Date Picker"
 						@click="openDatePickerOnClick"
@@ -1005,7 +1017,7 @@
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ displayedDateString }}
+							{{ selectedDates ? displayedDateString : headerDate }}
 						</h3>
 					</template>
 					<template
@@ -1085,7 +1097,12 @@
 }
 
 .v-messages__message--error {
-	:deep(.v-input__control),
+	:deep(.v-input__control) {
+		color: tokens.$colors-text-error !important;
+
+		--v-medium-emphasis-opacity: 1;
+	}
+
 	:deep(.v-messages__message) {
 		color: tokens.$colors-text-error !important;
 	}
@@ -1121,8 +1138,6 @@
 }
 
 :deep(.v-field--dirty) {
-	opacity: 1 !important;
-
 	--v-medium-emphasis-opacity: 1;
 }
 

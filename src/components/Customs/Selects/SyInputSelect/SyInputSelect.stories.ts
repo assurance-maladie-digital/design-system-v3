@@ -600,3 +600,17 @@ const validateForm = () => {
 		}
 	},
 }
+
+// depreciation notice
+export const DeprecationNotice = {
+	render: () => ({
+		components: { SyAlert },
+		template: `
+			<SyAlert type="warning" variant="tonal" :closable="false">
+				<b>Ce composant est déprécié</b>, il ne sera plus maintenu ou mis à jour.<br/>
+				Nous vous recommandons d'utiliser à la place le composant <a href="/?path=/docs/composants-formulaires-selects-syselect--docs"><code>SySelect</code></a>.
+			</SyAlert>
+		`,
+	}),
+	tags: ['!dev'],
+}

@@ -1,11 +1,13 @@
 import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
 import * as ValidationStories from './DatePickerValidation.stories.ts';
+import '../../../stories/styles/shared.css';
 
 <Meta of={ValidationStories}/>
 
-# Documentations des règles de validation du DatePicker
-
-Le composant DatePicker prend en charge plusieurs types de règles de validation qui permettent de contrôler les dates saisies par l'utilisateur. Cette documentation décrit toutes les règles disponibles et comment les utiliser.
+<div className="header">
+  <h1>Documentations des règles de validation du DatePicker</h1>
+  <p>Le composant DatePicker prend en charge plusieurs types de règles de validation qui permettent de contrôler les dates saisies par l'utilisateur. Cette documentation décrit toutes les règles disponibles et comment les utiliser.</p>
+</div>
 
 > Pour en savoir plus sur le système global de gestion de validation, consultez la page <a href="/?path=/docs/guide-du-dev-utiliser-le-syst%C3%A8me-de-validation--docs">Utiliser le système de validation</a>.
 
@@ -163,27 +165,27 @@ Permet de créer une règle de validation personnalisée avec une fonction de va
     dark code={`
 <DatePicker
   v-model="date"
-					:custom-rules="[{
-						type: 'custom',
-						options: {
-							validate: (value) => {
-								// Si pas de valeur, c'est valide
-								if (!value) return true
-								// Convertir en chaîne si ce n'est pas déjà le cas
-								const dateStr = value.toString()
-								// Vérifier si c'est une Date et extraire l'année
-								if (value instanceof Date) {
-									return value.getFullYear() !== 2024
-								}
-								// Fallback sur la vérification de chaîne
-								return !dateStr.includes('2024')
-							},
-							message: 'Les dates en 2024 ne sont pas autorisées',
-							successMessage: 'Date valide (hors 2024)',
-							fieldIdentifier: 'date'
-						}
-					}]"
-/>
+  :custom-rules="[{
+    type: 'custom',
+    options: {
+      validate: (value) => {
+        // Si pas de valeur, c'est valide
+        if (!value) return true
+        // Convertir en chaîne si ce n'est pas déjà le cas
+        const dateStr = value.toString()
+        // Vérifier si c'est une Date et extraire l'année
+        if (value instanceof Date) {
+          return value.getFullYear() !== 2024
+        }
+        // Fallback sur la vérification de chaîne
+        return !dateStr.includes('2024')
+      },
+      message: 'Les dates en 2024 ne sont pas autorisées',
+      successMessage: 'Date valide (hors 2024)',
+      fieldIdentifier: 'date'
+    }
+  }]"
+/>				
 `}/>
 
 La fonction `validate` reçoit la valeur de la date (au format spécifié par la prop `format`) et doit retourner :

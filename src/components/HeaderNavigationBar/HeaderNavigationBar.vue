@@ -5,7 +5,7 @@
 	import HeaderMenuSection from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.vue'
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
 	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
-	import { computed } from 'vue'
+	import { computed, ref } from 'vue'
 	import { type RouteLocationRaw } from 'vue-router'
 	import HorizontalNavbar from './HorizontalNavbar/HorizontalNavbar.vue'
 	import type { NavigationItem } from './types'
@@ -35,8 +35,16 @@
 			 * The items to show in the horizontal menu
 			 */
 			items?: NavigationItem[]
+			/** Si activé, une confirmation sera demandée avant de changer d'onglet */
+			confirmTabChange?: boolean
+			/** Message affiché dans la boîte de dialogue de confirmation */
+			confirmationMessage?: boolean
 		}>(),
 		{
+			// Confirmation related defaults
+			confirmTabChange: false,
+			confirmationMessage: false,
+			// Navigation related defaults
 			homeAriaLabel: undefined,
 			serviceTitle: undefined,
 			serviceSubtitle: undefined,
@@ -46,6 +54,9 @@
 			maxHorizontalMenuItems: 6,
 			items: undefined,
 		})
+
+	// Définition des événements émis
+	const emit = defineEmits(['confirm-tab-change'])
 
 	type SlotProps = {
 		menuOpen: boolean | undefined
@@ -76,6 +87,19 @@
 
 	const { isDesktop } = useHeaderResponsiveMode()
 
+	const horizontalNavbarRef = ref<InstanceType<typeof HorizontalNavbar> | null>(null)
+
+	// Exposer une méthode pour réinitialiser la sélection d'onglet
+	defineExpose({
+		resetTabSelection: () => {
+			// Déléguer au composant HorizontalNavbar si disponible
+			if (horizontalNavbarRef.value && !verticalMenu.value) {
+				return horizontalNavbarRef.value.resetTabSelection()
+			}
+			return null
+		},
+	})
+
 	const verticalMenu = computed<boolean>(() => {
 		return (
 			!isDesktop.value
@@ -84,6 +108,15 @@
 				&& props.items.length > props.maxHorizontalMenuItems)
 		)
 	})
+
+	// Fonction qui gère la confirmation de changement d'onglet
+	// Cette fonction est appelée quand un utilisateur essaie de changer d'onglet
+	// et que la confirmation est activée
+	function handleConfirmTabChange(message: string, callback: (confirmed: boolean) => void) {
+		// Émettre un événement avec le message et le callback
+		// Le composant parent pourra écouter cet événement et afficher sa propre UI de confirmation
+		emit('confirm-tab-change', message, callback)
+	}
 </script>
 
 <template>
@@ -167,8 +200,11 @@
 		<template #append>
 			<HorizontalNavbar
 				v-if="props.items && !verticalMenu"
+				ref="horizontalNavbarRef"
 				:items="items"
 				:vuetify-options
+				:confirm-tab-change="confirmTabChange"
+				@confirm-tab-change="handleConfirmTabChange"
 			>
 				<template #navigation-bar-prepend>
 					<slot name="navigation-bar-prepend" />

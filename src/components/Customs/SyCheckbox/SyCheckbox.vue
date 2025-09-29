@@ -71,7 +71,7 @@
 	const internalIndeterminate = ref(props.indeterminate)
 
 	const generatedLabel = computed(() => {
-		return props.label + (props.displayAsterisk ? '*' : '')
+		return (props.label || '') + (props.displayAsterisk ? '*' : '')
 	})
 
 	const model = computed({

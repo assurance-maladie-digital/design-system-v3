@@ -3,9 +3,10 @@ import * as DatePickerStories from "./DatePicker.stories.ts";
 
 <Meta of={DatePickerStories}/>
 
-# DatePicker - Mode calendrier
-
-Le DatePicker en mode calendrier permet de sélectionner une date ou une plage de dates via un calendrier interactif.
+<div className="header">
+  <h1>DatePicker - Mode calendrier</h1>
+  <p>Le DatePicker en mode calendrier permet de sélectionner une date ou une plage de dates via un calendrier interactif.</p>
+</div>
 
 ## Description
 
@@ -159,6 +160,7 @@ Le DatePicker utilise deux formats distincts :
 	import { DatePicker } from '@cnamts/synapse'
 
 	const date = ref('')
+import '../../../stories/styles/shared.css';
 </script>
 
 <template>

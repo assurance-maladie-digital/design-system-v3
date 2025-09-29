@@ -1,7 +1,7 @@
 import { VBtn, VIcon, VRow, VCol, VCard, VCardText, VCardTitle } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
 
-import { mdiGithub, mdiArrowRight } from '@mdi/js'
+import { mdiArrowRight, mdiNpm } from '@mdi/js'
 
 import { version } from '../../../package.json'
 
@@ -17,7 +17,7 @@ export const Header: StoryObj = {
 				const theme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
 				return {
 					arrowRight: mdiArrowRight,
-					githubIcon: mdiGithub,
+					npmIcon: mdiNpm,
 					version,
 					theme,
 				}
@@ -67,13 +67,13 @@ export const Header: StoryObj = {
 							<img src="/figma.svg" alt="Figma" width="auto" height="17" />
 						</VBtn>
 						<VBtn
-							aria-label="GitHub"
-							href="https://github.com/assurance-maladie-digital/design-system-v3"
+							aria-label="NPM"
+							href="https://www.npmjs.com/package/@cnamts/synapse"
 							target="_blank"
 							rel="noopener noreferrer"
 							class="d-flex align-center justify-center text-lowercase ml-2"
 						>
-							<VIcon size="large" class="mr-2">{{ githubIcon }}</VIcon>
+							<VIcon size="large" class="mr-2">{{ npmIcon }}</VIcon>
 							<b>v{{ version }}</b>
 						</VBtn>
 					</div>
@@ -204,7 +204,7 @@ export const List: StoryObj = {
 			components: { VRow, VCol },
 			setup() {
 				return {
-					githubIcon: mdiGithub,
+					npmIcon: mdiNpm,
 					version,
 				}
 			},

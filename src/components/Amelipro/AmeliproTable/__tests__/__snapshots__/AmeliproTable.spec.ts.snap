@@ -41,13 +41,14 @@ exports[`AmeliproTable > render correctly 1`] = `
       <div
         class="
           amelipro-table__pagination-select
+          mb-0
           ml-2
+          pt-0
         "
         id="amelipro-table-id-pagination-select-container"
         style="
-          margin-bottom: 0px !important;
+          margin-bottom: 12px;
           max-width: 170px;
-          padding-top: 0px !important;
         "
       >
         <div class="
@@ -72,29 +73,25 @@ exports[`AmeliproTable > render correctly 1`] = `
               <!-- v-if -->
             </label>
           </div>
-          <div
-            class="
-              amelipro-select
-              amelipro-table__pagination-select
-              ml-2
-              pt-0
-              v-input
-              v-input--center-affix
-              v-input--density-compact
-              v-input--dirty
-              v-input--horizontal
-              v-locale--is-ltr
-              v-select
-              v-select--selected
-              v-select--single
-              v-text-field
-              v-theme--light
-            "
-            style="
-              margin-bottom: 0px !important;
-              padding-top: 0px !important;
-            "
-          >
+          <div class="
+            amelipro-select
+            amelipro-table__pagination-select
+            mb-0
+            ml-2
+            pt-0
+            pt-0
+            v-input
+            v-input--center-affix
+            v-input--density-compact
+            v-input--dirty
+            v-input--horizontal
+            v-locale--is-ltr
+            v-select
+            v-select--selected
+            v-select--single
+            v-text-field
+            v-theme--light
+          ">
             <!---->
             <div class="v-input__control">
               <div

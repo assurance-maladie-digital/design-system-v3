@@ -4,9 +4,10 @@ import * as CopyBtnStories from './CopyBtn.stories';
 
 <Meta of={CopyBtnStories} />
 
-# CopyBtn
-
-Le composant `CopyBtn` est utilisé pour afficher un bouton permettant à l’utilisateur de copier du texte.
+<div className="header">
+  <h1>CopyBtn</h1>
+  <p>Le composant `CopyBtn` est utilisé pour afficher un bouton permettant à l’utilisateur de copier du texte.</p>
+</div>
 
 <Canvas of={CopyBtnStories.Default}  />
 
@@ -20,6 +21,7 @@ Le composant `CopyBtn` est utilisé pour afficher un bouton permettant à l’ut
 <script setup lang="ts">
 import { CopyBtn } from '@cnamts/synapse'
 </script>
+import '../../stories/styles/shared.css';
 
 <template>
   <main>

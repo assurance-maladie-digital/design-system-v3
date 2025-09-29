@@ -1,29 +1,11 @@
 import { Meta } from '@storybook/blocks'
+import '../styles/shared.css';
 
 <Meta title="Directives/v-rgaa-svg-fix" />
 
 <style>
 {
   `
-    .directive-header {
-      color: white;
-      padding: 2rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    
-    .directive-header h1 {
-      margin-top: 0;
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
-    
-    .directive-header p {
-      font-size: 1.1rem;
-      margin-bottom: 0;
-      opacity: 0.9;
-    }
     
     .section-title {
       position: relative;
@@ -84,7 +66,6 @@ import { Meta } from '@storybook/blocks'
     }
     
     .feature-card:hover {
-      transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
@@ -110,7 +91,7 @@ import { Meta } from '@storybook/blocks'
 }
 </style>
 
-<div className="directive-header">
+<div className="header">
   <h1>Directive v-rgaa-svg-fix</h1>
   <p>Correction des attributs d'accessibilité pour les icônes SVG selon les normes RGAA</p>
 </div>
@@ -426,7 +407,7 @@ import { Meta } from '@storybook/blocks'
   </div>
 </div>
 
-<div className="directive-header" style={{ background: '#e3e8f2', color: '#0c419a', marginTop: '3rem' }}>
+<div className="directive-header" style={{ background: '', color: '#0c419a', marginTop: '3rem' }}>
   <h2 style={{ margin: '0 0 1rem 0' }}>Conclusion</h2>
   <p>La directive <code>v-rgaa-svg-fix</code> est un outil essentiel pour garantir que les icônes SVG de votre application respectent les normes d'accessibilité RGAA. En l'utilisant correctement, vous améliorez l'expérience des utilisateurs de technologies d'assistance et vous contribuez à rendre votre application plus inclusive.</p>
 </div>

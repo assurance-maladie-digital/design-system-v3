@@ -49,6 +49,28 @@ export const formatDateInput = (
 		placeholderChar = '_',
 	} = options
 
+	// Handle completely empty input
+	if (!input || input.trim() === '') {
+		return {
+			formatted: '',
+			cursorPos: 0,
+		}
+	}
+
+	// Créer une carte de correspondance entre les positions avant et après formatage
+	const positionMap: number[] = []
+	let cleanedIndex = 0
+
+	// Pour chaque caractère dans l'entrée originale, noter sa position dans la chaîne nettoyée
+	for (let i = 0; i < input.length; i++) {
+		positionMap[i] = cleanedIndex
+		if (/\d/.test(input[i])) {
+			cleanedIndex++
+		}
+	}
+	// Ajouter une entrée finale pour la position après le dernier caractère
+	positionMap[input.length] = cleanedIndex
+
 	// Nettoyer l'entrée pour ne garder que les chiffres
 	let cleanedInput = input.replace(/[^\d]/g, '')
 
@@ -56,8 +78,8 @@ export const formatDateInput = (
 	const separator = format.match(/[^DMY]/)?.[0] || '/'
 
 	// Calculer la position du curseur dans l'entrée nettoyée (sans séparateurs)
-	const inputBeforeCursor = input.substring(0, cursorPosition || 0)
-	const digitsBeforeCursor = inputBeforeCursor.replace(/[^\d]/g, '').length
+	const adjustedCursorPosition = cursorPosition !== undefined ? cursorPosition : input.length
+	const digitPositionInCleaned = positionMap[adjustedCursorPosition]
 
 	// Extraire les groupes de chiffres du format (DD, MM, YYYY)
 	const digitGroups: string[] = []
@@ -78,8 +100,20 @@ export const formatDateInput = (
 		digitGroups.push(currentGroup)
 	}
 
+	// Calculate expected digits based on original format
+	const originalExpectedDigits = digitGroups.join('').length
+
+	// Expand 2-digit year to 4-digit for placeholder purposes only when input is incomplete
+	const shouldExpandYear = cleanedInput.length < originalExpectedDigits
+	const expandedDigitGroups = digitGroups.map((group) => {
+		if (group.toUpperCase() === 'YY' && shouldExpandYear) {
+			return 'YYYY'
+		}
+		return group
+	})
+
 	// Calculer le nombre total de chiffres attendus dans le format
-	const expectedDigits = format.replace(/[^DMY]/g, '').length
+	const expectedDigits = shouldExpandYear ? expandedDigitGroups.join('').length : originalExpectedDigits
 
 	// Limiter le nombre de chiffres saisis au nombre attendu
 	if (cleanedInput.length > expectedDigits) {
@@ -90,14 +124,21 @@ export const formatDateInput = (
 	let result = ''
 	let digitIndex = 0
 
+	// Carte inverse pour suivre où chaque chiffre du résultat se retrouve dans la sortie formatée
+	const resultPositionMap: number[] = []
+
+	// Use the appropriate digit groups based on whether we're expanding
+	const groupsToUse = shouldExpandYear ? expandedDigitGroups : digitGroups
+
 	// Parcourir les groupes de chiffres pour construire la date formatée
-	for (let groupIndex = 0; groupIndex < digitGroups.length; groupIndex++) {
-		const group = digitGroups[groupIndex]
+	for (let groupIndex = 0; groupIndex < groupsToUse.length; groupIndex++) {
+		const group = groupsToUse[groupIndex]
 		const groupLength = group.length
 
 		// Ajouter les chiffres pour ce groupe
 		for (let j = 0; j < groupLength; j++) {
 			if (digitIndex < cleanedInput.length) {
+				resultPositionMap[digitIndex] = result.length
 				result += cleanedInput[digitIndex]
 				digitIndex++
 			}
@@ -108,20 +149,44 @@ export const formatDateInput = (
 		}
 
 		// Ajouter le séparateur après chaque groupe sauf le dernier
-		if (groupIndex < digitGroups.length - 1) {
+		if (groupIndex < groupsToUse.length - 1) {
 			result += separator
 		}
 	}
 
-	// Calculer la nouvelle position du curseur
-	let newCursorPos = 0
-	let digitCount = 0
+	// Calculer la nouvelle position du curseur en tenant compte du contexte d'édition
+	let newCursorPos
 
-	// Parcourir le résultat formaté pour trouver la position du curseur
-	for (let i = 0; i < result.length && digitCount < digitsBeforeCursor; i++) {
-		newCursorPos++
-		if (/\d/.test(result[i])) {
-			digitCount++
+	if (cursorPosition === undefined) {
+		// Si aucune position de curseur n'est fournie, placer à la fin
+		newCursorPos = result.length
+	}
+	else {
+		// Si la position du curseur est à l'intérieur des chiffres saisis
+		if (digitPositionInCleaned <= cleanedInput.length) {
+			// Rechercher la position correspondante dans le résultat formaté
+			if (digitPositionInCleaned < cleanedInput.length) {
+				// Le curseur est positionné sur un chiffre existant
+				newCursorPos = resultPositionMap[digitPositionInCleaned]
+			}
+			else if (cleanedInput.length > 0) {
+				// Le curseur est après le dernier chiffre saisi
+				const lastDigitPos = resultPositionMap[cleanedInput.length - 1]
+				// Positionner après le dernier chiffre saisi
+				newCursorPos = lastDigitPos + 1
+				// Si la position tombe sur un séparateur, avancer d'une position
+				if (newCursorPos < result.length && result[newCursorPos] === separator) {
+					newCursorPos++
+				}
+			}
+			else {
+				// Aucun chiffre saisi, placer au début
+				newCursorPos = 0
+			}
+		}
+		else {
+			// Position au-delà de la longueur - cas rare
+			newCursorPos = result.length
 		}
 	}
 

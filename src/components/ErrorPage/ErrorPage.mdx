@@ -3,10 +3,12 @@ import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
 import * as ErrorPageStories from './ErrorPage.stories'
 
 <Meta of={ErrorPageStories} />
+import '../../stories/styles/shared.css';
 
-# ErrorPage
-
-Le composant `ErrorPage` sert à afficher une page d'erreur.
+<div className="header">
+  <h1>ErrorPage</h1>
+  <p>Le composant `ErrorPage` sert à afficher une page d'erreur.</p>
+</div>
 
 <Canvas of={ErrorPageStories.Default} />
 

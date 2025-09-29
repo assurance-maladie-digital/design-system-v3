@@ -1,12 +1,14 @@
 import { Meta, Controls, Canvas, Story } from '@storybook/blocks';
 import * as NoCalendarStories from './NoCalendar.stories';
 import { ref } from 'vue';
+import '../../../stories/styles/shared.css';
 
 <Meta of={NoCalendarStories} />
 
-# DatePicker - Mode saisie manuelle uniquement
-
-Le DatePicker en mode saisie manuelle uniquement (`noCalendar: true`) permet d'utiliser le champ de saisie avec formatage automatique sans que le calendrier n'apparaisse au clic sur l'input ou sur l'icône.
+<div className="header">
+  <h1>DatePicker - Mode saisie manuelle uniquement</h1>
+  <p>Le DatePicker en mode saisie manuelle uniquement (`noCalendar: true`) permet d'utiliser le champ de saisie avec formatage automatique sans que le calendrier n'apparaisse au clic sur l'input ou sur l'icône.</p>
+</div>
 
 ## Description
 

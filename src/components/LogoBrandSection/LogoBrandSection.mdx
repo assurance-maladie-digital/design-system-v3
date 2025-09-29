@@ -1,11 +1,13 @@
 import { Canvas, Meta, Controls, Source } from '@storybook/blocks';
 import * as LogoBrandSectionStories from './LogoBrandSection.stories.ts';
+import '../../stories/styles/shared.css';
 
 <Meta title="Composants/Données/LogoBrandSection" component={LogoBrandSectionStories} />
 
-# LogoBrandSection
-
-Il permet d'afficher le logo de l'Assurance Maladie avec des logos ou un titre secondaire et contient des présets pour différentes marques de l'Assurance Maladie grace a la props `theme` (ex: `ameli`, `ameli-pro`, `compte-entreprise`...).
+<div className="header">
+  <h1>LogoBrandSection</h1>
+  <p>Il permet d'afficher le logo de l'Assurance Maladie avec des logos ou un titre secondaire et contient des présets pour différentes marques de l'Assurance Maladie grace a la props `theme` (ex: `ameli`, `ameli-pro`, `compte-entreprise`...).</p>
+</div>
 
 <Canvas of={LogoBrandSectionStories.Default} />
 

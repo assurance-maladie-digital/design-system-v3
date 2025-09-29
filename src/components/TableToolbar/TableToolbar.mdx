@@ -1,12 +1,14 @@
 import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import '../../stories/styles/shared.css';
 
 import * as TableToolbarStories from './TableToolbar.stories';
 
 <Meta of={TableToolbarStories} />
 
-# TableToolbar
-
-Le composant `TableToolbar` est utilisé pour afficher une barre d'outils pour les tableaux.
+<div className="header">
+  <h1>TableToolbar</h1>
+  <p>Le composant `TableToolbar` est utilisé pour afficher une barre d'outils pour les tableaux.</p>
+</div>
 
 <Canvas of={TableToolbarStories.Default}  />
 
@@ -186,6 +188,7 @@ Vous pouvez utiliser les slots `search-left` ou `search-right` pour ajouter du c
 			}
 
 			const search = ref('')
+import '../../stories/styles/shared.css';
 		</script>
 
 		<template>

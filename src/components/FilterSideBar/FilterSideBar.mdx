@@ -3,9 +3,10 @@ import * as FilterSideBarStories from './FilterSideBar.stories.ts';
 
 <Meta of={FilterSideBarStories} />
 
-# FilterSideBar
-
-Le composant `FilterSideBar` est utilisé pour permettre à l’utilisateur de sélectionner des filtres dans un panel dédié.
+<div className="header">
+  <h1>FilterSideBar</h1>
+  <p>Le composant `FilterSideBar` est utilisé pour permettre à l’utilisateur de sélectionner des filtres dans un panel dédié.</p>
+</div>
 
 <Canvas of={FilterSideBarStories.Default} />
 
@@ -63,7 +64,6 @@ Vous pouvez modifier le formatage des puces en utilisant la propriété de filtr
 
 Vous pouvez utiliser plusieurs composants de filtres pour un seul et même filtre afin de pouvoir modifier un filtre à différents endroits sur une page.
 
-
 <Canvas
 	of={FilterSideBarStories.FilterCombination}
 	source={{
@@ -93,6 +93,7 @@ const filters = ref([
 		title: 'Profession',
 	},
 ])
+import '../../stories/styles/shared.css';
 
 const folderTypes = [
 	{

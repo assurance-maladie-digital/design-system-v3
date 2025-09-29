@@ -1,9 +1,15 @@
 import { Story, Meta } from '@storybook/blocks';
 import * as ColorsStories from './colors.stories';
+import '../styles/shared.css';
 
 <Meta title="Design Tokens/Couleurs" />
 
-# Couleurs
+
+<div className="header">
+  <h1>Couleurs</h1>
+  <p>Les couleurs disponibles dans notre Design System.</p>
+</div>
+
 <Story of={ColorsStories.Theme} />
 
 <Story of={ColorsStories.ColorIntegration} />

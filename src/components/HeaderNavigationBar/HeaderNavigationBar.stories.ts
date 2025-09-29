@@ -247,6 +247,16 @@ const meta = {
 				},
 			},
 		},
+		'confirmTabChange': {
+			control: { type: 'boolean' },
+			description: 'Si activé, une confirmation sera demandée avant de changer d\'onglet',
+			table: {
+				category: 'props',
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof HeaderNavigationBar>
 
@@ -832,8 +842,8 @@ export const WithVuetifyOptions: Story = {
 				code: `
 <HeaderNavigationBar
 	:items="[
-		{ label: 'Home', href: '' },
-		{ label: 'About', href: '' },
+		{ label: 'Home', href: '/home/about' },
+		{ label: 'About', href: '/about' },
 	]"
 	:vuetifyOptions="{
 		sheet: {
@@ -849,6 +859,85 @@ export const WithVuetifyOptions: Story = {
 				<script setup lang="ts">
 					import { HeaderNavigationBar } from '@cnamts/synapse'
 				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const WithTabConfirmation: Story = {
+	args: {
+		items: [
+			{ label: 'Home', href: '/home' },
+			{ label: 'Test avec href', href: '/test-avec-href' },
+			{ label: 'Test sans href', href: '' },
+		],
+		confirmTabChange: true,
+	},
+	render: (args) => {
+		return {
+			components: { HeaderNavigationBar },
+			setup() {
+				const showCustomConfirmDialog = (message: string, callback: (confirmed: boolean) => void) => {
+					// Simulation d'une boîte de dialogue personnalisée
+					// Dans un cas réel, vous afficheriez votre propre composant de dialogue
+					// Pour cette démo, on utilise encore window.confirm mais avec un préfixe
+					const confirmed = window.confirm('Changer d\'onglet ?')
+					console.log('Réponse de l\'utilisateur:', confirmed ? 'Accepté' : 'Refusé')
+					callback(confirmed)
+				}
+
+				return { args, showCustomConfirmDialog }
+			},
+			template: `
+				<div>
+					<HeaderNavigationBar
+						v-bind="args"
+						@confirm-tab-change="showCustomConfirmDialog"
+					/>
+					<div style="padding: 20px; background-color: #f5f5f5;">
+						<p>Cette démo montre comment intercepter l'événement <code>confirm-tab-change</code> et gérer la confirmation via votre propre UI.</p>
+						<p>Cliquez sur un onglet pour voir la boîte de dialogue de confirmation.</p>
+						<p><em>Consultez la console pour voir les logs de confirmation.</em></p>
+					</div>
+				</div>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<HeaderNavigationBar
+		:items="[
+			{ label: 'Home', href: '/home' },
+			{ label: 'About', href: '/about' },
+		]"
+		:confirmTabChange="true"
+		@confirm-tab-change="showCustomConfirmDialog"
+	/>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { HeaderNavigationBar } from '@cnamts/synapse'
+
+const showCustomConfirmDialog = (message: string, callback: (confirmed: boolean) => void) => {
+	// Dans un cas réel, vous afficheriez votre propre composant de dialogue modal
+	// Par exemple avec v-dialog de Vuetify
+					// Pour cette démo, on utilise encore window.confirm mais avec un préfixe
+				const confirmed = window.confirm('Changer d'onglet ?')
+
+	
+	// Appel du callback avec la décision (true/false)
+	callback(confirmed)
+}
+</script>
 				`,
 			},
 		],

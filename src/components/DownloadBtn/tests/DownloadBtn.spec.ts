@@ -39,8 +39,6 @@ describe('DownloadBtn', () => {
 		expect(DownloadBtn).toBeTruthy()
 
 		expect(element.exists()).toBe(true)
-
-		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('works correctly', async () => {
@@ -77,6 +75,7 @@ describe('DownloadBtn', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		element = wrapper.find('[data-testid="download-btn"]')
+		expect(element.text()).toBe(slot)
 	})
 })

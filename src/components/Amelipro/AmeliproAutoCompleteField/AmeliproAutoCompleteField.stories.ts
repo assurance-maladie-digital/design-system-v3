@@ -168,3 +168,483 @@ export const Default: Story = {
 />`,
 	}),
 }
+export const AvecPlaceholder: Story = {
+	args: {
+		items,
+		label: 'Avec placeholder',
+		uniqueId: 'amelipro-auto-complete-field-placeholder',
+		placeholder: 'Commencez à taper une ville…',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Un texte d’aide s’affiche dans le champ grâce à la prop <code>placeholder</code>.</p>
+	<AmeliproAutoCompleteField
+		v-model="model"
+		:items="items"
+		unique-id="amelipro-auto-complete-field-placeholder"
+		label="Avec placeholder"
+		placeholder="Commencez à taper une ville…"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
+	import { ref } from 'vue';
+
+	const model = ref();
+
+	const items = [/* ... */];
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAutoCompleteField },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>Un texte d’aide s’affiche dans le champ grâce à la prop <code>placeholder</code>.</p>
+<AmeliproAutoCompleteField
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const MasquerErreur: Story = {
+	args: {
+		items,
+		label: 'Masquage du message d’erreur',
+		uniqueId: 'amelipro-auto-complete-field-hide-error',
+		rules: [v => !!v || 'Ce champ est obligatoire'],
+		hideErrorMessage: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le message d’erreur ne s’affiche pas grâce à la prop <code>hideErrorMessage</code>.</p>
+	<AmeliproAutoCompleteField
+		v-model="model"
+		:items="items"
+		unique-id="amelipro-auto-complete-field-hide-error"
+		label="Masquage du message d’erreur"
+		:rules="[v => !!v || 'Ce champ est obligatoire']"
+		hide-error-message
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
+	import { ref } from 'vue';
+
+	const model = ref();
+
+	const items = [/* ... */];
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAutoCompleteField },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>Le message d’erreur ne s’affiche pas grâce à la prop <code>hideErrorMessage</code>.</p>
+<AmeliproAutoCompleteField
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const LargeurLabel: Story = {
+	args: {
+		items,
+		label: 'Un très long label dont la largeur est personnalisée',
+		uniqueId: 'amelipro-auto-complete-field-label-width',
+		labelMaxWidth: '200px',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>La largeur du label est fixée à 200px via la prop <code>labelMaxWidth</code>.</p>
+	<AmeliproAutoCompleteField
+		v-model="model"
+		:items="items"
+		unique-id="amelipro-auto-complete-field-label-width"
+		label="Un très long label dont la largeur est personnalisée"
+		label-max-width="200px"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
+	import { ref } from 'vue';
+
+	const model = ref();
+
+	const items = [/* ... */];
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAutoCompleteField },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>La largeur du label est fixée à 200px via la prop <code>labelMaxWidth</code>.</p>
+<AmeliproAutoCompleteField
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+export const LectureSeule: Story = {
+	args: {
+		items,
+		label: 'Lecture seule',
+		uniqueId: 'amelipro-auto-complete-field-readonly',
+		readonly: true,
+		modelValue: 'Bordeaux',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le champ est en lecture seule grâce à la prop <code>readonly</code>.</p>
+	<AmeliproAutoCompleteField
+		v-model="model"
+		:items="items"
+		unique-id="amelipro-auto-complete-field-readonly"
+		label="Lecture seule"
+		readonly
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
+	import { ref } from 'vue';
+
+	const model = ref('Bordeaux');
+
+	const items = [/* ... */];
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAutoCompleteField },
+		setup() {
+			const model = ref('Bordeaux')
+			watch(() => args.modelValue, (newValue) => {
+				model.value = String(newValue)
+			})
+			return { args, model }
+		},
+		template: `
+<p>Le champ est en lecture seule grâce à la prop <code>readonly</code>.</p>
+<AmeliproAutoCompleteField
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+export const LargeurPersonnalisee: Story = {
+	args: {
+		items,
+		label: 'Largeur personnalisée',
+		uniqueId: 'amelipro-auto-complete-field-largeur',
+		globalWidth: '400px',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>La largeur du champ est fixée à 400px via la prop <code>globalWidth</code>.</p>
+	<AmeliproAutoCompleteField
+		v-model="model"
+		:items="items"
+		unique-id="amelipro-auto-complete-field-largeur"
+		label="Largeur personnalisée"
+		global-width="400px"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
+	import { ref } from 'vue';
+
+	const model = ref();
+
+	const items = [/* ... */];
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAutoCompleteField },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>La largeur du champ est fixée à 400px via la prop <code>globalWidth</code>.</p>
+<AmeliproAutoCompleteField
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const Disabled: Story = {
+	args: {
+		items,
+		label: 'Champ désactivé',
+		uniqueId: 'amelipro-auto-complete-field-disabled',
+		disabled: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le champ est désactivé grâce à la prop <code>disabled</code>.</p>
+	<AmeliproAutoCompleteField
+		v-model="model"
+		:items="items"
+		unique-id="amelipro-auto-complete-field-disabled"
+		label="Champ désactivé"
+		disabled
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
+	import { ref } from 'vue';
+
+	const model = ref();
+
+	const items = [/* ... */];
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAutoCompleteField },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p>Le champ est désactivé grâce à la prop <code>disabled</code>.</p>
+<AmeliproAutoCompleteField
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const Required: Story = {
+	args: {
+		items,
+		label: 'Champ obligatoire',
+		uniqueId: 'amelipro-auto-complete-field-required',
+		ariaRequired: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+	<AmeliproAutoCompleteField
+		v-model="model"
+		:items="items"
+		unique-id="amelipro-auto-complete-field-required"
+		label="Champ obligatoire"
+		aria-required
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
+	import { ref } from 'vue';
+
+	const model = ref();
+
+	const items = [/* ... */];
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAutoCompleteField },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+<AmeliproAutoCompleteField
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+export const Horizontal: Story = {
+	args: {
+		items,
+		label: 'Affichage horizontal',
+		uniqueId: 'amelipro-auto-complete-field-horizontal',
+		horizontal: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p>Le champ est affiché en horizontal grâce à la prop <code>horizontal</code>.</p>
+	<AmeliproAutoCompleteField
+		v-model="model"
+		:items="items"
+		unique-id="amelipro-auto-complete-field-horizontal"
+		label="Affichage horizontal"
+		horizontal
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
+	import { ref } from 'vue';
+
+	const model = ref();
+
+	const items = [/* ... */];
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAutoCompleteField },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `<p>Le champ est affiché en horizontal grâce à la prop <code>horizontal</code>.</p>
+<AmeliproAutoCompleteField
+	v-bind="args"
+	v-model="model"
+/>`,
+	}),
+}
+
+export const Validation: Story = {
+	args: {
+		items,
+		label: 'Validation personnalisée',
+		uniqueId: 'amelipro-auto-complete-field-validation',
+		rules: [
+			v => !!v || 'Ce champ est obligatoire',
+			v => (v ? v.startsWith('B') : true) || 'La valeur doit commencer par "B"',
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<p>Ce champ est obligatoire et la valeur doit commencer par la lettre "B".</p>
+<template>
+	<AmeliproAutoCompleteField
+		v-model="model"
+		:items="items"
+		unique-id="amelipro-auto-complete-field-validation"
+		label="Validation personnalisée"
+		:rules="[
+			v => !!v || 'Ce champ est obligatoire',
+			v => (v ? v.startsWith('B') : true) || 'La valeur doit commencer par "B"',
+		]"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproAutoCompleteField } from '@cnamts/synapse';
+	import { ref } from 'vue';
+
+	const model = ref();
+
+	const items = [/* ... */];
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAutoCompleteField },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
+<p>Ce champ est obligatoire et la valeur doit commencer par la lettre "B".</p>
+<AmeliproAutoCompleteField
+	v-bind="args"
+	v-model="model"
+/>
+`,
+	}),
+}
