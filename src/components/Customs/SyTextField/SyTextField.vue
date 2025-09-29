@@ -71,6 +71,7 @@
 			rounded?: string | number | boolean
 			hasError?: boolean
 			hasWarning?: boolean
+			hasSuccess?: boolean
 			isOnSingleLine?: boolean
 			suffix?: string
 			theme?: string
@@ -270,7 +271,7 @@
 
 	const hasError = computed(() => validation.hasError.value || props.hasError)
 	const hasWarning = computed(() => validation.hasWarning.value || props.hasWarning)
-	const hasSuccess = computed(() => validation.hasSuccess.value && !hasError.value && !hasWarning.value)
+	const hasSuccess = computed(() => (validation.hasSuccess.value && !hasError.value && !hasWarning.value) || props.hasSuccess)
 
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
