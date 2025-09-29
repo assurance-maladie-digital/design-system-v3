@@ -29,15 +29,10 @@
 		filterInputConfig: () => ({}),
 		density: 'default',
 		striped: false,
-		showSelect: false,
 		multiSort: false,
 		mustSort: false,
 		itemsPerPageOptions: undefined,
 	})
-
-	const emit = defineEmits<{
-		(e: 'update:options', options: Partial<DataOptions>): void
-	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
@@ -98,7 +93,6 @@
 		options,
 		itemsLength,
 		table,
-		emit,
 	})
 
 	// Create a computed property for items to ensure reactivity
@@ -394,7 +388,7 @@
 						:page-count="pageCount"
 						:items-length="props.serverItemsLength"
 						:items-per-page-options="props.itemsPerPageOptions"
-						@update:page="page = $event"
+						@update:page="updateOptions({ page: $event })"
 						@update:items-per-page="updateItemsPerPage"
 					/>
 				</div>

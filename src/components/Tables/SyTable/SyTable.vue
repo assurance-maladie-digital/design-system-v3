@@ -396,7 +396,7 @@
 						:page-count="pageCount"
 						:items-length="filteredItems.length"
 						:items-per-page-options="props.itemsPerPageOptions"
-						@update:page="page = $event"
+						@update:page="updateOptions({ page: $event })"
 						@update:items-per-page="updateItemsPerPage"
 					/>
 				</div>
