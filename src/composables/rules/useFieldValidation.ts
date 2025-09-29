@@ -217,19 +217,33 @@ export function useFieldValidation() {
 						return { error: 'Date invalide' }
 					}
 
-					// Check if options.date is a string and in DD/MM/YYYY format
-					if (typeof options.date !== 'string') {
-						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+					// Amélioration pour accepter différents types de dates
+					let referenceDate
+					let formattedRefDate
+
+					if (typeof options.date === 'string') {
+						referenceDate = parseDate(options.date)
+						formattedRefDate = options.date
+					}
+					else if (options.date instanceof Date) {
+						referenceDate = options.date
+						// Formater la date pour l'affichage du message d'erreur
+						formattedRefDate = `${options.date.getDate().toString().padStart(2, '0')}/${(options.date.getMonth() + 1).toString().padStart(2, '0')}/${options.date.getFullYear()}`
+					}
+					else {
+						// Si c'est une référence réactive (comme dateA.value)
+						const strValue = String(options.date)
+						referenceDate = parseDate(strValue)
+						formattedRefDate = strValue
 					}
 
-					const referenceDate = parseDate(options.date)
 					if (!referenceDate) {
 						return { error: 'Date de référence invalide' }
 					}
 
 					return createValidationResult(
 						dateValue >= referenceDate,
-						options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${options.date}.`,
+						options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${formattedRefDate}.`,
 					)
 				}
 
@@ -243,19 +257,33 @@ export function useFieldValidation() {
 						return { error: 'Date invalide' }
 					}
 
-					// Check if options.date is a string and in DD/MM/YYYY format
-					if (typeof options.date !== 'string') {
-						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+					// Amélioration pour accepter différents types de dates
+					let referenceDate
+					let formattedRefDate
+
+					if (typeof options.date === 'string') {
+						referenceDate = parseDate(options.date)
+						formattedRefDate = options.date
+					}
+					else if (options.date instanceof Date) {
+						referenceDate = options.date
+						// Formater la date pour l'affichage du message d'erreur
+						formattedRefDate = `${options.date.getDate().toString().padStart(2, '0')}/${(options.date.getMonth() + 1).toString().padStart(2, '0')}/${options.date.getFullYear()}`
+					}
+					else {
+						// Si c'est une référence réactive (comme dateA.value)
+						const strValue = String(options.date)
+						referenceDate = parseDate(strValue)
+						formattedRefDate = strValue
 					}
 
-					const referenceDate = parseDate(options.date)
 					if (!referenceDate) {
 						return { error: 'Date de référence invalide' }
 					}
 
 					return createValidationResult(
 						dateValue <= referenceDate,
-						options.message || options.warningMessage || `${identifier} ne peut pas être après le ${options.date}.`,
+						options.message || options.warningMessage || `${identifier} ne peut pas être après le ${formattedRefDate}.`,
 					)
 				}
 
@@ -269,11 +297,26 @@ export function useFieldValidation() {
 						return { error: 'Date invalide' }
 					}
 
-					if (typeof options.date !== 'string') {
-						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+					// Amélioration pour accepter différents types de dates
+					let referenceDate
+					let formattedRefDate
+
+					if (typeof options.date === 'string') {
+						referenceDate = parseDate(options.date)
+						formattedRefDate = options.date
+					}
+					else if (options.date instanceof Date) {
+						referenceDate = options.date
+						// Formater la date pour l'affichage du message d'erreur
+						formattedRefDate = `${options.date.getDate().toString().padStart(2, '0')}/${(options.date.getMonth() + 1).toString().padStart(2, '0')}/${options.date.getFullYear()}`
+					}
+					else {
+						// Si c'est une référence réactive (comme dateA.value)
+						const strValue = String(options.date)
+						referenceDate = parseDate(strValue)
+						formattedRefDate = strValue
 					}
 
-					const referenceDate = parseDate(options.date)
 					if (!referenceDate) {
 						return { error: 'Date de référence invalide' }
 					}
@@ -289,7 +332,7 @@ export function useFieldValidation() {
 
 					return createValidationResult(
 						isSameDate,
-						options.message || options.warningMessage || `${identifier} doit être exactement le ${options.date}.`,
+						options.message || options.warningMessage || `${identifier} doit être exactement le ${formattedRefDate}.`,
 					)
 				}
 
