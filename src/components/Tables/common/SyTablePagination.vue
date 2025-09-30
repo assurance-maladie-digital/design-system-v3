@@ -82,7 +82,7 @@
 	watch(localItemsPerPage, (newValue) => {
 		// First reset to page 1 when changing items per page
 		emit('update:page', 1)
-		// Then update the items per page (single emission)
+		// Then update the items per page
 		emit('update:items-per-page', newValue)
 	})
 
