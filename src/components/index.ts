@@ -63,6 +63,7 @@ export { default as SySelect } from './Customs/Selects/SySelect/SySelect.vue'
 export { default as SyTextArea } from './SyTextArea/SyTextArea.vue'
 export { default as SyTextField } from './Customs/SyTextField/SyTextField.vue'
 export { default as UploadWorkflow } from './UploadWorkflow/UploadWorkflow.vue'
+export { default as SyForm } from './Customs/SyForm/SyForm.vue'
 
 // ===========================
 // Tableaux
@@ -185,6 +186,7 @@ export { useFieldValidation } from '../composables/rules/useFieldValidation'
 export { useNotificationService } from '../services/NotificationService'
 export { useValidation } from '../composables/validation/useValidation'
 export type { RuleOptions } from '../composables/rules/useFieldValidation'
+export { useValidatable } from '../composables/validation/useValidatable'
 
 // ===========================
 // Directives
