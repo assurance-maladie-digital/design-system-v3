@@ -35,7 +35,6 @@
 		itemsPerPageOptions: undefined,
 	})
 
-
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
