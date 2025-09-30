@@ -35,9 +35,6 @@
 		itemsPerPageOptions: undefined,
 	})
 
-	const emit = defineEmits<{
-		(e: 'update:options', options: Partial<DataOptions>): void
-	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
@@ -107,7 +104,6 @@
 		options,
 		itemsLength,
 		table,
-		emit,
 	})
 
 	// Use the table checkbox composable
