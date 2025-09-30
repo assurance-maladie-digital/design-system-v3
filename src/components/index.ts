@@ -63,6 +63,7 @@ export { default as SySelect } from './Customs/Selects/SySelect/SySelect.vue'
 export { default as SyTextArea } from './SyTextArea/SyTextArea.vue'
 export { default as SyTextField } from './Customs/SyTextField/SyTextField.vue'
 export { default as UploadWorkflow } from './UploadWorkflow/UploadWorkflow.vue'
+export { default as SyForm } from './Customs/SyForm/SyForm.vue'
 
 // ===========================
 // Tableaux
@@ -119,6 +120,7 @@ export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 // ===========================
 export { default as AmeliproAccordion } from './Amelipro/AmeliproAccordion/AmeliproAccordion.vue'
 export { default as AmeliproAccordionGroup } from './Amelipro/AmeliproAccordionGroup/AmeliproAccordionGroup.vue'
+export { default as AmeliproAccordionFrieze } from './Amelipro/AmeliproAccordionFrieze/AmeliproAccordionFrieze.vue'
 export { default as AmeliproAccordionList } from './Amelipro/AmeliproAccordionList/AmeliproAccordionList.vue'
 export { default as AmeliproAccordionResult } from './Amelipro/AmeliproAccordionResult/AmeliproAccordionResult.vue'
 export { default as AmeliproAccordionResultList } from './Amelipro/AmeliproAccordionResultList/AmeliproAccordionResultList.vue'
@@ -184,6 +186,7 @@ export { useFieldValidation } from '../composables/rules/useFieldValidation'
 export { useNotificationService } from '../services/NotificationService'
 export { useValidation } from '../composables/validation/useValidation'
 export type { RuleOptions } from '../composables/rules/useFieldValidation'
+export { useValidatable } from '../composables/validation/useValidatable'
 
 // ===========================
 // Directives

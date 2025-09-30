@@ -13,6 +13,7 @@
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { useValidation, type ValidationRule, type ValidationResult } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
@@ -920,6 +921,9 @@
 		if (!ok || hasError.value) return false
 		return !hasError.value
 	}
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
 
 	defineExpose({
 		validateOnSubmit,
