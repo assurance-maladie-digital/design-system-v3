@@ -21,11 +21,21 @@ Bloquant : <!-- Oui, Non (est-ce que le problème empêche le développement ou 
 
 ## Reproduction minimale
 
-<!-- Fournissez un lien vers une reproduction minimale du bug ou du code. -->
+<!-- Fournissez du code ou un lien vers une reproduction minimale du bug. -->
 
 Lorsque vous créez une reproduction minimale, supprimez tous les éléments, propriétés, variables, données et autres qui
 ne sont pas nécessaires pour reproduire le bug.
 Cela facilitera le traitement du rapport et le temps qu’il faudra pour identifier puis résoudre le bug.
+
+```
+<script lang='ts' setup>
+ Code du script
+</script>
+<template>
+    Code du template 
+</template>
+```
+
 
 ## Comment reproduire
 
