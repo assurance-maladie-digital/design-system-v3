@@ -29,6 +29,7 @@
 		filterInputConfig: () => ({}),
 		density: 'default',
 		striped: false,
+    showSelect: false,
 		multiSort: false,
 		mustSort: false,
 		itemsPerPageOptions: undefined,
