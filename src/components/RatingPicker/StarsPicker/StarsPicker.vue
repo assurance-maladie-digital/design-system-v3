@@ -3,6 +3,7 @@
 	import { RatingEnum, useRating } from '../Rating'
 	import { mdiStarOutline, mdiStar } from '@mdi/js'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { locales } from '../locales'
 
 	const props = defineProps({
 		label: {
@@ -102,7 +103,6 @@
 				:aria-disabled="(props.readonly || hasAnswered) ? true : false"
 				:disabled="props.readonly || hasAnswered ? true : null"
 				:aria-checked="isActive(index)"
-				:aria-label="`${index} star`"
 				@mouseover="hoverIndex = index"
 				@focus="hoverIndex = index"
 				@mouseleave="hoverIndex = -1"
@@ -113,6 +113,7 @@
 				@keyup.right="focusNextElement(index - 1)"
 				@keyup.left="focusPrevElement(index - 1)"
 			>
+				<span class="d-sr-only">{{ locales.etoiles(index) }}</span>
 				<SyIcon
 					:icon="isFilled(index) ? starIcon : starOutlineIcon"
 					:class="
