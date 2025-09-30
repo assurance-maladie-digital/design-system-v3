@@ -18,9 +18,6 @@ exports[`StarsPicker > renders correctly 1`] = `
     role="radiogroup"
   >
     <div
-      aria-checked="false"
-      aria-disabled="false"
-      aria-label="1 star"
       class="
         align-center
         d-flex
@@ -30,6 +27,9 @@ exports[`StarsPicker > renders correctly 1`] = `
       role="radio"
       tabindex="0"
     >
+      <span class="d-sr-only">
+        1 étoile
+      </span>
       <i
         aria-hidden="true"
         class="
@@ -50,9 +50,6 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
     <div
-      aria-checked="false"
-      aria-disabled="false"
-      aria-label="2 star"
       class="
         align-center
         d-flex
@@ -62,6 +59,9 @@ exports[`StarsPicker > renders correctly 1`] = `
       role="radio"
       tabindex="-1"
     >
+      <span class="d-sr-only">
+        2 étoiles
+      </span>
       <i
         aria-hidden="true"
         class="
@@ -82,9 +82,6 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
     <div
-      aria-checked="false"
-      aria-disabled="false"
-      aria-label="3 star"
       class="
         align-center
         d-flex
@@ -94,6 +91,9 @@ exports[`StarsPicker > renders correctly 1`] = `
       role="radio"
       tabindex="-1"
     >
+      <span class="d-sr-only">
+        3 étoiles
+      </span>
       <i
         aria-hidden="true"
         class="
@@ -114,9 +114,6 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
     <div
-      aria-checked="false"
-      aria-disabled="false"
-      aria-label="4 star"
       class="
         align-center
         d-flex
@@ -126,6 +123,9 @@ exports[`StarsPicker > renders correctly 1`] = `
       role="radio"
       tabindex="-1"
     >
+      <span class="d-sr-only">
+        4 étoiles
+      </span>
       <i
         aria-hidden="true"
         class="
@@ -146,9 +146,6 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
     <div
-      aria-checked="false"
-      aria-disabled="false"
-      aria-label="5 star"
       class="
         align-center
         d-flex
@@ -158,6 +155,9 @@ exports[`StarsPicker > renders correctly 1`] = `
       role="radio"
       tabindex="-1"
     >
+      <span class="d-sr-only">
+        5 étoiles
+      </span>
       <i
         aria-hidden="true"
         class="

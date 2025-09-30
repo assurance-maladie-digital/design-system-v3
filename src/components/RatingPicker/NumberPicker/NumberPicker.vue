@@ -52,13 +52,6 @@
 
 	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
 
-	onMounted(() => {
-		const hiddenInputs = document.querySelectorAll('.v-rating__hidden')
-		hiddenInputs.forEach((input) => {
-			(input as HTMLElement).setAttribute('aria-hidden', 'true')
-		})
-	})
-
 	const ratingElement = ref<HTMLDivElement[]>([])
 	function focusNextElement(index: number) {
 		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
@@ -129,11 +122,10 @@
 						ref="ratingElement"
 						v-ripple="!(props.readonly || hasAnswered)"
 						role="radio"
-						:aria-checked="props.modelValue === index"
+						:aria-checked="props.modelValue === index ? 'true' : undefined"
 						:aria-label="locales.ariaLabel(index, props.length)"
 						class="sy-number-picker__item text-body-2 pa-0"
-						:aria-disabled="(props.readonly || hasAnswered) ? true : false"
-						:disabled="props.readonly || hasAnswered ? true : null"
+						:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
 						@click="emitInputEvent(index); setFocus(index - 1)"
 						@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
 						@keyup.space="emitInputEvent(index); setFocus(index - 1)"

@@ -21,8 +21,6 @@ exports[`EmotionPicker > renders correctly 1`] = `
     role="radiogroup"
   >
     <div
-      aria-checked="false"
-      aria-disabled="false"
       class="
         mx-1
         mx-sm-2
@@ -112,8 +110,6 @@ exports[`EmotionPicker > renders correctly 1`] = `
       </span>
     </div>
     <div
-      aria-checked="false"
-      aria-disabled="false"
       class="
         mx-1
         mx-sm-2
@@ -203,8 +199,6 @@ exports[`EmotionPicker > renders correctly 1`] = `
       </span>
     </div>
     <div
-      aria-checked="false"
-      aria-disabled="false"
       class="
         happy
         mx-1
@@ -318,8 +312,6 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
     role="radiogroup"
   >
     <div
-      aria-checked="false"
-      aria-disabled="false"
       class="
         mx-1
         mx-sm-2
@@ -409,8 +401,6 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
       </span>
     </div>
     <div
-      aria-checked="false"
-      aria-disabled="false"
       class="
         happy
         mx-1

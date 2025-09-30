@@ -41,13 +41,6 @@
 		return (isHovered && !hasAnswered.value) || isActive
 	}
 
-	onMounted(() => {
-		const hiddenInputs = document.querySelectorAll('.v-rating__hidden')
-		hiddenInputs.forEach((input) => {
-			(input as HTMLElement).setAttribute('aria-hidden', 'true')
-		})
-	})
-
 	const ratingElement = ref<HTMLDivElement[]>([])
 	function focusNextElement(index: number) {
 		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
@@ -100,9 +93,8 @@
 				ref="ratingElement"
 				class="sy-stars-picker__item d-flex align-center justify-center"
 				role="radio"
-				:aria-disabled="(props.readonly || hasAnswered) ? true : false"
-				:disabled="props.readonly || hasAnswered ? true : null"
-				:aria-checked="isActive(index)"
+				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
+				:aria-checked="isActive(index) ? 'true' : undefined"
 				@mouseover="hoverIndex = index"
 				@focus="hoverIndex = index"
 				@mouseleave="hoverIndex = -1"

@@ -19,8 +19,6 @@ exports[`RatingPicker > renders correctly 1`] = `
         role="radiogroup"
       >
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 1 sur 10."
           class="
             pa-0
@@ -33,8 +31,6 @@ exports[`RatingPicker > renders correctly 1`] = `
           1
         </div>
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 2 sur 10."
           class="
             pa-0
@@ -47,8 +43,6 @@ exports[`RatingPicker > renders correctly 1`] = `
           2
         </div>
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 3 sur 10."
           class="
             pa-0
@@ -61,8 +55,6 @@ exports[`RatingPicker > renders correctly 1`] = `
           3
         </div>
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 4 sur 10."
           class="
             pa-0
@@ -75,8 +67,6 @@ exports[`RatingPicker > renders correctly 1`] = `
           4
         </div>
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 5 sur 10."
           class="
             pa-0
@@ -89,8 +79,6 @@ exports[`RatingPicker > renders correctly 1`] = `
           5
         </div>
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 6 sur 10."
           class="
             pa-0
@@ -103,8 +91,6 @@ exports[`RatingPicker > renders correctly 1`] = `
           6
         </div>
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 7 sur 10."
           class="
             pa-0
@@ -117,8 +103,6 @@ exports[`RatingPicker > renders correctly 1`] = `
           7
         </div>
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 8 sur 10."
           class="
             pa-0
@@ -131,8 +115,6 @@ exports[`RatingPicker > renders correctly 1`] = `
           8
         </div>
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 9 sur 10."
           class="
             pa-0
@@ -145,8 +127,6 @@ exports[`RatingPicker > renders correctly 1`] = `
           9
         </div>
         <div
-          aria-checked="false"
-          aria-disabled="false"
           aria-label="Note de 10 sur 10."
           class="
             pa-0
