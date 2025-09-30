@@ -69,4 +69,4 @@ Si vous rencontrez des problèmes ou avez des questions, n'hésitez pas à ouvri
 
 ## Licence
 
-Ce projet est sous licence MIT. Veuillez consulter le fichier LICENSE pour plus d'informations.
+Ce projet est sous licence MIT. Veuillez consulter le fichier LICENSE pour plus d'informations
