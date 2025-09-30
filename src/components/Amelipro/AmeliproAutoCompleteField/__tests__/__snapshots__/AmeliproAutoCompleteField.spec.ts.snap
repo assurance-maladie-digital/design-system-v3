@@ -122,7 +122,6 @@ exports[`AmeliproAutoCompleteField > render correctly 1`] = `
               aria-required="false"
               autocomplete="list"
               id="my-AutoCompleteField-id"
-              role="combobox"
               size="1"
               type="text"
               value=""
