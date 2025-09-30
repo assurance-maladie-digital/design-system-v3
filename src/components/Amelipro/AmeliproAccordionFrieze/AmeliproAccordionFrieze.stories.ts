@@ -34,7 +34,7 @@ const meta = {
 		'uniqueId': { description: 'Identifiant unique du carrousel' },
 	},
 	component: AmeliproAccordionFrieze,
-	title: 'Composants/Amelipro/Mise en page/AmeliproAccordionFrieze',
+	title: 'Composants/Amelipro/Listes de résultats/AmeliproAccordionFrieze',
 } as Meta<typeof AmeliproAccordionFrieze>
 export default meta
 
