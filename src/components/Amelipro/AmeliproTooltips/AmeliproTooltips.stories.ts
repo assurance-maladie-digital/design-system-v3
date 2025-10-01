@@ -58,3 +58,171 @@ export const Default: Story = {
 		`,
 	}),
 }
+
+export const CouleursPersonnalisees: Story = {
+	name: 'Couleurs personnalisées',
+	args: {
+		tooltipText: 'Info-bulle personnalisée avec couleurs',
+		tooltipBg: 'ap-parme-darken-1',
+		tooltipTextColor: 'ap-white',
+		iconBgColor: 'ap-parme-darken-1',
+		iconColor: 'ap-white',
+		iconHoverBgColor: 'ap-white',
+		iconHoverColor: 'ap-parme-darken-1',
+		uniqueId: 'tooltip-couleurs',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Info-bulle avec couleurs personnalisées pour l’icône et le fond de l’infobulle.</p>
+    <AmeliproTooltips
+        tooltip-text="Info-bulle personnalisée avec couleurs"
+        tooltip-bg="ap-parme-darken-1"
+        tooltip-text-color="ap-white"
+        icon-bg-color="ap-parme-darken-1"
+        icon-color="ap-white"
+        icon-hover-bg-color="ap-white"
+        icon-hover-color="ap-parme-darken-1"
+        unique-id="tooltip-couleurs"
+    />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTooltips },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Info-bulle avec couleurs personnalisées pour l’icône et le fond de l’infobulle.</p>
+<AmeliproTooltips v-bind="args" />
+        `,
+	}),
+}
+
+export const TexteLong: Story = {
+	name: 'Texte long',
+	args: {
+		tooltipText: 'Ceci est un texte très long pour tester l’affichage de l’info-bulle sur plusieurs lignes. Le composant doit gérer correctement le retour à la ligne et la largeur maximale.',
+		uniqueId: 'tooltip-long',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Info-bulle avec un texte très long pour vérifier le retour à la ligne et la largeur maximale.</p>
+    <AmeliproTooltips
+        tooltip-text="Ceci est un texte très long pour tester l’affichage de l’info-bulle sur plusieurs lignes. Le composant doit gérer correctement le retour à la ligne et la largeur maximale."
+        unique-id="tooltip-long"
+    />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTooltips },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Info-bulle avec un texte très long pour vérifier le retour à la ligne et la largeur maximale.</p>
+<AmeliproTooltips v-bind="args" />
+        `,
+	}),
+}
+
+export const IconePersonnalisee: Story = {
+	name: 'Icône personnalisée',
+	args: {
+		iconName: 'plus',
+		iconBgColor: 'ap-blue-darken-1',
+		iconColor: 'ap-white',
+		iconHoverBgColor: 'ap-white',
+		iconHoverColor: 'ap-blue-darken-1',
+		tooltipText: 'Icône personnalisée',
+		uniqueId: 'tooltip-icon-custom',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Info-bulle avec une icône personnalisée (<code>iconName</code>).</p>
+    <AmeliproTooltips
+        icon-name="plus"
+        icon-bg-color="ap-blue-darken-1"
+        icon-color="ap-white"
+        icon-hover-bg-color="ap-white"
+        icon-hover-color="ap-blue-darken-1"
+        tooltip-text="Icône personnalisée"
+        unique-id="tooltip-icon-custom"
+    />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTooltips },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Info-bulle avec une icône personnalisée (<code>iconName</code>).</p>
+<AmeliproTooltips v-bind="args" />
+        `,
+	}),
+}
+
+export const SlotDefault: Story = {
+	name: 'Slot default',
+	args: {
+		tooltipText: '',
+		uniqueId: 'tooltip-slot-default',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Utilisation du slot <code>default</code> pour personnaliser le contenu de l’info-bulle.</p>
+    <AmeliproTooltips
+        tooltip-text=""
+        unique-id="tooltip-slot-default"
+    >
+        <template #default>
+            <div style="max-width:220px">
+                <strong>Contenu riche</strong><br>
+                <ul style="margin:0;padding-left:1em;">
+                    <li>Point 1</li>
+                    <li>Point 2</li>
+                </ul>
+            </div>
+        </template>
+    </AmeliproTooltips>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { AmeliproTooltips } from '@cnamts/synapse'
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTooltips },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Utilisation du slot <code>default</code> pour personnaliser le contenu de l’info-bulle.</p>
+<AmeliproTooltips v-bind="args">
+    <template #default>
+        <div style="max-width:220px">
+            <strong>Contenu riche</strong><br>
+            <ul style="margin:0;padding-left:1em;">
+                <li>Point 1</li>
+                <li>Point 2</li>
+            </ul>
+        </div>
+    </template>
+</AmeliproTooltips>
+        `,
+	}),
+}
