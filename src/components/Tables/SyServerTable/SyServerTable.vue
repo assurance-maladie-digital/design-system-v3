@@ -108,7 +108,8 @@
 		if (Array.isArray(newVal)) {
 			lastNonUndefinedItems.value = newVal
 			isRefetching.value = false
-		} else if (newVal === undefined) {
+		}
+		else if (newVal === undefined) {
 			// Parent temporarily cleared items
 			isRefetching.value = true
 		}
@@ -125,7 +126,8 @@
 		if (Array.isArray(itemsVal) && typeof lenVal === 'number') {
 			lastNonUndefinedLength.value = lenVal
 			isRefetching.value = false
-		} else if (!Array.isArray(itemsVal)) {
+		}
+		else if (!Array.isArray(itemsVal)) {
 			isRefetching.value = true
 		}
 	}, { immediate: true })
