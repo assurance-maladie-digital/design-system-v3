@@ -23,7 +23,8 @@
 		caption: '',
 		saveState: true,
 		showFilters: false,
-		items: () => [],
+		// Do not default items to [] so we can detect undefined during refetch
+		items: undefined,
 		serverItemsLength: 0,
 		resizableColumns: false,
 		filterInputConfig: () => ({}),
@@ -86,10 +87,10 @@
 	})
 
 	// Create a reactive reference for items
-	const itemsRef = computed(() => props.items)
+	const itemsRef = computed<Record<string, unknown>[]>(() => displayedItems.value)
 
-	// Use the pagination composable with serverItemsLength
-	const itemsLength = computed(() => props.serverItemsLength)
+	// Use the pagination composable with displayedItemsLength (stable during refetch)
+	const itemsLength = computed(() => displayedItemsLength.value)
 	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
 		options,
 		itemsLength,
@@ -97,7 +98,44 @@
 	})
 
 	// Create a computed property for items to ensure reactivity
-	const tableItems = computed(() => props.items)
+	// Bind to displayedItems so it is always an array
+	const tableItems = computed<Record<string, unknown>[]>(() => displayedItems.value)
+
+	// Keep last non-undefined items to avoid clearing the table during refetches
+	const lastNonUndefinedItems = ref<Record<string, unknown>[]>([])
+	const isRefetching = ref(false)
+	watch(() => props.items, (newVal) => {
+		if (Array.isArray(newVal)) {
+			lastNonUndefinedItems.value = newVal
+			isRefetching.value = false
+		} else if (newVal === undefined) {
+			// Parent temporarily cleared items
+			isRefetching.value = true
+		}
+	}, { immediate: true })
+
+	const displayedItems = computed<Record<string, unknown>[]>(() => {
+		return Array.isArray(props.items) ? props.items : lastNonUndefinedItems.value
+	})
+
+	// Keep last non-undefined server items length as well
+	const lastNonUndefinedLength = ref<number>(0)
+	watch([() => props.items, () => props.serverItemsLength], ([itemsVal, lenVal]) => {
+		// Update cached length only when we have a valid items array
+		if (Array.isArray(itemsVal) && typeof lenVal === 'number') {
+			lastNonUndefinedLength.value = lenVal
+			isRefetching.value = false
+		} else if (!Array.isArray(itemsVal)) {
+			isRefetching.value = true
+		}
+	}, { immediate: true })
+
+	const displayedItemsLength = computed<number>(() => {
+		// If current items are an array, use current prop length; otherwise, keep last known length
+		return Array.isArray(props.items)
+			? (typeof props.serverItemsLength === 'number' ? props.serverItemsLength : lastNonUndefinedLength.value)
+			: lastNonUndefinedLength.value
+	})
 
 	// Timeout management for cleanup
 	const timeouts = ref<ReturnType<typeof setTimeout>[]>([])
@@ -128,7 +166,7 @@
 
 	// Watch for changes that might affect the table and update accessibility
 	watch(() => props.items, accessibilityRowCheckboxes, { deep: true })
-	watch(() => props.serverItemsLength, accessibilityRowCheckboxes)
+	watch(() => displayedItemsLength.value, accessibilityRowCheckboxes)
 	watch(() => page.value, accessibilityRowCheckboxes)
 
 	// Apply accessibility attributes when component is mounted
@@ -219,8 +257,8 @@
 			v-model="model"
 			:headers="displayHeaders"
 			color="primary"
-			:items="processItems(props.items)"
-			:items-length="props.serverItemsLength || 0"
+			:items="processItems(displayedItems)"
+			:items-length="displayedItemsLength || 0"
 			:density="props.density"
 			:show-select="props.showSelect"
 			:item-selectable="(item) => true"
@@ -383,11 +421,11 @@
 						v-model:headers="headers"
 					/>
 					<SyTablePagination
-						v-if="props.items.length > 0 ? props.serverItemsLength : 0"
+						v-if="displayedItems.length > 0 ? displayedItemsLength : 0"
 						:page="page"
 						:items-per-page="itemsPerPageValue"
 						:page-count="pageCount"
-						:items-length="props.serverItemsLength"
+						:items-length="displayedItemsLength"
 						:items-per-page-options="props.itemsPerPageOptions"
 						@update:page="updateOptions({ page: $event })"
 						@update:items-per-page="updateItemsPerPage"
