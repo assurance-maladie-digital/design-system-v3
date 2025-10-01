@@ -21,6 +21,14 @@
 - Documentation
 - Ce changement nécessite une mise à jour de la documentation
 
+
+## Checklist de validation RGAA
+
+- [ ] Testé avec navigation au clavier
+- [ ] Testé avec lecteur d'écran
+- [ ] Testé avec différentes tailles d'écran
+- [ ] Testé avec Tanaguru
+
 ## Checklist
 
 <!-- Vérifiez chaque point de la checklist et cochez-le s'il est appliqué. -->
@@ -36,3 +44,13 @@
 - [ ] Mes modifications ne génèrent aucun nouveau warning
 - [ ] J'ai ajouté des tests qui prouvent que mon correctif est efficace ou que ma fonctionnalité fonctionne
 - [ ] Les tests unitaires passent localement avec mes modifications
+
+## Checklist de validation du correctif RGAA
+
+- [ ] Conforme au critère RGAA concerné
+- [ ] Testé avec navigation au clavier
+- [ ] Testé avec lecteur d'écran
+- [ ] Testé avec différentes tailles d'écran
+- [ ] Pas de régression visuelle
+- [ ] Documentation mise à jour (ajout du doc + maj avancement) 
+- [ ] Breaking changes documentés

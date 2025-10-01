@@ -21,6 +21,7 @@
 	import { VDatePicker } from 'vuetify/components'
 	import { useInputHandler } from '../composables/useInputHandler'
 	import { useValidation } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import type { DateObjectValue } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
@@ -848,6 +849,9 @@
 		validateDates(true)
 		return textInputValid && errors.value.length === 0
 	}
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
 
 	defineExpose({
 		validateOnSubmit,

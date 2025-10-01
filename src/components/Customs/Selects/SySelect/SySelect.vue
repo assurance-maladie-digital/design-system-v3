@@ -7,6 +7,7 @@
 	import { ref, watch, onMounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
@@ -703,9 +704,29 @@
 		})
 	}, { deep: true })
 
+	// Méthode de validation pour l'enregistrement avec le système de validation du formulaire
+	const validateOnSubmit = (): boolean => {
+		// Si en mode readonly ou si la gestion d'erreur est désactivée, toujours valide
+		if (props.readonly || props.disableErrorHandling) {
+			return true
+		}
+
+		// Vérifier si une valeur est sélectionnée quand le champ est requis
+		const isValid = !isRequired.value
+
+		// Mettre à jour l'état d'erreur
+		hasError.value = !isValid || props.errorMessages.length > 0
+
+		return isValid
+	}
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
+
 	defineExpose({
 		isOpen,
 		closeList,
+		validateOnSubmit,
 	})
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

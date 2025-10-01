@@ -15,7 +15,7 @@ describe('NumberPicker', () => {
 			},
 		})
 
-		const btns = wrapper.findAll('button')
+		const btns = wrapper.findAll('[role="radio"]')
 
 		expect(btns).toHaveLength(10)
 		btns.forEach((btn, i) => {
@@ -31,7 +31,7 @@ describe('NumberPicker', () => {
 			},
 		})
 
-		await wrapper.findAll('button')!.at(3)!.trigger('click')
+		await wrapper.findAll('[role="radio"]')!.at(3)!.trigger('click')
 
 		expect(wrapper.emitted('update:modelValue')![0]).toEqual([4])
 	})
@@ -46,7 +46,7 @@ describe('NumberPicker', () => {
 			},
 		})
 
-		const btn = wrapper.findAll('button')[0]
+		const btn = wrapper.findAll('.sy-btn-answer')[0]
 
 		await wrapper.setProps({ modelValue: 4 })
 		expect(btn.text()).toBe('4')

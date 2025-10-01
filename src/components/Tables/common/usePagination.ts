@@ -7,19 +7,16 @@ import type { DataOptions } from './types'
  * @param options - Reactive reference to table options
  * @param itemsLength - Total number of items (for client-side) or serverItemsLength (for server-side)
  * @param table - Reference to the table component
- * @param emit - Emit function for update:options event
  * @returns Pagination utilities and computed properties
  */
 export function usePagination({
 	options,
 	itemsLength,
 	table,
-	emit,
 }: {
 	options: Ref<Partial<DataOptions>>
 	itemsLength: Ref<number>
 	table: Ref<unknown>
-	emit: (event: 'update:options', options: Partial<DataOptions>) => void
 }) {
 	// Current page with getter/setter
 	const page = computed({
@@ -68,9 +65,6 @@ export function usePagination({
 			if (tableValue && typeof tableValue.$forceUpdate === 'function') {
 				tableValue.$forceUpdate()
 			}
-
-			// Emit an event to notify parent components
-			emit('update:options', newOptions)
 		})
 	}
 
