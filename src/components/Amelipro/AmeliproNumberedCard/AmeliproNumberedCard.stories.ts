@@ -176,3 +176,153 @@ export const Default: Story = {
 </AmeliproNumberedCard>`,
 	}),
 }
+
+// --- Cartes avec 3 par ligne ---
+export const TroisParLigne: Story = {
+	name: '3 cartes par ligne',
+	args: {
+		items,
+		itemsPerLine: 3,
+		uniqueId: 'numbered-3parligne',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>Affichage de 3 cartes par ligne grâce à la prop <code>itemsPerLine</code>.</p>
+  <AmeliproNumberedCard
+    :items-per-line="3"
+    :items="items"
+    unique-id="numbered-3parligne"
+  >
+    <template #numbered-3parligne-item>
+      <p class="mb-0">[Slot: id-item]</p>
+    </template>
+  </AmeliproNumberedCard>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproNumberedCard },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Affichage de 3 cartes par ligne grâce à la prop <code>itemsPerLine</code>.</p>
+<AmeliproNumberedCard
+  :items-per-line="args.itemsPerLine"
+  :items="args.items"
+  unique-id="args.uniqueId"
+>
+  <template #numbered-3parligne-item>
+    <p class="mb-0">[Slot: id-item]</p>
+  </template>
+</AmeliproNumberedCard>
+`,
+	}),
+}
+
+// --- Cartes avec bordure et couleur personnalisées ---
+export const BordureEtCouleur: Story = {
+	name: 'Bordure et couleur',
+	args: {
+		items,
+		itemsPerLine: 2,
+		uniqueId: 'numbered-couleur',
+		bordered: true,
+		borderColor: '#1976d2',
+		cardColor: '#e3f2fd',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>Les cartes possèdent une bordure et une couleur de fond personnalisées grâce aux props <code>bordered</code>, <code>borderColor</code> et <code>cardColor</code>.</p>
+  <AmeliproNumberedCard
+    :items-per-line="2"
+    :items="items"
+    unique-id="numbered-couleur"
+    bordered
+    border-color="#1976d2"
+    card-color="#e3f2fd"
+  >
+    <template #numbered-couleur-item>
+      <p class="mb-0">[Slot: id-item]</p>
+    </template>
+  </AmeliproNumberedCard>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproNumberedCard },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Les cartes possèdent une bordure et une couleur de fond personnalisées grâce aux props <code>bordered</code>, <code>borderColor</code> et <code>cardColor</code>.</p>
+<AmeliproNumberedCard
+  :items-per-line="args.itemsPerLine"
+  :items="args.items"
+  unique-id="args.uniqueId"
+  bordered
+  border-color="#1976d2"
+  card-color="#e3f2fd"
+>
+  <template #numbered-couleur-item>
+    <p class="mb-0">[Slot: id-item]</p>
+  </template>
+</AmeliproNumberedCard>
+`,
+	}),
+}
+
+// --- Slot individuel pour une carte ---
+export const SlotIndividuel: Story = {
+	name: 'Slot individuel',
+	args: {
+		items,
+		itemsPerLine: 2,
+		uniqueId: 'numbered-individuel',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>Le slot <code>numbered-individuel-item-2</code> permet d’ajouter un contenu spécifique à la carte d’id 2.</p>
+  <AmeliproNumberedCard
+    :items-per-line="2"
+    :items="items"
+    unique-id="numbered-individuel"
+  >
+    <template #numbered-individuel-item-2>
+      <p class="mb-0">[Slot: id-item-2]</p>
+    </template>
+    <template #numbered-individuel-item>
+      <p class="mb-0">[Slot: id-item]</p>
+    </template>
+  </AmeliproNumberedCard>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproNumberedCard },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Le slot <code>numbered-individuel-item-2</code> permet d’ajouter un contenu spécifique à la carte d’id 2.</p>
+<AmeliproNumberedCard
+  :items-per-line="args.itemsPerLine"
+  :items="args.items"
+  unique-id="numbered-individuel"
+>
+  <template #numbered-individuel-item-2>
+    <p class="mb-0">[Slot: id-item-2]</p>
+  </template>
+  <template #numbered-individuel-item>
+    <p class="mb-0">[Slot: id-item]</p>
+  </template>
+</AmeliproNumberedCard>
+`,
+	}),
+}

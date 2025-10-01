@@ -50,5 +50,51 @@ export const Default: Story = {
 />
 		`,
 	}),
+}
 
+export const AvecGestionClick: Story = {
+	name: 'Avec gestion du click',
+	args: {
+		text: 'Cliquer pour fermer',
+		uniqueId: 'amelipro-chips-click',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <AmeliproChips
+        text="Cliquer pour fermer"
+        unique-id="amelipro-chips-click"
+        @click="onChipClick"
+    />
+</template>
+                `,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { AmeliproChips } from '@cnamts/synapse'
+
+function onChipClick(id: string) {
+    alert('Clic intercepté sur la puce avec l’id : ' + id)
+}
+</script>
+                `,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproChips },
+		setup() {
+			function onChipClick(id: string) {
+				alert('Clic intercepté sur la puce avec l’id : ' + id)
+			}
+			return { args, onChipClick }
+		},
+		template: `
+<p class="mb-2">Puce avec gestion de l’événement <code>click</code> (affiche un <code>alert</code>).</p>
+<AmeliproChips v-bind="args" @click="onChipClick" />
+        `,
+	}),
 }

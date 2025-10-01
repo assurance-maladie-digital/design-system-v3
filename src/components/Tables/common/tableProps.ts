@@ -32,9 +32,27 @@ export function useTableProps({
 
 	// When the table options are updated, merge them into localOptions
 	function updateOptions(tableOptions: Partial<DataOptions>): void {
-		options.value = {
+		const merged: Partial<DataOptions> = {
 			...options.value,
 			...tableOptions,
+		}
+
+		// Shallow equality check to prevent redundant reassignments (which would emit twice)
+		const prev = options.value || {}
+		let changed = false
+		const keys = new Set([
+			...Object.keys(prev as Record<string, unknown>),
+			...Object.keys(merged as Record<string, unknown>),
+		])
+		for (const key of keys) {
+			if ((prev as Record<string, unknown>)[key] !== (merged as Record<string, unknown>)[key]) {
+				changed = true
+				break
+			}
+		}
+
+		if (changed) {
+			options.value = merged
 		}
 	}
 

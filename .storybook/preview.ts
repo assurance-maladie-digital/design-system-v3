@@ -150,9 +150,8 @@ const preview: Preview = {
 					],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
 					'Guide Du Dev', [
-						'Migration depuis Bridge',
-						'Migration depuis Vue2',
-						'Breaking changes',
+						'Installation',
+						'Migration', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes',],
 						'Configuration du thème',
 						'Correspondance composants PAG',
 						'Règles De Validation',

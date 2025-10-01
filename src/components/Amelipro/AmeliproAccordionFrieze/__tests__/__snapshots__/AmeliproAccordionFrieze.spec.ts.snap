@@ -1,0 +1,858 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproAccordionFrieze > render correctly 1`] = `
+<div id="amelipro-accordion-frieze-unique-id">
+  <section
+    aria-label="mon titre"
+    aria-roledescription="carousel"
+    class="frieze"
+    id="amelipro-accordion-frieze-unique-id-frieze"
+  >
+    <!-- v-if -->
+    <button
+      aria-controls="amelipro-accordion-frieze-unique-id-items"
+      class="
+        btn--icon
+        btn-next
+        elevation-0
+        rounded-0
+        v-btn
+        v-btn--density-default
+        v-btn--elevated
+        v-btn--icon
+        v-btn--size-default
+        v-btn--variant-elevated
+        v-theme--light
+      "
+      id="amelipro-accordion-frieze-unique-id-next"
+      plain=""
+      style="
+        height: auto;
+        width: auto;
+      "
+      title="Next btn"
+      type="button"
+    >
+      <span class="v-btn__overlay"></span>
+      <span class="v-btn__underlay"></span>
+      <!---->
+      <span
+        class="v-btn__content"
+        data-no-activator=""
+      >
+        <!-- v-if -->
+        <span
+          class="
+            amelipro-icon
+            icon-custom
+          "
+          id="amelipro-accordion-frieze-unique-id-next-icon"
+        >
+          <span
+            aria-hidden="true"
+            class="
+              amelipro-custom-icon
+              custom-color
+              large
+            "
+            focusable="false"
+            role="img"
+            style="color: #0C419A;"
+          >
+            <span>
+              <svg
+                aria-hidden="true"
+                style="enable-background:new 0 0 14.8 24;"
+                version="1.1"
+                viewBox="0 0 14.8 24"
+                x="0px"
+                xml:space="preserve"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                y="0px"
+              >
+                <path
+                  class="shape-color"
+                  d="M0,2.8L9.2,12L0,21.2L2.8,24l12-12L2.8,0L0,2.8z"
+                />
+              </svg>
+            </span>
+          </span>
+        </span>
+      </span>
+      <!---->
+      <!---->
+    </button>
+    <div
+      aria-live="polite"
+      class="frieze-items"
+      id="amelipro-accordion-frieze-unique-id-items"
+      style="
+        width: calc(100% - 30px);
+        margin: 0px 30px 0px 0px;
+      "
+    >
+      <div
+        class="
+          d-flex
+          frieze__track
+        "
+        style="
+          max-width: calc(100% * 3);
+          transform: translateX(calc((-0 / 3) * 100%));
+          transition: all 0.5s ease-out;
+          width: calc(100% * 3);
+        "
+      >
+        <div
+          aria-label="1 sur 3"
+          aria-roledescription="slide"
+          class="
+            align-center
+            d-flex
+            frieze__slide
+            justify-end
+            list-style-none
+          "
+          id="amelipro-accordion-frieze-unique-id-slide-0"
+          role="group"
+          style=""
+        >
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-1__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-1"
+              tabindex="0"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 1
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 1
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-1-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-2__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-2"
+              tabindex="0"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 2
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 2
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-2-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          aria-label="2 sur 3"
+          aria-roledescription="slide"
+          class="
+            align-center
+            d-flex
+            frieze__slide
+            justify-end
+            list-style-none
+          "
+          id="amelipro-accordion-frieze-unique-id-slide-1"
+          role="group"
+          style=""
+        >
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-3__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-3"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 3
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 3
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-3-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-4__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-4"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 4
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 4
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-4-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-5__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-5"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 5
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 5
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-5-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-6__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-6"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 6
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 6
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-6-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-7__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-7"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 7
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 7
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-7-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-8__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-8"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 8
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 8
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-8-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          aria-label="3 sur 3"
+          aria-roledescription="slide"
+          class="
+            align-center
+            d-flex
+            frieze__slide
+            justify-end
+            list-style-none
+          "
+          id="amelipro-accordion-frieze-unique-id-slide-2"
+          role="group"
+          style=""
+        >
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-9__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-9"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 9
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 9
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-9-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-10__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-10"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 10
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 10
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-10-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-11__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-11"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 11
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 11
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-11-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-12__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-12"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 12
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 12
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-12-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-13__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-13"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 13
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 13
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-13-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+          <div class="
+            d-flex
+            frieze__sub-item
+            px-1
+          ">
+            <button
+              aria-controls="accordion-content--item-14__content"
+              aria-expanded="false"
+              class="
+                item-btn
+                w-100
+              "
+              id="amelipro-accordion-frieze-unique-id-btn-14"
+              tabindex="-1"
+            >
+              <span class="
+                d-block
+                font-weight-semibold
+              ">
+                titre 14
+              </span>
+              <span class="
+                align-center
+                d-flex
+                item-btn__link-style-text
+                justify-center
+              ">
+                sous-titre 14
+                <ameliproicon
+                  class="ml-1"
+                  icon="triangleDown"
+                  icon-bg-color="transparent"
+                  icon-color="ap-blue darken-1"
+                  size="10px"
+                  style="margin-top: -14px;"
+                  unique-id="amelipro-accordion-frieze-unique-id-btn-14-icon"
+                ></ameliproicon>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="frieze__accordion-content-wrapper">
+    <div id="accordion--item-1">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-1"
+          id="accordion--item-1__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-2">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-2"
+          id="accordion--item-2__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-3">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-3"
+          id="accordion--item-3__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-4">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-4"
+          id="accordion--item-4__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-5">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-5"
+          id="accordion--item-5__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-6">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-6"
+          id="accordion--item-6__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-7">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-7"
+          id="accordion--item-7__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-8">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-8"
+          id="accordion--item-8__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-9">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-9"
+          id="accordion--item-9__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-10">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-10"
+          id="accordion--item-10__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-11">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-11"
+          id="accordion--item-11__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-12">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-12"
+          id="accordion--item-12__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-13">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-13"
+          id="accordion--item-13__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+    <div id="accordion--item-14">
+      <div>
+        <div
+          aria-labelledby="amelipro-accordion-frieze-unique-id-btn-14"
+          id="accordion--item-14__content"
+          role="region"
+          style="display: none;"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -5,6 +5,7 @@
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useValidation } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
@@ -578,6 +579,9 @@
 		// Retourner directement un booléen pour maintenir la compatibilité avec les tests existants
 		return errors.value.length === 0
 	}
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
 
 	const openDatePicker = () => {
 		if (props.disabled || props.readonly) return

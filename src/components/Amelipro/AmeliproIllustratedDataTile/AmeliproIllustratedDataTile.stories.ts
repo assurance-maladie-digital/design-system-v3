@@ -65,3 +65,189 @@ export const Default: Story = {
 	}),
 
 }
+
+// --- Tuile illustrée avec image personnalisée ---
+export const AvecImage: Story = {
+	name: 'Avec image',
+	args: {
+		imgSrc: '.storybook/public/logos/logo-assurance-maladie.svg',
+		labelFirstLine: 'Assurance Maladie',
+		labelSecondLine: 'Partenaire',
+		tileWidth: '250px',
+		uniqueId: 'amelipro-illustrated-tile-img',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproIllustratedDataTile
+  img-src=".storybook/public/logos/logo-assurance-maladie.svg"
+  label-first-line="Assurance Maladie"
+  label-second-line="Partenaire"
+  tile-width="250px"
+  unique-id="amelipro-illustrated-tile-img"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIllustratedDataTile },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Affichage d’une image personnalisée grâce à la prop <code>imgSrc</code>.</p>
+<AmeliproIllustratedDataTile v-bind="args" />
+`,
+	}),
+}
+
+// --- Tuile illustrée avec icône ---
+export const AvecIcone: Story = {
+	name: 'Avec icône',
+	args: {
+		iconName: 'document',
+		labelFirstLine: 'Documents',
+		labelSecondLine: 'à traiter',
+		tileWidth: '250px',
+		uniqueId: 'amelipro-illustrated-tile-icon',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproIllustratedDataTile
+  icon-name="document"
+  label-first-line="Documents"
+  label-second-line="à traiter"
+  tile-width="250px"
+  unique-id="amelipro-illustrated-tile-icon"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIllustratedDataTile },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Affichage d’une icône grâce à la prop <code>iconName</code>.</p>
+<AmeliproIllustratedDataTile v-bind="args" />
+`,
+	}),
+}
+
+// --- Tuile illustrée avec informations complémentaires ---
+export const AvecInfosComplements: Story = {
+	name: 'Avec infos complémentaires',
+	args: {
+		iconName: 'chrono',
+		labelFirstLine: 'Traitement',
+		labelSecondLine: 'en cours',
+		tileWidth: '250px',
+		uniqueId: 'amelipro-illustrated-tile-complement',
+		complementaryInformation: [
+			{ label: 'Dossiers', value: '12' },
+			{ label: 'Restants', value: '3' },
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproIllustratedDataTile
+  icon-name="chrono"
+  label-first-line="Traitement"
+  label-second-line="en cours"
+  tile-width="250px"
+  unique-id="amelipro-illustrated-tile-complement"
+  :complementary-information="[{ label: 'Dossiers', value: '12' }, { label: 'Restants', value: '3' }]"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIllustratedDataTile },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Affichage d’informations complémentaires sous le sous-titre grâce à la prop <code>complementaryInformation</code>.</p>
+<AmeliproIllustratedDataTile v-bind="args" />
+`,
+	}),
+}
+
+// --- Tuile illustrée avec niveau de titre personnalisé ---
+export const TitreNiveauPersonnalise: Story = {
+	name: 'Niveau de titre personnalisé',
+	args: {
+		iconName: 'document',
+		labelFirstLine: 'Titre niveau 4',
+		labelSecondLine: 'Sous-titre',
+		tileWidth: '250px',
+		uniqueId: 'amelipro-illustrated-tile-title-level',
+		titleLevel: 4,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproIllustratedDataTile
+  icon-name="document"
+  label-first-line="Titre niveau 4"
+  label-second-line="Sous-titre"
+  tile-width="250px"
+  unique-id="amelipro-illustrated-tile-title-level"
+  :title-level="4"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIllustratedDataTile },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Le niveau du titre est personnalisé grâce à la prop <code>titleLevel</code>.</p>
+<AmeliproIllustratedDataTile v-bind="args" />
+`,
+	}),
+}
+
+// --- Tuile illustrée avec padding et min-height personnalisés ---
+export const AvecStylePerso: Story = {
+	name: 'Style personnalisé',
+	args: {
+		iconName: 'chrono',
+		labelFirstLine: 'Style',
+		labelSecondLine: 'personnalisé',
+		tileWidth: '250px',
+		tilePadding: '3rem 2rem',
+		tileMinHeight: '200px',
+		uniqueId: 'amelipro-illustrated-tile-style',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproIllustratedDataTile
+  icon-name="chrono"
+  label-first-line="Style"
+  label-second-line="personnalisé"
+  tile-width="250px"
+  tile-padding="3rem 2rem"
+  tile-min-height="200px"
+  unique-id="amelipro-illustrated-tile-style"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIllustratedDataTile },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Le padding et la hauteur minimale sont personnalisés grâce aux props <code>tilePadding</code> et <code>tileMinHeight</code>.</p>
+<AmeliproIllustratedDataTile v-bind="args" />
+`,
+	}),
+}
