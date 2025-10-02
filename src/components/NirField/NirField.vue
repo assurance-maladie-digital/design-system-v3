@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, nextTick, toRef, onMounted, useId } from 'vue'
+	import { ref, watch, computed, nextTick, toRef, onMounted, useId, onBeforeUnmount } from 'vue'
 	import { vMaska } from 'maska/vue'
 	import { checkNIR, isNIRKeyValid } from './nirValidation'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
@@ -12,7 +12,6 @@
 		numberLabel?: string
 		keyLabel?: string
 		displayKey?: boolean
-		outlined?: boolean
 		nirTooltip?: string
 		keyTooltip?: string
 		nirTooltipPosition?: 'prepend' | 'append'
@@ -48,7 +47,6 @@
 		numberLabel: 'Numéro de sécurité sociale',
 		keyLabel: 'Clé de validation',
 		displayKey: true,
-		outlined: true,
 		nirTooltip: undefined,
 		keyTooltip: undefined,
 		nirTooltipPosition: 'append',
@@ -126,6 +124,10 @@
 	const fieldId = useId()
 	const numberFieldErrorId = `nir-number-error-${fieldId}`
 	const keyFieldErrorId = `nir-key-error-${fieldId}`
+	const numberFieldWarningId = `nir-number-warning-${fieldId}`
+	const keyFieldWarningId = `nir-key-warning-${fieldId}`
+	const numberFieldSuccessId = `nir-number-success-${fieldId}`
+	const keyFieldSuccessId = `nir-key-success-${fieldId}`
 
 	const container = ref<HTMLElement | null>(null)
 
@@ -473,6 +475,11 @@
 		})
 	})
 
+	onBeforeUnmount(() => {
+		const numberInput = numberField.value?.$el?.querySelector?.('input')
+		numberInput.removeEventListener('keydown', handleNumberKeydown)
+	})
+
 	defineExpose({
 		validateOnSubmit,
 		numberMask,
@@ -493,6 +500,8 @@
 <template>
 	<component
 		:is="displayKey && !withoutFieldset ? 'fieldset' : 'div'"
+		:aria-label="displayKey && withoutFieldset ? label : undefined"
+		:role="displayKey && withoutFieldset ? 'group' : undefined"
 		ref="container"
 		:class="displayKey && !withoutFieldset ? 'nir-field nir-field--fieldset' : 'nir-field'"
 	>
@@ -505,7 +514,7 @@
 				v-model="numberValue"
 				v-maska="numberMask"
 				:label="numberLabelWithAsterisk"
-				:variant-style="outlined ? 'outlined' : 'underlined'"
+				:variant-style="props.variant"
 				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
@@ -523,14 +532,13 @@
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
 				:readonly="props.readonly"
-				:variant="props.variant"
 				:clearable="props.clearable"
 				:counter="props.counter"
 				:persistent-placeholder="props.persistentPlaceholder"
 				:hint="props.hint || locales.numberHint"
 				class="number-field"
 				:display-asterisk="false"
-				:aria-describedby="numberFieldErrorId"
+				:aria-describedby="numberFieldErrorId + ' ' + numberFieldWarningId + ' ' + numberFieldSuccessId"
 				:show-success-messages="false"
 				@input="handleNumberInput"
 				@blur="handleNumberBlur"
@@ -545,7 +553,7 @@
 				v-model="keyValue"
 				v-maska="keyMask"
 				:label="keyLabelWithAsterisk"
-				:variant-style="outlined ? 'outlined' : 'underlined'"
+				:variant-style="props.variant"
 				:prepend-icon="keyTooltip && keyTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="keyTooltip && keyTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
@@ -559,7 +567,6 @@
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
 				:readonly="props.readonly"
-				:variant="props.variant"
 				:clearable="props.clearable"
 				:counter="props.counter"
 				:persistent-hint="props.persistentHint"
@@ -571,7 +578,7 @@
 				:aria-invalid="ariaInvalidKey"
 				class="key-field"
 				:display-asterisk="false"
-				:aria-describedby="keyFieldErrorId"
+				:aria-describedby="keyFieldErrorId + ' ' + keyFieldWarningId + ' ' + keyFieldSuccessId"
 				:show-success-messages="false"
 				@input="handleKeyInput"
 				@blur="handleKeyBlur"
@@ -602,7 +609,7 @@
 				/>
 			</div>
 			<div
-				:id="numberFieldErrorId"
+				:id="numberFieldWarningId"
 				class="sy-number-warnings"
 			>
 				<VMessages
@@ -612,7 +619,7 @@
 				/>
 			</div>
 			<div
-				:id="keyFieldErrorId"
+				:id="keyFieldWarningId"
 				class="sy-key-warnings"
 			>
 				<VMessages
@@ -622,7 +629,7 @@
 				/>
 			</div>
 			<div
-				:id="numberFieldErrorId"
+				:id="numberFieldSuccessId"
 				class="sy-number-success"
 			>
 				<VMessages
@@ -632,7 +639,7 @@
 				/>
 			</div>
 			<div
-				:id="keyFieldErrorId"
+				:id="keyFieldSuccessId"
 				class="sy-key-success"
 			>
 				<VMessages
