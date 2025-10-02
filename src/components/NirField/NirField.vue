@@ -5,6 +5,7 @@
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 	import { locales } from './locales'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -80,7 +81,6 @@
 
 	const emit = defineEmits(['update:modelValue'])
 	const modelValueRef = toRef(props, 'modelValue')
-	// const options = useCustomizableOptions(defaultOptions, props)
 
 	// Champs
 	const numberValue = ref('')
@@ -479,6 +479,9 @@
 		const numberInput = numberField.value?.$el?.querySelector?.('input')
 		numberInput.removeEventListener('keydown', handleNumberKeydown)
 	})
+
+	// Rendre le composant auto-validable dans un SyForm
+	useValidatable(validateOnSubmit)
 
 	defineExpose({
 		validateOnSubmit,

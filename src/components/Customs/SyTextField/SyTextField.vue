@@ -14,6 +14,7 @@
 	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(
@@ -348,6 +349,9 @@
 	}
 
 	const syTextFieldRef = ref<ComponentPublicInstance | null>(null)
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
 
 	onMounted(() => {
 		nextTick(() => {
