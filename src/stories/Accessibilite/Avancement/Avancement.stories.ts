@@ -27,7 +27,7 @@ const ITEMS: AuditItem[] = [
 	{ composant: 'LogoBrandSection', status: STATUS.AUDITED },
 	{ composant: 'SubHeader', status: STATUS.AUDITED },
 	{ composant: 'HeaderLoading', status: STATUS.AUDITED },
-	{ composant: 'HeaderToolbar', status: STATUS.IN_PROGRESS },
+	{ composant: 'HeaderToolbar', status: STATUS.AUDITED },
 	{ composant: 'Footer', status: STATUS.AUDITED },
 	{ composant: 'SySelect', status: STATUS.AUDITED },
 	{ composant: 'SyInputSelect', status: STATUS.NOT_AUDITED },

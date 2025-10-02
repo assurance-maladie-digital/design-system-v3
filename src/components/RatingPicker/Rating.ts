@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 export interface RatingInterface {
 	emitInputEvent(event: string | number): void
@@ -36,6 +36,10 @@ export function useRating(props: {
 			emit('update:modelValue', internalValue.value) // Emit the updated value
 		}
 	}
+
+	watch(() => props.modelValue, (newVal) => {
+		internalValue.value = newVal
+	})
 
 	return {
 		internalValue,

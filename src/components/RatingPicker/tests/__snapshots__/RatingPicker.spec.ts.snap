@@ -1,538 +1,142 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`RatingPicker > renders correctly 1`] = `
-<div class="vd-rating-picker">
-  <fieldset class="vd-number-picker">
+<div class="sy-rating-picker">
+  <fieldset class="sy-number-picker">
     <legend class="d-sr-only"></legend>
     <legend class="
       mb-6
       text-h6
     "></legend>
     <div class="d-inline-block">
-      <div class="
-        d-flex
-        flex-wrap
-        max-width-none
-        v-rating
-        v-theme--light
-      ">
-        <label
-          class=""
-          for="v-rating-v-0-0"
+      <div
+        class="
+          d-flex
+          flex-wrap
+          ga-2
+          max-width-none
+        "
+        role="radiogroup"
+      >
+        <div
+          aria-label="Note de 1 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
+          tabindex="0"
         >
-          <span class="v-rating__hidden">
-            Rating 0 of 10
-          </span>
-          <!---->
-        </label>
-        <input
-          checked=""
-          class="v-rating__hidden"
-          id="v-rating-v-0-0"
-          name="v-rating-v-0"
+          1
+        </div>
+        <div
+          aria-label="Note de 2 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
           tabindex="-1"
-          type="radio"
-          value="0"
-        />
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-1"
-            >
-              <span class="v-rating__hidden">
-                Rating 1 of 10
-              </span>
-              <button
-                aria-label="Note de 1 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  1
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-1"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="1"
-            />
-          </div>
-          <!---->
+        >
+          2
         </div>
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-2"
-            >
-              <span class="v-rating__hidden">
-                Rating 2 of 10
-              </span>
-              <button
-                aria-label="Note de 2 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  2
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-2"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="2"
-            />
-          </div>
-          <!---->
+        <div
+          aria-label="Note de 3 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
+          tabindex="-1"
+        >
+          3
         </div>
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-3"
-            >
-              <span class="v-rating__hidden">
-                Rating 3 of 10
-              </span>
-              <button
-                aria-label="Note de 3 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  3
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-3"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="3"
-            />
-          </div>
-          <!---->
+        <div
+          aria-label="Note de 4 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
+          tabindex="-1"
+        >
+          4
         </div>
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-4"
-            >
-              <span class="v-rating__hidden">
-                Rating 4 of 10
-              </span>
-              <button
-                aria-label="Note de 4 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  4
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-4"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="4"
-            />
-          </div>
-          <!---->
+        <div
+          aria-label="Note de 5 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
+          tabindex="-1"
+        >
+          5
         </div>
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-5"
-            >
-              <span class="v-rating__hidden">
-                Rating 5 of 10
-              </span>
-              <button
-                aria-label="Note de 5 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  5
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-5"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="5"
-            />
-          </div>
-          <!---->
+        <div
+          aria-label="Note de 6 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
+          tabindex="-1"
+        >
+          6
         </div>
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-6"
-            >
-              <span class="v-rating__hidden">
-                Rating 6 of 10
-              </span>
-              <button
-                aria-label="Note de 6 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  6
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-6"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="6"
-            />
-          </div>
-          <!---->
+        <div
+          aria-label="Note de 7 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
+          tabindex="-1"
+        >
+          7
         </div>
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-7"
-            >
-              <span class="v-rating__hidden">
-                Rating 7 of 10
-              </span>
-              <button
-                aria-label="Note de 7 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  7
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-7"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="7"
-            />
-          </div>
-          <!---->
+        <div
+          aria-label="Note de 8 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
+          tabindex="-1"
+        >
+          8
         </div>
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-8"
-            >
-              <span class="v-rating__hidden">
-                Rating 8 of 10
-              </span>
-              <button
-                aria-label="Note de 8 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  8
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-8"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="8"
-            />
-          </div>
-          <!---->
+        <div
+          aria-label="Note de 9 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
+          tabindex="-1"
+        >
+          9
         </div>
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-9"
-            >
-              <span class="v-rating__hidden">
-                Rating 9 of 10
-              </span>
-              <button
-                aria-label="Note de 9 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  9
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-9"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="9"
-            />
-          </div>
-          <!---->
-        </div>
-        <div class="v-rating__wrapper">
-          <!---->
-          <div class="v-rating__item">
-            <label
-              class=""
-              for="v-rating-v-0-10"
-            >
-              <span class="v-rating__hidden">
-                Rating 10 of 10
-              </span>
-              <button
-                aria-label="Note de 10 sur 10."
-                class="
-                  mr-2
-                  pa-0
-                  text-body-2
-                  text-primary
-                  v-btn
-                  v-btn--density-default
-                  v-btn--size-x-small
-                  v-btn--variant-outlined
-                  v-theme--light
-                "
-                style="height: 36px;"
-                type="button"
-              >
-                <span class="v-btn__overlay"></span>
-                <span class="v-btn__underlay"></span>
-                <!---->
-                <span
-                  class="v-btn__content"
-                  data-no-activator=""
-                >
-                  10
-                </span>
-                <!---->
-                <!---->
-              </button>
-            </label>
-            <input
-              class="v-rating__hidden"
-              id="v-rating-v-0-10"
-              name="v-rating-v-0"
-              tabindex="-1"
-              type="radio"
-              value="10"
-            />
-          </div>
-          <!---->
+        <div
+          aria-label="Note de 10 sur 10."
+          class="
+            pa-0
+            sy-number-picker__item
+            text-body-2
+          "
+          role="radio"
+          tabindex="-1"
+        >
+          10
         </div>
       </div>
       <!-- v-if -->

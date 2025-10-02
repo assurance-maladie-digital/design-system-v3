@@ -18,10 +18,9 @@ const meta = {
 	argTypes: {
 		type: {
 			description: 'Le type de notation.',
-			control: {
-				type: 'select',
-				options: ['emotion', 'number', 'stars'],
-			},
+			control: 'select',
+			options: ['emotion', 'number', 'stars'],
+			default: 'emotion',
 			table: {
 				type: {
 					summary: 'emotion, number, stars',
@@ -253,7 +252,7 @@ const ratingNumber = ref(-1)
 
 export const Stars: Story = {
 	args: {
-		'type': 'star',
+		'type': 'stars',
 		'label': 'Êtes-vous satisfait de ce service ?',
 		'readonly': false,
 		'hideAlert': false,
@@ -280,7 +279,7 @@ export const Stars: Story = {
 	<RatingPicker
 		v-model="ratingStar"
 		label="Êtes-vous satisfait de ce service ?"
-		type="star"
+		type="stars"
 	/>
 </template>
         `,

@@ -84,12 +84,6 @@
 		emit('update:page', 1)
 		// Then update the items per page
 		emit('update:items-per-page', newValue)
-
-		// Force a re-render of the component
-		nextTick(() => {
-			// This will trigger a re-render of the parent components
-			emit('update:items-per-page', newValue)
-		})
 	})
 
 	// Remove aria-describedby attribute after component is mounted
