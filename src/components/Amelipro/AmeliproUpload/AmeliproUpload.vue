@@ -563,6 +563,7 @@
 
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokens';
+
 .amelipro-upload {
 	padding: apTokens.$card-padding-tablet;
 	border-radius: apTokens.$card-radius;
