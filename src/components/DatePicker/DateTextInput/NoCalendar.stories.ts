@@ -214,6 +214,12 @@ const meta = {
 			description: 'Active la validation automatique lorsque le champ perd le focus (onBlur)',
 			defaultValue: true,
 		},
+		'density': {
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
+			defaultValue: 'default',
+		},
 	},
 } as Meta<typeof DatePicker>
 

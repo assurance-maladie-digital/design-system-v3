@@ -48,6 +48,7 @@
 		displayRange?: boolean
 		autoClamp?: boolean
 		isValidateOnBlur?: boolean
+		density?: 'default' | 'comfortable' | 'compact'
 	}>(), {
 		modelValue: null,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -70,6 +71,7 @@
 		displayRange: false,
 		autoClamp: true,
 		isValidateOnBlur: true,
+		density: 'default',
 	})
 
 	const emit = defineEmits<{
@@ -1005,6 +1007,7 @@
 		:display-persistent-placeholder="true"
 		:aria-label="ariaLabel || props.placeholder"
 		:is-validate-on-blur="props.isValidateOnBlur"
+		:density="props.density"
 		title="Date text input"
 		@focus="onFocus"
 		@blur="onBlur"

@@ -138,6 +138,7 @@
 			}
 			autoClamp?: boolean
 			isValidateOnBlur?: boolean
+			density?: 'default' | 'comfortable' | 'compact'
 		}>(),
 		{
 			modelValue: undefined,
@@ -172,6 +173,7 @@
 			autoClamp: false,
 			label: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 			isValidateOnBlur: true,
+			density: 'default',
 		},
 	)
 
@@ -960,6 +962,7 @@
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
 						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
+						:density="props.density"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
@@ -989,6 +992,7 @@
 					:display-holiday-days="props.displayHolidayDays"
 					:display-asterisk="props.displayAsterisk"
 					:is-validate-on-blur="props.isValidateOnBlur"
+					:density="props.density"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"
