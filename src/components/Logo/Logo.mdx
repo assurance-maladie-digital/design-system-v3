@@ -4,9 +4,10 @@ import Logo from './Logo.vue';
 
 <Meta title="Composants/Données/Logo" component={Logo} />
 
-# Logo
-
-Le composant `Logo` est utilisé pour afficher le logo de l'application avec différentes options de personnalisation.
+<div className="header">
+  <h1>Logo</h1>
+  <p>Le composant `Logo` est utilisé pour afficher le logo de l'application avec différentes options de personnalisation.</p>
+</div>
 
 <Canvas of={LogoStories.Default} />
 
@@ -20,6 +21,7 @@ Le composant `Logo` est utilisé pour afficher le logo de l'application avec dif
 <script setup lang='ts'>
     import { Logo } from '@cnamts/synapse'
 </script>
+import '../../stories/styles/shared.css';
 <template>
   <Logo :hideSignature="false" :hideOrganism="false" :risquePro="false" ariaLabel="" :avatar="false" :dark="false" />
 </template>

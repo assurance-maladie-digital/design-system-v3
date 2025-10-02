@@ -3,9 +3,10 @@ import * as FileListStories from './FileList.stories';
 
 <Meta of={FileListStories} />
 
-# FileList
-
-Le composant `FileList` est utilisé pour afficher une liste de document à téléverser.
+<div className="header">
+  <h1>FileList</h1>
+  <p>Le composant `FileList` est utilisé pour afficher une liste de document à téléverser.</p>
+</div>
 
 <Canvas of={FileListStories.Default} />
 
@@ -14,7 +15,6 @@ Le composant `FileList` est utilisé pour afficher une liste de document à tél
 <Controls of={FileListStories.Default}/>
 
 # Exemple d'utilisation
-
 
 ## Les différents états d'un fichier
 
@@ -76,6 +76,7 @@ Il est possible de personnaliser les icônes de fichier en utilisant le slot dyn
 					state: 'initial',
 				},
 			])
+import '../../stories/styles/shared.css';
 		</script>
 
 		<FileList

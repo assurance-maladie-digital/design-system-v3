@@ -10,7 +10,7 @@ export const Header: StoryObj = {
 		return {
 			template: `
         <div class="mb-8">
-          <h1 class="mb-4">Composants</h1>
+          <h1 class="text-h4 title font-weight-bold mb-4">Composants</h1>
           <p class="text-body-1">Découvrez notre collection de composants réutilisables conçus pour créer des interfaces utilisateur cohérentes et accessibles.</p>
         </div>
       `,

@@ -580,6 +580,7 @@
 	}
 
 	const openDatePicker = () => {
+		if (props.disabled || props.readonly) return
 		if (!isDatePickerVisible.value) {
 			toggleDatePicker()
 		}
@@ -809,6 +810,7 @@
 	}
 
 	const openDatePickerOnClick = () => {
+		if (props.disabled || props.readonly) return
 		openDatePicker()
 		customizeMonthButton()
 	}
@@ -820,11 +822,15 @@
 	}
 
 	const openDatePickerOnIconClick = () => {
+		if (props.disabled || props.readonly) return
 		toggleDatePicker()
 	}
 
 	// Gestionnaire d'événement clavier pour l'input
 	const handleInputKeydown = (event: KeyboardEvent) => {
+		// Ne rien faire si le composant est en readonly
+		if (props.readonly) return
+
 		// Ouvrir le calendrier uniquement lorsque la touche Entrée est pressée
 		if (event.key === 'Enter') {
 			openDatePicker()
@@ -972,7 +978,7 @@
 						:density="props.density"
 						:hide-details="props.hideDetails"
 						:display-asterisk="props.displayAsterisk"
-						is-clearable
+						:is-clearable="!props.readonly"
 						:auto-clamp="props.autoClamp"
 						title="Date Picker"
 						@click="openDatePickerOnClick"

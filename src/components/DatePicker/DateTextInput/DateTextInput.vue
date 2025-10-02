@@ -985,7 +985,7 @@
 			'warning-field': isOnWarning,
 			'success-field': isOnSuccess,
 		}"
-		:disabled="props.disabled || props.readonly"
+		:disabled="props.disabled"
 		:error-messages="errorMessages"
 		:label="props.label || ''"
 		:placeholder="props.placeholder"
@@ -997,7 +997,7 @@
 		:success-messages="props.showSuccessMessages ? successMessages : []"
 		:bg-color="props.bgColor"
 		color="primary"
-		is-clearable
+		:is-clearable="!props.readonly"
 		:display-persistent-placeholder="true"
 		:aria-label="ariaLabel || props.placeholder"
 		:is-validate-on-blur="props.isValidateOnBlur"

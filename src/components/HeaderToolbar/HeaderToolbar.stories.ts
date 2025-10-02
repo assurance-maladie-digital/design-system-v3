@@ -10,16 +10,75 @@ const meta: Meta<typeof HeaderToolbar> = {
 	},
 	argTypes: {
 		leftMenu: {
-			control: 'object',
-			description: 'Slot pour remplacer le menu de gauche.',
+			description: 'Éléments du menu de gauche. Peut être remplacé via slot #left-menu.',
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+				type: { summary: 'MenuItem[]' },
+				defaultValue: {
+					summary: 'Liste par défaut',
+					detail: `[
+  { title: 'Assuré', href: 'https://www.ameli.fr/assure', openInNewTab: true },
+  { title: 'Professionnel de santé' },
+  { title: 'Entreprise', href: 'https://www.ameli.fr/entreprise', openInNewTab: true }
+]`,
+				},
+			},
 		},
 		rightMenu: {
-			control: 'object',
-			description: 'Slot pour remplacer le menu de droite.',
+			description: 'Éléments du menu de droite. Peut être remplacé via slot #right-menu.',
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+				type: { summary: 'MenuItem[]' },
+				defaultValue: {
+					summary: 'Liste par défaut',
+					detail: `[
+  { title: 'Qui sommes-nous ?', href: 'https://www.assurance-maladie.ameli.fr/qui-sommes-nous', openInNewTab: true },
+  { title: 'Carrières', href: 'https://www.assurance-maladie.ameli.fr/carrieres', openInNewTab: true },
+  { title: 'Études et données', href: 'https://www.assurance-maladie.ameli.fr/etudes-et-donnees', openInNewTab: true },
+  { title: 'Presse', href: 'https://www.assurance-maladie.ameli.fr/presse', openInNewTab: true }
+]`,
+				},
+			},
 		},
 		itemsSelectMenu: {
-			control: 'object',
-			description: 'Menu de sélection.',
+			description: 'Sous-items du menu déroulant « Professionnel de santé ».',
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+				type: { summary: 'SelectItem[]' },
+				defaultValue: {
+					summary: 'Liste par défaut',
+					detail: `[
+  { text: 'Chirurgien-dentiste', value: 'Chirurgien-dentiste', href: 'https://www.ameli.fr/chirurgien-dentiste', openInNewTab: true },
+  { text: 'Établissement', value: 'Établissement', href: 'https://www.ameli.fr/etablissement', openInNewTab: true },
+  { text: 'Exercice coordonné', value: 'Exercice coordonné', href: 'https://www.ameli.fr/exercice-coordonne', openInNewTab: true },
+  { text: 'Infirmier', value: 'Infirmier', href: 'https://www.ameli.fr/infirmier', openInNewTab: true },
+  { text: "Laboratoire d'analyses médicales", value: "Laboratoire d'analyses médicales", href: 'https://www.ameli.fr/laboratoire-danalyses-medicales', openInNewTab: true },
+  { text: 'Masseur-kinésithérapeute', value: 'Masseur-kinésithérapeute', href: 'https://www.ameli.fr/masseur-kinesitherapeute', openInNewTab: true },
+  { text: 'Médecin', value: 'Médecin', href: 'https://www.ameli.fr/medecin', openInNewTab: true },
+  { text: 'Orthophoniste', value: 'Orthophoniste', href: 'https://www.ameli.fr/orthophoniste', openInNewTab: true },
+  { text: 'Orthoptiste', value: 'Orthoptiste', href: 'https://www.ameli.fr/orthoptiste', openInNewTab: true },
+  { text: 'Pédicure-podologue', value: 'Pédicure-podologue', href: 'https://www.ameli.fr/pedicure-podologue', openInNewTab: true },
+  { text: 'Pharmacien', value: 'Pharmacien', href: 'https://www.ameli.fr/pharmacien', openInNewTab: true },
+  { text: 'Professionnel de la LPP/LATM', value: 'Professionnel de la LPP/LATM', href: 'https://www.ameli.fr/professionnel-de-la-lpplatm', openInNewTab: true },
+  { text: 'Psychologue', value: 'Psychologue', href: 'https://www.ameli.fr/psychologue', openInNewTab: true },
+  { text: 'Sage-femme', value: 'Sage-femme', href: 'https://www.ameli.fr/sage-femme', openInNewTab: true },
+  { text: 'Taxi conventionné', value: 'Taxi conventionné', href: 'https://www.ameli.fr/taxi-conventionne', openInNewTab: true },
+  { text: 'Transporteur sanitaire', value: 'Transporteur sanitaire', href: 'https://www.ameli.fr/transporteur-sanitaire', openInNewTab: true },
+]`,
+				},
+			},
+		},
+		currentPageIndex: {
+			description: 'Indice de la page actuelle dans le menu de gauche (0 Assuré, 1 Professionnel de santé, 2 Entreprise).',
+			control: { type: 'number' },
+			table: {
+				category: 'props',
+				type: { summary: 'number | null' },
+				defaultValue: { summary: 'null' },
+			},
 		},
 	},
 }

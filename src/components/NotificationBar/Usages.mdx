@@ -1,9 +1,11 @@
 import { Meta, Story} from "@storybook/blocks";
+import '../../stories/styles/shared.css';
 import * as stories from "./Usages.stories.ts";
 
 <Meta of={stories} />
 
-# Usages
-
-<Story of={stories.UsagePage} />
+<div className="header">
+  <h1>Usages</h1>
+  
+</div><Story of={stories.UsagePage} />
 <br />

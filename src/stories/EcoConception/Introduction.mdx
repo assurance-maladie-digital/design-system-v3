@@ -1,24 +1,201 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as EcoStories from './econception.stories.ts';
+import { Meta } from '@storybook/blocks';
+import '../styles/shared.css';
 
-<Meta of={EcoStories} />
+<Meta title="Éco-conception/Introduction"/>
 
-# Éco-conception
+<style>
+{
+  /* Styles globaux pour améliorer l'apparence */
+  `
+    .eco-header {
+      color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    
+    .eco-header h1 {
+      margin-top: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    
+    .eco-header p {
+      font-size: 1.1rem;
+      margin-bottom: 0;
+      opacity: 0.9;
+    }
+    
+    .key-element {
+      border-left: 4px solid  #0C419A
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 4px;
+    }
+    
+    .key-element h3 {
+      color: #0C419A;
+      margin-top: 0.25em;
+    }
+    
+    .info-section {
+      background-color: #fff;
+      border-radius: 8px;
+      border: none;
+    }
+    
+    .info-section h2 {
+      padding-bottom: 0.5rem;
+      margin-top: 0;
+    }
 
-<br></br>
+    .eco-header-title {
+      color: #0C419A;
+      position: relative;
+      padding-bottom: 0.75rem;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+    
+    .eco-header-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background-color: #0C419A;
+      border-radius: 3px;
+    }
+    
+    .alert {
+      background-color: #E3E8F2;
+      border-left: 4px solid #0C419A;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+    
+    .alert-title {
+      color: #0C419A;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      margin-bottom: 0.5rem;
+    }
+    
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .resource-card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .resource-card:hover {
+      transform: translateY(-2px);
+    }
+    
+    .resource-card h3 {
+      margin-top: 0;
+      color: #0C419A;
+    }
+    
+    .reference-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 1rem;
+    }
+    
+    .reference-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .reference-list li::before {
+      content: '📋';
+      margin-right: 0.75rem;
+      font-size: 1.2rem;
+    }
 
-### L’éco-conception est une approche méthodique qui prend en considération les aspects environnementaux du processus de conception et de développement dans le but de réduire les impacts environnementaux négatifs.
+    a {
+        color: #0C419A !important; 
+    }
+  `
+}
+</style>
 
-<br></br>
+<div className="header">
+  <h1>Éco-conception</h1>
+  <p>Concevoir des services numériques plus sobres et respectueux de l'environnement</p>
+</div>
 
-##### La liste suivante énumère les points auxquels vous devez faire attention pendant la conception ainsi que le développement de votre application.
+<h2 className="eco-header-title">Qu'est-ce que l'éco-conception ?</h2>
 
-<br></br>
+<div className="info-section">
+  <p>
+    L'éco-conception consiste à intégrer des pratiques respectueuses de l'environnement dès la phase de conception d'un produit ou d'un service, puis tout au long de son cycle de vie.
+  </p>
+  
+  <div className="alert">
+    <h4 className="alert-title">Objectif principal</h4>
+    <p>Réduire la consommation de ressources informatiques et énergétiques ainsi que la contribution à l'obsolescence des équipements, qu'il s'agisse des équipements utilisateurs ou des équipements réseau ou serveur.</p>
+  </div>
+</div>
 
-<Story of={EcoStories.EcoPanel} />
+<h2 className="eco-header-title">Notre démarche</h2>
 
-<br></br>
+<div className="key-element">
+  <h3 className="eco-header-subtitle">🌱 Bonnes pratiques</h3>
+  <p>Une liste complète de bonnes pratiques par métier et en fonction de la phase du projet a été élaborée pour guider les équipes.</p>
+</div>
 
-### Évaluer son projet
+<div className="key-element">
+  <h3 className="eco-header-subtitle">📊 Critères mesurables</h3>
+  <p>Ces pratiques ont été organisées au sein de critères répondant à des finalités spécifiques et mesurables.</p>
+</div>
 
-Pour évaluer l’éco-conception de votre projet, vous pouvez utiliser [Ecoindex](http://www.ecoindex.fr/) ou [Ecometer](http://www.ecometer.org/).
+<div className="key-element">
+  <h3 className="eco-header-subtitle">🔄 Intégration aux processus</h3>
+  <p>L'organisation par phase projet respecte la réalité de l'organisation à la CNAM pour faciliter l'adoption.</p>
+</div>
+
+<h2 className="eco-header-title">Référentiels utilisés</h2>
+
+<div className="info-section">
+  <p>Cette approche s'appuie sur 7 référentiels reconnus dans le domaine de l'éco-conception numérique :</p>
+  
+  <ul className="reference-list">
+    <li><a href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/" target="_blank" rel="noopener noreferrer">RGESN (versions 2022 et 2024) </a></li>
+    <li><a href="https://gr491.isit-europe.org/" target="_blank" rel="noopener noreferrer">GR491</a></li>
+    <li><a href="https://collectif.greenit.fr/ecoconception-web/115-bonnes-pratiques-eco-conception_web.html" target="_blank" rel="noopener noreferrer">Les 115 bonnes pratiques de l'écoconception</a></li>
+    <li><a href="https://ecoresponsable.numerique.gouv.fr/publications/bonnes-pratiques/" target="_blank" rel="noopener noreferrer">Bonnes pratiques numérique responsable pour les organisations</a></li>
+    <li><a href="https://club.greenit.fr/doc/2022-06-GREENIT-Referentiel_maturite-v3.pdf" target="_blank" rel="noopener noreferrer">74 bonnes pratiques clés pour un numérique plus responsable</a></li>
+    <li><a href="https://designersethiques.org/fr/thematiques/ecoconception/guide-d-ecoconception" target="_blank" rel="noopener noreferrer">Le guide d'écoconception de services numériques</a></li>
+  </ul>
+  
+  <div className="alert" style={{ marginTop: '2rem' }}>
+    <h4 className="alert-title">À noter</h4>
+    <p>Ces bonnes pratiques sont une réponse concrète aux Principes Directeurs SI « Sobriété » et s'inscrivent dans la stratégie de responsabilité numérique de la CNAM.</p>
+  </div>
+</div>
+
+<h2 className="eco-header-title">Ressources disponibles</h2>
+
+<div className="resources-grid">
+  <div className="resource-card">
+    <h3>Référentiel</h3>
+    <p>Consultez notre référentiel complet de bonnes pratiques d'éco-conception classées par thématique.</p>
+    <a href="/?path=/docs/éco-conception-référentiel--docs" style={{ marginTop: 'auto', color: '#0C419A', textDecoration: 'none', fontWeight: '500' }}>Découvrir →</a>
+  </div>
+</div>

@@ -2,10 +2,33 @@ import { Meta, Canvas, Source } from '@storybook/blocks';
 import * as IsMinLengthStories from './IsMinLength.stories';
 
 <Meta of={IsMinLengthStories} />
+<style>
+{
+`
+      .header {
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .header h1 {
+      margin-top: 0;
+      color:  #0c419a;;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    
+    .header p {
+      font-size: 1.1rem;
+      margin-bottom: 0;
+    }
+    `
+}
+</style>
 
-# Règle de validation `isMinLength`
-
-La règle de validation `isMinLength` permet de limiter la longueur d'une chaîne de caractères dans un champs de formulaire.
+<div className="header">
+  <h1>Règle de validation `isMinLength`</h1>
+  <p>La règle de validation `isMinLength` permet de limiter la longueur d'une chaîne de caractères dans un champs de formulaire.</p>
+</div>
 
 ## Usage
 

@@ -3,16 +3,16 @@ import * as RangeFieldStories from './RangeField.stories.ts';
 
 <Meta of={RangeFieldStories} />
 
-# RangeField
-
-Le composant RangeField est utilisé pour permettre à l'utilisateur de sélectionner un interval.
+<div className="header">
+  <h1>RangeField</h1>
+  <p>Le composant RangeField est utilisé pour permettre à l'utilisateur de sélectionner un interval.</p>
+</div>
 
 <Canvas of={RangeFieldStories.Default} />
 
 # Api
 
 <Controls of={RangeFieldStories.Default} />
-
 
 # Personnalisation des limites
 
@@ -29,6 +29,7 @@ Vous pouvez personnaliser les limites de l'intervalle en utilisant les props `mi
 			import { RangeField } from '@cnamts/synapse'
 
 			const range = ref([0, 100])
+import '../../stories/styles/shared.css';
 		</script>
 
 		<template>
@@ -42,12 +43,9 @@ Vous pouvez personnaliser les limites de l'intervalle en utilisant les props `mi
 	}}
 />
 
-
 # Personnalisation des composants Vuetify
 
-
 Vous pouvez personnaliser les composants Vuetify `VTextField` utilisés dans le composant RangeField en utilisant la props `vuetifyOptions`.
-
 
 <Canvas
 	of={RangeFieldStories.Customization}

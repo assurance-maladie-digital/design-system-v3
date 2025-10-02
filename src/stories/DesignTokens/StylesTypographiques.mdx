@@ -1,9 +1,14 @@
 import { Story, Meta } from '@storybook/blocks';
 import * as TypographyStories from './StylesTypographiques.stories';
+import '../styles/shared.css';
 
 <Meta title="Design Tokens/Styles typographiques" of={TypographyStories} />
 
-# Styles typographiques
+
+<div className="header">
+  <h1>Styles typographiques</h1>
+  <p>Les styles typographiques disponibles dans notre Design System.</p>
+</div>
 <Story of={TypographyStories.Introduction} />
 
 ## Styles de titres

@@ -4,9 +4,10 @@ import PhoneField from './PhoneField.vue'
 
 <Meta title="Composants/Formulaires/PhoneField" component={PhoneField} />
 
-# PhoneField
-
-Le composant`PhoneField`  est utilisé pour saisir des numéros de téléphone avec différentes options de formatage.
+<div className="header">
+  <h1>PhoneField</h1>
+  <p>Le composant`PhoneField`  est utilisé pour saisir des numéros de téléphone avec différentes options de formatage.</p>
+</div>
 
 <Canvas of={PhoneFieldStories.Default} />
 
@@ -22,6 +23,7 @@ import { PhoneField } from '@cnamts/synapse'
 import { ref } from 'vue'
 
 const value = ref('')
+import '../../stories/styles/shared.css';
 
 const handleChange = (newValue) => {
     console.log('Value changed:', newValue)

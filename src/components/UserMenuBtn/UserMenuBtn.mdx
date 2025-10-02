@@ -3,9 +3,10 @@ import * as UserMenuBtnStories from './UserMenuBtn.stories';
 
 <Meta of={UserMenuBtnStories}/>
 
-# UserMenuBtn
-
-Le composant `UserMenuBtn` est utilisé pour afficher un bouton de menu utilisateur avec un menu déroulant.
+<div className="header">
+  <h1>UserMenuBtn</h1>
+  <p>Le composant `UserMenuBtn` est utilisé pour afficher un bouton de menu utilisateur avec un menu déroulant.</p>
+</div>
 
 <Canvas of={UserMenuBtnStories.Default}/>
 
@@ -18,6 +19,7 @@ Le composant `UserMenuBtn` est utilisé pour afficher un bouton de menu utilisat
 <Source dark code={`
   <script setup lang="ts">
   import { UserMenuBtn } from '@cnamts/synapse';
+import '../../stories/styles/shared.css';
 
   const menuItems = [
     { text: 'Administration', value: 'Administration' },

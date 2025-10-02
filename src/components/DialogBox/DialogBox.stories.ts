@@ -113,6 +113,18 @@ const meta: Meta<typeof DialogBox> = {
 				},
 			},
 		},
+		'draggable': {
+			control: 'boolean',
+			description: 'Rendre la boîte de dialogue déplaçable avec la souris ou les flèches gauche/droite du clavier',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
 		'vuetifyOptions': {
 			control: 'object',
 			description: 'Personnalisation des composants Vuetify internes',
@@ -805,6 +817,77 @@ export const VuetifyOptions: Story = {
 							text: true,
 						},
 					}
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const Draggable: Story = {
+	args: {
+		'modelValue': false,
+		'title': 'DialogBox title',
+		'default': 'DialogBox content',
+		'draggable': true,
+		'onCancel': fn(),
+		'onConfirm': fn(),
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DialogBox, VBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="pa-4">
+					<VBtn
+						@click="args.modelValue = !args.modelValue"
+						color="primary"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-bind="args"
+						@update:modelValue="args.modelValue = $event"
+						@confirm="args.modelValue = false"
+						@cancel="args.modelValue = false"
+					>
+						{{ args.default }}
+					</DialogBox>
+				</div>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<VBtn
+						color="primary"
+						@click="dialogOpen = !dialogOpen"
+					>Toggle DialogBox</VBtn>
+					<DialogBox
+						v-model="dialogOpen"
+						title="DialogBox title"
+						draggable
+						@confirm="dialogOpen = false"
+						@cancel="dialogOpen = false"
+					>
+						DialogBox content
+					</DialogBox>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DialogBox } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const dialogOpen = ref(false)
 				</script>
 				`,
 			},

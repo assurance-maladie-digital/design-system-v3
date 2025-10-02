@@ -1,11 +1,13 @@
 import { Canvas, Meta, Controls, Story, Source } from '@storybook/blocks';
+import '../../../stories/styles/shared.css';
 import * as SyPaginationStories from "./SyPagination.stories";
 
 <Meta of={SyPaginationStories} />
 
-# SyPagination
-
-Le composant `SyPagination` permet de naviguer à travers un ensemble de données divisées en pages. Il offre une interface intuitive avec des boutons de navigation et des indicateurs de page.
+<div className="header">
+  <h1>SyPagination</h1>
+  <p>Le composant `SyPagination` permet de naviguer à travers un ensemble de données divisées en pages. Il offre une interface intuitive avec des boutons de navigation et des indicateurs de page.</p>
+</div>
 
 <Canvas of={SyPaginationStories.Default} />
 
@@ -57,7 +59,8 @@ Voici un exemple d'implémentation du composant SyPagination :
 	import { SyPagination } from '@cnamts/synapse'
 
 	// Exemple de données
-	const items = Array.from({ length: 50 }, (_, i) => ({
+	const items = Array.from({ length: 50 }, (_, i)
+=> ({
 		id: i + 1,
 		title: \`Élément \${i + 1}\`,
 	}))

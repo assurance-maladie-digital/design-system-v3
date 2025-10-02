@@ -1,12 +1,13 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { mdiClose } from '@mdi/js'
-	import { ref, useId, watch, nextTick } from 'vue'
+	import { nextTick, ref, toRef, useId, watch } from 'vue'
 	import type { VBtn, VDialog } from 'vuetify/components'
-	import { config } from './config'
-	import { locales } from './locales'
 	import { useDisplay } from 'vuetify/lib/framework.mjs'
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
+	import { config } from './config'
+	import { locales } from './locales'
+	import { useDraggable } from './useDraggable'
 
 	const props = withDefaults(defineProps<{
 		title?: string
@@ -16,6 +17,7 @@
 		hideActions?: boolean
 		persistent?: boolean
 		autofocusValidateBtn?: boolean
+		draggable?: boolean
 	} & CustomizableOptions>(), {
 		title: undefined,
 		width: '800px',
@@ -100,11 +102,18 @@
 
 	const display = useDisplay()
 
+	const {
+		isGrabbing,
+		startDragging,
+		moveToLeft,
+		moveToRight,
+	} = useDraggable(toRef(props, 'draggable'), dialogContent)
 </script>
 
 <template>
 	<VDialog
 		v-model="dialog"
+		:scrim="props.draggable ? false : true"
 		v-bind="$attrs"
 		:width="props.width"
 		:persistent="props.persistent"
@@ -113,13 +122,24 @@
 		class="sy-dialog-box"
 		:aria-labelledby="id"
 		@keydown.tab="handleFocus"
+		@keydown.left="moveToLeft"
+		@keydown.right="moveToRight"
 	>
 		<VCard
 			v-bind="options.card"
-			id="dialog-content"
 			ref="dialogContent"
+			:class="{
+				'sy-dialog-box-draggable': props.draggable,
+				'sy-dialog-box-draggable--active': props.draggable && isGrabbing,
+			}"
+			:aria-label="props.draggable ? locales.draggable : undefined"
 		>
-			<VCardTitle v-bind="options.cardTitle">
+			<VCardTitle
+				class="sy-dialog-box-title"
+				v-bind="options.cardTitle"
+				:title="props.draggable ? locales.dragInstruction : undefined"
+				@mousedown="startDragging"
+			>
 				<slot name="title">
 					<h2
 						v-if="title"
@@ -146,7 +166,13 @@
 					/>
 				</VBtn>
 			</VCardTitle>
-			<slot />
+
+			<div
+				class="px-6"
+				v-bind="options.cardText"
+			>
+				<slot />
+			</div>
 
 			<div
 				v-if="!props.hideActions"
@@ -237,6 +263,15 @@ h2 {
 	flex-direction: column;
 	justify-content: stretch;
 	gap: $spacing-small;
+}
+
+.sy-dialog-box-draggable .sy-dialog-box-title {
+	cursor: grab;
+}
+
+.sy-dialog-box-draggable--active .sy-dialog-box-title {
+	cursor: grabbing;
+	user-select: none;
 }
 
 @media screen and (min-width: $container-mobile-max-width) {

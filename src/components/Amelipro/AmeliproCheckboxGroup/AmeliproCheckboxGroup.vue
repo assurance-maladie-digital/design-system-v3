@@ -359,7 +359,7 @@
 				&::after {
 					position: absolute;
 					top: 1rem;
-					left: 1.1rem;
+					left: 0.75rem;
 					width: 1rem;
 					height: 0.5rem;
 					border-bottom: 2px solid apTokens.$ap-blue-darken1;

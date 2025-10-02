@@ -1,11 +1,14 @@
 import { Meta, Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
 import * as SyTabsStories from './SyTabs.stories';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import '../../../stories/styles/shared.css';
 
 <Meta of={SyTabsStories} />
 
 <div className="accessibility-guide">
-  <Title>Guide d'Accessibilité du Composant SyTabs</Title>
+  <div className="header">
+  <h1>Guide d'Accessibilité</h1>
+</div>
   
   <div className="intro-section">
     <img 

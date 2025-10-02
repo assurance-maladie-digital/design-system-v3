@@ -1,11 +1,13 @@
 import {Controls, Canvas, Meta, Source, Story} from '@storybook/blocks';
+import '../../stories/styles/shared.css';
 import * as ContextualMenuStories from './ContextualMenu.stories';
 
 <Meta of={ContextualMenuStories} />
 
-# ContextualMenu
-
-L’élément `ContextualMenu` est utilisé pour afficher un menu avec une liste d’ancres pour la navigation.
+<div className="header">
+  <h1>ContextualMenu</h1>
+  <p>L’élément `ContextualMenu` est utilisé pour afficher un menu avec une liste d’ancres pour la navigation.</p>
+</div>
 
 <Canvas of={ContextualMenuStories.Default}  />
 
@@ -37,7 +39,8 @@ L’élément `ContextualMenu` est utilisé pour afficher un menu avec une liste
         hash: '#section-5',
     }]
 
-    const hash = ref<string | null>(null)
+    const hash = ref<string | null>
+(null)
 </script>
 
 <template>

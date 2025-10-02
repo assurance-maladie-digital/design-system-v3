@@ -133,3 +133,324 @@ export const Default: Story = {
 	</AmeliproAccordionGroup>`,
 	}),
 }
+
+// --- Bloc ouvert par défaut ---
+export const DefaultItemOpened: Story = {
+	args: {
+		items,
+		'uniqueId': 'amelipro-accordion-group-opened',
+		'defaultItemOpened': 2,
+		'accordion-content': '[Slot: accordion-content]',
+		'accordion-header-right': '[Slot: accordion-header-right]',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>Le bloc numéro 3 est ouvert par défaut grâce à la prop <code>defaultItemOpened</code>.</p>
+  <AmeliproAccordionGroup
+    class="w-100"
+    :items="items"
+    unique-id="amelipro-accordion-group-opened"
+    :default-item-opened="2"
+  >
+    <template #accordion-header-right>
+      [Slot: accordion-header-right]
+    </template>
+    <template #accordion-content>
+      [Slot: accordion-content]
+    </template>
+  </AmeliproAccordionGroup>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { AmeliproAccordionGroup } from '@cnamts/synapse'
+  const items = [
+    { id: 'test-1', title: 'Exemple 1' },
+    { id: 'test-2', title: 'Exemple 2' },
+    { id: 'test-3', title: 'Exemple 3' },
+    { id: 'test-4', title: 'Exemple 4' },
+  ]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAccordionGroup },
+		setup() {
+			return { args }
+		},
+		template: `
+<p class="mb-2">Le bloc numéro 3 est ouvert par défaut grâce à la prop <code>defaultItemOpened</code>.</p>
+<AmeliproAccordionGroup class="w-100" v-bind="args">
+  <template #accordion-header-right>
+    [Slot: accordion-header-right]
+  </template>
+  <template #accordion-content>
+    [Slot: accordion-content]
+  </template>
+</AmeliproAccordionGroup>
+`,
+	}),
+}
+
+// --- Bordure et couleur personnalisées ---
+export const BorderedColored: Story = {
+	args: {
+		items,
+		'uniqueId': 'amelipro-accordion-group-colored',
+		'groupBordered': true,
+		'groupBorderColor': '#1976d2',
+		'groupColor': '#e3f2fd',
+		'accordion-content': '[Slot: accordion-content]',
+		'accordion-header-right': '[Slot: accordion-header-right]',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>Les panneaux dépliants ont une bordure et une couleur de fond personnalisées grâce aux props <code>groupBordered</code>, <code>groupBorderColor</code> et <code>groupColor</code>.</p>
+  <AmeliproAccordionGroup
+    class="w-100"
+    :items="items"
+    unique-id="amelipro-accordion-group-colored"
+    group-bordered
+    group-border-color="#1976d2"
+    group-color="#e3f2fd"
+  >
+    <template #accordion-header-right>
+      [Slot: accordion-header-right]
+    </template>
+    <template #accordion-content>
+      [Slot: accordion-content]
+    </template>
+  </AmeliproAccordionGroup>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { AmeliproAccordionGroup } from '@cnamts/synapse'
+  const items = [
+    { id: 'test-1', title: 'Exemple 1' },
+    { id: 'test-2', title: 'Exemple 2' },
+    { id: 'test-3', title: 'Exemple 3' },
+    { id: 'test-4', title: 'Exemple 4' },
+  ]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAccordionGroup },
+		setup() {
+			return { args }
+		},
+		template: `
+<p class="mb-2">Les panneaux dépliants ont une bordure et une couleur de fond personnalisées grâce aux props <code>groupBordered</code>, <code>groupBorderColor</code> et <code>groupColor</code>.</p>
+<AmeliproAccordionGroup class="w-100" v-bind="args">
+  <template #accordion-header-right>
+    [Slot: accordion-header-right]
+  </template>
+  <template #accordion-content>
+    [Slot: accordion-content]
+  </template>
+</AmeliproAccordionGroup>
+`,
+	}),
+}
+
+// --- Masquer le séparateur ---
+export const HideSeparator: Story = {
+	args: {
+		items,
+		'uniqueId': 'amelipro-accordion-group-nosep',
+		'hideSeparator': true,
+		'accordion-content': '[Slot: accordion-content]',
+		'accordion-header-right': '[Slot: accordion-header-right]',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>Le séparateur entre le titre et le contenu est masqué grâce à la prop <code>hideSeparator</code>.</p>
+  <AmeliproAccordionGroup
+    class="w-100"
+    :items="items"
+    unique-id="amelipro-accordion-group-nosep"
+    hide-separator
+  >
+    <template #accordion-header-right>
+      [Slot: accordion-header-right]
+    </template>
+    <template #accordion-content>
+      [Slot: accordion-content]
+    </template>
+  </AmeliproAccordionGroup>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { AmeliproAccordionGroup } from '@cnamts/synapse'
+  const items = [
+    { id: 'test-1', title: 'Exemple 1' },
+    { id: 'test-2', title: 'Exemple 2' },
+    { id: 'test-3', title: 'Exemple 3' },
+    { id: 'test-4', title: 'Exemple 4' },
+  ]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAccordionGroup },
+		setup() {
+			return { args }
+		},
+		template: `
+<p class="mb-2">Le séparateur entre le titre et le contenu est masqué grâce à la prop <code>hideSeparator</code>.</p>
+<AmeliproAccordionGroup class="w-100" v-bind="args">
+  <template #accordion-header-right>
+    [Slot: accordion-header-right]
+  </template>
+  <template #accordion-content>
+    [Slot: accordion-content]
+  </template>
+</AmeliproAccordionGroup>
+`,
+	}),
+}
+
+// --- Titres capitales et niveau ---
+export const TitleUppercaseLevel: Story = {
+	args: {
+		items,
+		'uniqueId': 'amelipro-accordion-group-uppercase',
+		'groupTitleUppercase': true,
+		'groupTitleLevel': 3,
+		'accordion-content': '[Slot: accordion-content]',
+		'accordion-header-right': '[Slot: accordion-header-right]',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>Les titres sont en capitales et utilisent le niveau de titre <code>h3</code> grâce aux props <code>groupTitleUppercase</code> et <code>groupTitleLevel</code>.</p>
+  <AmeliproAccordionGroup
+    class="w-100"
+    :items="items"
+    unique-id="amelipro-accordion-group-uppercase"
+    group-title-uppercase
+    :group-title-level="3"
+  >
+    <template #accordion-header-right>
+      [Slot: accordion-header-right]
+    </template>
+    <template #accordion-content>
+      [Slot: accordion-content]
+    </template>
+  </AmeliproAccordionGroup>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { AmeliproAccordionGroup } from '@cnamts/synapse'
+  const items = [
+    { id: 'test-1', title: 'Exemple 1' },
+    { id: 'test-2', title: 'Exemple 2' },
+    { id: 'test-3', title: 'Exemple 3' },
+    { id: 'test-4', title: 'Exemple 4' },
+  ]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAccordionGroup },
+		setup() {
+			return { args }
+		},
+		template: `
+<p class="mb-2">Les titres sont en capitales et utilisent le niveau de titre <code>h3</code> grâce aux props <code>groupTitleUppercase</code> et <code>groupTitleLevel</code>.</p>
+<AmeliproAccordionGroup class="w-100" v-bind="args">
+  <template #accordion-header-right>
+    [Slot: accordion-header-right]
+  </template>
+  <template #accordion-content>
+    [Slot: accordion-content]
+  </template>
+</AmeliproAccordionGroup>
+`,
+	}),
+}
+
+// --- Slot headerRight avec largeur personnalisée ---
+export const HeaderRightWidth: Story = {
+	args: {
+		items,
+		'uniqueId': 'amelipro-accordion-group-header-right',
+		'headerRightWidth': '200px',
+		'accordion-content': '[Slot: accordion-content]',
+		'accordion-header-right': '[Slot: accordion-header-right]',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <p>La partie droite du header utilise le slot <code>accordion-header-right</code> et une largeur personnalisée via <code>headerRightWidth</code>.</p>
+  <AmeliproAccordionGroup
+    class="w-100"
+    :items="items"
+    unique-id="amelipro-accordion-group-header-right"
+    header-right-width="200px"
+  >
+    <template #accordion-header-right>
+      [Slot: accordion-header-right]
+    </template>
+    <template #accordion-content>
+      [Slot: accordion-content]
+    </template>
+  </AmeliproAccordionGroup>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { AmeliproAccordionGroup } from '@cnamts/synapse'
+  const items = [
+    { id: 'test-1', title: 'Exemple 1' },
+    { id: 'test-2', title: 'Exemple 2' },
+    { id: 'test-3', title: 'Exemple 3' },
+    { id: 'test-4', title: 'Exemple 4' },
+  ]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproAccordionGroup },
+		setup() {
+			return { args }
+		},
+		template: `
+<p class="mb-2">La partie droite du header utilise le slot <code>accordion-header-right</code> et une largeur personnalisée via <code>headerRightWidth</code>.</p>
+<AmeliproAccordionGroup class="w-100" v-bind="args">
+  <template #accordion-header-right>
+    [Slot: accordion-header-right]
+  </template>
+  <template #accordion-content>
+    [Slot: accordion-content]
+  </template>
+</AmeliproAccordionGroup>
+`,
+	}),
+}

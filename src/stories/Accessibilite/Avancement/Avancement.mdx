@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/blocks';
 import * as AvancementStories from './Avancement.stories';
+import '../../styles/shared.css';
 
 <Meta of={AvancementStories} />
 
@@ -27,45 +28,7 @@ import * as AvancementStories from './Avancement.stories';
       padding: 0 1rem;
     }
     
-    /* Header avec effet glassmorphism */
-    .avancement-header {
-      padding: 2rem;
-      border-radius: var(--border-radius);
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--card-shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    
-    .avancement-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgzMCkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
-      opacity: 0.1;
-      z-index: 0;
-    }
-    
-    .avancement-header h1 {
-      margin: 0;
-      position: relative;
-      z-index: 1;
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
-    
-    .avancement-header p {
-      margin-top: 0.5rem;
-      position: relative;
-      z-index: 1;
-      font-size: 1.1rem;
-      max-width: 800px;
-    }
+       
     
     /* Titres avec ligne décorative */
     .section-title {
@@ -105,15 +68,8 @@ import * as AvancementStories from './Avancement.stories';
       background-color: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--card-shadow);
-      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
       display: flex;
       flex-direction: column;
-    }
-    
-    .progress-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
     
     .progress-card h3 {
@@ -296,7 +252,6 @@ import * as AvancementStories from './Avancement.stories';
       position: absolute;
       left: 10px;
       top: 50%;
-      transform: translateY(-50%);
       color: #666;
     }
     
@@ -410,15 +365,10 @@ import * as AvancementStories from './Avancement.stories';
       border-radius: var(--border-radius);
       padding: 1.5rem;
       box-shadow: var(--card-shadow);
-      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
       display: flex;
       flex-direction: column;
     }
-    
-    .action-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
+  
     
     .action-icon {
       width: 48px;
@@ -491,7 +441,7 @@ import * as AvancementStories from './Avancement.stories';
 </style>
 
 <div className="avancement-container">
-  <div className="avancement-header">
+  <div className="header">
     <h1>Suivi d'avancement de l'accessibilité</h1>
     <p>Tableau de bord de l'état d'avancement des audits d'accessibilité des composants du Design System CNAM</p>
   </div>

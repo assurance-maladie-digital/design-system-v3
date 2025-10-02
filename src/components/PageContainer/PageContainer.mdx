@@ -4,9 +4,10 @@ import * as PageContainerStories from './PageContainer.stories';
 
 <Meta of={PageContainerStories} />
 
-# PageContainer
-
-Le composant `PageContainer` est un conteneur transparent utilisé pour afficher une page.
+<div className="header">
+  <h1>PageContainer</h1>
+  <p>Le composant `PageContainer` est un conteneur transparent utilisé pour afficher une page.</p>
+</div>
 
 <Canvas of={PageContainerStories.Default}  />
 
@@ -20,6 +21,7 @@ Le composant `PageContainer` est un conteneur transparent utilisé pour afficher
 <script setup lang="ts">
 import { PageContainer } from '@cnamts/synapse'
 </script>
+import '../../stories/styles/shared.css';
 
 <template>
     <PageContainer color="primary">

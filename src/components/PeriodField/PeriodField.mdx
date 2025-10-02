@@ -3,9 +3,10 @@ import * as PeriodFieldStories from "./PeriodField.stories.ts";
 
 <Meta of={PeriodFieldStories}/>
 
-# PeriodField
-
-Le composant `PeriodField` est utilisé pour permettre à l’utilisateur de saisir une période.
+<div className="header">
+  <h1>PeriodField</h1>
+  <p>Le composant `PeriodField` est utilisé pour permettre à l’utilisateur de saisir une période.</p>
+</div>
 
 <Canvas story={{height: '550px'}} of={PeriodFieldStories.Default}/>
 
@@ -22,6 +23,7 @@ Le composant `PeriodField` est utilisé pour permettre à l’utilisateur de sai
 	import { PeriodField } from '@cnamts/synapse'
 
 	const selectedPeriod = ref({ from: null, to: null })
+import '../../stories/styles/shared.css';
 </script>
 
 <template>

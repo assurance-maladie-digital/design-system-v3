@@ -40,7 +40,7 @@ describe('PasswordField.vue', () => {
 		// 2. Cast wrapper.vm as your interface
 		const vm = wrapper.vm as unknown as PasswordFieldVM
 
-		const button = wrapper.find('[role="button"]')
+		const button = wrapper.find('.password-toggle-button')
 		expect(vm.showEyeIcon).toBe(false) // from your interface
 		await button.trigger('click')
 		expect(vm.showEyeIcon).toBe(true)

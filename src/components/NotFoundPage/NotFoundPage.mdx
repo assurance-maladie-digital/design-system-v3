@@ -1,12 +1,14 @@
 import { Controls, Canvas, Meta, Source } from "@storybook/blocks";
+import '../../stories/styles/shared.css';
 import * as NotFoundPageStories from "./NotFoundPage.stories";
 
 <Meta of={NotFoundPageStories} />
 
-# NotFoundPage
-
-Le composant `NotFoundPage` permet d'afficher une page 404.
-Il est basé sur le composant `ErrorPage` du design system.
+<div className="header">
+  <h1>NotFoundPage</h1>
+  <p>Le composant `NotFoundPage` permet d'afficher une page 404.
+Il est basé sur le composant `ErrorPage` du design system.</p>
+</div>
 
 <Canvas of={NotFoundPageStories.Default} />
 
