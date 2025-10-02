@@ -70,7 +70,7 @@ const items = [
 }
 
 /**
- * Exemple de base du composant SyTabs avec des onglets simples.
+ * Exemple de base du composant SyTabs avecun onglet disabled.
  */
 export const Disabled: Story = {
 	args: {
