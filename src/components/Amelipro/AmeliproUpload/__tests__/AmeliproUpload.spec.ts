@@ -1,0 +1,20 @@
+// const buildFile = (name: string) => ({
+// 	lastModified: 1685526538748,
+// 	name,
+// 	size: 3115351,
+// 	type: 'application/pdf',
+// 	webkitRelativePath: '',
+// } as File);
+
+// ariaRequired: true,
+// errorMessages: { duplicated: 'Custom error message for duplicated file' },
+// errorTitle: 'The error title',
+// errorTypeString: 'The error type string',
+// fileTypeAccepted: ['application/pdf', 'image/jpeg'],
+// inputLabel: 'The input label',
+// maxFileNumber: 5,
+// rules: [() => 'the-rules'],
+// uniqueId: 'the-id',
+// value: [buildFile('file.pdf')],
+// warningRules: [() => 'the-warning-rules-a', () => 'the-warning-rules-b'],
+// warningTitle: 'The warning title',
