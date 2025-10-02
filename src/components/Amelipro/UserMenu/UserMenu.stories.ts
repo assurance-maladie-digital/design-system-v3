@@ -124,11 +124,12 @@ export const Default: Story = {
 		setup() {
 			return { args }
 		},
-		template: `
+		template: `<div style="height: 400px; background: repeating-linear-gradient(135deg,#fafafa,#fafafa 10px,#f5f5f5 10px,#f5f5f5 20px);">
 <UserMenu
-	style="margin-left: 200px"
+	style="margin-left: 250px; top: 15px"
 	v-bind="args"
-/>`,
+/>
+</div>`,
 	}),
 }
 
