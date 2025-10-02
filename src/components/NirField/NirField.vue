@@ -500,9 +500,9 @@
 <template>
 	<component
 		:is="displayKey && !withoutFieldset ? 'fieldset' : 'div'"
+		ref="container"
 		:aria-label="displayKey && withoutFieldset ? label : undefined"
 		:role="displayKey && withoutFieldset ? 'group' : undefined"
-		ref="container"
 		:class="displayKey && !withoutFieldset ? 'nir-field nir-field--fieldset' : 'nir-field'"
 	>
 		<legend v-if="label && displayKey && !withoutFieldset">
