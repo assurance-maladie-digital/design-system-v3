@@ -29,9 +29,7 @@ export const locales = {
 		textfieldLabel: 'Caractères de l’audio',
 	},
 	choiceCaptcha: {
-		use: 'Utiliser un',
 		image: 'captcha image',
-		or: 'ou un',
 		audio: 'captcha audio',
 	},
 	play: 'Lire l\'audio',
@@ -52,4 +50,6 @@ export const locales = {
 	required: 'Le captcha est requis',
 	hardToRead: 'Vous n\'arrivez pas à lire ?',
 	captchaImgLoading: 'Chargement de l\'image du captcha',
+	choiceCaptchaTitle: 'Choisissez le type de captcha de votre choix.',
+	helpDesk: (phoneNumber: string) => `Si vous êtes en incapacité de résoudre le captcha, contactez le support au ${phoneNumber}.`,
 } as const

@@ -20,7 +20,7 @@
 		modelValue?: string | undefined
 		defaultType?: CaptchaType
 		tagTitle?: string
-		helpDesk?: string
+		helpDesk?: string | false
 	}>(), {
 		modelValue: undefined,
 		defaultType: 'image',
@@ -36,7 +36,7 @@
 		(e: 'validation:error', error: unknown): void
 	}>()
 	const text = ref<string | null>(null)
-	const type = ref<CaptchaType>(props.defaultType ?? 'image')
+	const type = ref<CaptchaType>(props.defaultType)
 	const id = ref<string | null>(null)
 	const state = ref<StateType>('idle')
 	const errorMessage = ref<string | null>(null)
@@ -53,7 +53,7 @@
 	})
 
 	onMounted(() => {
-		type.value = props.defaultType ?? 'image'
+		type.value = props.defaultType
 	})
 
 	// --- Methods ---
@@ -182,6 +182,13 @@
 					>
 						{{ locales.image.change }}
 					</CaptchaBtn>
+
+					<p
+						v-if="props.helpDesk"
+						class="captcha-helpdesk text-textSubdued mb-2"
+					>
+						{{ locales?.helpDesk(props.helpDesk) }}
+					</p>
 				</div>
 			</template>
 
@@ -251,6 +258,12 @@
 					>
 						{{ locales.audio.change }}
 					</CaptchaBtn>
+					<p
+						v-if="props.helpDesk"
+						class="captcha-helpdesk text-textSubdued mb-2"
+					>
+						{{ locales?.helpDesk(props.helpDesk) }}
+					</p>
 				</div>
 			</template>
 
@@ -262,6 +275,9 @@
 				}"
 			>
 				<div class="captcha-config pt-4 d-flex flex-column ga-2 align-start">
+					<p class="label-options text-textSubdued">
+						{{ locales.choiceCaptchaTitle }}
+					</p>
 					<CaptchaBtn
 						:prepend-icon="mdiImageOutline"
 						@click="chooseImage"
@@ -293,7 +309,12 @@
 }
 
 .captcha-audio {
-	letter-spacing: 0%;
+	letter-spacing: normal;
+}
+
+.captcha-helpdesk {
+	max-width: 300px;
+	font-size: 0.875rem;
 }
 
 </style>
