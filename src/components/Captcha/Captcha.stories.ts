@@ -1,7 +1,6 @@
 import Captcha from './Captcha.vue'
 import type { StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
-import { ArgTypes, Controls } from '@storybook/blocks'
 
 export default {
 	title: 'Composants/Formulaires/Captcha',

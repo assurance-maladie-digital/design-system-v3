@@ -30,6 +30,6 @@
 
 <style scoped lang="scss">
 :deep(.v-skeleton-loader__image) {
-  height: 100%;
+	height: 100%;
 }
 </style>
