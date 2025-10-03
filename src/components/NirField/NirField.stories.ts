@@ -25,16 +25,6 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
-		outlined: {
-			description: 'Indique si le champ est encadré.',
-			control: 'boolean',
-			default: true,
-			table: {
-				type: {
-					summary: 'boolean',
-				},
-			},
-		},
 		required: {
 			description: 'Indique si le champ est requis.',
 			control: 'boolean',
@@ -360,7 +350,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	args: {
 		modelValue: '',
-		outlined: true,
 		required: false,
 		numberLabel: 'Numéro de sécurité sociale',
 		keyLabel: 'Clé',
