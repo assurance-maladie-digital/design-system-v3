@@ -552,7 +552,7 @@
 		:error-messages="errors"
 		:flat="props.isFlat"
 		:focused="props.isFocused"
-		:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
+		:hide-details="props.areDetailsHidden === 'auto' ? 'auto' : props.areDetailsHidden && !showHelpTextAsMessage"
 		:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 		:label="labelWithAsterisk"
 		:loading="props.loading"

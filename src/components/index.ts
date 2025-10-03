@@ -63,6 +63,7 @@ export { default as SySelect } from './Customs/Selects/SySelect/SySelect.vue'
 export { default as SyTextArea } from './SyTextArea/SyTextArea.vue'
 export { default as SyTextField } from './Customs/SyTextField/SyTextField.vue'
 export { default as UploadWorkflow } from './UploadWorkflow/UploadWorkflow.vue'
+export { default as Captcha } from './Captcha/Captcha.vue'
 
 // ===========================
 // Tableaux
