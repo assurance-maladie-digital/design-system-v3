@@ -283,17 +283,17 @@
 <style scoped lang="scss">
 @use '@/assets/tokens';
 
-	.label-options {
-		font-size: 0.875rem;
-		font-weight: 400;
-	}
+.label-options {
+	font-size: 0.875rem;
+	font-weight: 400;
+}
 
-	.captcha-config {
-		border-top: 1px solid tokens.$colors-border-subdued;
-	}
+.captcha-config {
+	border-top: 1px solid tokens.$colors-border-subdued;
+}
 
-	.captcha-audio {
-		letter-spacing: 0%;
-	}
+.captcha-audio {
+	letter-spacing: 0%;
+}
 
 </style>

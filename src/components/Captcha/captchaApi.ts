@@ -1,7 +1,7 @@
-const reGet = /CAPTCHAID/;
+const reGet = /CAPTCHAID/
 
-type SuccessCallback = (captchaId: string) => void;
-type ErrorCallback = (error: Error) => void;
+type SuccessCallback = (captchaId: string) => void
+type ErrorCallback = (error: Error) => void
 
 /**
  * Création du captcha auprès d'OBS
@@ -11,34 +11,35 @@ type ErrorCallback = (error: Error) => void;
  * @param cberror - Fonction à appeler en cas d'erreur
  */
 export function createCaptcha(
-  urlCreate: string,
-  body: string | null,
-  cbsuccess: SuccessCallback,
-  cberror: ErrorCallback
+	urlCreate: string,
+	body: string | null,
+	cbsuccess: SuccessCallback,
+	cberror: ErrorCallback,
 ): void {
-
-  fetch(urlCreate, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: body
-  })
-    .then(async (response) => {
-      if (response.ok) {
-        try {
-          const json = await response.json();
-          cbsuccess(json.id);
-        } catch (err) {
-          cberror(err as Error);
-        }
-      } else {
-        cberror(response.statusText ? new Error(response.statusText) : new Error('Erreur inconnue'));
-      }
-    })
-    .catch((error) => {
-      cberror(error);
-    });
+	fetch(urlCreate, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: body,
+	})
+		.then(async (response) => {
+			if (response.ok) {
+				try {
+					const json = await response.json()
+					cbsuccess(json.id)
+				}
+				catch (err) {
+					cberror(err as Error)
+				}
+			}
+			else {
+				cberror(response.statusText ? new Error(response.statusText) : new Error('Erreur inconnue'))
+			}
+		})
+		.catch((error) => {
+			cberror(error)
+		})
 }
 
 /**
@@ -49,17 +50,17 @@ export function createCaptcha(
  * @param locale - Locale (langue)
  */
 export function createCaptchaImage(
-  urlCreate: string,
-  cbsuccess: SuccessCallback,
-  cberror: ErrorCallback,
-  locale: string = 'default'
+	urlCreate: string,
+	cbsuccess: SuccessCallback,
+	cberror: ErrorCallback,
+	locale: string = 'default',
 ): void {
-  const body = JSON.stringify({
-    type: 'IMAGE',
-    locale
-  });
+	const body = JSON.stringify({
+		type: 'IMAGE',
+		locale,
+	})
 
-  createCaptcha(urlCreate, body, cbsuccess, cberror);
+	createCaptcha(urlCreate, body, cbsuccess, cberror)
 }
 
 /**
@@ -70,17 +71,17 @@ export function createCaptchaImage(
  * @param locale - Locale (langue), "default" si non indiqué
  */
 export function createCaptchaAudio(
-  urlCreate: string,
-  cbsuccess: SuccessCallback,
-  cberror: ErrorCallback,
-  locale: string = 'default'
+	urlCreate: string,
+	cbsuccess: SuccessCallback,
+	cberror: ErrorCallback,
+	locale: string = 'default',
 ): void {
-  const body = JSON.stringify({
-    type: 'AUDIO',
-    locale
-  });
+	const body = JSON.stringify({
+		type: 'AUDIO',
+		locale,
+	})
 
-  createCaptcha(urlCreate, body, cbsuccess, cberror);
+	createCaptcha(urlCreate, body, cbsuccess, cberror)
 }
 
 /**
@@ -90,10 +91,10 @@ export function createCaptchaAudio(
  * @returns L'URL avec l'identifiant inséré
  */
 export function getCaptchaImageUrl(
-  urlGetImage: string,
-  captchaId: string
+	urlGetImage: string,
+	captchaId: string,
 ): string {
-  return urlGetImage.replace(reGet, captchaId);
+	return urlGetImage.replace(reGet, captchaId)
 }
 
 /**
@@ -103,8 +104,8 @@ export function getCaptchaImageUrl(
  * @returns L'URL avec l'identifiant inséré
  */
 export function getCaptchaAudioUrl(
-  urlGetAudio: string,
-  captchaId: string
+	urlGetAudio: string,
+	captchaId: string,
 ): string {
-  return urlGetAudio.replace(reGet, captchaId);
+	return urlGetAudio.replace(reGet, captchaId)
 }
