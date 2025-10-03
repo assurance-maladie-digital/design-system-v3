@@ -1,0 +1,81 @@
+import { Meta, Story, ArgTypes, Canvas } from '@storybook/blocks'
+import SyMonthPicker from './SyMonthPicker.vue'
+import * as SyMonthPickerStories from './SyMonthPicker.stories'
+
+<Meta of={SyMonthPickerStories} />
+
+# SyMonthPicker
+
+Le composant `SyMonthPicker` permet de sélectionner un mois et une année sans avoir à choisir un jour spécifique. Il est basé sur le `DatePicker` de Vuetify mais a été adapté pour ne permettre que la sélection de mois/année.
+
+## Utilisation
+
+Le `SyMonthPicker` peut être utilisé dans tous les cas où vous avez besoin de permettre à l'utilisateur de sélectionner un mois et une année, comme :
+
+- Sélection de périodes comptables
+- Filtrage de rapports mensuels
+- Planification par mois
+
+## Exemple de base
+
+<Canvas of={SyMonthPickerStories.Default} />
+
+## Utilisation avec v-model
+
+Le composant fonctionne avec v-model pour lier la valeur sélectionnée à votre modèle de données.
+
+<Canvas of={SyMonthPickerStories.WithVModel} />
+
+## Validation de champ requis
+
+Vous pouvez définir le champ comme requis et afficher un astérisque avec les propriétés `required` et `displayAsterisk`.
+
+<Canvas of={SyMonthPickerStories.RequiredWithAsterisk} />
+
+## Positionnement de l'icône
+
+L'icône de calendrier peut être affichée à gauche (par défaut) ou à droite du champ.
+
+<Canvas of={SyMonthPickerStories.IconPositionAppend} />
+
+## États du composant
+
+### Désactivé
+
+<Canvas of={SyMonthPickerStories.Disabled} />
+
+### Lecture seule
+
+<Canvas of={SyMonthPickerStories.ReadOnly} />
+
+## Format des données
+
+Le `SyMonthPicker` utilise par défaut le format `MM/YYYY` pour la valeur du modèle (v-model). Par exemple, "05/2023" pour mai 2023. L'affichage à l'utilisateur est formaté différemment, montrant le nom complet du mois et l'année (ex: "Mai 2023").
+
+## Accessibilité
+
+Le composant est conçu pour être entièrement accessible au clavier :
+- La touche `Entrée` ouvre le sélecteur de mois quand le champ est en focus
+- La touche `Échap` ferme le sélecteur de mois
+- Le focus est géré correctement entre l'ouverture et la fermeture du sélecteur
+
+## API
+
+<ArgTypes of={SyMonthPicker} />
+
+## Événements
+
+| Nom | Description | Paramètres |
+| --- | --- | --- |
+| `update:modelValue` | Émis lorsque la valeur sélectionnée change | `(value: string \| null)` - La nouvelle valeur au format MM/YYYY ou null |
+| `focus` | Émis lorsque le champ reçoit le focus | - |
+| `blur` | Émis lorsque le champ perd le focus | - |
+| `month-selected` | Émis lorsqu'un mois est sélectionné | `(value: string)` - La valeur sélectionnée au format MM/YYYY |
+| `closed` | Émis lorsque le sélecteur de mois est fermé | - |
+| `clear` | Émis lorsque la sélection est effacée | - |
+
+## Bonnes pratiques d'utilisation
+
+- Utilisez un libellé clair qui indique que seul un mois est requis (et non une date complète)
+- Combinaison possible avec d'autres champs pour des plages de dates par mois
+- Le format d'affichage (nom du mois + année) améliore la lisibilité pour l'utilisateur
