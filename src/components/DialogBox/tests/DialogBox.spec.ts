@@ -3,7 +3,7 @@ import { vuetify } from '@tests/unit/setup'
 import { mount, shallowMount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { defineComponent, nextTick } from 'vue'
+import { defineComponent } from 'vue'
 import { VCard } from 'vuetify/components'
 import DialogBox from '../DialogBox.vue'
 
@@ -219,17 +219,18 @@ describe('DialogBox', () => {
 				setup() {
 					return {
 						dialog: true,
+
 					}
 				},
 				template: `
-				<DialogBox v-model="dialog" title="Test title" :hide-actions="true">
-					<button id="first">First</button>
-					<button id="second" disabled>Second</button>
-					<button id="third">third</button>
-					<a href="https://www.ameli.fr/" id="link">ameli.fr</a>
-				</DialogBox>
-				<button id="external">External</button>
-				`,
+                  <DialogBox v-model="dialog" title="Test title" :hide-actions="true">
+                    <button id="first">First</button>
+                    <button id="second" disabled>Second</button>
+                    <button id="third">third</button>
+                    <a href="https://www.ameli.fr/" id="link">ameli.fr</a>
+                  </DialogBox>
+                  <button id="external">External</button>
+                `,
 			})
 			const wrapper = mount(testComponent, {
 				global: {
@@ -251,8 +252,11 @@ describe('DialogBox', () => {
 			const modal = wrapper.getComponent(VCard)
 
 			const firstBtn = modal.find<HTMLElement>('#first')
-			await nextTick() // si besoin
-			expect(firstBtn.element).toBe(document.activeElement)
+
+			firstBtn.element.focus()
+			await modal.vm.$nextTick()
+
+			expect(firstBtn.element).toEqual(document.activeElement)
 			wrapper.unmount()
 		})
 
