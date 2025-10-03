@@ -3,7 +3,7 @@ import { vuetify } from '@tests/unit/setup'
 import { mount, shallowMount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { defineComponent } from 'vue'
+import { defineComponent, nextTick } from 'vue'
 import { VCard } from 'vuetify/components'
 import DialogBox from '../DialogBox.vue'
 
@@ -205,10 +205,10 @@ describe('DialogBox', () => {
 			await modal.vm.$nextTick()
 
 			await triggerShiftTab()
-			expect(link.element).toEqual(document.activeElement)
+			expect(link.element).toBe(document.activeElement)
 
 			await triggerTab()
-			expect(firstBtn.element).toEqual(document.activeElement)
+			expect(firstBtn.element).toBe(document.activeElement)
 
 			wrapper.unmount()
 		})
@@ -251,7 +251,8 @@ describe('DialogBox', () => {
 			const modal = wrapper.getComponent(VCard)
 
 			const firstBtn = modal.find<HTMLElement>('#first')
-			expect(firstBtn.element).toEqual(document.activeElement)
+            await nextTick() // si besoin
+            expect(firstBtn.element).toBe(document.activeElement)
 			wrapper.unmount()
 		})
 
@@ -293,7 +294,7 @@ describe('DialogBox', () => {
 			})
 
 			const link = modal.find<HTMLButtonElement>('#link')
-			expect(link.element).toEqual(document.activeElement)
+			expect(link.element).toBe(document.activeElement)
 			wrapper.unmount()
 		})
 	})
