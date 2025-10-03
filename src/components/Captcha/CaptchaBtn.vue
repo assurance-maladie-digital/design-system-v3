@@ -17,7 +17,7 @@
 			v-if="prependIcon"
 			size="x-small"
 			:icon="prependIcon"
-			role="presentation"
+			decorative
 		/>
 		<slot />
 	</button>

@@ -72,7 +72,7 @@
 
 			<VBtn
 				type="submit"
-				class="text-none d-block ml-auto mb-4"
+				class="capcha-submit text-none d-block ml-auto mb-4"
 				height="44"
 				width="95"
 				color="primary"
@@ -84,3 +84,8 @@
 		</VSheet>
 	</VForm>
 </template>
+<style lang="css" scoped>
+.captcha-submit {
+	letter-spacing: normal;
+}
+</style>
