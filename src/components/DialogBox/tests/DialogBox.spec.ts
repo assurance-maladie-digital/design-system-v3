@@ -251,8 +251,8 @@ describe('DialogBox', () => {
 			const modal = wrapper.getComponent(VCard)
 
 			const firstBtn = modal.find<HTMLElement>('#first')
-            await nextTick() // si besoin
-            expect(firstBtn.element).toBe(document.activeElement)
+			await nextTick() // si besoin
+			expect(firstBtn.element).toBe(document.activeElement)
 			wrapper.unmount()
 		})
 
