@@ -195,6 +195,7 @@
 					v-model="sortSelectModel"
 					class="ml-2 mb-0 pt-0 amelipro-table__sort-select"
 					global-max-width="170px"
+					global-min-width="162px"
 					:hide-error-message="true"
 					:items="sortSelectItems"
 					:label="sortSelectLabel"
