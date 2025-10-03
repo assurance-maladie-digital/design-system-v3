@@ -30,9 +30,11 @@ describe('DialogBox', () => {
 						},
 					},
 				},
+				attachTo: document.body,
 			})
 
 			expect(wrapper.html()).toMatchSnapshot()
+			wrapper.unmount()
 		})
 
 		it('is closed when model value is false', async () => {
@@ -44,9 +46,11 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			expect(wrapper.html()).toBe('')
+			wrapper.unmount()
 		})
 
 		it('becomes visible when the model value is updated', async () => {
@@ -87,6 +91,8 @@ describe('DialogBox', () => {
 			// Dialog should be visible again
 			const cardAfterReopen = wrapper.findComponent(VCard)
 			expect(cardAfterReopen.exists()).toBe(true)
+
+			wrapper.unmount()
 		})
 
 		it('renders the title slot', async () => {
@@ -98,6 +104,7 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const modal = wrapper.getComponent(VCard)
@@ -106,6 +113,7 @@ describe('DialogBox', () => {
 			await modal.vm.$nextTick()
 
 			expect(title).toBe('Test title')
+			wrapper.unmount()
 		})
 	})
 
@@ -128,6 +136,7 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const modal = wrapper.getComponent(VCard)
@@ -144,6 +153,8 @@ describe('DialogBox', () => {
 				thirdBtn.element,
 				theLink.element,
 			])
+
+			wrapper.unmount()
 		})
 
 		it('handles the internal tab navigation', async () => {
@@ -164,6 +175,7 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			async function triggerTab() {
@@ -197,6 +209,8 @@ describe('DialogBox', () => {
 
 			await triggerTab()
 			expect(firstBtn.element).toEqual(document.activeElement)
+
+			wrapper.unmount()
 		})
 
 		it('return to the first focusable element', async () => {
@@ -205,7 +219,6 @@ describe('DialogBox', () => {
 				setup() {
 					return {
 						dialog: true,
-
 					}
 				},
 				template: `
@@ -222,6 +235,7 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const externalBtn = wrapper.find<HTMLButtonElement>('#external')
@@ -238,6 +252,7 @@ describe('DialogBox', () => {
 
 			const firstBtn = modal.find<HTMLElement>('#first')
 			expect(firstBtn.element).toEqual(document.activeElement)
+			wrapper.unmount()
 		})
 
 		it('return the last focusable element', async () => {
@@ -262,6 +277,7 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const external = wrapper.find<HTMLElement>('#external')
@@ -278,6 +294,7 @@ describe('DialogBox', () => {
 
 			const link = modal.find<HTMLButtonElement>('#link')
 			expect(link.element).toEqual(document.activeElement)
+			wrapper.unmount()
 		})
 	})
 
@@ -290,6 +307,7 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const modal = wrapper.getComponent(VCard)
@@ -300,6 +318,7 @@ describe('DialogBox', () => {
 			await closeBtn.trigger('click')
 
 			expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+			wrapper.unmount()
 		})
 
 		it('emits a cancel event when cancel button is clicked', async () => {
@@ -308,6 +327,7 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const modal = wrapper.getComponent(VCard)
@@ -316,6 +336,7 @@ describe('DialogBox', () => {
 			await cancelBtn.trigger('click')
 
 			expect(wrapper.emitted('cancel')).toBeTruthy()
+			wrapper.unmount()
 		})
 
 		it('emits a confirm event when confirm button is clicked', async () => {
@@ -324,6 +345,7 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 
 			const modal = wrapper.getComponent(VCard)
@@ -332,6 +354,7 @@ describe('DialogBox', () => {
 			await confirmBtn.trigger('click')
 
 			expect(wrapper.emitted('confirm')).toBeTruthy()
+			wrapper.unmount()
 		})
 	})
 
@@ -342,10 +365,12 @@ describe('DialogBox', () => {
 				global: {
 					plugins: [vuetify],
 				},
+				attachTo: document.body,
 			})
 			// @ts-expect-error - Testing private method
 			const result = await wrapper.vm.getSelectableElements()
 			expect(result).toEqual([])
+			wrapper.unmount()
 		})
 	})
 
@@ -471,6 +496,7 @@ describe('DialogBox', () => {
 
 			expect(overlayElement.style.position).toBe('absolute')
 			expect(overlayElement.style.left).toBe(`0px`)
+			wrapper.unmount()
 		})
 
 		it('move the dialog to the right when the right arrow is pressed', async () => {
@@ -497,6 +523,144 @@ describe('DialogBox', () => {
 
 			expect(overlayElement.style.position).toBe('absolute')
 			expect(overlayElement.style.left).toBe(`${positionToLeft}px`)
+			wrapper.unmount()
 		})
+	})
+
+	it('move the dialog to the top when the up arrow is pressed', async () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				draggable: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const card = wrapper.getComponent(VCard)
+
+		await card.trigger('keydown', { key: 'ArrowUp' })
+		await wrapper.vm.$nextTick()
+
+		const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
+
+		expect(overlayElement.style.position).toBe('absolute')
+		expect(overlayElement.style.top).toBe(`0px`)
+
+		wrapper.unmount()
+	})
+
+	it('move the dialog to the bottom when the down arrow is pressed', async () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				draggable: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const card = wrapper.getComponent(VCard)
+
+		await card.trigger('keydown', { key: 'ArrowDown' })
+		await wrapper.vm.$nextTick()
+
+		const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
+		const computedStyle = getComputedStyle(overlayElement)
+		const marginTop = parseFloat(computedStyle.marginTop) || 0
+		const positionToTop = window.innerHeight - overlayElement.offsetHeight - marginTop * 2
+
+		expect(overlayElement.style.position).toBe('absolute')
+		expect(overlayElement.style.top).toBe(`${positionToTop}px`)
+
+		wrapper.unmount()
+	})
+
+	it('move the dialog to the left when the window is resized and the dialog is out of viewport', async () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				draggable: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const card = wrapper.getComponent(VCard)
+		const titleBar = card.find<HTMLElement>('.sy-dialog-box-title')
+
+		titleBar.trigger('mousedown', { clientX: 100, clientY: 100 })
+		await wrapper.vm.$nextTick()
+
+		await wrapper.trigger('mousemove', { clientX: 800, clientY: 100 })
+		await wrapper.vm.$nextTick()
+
+		const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
+
+		const left = parseFloat(overlayElement.style.left) || 0
+		expect(left).toBe(700)
+
+		Object.defineProperty(window, 'innerWidth', {
+			writable: true,
+			configurable: true,
+			value: 300,
+		})
+
+		window.dispatchEvent(new Event('resize'))
+		await wrapper.vm.$nextTick()
+
+		const newLeft = parseFloat(overlayElement.style.left) || 0
+
+		expect(newLeft).toBe(300 - overlayElement.offsetWidth)
+
+		wrapper.unmount()
+	})
+
+	it('move the dialog to the top when the window is resized and the dialog is out of viewport', async () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				draggable: true,
+			},
+			global: {
+				plugins: [vuetify],
+			},
+			attachTo: document.body,
+		})
+
+		const card = wrapper.getComponent(VCard)
+		const titleBar = card.find<HTMLElement>('.sy-dialog-box-title')
+
+		titleBar.trigger('mousedown', { clientX: 100, clientY: 100 })
+		await wrapper.vm.$nextTick()
+
+		await wrapper.trigger('mousemove', { clientX: 100, clientY: 800 })
+		await wrapper.vm.$nextTick()
+
+		const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
+
+		const top = parseFloat(overlayElement.style.top) || 0
+		expect(top).toBe(700)
+
+		Object.defineProperty(window, 'innerHeight', {
+			writable: true,
+			configurable: true,
+			value: 300,
+		})
+
+		window.dispatchEvent(new Event('resize'))
+		await wrapper.vm.$nextTick()
+
+		const newTop = parseFloat(overlayElement.style.top) || 0
+
+		expect(newTop).toBe(300 - overlayElement.offsetHeight)
+
+		wrapper.unmount()
 	})
 })
