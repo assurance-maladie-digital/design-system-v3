@@ -153,6 +153,9 @@ export const useDateValidation = (options: {
 
 		// Valider chaque date
 		if (shouldDisplayErrors) {
+			// Collecter tous les résultats de validation pour chaque date
+			const validationResults: ValidationResult[] = []
+
 			datesToValidate.forEach((date) => {
 				if (!date) return // Ignorer les dates null
 
@@ -161,10 +164,39 @@ export const useDateValidation = (options: {
 					customRules,
 					customWarningRules,
 				)
+				validationResults.push(result)
 				if (result.hasError) {
 					isValid = false
 				}
 			})
+
+			// Agréger tous les résultats pour garantir que toutes les erreurs, avertissements et succès sont collectés
+			const allErrors = new Set<string>()
+			const allWarnings = new Set<string>()
+			const allSuccesses = new Set<string>()
+
+			// Parcourir tous les résultats et collecter les messages
+			for (const result of validationResults) {
+				// Ajouter les erreurs
+				for (const error of result.state.errors) {
+					allErrors.add(error)
+				}
+
+				// Ajouter les avertissements
+				for (const warning of result.state.warnings) {
+					allWarnings.add(warning)
+				}
+
+				// Ajouter les succès
+				for (const success of result.state.successes) {
+					allSuccesses.add(success)
+				}
+			}
+
+			// Mettre à jour les tableaux de messages
+			errors.value = [...allErrors]
+			warnings.value = [...allWarnings]
+			successes.value = [...allSuccesses]
 
 			// Vérifier la validité de la plage de dates si en mode plage
 			if (displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
@@ -191,31 +223,57 @@ export const useDateValidation = (options: {
 				}
 			}
 
-			// Dédoublonner les messages (au cas où plusieurs dates auraient les mêmes messages)
-			errors.value = [...new Set(errors.value)]
-			warnings.value = [...new Set(warnings.value)]
-			successes.value = [...new Set(successes.value)]
+			// Note: La dédoublonnage des messages est déjà fait par l'agrégation avec des Sets
 		}
 
+		// Assurer que l'objet de résultat contient tous les messages agrégés
+		// et respecte exactement la même structure que celle retournée par validateField
 		return {
 			hasError: !isValid,
 			hasWarning: warnings.value.length > 0,
 			hasSuccess: successes.value.length > 0 && isValid && warnings.value.length === 0,
 			state: {
-				errors: errors.value,
-				warnings: warnings.value,
-				successes: successes.value,
+				errors: [...errors.value], // Garantir une copie pour éviter les références partagées
+				warnings: [...warnings.value],
+				successes: [...successes.value],
 			},
 		}
 	}
 
 	/**
    * Valide les dates pour la soumission d'un formulaire
+   * Force la validation même si isUpdatingFromInternal est vrai
+   * et garantit que tous les messages sont bien agrégés
    *
-   * @returns Résultat de la validation
+   * @returns Résultat de la validation complet avec tous les messages
    */
 	const validateOnSubmit = (): ValidationResult => {
-		return validateDates(true)
+		// Force la validation même si isUpdatingFromInternal est vrai
+		const result = validateDates(true)
+
+		// Vérifier que le résultat contient tous les messages
+		const hasAllMessages = (
+			result.state.errors.length === errors.value.length
+			&& result.state.warnings.length === warnings.value.length
+			&& result.state.successes.length === successes.value.length
+		)
+
+		// Si tous les messages sont présents, retourner le résultat tel quel
+		if (hasAllMessages) {
+			return result
+		}
+
+		// Sinon, créer un nouveau résultat avec tous les messages
+		return {
+			hasError: result.hasError,
+			hasWarning: result.hasWarning,
+			hasSuccess: result.hasSuccess,
+			state: {
+				errors: [...errors.value],
+				warnings: [...warnings.value],
+				successes: [...successes.value],
+			},
+		}
 	}
 
 	return {
