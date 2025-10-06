@@ -50,6 +50,11 @@
 					confirmBtn.value?.$el.focus()
 				})
 			}
+			else if (props.draggable) {
+				nextTick(() => {
+					dialogContent.value?.$el.querySelector('.sy-dialog-box-title')?.focus()
+				})
+			}
 		}
 		else if (activeElement) {
 			activeElement.focus()
