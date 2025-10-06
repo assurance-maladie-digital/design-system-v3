@@ -40,7 +40,7 @@
 	})
 
 	const confirmBtn = ref<VBtn | null>(null)
-	// Restor the focus to the last active element when the dialog is closed
+	// Restore the focus to the last active element when the dialog is closed
 	let activeElement: HTMLElement | null = null
 	watch(dialog, (newValue) => {
 		if (newValue) {
@@ -107,13 +107,15 @@
 		startDragging,
 		moveToLeft,
 		moveToRight,
+		moveToBottom,
+		moveToTop,
 	} = useDraggable(toRef(props, 'draggable'), dialogContent)
 </script>
 
 <template>
 	<VDialog
 		v-model="dialog"
-		:scrim="props.draggable ? false : true"
+		:scrim="props.draggable ? 'transparent' : true"
 		v-bind="$attrs"
 		:width="props.width"
 		:persistent="props.persistent"
@@ -124,6 +126,8 @@
 		@keydown.tab="handleFocus"
 		@keydown.left="moveToLeft"
 		@keydown.right="moveToRight"
+		@keydown.up="moveToTop"
+		@keydown.down="moveToBottom"
 	>
 		<VCard
 			v-bind="options.card"
@@ -157,7 +161,7 @@
 					class="sy-dialog-box-close-btn"
 					v-bind="options.closeBtn"
 					:aria-label="locales.closeBtn"
-					@click="dialog = false"
+					@click.stop="dialog = false"
 				>
 					<SyIcon
 						:icon="closeIcon"
