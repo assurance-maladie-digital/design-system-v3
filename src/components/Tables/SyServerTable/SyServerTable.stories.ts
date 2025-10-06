@@ -44,7 +44,7 @@ const meta = {
 			table: {
 				category: 'props',
 				defaultValue: {
-					summary: '[]',
+					summary: 'undefined',
 				},
 			},
 		},
