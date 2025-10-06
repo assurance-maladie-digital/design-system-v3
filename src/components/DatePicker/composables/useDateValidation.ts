@@ -177,19 +177,28 @@ export const useDateValidation = (options: {
 
 			// Parcourir tous les résultats et collecter les messages
 			for (const result of validationResults) {
+				// Vérifier que result.state existe et contient les propriétés attendues
+				if (!result || !result.state) continue
+
 				// Ajouter les erreurs
-				for (const error of result.state.errors) {
-					allErrors.add(error)
+				if (Array.isArray(result.state.errors)) {
+					for (const error of result.state.errors) {
+						if (error) allErrors.add(error)
+					}
 				}
 
 				// Ajouter les avertissements
-				for (const warning of result.state.warnings) {
-					allWarnings.add(warning)
+				if (Array.isArray(result.state.warnings)) {
+					for (const warning of result.state.warnings) {
+						if (warning) allWarnings.add(warning)
+					}
 				}
 
 				// Ajouter les succès
-				for (const success of result.state.successes) {
-					allSuccesses.add(success)
+				if (Array.isArray(result.state.successes)) {
+					for (const success of result.state.successes) {
+						if (success) allSuccesses.add(success)
+					}
 				}
 			}
 
