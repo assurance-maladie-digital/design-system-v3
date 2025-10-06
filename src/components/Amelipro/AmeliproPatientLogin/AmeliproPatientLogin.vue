@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { type PropType, computed } from 'vue'
-	import { type AutoCompleteItem } from '../AmeliproAutoCompleteField/types'
+	import type { AutoCompleteItem } from '../AmeliproAutoCompleteField/types'
 	import type { IPatientLogin } from './types'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 	import AmeliproCard from '../AmeliproCard/AmeliproCard.vue'
