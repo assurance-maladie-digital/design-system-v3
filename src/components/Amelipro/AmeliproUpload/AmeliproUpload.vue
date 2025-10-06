@@ -72,14 +72,22 @@
 
 	// --- Gestion des fichiers ---
 	/**
-	 * On a besoin de dupliquer internalValue pour pouvoir modifier sa valeur en
-	 * temps réel sans modifier la valeur de internalValue (qui déclencherait un
+	 * On a besoin de dupliquer filesModel pour pouvoir modifier sa valeur en
+	 * temps réel sans modifier la valeur de filesModel (qui déclencherait un
 	 * événement "input" pour chaque nouveau fichier, au lieu d'un seul
 	 * événement pour l'ensemble des fichiers ajoutés)
 	 */
-	const realTimeValue = ref<File[]>([])
-	const lazyValue = ref<File[]>(props.value)
-	const vModel = ref<File[]>([])
+
+	// pendingFiles contient la liste des fichiers en cours d'ajout
+	const pendingFiles = ref<File[]>([])
+
+	// internalFiles est la source de vérité pour les fichiers importés
+	const internalFiles = ref<File[]>(props.value)
+
+	// fileInputModel est lié au composant VFileInput
+	const fileInputModel = ref<File[]>([])
+
+	//
 	const warningMessagesBucket = ref<ErrorBucket[]>([])
 
 	/**
@@ -91,11 +99,11 @@
 	/**
 	 * Référence à la liste de fichiers importés
 	 */
-	const internalValue = computed({
-		get: (): File[] => lazyValue.value,
+	const filesModel = computed({
+		get: (): File[] => internalFiles.value,
 		set: (fileList: File[]): void => {
-			lazyValue.value = fileList
-			vModel.value = fileList
+			internalFiles.value = fileList
+			fileInputModel.value = fileList
 			emit('update:model-value', fileList)
 		},
 	})
@@ -135,22 +143,22 @@
 	 * avec les messages d'erreur associés.
 	 */
 	const importFiles = (filesToAdd: File[]): void => {
-		realTimeValue.value = [...internalValue.value]
-		let updateInternalValue = false
+		pendingFiles.value = [...filesModel.value]
+		let updatefilesModel = false
 
 		filesToAdd.forEach((file) => {
 			const result = applyRulesOnFile(inputRules.value, file)
 			if (result === true) {
-				realTimeValue.value.push(file)
-				updateInternalValue = true
+				pendingFiles.value.push(file)
+				updatefilesModel = true
 			}
 			else {
 				warningMessagesBucket.value.push({ fileName: file.name, errors: result as string[] })
 			}
 		})
 
-		if (updateInternalValue) {
-			internalValue.value = [...realTimeValue.value]
+		if (updatefilesModel) {
+			filesModel.value = [...pendingFiles.value]
 		}
 
 		vFileInput.value.reset()
@@ -164,10 +172,10 @@
 	const internalValidate = (): void => {
 		const errorBucket: ErrorBucket[] = []
 
-		if (internalValue.value.length > 0) {
+		if (filesModel.value.length > 0) {
 			// Appliquer les règles de validation sur chaque fichier
 			// et ajouter les messages d'erreur dans le tableau errorBucket
-			internalValue.value.forEach((file) => {
+			filesModel.value.forEach((file) => {
 				const result = applyRulesOnFile(validationRules.value, file)
 				if (result !== true) {
 					errorBucket.push({ fileName: file.name, errors: result as string[] })
@@ -191,8 +199,8 @@
 	}
 
 	const removeFile = (index: number): void => {
-		realTimeValue.value.splice(index, 1)
-		internalValue.value = [...realTimeValue.value]
+		pendingFiles.value.splice(index, 1)
+		filesModel.value = [...pendingFiles.value]
 
 		removeErrors()
 		internalValidate()
@@ -200,13 +208,13 @@
 		nextTick(() => {
 			vFileInput.value.$el.querySelector('input').value = ''
 		})
-		emit('update:model-value', internalValue.value)
+		emit('update:model-value', filesModel.value)
 	}
 
 	const removeAllFiles = (): void => {
 		removeErrors()
-		lazyValue.value = []
-		realTimeValue.value = []
+		internalFiles.value = []
+		pendingFiles.value = []
 	}
 
 	// --- Gestion des erreurs ---
@@ -289,8 +297,8 @@
 	// --- Règles d'importation (non bloquantes) ---
 	const inputRules = computed<ValidationRule[]>(() => {
 		const rules = [
-			fileUploadMaxFileNumberRule(realTimeValue.value, props.maxFileNumber, errorMessages.value),
-			fileUploadDuplicationRule(realTimeValue.value, errorMessages.value),
+			fileUploadMaxFileNumberRule(pendingFiles.value, props.maxFileNumber, errorMessages.value),
+			fileUploadDuplicationRule(pendingFiles.value, errorMessages.value),
 			fileUploadFormatRule(props.fileTypeAccepted, errorMessages.value),
 			...props.warningRules,
 		]
@@ -351,7 +359,7 @@
 		}
 	}, { immediate: true })
 
-	watch(() => vModel.value, (newValue: File[], oldValue: File[] | undefined) => {
+	watch(() => fileInputModel.value, (newValue: File[], oldValue: File[] | undefined) => {
 		if (isUpdating) {
 			return
 		}
@@ -406,7 +414,7 @@
 			<VFileInput
 				:id="uniqueId"
 				ref="vFileInput"
-				v-model="vModel"
+				v-model="fileInputModel"
 				:accept="fileTypeAccepted.join(',')"
 				:aria-describedby="describedby"
 				:aria-invalid="hasError"
@@ -537,7 +545,7 @@
 		</div>
 
 		<div
-			v-if="internalValue.length > 0"
+			v-if="filesModel.length > 0"
 			class="d-flex mt-2"
 		>
 			<ul
@@ -545,7 +553,7 @@
 				class="list-style-none amelipro-upload__list"
 			>
 				<li
-					v-for="(file, index) in internalValue"
+					v-for="(file, index) in filesModel"
 					:id="`${uniqueId}-file-item-${index}`"
 					:key="index"
 					class="mt-6 d-inline-flex amelipro-upload__item"
