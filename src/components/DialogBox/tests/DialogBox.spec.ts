@@ -493,8 +493,9 @@ describe('DialogBox', () => {
 			})
 
 			const card = wrapper.getComponent(VCard)
+			const titleBar = card.find<HTMLElement>('.sy-dialog-box-title')
 
-			await card.trigger('keydown', { key: 'ArrowLeft' })
+			await titleBar.trigger('keydown', { key: 'ArrowLeft' })
 			await wrapper.vm.$nextTick()
 
 			const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
@@ -517,8 +518,9 @@ describe('DialogBox', () => {
 			})
 
 			const card = wrapper.getComponent(VCard)
+			const titleBar = card.find<HTMLElement>('.sy-dialog-box-title')
 
-			await card.trigger('keydown', { key: 'ArrowRight' })
+			await titleBar.trigger('keydown', { key: 'ArrowRight' })
 			await wrapper.vm.$nextTick()
 
 			const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
@@ -545,8 +547,9 @@ describe('DialogBox', () => {
 		})
 
 		const card = wrapper.getComponent(VCard)
+		const titleBar = card.find<HTMLElement>('.sy-dialog-box-title')
 
-		await card.trigger('keydown', { key: 'ArrowUp' })
+		await titleBar.trigger('keydown', { key: 'ArrowUp' })
 		await wrapper.vm.$nextTick()
 
 		const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
@@ -570,8 +573,9 @@ describe('DialogBox', () => {
 		})
 
 		const card = wrapper.getComponent(VCard)
+		const titleBar = card.find<HTMLElement>('.sy-dialog-box-title')
 
-		await card.trigger('keydown', { key: 'ArrowDown' })
+		await titleBar.trigger('keydown', { key: 'ArrowDown' })
 		await wrapper.vm.$nextTick()
 
 		const overlayElement = card.element.closest('.v-overlay__content') as HTMLElement
