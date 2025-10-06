@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { fn } from '@storybook/test'
 import AmeliproPatientLogin from './AmeliproPatientLogin.vue'
 import { ref, watch } from 'vue'
 
@@ -65,7 +66,7 @@ type Story = StoryObj<typeof AmeliproPatientLogin>
 
 export const Default: Story = {
 	args: {
-		autoCompleteCardItems: [
+		'autoCompleteCardItems': [
 			{
 				title: 'Carte 1',
 				value: '1',
@@ -79,11 +80,14 @@ export const Default: Story = {
 				value: '3',
 			},
 		],
-		modelValue: {
+		'modelValue': {
 			dialog: false,
 			formValue: {},
 		},
-		uniqueId: 'test-id',
+		'uniqueId': 'test-id',
+		'onClick:vital-card': fn(),
+		'onClick:vital-card-app': fn(),
+		'onSubmit:nir': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -139,6 +143,9 @@ export const Default: Story = {
 		template: `<AmeliproPatientLogin
 	v-bind="args"
 	v-model="model"
+	@click:vital-card="args['onClick:vital-card']"
+	@click:vital-card-app="args['onClick:vital-card-app']"
+	@submit:nir="args['onSubmit:nir']"
 />`,
 	}),
 }
