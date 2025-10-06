@@ -227,6 +227,10 @@ export function useFieldValidation() {
 						return { error: 'Date de référence invalide' }
 					}
 
+					// Normaliser les dates en réinitialisant les heures/minutes/secondes
+					dateValue.setHours(0, 0, 0, 0)
+					referenceDate.setHours(0, 0, 0, 0)
+
 					return createValidationResult(
 						dateValue >= referenceDate,
 						options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${options.date}.`,
@@ -252,6 +256,10 @@ export function useFieldValidation() {
 					if (!referenceDate) {
 						return { error: 'Date de référence invalide' }
 					}
+
+					// Normaliser les dates en réinitialisant les heures/minutes/secondes
+					dateValue.setHours(0, 0, 0, 0)
+					referenceDate.setHours(0, 0, 0, 0)
 
 					return createValidationResult(
 						dateValue <= referenceDate,
