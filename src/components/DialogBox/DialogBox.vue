@@ -124,10 +124,6 @@
 		class="sy-dialog-box"
 		:aria-labelledby="id"
 		@keydown.tab="handleFocus"
-		@keydown.left="moveToLeft"
-		@keydown.right="moveToRight"
-		@keydown.up="moveToTop"
-		@keydown.down="moveToBottom"
 	>
 		<VCard
 			v-bind="options.card"
@@ -142,7 +138,13 @@
 				class="sy-dialog-box-title"
 				v-bind="options.cardTitle"
 				:title="props.draggable ? locales.dragInstruction : undefined"
+				:aria-label="props.draggable ? locales.dragInstructionLabel : undefined"
+				:tabindex="props.draggable ? 0 : undefined"
 				@mousedown="startDragging"
+				@keydown.left.self="moveToLeft"
+				@keydown.right.self="moveToRight"
+				@keydown.up.self="moveToTop"
+				@keydown.down.self="moveToBottom"
 			>
 				<slot name="title">
 					<h2
@@ -271,6 +273,12 @@ h2 {
 
 .sy-dialog-box-draggable .sy-dialog-box-title {
 	cursor: grab;
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -2px;
+		border-radius: 3px;
+	}
 }
 
 .sy-dialog-box-draggable--active .sy-dialog-box-title {
