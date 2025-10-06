@@ -60,11 +60,17 @@
 			content: '',
 			href: item.href,
 			to: item.to,
+			disabled: item.disabled,
 		}))
 	})
 
 	// Fonction pour déterminer si un élément de navigation est actif
 	function isActive(item: NavigationItem, index: number): boolean {
+		// Si l'élément est désactivé, il ne peut pas être actif
+		if (item.disabled) {
+			return false
+		}
+
 		// Si l'élément est explicitement activé par un clic ou initialisé
 		if (activeItemIndex.value === index) {
 			return true
@@ -108,6 +114,14 @@
 
 	// Fonction pour gérer la navigation lors d'un changement d'onglet
 	async function handleTabChange(index: number) {
+		// Récupérer l'élément correspondant à cet index
+		const item = props.items?.[index]
+
+		// Ne pas continuer si l'item est désactivé ou n'existe pas
+		if (!item || item.disabled) {
+			return
+		}
+
 		// Mettre à jour l'élément actif
 		setActiveItem(index)
 
@@ -116,10 +130,6 @@
 		if (props.confirmTabChange) {
 			return
 		}
-
-		// Récupérer l'élément correspondant à cet index
-		const item = props.items?.[index]
-		if (!item) return
 
 		// Navigation vers la destination si nécessaire
 		if (item.to && router) {
