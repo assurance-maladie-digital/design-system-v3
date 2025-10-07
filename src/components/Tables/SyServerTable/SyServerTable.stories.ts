@@ -4216,98 +4216,120 @@ export const ResizableColumns: Story = {
 
 export const RowSelection: Story = {
 	name: 'Row Selection',
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SyServerTable
-						v-model:options="options"
-						v-model="selection"
-						:headers="headers"
-						:items="items"
-						:serverItemsLength="items.length"
-						show-select
-						show-filters
-						suffix="selection-server-table"
-					/>
-					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
-						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
-						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
-							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : users.find(i => JSON.stringify(i) === item)?.lastname }}</div>
-							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : users.find(i => JSON.stringify(i) === item)?.firstname }}</div>
-							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : users.find(i => JSON.stringify(i) === item)?.email }}</div>
-						</div>
-					</div>
-				</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyServerTable } from '@cnamts/synapse'
-					
-					const options = ref({
-						itemsPerPage: 4,
-					})
-					
-					const headers = ref([
-						{
-							title: 'Nom',
-							key: 'lastname',
-						},
-						{
-							title: 'Prénom',
-							key: 'firstname',
-						},
-						{
-							title: 'Email',
-							value: 'email',
-						},
-					])
-						
-					const items = ref([
-						{
-							firstname: 'Virginie',
-							lastname: 'Beauchesne',
-							email: 'virginie.beauchesne@example.com',
-						},
-						{
-							firstname: 'Simone',
-							lastname: 'Bellefeuille',
-							email: 'simone.bellefeuille@example.com',
-						},
-						{
-							firstname: 'Étienne',
-							lastname: 'Salois',
-							email: 'etienne.salois@example.com',
-						},
-						{
-							firstname: 'Thierry',
-							lastname: 'Bobu',
-							email: 'thierry.bobu@example.com',
-						},
-						{
-							firstname: 'Bernadette',
-							lastname: 'Langelier',
-							email: 'bernadette.langelier@exemple.com'
-						},
-						{
-							firstname: 'Agate',
-							lastname: 'Roy',
-							email: 'agate.roy@exemple.com'
-						}
-					])
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
+    parameters: {
+        sourceCode: [
+            {
+                name: 'Template',
+                code: `
+<template>
+  <SyServerTable
+    v-model:options="options"
+    v-model="selection"
+    :items="users"
+    :server-items-length="totalUsers"
+    :loading="state === StateEnum.PENDING"
+    suffix="selection-server-table"
+    @update:options="fetchData"
+  />
+  <div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
+    <h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
+    <div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
+      <div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : allUsers.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+      <div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : allUsers.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+      <div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : allUsers.find(i => JSON.stringify(i) === item)?.email }}</div>
+    </div>
+  </div>
+</template>
+      `,
+            },
+            {
+                name: 'Script',
+                code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyServerTable } from '@cnamts/synapse'
+import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+
+interface User {
+  firstname: string
+  lastname: string
+  email: string
+}
+
+interface DataObj {
+  items: User[]
+  total: number
+}
+
+const selection = ref([])
+const totalUsers = ref(0)
+const users = ref<User[]>([])
+const state = ref(StateEnum.IDLE)
+
+const getUsers = (): User[] => [
+  { firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+  { firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+  { firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+  { firstname: 'Thierry', lastname: 'Bobu', email: 'thierry.bobu@example.com' },
+  { firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@exemple.com' },
+  { firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@exemple.com' },
+]
+
+const allUsers = ref<User[]>(getUsers())
+
+const fetchData = async (): Promise<void> => {
+  const defaultOptions: DataOptions = {
+    page: 1,
+    itemsPerPage: 10,
+    sortBy: [],
+    multiSort: false,
+  }
+  const options = args.options ? { ...defaultOptions, ...args.options } : defaultOptions
+  const { items, total } = await getDataFromApi(options)
+  users.value = items
+  totalUsers.value = total
+}
+
+const wait = async (ms: number) => {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
+  state.value = StateEnum.PENDING
+  await wait(1000)
+  return new Promise((resolve) => {
+    let items: User[] = getUsers()
+    let total = items.length
+    // Ajout du filtrage si besoin
+    if (filters && filters.length > 0) {
+      filters.forEach((filter) => {
+        // Ajoutez ici la logique de filtrage
+      })
+      total = items.length
+    }
+    if (sortBy && sortBy.length > 0) {
+      items = items.sort((a, b) => {
+        // Ajoutez ici la logique de tri
+        return 0
+      })
+    }
+    if (itemsPerPage > 0) {
+      items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+    }
+    resolve({ items, total })
+    state.value = StateEnum.RESOLVED
+  })
+}
+
+// Chargement initial
+fetchData()
+</script>
+      `,
+            },
+        ],
+    },
+    args: {
 		'headers': [
 			{
 				title: 'Nom',
