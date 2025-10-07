@@ -103,10 +103,7 @@
 		useCombinedMode: false,
 		textFieldActivator: false,
 		displayAsterisk: false,
-		period: () => ({
-			min: '',
-			max: '',
-		}),
+		period: () => ({ min: '', max: '' }),
 		autoClamp: false,
 		isValidateOnBlur: true,
 	})
@@ -121,6 +118,9 @@
 	const selectedDates = ref<Date | Date[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
+
+	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format))
+	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format))
 
 	// Utilisation du composable pour l'affichage formaté des dates
 	const { displayedDateString } = useDisplayedDateString({
@@ -1005,8 +1005,8 @@
 					:show-week="props.showWeekNumber"
 					:view-mode="currentViewMode"
 					:class="displayWeekendDays ? 'weekend' : ''"
-					:max="props.period?.max"
-					:min="props.period?.min"
+					:max="maxDate"
+					:min="minDate"
 					:display-holiday-days="props.displayHolidayDays"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"

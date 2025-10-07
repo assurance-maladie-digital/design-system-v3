@@ -190,8 +190,8 @@
 	 * Derived values
 	 */
 	const returnFormat = computed(() => props.dateFormatReturn || props.format)
-	const minDate = computed(() => props.period?.min || dayjs().subtract(10, 'year').format(props.format))
-	const maxDate = computed(() => props.period?.max || dayjs().add(10, 'year').format(props.format))
+	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format))
+	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format))
 
 	/**
 	 * Validation + messages
