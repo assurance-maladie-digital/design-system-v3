@@ -4452,10 +4452,13 @@ export const RowSelection: Story = {
 					]
 				}
 
+				// Keep a full copy of all users for selection display across pages
+				const allUsers = ref<User[]>(getUsers())
+
 				// Call fetchData on mount
 				fetchData()
 
-				return { args, users, state, fetchData, totalUsers, selection, StateEnum }
+				return { args, users, allUsers, state, fetchData, totalUsers, selection, StateEnum }
 			},
 			template: `
 				<div>
@@ -4472,9 +4475,9 @@ export const RowSelection: Story = {
 					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
 						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
-							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : users.find(i => JSON.stringify(i) === item)?.lastname }}</div>
-							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : users.find(i => JSON.stringify(i) === item)?.firstname }}</div>
-							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : users.find(i => JSON.stringify(i) === item)?.email }}</div>
+							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : allUsers.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : allUsers.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : allUsers.find(i => JSON.stringify(i) === item)?.email }}</div>
 						</div>
 					</div>
 				</div>

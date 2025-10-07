@@ -185,13 +185,41 @@
 		timeouts.value = []
 	})
 
+	// Local helper to compute a stable item id (same logic as getItemValue)
+	const getLocalItemId = (item: Record<string, unknown>): unknown => {
+		// Prefer explicit id if present
+		const maybeId = (item as Record<string, unknown>)['id']
+		if (typeof maybeId !== 'undefined') return maybeId
+		// Fallback to a stringified snapshot (server items are plain objects in stories)
+		return JSON.stringify(item)
+	}
+
+	// Compute the current page item identifiers (as used by item-value)
+	const currentPageItemValues = computed<unknown[]>(() => {
+		return tableItems.value.map(item => getLocalItemId(item))
+	})
+
+	// Merge strategy to preserve selection across pages:
+	// - Remove any ids from the current page
+	// - Add the ids that should be selected for the current page
+	const updateSelectionMerged = (newPageSelection: unknown[]) => {
+		const set = new Set(model.value as unknown[])
+		// Remove current page ids first
+		currentPageItemValues.value.forEach(id => set.delete(id))
+		// Add back the currently selected ids for the page
+		newPageSelection.forEach(id => set.add(id))
+		model.value = Array.from(set)
+	}
+
 	const { getItemValue, toggleAllRows } = useTableCheckbox({
 		items: tableItems,
 		modelValue: model,
-		updateModelValue: (value) => {
-			model.value = value
-		},
+		updateModelValue: updateSelectionMerged,
 	})
+
+	const onUpdateModelValue = (newSelection: unknown[]) => {
+		updateSelectionMerged(newSelection)
+	}
 
 	// Use the ARIA accessibility composable
 	const {
@@ -256,7 +284,7 @@
 		<VDataTableServer
 			ref="table"
 			v-bind="propsFacade"
-			v-model="model"
+			:model-value="model"
 			:headers="displayHeaders"
 			color="primary"
 			:items="processItems(displayedItems)"
@@ -268,6 +296,7 @@
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
 			@update:options="updateOptions"
+			@update:model-value="onUpdateModelValue"
 		>
 			<template #top>
 				<caption
