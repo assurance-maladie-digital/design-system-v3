@@ -1,5 +1,6 @@
+<!-- eslint-disable no-console -->
 <script setup lang="ts">
-	/* eslint-disable vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/label-has-for */
+/* eslint-disable vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/label-has-for */
 	import type { ErrorBucket, Registrable } from './types'
 	import type { ErrorMessages, ValidationRule } from '@/utils/rules/types'
 	import { type PropType, computed, getCurrentInstance, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
@@ -9,6 +10,17 @@
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import { isRequiredFn } from '@/utils/rules/isRequired'
 	import bgPJ from '@/assets/amelipro/img/bg-pieces-jointe.svg'
+
+	type FileInfo = { name: string, size: number, type: string, hash: string }
+
+	function fileHashSync(file: { name: string, size: number, type: string }): string {
+		const str = `${file.name}:${file.size}:${file.type}`
+		let hash = 5381
+		for (let i = 0; i < str.length; i++) {
+			hash = ((hash << 5) + hash) + str.charCodeAt(i)
+		}
+		return Math.abs(hash).toString(36)
+	}
 
 	const props = defineProps({
 		ariaRequired: {
@@ -70,19 +82,19 @@
 	 */
 	const focused = ref(false)
 
+	// internalFiles est la source de vérité pour les fichiers importés
+	const internalFiles = ref<File[]>(props.value)
+
 	// --- Gestion des fichiers ---
 	/**
-	 * On a besoin de dupliquer filesModel pour pouvoir modifier sa valeur en
+	 * @type {Ref<File[]>} - Référence à la liste des fichiers "de travail"
+	 *
+	 * @description - On a besoin de dupliquer filesModel pour pouvoir modifier sa valeur en
 	 * temps réel sans modifier la valeur de filesModel (qui déclencherait un
 	 * événement "input" pour chaque nouveau fichier, au lieu d'un seul
 	 * événement pour l'ensemble des fichiers ajoutés)
 	 */
-
-	// pendingFiles contient la liste des fichiers en cours d'ajout
-	const pendingFiles = ref<File[]>([])
-
-	// internalFiles est la source de vérité pour les fichiers importés
-	const internalFiles = ref<File[]>(props.value)
+	const pendingFiles = ref<File[]>([...internalFiles.value])
 
 	// fileInputModel est lié au composant VFileInput
 	const fileInputModel = ref<File[]>([])
@@ -102,9 +114,10 @@
 	const filesModel = computed({
 		get: (): File[] => internalFiles.value,
 		set: (fileList: File[]): void => {
+			console.info('AmeliproUpload:filesModel:set', fileList)
 			internalFiles.value = fileList
 			fileInputModel.value = fileList
-			emit('update:model-value', fileList)
+			emitFiles(fileList)
 		},
 	})
 
@@ -132,6 +145,36 @@
 		return isValid || fileErrorMessages
 	}
 
+	const importFilesFrom = (filesToAdd: File[], source: string): void => {
+		console.info('AmeliproUpload:importFilesFrom', { filesToAdd, source })
+
+		isUpdating = true
+
+		const allMatch = filesToAdd.length === lastEmittedFiles.value.length && filesToAdd.every((file, index) => {
+			const lastFile = lastEmittedFiles.value[index]
+			return fileHashSync(file) === lastFile.hash
+		})
+
+		// Si la liste est exactement la même que la dernière liste émise, ignorer
+		if (allMatch) {
+			isUpdating = false
+			return
+		}
+
+		if (source === 'prop') {
+			// Si la source est la prop, tout supprimer
+			removeAllFiles()
+		}
+
+		removeErrors()
+		importFiles(filesToAdd)
+
+		nextTick(() => {
+			isUpdating = false
+			internalValidate()
+		})
+	}
+
 	/**
 	 * Ajoute des fichiers à la liste des fichiers importés
 	 * @param filesToAdd - Liste de fichiers à ajouter
@@ -143,21 +186,24 @@
 	 * avec les messages d'erreur associés.
 	 */
 	const importFiles = (filesToAdd: File[]): void => {
+		console.info('AmeliproUpload:importFiles', filesToAdd)
+
+		let updateFilesModel = false
+
 		pendingFiles.value = [...filesModel.value]
-		let updatefilesModel = false
 
 		filesToAdd.forEach((file) => {
 			const result = applyRulesOnFile(inputRules.value, file)
 			if (result === true) {
 				pendingFiles.value.push(file)
-				updatefilesModel = true
+				updateFilesModel = true
 			}
 			else {
 				warningMessagesBucket.value.push({ fileName: file.name, errors: result as string[] })
 			}
 		})
 
-		if (updatefilesModel) {
+		if (updateFilesModel) {
 			filesModel.value = [...pendingFiles.value]
 		}
 
@@ -170,6 +216,7 @@
 	 * @returns {boolean} - true si tous les fichiers sont valides, false sinon
 	 */
 	const internalValidate = (): void => {
+		console.info('AmeliproUpload:internalValidate')
 		const errorBucket: ErrorBucket[] = []
 
 		if (filesModel.value.length > 0) {
@@ -194,27 +241,71 @@
 			})
 		}
 
+		console.debug({ errorBucket })
+
 		// Mettre à jour les messages d'erreur et l'état de validation
 		validationMessagesBucket.value = errorBucket
 	}
 
+	/**
+	 * Supprime un fichier de la liste des fichiers importés
+	 * @param index - Index du fichier à supprimer
+	 * @returns {void}
+	 */
 	const removeFile = (index: number): void => {
-		pendingFiles.value.splice(index, 1)
-		filesModel.value = [...pendingFiles.value]
+		console.info('AmeliproUpload:removeFile', index)
+		isUpdating = true
 
 		removeErrors()
-		internalValidate()
+		doRemoveFile(index)
 
 		nextTick(() => {
-			vFileInput.value.$el.querySelector('input').value = ''
+			isUpdating = false
+			internalValidate()
 		})
-		emit('update:model-value', filesModel.value)
+	}
+
+	/**
+	 * Effectue la suppression d'un fichier de la liste des fichiers importés
+	 * @param index - Index du fichier à supprimer
+	 * @returns {void}
+	 */
+	const doRemoveFile = (index: number): void => {
+		console.info('AmeliproUpload:doRemoveFile', index)
+
+		let updateFilesModel = false
+		pendingFiles.value = [...filesModel.value]
+
+		if (index >= 0 && index < pendingFiles.value.length) {
+			pendingFiles.value.splice(index, 1)
+			updateFilesModel = true
+		}
+		else {
+			console.warn('AmeliproUpload:doRemoveFile: index out of bounds', index)
+		}
+
+		if (updateFilesModel) {
+			filesModel.value = [...pendingFiles.value]
+		}
+
+		nextTick(() => {
+			console.info('AmeliproUpload:doRemoveFile:nextTick:before reset input')
+			vFileInput.value.$el.querySelector('input').value = ''
+			console.info('AmeliproUpload:doRemoveFile:nextTick:after reset input')
+		})
 	}
 
 	const removeAllFiles = (): void => {
+		isUpdating = true
+
 		removeErrors()
 		internalFiles.value = []
 		pendingFiles.value = []
+
+		nextTick(() => {
+			isUpdating = false
+			internalValidate()
+		})
 	}
 
 	// --- Gestion des erreurs ---
@@ -310,28 +401,34 @@
 	const emit = defineEmits(['update:model-value', 'change'])
 	let isUpdating = false
 
+	let lastEmittedFiles = ref<FileInfo[]>([])
+
+	const emitFiles = (files: File[]): void => {
+		console.info('AmeliproUpload:emitFiles', files)
+
+		// Sauvegarder les infos nécessaires pour comparaison future
+		lastEmittedFiles.value = files.map(f => ({ name: f.name, size: f.size, type: f.type, hash: fileHashSync(f) }))
+
+		emit('update:model-value', files)
+	}
+
 	const onDropFile = (dragEvent: DragEvent): void => {
 		if (!props.disabled) {
 			const droppedFiles = dragEvent?.dataTransfer?.files
 			if (droppedFiles) {
 				isUpdating = true
-				removeErrors()
-				importFiles(Array.from(droppedFiles))
-				nextTick(() => {
-					isUpdating = false
-					internalValidate()
-				})
+				importFilesFrom(Array.from(droppedFiles), 'drop')
 			}
 		}
 	}
 
 	// --- Fonctions utilitaires ---
-	const areFileArraysDifferent = (array1: File[], array2: File[]): boolean => {
-		if (array1.length !== array2.length) {
-			return true
-		}
-		return array1.some((file, index) => file.name !== array2[index]?.name)
-	}
+	// const areFileArraysDifferent = (array1: File[], array2: File[]): boolean => {
+	//	if (array1.length !== array2.length) {
+	//		return true
+	//	}
+	//	return array1.some((file, index) => file.name !== array2[index]?.name)
+	// }
 
 	// --- Watchers ---
 	watch(() => props.ariaRequired, () => {
@@ -342,37 +439,20 @@
 		vFileInput.value.valid = newValue
 	}, { immediate: true })
 
-	watch(() => props.value, (newValue: File[], oldValue: File[] | undefined) => {
+	watch(() => props.value, (newValue: File[]) => {
 		if (isUpdating) {
 			return
 		}
 
-		if (areFileArraysDifferent(newValue, oldValue || [])) {
-			isUpdating = true
-			removeAllFiles()
-			removeErrors()
-			importFiles(newValue)
-			nextTick(() => {
-				isUpdating = false
-				internalValidate()
-			})
-		}
+		importFilesFrom(newValue, 'prop')
 	}, { immediate: true })
 
-	watch(() => fileInputModel.value, (newValue: File[], oldValue: File[] | undefined) => {
+	watch(() => fileInputModel.value, (newValue: File[]) => {
 		if (isUpdating) {
 			return
 		}
 
-		if (areFileArraysDifferent(newValue, oldValue || [])) {
-			isUpdating = true
-			removeErrors()
-			importFiles(newValue)
-			nextTick(() => {
-				isUpdating = false
-				internalValidate()
-			})
-		}
+		importFilesFrom(newValue, 'input')
 	})
 
 	// --- Enregistrer l'instance du composant dans le contexte du formulaire ---
