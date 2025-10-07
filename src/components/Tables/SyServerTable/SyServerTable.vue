@@ -443,20 +443,20 @@
 @use '@/assets/tokens';
 
 .sy-server-table :deep() {
-  @include tablestyles;
+	@include tablestyles;
 }
 
 @mixin striped-rows {
-  .v-table tbody tr:nth-child(even) {
-    background-color: rgba(tokens.$primary-base, 0.05);
-  }
+	.v-table tbody tr:nth-child(even) {
+		background-color: rgba(tokens.$primary-base, 0.05);
+	}
 }
 
 .sy-server-table--striped :deep() {
-  @include striped-rows;
+	@include striped-rows;
 }
 
 .checkbox-column {
-  max-width: fit-content;
+	max-width: fit-content;
 }
 </style>
