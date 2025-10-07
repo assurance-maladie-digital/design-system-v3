@@ -4216,11 +4216,11 @@ export const ResizableColumns: Story = {
 
 export const RowSelection: Story = {
 	name: 'Row Selection',
-    parameters: {
-        sourceCode: [
-            {
-                name: 'Template',
-                code: `
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
 <template>
   <SyServerTable
     v-model:options="options"
@@ -4241,10 +4241,10 @@ export const RowSelection: Story = {
   </div>
 </template>
       `,
-            },
-            {
-                name: 'Script',
-                code: `
+			},
+			{
+				name: 'Script',
+				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyServerTable } from '@cnamts/synapse'
@@ -4326,10 +4326,10 @@ const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptio
 fetchData()
 </script>
       `,
-            },
-        ],
-    },
-    args: {
+			},
+		],
+	},
+	args: {
 		'headers': [
 			{
 				title: 'Nom',
