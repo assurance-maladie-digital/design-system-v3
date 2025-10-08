@@ -332,12 +332,6 @@
 		return errorBucket
 	})
 
-	const errorMessages = computed<ErrorMessages>(() => {
-		const messages: ErrorMessages = props.errorMessages ?? {}
-
-		return messages
-	})
-
 	const removeErrors = (): void => {
 		warningMessagesBucket.value = []
 		validationMessagesBucket.value = []
@@ -379,7 +373,7 @@
 		const rules = [...props.rules]
 
 		if (props.ariaRequired) {
-			rules.push(isRequiredFn(errorMessages.value))
+			rules.push(isRequiredFn(props.errorMessages))
 		}
 
 		return rules
@@ -388,9 +382,9 @@
 	// --- Règles d'importation (non bloquantes) ---
 	const inputRules = computed<ValidationRule[]>(() => {
 		const rules = [
-			fileUploadMaxFileNumberRule(pendingFiles.value, props.maxFileNumber, errorMessages.value),
-			fileUploadDuplicationRule(pendingFiles.value, errorMessages.value),
-			fileUploadFormatRule(props.fileTypeAccepted, errorMessages.value),
+			fileUploadMaxFileNumberRule(pendingFiles.value, props.maxFileNumber, props.errorMessages),
+			fileUploadDuplicationRule(pendingFiles.value, props.errorMessages),
+			fileUploadFormatRule(props.fileTypeAccepted, props.errorMessages),
 			...props.warningRules,
 		]
 
