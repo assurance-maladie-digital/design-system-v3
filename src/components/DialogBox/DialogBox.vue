@@ -239,7 +239,7 @@
 @use '@/assets/tokens' as *;
 
 .sy-dialog-box-title {
-  line-height: normal;
+	line-height: normal;
 }
 
 .v-btn--icon {
