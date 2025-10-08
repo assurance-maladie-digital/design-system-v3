@@ -238,8 +238,8 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens' as *;
 
-.v-card__title > * {
-	line-height: 1em;
+.sy-dialog-box-title {
+  line-height: normal;
 }
 
 .v-btn--icon {
