@@ -114,7 +114,6 @@
 	const filesModel = computed({
 		get: (): File[] => internalFiles.value,
 		set: (fileList: File[]): void => {
-			console.info('AmeliproUpload:filesModel:set', fileList)
 			internalFiles.value = fileList
 			fileInputModel.value = fileList
 			emitFiles(fileList)
@@ -146,8 +145,6 @@
 	}
 
 	const importFilesFrom = (filesToAdd: File[], source: string): void => {
-		console.info('AmeliproUpload:importFilesFrom', { filesToAdd, source })
-
 		isUpdating = true
 
 		const allMatch = filesToAdd.length === lastEmittedFiles.value.length && filesToAdd.every((file, index) => {
@@ -186,8 +183,6 @@
 	 * avec les messages d'erreur associés.
 	 */
 	const importFiles = (filesToAdd: File[]): void => {
-		console.info('AmeliproUpload:importFiles', filesToAdd)
-
 		let updateFilesModel = false
 
 		pendingFiles.value = [...filesModel.value]
@@ -216,7 +211,6 @@
 	 * @returns {boolean} - true si tous les fichiers sont valides, false sinon
 	 */
 	const internalValidate = (): void => {
-		console.info('AmeliproUpload:internalValidate')
 		const errorBucket: ErrorBucket[] = []
 
 		if (filesModel.value.length > 0) {
@@ -241,8 +235,6 @@
 			})
 		}
 
-		console.debug({ errorBucket })
-
 		// Mettre à jour les messages d'erreur et l'état de validation
 		validationMessagesBucket.value = errorBucket
 	}
@@ -253,7 +245,6 @@
 	 * @returns {void}
 	 */
 	const removeFile = (index: number): void => {
-		console.info('AmeliproUpload:removeFile', index)
 		isUpdating = true
 
 		removeErrors()
@@ -271,8 +262,6 @@
 	 * @returns {void}
 	 */
 	const doRemoveFile = (index: number): void => {
-		console.info('AmeliproUpload:doRemoveFile', index)
-
 		let updateFilesModel = false
 		pendingFiles.value = [...filesModel.value]
 
@@ -289,9 +278,7 @@
 		}
 
 		nextTick(() => {
-			console.info('AmeliproUpload:doRemoveFile:nextTick:before reset input')
 			vFileInput.value.$el.querySelector('input').value = ''
-			console.info('AmeliproUpload:doRemoveFile:nextTick:after reset input')
 		})
 	}
 
@@ -398,8 +385,6 @@
 	let lastEmittedFiles = ref<FileInfo[]>([])
 
 	const emitFiles = (files: File[]): void => {
-		console.info('AmeliproUpload:emitFiles', files)
-
 		// Sauvegarder les infos nécessaires pour comparaison future
 		lastEmittedFiles.value = files.map(f => ({ name: f.name, size: f.size, type: f.type, hash: fileHashSync(f) }))
 
