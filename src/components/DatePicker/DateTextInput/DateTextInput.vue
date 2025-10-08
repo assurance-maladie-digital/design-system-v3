@@ -640,8 +640,11 @@
 			else {
 				runRules(inputValue.value)
 				if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
-				// For invalid input, emit null instead of previous value
-				emitModel(null)
+				// Only emit null for format errors, not for custom rule errors
+				if (!formatValidationResult.isValid) {
+					emitModel(null)
+				}
+				// For custom rule errors with valid format, keep the current value
 			}
 		}
 
