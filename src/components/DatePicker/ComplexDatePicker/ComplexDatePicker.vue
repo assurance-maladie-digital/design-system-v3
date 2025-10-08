@@ -211,9 +211,9 @@
 
 	const getMessageClasses = () => ({
 		'dp-width': true,
-		'v-messages__message--success': successMessages.value.length > 0,
 		'v-messages__message--error': errorMessages.value.length > 0,
-		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
+		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length === 0,
+		'v-messages__message--success': successMessages.value.length > 0 && errorMessages.value.length === 0 && warningMessages.value.length === 0,
 	})
 
 	/**
