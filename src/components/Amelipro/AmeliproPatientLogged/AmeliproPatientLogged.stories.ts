@@ -177,7 +177,19 @@ export const Default: Story = {
 		],
 	}"
 	unique-id="test-id"
-/>`,
+>
+	<template #doctor>
+		<p>
+			Contenu du slot "doctorDialog"
+		</p>
+	</template>
+
+	<template #doctorDialogFooter>
+		<p>
+			Contenu du slot "doctorDialogFooter"
+		</p>
+	</template>
+</AmeliproPatientLogged>`,
 			},
 			{
 				name: 'Script',
@@ -209,6 +221,18 @@ export const Default: Story = {
 	@click:infos="args['onClick:infos']"
 	@click:more-infos="args['onClick:more-infos']"
 	@click:pdf="args['onClick:pdf']"
-/>`,
+>
+	<template #doctorDialog>
+		<p>
+			Contenu du slot "doctorDialog"
+		</p>
+	</template>
+
+	<template #doctorDialogFooter>
+		<p>
+			Contenu du slot "doctorDialogFooter"
+		</p>
+	</template>
+</AmeliproPatientLogged>`,
 	}),
 }
