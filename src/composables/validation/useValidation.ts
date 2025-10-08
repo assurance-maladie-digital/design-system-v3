@@ -58,7 +58,17 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		warningRules: ValidationRule[] = [],
 		successRules: ValidationRule[] = [],
 	): ValidationResult => {
+		// Ne pas effacer les erreurs existantes - les conserver pour la priorité
+		const existingErrors = [...errors.value]
+		const existingWarnings = [...warnings.value]
+		const existingSuccesses = [...successes.value]
+		
 		clearValidation()
+		
+		// Collecter tous les résultats avant de les traiter
+		const allErrors: string[] = []
+		const allWarnings: string[] = []
+		const allSuccesses: string[] = []
 
 		// Si la gestion des erreurs est désactivée, on retourne un résultat sans erreurs
 		if (options.disableErrorHandling) {
@@ -84,14 +94,38 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		}))
 
 		const validationRules = generateRules(normalRules)
-		let hasValidationError = false
 		validationRules.forEach((validationRule) => {
 			const result = validationRule(value)
 			if (result.error) {
-				errors.value.push(result.error)
-				hasValidationError = true
+				allErrors.push(result.error)
+			}
+			if (result.warning) {
+				allWarnings.push(result.warning)
+			}
+			if (result.success) {
+				allSuccesses.push(result.success)
 			}
 		})
+		
+		// Appliquer les résultats : les erreurs ont la priorité absolue
+		// Si il y a déjà des erreurs OU de nouvelles erreurs, ne montrer que les erreurs
+		if (existingErrors.length > 0 || allErrors.length > 0) {
+			errors.value.push(...existingErrors, ...allErrors)
+		} else if (existingWarnings.length > 0 || allWarnings.length > 0) {
+			warnings.value.push(...existingWarnings, ...allWarnings)
+		} else {
+			successes.value.push(...existingSuccesses, ...allSuccesses)
+		}
+		
+		console.warn('🔍 useValidation final state:', { 
+			errors: errors.value, 
+			warnings: warnings.value, 
+			successes: successes.value,
+			hasError: errors.value.length > 0,
+			fieldIdentifier: options.fieldIdentifier 
+		})
+		
+		const hasValidationError = allErrors.length > 0
 
 		// Si pas d'erreur, ajouter le message de succès ou un message par défaut
 		// Mais seulement si aucun customSuccessRules n'est défini pour éviter la duplication

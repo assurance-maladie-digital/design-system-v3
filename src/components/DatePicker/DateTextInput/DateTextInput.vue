@@ -563,8 +563,8 @@
 						errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 						return false
 					}
-					safeValidateField(startDate, props.customRules, props.customWarningRules)
-					if (errors.value.length === 0) safeValidateField(endDate, props.customRules, props.customWarningRules)
+					safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					if (errors.value.length === 0) safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 				}
 			}
 			return !hasError.value
@@ -623,7 +623,7 @@
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
-			const customRulesValidationResult = safeValidateField(inputValue.value, props.customRules, props.customWarningRules)
+			const customRulesValidationResult = safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()

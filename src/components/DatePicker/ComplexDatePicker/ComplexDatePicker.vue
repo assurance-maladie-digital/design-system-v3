@@ -247,8 +247,8 @@
 		required: props.required,
 		displayRange: props.displayRange,
 		disableErrorHandling: props.disableErrorHandling,
-		customRules: props.customRules,
-		customWarningRules: props.customWarningRules,
+		customRules: computed(() => props.customRules),
+		customWarningRules: computed(() => props.customWarningRules),
 		selectedDates,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
@@ -309,7 +309,23 @@
 	watch(displayFormattedDateComputed, (newValue) => {
 		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
 	})
-
+	// Watcher pour re-valider quand les customRules changent (par exemple quand dateA change dans dateBRules)
+	watch(() => props.customRules, () => {
+		if (selectedDates.value !== null) {
+			// Retarder légèrement pour s'assurer que les computed sont mis à jour
+			setTimeout(() => {
+				clearValidation()
+				const datesToValidate = Array.isArray(selectedDates.value) ? selectedDates.value : [selectedDates.value]
+				datesToValidate.forEach((date) => {
+					validateField(
+						date,
+						props.customRules,
+						props.customWarningRules,
+					)
+				})
+			}, 5)
+		}
+	}, { deep: true })
 	// Range handling
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 	const dateSelectionResult = useDateSelection(parseDate, selectedDates, props.format, props.displayRange)
@@ -627,8 +643,8 @@
 		format: props.format,
 		required: props.required,
 		disableErrorHandling: props.disableErrorHandling,
-		customRules: props.customRules,
-		customWarningRules: props.customWarningRules,
+		customRules: computed(() => props.customRules),
+		customWarningRules: computed(() => props.customWarningRules),
 		hasInteracted,
 		errors,
 		clearValidation,
@@ -913,6 +929,7 @@
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
 				:auto-clamp="props.autoClamp"
+				:error-messages="errorMessages"
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
 				title="Date text input"
@@ -959,6 +976,7 @@
 						:display-range="props.displayRange"
 						:display-persistent-placeholder="true"
 						:is-validate-on-blur="props.isValidateOnBlur"
+						:error-messages="errorMessages"
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
 						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
@@ -992,6 +1010,7 @@
 					:display-holiday-days="props.displayHolidayDays"
 					:display-asterisk="props.displayAsterisk"
 					:is-validate-on-blur="props.isValidateOnBlur"
+					:error-messages="errorMessages"
 					:density="props.density"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"

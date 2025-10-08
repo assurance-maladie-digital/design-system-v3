@@ -111,12 +111,17 @@ export function useFieldValidation() {
 			}
 
 			const createValidationResult = (isValid: boolean, message?: string): ValidationResult => {
-				if (isValid) {
-					return { success: baseMessages.success }
+				const result = isValid 
+					? { success: baseMessages.success }
+					: options.isWarning
+						? { warning: message || baseMessages.warning }
+						: { error: message || baseMessages.error }
+				
+				console.log('createValidationResult:', { isValid, message, isWarning: options.isWarning, result })
+				if (message === "toto") {
+					console.log('TOTO found! Stack:', new Error().stack)
 				}
-				return options.isWarning
-					? { warning: message || baseMessages.warning }
-					: { error: message || baseMessages.error }
+				return result
 			}
 
 			switch (type) {
@@ -209,7 +214,9 @@ export function useFieldValidation() {
 				}
 
 				case 'notBeforeDate': {
+console.log(options)
 					if (!options.date) {
+						console.log('Configuration de la règle invalide')
 						return { error: 'Configuration de la règle invalide' }
 					}
 					const dateValue = parseDate(value)
@@ -231,8 +238,16 @@ export function useFieldValidation() {
 					dateValue.setHours(0, 0, 0, 0)
 					referenceDate.setHours(0, 0, 0, 0)
 
+					const isValid = dateValue >= referenceDate
+					console.log('notBeforeDate validation:', { 
+						dateValue: dateValue.toDateString(), 
+						referenceDate: referenceDate.toDateString(), 
+						isValid,
+						message: options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${options.date}.`
+					})
+
 					return createValidationResult(
-						dateValue >= referenceDate,
+						isValid,
 						options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${options.date}.`,
 					)
 				}
