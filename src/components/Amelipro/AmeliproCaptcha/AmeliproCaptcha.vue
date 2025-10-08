@@ -165,7 +165,7 @@
 			<AmeliproTextField
 				v-model="modelValue.inputValue"
 				aria-required
-				class="mt-4"
+				classes="mt-4"
 				input-max-width="320px"
 				:label="audio ? captchaInputLabelAudio : captchaInputLabelImg"
 				:unique-id="`${uniqueId}-input`"

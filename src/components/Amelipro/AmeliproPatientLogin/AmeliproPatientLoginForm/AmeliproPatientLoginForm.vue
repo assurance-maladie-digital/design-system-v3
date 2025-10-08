@@ -178,7 +178,7 @@
 					v-model="currentValue.fieldValue"
 					v-maska="mask"
 					aria-required
-					class="mt-6"
+					classes="mt-6"
 					clearable
 					:counter="13"
 					label="Saisir son NIR :"
