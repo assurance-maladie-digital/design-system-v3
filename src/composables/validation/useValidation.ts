@@ -62,9 +62,9 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		const existingErrors = [...errors.value]
 		const existingWarnings = [...warnings.value]
 		const existingSuccesses = [...successes.value]
-		
+
 		clearValidation()
-		
+
 		// Collecter tous les résultats avant de les traiter
 		const allErrors: string[] = []
 		const allWarnings: string[] = []
@@ -106,25 +106,27 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				allSuccesses.push(result.success)
 			}
 		})
-		
+
 		// Appliquer les résultats : les erreurs ont la priorité absolue
 		// Si il y a déjà des erreurs OU de nouvelles erreurs, ne montrer que les erreurs
 		if (existingErrors.length > 0 || allErrors.length > 0) {
 			errors.value.push(...existingErrors, ...allErrors)
-		} else if (existingWarnings.length > 0 || allWarnings.length > 0) {
+		}
+		else if (existingWarnings.length > 0 || allWarnings.length > 0) {
 			warnings.value.push(...existingWarnings, ...allWarnings)
-		} else {
+		}
+		else {
 			successes.value.push(...existingSuccesses, ...allSuccesses)
 		}
-		
-		console.warn('🔍 useValidation final state:', { 
-			errors: errors.value, 
-			warnings: warnings.value, 
+
+		console.warn('🔍 useValidation final state:', {
+			errors: errors.value,
+			warnings: warnings.value,
 			successes: successes.value,
 			hasError: errors.value.length > 0,
-			fieldIdentifier: options.fieldIdentifier 
+			fieldIdentifier: options.fieldIdentifier,
 		})
-		
+
 		const hasValidationError = allErrors.length > 0
 
 		// Si pas d'erreur, ajouter le message de succès ou un message par défaut
