@@ -23,6 +23,8 @@ describe('AmeliproPatientLogged', () => {
 					doctorDialogBtn: 'test Voir détails MT',
 					doctorDialogTitle: 'test Médecin traitant',
 					exemption: 'test Exonération TM',
+					exemptionDialogTitle: 'titre dialogue éxonération TM',
+					exemptionLine2: 'éxonération ligne 2',
 					firstName: 'test Prénom',
 					fund: ',test Caisse',
 					fundDialogTitle: 'test Coordonnées de l\'organisme de rattachement du patient',
