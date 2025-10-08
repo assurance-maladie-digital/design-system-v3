@@ -379,7 +379,7 @@
 	})
 
 	// --- Gestion des événements ---
-	const emit = defineEmits(['update:model-value', 'change'])
+	const emit = defineEmits(['update:model-value'])
 	let isUpdating = false
 
 	let lastEmittedFiles = ref<FileInfo[]>([])
