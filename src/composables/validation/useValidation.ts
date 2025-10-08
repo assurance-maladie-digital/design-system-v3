@@ -58,11 +58,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		warningRules: ValidationRule[] = [],
 		successRules: ValidationRule[] = [],
 	): ValidationResult => {
-		// Ne pas effacer les erreurs existantes - les conserver pour la priorité
-		const existingErrors = [...errors.value]
-		const existingWarnings = [...warnings.value]
+		// Conserver les succès existants si il n'y a pas de nouvelles règles à traiter
 		const existingSuccesses = [...successes.value]
-
 		clearValidation()
 
 		// Collecter tous les résultats avant de les traiter
@@ -102,36 +99,31 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 			if (result.warning) {
 				allWarnings.push(result.warning)
 			}
-			if (result.success) {
+			if (result.success && options.showSuccessMessages !== false) {
 				allSuccesses.push(result.success)
 			}
 		})
 
-		// Appliquer les résultats : les erreurs ont la priorité absolue
-		// Si il y a déjà des erreurs OU de nouvelles erreurs, ne montrer que les erreurs
-		if (existingErrors.length > 0 || allErrors.length > 0) {
-			errors.value.push(...existingErrors, ...allErrors)
+		// Appliquer les résultats : les erreurs ont la priorité
+		if (allErrors.length > 0) {
+			errors.value.push(...allErrors)
 		}
-		else if (existingWarnings.length > 0 || allWarnings.length > 0) {
-			warnings.value.push(...existingWarnings, ...allWarnings)
+		else if (allWarnings.length > 0) {
+			warnings.value.push(...allWarnings)
 		}
-		else {
-			successes.value.push(...existingSuccesses, ...allSuccesses)
+		else if (allSuccesses.length > 0) {
+			successes.value.push(...allSuccesses)
+		}
+		else if (existingSuccesses.length > 0) {
+			// Restaurer les succès existants si pas de nouvelles erreurs/warnings/succès
+			successes.value.push(...existingSuccesses)
 		}
 
-		console.warn('🔍 useValidation final state:', {
-			errors: errors.value,
-			warnings: warnings.value,
-			successes: successes.value,
-			hasError: errors.value.length > 0,
-			fieldIdentifier: options.fieldIdentifier,
-		})
-
-		const hasValidationError = allErrors.length > 0
+		const hasValidationError = errors.value.length > 0
 
 		// Si pas d'erreur, ajouter le message de succès ou un message par défaut
 		// Mais seulement si aucun customSuccessRules n'est défini pour éviter la duplication
-		if (!hasValidationError && value && options.showSuccessMessages !== false && (!successRules || successRules.length === 0)) {
+		if (!hasValidationError && value && options.showSuccessMessages !== false && successRules.length === 0 && allSuccesses.length === 0 && existingSuccesses.length === 0) {
 			const customSuccessMessage = rules.find(rule => rule.options.successMessage)?.options.successMessage
 			if (customSuccessMessage) {
 				successes.value.push(customSuccessMessage)
