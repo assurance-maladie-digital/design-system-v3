@@ -178,7 +178,7 @@ export const Default: Story = {
 	}"
 	unique-id="test-id"
 >
-	<template #doctor>
+	<template #doctorDialog>
 		<p>
 			Contenu du slot "doctorDialog"
 		</p>
@@ -187,6 +187,12 @@ export const Default: Story = {
 	<template #doctorDialogFooter>
 		<p>
 			Contenu du slot "doctorDialogFooter"
+		</p>
+	</template>
+
+	<template #fundDialog>
+		<p>
+			Contenu du slot "fundDialog"
 		</p>
 	</template>
 </AmeliproPatientLogged>`,
@@ -231,6 +237,12 @@ export const Default: Story = {
 	<template #doctorDialogFooter>
 		<p>
 			Contenu du slot "doctorDialogFooter"
+		</p>
+	</template>
+
+	<template #fundDialog>
+		<p>
+			Contenu du slot "fundDialog"
 		</p>
 	</template>
 </AmeliproPatientLogged>`,
