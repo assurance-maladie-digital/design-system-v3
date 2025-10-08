@@ -58,8 +58,11 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		warningRules: ValidationRule[] = [],
 		successRules: ValidationRule[] = [],
 	): ValidationResult => {
-		// Conserver les succès existants si il n'y a pas de nouvelles règles à traiter
-		const existingSuccesses = [...successes.value]
+		// Ne conserver les succès existants que si c'est vraiment un appel vide
+		// (pas de règles du tout) et qu'il n'y a pas d'erreurs existantes
+		const hasExistingErrors = errors.value.length > 0
+		const isEmptyCall = rules.length === 0 && warningRules.length === 0 && successRules.length === 0
+		const existingSuccesses = isEmptyCall && !hasExistingErrors ? [...successes.value] : []
 		clearValidation()
 
 		// Collecter tous les résultats avant de les traiter
@@ -114,25 +117,12 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		else if (allSuccesses.length > 0) {
 			successes.value.push(...allSuccesses)
 		}
-		else if (existingSuccesses.length > 0) {
-			// Restaurer les succès existants si pas de nouvelles erreurs/warnings/succès
+		else if (existingSuccesses.length > 0 && successRules.length === 0) {
+			// Restaurer les succès existants SEULEMENT si pas de nouvelles successRules
 			successes.value.push(...existingSuccesses)
 		}
 
 		const hasValidationError = errors.value.length > 0
-
-		// Si pas d'erreur, ajouter le message de succès ou un message par défaut
-		// Mais seulement si aucun customSuccessRules n'est défini pour éviter la duplication
-		if (!hasValidationError && value && options.showSuccessMessages !== false && successRules.length === 0 && allSuccesses.length === 0 && existingSuccesses.length === 0) {
-			const customSuccessMessage = rules.find(rule => rule.options.successMessage)?.options.successMessage
-			if (customSuccessMessage) {
-				successes.value.push(customSuccessMessage)
-			}
-			else {
-				const defaultMessage = options.fieldIdentifier ? `Le champ ${options.fieldIdentifier} est valide.` : 'Champ valide'
-				successes.value.push(defaultMessage)
-			}
-		}
 
 		// Validation des règles d'avertissement
 		if (!hasValidationError) {
@@ -157,6 +147,11 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 
 		// Validation des règles de succès
 		if (!hasValidationError && !hasWarning.value) {
+			// Si on a des successRules, vider complètement les succès existants
+			if (successRules.length > 0) {
+				successes.value = []
+			}
+
 			const successValidationRules = generateRules(
 				successRules.map(rule => ({
 					type: rule.type,
@@ -174,6 +169,19 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 					successes.value.push(result.success)
 				}
 			})
+		}
+
+		// Si pas d'erreur et pas de warning, ajouter le message de succès par défaut si nécessaire
+		// Mais seulement si aucun customSuccessRules n'est défini et qu'il n'y a pas déjà de succès
+		if (!hasValidationError && !hasWarning.value && value && options.showSuccessMessages !== false && successRules.length === 0 && allSuccesses.length === 0 && existingSuccesses.length === 0 && successes.value.length === 0) {
+			const customSuccessMessage = rules.find(rule => rule.options.successMessage)?.options.successMessage
+			if (customSuccessMessage) {
+				successes.value.push(customSuccessMessage)
+			}
+			else {
+				const defaultMessage = options.fieldIdentifier ? `Le champ ${options.fieldIdentifier} est valide.` : 'Champ valide'
+				successes.value.push(defaultMessage)
+			}
 		}
 
 		return {
