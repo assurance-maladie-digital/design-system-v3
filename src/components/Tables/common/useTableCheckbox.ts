@@ -23,7 +23,7 @@ export function useTableCheckbox(options: UseTableCheckboxOptions) {
    * Function to get a unique identifier for each item
    */
 	const getItemValue = (item: Record<string, unknown>) => {
-		// If the item has an id field, use that (stable primitive key)
+		// If the item has an id field, use that
 		if ((item as Record<string, unknown>).id !== undefined) {
 			return (item as Record<string, unknown>).id
 		}
