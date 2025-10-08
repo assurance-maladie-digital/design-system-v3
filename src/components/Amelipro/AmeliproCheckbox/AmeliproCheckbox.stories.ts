@@ -89,7 +89,7 @@ export const Default: Story = {
 >
 	<template #append>
 		<AmeliproTooltips
-			class="ml-2"
+			classes="ml-2"
 			tooltip-text="contenu de la tooltip"
 			unique-id="ma-tooltip"
 		/>

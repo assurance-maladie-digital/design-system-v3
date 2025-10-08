@@ -9,6 +9,10 @@
 			type: String,
 			default: 'plus d’informations',
 		},
+		classes: {
+			type: String,
+			default: undefined,
+		},
 		iconBgColor: {
 			type: String,
 			default: 'ap-white',
@@ -55,7 +59,8 @@
 <template>
 	<div
 		:id="`${uniqueId}-container`"
-		class="d-flex justify-center amelipro-tooltip"
+		class="amelipro-tooltip"
+		:class="classes"
 	>
 		<VTooltip
 			:id="uniqueId"

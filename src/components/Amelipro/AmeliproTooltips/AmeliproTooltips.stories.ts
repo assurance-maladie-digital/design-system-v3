@@ -4,6 +4,7 @@ import AmeliproTooltips from './AmeliproTooltips.vue'
 const meta = {
 	argTypes: {
 		btnLabel: { description: 'Libellé du bouton d’ouverture de la bulle d’information' },
+		classes: { descriptions: 'classes css à ajouter au wrapper du composant' },
 		iconBgColor: { description: 'Couleur de fond pour l’icône du bouton d’ouverture de la bulle d’information' },
 		iconColor: { description: 'Couleur de l’icône du bouton d’ouverture de la bulle d’information' },
 		iconHoverBgColor: { description: 'Couleur de fond pour l’icône au survol du bouton d’ouverture de la bulle d’information' },

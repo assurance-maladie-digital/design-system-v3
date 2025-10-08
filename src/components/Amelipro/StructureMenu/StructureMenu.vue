@@ -184,7 +184,7 @@
 					/>
 
 					<AmeliproTooltips
-						class="ml-2 mt-1"
+						classes="ml-2 mt-1"
 						:tooltip-text="locales.switchDescription"
 						:unique-id="`${uniqueId}-default-structure-switch-description`"
 					/>
