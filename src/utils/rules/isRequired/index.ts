@@ -1,10 +1,7 @@
 import { ruleMessage } from '../../ruleMessage'
-import type { ValidationRule, ValidationResult, ErrorMessages } from '../types'
+import type { ValidationRule, ValidationResult, ErrorMessages, Value } from '../types'
 
 import { defaultErrorMessages } from './locales'
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Value = string | File | any[] | null
 
 export function isRequiredFn(
 	errorMessages: ErrorMessages = defaultErrorMessages,

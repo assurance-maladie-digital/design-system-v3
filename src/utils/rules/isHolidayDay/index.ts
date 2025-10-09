@@ -22,16 +22,11 @@ export function isHolidayDayFn(
 			return true
 		}
 
-		// Vérifier que la valeur est de type String ou Date
-		if (typeof value !== 'string' || Object.prototype.toString.call(value) !== '[object Date]') {
-			return ruleMessage(errorMessages, 'default')
-		}
-
 		// Utiliser le composable pour vérifier si la date est un jour férié
 		const { isHolidayDay } = useHolidayDay()
 
 		// On retourne true si ce n'est PAS un jour férié, sinon on retourne le message d'erreur
-		return !isHolidayDay(value) || ruleMessage(errorMessages, 'default')
+		return ((typeof value === 'string' || value instanceof Date) && !isHolidayDay(value)) || ruleMessage(errorMessages, 'default')
 	}
 }
 
