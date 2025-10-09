@@ -232,7 +232,8 @@
 			}
 			return
 		}
-		if (!selectedDates.value) return
+		// Permettre aux custom rules de s'exécuter même sur des champs vides
+		if (!selectedDates.value && (!props.customRules || props.customRules.length === 0)) return
 
 		// Préparer les dates à valider
 		const datesToValidate = Array.isArray(selectedDates.value)
