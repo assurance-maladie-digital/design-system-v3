@@ -1,63 +1,55 @@
-import { beforeEach, describe, it, expect } from 'vitest'
-import type { IFileUploadRuleParams, ValidationRule } from '../../../../rules/types'
-import { fileUploadRule } from '../'
+import { describe, it, expect } from 'vitest'
+import {
+	fileUploadMaxFileNumberRule,
+	fileUploadDuplicationRule,
+	fileUploadFormatRule,
+	fileUploadRuleErrorMessages,
+} from '../index'
 
-describe('fileUploadRule', () => {
-	const buildFile = (name: string): File => (<File>{
-		lastModified: 1685526538748,
-		name,
-		size: 3115351,
-		type: 'application/pdf',
-		webkitRelativePath: '',
+const buildFile = (name: string, type = 'application/pdf', size = 3115351): File => (<File>{
+	lastModified: 1685526538748,
+	name,
+	size,
+	type,
+	webkitRelativePath: '',
+})
+
+describe('fileUploadMaxFileNumberRule', () => {
+	it('returns true when file list is not full', () => {
+		const fileList: File[] = []
+		const rule = fileUploadMaxFileNumberRule(fileList, 2)
+		expect(rule([buildFile('file1.pdf')])).toBe(true)
 	})
-	const simplePdf = buildFile('file1.pdf')
 
-	it('returns true when the file has the right type', () => {
-		const params = <IFileUploadRuleParams> {
-			fileList: [],
-			fileTypeAccepted: ['application/pdf'],
-			maxFileNumber: 1,
-		}
-		expect(fileUploadRule({}, params)(simplePdf)).toBe(true)
+	it('returns error when file list is full', () => {
+		const fileList: File[] = [buildFile('file1.pdf'), buildFile('file2.pdf')]
+		const rule = fileUploadMaxFileNumberRule(fileList, 2)
+		expect(rule([buildFile('file3.pdf')])).toBe(fileUploadRuleErrorMessages.maxFile)
+	})
+})
+
+describe('fileUploadDuplicationRule', () => {
+	it('returns true when file is not duplicated', () => {
+		const fileList: File[] = [buildFile('file1.pdf')]
+		const rule = fileUploadDuplicationRule(fileList)
+		expect(rule([buildFile('file2.pdf')])).toBe(true)
 	})
 
-	describe('default and custom error messages', () => {
-		let defaultRule: ValidationRule<File>
-		let customRule: ValidationRule<File>
+	it('returns error when file is duplicated', () => {
+		const fileList: File[] = [buildFile('file1.pdf')]
+		const rule = fileUploadDuplicationRule(fileList)
+		expect(rule([buildFile('file1.pdf')])).toBe(fileUploadRuleErrorMessages.duplicated)
+	})
+})
 
-		beforeEach(() => {
-			defaultRule = fileUploadRule()
-			customRule = fileUploadRule({
-				default: 'Default error',
-				duplicated: 'Duplicated error',
-				maxFile: 'Max files error',
-				type: 'Type error',
-			})
-		})
+describe('fileUploadFormatRule', () => {
+	it('returns true when file type is accepted', () => {
+		const rule = fileUploadFormatRule(['application/pdf'])
+		expect(rule([buildFile('file1.pdf')])).toBe(true)
+	})
 
-		it('returns an error when the file type is not defined', () => {
-			expect(defaultRule(simplePdf)).toBe('Format de fichier incorrect (file1.pdf)')
-			expect(customRule(simplePdf)).toBe('Type error')
-		})
-
-		it('returns an error when the file list is full', () => {
-			const params = <IFileUploadRuleParams> {
-				fileList: [simplePdf],
-				fileTypeAccepted: ['application/pdf'],
-				maxFileNumber: 1,
-			}
-			expect(defaultRule(simplePdf, params)).toBe('Vous avez dépassé le maximum de pièces jointes autorisées')
-			expect(customRule(simplePdf, params)).toBe('Max files error')
-		})
-
-		it('returns an error when the file already exists in the file list', () => {
-			const params = <IFileUploadRuleParams> {
-				fileList: [simplePdf],
-				fileTypeAccepted: ['application/pdf'],
-				maxFileNumber: 2,
-			}
-			expect(defaultRule(simplePdf, params)).toBe('Fichier déjà présent dans la liste (file1.pdf)')
-			expect(customRule(simplePdf, params)).toBe('Duplicated error')
-		})
+	it('returns error when file type is not accepted', () => {
+		const rule = fileUploadFormatRule(['image/png'])
+		expect(rule([buildFile('file1.pdf')])).toBe(fileUploadRuleErrorMessages.type)
 	})
 })

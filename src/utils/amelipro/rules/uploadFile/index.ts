@@ -14,44 +14,6 @@ export const defaultFileUploadErrorParams = (): IFileUploadRuleParams => ({
 	maxFileNumber: 1,
 })
 
-export const fileUploadRule = (errorMessages: ErrorMessages = {}, params: IFileUploadRuleParams = defaultFileUploadErrorParams()): ValidationRule => (files): ValidationResult => {
-	let valid: ValidationResult = true
-	const localFiles = Array.isArray(files) ? files : [files]
-	const results: ValidationResult[] = []
-	localFiles.forEach((file) => {
-		results.push(fileUploadRuleFn(errorMessages, params, file as File))
-	})
-	valid = results.every(elem => elem === true)
-	return valid || String(results.filter(elem => elem !== true))
-}
-
-const fileUploadRuleFn = (errorMessages: ErrorMessages, params: IFileUploadRuleParams, file: File): ValidationResult => {
-	const ifExist = params.fileList.find(elem => elem.name === file.name)
-	let valid = false
-	let errorMessageKey = 'default'
-	if (params.maxFileNumber > params.fileList.length) {
-		if (params.fileTypeAccepted.includes(file.type)) {
-			if (ifExist === undefined) {
-				valid = true
-			}
-			else {
-				errorMessageKey = 'duplicated'
-			}
-		}
-		else {
-			errorMessageKey = 'type'
-		}
-	}
-	else {
-		errorMessageKey = 'maxFile'
-	}
-
-	return valid || ruleMessage({
-		...fileUploadRuleErrorMessages,
-		...errorMessages,
-	}, errorMessageKey)
-}
-
 // check that the list length doesn't pass over authorized max file number
 export const fileUploadMaxFileNumberRule = (fileList: File[], maxItems: number, errorMessages: ErrorMessages = {}): ValidationRule => (files): ValidationResult => {
 	let valid: ValidationResult = true
