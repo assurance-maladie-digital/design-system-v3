@@ -309,7 +309,7 @@
 	watch(displayFormattedDateComputed, (newValue) => {
 		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
 	})
-	// Watcher pour re-valider quand les customRules changent (par exemple quand dateA change dans dateBRules)
+	// Watcher pour re-valider quand les customRules changent
 	watch(() => props.customRules, () => {
 		if (selectedDates.value !== null) {
 			// Retarder légèrement pour s'assurer que les computed sont mis à jour
