@@ -155,7 +155,7 @@
 					<h2
 						v-if="title"
 						:id="id"
-						class="text-h6 font-weight-bold"
+						class="text-h4 font-weight-bold"
 					>
 						{{ props.title }}
 					</h2>
