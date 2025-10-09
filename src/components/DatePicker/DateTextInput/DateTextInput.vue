@@ -49,6 +49,7 @@
 		autoClamp?: boolean
 		isValidateOnBlur?: boolean
 		density?: 'default' | 'comfortable' | 'compact'
+		externalErrorMessages?: string[]
 	}>(), {
 		modelValue: null,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -72,6 +73,7 @@
 		autoClamp: true,
 		isValidateOnBlur: true,
 		density: 'default',
+		externalErrorMessages: () => [],
 	})
 
 	const emit = defineEmits<{
@@ -120,7 +122,9 @@
 		}
 
 	const { errors, warnings, successes, hasError, clearValidation, validateField } = validationApi
-	const errorMessages = errors
+
+	// Agrégation des erreurs internes et externes
+	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
 	const warningMessages = warnings
 	const successMessages = successes
 
