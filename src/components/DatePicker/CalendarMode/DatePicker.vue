@@ -241,7 +241,8 @@
 			: [selectedDates.value]
 
 		// Valider chaque date
-		if (shouldDisplayErrors) {
+		// Ne pas afficher d'erreurs de custom rules si on est dans le contexte du mounted initial
+		if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
 			datesToValidate.forEach((date) => {
 				validateField(
 					date,

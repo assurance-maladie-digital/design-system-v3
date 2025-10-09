@@ -547,7 +547,8 @@
 				return false
 			}
 			// Permettre aux custom rules de s'exécuter même sur des champs vides
-			if (props.customRules && props.customRules.length > 0) {
+			// Mais seulement si l'utilisateur a interagi avec le champ
+			if (props.customRules && props.customRules.length > 0 && hasInteracted.value) {
 				// Exécuter les custom rules sur la valeur vide
 				safeValidateField(null, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 				return !hasError.value
