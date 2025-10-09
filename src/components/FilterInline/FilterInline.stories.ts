@@ -8,6 +8,8 @@ import PeriodField from '../PeriodField/PeriodField.vue'
 import RangeField from '../RangeField/RangeField.vue'
 import SearchListField from '../SearchListField/SearchListField.vue'
 import FilterInline from './FilterInline.vue'
+import SySelect from '../Customs/Selects/SySelect/SySelect.vue'
+import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 
 const meta = {
 	title: 'Composants/Filtres/FilterInline',
@@ -101,7 +103,7 @@ export const Default: Story = {
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
-		components: { FilterInline, VTextField, VSelect, PeriodField, SearchListField },
+		components: { FilterInline, SyTextField, SySelect, PeriodField, SearchListField },
 		setup() {
 			const filters = [
 				{
@@ -123,9 +125,9 @@ export const Default: Story = {
 			]
 
 			const folderTypes = [
-				{ title: 'Arrêt de Travail (AT)', value: 'AT' },
-				{ title: 'Maladie Professionnelle (MP)', value: 'MP' },
-				{ title: 'Autre', value: 'other' },
+				{ text: 'Arrêt de Travail (AT)', value: 'AT' },
+				{ text: 'Maladie Professionnelle (MP)', value: 'MP' },
+				{ text: 'Autre', value: 'other' },
 			]
 
 			const professionList = [
@@ -163,12 +165,14 @@ export const Default: Story = {
 	v-bind="args"
 >
 	<template #name="{ props }">
-		<VTextField
+		<SyTextField
 			v-bind="props"
 			label="Nom"
 			variant="outlined"
 			hide-details
 			color="primary"
+			:noIcon="true"
+			:showSuccessMessages="false"
 		/>
 	</template>
 
@@ -177,12 +181,11 @@ export const Default: Story = {
 			Vous pouvez filtrer entre les dossiers de type <b>Arrêt de Travail (AT)</b> et <b>Maladie Professionnelle (MP)</b> ou <b>Autre</b>.
 		</p>
 
-		<VSelect
+		<SySelect
 			v-bind="props"
 			:items="folderTypes"
 			label="Type de dossier"
 			multiple
-			variant="outlined"
 			return-object
 			hide-details
 			color="primary"
@@ -192,7 +195,6 @@ export const Default: Story = {
 	<template #period="{ props }">
 		<PeriodField
 			v-bind="props"
-			variant="outlined"
 		/>
 	</template>
 
@@ -200,7 +202,7 @@ export const Default: Story = {
 		<SearchListField
 			v-bind="props"
 			:items="professionList"
-			color="primary"
+	
 		/>
 	</template>
 </FilterInline>
@@ -245,7 +247,6 @@ export const Default: Story = {
 	<template #period="{ props }">
 		<PeriodField
 			v-bind="props"
-			variant="outlined"
 		/>
 	</template>
 
@@ -531,7 +532,6 @@ export const FilterCombination: Story = {
 				<template #period="{ props }">
 					<PeriodField
 						v-bind="props"
-						variant="outlined"
 					/>
 				</template>
 
@@ -577,7 +577,6 @@ export const FilterCombination: Story = {
 				<template #period="{ props }">
 					<PeriodField
 						v-bind="props"
-						variant="outlined"
 					/>
 				</template>
 
@@ -632,7 +631,6 @@ export const FilterCombination: Story = {
 				<template #period="{ props }">
 					<PeriodField
 						v-bind="props"
-						variant="outlined"
 					/>
 				</template>
 
@@ -677,7 +675,6 @@ export const FilterCombination: Story = {
 				<template #period="{ props }">
 					<PeriodField
 						v-bind="props"
-						variant="outlined"
 					/>
 				</template>
 
