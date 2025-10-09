@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref } from 'vue'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 
@@ -146,4 +146,4 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 .instructions li {
 	margin-bottom: 8px;
 }
-</style>
+</style> -->
