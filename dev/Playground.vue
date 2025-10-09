@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-import { ref, computed } from 'vue'
+<script lang="ts" setup>
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+	import { ref, computed } from 'vue'
 	const dateA = ref()
 	const dateB = ref()
 	const dateBRules = computed(() => {
@@ -24,19 +24,19 @@ import { ref, computed } from 'vue'
 	<DatePicker
 		v-model="dateA"
 		label="Date A"
+		use-combined-mode
 		display-append-icon
 		outlined
 		required
-        use-combined-mode
 		:show-success-messages="false"
 	/>
 	<DatePicker
 		v-model="dateB"
 		label="Date B"
+		use-combined-mode
 		display-append-icon
 		outlined
 		:custom-rules="dateBRules"
-        use-combined-mode
 		:show-success-messages="false"
 	/>
 </template>
