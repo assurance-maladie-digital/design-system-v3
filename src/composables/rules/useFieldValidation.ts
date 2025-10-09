@@ -1,8 +1,8 @@
+import { useHolidayDay } from '@/composables/date/useHolidayDay'
 // Regular expressions
 export const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
 // Import du composable pour les jours fériés
-import { useHolidayDay } from '@/composables/date/useHolidayDay'
 
 export type ValidationResult = {
 	success?: string
@@ -111,17 +111,12 @@ export function useFieldValidation() {
 			}
 
 			const createValidationResult = (isValid: boolean, message?: string): ValidationResult => {
-				const result = isValid
-					? { success: baseMessages.success }
-					: options.isWarning
-						? { warning: message || baseMessages.warning }
-						: { error: message || baseMessages.error }
-
-				console.log('createValidationResult:', { isValid, message, isWarning: options.isWarning, result })
-				if (message === 'toto') {
-					console.log('TOTO found! Stack:', new Error().stack)
+				if (isValid) {
+					return { success: baseMessages.success }
 				}
-				return result
+				return options.isWarning
+					? { warning: message || baseMessages.warning }
+					: { error: message || baseMessages.error }
 			}
 
 			switch (type) {
@@ -214,9 +209,7 @@ export function useFieldValidation() {
 				}
 
 				case 'notBeforeDate': {
-					console.log(options)
 					if (!options.date) {
-						console.log('Configuration de la règle invalide')
 						return { error: 'Configuration de la règle invalide' }
 					}
 					const dateValue = parseDate(value)
@@ -238,16 +231,8 @@ export function useFieldValidation() {
 					dateValue.setHours(0, 0, 0, 0)
 					referenceDate.setHours(0, 0, 0, 0)
 
-					const isValid = dateValue >= referenceDate
-					console.log('notBeforeDate validation:', {
-						dateValue: dateValue.toDateString(),
-						referenceDate: referenceDate.toDateString(),
-						isValid,
-						message: options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${options.date}.`,
-					})
-
 					return createValidationResult(
-						isValid,
+						dateValue >= referenceDate,
 						options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${options.date}.`,
 					)
 				}
