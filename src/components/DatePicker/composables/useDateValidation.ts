@@ -1,4 +1,4 @@
-import { type Ref } from 'vue'
+import { type Ref, unref } from 'vue'
 import { type ValidationResult } from '@/composables/validation/useValidation'
 import { type DateObjectValue } from '../types'
 import { DATE_PICKER_MESSAGES } from '../constants/messages'
@@ -16,9 +16,9 @@ export const useDateValidation = (options: {
 	displayRange?: boolean
 	disableErrorHandling?: boolean
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Règles personnalisées
-	customRules?: { type: string, options: any }[]
+	customRules?: { type: string, options: any }[] | Ref<{ type: string, options: any }[]>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Règles d'avertissement personnalisées
-	customWarningRules?: { type: string, options: any }[]
+	customWarningRules?: { type: string, options: any }[] | Ref<{ type: string, options: any }[]>
 
 	// Références réactives
 	selectedDates: Ref<DateObjectValue>
@@ -61,6 +61,9 @@ export const useDateValidation = (options: {
    * @returns Résultat de la validation
    */
 	const validateDates = (forceValidation = false): ValidationResult => {
+		const currentCustomRules = unref(customRules)
+		const currentCustomWarningRules = unref(customWarningRules)
+
 		if (noCalendar) {
 			// En mode no-calendar, on délègue la validation au DateTextInput
 			return {
@@ -158,8 +161,8 @@ export const useDateValidation = (options: {
 
 				const result = validateField(
 					date,
-					customRules,
-					customWarningRules,
+					currentCustomRules,
+					currentCustomWarningRules,
 				)
 				if (result.hasError) {
 					isValid = false

@@ -1,8 +1,8 @@
+import { useHolidayDay } from '@/composables/date/useHolidayDay'
 // Regular expressions
 export const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
 // Import du composable pour les jours fériés
-import { useHolidayDay } from '@/composables/date/useHolidayDay'
 
 export type ValidationResult = {
 	success?: string
