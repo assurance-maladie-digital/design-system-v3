@@ -111,11 +111,6 @@
 </template>
 
 <style scoped>
-html,
-body {
-	background-color: #17181a !important;
-}
-
 .data-selector-wrapper {
 	margin-bottom: 1rem;
 	color: #636266;
