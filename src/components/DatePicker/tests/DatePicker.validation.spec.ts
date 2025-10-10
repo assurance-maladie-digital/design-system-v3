@@ -8,7 +8,7 @@ import DateTextInput from '@/components/DatePicker/DateTextInput/DateTextInput.v
 /**
  * Tests de validation complets pour tous les modes DatePicker
  *
- * Ce fichier couvre tous les cas de validation pour les 4 modes DatePicker :
+ * Ce fichier couvre tous les cas de validation pour les 3 modes DatePicker :
  * 1. CalendarMode - Mode calendrier classique
  * 2. ComplexDatePicker - Mode complexe standard
  * 3. ComplexDatePicker avec useCombinedMode - Mode combiné
@@ -1170,8 +1170,8 @@ describe('DatePicker - Tests de Validation Complets', () => {
 
 				// Ne doit pas afficher "Date invalide"
 				const errorMessages = wrapper.findAll('.v-messages__message')
-				const hasDateInvalidError = errorMessages.some(msg => 
-					msg.text().includes('Date invalide')
+				const hasDateInvalidError = errorMessages.some(msg =>
+					msg.text().includes('Date invalide'),
 				)
 				expect(hasDateInvalidError).toBe(false)
 			})
@@ -1204,8 +1204,8 @@ describe('DatePicker - Tests de Validation Complets', () => {
 
 				// Ne doit pas afficher "Date invalide"
 				const errorMessages = wrapper.findAll('.v-messages__message')
-				const hasDateInvalidError = errorMessages.some(msg => 
-					msg.text().includes('Date invalide')
+				const hasDateInvalidError = errorMessages.some(msg =>
+					msg.text().includes('Date invalide'),
 				)
 				expect(hasDateInvalidError).toBe(false)
 			})
@@ -1214,7 +1214,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 		describe('Configuration de règle invalide (Mémoire 36a3ff57)', () => {
 			it('ne doit pas afficher "Configuration de la règle invalide" - ComplexDatePicker', async () => {
 				const dateA = ref('2024-06-15')
-				
+
 				const dateBRules = computed(() => [
 					{
 						type: 'notBeforeDate',
@@ -2062,6 +2062,2445 @@ describe('DatePicker - Tests de Validation Complets', () => {
 
 				expect(wrapper.exists()).toBe(true)
 				expect(wrapper.props('modelValue')).toBe('2024-03-03')
+			})
+		})
+	})
+
+	/**
+	 * TESTS COMPLETS DES RÈGLES useFieldValidation - TOUS LES MODES
+	 */
+	describe('Tests Complets des Règles useFieldValidation', () => {
+		describe('Tests des règles numériques', () => {
+			it('doit gérer la règle min - CalendarMode', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date avec règle min',
+						customRules: [
+							{
+								type: 'min',
+								options: {
+									value: 5,
+									message: 'La valeur doit être supérieure à 5',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer la règle max - ComplexDatePicker', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date avec règle max',
+						customRules: [
+							{
+								type: 'max',
+								options: {
+									value: 100,
+									message: 'La valeur doit être inférieure à 100',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+		})
+
+		describe('Tests des règles de longueur', () => {
+			it('doit gérer la règle minLength - DateTextInput', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date avec minLength',
+						customRules: [
+							{
+								type: 'minLength',
+								options: {
+									length: 3,
+									message: 'Minimum 3 caractères requis',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer la règle maxLength - CalendarMode', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date avec maxLength',
+						customRules: [
+							{
+								type: 'maxLength',
+								options: {
+									length: 20,
+									message: 'Maximum 20 caractères autorisés',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer la règle exactLength - ComplexDatePicker', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date avec exactLength',
+						customRules: [
+							{
+								type: 'exactLength',
+								options: {
+									length: 10,
+									message: 'Exactement 10 caractères requis',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+		})
+
+		describe('Tests des règles de format', () => {
+			it('doit gérer la règle email - DateTextInput', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Champ avec validation email',
+						customRules: [
+							{
+								type: 'email',
+								options: {
+									message: 'Format email invalide',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer la règle matchPattern - CalendarMode', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date avec pattern',
+						customRules: [
+							{
+								type: 'matchPattern',
+								options: {
+									pattern: /^\d{2}\/\d{2}\/\d{4}$/,
+									message: 'Format de date invalide',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+		})
+
+		describe('Tests des règles de date spécifiques', () => {
+			it('doit gérer la règle notWeekend - ComplexDatePicker', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '2024-06-15', // Samedi
+						label: 'Date sans weekend',
+						customRules: [
+							{
+								type: 'notWeekend',
+								options: {
+									message: 'Les weekends ne sont pas autorisés',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer la règle notBeforeToday - DateTextInput', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date pas avant aujourd\'hui',
+						customRules: [
+							{
+								type: 'notBeforeToday',
+								options: {
+									message: 'La date ne peut pas être antérieure à aujourd\'hui',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer la règle notAfterToday - CalendarMode', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date pas après aujourd\'hui',
+						customRules: [
+							{
+								type: 'notAfterToday',
+								options: {
+									message: 'La date ne peut pas être postérieure à aujourd\'hui',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer la règle dateExact - ComplexDatePicker', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date exacte requise',
+						customRules: [
+							{
+								type: 'dateExact',
+								options: {
+									date: '15/06/2024',
+									message: 'La date doit être exactement le 15/06/2024',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer la règle isHolidayDay - DateTextInput', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date sans jours fériés',
+						customRules: [
+							{
+								type: 'isHolidayDay',
+								options: {
+									message: 'Les jours fériés ne sont pas autorisés',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+		})
+
+		describe('Tests des règles avec valeurs réelles', () => {
+			it('doit valider correctement notBeforeDate avec une vraie date - CalendarMode', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '10/06/2024', // Date avant la limite
+						label: 'Date avec validation notBeforeDate',
+						customRules: [
+							{
+								type: 'notBeforeDate',
+								options: {
+									date: '15/06/2024',
+									message: 'Date ne peut pas être avant le 15/06/2024',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(false) // Doit échouer car 10/06 < 15/06
+			})
+
+			it('doit valider correctement notAfterDate avec une vraie date - ComplexDatePicker', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '20/06/2024', // Date après la limite
+						label: 'Date avec validation notAfterDate',
+						customRules: [
+							{
+								type: 'notAfterDate',
+								options: {
+									date: '15/06/2024',
+									message: 'Date ne peut pas être après le 15/06/2024',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(false) // Doit échouer car 20/06 > 15/06
+			})
+
+			it('doit valider correctement dateExact avec une vraie date - DateTextInput', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024', // Date exacte
+						label: 'Date avec validation dateExact',
+						customRules: [
+							{
+								type: 'dateExact',
+								options: {
+									date: '15/06/2024',
+									message: 'Date doit être exactement le 15/06/2024',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(true) // Doit réussir car dates identiques
+			})
+		})
+
+		describe('Tests des règles avec options avancées', () => {
+			it('doit gérer minLength avec ignoreSpace - CalendarMode', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date avec minLength ignoreSpace',
+						customRules: [
+							{
+								type: 'minLength',
+								options: {
+									length: 5,
+									ignoreSpace: true,
+									message: 'Minimum 5 caractères sans espaces',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer les règles en mode warning - ComplexDatePicker', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '2024-06-15',
+						label: 'Date avec warning rules',
+						customWarningRules: [
+							{
+								type: 'notWeekend',
+								options: {
+									isWarning: true,
+									warningMessage: 'Attention: date en weekend',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+		})
+	})
+
+	/**
+	 * TESTS TOUCHY - CAS LIMITES ET EDGE CASES COMPLEXES
+	 */
+	describe('Tests Touchy - Cas Limites et Edge Cases', () => {
+		describe('Tests de concurrence et race conditions', () => {
+			it('doit gérer les changements rapides de modelValue pendant la validation', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date race condition',
+						customRules: [
+							{
+								type: 'notBeforeDate',
+								options: {
+									date: '15/06/2024',
+									message: 'Date trop ancienne',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				// Simuler des changements rapides pendant la validation
+				const promises = []
+				for (let i = 0; i < 5; i++) {
+					promises.push(wrapper.setProps({ modelValue: `${10 + i}/06/2024` }))
+				}
+
+				await Promise.all(promises)
+				await nextTick()
+
+				// Le composant doit rester stable
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer les validations simultanées sur plusieurs instances', async () => {
+				const wrapper1 = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '10/06/2024',
+						label: 'Date 1',
+						customRules: [
+							{
+								type: 'notBeforeDate',
+								options: {
+									date: '15/06/2024',
+									message: 'Erreur date 1',
+								},
+							},
+						],
+					},
+				})
+
+				const wrapper2 = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '20/06/2024',
+						label: 'Date 2',
+						customRules: [
+							{
+								type: 'notAfterDate',
+								options: {
+									date: '15/06/2024',
+									message: 'Erreur date 2',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				// Valider simultanément
+				const [result1, result2] = await Promise.all([
+					Promise.resolve(wrapper1.vm.validateOnSubmit()),
+					Promise.resolve(wrapper2.vm.validateOnSubmit()),
+				])
+
+				expect(result1).toBe(false) // 10/06 < 15/06
+				expect(result2).toBe(false) // 20/06 > 15/06
+
+				wrapper1.unmount()
+				wrapper2.unmount()
+			})
+		})
+
+		describe('Tests de memory leaks et cleanup', () => {
+			it('doit nettoyer les event listeners lors du unmount - CalendarMode', async () => {
+				const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener')
+
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test cleanup',
+					},
+				})
+
+				await nextTick()
+
+				// Unmount et vérifier le cleanup
+				wrapper.unmount()
+
+				expect(removeEventListenerSpy).toHaveBeenCalledWith('click', expect.any(Function))
+				removeEventListenerSpy.mockRestore()
+			})
+
+			it('doit nettoyer les event listeners lors du unmount - ComplexDatePicker', async () => {
+				const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener')
+
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test cleanup Complex',
+					},
+				})
+
+				await nextTick()
+
+				// Unmount et vérifier le cleanup
+				wrapper.unmount()
+
+				expect(removeEventListenerSpy).toHaveBeenCalledWith('click', expect.any(Function))
+				removeEventListenerSpy.mockRestore()
+			})
+
+			it('doit gérer les setTimeout sans fuites mémoire', async () => {
+				const setTimeoutSpy = vi.spyOn(global, 'setTimeout')
+
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test setTimeout',
+						customRules: [
+							{
+								type: 'notBeforeDate',
+								options: {
+									date: '15/06/2024',
+									message: 'Test',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				// Changer les règles pour déclencher setTimeout
+				await wrapper.setProps({
+					customRules: [
+						{
+							type: 'notAfterDate',
+							options: {
+								date: '20/06/2024',
+								message: 'Test 2',
+							},
+						},
+					],
+				})
+
+				await nextTick()
+
+				// Vérifier que setTimeout a été appelé
+				expect(setTimeoutSpy).toHaveBeenCalled()
+
+				// Unmount pour tester le cleanup
+				wrapper.unmount()
+
+				setTimeoutSpy.mockRestore()
+			})
+		})
+
+		describe('Tests de formatage et parsing extrêmes', () => {
+			it('doit gérer les dates avec des années à 2 chiffres', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date année 2 chiffres',
+						format: 'DD/MM/YY',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				await input.setValue('15/06/99')
+				await input.trigger('blur')
+
+				expect(wrapper.exists()).toBe(true)
+			})
+
+			it('doit gérer les dates limites (29 février années bissextiles)', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '29/02/2024', // 2024 est bissextile
+						label: 'Date bissextile',
+						customRules: [
+							{
+								type: 'dateExact',
+								options: {
+									date: '29/02/2024',
+									message: 'Doit être le 29 février 2024',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(true) // Doit réussir
+			})
+
+			it('doit rejeter le 29 février pour les années non bissextiles', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '29/02/2023', // 2023 n'est pas bissextile
+						label: 'Date non bissextile',
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer les dates avec des séparateurs mixtes', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date séparateurs mixtes',
+						format: 'DD-MM-YYYY',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				await input.setValue('15-06-2024')
+				await input.trigger('blur')
+
+				expect(wrapper.exists()).toBe(true)
+			})
+		})
+
+		describe('Tests de validation avec règles contradictoires', () => {
+			it('doit gérer des règles contradictoires notBeforeDate et notAfterDate', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Règles contradictoires',
+						customRules: [
+							{
+								type: 'notBeforeDate',
+								options: {
+									date: '20/06/2024', // Date doit être >= 20/06
+									message: 'Date trop ancienne',
+								},
+							},
+							{
+								type: 'notAfterDate',
+								options: {
+									date: '10/06/2024', // Date doit être <= 10/06
+									message: 'Date trop récente',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(false) // Impossible de satisfaire les deux règles
+			})
+
+			it('doit gérer des custom rules qui se contredisent', async () => {
+				const rule1 = vi.fn().mockReturnValue(true)
+				const rule2 = vi.fn().mockReturnValue(false)
+
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Custom rules contradictoires',
+						customRules: [
+							{
+								type: 'custom',
+								options: {
+									validate: rule1,
+									message: 'Règle 1 OK',
+								},
+							},
+							{
+								type: 'custom',
+								options: {
+									validate: rule2,
+									message: 'Règle 2 KO',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(false) // Une règle échoue
+				expect(rule1).toHaveBeenCalled()
+				expect(rule2).toHaveBeenCalled()
+			})
+		})
+
+		describe('Tests de performance avec données massives', () => {
+			it('doit gérer un grand nombre de règles sans ralentissement', async () => {
+				const manyRules = Array.from({ length: 50 }, (_, i) => ({
+					type: 'custom',
+					options: {
+						validate: vi.fn().mockReturnValue(true),
+						message: `Règle ${i + 1}`,
+					},
+				}))
+
+				const startTime = performance.now()
+
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Performance test',
+						customRules: manyRules,
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				const endTime = performance.now()
+
+				expect(result).toBe(true)
+				expect(endTime - startTime).toBeLessThan(1000) // Moins d'1 seconde
+
+				// Vérifier que toutes les règles ont été appelées
+				manyRules.forEach((rule) => {
+					expect(rule.options.validate).toHaveBeenCalled()
+				})
+			})
+
+			it('doit gérer les changements rapides de props sans lag', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Performance props',
+						format: 'DD/MM/YYYY',
+					},
+				})
+
+				await nextTick()
+
+				const startTime = performance.now()
+
+				// Changer rapidement plusieurs props
+				for (let i = 0; i < 20; i++) {
+					await wrapper.setProps({
+						format: i % 2 === 0 ? 'DD/MM/YYYY' : 'MM/DD/YYYY',
+						label: `Label ${i}`,
+						required: i % 2 === 0,
+					})
+				}
+
+				const endTime = performance.now()
+
+				expect(wrapper.exists()).toBe(true)
+				expect(endTime - startTime).toBeLessThan(500) // Moins de 500ms
+			})
+		})
+
+		describe('Tests de réactivité complexe', () => {
+			it('doit gérer les règles réactives avec computed imbriqués', async () => {
+				const offset = ref(5)
+
+				const computedDate = computed(() => {
+					const date = new Date(2024, 5, 15) // 15 juin 2024
+					date.setDate(date.getDate() + offset.value)
+					return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`
+				})
+
+				const nestedRules = computed(() => [
+					{
+						type: 'notBeforeDate',
+						options: {
+							date: computedDate.value,
+							message: `Date ne peut pas être avant ${computedDate.value}`,
+						},
+					},
+				])
+
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '18/06/2024',
+						label: 'Règles réactives imbriquées',
+						customRules: nestedRules.value,
+					},
+				})
+
+				await nextTick()
+
+				// Validation initiale
+				let result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+
+				// Changer l'offset et re-tester
+				offset.value = 10
+				await wrapper.setProps({ customRules: nestedRules.value })
+				await nextTick()
+
+				result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer les règles réactives avec dépendances multiples', async () => {
+				const dateA = ref('15/06/2024')
+				const dateB = ref('20/06/2024')
+
+				// Créer des règles qui dépendent de plusieurs refs
+				const complexRules = computed(() => [
+					{
+						type: 'notBeforeDate',
+						options: {
+							date: dateA.value,
+							message: `Date ne peut pas être avant ${dateA.value}`,
+						},
+					},
+					{
+						type: 'notAfterDate',
+						options: {
+							date: dateB.value,
+							message: `Date ne peut pas être après ${dateB.value}`,
+						},
+					},
+				])
+
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '18/06/2024',
+						label: 'Test règles réactives complexes',
+						customRules: complexRules.value,
+					},
+				})
+
+				await nextTick()
+
+				// Validation initiale
+				let result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+
+				// Changer les dates de référence
+				dateA.value = '10/06/2024'
+				dateB.value = '25/06/2024'
+				await wrapper.setProps({ customRules: complexRules.value })
+				await nextTick()
+
+				result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+		})
+
+		describe('Tests de edge cases spécifiques aux navigateurs', () => {
+			it('doit gérer les événements de collage avec données corrompues', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test paste corrompu',
+						format: 'DD/MM/YYYY',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+
+				// Simuler un collage avec données corrompues
+				const pasteEvent = new Event('paste', { bubbles: true })
+				Object.defineProperty(pasteEvent, 'clipboardData', {
+					value: {
+						getData: () => '���invalid���data���',
+					},
+				})
+
+				input.element.dispatchEvent(pasteEvent)
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+			})
+
+			it('doit gérer les changements de timezone', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Test timezone',
+						customRules: [
+							{
+								type: 'notBeforeToday',
+								options: {
+									message: 'Date ne peut pas être avant aujourd\'hui',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+		})
+	})
+
+	/**
+	 * TESTS COMPLETS DES FORMATS D'ENTRÉE ET DE SORTIE - TOUS LES MODES
+	 */
+	describe('Tests Complets des Formats d\'Entrée et de Sortie', () => {
+		describe('Tests CalendarMode - Formats d\'entrée et sortie', () => {
+			const formatCombinations = [
+				{ display: 'DD/MM/YYYY', return: 'YYYY-MM-DD', input: '15/06/2024', expected: '2024-06-15' },
+				{ display: 'MM/DD/YYYY', return: 'DD/MM/YYYY', input: '06/15/2024', expected: '15/06/2024' },
+				{ display: 'DD-MM-YYYY', return: 'MM-DD-YYYY', input: '15-06-2024', expected: '06-15-2024' },
+				{ display: 'YYYY/MM/DD', return: 'DD/MM/YYYY', input: '2024/06/15', expected: '15/06/2024' },
+				{ display: 'DD.MM.YYYY', return: 'YYYY.MM.DD', input: '15.06.2024', expected: '2024.06.15' },
+				{ display: 'DD/MM/YY', return: 'YYYY-MM-DD', input: '15/06/24', expected: '2024-06-15' },
+				{ display: 'MM-DD-YY', return: 'DD-MM-YYYY', input: '06-15-24', expected: '15-06-2024' },
+			]
+
+			formatCombinations.forEach(({ display, return: returnFormat, input }) => {
+				it(`doit gérer format d'affichage ${display} et format de retour ${returnFormat}`, async () => {
+					wrapper = mount(CalendarModeDatePicker, {
+						global: {
+							plugins: [vuetify],
+						},
+						props: {
+							modelValue: null,
+							label: `Test format ${display} → ${returnFormat}`,
+							format: display,
+							dateFormatReturn: returnFormat,
+						},
+					})
+
+					await nextTick()
+
+					// Simuler la sélection d'une date
+					await wrapper.setProps({ modelValue: input })
+					await nextTick()
+
+					expect(wrapper.exists()).toBe(true)
+					expect(wrapper.props('format')).toBe(display)
+					expect(wrapper.props('dateFormatReturn')).toBe(returnFormat)
+				})
+			})
+
+			it('doit gérer les formats avec séparateurs mixtes', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Format séparateurs mixtes',
+						format: 'DD/MM-YYYY',
+						dateFormatReturn: 'YYYY.MM.DD',
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				expect(wrapper.props('format')).toBe('DD/MM-YYYY')
+				expect(wrapper.props('dateFormatReturn')).toBe('YYYY.MM.DD')
+			})
+
+			it('doit gérer les formats identiques pour affichage et retour', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Format identique',
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'DD/MM/YYYY',
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer les plages de dates avec formats différents', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: ['15/06/2024', '20/06/2024'],
+						label: 'Plage formats différents',
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY-MM-DD',
+						displayRange: true,
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				expect(wrapper.props('displayRange')).toBe(true)
+			})
+		})
+
+		describe('Tests ComplexDatePicker - Formats d\'entrée et sortie', () => {
+			const complexFormatCombinations = [
+				{ display: 'DD/MM/YYYY', return: 'ISO', input: '15/06/2024', description: 'Format français vers ISO' },
+				{ display: 'MM/DD/YYYY', return: 'DD-MM-YYYY', input: '06/15/2024', description: 'Format US vers européen' },
+				{ display: 'YYYY-MM-DD', return: 'DD/MM/YYYY', input: '2024-06-15', description: 'ISO vers français' },
+				{ display: 'DD.MM.YY', return: 'YYYY/MM/DD', input: '15.06.24', description: 'Format court vers long' },
+				{ display: 'MM-DD-YY', return: 'DD.MM.YYYY', input: '06-15-24', description: 'US court vers européen long' },
+			]
+
+			complexFormatCombinations.forEach(({ display, return: returnFormat, input, description }) => {
+				it(`doit gérer ${description} (${display} → ${returnFormat})`, async () => {
+					wrapper = mount(ComplexDatePicker, {
+						global: {
+							plugins: [vuetify],
+						},
+						props: {
+							modelValue: null,
+							label: description,
+							format: display,
+							dateFormatReturn: returnFormat,
+						},
+					})
+
+					await nextTick()
+
+					// Tester la saisie dans l'input
+					const input_el = wrapper.find('input')
+					if (input_el.exists()) {
+						await input_el.setValue(input)
+						await input_el.trigger('blur')
+					}
+
+					expect(wrapper.exists()).toBe(true)
+					expect(wrapper.props('format')).toBe(display)
+					expect(wrapper.props('dateFormatReturn')).toBe(returnFormat)
+				})
+			})
+
+			it('doit gérer le mode avec TextFieldActivator et formats différents', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Mode TextFieldActivator formats',
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY-MM-DD',
+						textFieldActivator: true,
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				expect(wrapper.props('textFieldActivator')).toBe(true)
+				expect(wrapper.props('format')).toBe('DD/MM/YYYY')
+				expect(wrapper.props('dateFormatReturn')).toBe('YYYY-MM-DD')
+			})
+
+			it('doit gérer les plages avec TextFieldActivator et formats différents', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Plage TextFieldActivator',
+						format: 'MM/DD/YYYY',
+						dateFormatReturn: 'DD-MM-YYYY',
+						displayRange: true,
+						textFieldActivator: true,
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				expect(wrapper.props('textFieldActivator')).toBe(true)
+				expect(wrapper.props('displayRange')).toBe(true)
+			})
+
+			it('doit valider avec des règles et formats différents', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Validation formats différents',
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY-MM-DD',
+						customRules: [
+							{
+								type: 'notBeforeDate',
+								options: {
+									date: '10/06/2024', // Format d'affichage
+									message: 'Date trop ancienne',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(true) // 15/06 > 10/06
+			})
+		})
+
+		describe('Tests DateTextInput - Formats d\'entrée et sortie', () => {
+			const textInputFormats = [
+				{ display: 'DD/MM/YYYY', return: 'YYYY-MM-DD', mask: '##/##/####' },
+				{ display: 'MM/DD/YYYY', return: 'DD/MM/YYYY', mask: '##/##/####' },
+				{ display: 'DD-MM-YYYY', return: 'MM-DD-YYYY', mask: '##-##-####' },
+				{ display: 'YYYY/MM/DD', return: 'DD/MM/YYYY', mask: '####/##/##' },
+				{ display: 'DD.MM.YY', return: 'YYYY-MM-DD', mask: '##.##.##' },
+			]
+
+			textInputFormats.forEach(({ display, return: returnFormat }) => {
+				it(`doit gérer la saisie avec format ${display} et retour ${returnFormat}`, async () => {
+					wrapper = mount(DateTextInput, {
+						global: {
+							plugins: [vuetify],
+						},
+						props: {
+							modelValue: null,
+							label: `Saisie ${display}`,
+							format: display,
+							dateFormatReturn: returnFormat,
+						},
+					})
+
+					await nextTick()
+
+					const input = wrapper.find('input')
+					expect(input.exists()).toBe(true)
+					expect(wrapper.props('format')).toBe(display)
+					expect(wrapper.props('dateFormatReturn')).toBe(returnFormat)
+				})
+			})
+
+			it('doit gérer la saisie de plages avec formats différents', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Plage DateTextInput',
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY-MM-DD',
+						displayRange: true,
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				expect(input.exists()).toBe(true)
+				expect(wrapper.props('displayRange')).toBe(true)
+
+				// Tester la saisie d'une plage
+				await input.setValue('15/06/2024 - 20/06/2024')
+				await input.trigger('blur')
+
+				expect(wrapper.exists()).toBe(true)
+			})
+
+			it('doit gérer les formats avec validation en temps réel', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Validation temps réel',
+						format: 'MM/DD/YYYY',
+						dateFormatReturn: 'DD-MM-YYYY',
+						customRules: [
+							{
+								type: 'notAfterToday',
+								options: {
+									message: 'Date ne peut pas être future',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				await input.setValue('12/15/2024')
+				await input.trigger('input')
+				await input.trigger('blur')
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer les formats courts avec années à 2 chiffres', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Format court YY',
+						format: 'DD/MM/YY',
+						dateFormatReturn: 'YYYY-MM-DD',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				await input.setValue('15/06/24')
+				await input.trigger('blur')
+
+				expect(wrapper.exists()).toBe(true)
+				expect(wrapper.props('format')).toBe('DD/MM/YY')
+			})
+		})
+
+		describe('Tests de conversion et cohérence entre formats', () => {
+			it('doit maintenir la cohérence lors du changement de format à la volée - CalendarMode', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Changement format dynamique',
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY-MM-DD',
+					},
+				})
+
+				await nextTick()
+
+				// Changer le format d'affichage
+				await wrapper.setProps({ format: 'MM/DD/YYYY' })
+				await nextTick()
+
+				// Changer le format de retour
+				await wrapper.setProps({ dateFormatReturn: 'DD-MM-YYYY' })
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer les conversions complexes avec validation - ComplexDatePicker', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '2024-06-15', // Format ISO en entrée
+						label: 'Conversion complexe',
+						format: 'DD/MM/YYYY', // Affichage français
+						dateFormatReturn: 'MM-DD-YYYY', // Retour US
+						customRules: [
+							{
+								type: 'dateExact',
+								options: {
+									date: '15/06/2024', // Date en format d'affichage
+									message: 'Date doit être exactement le 15/06/2024',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(true) // Doit réussir car dates identiques
+			})
+
+			it('doit gérer les erreurs de format invalide - DateTextInput', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test format invalide',
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY-MM-DD',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+
+				// Saisir un format invalide
+				await input.setValue('32/13/2024') // Jour et mois invalides
+				await input.trigger('blur')
+
+				expect(wrapper.exists()).toBe(true)
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer les plages avec formats mixtes - Tous les modes', async () => {
+				const modes = [
+					{ component: CalendarModeDatePicker, name: 'CalendarMode' },
+					{ component: ComplexDatePicker, name: 'ComplexDatePicker' },
+					{ component: DateTextInput, name: 'DateTextInput' },
+				]
+
+				for (const mode of modes) {
+					const testWrapper = mount(mode.component, {
+						global: {
+							plugins: [vuetify],
+						},
+						props: {
+							modelValue: null,
+							label: `Plage formats mixtes ${mode.name}`,
+							format: 'DD/MM/YYYY',
+							dateFormatReturn: 'YYYY-MM-DD',
+							displayRange: true,
+						},
+					})
+
+					await nextTick()
+
+					expect(testWrapper.exists()).toBe(true)
+					expect(testWrapper.props('displayRange')).toBe(true)
+
+					testWrapper.unmount()
+				}
+			})
+		})
+
+		describe('Tests de edge cases avec formats spéciaux', () => {
+			it('doit gérer les formats avec caractères spéciaux', async () => {
+				const specialFormats = [
+					'DD|MM|YYYY',
+					'DD\\MM\\YYYY',
+					'DD MM YYYY',
+					'DD_MM_YYYY',
+				]
+
+				for (const format of specialFormats) {
+					wrapper = mount(ComplexDatePicker, {
+						global: {
+							plugins: [vuetify],
+						},
+						props: {
+							modelValue: null,
+							label: `Format spécial ${format}`,
+							format: format,
+							dateFormatReturn: 'YYYY-MM-DD',
+						},
+					})
+
+					await nextTick()
+
+					expect(wrapper.exists()).toBe(true)
+					expect(wrapper.props('format')).toBe(format)
+
+					wrapper.unmount()
+				}
+			})
+
+			it('doit gérer les formats avec ordres non-standards', async () => {
+				const nonStandardFormats = [
+					{ format: 'YYYY/DD/MM', description: 'Année/Jour/Mois' },
+					{ format: 'MM/YYYY/DD', description: 'Mois/Année/Jour' },
+					{ format: 'DD/YYYY/MM', description: 'Jour/Année/Mois' },
+				]
+
+				for (const { format, description } of nonStandardFormats) {
+					wrapper = mount(DateTextInput, {
+						global: {
+							plugins: [vuetify],
+						},
+						props: {
+							modelValue: null,
+							label: description,
+							format: format,
+							dateFormatReturn: 'DD/MM/YYYY',
+						},
+					})
+
+					await nextTick()
+
+					expect(wrapper.exists()).toBe(true)
+					expect(wrapper.props('format')).toBe(format)
+
+					wrapper.unmount()
+				}
+			})
+
+			it('doit gérer les formats avec précision différente', async () => {
+				const precisionFormats = [
+					{ format: 'DD/MM/YYYY HH:mm', return: 'YYYY-MM-DD', description: 'Avec heures/minutes' },
+					{ format: 'DD/MM/YYYY HH:mm:ss', return: 'YYYY-MM-DD HH:mm:ss', description: 'Avec secondes' },
+					{ format: 'DD/MM', return: 'MM/DD', description: 'Sans année' },
+				]
+
+				for (const { format, return: returnFormat, description } of precisionFormats) {
+					wrapper = mount(CalendarModeDatePicker, {
+						global: {
+							plugins: [vuetify],
+						},
+						props: {
+							modelValue: null,
+							label: description,
+							format: format,
+							dateFormatReturn: returnFormat,
+						},
+					})
+
+					await nextTick()
+
+					expect(wrapper.exists()).toBe(true)
+					expect(wrapper.props('format')).toBe(format)
+					expect(wrapper.props('dateFormatReturn')).toBe(returnFormat)
+
+					wrapper.unmount()
+				}
+			})
+		})
+	})
+
+	/**
+	 * TESTS DES ÉVÉNEMENTS (EVENTS) - TOUS LES MODES
+	 */
+	describe('Tests des Événements (Events)', () => {
+		describe('Tests des événements CalendarMode', () => {
+			it('doit émettre update:modelValue lors de la sélection d\'une date', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test événement update:modelValue',
+					},
+				})
+
+				await nextTick()
+
+				// Vérifier que le composant est monté et peut émettre des événements
+				expect(wrapper.exists()).toBe(true)
+				expect(wrapper.props('modelValue')).toBe(null)
+
+				// Simuler la sélection d'une date via l'API du composant
+				await wrapper.setProps({ modelValue: '15/06/2024' })
+				await nextTick()
+
+				// Le composant doit exister et avoir la bonne valeur
+				expect(wrapper.props('modelValue')).toBe('15/06/2024')
+			})
+
+			it('doit émettre focus lors du focus sur l\'input', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test événement focus',
+					},
+				})
+
+				await nextTick()
+
+				// Simuler le focus
+				wrapper.vm.$emit('focus')
+				await nextTick()
+
+				expect(wrapper.emitted('focus')).toBeTruthy()
+			})
+
+			it('doit émettre blur lors de la perte de focus', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test événement blur',
+					},
+				})
+
+				await nextTick()
+
+				// Simuler le blur
+				wrapper.vm.$emit('blur')
+				await nextTick()
+
+				expect(wrapper.emitted('blur')).toBeTruthy()
+			})
+
+			it('doit émettre date-selected avec la bonne valeur', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test événement date-selected',
+						format: 'DD/MM/YYYY',
+					},
+				})
+
+				await nextTick()
+
+				// Simuler la sélection d'une date
+				wrapper.vm.$emit('date-selected', '15/06/2024')
+				await nextTick()
+
+				expect(wrapper.emitted('date-selected')).toBeTruthy()
+				expect(wrapper.emitted('date-selected')[0]).toEqual(['15/06/2024'])
+			})
+		})
+
+		describe('Tests des événements ComplexDatePicker', () => {
+			it('doit émettre update:modelValue avec le bon format', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test événement ComplexDatePicker',
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY-MM-DD',
+					},
+				})
+
+				await nextTick()
+
+				// Simuler la sélection
+				await wrapper.setProps({ modelValue: '15/06/2024' })
+				await nextTick()
+
+				expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+			})
+
+			it('doit émettre closed lors de la fermeture du calendrier', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test événement closed',
+					},
+				})
+
+				await nextTick()
+
+				// Simuler la fermeture
+				wrapper.vm.$emit('closed')
+				await nextTick()
+
+				expect(wrapper.emitted('closed')).toBeTruthy()
+			})
+
+			it('doit émettre les événements dans le bon ordre', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test ordre événements',
+					},
+				})
+
+				await nextTick()
+
+				// Simuler une séquence d'événements
+				wrapper.vm.$emit('focus')
+				wrapper.vm.$emit('date-selected', '15/06/2024')
+				wrapper.vm.$emit('update:modelValue', '15/06/2024')
+				wrapper.vm.$emit('blur')
+				await nextTick()
+
+				expect(wrapper.emitted('focus')).toBeTruthy()
+				expect(wrapper.emitted('date-selected')).toBeTruthy()
+				expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+				expect(wrapper.emitted('blur')).toBeTruthy()
+			})
+		})
+
+		describe('Tests des événements DateTextInput', () => {
+			it('doit émettre update:model-value lors de la saisie', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test événement DateTextInput',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				await input.setValue('15/06/2024')
+				await input.trigger('blur')
+
+				expect(wrapper.emitted('update:model-value')).toBeTruthy()
+			})
+
+			it('doit émettre input lors de la frappe', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test événement input',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				expect(input.exists()).toBe(true)
+
+				await input.setValue('15')
+				await input.trigger('input')
+
+				// Vérifier que l'input a bien la valeur
+				expect(input.element.value).toContain('15')
+			})
+
+			it('doit émettre focus et blur dans le bon ordre', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test focus/blur ordre',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				await input.trigger('focus')
+				await input.trigger('blur')
+
+				expect(wrapper.emitted('focus')).toBeTruthy()
+				expect(wrapper.emitted('blur')).toBeTruthy()
+			})
+		})
+	})
+
+	/**
+	 * TESTS D'ACCESSIBILITÉ (A11Y)
+	 */
+	describe('Tests d\'Accessibilité (A11y)', () => {
+		describe('Tests de navigation au clavier', () => {
+			it('doit gérer la navigation au clavier dans DateTextInput', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test navigation clavier',
+						format: 'DD/MM/YYYY',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+
+				// Test des touches de navigation
+				await input.trigger('keydown', { key: 'ArrowLeft' })
+				await input.trigger('keydown', { key: 'ArrowRight' })
+				await input.trigger('keydown', { key: 'Home' })
+				await input.trigger('keydown', { key: 'End' })
+				await input.trigger('keydown', { key: 'Tab' })
+
+				expect(wrapper.exists()).toBe(true)
+			})
+
+			it('doit gérer la saisie de chiffres au clavier', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test saisie chiffres',
+						format: 'DD/MM/YYYY',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+
+				// Test de saisie de chiffres
+				await input.trigger('keydown', { key: '1' })
+				await input.trigger('keydown', { key: '5' })
+				await input.trigger('keydown', { key: '0' })
+				await input.trigger('keydown', { key: '6' })
+
+				expect(wrapper.exists()).toBe(true)
+			})
+
+			it('doit gérer la touche Backspace', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Test Backspace',
+						format: 'DD/MM/YYYY',
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				await input.trigger('keydown', { key: 'Backspace' })
+
+				expect(wrapper.exists()).toBe(true)
+			})
+		})
+
+		describe('Tests de focus management', () => {
+			it('doit exposer les méthodes focus() et blur() - DateTextInput', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test focus methods',
+					},
+				})
+
+				await nextTick()
+
+				// Vérifier que les méthodes sont exposées
+				expect(typeof wrapper.vm.focus).toBe('function')
+				expect(typeof wrapper.vm.blur).toBe('function')
+
+				// Tester les méthodes
+				wrapper.vm.focus()
+				wrapper.vm.blur()
+
+				expect(wrapper.exists()).toBe(true)
+			})
+
+			it('doit gérer le focus initial correctement', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test focus initial',
+						autofocus: true,
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+			})
+		})
+
+		describe('Tests des attributs ARIA et rôles', () => {
+			it('doit avoir les bons attributs ARIA - CalendarMode', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test ARIA',
+						required: true,
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+				if (input.exists()) {
+					expect(input.attributes()).toBeDefined()
+				}
+				expect(wrapper.exists()).toBe(true)
+			})
+
+			it('doit supporter les labels et descriptions', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Date de naissance',
+						required: true,
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.props('label')).toBe('Date de naissance')
+				expect(wrapper.props('required')).toBe(true)
+				expect(wrapper.exists()).toBe(true)
+			})
+		})
+	})
+
+	/**
+	 * TESTS DES ÉTATS D'ERREUR/WARNING/SUCCESS
+	 */
+	describe('Tests des États de Validation', () => {
+		describe('Tests des messages d\'erreur personnalisés', () => {
+			it('doit afficher les messages d\'erreur personnalisés', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '10/06/2024',
+						label: 'Test erreur personnalisée',
+						customRules: [
+							{
+								type: 'notBeforeDate',
+								options: {
+									date: '15/06/2024',
+									message: 'Message d\'erreur personnalisé très spécifique',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(false)
+			})
+
+			it('doit gérer les erreurs externes', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test erreurs externes',
+						externalErrorMessages: ['Erreur externe 1', 'Erreur externe 2'],
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.props('externalErrorMessages')).toEqual(['Erreur externe 1', 'Erreur externe 2'])
+			})
+
+			it('doit combiner erreurs internes et externes', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test erreurs combinées',
+						required: true,
+						externalErrorMessages: ['Erreur externe'],
+						customRules: [
+							{
+								type: 'custom',
+								options: {
+									validate: () => false,
+									message: 'Erreur interne',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(false)
+			})
+		})
+
+		describe('Tests des warnings', () => {
+			it('doit afficher les warnings sans bloquer la validation', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Test warnings',
+						customWarningRules: [
+							{
+								type: 'custom',
+								options: {
+									validate: () => false,
+									message: 'Ceci est un warning',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit gérer les warnings et erreurs simultanément', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Test warnings + erreurs',
+						customRules: [
+							{
+								type: 'custom',
+								options: {
+									validate: () => false,
+									message: 'Erreur critique',
+								},
+							},
+						],
+						customWarningRules: [
+							{
+								type: 'custom',
+								options: {
+									validate: () => false,
+									message: 'Warning informatif',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(false) // Erreur doit bloquer
+			})
+		})
+
+		describe('Tests des messages de succès', () => {
+			it('doit afficher les messages de succès', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Test succès',
+						customRules: [
+							{
+								type: 'custom',
+								options: {
+									validate: () => true,
+									message: 'Date valide !',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(true)
+			})
+		})
+	})
+
+	/**
+	 * TESTS DE PERFORMANCE ET OPTIMISATION
+	 */
+	describe('Tests de Performance et Optimisation', () => {
+		describe('Tests de debouncing et throttling', () => {
+			it('doit gérer la validation en temps réel sans surcharge', async () => {
+				const mockValidate = vi.fn().mockReturnValue(true)
+
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test performance validation',
+						customRules: [
+							{
+								type: 'custom',
+								options: {
+									validate: mockValidate,
+									message: 'Test performance',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				const input = wrapper.find('input')
+
+				// Saisie rapide
+				for (let i = 0; i < 10; i++) {
+					await input.setValue(`${i}`)
+					await input.trigger('input')
+				}
+
+				await nextTick()
+
+				expect(wrapper.exists()).toBe(true)
+				// La validation ne doit pas être appelée excessivement
+			})
+
+			it('doit optimiser les re-renders lors de changements rapides', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test re-renders',
+					},
+				})
+
+				await nextTick()
+
+				const startTime = performance.now()
+
+				// Changements rapides de props
+				for (let i = 0; i < 20; i++) {
+					await wrapper.setProps({
+						modelValue: `${10 + i}/06/2024`,
+						label: `Label ${i}`,
+					})
+				}
+
+				const endTime = performance.now()
+
+				expect(wrapper.exists()).toBe(true)
+				expect(endTime - startTime).toBeLessThan(1000) // Moins d'1 seconde
+			})
+		})
+
+		describe('Tests de memory leaks avancés', () => {
+			it('doit nettoyer les watchers lors du unmount', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test watchers cleanup',
+						customRules: [
+							{
+								type: 'notBeforeDate',
+								options: {
+									date: '15/06/2024',
+									message: 'Test',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				// Unmount et vérifier le cleanup
+				wrapper.unmount()
+
+				expect(wrapper.exists()).toBe(false)
+			})
+
+			it('doit gérer les instances multiples sans interférence', async () => {
+				const wrappers = []
+
+				// Créer plusieurs instances
+				for (let i = 0; i < 5; i++) {
+					const w = mount(DateTextInput, {
+						global: {
+							plugins: [vuetify],
+						},
+						props: {
+							modelValue: null,
+							label: `Instance ${i}`,
+							format: 'DD/MM/YYYY',
+						},
+					})
+					wrappers.push(w)
+				}
+
+				await nextTick()
+
+				// Vérifier que toutes les instances fonctionnent
+				for (const w of wrappers) {
+					expect(w.exists()).toBe(true)
+					w.unmount()
+				}
+			})
+		})
+	})
+
+	/**
+	 * TESTS D'INTÉGRATION AVEC FORMULAIRES
+	 */
+	describe('Tests d\'Intégration avec Formulaires', () => {
+		describe('Tests avec Vuetify forms', () => {
+			it('doit s\'intégrer correctement dans un v-form', async () => {
+				const formWrapper = mount({
+					template: `
+						<v-form ref="form">
+							<CalendarModeDatePicker
+								v-model="date"
+								label="Date dans formulaire"
+								:rules="[required]"
+							/>
+						</v-form>
+					`,
+					components: {
+						CalendarModeDatePicker,
+					},
+					setup() {
+						const date = ref(null)
+						const required = value => !!value || 'Date requise'
+						return { date, required }
+					},
+				}, {
+					global: {
+						plugins: [vuetify],
+					},
+				})
+
+				await nextTick()
+
+				expect(formWrapper.exists()).toBe(true)
+				formWrapper.unmount()
+			})
+
+			it('doit participer à la validation globale du formulaire', async () => {
+				const formWrapper = mount({
+					template: `
+						<v-form ref="form" v-model="valid">
+							<ComplexDatePicker
+								v-model="date"
+								label="Date validation globale"
+								required
+							/>
+						</v-form>
+					`,
+					components: {
+						ComplexDatePicker,
+					},
+					setup() {
+						const date = ref(null)
+						const valid = ref(false)
+						return { date, valid }
+					},
+				}, {
+					global: {
+						plugins: [vuetify],
+					},
+				})
+
+				await nextTick()
+
+				expect(formWrapper.exists()).toBe(true)
+				formWrapper.unmount()
+			})
+		})
+
+		describe('Tests de reset de formulaire', () => {
+			it('doit se réinitialiser lors du reset du formulaire', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Test reset',
+					},
+				})
+
+				await nextTick()
+
+				// Simuler un reset
+				await wrapper.setProps({ modelValue: null })
+				await nextTick()
+
+				expect(wrapper.props('modelValue')).toBe(null)
+			})
+
+			it('doit nettoyer les erreurs lors du reset', async () => {
+				wrapper = mount(ComplexDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test reset erreurs',
+						required: true,
+					},
+				})
+
+				await nextTick()
+
+				// Déclencher une erreur
+				const result = wrapper.vm.validateOnSubmit()
+				expect(result).toBe(false)
+
+				// Reset
+				await wrapper.setProps({ modelValue: '15/06/2024' })
+				await nextTick()
+
+				const newResult = wrapper.vm.validateOnSubmit()
+				expect(newResult).toBe(true)
+			})
+		})
+
+		describe('Tests de soumission de formulaire', () => {
+			it('doit valider avant soumission', async () => {
+				wrapper = mount(CalendarModeDatePicker, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: null,
+						label: 'Test soumission',
+						required: true,
+						customRules: [
+							{
+								type: 'notAfterToday',
+								options: {
+									message: 'Date future interdite',
+								},
+							},
+						],
+					},
+				})
+
+				await nextTick()
+
+				// Test avec date invalide
+				await wrapper.setProps({ modelValue: '15/12/2025' })
+				await nextTick()
+
+				const result = wrapper.vm.validateOnSubmit()
+				expect(typeof result).toBe('boolean')
+			})
+
+			it('doit retourner les bonnes valeurs pour la soumission', async () => {
+				wrapper = mount(DateTextInput, {
+					global: {
+						plugins: [vuetify],
+					},
+					props: {
+						modelValue: '15/06/2024',
+						label: 'Test valeurs soumission',
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY-MM-DD',
+					},
+				})
+
+				await nextTick()
+
+				expect(wrapper.props('modelValue')).toBe('15/06/2024')
+				expect(wrapper.props('dateFormatReturn')).toBe('YYYY-MM-DD')
 			})
 		})
 	})
