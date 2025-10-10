@@ -2563,7 +2563,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				await nextTick()
 
 				// Simuler des changements rapides pendant la validation
-				const promises = []
+				const promises: Promise<void>[] = []
 				for (let i = 0; i < 5; i++) {
 					promises.push(wrapper.setProps({ modelValue: `${10 + i}/06/2024` }))
 				}
@@ -4309,7 +4309,8 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer les instances multiples sans interférence', async () => {
-				const wrappers = []
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- tests
+				const wrappers: any[] = []
 
 				// Créer plusieurs instances
 				for (let i = 0; i < 5; i++) {
