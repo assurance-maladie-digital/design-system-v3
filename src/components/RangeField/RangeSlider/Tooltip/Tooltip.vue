@@ -40,6 +40,7 @@
 	position: absolute;
 	top: 0;
 	left: 20px;
+	user-select: none;
 
 	&::before {
 		content: '';
