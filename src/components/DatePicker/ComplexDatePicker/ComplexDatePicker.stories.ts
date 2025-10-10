@@ -317,6 +317,12 @@ const meta = {
 			description: 'Active le mode combiné permettant à la fois la sélection via calendrier et la saisie manuelle de date. ⚠️ Incompatible avec noCalendar.',
 			defaultValue: true,
 		},
+		'density': {
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
+			defaultValue: 'default',
+		},
 	},
 } as Meta<typeof DatePicker>
 

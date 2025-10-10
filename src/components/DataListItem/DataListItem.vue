@@ -97,19 +97,18 @@
 					class="text-body-1"
 					v-text="itemValue"
 				/>
-
-				<slot name="action">
-					<VBtn
-						v-if="action"
-						class="sy-data-list-item-action-btn px-2"
-						size="small"
-						variant="tonal"
-						:color="actionButtonColor"
-						@click="emits('click:action')"
-					>
-						{{ action }}
-					</VBtn>
-				</slot>
+			</slot>
+			<slot name="action">
+				<VBtn
+					v-if="action"
+					class="sy-data-list-item-action-btn px-2"
+					size="small"
+					variant="tonal"
+					:color="actionButtonColor"
+					@click="emits('click:action')"
+				>
+					{{ action }}
+				</VBtn>
 			</slot>
 		</dd>
 	</div>

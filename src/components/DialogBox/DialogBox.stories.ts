@@ -115,7 +115,7 @@ const meta: Meta<typeof DialogBox> = {
 		},
 		'draggable': {
 			control: 'boolean',
-			description: 'Rendre la boîte de dialogue déplaçable avec la souris ou les flèches gauche/droite du clavier',
+			description: 'Rendre la boîte de dialogue déplaçable avec la souris ou les flèches du clavier',
 			table: {
 				type: {
 					summary: 'boolean',

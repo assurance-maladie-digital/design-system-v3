@@ -244,7 +244,7 @@
 						type: 'notBeforeDate',
 						options: {
 							message: 'La date ne peut pas être antérieure au 01/01/2025',
-							successMessage: 'Date valide (après le 01/01/2025)',
+							successMessage: 'Date valide (après ou le 01/01/2025)',
 							date: '01/01/2025'
 						}
 					}]"
@@ -286,7 +286,7 @@
 						type: 'notAfterDate',
 						options: {
 							message: 'La date ne peut pas être postérieure au 31/12/2025',
-							successMessage: 'Date valide (avant le 31/12/2025)',
+							successMessage: 'Date valide (avant ou le 31/12/2025)',
 							date: '31/12/2025'
 						}
 					}]"

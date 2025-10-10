@@ -160,6 +160,8 @@ export { default as AmeliproOnboarding } from './Amelipro/AmeliproOnboarding/Ame
 export { default as AmeliproPageLayout } from './Amelipro/AmeliproPageLayout/AmeliproPageLayout.vue'
 export { default as AmeliproPagination } from './Amelipro/AmeliproPagination/AmeliproPagination.vue'
 export { default as AmeliproPatientBanner } from './Amelipro/AmeliproPatientBanner/AmeliproPatientBanner.vue'
+export { default as AmeliproPatientLogged } from './Amelipro/AmeliproPatientLogged/AmeliproPatientLogged.vue'
+export { default as AmeliproPatientLogin } from './Amelipro/AmeliproPatientLogin/AmeliproPatientLogin.vue'
 export { default as AmeliproRadioGroup } from './Amelipro/AmeliproRadioGroup/AmeliproRadioGroup.vue'
 export { default as AmeliproResultList } from './Amelipro/AmeliproResultList/AmeliproResultList.vue'
 export { default as AmeliproSelect } from './Amelipro/AmeliproSelect/AmeliproSelect.vue'

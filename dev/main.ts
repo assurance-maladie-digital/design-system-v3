@@ -6,6 +6,11 @@ import { router } from './router'
 
 const vuetify = createVuetifyInstance()
 
+// Applique theme CNAM par défaut dans le playground
+if (typeof document !== 'undefined') {
+	document.documentElement.classList.add('theme-cnam')
+}
+
 createApp(Playground)
 	.use(vuetify)
 	.use(router)

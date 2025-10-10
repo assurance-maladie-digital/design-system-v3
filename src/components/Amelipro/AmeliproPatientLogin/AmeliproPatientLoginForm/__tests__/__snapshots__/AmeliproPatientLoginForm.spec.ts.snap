@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproPatientLoginForm > render correctly 1`] = `
+<div
+  aria-live="polite"
+  disablepatientloginformappvitalcard="true"
+  disablepatientloginformnir="true"
+  disablepatientloginformvitalcard="true"
+>
+  <!-- v-if -->
+  <div
+    aria-busy="true"
+    class="
+      d-block
+      mt-8
+    "
+  >
+    <p class="text-center">
+      <span
+        aria-hidden="true"
+        class="
+          d-block
+          mx-auto
+          my-4
+        "
+      >
+        <span class="loader"></span>
+      </span>
+      Veuillez patienter pendant le chargement...
+    </p>
+  </div>
+</div>
+`;

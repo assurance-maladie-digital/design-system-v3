@@ -2,11 +2,7 @@
 
 exports[`AmeliproTooltips > render correctly 1`] = `
 <div
-  class="
-    amelipro-tooltip
-    d-flex
-    justify-center
-  "
+  class="amelipro-tooltip"
   id="my-tooltip-id-container"
 >
   <button

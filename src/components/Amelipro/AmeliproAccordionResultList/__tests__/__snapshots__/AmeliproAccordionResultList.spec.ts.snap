@@ -71,11 +71,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
             </label>
           </div>
           <div class="
-            amelipro-accordion-result-list__pagination-select
             amelipro-select
-            mb-0
-            ml-2
-            pt-0
             pt-0
             v-input
             v-input--center-affix

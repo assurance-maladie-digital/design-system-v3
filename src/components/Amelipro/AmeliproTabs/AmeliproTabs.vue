@@ -274,7 +274,7 @@
 					ref="ameliproTabsSelect"
 					v-model="selected"
 					:aria-controls="`${uniqueId}-select-panel`"
-					class="amelipro-tabs__select"
+					classes="amelipro-tabs__select"
 					horizontal
 					:items="mobileItems"
 					label="Selectionnez l'onglet à afficher"

@@ -48,6 +48,8 @@
 		displayRange?: boolean
 		autoClamp?: boolean
 		isValidateOnBlur?: boolean
+		density?: 'default' | 'comfortable' | 'compact'
+		externalErrorMessages?: string[]
 	}>(), {
 		modelValue: null,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -70,6 +72,8 @@
 		displayRange: false,
 		autoClamp: true,
 		isValidateOnBlur: true,
+		density: 'default',
+		externalErrorMessages: () => [],
 	})
 
 	const emit = defineEmits<{
@@ -118,7 +122,9 @@
 		}
 
 	const { errors, warnings, successes, hasError, clearValidation, validateField } = validationApi
-	const errorMessages = errors
+
+	// Agrégation des erreurs internes et externes
+	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
 	const warningMessages = warnings
 	const successMessages = successes
 
@@ -561,8 +567,8 @@
 						errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 						return false
 					}
-					safeValidateField(startDate, props.customRules, props.customWarningRules)
-					if (errors.value.length === 0) safeValidateField(endDate, props.customRules, props.customWarningRules)
+					safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					if (errors.value.length === 0) safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 				}
 			}
 			return !hasError.value
@@ -621,7 +627,7 @@
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
-			const customRulesValidationResult = safeValidateField(inputValue.value, props.customRules, props.customWarningRules)
+			const customRulesValidationResult = safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
@@ -638,8 +644,11 @@
 			else {
 				runRules(inputValue.value)
 				if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
-				// For invalid input, emit null instead of previous value
-				emitModel(null)
+				// Only emit null for format errors, not for custom rule errors
+				if (!formatValidationResult.isValid) {
+					emitModel(null)
+				}
+				// For custom rule errors with valid format, keep the current value
 			}
 		}
 
@@ -1005,6 +1014,7 @@
 		:display-persistent-placeholder="true"
 		:aria-label="ariaLabel || props.placeholder"
 		:is-validate-on-blur="props.isValidateOnBlur"
+		:density="props.density"
 		title="Date text input"
 		@focus="onFocus"
 		@blur="onBlur"
