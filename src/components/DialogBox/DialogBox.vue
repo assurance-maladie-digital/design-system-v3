@@ -155,7 +155,7 @@
 					<h2
 						v-if="title"
 						:id="id"
-						class="text-h6 font-weight-bold"
+						class="text-h4 mr-6 font-weight-bold"
 					>
 						{{ props.title }}
 					</h2>
@@ -238,8 +238,8 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens' as *;
 
-.v-card__title > * {
-	line-height: 1em;
+.sy-dialog-box-title {
+	line-height: normal;
 }
 
 .v-btn--icon {

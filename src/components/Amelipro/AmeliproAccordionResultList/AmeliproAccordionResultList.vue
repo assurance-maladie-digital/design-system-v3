@@ -180,7 +180,7 @@
 				<AmeliproSelect
 					v-if="sortSelectItems.length > 0"
 					v-model="sortSelectModel"
-					class="ml-2 mb-0 pt-0 amelipro-accordion-result-list__sort-select"
+					classes="ml-2 mb-0 pt-0 amelipro-accordion-result-list__sort-select"
 					global-max-width="170px"
 					:hide-error-message="true"
 					:items="sortSelectItems"
@@ -193,7 +193,7 @@
 				<AmeliproSelect
 					v-if="mdAndUp"
 					v-model="paginationSelectModel"
-					class="ml-2 mb-0 pt-0 amelipro-accordion-result-list__pagination-select"
+					classes="ml-2 mb-0 pt-0 amelipro-accordion-result-list__pagination-select"
 					global-max-width="170px"
 					:hide-error-message="true"
 					:items="paginationSelectItems"

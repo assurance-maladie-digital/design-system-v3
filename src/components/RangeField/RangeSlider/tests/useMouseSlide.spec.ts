@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, afterEach } from 'vitest'
+import { describe, expect, it, vi, afterEach, beforeEach } from 'vitest'
 import useMouseSlide from '../useMouseSlide'
 
 import { defineComponent, onMounted, ref, type Ref } from 'vue'
@@ -38,6 +38,13 @@ describe('useMouseSlide', () => {
 		<div ref="track">
 			<div ref="thumb" class="thumb"></div>
 		</div>`,
+	})
+
+	beforeEach(() => {
+		vi.stubGlobal('requestAnimationFrame', function (cb) {
+			cb()
+			return null
+		})
 	})
 
 	afterEach(() => {
@@ -192,6 +199,7 @@ describe('useMouseSlide', () => {
 		await thumb.trigger('mousemove', {
 			clientX: 200,
 		})
+
 		await thumb.trigger('mousemove', {
 			clientX: 500,
 		})
