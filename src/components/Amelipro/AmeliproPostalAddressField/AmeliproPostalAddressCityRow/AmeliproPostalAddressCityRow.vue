@@ -440,6 +440,7 @@
 	& :deep(.v-field__outline) {
 		--v-field-border-opacity: 1 !important;
 	}
+
 	& :deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
 		--v-field-border-width: 1px !important;
 	}
@@ -455,6 +456,7 @@
 		padding-left: 12px;
 		padding-right: 12px;
 	}
+
 	& :deep(.v-field--disabled) {
 		opacity: 1 !important;
 	}
