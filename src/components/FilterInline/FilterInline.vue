@@ -50,7 +50,7 @@
 					:variant="getFilterCount(filter) ? undefined : 'outlined'"
 					color="secondary"
 					rounded
-					class="ma-2 SyFilterBtn"
+					class="ma-2 sy-filter-btn"
 				>
 					<VBadge
 						v-if="getFilterCount(filter)"
@@ -108,7 +108,7 @@
 	background-color: white;
 }
 
-.SyFilterBtn:focus-visible {
+.sy-filter-btn:focus-visible {
 	:deep(.v-btn__overlay) {
 		display: none;
 	}
@@ -120,5 +120,4 @@
 		outline-offset: 3px;
 	}
 }
-
 </style>
