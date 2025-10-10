@@ -33,7 +33,7 @@ describe('DialogBox', () => {
 				attachTo: document.body,
 			})
 
-			expect(wrapper.html()).not.toBe('')
+			expect(wrapper.html()).toContain('Test')
 		})
 
 		it('is closed when model value is false', async () => {
