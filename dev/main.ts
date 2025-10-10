@@ -6,10 +6,9 @@ import { router } from './router'
 
 const vuetify = createVuetifyInstance()
 
-// Ensure typography overrides (scoped under .theme-cnam/.theme-pa) apply in Playground
-// By default we start with CNAM theme
+// Applique theme CNAM par défaut dans le playground
 if (typeof document !== 'undefined') {
-  document.documentElement.classList.add('theme-cnam')
+	document.documentElement.classList.add('theme-cnam')
 }
 
 createApp(Playground)
