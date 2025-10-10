@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import { ref, watch } from 'vue'
-	import { locales } from './locales'
 	import { type VForm } from 'vuetify/components'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
+	import type { locales as defaultLocales } from './locales'
 
 	interface Props {
 		label: string
@@ -10,6 +10,7 @@
 		state?: string | null
 		loading?: boolean
 		errors: string[] | undefined
+		locales: typeof defaultLocales
 	}
 
 	const props = defineProps<Props>()

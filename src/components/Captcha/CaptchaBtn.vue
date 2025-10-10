@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 
 	defineProps<{

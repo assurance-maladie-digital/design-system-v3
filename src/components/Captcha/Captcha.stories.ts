@@ -56,6 +56,14 @@ export default {
 		helpDesk: {
 			description: 'Le numéro d\'aide.',
 		},
+		locales: {
+			description: 'Les locales à utiliser pour le composant. Voir le fichier locales.ts pour l\'exemple des clés disponibles.',
+			control: false,
+			table: {
+				type: { summary: 'object' },
+				defaultValue: { summary: 'locales (importé depuis le fichier locales.ts)' },
+			},
+		},
 	},
 
 }
@@ -83,7 +91,7 @@ export const Default: Story = {
 						return Promise.resolve({ response: { data: { message: 'Success' } } })
 					}
 					else {
-						return Promise.reject('An error occurred')
+						return Promise.reject({ response: { data: { message: 'Le captcha est incorrect' } } })
 					}
 				}
 				return { args, captchaValue, verifyCaptcha }
@@ -156,7 +164,7 @@ export const Choice: Story = {
 						return Promise.resolve({ response: { data: { message: 'Success' } } })
 					}
 					else {
-						return Promise.reject('An error occurred')
+						return Promise.reject({ response: { data: { message: 'Le captcha est incorrect' } } })
 					}
 				}
 				return { args, captchaValue, verifyCaptcha }

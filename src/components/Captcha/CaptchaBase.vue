@@ -6,14 +6,15 @@
 		getCaptchaAudioUrl,
 		getCaptchaImageUrl,
 	} from './captchaApi'
-	import { locales } from './locales'
 	import type { CaptchaType, StateType } from './types'
+	import type { locales as defaultLocales } from './locales'
 
 	const props = defineProps<{
 		modelValue: CaptchaType
 		urlCreate: string
 		urlGetImage: string
 		urlGetAudio: string
+		locales: typeof defaultLocales
 	}>()
 
 	const emit = defineEmits<{
@@ -139,7 +140,7 @@
 			errorMessage.value = JSON.parse(error.message)
 		}
 		catch {
-			errorMessage.value = locales.defaultErrorMessage
+			errorMessage.value = props.locales.defaultErrorMessage
 		}
 
 		emitCreateErrorEvent(error)

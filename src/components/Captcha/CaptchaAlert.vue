@@ -1,6 +1,11 @@
 <script setup lang="ts">
 	import { mdiAlertCircleOutline, mdiAutorenew } from '@mdi/js'
 	import { useAttrs } from 'vue'
+	import type { locales as defaultLocales } from './locales'
+
+	defineProps<{
+		locales: typeof defaultLocales
+	}>()
 
 	const attrs = useAttrs()
 
@@ -34,9 +39,11 @@
 					color="primary"
 					min-width="48px"
 					min-height="36px"
-					outlined
-					v-on="attrs"
+					variant="outlined"
 				>
+					<p class="d-sr-only">
+						{{ locales.renew }}
+					</p>
 					<VIcon>
 						{{ renewIcon }}
 					</VIcon>

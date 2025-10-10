@@ -1,9 +1,10 @@
 <script setup lang="ts">
-	import { locales } from './locales'
+	import type { locales as defaultLocales } from './locales'
 
 	defineProps<{
 		state: string
 		src?: string | null
+		locales: typeof defaultLocales
 	}>()
 </script>
 
@@ -11,7 +12,7 @@
 	<div>
 		<VSkeletonLoader
 			v-if="state === 'pending'"
-			aria-label="locales.captchaImgLoading"
+			:aria-label="locales.captchaImgLoading"
 			type="image"
 			height="64"
 			width="311"
