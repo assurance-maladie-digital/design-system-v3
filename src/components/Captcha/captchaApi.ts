@@ -1,3 +1,4 @@
+
 const reGet = /CAPTCHAID/
 
 type SuccessCallback = (captchaId: string) => void
@@ -24,6 +25,7 @@ export function createCaptcha(
 		body: body,
 	})
 		.then(async (response) => {
+			console.log('r', response)
 			if (response.ok) {
 				try {
 					const json = await response.json()

@@ -8,7 +8,7 @@
 	import CaptchaForm from './CaptchaForm.vue'
 	import CaptchaImg from './CaptchaImg.vue'
 	import CaptchaInformation from './CaptchaInformation.vue'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 	import { type CaptchaType, type StateType } from './types'
 	import SyAlert from '../SyAlert/SyAlert.vue'
 
@@ -21,11 +21,13 @@
 		defaultType?: CaptchaType
 		tagTitle?: string
 		helpDesk?: string | false
+		locales?: typeof defaultLocales
 	}>(), {
 		modelValue: undefined,
 		defaultType: 'image',
 		helpDesk: '3648',
 		tagTitle: 'h3',
+		locales: () => defaultLocales,
 	})
 
 	const emit = defineEmits<{
@@ -104,7 +106,10 @@
 
 <template>
 	<div>
-		<CaptchaInformation :type="type">
+		<CaptchaInformation
+			:type="type"
+			:locales
+		>
 			<template
 				v-if="errorMessage"
 				#error
@@ -124,6 +129,7 @@
 			:url-create="urlCreate"
 			:url-get-image="urlGetImage"
 			:url-get-audio="urlGetAudio"
+			:locales
 			@update:model-value="emitChangeTypeEvent"
 			@create-captcha:init="createCaptchaInit"
 			@create-captcha:success="createCaptchaSuccess"
@@ -143,11 +149,13 @@
 					v-if="!isError"
 					:src="url"
 					:state="createCaptchaState"
+					:locales
 					class="mt-4"
 				/>
 
 				<CaptchaAlert
 					v-else
+					:locales
 					class="mt-2"
 					@click="chooseImage"
 				>
@@ -156,6 +164,7 @@
 
 				<CaptchaForm
 					v-model="text"
+					:locales
 					:label="locales.image.textfieldLabel"
 					:state="createCaptchaState"
 					:errors="errorMessage ? [errorMessage] : []"
@@ -166,7 +175,7 @@
 
 				<div class="captcha-config pt-4 d-flex flex-column ga-2 align-start">
 					<p class="label-options text-textSubdued">
-						{{ locales?.hardToRead }}
+						{{ locales.hardToRead }}
 					</p>
 
 					<CaptchaBtn
@@ -226,6 +235,7 @@
 
 				<CaptchaAlert
 					v-else
+					:locales
 					class="mt-2"
 					@click="chooseAudio"
 				>
@@ -234,6 +244,7 @@
 
 				<CaptchaForm
 					v-model="text"
+					:locales
 					:label="locales.audio.textfieldLabel"
 					:state="createCaptchaState"
 					:loading="state === 'pending'"
@@ -243,7 +254,7 @@
 				/>
 				<div class="captcha-config pt-4 d-flex flex-column ga-2 align-start">
 					<p class="label-options text-textSubdued">
-						{{ locales?.hardToRead }}
+						{{ locales.hardToRead }}
 					</p>
 
 					<CaptchaBtn
@@ -267,7 +278,6 @@
 				</div>
 			</template>
 
-			<!-- Default captcha -->
 			<template
 				#default="{
 					chooseImage,

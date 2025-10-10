@@ -1,10 +1,11 @@
 <script setup lang="ts">
-	import { locales } from './locales'
 	import type { CaptchaType } from './types'
+	import type { locales as defaultLocales } from './locales'
 
 	interface Props {
 		type?: CaptchaType | string
 		tagTitle?: string
+		locales: typeof defaultLocales
 	}
 
 	withDefaults(defineProps<Props>(), {
@@ -29,7 +30,7 @@
 		>
 			<div v-if="type === 'image'">
 				<p class="captcha-instructions text-textSubdued">
-					{{ locales.information.image.text }}
+					{{ locales.information.imageInstruction }}
 				</p>
 
 				<slot name="error" />
@@ -37,7 +38,7 @@
 
 			<div v-if="type === 'audio'">
 				<p class="captcha-instructions text-textSubdued">
-					{{ locales.information.audio.text }}
+					{{ locales.information.audioInstruction }}
 				</p>
 
 				<slot name="error" />
