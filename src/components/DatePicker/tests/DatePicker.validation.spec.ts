@@ -3,15 +3,15 @@ import { mount } from '@vue/test-utils'
 import { nextTick, ref, computed } from 'vue'
 import { vuetify } from '../../../../tests/unit/setup'
 import CalendarModeDatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-import ComplexDatePicker from '@/components/DatePicker/ComplexDatePicker/ComplexDatePicker.vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import DateTextInput from '@/components/DatePicker/DateTextInput/DateTextInput.vue'
 /**
  * Tests de validation complets pour tous les modes DatePicker
  *
  * Ce fichier couvre tous les cas de validation pour les 3 modes DatePicker :
  * 1. CalendarMode - Mode calendrier classique
- * 2. ComplexDatePicker - Mode complexe standard
- * 3. ComplexDatePicker avec useCombinedMode - Mode combiné
+ * 2. DatePicker - Mode complexe standard
+ * 3. DatePicker avec useCombinedMode - Mode combiné
  * 4. DateTextInput - Mode saisie texte uniquement
  *
  * Basé sur les mémoires de bugs résolus et les cas edge identifiés.
@@ -444,16 +444,17 @@ describe('DatePicker - Tests de Validation Complets', () => {
 	/**
 	 * TESTS POUR COMPLEX DATEPICKER (MODE STANDARD)
 	 */
-	describe('ComplexDatePicker - Mode Standard', () => {
+	describe('DatePicker - Mode Standard', () => {
 		describe('Cas normaux - Fonctionnement de base', () => {
 			it('doit afficher le composant avec les props par défaut', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
-						label: 'Date ComplexDatePicker',
+						label: 'Date DatePicker',
 					},
 				})
 
@@ -464,11 +465,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer le mode combined', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date Combined Mode',
 						useCombinedMode: true,
@@ -481,11 +483,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer les plages de dates', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Plage de dates Complex',
 						displayRange: true,
@@ -498,11 +501,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer le formatage automatique', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date auto format',
 						autoClamp: true,
@@ -515,11 +519,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer le mode readonly', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
 						label: 'Date readonly',
 						readonly: true,
@@ -532,11 +537,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer les custom rules de succès', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
 						label: 'Date avec succès',
 					},
@@ -550,11 +556,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer les custom warning rules', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
 						label: 'Date avec warning',
 						customWarningRules: [],
@@ -584,11 +591,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 					},
 				])
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date B',
 						customRules: dateBRules.value,
@@ -615,7 +623,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 	/**
 	 * TESTS POUR COMPLEX DATEPICKER (MODE COMBINÉ)
 	 */
-	describe('ComplexDatePicker - Mode Combiné (useCombinedMode=true)', () => {
+	describe('DatePicker - Mode Combiné (useCombinedMode=true)', () => {
 		describe('Messages d\'erreur en combined-mode (Mémoire a60921cf)', () => {
 			it('doit maintenir la réactivité des règles en combined-mode', async () => {
 				const dateA = ref('2024-06-15')
@@ -631,11 +639,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 					},
 				])
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date B Combined',
 						useCombinedMode: true,
@@ -1014,12 +1023,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 		})
 
 		describe('Gestion du textFieldActivator', () => {
-			it('doit gérer textFieldActivator pour ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer textFieldActivator pour DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date avec textFieldActivator',
 						textFieldActivator: true,
@@ -1176,14 +1186,15 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(hasDateInvalidError).toBe(false)
 			})
 
-			it('ne doit pas afficher "Date invalide" lors de suppression via croix - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('ne doit pas afficher "Date invalide" lors de suppression via croix - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
-						label: 'Date ComplexDatePicker',
+						label: 'Date DatePicker',
 						customRules: [
 							{
 								type: 'notAfterDate',
@@ -1212,7 +1223,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 		})
 
 		describe('Configuration de règle invalide (Mémoire 36a3ff57)', () => {
-			it('ne doit pas afficher "Configuration de la règle invalide" - ComplexDatePicker', async () => {
+			it('ne doit pas afficher "Configuration de la règle invalide" - DatePicker', async () => {
 				const dateA = ref('2024-06-15')
 
 				const dateBRules = computed(() => [
@@ -1225,11 +1236,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 					},
 				])
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date B',
 						customRules: dateBRules.value,
@@ -1259,7 +1271,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 		})
 
 		describe('Priorité des messages (Mémoire 36e3ba09)', () => {
-			it('doit prioriser les erreurs sur les succès - ComplexDatePicker', async () => {
+			it('doit prioriser les erreurs sur les succès - DatePicker', async () => {
 				const customErrorRule = vi.fn().mockReturnValue(false)
 				const customSuccessRule = vi.fn().mockReturnValue(true)
 
@@ -1283,13 +1295,14 @@ describe('DatePicker - Tests de Validation Complets', () => {
 					},
 				]
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
-						label: 'Date ComplexDatePicker',
+						label: 'Date DatePicker',
 						customRules,
 						customSuccessRules,
 					},
@@ -1413,11 +1426,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 
 			it('doit gérer les plages de dates avec des valeurs initiales', async () => {
 				const rangeValue = ['2024-06-01', '2024-06-30']
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: rangeValue,
 						label: 'Plage avec valeurs',
 						displayRange: true,
@@ -1441,11 +1455,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 					},
 				}))
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
 						label: 'Date avec nombreuses règles',
 						customRules: manyRules,
@@ -1488,7 +1503,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(wrapper.props('useCombinedMode')).toBe(true)
 			})
 
-			it('doit déléguer la validation au ComplexDatePicker en mode combiné', async () => {
+			it('doit déléguer la validation au DatePicker en mode combiné', async () => {
 				wrapper = mount(CalendarModeDatePicker, {
 					global: {
 						plugins: [vuetify],
@@ -1528,12 +1543,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(wrapper.props('noCalendar')).toBe(true)
 			})
 
-			it('doit gérer noCalendar=true avec ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer noCalendar=true avec DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date sans calendrier Complex',
 						noCalendar: true,
@@ -1547,11 +1563,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit déléguer la validation au DateTextInput en mode noCalendar', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date noCalendar',
 						noCalendar: true,
@@ -1604,12 +1621,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(wrapper.props('birthDate')).toBe(true)
 			})
 
-			it('doit gérer isBirthDate=true avec ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer isBirthDate=true avec DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date de naissance Complex',
 						isBirthDate: true,
@@ -1644,12 +1662,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(wrapper.props('dateFormatReturn')).toBe('YYYY-MM-DD')
 			})
 
-			it('doit gérer dateFormatReturn différent du format d\'affichage - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer dateFormatReturn différent du format d\'affichage - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date avec format retour Complex',
 						format: 'DD/MM/YYYY',
@@ -1705,11 +1724,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer bgColor personnalisé', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date avec couleur',
 						bgColor: 'lightblue',
@@ -1760,12 +1780,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(wrapper.vm.isDatePickerVisible).toBeDefined()
 			})
 
-			it('doit émettre l\'événement input - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit émettre l\'événement input - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date événement input',
 					},
@@ -1822,11 +1843,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer showSuccessMessages=false', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
 						label: 'Date sans messages succès',
 						showSuccessMessages: false,
@@ -1858,12 +1880,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(typeof wrapper.vm.isDatePickerVisible).toBe('boolean')
 			})
 
-			it('doit exposer selectedDates - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit exposer selectedDates - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
 						label: 'Date selectedDates exposé',
 					},
@@ -1935,11 +1958,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 					},
 				]
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
 						label: 'Date règles dynamiques',
 						customRules: initialRules,
@@ -1957,11 +1981,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer les plages de dates avec des valeurs partielles', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: ['2024-06-01', ''],
 						label: 'Plage partielle',
 						displayRange: true,
@@ -2014,11 +2039,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			it('doit gérer les custom rules avec des fonctions qui lèvent des erreurs', async () => {
 				const errorRule = vi.fn().mockReturnValue(false) // Simuler une règle qui échoue sans lever d'erreur
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
 						label: 'Date règle erreur',
 						customRules: [
@@ -2098,12 +2124,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(typeof result).toBe('boolean')
 			})
 
-			it('doit gérer la règle max - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer la règle max - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date avec règle max',
 						customRules: [
@@ -2181,12 +2208,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(typeof result).toBe('boolean')
 			})
 
-			it('doit gérer la règle exactLength - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer la règle exactLength - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date avec exactLength',
 						customRules: [
@@ -2265,12 +2293,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 		})
 
 		describe('Tests des règles de date spécifiques', () => {
-			it('doit gérer la règle notWeekend - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer la règle notWeekend - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15', // Samedi
 						label: 'Date sans weekend',
 						customRules: [
@@ -2343,12 +2372,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(typeof result).toBe('boolean')
 			})
 
-			it('doit gérer la règle dateExact - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer la règle dateExact - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date exacte requise',
 						customRules: [
@@ -2424,12 +2454,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(result).toBe(false) // Doit échouer car 10/06 < 15/06
 			})
 
-			it('doit valider correctement notAfterDate avec une vraie date - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit valider correctement notAfterDate avec une vraie date - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '20/06/2024', // Date après la limite
 						label: 'Date avec validation notAfterDate',
 						customRules: [
@@ -2506,12 +2537,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(typeof result).toBe('boolean')
 			})
 
-			it('doit gérer les règles en mode warning - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer les règles en mode warning - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15',
 						label: 'Date avec warning rules',
 						customWarningRules: [
@@ -2541,11 +2573,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 	describe('Tests Touchy - Cas Limites et Edge Cases', () => {
 		describe('Tests de concurrence et race conditions', () => {
 			it('doit gérer les changements rapides de modelValue pendant la validation', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date race condition',
 						customRules: [
@@ -2597,11 +2630,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 					},
 				})
 
-				const wrapper2 = mount(ComplexDatePicker, {
+				const wrapper2 = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '20/06/2024',
 						label: 'Date 2',
 						customRules: [
@@ -2655,14 +2689,15 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				removeEventListenerSpy.mockRestore()
 			})
 
-			it('doit nettoyer les event listeners lors du unmount - ComplexDatePicker', async () => {
+			it('doit nettoyer les event listeners lors du unmount - DatePicker', async () => {
 				const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener')
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Test cleanup Complex',
 					},
@@ -2680,11 +2715,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			it('doit gérer les setTimeout sans fuites mémoire', async () => {
 				const setTimeoutSpy = vi.spyOn(global, 'setTimeout')
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Test setTimeout',
 						customRules: [
@@ -2775,11 +2811,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit rejeter le 29 février pour les années non bissextiles', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '29/02/2023', // 2023 n'est pas bissextile
 						label: 'Date non bissextile',
 					},
@@ -2815,11 +2852,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 
 		describe('Tests de validation avec règles contradictoires', () => {
 			it('doit gérer des règles contradictoires notBeforeDate et notAfterDate', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '15/06/2024',
 						label: 'Règles contradictoires',
 						customRules: [
@@ -2898,11 +2936,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 
 				const startTime = performance.now()
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '15/06/2024',
 						label: 'Performance test',
 						customRules: manyRules,
@@ -2975,11 +3014,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 					},
 				])
 
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '18/06/2024',
 						label: 'Règles réactives imbriquées',
 						customRules: nestedRules.value,
@@ -3083,11 +3123,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer les changements de timezone', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '15/06/2024',
 						label: 'Test timezone',
 						customRules: [
@@ -3211,7 +3252,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 		})
 
-		describe('Tests ComplexDatePicker - Formats d\'entrée et sortie', () => {
+		describe('Tests DatePicker - Formats d\'entrée et sortie', () => {
 			const complexFormatCombinations = [
 				{ display: 'DD/MM/YYYY', return: 'ISO', input: '15/06/2024', description: 'Format français vers ISO' },
 				{ display: 'MM/DD/YYYY', return: 'DD-MM-YYYY', input: '06/15/2024', description: 'Format US vers européen' },
@@ -3222,11 +3263,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 
 			complexFormatCombinations.forEach(({ display, return: returnFormat, input, description }) => {
 				it(`doit gérer ${description} (${display} → ${returnFormat})`, async () => {
-					wrapper = mount(ComplexDatePicker, {
+					wrapper = mount(DatePicker, {
 						global: {
 							plugins: [vuetify],
 						},
 						props: {
+							useCombinedMode: true,
 							modelValue: null,
 							label: description,
 							format: display,
@@ -3250,11 +3292,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer le mode avec TextFieldActivator et formats différents', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Mode TextFieldActivator formats',
 						format: 'DD/MM/YYYY',
@@ -3272,11 +3315,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer les plages avec TextFieldActivator et formats différents', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Plage TextFieldActivator',
 						format: 'MM/DD/YYYY',
@@ -3294,11 +3338,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit valider avec des règles et formats différents', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '15/06/2024',
 						label: 'Validation formats différents',
 						format: 'DD/MM/YYYY',
@@ -3467,12 +3512,13 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				expect(typeof result).toBe('boolean')
 			})
 
-			it('doit gérer les conversions complexes avec validation - ComplexDatePicker', async () => {
-				wrapper = mount(ComplexDatePicker, {
+			it('doit gérer les conversions complexes avec validation - DatePicker', async () => {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '2024-06-15', // Format ISO en entrée
 						label: 'Conversion complexe',
 						format: 'DD/MM/YYYY', // Affichage français
@@ -3524,7 +3570,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			it('doit gérer les plages avec formats mixtes - Tous les modes', async () => {
 				const modes = [
 					{ component: CalendarModeDatePicker, name: 'CalendarMode' },
-					{ component: ComplexDatePicker, name: 'ComplexDatePicker' },
+					{ component: DatePicker, name: 'DatePicker' },
 					{ component: DateTextInput, name: 'DateTextInput' },
 				]
 
@@ -3562,11 +3608,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				]
 
 				for (const format of specialFormats) {
-					wrapper = mount(ComplexDatePicker, {
+					wrapper = mount(DatePicker, {
 						global: {
 							plugins: [vuetify],
 						},
 						props: {
+							useCombinedMode: true,
 							modelValue: null,
 							label: `Format spécial ${format}`,
 							format: format,
@@ -3737,15 +3784,16 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 		})
 
-		describe('Tests des événements ComplexDatePicker', () => {
+		describe('Tests des événements DatePicker', () => {
 			it('doit émettre update:modelValue avec le bon format', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
-						label: 'Test événement ComplexDatePicker',
+						label: 'Test événement DatePicker',
 						format: 'DD/MM/YYYY',
 						dateFormatReturn: 'YYYY-MM-DD',
 					},
@@ -3761,11 +3809,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit émettre closed lors de la fermeture du calendrier', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Test événement closed',
 					},
@@ -3781,11 +3830,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit émettre les événements dans le bon ordre', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Test ordre événements',
 					},
@@ -3977,11 +4027,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit gérer le focus initial correctement', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Test focus initial',
 						autofocus: true,
@@ -4086,11 +4137,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit combiner erreurs internes et externes', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Test erreurs combinées',
 						required: true,
@@ -4116,11 +4168,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 
 		describe('Tests des warnings', () => {
 			it('doit afficher les warnings sans bloquer la validation', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: '15/06/2024',
 						label: 'Test warnings',
 						customWarningRules: [
@@ -4250,11 +4303,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit optimiser les re-renders lors de changements rapides', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Test re-renders',
 					},
@@ -4281,11 +4335,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 
 		describe('Tests de memory leaks avancés', () => {
 			it('doit nettoyer les watchers lors du unmount', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Test watchers cleanup',
 						customRules: [
@@ -4378,7 +4433,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				const formWrapper = mount({
 					template: `
 						<v-form ref="form" v-model="valid">
-							<ComplexDatePicker
+							<DatePicker
 								v-model="date"
 								label="Date validation globale"
 								required
@@ -4386,7 +4441,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 						</v-form>
 					`,
 					components: {
-						ComplexDatePicker,
+						DatePicker,
 					},
 					setup() {
 						const date = ref(null)
@@ -4428,11 +4483,12 @@ describe('DatePicker - Tests de Validation Complets', () => {
 			})
 
 			it('doit nettoyer les erreurs lors du reset', async () => {
-				wrapper = mount(ComplexDatePicker, {
+				wrapper = mount(DatePicker, {
 					global: {
 						plugins: [vuetify],
 					},
 					props: {
+						useCombinedMode: true,
 						modelValue: null,
 						label: 'Test reset erreurs',
 						required: true,
@@ -4512,8 +4568,8 @@ describe('DatePicker - Tests de Validation Complets', () => {
 	describe('Tests Transversaux - Tous les Modes', () => {
 		const modes = [
 			{ name: 'CalendarMode', component: CalendarModeDatePicker, props: {} },
-			{ name: 'ComplexDatePicker', component: ComplexDatePicker, props: {} },
-			{ name: 'ComplexDatePicker Combined', component: ComplexDatePicker, props: { useCombinedMode: true } },
+			{ name: 'DatePicker', component: DatePicker, props: {} },
+			{ name: 'DatePicker Combined', component: DatePicker, props: { useCombinedMode: true } },
 			{ name: 'DateTextInput', component: DateTextInput, props: {} },
 		]
 
