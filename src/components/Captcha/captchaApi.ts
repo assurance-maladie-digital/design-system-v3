@@ -1,4 +1,3 @@
-
 const reGet = /CAPTCHAID/
 
 type SuccessCallback = (captchaId: string) => void
