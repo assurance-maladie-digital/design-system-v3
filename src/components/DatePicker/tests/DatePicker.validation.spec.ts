@@ -721,7 +721,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 							plugins: [vuetify],
 						},
 						props: {
-						noCalendar: true,
+							noCalendar: true,
 							modelValue: null,
 							label: `Date format ${format}`,
 							format,

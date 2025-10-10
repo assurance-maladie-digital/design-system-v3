@@ -1,4 +1,4 @@
-tests/unit/datePicker/
+datePicker/tests
 ├── core/                           # Tests des fonctionnalités de base
 │   ├── validation.core.spec.ts     # Validation de base (required, format)
 │   ├── formats.core.spec.ts        # Formats d'entrée/sortie standards
