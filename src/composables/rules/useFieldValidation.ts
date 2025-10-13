@@ -212,6 +212,10 @@ export function useFieldValidation() {
 					if (!options.date) {
 						return { error: 'Configuration de la règle invalide' }
 					}
+					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
@@ -241,7 +245,10 @@ export function useFieldValidation() {
 					if (!options.date) {
 						return { error: 'Configuration de la règle invalide' }
 					}
-
+					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
@@ -271,7 +278,10 @@ export function useFieldValidation() {
 					if (!options.date) {
 						return { error: 'Configuration de la règle invalide' }
 					}
-
+					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
