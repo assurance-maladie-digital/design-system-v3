@@ -168,11 +168,17 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -186,10 +192,12 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -213,7 +221,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
                 v-field-label
                 v-label
               "
-              for="input-v-0"
+              for="input-v-1"
             >
               <!---->
               Valeur min
@@ -223,7 +231,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               aria-label="Valeur min"
               autocomplete="off"
               class="v-field__input"
-              id="input-v-0"
+              id="input-v-1"
               inputmode="numeric"
               size="1"
               title="Valeur min"
@@ -248,7 +256,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
                   v-field-label--floating
                   v-label
                 "
-                for="input-v-0"
+                for="input-v-1"
               >
                 <!---->
                 Valeur min
@@ -309,11 +317,17 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -327,10 +341,12 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -354,7 +370,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
                 v-field-label
                 v-label
               "
-              for="input-v-2"
+              for="input-v-4"
             >
               <!---->
               Valeur max
@@ -364,7 +380,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               aria-label="Valeur max"
               autocomplete="off"
               class="v-field__input"
-              id="input-v-2"
+              id="input-v-4"
               inputmode="numeric"
               size="1"
               title="Valeur max"
@@ -389,7 +405,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
                   v-field-label--floating
                   v-label
                 "
-                for="input-v-2"
+                for="input-v-4"
               >
                 <!---->
                 Valeur max
@@ -575,11 +591,17 @@ exports[`RangeField > renders correctly 1`] = `
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -593,10 +615,12 @@ exports[`RangeField > renders correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -620,7 +644,7 @@ exports[`RangeField > renders correctly 1`] = `
                 v-field-label
                 v-label
               "
-              for="input-v-0"
+              for="input-v-1"
             >
               <!---->
               Valeur min
@@ -630,7 +654,7 @@ exports[`RangeField > renders correctly 1`] = `
               aria-label="Valeur min"
               autocomplete="off"
               class="v-field__input"
-              id="input-v-0"
+              id="input-v-1"
               inputmode="numeric"
               size="1"
               title="Valeur min"
@@ -655,7 +679,7 @@ exports[`RangeField > renders correctly 1`] = `
                   v-field-label--floating
                   v-label
                 "
-                for="input-v-0"
+                for="input-v-1"
               >
                 <!---->
                 Valeur min
@@ -716,11 +740,17 @@ exports[`RangeField > renders correctly 1`] = `
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -734,10 +764,12 @@ exports[`RangeField > renders correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -761,7 +793,7 @@ exports[`RangeField > renders correctly 1`] = `
                 v-field-label
                 v-label
               "
-              for="input-v-2"
+              for="input-v-4"
             >
               <!---->
               Valeur max
@@ -771,7 +803,7 @@ exports[`RangeField > renders correctly 1`] = `
               aria-label="Valeur max"
               autocomplete="off"
               class="v-field__input"
-              id="input-v-2"
+              id="input-v-4"
               inputmode="numeric"
               size="1"
               title="Valeur max"
@@ -796,7 +828,7 @@ exports[`RangeField > renders correctly 1`] = `
                   v-field-label--floating
                   v-label
                 "
-                for="input-v-2"
+                for="input-v-4"
               >
                 <!---->
                 Valeur max
@@ -982,11 +1014,17 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -1000,10 +1038,12 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -1027,7 +1067,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
                 v-field-label
                 v-label
               "
-              for="input-v-0"
+              for="input-v-1"
             >
               <!---->
               Valeur min
@@ -1037,7 +1077,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               aria-label="Valeur min"
               autocomplete="off"
               class="v-field__input"
-              id="input-v-0"
+              id="input-v-1"
               inputmode="numeric"
               size="1"
               title="Valeur min"
@@ -1062,7 +1102,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
                   v-field-label--floating
                   v-label
                 "
-                for="input-v-0"
+                for="input-v-1"
               >
                 <!---->
                 Valeur min
@@ -1123,11 +1163,17 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -1141,10 +1187,12 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -1168,7 +1216,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
                 v-field-label
                 v-label
               "
-              for="input-v-2"
+              for="input-v-4"
             >
               <!---->
               Valeur max
@@ -1178,7 +1226,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               aria-label="Valeur max"
               autocomplete="off"
               class="v-field__input"
-              id="input-v-2"
+              id="input-v-4"
               inputmode="numeric"
               size="1"
               title="Valeur max"
@@ -1203,7 +1251,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
                   v-field-label--floating
                   v-label
                 "
-                for="input-v-2"
+                for="input-v-4"
               >
                 <!---->
                 Valeur max
