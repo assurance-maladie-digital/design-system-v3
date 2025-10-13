@@ -471,7 +471,6 @@ describe('DatePicker - Tests de Validation Complets', () => {
 						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date Combined Mode',
-						useCombinedMode: true,
 					},
 				})
 
@@ -645,7 +644,6 @@ describe('DatePicker - Tests de Validation Complets', () => {
 						useCombinedMode: true,
 						modelValue: null,
 						label: 'Date B Combined',
-						useCombinedMode: true,
 						customRules: dateBRules.value,
 					},
 				})
