@@ -113,6 +113,10 @@
       <td>- DatePicker : fix readonly style on dateInput <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1140">#1140</a></td>
      <td></td>
     </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: add title prop to improve accessibility <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1262">#1262</a></td>
+     <td></td>
+    </tr>
   </tbody>
 </table>
 
@@ -198,10 +202,6 @@
     </tr>
     <tr style="vertical-align: top;">
       <td>- PhoneField: add withoutFieldSet prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1081">#1081</a></td>
-     <td></td>
-    </tr>
-    <tr style="vertical-align: top;">
-      <td>- DatePicker: add title prop to improve accessibility <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1262">#1262</a></td>
      <td></td>
     </tr>
   </tbody>
