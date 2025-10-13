@@ -123,6 +123,7 @@
 			noCalendar?: boolean
 			isOutlined?: boolean
 			readonly?: boolean
+			title?: string | false
 			width?: string
 			disableErrorHandling?: boolean
 			showSuccessMessages?: boolean
@@ -160,6 +161,7 @@
 			noCalendar: false,
 			isOutlined: true,
 			readonly: false,
+			title: false,
 			width: '100%',
 			disableErrorHandling: false,
 			showSuccessMessages: true,
@@ -932,7 +934,7 @@
 				:external-error-messages="errorMessages"
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
-				title="Date text input"
+				:title="props.title || undefined"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
