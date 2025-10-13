@@ -220,6 +220,9 @@ const meta = {
 			description: 'Densité du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
 			defaultValue: 'default',
 		},
+		'title': {
+			controls: 'text',
+		},
 	},
 } as Meta<typeof DatePicker>
 
