@@ -138,7 +138,7 @@ export const Default: Story = {
 			template: `
                 <VCard class="pa-4" max-width="600" min-width="300">
                     <Captcha 
-                        url-create="/captcha/captcha.json"
+                        url-create="https://free.mockerapi.com/mock/0adac32b-e832-4553-aa7f-0011b7f35f0c"
                         url-get-image="/captcha/captcha.png"
                         url-get-audio="/captcha/captcha.mp3"
 						:service="verifyCaptcha"
@@ -211,7 +211,7 @@ export const Choice: Story = {
 			template: `
                 <VCard class="pa-4" max-width="600" min-width="300">
                     <Captcha
-                        url-create="/captcha/captcha.json"
+                        url-create="https://free.mockerapi.com/mock/0adac32b-e832-4553-aa7f-0011b7f35f0c"
                         url-get-image="/captcha/captcha.png"
                         url-get-audio="/captcha/captcha.mp3"
 						v-bind="args"
