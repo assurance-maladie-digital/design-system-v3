@@ -11,57 +11,96 @@ export default {
 		controls: { exclude: ['onUpdate:modelValue', 'onUpdate:type', 'onValidation:click', 'onValidation:success', 'onValidation:error'] },
 	},
 	argTypes: {
-		service: {
+		'service': {
 			description: 'Fonction de validation du captcha. Doit retourner une Promise.',
 			control: false,
 			table: {
 				type: { summary: '(value: string, type: "image" | "audio") => Promise<any>' },
 			},
 		},
-		urlCreate: {
+		'urlCreate': {
 			description: 'URL de création du captcha (retourne un JSON avec les URLs de l\'image et de l\'audio)',
 			control: false,
 			table: {
 				type: { summary: 'string' },
 			},
 		},
-		urlGetImage: {
-			description: 'URL de récupération de l\'image du captcha',
+		'urlGetImage': {
+			description: 'URL de récupération de l\'image du captcha. <br> La chaîne `CAPTCHAID` sera remplacée par l\'ID du captcha.',
 			control: false,
 			table: {
 				type: { summary: 'string' },
 			},
 		},
-		urlGetAudio: {
-			description: 'URL de récupération de l\'audio du captcha',
+		'urlGetAudio': {
+			description: 'URL de récupération de l\'audio du captcha. <br> La chaîne `CAPTCHAID` sera remplacée par l\'ID du captcha.',
 			control: false,
 			table: {
 				type: { summary: 'string' },
 			},
 		},
-		modelValue: {
+		'modelValue': {
 			description: 'La valeur du champs de captcha',
 			control: 'string',
 		},
-		defaultType: {
+		'defaultType': {
 			description: 'Le type de captcha affiché par défaut.',
 			options: ['image', 'audio', 'choice'],
 			control: {
 				type: 'select',
 			},
+			table: {
+				type: { summary: 'image | audio | choice' },
+				defaultValue: { summary: '"image"' },
+			},
 		},
-		tagTitle: {
+		'tagTitle': {
 			description: 'Le tag du titre de la section.',
 		},
-		helpDesk: {
+		'helpDesk': {
 			description: 'Le numéro d\'aide.',
 		},
-		locales: {
+		'locales': {
 			description: 'Les locales à utiliser pour le composant. Voir le fichier locales.ts pour l\'exemple des clés disponibles.',
 			control: false,
 			table: {
 				type: { summary: 'object' },
 				defaultValue: { summary: 'locales (importé depuis le fichier locales.ts)' },
+			},
+		},
+		'update:modelValue': {
+			description: 'Événement émis lors de la mise à jour du champs de captcha.',
+			control: false,
+			table: {
+				type: { summary: 'string' },
+			},
+		},
+		'update:type': {
+			description: 'Événement émis lors de la mise à jour du type de captcha (image ou audio).',
+			control: false,
+			table: {
+				type: { summary: 'image | audio' },
+			},
+		},
+		'validation:click': {
+			description: 'Événement émis lors du clic sur le bouton de validation.',
+			control: false,
+			table: {
+				type: { summary: 'void' },
+			},
+		},
+		'validation:success': {
+			description: 'Événement émis lorsque la validation du captcha réussit.',
+			control: false,
+			table: {
+				type: { summary: '(response: any) => void' },
+			},
+		},
+		'validation:error': {
+			description: 'Événement émis lorsque la validation du captcha échoue.',
+			control: false,
+			table: {
+				type: { summary: '(error: Error) => void' },
 			},
 		},
 	},
