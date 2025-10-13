@@ -35,6 +35,7 @@
 		required?: boolean
 		disabled?: boolean
 		readonly?: boolean
+		title?: string | false
 		isOutlined?: boolean
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
@@ -59,6 +60,7 @@
 		required: false,
 		disabled: false,
 		readonly: false,
+		title: false,
 		isOutlined: true,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -1022,7 +1024,7 @@
 		:aria-label="ariaLabel || props.placeholder"
 		:is-validate-on-blur="props.isValidateOnBlur"
 		:density="props.density"
-		title="Date text input"
+		:title="props.title || undefined"
 		@focus="onFocus"
 		@blur="onBlur"
 		@keydown="handleKeydown"

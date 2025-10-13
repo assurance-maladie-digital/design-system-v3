@@ -302,6 +302,9 @@ const meta = {
 			description: 'Active la validation automatique lorsque le champ perd le focus (onBlur)',
 			defaultValue: true,
 		},
+		'title': {
+			control: 'text',
+		},
 	},
 } as Meta<typeof DatePicker>
 
