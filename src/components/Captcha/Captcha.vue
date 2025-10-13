@@ -179,6 +179,7 @@
 					</p>
 
 					<CaptchaBtn
+						data-test-id="captcha-image-new"
 						:prepend-icon="mdiCached"
 						@click="chooseImage"
 					>
@@ -186,6 +187,7 @@
 					</CaptchaBtn>
 
 					<CaptchaBtn
+						data-test-id="captcha-image-change"
 						:prepend-icon="mdiVolumeHigh"
 						@click="chooseAudio"
 					>
@@ -258,12 +260,14 @@
 					</p>
 
 					<CaptchaBtn
+						data-test-id="captcha-audio-new"
 						:prepend-icon="mdiCached"
 						@click="chooseAudio"
 					>
 						{{ locales.audio.new }}
 					</CaptchaBtn>
 					<CaptchaBtn
+						data-test-id="captcha-audio-change"
 						:prepend-icon="mdiImageOutline"
 						@click="chooseImage"
 					>

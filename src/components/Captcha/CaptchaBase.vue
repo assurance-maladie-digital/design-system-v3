@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { onMounted, ref, watch } from 'vue'
+	import { onMounted, ref, watch, nextTick } from 'vue'
 	import {
 		createCaptchaAudio,
 		createCaptchaImage,
@@ -33,21 +33,24 @@
 	const errorMessage = ref<string | null>(null)
 	const state = ref<StateType>('idle')
 
-	onMounted(() => {
-		chooseType(props.modelValue)
+	onMounted(async () => {
+		await chooseType(props.modelValue)
 	})
 
-	// ----- Watchers -----
-	watch(() => props.modelValue, (newType) => {
-		type.value = newType
-		chooseType(newType)
+	watch(() => props.modelValue, async (newType) => {
+		if (type.value !== newType) {
+			type.value = newType
+			await chooseType(newType)
+		}
 	})
 
-	// ----- Functions -----
+	async function chooseType(selectedType: CaptchaType) {
+		if (type.value === selectedType && state.value !== 'idle') return
 
-	function chooseType(selectedType: CaptchaType) {
 		updateType(selectedType)
 		resetError()
+
+		await nextTick()
 
 		switch (selectedType) {
 		case 'image':
@@ -108,8 +111,17 @@
 	}
 
 	function resetValues() {
-		audioElement.value?.pause()
-		audioElement.value = null
+		// Stop audio and clean up in a safe order
+		if (audioElement.value) {
+			try {
+				audioElement.value.pause()
+			}
+			catch {
+				// Ignore errors if audio element is already disposed
+			}
+			audioElement.value = null
+		}
+
 		url.value = null
 		id.value = null
 		state.value = 'pending'
@@ -148,6 +160,8 @@
 	}
 
 	function updateType(selectedType: CaptchaType) {
+		if (type.value === selectedType) return
+
 		type.value = selectedType
 		emitTypeChangeEvent(selectedType)
 	}
