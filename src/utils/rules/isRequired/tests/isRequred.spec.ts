@@ -44,4 +44,28 @@ describe('isRequiredFn', () => {
 		const result = rule('')
 		expect(result).toBe('Custom required message')
 	})
+
+	it('returns true for number 0', () => {
+		const rule = isRequiredFn()
+		const result = rule(0)
+		expect(result).toBe(true)
+	})
+
+	it('returns true for negative numbers', () => {
+		const rule = isRequiredFn()
+		const result = rule(-1)
+		expect(result).toBe(true)
+	})
+
+	it('returns true for positive numbers', () => {
+		const rule = isRequiredFn()
+		const result = rule(42)
+		expect(result).toBe(true)
+	})
+
+	it('returns false for undefined', () => {
+		const rule = isRequiredFn()
+		const result = rule(undefined)
+		expect(result).toBe('Le champ est requis.')
+	})
 })
