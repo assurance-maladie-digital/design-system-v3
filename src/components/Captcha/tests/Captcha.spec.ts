@@ -9,7 +9,7 @@ describe('Captcha', () => {
 		// Suppress Vue internal warnings during component testing
 		const originalWarn = console.warn
 		const originalError = console.error
-		
+
 		console.warn = (...args) => {
 			const message = args.join(' ')
 			if (message.includes('Unhandled error during execution')
@@ -19,7 +19,7 @@ describe('Captcha', () => {
 			}
 			originalWarn(...args)
 		}
-		
+
 		console.error = (...args) => {
 			const message = args.join(' ')
 			if (message.includes('Unhandled error during execution')
@@ -59,10 +59,10 @@ describe('Captcha', () => {
 		// Wait for the component to fully mount and initialize
 		await wrapper.vm.$nextTick()
 		await wrapper.vm.$nextTick()
-		
+
 		// Allow additional time for async initialization
 		await new Promise(resolve => setTimeout(resolve, 50))
-		
+
 		expect(fetch).toHaveBeenCalledTimes(1)
 
 		await wrapper.vm.$nextTick()
@@ -104,10 +104,10 @@ describe('Captcha', () => {
 		// Wait for the component to fully mount and initialize
 		await wrapper.vm.$nextTick()
 		await wrapper.vm.$nextTick()
-		
+
 		// Allow additional time for async initialization
 		await new Promise(resolve => setTimeout(resolve, 50))
-		
+
 		expect(fetch).toHaveBeenCalledTimes(1)
 
 		await wrapper.vm.$nextTick()
@@ -167,7 +167,7 @@ describe('Captcha', () => {
 				service: (_id, _value): any => {},
 			},
 		})
-		
+
 		// Wait for initial component setup
 		await wrapper.vm.$nextTick()
 		await wrapper.vm.$nextTick()
@@ -180,15 +180,15 @@ describe('Captcha', () => {
 		// Test switching by directly calling the component method instead of triggering DOM events
 		const captchaBaseComponent = wrapper.findComponent({ name: 'CaptchaBase' })
 		expect(captchaBaseComponent.exists()).toBe(true)
-		
+
 		// Change the type prop directly to simulate switching
 		await wrapper.setProps({ defaultType: 'audio' })
-		
+
 		// Allow sufficient time for the component to react to prop changes
 		await wrapper.vm.$nextTick()
 		await wrapper.vm.$nextTick()
 		await new Promise(resolve => setTimeout(resolve, 100))
-		
+
 		// Verify we can detect audio mode elements
 		expect(wrapper.text()).toContain('audio')
 	})
@@ -214,7 +214,7 @@ describe('Captcha', () => {
 				service: (_id, _value): any => {},
 			},
 		})
-		
+
 		// Wait for initial component setup
 		await wrapper.vm.$nextTick()
 		await wrapper.vm.$nextTick()
@@ -225,12 +225,12 @@ describe('Captcha', () => {
 
 		// Test switching by changing props instead of DOM interaction
 		await wrapper.setProps({ defaultType: 'image' })
-		
+
 		// Allow sufficient time for the component to react to prop changes
 		await wrapper.vm.$nextTick()
 		await wrapper.vm.$nextTick()
 		await new Promise(resolve => setTimeout(resolve, 100))
-		
+
 		// Verify we can detect image mode elements
 		expect(wrapper.text()).toContain('image')
 	})
