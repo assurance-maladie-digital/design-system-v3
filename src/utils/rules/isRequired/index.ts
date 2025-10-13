@@ -21,3 +21,8 @@ export function isRequiredFn(
 }
 
 export const isRequired = isRequiredFn()
+
+/**
+ * @deprecated utiliser à la place Value depuis src\utils\rules\types.d.ts
+ */
+export type { Value } from '../types'
