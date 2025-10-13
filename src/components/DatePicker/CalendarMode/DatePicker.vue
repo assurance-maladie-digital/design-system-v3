@@ -887,6 +887,7 @@
 				:no-icon="props.noIcon"
 				:is-outlined="props.isOutlined"
 				:readonly="props.readonly"
+				:title="props.title || undefined"
 				:width="props.width"
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"

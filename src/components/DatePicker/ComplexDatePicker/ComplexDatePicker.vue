@@ -964,6 +964,7 @@
 						:required="props.required"
 						:disabled="props.disabled"
 						:readonly="props.readonly"
+						:title="props.title || undefined"
 						:is-outlined="props.isOutlined"
 						:display-icon="props.displayIcon"
 						:display-append-icon="props.displayAppendIcon"
