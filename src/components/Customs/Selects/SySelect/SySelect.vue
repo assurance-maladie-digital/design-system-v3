@@ -7,6 +7,7 @@
 	import { ref, watch, onMounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
@@ -703,9 +704,29 @@
 		})
 	}, { deep: true })
 
+	// Méthode de validation pour l'enregistrement avec le système de validation du formulaire
+	const validateOnSubmit = (): boolean => {
+		// Si en mode readonly ou si la gestion d'erreur est désactivée, toujours valide
+		if (props.readonly || props.disableErrorHandling) {
+			return true
+		}
+
+		// Vérifier si une valeur est sélectionnée quand le champ est requis
+		const isValid = !isRequired.value
+
+		// Mettre à jour l'état d'erreur
+		hasError.value = !isValid || props.errorMessages.length > 0
+
+		return isValid
+	}
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
+
 	defineExpose({
 		isOpen,
 		closeList,
+		validateOnSubmit,
 	})
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -883,9 +904,15 @@
 				<VListItemTitle>
 					<span
 						v-if="allowHtml"
+						class="item-text"
 						v-html="getItemText(item)"
 					/>
-					<span v-else>{{ getItemText(item) }}</span>
+					<span
+						v-else
+						class="item-text"
+					>
+						{{ getItemText(item) }}
+					</span>
 				</VListItemTitle>
 			</VListItem>
 		</VList>
@@ -956,6 +983,21 @@
 	outline: 2px solid tokens.$primary-base;
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
+}
+
+/* Permettre le passage à la ligne pour les textes longs dans la liste déroulante */
+.v-list-item-title {
+	white-space: normal;
+	word-wrap: break-word;
+	word-break: break-word;
+	line-height: 1.2;
+	padding: 4px 0;
+}
+
+/* Style spécifique pour le contenu texte des éléments de liste */
+.item-text {
+	display: block;
+	padding: 2px 0;
 }
 
 .v-icon {

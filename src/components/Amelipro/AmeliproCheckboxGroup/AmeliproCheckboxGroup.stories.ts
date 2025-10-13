@@ -104,7 +104,7 @@ export const Default: Story = {
 	>
 		<template #append-1>
 			<AmeliproTooltips
-				class="ml-2"
+				classes="ml-2"
 				tooltip-text="contenu de la tooltip"
 				unique-id="ma-tooltip"
 			/>
@@ -172,7 +172,7 @@ export const Default: Story = {
 >
 	<template #append-1>
 		<AmeliproTooltips
-			class="ml-2"
+			classes="ml-2"
 			tooltip-text="contenu de la tooltip"
 			unique-id="ma-tooltip"
 		/>

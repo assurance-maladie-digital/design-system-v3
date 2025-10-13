@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 	import { computed, ref, watch, onMounted, nextTick } from 'vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales } from './locales'
 
 	const props = withDefaults(
@@ -253,6 +254,9 @@
 	onMounted(() => {
 		removeAriaAttributes()
 	})
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
 
 	const toggleMixed = () => {
 		if (!props.readonly && !props.disabled) {

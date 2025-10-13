@@ -5,6 +5,7 @@
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useValidation } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
@@ -62,6 +63,7 @@
 		displayHolidayDays?: boolean
 		useCombinedMode?: boolean
 		textFieldActivator?: boolean
+		title?: string | false
 		displayAsterisk?: boolean
 		period?: {
 			min?: string
@@ -101,11 +103,9 @@
 		displayHolidayDays: true,
 		useCombinedMode: false,
 		textFieldActivator: false,
+		title: false,
 		displayAsterisk: false,
-		period: () => ({
-			min: '',
-			max: '',
-		}),
+		period: () => ({ min: '', max: '' }),
 		autoClamp: false,
 		isValidateOnBlur: true,
 	})
@@ -120,6 +120,9 @@
 	const selectedDates = ref<Date | Date[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
+
+	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format))
+	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format))
 
 	// Utilisation du composable pour l'affichage formaté des dates
 	const { displayedDateString } = useDisplayedDateString({
@@ -231,7 +234,8 @@
 			}
 			return
 		}
-		if (!selectedDates.value) return
+		// Permettre aux custom rules de s'exécuter même sur des champs vides
+		if (!selectedDates.value && (!props.customRules || props.customRules.length === 0)) return
 
 		// Préparer les dates à valider
 		const datesToValidate = Array.isArray(selectedDates.value)
@@ -239,7 +243,8 @@
 			: [selectedDates.value]
 
 		// Valider chaque date
-		if (shouldDisplayErrors) {
+		// Ne pas afficher d'erreurs de custom rules si on est dans le contexte du mounted initial
+		if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
 			datesToValidate.forEach((date) => {
 				validateField(
 					date,
@@ -551,7 +556,10 @@
 		}
 
 		// Valider les dates au montage, mais sans afficher d'erreur pour le required
-		validateDates()
+		// Forcer la validation si il y a des custom rules et que le champ est rempli
+		const hasCustomRules = props.customRules && props.customRules.length > 0
+		const hasValue = selectedDates.value !== null && selectedDates.value !== undefined
+		validateDates(hasCustomRules && hasValue)
 
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
@@ -579,7 +587,11 @@
 		return errors.value.length === 0
 	}
 
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
+
 	const openDatePicker = () => {
+		if (props.disabled || props.readonly) return
 		if (!isDatePickerVisible.value) {
 			toggleDatePicker()
 		}
@@ -809,6 +821,7 @@
 	}
 
 	const openDatePickerOnClick = () => {
+		if (props.disabled || props.readonly) return
 		openDatePicker()
 		customizeMonthButton()
 	}
@@ -820,11 +833,15 @@
 	}
 
 	const openDatePickerOnIconClick = () => {
+		if (props.disabled || props.readonly) return
 		toggleDatePicker()
 	}
 
 	// Gestionnaire d'événement clavier pour l'input
 	const handleInputKeydown = (event: KeyboardEvent) => {
+		// Ne rien faire si le composant est en readonly
+		if (props.readonly) return
+
 		// Ouvrir le calendrier uniquement lorsque la touche Entrée est pressée
 		if (event.key === 'Enter') {
 			openDatePicker()
@@ -875,6 +892,7 @@
 				:no-icon="props.noIcon"
 				:is-outlined="props.isOutlined"
 				:readonly="props.readonly"
+				:title="props.title || undefined"
 				:width="props.width"
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
@@ -920,7 +938,7 @@
 				:show-week-number="props.showWeekNumber"
 				:is-birth-date="props.isBirthDate || props.birthDate"
 				:text-field-activator="props.textFieldActivator"
-				:title="'Date text input'"
+				:title="props.title || undefined"
 				:period="period"
 				:auto-clamp="props.autoClamp"
 				:label="props.label"
@@ -972,9 +990,9 @@
 						:density="props.density"
 						:hide-details="props.hideDetails"
 						:display-asterisk="props.displayAsterisk"
-						is-clearable
+						:is-clearable="!props.readonly"
 						:auto-clamp="props.autoClamp"
-						title="Date Picker"
+						:title="props.title || undefined"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
@@ -995,8 +1013,8 @@
 					:show-week="props.showWeekNumber"
 					:view-mode="currentViewMode"
 					:class="displayWeekendDays ? 'weekend' : ''"
-					:max="props.period?.max"
-					:min="props.period?.min"
+					:max="maxDate"
+					:min="minDate"
 					:display-holiday-days="props.displayHolidayDays"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"

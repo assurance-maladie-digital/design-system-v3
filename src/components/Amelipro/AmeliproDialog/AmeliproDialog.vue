@@ -173,7 +173,9 @@
 			if (!openedOnce.value) {
 				openedOnce.value = true
 				tabbableEl.value = document.getElementById(props.uniqueId)?.querySelectorAll('a[href], button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])')
-				observer.observe(document.getElementById(props.uniqueId) as Node, observerConfig)
+				if (document.getElementById(props.uniqueId)) {
+					observer.observe(document.getElementById(props.uniqueId) as Node, observerConfig)
+				}
 			}
 			setDialogAttributes()
 		}
@@ -188,7 +190,9 @@
 		// we disconnect the observer and reconnect it after setDialogAttributes to avoid infinite loop
 		observer.disconnect()
 		setDialogAttributes()
-		observer.observe(document.getElementById(props.uniqueId) as Node, observerConfig)
+		if (document.getElementById(props.uniqueId)) {
+			observer.observe(document.getElementById(props.uniqueId) as Node, observerConfig)
+		}
 	})
 
 	onUnmounted(() => observer.disconnect())
@@ -202,6 +206,7 @@
 		:eager="eager"
 		:fullscreen="fullscreen"
 		:persistent="persistent || noClickOutside"
+		scroll-strategy="none"
 		:width="width"
 		@click:outside="noClickOutside ? emitCloseEvent(false) : emitCloseEvent"
 		@keydown.escape="emitCloseEvent"

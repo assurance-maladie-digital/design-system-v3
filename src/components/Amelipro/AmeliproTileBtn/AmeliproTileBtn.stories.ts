@@ -49,7 +49,7 @@ export const Default: Story = {
 				code: `<ul class="list-style-none d-flex flex-wrap">
 	<li>
 		<AmeliproTileBtn
-			img-src="/tile-example.svg"
+			img-src="/amelipro/img/tile-example.svg"
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
 			unique-id="tile-btn-example-1"
@@ -57,7 +57,7 @@ export const Default: Story = {
 	</li>
 	<li>
 		<AmeliproTileBtn
-			img-src="/tile-example.svg"
+			img-src="/amelipro/img/tile-example.svg"
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
 			unique-id="tile-btn-example-2"
@@ -66,7 +66,7 @@ export const Default: Story = {
 	</li>
 	<li>
 		<AmeliproTileBtn
-			img-src="/tile-example.svg"
+			img-src="/amelipro/img/tile-example.svg"
 			invalid
 			label="Appareil de mesure Tensiomètre"
 			tile-min-height="100%"
@@ -102,7 +102,7 @@ export const Default: Story = {
 			<ul class="list-style-none d-flex flex-wrap">
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
-						img-src="/tile-example.svg"
+						img-src="/amelipro/img/tile-example.svg"
 						label="Appareil de mesure Tensiomètre"
 						tile-min-height="100%"
 						unique-id="tile-btn-example-1"
@@ -111,7 +111,7 @@ export const Default: Story = {
 				</li>
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
-						img-src="/tile-example.svg"
+						img-src="/amelipro/img/tile-example.svg"
 						label="Appareil de mesure Tensiomètre"
 						tile-min-height="100%"
 						unique-id="tile-btn-example-2"
@@ -121,7 +121,7 @@ export const Default: Story = {
 				</li>
 				<li style="margin: 10px; width: calc((100% / 3) - 20px);">
 					<AmeliproTileBtn
-						img-src="/tile-example.svg"
+						img-src="/amelipro/img/tile-example.svg"
 						invalid
 						label="Appareil de mesure Tensiomètre"
 						tile-min-height="100%"
@@ -131,5 +131,221 @@ export const Default: Story = {
 				</li>
 			</ul>
 		`,
+	}),
+}
+
+// --- Tuile bouton désactivée ---
+export const Desactivee: Story = {
+	name: 'Désactivée',
+	args: {
+		imgSrc: '/amelipro/img/tile-example.svg',
+		label: 'Bouton désactivé',
+		tileMinHeight: '100%',
+		uniqueId: 'tile-btn-disabled',
+		disabled: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproTileBtn
+  img-src="/amelipro/img/tile-example.svg"
+  label="Bouton désactivé"
+  tile-min-height="100%"
+  unique-id="tile-btn-disabled"
+  :disabled="true"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTileBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Le bouton est désactivé grâce à la prop <code>disabled</code>.</p>
+<AmeliproTileBtn v-bind="args" />
+`,
+	}),
+}
+
+// --- Tuile bouton avec message informatif ---
+export const AvecMessageInfo: Story = {
+	name: 'Avec message informatif',
+	args: {
+		imgSrc: '/amelipro/img/tile-example.svg',
+		label: 'Bouton avec info',
+		tileMinHeight: '100%',
+		uniqueId: 'tile-btn-info',
+		message: 'Information complémentaire',
+		messageType: 'info',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproTileBtn
+  img-src="/amelipro/img/tile-example.svg"
+  label="Bouton avec info"
+  tile-min-height="100%"
+  unique-id="tile-btn-info"
+  message="Information complémentaire"
+  message-type="info"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTileBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Affichage d’un message informatif grâce aux props <code>message</code> et <code>messageType</code>.</p>
+<AmeliproTileBtn v-bind="args" />
+`,
+	}),
+}
+
+// --- Tuile bouton avec message d’erreur ---
+export const AvecMessageErreur: Story = {
+	name: 'Avec message d’erreur',
+	args: {
+		imgSrc: '/amelipro/img/tile-example.svg',
+		label: 'Bouton avec erreur',
+		tileMinHeight: '100%',
+		uniqueId: 'tile-btn-error',
+		message: 'Erreur détectée',
+		messageType: 'error',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproTileBtn
+  img-src="/amelipro/img/tile-example.svg"
+  label="Bouton avec erreur"
+  tile-min-height="100%"
+  unique-id="tile-btn-error"
+  message="Erreur détectée"
+  message-type="error"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTileBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Affichage d’un message d’erreur grâce à la prop <code>messageType="error"</code>.</p>
+<AmeliproTileBtn v-bind="args" />
+`,
+	}),
+}
+
+// --- Tuile bouton avec informations complémentaires ---
+export const AvecInfosComplements: Story = {
+	name: 'Avec infos complémentaires',
+	args: {
+		imgSrc: '/amelipro/img/tile-example.svg',
+		label: 'Bouton avec infos',
+		tileMinHeight: '100%',
+		uniqueId: 'tile-btn-complement',
+		complementaryInfoLine1: 'Complément 1',
+		complementaryInfoLine2: 'Complément 2',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproTileBtn
+  img-src="/amelipro/img/tile-example.svg"
+  label="Bouton avec infos"
+  tile-min-height="100%"
+  unique-id="tile-btn-complement"
+  complementary-info-line1="Complément 1"
+  complementary-info-line2="Complément 2"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTileBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Affichage de deux lignes d’informations complémentaires grâce aux props <code>complementaryInfoLine1</code> et <code>complementaryInfoLine2</code>.</p>
+<AmeliproTileBtn v-bind="args" />
+`,
+	}),
+}
+
+// --- Tuile bouton avec navigation externe (href) ---
+export const AvecLien: Story = {
+	name: 'Avec lien externe',
+	args: {
+		imgSrc: '/amelipro/img/tile-example.svg',
+		label: 'Bouton avec lien',
+		tileMinHeight: '100%',
+		uniqueId: 'tile-btn-href',
+		href: 'https://espacepro.ameli.fr',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproTileBtn
+  img-src="/amelipro/img/tile-example.svg"
+  label="Bouton avec lien"
+  tile-min-height="100%"
+  unique-id="tile-btn-href"
+  href="https://espacepro.ameli.fr"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTileBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Le bouton agit comme un lien externe grâce à la prop <code>href</code>.</p>
+<AmeliproTileBtn v-bind="args" />
+`,
+	}),
+}
+
+// --- Tuile bouton avec navigation interne (to) ---
+export const AvecRouteInterne: Story = {
+	name: 'Avec route interne',
+	args: {
+		imgSrc: '/amelipro/img/tile-example.svg',
+		label: 'Bouton avec route',
+		tileMinHeight: '100%',
+		uniqueId: 'tile-btn-to',
+		to: '/ma-route-interne',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproTileBtn
+  img-src="/amelipro/img/tile-example.svg"
+  label="Bouton avec route"
+  tile-min-height="100%"
+  unique-id="tile-btn-to"
+  to="/ma-route-interne"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTileBtn },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Le bouton utilise la navigation interne grâce à la prop <code>to</code>.</p>
+<AmeliproTileBtn v-bind="args" />
+`,
 	}),
 }

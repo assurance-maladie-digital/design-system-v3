@@ -71,9 +71,30 @@ export const Default: Story = {
 
 }
 
+// Génrer le code à afficher dans la story AllIcons
+const allIconsCode = iconList.map((icon) => {
+	const bgColor = icon.noBackground ? 'transparent' : 'ap-blue-darken-1'
+	const color = icon.noBackground ? 'ap-blue-darken-1' : 'ap-white'
+	return `<AmeliproIcon
+		icon="${icon.name}"
+		icon-bg-color="${bgColor}"
+		icon-color="${color}"
+		unique-id="amelipro-icon-${icon.name}"
+	/>
+`
+}).join('\n')
+
 export const AllIcons: Story = {
 	args: { iconColor: 'ap-white' },
-	parameters: {},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+
+				code: allIconsCode,
+			},
+		],
+	},
 	render: args => ({
 		components: { AmeliproIcon },
 		setup() {
@@ -97,5 +118,44 @@ export const AllIcons: Story = {
 		<p class="mt-2"> {{ icon.name }} </p>
 	</li>
 </ul>`,
+	}),
+}
+
+export const AvecBordure: Story = {
+	name: 'Avec bordure personnalisée',
+	args: {
+		icon: 'utilisateur',
+		iconColor: 'ap-red-darken-1',
+		iconBgColor: 'ap-white',
+		bordered: true,
+		borderColor: 'ap-red-darken-1',
+		uniqueId: 'amelipro-icon-bordered',
+		xLarge: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <AmeliproIcon
+        icon="utilisateur"
+        icon-color="ap-red-darken-1"
+        icon-bg-color="ap-white"
+        bordered
+        border-color="ap-red-darken-1"
+        x-large
+        unique-id="amelipro-icon-bordered"
+    />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIcon },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Icône Amelipro avec bordure personnalisée (<code>bordered</code> et <code>borderColor</code>).</p>
+<AmeliproIcon v-bind="args" />
+        `,
 	}),
 }

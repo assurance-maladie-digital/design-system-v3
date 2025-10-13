@@ -13,6 +13,7 @@
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { useValidation, type ValidationRule, type ValidationResult } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
@@ -34,6 +35,7 @@
 		required?: boolean
 		disabled?: boolean
 		readonly?: boolean
+		title?: string | false
 		isOutlined?: boolean
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
@@ -47,6 +49,8 @@
 		displayRange?: boolean
 		autoClamp?: boolean
 		isValidateOnBlur?: boolean
+		density?: 'default' | 'comfortable' | 'compact'
+		externalErrorMessages?: string[]
 	}>(), {
 		modelValue: null,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
@@ -56,6 +60,7 @@
 		required: false,
 		disabled: false,
 		readonly: false,
+		title: false,
 		isOutlined: true,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -69,6 +74,8 @@
 		displayRange: false,
 		autoClamp: true,
 		isValidateOnBlur: true,
+		density: 'default',
+		externalErrorMessages: () => [],
 	})
 
 	const emit = defineEmits<{
@@ -117,7 +124,9 @@
 		}
 
 	const { errors, warnings, successes, hasError, clearValidation, validateField } = validationApi
-	const errorMessages = errors
+
+	// Agrégation des erreurs internes et externes
+	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
 	const warningMessages = warnings
 	const successMessages = successes
 
@@ -539,6 +548,13 @@
 				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
 				return false
 			}
+			// Permettre aux custom rules de s'exécuter même sur des champs vides
+			// Mais seulement si l'utilisateur a interagi avec le champ
+			if (props.customRules && props.customRules.length > 0 && hasInteracted.value) {
+				// Exécuter les custom rules sur la valeur vide
+				safeValidateField(null, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+				return !hasError.value
+			}
 			return true
 		}
 
@@ -560,8 +576,8 @@
 						errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 						return false
 					}
-					safeValidateField(startDate, props.customRules, props.customWarningRules)
-					if (errors.value.length === 0) safeValidateField(endDate, props.customRules, props.customWarningRules)
+					safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					if (errors.value.length === 0) safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 				}
 			}
 			return !hasError.value
@@ -620,7 +636,7 @@
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
-			const customRulesValidationResult = safeValidateField(inputValue.value, props.customRules, props.customWarningRules)
+			const customRulesValidationResult = safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
@@ -637,8 +653,11 @@
 			else {
 				runRules(inputValue.value)
 				if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
-				// For invalid input, emit null instead of previous value
-				emitModel(null)
+				// Only emit null for format errors, not for custom rule errors
+				if (!formatValidationResult.isValid) {
+					emitModel(null)
+				}
+				// For custom rule errors with valid format, keep the current value
 			}
 		}
 
@@ -921,6 +940,9 @@
 		return !hasError.value
 	}
 
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
+
 	defineExpose({
 		validateOnSubmit,
 		focus() {
@@ -985,7 +1007,7 @@
 			'warning-field': isOnWarning,
 			'success-field': isOnSuccess,
 		}"
-		:disabled="props.disabled || props.readonly"
+		:disabled="props.disabled"
 		:error-messages="errorMessages"
 		:label="props.label || ''"
 		:placeholder="props.placeholder"
@@ -997,11 +1019,12 @@
 		:success-messages="props.showSuccessMessages ? successMessages : []"
 		:bg-color="props.bgColor"
 		color="primary"
-		is-clearable
+		:is-clearable="!props.readonly"
 		:display-persistent-placeholder="true"
 		:aria-label="ariaLabel || props.placeholder"
 		:is-validate-on-blur="props.isValidateOnBlur"
-		title="Date text input"
+		:density="props.density"
+		:title="props.title || undefined"
 		@focus="onFocus"
 		@blur="onBlur"
 		@keydown="handleKeydown"

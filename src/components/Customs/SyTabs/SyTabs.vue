@@ -1,9 +1,10 @@
 <script setup lang="ts">
-	import type { TabItem } from './types'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
-	import { config } from './config'
-	import { ref, watch, onMounted, onUnmounted, getCurrentInstance } from 'vue'
+	import { getCurrentInstance, onMounted, onUnmounted, ref, watch } from 'vue'
 	import type { Router } from 'vue-router'
+	import { config } from './config'
+	import type { TabItem } from './types'
+	import { useTabTransition } from './useTabTransition'
 
 	const props = withDefaults(defineProps<{
 		items: TabItem[]
@@ -79,11 +80,15 @@
 
 	// Fonction pour activer un élément au clic avec confirmation si nécessaire
 	async function setActiveItem(index: number) {
-		// Si l'index est déjà actif, ne rien faire
+		// Si l'index est déjà actif ou si l'élément est désactivé, ne rien faire
 		if (index === activeItemIndex.value) return
 
 		// Récupérer l'item pour la navigation potentielle
 		const item = props.items[index]
+
+		// Ne rien faire si l'élément est désactivé
+		if (item.disabled) return
+
 		const hasHref = item && (item.href || item.to)
 
 		// Si la confirmation est activée, demander confirmation
@@ -111,6 +116,11 @@
 	function handleKeyPress(event: KeyboardEvent, index: number) {
 		if (event.key === 'Enter' || event.key === ' ') {
 			const item = props.items[index]
+			// Ne rien faire si l'élément est désactivé
+			if (item.disabled) {
+				event.preventDefault()
+				return
+			}
 			// Don't prevent default for external links - let them navigate naturally
 			if (!item.href) {
 				event.preventDefault()
@@ -147,18 +157,21 @@
 		let newIndex = currentIndex
 		switch (event.key) {
 		case 'ArrowLeft':
-			newIndex = currentIndex <= 0 ? itemCount - 1 : currentIndex - 1
+			newIndex = findPreviousEnabledTab(currentIndex)
 			break
 		case 'ArrowRight':
-			newIndex = currentIndex >= itemCount - 1 ? 0 : currentIndex + 1
+			newIndex = findNextEnabledTab(currentIndex)
 			break
 		case 'Home':
-			newIndex = 0
+			newIndex = findFirstEnabledTab()
 			break
 		case 'End':
-			newIndex = itemCount - 1
+			newIndex = findLastEnabledTab()
 			break
 		}
+
+		// Si tous les onglets sont désactivés, ne rien faire
+		if (newIndex === -1) return
 
 		// Mettre à jour l'index de l'élément focusé et actif
 		focusedItemIndex.value = newIndex
@@ -231,6 +244,67 @@
 			}
 		}
 	})
+
+	const tablist = ref<HTMLElement | null>(null)
+	const { xPosition, width } = useTabTransition(tablist, activeItemIndex)
+
+	// Fonctions utilitaires pour la navigation entre les onglets non désactivés
+	function findNextEnabledTab(currentIndex: number): number {
+		const itemCount = props.items?.length || 0
+		if (itemCount === 0) return -1
+
+		let nextIndex = currentIndex >= itemCount - 1 ? 0 : currentIndex + 1
+		let loopCounter = 0
+
+		// Chercher le prochain onglet non désactivé
+		while (loopCounter < itemCount && props.items[nextIndex]?.disabled) {
+			nextIndex = nextIndex >= itemCount - 1 ? 0 : nextIndex + 1
+			loopCounter++
+		}
+
+		// Si on a fait le tour et tous les onglets sont désactivés
+		return loopCounter < itemCount ? nextIndex : -1
+	}
+
+	function findPreviousEnabledTab(currentIndex: number): number {
+		const itemCount = props.items?.length || 0
+		if (itemCount === 0) return -1
+
+		let prevIndex = currentIndex <= 0 ? itemCount - 1 : currentIndex - 1
+		let loopCounter = 0
+
+		// Chercher le précédent onglet non désactivé
+		while (loopCounter < itemCount && props.items[prevIndex]?.disabled) {
+			prevIndex = prevIndex <= 0 ? itemCount - 1 : prevIndex - 1
+			loopCounter++
+		}
+
+		// Si on a fait le tour et tous les onglets sont désactivés
+		return loopCounter < itemCount ? prevIndex : -1
+	}
+
+	function findFirstEnabledTab(): number {
+		const itemCount = props.items?.length || 0
+		if (itemCount === 0) return -1
+
+		for (let i = 0; i < itemCount; i++) {
+			if (!props.items[i].disabled) return i
+		}
+
+		return -1
+	}
+
+	function findLastEnabledTab(): number {
+		const itemCount = props.items?.length || 0
+		if (itemCount === 0) return -1
+
+		for (let i = itemCount - 1; i >= 0; i--) {
+			if (!props.items[i].disabled) return i
+		}
+
+		return -1
+	}
+
 </script>
 
 <template>
@@ -249,6 +323,7 @@
 					class="sy-tabs__nav"
 				>
 					<ul
+						ref="tablist"
 						class="sy-tabs__list"
 					>
 						<li
@@ -259,59 +334,119 @@
 						>
 							<!-- Use RouterLink for internal navigation -->
 							<RouterLink
-								v-if="item.to && router"
+								v-if="item.to && router && !item.disabled"
 								:id="`tab-${index}`"
 								:to="item.to"
 								class="sy-tabs__button"
-								:class="{ 'sy-tabs__button--active': activeItemIndex === index }"
+								:class="{
+									'sy-tabs__button--active': activeItemIndex === index,
+									'sy-tabs__button--disabled': item.disabled
+								}"
 								role="tab"
 								:aria-selected="activeItemIndex === index"
 								:aria-controls="`panel-${index}`"
-								tabindex="0"
-								@click="setActiveItem(index)"
+								:aria-disabled="item.disabled || undefined"
+								:tabindex="item.disabled ? -1 : 0"
+								@click="item.disabled ? undefined : setActiveItem(index)"
 								@keydown="(event) => {
-									handleKeyPress(event, index);
-									handleArrowNavigation(event, index);
+									if (!item.disabled) {
+										handleKeyPress(event, index);
+										handleArrowNavigation(event, index);
+									}
 								}"
 							>
 								{{ item.label.toUpperCase() }}
 							</RouterLink>
 							<!-- Use regular anchor for external links -->
 							<a
-								v-else-if="item.href"
+								v-else-if="item.href && !item.disabled"
 								:id="`tab-${index}`"
 								:href="item.href"
 								class="sy-tabs__button"
-								:class="{ 'sy-tabs__button--active': activeItemIndex === index }"
+								:class="{
+									'sy-tabs__button--active': activeItemIndex === index,
+									'sy-tabs__button--disabled': item.disabled
+								}"
 								role="tab"
 								:aria-selected="activeItemIndex === index"
 								:aria-controls="`panel-${index}`"
-								tabindex="0"
+								:aria-disabled="item.disabled || undefined"
+								:tabindex="item.disabled ? -1 : 0"
 								@click="(event) => {
+									if (item.disabled) {
+										event.preventDefault();
+										return;
+									}
 									// Don't prevent default for external links - let them navigate naturally
 									setActiveItem(index);
 								}"
 								@keydown="(event) => {
-									handleKeyPress(event, index);
-									handleArrowNavigation(event, index);
+									if (!item.disabled) {
+										handleKeyPress(event, index);
+										handleArrowNavigation(event, index);
+									}
 								}"
 							>
 								{{ item.label.toUpperCase() }}
 							</a>
 							<!-- Fallback button for items without navigation -->
+							<!-- Version désactivée du RouterLink -->
+							<button
+								v-else-if="item.to && router && item.disabled"
+								:id="`tab-${index}`"
+								class="sy-tabs__button"
+								:class="{
+									'sy-tabs__button--active': activeItemIndex === index,
+									'sy-tabs__button--disabled': true
+								}"
+								role="tab"
+								:aria-selected="activeItemIndex === index"
+								:aria-controls="`panel-${index}`"
+								aria-disabled="true"
+								tabindex="-1"
+								disabled
+							>
+								{{ item.label.toUpperCase() }}
+							</button>
+							<!-- Version désactivée du lien -->
+							<button
+								v-else-if="item.href && item.disabled"
+								:id="`tab-${index}`"
+								class="sy-tabs__button"
+								:class="{
+									'sy-tabs__button--active': activeItemIndex === index,
+									'sy-tabs__button--disabled': true
+								}"
+								role="tab"
+								:aria-selected="activeItemIndex === index"
+								:aria-controls="`panel-${index}`"
+								aria-disabled="true"
+								tabindex="-1"
+								disabled
+							>
+								{{ item.label.toUpperCase() }}
+							</button>
+							<!-- Fallback button pour les onglets standards -->
 							<button
 								v-else
 								:id="`tab-${index}`"
 								class="sy-tabs__button"
-								:class="{ 'sy-tabs__button--active': activeItemIndex === index }"
+								:class="{
+									'sy-tabs__button--active': activeItemIndex === index,
+									'sy-tabs__button--disabled': item.disabled
+								}"
 								role="tab"
 								:aria-selected="activeItemIndex === index"
 								:aria-controls="`panel-${index}`"
-								tabindex="0"
+								:aria-disabled="item.disabled || undefined"
+								:tabindex="item.disabled ? -1 : 0"
+								:disabled="item.disabled"
 								@click="setActiveItem(index)"
 								@keydown="(event) => {
-									handleKeyPress(event, index);
-									handleArrowNavigation(event, index);
+									if (!item.disabled) {
+										handleKeyPress(event, index);
+										handleArrowNavigation(event, index);
+									}
 								}"
 							>
 								{{ item.label.toUpperCase() }}
@@ -360,10 +495,23 @@
 
 .sy-tabs__list {
 	display: flex;
+	position: relative;
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 	width: 100%;
+}
+
+.sy-tabs__list::after {
+	content: '';
+	width: v-bind("width + 'px'");
+	height: 3px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	translate: v-bind("xPosition + 'px'");
+	transition: translate 0.2s ease-in-out, width 0.2s ease-in-out;
+	background-color: v-bind("options.tab['slider-color']");
 }
 
 .sy-tabs__item {
@@ -386,19 +534,28 @@
 	transition: color 0.2s ease;
 	text-decoration: none; /* For RouterLink elements */
 
-	&:hover {
+	&:hover:not(.sy-tabs__button--disabled) {
 		color: v-bind("options.tab['active-color']");
 	}
 
-	&:focus-visible {
+	&:focus-visible:not(.sy-tabs__button--disabled) {
 		outline: 3px solid v-bind("options.tab['active-color']");
 		outline-offset: -3px;
 	}
 
-	&--active {
+	&--active:not(.sy-tabs__button--disabled) {
 		color: v-bind("options.tab['active-color']");
-		border-bottom: 3px solid v-bind("options.tab['slider-color']");
 	}
+
+	&--disabled {
+		color: rgba(var(--v-theme-on-surface), 0.38);
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+}
+
+.sy-tabs__button--active::after {
+	scale: 1 1;
 }
 
 .sy-tabs-panels {
@@ -410,4 +567,5 @@
 		display: none;
 	}
 }
+
 </style>

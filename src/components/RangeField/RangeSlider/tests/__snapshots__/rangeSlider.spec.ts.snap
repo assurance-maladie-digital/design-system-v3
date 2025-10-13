@@ -3,7 +3,7 @@
 exports[`RangeField component > should render the component 1`] = `
 <div class="wrapper">
   <div class="track">
-    <button
+    <div
       aria-label="Minimum"
       aria-orientation="horizontal"
       aria-valuemax="75"
@@ -15,6 +15,10 @@ exports[`RangeField component > should render the component 1`] = `
       tabindex="0"
       title="Minimum"
     >
+      <div
+        aria-hidden="true"
+        class="thumb-outline"
+      ></div>
       <div class="tooltip-wrapper">
         <div
           class="tooltip"
@@ -27,8 +31,8 @@ exports[`RangeField component > should render the component 1`] = `
         </div>
       </div>
       <span class="inner-thumb"></span>
-    </button>
-    <button
+    </div>
+    <div
       aria-label="Maximum"
       aria-orientation="horizontal"
       aria-valuemax="100"
@@ -40,6 +44,10 @@ exports[`RangeField component > should render the component 1`] = `
       tabindex="0"
       title="Maximum"
     >
+      <div
+        aria-hidden="true"
+        class="thumb-outline"
+      ></div>
       <div class="tooltip-wrapper">
         <div
           class="tooltip"
@@ -52,7 +60,7 @@ exports[`RangeField component > should render the component 1`] = `
         </div>
       </div>
       <span class="inner-thumb"></span>
-    </button>
+    </div>
     <div
       aria-hidden="true"
       class="

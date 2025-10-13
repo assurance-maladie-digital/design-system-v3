@@ -1,8 +1,8 @@
+import { useHolidayDay } from '@/composables/date/useHolidayDay'
 // Regular expressions
 export const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
 // Import du composable pour les jours fériés
-import { useHolidayDay } from '@/composables/date/useHolidayDay'
 
 export type ValidationResult = {
 	success?: string
@@ -212,6 +212,10 @@ export function useFieldValidation() {
 					if (!options.date) {
 						return { error: 'Configuration de la règle invalide' }
 					}
+					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
@@ -226,6 +230,10 @@ export function useFieldValidation() {
 					if (!referenceDate) {
 						return { error: 'Date de référence invalide' }
 					}
+
+					// Normaliser les dates en réinitialisant les heures/minutes/secondes
+					dateValue.setHours(0, 0, 0, 0)
+					referenceDate.setHours(0, 0, 0, 0)
 
 					return createValidationResult(
 						dateValue >= referenceDate,
@@ -237,7 +245,10 @@ export function useFieldValidation() {
 					if (!options.date) {
 						return { error: 'Configuration de la règle invalide' }
 					}
-
+					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
@@ -253,6 +264,10 @@ export function useFieldValidation() {
 						return { error: 'Date de référence invalide' }
 					}
 
+					// Normaliser les dates en réinitialisant les heures/minutes/secondes
+					dateValue.setHours(0, 0, 0, 0)
+					referenceDate.setHours(0, 0, 0, 0)
+
 					return createValidationResult(
 						dateValue <= referenceDate,
 						options.message || options.warningMessage || `${identifier} ne peut pas être après le ${options.date}.`,
@@ -263,7 +278,10 @@ export function useFieldValidation() {
 					if (!options.date) {
 						return { error: 'Configuration de la règle invalide' }
 					}
-
+					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }

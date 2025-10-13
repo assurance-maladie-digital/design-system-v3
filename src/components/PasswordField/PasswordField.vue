@@ -1,8 +1,4 @@
 <script lang="ts" setup>
-	import { ref, computed, watch } from 'vue'
-	import { config } from './config'
-	import { locales } from './locales'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import {
 		mdiEye,
 		mdiEyeOff,
@@ -10,9 +6,15 @@
 		mdiAlert,
 		mdiCheckCircle,
 	} from '@mdi/js'
+	import { ref, computed, watch, nextTick } from 'vue'
+	import { config } from './config'
+	import { locales } from './locales'
+	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import type { ColorType } from '@/components/Customs/SyTextField/types'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | null
@@ -34,6 +36,7 @@
 		isValidateOnBlur?: boolean
 		disableErrorHandling?: boolean
 		bgColor?: string
+		autocompleteType?: 'current-password' | 'new-password'
 	} & CustomizableOptions>(), {
 		modelValue: null,
 		variantStyle: 'outlined',
@@ -54,6 +57,7 @@
 		isValidateOnBlur: true,
 		disableErrorHandling: false,
 		bgColor: 'white',
+		autocompleteType: 'current-password',
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -62,10 +66,10 @@
 	const eyeIcon = mdiEye
 	const eyeOffIcon = mdiEyeOff
 	const showEyeIcon = ref(false)
+	const passwordFieldId = ref(`password-field-${Math.random().toString(36).substring(2, 10)}`)
+	const alertMessage = ref('')
 
-	const btnLabel = computed(() => {
-		return showEyeIcon.value ? locales.hidePassword : locales.showPassword
-	})
+	const btnLabel = locales.showPassword
 
 	const password = ref<string | null>(props.modelValue)
 	watch(
@@ -127,7 +131,7 @@
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlert
 		if (hasSuccess.value) return mdiCheckCircle
-		return undefined
+		return ''
 	})
 
 	const validationColor = computed(() => {
@@ -162,14 +166,41 @@
 		emit('update:modelValue', password.value)
 	})
 
+	function togglePasswordVisibility() {
+		showEyeIcon.value = !showEyeIcon.value
+		alertMessage.value = showEyeIcon.value ? locales.showedPassword : locales.hidedPassword
+		nextTick(() => {
+			// Connect input to status message via aria-describedby
+			const inputElement = document.getElementById(passwordFieldId.value)
+			const statusId = `${passwordFieldId.value}-status`
+
+			if (inputElement) {
+				// Get existing describedby IDs
+				const existingDescribedby = inputElement.getAttribute('aria-describedby')
+				const ids = existingDescribedby ? existingDescribedby.split(' ').filter(id => id !== statusId) : []
+
+				// Add our status ID
+				ids.push(statusId)
+
+				// Set the attribute
+				inputElement.setAttribute('aria-describedby', ids.join(' '))
+			}
+
+			// Reset the message after a short delay to avoid repeated announcements
+			setTimeout(() => {
+				alertMessage.value = ''
+			}, 2000)
+		})
+	}
+
 	function handleKeydown(event: KeyboardEvent): void {
 		if (event.key === 'Enter') {
 			validateOnSubmit()
 		}
 	}
 
-	const validateOnSubmit = () => {
-		if (props.readonly) return
+	const validateOnSubmit = (): boolean => {
+		if (props.readonly) return true // Retourner true au lieu de undefined
 		validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
 		const isValid = errors.value.length === 0
 		if (isValid) {
@@ -177,6 +208,9 @@
 		}
 		return isValid
 	}
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
 
 	defineExpose({
 		showEyeIcon,
@@ -192,8 +226,9 @@
 
 <template>
 	<SyTextField
+		v-bind="Object.fromEntries(Object.entries(options).filter(([key]) => key !== 'btn' && key !== 'icon' && key !== 'variant'))"
+		:id="passwordFieldId"
 		v-model="password"
-		v-bind="options"
 		:variant-style="props.variantStyle"
 		:color="props.color"
 		:label="props.label"
@@ -206,8 +241,11 @@
 		:placeholder="props.placeholder"
 		:bg-color="props.bgColor"
 		:type="showEyeIcon ? 'text' : 'password'"
+		:aria-invalid="hasError"
+		:aria-describedby="`${passwordFieldId}-status${props.customRules && props.customRules.length > 0 ? ' ' + passwordFieldId + '-guidelines' : ''}`"
 		:display-asterisk="props.displayAsterisk"
 		:rules="[...defaultRules, ...props.customRules]"
+		:autocomplete="props.autocompleteType"
 		class="vd-password"
 		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
 		@blur="props.isValidateOnBlur && !props.readonly ? validateField(password, [...defaultRules, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || []) : () => {}"
@@ -216,20 +254,39 @@
 		<template #append-inner>
 			<div
 				class="d-flex align-center"
-				v-bind="options.btn"
 			>
-				<VIcon
+				<SyIcon
 					:icon="validationIcon"
 					:color="validationColor"
+					decorative
 					class="mr-2"
 				/>
-				<VIcon
-					:icon="showEyeIcon ? eyeIcon : eyeOffIcon"
-					color="rgb(0 0 0 / 70%)"
+				<!-- Utiliser un vrai élément button plutôt qu'une icône avec role="button" -->
+				<v-button
+					type="button"
+					class="password-toggle-button"
 					:aria-label="btnLabel"
-					role="button"
-					@click="showEyeIcon = !showEyeIcon"
-				/>
+					:aria-pressed="showEyeIcon"
+					:aria-controls="passwordFieldId"
+					v-bind="options.btn"
+					@click="togglePasswordVisibility"
+					@keydown.space.prevent="togglePasswordVisibility"
+					@keydown.enter.prevent="togglePasswordVisibility"
+				>
+					<VIcon
+						:icon="showEyeIcon ? eyeIcon : eyeOffIcon"
+						color="rgb(0 0 0 / 70%)"
+						:aria-hidden="true"
+					/>
+				</v-button>
+			</div>
+			<div
+				:id="`${passwordFieldId}-status`"
+				class="d-sr-only"
+				role="alert"
+				aria-live="assertive"
+			>
+				{{ alertMessage }}
 			</div>
 		</template>
 	</SyTextField>
@@ -243,6 +300,28 @@
 		.v-field__input {
 			padding-right: 48px;
 		}
+	}
+}
+
+.password-toggle-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	padding: 4px;
+	border-radius: 4px;
+	outline: none;
+	transition: background-color 0.2s ease;
+
+	&:focus-visible {
+		background-color: rgb(0 0 0 / 8%);
+		box-shadow: 0 0 0 2px rgb(25 118 210 / 50%);
+	}
+
+	&:hover {
+		background-color: rgb(0 0 0 / 4%);
 	}
 }
 

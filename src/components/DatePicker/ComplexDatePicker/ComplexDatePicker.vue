@@ -21,6 +21,7 @@
 	import { VDatePicker } from 'vuetify/components'
 	import { useInputHandler } from '../composables/useInputHandler'
 	import { useValidation } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import type { DateObjectValue } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
@@ -122,6 +123,7 @@
 			noCalendar?: boolean
 			isOutlined?: boolean
 			readonly?: boolean
+			title?: string | false
 			width?: string
 			disableErrorHandling?: boolean
 			showSuccessMessages?: boolean
@@ -137,6 +139,7 @@
 			}
 			autoClamp?: boolean
 			isValidateOnBlur?: boolean
+			density?: 'default' | 'comfortable' | 'compact'
 		}>(),
 		{
 			modelValue: undefined,
@@ -158,6 +161,7 @@
 			noCalendar: false,
 			isOutlined: true,
 			readonly: false,
+			title: false,
 			width: '100%',
 			disableErrorHandling: false,
 			showSuccessMessages: true,
@@ -171,6 +175,7 @@
 			autoClamp: false,
 			label: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 			isValidateOnBlur: true,
+			density: 'default',
 		},
 	)
 
@@ -187,8 +192,8 @@
 	 * Derived values
 	 */
 	const returnFormat = computed(() => props.dateFormatReturn || props.format)
-	const minDate = computed(() => props.period?.min || dayjs().subtract(10, 'year').format(props.format))
-	const maxDate = computed(() => props.period?.max || dayjs().add(10, 'year').format(props.format))
+	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format))
+	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format))
 
 	/**
 	 * Validation + messages
@@ -208,9 +213,9 @@
 
 	const getMessageClasses = () => ({
 		'dp-width': true,
-		'v-messages__message--success': successMessages.value.length > 0,
 		'v-messages__message--error': errorMessages.value.length > 0,
-		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
+		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length === 0,
+		'v-messages__message--success': successMessages.value.length > 0 && errorMessages.value.length === 0 && warningMessages.value.length === 0,
 	})
 
 	/**
@@ -244,8 +249,8 @@
 		required: props.required,
 		displayRange: props.displayRange,
 		disableErrorHandling: props.disableErrorHandling,
-		customRules: props.customRules,
-		customWarningRules: props.customWarningRules,
+		customRules: computed(() => props.customRules),
+		customWarningRules: computed(() => props.customWarningRules),
 		selectedDates,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
@@ -306,7 +311,23 @@
 	watch(displayFormattedDateComputed, (newValue) => {
 		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
 	})
-
+	// Watcher pour re-valider quand les customRules changent
+	watch(() => props.customRules, () => {
+		if (selectedDates.value !== null) {
+			// Retarder légèrement pour s'assurer que les computed sont mis à jour
+			setTimeout(() => {
+				clearValidation()
+				const datesToValidate = Array.isArray(selectedDates.value) ? selectedDates.value : [selectedDates.value]
+				datesToValidate.forEach((date) => {
+					validateField(
+						date,
+						props.customRules,
+						props.customWarningRules,
+					)
+				})
+			}, 5)
+		}
+	}, { deep: true })
 	// Range handling
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 	const dateSelectionResult = useDateSelection(parseDate, selectedDates, props.format, props.displayRange)
@@ -624,8 +645,8 @@
 		format: props.format,
 		required: props.required,
 		disableErrorHandling: props.disableErrorHandling,
-		customRules: props.customRules,
-		customWarningRules: props.customWarningRules,
+		customRules: computed(() => props.customRules),
+		customWarningRules: computed(() => props.customWarningRules),
 		hasInteracted,
 		errors,
 		clearValidation,
@@ -849,6 +870,9 @@
 		return textInputValid && errors.value.length === 0
 	}
 
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
+
 	defineExpose({
 		validateOnSubmit,
 		isDatePickerVisible,
@@ -907,9 +931,10 @@
 				:show-success-messages="props.showSuccessMessages"
 				:bg-color="props.bgColor"
 				:auto-clamp="props.autoClamp"
+				:external-error-messages="errorMessages"
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
-				title="Date text input"
+				:title="props.title || undefined"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
@@ -939,6 +964,7 @@
 						:required="props.required"
 						:disabled="props.disabled"
 						:readonly="props.readonly"
+						:title="props.title || undefined"
 						:is-outlined="props.isOutlined"
 						:display-icon="props.displayIcon"
 						:display-append-icon="props.displayAppendIcon"
@@ -953,9 +979,11 @@
 						:display-range="props.displayRange"
 						:display-persistent-placeholder="true"
 						:is-validate-on-blur="props.isValidateOnBlur"
+						:external-error-messages="errorMessages"
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
 						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
+						:density="props.density"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
@@ -985,6 +1013,8 @@
 					:display-holiday-days="props.displayHolidayDays"
 					:display-asterisk="props.displayAsterisk"
 					:is-validate-on-blur="props.isValidateOnBlur"
+					:error-messages="errorMessages"
+					:density="props.density"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"

@@ -1,4 +1,4 @@
-import { type Ref } from 'vue'
+import { type Ref, unref } from 'vue'
 import { type ValidationResult } from '@/composables/validation/useValidation'
 import { DATE_PICKER_MESSAGES } from '../constants/messages'
 import {
@@ -18,8 +18,8 @@ export const useManualDateValidation = (options: {
 	format: string
 	required?: boolean
 	disableErrorHandling?: boolean
-	customRules?: CustomRule[]
-	customWarningRules?: CustomRule[]
+	customRules?: CustomRule[] | Ref<CustomRule[]>
+	customWarningRules?: CustomRule[] | Ref<CustomRule[]>
 
 	// Références réactives
 	hasInteracted: Ref<boolean>
@@ -96,10 +96,27 @@ export const useManualDateValidation = (options: {
 
 		// Valider les règles personnalisées
 		if (!disableErrorHandling) {
-			// Adapter les règles pour maintenir la compatibilité avec les tests existants
+			// Résoudre les références pour obtenir les valeurs actuelles
+			const currentCustomRules = unref(customRules)
+			const currentCustomWarningRules = unref(customWarningRules)
+
+			// Filtrer les règles qui sont prêtes (ont une date définie)
+			const readyRules = currentCustomRules.filter((rule) => {
+				if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
+					return rule.options && rule.options.date !== undefined
+				}
+				return true // Les autres types de règles sont toujours prêtes
+			})
+
+			// Si aucune règle n'est prête, skip la validation
+			if (readyRules.length === 0 && currentCustomRules.length > 0) {
+				return true
+			}
+
+			// Adapter les règles prêtes pour maintenir la compatibilité avec les tests existants
 			// en utilisant notre utilitaire pour éviter les erreurs de type
-			const safeCustomRules = adaptCustomRules(customRules, format)
-			const safeWarningRules = adaptCustomRules(customWarningRules, format)
+			const safeCustomRules = adaptCustomRules(readyRules, format)
+			const safeWarningRules = adaptCustomRules(currentCustomWarningRules, format)
 
 			// Appeler validateField pour évaluer les règles
 			const result = validateField(

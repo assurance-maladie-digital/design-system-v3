@@ -5,7 +5,7 @@ import AmeliproOnboarding from './AmeliproOnboarding.vue'
 
 const meta = {
 	argTypes: {
-		'attach': { description: 'attache le contenu de la boite de dialogue et son overlay à l\'intérieur de v-app' },
+		'attach': { description: 'attache le contenu de la boite de dialogue et son overlay à l’intérieur de v-app' },
 		'displayImgMobile': { description: 'Affiche l’image en version mobile' },
 		'eager': { description: 'Property héritée de Vuetify permettant de charger le contenu de la modale dans le DOM même lorsque la modale est fermée' },
 		'finalBtnLabel': { description: 'Label du bouton de fin de tutoriel' },
@@ -45,14 +45,14 @@ const steps = [
 			'Dans cet espace, vous allez pouvoir souscrire un contrat d’engagement au dispositif AIR afin de permettre aux professionnels de santé '
 			+ 'de votre établissement de consulter le DMP de leurs patients.',
 		],
-		img: './public/tile-example.svg',
+		img: '/amelipro/img/tile-example.svg',
 		title: 'Gérez votre contrat d\'accès au DMP en toute simplicité',
 	},
 	{
 		content: [
-			'Vous avez la possibilité de désigner les personnes qui seront les contacts privilégiés de l\'Assurance Maladie dans la gestion au quotidien de la solution AIR.',
+			'Vous avez la possibilité de désigner les personnes qui seront les contacts privilégiés de l’Assurance Maladie dans la gestion au quotidien de la solution AIR.',
 		],
-		img: './public/tile-example.svg',
+		img: '/amelipro/img/tile-example.svg',
 		title: 'Ajoutez ou modifiez des contacts',
 	},
 	{
@@ -60,7 +60,7 @@ const steps = [
 			'A partir de la page principale, vous pouvez consulter vos conditions d’engagement et retrouver les documents  '
 			+ 'utiles à l’application des conditions de mise en œuvre de la solution AIR.',
 		],
-		img: './public/tile-example.svg',
+		img: '/amelipro/img/tile-example.svg',
 		title: 'Retrouvez les informations utiles à la gestion de vos contrats',
 	},
 ]
@@ -106,14 +106,14 @@ export const Default: Story = {
 				'Dans cet espace, vous allez pouvoir souscrire un contrat d’engagement au dispositif AIR afin de permettre aux professionnels de santé ' 
 				+ 'de votre établissement de consulter le DMP de leurs patients.',
 			],
-			img: './public/tile-example.svg',
+			img: '/amelipro/img/tile-example.svg',
 			title: 'Gérez votre contrat d’accès au DMP en toute simplicité',
 		},
 		{
 			content: [
 				'Vous avez la possibilité de désigner les personnes qui seront les contacts privilégiés de l’Assurance Maladie dans la gestion au quotidien de la solution AIR.',
 			],
-			img: './public/tile-example.svg',
+			img: '/amelipro/img/tile-example.svg',
 			title: 'Ajoutez ou modifiez des contacts',
 		},
 		{
@@ -121,7 +121,7 @@ export const Default: Story = {
 				'A partir de la page principale, vous pouvez consulter vos conditions d’engagement et retrouver les documents  ' 
 				+ 'utiles à l’application des conditions de mise en œuvre de la solution AIR.',
 			],
-			img: './public/tile-example.svg',
+			img: '/amelipro/img/tile-example.svg',
 			title: 'Retrouvez les informations utiles à la gestion de vos contrats',
 		},
 	]
@@ -156,5 +156,278 @@ export const Default: Story = {
 	/>
 </div>
 		`,
+	}),
+}
+
+export const AvecBoutonFinalPersonnalise: Story = {
+	name: 'Avec bouton final personnalisé',
+	args: {
+		modelValue: false,
+		steps,
+		title: 'Tutoriel',
+		uniqueId: 'amelipro-onboarding-final-btn',
+		finalBtnLabel: 'Terminer le tutoriel',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <div>
+        <AmeliproBtn
+            unique-id="open-onboarding-final-btn"
+            @click="model = true"
+        >
+            Ouvrir le tutoriel (bouton final personnalisé)
+        </AmeliproBtn>
+        <AmeliproOnboarding
+            v-model="model"
+            :steps="steps"
+            title="Tutoriel"
+            unique-id="amelipro-onboarding-final-btn"
+            final-btn-label="Terminer le tutoriel"
+        />
+    </div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { AmeliproBtn, AmeliproOnboarding } from '@cnamts/synapse'
+
+const model = ref(false)
+const steps = [
+    {
+        content: [
+            'Dans cet espace, vous allez pouvoir souscrire un contrat d’engagement au dispositif AIR afin de permettre aux professionnels de santé ' +
+            'de votre établissement de consulter le DMP de leurs patients.',
+        ],
+        img: './public/tile-example.svg',
+        title: 'Gérez votre contrat d’accès au DMP en toute simplicité',
+    },
+    {
+        content: [
+            'Vous avez la possibilité de désigner les personnes qui seront les contacts privilégiés de l’Assurance Maladie dans la gestion au quotidien de la solution AIR.',
+        ],
+        img: './public/tile-example.svg',
+        title: 'Ajoutez ou modifiez des contacts',
+    },
+    {
+        content: [
+            'A partir de la page principale, vous pouvez consulter vos conditions d’engagement et retrouver les documents  ' +
+            'utiles à l’application des conditions de mise en œuvre de la solution AIR.',
+        ],
+        img: './public/tile-example.svg',
+        title: 'Retrouvez les informations utiles à la gestion de vos contrats',
+    },
+]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproBtn, AmeliproOnboarding },
+		setup() {
+			const model = ref(false)
+			return { args, model }
+		},
+		template: `
+<p class="mb-2">Onboarding avec un label de bouton final personnalisé (<code>finalBtnLabel</code>).</p>
+<div>
+    <AmeliproBtn
+        unique-id="open-onboarding-final-btn"
+        @click="model = true"
+    >
+        Ouvrir le tutoriel (bouton final personnalisé)
+    </AmeliproBtn>
+    <AmeliproOnboarding
+        v-bind="args"
+        v-model="model"
+    />
+</div>
+        `,
+	}),
+}
+
+export const Persistent: Story = {
+	name: 'Persistent (pas de croix ni bouton "Passer")',
+	args: {
+		modelValue: false,
+		steps,
+		title: 'Tutoriel',
+		uniqueId: 'amelipro-onboarding-persistent',
+		persistent: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <div>
+        <AmeliproBtn
+            unique-id="open-onboarding-persistent-btn"
+            @click="model = true"
+        >
+            Ouvrir le tutoriel (persistent)
+        </AmeliproBtn>
+        <AmeliproOnboarding
+            v-model="model"
+            :steps="steps"
+            title="Tutoriel"
+            unique-id="amelipro-onboarding-persistent"
+            persistent
+        />
+    </div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { AmeliproBtn, AmeliproOnboarding } from '@cnamts/synapse'
+
+const model = ref(false)
+const steps = [
+    {
+        content: [
+            'Dans cet espace, vous allez pouvoir souscrire un contrat d’engagement au dispositif AIR afin de permettre aux professionnels de santé ' +
+            'de votre établissement de consulter le DMP de leurs patients.',
+        ],
+        img: './public/tile-example.svg',
+        title: 'Gérez votre contrat d’accès au DMP en toute simplicité',
+    },
+    {
+        content: [
+            'Vous avez la possibilité de désigner les personnes qui seront les contacts privilégiés de l’Assurance Maladie dans la gestion au quotidien de la solution AIR.',
+        ],
+        img: './public/tile-example.svg',
+        title: 'Ajoutez ou modifiez des contacts',
+    },
+    {
+        content: [
+            'A partir de la page principale, vous pouvez consulter vos conditions d’engagement et retrouver les documents  ' +
+            'utiles à l’application des conditions de mise en œuvre de la solution AIR.',
+        ],
+        img: './public/tile-example.svg',
+        title: 'Retrouvez les informations utiles à la gestion de vos contrats',
+    },
+]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproBtn, AmeliproOnboarding },
+		setup() {
+			const model = ref(false)
+			return { args, model }
+		},
+		template: `
+<p class="mb-2">Onboarding persistent : pas de croix de fermeture ni de bouton "Passer" (<code>persistent</code>).</p>
+<div>
+    <AmeliproBtn
+        unique-id="open-onboarding-persistent-btn"
+        @click="model = true"
+    >
+        Ouvrir le tutoriel (persistent)
+    </AmeliproBtn>
+    <AmeliproOnboarding
+        v-bind="args"
+        v-model="model"
+    />
+</div>
+        `,
+	}),
+}
+
+export const LargeurPersonnalisee: Story = {
+	name: 'Largeur personnalisée',
+	args: {
+		modelValue: false,
+		steps,
+		title: 'Tutoriel',
+		uniqueId: 'amelipro-onboarding-width',
+		width: '900px',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <div>
+        <AmeliproBtn
+            unique-id="open-onboarding-width-btn"
+            @click="model = true"
+        >
+            Ouvrir le tutoriel (largeur personnalisée)
+        </AmeliproBtn>
+        <AmeliproOnboarding
+            v-model="model"
+            :steps="steps"
+            title="Tutoriel"
+            unique-id="amelipro-onboarding-width"
+            width="900px"
+        />
+    </div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { AmeliproBtn, AmeliproOnboarding } from '@cnamts/synapse'
+
+const model = ref(false)
+const steps = [
+    {
+        content: [
+            'Dans cet espace, vous allez pouvoir souscrire un contrat d’engagement au dispositif AIR afin de permettre aux professionnels de santé ' +
+            'de votre établissement de consulter le DMP de leurs patients.',
+        ],
+        img: './public/tile-example.svg',
+        title: 'Gérez votre contrat d’accès au DMP en toute simplicité',
+    },
+    {
+        content: [
+            'Vous avez la possibilité de désigner les personnes qui seront les contacts privilégiés de l’Assurance Maladie dans la gestion au quotidien de la solution AIR.',
+        ],
+        img: './public/tile-example.svg',
+        title: 'Ajoutez ou modifiez des contacts',
+    },
+    {
+        content: [
+            'A partir de la page principale, vous pouvez consulter vos conditions d’engagement et retrouver les documents  ' +
+            'utiles à l’application des conditions de mise en œuvre de la solution AIR.',
+        ],
+        img: './public/tile-example.svg',
+        title: 'Retrouvez les informations utiles à la gestion de vos contrats',
+    },
+]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproBtn, AmeliproOnboarding },
+		setup() {
+			const model = ref(false)
+			return { args, model }
+		},
+		template: `
+<p class="mb-2">Onboarding avec largeur personnalisée (<code>width="900px"</code>).</p>
+<div>
+    <AmeliproBtn
+        unique-id="open-onboarding-width-btn"
+        @click="model = true"
+    >
+        Ouvrir le tutoriel (largeur personnalisée)
+    </AmeliproBtn>
+    <AmeliproOnboarding
+        v-bind="args"
+        v-model="model"
+    />
+</div>
+        `,
 	}),
 }

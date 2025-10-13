@@ -121,7 +121,7 @@
 					<slot name="contentTitle">
 						<h2
 							:id="uniqueId ? `${uniqueId}-content-title` : undefined"
-							class="ap-parme--text text--darken-1 font-weight-semibold amelipro-error-template-content-title"
+							class="text-ap-parme-darken-1 font-weight-semibold amelipro-error-template-content-title"
 						>
 							{{ customContentTitle || contentTitle }}
 						</h2>

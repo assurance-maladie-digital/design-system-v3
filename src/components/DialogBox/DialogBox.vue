@@ -40,7 +40,7 @@
 	})
 
 	const confirmBtn = ref<VBtn | null>(null)
-	// Restor the focus to the last active element when the dialog is closed
+	// Restore the focus to the last active element when the dialog is closed
 	let activeElement: HTMLElement | null = null
 	watch(dialog, (newValue) => {
 		if (newValue) {
@@ -48,6 +48,11 @@
 			if (props.autofocusValidateBtn) {
 				nextTick(() => {
 					confirmBtn.value?.$el.focus()
+				})
+			}
+			else if (props.draggable) {
+				nextTick(() => {
+					dialogContent.value?.$el.querySelector('.sy-dialog-box-title')?.focus()
 				})
 			}
 		}
@@ -107,13 +112,15 @@
 		startDragging,
 		moveToLeft,
 		moveToRight,
+		moveToBottom,
+		moveToTop,
 	} = useDraggable(toRef(props, 'draggable'), dialogContent)
 </script>
 
 <template>
 	<VDialog
 		v-model="dialog"
-		:scrim="props.draggable ? false : true"
+		:scrim="props.draggable ? 'transparent' : true"
 		v-bind="$attrs"
 		:width="props.width"
 		:persistent="props.persistent"
@@ -122,8 +129,6 @@
 		class="sy-dialog-box"
 		:aria-labelledby="id"
 		@keydown.tab="handleFocus"
-		@keydown.left="moveToLeft"
-		@keydown.right="moveToRight"
 	>
 		<VCard
 			v-bind="options.card"
@@ -138,13 +143,19 @@
 				class="sy-dialog-box-title"
 				v-bind="options.cardTitle"
 				:title="props.draggable ? locales.dragInstruction : undefined"
+				:aria-label="props.draggable ? locales.dragInstructionLabel : undefined"
+				:tabindex="props.draggable ? 0 : undefined"
 				@mousedown="startDragging"
+				@keydown.left.self="moveToLeft"
+				@keydown.right.self="moveToRight"
+				@keydown.up.self="moveToTop"
+				@keydown.down.self="moveToBottom"
 			>
 				<slot name="title">
 					<h2
 						v-if="title"
 						:id="id"
-						class="text-h6 font-weight-bold"
+						class="text-h4 mr-6 font-weight-bold"
 					>
 						{{ props.title }}
 					</h2>
@@ -157,7 +168,7 @@
 					class="sy-dialog-box-close-btn"
 					v-bind="options.closeBtn"
 					:aria-label="locales.closeBtn"
-					@click="dialog = false"
+					@click.stop="dialog = false"
 				>
 					<SyIcon
 						:icon="closeIcon"
@@ -227,8 +238,8 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens' as *;
 
-.v-card__title > * {
-	line-height: 1em;
+.sy-dialog-box-title {
+	line-height: normal;
 }
 
 .v-btn--icon {
@@ -267,6 +278,12 @@ h2 {
 
 .sy-dialog-box-draggable .sy-dialog-box-title {
 	cursor: grab;
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -2px;
+		border-radius: 3px;
+	}
 }
 
 .sy-dialog-box-draggable--active .sy-dialog-box-title {

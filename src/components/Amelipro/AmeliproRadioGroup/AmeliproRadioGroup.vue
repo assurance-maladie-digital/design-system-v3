@@ -123,8 +123,9 @@
 					class="radio-group__label d-inline-flex"
 					:class="{
 						'mb-1': !fullHorizontal && !pills,
-						'mb-0 mb-md-4': fullHorizontal || pills,
-						'margin-label': horizontalLabel && !fullHorizontal,
+						'mb-0': fullHorizontal || pills,
+						'mb-md-4': fullHorizontal,
+						'margin-label': horizontalLabel || fullHorizontal,
 						'd-sr-only': hiddenLabel,
 					}"
 				>
@@ -360,7 +361,7 @@ input {
 				&::after {
 					position: absolute;
 					top: 1rem;
-					left: 1.1rem;
+					left: 0.75rem;
 					width: 1rem;
 					height: 0.5rem;
 					border-bottom: 2px solid apTokens.$ap-blue-darken1;

@@ -10,6 +10,7 @@ interface DatePickerProps {
 	'placeholder'?: string
 	'format'?: string
 	'dateFormatReturn'?: string
+	'density'?: 'default' | 'comfortable' | 'compact'
 	'isBirthDate'?: boolean
 	'birthDate'?: boolean
 	'showWeekNumber'?: boolean
@@ -29,7 +30,6 @@ interface DatePickerProps {
 	'disableErrorHandling'?: boolean
 	'showSuccessMessages'?: boolean
 	'bgColor'?: string
-	'density'?: 'default' | 'comfortable' | 'compact'
 	'hideDetails'?: boolean | 'auto'
 	'displayWeekendDays'?: boolean
 	'displayTodayButton'?: boolean
@@ -68,80 +68,108 @@ const meta = {
 		placeholder: {
 			control: 'text',
 			description: 'Texte indicatif',
+			defaultValue: 'JJ/MM/AAAA - JJ/MM/AAAA',
 		},
 		format: {
 			control: 'select',
 			options: ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
 			description: 'Format d\'affichage de la date',
+			defaultValue: 'DD/MM/YYYY',
 		},
 		dateFormatReturn: {
 			control: 'select',
 			options: ['', 'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
 			description: 'Format de la date pour la valeur de retour',
+			defaultValue: '',
 		},
 		label: {
 			control: 'text',
 			description: 'Libellé du champ',
+			defaultValue: 'Période',
 		},
 		required: {
 			control: 'boolean',
 			description: 'Champ obligatoire',
+			defaultValue: false,
 		},
 		disabled: {
 			control: 'boolean',
 			description: 'Désactive le champ',
+			defaultValue: false,
 		},
 		readonly: {
 			control: 'boolean',
 			description: 'Le champ est en lecture seule',
+			defaultValue: false,
 		},
 		isOutlined: {
 			control: 'boolean',
 			description: 'Affiche le champ en contour',
+			defaultValue: true,
 		},
 		displayIcon: {
 			control: 'boolean',
 			description: 'Affiche l\'icône calendrier',
+			defaultValue: true,
 		},
 		displayAppendIcon: {
 			control: 'boolean',
 			description: 'Icône à la fin du champ',
+			defaultValue: false,
 		},
 		noIcon: {
 			control: 'boolean',
 			description: 'Masque toutes les icônes',
+			defaultValue: false,
 		},
 		customRules: {
 			control: 'object',
 			description: 'Règles de validation',
+			defaultValue: [],
 		},
 		customWarningRules: {
 			control: 'object',
 			description: 'Règles d\'avertissement',
+			defaultValue: [],
 		},
 		displayPrependIcon: {
 			control: 'boolean',
 			description: 'Icône au début du champ',
+			defaultValue: true,
 		},
 		disableErrorHandling: {
 			control: 'boolean',
 			description: 'Désactive la gestion des erreurs par le composant',
+			defaultValue: false,
 		},
 		showSuccessMessages: {
 			control: 'boolean',
 			description: 'Affiche les messages de succès',
+			defaultValue: true,
 		},
 		bgColor: {
 			control: 'color',
 			description: 'Couleur de fond',
+			defaultValue: 'white',
 		},
 		displayRange: {
 			control: 'boolean',
 			description: 'Sélection de plage de dates',
+			defaultValue: true,
 		},
 		noCalendar: {
 			control: 'boolean',
 			description: 'Masque le calendrier',
+			defaultValue: false,
+		},
+		density: {
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
+			defaultValue: 'default',
+		},
+		title: {
+			control: 'text',
 		},
 	},
 } as Meta<DatePickerProps>

@@ -17,92 +17,293 @@ const meta = {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue'] },
 		actions: { argTypesRegex: '^on.*' },
+		events: {
+			remapEvents: {
+				'update:modelValue': 'onUpdate:modelValue',
+				'focus': 'onFocus',
+				'blur': 'onBlur',
+				'closed': 'onClosed',
+				'input': 'onInput',
+				'date-selected': 'onDate-selected',
+			},
+		},
+		docs: {
+			description: {
+				component: '\n## DatePicker - Incompatibilités entre props\n\n### Contrôle d\'affichage des icônes\n- `noIcon: true` masque toutes les icônes, rendant `displayIcon`, `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayIcon: false` désactive les icônes, rendant `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayAppendIcon` et `displayPrependIcon` sont mutuellement exclusifs; si les deux sont définis à `true`, `displayAppendIcon` est prioritaire\n\n### Modes de fonctionnement\n- `noCalendar` et `useCombinedMode` sont mutuellement exclusifs\n- `noCalendar: true` rend sans effet : `displayWeekendDays`, `displayHolidayDays`, `showWeekNumber` et `textFieldActivator`\n\n### Validation et états de champ\n- `readonly: true` désactive toutes les validations, y compris `required` et les règles personnalisées\n- `disabled` et `readonly` sont mutuellement exclusifs\n- `disableErrorHandling: true` peut créer une incohérence avec `showSuccessMessages: true`\n\n### Format et saisie\n- `birthDate` et `isBirthDate` sont des alias, utiliser l\'un ou l\'autre mais pas les deux\n- `displayRange: true` nécessite que modelValue soit un tableau de deux dates `[startDate, endDate]`\n- `autoClamp: true` peut court-circuiter certaines validations manuelles\n',
+			},
+		},
 	},
 	argTypes: {
-		modelValue: {
-			control: 'text',
-			description: 'Valeur du champ',
+		'onUpdate:modelValue': {
+			description: 'Émis lorsque la valeur du champ est mise à jour',
+			table: {
+				category: 'events',
+				type: { summary: '(value: DateValue) => void' },
+			},
 		},
-		placeholder: {
-			control: 'text',
-			description: 'Texte indicatif',
+		'onClosed': {
+			description: 'Émis lorsque le calendrier est fermé',
+			table: {
+				category: 'events',
+				type: { summary: '() => void' },
+			},
 		},
-		format: {
+		'onFocus': {
+			description: 'Émis lorsque le champ reçoit le focus',
+			table: {
+				category: 'events',
+				type: { summary: '() => void' },
+			},
+		},
+		'onBlur': {
+			description: 'Émis lorsque le champ perd le focus',
+			table: {
+				category: 'events',
+				type: { summary: '() => void' },
+			},
+		},
+		'onInput': {
+			description: 'Émis lors de la saisie dans le champ',
+			table: {
+				category: 'events',
+				type: { summary: '(value: DateValue) => void' },
+			},
+		},
+		'onDate-selected': {
+			description: 'Émis lorsqu\'une date est sélectionnée dans le calendrier',
+			table: {
+				category: 'events',
+				type: { summary: '(value: DateValue) => void' },
+			},
+		},
+		'validateOnSubmit': {
+			description: 'Valide le champ et retourne true si valide, false sinon',
+			table: {
+				category: 'exposed',
+				type: { summary: '() => boolean' },
+			},
+		},
+		'isDatePickerVisible': {
+			description: 'Indique si le calendrier est actuellement visible',
+			table: {
+				category: 'exposed',
+				type: { summary: 'Ref<boolean>' },
+			},
+		},
+		'selectedDates': {
+			description: 'Dates sélectionnées au format Date (peut être un tableau en mode plage)',
+			table: {
+				category: 'exposed',
+				type: { summary: 'Ref<Date | Date[] | null>' },
+			},
+		},
+		'errorMessages': {
+			description: 'Messages d\'erreur actuels',
+			table: {
+				category: 'exposed',
+				type: { summary: 'Ref<string[]>' },
+			},
+		},
+		'handleClickOutside': {
+			description: 'Gestionnaire d\'interactions externes au composant',
+			table: {
+				category: 'exposed',
+				type: { summary: '(event: MouseEvent) => void' },
+			},
+		},
+		'initializeSelectedDates': {
+			description: 'Initialise les dates sélectionnées à partir de valeurs fournies',
+			table: {
+				category: 'exposed',
+				type: { summary: '(value: DateInput | null, format: string, returnFormat?: string) => Date | Date[] | null' },
+			},
+		},
+		'updateAccessibility': {
+			description: 'Met à jour les attributs d\'accessibilité du composant',
+			table: {
+				category: 'exposed',
+				type: { summary: '() => void' },
+			},
+		},
+		'openDatePicker': {
+			description: 'Ouvre le calendrier de sélection de date',
+			table: {
+				category: 'exposed',
+				type: { summary: '() => void' },
+			},
+		},
+		'modelValue': {
+			control: 'text',
+			description: 'Valeur du champ (v-model), peut être une chaîne de caractères ou un tableau de deux dates en mode plage',
+		},
+		'placeholder': {
+			control: 'text',
+			description: 'Texte indicatif affiché lorsque le champ est vide pour guider l\'utilisateur sur le format attendu',
+		},
+		'format': {
 			control: 'select',
 			options: ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
-			description: 'Format d\'affichage de la date',
+			description: 'Format d\'affichage de la date dans le champ (ex: DD/MM/YYYY pour jour/mois/année)',
+			defaultValue: 'DD/MM/YYYY',
 		},
-		dateFormatReturn: {
+		'dateFormatReturn': {
 			control: 'select',
 			options: ['', 'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
-			description: 'Format de la date pour la valeur de retour',
+			description: 'Format de la date émise par le v-model. Si vide, utilise le même format que la prop "format"',
+			defaultValue: 'DD/MM/YYYY',
 		},
-		isBirthDate: {
+		'isBirthDate': {
 			control: 'boolean',
-			description: 'Mode date de naissance',
+			description: 'Active le mode date de naissance qui commence la navigation du calendrier à l\'année en cours moins 30 ans',
+			defaultValue: false,
 		},
-		isOutlined: {
+		'birthDate': {
 			control: 'boolean',
-			description: 'Affiche le champ en contour',
+			description: 'Alias pour isBirthDate (pour compatibilité avec l\'attribut kebab-case birth-date dans les templates). ⚠️ Utiliser soit birthDate soit isBirthDate, mais pas les deux.',
+			defaultValue: false,
 		},
-		showWeekNumber: {
+		'isOutlined': {
 			control: 'boolean',
-			description: 'Affiche les numéros de semaine',
+			description: 'Affiche le champ avec un contour complet (style outlined de Vuetify) plutôt qu\'un souligné simple',
+			defaultValue: true,
 		},
-		required: {
+		'showWeekNumber': {
 			control: 'boolean',
-			description: 'Champ obligatoire',
+			description: 'Affiche les numéros de semaine dans la colonne de gauche du calendrier. ⚠️ Sans effet si noCalendar est true.',
+			defaultValue: false,
 		},
-		displayRange: {
+		'required': {
 			control: 'boolean',
-			description: 'Sélection de plage de dates',
+			description: 'Définit si le champ est obligatoire et active la validation correspondante',
+			defaultValue: false,
 		},
-		displayIcon: {
+		'displayRange': {
 			control: 'boolean',
-			description: 'Affiche l\'icône calendrier',
+			description: 'Active la sélection de plage de dates (date début - date fin), le v-model retournera un tableau de deux dates. ⚠️ Nécessite que modelValue soit un tableau de deux dates [startDate, endDate] pour fonctionner correctement.',
+			defaultValue: false,
 		},
-		displayAppendIcon: {
+		'displayIcon': {
 			control: 'boolean',
-			description: 'Icône à la fin du champ',
+			description: 'Contrôle l\'affichage de l\'icône calendrier, à utiliser en conjonction avec displayPrependIcon ou displayAppendIcon. ⚠️ Sans effet si noIcon est true.',
+			defaultValue: true,
 		},
-		disabled: {
+		'displayAppendIcon': {
 			control: 'boolean',
-			description: 'Désactive le champ',
+			description: 'Affiche l\'icône calendrier à la fin du champ (à droite). ⚠️ Sans effet si displayIcon est false ou si noIcon est true. Prioritaire sur displayPrependIcon si les deux sont true.',
+			defaultValue: false,
 		},
-		noIcon: {
+		'displayPrependIcon': {
 			control: 'boolean',
-			description: 'Masque toutes les icônes',
+			description: 'Affiche l\'icône calendrier au début du champ (à gauche). ⚠️ Sans effet si displayIcon est false, si noIcon est true, ou si displayAppendIcon est true.',
+			defaultValue: true,
 		},
-		noCalendar: {
+		'disabled': {
+			control: 'boolean',
+			description: 'Désactive le champ, empêchant toute interaction utilisateur et appliquant un style grisé. ⚠️ Incompatible avec readonly.',
+			defaultValue: false,
+		},
+		'noIcon': {
+			control: 'boolean',
+			description: 'Masque toutes les icônes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. ⚠️ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
+			defaultValue: false,
+		},
+		'noCalendar': {
 			table: {
 				category: 'props',
 			},
 			control: 'boolean',
-			description: 'Désactive l\'affichage du calendrier (saisie manuelle uniquement), elle permet les copier coller et le passage de robots',
+			description: 'Désactive l\'affichage du calendrier, permettant uniquement la saisie manuelle (utile pour les tests automatisés, copier-coller et robots). ⚠️ Incompatible avec useCombinedMode, displayWeekendDays, displayHolidayDays, showWeekNumber et textFieldActivator.',
+			defaultValue: false,
 		},
-		customRules: {
-			control: 'object',
-			description: 'Règles de validation',
-		},
-		customWarningRules: {
-			control: 'object',
-			description: 'Règles d\'avertissement',
-		},
-		disableErrorHandling: {
+		'readonly': {
 			control: 'boolean',
-			description: 'Désactive la gestion des erreurs par le composant',
+			description: 'Rend le champ en lecture seule, la valeur peut être affichée mais pas modifiée par l\'utilisateur. ⚠️ Désactive toutes les validations (required, customRules, customWarningRules). Incompatible avec disabled.',
+			defaultValue: false,
 		},
-		period: {
+		'width': {
+			control: 'text',
+			description: 'Largeur du champ (peut être en px, %, em, rem ou toute unité CSS valide)',
+			defaultValue: '100%',
+		},
+		'customRules': {
 			control: 'object',
-			description: 'Période pendant laquelle les dates peuvent être sélectionnées (au format: MM/DD/YYYY)',
+			description: 'Règles de validation personnalisées pour la date saisie, affichant des erreurs si non respectées',
+			defaultValue: [],
 		},
-		autoClamp: {
-			control: 'boolean',
-			description: 'Active le clamping automatique des dates',
+		'customWarningRules': {
+			control: 'object',
+			description: 'Règles d\'avertissement pour afficher des messages d\'attention sans bloquer la validation',
+			defaultValue: [],
 		},
-		displayHolidayDays: {
+		'disableErrorHandling': {
 			control: 'boolean',
-			description: 'Affiche les jours fériés',
+			description: 'Désactive la gestion interne des erreurs, permettant à l\'application parente de gérer les validations. ⚠️ Peut créer une incohérence si showSuccessMessages est true.',
+			defaultValue: false,
+		},
+		'showSuccessMessages': {
+			control: 'boolean',
+			description: 'Affiche les messages de succès quand la validation est passée avec succès',
+			defaultValue: true,
+		},
+		'bgColor': {
+			control: 'text',
+			description: 'Couleur de fond du champ de saisie (ex: white, transparent, #f5f5f5)',
+			defaultValue: 'white',
+		},
+		'density': {
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
+			defaultValue: 'default',
+		},
+		'hideDetails': {
+			control: 'select',
+			options: [true, false, 'auto'],
+			description: 'Contrôle l\'affichage des messages d\'erreur et de validation sous le champ (true=masqués, false=toujours affichés, auto=affichés si nécessaire)',
+			defaultValue: false,
+		},
+		'displayWeekendDays': {
+			control: 'boolean',
+			description: 'Affiche les jours de week-end avec un style spécifique pour les distinguer dans le calendrier. ⚠️ Sans effet si noCalendar est true.',
+			defaultValue: true,
+		},
+		'displayTodayButton': {
+			control: 'boolean',
+			description: 'Affiche le bouton "Aujourd\'hui" en bas du calendrier pour sélectionner rapidement la date du jour',
+			defaultValue: true,
+		},
+		'displayHolidayDays': {
+			control: 'boolean',
+			description: 'Affiche les jours fériés français avec un style spécifique dans le calendrier. ⚠️ Sans effet si noCalendar est true.',
+			defaultValue: true,
+		},
+		'useCombinedMode': {
+			control: 'boolean',
+			description: 'Active le mode combiné permettant à la fois la sélection via calendrier et la saisie manuelle de date. ⚠️ Incompatible avec noCalendar.',
+			defaultValue: false,
+		},
+		'textFieldActivator': {
+			control: 'boolean',
+			description: 'Permet d\'ouvrir le calendrier en cliquant n\'importe où sur le champ texte, pas uniquement sur l\'icône. ⚠️ Sans effet si noCalendar est true.',
+			defaultValue: false,
+		},
+		'displayAsterisk': {
+			control: 'boolean',
+			description: 'Affiche un astérisque (*) à côté du label pour indiquer visuellement que le champ est obligatoire',
+			defaultValue: false,
+		},
+		'autoClamp': {
+			control: 'boolean',
+			description: 'Active la mise en forme automatique lors de la saisie (ajout des séparateurs automatiquement). ⚠️ Peut court-circuiter certaines validations manuelles.',
+			defaultValue: false,
+		},
+		'isValidateOnBlur': {
+			control: 'boolean',
+			description: 'Active la validation automatique lorsque le champ perd le focus (onBlur)',
+			defaultValue: true,
+		},
+		'title': {
+			control: 'text',
 		},
 	},
 } as Meta<typeof DatePicker>

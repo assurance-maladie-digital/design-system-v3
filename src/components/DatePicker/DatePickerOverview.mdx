@@ -1,5 +1,6 @@
-import { Meta, Canvas, Controls, Source } from '@storybook/blocks';
+import { Meta, Canvas, Controls, Source, Story } from '@storybook/blocks';
 import { linkTo } from '@storybook/addon-links';
+import * as datePickers from './datePickers.stories'
 import '../../stories/styles/shared.css';
 
 <Meta title="Composants/Formulaires/DatePicker/Introduction" />
@@ -8,6 +9,7 @@ import '../../stories/styles/shared.css';
   <h1>DatePicker - Vue d'ensemble</h1>
   <p>Le composant `DatePicker` facilite la sélection d’une date et se décline en plusieurs modes selon vos besoins. Cette page détaille chaque variante disponible et vous guide pour choisir celle qui correspond le mieux à votre cas d’usage.</p>
 </div>
+
 ## Variantes disponibles
 
 Le DatePicker propose trois modes principaux, chacun adapté à des besoins spécifiques :
@@ -120,6 +122,8 @@ Le DatePicker propose trois modes principaux, chacun adapté à des besoins spé
 </div>
 
 ## Tableau comparatif des fonctionnalités
+
+<Story of={datePickers.Century}  />
 
 <div className="sb-unstyled">
   <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '30px' }}>

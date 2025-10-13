@@ -15,85 +15,213 @@ const meta = {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue'] },
 		actions: { argTypesRegex: '^on.*' },
+		events: {
+			remapEvents: {
+				'update:model-value': 'onUpdate:modelValue',
+				'focus': 'onFocus',
+				'blur': 'onBlur',
+				'input': 'onInput',
+				'date-selected': 'onDate-selected',
+			},
+		},
+		docs: {
+			description: {
+				component: '\n## DatePicker en mode text input (noCalendar) - Incompatibilités entre props\n\n### Contrôle d\'affichage des icônes\n- `noIcon: true` masque toutes les icônes, rendant `displayIcon`, `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayIcon: false` désactive les icônes, rendant `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayAppendIcon` et `displayPrependIcon` sont mutuellement exclusifs; si les deux sont définis à `true`, `displayAppendIcon` est prioritaire\n\n### Validation et états de champ\n- `readonly: true` désactive toutes les validations, y compris `required` et les règles personnalisées\n- `disabled` et `readonly` sont mutuellement exclusifs\n- `disableErrorHandling: true` peut créer une incohérence avec `showSuccessMessages: true`\n\n### Format et saisie\n- `birthDate` et `isBirthDate` sont des alias, utiliser l\'un ou l\'autre mais pas les deux\n- `displayRange: true` nécessite que modelValue soit un tableau de deux dates `[startDate, endDate]`\n- `autoClamp: true` peut court-circuiter certaines validations manuelles\n',
+			},
+		},
 	},
 	argTypes: {
-		placeholder: {
-			control: 'text',
-			description: 'Texte indicatif',
+		'onUpdate:modelValue': {
+			description: 'Émis lorsque la valeur du champ est mise à jour',
+			table: {
+				category: 'events',
+				type: { summary: '(value: DateValue) => void' },
+			},
 		},
-		format: {
+		'onFocus': {
+			description: 'Émis lorsque le champ reçoit le focus',
+			table: {
+				category: 'events',
+				type: { summary: '() => void' },
+			},
+		},
+		'onBlur': {
+			description: 'Émis lorsque le champ perd le focus',
+			table: {
+				category: 'events',
+				type: { summary: '() => void' },
+			},
+		},
+		'onInput': {
+			description: 'Émis lors de la saisie dans le champ',
+			table: {
+				category: 'events',
+				type: { summary: '(value: string) => void' },
+			},
+		},
+		'onDate-selected': {
+			description: 'Émis lorsqu\'une date complète est saisie manuellement',
+			table: {
+				category: 'events',
+				type: { summary: '(value: DateValue) => void' },
+			},
+		},
+		'validateOnSubmit': {
+			description: 'Valide le champ et retourne true si valide, false sinon',
+			table: {
+				category: 'exposed',
+				type: { summary: '() => boolean' },
+			},
+		},
+		'focus': {
+			description: 'Met le focus sur le champ de saisie de date',
+			table: {
+				category: 'exposed',
+				type: { summary: '() => void' },
+			},
+		},
+		'blur': {
+			description: 'Retire le focus du champ de saisie',
+			table: {
+				category: 'exposed',
+				type: { summary: '() => void' },
+			},
+		},
+		'placeholder': {
+			control: 'text',
+			description: 'Texte indicatif affiché lorsque le champ est vide pour guider l\'utilisateur sur le format attendu',
+			defaultValue: 'JJ/MM/AAAA',
+		},
+		'format': {
 			control: 'select',
 			options: ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
-			description: 'Format d\'affichage de la date',
+			description: 'Format d\'affichage de la date dans le champ (ex: DD/MM/YYYY pour jour/mois/année)',
+			defaultValue: 'DD/MM/YYYY',
 		},
-		dateFormatReturn: {
+		'dateFormatReturn': {
 			control: 'select',
 			options: ['', 'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
-			description: 'Format de la date pour la valeur de retour',
+			description: 'Format de la date émise par le v-model. Si vide, utilise le même format que la prop "format"',
+			defaultValue: '',
 		},
-		label: {
+		'label': {
 			control: 'text',
-			description: 'Libellé du champ',
+			description: 'Libellé du champ affiché au-dessus ou dans le champ de saisie',
+			defaultValue: 'Date',
 		},
-		required: {
+		'required': {
 			control: 'boolean',
-			description: 'Champ obligatoire',
+			description: 'Définit si le champ est obligatoire et active la validation correspondante',
+			defaultValue: false,
 		},
-		disabled: {
+		'disabled': {
 			control: 'boolean',
-			description: 'Désactive le champ',
+			description: 'Désactive le champ, empêchant toute interaction utilisateur et appliquant un style grisé. ⚠️ Incompatible avec readonly.',
+			defaultValue: false,
 		},
-		readonly: {
+		'readonly': {
 			control: 'boolean',
-			description: 'Le champ est en lecture seule',
+			description: 'Rend le champ en lecture seule, la valeur peut être affichée mais pas modifiée par l\'utilisateur. ⚠️ Désactive toutes les validations (required, customRules, customWarningRules). Incompatible avec disabled.',
+			defaultValue: false,
 		},
-		isOutlined: {
+		'isOutlined': {
 			control: 'boolean',
-			description: 'Affiche le champ en contour',
+			description: 'Affiche le champ avec un contour complet (style outlined de Vuetify) plutôt qu\'un souligné simple',
+			defaultValue: true,
 		},
-		displayIcon: {
+		'displayIcon': {
 			control: 'boolean',
-			description: 'Affiche l\'icône calendrier',
+			description: 'Contrôle l\'affichage de l\'icône calendrier, à utiliser en conjonction avec displayPrependIcon ou displayAppendIcon. ⚠️ Sans effet si noIcon est true.',
+			defaultValue: true,
 		},
-		displayAppendIcon: {
+		'displayAppendIcon': {
 			control: 'boolean',
-			description: 'Icône à la fin du champ',
+			description: 'Affiche l\'icône calendrier à la fin du champ (à droite). ⚠️ Sans effet si displayIcon est false ou si noIcon est true. Prioritaire sur displayPrependIcon si les deux sont true.',
+			defaultValue: false,
 		},
-		noIcon: {
+		'noIcon': {
 			control: 'boolean',
-			description: 'Masque toutes les icônes',
+			description: 'Masque toutes les icônes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. ⚠️ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
+			defaultValue: false,
 		},
-		customRules: {
+		'customRules': {
 			control: 'object',
-			description: 'Règles de validation',
+			description: 'Règles de validation personnalisées pour la date saisie, affichant des erreurs si non respectées',
+			defaultValue: [],
 		},
-		customWarningRules: {
+		'customWarningRules': {
 			control: 'object',
-			description: 'Règles d\'avertissement',
+			description: 'Règles d\'avertissement pour afficher des messages d\'attention sans bloquer la validation',
+			defaultValue: [],
 		},
-		displayPrependIcon: {
+		'displayPrependIcon': {
 			control: 'boolean',
-			description: 'Icône au début du champ',
+			description: 'Affiche l\'icône calendrier au début du champ (à gauche). ⚠️ Sans effet si displayIcon est false, si noIcon est true, ou si displayAppendIcon est true.',
+			defaultValue: true,
 		},
-		disableErrorHandling: {
+		'disableErrorHandling': {
 			control: 'boolean',
-			description: 'Désactive la gestion des erreurs par le composant',
+			description: 'Désactive la gestion interne des erreurs, permettant à l\'application parente de gérer les validations. ⚠️ Peut créer une incohérence si showSuccessMessages est true.',
+			defaultValue: false,
 		},
-		showSuccessMessages: {
+		'showSuccessMessages': {
 			control: 'boolean',
-			description: 'Affiche les messages de succès',
+			description: 'Affiche les messages de succès quand la validation est passée avec succès',
+			defaultValue: true,
 		},
-		bgColor: {
+		'bgColor': {
 			control: 'color',
-			description: 'Couleur de fond',
+			description: 'Couleur de fond du champ de saisie (ex: white, transparent, #f5f5f5)',
+			defaultValue: 'white',
 		},
-		displayRange: {
+		'displayRange': {
 			control: 'boolean',
-			description: 'Sélection de plage de dates',
+			description: 'Active la sélection de plage de dates (date début - date fin), le v-model retournera un tableau de deux dates. ⚠️ Nécessite que modelValue soit un tableau de deux dates [startDate, endDate] pour fonctionner correctement.',
+			defaultValue: false,
 		},
-		autoClamp: {
+		'autoClamp': {
 			control: 'boolean',
-			description: 'Active le clamping automatique des dates',
+			description: 'Active la mise en forme automatique lors de la saisie (ajout des séparateurs automatiquement). ⚠️ Peut court-circuiter certaines validations manuelles.',
+			defaultValue: false,
+		},
+		'noCalendar': {
+			control: 'boolean',
+			description: 'Désactive l\'affichage du calendrier, permettant uniquement la saisie manuelle (utile pour les tests automatisés)',
+			defaultValue: true,
+		},
+		'displayAsterisk': {
+			control: 'boolean',
+			description: 'Affiche un astérisque (*) à côté du label pour indiquer visuellement que le champ est obligatoire',
+			defaultValue: false,
+		},
+		'birthDate': {
+			control: 'boolean',
+			description: 'Alias pour isBirthDate (pour compatibilité avec l\'attribut kebab-case birth-date dans les templates). ⚠️ Utiliser soit birthDate soit isBirthDate, mais pas les deux.',
+			defaultValue: false,
+		},
+		'isBirthDate': {
+			control: 'boolean',
+			description: 'Active le mode date de naissance qui commence la navigation du calendrier à l\'année en cours moins 30 ans',
+			defaultValue: false,
+		},
+		'width': {
+			control: 'text',
+			description: 'Largeur du champ (peut être en px, %, em, rem ou toute unité CSS valide)',
+			defaultValue: '100%',
+		},
+		'isValidateOnBlur': {
+			control: 'boolean',
+			description: 'Active la validation automatique lorsque le champ perd le focus (onBlur)',
+			defaultValue: true,
+		},
+		'density': {
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
+			defaultValue: 'default',
+		},
+		'title': {
+			control: 'text',
 		},
 	},
 } as Meta<typeof DatePicker>

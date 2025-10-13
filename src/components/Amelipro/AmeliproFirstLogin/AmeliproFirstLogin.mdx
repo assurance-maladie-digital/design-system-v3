@@ -1,0 +1,15 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as AmeliproFirstLoginStories from './AmeliproFirstLogin.stories';
+
+<Meta of={AmeliproFirstLoginStories} />
+
+# AmeliproFirstLogin
+
+L’élément `AmeliproFirstLogin` est utilisé pour afficher la fenêtre de dialogue de première connexion à Amelipro.
+
+<Canvas of={AmeliproFirstLoginStories.Default} />
+
+## API
+
+<Controls of={AmeliproFirstLoginStories.Default} />
