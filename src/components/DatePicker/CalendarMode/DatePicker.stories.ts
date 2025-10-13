@@ -303,7 +303,7 @@ const meta = {
 			defaultValue: true,
 		},
 		'title': {
-			controls: 'text',
+			control: 'text',
 		},
 	},
 } as Meta<typeof DatePicker>

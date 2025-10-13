@@ -324,7 +324,7 @@ const meta = {
 			defaultValue: 'default',
 		},
 		'title': {
-			controls: 'text',
+			control: 'text',
 		},
 	},
 } as Meta<typeof DatePicker>
