@@ -81,7 +81,7 @@
 		const newValue = [...internalValue.value]
 		const valueToEmit = props.returnObject ? item : item.value
 		const index = newValue.findIndex(value => props.returnObject ? isEqual(value, item) : isEqual(value, item.value))
-		
+
 		if (index === -1) {
 			newValue.push(valueToEmit)
 		}

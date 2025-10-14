@@ -410,7 +410,7 @@ describe('SearchListField.vue', () => {
 			// Select first item
 			wrapper.vm.toggleSelection(items[0])
 			await wrapper.vm.$nextTick()
-			
+
 			const emittedEvents = wrapper.emitted('update:modelValue')
 			expect(emittedEvents).toBeTruthy()
 			expect(emittedEvents![0]).toEqual([[items[0]]])
@@ -422,7 +422,7 @@ describe('SearchListField.vue', () => {
 			// Deselect first item
 			wrapper.vm.toggleSelection(items[0])
 			await wrapper.vm.$nextTick()
-			
+
 			expect(emittedEvents![1]).toEqual([[]])
 		})
 	})
