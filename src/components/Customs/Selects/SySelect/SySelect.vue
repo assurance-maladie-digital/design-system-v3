@@ -122,8 +122,8 @@
 			default: false,
 		},
 		autocomplete: {
-			type: String,
-			default: '',
+			type: String as PropType<'on' | 'off' | undefined | string>,
+			default: 'on',
 		},
 	})
 
