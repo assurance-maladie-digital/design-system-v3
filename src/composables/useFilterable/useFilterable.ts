@@ -28,6 +28,30 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 		return slugify(name, { lower: true })
 	}
 
+	/**
+	 * Handle various types of items to extract a displayable text
+	 */
+	function getDisplayText(item: unknown): string {
+		if (item === null || item === undefined) {
+			return ''
+		}
+
+		if (typeof item !== 'object') {
+			return item.toString()
+		}
+
+		const obj = item as Record<string, unknown>
+
+		const possibleKeys = ['title', 'text', 'label', 'name', 'value']
+		for (const key of possibleKeys) {
+			if (typeof obj[key] === 'string' || typeof obj[key] === 'number') {
+				return obj[key].toString()
+			}
+		}
+
+		return JSON.stringify(item)
+	}
+
 	function getChips(filter: FilterItem): ChipItem[] {
 		const { value, formatChip } = filter
 
@@ -54,19 +78,10 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 		}
 
 		if (isArray) {
-			return value.map((item) => {
-				if (typeof item !== 'object') {
-					return {
-						text: item.toString(),
-						value: item,
-					}
-				}
-
-				return {
-					text: item.title || item.text || item.value.toString(),
-					value: item,
-				}
-			})
+			return value.map(item => ({
+				text: getDisplayText(item),
+				value: item,
+			}))
 		}
 
 		if (isObject) {
@@ -90,11 +105,11 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 
 			// Handle single select objects (VSelect with return-object but without multiple)
 			// Check if this looks like a select option object with title/text and value properties
-			const hasSelectStructure = (typedValue.title !== undefined || typedValue.text !== undefined) && typedValue.value !== undefined
+			const hasSelectStructure = (typedValue.title !== undefined || typedValue.text !== undefined || typedValue.label !== undefined) && typedValue.value !== undefined
 			if (hasSelectStructure) {
 				return [
 					{
-						text: typedValue.title || typedValue.text || typedValue.value.toString(),
+						text: getDisplayText(typedValue),
 						value: typedValue,
 					},
 				]
@@ -102,15 +117,8 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 
 			// Any other object - iterate over keys
 			return Object.keys(typedValue).map((key) => {
-				// Use text property if it exists, else use value property or default to key value
-				const text
-					= typedValue[key].title
-						|| typedValue[key].text
-						|| typedValue[key].value?.toString()
-						|| typedValue[key].toString()
-
 				return {
-					text,
+					text: getDisplayText(typedValue[key]),
 					value: typedValue[key],
 				}
 			})
@@ -174,7 +182,7 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 			}
 
 			// Handle single select objects (VSelect with return-object but without multiple)
-			const hasSelectStructure = (typedValue.title !== undefined || typedValue.text !== undefined) && typedValue.value !== undefined
+			const hasSelectStructure = (typedValue.title !== undefined || typedValue.text !== undefined || typedValue.label !== undefined) && typedValue.value !== undefined
 			if (hasSelectStructure) {
 				// For single select objects, clear the entire value
 				filter.value = undefined

@@ -225,6 +225,7 @@ export const Default: Story = {
 					<SearchListField
 						v-bind="props"
 						:items="professionList"
+						return-object
 					/>
 				</template>
 			</FilterSideBar>
@@ -276,6 +277,7 @@ export const Default: Story = {
 		<SearchListField
 			v-bind="props"
 			:items="professionList"
+			return-object
 		/>
 	</template>
 </FilterSideBar>
