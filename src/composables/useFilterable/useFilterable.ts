@@ -45,7 +45,8 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 		const possibleKeys = ['title', 'text', 'label', 'name', 'value']
 		for (const key of possibleKeys) {
 			if (typeof obj[key] === 'string' || typeof obj[key] === 'number') {
-				return obj[key].toString()
+				const existingDisplayableValue = obj[key] as string | number
+				return existingDisplayableValue.toString()
 			}
 		}
 
