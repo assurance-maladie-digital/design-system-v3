@@ -306,8 +306,11 @@
 	border-top: 1px solid tokens.$colors-border-subdued;
 }
 
-.captcha-audio {
-	letter-spacing: normal;
+.captcha-audio :deep(.v-btn__content) span {
+	display: flex;
+	align-items: center;
+	gap: tokens.$gap-2;
+	letter-spacing: 0%;
 }
 
 .captcha-helpdesk {
