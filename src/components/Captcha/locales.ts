@@ -9,6 +9,7 @@ export const locales = {
 		new: 'Changer d’audio',
 		change: 'Utiliser un captcha image',
 		textfieldLabel: 'Caractères de l’audio',
+		loading: 'Chargement de l\'audio du captcha',
 	},
 	choiceCaptcha: {
 		image: 'captcha image',

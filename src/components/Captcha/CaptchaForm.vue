@@ -86,7 +86,7 @@
 	</VForm>
 </template>
 <style lang="css" scoped>
-.capcha-submit :deep(.v-btn__content){
+.capcha-submit :deep(.v-btn__content) {
 	letter-spacing: 0%;
 }
 </style>
