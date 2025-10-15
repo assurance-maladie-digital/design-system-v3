@@ -1,12 +1,13 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import SearchListField from './SearchListField.vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Formulaires/SearchListField',
 	component: SearchListField,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['filteredItems', 'search', 'emitChangeEvent'] },
+		controls: { exclude: ['filteredItems', 'search', 'emitChangeEvent', 'onUpdate:modelValue'] },
 	},
 	decorators: [
 		() => ({
@@ -18,6 +19,10 @@ const meta = {
 			default: '[]',
 		},
 		items: { control: { type: 'object' } },
+		returnObject: {
+			description: 'Si true, retourne l\'objet entier au lieu de la valeur',
+			control: 'boolean',
+		},
 	},
 } satisfies Meta<typeof SearchListField>
 
@@ -30,8 +35,8 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
 	args: {
-		modelValue: [],
-		items: [
+		'modelValue': [],
+		'items': [
 			{
 				label: 'Chirurgien-dentiste',
 				value: 'chirurgien-dentiste',
@@ -57,6 +62,7 @@ export const Default: Story = {
 				value: 'pharmacien',
 			},
 		],
+		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -126,6 +132,100 @@ const items = [
 ]
 </script>
         `,
+			},
+		],
+	},
+}
+
+export const WithReturnObject: Story = {
+	args: {
+		'modelValue': [],
+		'returnObject': true,
+		'items': [
+			{
+				label: 'Chirurgien-dentiste',
+				value: 'chirurgien-dentiste',
+			},
+			{
+				label: 'Infirmier',
+				value: 'infirmier',
+			},
+			{
+				label: 'Orthophoniste',
+				value: 'orthophoniste',
+			},
+			{
+				label: 'Orthoptiste',
+				value: 'orthoptiste',
+			},
+			{
+				label: 'Pédicure-podologue',
+				value: 'pedicure-podologue',
+			},
+			{
+				label: 'Pharmacien',
+				value: 'pharmacien',
+			},
+		],
+		'onUpdate:modelValue': fn(),
+	},
+	argTypes: {
+		returnObject: { control: false },
+	},
+	render: (args) => {
+		return {
+			components: { SearchListField },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div>
+					<SearchListField v-bind="args" v-model="args.modelValue"/>
+					<div style="margin-top: 20px;">
+						<strong>Valeur(s) sélectionnée(s) :</strong>
+						<pre>{{ args.modelValue }}</pre>
+					</div>
+				</div>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SearchListField
+	v-model="modelValue"
+	:items="items"
+	:return-object="true"
+  />
+  {{ modelValue }}
+</template>
+		`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SearchListField } from '@cnamts/synapse'
+
+const modelValue = ref([])
+
+const items = [
+  {
+	label: 'Chirurgien-dentiste',
+	value: 'chirurgien-dentiste',
+  },
+  {
+	label: 'Infirmier',
+	value: 'infirmier',
+  },
+  // ... autres objets
+]
+</script>
+		`,
 			},
 		],
 	},

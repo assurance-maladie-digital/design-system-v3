@@ -24,6 +24,10 @@
 			type: String,
 			default: 'white',
 		},
+		returnObject: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -32,6 +36,25 @@
 	const internalValue = ref<unknown[]>(props.modelValue)
 	const searchIcon = mdiMagnify
 	const checkboxListRef = ref<HTMLElement | null>(null)
+
+	// Helper function for deep equality comparison
+	const isEqual = (a: unknown, b: unknown): boolean => {
+		if (a === b) return true
+		if (a === null || b === null) return false
+		if (typeof a !== 'object' || typeof b !== 'object') return false
+
+		const keysA = Object.keys(a as Record<string, unknown>)
+		const keysB = Object.keys(b as Record<string, unknown>)
+
+		if (keysA.length !== keysB.length) return false
+
+		for (const key of keysA) {
+			if (!keysB.includes(key)) return false
+			if (!isEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])) return false
+		}
+
+		return true
+	}
 
 	watch(
 		() => props.modelValue,
@@ -45,20 +68,22 @@
 			return props.items
 		}
 		const searchLower = search.value.toLowerCase()
-		return props.items.filter(item =>
-			item.label.toLowerCase().includes(searchLower),
-		)
+		return props.items.filter((item) => {
+			return item.label.toLowerCase().includes(searchLower)
+		})
 	})
 
 	const emitChangeEvent = (value: unknown[]) => {
 		emit('update:modelValue', value)
 	}
 
-	const toggleSelection = (itemValue: unknown) => {
+	const toggleSelection = (item: SearchListItem) => {
 		const newValue = [...internalValue.value]
-		const index = newValue.indexOf(itemValue)
+		const valueToEmit = props.returnObject ? item : item.value
+		const index = newValue.findIndex(value => props.returnObject ? isEqual(value, item) : isEqual(value, item.value))
+
 		if (index === -1) {
-			newValue.push(itemValue)
+			newValue.push(valueToEmit)
 		}
 		else {
 			newValue.splice(index, 1)
@@ -130,9 +155,9 @@
 				v-for="(item, index) in filteredItems"
 				:id="`search-list-item-${index}`"
 				:key="index"
-				:value="item.value"
+				:value="props.returnObject ? item : item.value"
 				role="option"
-				:aria-selected="internalValue.includes(item.value)"
+				:aria-selected="internalValue.some(value => props.returnObject ? isEqual(value, item) : isEqual(value, item.value))"
 				:tabindex="0"
 				active-class="text-primary"
 				class="d-flex align-center justify-start mx-4"
@@ -149,7 +174,7 @@
 							hide-details
 							class="ml-2 search-list-checkbox"
 							density="compact"
-							@click="toggleSelection(item.value)"
+							@click="toggleSelection(item)"
 						/>
 					</VListItemAction>
 
