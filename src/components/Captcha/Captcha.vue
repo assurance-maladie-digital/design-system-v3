@@ -10,7 +10,6 @@
 	import CaptchaInformation from './CaptchaInformation.vue'
 	import { locales as defaultLocales } from './locales'
 	import { type CaptchaType, type StateType } from './types'
-	import SyAlert from '../SyAlert/SyAlert.vue'
 
 	const props = withDefaults(defineProps<{
 		urlCreate: string
@@ -107,20 +106,7 @@
 		<CaptchaInformation
 			:type="type"
 			:locales
-		>
-			<template
-				v-if="errorMessage"
-				#error
-			>
-				<SyAlert
-					class="mt-2"
-					variant="outlined"
-					type="error"
-				>
-					{{ errorMessage }}
-				</SyAlert>
-			</template>
-		</CaptchaInformation>
+		/>
 
 		<CaptchaBase
 			v-model="type"
