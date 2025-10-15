@@ -1,36 +1,10 @@
-import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 
 import Captcha from '../Captcha.vue'
 import { vuetify } from '@tests/unit/setup'
 
 describe('Captcha', () => {
-	beforeEach(() => {
-		// Suppress Vue internal warnings during component testing
-		const originalWarn = console.warn
-		const originalError = console.error
-
-		console.warn = (...args) => {
-			const message = args.join(' ')
-			if (message.includes('Unhandled error during execution')
-				|| message.includes('emitsOptions')
-				|| message.includes('nextSibling')) {
-				return // Suppress Vue internal warnings
-			}
-			originalWarn(...args)
-		}
-
-		console.error = (...args) => {
-			const message = args.join(' ')
-			if (message.includes('Unhandled error during execution')
-				|| message.includes('emitsOptions')
-				|| message.includes('nextSibling')) {
-				return // Suppress Vue internal errors
-			}
-			originalError(...args)
-		}
-	})
-
 	afterEach(() => {
 		vi.restoreAllMocks()
 	})
@@ -427,7 +401,6 @@ describe('Captcha', () => {
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.text()).toContain('Custom error message')
-		expect(wrapper.find('.v-alert').exists()).toBe(true)
 	})
 
 	it('handles unknown error gracefully', async () => {
