@@ -10,6 +10,7 @@
 		state?: string | null
 		loading?: boolean
 		errors: string[] | undefined
+		success: boolean
 		locales: typeof defaultLocales
 	}
 
@@ -57,7 +58,6 @@
 				class="mt-4"
 				variant="outlined"
 				:error-messages="props.errors"
-				is-clearable
 				:custom-rules="[
 					{
 						type: 'required',
@@ -65,9 +65,12 @@
 					}
 				]"
 				:show-success-messages="false"
+				:has-success="success"
 				:disabled="state === 'rejected'"
 				:label="label"
 				hide-details="auto"
+				:readonly="success"
+				:is-clearable="!success"
 				@update:model-value="emitChangeEvent"
 			/>
 

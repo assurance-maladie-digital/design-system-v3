@@ -41,6 +41,7 @@
 	const id = ref<string | null>(null)
 	const state = ref<StateType>('idle')
 	const errorMessage = ref<string | null>(null)
+	const captchaValid = ref<boolean>(false)
 
 	watch(() => props.modelValue, (val) => {
 		text.value = val ?? null
@@ -67,6 +68,7 @@
 		try {
 			const res = await props.service(id.value, text.value)
 			state.value = 'resolved'
+			captchaValid.value = true
 			emit('validation:success', res)
 		}
 		catch (error) {
@@ -153,6 +155,7 @@
 					:state="createCaptchaState"
 					:errors="errorMessage ? [errorMessage] : []"
 					:loading="state === 'pending'"
+					:success="captchaValid"
 					@update:model-value="emitChangeValueEvent"
 					@submit="submitForm"
 				/>
@@ -236,6 +239,7 @@
 					:state="createCaptchaState"
 					:loading="state === 'pending'"
 					:errors="errorMessage ? [errorMessage] : []"
+					:success="captchaValid"
 					@update:model-value="emitChangeValueEvent"
 					@submit="submitForm"
 				/>
