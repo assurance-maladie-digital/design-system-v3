@@ -15,7 +15,6 @@ interface UseTableCheckboxOptions {
    */
 	updateModelValue: (value: unknown[]) => void
 }
-
 export function useTableCheckbox(options: UseTableCheckboxOptions) {
 	const itemsRef = toRef(options.items)
 	const modelValueRef = toRef(options.modelValue)
@@ -25,11 +24,12 @@ export function useTableCheckbox(options: UseTableCheckboxOptions) {
    */
 	const getItemValue = (item: Record<string, unknown>) => {
 		// If the item has an id field, use that
-		if (item.id !== undefined) {
-			return item.id
+		if ((item as Record<string, unknown>).id !== undefined) {
+			return (item as Record<string, unknown>).id
 		}
-		// Otherwise, create a unique string representation of the item
-		return JSON.stringify(item)
+		// Otherwise, return the full object instead of a JSON string
+		// so v-model contains real objects
+		return item
 	}
 
 	/**

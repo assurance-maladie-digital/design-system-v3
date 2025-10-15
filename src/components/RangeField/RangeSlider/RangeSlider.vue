@@ -33,9 +33,9 @@
 			'step': 1,
 			'minLabel': 'Minimum',
 			'maxLabel': 'Maximum',
-			'thumb-color': cnamColorsTokens.blue.base,
-			'track-color': cnamColorsTokens.blue.lighten80,
-			'track-fill-color': cnamColorsTokens.blue.lighten40,
+			'thumb-color': cnamColorsTokens.blue.darken80,
+			'track-color': cnamColorsTokens.blue.lighten40,
+			'track-fill-color': cnamColorsTokens.blue.lighten20,
 		},
 	)
 
@@ -171,7 +171,7 @@
 			ref="track"
 			class="track"
 		>
-			<button
+			<div
 				ref="thumbMin"
 				v-animate-click
 				class="thumb-min"
@@ -185,6 +185,10 @@
 				:aria-label="minLabel"
 				:title="minLabel"
 			>
+				<div
+					class="thumb-outline"
+					aria-hidden="true"
+				/>
 				<Tooltip
 					ref="tooltipMin"
 					:nudge-right="nudgeMinThumb"
@@ -192,8 +196,8 @@
 					{{ range.selectedMin.value }}
 				</Tooltip>
 				<span class="inner-thumb" />
-			</button>
-			<button
+			</div>
+			<div
 				ref="thumbMax"
 				v-animate-click
 				role="slider"
@@ -207,6 +211,10 @@
 				:aria-label="maxLabel"
 				:title="maxLabel"
 			>
+				<div
+					class="thumb-outline"
+					aria-hidden="true"
+				/>
 				<Tooltip
 					ref="tooltipMax"
 					:nudge-left="nudgeMaxThumb"
@@ -214,7 +222,7 @@
 					{{ range.selectedMax.value }}
 				</Tooltip>
 				<span class="inner-thumb" />
-			</button>
+			</div>
 			<div
 				class="fake-thumb thumb-min"
 				aria-hidden="true"
@@ -287,7 +295,6 @@ $virtual-thumb-size: 40px;
 	z-index: 2;
 	width: $virtual-thumb-size;
 	height: $virtual-thumb-size;
-	border-radius: 50%;
 	transition: left 0.1s;
 	will-change: left;
 
@@ -323,9 +330,24 @@ $virtual-thumb-size: 40px;
 
 	&:focus,
 	&:hover {
+		outline: none;
+
 		&::before {
 			transform: scale(2);
 		}
+	}
+
+	&:focus .thumb-outline {
+		$offset: 8px;
+
+		position: absolute;
+		top: calc(100% + $offset);
+		left: 50%;
+		transform: translate(-50%, -100%);
+		width: calc(var(--sy-thumb-size) * 2 + $offset);
+		height: calc(var(--sy-thumb-size) * 4 + $offset);
+		border: 2px solid rgba(var(--v-theme-primary));
+		border-radius: 4px;
 	}
 }
 

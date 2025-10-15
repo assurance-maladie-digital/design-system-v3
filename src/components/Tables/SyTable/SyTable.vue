@@ -35,10 +35,6 @@
 		itemsPerPageOptions: undefined,
 	})
 
-	const emit = defineEmits<{
-		(e: 'update:options', options: Partial<DataOptions>): void
-	}>()
-
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
@@ -107,7 +103,6 @@
 		options,
 		itemsLength,
 		table,
-		emit,
 	})
 
 	// Use the table checkbox composable
@@ -396,7 +391,7 @@
 						:page-count="pageCount"
 						:items-length="filteredItems.length"
 						:items-per-page-options="props.itemsPerPageOptions"
-						@update:page="page = $event"
+						@update:page="updateOptions({ page: $event })"
 						@update:items-per-page="updateItemsPerPage"
 					/>
 				</div>

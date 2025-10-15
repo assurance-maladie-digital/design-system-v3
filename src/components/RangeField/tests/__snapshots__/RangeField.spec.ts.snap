@@ -1,7 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`RangeField > render correctly when the modelValue is not defined 1`] = `
-<div class="vd-range-field">
+<div class="sy-range-field">
+  <!-- v-if -->
   <div class="
     mb-2
     mt-10
@@ -13,7 +14,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
       wrapper
     ">
       <div class="track">
-        <button
+        <div
           aria-label="Minimum"
           aria-orientation="horizontal"
           aria-valuemax="100"
@@ -25,6 +26,10 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
           tabindex="0"
           title="Minimum"
         >
+          <div
+            aria-hidden="true"
+            class="thumb-outline"
+          ></div>
           <div class="tooltip-wrapper">
             <div
               class="tooltip"
@@ -37,8 +42,8 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             </div>
           </div>
           <span class="inner-thumb"></span>
-        </button>
-        <button
+        </div>
+        <div
           aria-label="Maximum"
           aria-orientation="horizontal"
           aria-valuemax="100"
@@ -50,6 +55,10 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
           tabindex="0"
           title="Maximum"
         >
+          <div
+            aria-hidden="true"
+            class="thumb-outline"
+          ></div>
           <div class="tooltip-wrapper">
             <div
               class="tooltip"
@@ -62,7 +71,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             </div>
           </div>
           <span class="inner-thumb"></span>
-        </button>
+        </div>
         <div
           aria-hidden="true"
           class="
@@ -113,6 +122,7 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
     max-width-none
   ">
     <div class="
+      basic-field
       ma-3
       v-input
       v-input--center-affix
@@ -129,9 +139,11 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
           bg-white
           v-field
           v-field--active
+          v-field--appended
           v-field--center-affix
           v-field--dirty
           v-field--has-background
+          v-field--prepended
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -186,7 +198,11 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               <!---->
             </div>
           </div>
-          <!---->
+          <div class="v-field__prepend-inner">
+            <!---->
+            <!-- v-if -->
+            <!-- v-if -->
+          </div>
           <div
             class="v-field__field"
             data-no-activator=""
@@ -204,8 +220,8 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             </label>
             <!---->
             <input
-              aria-describedby="input-v-0-messages"
               aria-label="Valeur min"
+              autocomplete="off"
               class="v-field__input"
               id="input-v-0"
               inputmode="numeric"
@@ -217,7 +233,11 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             <!---->
           </div>
           <!---->
-          <!---->
+          <div class="v-field__append-inner">
+            <!-- v-if -->
+            <!-- v-if -->
+            <!---->
+          </div>
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
@@ -240,26 +260,10 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
         </div>
       </div>
       <!---->
-      <div
-        aria-live="polite"
-        class="v-input__details"
-        id="input-v-0-messages"
-        role="alert"
-      >
-        <transition-group-stub
-          appear="false"
-          class="v-messages"
-          css="true"
-          name="slide-y-transition"
-          persisted="false"
-          tag="div"
-        >
-          <!---->
-        </transition-group-stub>
-        <!---->
-      </div>
+      <!---->
     </div>
     <div class="
+      basic-field
       ma-3
       v-input
       v-input--center-affix
@@ -276,9 +280,11 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
           bg-white
           v-field
           v-field--active
+          v-field--appended
           v-field--center-affix
           v-field--dirty
           v-field--has-background
+          v-field--prepended
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -333,7 +339,11 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
               <!---->
             </div>
           </div>
-          <!---->
+          <div class="v-field__prepend-inner">
+            <!---->
+            <!-- v-if -->
+            <!-- v-if -->
+          </div>
           <div
             class="v-field__field"
             data-no-activator=""
@@ -351,8 +361,8 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             </label>
             <!---->
             <input
-              aria-describedby="input-v-2-messages"
               aria-label="Valeur max"
+              autocomplete="off"
               class="v-field__input"
               id="input-v-2"
               inputmode="numeric"
@@ -364,7 +374,11 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
             <!---->
           </div>
           <!---->
-          <!---->
+          <div class="v-field__append-inner">
+            <!-- v-if -->
+            <!-- v-if -->
+            <!---->
+          </div>
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
@@ -387,31 +401,15 @@ exports[`RangeField > render correctly when the modelValue is not defined 1`] = 
         </div>
       </div>
       <!---->
-      <div
-        aria-live="polite"
-        class="v-input__details"
-        id="input-v-2-messages"
-        role="alert"
-      >
-        <transition-group-stub
-          appear="false"
-          class="v-messages"
-          css="true"
-          name="slide-y-transition"
-          persisted="false"
-          tag="div"
-        >
-          <!---->
-        </transition-group-stub>
-        <!---->
-      </div>
+      <!---->
     </div>
   </div>
 </div>
 `;
 
 exports[`RangeField > renders correctly 1`] = `
-<div class="vd-range-field">
+<div class="sy-range-field">
+  <!-- v-if -->
   <div class="
     mb-2
     mt-10
@@ -423,7 +421,7 @@ exports[`RangeField > renders correctly 1`] = `
       wrapper
     ">
       <div class="track">
-        <button
+        <div
           aria-label="Minimum"
           aria-orientation="horizontal"
           aria-valuemax="80"
@@ -435,6 +433,10 @@ exports[`RangeField > renders correctly 1`] = `
           tabindex="0"
           title="Minimum"
         >
+          <div
+            aria-hidden="true"
+            class="thumb-outline"
+          ></div>
           <div class="tooltip-wrapper">
             <div
               class="tooltip"
@@ -447,8 +449,8 @@ exports[`RangeField > renders correctly 1`] = `
             </div>
           </div>
           <span class="inner-thumb"></span>
-        </button>
-        <button
+        </div>
+        <div
           aria-label="Maximum"
           aria-orientation="horizontal"
           aria-valuemax="100"
@@ -460,6 +462,10 @@ exports[`RangeField > renders correctly 1`] = `
           tabindex="0"
           title="Maximum"
         >
+          <div
+            aria-hidden="true"
+            class="thumb-outline"
+          ></div>
           <div class="tooltip-wrapper">
             <div
               class="tooltip"
@@ -472,7 +478,7 @@ exports[`RangeField > renders correctly 1`] = `
             </div>
           </div>
           <span class="inner-thumb"></span>
-        </button>
+        </div>
         <div
           aria-hidden="true"
           class="
@@ -523,6 +529,7 @@ exports[`RangeField > renders correctly 1`] = `
     max-width-none
   ">
     <div class="
+      basic-field
       ma-3
       v-input
       v-input--center-affix
@@ -539,9 +546,11 @@ exports[`RangeField > renders correctly 1`] = `
           bg-white
           v-field
           v-field--active
+          v-field--appended
           v-field--center-affix
           v-field--dirty
           v-field--has-background
+          v-field--prepended
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -596,7 +605,11 @@ exports[`RangeField > renders correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
+          <div class="v-field__prepend-inner">
+            <!---->
+            <!-- v-if -->
+            <!-- v-if -->
+          </div>
           <div
             class="v-field__field"
             data-no-activator=""
@@ -614,8 +627,8 @@ exports[`RangeField > renders correctly 1`] = `
             </label>
             <!---->
             <input
-              aria-describedby="input-v-0-messages"
               aria-label="Valeur min"
+              autocomplete="off"
               class="v-field__input"
               id="input-v-0"
               inputmode="numeric"
@@ -627,7 +640,11 @@ exports[`RangeField > renders correctly 1`] = `
             <!---->
           </div>
           <!---->
-          <!---->
+          <div class="v-field__append-inner">
+            <!-- v-if -->
+            <!-- v-if -->
+            <!---->
+          </div>
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
@@ -650,26 +667,10 @@ exports[`RangeField > renders correctly 1`] = `
         </div>
       </div>
       <!---->
-      <div
-        aria-live="polite"
-        class="v-input__details"
-        id="input-v-0-messages"
-        role="alert"
-      >
-        <transition-group-stub
-          appear="false"
-          class="v-messages"
-          css="true"
-          name="slide-y-transition"
-          persisted="false"
-          tag="div"
-        >
-          <!---->
-        </transition-group-stub>
-        <!---->
-      </div>
+      <!---->
     </div>
     <div class="
+      basic-field
       ma-3
       v-input
       v-input--center-affix
@@ -686,9 +687,11 @@ exports[`RangeField > renders correctly 1`] = `
           bg-white
           v-field
           v-field--active
+          v-field--appended
           v-field--center-affix
           v-field--dirty
           v-field--has-background
+          v-field--prepended
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -743,7 +746,11 @@ exports[`RangeField > renders correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
+          <div class="v-field__prepend-inner">
+            <!---->
+            <!-- v-if -->
+            <!-- v-if -->
+          </div>
           <div
             class="v-field__field"
             data-no-activator=""
@@ -761,8 +768,8 @@ exports[`RangeField > renders correctly 1`] = `
             </label>
             <!---->
             <input
-              aria-describedby="input-v-2-messages"
               aria-label="Valeur max"
+              autocomplete="off"
               class="v-field__input"
               id="input-v-2"
               inputmode="numeric"
@@ -774,7 +781,11 @@ exports[`RangeField > renders correctly 1`] = `
             <!---->
           </div>
           <!---->
-          <!---->
+          <div class="v-field__append-inner">
+            <!-- v-if -->
+            <!-- v-if -->
+            <!---->
+          </div>
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
@@ -797,31 +808,15 @@ exports[`RangeField > renders correctly 1`] = `
         </div>
       </div>
       <!---->
-      <div
-        aria-live="polite"
-        class="v-input__details"
-        id="input-v-2-messages"
-        role="alert"
-      >
-        <transition-group-stub
-          appear="false"
-          class="v-messages"
-          css="true"
-          name="slide-y-transition"
-          persisted="false"
-          tag="div"
-        >
-          <!---->
-        </transition-group-stub>
-        <!---->
-      </div>
+      <!---->
     </div>
   </div>
 </div>
 `;
 
 exports[`RangeField > renders correctly with value NaN 1`] = `
-<div class="vd-range-field">
+<div class="sy-range-field">
+  <!-- v-if -->
   <div class="
     mb-2
     mt-10
@@ -833,7 +828,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
       wrapper
     ">
       <div class="track">
-        <button
+        <div
           aria-label="Minimum"
           aria-orientation="horizontal"
           aria-valuemax="0"
@@ -845,6 +840,10 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
           tabindex="0"
           title="Minimum"
         >
+          <div
+            aria-hidden="true"
+            class="thumb-outline"
+          ></div>
           <div class="tooltip-wrapper">
             <div
               class="tooltip"
@@ -857,8 +856,8 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             </div>
           </div>
           <span class="inner-thumb"></span>
-        </button>
-        <button
+        </div>
+        <div
           aria-label="Maximum"
           aria-orientation="horizontal"
           aria-valuemax="100"
@@ -870,6 +869,10 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
           tabindex="0"
           title="Maximum"
         >
+          <div
+            aria-hidden="true"
+            class="thumb-outline"
+          ></div>
           <div class="tooltip-wrapper">
             <div
               class="tooltip"
@@ -882,7 +885,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             </div>
           </div>
           <span class="inner-thumb"></span>
-        </button>
+        </div>
         <div
           aria-hidden="true"
           class="
@@ -933,6 +936,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
     max-width-none
   ">
     <div class="
+      basic-field
       ma-3
       v-input
       v-input--center-affix
@@ -949,9 +953,11 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
           bg-white
           v-field
           v-field--active
+          v-field--appended
           v-field--center-affix
           v-field--dirty
           v-field--has-background
+          v-field--prepended
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -1006,7 +1012,11 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
+          <div class="v-field__prepend-inner">
+            <!---->
+            <!-- v-if -->
+            <!-- v-if -->
+          </div>
           <div
             class="v-field__field"
             data-no-activator=""
@@ -1024,8 +1034,8 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             </label>
             <!---->
             <input
-              aria-describedby="input-v-0-messages"
               aria-label="Valeur min"
+              autocomplete="off"
               class="v-field__input"
               id="input-v-0"
               inputmode="numeric"
@@ -1037,7 +1047,11 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             <!---->
           </div>
           <!---->
-          <!---->
+          <div class="v-field__append-inner">
+            <!-- v-if -->
+            <!-- v-if -->
+            <!---->
+          </div>
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
@@ -1060,26 +1074,10 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
         </div>
       </div>
       <!---->
-      <div
-        aria-live="polite"
-        class="v-input__details"
-        id="input-v-0-messages"
-        role="alert"
-      >
-        <transition-group-stub
-          appear="false"
-          class="v-messages"
-          css="true"
-          name="slide-y-transition"
-          persisted="false"
-          tag="div"
-        >
-          <!---->
-        </transition-group-stub>
-        <!---->
-      </div>
+      <!---->
     </div>
     <div class="
+      basic-field
       ma-3
       v-input
       v-input--center-affix
@@ -1096,9 +1094,11 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
           bg-white
           v-field
           v-field--active
+          v-field--appended
           v-field--center-affix
           v-field--dirty
           v-field--has-background
+          v-field--prepended
           v-field--variant-outlined
           v-locale--is-ltr
           v-theme--light
@@ -1153,7 +1153,11 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
+          <div class="v-field__prepend-inner">
+            <!---->
+            <!-- v-if -->
+            <!-- v-if -->
+          </div>
           <div
             class="v-field__field"
             data-no-activator=""
@@ -1171,8 +1175,8 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             </label>
             <!---->
             <input
-              aria-describedby="input-v-2-messages"
               aria-label="Valeur max"
+              autocomplete="off"
               class="v-field__input"
               id="input-v-2"
               inputmode="numeric"
@@ -1184,7 +1188,11 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
             <!---->
           </div>
           <!---->
-          <!---->
+          <div class="v-field__append-inner">
+            <!-- v-if -->
+            <!-- v-if -->
+            <!---->
+          </div>
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
             <div class="v-field__outline__notch">
@@ -1207,24 +1215,7 @@ exports[`RangeField > renders correctly with value NaN 1`] = `
         </div>
       </div>
       <!---->
-      <div
-        aria-live="polite"
-        class="v-input__details"
-        id="input-v-2-messages"
-        role="alert"
-      >
-        <transition-group-stub
-          appear="false"
-          class="v-messages"
-          css="true"
-          name="slide-y-transition"
-          persisted="false"
-          tag="div"
-        >
-          <!---->
-        </transition-group-stub>
-        <!---->
-      </div>
+      <!---->
     </div>
   </div>
 </div>

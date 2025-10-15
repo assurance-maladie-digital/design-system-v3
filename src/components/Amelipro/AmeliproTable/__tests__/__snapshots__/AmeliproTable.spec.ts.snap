@@ -75,10 +75,6 @@ exports[`AmeliproTable > render correctly 1`] = `
           </div>
           <div class="
             amelipro-select
-            amelipro-table__pagination-select
-            mb-0
-            ml-2
-            pt-0
             pt-0
             v-input
             v-input--center-affix

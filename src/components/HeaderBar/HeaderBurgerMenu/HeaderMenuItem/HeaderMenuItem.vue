@@ -1,8 +1,10 @@
 <script setup lang="ts">
 	withDefaults(defineProps<{
 		tag?: string
+		disabled?: boolean
 	}>(), {
 		tag: 'li',
+		disabled: false,
 	})
 </script>
 
@@ -10,6 +12,8 @@
 	<component
 		:is="tag"
 		class="header-menu-item"
+		:class="{ 'header-menu-item--disabled': disabled }"
+		:aria-disabled="disabled"
 	>
 		<slot />
 	</component>

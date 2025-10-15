@@ -114,6 +114,7 @@ export const BorderLeft: Story = {
 			return { args }
 		},
 		template: `
+<p class="mb-2">Utilisation du slot <code>borderLeftMessageContent</code> pour personnaliser le contenu.</p>
 <AmeliproMessage
 	v-bind="args"
 >
@@ -123,5 +124,115 @@ export const BorderLeft: Story = {
 		</p>
 	</template>
 </AmeliproMessage>`,
+	}),
+}
+
+export const ModeTexte: Story = {
+	name: 'Mode texte',
+	args: {
+		type: 'success',
+		text: true,
+		textColor: 'ap-green',
+		uniqueId: 'message-text',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Message affiché en mode texte (<code>text</code>).</p>
+    <AmeliproMessage
+        type="success"
+        text
+        text-color="ap-green"
+        unique-id="message-text"
+    >
+        Opération réalisée avec succès.
+    </AmeliproMessage>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproMessage },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Message affiché en mode texte (<code>text</code>).</p>
+<AmeliproMessage v-bind="args">
+    Opération réalisée avec succès.
+</AmeliproMessage>
+        `,
+	}),
+}
+
+export const SansIcone: Story = {
+	name: 'Sans icône',
+	args: {
+		type: 'info',
+		noIcon: true,
+		uniqueId: 'message-no-icon',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Message affiché sans icône (<code>noIcon</code>).</p>
+    <AmeliproMessage
+        type="info"
+        no-icon
+        unique-id="message-no-icon"
+    >
+        Information sans icône.
+    </AmeliproMessage>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproMessage },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Message affiché sans icône (<code>noIcon</code>).</p>
+<AmeliproMessage v-bind="args">
+    Information sans icône.
+</AmeliproMessage>
+        `,
+	}),
+}
+
+export const Dismissible: Story = {
+	name: 'Fermable (dismissible)',
+	args: {
+		type: 'error',
+		dismissible: true,
+		uniqueId: 'message-dismissible',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Message affichable/fermé par l’utilisateur (<code>dismissible</code>).</p>
+    <AmeliproMessage
+        type="error"
+        dismissible
+        unique-id="message-dismissible"
+    >
+        Une erreur est survenue.
+    </AmeliproMessage>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproMessage },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Message affichable/fermé par l’utilisateur (<code>dismissible</code>).</p>
+<AmeliproMessage v-bind="args">
+    Une erreur est survenue.
+</AmeliproMessage>
+        `,
 	}),
 }

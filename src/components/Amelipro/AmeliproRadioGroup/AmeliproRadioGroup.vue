@@ -123,8 +123,9 @@
 					class="radio-group__label d-inline-flex"
 					:class="{
 						'mb-1': !fullHorizontal && !pills,
-						'mb-0 mb-md-4': fullHorizontal || pills,
-						'margin-label': horizontalLabel && !fullHorizontal,
+						'mb-0': fullHorizontal || pills,
+						'mb-md-4': fullHorizontal,
+						'margin-label': horizontalLabel || fullHorizontal,
 						'd-sr-only': hiddenLabel,
 					}"
 				>

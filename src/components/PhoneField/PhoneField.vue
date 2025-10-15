@@ -9,6 +9,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import {
 		mdiAlertOutline,
 		mdiCheck,
@@ -310,6 +311,9 @@
 
 		return !validation.hasError.value
 	}
+
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
 
 	defineExpose({
 		computedValue,

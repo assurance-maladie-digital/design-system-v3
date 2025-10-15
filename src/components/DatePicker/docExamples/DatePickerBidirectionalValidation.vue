@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 	import { ref, computed, watch } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-	import { useDateFormat } from '@/composables/date/useDateFormat'
-
-	const { parseDate } = useDateFormat()
+	// useDateFormat n'est plus nécessaire avec les règles prédéfinies
 
 	// État des dates
 	const startDate = ref<string | null>(null)
@@ -13,68 +11,59 @@
 	const startDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 	const endDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 
-	// Règle de validation pour vérifier que la date de fin n'est pas avant la date de début
-	const createEndDateValidationRule = () => ({
-		type: 'custom',
-		options: {
-			validate: (value: string) => {
-				// Si pas de valeur pour la date de fin, pas besoin de validation
-				if (!value) return true
-
-				// Si pas de date de début mais une date de fin, afficher l'erreur
-				if (!startDate.value) return 'Veuillez d\'abord sélectionner une date de début'
-
-				const start = parseDate(startDate.value, 'DD/MM/YYYY')
-				const end = parseDate(value, 'DD/MM/YYYY')
-
-				if (!start || !end) return true
-
-				return end >= start || 'La date de fin ne peut pas être antérieure à la date de début'
-			},
-			message: 'La date de fin ne peut pas être antérieure à la date de début',
-		},
-	})
-
-	// Règle de validation pour vérifier que la date de début n'est pas après la date de fin
-	const createStartDateValidationRule = () => ({
-		type: 'custom',
-		options: {
-			validate: (value: string) => {
-				// Si pas de valeur pour la date de début ou pas de date de fin, pas besoin de validation
-				if (!value || !endDate.value) return true
-
-				const start = parseDate(value, 'DD/MM/YYYY')
-				const end = parseDate(endDate.value, 'DD/MM/YYYY')
-
-				if (!start || !end) return true
-
-				return start <= end || 'La date de début ne peut pas être postérieure à la date de fin'
-			},
-			message: 'La date de début ne peut pas être postérieure à la date de fin',
-		},
-	})
+	// Les règles de validation sont définies directement dans les computed startDateRules et endDateRules
 
 	// Règles de validation pour la date de début
-	const startDateRules = computed(() => [
-		{
-			type: 'required',
-			options: {
-				message: 'La date de début est requise.',
+	const startDateRules = computed(() => {
+		const rules = [
+			{
+				type: 'required',
+				options: {
+					message: 'La date de début est requise.',
+				},
 			},
-		},
-		createStartDateValidationRule(),
-	])
+		]
+
+		// Ajouter la règle notAfterDate seulement si endDate.value existe
+		if (endDate.value) {
+			rules.push({
+				type: 'notAfterDate',
+
+				options: {
+					message: 'La date de début ne peut pas être postérieure à la date de fin',
+					date: endDate.value, // Déjà une chaîne au format DD/MM/YYYY
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+				} as any,
+			})
+		}
+
+		return rules
+	})
 
 	// Règles de validation pour la date de fin
-	const endDateRules = computed(() => [
-		{
-			type: 'required',
-			options: {
-				message: 'La date de fin est requise.',
+	const endDateRules = computed(() => {
+		const rules = [
+			{
+				type: 'required',
+				options: {
+					message: 'La date de fin est requise.',
+				},
 			},
-		},
-		createEndDateValidationRule(),
-	])
+		]
+		// Ajouter la règle notBeforeDate seulement si startDate.value existe
+		if (startDate.value) {
+			rules.push({
+				type: 'notBeforeDate',
+
+				options: {
+					message: 'La date de fin ne peut pas être antérieure à la date de début',
+					date: startDate.value, // Déjà une chaîne au format DD/MM/YYYY
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+				} as any,
+			})
+		}
+		return rules
+	})
 
 	// Fonction pour forcer la validation de la date de fin quand la date de début change
 	const validateEndDate = () => {

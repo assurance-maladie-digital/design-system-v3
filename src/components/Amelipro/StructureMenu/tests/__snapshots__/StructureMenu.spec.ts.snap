@@ -1153,8 +1153,6 @@ exports[`StructureMenu > render correctly 1`] = `
           <div
             class="
               amelipro-tooltip
-              d-flex
-              justify-center
               ml-2
               mt-1
             "

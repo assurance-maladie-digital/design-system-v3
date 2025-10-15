@@ -146,20 +146,30 @@
 								<HeaderMenuItem
 									v-for="item in items"
 									:key="item.label"
+									:disabled="item.disabled"
 								>
+									<!-- Link with href for enabled items -->
 									<a
-										v-if="'href' in item"
+										v-if="'href' in item && !item.disabled"
 										:href="item.href"
 									>
 										{{ item.label }}
 									</a>
+									<!-- RouterLink for enabled items -->
 									<RouterLink
-										v-else-if="item.to"
+										v-else-if="item.to && !item.disabled"
 										:to="item.to"
 										@click="menuOpen = false"
 									>
 										{{ item.label }}
 									</RouterLink>
+									<!-- Span for disabled items -->
+									<span
+										v-else
+										class="disabled-item"
+									>
+										{{ item.label }}
+									</span>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</slot>
@@ -227,5 +237,11 @@
 
 .inner-vertical-menu__main-content {
 	flex: 1;
+}
+
+.disabled-item {
+	opacity: 0.38;
+	color: rgba(var(--v-theme-on-surface), 0.38);
+	cursor: not-allowed;
 }
 </style>

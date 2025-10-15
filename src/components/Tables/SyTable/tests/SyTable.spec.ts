@@ -239,6 +239,7 @@ describe('SyTable', () => {
 		})
 
 		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
 		const filterComponents = wrapper.findAllComponents({ name: 'SyTableFilter' })
 		expect(filterComponents.length).toBeGreaterThan(0)
 	})
@@ -262,6 +263,8 @@ describe('SyTable', () => {
 				plugins: [vuetify],
 			},
 		})
+
+		await vi.dynamicImportSettled()
 
 		// Simulate the VDataTable emitting an update:options event with the filters
 		await wrapperWithFilters.findComponent({ name: 'VDataTable' }).vm.$emit('update:options', { filters })
@@ -303,6 +306,7 @@ describe('SyTable', () => {
 		})
 
 		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
 		const resetButton = wrapper.find('button')
 		expect(resetButton.exists()).toBe(true)
 		expect(resetButton.text()).toContain('Réinitialiser les filtres')
@@ -332,6 +336,7 @@ describe('SyTable', () => {
 		})
 
 		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
 		const resetButton = wrapper.find('button')
 		await resetButton.trigger('click')
 
@@ -369,6 +374,7 @@ describe('SyTable', () => {
 		})
 
 		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
 		expect(wrapper.text()).toContain('No data available')
 	})
 
