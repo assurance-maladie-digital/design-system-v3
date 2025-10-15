@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause, mdiVolumeHigh } from '@mdi/js'
 	import { type AxiosError, type AxiosResponse } from 'axios'
-	import { onMounted, ref, watch } from 'vue'
+	import { ref, watch } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
 	import CaptchaBtn from './CaptchaBtn.vue'
@@ -18,13 +18,13 @@
 		urlGetAudio: string
 		service: (id: string | null, value: string | null) => Promise<AxiosResponse>
 		modelValue?: string | undefined
-		defaultType?: CaptchaType
+		type?: CaptchaType
 		tagTitle?: string
 		helpDesk?: string | false
 		locales?: typeof defaultLocales
 	}>(), {
 		modelValue: undefined,
-		defaultType: 'image',
+		type: 'image',
 		helpDesk: '3648',
 		tagTitle: 'h3',
 		locales: () => defaultLocales,
@@ -38,14 +38,17 @@
 		(e: 'validation:error', error: unknown): void
 	}>()
 	const text = ref<string | null>(null)
-	const type = ref<CaptchaType>(props.defaultType)
+	const type = ref<CaptchaType>(props.type)
 	const id = ref<string | null>(null)
 	const state = ref<StateType>('idle')
 	const errorMessage = ref<string | null>(null)
 
-	// --- Watchers ---
 	watch(() => props.modelValue, (val) => {
 		text.value = val ?? null
+	}, { immediate: true })
+
+	watch(() => props.type, (val) => {
+		type.value = val
 	}, { immediate: true })
 
 	watch(text, (val) => {
@@ -54,11 +57,6 @@
 		}
 	})
 
-	onMounted(() => {
-		type.value = props.defaultType
-	})
-
-	// --- Methods ---
 	async function submitForm() {
 		emitValidateEvent()
 

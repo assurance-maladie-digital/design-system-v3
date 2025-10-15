@@ -43,8 +43,8 @@ export default {
 			description: 'La valeur du champs de captcha',
 			control: 'string',
 		},
-		'defaultType': {
-			description: 'Le type de captcha affiché par défaut.',
+		'type': {
+			description: 'Le type de captcha affiché.',
 			options: ['image', 'audio', 'choice'],
 			control: {
 				type: 'select',
