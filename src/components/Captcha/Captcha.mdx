@@ -8,7 +8,33 @@ import * as CaptchaStories from './Captcha.stories';
   <p>Le composant `Captcha` est utilisé pour afficher un captcha à l’utilisateur. </p>
 </div>
 
-<Canvas of={CaptchaStories.Default}  />
+<Canvas
+  of={CaptchaStories.Default}
+  	source={{
+		language: 'html',
+		format: 'dedent',
+		code: `
+		<script lang="ts" setup>
+			import { captcha } from '@cnamts/synapse'
+		</script>
+
+		<template>
+			<VCard class="pa-8" width="400">
+        <Captcha 
+          url-create="..."
+          url-get-image="..."
+          url-get-audio="/..."
+          service="(e) => {
+            // call the API to verify the captcha and return the response
+          }"
+          @validation:success="(e) => { ... }"
+          @validation:error="(e) => { ... }"
+        />
+      </VCard>
+		</template>
+		`
+	}}
+/>
 
 ## API
 

@@ -133,10 +133,11 @@ export const Default: Story = {
 						return Promise.reject({ response: { data: { message: 'Le captcha est incorrect' } } })
 					}
 				}
+
 				return { args, captchaValue, verifyCaptcha }
 			},
 			template: `
-                <VCard class="pa-4" max-width="600" min-width="300">
+                <VCard class="pa-8" max-width="600" min-width="300">
                     <Captcha 
                         url-create="https://free.mockerapi.com/mock/0adac32b-e832-4553-aa7f-0011b7f35f0c"
                         url-get-image="/captcha/captcha.png"
@@ -154,7 +155,7 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-    <VCard class="pa-4" max-width="600">
+    <VCard class="pa-8" max-width="600">
         <Captcha 
 			url-create="..."
 			url-get-image="..."
@@ -172,7 +173,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import Captcha from '@cnamts/Captcha'
+import { Captcha } from '@cnamts/Captcha'
 import { VCard } from 'vuetify/components'
 </script>
                 `,
@@ -188,7 +189,7 @@ export const Choice: Story = {
 		'onValidation:click': fn(),
 		'onValidation:success': fn(),
 		'onValidation:error': fn(),
-		'defaultType': 'choice',
+		'type': 'choice',
 	},
 	render: (args) => {
 		return {
@@ -209,7 +210,7 @@ export const Choice: Story = {
 				return { args, captchaValue, verifyCaptcha }
 			},
 			template: `
-                <VCard class="pa-4" max-width="600" min-width="300">
+                <VCard class="pa-8" max-width="600" min-width="300">
                     <Captcha
                         url-create="https://free.mockerapi.com/mock/0adac32b-e832-4553-aa7f-0011b7f35f0c"
                         url-get-image="/captcha/captcha.png"
@@ -227,7 +228,7 @@ export const Choice: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-    <VCard class="pa-4" max-width="600">
+    <VCard class="pa-8" max-width="600">
         <Captcha 
 			url-create="..."
 			url-get-image="..."
@@ -237,7 +238,7 @@ export const Choice: Story = {
 			}"
 			@validation:success="(e) => { ... }"
 			@validation:error="(e) => { ... }"
-			default-type="choice"
+			type="choice"
 		/>
     </VCard>
 </template>
@@ -246,7 +247,7 @@ export const Choice: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import Captcha from '@cnamts/Captcha'
+import { Captcha } from '@cnamts/Captcha'
 import { VCard } from 'vuetify/components'
 </script>
                 `,
