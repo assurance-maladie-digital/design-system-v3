@@ -169,6 +169,9 @@ export const WithReturnObject: Story = {
 		],
 		'onUpdate:modelValue': fn(),
 	},
+	argTypes: {
+		returnObject: { control: false },
+	},
 	render: (args) => {
 		return {
 			components: { SearchListField },
@@ -176,14 +179,14 @@ export const WithReturnObject: Story = {
 				return { args }
 			},
 			template: `
-                <div>
-                    <SearchListField v-bind="args" v-model="args.modelValue"/>
-                    <div style="margin-top: 20px;">
-                        <strong>Valeur(s) sélectionnée(s) :</strong>
-                        <pre>{{ args.modelValue }}</pre>
-                    </div>
-                </div>
-            `,
+				<div>
+					<SearchListField v-bind="args" v-model="args.modelValue"/>
+					<div style="margin-top: 20px;">
+						<strong>Valeur(s) sélectionnée(s) :</strong>
+						<pre>{{ args.modelValue }}</pre>
+					</div>
+				</div>
+			`,
 		}
 	},
 	parameters: {
@@ -193,13 +196,13 @@ export const WithReturnObject: Story = {
 				code: `
 <template>
   <SearchListField
-   	v-model="modelValue"
+	v-model="modelValue"
 	:items="items"
 	:return-object="true"
   />
   {{ modelValue }}
 </template>
-        `,
+		`,
 			},
 			{
 				name: 'Script',
@@ -222,7 +225,7 @@ const items = [
   // ... autres objets
 ]
 </script>
-        `,
+		`,
 			},
 		],
 	},
