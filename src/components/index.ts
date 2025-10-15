@@ -162,6 +162,7 @@ export { default as AmeliproPagination } from './Amelipro/AmeliproPagination/Ame
 export { default as AmeliproPatientBanner } from './Amelipro/AmeliproPatientBanner/AmeliproPatientBanner.vue'
 export { default as AmeliproPatientLogged } from './Amelipro/AmeliproPatientLogged/AmeliproPatientLogged.vue'
 export { default as AmeliproPatientLogin } from './Amelipro/AmeliproPatientLogin/AmeliproPatientLogin.vue'
+export { default as AmeliproPostalAddressField } from './Amelipro/AmeliproPostalAddressField/AmeliproPostalAddressField.vue'
 export { default as AmeliproRadioGroup } from './Amelipro/AmeliproRadioGroup/AmeliproRadioGroup.vue'
 export { default as AmeliproResultList } from './Amelipro/AmeliproResultList/AmeliproResultList.vue'
 export { default as AmeliproSelect } from './Amelipro/AmeliproSelect/AmeliproSelect.vue'

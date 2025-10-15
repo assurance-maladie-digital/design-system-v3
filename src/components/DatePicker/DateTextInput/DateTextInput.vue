@@ -35,6 +35,7 @@
 		required?: boolean
 		disabled?: boolean
 		readonly?: boolean
+		title?: string | false
 		isOutlined?: boolean
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
@@ -59,6 +60,7 @@
 		required: false,
 		disabled: false,
 		readonly: false,
+		title: false,
 		isOutlined: true,
 		displayIcon: true,
 		displayAppendIcon: false,
@@ -546,6 +548,13 @@
 				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
 				return false
 			}
+			// Permettre aux custom rules de s'exécuter même sur des champs vides
+			// Mais seulement si l'utilisateur a interagi avec le champ
+			if (props.customRules && props.customRules.length > 0 && hasInteracted.value) {
+				// Exécuter les custom rules sur la valeur vide
+				safeValidateField(null, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+				return !hasError.value
+			}
 			return true
 		}
 
@@ -1015,7 +1024,7 @@
 		:aria-label="ariaLabel || props.placeholder"
 		:is-validate-on-blur="props.isValidateOnBlur"
 		:density="props.density"
-		title="Date text input"
+		:title="props.title || undefined"
 		@focus="onFocus"
 		@blur="onBlur"
 		@keydown="handleKeydown"

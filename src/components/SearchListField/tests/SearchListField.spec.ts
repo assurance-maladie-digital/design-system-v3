@@ -320,4 +320,110 @@ describe('SearchListField.vue', () => {
 
 		expect(wrapper.find('.v-field--variant-underlined')).toBeTruthy()
 	})
+
+	describe('Return object functionality', () => {
+		it('emits values when returnObject is false (default)', async () => {
+			const items = [
+				{
+					label: 'First Item',
+					value: { id: 1, name: 'First' },
+				},
+				{
+					label: 'Second Item',
+					value: { id: 2, name: 'Second' },
+				},
+			]
+
+			const wrapper = mount(SearchListField, {
+				global: {
+					plugins: [vuetify],
+				},
+				propsData: {
+					items,
+					modelValue: [],
+					returnObject: false,
+				},
+			})
+
+			wrapper.vm.toggleSelection(items[0])
+			await wrapper.vm.$nextTick()
+
+			const emittedEvents = wrapper.emitted('update:modelValue')
+			expect(emittedEvents).toBeTruthy()
+			expect(emittedEvents![0]).toEqual([[{ id: 1, name: 'First' }]])
+		})
+
+		it('emits entire objects when returnObject is true', async () => {
+			const items = [
+				{
+					label: 'First Item',
+					value: { id: 1, name: 'First' },
+				},
+				{
+					label: 'Second Item',
+					value: { id: 2, name: 'Second' },
+				},
+			]
+
+			const wrapper = mount(SearchListField, {
+				global: {
+					plugins: [vuetify],
+				},
+				propsData: {
+					items,
+					modelValue: [],
+					returnObject: true,
+				},
+			})
+
+			wrapper.vm.toggleSelection(items[0])
+			await wrapper.vm.$nextTick()
+
+			const emittedEvents = wrapper.emitted('update:modelValue')
+			expect(emittedEvents).toBeTruthy()
+			expect(emittedEvents![0]).toEqual([[items[0]]])
+		})
+
+		it('handles selection and deselection correctly with returnObject true', async () => {
+			const items = [
+				{
+					label: 'First Item',
+					value: { id: 1, name: 'First' },
+				},
+				{
+					label: 'Second Item',
+					value: { id: 2, name: 'Second' },
+				},
+			]
+
+			const wrapper = mount(SearchListField, {
+				global: {
+					plugins: [vuetify],
+				},
+				propsData: {
+					items,
+					modelValue: [],
+					returnObject: true,
+				},
+			})
+
+			// Select first item
+			wrapper.vm.toggleSelection(items[0])
+			await wrapper.vm.$nextTick()
+
+			const emittedEvents = wrapper.emitted('update:modelValue')
+			expect(emittedEvents).toBeTruthy()
+			expect(emittedEvents![0]).toEqual([[items[0]]])
+
+			// Update props to simulate parent component update
+			await wrapper.setProps({ modelValue: [items[0]] })
+			await wrapper.vm.$nextTick()
+
+			// Deselect first item
+			wrapper.vm.toggleSelection(items[0])
+			await wrapper.vm.$nextTick()
+
+			expect(emittedEvents![1]).toEqual([[]])
+		})
+	})
 })

@@ -62,6 +62,66 @@ const meta = {
 				},
 			},
 		},
+		'fieldsetLabel': {
+			control: 'text',
+			description: 'Label du champ du fieldset, si passé a false, le champ est affiché sans fieldset. Il faudra alors veiller a ajouter un titre.',
+			table: {
+				type: {
+					summary: 'string | false',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		'thumbMinLabel': {
+			control: 'text',
+			description: 'Label du curseur min',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Valeur min',
+				},
+			},
+		},
+		'thumbMaxLabel': {
+			control: 'text',
+			description: 'Label du curseur max',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Valeur max',
+				},
+			},
+		},
+		'textFieldMinLabel': {
+			control: 'text',
+			description: 'Label du champ min',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Valeur min',
+				},
+			},
+		},
+		'textFieldMaxLabel': {
+			control: 'text',
+			description: 'Label du champ max',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Valeur max',
+				},
+			},
+		},
 		'vuetifyOptions': {
 			control: 'object',
 			description: 'Personnalisation des composants Vuetify internes',

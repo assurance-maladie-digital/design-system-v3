@@ -63,6 +63,7 @@
 		displayHolidayDays?: boolean
 		useCombinedMode?: boolean
 		textFieldActivator?: boolean
+		title?: string | false
 		displayAsterisk?: boolean
 		period?: {
 			min?: string
@@ -102,6 +103,7 @@
 		displayHolidayDays: true,
 		useCombinedMode: false,
 		textFieldActivator: false,
+		title: false,
 		displayAsterisk: false,
 		period: () => ({ min: '', max: '' }),
 		autoClamp: false,
@@ -232,7 +234,8 @@
 			}
 			return
 		}
-		if (!selectedDates.value) return
+		// Permettre aux custom rules de s'exécuter même sur des champs vides
+		if (!selectedDates.value && (!props.customRules || props.customRules.length === 0)) return
 
 		// Préparer les dates à valider
 		const datesToValidate = Array.isArray(selectedDates.value)
@@ -240,7 +243,8 @@
 			: [selectedDates.value]
 
 		// Valider chaque date
-		if (shouldDisplayErrors) {
+		// Ne pas afficher d'erreurs de custom rules si on est dans le contexte du mounted initial
+		if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
 			datesToValidate.forEach((date) => {
 				validateField(
 					date,
@@ -552,7 +556,10 @@
 		}
 
 		// Valider les dates au montage, mais sans afficher d'erreur pour le required
-		validateDates()
+		// Forcer la validation si il y a des custom rules et que le champ est rempli
+		const hasCustomRules = props.customRules && props.customRules.length > 0
+		const hasValue = selectedDates.value !== null && selectedDates.value !== undefined
+		validateDates(hasCustomRules && hasValue)
 
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
@@ -885,6 +892,7 @@
 				:no-icon="props.noIcon"
 				:is-outlined="props.isOutlined"
 				:readonly="props.readonly"
+				:title="props.title || undefined"
 				:width="props.width"
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
@@ -930,7 +938,7 @@
 				:show-week-number="props.showWeekNumber"
 				:is-birth-date="props.isBirthDate || props.birthDate"
 				:text-field-activator="props.textFieldActivator"
-				:title="'Date text input'"
+				:title="props.title || undefined"
 				:period="period"
 				:auto-clamp="props.autoClamp"
 				:label="props.label"
@@ -984,7 +992,7 @@
 						:display-asterisk="props.displayAsterisk"
 						:is-clearable="!props.readonly"
 						:auto-clamp="props.autoClamp"
-						title="Date Picker"
+						:title="props.title || undefined"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
