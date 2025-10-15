@@ -118,7 +118,7 @@ export const Date: Story = {
 	<AmeliproTextField
 		v-model="model"
 		aria-required
-		class="mt-2"
+		classes="mt-2"
 		label="Mon label"
 		max-date="2024-02-20"
 		min-date="2024-01-20"
@@ -177,7 +177,7 @@ export const Number: Story = {
 	<AmeliproTextField
 		v-model="model"
 		aria-required
-		class="mt-2"
+		classes="mt-2"
 		label="Mon label"
 		max-number="10"
 		min-number="0"

@@ -70,6 +70,37 @@ const items = [
 }
 
 /**
+ * Exemple de base du composant SyTabs avecun onglet disabled.
+ */
+export const Disabled: Story = {
+	args: {
+		items: [
+			{ label: 'Onglet 1', value: 'tab1', content: 'Contenu de l\'onglet 1' },
+			{ label: 'Onglet 2', value: 'tab2', content: 'Contenu de l\'onglet 2', disabled: true },
+			{ label: 'Onglet 3', value: 'tab3', content: 'Contenu de l\'onglet 3' },
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyTabs :items="items" />`,
+			},
+			{
+				name: 'Script',
+				code: `
+					const items = [
+						{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
+						{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2", disabled: true },
+						{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
+					]
+				`,
+			},
+		],
+	},
+}
+
+/**
  * Exemple avec v-model pour contrôler l'onglet actif de façon externe.
  */
 export const WithVModel: Story = {

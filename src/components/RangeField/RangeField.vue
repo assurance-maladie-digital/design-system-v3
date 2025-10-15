@@ -1,22 +1,33 @@
 <script lang="ts" setup>
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { vMaska } from 'maska/vue'
-	import { computed, ref, watch } from 'vue'
+	import { computed, nextTick, ref, watch } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import RangeSlider from './RangeSlider/RangeSlider.vue'
 	import { config } from './config'
 	import { locales } from './locales'
+	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		min?: number
 		max?: number
 		step?: number
 		bgColor?: string
+		fieldsetLabel?: string | false
+		thumbMinLabel?: string
+		thumbMaxLabel?: string
+		textFieldMinLabel?: string
+		textFieldMaxLabel?: string
 	}>(), {
 		min: 0,
 		max: 100,
 		step: 1,
 		bgColor: 'white',
+		fieldsetLabel: false,
+		thumbMinLabel: locales.minLabel,
+		thumbMaxLabel: locales.maxLabel,
+		textFieldMinLabel: locales.minLabel,
+		textFieldMaxLabel: locales.maxLabel,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -24,6 +35,10 @@
 	const model = defineModel<
 		Array<number>
 	>()
+
+	if (!model.value) {
+		model.value = [props.min, props.max]
+	}
 
 	const innerValue = computed(() => {
 		return model.value ? model.value : [props.min, props.max]
@@ -96,21 +111,26 @@
 		}
 	}
 
-	function validateMin(focus: boolean) {
-		if (!focus) {
-			fieldMin.value = innerValue.value[0]
-		}
+	async function validateMin() {
+		await nextTick()
+		fieldMin.value = innerValue.value[0]
 	}
 
-	function validateMax(focus: boolean) {
-		if (!focus) {
-			fieldMax.value = innerValue.value[1]
-		}
+	async function validateMax() {
+		await nextTick()
+		fieldMax.value = innerValue.value[1]
 	}
 </script>
 
 <template>
-	<div class="vd-range-field">
+	<component
+		:is="fieldsetLabel ? 'fieldset' : 'div'"
+		class="sy-range-field"
+	>
+		<legend v-if="fieldsetLabel">
+			{{ fieldsetLabel }}
+		</legend>
+
 		<div class="mt-10 mb-2 mx-3">
 			<RangeSlider
 				:model-value="innerValue"
@@ -126,32 +146,28 @@
 			:class="{ 'flex-column': display.xs.value }"
 			class="d-flex flex-wrap max-width-none"
 		>
-			<VTextField
+			<SyTextField
 				v-model="fieldMin"
 				v-maska="mask"
 				v-bind="options.textField"
-				:label="locales.minLabel"
-				:aria-label="locales.minLabel"
+				:label="textFieldMinLabel"
 				inputmode="numeric"
 				color="primary"
 				:bg-color="bgColor"
-				:title="locales.minLabel"
 				@update:model-value="updateMin"
-				@update:focused="validateMin"
+				@blur="validateMin"
 			/>
-			<VTextField
+			<SyTextField
 				v-model="fieldMax"
 				v-maska="mask"
 				v-bind="options.textField"
-				:label="locales.maxLabel"
-				:aria-label="locales.maxLabel"
+				:label="textFieldMaxLabel"
 				inputmode="numeric"
 				color="primary"
 				:bg-color="bgColor"
-				:title="locales.maxLabel"
 				@update:model-value="updateMax"
-				@update:focused="validateMax"
+				@blur="validateMax"
 			/>
 		</div>
-	</div>
+	</component>
 </template>

@@ -1,4 +1,4 @@
-import { ref, type Ref, type TemplateRef } from 'vue'
+import { onMounted, onUnmounted, ref, type Ref, type TemplateRef } from 'vue'
 import type { VDialog } from 'vuetify/components'
 
 export function useDraggable(
@@ -8,6 +8,7 @@ export function useDraggable(
 	const isGrabbing = ref(false)
 	function startDragging(e: MouseEvent) {
 		if (!draggable.value) return
+		if ((e?.target as HTMLElement)?.closest('button')) return
 
 		isGrabbing.value = true
 
@@ -34,10 +35,10 @@ export function useDraggable(
 			let top = e.clientY - offsetY
 
 			// Prevent the dialog from going outside the window horizontally
-			left = Math.max(-marginLeft, Math.min(left, windowWidth - overlayWidth - marginLeft))
+			left = Math.max(0, Math.min(left, windowWidth - overlayWidth - marginLeft * 2))
 
 			// Prevent the dialog from going outside the window vertically
-			top = Math.max(-marginTop, Math.min(top, windowHeight - overlayHeight - marginTop))
+			top = Math.max(0, Math.min(top, windowHeight - overlayHeight - marginTop * 2))
 
 			overlayElement.style.position = 'absolute'
 			overlayElement.style.left = `${left}px`
@@ -57,6 +58,7 @@ export function useDraggable(
 	/* Keyboard accessibility functions */
 
 	function moveToLeft() {
+		if (!draggable.value) return
 		const overlayElement = dialogContent?.value?.$el.closest('.v-overlay__content') as HTMLElement
 		if (!overlayElement) throw new Error('Dialog element not found')
 
@@ -76,6 +78,7 @@ export function useDraggable(
 	}
 
 	function moveToRight() {
+		if (!draggable.value) return
 		const overlayElement = dialogContent?.value?.$el.closest('.v-overlay__content') as HTMLElement
 		if (!overlayElement) throw new Error('Dialog element not found')
 
@@ -94,5 +97,90 @@ export function useDraggable(
 		overlayElement.style.top = ''
 	}
 
-	return { isGrabbing, startDragging, moveToLeft, moveToRight }
+	function moveToTop() {
+		if (!draggable.value) return
+		const overlayElement = dialogContent?.value?.$el.closest('.v-overlay__content') as HTMLElement
+		if (!overlayElement) throw new Error('Dialog element not found')
+
+		const computedStyle = getComputedStyle(overlayElement)
+		const marginTop = parseFloat(computedStyle.marginTop) || 0
+
+		const positionToTop = window.innerHeight - overlayElement.offsetHeight - marginTop * 2
+
+		if (overlayElement.style.top === `${positionToTop}px`) {
+			overlayElement.style.position = 'static'
+			overlayElement.style.top = ``
+			return
+		}
+
+		overlayElement.style.position = 'absolute'
+		overlayElement.style.top = `0px`
+		overlayElement.style.left = ''
+	}
+
+	function moveToBottom() {
+		if (!draggable.value) return
+		const overlayElement = dialogContent?.value?.$el.closest('.v-overlay__content') as HTMLElement
+		if (!overlayElement) throw new Error('Dialog element not found')
+
+		const computedStyle = getComputedStyle(overlayElement)
+		const marginTop = parseFloat(computedStyle.marginTop) || 0
+
+		const positionToTop = window.innerHeight - overlayElement.offsetHeight - marginTop * 2
+
+		if (overlayElement.style.top === `0px`) {
+			overlayElement.style.position = 'static'
+			overlayElement.style.top = ``
+			return
+		}
+
+		overlayElement.style.position = 'absolute'
+		overlayElement.style.top = `${positionToTop}px`
+		overlayElement.style.left = ''
+	}
+
+	/* Keep the dialog in the viewport on window resize */
+
+	onMounted(() => {
+		window.addEventListener('resize', keepInViewport)
+	})
+
+	onUnmounted(() => {
+		window.removeEventListener('resize', keepInViewport)
+		window.removeEventListener('mousemove', keepInViewport)
+		window.removeEventListener('mouseup', keepInViewport)
+	})
+
+	function keepInViewport() {
+		const overlayElement = dialogContent?.value?.$el.closest('.v-overlay__content') as HTMLElement
+
+		if (!overlayElement) {
+			return
+		}
+
+		const computedStyle = getComputedStyle(overlayElement)
+		const marginLeft = parseFloat(computedStyle.marginLeft) || 0
+		const marginTop = parseFloat(computedStyle.marginTop) || 0
+
+		const windowWidth = window.innerWidth
+		const windowHeight = window.innerHeight
+
+		const overlayWidth = overlayElement.offsetWidth
+		const overlayHeight = overlayElement.offsetHeight
+
+		let left = parseFloat(overlayElement.style.left) || 0
+		let top = parseFloat(overlayElement.style.top) || 0
+
+		if (left + overlayWidth + marginLeft * 2 > windowWidth) {
+			left = windowWidth - overlayWidth - marginLeft * 2
+			overlayElement.style.left = `${left}px`
+		}
+
+		if (top + overlayHeight + marginTop * 2 > windowHeight) {
+			top = windowHeight - overlayHeight - marginTop * 2
+			overlayElement.style.top = `${top}px`
+		}
+	}
+
+	return { isGrabbing, startDragging, moveToLeft, moveToRight, moveToTop, moveToBottom }
 }

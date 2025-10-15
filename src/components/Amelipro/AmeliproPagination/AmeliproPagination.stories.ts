@@ -27,70 +27,150 @@ export default meta
 
 type Story = StoryObj<typeof AmeliproPagination>
 
-const items = [
-	{ key: 1 },
-	{ key: 2 },
-	{ key: 3 },
-	{ key: 4 },
-	{ key: 5 },
-	{ key: 6 },
-	{ key: 7 },
-	{ key: 8 },
-	{ key: 9 },
-	{ key: 10 },
-]
-
 export const Default: Story = {
+	name: 'Default',
 	args: {
+		items: [
+			{ key: 1 },
+			{ key: 2 },
+			{ key: 3 },
+			{ key: 4 },
+			{ key: 5 },
+		],
 		activePageDefault: 1,
-		items,
-		uniqueId: 'amelipro-pagination-unique-id',
+		uniqueId: 'pagination-basique',
 	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-	<AmeliproPagination
-		:active-page-default="1"
-		:items="items"
-		unique-id="amelipro-pagination-unique-id"
-	/>
-</template>
-				`,
+    <p>Pagination simple sur 5 pages, sans navigation interne ni liens.</p>
+    <AmeliproPagination
+        :items="[
+            { key: 1 },
+            { key: 2 },
+            { key: 3 },
+            { key: 4 },
+            { key: 5 }
+        ]"
+        active-page-default="1"
+        unique-id="pagination-basique"
+    />
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import { AmeliproPagination } from '@cnamts/synapse'
+import { AmeliproPagination } from '@cnamts/synapse'
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproPagination },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Pagination simple sur 5 pages, sans navigation interne ni liens.</p>
+<AmeliproPagination v-bind="args" />
+        `,
+	}),
+}
 
-	const items = [
-		{ key: 1 },
-		{ key: 2 },
-		{ key: 3 },
-		{ key: 4 },
-		{ key: 5 },
-		{ key: 6 },
-		{ key: 7 },
-		{ key: 8 },
-		{ key: 9 },
-		{ key: 10 },
-	]
-</script>
-				`,
+export const PaginationLongue: Story = {
+	name: 'Pagination longue (plus de 5 pages)',
+	args: {
+		items: Array.from({ length: 10 }, (_, i) => ({ key: i + 1 })),
+		activePageDefault: 6,
+		uniqueId: 'pagination-longue',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>Pagination longue (plus de 5 pages) avec gestion des chevrons et affichage dynamique.</p>
+    <AmeliproPagination
+        :items="Array.from({ length: 10 }, (_, i) => ({ key: i + 1 }))"
+        active-page-default="6"
+        unique-id="pagination-longue"
+    />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { AmeliproPagination } from '@cnamts/synapse'
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproPagination },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Pagination longue (plus de 5 pages) avec gestion des chevrons et affichage dynamique.</p>
+<AmeliproPagination v-bind="args" />
+        `,
+	}),
+}
+
+export const EvenementClick: Story = {
+	name: 'Gestion de l’événement click',
+	args: {
+		items: [
+			{ key: 1 },
+			{ key: 2 },
+			{ key: 3 },
+			{ key: 4 },
+			{ key: 5 },
+		],
+		activePageDefault: 1,
+		uniqueId: 'pagination-click',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <p>La pagination émet un événement <code>click</code> à chaque changement de page.</p>
+    <AmeliproPagination
+        :items="[
+            { key: 1 },
+            { key: 2 },
+            { key: 3 },
+            { key: 4 },
+            { key: 5 }
+        ]"
+        active-page-default="1"
+        unique-id="pagination-click"
+        @click="onPageClick"
+    />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { AmeliproPagination } from '@cnamts/synapse'
+
+function onPageClick(page: number) {
+    alert('Page active : ' + page)
+}
+</script>`,
 			},
 		],
 	},
 	render: args => ({
 		components: { AmeliproPagination },
 		setup() {
-			return { args }
+			function onPageClick(page: number) {
+				alert('Page active : ' + page)
+			}
+			return { args, onPageClick }
 		},
 		template: `
-			<AmeliproPagination
-				v-bind="args"
-			/>
-		`,
+<p class="mb-2">La pagination émet un événement <code>click</code> à chaque changement de page.</p>
+<AmeliproPagination v-bind="args" @click="onPageClick" />
+        `,
 	}),
-
 }

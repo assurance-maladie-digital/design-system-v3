@@ -1,7 +1,10 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`HeaderMenuItem > should render the component 1`] = `
-<li class="header-menu-item">
+<li
+  aria-disabled="false"
+  class="header-menu-item"
+>
   <a>Test</a>
 </li>
 `;

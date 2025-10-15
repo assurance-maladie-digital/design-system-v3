@@ -1,0 +1,60 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproPatientLogin > render correctly 1`] = `
+<div id="test-id">
+  <div
+    class="
+      amelipro-card
+      d-flex
+      flex-column
+      flex-md-row
+      w-100
+    "
+    style="
+      background-color: #FFFFFF;
+      border: 1px solid #DDDEDE;
+    "
+  >
+    <div
+      class="amelipro-card__left-part"
+      style="width: 100%;"
+    >
+      <!-- v-if -->
+      <div class="amelipro-card__content">
+        <h2
+          class="ident-title"
+          id="test-id-title"
+        >
+          Identification patient
+        </h2>
+        <div aria-live="polite">
+          <!-- v-if -->
+          <div
+            aria-busy="true"
+            class="
+              d-block
+              mt-8
+            "
+          >
+            <p class="text-center">
+              <span
+                aria-hidden="true"
+                class="
+                  d-block
+                  mx-auto
+                  my-4
+                "
+              >
+                <span class="loader"></span>
+              </span>
+              Veuillez patienter pendant le chargement...
+            </p>
+          </div>
+        </div>
+        <!-- v-if -->
+      </div>
+    </div>
+    <!-- v-if -->
+  </div>
+</div>
+`;

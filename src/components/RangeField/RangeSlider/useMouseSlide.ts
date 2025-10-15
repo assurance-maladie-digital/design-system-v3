@@ -44,6 +44,9 @@ export default function useMouseSlide(
 		document.addEventListener('touchcancel', stopDrag)
 	}
 
+	let rafId: number | null = null
+	let lastPointerX: number | null = null
+
 	function stopDrag() {
 		document.removeEventListener('mousemove', drag)
 		document.removeEventListener('mouseup', stopDrag)
@@ -52,8 +55,14 @@ export default function useMouseSlide(
 		document.removeEventListener('touchend', stopDrag)
 		document.removeEventListener('touchcancel', stopDrag)
 
+		// Cancel any scheduled frame on stop
+		if (rafId !== null) {
+			cancelAnimationFrame(rafId)
+			rafId = null
+		}
 		effectedChange = 0
 		startX = null
+		lastPointerX = null
 
 		// avoid click on track after dragging
 		setTimeout(() => {
@@ -63,17 +72,26 @@ export default function useMouseSlide(
 
 	function drag(event: MouseEvent | TouchEvent) {
 		event.stopPropagation()
-		const pointerPositionX = ('touches' in event) ? event.touches[0].clientX : event.clientX
+		lastPointerX = ('touches' in event) ? event.touches[0].clientX : event.clientX
 		if (startX === null) {
-			startX = pointerPositionX
-			return
+			startX = lastPointerX
 		}
+		// Schedule a frame if we don't have one already
+		if (rafId === null) {
+			rafId = requestAnimationFrame(processDrag)
+		}
+	}
+
+	function processDrag() {
+		rafId = null
+		if (lastPointerX === null || startX === null) return
+
 		const curStep = toValue(step)
 		const curValue = Math.round(toValue(currentValue) / curStep) * curStep
 
 		const trackRect = toValue(track).getBoundingClientRect()
 		const trackWidth = trackRect.width
-		const dx = pointerPositionX - startX
+		const dx = lastPointerX - startX
 
 		const percentChange = dx * 100 / trackWidth
 		const percentStep = curStep * 100 / (toValue(rangeEnd) - toValue(rangeStart))
@@ -90,10 +108,7 @@ export default function useMouseSlide(
 		)
 
 		const currentChange = clampedNewValue - curValue
-
-		if (currentChange === 0) {
-			return
-		}
+		if (currentChange === 0) return
 
 		effectedChange += currentChange
 		callback(clampedNewValue)

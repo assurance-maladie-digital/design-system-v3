@@ -10,6 +10,7 @@ interface DatePickerProps {
 	'placeholder'?: string
 	'format'?: string
 	'dateFormatReturn'?: string
+	'density'?: 'default' | 'comfortable' | 'compact'
 	'isBirthDate'?: boolean
 	'birthDate'?: boolean
 	'showWeekNumber'?: boolean
@@ -29,7 +30,6 @@ interface DatePickerProps {
 	'disableErrorHandling'?: boolean
 	'showSuccessMessages'?: boolean
 	'bgColor'?: string
-	'density'?: 'default' | 'comfortable' | 'compact'
 	'hideDetails'?: boolean | 'auto'
 	'displayWeekendDays'?: boolean
 	'displayTodayButton'?: boolean
@@ -161,6 +161,15 @@ const meta = {
 			control: 'boolean',
 			description: 'Masque le calendrier',
 			defaultValue: false,
+		},
+		density: {
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
+			defaultValue: 'default',
+		},
+		title: {
+			control: 'text',
 		},
 	},
 } as Meta<DatePickerProps>

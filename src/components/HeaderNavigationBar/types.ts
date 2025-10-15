@@ -4,4 +4,5 @@ export interface NavigationItem {
 	label: string
 	href?: string
 	to?: RouteLocationRaw
+	disabled?: boolean
 }

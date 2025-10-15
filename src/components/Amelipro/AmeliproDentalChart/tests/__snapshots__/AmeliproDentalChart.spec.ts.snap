@@ -32,7 +32,6 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
               d-inline-flex
               d-sr-only
               mb-0
-              mb-md-4
               radio-group__label
             "
             id="my-btn-id-filters"
