@@ -1,7 +1,16 @@
 import { Meta, Source } from '@storybook/addon-docs/blocks';
+import { ref } from 'vue';
+import { SyTextField } from '@cnamts/synapse';
+import { ref } from 'vue'
+import PasswordField from '@/components/PasswordField/PasswordField.vue'
+import { ref } from 'vue';
+import { SyTextField, PasswordField } from '@cnamts/synapse';
+import { ref, watch } from 'vue';
+import { PasswordField } from '@cnamts/synapse';
+import { ref } from 'vue';
 import '../styles/shared.css';
 
-<Meta title="Guide Du Dev/Guide de Validation des Formulaires"/>
+<Meta title="Guide Du Dev/Guide de Validation des Composants"/>
 
 
 <div className="header">
@@ -31,8 +40,6 @@ Voici comment mettre en place une validation basique sur un champ :
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { SyTextField } from '@cnamts/synapse';
 
 const email = ref('');
 
@@ -55,8 +62,6 @@ Utilisez les différents types de règles pour une expérience utilisateur riche
 
 <Source dark code={`
 <script setup>
-	import { ref } from 'vue'
-	import PasswordField from '@/components/PasswordField/PasswordField.vue'
 
 	const password = ref('')
 
@@ -138,8 +143,6 @@ La méthode `validateOnSubmit` est essentielle pour valider l'ensemble du formul
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { SyTextField, PasswordField } from '@cnamts/synapse';
 
 const email = ref('');
 const password = ref('');
@@ -203,8 +206,6 @@ Parfois, la validation d'un champ dépend de la valeur d'un autre champ. Voici c
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import { PasswordField } from '@cnamts/synapse';
 
 const password = ref('');
 const confirmPassword = ref('');
@@ -279,7 +280,6 @@ Plusieurs composants du Design System intègrent déjà la validation :
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { NirField, SyButton } from '
 import '../styles/shared.css';@cnamts/synapse';
 
