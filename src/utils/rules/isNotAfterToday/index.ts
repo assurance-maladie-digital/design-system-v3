@@ -20,7 +20,7 @@ export function isNotAfterTodayFn(
 		}
 
 		return (
-			!isDateAfter(formatDate(dayjs()), value) || ruleMessage(errorMessages, 'default')
+			(typeof value === 'string' && !isDateAfter(formatDate(dayjs()), value)) || ruleMessage(errorMessages, 'default')
 		)
 	}
 }

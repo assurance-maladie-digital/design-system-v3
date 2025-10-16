@@ -20,6 +20,7 @@ function generateVuetifyGlobals() {
 		'VDataTableServer',
 		'VBtnToggle',
 		'VCheckbox',
+		'VFileInput',
 		'VSelect',
 		'VRating',
 		'VRangeSlider',

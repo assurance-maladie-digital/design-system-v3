@@ -19,6 +19,10 @@ export function isMaxLengthFn(
 			return true
 		}
 
+		if (typeof value !== 'string') {
+			return ruleMessage(errorMessages, 'default', [max])
+		}
+
 		if (ignoreSpaces) {
 			value = value.replace(/\s/g, '')
 		}
