@@ -68,7 +68,7 @@
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.17.1",
     "@typescript-eslint/parser": "^8.11.0",
-    "@vitejs/plugin-vue": "^5.1.4",
+    "@vitejs/plugin-vue": "5.2.1",
     "@vitest/coverage-v8": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
@@ -98,7 +98,7 @@
     "vite-plugin-vuetify": "^2.1.1",
     "vitest": "^3.2.4",
     "vue": "^3.5.18",
-    "vue-component-type-helpers": "^2.2.0",
+    "vue-component-type-helpers": "2.2.0",
     "vue-router": "^4.4.5",
     "vue-tsc": "^2.1.8",
     "vue3-snapshot-serializer": "^2.9.0"
@@ -123,5 +123,13 @@
   },
   "overrides": {
     "esbuild": "^0.25.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "undici": "7.15.0"
+    },
+    "patchedDependencies": {
+      "undici@7.15.0": "patches/undici@7.15.0.patch"
+    }
   }
 }

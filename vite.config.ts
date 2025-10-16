@@ -124,7 +124,6 @@ export default defineConfig({
 	},
 	test: {
 		environment: 'happy-dom',
-		setupFiles: ['./tests/unit/setup.ts'],
 		isolate: true,
 		maxConcurrency: process.env.CI ? 1 : 5,
 		server: {
@@ -132,6 +131,7 @@ export default defineConfig({
 				inline: ['vuetify'],
 			},
 		},
+		setupFiles: ['./tests/unit/setup.ts'],
 		snapshotSerializers: [
 			'./node_modules/vue3-snapshot-serializer/index.js',
 		],

@@ -1,0 +1,16 @@
+diff --git a/lib/web/webidl/index.js b/lib/web/webidl/index.js
+index dfe8a92cfd276ab5cfd976540207a11c681fbc8a..cc3af15bdecf8d54d4d9e3a957c05f94b36cce5c 100644
+--- a/lib/web/webidl/index.js
++++ b/lib/web/webidl/index.js
+@@ -1,5 +1,11 @@
+ 'use strict'
+ 
++if (typeof globalThis.File === 'undefined') {
++  globalThis.File = class {
++    constructor() {}
++  }
++}
++
+ const { types, inspect } = require('node:util')
+ const { markAsUncloneable } = require('node:worker_threads')
+ 
