@@ -11,7 +11,7 @@ import { VBtn, VTextField } from 'vuetify/components'
  * La documentation sur le système de validation en cascade de Synapse Design System.
  */
 export default {
-	title: 'Composables/ValidationSystem',
+	title: 'GuideDuDev/ValidationSystem',
 	component: SyForm,
 	argTypes: {
 		validateOnSubmit: {
