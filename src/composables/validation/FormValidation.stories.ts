@@ -32,7 +32,7 @@ export default {
 type Story = StoryObj<typeof SyForm>
 
 // Exemple de base
-export const SimpleForm: Story = {
+export const FormulaireSimple: Story = {
 	render: args => ({
 		components: { SyForm, SyTextField, VBtn },
 		setup() {
@@ -100,7 +100,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 }
 
 // Exemple de formulaire avec composants mixtes
-export const MixedComponentsForm: Story = {
+export const FormulaireMixte: Story = {
 	render: args => ({
 		components: { SyForm, SyTextField, SySelect, SyCheckbox, DatePicker, VBtn, VTextField },
 		setup() {
@@ -216,7 +216,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 }
 
 // Exemple de formulaire imbriqué
-export const NestedForm: Story = {
+export const FormulaireImbrique: Story = {
 	render: args => ({
 		components: { SyForm, SyTextField, VBtn },
 		setup() {
@@ -313,7 +313,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 }
 
 // Exemple d'implémentation personnalisée
-export const CustomImplementation: Story = {
+export const ImplementationPersonnalisee: Story = {
 	render: args => ({
 		components: { SyForm, SyTextField, VBtn },
 		setup() {
