@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import SyForm from './SyForm.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { VBtn } from 'vuetify/components'
-import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 
 export default {
 	title: 'Composants/Formulaires/SyForm',
@@ -35,12 +34,12 @@ export const Basic: Story = {
 			const name = ref('')
 			const email = ref('')
 			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
-			const { generateRules } = useFieldValidation()
 
 			// Règles de validation selon le design system
-			const emailRules = generateRules([
+			const emailRules = [
+				{ type: 'email', options: { message: 'Format d\'email invalide' } },
 				{ type: 'required', options: { message: 'L\'email est obligatoire' } },
-			])
+			]
 
 			const submitForm = async () => {
 				const isValid = await form.value?.validate()
@@ -58,7 +57,7 @@ export const Basic: Story = {
       <SyForm ref="form" v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="name" label="Nom" required />
-          <SyTextField v-model="email" label="Email" :rules="emailRules" />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
           <v-btn type="submit" color="primary">Soumettre</v-btn>
         </div>
       </SyForm>
@@ -73,13 +72,13 @@ export const Basic: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyForm @submit="onSubmit">
-    <div class="d-flex flex-column gap-4">
-      <SyTextField v-model="name" label="Nom" required />
-      <SyTextField v-model="email" label="Email" :rules="emailRules" />
-      <v-btn type="submit" color="primary">Soumettre</v-btn>
-    </div>
-  </SyForm>
+      <SyForm ref="form" v-bind="args" @submit="submitForm">
+        <div class="d-flex flex-column gap-4">
+          <SyTextField v-model="name" label="Nom" required />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
+          <v-btn type="submit" color="primary">Soumettre</v-btn>
+        </div>
+      </SyForm>
 </template>
 `,
 			},
@@ -90,13 +89,12 @@ export const Basic: Story = {
 
 const name = ref('')
 const email = ref('')
-const { generateRules } = useFieldValidation()
 
 // Règles de validation selon le design system
-const emailRules = generateRules([
-  { type: 'required', options: { message: 'L'email est obligatoire' } },
-  { type: 'email', options: { message: 'Format d'email invalide' } },
-])
+const emailRules = [
+	{ type: 'email', options: { message: "Format d'email invalide" } },
+	{ type: 'required', options: { message: "L'email est obligatoire" } },
+]
 
 const onSubmit = (event: { isValid: boolean }) => {
   if (event.isValid) {
@@ -121,20 +119,19 @@ export const CustomValidation: Story = {
 			const password = ref('')
 			const confirmPassword = ref('')
 			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
-			const { generateRules } = useFieldValidation()
 
 			// Règles de validation
-			const passwordRules = generateRules([
-				{ type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
+			const passwordRules = computed(() => [
 				{ type: 'minLength', options: { length: 8, message: 'Minimum 8 caractères' } },
+				{ type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
 			])
 
-			const confirmPasswordRules = generateRules([
-				{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
+			const confirmPasswordRules = computed(() => [
 				{ type: 'custom', options: {
 					validate: value => value === password.value || 'Les mots de passe ne correspondent pas',
 					message: 'Les mots de passe ne correspondent pas',
 				} },
+				{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
 			])
 
 			const submitForm = async () => {
@@ -164,13 +161,13 @@ export const CustomValidation: Story = {
         <SyForm ref="form" v-bind="args" @submit="submitForm">
           <div class="d-flex flex-column gap-4">
             <SyTextField v-model="username" label="Nom d'utilisateur" required />
-            <SyTextField v-model="password" label="Mot de passe" type="password" :rules="passwordRules" />
+            <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" />
             <SyTextField 
               v-model="confirmPassword" 
               label="Confirmer le mot de passe" 
               type="password" 
               required 
-              :rules="confirmPasswordRules" 
+              :custom-rules="confirmPasswordRules" 
             />
             <div class="d-flex gap-3">
               <v-btn type="submit" color="primary">S'inscrire</v-btn>
@@ -191,12 +188,12 @@ export const CustomValidation: Story = {
     <SyForm ref="form" @submit="onSubmit">
       <div class="d-flex flex-column gap-4">
         <SyTextField v-model="username" label="Nom d'utilisateur" required />
-        <SyTextField v-model="password" label="Mot de passe" type="password" :rules="passwordRules" />
+        <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" />
         <SyTextField 
           v-model="confirmPassword" 
           label="Confirmer le mot de passe" 
           type="password" 
-          :rules="confirmPasswordRules" 
+          :custom-rules="confirmPasswordRules" 
         />
         <div class="d-flex gap-3">
           <v-btn type="submit" color="primary">S'inscrire</v-btn>
@@ -212,12 +209,26 @@ export const CustomValidation: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const form = ref(null)
 
+const passwordRules = computed(() => [
+	{ type: 'minLength', options: { length: 8, message: 'Minimum 8 caractères' } },
+	{ type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
+])
+
+const confirmPasswordRules = computed(() => [
+	{ type: 'custom', options: {
+		validate: value => value === password.value || 'Les mots de passe ne correspondent pas',
+		message: 'Les mots de passe ne correspondent pas',
+	} },
+	{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
+])
+	
 const validatePasswordMatch = () => {
   return password.value === confirmPassword.value || 'Les mots de passe ne correspondent pas'
 }
