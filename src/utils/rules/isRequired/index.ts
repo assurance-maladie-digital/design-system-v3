@@ -1,10 +1,7 @@
 import { ruleMessage } from '../../ruleMessage'
-import type { ValidationRule, ValidationResult, ErrorMessages } from '../types'
+import type { ValidationRule, ValidationResult, ErrorMessages, Value } from '../types'
 
 import { defaultErrorMessages } from './locales'
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Value = string | any[] | null
 
 export function isRequiredFn(
 	errorMessages: ErrorMessages = defaultErrorMessages,
@@ -24,3 +21,8 @@ export function isRequiredFn(
 }
 
 export const isRequired = isRequiredFn()
+
+/**
+ * @deprecated utiliser à la place Value depuis src\utils\rules\types.d.ts
+ */
+export type { Value } from '../types'
