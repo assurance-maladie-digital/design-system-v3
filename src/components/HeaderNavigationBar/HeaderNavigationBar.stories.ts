@@ -24,7 +24,7 @@ const meta = {
 			},
 			control: { type: 'boolean' },
 			description:
-        'État du menu burger. Controllable avec `v-model:burger-menu`.',
+				'État du menu burger. Controllable avec `v-model:burger-menu`.',
 		},
 		'onUpdate:burgerMenu': {
 			action: 'update:burgerMenu',
@@ -76,7 +76,7 @@ const meta = {
 		'homeLink': {
 			control: { type: 'object' },
 			description:
-        'Le lien de retour vers la home. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
+				'Le lien de retour vers la home. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
 			table: {
 				type: {
 					summary: `{
@@ -111,7 +111,7 @@ const meta = {
 		'maxHorizontalMenuItems': {
 			control: { type: 'number' },
 			description:
-        'Nombre maximum d\'items dans le menu horizontal avant de basculer sur le menu burger.',
+				'Nombre maximum d\'items dans le menu horizontal avant de basculer sur le menu burger.',
 			table: {
 				type: {
 					summary: 'number',
@@ -135,7 +135,7 @@ const meta = {
 		'logo-brand-content': {
 			control: { type: 'text' },
 			description:
-        'Le contenu a droite du logo de l\'assurance maladie. Peut être utilisé pour accoler un autre logo par exemple.',
+				'Le contenu a droite du logo de l\'assurance maladie. Peut être utilisé pour accoler un autre logo par exemple.',
 			table: {
 				type: {
 					summary: `{ 
@@ -150,7 +150,7 @@ const meta = {
 		'header-side': {
 			control: { type: 'text' },
 			description:
-        'Contenu a droite du header. Utile pour ajouter un menu secondaire par exemple.',
+				'Contenu a droite du header. Utile pour ajouter un menu secondaire par exemple.',
 			table: {
 				type: {
 					summary: '{ menu-open: boolean }',
@@ -205,7 +205,7 @@ const meta = {
 		'navigation-menu-content': {
 			control: { type: 'text' },
 			description:
-        'Remplace le contenu du menu de navigation (mobile). Utiliser les composants `HeaderMenuSection` et `HeaderMenuItem`.',
+				'Remplace le contenu du menu de navigation (mobile). Utiliser les composants `HeaderMenuSection` et `HeaderMenuItem`.',
 			table: {
 				type: {
 					summary: '{ menu-open: boolean }',
@@ -215,7 +215,7 @@ const meta = {
 		'vuetifyOptions': {
 			control: { type: 'object' },
 			description:
-        'Permet de personaliser les props des composants vuetify `VSheet`, `VTabs` et `VTab` utilisés en interne.',
+				'Permet de personaliser les props des composants vuetify `VSheet`, `VTabs` et `VTab` utilisés en interne.',
 			table: {
 				category: 'props',
 				type: {
@@ -327,6 +327,8 @@ export const WithScroll: Story = {
 		}),
 	],
 	parameters: {
+		controls: { exclude: ['resetTabSelection', 'header-side', 'logo-brand-content', 'onUpdate:burgerMenu', 'vuetifyOptions', 'confirm-tab-change', 'confirmTabChange', 'confirmationMessage', 'navigation-menu-content', 'navigation-menu-prepend', 'navigation-menu-append', 'navigation-bar-content', 'navigation-bar-append', 'navigation-bar-prepend'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -393,6 +395,8 @@ export const WithManyItems: Story = {
 		],
 	},
 	parameters: {
+		controls: { exclude: ['logo', 'homeAriaLabel', 'serviceTitle', 'serviceSubtitle', 'homeLink', 'maxHorizontalMenuItems', 'burgerMenu', 'resetTabSelection', 'header-side', 'logo-brand-content', 'onUpdate:burgerMenu', 'vuetifyOptions', 'confirm-tab-change', 'confirmTabChange', 'confirmationMessage', 'navigation-menu-content', 'navigation-menu-prepend', 'navigation-menu-append', 'navigation-bar-content', 'navigation-bar-append', 'navigation-bar-prepend', 'hideWhenDown', 'sticky'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -507,6 +511,8 @@ export const WithSlots: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'confirm-tab-change', 'confirmTabChange', 'confirmationMessage', 'hideWhenDown', 'sticky'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -608,6 +614,8 @@ export const WithLogoSlot: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['onUpdate:burgerMenu', 'vuetifyOptions', 'confirm-tab-change', 'confirmTabChange', 'confirmationMessage', 'navigation-menu-content', 'navigation-menu-prepend', 'navigation-menu-append', 'navigation-bar-content', 'navigation-bar-append', 'navigation-bar-prepend', 'hideWhenDown', 'sticky'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -672,6 +680,8 @@ export const WithNavigationBarPrependSlot: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['vuetifyOptions', 'confirm-tab-change', 'confirmTabChange', 'confirmationMessage', 'navigation-menu-content', 'navigation-menu-prepend', 'navigation-menu-append', 'navigation-bar-content', 'navigation-bar-append', 'hideWhenDown', 'sticky', 'header-side', 'logo-brand-content'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -723,6 +733,8 @@ export const WithNavigationBarAppendSlot: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['onUpdate:burgerMenu', 'vuetifyOptions', 'confirm-tab-change', 'navigation-menu-content', 'navigation-menu-prepend', 'navigation-menu-append', 'confirmTabChange', 'confirmationMessage', 'navigation-bar-content', 'navigation-bar-prepend', 'hideWhenDown', 'sticky', 'header-side', 'logo-brand-content'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -789,6 +801,8 @@ export const WithNavigationMenuAppendSlot: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['resetTabSelection', 'logo', 'vuetifyOptions', 'confirm-tab-change', 'navigation-bar-append', 'confirmTabChange', 'confirmationMessage', 'navigation-bar-content', 'navigation-bar-prepend', 'hideWhenDown', 'sticky', 'header-side', 'logo-brand-content'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -836,6 +850,8 @@ export const WithVuetifyOptions: Story = {
 		},
 	},
 	parameters: {
+		controls: { exclude: ['resetTabSelection', 'logo', 'burgerMenu', 'confirm-tab-change', 'onUpdate:burgerMenu', 'homeAriaLabel', 'serviceTitle', 'serviceSubtitle', 'homeLink', 'maxHorizontalMenuItems', 'navigation-bar-append', 'confirmTabChange', 'confirmationMessage', 'navigation-menu-append', 'navigation-bar-content', 'navigation-menu-prepend', 'navigation-menu-content', 'navigation-bar-prepend', 'hideWhenDown', 'sticky', 'header-side', 'logo-brand-content'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -905,6 +921,8 @@ export const WithTabConfirmation: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['resetTabSelection', 'logo', 'burgerMenu', 'vuetifyOptions', 'onUpdate:burgerMenu', 'homeAriaLabel', 'serviceTitle', 'serviceSubtitle', 'homeLink', 'maxHorizontalMenuItems', 'navigation-bar-append', 'navigation-menu-append', 'navigation-bar-content', 'navigation-menu-prepend', 'navigation-menu-content', 'navigation-bar-prepend', 'hideWhenDown', 'sticky', 'header-side', 'logo-brand-content'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
