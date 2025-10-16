@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { onMounted, ref, watch, nextTick } from 'vue'
+	import { onMounted, ref, watch } from 'vue'
 	import {
 		createCaptchaAudio,
 		createCaptchaImage,
@@ -45,12 +45,8 @@
 	})
 
 	async function chooseType(selectedType: CaptchaType) {
-		if (type.value === selectedType && state.value !== 'idle') return
-
 		updateType(selectedType)
 		resetError()
-
-		await nextTick()
 
 		switch (selectedType) {
 		case 'image':
@@ -160,8 +156,6 @@
 	}
 
 	function updateType(selectedType: CaptchaType) {
-		if (type.value === selectedType) return
-
 		type.value = selectedType
 		emitTypeChangeEvent(selectedType)
 	}
