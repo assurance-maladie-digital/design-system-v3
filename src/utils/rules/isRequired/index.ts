@@ -12,8 +12,12 @@ export function isRequiredFn(
 		if (Array.isArray(value)) {
 			valid = value.length !== 0
 		}
+		else if (typeof value === 'string') {
+			valid = value.trim() !== ''
+		}
 		else {
-			valid = Boolean(typeof value === 'string' ? value.trim() : value)
+			// Pour les nombres (y compris 0), null, undefined, etc.
+			valid = value !== null && value !== undefined
 		}
 
 		return valid || ruleMessage(errorMessages, 'default')
@@ -23,6 +27,6 @@ export function isRequiredFn(
 export const isRequired = isRequiredFn()
 
 /**
- * @deprecated utiliser à la place Value depuis src\utils\rules\types.d.ts
+ * @deprecated utiliser à la place Value depuis src/utils/rules/types.d.ts
  */
 export type { Value } from '../types'
