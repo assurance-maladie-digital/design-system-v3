@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export type Value = string | Date | File | any[] | null
+export type Value = string | number | Date | File | any[] | null | undefined
 export type ValidationResult = string | boolean
 
 // "any" car impossible de connaître à l'avance tous les types des valeurs
