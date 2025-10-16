@@ -55,4 +55,13 @@ export default ts.config(
 			'vuejs-accessibility/interactive-supports-focus': 0,
 		},
 	},
+	// Scripts (Node) override — autorise process/require dans scripts/*.js
+	{
+		files: ['scripts/**/*.js'],
+		env: { node: true },
+		rules: {
+			'@typescript-eslint/no-require-imports': 'off',
+			'no-undef': 'off',
+		},
+	},
 )
