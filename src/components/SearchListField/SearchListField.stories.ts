@@ -1,6 +1,7 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import SearchListField from './SearchListField.vue'
 import { fn } from '@storybook/test'
+import { options } from 'marked'
 
 const meta = {
 	title: 'Composants/Formulaires/SearchListField',
@@ -22,6 +23,17 @@ const meta = {
 		returnObject: {
 			description: 'Si true, retourne l\'objet entier au lieu de la valeur',
 			control: 'boolean',
+		},
+		tagTitle: {
+			description: 'Titre du tag affiché dans la liste des éléments sélectionnés',
+			options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+			control: { type: 'select' },
+			default: 'h2',
+		},
+		label: {
+			description: 'Label du champ de recherche',
+			control: 'text',
+			default: 'Rechercher',
 		},
 	},
 } satisfies Meta<typeof SearchListField>

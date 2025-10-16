@@ -3,7 +3,7 @@
 	import { mdiMagnify } from '@mdi/js'
 	import type { PropType } from 'vue'
 	import type { SearchListItem } from './types'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 
 	import { SyTextField, SyCheckbox } from '@/components'
 
@@ -27,6 +27,22 @@
 		returnObject: {
 			type: Boolean,
 			default: false,
+		},
+		tagTitle: {
+			type: String as PropType<'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | string & {}>,
+			default: 'h2',
+		},
+		label: {
+			type: String,
+			default: defaultLocales.search,
+		},
+		locales: {
+			type: Object as PropType<{
+				search: string
+				searchListTitle: string
+				checkboxLabel: string
+			}>,
+			default: () => defaultLocales,
 		},
 	})
 
@@ -103,7 +119,7 @@
 	<div class="vd-search-list">
 		<SyTextField
 			v-model="search"
-			:label="locales.search"
+			:label="props.label"
 			aria-describedby="search-description"
 			aria-labelledby="search-label"
 			hide-details
@@ -145,12 +161,13 @@
 			aria-labelledby="search-list-title"
 			@update:selected="emitChangeEvent"
 		>
-			<h2
+			<Component
+				:is="tagTitle"
 				id="search-list-title"
 				class="d-sr-only"
 			>
 				{{ locales.searchListTitle }}
-			</h2>
+			</Component>
 			<VListItem
 				v-for="(item, index) in filteredItems"
 				:id="`search-list-item-${index}`"
