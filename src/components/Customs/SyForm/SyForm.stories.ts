@@ -259,7 +259,6 @@ export const MixedFields: Story = {
 				name: '',
 				email: '',
 				country: '',
-				subscribe: false,
 			})
 			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
 
@@ -298,9 +297,8 @@ export const MixedFields: Story = {
       <SyForm ref="form" v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="formData.name" label="Nom complet" required />
-          <SyTextField v-model="formData.email" label="Email" :customRules="emailCustomRules" />
+          <SyTextField v-model="formData.email" label="Email" :custom-rules="emailCustomRules" />
           <SySelect v-model="formData.country" :items="countries" label="Pays" required />
-          <SyCheckbox v-model="formData.subscribe" label="S'abonner à la newsletter" />
           <v-btn type="submit" color="primary">Enregistrer</v-btn>
         </div>
       </SyForm>
@@ -317,7 +315,6 @@ export const MixedFields: Story = {
           <SyTextField v-model="formData.name" label="Nom complet" required />
           <SyTextField v-model="formData.email" label="Email" :customRules="emailCustomRules" />
           <SySelect v-model="formData.country" :items="countries" label="Pays" required />
-          <SyCheckbox v-model="formData.subscribe" label="S'abonner à la newsletter" />
           <v-btn type="submit" color="primary">Enregistrer</v-btn>
         </div>
       </SyForm>
@@ -333,7 +330,6 @@ export const MixedFields: Story = {
 			name: '',
 			email: '',
 			country: '',
-			subscribe: false,
 			})
 
 			const countries = [
