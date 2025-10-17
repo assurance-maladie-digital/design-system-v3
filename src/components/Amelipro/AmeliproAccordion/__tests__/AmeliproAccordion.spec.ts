@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'import AmeliproAccordion from '../AmeliproAccordion.vue'
+import { expect, describe, it } from 'vitest'
+import AmeliproAccordion from '../AmeliproAccordion.vue'
 
 describe('AmeliproAccordion', () => {
 	it('render correctly', async () => {
