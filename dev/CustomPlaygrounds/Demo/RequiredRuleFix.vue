@@ -34,7 +34,6 @@
 
 			<div class="demo-info">
 				<p><strong>Valeur actuelle :</strong> {{ number }}</p>
-				<p><strong>Type :</strong> {{ typeof number }}</p>
 			</div>
 		</div>
 	</div>
