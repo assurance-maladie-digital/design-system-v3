@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils'
 import PasswordField from '../PasswordField.vue'
-import { describe, it, expect, beforeEach } from 'vitest'
-import { createVuetify } from 'vuetify'
+import { describe, it, expect } from 'vitest'
 
 // 1. Define an interface for the properties/methods you're testing
 interface PasswordFieldVM {
@@ -16,12 +15,6 @@ interface PasswordFieldVM {
 }
 
 describe('PasswordField.vue', () => {
-	let vuetify
-
-	beforeEach(() => {
-		vuetify = createVuetify()
-	})
-
 	it('renders the password field', () => {
 		const wrapper = mount(PasswordField)
 		expect(wrapper.exists()).toBe(true)

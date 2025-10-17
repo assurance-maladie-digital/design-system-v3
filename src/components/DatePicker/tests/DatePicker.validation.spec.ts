@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick, ref, computed } from 'vue'
-import { vuetify } from '../../../../tests/unit/setup'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 /**
  * Tests de validation complets pour tous les modes DatePicker
@@ -3928,7 +3927,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 						return { date, required }
 					},
 				}, {
-					
+
 				})
 
 				await nextTick()
@@ -3957,7 +3956,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 						return { date, valid }
 					},
 				}, {
-					
+
 				})
 
 				await nextTick()

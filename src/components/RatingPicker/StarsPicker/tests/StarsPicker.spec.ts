@@ -4,7 +4,6 @@ import { mount } from '@vue/test-utils'
 import StarsPicker from '../StarsPicker.vue'
 import { VIcon } from 'vuetify/components'
 import { mdiStarOutline, mdiStar } from '@mdi/js'
-import { vuetify } from '@tests/unit/setup'
 
 describe('StarsPicker', () => {
 	it('renders correctly', () => {

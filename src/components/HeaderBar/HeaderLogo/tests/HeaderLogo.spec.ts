@@ -84,7 +84,7 @@ describe('HeaderLogo', () => {
 	it('render a router-link when homeLink is set with `to`', async () => {
 		const wrapper = mount(HeaderLogo, {
 			global: {
-				stubs: ['RouterLink']},
+				stubs: ['RouterLink'] },
 			props: {
 				homeLink: {
 					to: '/',

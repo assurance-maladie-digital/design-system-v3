@@ -1,16 +1,9 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach } from 'vitest'
-import { createVuetify } from 'vuetify'
+import { describe, it, expect } from 'vitest'
 
 import PeriodField from '../PeriodField.vue'
 
 describe('PeriodField.vue', () => {
-	let vuetify
-
-	beforeEach(() => {
-		vuetify = createVuetify()
-	})
-
 	describe('Rendering', () => {
 		it('displays 2 fields with correct labels', () => {
 			const wrapper = mount(PeriodField, {
