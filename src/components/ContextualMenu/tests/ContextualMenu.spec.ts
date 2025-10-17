@@ -1,15 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 
-import ContextualMenu from '../ContextualMenu.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import ContextualMenu from '../ContextualMenu.vue'
 describe('ContextualMenu', () => {
 	it('renders correctly with items', () => {
 		const wrapper = mount(ContextualMenu, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				ariaLabel: 'menu contextuel',
 				items: [
@@ -30,9 +25,6 @@ describe('ContextualMenu', () => {
 
 	it('renders correctly without items', () => {
 		const wrapper = mount(ContextualMenu, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				ariaLabel: 'menu contextuel',
 				items: [],
@@ -44,9 +36,6 @@ describe('ContextualMenu', () => {
 
 	it('emit an update:modelValue event when an item is updated', async () => {
 		const wrapper = mount(ContextualMenu, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				ariaLabel: 'menu contextuel',
 				items: [
@@ -69,9 +58,6 @@ describe('ContextualMenu', () => {
 
 	it('update the highlighted item when the modelValue is updated', async () => {
 		const wrapper = mount(ContextualMenu, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				ariaLabel: 'menu contextuel',
 				items: [
@@ -95,9 +81,6 @@ describe('ContextualMenu', () => {
 		window.location.hash = '#example-2'
 
 		const wrapper = mount(ContextualMenu, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				ariaLabel: 'menu contextuel',
 				items: [
@@ -121,9 +104,6 @@ describe('ContextualMenu', () => {
 	describe('layout', () => {
 		it('render correctly with a deepth', () => {
 			const wrapper = mount(ContextualMenu, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					ariaLabel: 'menu contextuel',
 					items: [
@@ -151,9 +131,6 @@ describe('ContextualMenu', () => {
 
 		it('render correctly with a deepth', () => {
 			const wrapper = mount(ContextualMenu, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					ariaLabel: 'menu contextuel',
 					items: [
@@ -191,9 +168,6 @@ describe('ContextualMenu', () => {
 
 		it('render correctly with a deepth', () => {
 			const wrapper = mount(ContextualMenu, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					ariaLabel: 'menu contextuel',
 					items: [
@@ -230,9 +204,6 @@ describe('ContextualMenu', () => {
 
 		it('render correctly with a deepth', () => {
 			const wrapper = mount(ContextualMenu, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					ariaLabel: 'menu contextuel',
 					items: [

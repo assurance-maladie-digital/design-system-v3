@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import StructureItem from '../StructureItem.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import StructureItem from '../StructureItem.vue'
 describe('StructureItem', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(StructureItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				groupName: 'group-name',
 				item: {

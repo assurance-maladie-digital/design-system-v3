@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproPatientLogged from '../AmeliproPatientLogged.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproPatientLogged from '../AmeliproPatientLogged.vue'
 describe('AmeliproPatientLogged', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPatientLogged, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				btnMoreInfo: true,
 				doctorTooltipRed: true,

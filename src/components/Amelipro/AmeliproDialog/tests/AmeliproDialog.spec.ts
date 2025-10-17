@@ -1,19 +1,15 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproDialog from '../AmeliproDialog.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproDialog from '../AmeliproDialog.vue'
 describe('AmeliproDialog', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproDialog, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					VDialog: {
 						template: '<div><slot></slot></div>',
 					},
-				},
-			},
+				}},
 			props: {
 				modelValue: true,
 				labelledby: 'amelipro-dialog-id-title',

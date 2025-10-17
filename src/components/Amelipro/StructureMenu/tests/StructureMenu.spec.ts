@@ -1,13 +1,11 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import StructureMenu from '../StructureMenu.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('StructureMenu', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(StructureMenu, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					VDialog: {
 						template: '<div><slot></slot></div>',

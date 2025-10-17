@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import StructureBtn from '../StructureBtn.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import StructureBtn from '../StructureBtn.vue'
 describe('StructureBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(StructureBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				controls: 'control-id',
 				tabindex: 0,

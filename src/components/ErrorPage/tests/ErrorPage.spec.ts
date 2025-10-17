@@ -1,14 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-import ErrorPage from '../ErrorPage.vue'
+import { mount } from '@vue/test-utils'import ErrorPage from '../ErrorPage.vue'
 
 describe('ErrorPage', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(ErrorPage, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				pageTitle: 'Something went wrong',
 				message: 'Error message',
@@ -22,9 +17,6 @@ describe('ErrorPage', () => {
 
 	it('renders correctly with undefined route', () => {
 		const wrapper = mount(ErrorPage, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				code: '501',
 				pageTitle: 'Error',

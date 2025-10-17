@@ -1,7 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
-import { nextTick } from 'vue'
+import { describe, it, expect, beforeEach } from 'vitest'import { nextTick } from 'vue'
 import DateTextInput from './DateTextInput.vue'
 
 describe('DateTextInput.vue - Events', () => {
@@ -9,9 +7,6 @@ describe('DateTextInput.vue - Events', () => {
 
 	beforeEach(() => {
 		wrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'DD/MM/YYYY',
@@ -84,9 +79,6 @@ describe('DateTextInput.vue - Events', () => {
 
 	it('supporte différents séparateurs selon le format', async () => {
 		const wrapperWithDashFormat = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'YYYY-MM-DD',
@@ -110,9 +102,6 @@ describe('DateTextInput.vue - Events', () => {
 
 	it('gère correctement les plages de dates', async () => {
 		const wrapperWithRange = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'DD/MM/YYYY',
@@ -139,9 +128,6 @@ describe('DateTextInput.vue - Events', () => {
 		}
 
 		const wrapperWithRules = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'DD/MM/YYYY',

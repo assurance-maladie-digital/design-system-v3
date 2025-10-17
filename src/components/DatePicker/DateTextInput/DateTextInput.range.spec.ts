@@ -1,4 +1,3 @@
-import { vuetify } from '@tests/unit/setup'
 import { flushPromises, mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
@@ -9,9 +8,6 @@ describe('DateTextInput.vue - Range Mode', () => {
 
 	beforeEach(() => {
 		wrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',
@@ -160,9 +156,6 @@ describe('DateTextInput.vue - Range Mode', () => {
 
 	it('correctly formats range with different return format', async () => {
 		wrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',
@@ -331,9 +324,6 @@ describe('DateTextInput.vue - Range Mode', () => {
 	it('validates custom rules in range mode', async () => {
 		// Créer un wrapper avec une règle personnalisée qui échoue toujours
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',

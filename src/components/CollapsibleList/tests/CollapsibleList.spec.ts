@@ -1,16 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 
-import CollapsibleList from '../CollapsibleList.vue'
-
-import { vuetify } from '@tests/unit/setup'
-
+import CollapsibleList from '../CollapsibleList.vue'
 describe('CollapsibleList', () => {
 	it('renders correctly', async () => {
 		const wrapper = mount(CollapsibleList, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				listTitle: 'Santé',
 				items: [
@@ -34,9 +28,6 @@ describe('CollapsibleList', () => {
 
 	it('renders correctly with in mobile mode', () => {
 		const wrapper = mount(CollapsibleList, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				listTitle: 'Santé',
 				items: [

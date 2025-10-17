@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
-import AmeliproAccordionResultList from '../AmeliproAccordionResultList.vue'
+import { expect, describe, it } from 'vitest'import AmeliproAccordionResultList from '../AmeliproAccordionResultList.vue'
 
 describe('AmeliproAccordionResultList', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproAccordionResultList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: [
 					{ id: 0 },

@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproIconBtn from '../AmeliproIconBtn.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproIconBtn from '../AmeliproIconBtn.vue'
 describe('AmeliproIconBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproIconBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				btnLabel: 'Libellé du bouton',
 				icon: 'utilisateur',

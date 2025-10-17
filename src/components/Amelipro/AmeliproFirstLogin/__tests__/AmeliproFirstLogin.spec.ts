@@ -1,13 +1,11 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproFirstLogin from '../AmeliproFirstLogin.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproFirstLogin', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproFirstLogin, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					VDialog: {
 						template: '<div><slot></slot></div>',

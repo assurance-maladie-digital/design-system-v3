@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproTabBtn from '../AmeliproTabBtn.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproTabBtn from '../AmeliproTabBtn.vue'
 describe('AmeliproTabBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproTabBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				controls: 'content-id',
 				tabindex: 0,

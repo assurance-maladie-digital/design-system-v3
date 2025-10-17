@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproMailTile from '../AmeliproMailTile.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproMailTile from '../AmeliproMailTile.vue'
 describe('AmeliproMailTile', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproMailTile, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				mailInfo: {
 					commentValue: true,

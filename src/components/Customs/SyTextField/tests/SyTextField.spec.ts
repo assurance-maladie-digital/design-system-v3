@@ -18,9 +18,6 @@ describe('SyTextField.vue', () => {
 
 	beforeEach(() => {
 		wrapper = mount(SyTextField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				required: true,
@@ -37,7 +34,6 @@ describe('SyTextField.vue', () => {
 
 	it('applies the correct variant style', () => {
 		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: { variantStyle: 'filled' },
 		})
 		const textField = wrapper.findComponent({ name: 'VTextField' })
@@ -46,7 +42,6 @@ describe('SyTextField.vue', () => {
 
 	it('renders default slots correctly', () => {
 		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			slots: {
 				prepend: '<div data-testid="prepend-slot">Prepend Slot Content</div>',
 				append: '<div data-testid="append-slot">Append Slot Content</div>',
@@ -62,7 +57,6 @@ describe('SyTextField.vue', () => {
 
 	it('renders inner slots correctly', () => {
 		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			slots: {
 				'prepend-inner': '<div data-testid="prepend-inner-slot">Prepend Inner Slot Content</div>',
 				'append-inner': '<div data-testid="append-inner-slot">Append Inner Slot Content</div>',
@@ -80,7 +74,6 @@ describe('SyTextField.vue', () => {
 
 	it('should update icon when validation state changes', async () => {
 		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: { appendInnerIcon: 'success' as IconType },
 		})
 		expect(wrapper.props('appendInnerIcon')).toBe('success')
@@ -88,7 +81,6 @@ describe('SyTextField.vue', () => {
 
 	it('should update icon when validation state changes with warning', async () => {
 		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: { appendInnerIcon: 'warning' as IconType },
 		})
 		expect(wrapper.props('appendInnerIcon')).toBe('warning')
@@ -96,7 +88,6 @@ describe('SyTextField.vue', () => {
 
 	it('should update icon when validation state changes with error', async () => {
 		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: { appendInnerIcon: 'error' as IconType },
 		})
 		expect(wrapper.props('appendInnerIcon')).toBe('error')
@@ -104,7 +95,6 @@ describe('SyTextField.vue', () => {
 
 	it('should update icon when validation state changes with success', async () => {
 		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: { appendInnerIcon: 'success' as IconType },
 		})
 		expect(wrapper.props('appendInnerIcon')).toBe('success')
@@ -112,7 +102,6 @@ describe('SyTextField.vue', () => {
 
 	it('emits prepend-icon-click event when prepend icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: { prependIcon: 'info' as IconType },
 		})
 
@@ -126,7 +115,6 @@ describe('SyTextField.vue', () => {
 
 	it('emits append-icon-click event when append icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: { appendIcon: 'info' as IconType },
 		})
 
@@ -140,7 +128,6 @@ describe('SyTextField.vue', () => {
 
 	it('shows validation error message', async () => {
 		const wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: {
 				required: true,
 				label: 'Test Field',
@@ -161,7 +148,6 @@ describe('SyTextField.vue', () => {
 		}
 
 		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: { customRules: [customRule] },
 		})
 
@@ -184,7 +170,6 @@ describe('SyTextField.vue', () => {
 		}
 
 		const wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: {
 				modelValue: 'test',
 				customWarningRules: [warningRule],
@@ -203,9 +188,7 @@ describe('SyTextField.vue', () => {
 	})
 
 	it('maintains input value without validation rules', async () => {
-		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
-		})
+		wrapper = mount(SyTextField)
 		const input = wrapper.find('input')
 
 		await input.setValue('test value')
@@ -222,7 +205,6 @@ describe('SyTextField.vue', () => {
 		}
 
 		wrapper = mount(SyTextField, {
-			global: { plugins: [vuetify] },
 			props: {
 				customRules: [customRule],
 				isValidateOnBlur: false,

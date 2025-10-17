@@ -5,9 +5,7 @@ import {
 	filePromise,
 	filePromiseError,
 } from './data/filePromise'
-import DownloadBtn from '../DownloadBtn.vue'
-import { vuetify } from '@tests/unit/setup'
-import { downloadFile } from '@/utils/functions/downloadFile'
+import DownloadBtn from '../DownloadBtn.vue'import { downloadFile } from '@/utils/functions/downloadFile'
 
 describe('DownloadBtn', () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,9 +15,6 @@ describe('DownloadBtn', () => {
 		wrapper = mount(DownloadBtn, {
 			props: {
 				filePromise,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -69,9 +64,6 @@ describe('DownloadBtn', () => {
 			},
 			slots: {
 				default: slot,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

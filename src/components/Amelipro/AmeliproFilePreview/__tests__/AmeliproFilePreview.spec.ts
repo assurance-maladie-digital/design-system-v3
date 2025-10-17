@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproFilePreview from '../AmeliproFilePreview.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproFilePreview from '../AmeliproFilePreview.vue'
 describe('AmeliproFilePreview', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproFilePreview, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				cardTitle: 'Modified card title',
 				downloadBtnText: 'Modified download btn text',

@@ -1,7 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
-import { nextTick } from 'vue'
+import { describe, it, expect, beforeEach } from 'vitest'import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
 
 describe('CalendarMode.vue - Events', () => {
@@ -9,9 +7,6 @@ describe('CalendarMode.vue - Events', () => {
 
 	beforeEach(() => {
 		wrapper = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'DD/MM/YYYY',
@@ -58,9 +53,6 @@ describe('CalendarMode.vue - Events', () => {
 	it('permet la saisie manuelle même avec disablePickerInteraction', async () => {
 		// Créer un composant avec disablePickerInteraction à true
 		const wrapperWithDisabledPicker = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'DD/MM/YYYY',
@@ -118,9 +110,6 @@ describe('CalendarMode.vue - Events', () => {
 
 	it('accepte différents formats de date', async () => {
 		const wrapperWithDashFormat = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'YYYY-MM-DD',
@@ -142,9 +131,6 @@ describe('CalendarMode.vue - Events', () => {
 
 	it('accepte les plages de dates en entrée', async () => {
 		const wrapperWithRange = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: ['01/01/2023', '05/01/2023'],
 				format: 'DD/MM/YYYY',
@@ -168,9 +154,6 @@ describe('CalendarMode.vue - Events', () => {
 		}
 
 		const wrapperWithRules = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'DD/MM/YYYY',

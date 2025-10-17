@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
-import AmeliproAutoCompleteField from '../AmeliproAutoCompleteField.vue'
+import { expect, describe, it } from 'vitest'import AmeliproAutoCompleteField from '../AmeliproAutoCompleteField.vue'
 
 describe('AmeliproAutoCompleteField', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproAutoCompleteField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: [
 					{

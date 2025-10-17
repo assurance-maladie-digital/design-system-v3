@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproIllustratedRadioGroup from '../AmeliproIllustratedRadioGroup.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproIllustratedRadioGroup from '../AmeliproIllustratedRadioGroup.vue'
 describe('AmeliproIllustratedRadioGroup', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproIllustratedRadioGroup, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				groupLabel: 'Mon Label',
 				modelValue: [

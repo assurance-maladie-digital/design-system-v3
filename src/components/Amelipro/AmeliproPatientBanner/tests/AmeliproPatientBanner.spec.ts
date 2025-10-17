@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproPatientBanner from '../AmeliproPatientBanner.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproPatientBanner from '../AmeliproPatientBanner.vue'
 describe('AmeliproPatientBanner', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPatientBanner, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				birthName: 'Dupont',
 				birthdate: '09/11/1992',

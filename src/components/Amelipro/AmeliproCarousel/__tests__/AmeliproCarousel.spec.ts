@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproCarousel from '../AmeliproCarousel.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproCarousel from '../AmeliproCarousel.vue'
 describe('AmeliproCarousel', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproCarousel, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: [
 					{

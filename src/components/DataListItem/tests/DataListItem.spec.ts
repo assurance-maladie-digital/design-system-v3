@@ -1,15 +1,10 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
-
+import { describe, it, expect } from 'vitest'
 import DataListItem from '../DataListItem.vue'
 
 describe('DataListItem', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(DataListItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Test',
 				value: 'Sample Value',
@@ -29,9 +24,6 @@ describe('DataListItem', () => {
 
 	it('renders correctly with a number value', () => {
 		const wrapper = mount(DataListItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Test',
 				value: 123,
@@ -43,9 +35,6 @@ describe('DataListItem', () => {
 
 	it('renders correctly with a NaN value', () => {
 		const wrapper = mount(DataListItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Test',
 				value: parseInt('test', 10),
@@ -57,9 +46,6 @@ describe('DataListItem', () => {
 
 	it('renders correctly a value with HTML as text', () => {
 		const wrapper = mount(DataListItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Test',
 				value: '<span>Custom Value</span>',
@@ -73,9 +59,6 @@ describe('DataListItem', () => {
 
 	it('renders correctly a value as plain HTML', () => {
 		const wrapper = mount(DataListItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Test',
 				value: 'Paul<br> Dupont',
@@ -90,9 +73,6 @@ describe('DataListItem', () => {
 
 	it('renders correctly value in a chip', () => {
 		const wrapper = mount(DataListItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Test',
 				value: 'Chip Value',
@@ -106,9 +86,6 @@ describe('DataListItem', () => {
 
 	it('renders correctly with an action', () => {
 		const wrapper = mount(DataListItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Test',
 				action: 'Click Me',
@@ -121,9 +98,6 @@ describe('DataListItem', () => {
 
 	it('emits click:action event on button click', async () => {
 		const wrapper = mount(DataListItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Test',
 				action: 'Click Me',
@@ -138,9 +112,6 @@ describe('DataListItem', () => {
 
 	it('renders correctly in row mode', () => {
 		const wrapper = mount(DataListItem, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Test',
 				value: 'Sample Value',

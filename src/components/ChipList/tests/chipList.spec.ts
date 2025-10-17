@@ -31,9 +31,6 @@ describe('ChipList', () => {
 			props: {
 				items: defaultItems,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Vérifie que tous les items sont rendus
@@ -81,9 +78,6 @@ describe('ChipList', () => {
 				items,
 				overflowLimit: 6, // Augmenté pour voir tous les chips
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Vérifie les classes d'état
@@ -106,9 +100,6 @@ describe('ChipList', () => {
 			props: {
 				items: defaultItems,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const successChip = wrapper.find('.sy-chip-success')
@@ -124,9 +115,6 @@ describe('ChipList', () => {
 			props: {
 				items: defaultItems,
 				readonly: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -158,9 +146,6 @@ describe('ChipList', () => {
 				items: manyItems,
 				overflowLimit: 3,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Vérifie que le nombre de chips visibles est correct
@@ -180,9 +165,6 @@ describe('ChipList', () => {
 		const wrapper = mount(ChipList, {
 			props: {
 				items: defaultItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -206,9 +188,6 @@ describe('ChipList', () => {
 				items: defaultItems,
 				resetText: customResetText,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const resetButton = wrapper.find('[data-test-id="reset-btn"]')
@@ -220,9 +199,6 @@ describe('ChipList', () => {
 		const wrapper = mount(ChipList, {
 			props: {
 				items: defaultItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -244,9 +220,6 @@ describe('ChipList', () => {
 		const wrapper = mount(ChipList, {
 			props: {
 				items: [],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -282,9 +255,6 @@ describe('ChipList', () => {
 				items,
 				readonly,
 				overflowLimit: 3,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

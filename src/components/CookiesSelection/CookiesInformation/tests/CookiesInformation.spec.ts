@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-import CookiesInformation from '../CookiesInformation.vue'
+import { mount } from '@vue/test-utils'import CookiesInformation from '../CookiesInformation.vue'
 import { locales } from '../locales'
 
 const cookies = [
@@ -20,9 +18,6 @@ const cookies = [
 describe('CookiesInformation', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(CookiesInformation, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				tableItems: cookies,
 				type: 'functional',
@@ -41,9 +36,6 @@ describe('CookiesInformation', () => {
 
 	it('renders correctly without items', () => {
 		const wrapper = mount(CookiesInformation, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				type: 'functional',
 				tableItems: [],
@@ -55,9 +47,6 @@ describe('CookiesInformation', () => {
 
 	it('renders correctly when details is toggled', async () => {
 		const wrapper = mount(CookiesInformation, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				tableItems: cookies,
 				type: 'functional',
@@ -106,9 +95,6 @@ describe('CookiesInformation', () => {
 
 	it('update the radio when the modelValue change', async () => {
 		const wrapper = mount(CookiesInformation, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				tableItems: cookies,
 				type: 'functional',
@@ -129,9 +115,6 @@ describe('CookiesInformation', () => {
 
 	it('do not set the radio when the modelValue is undefined', async () => {
 		const wrapper = mount(CookiesInformation, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				tableItems: cookies,
 				type: 'functional',

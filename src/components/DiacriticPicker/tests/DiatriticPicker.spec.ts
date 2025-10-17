@@ -1,8 +1,6 @@
 /* eslint-disable vue/one-component-per-file */
 import { describe, it, expect, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-import { ref, nextTick, defineComponent, h } from 'vue'
+import { mount } from '@vue/test-utils'import { ref, nextTick, defineComponent, h } from 'vue'
 import DiacriticPicker from '../DiacriticPicker.vue'
 
 const defaultProps = {
@@ -19,9 +17,6 @@ describe('DiacriticPicker.vue', () => {
 			props: defaultProps,
 			slots: {
 				default: `<input id="diacritic-input-${Math.random().toString(36).substr(2, 9)}" type="text" value="a" />`,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 		await nextTick()
@@ -48,7 +43,6 @@ describe('DiacriticPicker.vue', () => {
 		const model = ref('a')
 
 		const wrapper = mount(DiacriticPicker, {
-			global: { plugins: [vuetify] },
 			props: {
 				modelValue: model.value,
 				onUpdateModelValue: (val: string) => {
@@ -103,7 +97,6 @@ describe('DiacriticPicker.vue', () => {
 		const model1 = ref('a')
 
 		const wrapper = mount(DiacriticPicker, {
-			global: { plugins: [vuetify] },
 			props: {
 				modelValue: model1.value,
 				onUpdateModelValue: (val: string) => {

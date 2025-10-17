@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproPostalAddressCityRow from '../AmeliproPostalAddressCityRow.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import AmeliproPostalAddressCityRow from '../AmeliproPostalAddressCityRow.vue'
 describe('AmeliproPostalAddressCityRow', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPostalAddressCityRow, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				ariaRequired: true,
 				autoCompleteList: [

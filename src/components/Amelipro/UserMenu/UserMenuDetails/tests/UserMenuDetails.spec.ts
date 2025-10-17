@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import UserMenuDetails from '../UserMenuDetails.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import UserMenuDetails from '../UserMenuDetails.vue'
 describe('UserMenuDetails', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(UserMenuDetails, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				uniqueId: 'user-information-summary-id',
 				UserMenuDetailsInfos: {
