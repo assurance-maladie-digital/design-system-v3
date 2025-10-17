@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
-import { mount } from '@vue/test-utils'import RangeSlider from '../RangeSlider.vue'
+import { mount } from '@vue/test-utils'
+import RangeSlider from '../RangeSlider.vue'
 
 describe('RangeField component', () => {
 	it('should render the component', () => {

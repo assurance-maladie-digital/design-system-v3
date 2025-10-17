@@ -1,6 +1,7 @@
 import { it, describe, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import SyTextArea from '../SyTextArea.vue'
+import SyTextArea from '../SyTextArea.vue'
+
 describe('SyTextArea', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(SyTextArea, {

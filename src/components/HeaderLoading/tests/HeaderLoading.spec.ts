@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+
 import HeaderLoading from '../HeaderLoading.vue'
 
 describe('HeaderLoading', () => {

@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'import AmeliproAccordionGroup from '../AmeliproAccordionGroup.vue'
+import { expect, describe, it } from 'vitest'
+import AmeliproAccordionGroup from '../AmeliproAccordionGroup.vue'
 
 describe('AmeliproAccordionGroup', () => {
 	it('render correctly', async () => {

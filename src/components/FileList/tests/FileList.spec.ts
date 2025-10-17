@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FileList from '../FileList.vue'import { locales } from '../UploadItem/locales'
+import FileList from '../FileList.vue'
+import { locales } from '../UploadItem/locales'
 
 describe('FileList', () => {
 	it('renders many file items', () => {

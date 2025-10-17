@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import UserMenu from '../UserMenu.vue'
+import UserMenu from '../UserMenu.vue'
+
 describe('UserMenu', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(UserMenu, {

@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 
-import LogoBrandSection from '../LogoBrandSection.vue'
+import LogoBrandSection from '../LogoBrandSection.vue'
+
 describe('LogoBrandSection', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(LogoBrandSection, {

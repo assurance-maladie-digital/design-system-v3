@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import FilterInline from '../FilterInline.vue'
-import { mount } from '@vue/test-utils'import { locales } from '../locales'
+import { mount } from '@vue/test-utils'
+import { locales } from '../locales'
 
 describe('FilterInline', () => {
 	it('should render correctly', () => {

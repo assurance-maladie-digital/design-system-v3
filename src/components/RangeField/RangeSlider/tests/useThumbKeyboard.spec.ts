@@ -1,7 +1,8 @@
 import { defineComponent, ref, type Ref } from 'vue'
 import useThumbKeyboard from '../useThumbKeyboard'
 import { describe, expect, it, vi, afterEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+
 describe('useThumbKeyboard', () => {
 	let setValue = vi.fn()
 

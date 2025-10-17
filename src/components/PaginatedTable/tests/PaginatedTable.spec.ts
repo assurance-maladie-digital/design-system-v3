@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { mount } from '@vue/test-utils'import { LocalStorageUtility } from '@/utils/localStorageUtility'
+import { mount } from '@vue/test-utils''
+import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions } from '@/components/PaginatedTable/types'
 
 import PaginatedTable from '../PaginatedTable.vue'

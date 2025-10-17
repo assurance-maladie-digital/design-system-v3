@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproPatientBanner from '../AmeliproPatientBanner.vue'
+import AmeliproPatientBanner from '../AmeliproPatientBanner.vue'
+
 describe('AmeliproPatientBanner', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPatientBanner, {

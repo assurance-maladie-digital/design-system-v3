@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { shallowMount, mount } from '@vue/test-utils'import { locales } from '../locales'
+import { shallowMount, mount } from '@vue/test-utils'
+import { locales } from '../locales'
 
 import ExternalLinks from '../ExternalLinks.vue'
 

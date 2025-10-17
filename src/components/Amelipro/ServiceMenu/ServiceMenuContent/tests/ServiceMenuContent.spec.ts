@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import ServiceMenuContent from '../ServiceMenuContent.vue'
+import ServiceMenuContent from '../ServiceMenuContent.vue'
+
 describe('ServiceMenuContent', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(ServiceMenuContent, {

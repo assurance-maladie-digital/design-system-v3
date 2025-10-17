@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach } from 'vitest'import { nextTick } from 'vue'
+import { describe, it, expect, beforeEach } from 'vitest''
+import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 
 describe('ComplexDatePicker.vue - Events', () => {

@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproErrorTemplate from '../AmeliproErrorTemplate.vue'
+import AmeliproErrorTemplate from '../AmeliproErrorTemplate.vue'
+
 describe('AmeliproErrorTemplate', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproErrorTemplate, {

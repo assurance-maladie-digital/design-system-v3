@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproCarouselItem from '../AmeliproCarouselItem.vue'
+import AmeliproCarouselItem from '../AmeliproCarouselItem.vue'
+
 describe('AmeliproCarouselItem', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproCarouselItem, {

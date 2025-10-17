@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproHeaderBrandSection from '../AmeliproHeaderBrandSection.vue'
+import AmeliproHeaderBrandSection from '../AmeliproHeaderBrandSection.vue'
+
 describe('AmeliproHeaderBrandSection', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproHeaderBrandSection, {

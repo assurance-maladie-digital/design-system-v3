@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import ServiceBtn from '../ServiceBtn.vue'
+import ServiceBtn from '../ServiceBtn.vue'
+
 describe('ServiceBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(ServiceBtn, {

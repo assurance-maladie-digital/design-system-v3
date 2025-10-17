@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import StructureBtn from '../StructureBtn.vue'
+import StructureBtn from '../StructureBtn.vue'
+
 describe('StructureBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(StructureBtn, {

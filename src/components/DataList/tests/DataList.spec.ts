@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { type DOMWrapper, mount } from '@vue/test-utils'
+import { type DOMWrapper, mount } from '@vue/test-utils'
+'
 import DataList from '../DataList.vue'
 import type { DataListItem } from '../types'
 

@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'import AmeliproTextField from '../AmeliproTextField.vue'
+import { expect, describe, it } from 'vitest'
+import AmeliproTextField from '../AmeliproTextField.vue'
 
 describe('AmeliproTextField', () => {
 	it('render correctly', async () => {

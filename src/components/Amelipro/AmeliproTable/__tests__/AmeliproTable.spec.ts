@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproTable from '../AmeliproTable.vue'
+import AmeliproTable from '../AmeliproTable.vue'
+
 describe('AmeliproTable', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproTable, {

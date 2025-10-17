@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproMessagingMenuBtn from '../AmeliproMessagingMenuBtn.vue'
+import AmeliproMessagingMenuBtn from '../AmeliproMessagingMenuBtn.vue'
+
 describe('AmeliproMessagingMenuBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproMessagingMenuBtn, {

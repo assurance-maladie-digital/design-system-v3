@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import ServiceList from '../ServiceList.vue'
+import ServiceList from '../ServiceList.vue'
+
 describe('ServiceList', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(ServiceList, {

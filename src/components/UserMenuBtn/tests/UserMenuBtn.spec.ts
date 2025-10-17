@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import UserMenuBtn from '../UserMenuBtn.vue'import { nextTick } from 'vue'
+import UserMenuBtn from '../UserMenuBtn.vue'
+import { nextTick } from 'vue'
 
 describe('UserMenuBtn', () => {
 	it('renders the component', () => {

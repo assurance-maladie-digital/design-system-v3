@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproTileBtn from '../AmeliproTileBtn.vue'
+import AmeliproTileBtn from '../AmeliproTileBtn.vue'
+
 describe('AmeliproTileBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproTileBtn, {

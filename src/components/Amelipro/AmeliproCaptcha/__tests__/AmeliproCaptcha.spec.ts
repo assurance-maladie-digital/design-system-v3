@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproCaptcha from '../AmeliproCaptcha.vue'
+import AmeliproCaptcha from '../AmeliproCaptcha.vue'
+
 describe('AmeliproCaptcha', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproCaptcha, {

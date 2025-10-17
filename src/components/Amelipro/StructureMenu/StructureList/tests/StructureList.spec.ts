@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import StructureList from '../StructureList.vue'
+import StructureList from '../StructureList.vue'
+
 describe('StructureList', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(StructureList, {

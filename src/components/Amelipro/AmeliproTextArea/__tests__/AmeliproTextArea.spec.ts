@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'import AmeliproTextArea from '../AmeliproTextArea.vue'
+import { expect, describe, it } from 'vitest'
+import AmeliproTextArea from '../AmeliproTextArea.vue'
 
 describe('AmeliproTextArea', () => {
 	it('render correctly', async () => {

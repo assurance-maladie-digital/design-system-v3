@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproTooltips from '../AmeliproTooltips.vue'
+import AmeliproTooltips from '../AmeliproTooltips.vue'
+
 describe('AmeliproTooltips', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproTooltips, {

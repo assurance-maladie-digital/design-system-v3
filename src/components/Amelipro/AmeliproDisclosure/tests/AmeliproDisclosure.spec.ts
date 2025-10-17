@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproDisclosure from '../AmeliproDisclosure.vue'
+import AmeliproDisclosure from '../AmeliproDisclosure.vue'
+
 describe('AmeliproDisclosure', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproDisclosure, {

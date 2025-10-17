@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 
-import ContextualMenu from '../ContextualMenu.vue'
+import ContextualMenu from '../ContextualMenu.vue'
+
 describe('ContextualMenu', () => {
 	it('renders correctly with items', () => {
 		const wrapper = mount(ContextualMenu, {

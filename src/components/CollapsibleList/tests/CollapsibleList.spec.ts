@@ -1,7 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 
-import CollapsibleList from '../CollapsibleList.vue'
+import CollapsibleList from '../CollapsibleList.vue'
+
 describe('CollapsibleList', () => {
 	it('renders correctly', async () => {
 		const wrapper = mount(CollapsibleList, {

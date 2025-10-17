@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproTabBtn from '../AmeliproTabBtn.vue'
+import AmeliproTabBtn from '../AmeliproTabBtn.vue'
+
 describe('AmeliproTabBtn', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproTabBtn, {

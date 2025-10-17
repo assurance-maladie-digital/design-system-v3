@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'import TableToolbar from '../TableToolbar.vue'
+import { mount } from '@vue/test-utils'
+import TableToolbar from '../TableToolbar.vue'
 
 describe('TableToolbar', () => {
 	it('should render', () => {

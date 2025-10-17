@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproIllustratedDataTile from '../AmeliproIllustratedDataTile.vue'
+import AmeliproIllustratedDataTile from '../AmeliproIllustratedDataTile.vue'
+
 describe('AmeliproIllustratedDataTile', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproIllustratedDataTile, {

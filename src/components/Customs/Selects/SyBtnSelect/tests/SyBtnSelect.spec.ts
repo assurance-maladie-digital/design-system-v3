@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import SyBtnSelect from '../SyBtnSelect.vue'
+import SyBtnSelect from '../SyBtnSelect.vue'
+
 describe('SyBtnSelect', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(SyBtnSelect, {

@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproIllustratedRadioGroup from '../AmeliproIllustratedRadioGroup.vue'
+import AmeliproIllustratedRadioGroup from '../AmeliproIllustratedRadioGroup.vue'
+
 describe('AmeliproIllustratedRadioGroup', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproIllustratedRadioGroup, {

@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproDentalChart from '../AmeliproDentalChart.vue'
+import AmeliproDentalChart from '../AmeliproDentalChart.vue'
+
 describe('AmeliproDentalChart', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproDentalChart, {

@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproContentLayout from '../AmeliproContentLayout.vue'
+import AmeliproContentLayout from '../AmeliproContentLayout.vue'
+
 describe('AmeliproContentLayout', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproContentLayout, {

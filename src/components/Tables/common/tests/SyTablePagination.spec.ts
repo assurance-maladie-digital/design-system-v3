@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import SyTablePagination from '../SyTablePagination.vue'
+import SyTablePagination from '../SyTablePagination.vue'
+
 describe('SyTablePagination.vue', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(SyTablePagination, {

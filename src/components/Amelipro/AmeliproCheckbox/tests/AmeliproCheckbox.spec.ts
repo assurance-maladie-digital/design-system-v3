@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproCheckbox from '../AmeliproCheckbox.vue'
+import AmeliproCheckbox from '../AmeliproCheckbox.vue'
+
 describe('AmeliproCheckbox', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproCheckbox, {

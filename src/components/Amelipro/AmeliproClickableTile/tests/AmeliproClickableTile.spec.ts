@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproClickableTile from '../AmeliproClickableTile.vue'
+import AmeliproClickableTile from '../AmeliproClickableTile.vue'
+
 describe('AmeliproClickableTile', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproClickableTile, {

@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import StructureTabs from '../StructureTabs.vue'
+import StructureTabs from '../StructureTabs.vue'
+
 describe('StructureTabs', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(StructureTabs, {

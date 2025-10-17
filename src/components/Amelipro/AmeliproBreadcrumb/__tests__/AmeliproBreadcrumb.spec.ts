@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'import AmeliproBreadcrumb from '../AmeliproBreadcrumb.vue'
+import { expect, describe, it } from 'vitest'
+import AmeliproBreadcrumb from '../AmeliproBreadcrumb.vue'
 
 describe('AmeliproBreadcrumb', () => {
 	it('render correctly', async () => {

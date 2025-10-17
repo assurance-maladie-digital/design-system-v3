@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproDialog from '../AmeliproDialog.vue'
+import AmeliproDialog from '../AmeliproDialog.vue'
+
 describe('AmeliproDialog', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproDialog, {

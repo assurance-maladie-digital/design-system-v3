@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproChips from '../AmeliproChips.vue'
+import AmeliproChips from '../AmeliproChips.vue'
+
 describe('AmeliproChips', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproChips, {

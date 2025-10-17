@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'import CookiesInformation from '../CookiesInformation.vue'
+import { mount } from '@vue/test-utils''
+import CookiesInformation from '../CookiesInformation.vue'
 import { locales } from '../locales'
 
 const cookies = [

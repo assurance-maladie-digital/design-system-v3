@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue'
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+
 import { useRating } from '../Rating'
 
 /** Create the test component */

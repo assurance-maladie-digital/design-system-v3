@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproPostalAddressCityRow from '../AmeliproPostalAddressCityRow.vue'
+import AmeliproPostalAddressCityRow from '../AmeliproPostalAddressCityRow.vue'
+
 describe('AmeliproPostalAddressCityRow', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPostalAddressCityRow, {

@@ -5,7 +5,8 @@ import {
 	filePromise,
 	filePromiseError,
 } from './data/filePromise'
-import DownloadBtn from '../DownloadBtn.vue'import { downloadFile } from '@/utils/functions/downloadFile'
+import DownloadBtn from '../DownloadBtn.vue'
+import { downloadFile } from '@/utils/functions/downloadFile'
 
 describe('DownloadBtn', () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

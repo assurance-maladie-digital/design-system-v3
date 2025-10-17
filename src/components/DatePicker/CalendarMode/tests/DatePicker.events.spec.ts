@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach } from 'vitest'import { nextTick } from 'vue'
+import { describe, it, expect, beforeEach } from 'vitest''
+import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
 
 describe('CalendarMode.vue - Events', () => {

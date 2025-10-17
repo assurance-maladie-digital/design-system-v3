@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import AmeliproMailTile from '../AmeliproMailTile.vue'
+import AmeliproMailTile from '../AmeliproMailTile.vue'
+
 describe('AmeliproMailTile', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproMailTile, {
