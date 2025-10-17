@@ -12,4 +12,8 @@
 		key-label="Clé"
 		:hide-details="true"
 	/>
+
+  <a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/1175" target="_blank">
+    Voir le ticket lié à cette démo
+  </a>
 </template>
