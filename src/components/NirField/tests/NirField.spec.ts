@@ -1,15 +1,7 @@
 import { mount } from '@vue/test-utils'
 import NirField from '../NirField.vue'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { useValidation } from '@/composables/validation/useValidation'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('NirField.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof NirField & {

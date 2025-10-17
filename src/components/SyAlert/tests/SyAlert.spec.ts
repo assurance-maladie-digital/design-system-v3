@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-
+import { mount } from '@vue/test-utils'
 import SyAlert from '../SyAlert.vue'
 import { VBtn } from 'vuetify/components'
 
@@ -15,9 +13,6 @@ describe('Alert', () => {
 			},
 			slots: {
 				default: 'slot content',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -33,9 +28,6 @@ describe('Alert', () => {
 			},
 			slots: {
 				default: 'slot content',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -77,9 +69,6 @@ describe('Alert', () => {
 			slots: {
 				default: 'slot content',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).not.toBeFalsy()
@@ -112,9 +101,6 @@ describe('Alert', () => {
 			},
 			slots: {
 				default: 'slot content',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

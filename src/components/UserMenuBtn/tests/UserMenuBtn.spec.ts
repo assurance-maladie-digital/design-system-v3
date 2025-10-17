@@ -1,15 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import UserMenuBtn from '../UserMenuBtn.vue'
-import { vuetify } from '@tests/unit/setup'
-import { nextTick } from 'vue'
+import UserMenuBtn from '../UserMenuBtn.vue'import { nextTick } from 'vue'
 
 describe('UserMenuBtn', () => {
 	it('renders the component', () => {
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				menuItems: [{ text: 'Item 1', value: 'item1' }],
@@ -25,9 +20,6 @@ describe('UserMenuBtn', () => {
 
 	it('displays the full name', () => {
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				fullName: 'John Doe',
@@ -38,9 +30,6 @@ describe('UserMenuBtn', () => {
 
 	it('does not render logout button when hidden', () => {
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				hideLogoutBtn: true,
@@ -51,9 +40,6 @@ describe('UserMenuBtn', () => {
 
 	it('renders user icon when not hidden', () => {
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				hideUserIcon: false,
@@ -64,9 +50,6 @@ describe('UserMenuBtn', () => {
 
 	it('does not render user icon when hidden', () => {
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				hideUserIcon: true,
@@ -77,9 +60,6 @@ describe('UserMenuBtn', () => {
 
 	it('emits "update:modelValue" when selected changes', async () => {
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 			},
@@ -95,9 +75,6 @@ describe('UserMenuBtn', () => {
 
 	it('computes mobile view correctly based on props and display', () => {
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				isMobileView: true,
@@ -107,9 +84,6 @@ describe('UserMenuBtn', () => {
 	})
 	it('emits "update:modelValue" when updateModelValue is called via event', async () => {
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				menuItems: [{ text: 'Item 1', value: 'item1' }],
@@ -127,9 +101,6 @@ describe('UserMenuBtn', () => {
 	it('possède la prop logoutText  custom', async () => {
 		const customLogoutText = 'Déconnexion'
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				logoutText: customLogoutText,
@@ -148,9 +119,6 @@ describe('UserMenuBtn', () => {
 	it('possède la prop logoutText  par défaut', async () => {
 		const defaultLogoutText = 'Logout'
 		const wrapper = mount(UserMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				hideLogoutBtn: false,

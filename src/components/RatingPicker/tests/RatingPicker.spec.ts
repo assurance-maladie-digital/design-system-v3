@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-
+import { mount } from '@vue/test-utils'
 import RatingPicker from '../RatingPicker.vue'
 import { RatingEnum } from '../Rating'
 import NumberPicker from '../NumberPicker/NumberPicker.vue'
@@ -14,9 +12,6 @@ import { locales } from '../locales'
 describe('RatingPicker', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(RatingPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			stubs: {
 				NumberPicker: {
 					template: '<div />',
@@ -32,9 +27,6 @@ describe('RatingPicker', () => {
 
 	it('renders with additional content with the NumberPicker', async () => {
 		const wrapper = mount(RatingPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			stubs: {
 				NumberPicker: {
 					template: '<div />',
@@ -57,9 +49,6 @@ describe('RatingPicker', () => {
 
 	it('renders with additional content with the StarsPicker', async () => {
 		const wrapper = mount(RatingPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			stubs: {
 				StarsPicker: {
 					template: '<div />',
@@ -82,9 +71,6 @@ describe('RatingPicker', () => {
 
 	it('renders with additional content with the EmotionPicker', async () => {
 		const wrapper = mount(RatingPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			stubs: {
 				EmotionPicker: {
 					template: '<div />',
@@ -107,9 +93,6 @@ describe('RatingPicker', () => {
 
 	it('renders with additional content with the EmotionPicker when twoEmotions is true', async () => {
 		const wrapper = mount(RatingPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			stubs: {
 				EmotionPicker: {
 					template: '<div />',
@@ -133,9 +116,6 @@ describe('RatingPicker', () => {
 
 	it('do not render the additional content when the rating is good', async () => {
 		const wrapper = mount(RatingPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			stubs: {
 				NumberPicker: {
 					template: '<div />',
@@ -157,9 +137,6 @@ describe('RatingPicker', () => {
 
 	it('sends the correct values to the EmotionPicker', async () => {
 		const wrapper = mount(RatingPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			stubs: {
 				EmotionPicker: {
 					template: '<div />',

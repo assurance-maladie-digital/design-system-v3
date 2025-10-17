@@ -1,8 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import SyTablePagination from '../SyTablePagination.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import SyTablePagination from '../SyTablePagination.vue'
 describe('SyTablePagination.vue', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(SyTablePagination, {
@@ -11,9 +9,6 @@ describe('SyTablePagination.vue', () => {
 				itemsPerPage: 10,
 				itemsLength: 100,
 				pageCount: 10,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 		expect(wrapper.exists()).toBe(true)
@@ -28,9 +23,6 @@ describe('SyTablePagination.vue', () => {
 				itemsLength: 100,
 				pageCount: 10,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		expect(wrapper.find('.pagination').exists()).toBe(true)
 	})
@@ -42,9 +34,6 @@ describe('SyTablePagination.vue', () => {
 				itemsPerPage: 10,
 				itemsLength: 5,
 				pageCount: 1,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 		expect(wrapper.find('.sy-table-pagination').exists()).toBe(true)
@@ -58,9 +47,6 @@ describe('SyTablePagination.vue', () => {
 				itemsPerPage: 10,
 				itemsLength: 5,
 				pageCount: 1,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 		expect(wrapper.find('.sy-table-pagination').exists()).toBe(true)
@@ -76,9 +62,6 @@ describe('SyTablePagination.vue', () => {
 				itemsPerPage: 10, // Standard value
 				itemsLength: 42,
 				pageCount: 5,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -96,9 +79,6 @@ describe('SyTablePagination.vue', () => {
 				itemsPerPage: 42, // Custom value
 				itemsLength: 100,
 				pageCount: 5,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -121,9 +101,6 @@ describe('SyTablePagination.vue', () => {
 				itemsLength: 42,
 				pageCount: 1,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const infoText = wrapper.find('.info').text()
@@ -137,9 +114,6 @@ describe('SyTablePagination.vue', () => {
 				itemsPerPage: 10,
 				itemsLength: 100,
 				pageCount: 10,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -160,9 +134,6 @@ describe('SyTablePagination.vue', () => {
 				itemsLength: 100,
 				pageCount: 10,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.find('.rows-per-page-label').exists()).toBe(true)
@@ -180,9 +151,6 @@ describe('SyTablePagination.vue', () => {
 					pageCount: 5,
 					itemsPerPage: 10,
 					itemsLength: 50,
-				},
-				global: {
-					plugins: [vuetify],
 				},
 			})
 
@@ -202,9 +170,6 @@ describe('SyTablePagination.vue', () => {
 					itemsLength: 50,
 					itemsPerPageOptions: [5, 10, 25],
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			// Should only have the limited options, no "Tous" option
@@ -223,9 +188,6 @@ describe('SyTablePagination.vue', () => {
 					itemsPerPage: 10,
 					itemsLength: 50,
 					itemsPerPageOptions: [5, 10, 25, -1],
-				},
-				global: {
-					plugins: [vuetify],
 				},
 			})
 
@@ -250,9 +212,6 @@ describe('SyTablePagination.vue', () => {
 					itemsLength: 50,
 					itemsPerPageOptions: [5, 10, 25],
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			// Should include the current itemsPerPage value and sort numerically
@@ -270,9 +229,6 @@ describe('SyTablePagination.vue', () => {
 					itemsPerPage: -1, // "Tous" option
 					itemsLength: 50,
 					itemsPerPageOptions: [5, 10, 25],
-				},
-				global: {
-					plugins: [vuetify],
 				},
 			})
 
@@ -293,9 +249,6 @@ describe('SyTablePagination.vue', () => {
 					itemsLength: 50,
 					itemsPerPageOptions: [5], // Only one option
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			// Should only have one option
@@ -314,9 +267,6 @@ describe('SyTablePagination.vue', () => {
 					itemsPerPage: 10,
 					itemsLength: 50,
 					itemsPerPageOptions: [], // Empty array
-				},
-				global: {
-					plugins: [vuetify],
 				},
 			})
 

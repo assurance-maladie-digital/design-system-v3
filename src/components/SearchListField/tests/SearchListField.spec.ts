@@ -12,9 +12,6 @@ describe('SearchListField.vue', () => {
 
 	it('renders the password field', () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -34,9 +31,6 @@ describe('SearchListField.vue', () => {
 
 	it('initial state', () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -59,9 +53,6 @@ describe('SearchListField.vue', () => {
 
 	it('initial state with empty value prop', () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -84,9 +75,6 @@ describe('SearchListField.vue', () => {
 
 	it('selects an item', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -111,9 +99,6 @@ describe('SearchListField.vue', () => {
 
 	it('filters items based on search input', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -142,9 +127,6 @@ describe('SearchListField.vue', () => {
 
 	it('clears the search field', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -169,9 +151,6 @@ describe('SearchListField.vue', () => {
 
 	it('filteredItems computed property', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -195,9 +174,6 @@ describe('SearchListField.vue', () => {
 
 	it('filteredItems computed property with null search', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -221,9 +197,6 @@ describe('SearchListField.vue', () => {
 
 	it('filteredItems computed property with multiple matching items', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -249,9 +222,6 @@ describe('SearchListField.vue', () => {
 
 	it('emitChangeEvent method', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -273,9 +243,6 @@ describe('SearchListField.vue', () => {
 
 	it('emits the update:modelValue event when an item is selected', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -300,9 +267,6 @@ describe('SearchListField.vue', () => {
 
 	it('renders the password field without outlined prop', () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: [
 					{
@@ -335,9 +299,6 @@ describe('SearchListField.vue', () => {
 			]
 
 			const wrapper = mount(SearchListField, {
-				global: {
-					plugins: [vuetify],
-				},
 				propsData: {
 					items,
 					modelValue: [],
@@ -366,9 +327,6 @@ describe('SearchListField.vue', () => {
 			]
 
 			const wrapper = mount(SearchListField, {
-				global: {
-					plugins: [vuetify],
-				},
 				propsData: {
 					items,
 					modelValue: [],
@@ -397,9 +355,6 @@ describe('SearchListField.vue', () => {
 			]
 
 			const wrapper = mount(SearchListField, {
-				global: {
-					plugins: [vuetify],
-				},
 				propsData: {
 					items,
 					modelValue: [],

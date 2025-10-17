@@ -1,18 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 
 import TextFilter from '../TextFilter.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import type { FilterType } from '../../types'
 import { filterItems } from '../../tableFilterUtils'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('TextFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof TextFilter>>
@@ -22,7 +14,6 @@ describe('TextFilter.vue', () => {
 	beforeEach(() => {
 		wrapper = mount(TextFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SyTextField: {
 						template: '<div class="sy-text-field-stub" data-testid="sy-text-field" :label="label" :clearable="clearable" :density="density" :hideDetails="hideDetails"></div>',
@@ -99,7 +90,6 @@ describe('TextFilter.vue', () => {
 		const headerWithoutKey = { title: 'Test Column' }
 		const newWrapper = mount(TextFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SyTextField: {
 						template: '<div class="sy-text-field-stub" data-testid="sy-text-field"></div>',
@@ -138,7 +128,6 @@ describe('TextFilter.vue', () => {
 		const emptyHeader = {}
 		const newWrapper = mount(TextFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SyTextField: {
 						template: '<div class="sy-text-field-stub" data-testid="sy-text-field"></div>',

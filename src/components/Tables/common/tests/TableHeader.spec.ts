@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-import TableHeader from '../TableHeader.vue'
+import { mount } from '@vue/test-utils'import TableHeader from '../TableHeader.vue'
 import type { SortOptions } from '../types'
 import type { VDataTable } from 'vuetify/components'
 
@@ -38,9 +36,6 @@ describe('TableHeader', () => {
 				},
 				table: { $el: { offsetWidth: 800 } } as unknown as VDataTable,
 				resizableColumns: false,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -90,9 +85,6 @@ describe('TableHeader', () => {
 				table: { $el: { offsetWidth: 800 } } as unknown as VDataTable,
 				resizableColumns: false,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Check if the sort order indicator is displayed
@@ -135,9 +127,6 @@ describe('TableHeader', () => {
 				},
 				table: { $el: { offsetWidth: 800 } } as unknown as VDataTable,
 				resizableColumns: false,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -199,9 +188,6 @@ describe('TableHeader', () => {
 				table: { $el: { offsetWidth: 800 } } as unknown as VDataTable,
 				resizableColumns: false,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Second column (sort order 2)
@@ -229,9 +215,6 @@ describe('TableHeader', () => {
 				table: { $el: { offsetWidth: 800 } } as unknown as VDataTable,
 				resizableColumns: false,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Third column (sort order 3)
@@ -258,9 +241,6 @@ describe('TableHeader', () => {
 				},
 				table: { $el: { offsetWidth: 800 } } as unknown as VDataTable,
 				resizableColumns: false,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { shallowMount, flushPromises } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-import SyTableFilter from '../SyTableFilter.vue'
+import { shallowMount, flushPromises } from '@vue/test-utils'import SyTableFilter from '../SyTableFilter.vue'
 import type { FilterOption, TableColumnHeader, FilterType } from '../types'
 
 // Using shallowMount will automatically stub all child components
@@ -20,9 +18,6 @@ describe('SyTableFilter', () => {
 			props: {
 				filters,
 				header,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -47,9 +42,6 @@ describe('SyTableFilter', () => {
 				filters,
 				header,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await flushPromises()
@@ -71,9 +63,6 @@ describe('SyTableFilter', () => {
 			props: {
 				filters,
 				header,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -102,9 +91,6 @@ describe('SyTableFilter', () => {
 				filters,
 				header,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await flushPromises()
@@ -127,9 +113,6 @@ describe('SyTableFilter', () => {
 			props: {
 				filters,
 				header,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -154,9 +137,6 @@ describe('SyTableFilter', () => {
 				filters,
 				header,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await flushPromises()
@@ -178,9 +158,6 @@ describe('SyTableFilter', () => {
 			props: {
 				filters,
 				header,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -216,9 +193,6 @@ describe('SyTableFilter', () => {
 			props: {
 				filters,
 				header,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -257,9 +231,6 @@ describe('SyTableFilter', () => {
 				filters,
 				header,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await flushPromises()
@@ -292,9 +263,6 @@ describe('SyTableFilter', () => {
 			props: {
 				filters,
 				header,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			slots: {
 				'custom-filter': `<div class="test-custom-filter">${customSlotText}</div>`,

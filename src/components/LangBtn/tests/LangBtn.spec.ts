@@ -1,15 +1,7 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import LangBtn from '../LangBtn.vue'
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import ISO6391 from 'iso-639-1'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('LangBtn', () => {
 	let wrapper: VueWrapper

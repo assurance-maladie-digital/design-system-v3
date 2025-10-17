@@ -1,17 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { VIcon } from 'vuetify/components'
 
 import SyTextField from '../SyTextField.vue'
 import type { IconType } from '../types'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('SyTextField.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof SyTextField>>

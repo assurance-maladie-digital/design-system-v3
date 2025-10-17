@@ -1,15 +1,8 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import PhoneField from '../PhoneField.vue'
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { indicatifs } from '../indicatifs'
 
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 describe('PhoneField', () => {
 	afterEach(() => {
 		vi.clearAllMocks()
