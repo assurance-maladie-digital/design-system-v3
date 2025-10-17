@@ -1,25 +1,17 @@
 import { describe, it, expect } from 'vitest'
 import FilterInline from '../FilterInline.vue'
-import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-import { locales } from '../locales'
+import { mount } from '@vue/test-utils'import { locales } from '../locales'
 
 describe('FilterInline', () => {
 	it('should render correctly', () => {
 		const wrapper = mount(FilterInline, {
 			props: {},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders correctly with an active filter', () => {
 		const wrapper = mount(FilterInline, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [
 					{
@@ -36,9 +28,6 @@ describe('FilterInline', () => {
 
 	it('renders correctly with multiple active filters', () => {
 		const wrapper = mount(FilterInline, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [
 					{

@@ -23,20 +23,12 @@ describe('PasswordField.vue', () => {
 	})
 
 	it('renders the password field', () => {
-		const wrapper = mount(PasswordField, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(PasswordField)
 		expect(wrapper.exists()).toBe(true)
 	})
 
 	it('toggles password visibility', async () => {
-		const wrapper = mount(PasswordField, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(PasswordField)
 		// 2. Cast wrapper.vm as your interface
 		const vm = wrapper.vm as unknown as PasswordFieldVM
 
@@ -49,11 +41,7 @@ describe('PasswordField.vue', () => {
 	})
 
 	it('emits update:modelValue event on input', async () => {
-		const wrapper = mount(PasswordField, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(PasswordField)
 		const input = wrapper.find('input')
 		await input.setValue('new-password')
 		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['new-password'])
@@ -61,9 +49,6 @@ describe('PasswordField.vue', () => {
 
 	it('validates the password field on blur', async () => {
 		const wrapper = mount(PasswordField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 				label: 'Password',
@@ -78,9 +63,6 @@ describe('PasswordField.vue', () => {
 
 	it('validates fields on submit', async () => {
 		const wrapper = mount(PasswordField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				variantStyle: 'underlined',
@@ -102,9 +84,6 @@ describe('PasswordField.vue', () => {
 
 	it('displays warning and success messages', async () => {
 		const wrapper = mount(PasswordField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: 'test',
 				warningMessages: ['Attention: mot de passe court'],
@@ -124,9 +103,6 @@ describe('PasswordField.vue', () => {
 
 	it('handles custom validation rules', async () => {
 		const wrapper = mount(PasswordField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: 'test',
 				customRules: [{
@@ -171,9 +147,6 @@ describe('PasswordField.vue', () => {
 
 	it('displays validation states based on validation rules', async () => {
 		const wrapper = mount(PasswordField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: 'test',
 				customRules: [{

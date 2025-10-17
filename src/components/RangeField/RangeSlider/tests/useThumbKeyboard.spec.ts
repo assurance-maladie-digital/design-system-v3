@@ -1,9 +1,7 @@
 import { defineComponent, ref, type Ref } from 'vue'
 import useThumbKeyboard from '../useThumbKeyboard'
 import { describe, expect, it, vi, afterEach } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-
+import { mount } from '@vue/test-utils'
 describe('useThumbKeyboard', () => {
 	let setValue = vi.fn()
 
@@ -36,9 +34,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle ArrowLeft key', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 5,
 			},
@@ -54,9 +49,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle ArrowDown key', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 5,
 			},
@@ -72,9 +64,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle ArrowRight key', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 5,
 			},
@@ -90,9 +79,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle ArrowUp key', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 5,
 			},
@@ -108,9 +94,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should set a value that is a multiple of the step', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 6,
 			},
@@ -125,9 +108,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle Home key', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 9,
 			},
@@ -143,9 +123,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle End key', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 9,
 			},
@@ -161,9 +138,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle PageDown key', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 2,
 			},
@@ -179,9 +153,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle PageUp key', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 2,
 			},
@@ -197,9 +168,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle PageDown key with overflow', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 9,
 			},
@@ -215,9 +183,6 @@ describe('useThumbKeyboard', () => {
 
 	it('should handle PageUp key with overflow', async () => {
 		const wrapper = mount(TestComponent, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				step: 9,
 			},

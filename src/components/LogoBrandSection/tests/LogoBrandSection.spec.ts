@@ -1,16 +1,12 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 
-import LogoBrandSection from '../LogoBrandSection.vue'
-import { vuetify } from '@tests/unit/setup'
-
+import LogoBrandSection from '../LogoBrandSection.vue'
 describe('LogoBrandSection', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				serviceTitle: 'Service Title',
@@ -29,9 +25,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with service computed', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				serviceTitle: 'Service Title',
@@ -45,9 +39,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with service computed', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'compte-entreprise',
 			},
@@ -59,9 +51,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with height', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				serviceTitle: 'Service Title',
@@ -81,9 +71,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with showServiceSubTitle', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				serviceTitle: 'Service Title',
@@ -97,9 +85,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with no showServiceSubTitle', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				serviceTitle: 'Service Title',
@@ -113,9 +99,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with default theme', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				serviceTitle: 'Service Title',
 				serviceSubTitle: 'Service Sub Title',
@@ -129,9 +113,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with cnam theme', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'cnam',
 				serviceTitle: 'Service Title',
@@ -146,9 +128,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with compte entreprise theme', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'compte-entreprise',
 				serviceTitle: 'Service Title',
@@ -163,9 +143,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with risquePro if no reduceLogo', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'risque-pro',
 				reduceLogo: false,
@@ -179,9 +157,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with risquePro', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'risque-pro',
 				reduceLogo: true,
@@ -194,9 +170,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with isCompteEntreprise', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'compte-entreprise',
 			},
@@ -208,9 +182,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with isCompteAmeliMobile', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'compte-ameli',
 				mobileVersion: true,
@@ -224,9 +196,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly without signature', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				reduceLogo: true,
@@ -239,9 +209,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly without hideSignature', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				reduceLogo: false,
@@ -254,9 +222,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with secondaryLogo', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				stubs: ['RouterLink', 'Logo'],
-				plugins: [vuetify],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'compte-ameli',
 			},
@@ -268,9 +234,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with logoContainerComponent', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				homeLink: {
@@ -285,9 +249,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly RouterLink with logoContainerComponent', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				homeLink: {
@@ -302,9 +264,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with logoContainerComponent', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 				homeLink: {
@@ -320,9 +280,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with secondaryLogoCtnComponent', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'default',
 			},
@@ -334,9 +292,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with secondaryLogoCtnComponent', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'ameli-pro',
 			},
@@ -348,9 +304,7 @@ describe('LogoBrandSection', () => {
 	it('renders correctly with secondaryLogoCtnComponent', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink', 'Logo'],
-			},
+				stubs: ['RouterLink', 'Logo']},
 			props: {
 				theme: 'ameli',
 				homeLink: {

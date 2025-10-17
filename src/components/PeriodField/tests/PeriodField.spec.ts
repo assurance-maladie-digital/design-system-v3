@@ -14,9 +14,6 @@ describe('PeriodField.vue', () => {
 	describe('Rendering', () => {
 		it('displays 2 fields with correct labels', () => {
 			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					placeholderFrom: 'From',
 					placeholderTo: 'To',
@@ -31,9 +28,6 @@ describe('PeriodField.vue', () => {
 
 		it('renders with initial values', async () => {
 			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					modelValue: {
 						from: '14/11/2005',
@@ -53,9 +47,6 @@ describe('PeriodField.vue', () => {
 	describe('Events', () => {
 		it('emits update events when fields are changed', async () => {
 			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					modelValue: {
 						from: null,
@@ -104,9 +95,6 @@ describe('PeriodField.vue', () => {
 						to: '01/01/2024',
 					},
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			await wrapper.vm.$nextTick()
@@ -123,9 +111,6 @@ describe('PeriodField.vue', () => {
 						to: '01/01/2024',
 					},
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			await wrapper.vm.$nextTick()
@@ -136,9 +121,6 @@ describe('PeriodField.vue', () => {
 
 		it('validates when required and both dates are missing', async () => {
 			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: {
@@ -170,9 +152,6 @@ describe('PeriodField.vue', () => {
 
 		it('validates when required and only one date is provided', async () => {
 			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: {
@@ -198,9 +177,6 @@ describe('PeriodField.vue', () => {
 
 		it('validates when not required and no dates are provided', async () => {
 			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: false,
 					modelValue: {
@@ -218,9 +194,6 @@ describe('PeriodField.vue', () => {
 
 		it('validates when not required and only one date is provided', async () => {
 			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: false,
 					modelValue: {
@@ -238,9 +211,6 @@ describe('PeriodField.vue', () => {
 
 		it('validates when both dates are valid', async () => {
 			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					modelValue: {
 						from: '12/12/1995',
@@ -258,9 +228,6 @@ describe('PeriodField.vue', () => {
 		it('validates correctly the required rule when fields are empty or partially filled', async () => {
 			// Cas 1: Tester la validation quand les deux champs sont vides
 			const wrapper1 = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: {
@@ -281,9 +248,6 @@ describe('PeriodField.vue', () => {
 
 			// Cas 2: Tester la validation quand un champ est rempli mais l'autre est vide
 			const wrapper2 = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: {
@@ -305,9 +269,6 @@ describe('PeriodField.vue', () => {
 
 			// Cas 3: Tester que la validation renvoie true quand le champ n'est pas vide
 			const wrapper3 = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: {
@@ -331,9 +292,6 @@ describe('PeriodField.vue', () => {
 		it('validates correctly the to-date required rule when fields are empty or partially filled', async () => {
 			// Cas 1: Tester la validation quand les deux champs sont vides
 			const wrapper1 = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: {
@@ -354,9 +312,6 @@ describe('PeriodField.vue', () => {
 
 			// Cas 2: Tester la validation quand un champ est rempli mais l'autre est vide
 			const wrapper2 = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: {
@@ -378,9 +333,6 @@ describe('PeriodField.vue', () => {
 
 			// Cas 3: Tester que la validation renvoie true quand le champ n'est pas vide
 			const wrapper3 = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: {
@@ -404,11 +356,7 @@ describe('PeriodField.vue', () => {
 
 	describe('Utils', () => {
 		it('formats date from selectedDates correctly', async () => {
-			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
-			})
+			const wrapper = mount(PeriodField)
 
 			const input = {
 				selectedDates: new Date('2025-02-07T15:42:00.000Z'),
@@ -420,11 +368,7 @@ describe('PeriodField.vue', () => {
 		})
 
 		it('returns null for invalid inputs', async () => {
-			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
-			})
+			const wrapper = mount(PeriodField)
 
 			// @ts-expect-error: accès à une méthode privée pour le test
 			expect(wrapper.vm.formatDateValue(null)).toBe(null)
@@ -435,11 +379,7 @@ describe('PeriodField.vue', () => {
 		})
 
 		it('returns string value directly', async () => {
-			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
-			})
+			const wrapper = mount(PeriodField)
 
 			// @ts-expect-error: accès à une méthode privée pour le test
 			expect(wrapper.vm.formatDateValue('07/02/2025')).toBe('07/02/2025')
@@ -449,9 +389,6 @@ describe('PeriodField.vue', () => {
 	describe('Custom Rules', () => {
 		it('applies custom validation rules', async () => {
 			const wrapper = mount(PeriodField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					modelValue: {
 						from: '12/12/1995',

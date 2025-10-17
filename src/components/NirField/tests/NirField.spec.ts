@@ -27,9 +27,6 @@ describe('NirField.vue', () => {
 
 	beforeEach(async () => {
 		wrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				required: true,
@@ -126,9 +123,6 @@ describe('NirField.vue', () => {
 
 	it('calls validateOnSubmit and returns true if no errors', async () => {
 		const testWrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				required: false,
@@ -162,9 +156,6 @@ describe('NirField.vue', () => {
 		}]
 
 		const customWrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				customKeyRules,

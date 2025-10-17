@@ -1,14 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-import RangeSlider from '../RangeSlider.vue'
+import { mount } from '@vue/test-utils'import RangeSlider from '../RangeSlider.vue'
 
 describe('RangeField component', () => {
 	it('should render the component', () => {
 		const wrapper = mount(RangeSlider, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				min: 0,
 				max: 100,
@@ -31,9 +26,6 @@ describe('RangeField component', () => {
 
 	it('should update the model value on thumb drag', async () => {
 		const wrapper = mount(RangeSlider, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				min: 0,
 				max: 100,
@@ -50,9 +42,6 @@ describe('RangeField component', () => {
 
 	it('should update the range when the modelValue is updated', async () => {
 		const wrapper = mount(RangeSlider, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				min: 0,
 				max: 100,
@@ -75,9 +64,6 @@ describe('RangeField component', () => {
 
 	it('emit an event when the track is clicked', async () => {
 		const wrapper = mount(RangeSlider, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				min: 0,
 				max: 100,

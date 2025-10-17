@@ -3,7 +3,6 @@ import { describe, it, expect, vi } from 'vitest'
 import FooterBar from '@/components/FooterBar/FooterBar.vue'
 import { locales } from '@/components/FooterBar/locales'
 import { A11yComplianceEnum } from '@/components/FooterBar/A11yCompliance'
-import { vuetify } from '@tests/unit/setup'
 import { LogoSize } from '@/components/Logo/LogoSize'
 import { nextTick } from 'vue'
 
@@ -17,13 +16,13 @@ describe('FooterBar', () => {
 	}
 
 	it('renders correctly', async () => {
-		const wrapper = mount(FooterBar, { global: { plugins: [vuetify] } })
+		const wrapper = mount(FooterBar)
 		expect(FooterBar).toBeTruthy()
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders default props correctly', () => {
-		const wrapper = mount(FooterBar, { global: { plugins: [vuetify] } })
+		const wrapper = mount(FooterBar)
 		expect(wrapper.props().a11yCompliance).toBe('non-compliant')
 		expect(wrapper.props().linkItems).toBeNull()
 		expect(wrapper.props().sitemapRoute).toEqual({ name: 'sitemap' })
@@ -36,14 +35,14 @@ describe('FooterBar', () => {
 			linkItems: [{ text: 'Custom Link', to: '/custom' }],
 			hideSitemapLink: true,
 		}
-		const wrapper = mount(FooterBar, { props: customProps, global: { plugins: [vuetify] } })
+		const wrapper = mount(FooterBar, { props: customProps })
 		expect(wrapper.props().a11yCompliance).toBe(A11yComplianceEnum['fully-compliant'])
 		expect(wrapper.props().linkItems).toEqual(customProps.linkItems)
 		expect(wrapper.props().hideSitemapLink).toBe(true)
 	})
 
 	it('renders footer links correctly', () => {
-		const wrapper = mount(FooterBar, { global: { plugins: [vuetify] } })
+		const wrapper = mount(FooterBar)
 		const links = wrapper.findAll('.vd-footer-bar-links li')
 		expect(links.length).toBeGreaterThan(0)
 	})
@@ -57,7 +56,6 @@ describe('FooterBar', () => {
 				hideLegalNoticeLink: true,
 				hideA11yLink: true,
 			},
-			global: { plugins: [vuetify] },
 		})
 		const links = wrapper.findAll('.vd-footer-bar-links li')
 		expect(links.length).toBe(0)
@@ -65,25 +63,17 @@ describe('FooterBar', () => {
 
 	it('renders version if provided', () => {
 		const version = '1.0.0'
-		const wrapper = mount(FooterBar, { props: { version }, global: { plugins: [vuetify] } })
+		const wrapper = mount(FooterBar, { props: { version } })
 		expect(wrapper.text()).toContain(`${locales.versionLabel} ${version}`)
 	})
 
 	it('computes logoSize correctly for desktop screens', () => {
-		const wrapper = mount(FooterBar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(FooterBar)
 		expect(wrapper.vm.$.exposed?.logoSize.value).toBe(LogoSize.NORMAL)
 	})
 
 	it('computes logoSize correctly for small screens', async () => {
-		const wrapper = mount(FooterBar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(FooterBar)
 		Object.defineProperty(window, 'innerWidth', {
 			writable: true,
 			configurable: true,
@@ -97,7 +87,6 @@ describe('FooterBar', () => {
 	it('renders the scroll to top button and triggers scrollToTop', async () => {
 		// Passer un slot ou forcer une condition pour activer le mode étendu
 		const wrapper = mount(FooterBar, {
-			global: { plugins: [vuetify] },
 			slots: {
 				default: '<div>Extended mode content</div>', // Slot pour forcer le mode étendu
 			},
@@ -141,7 +130,6 @@ describe('FooterBar', () => {
 		]
 		const wrapper = mount(FooterBar, {
 			props: { linkItems },
-			global: { plugins: [vuetify] },
 		})
 
 		const links = wrapper.findAll('.vd-footer-bar-links a')

@@ -1,15 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 import FranceConnectBtn from '../FranceConnectBtn.vue'
 import { VThemeProvider } from 'vuetify/components'
 
 describe('FranceConnectBtn', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(FranceConnectBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				href: 'https://app.franceconnect.gouv.fr/',
 			},
@@ -21,9 +17,6 @@ describe('FranceConnectBtn', () => {
 
 	it('renders correctly with connect-plus', () => {
 		const wrapper = mount(FranceConnectBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				href: 'https://app.franceconnect.gouv.fr/',
 				isConnectPlus: true,
@@ -47,10 +40,6 @@ describe('FranceConnectBtn', () => {
                 >
                     <FranceConnectBtn href="https://app.franceconnect.gouv.fr/" isConnectPlus />
                 </VThemeProvider>`,
-		}, {
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
