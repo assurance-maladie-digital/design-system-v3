@@ -73,6 +73,8 @@ export const Default: Story = {
 
 export const Size: Story = {
 	parameters: {
+		controls: { exclude: ['spacingClass', 'containerSize', 'default', 'spacing', 'color'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -113,6 +115,7 @@ export const Size: Story = {
 
 export const Color: Story = {
 	parameters: {
+		controls: { exclude: ['spacingClass', 'containerSize', 'default', 'spacing', 'size'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -157,6 +160,8 @@ export const Color: Story = {
 
 export const Card: Story = {
 	parameters: {
+		controls: { exclude: ['spacingClass', 'containerSize', 'default'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
