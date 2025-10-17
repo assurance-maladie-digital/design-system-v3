@@ -131,17 +131,13 @@
 
 	const container = ref<HTMLElement | null>(null)
 
-	// Fonction pour gérer le focus des champs
+	// Fonction pour gérer le focus des champs (ne pas déplacer le caret à la fin)
 	const focusField = (field: typeof numberField | typeof keyField) => {
 		nextTick(() => {
-			const input = field.value?.$el?.querySelector?.('input')
+			const input = field.value?.$el?.querySelector?.('input') as HTMLInputElement | null
 			if (input) {
-				// Focus and select all text
 				input.focus()
-				// Adding a slight delay to ensure focus is applied
-				setTimeout(() => {
-					input.click()
-				}, 50)
+				// Ne pas déclencher de clic ni de sélection qui déplaceraient le caret
 			}
 		})
 	}
@@ -284,22 +280,22 @@
 			keyValue.value = ''
 			return
 		}
-		if (newValue.length === 15) {
-			const number = newValue.slice(0, -2)
-			const key = newValue.slice(-2)
+
+		// Découper systématiquement: 13 pour le numéro, puis 2 pour la clé
+		const raw = newValue
+		const number = raw.slice(0, 13)
+		const key = raw.slice(13, 15)
+
+		// Éviter les réassignations inutiles (comparer la version non masquée)
+		if (unmaskedNumberValue.value !== number) {
 			numberValue.value = number
-			keyValue.value = key
 		}
-		if (newValue.length === 14) {
-			const number = newValue.slice(0, -1)
-			const key = newValue.slice(-1)
-			numberValue.value = number
-			keyValue.value = key
-		}
-		if (newValue.length <= 13) {
-			const number = newValue
-			numberValue.value = number
-			keyValue.value = ''
+
+		// Ne synchroniser la clé que si elle est présente dans modelValue (>13 chars)
+		if (raw.length > 13) {
+			if (unmaskedKeyValue.value !== key) {
+				keyValue.value = key
+			}
 		}
 	}, { immediate: true })
 
@@ -310,6 +306,12 @@
 
 		if (!number && !key) {
 			emit('update:modelValue', undefined)
+			return
+		}
+
+		// N'émettre la clé que si le numéro est complet (13 caractères)
+		if (number && number.length < 13) {
+			emit('update:modelValue', `${number}`)
 			return
 		}
 
