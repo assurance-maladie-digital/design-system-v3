@@ -1148,6 +1148,7 @@ Cette story montre l'utilisation du NirField dans un formulaire avec validation.
 		v-model="value"
 		label="NirField"
 		required
+		:displayKey="false"
 		showSuccessMessages
 		ref="nirField"
 	/>
@@ -1210,6 +1211,7 @@ const onSubmit = async () => {
 					label="NirField"
 					required
 					showSuccessMessages
+                    :displayKey="false"
 					ref="nirField"
 				/>
 				<v-btn
