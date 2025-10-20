@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach, vi } from 'vitest''
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import DateTextInput from './DateTextInput.vue'
 import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 

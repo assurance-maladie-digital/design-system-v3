@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import Usages from '../Usages.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('Usages.vue', () => {
 	it('renders the component with default props', () => {
@@ -87,11 +86,7 @@ describe('Usages.vue', () => {
 	})
 
 	it('uses the correct icons', () => {
-		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(Usages)
 
 		const icons = wrapper.findAll('.v-icon')
 
@@ -106,11 +101,7 @@ describe('Usages.vue', () => {
 	})
 
 	it('applies the correct styling to columns', () => {
-		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(Usages)
 
 		// Vérifier les classes CSS pour la première colonne
 		const checkColumn = wrapper.find('.check')

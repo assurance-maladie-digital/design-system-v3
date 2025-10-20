@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils''
-import TableHeader from '../TableHeader.vu'
+import { mount } from '@vue/test-utils'
+import TableHeader from '../TableHeader.vue'
 import type { SortOptions } from '../types'
 import type { VDataTable } from 'vuetify/components'
 

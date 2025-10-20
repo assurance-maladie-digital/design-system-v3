@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach } from 'vitest''
+import { describe, it, expect, beforeEach } from 'vitest'
 import { nextTick } from 'vue'
 import DateTextInput from './DateTextInput.vue'
 

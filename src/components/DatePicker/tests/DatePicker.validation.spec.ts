@@ -3926,8 +3926,6 @@ describe('DatePicker - Tests de Validation Complets', () => {
 						const required = value => !!value || 'Date requise'
 						return { date, required }
 					},
-				}, {
-
 				})
 
 				await nextTick()
@@ -3955,8 +3953,6 @@ describe('DatePicker - Tests de Validation Complets', () => {
 						const valid = ref(false)
 						return { date, valid }
 					},
-				}, {
-
 				})
 
 				await nextTick()

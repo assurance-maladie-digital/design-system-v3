@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { shallowMount, flushPromises } from '@vue/test-utils''
+import { shallowMount, flushPromises } from '@vue/test-utils'
 import SyTableFilter from '../SyTableFilter.vue'
 import type { FilterOption, TableColumnHeader, FilterType } from '../types'
 

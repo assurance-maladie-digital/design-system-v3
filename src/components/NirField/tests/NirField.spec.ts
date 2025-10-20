@@ -370,9 +370,6 @@ describe('NirField.vue', () => {
 
 		beforeEach(async () => {
 			wrapperWithoutKey = mount(NirField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					modelValue: undefined,
 					displayKey: false,
@@ -395,9 +392,6 @@ describe('NirField.vue', () => {
 			activeWrappers.pop()
 
 			const newWrapper = mount(NirField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					displayKey: false,
 					required: false,

@@ -1,8 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-
 import SubHeader from '../SubHeader.vue'
-'
 import type { DataList } from '@/components/DataList/types'
 import type { DataListGroupItems } from '@/components/DataListGroup/types'
 

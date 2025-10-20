@@ -10,7 +10,8 @@ describe('AmeliproDialog', () => {
 					VDialog: {
 						template: '<div><slot></slot></div>',
 					},
-				} },
+				},
+			},
 			props: {
 				modelValue: true,
 				labelledby: 'amelipro-dialog-id-title',
