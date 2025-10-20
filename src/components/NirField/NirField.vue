@@ -86,6 +86,9 @@
 	const numberValue = ref('')
 	const keyValue = ref('')
 
+	// Flag pour éviter les boucles infinies lors de la synchronisation
+	const isInternalUpdate = ref(false)
+
 	// Refs pour les champs
 	const keyField = ref<InstanceType<typeof SyTextField> | null>(null)
 	const numberField = ref<InstanceType<typeof SyTextField> | null>(null)
@@ -154,13 +157,15 @@
 	})
 
 	watch(unmaskedKeyValue, (newValue) => {
-		if (newValue.length === 0) {
+		if (newValue.length === 0 && props.displayKey) {
 			focusField(numberField)
 		}
 	})
 
 	// Watch pour détecter la suppression des chiffres de la clé
 	watch(keyValue, (newValue, oldValue) => {
+		if (!props.displayKey) return
+
 		// Si l'ancienne valeur avait des chiffres et la nouvelle est vide ou ne contient que des espaces
 		if (oldValue && newValue !== null && oldValue.trim() && !newValue.trim()) {
 			focusField(numberField)
@@ -279,6 +284,9 @@
 
 	// Synchronisation avec modelValue
 	watch(modelValueRef, (newValue) => {
+		// Ignorer les mises à jour internes pour éviter les boucles infinies
+		if (isInternalUpdate.value) return
+
 		if (newValue === undefined || newValue === null) {
 			numberValue.value = ''
 			keyValue.value = ''
@@ -308,12 +316,20 @@
 		const number = unmaskedNumberValue.value
 		const key = unmaskedKeyValue.value
 
+		// Marquer comme mise à jour interne pour éviter la boucle
+		isInternalUpdate.value = true
+
 		if (!number && !key) {
 			emit('update:modelValue', undefined)
-			return
+		}
+		else {
+			emit('update:modelValue', `${number}${key}`)
 		}
 
-		emit('update:modelValue', `${number}${key}`)
+		// Réactiver la synchronisation au prochain tick
+		nextTick(() => {
+			isInternalUpdate.value = false
+		})
 	}
 
 	// État pour suivre si une validation est en cours
@@ -416,7 +432,7 @@
 		debouncedValidate()
 
 		// Si on supprime le contenu de la clé, on revient au champ NIR
-		if (unmaskedKeyValue.value.length === 0) {
+		if (props.displayKey && unmaskedKeyValue.value.length === 0) {
 			nextTick(() => {
 				numberField.value?.$el?.querySelector?.('input')?.focus()
 			})
@@ -454,30 +470,37 @@
 
 	// Ajouter des écouteurs d'événements keydown aux champs NIR après le montage du composant
 	onMounted(() => {
-		// Attendre que les refs soient disponibles
-		nextTick(() => {
-			// Ajouter l'écouteur d'événement au premier champ NIR
-			const numberInput = numberField.value?.$el?.querySelector?.('input')
-			if (numberInput) {
-				numberInput.addEventListener('keydown', handleNumberKeydown)
-			}
+		// N'ajouter l'écouteur keydown QUE si on affiche la clé
+		if (props.displayKey) {
+			// Attendre que les refs soient disponibles
+			nextTick(() => {
+				// Ajouter l'écouteur d'événement au premier champ NIR
+				const numberInput = numberField.value?.$el?.querySelector?.('input')
+				if (numberInput) {
+					numberInput.addEventListener('keydown', handleNumberKeydown)
+				}
 
-			// Si le composant est en mode withoutFieldset, ajouter l'écouteur au deuxième champ NIR
-			if (props.withoutFieldset) {
-				// Attendre un peu pour s'assurer que le DOM est complètement rendu
-				setTimeout(() => {
-					const fieldsetNumberInput = container.value?.querySelector('.number-field input')
-					if (fieldsetNumberInput) {
-						fieldsetNumberInput.addEventListener('keydown', handleNumberKeydown)
-					}
-				}, 100)
-			}
-		})
+				// Si le composant est en mode withoutFieldset, ajouter l'écouteur au deuxième champ NIR
+				if (props.withoutFieldset) {
+					// Attendre un peu pour s'assurer que le DOM est complètement rendu
+					setTimeout(() => {
+						const fieldsetNumberInput = container.value?.querySelector('.number-field input')
+						if (fieldsetNumberInput) {
+							fieldsetNumberInput.addEventListener('keydown', handleNumberKeydown)
+						}
+					}, 100)
+				}
+			})
+		}
 	})
 
 	onBeforeUnmount(() => {
-		const numberInput = numberField.value?.$el?.querySelector?.('input')
-		numberInput.removeEventListener('keydown', handleNumberKeydown)
+		if (props.displayKey) {
+			const numberInput = numberField.value?.$el?.querySelector?.('input')
+			if (numberInput) {
+				numberInput.removeEventListener('keydown', handleNumberKeydown)
+			}
+		}
 	})
 
 	// Rendre le composant auto-validable dans un SyForm
