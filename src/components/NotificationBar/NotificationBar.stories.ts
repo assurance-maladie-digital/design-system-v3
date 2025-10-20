@@ -28,7 +28,6 @@ const meta: Meta<typeof NotificationBar> = {
 				},
 				defaultValue: {
 					summary: 'Fermer',
-
 				},
 			},
 		},
