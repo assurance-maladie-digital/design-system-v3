@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeAll } from 'vitest'
 import { mount } from '@vue/test-utils'
-
-import { vuetify } from '@tests/unit/setup'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
@@ -85,9 +83,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				headers: headers,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.find('.sy-table').exists()).toBe(true)
@@ -117,9 +112,6 @@ describe('SyTable', () => {
 					},
 				],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.text()).toContain('John Doe')
@@ -138,9 +130,6 @@ describe('SyTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -175,9 +164,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				headers: headers,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Simulate a sort event from VDataTable
@@ -198,9 +184,6 @@ describe('SyTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -231,7 +214,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SyTableFilter: true,
 				},
@@ -258,9 +240,6 @@ describe('SyTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -300,9 +279,6 @@ describe('SyTable', () => {
 				],
 				items: fakeItems,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.vm.$nextTick()
@@ -329,9 +305,6 @@ describe('SyTable', () => {
 					},
 				],
 				items: fakeItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -368,9 +341,6 @@ describe('SyTable', () => {
 				],
 				items: fakeItems,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.vm.$nextTick()
@@ -385,9 +355,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				showSelect: true,
 				suffix: '',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -404,9 +371,6 @@ describe('SyTable', () => {
 				showSelect: false,
 				suffix: '',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Check that the VDataTable has showSelect prop set to false
@@ -421,9 +385,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				showSelect: true,
 				suffix: '',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -447,9 +408,6 @@ describe('SyTable', () => {
 				modelValue: selectedItems,
 				suffix: '',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Check that the VDataTable has the correct model value
@@ -468,9 +426,6 @@ describe('SyTable', () => {
 				'onUpdate:modelValue': (val: unknown[]) => {
 					wrapper.setProps({ modelValue: val })
 				},
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -504,7 +459,6 @@ describe('SyTable', () => {
 				enableColumnControls: true,
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					OrganizeColumns: mockOrganizeColumns,
 				},
@@ -607,9 +561,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				enableColumnControls: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -651,9 +602,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				enableColumnControls: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -693,9 +641,6 @@ describe('SyTable', () => {
 				headers: JSON.parse(JSON.stringify(headers)),
 				items: fakeItems,
 				enableColumnControls: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})

@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproCustomSelector from '../AmeliproCustomSelector.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproCustomSelector', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproCustomSelector, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				groupLabel: 'Libellé du groupe',
 				modelValue: [

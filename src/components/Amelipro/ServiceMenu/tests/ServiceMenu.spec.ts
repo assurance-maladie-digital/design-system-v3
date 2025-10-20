@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import ServiceMenu from '../ServiceMenu.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('ServiceMenu', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(ServiceMenu, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: true,
 				servicesPs: [

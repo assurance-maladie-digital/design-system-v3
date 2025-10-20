@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproTable from '../AmeliproTable.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproTable', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproTable, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				headers: [
 					{

@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import CopyBtn from '../CopyBtn.vue'
 
@@ -29,9 +28,6 @@ describe('CopyBtn', () => {
 				label: 'test',
 				textToCopy: 'test',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
@@ -42,9 +38,6 @@ describe('CopyBtn', () => {
 			propsData: {
 				label: 'test',
 				textToCopy: 'test',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -68,9 +61,6 @@ describe('CopyBtn', () => {
 				textToCopy: 'test',
 				tooltipDuration: 100,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
@@ -89,9 +79,6 @@ describe('CopyBtn', () => {
 				textToCopy: 'test',
 				hideTooltip: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
@@ -105,9 +92,6 @@ describe('CopyBtn', () => {
 				label: 'test',
 				textToCopy: 'text with spaces',
 				separatorsToRemove: ' ',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -123,9 +107,6 @@ describe('CopyBtn', () => {
 				textToCopy: 'text with\tspaces\nand\rtabs',
 				separatorsToRemove: ' ',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
@@ -139,9 +120,6 @@ describe('CopyBtn', () => {
 				label: 'test',
 				textToCopy: 'FR76-3000-4000-0300',
 				separatorsToRemove: '-',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -157,9 +135,6 @@ describe('CopyBtn', () => {
 				textToCopy: '+33 (0)6.12.34.56',
 				separatorsToRemove: ['+', '(', ')', '.'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
@@ -174,9 +149,6 @@ describe('CopyBtn', () => {
 				textToCopy: 'text.with*special[chars]',
 				separatorsToRemove: ['.', '*', '[', ']'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.find('[data-test-id="copy-btn"]').trigger('click')
@@ -190,9 +162,6 @@ describe('CopyBtn', () => {
 				label: 'test',
 				textToCopy: 'FR76-3000-4000',
 				separatorsToRemove: '-',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

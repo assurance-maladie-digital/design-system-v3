@@ -1,14 +1,6 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import SocialMediaLinks from '../SocialMediaLinks.vue'
 import { describe, it, expect, afterEach } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('SocialMediaLinks', () => {
 	let wrapper: VueWrapper
@@ -21,9 +13,6 @@ describe('SocialMediaLinks', () => {
 
 	it('renders correctly with default props', () => {
 		wrapper = mount(SocialMediaLinks, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				links: undefined,
 				headingLevel: 6,
@@ -45,9 +34,6 @@ describe('SocialMediaLinks', () => {
 			{ href: 'https://facebook.com', name: 'Facebook', icon: 'mdi-facebook' },
 		]
 		wrapper = mount(SocialMediaLinks, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				links,
 				headingLevel: 6,
@@ -80,9 +66,6 @@ describe('SocialMediaLinks', () => {
 			{ href: 'https://facebook.com', name: 'Facebook', icon: 'mdi-facebook' },
 		]
 		wrapper = mount(SocialMediaLinks, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				links,
 				headingLevel: 6,
@@ -94,9 +77,6 @@ describe('SocialMediaLinks', () => {
 
 	it('renders no links when links prop is empty array', () => {
 		wrapper = mount(SocialMediaLinks, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				links: [],
 				headingLevel: 6,
@@ -108,9 +88,6 @@ describe('SocialMediaLinks', () => {
 
 	it('renders no links when links prop is null', () => {
 		wrapper = mount(SocialMediaLinks, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				links: undefined,
 				headingLevel: 6,
@@ -123,9 +100,6 @@ describe('SocialMediaLinks', () => {
 	it('renders with correct heading level when headingLevel prop is provided', () => {
 		const headingLevel = 3
 		wrapper = mount(SocialMediaLinks, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				links: [],
 				headingLevel,
@@ -138,9 +112,6 @@ describe('SocialMediaLinks', () => {
 	it('renders with span and ARIA attributes when useNativeHeading is false', () => {
 		const headingLevel = 4
 		wrapper = mount(SocialMediaLinks, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				links: [],
 				headingLevel,
@@ -158,9 +129,6 @@ describe('SocialMediaLinks', () => {
 			{ href: 'https://twitter.com', name: 'Twitter', icon: 'mdi-twitter' },
 		]
 		wrapper = mount(SocialMediaLinks, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				links,
 				headingLevel: 6,

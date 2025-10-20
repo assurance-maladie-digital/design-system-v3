@@ -1,15 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import ChipList from '../ChipList.vue'
 import type { ChipItem, ChipState } from '../types'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('ChipList', () => {
 	const defaultItems: ChipItem[] = [
@@ -30,9 +22,6 @@ describe('ChipList', () => {
 		const wrapper = mount(ChipList, {
 			props: {
 				items: defaultItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -81,9 +70,6 @@ describe('ChipList', () => {
 				items,
 				overflowLimit: 6, // Augmenté pour voir tous les chips
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Vérifie les classes d'état
@@ -106,9 +92,6 @@ describe('ChipList', () => {
 			props: {
 				items: defaultItems,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const successChip = wrapper.find('.sy-chip-success')
@@ -124,9 +107,6 @@ describe('ChipList', () => {
 			props: {
 				items: defaultItems,
 				readonly: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -158,9 +138,6 @@ describe('ChipList', () => {
 				items: manyItems,
 				overflowLimit: 3,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Vérifie que le nombre de chips visibles est correct
@@ -180,9 +157,6 @@ describe('ChipList', () => {
 		const wrapper = mount(ChipList, {
 			props: {
 				items: defaultItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -206,9 +180,6 @@ describe('ChipList', () => {
 				items: defaultItems,
 				resetText: customResetText,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const resetButton = wrapper.find('[data-test-id="reset-btn"]')
@@ -220,9 +191,6 @@ describe('ChipList', () => {
 		const wrapper = mount(ChipList, {
 			props: {
 				items: defaultItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -244,9 +212,6 @@ describe('ChipList', () => {
 		const wrapper = mount(ChipList, {
 			props: {
 				items: [],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -282,9 +247,6 @@ describe('ChipList', () => {
 				items,
 				readonly,
 				overflowLimit: 3,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

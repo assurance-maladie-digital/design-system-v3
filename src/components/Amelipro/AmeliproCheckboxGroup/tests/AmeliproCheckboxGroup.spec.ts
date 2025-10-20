@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproCheckboxGroup from '../AmeliproCheckboxGroup.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproCheckboxGroup', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproCheckboxGroup, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				groupLabel: 'Libellé du groupe',
 				modelValue: [

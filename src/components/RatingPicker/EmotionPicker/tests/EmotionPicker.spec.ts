@@ -1,15 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import EmotionPicker from '../EmotionPicker.vue'
 
 describe('EmotionPicker', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(EmotionPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				label: 'Pourriez-vous donner une note ?',
 				itemLabels: ['Pas du tout', 'Peut-être', 'Oui super'],
@@ -25,9 +21,6 @@ describe('EmotionPicker', () => {
 
 	it('renders correctly with only 2 items', () => {
 		const wrapper = mount(EmotionPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				label: 'Pourriez-vous donner une note ?',
 				itemLabels: ['Pas du tout', 'Not used', 'Oui super'],
@@ -47,9 +40,6 @@ describe('EmotionPicker', () => {
 		window.happyDOM.setInnerWidth(600)
 
 		const wrapper = mount(EmotionPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				label: 'Pourriez-vous donner une note ?',
 				itemLabels: ['Pas du tout', 'Peut-être', 'Oui super'],
@@ -62,11 +52,7 @@ describe('EmotionPicker', () => {
 	})
 
 	it('emit the right value when an item is clicked', async () => {
-		const wrapper = mount(EmotionPicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(EmotionPicker)
 
 		const items = wrapper.findAll('[role="radio"]')
 		await items[0].trigger('click')
@@ -76,9 +62,6 @@ describe('EmotionPicker', () => {
 
 	it('have no labels when no labels are provided', () => {
 		const wrapper = mount(EmotionPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				itemLabels: [],
 			},
@@ -90,11 +73,7 @@ describe('EmotionPicker', () => {
 	})
 
 	it('change the style of the buttons when an item is clicked', async () => {
-		const wrapper = mount(EmotionPicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(EmotionPicker)
 
 		const items = wrapper.findAll('[role="radio"]')
 

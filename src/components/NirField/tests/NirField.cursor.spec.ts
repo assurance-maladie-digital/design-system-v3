@@ -1,14 +1,6 @@
 import { mount } from '@vue/test-utils'
 import NirField from '../NirField.vue'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 /**
  * Tests spécifiques pour la préservation de la position du curseur
@@ -24,9 +16,6 @@ describe('NirField - Cursor Position Preservation', () => {
 
 	beforeEach(async () => {
 		wrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				displayKey: false, // ⚠️ Mode sans clé
@@ -118,9 +107,6 @@ describe('NirField - Cursor Position Preservation', () => {
 		const addEventListenerSpy = vi.spyOn(HTMLElement.prototype, 'addEventListener')
 
 		const newWrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				displayKey: false,
 				required: false,

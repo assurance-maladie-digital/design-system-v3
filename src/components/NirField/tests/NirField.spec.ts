@@ -1,15 +1,7 @@
 import { mount } from '@vue/test-utils'
 import NirField from '../NirField.vue'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { useValidation } from '@/composables/validation/useValidation'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('NirField.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof NirField & {
@@ -27,9 +19,6 @@ describe('NirField.vue', () => {
 
 	beforeEach(async () => {
 		wrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				required: true,
@@ -126,9 +115,6 @@ describe('NirField.vue', () => {
 
 	it('calls validateOnSubmit and returns true if no errors', async () => {
 		const testWrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				required: false,
@@ -162,9 +148,6 @@ describe('NirField.vue', () => {
 		}]
 
 		const customWrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				customKeyRules,
@@ -387,9 +370,6 @@ describe('NirField.vue', () => {
 
 		beforeEach(async () => {
 			wrapperWithoutKey = mount(NirField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					modelValue: undefined,
 					displayKey: false,
@@ -412,9 +392,6 @@ describe('NirField.vue', () => {
 			activeWrappers.pop()
 
 			const newWrapper = mount(NirField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					displayKey: false,
 					required: false,

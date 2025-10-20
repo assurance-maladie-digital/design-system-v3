@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
 import AmeliproBreadcrumb from '../AmeliproBreadcrumb.vue'
 
 describe('AmeliproBreadcrumb', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproBreadcrumb, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: [
 					{

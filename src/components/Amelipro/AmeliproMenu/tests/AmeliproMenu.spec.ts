@@ -1,13 +1,11 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproMenu from '../AmeliproMenu.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproMenu', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproMenu, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					VNavigationDrawer: {
 						template: '<div><slot></slot></div>',

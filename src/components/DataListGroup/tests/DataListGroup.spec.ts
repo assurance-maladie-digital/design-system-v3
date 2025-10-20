@@ -4,16 +4,12 @@ import { mount } from '@vue/test-utils'
 import DataListGroup from '../DataListGroup.vue'
 
 import { dataListGroupItems } from './data/dataListGroupItems'
-import { vuetify } from '@tests/unit/setup'
 
 describe('DataListGroup', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(DataListGroup, {
 			props: {
 				items: dataListGroupItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -26,9 +22,6 @@ describe('DataListGroup', () => {
 				loading: true,
 				items: dataListGroupItems,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.find('.sy-data-list-loading').exists()).toBe(true)
@@ -38,9 +31,6 @@ describe('DataListGroup', () => {
 		const wrapper = mount(DataListGroup, {
 			props: {
 				items: dataListGroupItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

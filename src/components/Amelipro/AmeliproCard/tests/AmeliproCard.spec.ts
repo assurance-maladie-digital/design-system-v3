@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproCard from '../AmeliproCard.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproCard', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproCard, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				cardTitle: 'Titre de ma carte',
 				uniqueId: 'my-card-id',

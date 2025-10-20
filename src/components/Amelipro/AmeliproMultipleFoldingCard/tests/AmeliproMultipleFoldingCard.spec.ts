@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproMultipleFoldingCard from '../AmeliproMultipleFoldingCard.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproMultipleFoldingCard', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproMultipleFoldingCard, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				tabs: [
 					{

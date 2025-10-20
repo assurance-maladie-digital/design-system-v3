@@ -1,4 +1,3 @@
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import { defineComponent, inject, onMounted, ref, type Ref } from 'vue'
@@ -19,9 +18,6 @@ describe('HeaderBar', () => {
 		const wrapper = mount(HeaderBar, {
 			props: {
 				sticky: false,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -49,9 +45,6 @@ describe('HeaderBar', () => {
 
 	it('should render all the component slots', async () => {
 		const wrapper = mount(HeaderBar, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 			slots: {
 				'default': '<div>Default slot</div>',
@@ -111,9 +104,6 @@ describe('HeaderBar', () => {
 					</template>
 				</HeaderBar>`,
 		}, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		const text = wrapper.text()
@@ -132,9 +122,6 @@ describe('HeaderBar', () => {
 		const wrapper = mount(HeaderBar, {
 			props: {
 				sticky: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -164,9 +151,6 @@ describe('HeaderBar', () => {
 		const wrapper = mount(HeaderBar, {
 			props: {
 				hideWhenDown: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
