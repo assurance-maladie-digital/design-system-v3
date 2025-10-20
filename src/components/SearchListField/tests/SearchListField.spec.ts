@@ -15,7 +15,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -37,7 +37,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -62,7 +62,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -87,7 +87,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -101,7 +101,7 @@ describe('SearchListField.vue', () => {
 			},
 		})
 
-		const listItem = wrapper.find('.vd-search-list .v-list-item')
+		const listItem = wrapper.find('.sy-search-list input')
 		await listItem.trigger('click')
 		await wrapper.vm.$nextTick()
 
@@ -114,7 +114,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Apple',
@@ -145,7 +145,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -172,7 +172,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -198,7 +198,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -224,7 +224,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -252,7 +252,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -276,7 +276,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -303,7 +303,7 @@ describe('SearchListField.vue', () => {
 			global: {
 				plugins: [vuetify],
 			},
-			propsData: {
+			props: {
 				items: [
 					{
 						label: 'Item 1',
@@ -338,7 +338,7 @@ describe('SearchListField.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
-				propsData: {
+				props: {
 					items,
 					modelValue: [],
 					returnObject: false,
@@ -369,7 +369,7 @@ describe('SearchListField.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
-				propsData: {
+				props: {
 					items,
 					modelValue: [],
 					returnObject: true,
@@ -400,7 +400,7 @@ describe('SearchListField.vue', () => {
 				global: {
 					plugins: [vuetify],
 				},
-				propsData: {
+				props: {
 					items,
 					modelValue: [],
 					returnObject: true,

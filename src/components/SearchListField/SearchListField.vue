@@ -1,3 +1,4 @@
+<!-- eslint-disable vuejs-accessibility/label-has-for -->
 <script lang="ts" setup>
 	import { ref, computed, watch } from 'vue'
 	import { mdiMagnify } from '@mdi/js'
@@ -6,6 +7,7 @@
 	import { locales as defaultLocales } from './locales'
 
 	import { SyTextField, SyCheckbox } from '@/components'
+	import slugify from 'slugify'
 
 	const props = defineProps({
 		modelValue: {
@@ -28,10 +30,6 @@
 			type: Boolean,
 			default: false,
 		},
-		tagTitle: {
-			type: String as PropType<'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | string & {}>,
-			default: 'h2',
-		},
 		label: {
 			type: String,
 			default: defaultLocales.search,
@@ -41,6 +39,7 @@
 				search: string
 				searchListTitle: string
 				checkboxLabel: string
+				noItems: string
 			}>,
 			default: () => defaultLocales,
 		},
@@ -49,34 +48,13 @@
 	const emit = defineEmits(['update:modelValue'])
 
 	const search = ref<string | null>(null)
-	const internalValue = ref<unknown[]>(props.modelValue)
-	const searchIcon = mdiMagnify
-	const checkboxListRef = ref<HTMLElement | null>(null)
-
-	// Helper function for deep equality comparison
-	const isEqual = (a: unknown, b: unknown): boolean => {
-		if (a === b) return true
-		if (a === null || b === null) return false
-		if (typeof a !== 'object' || typeof b !== 'object') return false
-
-		const keysA = Object.keys(a as Record<string, unknown>)
-		const keysB = Object.keys(b as Record<string, unknown>)
-
-		if (keysA.length !== keysB.length) return false
-
-		for (const key of keysA) {
-			if (!keysB.includes(key)) return false
-			if (!isEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])) return false
-		}
-
-		return true
-	}
+	const internalValue = ref<(SearchListItem | unknown)[]>([])
 
 	watch(
 		() => props.modelValue,
 		(newValue) => {
 			internalValue.value = newValue
-		},
+		}, { immediate: true },
 	)
 
 	const filteredItems = computed(() => {
@@ -89,38 +67,46 @@
 		})
 	})
 
-	const emitChangeEvent = (value: unknown[]) => {
-		emit('update:modelValue', value)
-	}
-
-	const toggleSelection = (item: SearchListItem) => {
-		const newValue = [...internalValue.value]
-		const valueToEmit = props.returnObject ? item : item.value
-		const index = newValue.findIndex(value => props.returnObject ? isEqual(value, item) : isEqual(value, item.value))
-
-		if (index === -1) {
-			newValue.push(valueToEmit)
+	function toggleCheckbox(item: SearchListItem, state: boolean) {
+		if (state) {
+			if (props.returnObject) {
+				internalValue.value.push(item)
+			}
+			else {
+				internalValue.value.push(item.value)
+			}
 		}
 		else {
-			newValue.splice(index, 1)
+			if (props.returnObject) {
+				internalValue.value = internalValue.value.filter(
+					el => el !== item,
+				)
+			}
+			else {
+				internalValue.value = internalValue.value.filter(
+					el => el !== item.value,
+				)
+			}
 		}
-		emitChangeEvent(newValue)
+		emitChangeEvent(internalValue.value)
+	}
+
+	const emitChangeEvent = (value: unknown[]) => {
+		emit('update:modelValue', value)
 	}
 
 	defineExpose({
 		filteredItems,
 		search,
 		emitChangeEvent,
-		toggleSelection,
 	})
 </script>
 
 <template>
-	<div class="vd-search-list">
+	<div class="sy-search-list">
 		<SyTextField
 			v-model="search"
 			:label="props.label"
-			aria-describedby="search-description"
 			aria-labelledby="search-label"
 			hide-details
 			color="primary"
@@ -131,95 +117,87 @@
 		>
 			<template #prepend-inner>
 				<VIcon class="mr-1">
-					{{ searchIcon }}
+					{{ mdiMagnify }}
 				</VIcon>
 			</template>
 		</SyTextField>
 
-		<!-- eslint-disable-next-line  vuejs-accessibility/label-has-for -->
-		<label
-			id="search-label"
-			class="d-sr-only"
-		>
-			{{ locales.search }}
-		</label>
-		<span
-			id="search-description"
-			class="d-sr-only"
-		>
-			{{ locales.search }}
-		</span>
-
-		<VList
-			id="search-list"
-			ref="checkboxListRef"
-			v-model:selected="internalValue"
-			title="search-list"
-			select-strategy="classic"
-			class="pb-0"
-			role="listbox"
-			aria-labelledby="search-list-title"
-			@update:selected="emitChangeEvent"
-		>
-			<Component
-				:is="tagTitle"
-				id="search-list-title"
+		<fieldset>
+			<legend
+				id="search-label"
 				class="d-sr-only"
 			>
-				{{ locales.searchListTitle }}
-			</Component>
-			<VListItem
-				v-for="(item, index) in filteredItems"
-				:id="`search-list-item-${index}`"
-				:key="index"
-				:value="props.returnObject ? item : item.value"
-				role="option"
-				:aria-selected="internalValue.some(value => props.returnObject ? isEqual(value, item) : isEqual(value, item.value))"
-				:tabindex="0"
-				active-class="text-primary"
-				class="d-flex align-center justify-start mx-4"
-			>
-				<template #prepend="{ isActive }">
-					<VListItemAction start>
-						<SyCheckbox
-							:id="`checkbox-${index}`"
-							:model-value="isActive"
-							label=""
-							:aria-label="`${locales.checkboxLabel} ${item.label}`"
-							:title="`${locales.checkboxLabel} ${item.label}`"
-							:aria-labelledby="`list-item-title-${index}`"
-							hide-details
-							class="ml-2 search-list-checkbox"
-							density="compact"
-							@click="toggleSelection(item)"
-						/>
-					</VListItemAction>
+				{{ props.label }}
+			</legend>
 
-					<VListItemTitle :id="`list-item-title-${index}`">
-						{{ item.label }}
-					</VListItemTitle>
-				</template>
-			</VListItem>
-		</VList>
+			<p
+				v-if="filteredItems.length === 0"
+				class="mx-4 my-2 text-caption"
+			>
+				{{ locales.noItems }}
+			</p>
+
+			<ul
+				v-else
+				class="list"
+			>
+				<li
+					v-for="item in filteredItems"
+					:key="item.label"
+				>
+					<!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
+					<label
+						class="label"
+						:for="`checkbox-${slugify(item.label)}`"
+					>
+						<SyCheckbox
+							:id="`checkbox-${slugify(item.label)}`"
+							hide-details
+							density="compact"
+							class="ml-2"
+							:model-value="!!internalValue.find(el => el === (props.returnObject ? item : item.label))"
+							@update:model-value="(e: boolean)=>toggleCheckbox(item, e)"
+						/>
+						<span>
+							{{ item.label }}
+						</span>
+					</label>
+				</li>
+			</ul>
+		</fieldset>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
-.v-list {
-	background: transparent;
+.sy-search-list fieldset {
+	border: 0;
 }
 
-.vd-search-list .v-list-item--active::before {
-	opacity: 0;
+.list {
+	padding: 0;
+	margin: 0;
+	list-style: none;
 }
 
-/* Hide duplicate labels for accessibility */
-.search-list-checkbox {
-	/* Hide the label from screen readers but keep the checkbox visible */
-	::v-deep(.v-label) {
-		display: none;
+.label {
+	display: grid;
+	align-items: center;
+	grid-template-columns: auto 1fr;
+	grid-gap: 8px;
+	min-height: 34px;
+	cursor: pointer;
+
+	&:hover,
+	&:focus-within {
+		background-color: aqua;
+	}
+
+	span {
+		display: block;
+		min-width: 100%;
 	}
 }
+
 </style>

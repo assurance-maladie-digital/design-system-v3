@@ -1,7 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import SearchListField from './SearchListField.vue'
 import { fn } from '@storybook/test'
-import { options } from 'marked'
 
 const meta = {
 	title: 'Composants/Formulaires/SearchListField',
@@ -74,6 +73,7 @@ export const Default: Story = {
 				value: 'pharmacien',
 			},
 		],
+		'label': 'Filtrer la liste des professions',
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
@@ -102,6 +102,7 @@ export const Default: Story = {
   <SearchListField
    	v-model="modelValue"
 	:items="items"
+	label="Filtrer la liste des professions"
   />
   {{ modelValue }}
 </template>
@@ -179,6 +180,7 @@ export const WithReturnObject: Story = {
 				value: 'pharmacien',
 			},
 		],
+		'label': 'Filtrer la liste des professions',
 		'onUpdate:modelValue': fn(),
 	},
 	argTypes: {
@@ -210,6 +212,7 @@ export const WithReturnObject: Story = {
   <SearchListField
 	v-model="modelValue"
 	:items="items"
+	label="Filtrer la liste des professions"
 	:return-object="true"
   />
   {{ modelValue }}
