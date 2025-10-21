@@ -62,6 +62,10 @@
 			type: String,
 			default: undefined,
 		},
+		configurationLabel: {
+			type: String,
+			default: 'Configuration',
+		},
 		configurationTarget: {
 			type: String,
 			default: undefined,
@@ -300,7 +304,7 @@
 						:unique-id="uniqueId ? `${uniqueId}-config-btn` : undefined"
 						@click="configEvent"
 					>
-						{{ localesValue.configurationLabel }}
+						{{ configurationLabel }}
 					</AmeliproBtn>
 				</li>
 
