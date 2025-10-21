@@ -92,7 +92,6 @@
 		}
 
 		handleYearUpdate()
-		handleMonthUpdate()
 		unifyAfterCalendarUpdate()
 	}
 

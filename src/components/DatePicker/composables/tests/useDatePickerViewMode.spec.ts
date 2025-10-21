@@ -115,7 +115,7 @@ describe('useDatePickerViewMode', () => {
 			expect(currentViewMode.value).toBe('months')
 		})
 
-		it('devrait passer à undefined si isBirthDate est true', () => {
+		it('devrait passer à month si isBirthDate est true', () => {
 			isBirthDate = true
 
 			const { currentViewMode, handleMonthUpdate } = useDatePickerViewMode(mockIsBirthDateGetter)
@@ -123,8 +123,8 @@ describe('useDatePickerViewMode', () => {
 			// Appeler handleMonthUpdate
 			handleMonthUpdate()
 
-			// currentViewMode devrait passer à undefined
-			expect(currentViewMode.value).toBeUndefined()
+			// currentViewMode devrait passer à 'month'
+			expect(currentViewMode.value).toBe('month')
 		})
 	})
 

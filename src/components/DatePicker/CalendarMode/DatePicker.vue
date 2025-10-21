@@ -619,7 +619,6 @@
 		markHolidayDays()
 
 		handleYearUpdate()
-		handleMonthUpdate()
 		nextTick(() => {
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()

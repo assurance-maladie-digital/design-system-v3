@@ -27,13 +27,18 @@ export function useDatePickerViewMode(isBirthDateGetter: () => boolean): ViewMod
 
 	// Fonction pour gérer le changement de mode d'affichage
 	const handleViewModeUpdate = (newMode: ViewMode) => {
+		// En mode birthDate, ne pas laisser VDatePicker écraser le mode 'months'
+		if (isBirthDateGetter() && currentViewMode.value === 'months' && newMode === 'month') {
+			return
+		}
+		
 		currentViewMode.value = newMode
 	}
 
 	// Fonction pour gérer la sélection de l'année quand isBirthDate est true
 	const handleYearUpdate = () => {
 		if (isBirthDateGetter()) {
-			// Après la sélection de l'année, passer automatiquement à la sélection du mois
+			// Après la sélection de l'année, passer au mode months pour la sélection du mois
 			currentViewMode.value = 'months'
 		}
 	}
@@ -41,8 +46,8 @@ export function useDatePickerViewMode(isBirthDateGetter: () => boolean): ViewMod
 	// Fonction pour gérer la sélection du mois quand isBirthDate est true
 	const handleMonthUpdate = () => {
 		if (isBirthDateGetter()) {
-			// Après la sélection du mois, passer automatiquement à la sélection du jour
-			currentViewMode.value = undefined
+			// Après la sélection du mois, passer automatiquement à la vue calendrier mensuel
+			currentViewMode.value = 'month'
 		}
 	}
 
