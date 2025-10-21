@@ -31,7 +31,7 @@ export function useDatePickerViewMode(isBirthDateGetter: () => boolean): ViewMod
 		if (isBirthDateGetter() && currentViewMode.value === 'months' && newMode === 'month') {
 			return
 		}
-		
+
 		currentViewMode.value = newMode
 	}
 
