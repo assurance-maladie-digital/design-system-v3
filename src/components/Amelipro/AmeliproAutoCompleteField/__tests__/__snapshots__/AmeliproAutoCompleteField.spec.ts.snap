@@ -116,8 +116,10 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with all 
     let valid;
     if (Array.isArray(value)) {
       valid = value.length !== 0;
+    } else if (typeof value === "string") {
+      valid = value.trim() !== "";
     } else {
-      valid = Boolean(typeof value === "string" ? value.trim() : value);
+      valid = value !== null && value !== void 0;
     }
     return valid || __vite_ssr_import_0__.ruleMessage(errorMessages, "default");
   }"
