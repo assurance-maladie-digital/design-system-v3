@@ -237,7 +237,7 @@ describe('useDatePickerViewMode', () => {
 		it('devrait permettre le flux normal quand isBirthDate est false', () => {
 			isBirthDate = false
 
-			const { currentViewMode, handleYearUpdate, handleMonthUpdate, handleViewModeUpdate } = useDatePickerViewMode(mockIsBirthDateGetter)
+			const { currentViewMode, handleYearUpdate, handleViewModeUpdate } = useDatePickerViewMode(mockIsBirthDateGetter)
 
 			// État initial : mode 'month'
 			expect(currentViewMode.value).toBe('month')
