@@ -205,6 +205,7 @@
 							:cgu-target="ameliproPageLayoutInfos.ameliproFooterInfos.cguTarget"
 							:cgu-to="ameliproPageLayoutInfos.ameliproFooterInfos.cguTo"
 							:configuration-href="ameliproPageLayoutInfos.ameliproFooterInfos.configurationHref"
+							:configuration-label="ameliproPageLayoutInfos.ameliproFooterInfos.configurationLabel"
 							:configuration-target="ameliproPageLayoutInfos.ameliproFooterInfos.configurationTarget"
 							:configuration-to="ameliproPageLayoutInfos.ameliproFooterInfos.configurationTo"
 							:legal-notice-href="ameliproPageLayoutInfos.ameliproFooterInfos.legalNoticeHref"

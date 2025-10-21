@@ -125,6 +125,7 @@ const meta = {
 		configurationTarget?: string;
 		configurationTo?: RouteLocationRaw;
 		configurationHref?: string;
+		configurationLabel?: string;
 		noLegalNotice?: boolean;
 		legalNoticeTarget?: string;
 		legalNoticeTo?: RouteLocationRaw;
