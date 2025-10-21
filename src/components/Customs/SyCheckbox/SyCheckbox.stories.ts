@@ -211,11 +211,12 @@ export const WithControlsIds: Story = {
       @update:indeterminate="parentIndeterminate = $event"
       :controls-ids="['child-1', 'child-2', 'child-3']"
       label="Parent" 
+      hide-details
     />
     <div style="margin-left: 24px;">
-      <SyCheckbox v-model="childChecked1" id="child-1" label="Enfant 1" />
-      <SyCheckbox v-model="childChecked2" id="child-2" label="Enfant 2" />
-      <SyCheckbox v-model="childChecked3" id="child-3" label="Enfant 3" />
+      <SyCheckbox v-model="childChecked1" id="child-1" label="Enfant 1" hide-details />
+      <SyCheckbox v-model="childChecked2" id="child-2" label="Enfant 2" hide-details />
+      <SyCheckbox v-model="childChecked3" id="child-3" label="Enfant 3" hide-details />
     </div>
   </div>
 </template>
@@ -385,11 +386,12 @@ La propriété \`controlsIds\` permet de créer une relation sémantique entre u
 					@update:indeterminate="parentIndeterminate = $event"
 					:controls-ids="['child-1', 'child-2', 'child-3']"
 					label="Parent" 
+                    hide-details
 				/>
 				<div style="margin-left: 24px;">
-					<SyCheckbox v-model="childChecked1" id="child-1" label="Enfant 1" />
-					<SyCheckbox v-model="childChecked2" id="child-2" label="Enfant 2" />
-					<SyCheckbox v-model="childChecked3" id="child-3" label="Enfant 3" />
+					<SyCheckbox v-model="childChecked1" id="child-1" label="Enfant 1" hide-details />
+					<SyCheckbox v-model="childChecked2" id="child-2" label="Enfant 2" hide-details />
+					<SyCheckbox v-model="childChecked3" id="child-3" label="Enfant 3" hide-details />
 				</div>
 			</div>
 		`,
@@ -559,9 +561,9 @@ export const DifferentDensities: Story = {
 				name: 'Template',
 				code: `
                 <div>
-                <SyCheckbox v-model="checked1" label="Densité par défaut" />
-                <SyCheckbox v-model="checked2" label="Densité confortable" density="comfortable" />
-                <SyCheckbox v-model="checked3" label="Densité compacte" density="compact" />
+                <SyCheckbox v-model="checked1" label="Densité par défaut" hide-details />
+                <SyCheckbox v-model="checked2" label="Densité confortable" density="comfortable" hide-details />
+                <SyCheckbox v-model="checked3" label="Densité compacte" density="compact" hide-details />
                 </div>`,
 			},
 		],
@@ -584,9 +586,9 @@ Le composant SyCheckbox prend en charge différentes densités pour s'adapter à
 		},
 		template: `
 			<div>
-				<SyCheckbox v-model="checked1" label="Densité par défaut" />
-				<SyCheckbox v-model="checked2" label="Densité confortable" density="comfortable" />
-				<SyCheckbox v-model="checked3" label="Densité compacte" density="compact" />
+				<SyCheckbox v-model="checked1" label="Densité par défaut" hide-details />
+				<SyCheckbox v-model="checked2" label="Densité confortable" density="comfortable" hide-details />
+				<SyCheckbox v-model="checked3" label="Densité compacte" density="compact" hide-details />
 			</div>
 		`,
 	}),
@@ -599,11 +601,11 @@ export const CustomColors: Story = {
 				name: 'Template',
 				code: `
 <div>
-  <SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" />
-  <SyCheckbox v-model="checked2" label="Couleur secondaire" color="secondary" />
-  <SyCheckbox v-model="checked3" label="Couleur succès" color="success" />
-  <SyCheckbox v-model="checked4" label="Couleur erreur" color="error" />
-  <SyCheckbox v-model="checked5" label="Couleur avertissement" color="warning" />
+  <SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" hide-details />
+  <SyCheckbox v-model="checked2" label="Couleur secondaire" color="secondary" hide-details />
+  <SyCheckbox v-model="checked3" label="Couleur succès" color="success" hide-details />
+  <SyCheckbox v-model="checked4" label="Couleur erreur" color="error" hide-details />
+  <SyCheckbox v-model="checked5" label="Couleur avertissement" color="warning" hide-details />
 </div>`,
 			},
 		],
@@ -628,11 +630,11 @@ Le composant SyCheckbox peut être personnalisé avec différentes couleurs pour
 		},
 		template: `
 			<div>
-				<SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" />
-				<SyCheckbox v-model="checked2" label="Couleur secondaire" color="secondary" />
-				<SyCheckbox v-model="checked3" label="Couleur succès" color="success" />
-				<SyCheckbox v-model="checked4" label="Couleur erreur" color="error" />
-				<SyCheckbox v-model="checked5" label="Couleur avertissement" color="warning" />
+				<SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" hide-details />
+				<SyCheckbox v-model="checked2" label="Couleur secondaire" color="secondary" hide-details />
+				<SyCheckbox v-model="checked3" label="Couleur succès" color="success" hide-details />
+				<SyCheckbox v-model="checked4" label="Couleur erreur" color="error" hide-details />
+				<SyCheckbox v-model="checked5" label="Couleur avertissement" color="warning" hide-details />
 			</div>
 		`,
 	}),
