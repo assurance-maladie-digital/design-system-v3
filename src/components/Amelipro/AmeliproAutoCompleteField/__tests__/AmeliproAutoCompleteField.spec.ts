@@ -4,7 +4,7 @@ import AmeliproAutoCompleteField from '../AmeliproAutoCompleteField.vue'
 import type { AutoCompleteItem } from '../types'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { ExpectedPropOptions } from '@tests/types'
-import type { PropType } from 'vue'
+import { defineComponent, h, type PropType } from 'vue'
 import TestHelper from '@tests/helpers/TestHelper'
 import type { ValidateOnType } from '../../types'
 import type { ValidationRule } from '@/utils/rules/types'
@@ -146,10 +146,19 @@ const modifiedPropValues = (): ComponentProps<typeof AmeliproAutoCompleteField> 
 	validateOn: 'lazy',
 })
 
+// Mock VAutocomplete pour éviter la logique d'attache DOM de Vuetify
+const VAutocompleteMock = defineComponent({
+	name: 'VAutocomplete',
+	setup() {
+		return () => h('v-autocomplete-stub')
+	},
+})
+
 const testHelper = new TestHelper(AmeliproAutoCompleteField)
 testHelper.setExpectedPropOptions(expectedPropOptions)
 	.setRequiredPropValues(requiredPropValues)
 	.setModifiedPropValues(modifiedPropValues)
+	.setMountOptions({ global: { stubs: { VAutocomplete: VAutocompleteMock } } })
 
 describe('AmeliproAutoCompleteField', () => {
 	describe('Snapshots', () => {
@@ -164,7 +173,11 @@ describe('AmeliproAutoCompleteField', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproAutoCompleteField>>
 
 		beforeEach(() => {
-			vueWrapper = shallowMount(AmeliproAutoCompleteField, { props: requiredPropValues() })
+			vueWrapper = shallowMount(AmeliproAutoCompleteField, {
+				props: requiredPropValues(), global: {
+					stubs: { VAutocomplete: VAutocompleteMock },
+				},
+			})
 		})
 
 		describe('root', () => {
