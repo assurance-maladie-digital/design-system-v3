@@ -164,6 +164,7 @@ const meta = {
 			},
 		},
 		'back-btn-click': { description: 'Événement émis lorsque l’utilisateur clique sur le bouton retour présent dans le header.', type: 'void' },
+		'click-logo': { description: 'Evénement émit au click sur le logo, utilisable si les properties `homeHref` et `homeLink` ne sont pas définies sur le header et que le slot `header` n\'est pas utilisé' },
 		'click:patient-change': { description: 'Événement émis au clic sur le bouton changer de patient dans le bandeau patient.', type: 'void' },
 		'customMainContent': { description: 'Permet de personnaliser la partie contenu principal pour les page différentes du format classique' },
 		'footer': { description: 'Slot pour ajouter le footer.' },

@@ -118,6 +118,7 @@ const meta: Meta<typeof AmeliproHeader> = {
 		'backBtnLabel': { description: 'Label du bouton de retour' },
 		'backBtnTo': { description: 'Route pour le bouton de retour, elle doit renvoyer à la page précédente, s’il n’y a pas de page précédente connue, elle doit renvoyer à la page d’Accueil Amelipro' },
 		'backoffice': { description: 'Définit si nous somme sur une page de backoffice' },
+		'click-logo': { description: 'Evénement émit au click sur le logo, utilisable si les properties `homeHref` et `homeLink` ne sont pas définies' },
 		'headerTitle': { description: 'Titre de site venant remplacer le logo Amelipro' },
 		'homeHref': { description: 'Lien pour le bouton de retour vers l’accueil Amelipro' },
 		'homeLink': { description: 'Route pour le bouton de retour vers l’accueil Amelipro' },
