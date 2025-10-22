@@ -57,8 +57,8 @@
 	const instance = getCurrentInstance()
 	const router = instance?.appContext.config.globalProperties.$router as Router | null || null
 
-	// État pour suivre l'élément activement sélectionné (-1 signifie aucun onglet actif)
-	const activeItemIndex = ref<number>(-1)
+	// État pour suivre l'élément activement sélectionné (par défaut: premier onglet)
+	const activeItemIndex = ref<number>(0)
 	// Élément actuellement focusé (pour la navigation clavier)
 	const focusedItemIndex = ref<number>(-1)
 
