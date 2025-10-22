@@ -745,3 +745,85 @@ export const Default: Story = {
 		`,
 	}),
 }
+
+// --- Mise en page sans bandeau patient ---
+export const SansBandeauPatient: Story = {
+	name: 'Sans bandeau patient',
+	args: {
+		ameliproPageLayoutInfos: {
+			ameliproFooterInfos,
+			ameliproHeaderInfos,
+			displayPatientBanner: false,
+		},
+		uniqueId: 'amelipro-page-layout-no-patient',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproPageLayout
+    :amelipro-page-layout-infos="ameliproPageLayoutInfos"
+    unique-id="amelipro-page-layout-no-patient"
+  />
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproPageLayout },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Mise en page sans affichage du bandeau patient (<code>displayPatientBanner: false</code>).</p>
+<AmeliproPageLayout v-bind="args" />
+        `,
+	}),
+}
+
+// --- Mise en page avec slot main personnalisé ---
+export const MainPersonnalise: Story = {
+	name: 'Contenu principal personnalisé (slot main)',
+	args: {
+		ameliproPageLayoutInfos: {
+			ameliproFooterInfos,
+			ameliproHeaderInfos,
+			displayPatientBanner: false,
+		},
+		uniqueId: 'amelipro-page-layout-main-slot',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproPageLayout
+    :amelipro-page-layout-infos="ameliproPageLayoutInfos"
+    unique-id="amelipro-page-layout-main-slot"
+  >
+    <template #main>
+      <div style="padding:2rem; background:#e3f2fd;">
+        <h2>Contenu principal personnalisé</h2>
+        <p>Ce contenu remplace le slot <code>main</code> par défaut.</p>
+      </div>
+    </template>
+  </AmeliproPageLayout>
+</template>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproPageLayout },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Utilisation du slot <code>main</code> pour personnaliser le contenu principal de la page.</p>
+<AmeliproPageLayout v-bind="args">
+  <template #main>
+    <div style="padding:2rem; background:#e3f2fd;">
+      <h2>Contenu principal personnalisé</h2>
+      <p>Ce contenu remplace le slot <code>main</code> par défaut.</p>
+    </div>
+  </template>
+</AmeliproPageLayout>
+        `,
+	}),
+}

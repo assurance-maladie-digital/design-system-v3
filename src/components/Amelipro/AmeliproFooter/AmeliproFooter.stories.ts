@@ -104,3 +104,185 @@ export const Default: Story = {
 		`,
 	}),
 }
+
+// --- Footer en mode back office ---
+export const BackOffice: Story = {
+	name: 'Back office',
+	args: {
+		a11yCompliance: 'A11yComplianceEnum.COMPLIANT',
+		backOffice: true,
+		backOfficeText: 'Service Back Office',
+		version: 'X.X.X',
+		noA11y: false,
+		noAbout: false,
+		noCgu: false,
+		noConfiguration: false,
+		noLegalNotice: false,
+		noLinkA11y: false,
+		noSiteMap: false,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproFooter
+    a11y-compliance="A11yComplianceEnum.COMPLIANT"
+    :back-office="true"
+    back-office-text="Service Back Office"
+    version="X.X.X"
+    :no-a11y="false"
+    :no-about="false"
+    :no-cgu="false"
+    :no-configuration="false"
+    :no-legal-notice="false"
+    :no-link-a11y="false"
+    :no-site-map="false"
+  />
+</template>`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+  import { AmeliproFooter } from '@cnamts/synapse'
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproFooter },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Affichage du footer en mode <strong>back office</strong> avec texte personnalisé.</p>
+<AmeliproFooter v-bind="args" />
+`,
+	}),
+}
+
+// --- Footer sans bouton accessibilité, CGU et plan du site ---
+export const SansA11yCguPlan: Story = {
+	name: 'Sans accessibilité, CGU et plan du site',
+	args: {
+		a11yCompliance: 'A11yComplianceEnum.COMPLIANT',
+		backOffice: false,
+		version: 'X.X.X',
+		noA11y: true,
+		noAbout: false,
+		noCgu: true,
+		noConfiguration: false,
+		noLegalNotice: false,
+		noLinkA11y: false,
+		noSiteMap: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproFooter
+    a11y-compliance="A11yComplianceEnum.COMPLIANT"
+    :back-office="false"
+    version="X.X.X"
+    :no-a11y="true"
+    :no-about="false"
+    :no-cgu="true"
+    :no-configuration="false"
+    :no-legal-notice="false"
+    :no-link-a11y="false"
+    :no-site-map="true"
+  />
+</template>`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+  import { AmeliproFooter } from '@cnamts/synapse'
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproFooter },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Footer sans bouton accessibilité, CGU ni plan du site (<code>noA11y</code>, <code>noCgu</code> et <code>noSiteMap</code> à <code>true</code>).</p>
+<AmeliproFooter v-bind="args" />
+`,
+	}),
+}
+
+// --- Footer avec liens externes personnalisés ---
+export const LiensExternes: Story = {
+	name: 'Liens externes personnalisés',
+	args: {
+		a11yCompliance: 'A11yComplianceEnum.COMPLIANT',
+		backOffice: false,
+		version: 'X.X.X',
+		a11yHref: 'https://accessibilite.ameli.fr',
+		aboutHref: 'https://ameli.fr/a-propos',
+		cguHref: 'https://ameli.fr/cgu',
+		configurationHref: 'https://ameli.fr/config',
+		legalNoticeHref: 'https://ameli.fr/mentions-legales',
+		siteMapHref: 'https://ameli.fr/plan-du-site',
+		a11yTarget: '_blank',
+		aboutTarget: '_blank',
+		cguTarget: '_blank',
+		configurationTarget: '_blank',
+		legalNoticeTarget: '_blank',
+		siteMapTarget: '_blank',
+		noA11y: false,
+		noAbout: false,
+		noCgu: false,
+		noConfiguration: false,
+		noLegalNotice: false,
+		noLinkA11y: false,
+		noSiteMap: false,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <AmeliproFooter
+    a11y-compliance="A11yComplianceEnum.COMPLIANT"
+    :back-office="false"
+    version="X.X.X"
+    a11y-href="https://accessibilite.ameli.fr"
+    about-href="https://ameli.fr/a-propos"
+    cgu-href="https://ameli.fr/cgu"
+    configuration-href="https://ameli.fr/config"
+    legal-notice-href="https://ameli.fr/mentions-legales"
+    site-map-href="https://ameli.fr/plan-du-site"
+    a11y-target="_blank"
+    about-target="_blank"
+    cgu-target="_blank"
+    configuration-target="_blank"
+    legal-notice-target="_blank"
+    site-map-target="_blank"
+    :no-a11y="false"
+    :no-about="false"
+    :no-cgu="false"
+    :no-configuration="false"
+    :no-legal-notice="false"
+    :no-link-a11y="false"
+    :no-site-map="false"
+  />
+</template>`,
+			},
+			{
+				name: 'Scripts',
+				code: `<script setup lang="ts">
+  import { AmeliproFooter } from '@cnamts/synapse'
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproFooter },
+		setup() { return { args } },
+		template: `
+<p class="mb-2">Footer avec tous les liens externes personnalisés (props <code>Href</code> et <code>Target</code>).</p>
+<AmeliproFooter v-bind="args" />
+`,
+	}),
+}
