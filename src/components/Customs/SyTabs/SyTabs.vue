@@ -57,8 +57,8 @@
 	const instance = getCurrentInstance()
 	const router = instance?.appContext.config.globalProperties.$router as Router | null || null
 
-	// État pour suivre l'élément activement sélectionné
-	const activeItemIndex = ref<number>(0)
+	// État pour suivre l'élément activement sélectionné (-1 signifie aucun onglet actif)
+	const activeItemIndex = ref<number>(-1)
 	// Élément actuellement focusé (pour la navigation clavier)
 	const focusedItemIndex = ref<number>(-1)
 
@@ -204,24 +204,24 @@
 					if (index >= 0) {
 						activeItemIndex.value = index
 					}
-					// Sinon utiliser props.modelValue comme index direct si c'est valide
-					else if (props.modelValue >= 0 && props.modelValue < props.items.length) {
-						activeItemIndex.value = props.modelValue
+					// Sinon utiliser props.modelValue comme index direct
+					else {
+						activeItemIndex.value = (props.modelValue >= 0 && props.modelValue < props.items.length)
+							? props.modelValue
+							: -1
 					}
 				}
 				catch {
-					// Utiliser props.modelValue comme fallback si c'est dans la plage valide
-					if (props.modelValue >= 0 && props.modelValue < props.items.length) {
-						activeItemIndex.value = props.modelValue
-					}
+					// Utiliser props.modelValue comme fallback, sinon -1
+					activeItemIndex.value = (props.modelValue >= 0 && props.modelValue < props.items.length)
+						? props.modelValue
+						: -1
 				}
 			}
 			else {
 				// Chercher l'index de l'item avec la valeur correspondante
 				const index = props.items.findIndex(item => item.value === props.modelValue)
-				if (index !== -1) {
-					activeItemIndex.value = index
-				}
+				activeItemIndex.value = index !== -1 ? index : -1
 			}
 		}
 		else {
@@ -234,13 +234,11 @@
 	watch(() => props.modelValue, (newValue) => {
 		if (newValue !== undefined) {
 			if (typeof newValue === 'number') {
-				activeItemIndex.value = newValue
+				activeItemIndex.value = (newValue >= 0 && newValue < (props.items?.length ?? 0)) ? newValue : -1
 			}
 			else {
 				const index = props.items.findIndex(item => item.value === newValue)
-				if (index !== -1) {
-					activeItemIndex.value = index
-				}
+				activeItemIndex.value = index !== -1 ? index : -1
 			}
 		}
 	})
