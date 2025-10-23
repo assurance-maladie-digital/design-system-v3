@@ -359,13 +359,10 @@ describe('AmeliproBtn', () => {
 	describe('Events & setting props should update props or attributes of inner components', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproBtn>>
 
-
-
 		describe('VBtn', () => {
 			beforeEach(() => {
 				vueWrapper = shallowMount(AmeliproBtn, {
 					props: requiredPropValues(),
-					//stubs: { AmeliproIcon, VBtn: VBtnMock},
 				})
 			})
 
