@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproPageLayout from './AmeliproPageLayout.vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	argTypes: {
@@ -448,13 +449,15 @@ const ameliproFooterInfos = {
 
 export const Default: Story = {
 	args: {
-		ameliproPageLayoutInfos: {
+		'ameliproPageLayoutInfos': {
 			ameliproFooterInfos,
 			ameliproHeaderInfos,
 			ameliproPatientBannerInfos,
 			displayPatientBanner: true,
 		},
-		uniqueId: 'amelipro-page-layout-id',
+		'uniqueId': 'amelipro-page-layout-id',
+		'onClick-logo': fn(),
+		'onBack-btn-click': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -742,6 +745,8 @@ export const Default: Story = {
 		template: `
 			<AmeliproPageLayout
 				v-bind="args"
+				@click-logo="args['onClick-logo']"
+				@back-btn-click="args['onBack-btn-click']"
 			/>
 		`,
 	}),

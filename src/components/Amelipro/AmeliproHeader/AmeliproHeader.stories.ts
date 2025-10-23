@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproHeader from './AmeliproHeader.vue'
+import { fn } from '@storybook/test'
 
 const meta: Meta<typeof AmeliproHeader> = {
 	argTypes: {
@@ -393,7 +394,9 @@ const ameliproHeaderInfos = {
 export const Default: Story = {
 	args: {
 		ameliproHeaderInfos,
-		uniqueId: 'amelipro-header-id',
+		'uniqueId': 'amelipro-header-id',
+		'onClick-logo': fn(),
+		'onBack-btn-click': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -651,6 +654,8 @@ export const Default: Story = {
 		template: `
 <AmeliproHeader
 	v-bind="args"
+	@click-logo="args['onClick-logo']"
+	@back-btn-click="args['onBack-btn-click']"
 />
 		`,
 	}),
@@ -658,9 +663,10 @@ export const Default: Story = {
 
 export const notLogged: Story = {
 	args: {
-		noSubPart: true,
-		uniqueId: 'amelipro-header-not-logged-id',
-		unlogged: true,
+		'noSubPart': true,
+		'uniqueId': 'amelipro-header-not-logged-id',
+		'unlogged': true,
+		'onClick-logo': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -691,6 +697,7 @@ export const notLogged: Story = {
 		template: `
 <AmeliproHeader
 	v-bind="args"
+	lick-logo="args['onClick-logo']"
 />
 		`,
 	}),
@@ -698,10 +705,11 @@ export const notLogged: Story = {
 
 export const other: Story = {
 	args: {
-		headerTitle: 'Titre du site',
-		noSubPart: true,
-		serviceSubTitle: 'Sous-titre',
-		uniqueId: 'amelipro-header-other-id',
+		'headerTitle': 'Titre du site',
+		'noSubPart': true,
+		'serviceSubTitle': 'Sous-titre',
+		'uniqueId': 'amelipro-header-other-id',
+		'onClick-logo': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -737,6 +745,7 @@ export const other: Story = {
 		template: `
 <AmeliproHeader
 	v-bind="args"
+	lick-logo="args['onClick-logo']"
 >
 	<template #rightPart>
 		[Slot: rightPart]
