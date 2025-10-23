@@ -1,0 +1,99 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproHeaderBar > Snapshots > renders the component with all properties filled in 1`] = `
+<header
+  class="
+    header-bar-container
+    w-100
+  "
+  id="modified-unique-id-container"
+  role="banner"
+>
+  <div
+    class="
+      bg-ap-white
+      d-block
+      header-bar
+      w-100
+    "
+    id="modified-unique-id-main-bar"
+  >
+    <div class="
+      d-flex
+      header-bar-content
+      justify-center
+      px-14
+      py-2
+    ">
+      <div
+        class="
+          align-center
+          d-flex
+          header-bar-content__container
+        "
+        style="
+          width: 1000px;
+          max-width: 1000px;
+        "
+      >
+        <amelipro-header-brand-section-stub
+          homehref="#modified-home-href"
+          homelink="/modified-home-link"
+          mobileversion="false"
+          servicesubtitle="Modified service sub title"
+          servicetitle="Modified service title"
+          themeamelipro="false"
+          uniqueid="modified-unique-id-brand-section"
+        ></amelipro-header-brand-section-stub>
+        <!-- v-if -->
+      </div>
+    </div>
+    <!-- v-if -->
+  </div>
+</header>
+`;
+
+exports[`AmeliproHeaderBar > Snapshots > renders the component with only required properties filled in 1`] = `
+<header
+  class="
+    header-bar-container
+    w-100
+  "
+  role="banner"
+>
+  <div class="
+    bg-ap-white
+    d-block
+    header-bar
+    w-100
+  ">
+    <div class="
+      d-flex
+      header-bar-content
+      justify-center
+      px-14
+      py-2
+    ">
+      <div
+        class="
+          align-center
+          d-flex
+          header-bar-content__container
+        "
+        style="
+          width: 100%;
+          max-width: 100%;
+        "
+      >
+        <amelipro-header-brand-section-stub
+          homelink="/"
+          mobileversion="false"
+          themeamelipro="true"
+        ></amelipro-header-brand-section-stub>
+        <!-- v-if -->
+      </div>
+    </div>
+    <!-- v-if -->
+  </div>
+</header>
+`;
