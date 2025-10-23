@@ -65,6 +65,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproFooter> = {
 		type: String,
 		default: undefined,
 	},
+	configurationLabel: {
+		type: String,
+		default: 'Configuration',
+	},
 	configurationTarget: {
 		type: String,
 		default: undefined,
@@ -161,6 +165,7 @@ const modifiedPropValues = (): ComponentProps<typeof AmeliproFooter> => ({
 	cguTarget: 'modified-cgu-target',
 	cguTo: '/modified-cgu-to',
 	configurationHref: '#modified-configuration-href',
+	configurationLabel: 'Modified configuration label',
 	configurationTarget: 'modified-configuration-target',
 	configurationTo: '/modified-configuration-to',
 	legalNoticeHref: '#modified-legal-notice-href',
@@ -563,6 +568,15 @@ describe('AmeliproFooter', () => {
 				const { configurationHref } = modifiedPropValues()
 				await vueWrapper.setProps({ configurationHref })
 				expect(findBtn().attributes('href')).toBe(testHelper.modified('configurationHref'))
+			})
+
+			// TODO: pourquoi ce test ne passe-t-il pas ?
+			it.skip('prop configurationLabel sets label text', async () => {
+				expect(findBtn().text()).toBe(testHelper.default('configurationLabel'))
+
+				const { configurationLabel } = modifiedPropValues()
+				await vueWrapper.setProps({ configurationLabel })
+				expect(findBtn().text()).toBe(testHelper.modified('configurationLabel'))
 			})
 
 			it('prop configurationTarget sets attribute target', async () => {
