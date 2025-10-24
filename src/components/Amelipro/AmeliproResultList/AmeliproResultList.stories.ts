@@ -273,6 +273,7 @@ export const PaginationEtTri: Story = {
 		title: 'Avec pagination et tri',
 		itemsToDisplayDesktop: 4,
 		itemsToDisplayMobile: 2,
+		sortSelectDefaultValue: 'desc',
 		sortSelectItems: [
 			{ title: 'Nom croissant', value: 'asc' },
 			{ title: 'Nom décroissant', value: 'desc' },
@@ -292,6 +293,7 @@ export const PaginationEtTri: Story = {
     title="Avec pagination et tri"
     :items-to-display-desktop="4"
     :items-to-display-mobile="2"
+	sort-select-default-value="name-desc"
     :sort-select-items="[
       { title: 'Nom croissant', value: 'asc' },
       { title: 'Nom décroissant', value: 'desc' }

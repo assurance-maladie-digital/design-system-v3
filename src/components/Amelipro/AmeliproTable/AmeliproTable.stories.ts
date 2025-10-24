@@ -561,6 +561,7 @@ export const PaginationEtTri: Story = {
 		uniqueId: 'table-pagination-tri',
 		itemsToDisplayDesktop: 2,
 		itemsToDisplayMobile: 1,
+		sortSelectDefaultValue: 'name-desc',
 		sortSelectItems: [
 			{ title: 'Nom croissant', value: 'name-asc' },
 			{ title: 'Nom décroissant', value: 'name-desc' },
@@ -582,6 +583,7 @@ export const PaginationEtTri: Story = {
         unique-id="table-pagination-tri"
         :items-to-display-desktop="2"
         :items-to-display-mobile="1"
+		sort-select-default-value="name-desc"
         :sort-select-items="[
             { title: 'Nom croissant', value: 'name-asc' },
             { title: 'Nom décroissant', value: 'name-desc' }
