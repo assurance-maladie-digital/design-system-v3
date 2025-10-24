@@ -684,6 +684,8 @@
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
 		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
 		() => props.isBirthDate || props.birthDate,
+		// Fonction qui retourne l'état de la date sélectionnée
+		() => selectedDates.value,
 	)
 
 	const handleInputBlur = () => {

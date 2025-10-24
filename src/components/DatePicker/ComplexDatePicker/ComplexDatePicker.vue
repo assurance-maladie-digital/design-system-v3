@@ -635,7 +635,10 @@
 	 * View mode handling
 	 */
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode }
-		= useDatePickerViewMode(() => props.isBirthDate || props.birthDate)
+		= useDatePickerViewMode(
+			() => props.isBirthDate || props.birthDate,
+			() => selectedDates.value,
+		)
 
 	/**
 	 * Manual input validation on blur
