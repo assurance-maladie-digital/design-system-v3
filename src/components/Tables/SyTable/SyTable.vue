@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, nextTick, onMounted, onUnmounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -60,7 +60,7 @@
 	// Generate a unique ID for this table instance
 	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substr(2, 9)}`)
 
-	const { storedOptions } = useStoredOptions({
+	const { storedOptions, storeOptions } = useStoredOptions({
 		key: computed(() => props.suffix ? `table-${props.suffix}` : 'table'),
 		saveState: toRef(props, 'saveState'),
 	})
@@ -159,6 +159,44 @@
 	watch(() => page.value, accessibilityRowCheckboxes)
 
 	// Apply accessibility attributes when component is mounted
+	onMounted(() => {
+		accessibilityRowCheckboxes()
+	})
+
+	// Clean up timeouts on unmount to prevent unhandled errors
+	onUnmounted(() => {
+		timeouts.value.forEach((timeoutId) => {
+			clearTimeout(timeoutId)
+		})
+		timeouts.value = []
+	})
+
+	// Create a reactive reference to column widths that will be provided to children
+	const reactiveColumnWidths = ref(storedOptions.columnWidths || {})
+
+	// Provide column widths and update function to child components
+	provide('columnWidths', reactiveColumnWidths)
+	provide('updateColumnWidth', (key: string, width: number | string) => {
+		// Update both the local reactive reference and call the storage utility (via deep watch below)
+		reactiveColumnWidths.value[key] = width
+	})
+
+	// Save options, headers, and column widths to local storage whenever they change
+	watch(
+		[
+			() => options.value,
+			() => headers.value,
+			() => reactiveColumnWidths.value,
+		],
+		() => {
+			storeOptions({
+				options: options.value,
+				headers: headers.value,
+				columnWidths: reactiveColumnWidths.value,
+			})
+		},
+		{ deep: true },
+	)
 </script>
 
 <template>
