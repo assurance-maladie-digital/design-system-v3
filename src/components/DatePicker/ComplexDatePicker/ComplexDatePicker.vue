@@ -408,6 +408,8 @@
 			})
 		}
 		else {
+			currentMonthName.value = null
+			currentYearName.value = null
 			updateModel(null)
 			textInputValue.value = ''
 		}
