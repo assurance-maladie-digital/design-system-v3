@@ -3,15 +3,57 @@
 	import type { VDataTable, VDataTableServer } from 'vuetify/components'
 	import { locales } from './locales'
 
+	type HeaderPropsRaw = {
+		class?: string | string[]
+		style?: Record<string, string | number>
+	}
+
 	const props = withDefaults(defineProps<{
 		column: Parameters<VDataTable['$slots']['headers']>['0']['columns'][number]
 		headerParams: Parameters<VDataTable['$slots']['headers']>['0']
 		table: VDataTable | VDataTableServer | null | undefined
 		resizableColumns?: boolean
 		storageKey?: string
+		headerPropsRaw?: HeaderPropsRaw
 	}>(), {
 		resizableColumns: false,
 		storageKey: undefined,
+		headerPropsRaw: undefined,
+	})
+
+	// Derive alignment from header definition and headerProps.class (Vuetify-like)
+	const alignClass = computed((): string => {
+		const a = header.value?.align
+		if (a === 'center') return 'justify-center'
+		if (a === 'end') return 'justify-end'
+
+		const cls = props.headerPropsRaw?.class
+		if (cls !== undefined) {
+			const classes = Array.isArray(cls) ? cls : String(cls).split(/\s+/)
+			if (classes.includes('text-center')) return 'justify-center'
+			if (classes.includes('text-end') || classes.includes('text-right')) return 'justify-end'
+		}
+		return ''
+	})
+
+	// Extract inline style passed via headerProps.style
+	const headerStyle = computed<Record<string, string | number> | undefined>(() => props.headerPropsRaw?.style)
+	const headerClassRaw = computed<string | string[] | undefined>(() => props.headerPropsRaw?.class)
+
+	// Derive text alignment utility class for the title content (Vuetify-like)
+	const textAlignClass = computed((): string => {
+		const a = header.value?.align
+		if (a === 'center') return 'text-center'
+		if (a === 'end') return 'text-end'
+
+		const cls = props.headerPropsRaw?.class
+		if (cls !== undefined) {
+			const classes = Array.isArray(cls) ? cls : String(cls).split(/\s+/)
+			if (classes.includes('text-center')) return 'text-center'
+			if (classes.includes('text-end')) return 'text-end'
+			if (classes.includes('text-right')) return 'text-end'
+		}
+		return ''
 	})
 
 	const header = computed(() => {
@@ -153,8 +195,14 @@
 	<div
 		ref="wrapper"
 		class="v-data-table-header__content d-flex align-center h-100"
+		:class="alignClass"
+		:style="{ width: '100%' }"
 	>
-		<div class="col-title">
+		<div
+			class="col-title"
+			:class="[textAlignClass, headerClassRaw]"
+			:style="[{ width: '100%' }, headerStyle]"
+		>
 			{{ column.title }}
 		</div>
 		<div
