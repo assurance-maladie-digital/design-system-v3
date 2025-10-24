@@ -929,6 +929,7 @@
 
 <template>
 	<div class="date-picker-container">
+		{{ selectedDates }}
 		<!-- Hidden live region text holder (kept for potential a11y tooling) -->
 		<span
 			v-if="false"
