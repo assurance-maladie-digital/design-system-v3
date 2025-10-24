@@ -84,6 +84,7 @@
 		(e: 'blur'): void
 		(e: 'input', value: string): void
 		(e: 'date-selected', value: DateValue): void
+		(e: 'clear'): void
 	}>()
 
 	/**
@@ -539,6 +540,22 @@
 
 	function emitModel(val: DateValue) {
 		emit('update:model-value', val)
+	}
+
+	function handleClear() {
+		// Utiliser isFormatting pour éviter les boucles dans les watchers
+		isFormatting.value = true
+		inputValue.value = ''
+		selectedDates.value = null
+		clearValidation()
+		emitModel(null)
+		emit('clear')
+		emit('date-selected', null)
+
+		// Reset the flag after all operations are complete
+		queueMicrotask(() => {
+			isFormatting.value = false
+		})
 	}
 
 	function runRules(value: string): boolean {
@@ -1029,6 +1046,7 @@
 		@blur="onBlur"
 		@keydown="handleKeydown"
 		@paste="handlePaste"
+		@clear="handleClear"
 	/>
 </template>
 

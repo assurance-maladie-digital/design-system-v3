@@ -186,6 +186,7 @@
 		(e: 'blur'): void
 		(e: 'input', value: string): void
 		(e: 'date-selected', value: DateValue): void
+		(e: 'clear'): void
 	}>()
 
 	/**
@@ -292,6 +293,27 @@
 
 		// 3) Re-emit upward
 		emit('date-selected', value)
+	}
+
+	const handleClear = () => {
+		// Clear the selected dates and internal state
+		withInternalUpdate(() => {
+			selectedDates.value = null
+			textInputValue.value = ''
+			displayFormattedDate.value = ''
+			clearValidation()
+
+			// Update the model and emit events
+			updateModel(null)
+			emit('clear')
+			emit('date-selected', null)
+		})
+
+		// Close the date picker if it's open
+		if (isDatePickerVisible.value) {
+			isDatePickerVisible.value = false
+			emit('closed')
+		}
 	}
 
 	// Display helpers
@@ -885,6 +907,7 @@
 		handleClickOutside,
 		initializeSelectedDates,
 		handleSelectToday,
+		handleClear,
 		updateAccessibility,
 		openDatePicker,
 		updateDisplayFormattedDate,
@@ -941,6 +964,7 @@
 				:title="props.title || undefined"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
+				@clear="handleClear"
 			/>
 		</template>
 
@@ -996,6 +1020,7 @@
 						@date-selected="handleDateSelected"
 						@prepend-icon-click="openDatePickerOnIconClick"
 						@append-icon-click="openDatePickerOnIconClick"
+						@clear="handleClear"
 					/>
 				</template>
 
