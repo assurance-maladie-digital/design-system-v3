@@ -432,6 +432,8 @@
 			withInternalUpdate(() => (displayFormattedDate.value = newValue))
 		}
 		else {
+			currentMonthName.value = null
+			currentYearName.value = null
 			updateModel(null)
 			withInternalUpdate(() => {
 				displayFormattedDate.value = ''
