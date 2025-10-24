@@ -317,6 +317,9 @@
 			}
 		}
 		else {
+			// Réinitialiser les refs du mois et de l'année quand la date est supprimée
+			currentMonthName.value = null
+			currentYearName.value = null
 			updateModel(null)
 			// Réinitialiser textInputValue
 			textInputValue.value = ''

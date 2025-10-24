@@ -122,4 +122,87 @@ describe('useMonthButtonCustomization', () => {
 
 		expect(spy).toHaveBeenCalledWith('.v-date-picker-controls')
 	})
+
+	// Test du cas de figure : picker non visible mais refs avec valeurs
+	it('ne personnalise pas les boutons quand le picker n\'est pas visible même si les refs ont des valeurs', async () => {
+		// Configurer pour que le picker ne soit pas visible
+		isPickerVisibleGetter = () => false
+
+		// Définir des valeurs pour les refs
+		monthName.value = 'janvier'
+		yearName.value = '2023'
+
+		const { customizeMonthButton } = useMonthButtonCustomization(
+			isPickerVisibleGetter,
+			monthName,
+			yearName,
+		)
+
+		// Spy sur querySelectorAll pour vérifier qu'il n'est pas appelé
+		const querySelectorAllSpy = vi.spyOn(document, 'querySelectorAll')
+
+		await customizeMonthButton()
+		await nextTick()
+
+		// Vérifier que querySelectorAll n'a pas été appelé car le picker n'est pas visible
+		expect(querySelectorAllSpy).not.toHaveBeenCalled()
+
+		querySelectorAllSpy.mockRestore()
+	})
+
+	// Test du cas de figure : restauration des boutons quand refs sont null et picker non visible
+	it('restaure les boutons originaux quand les refs sont null et picker non visible', async () => {
+		// Configurer pour que le picker ne soit pas visible
+		isPickerVisibleGetter = () => false
+
+		// Définir les refs à null
+		monthName.value = null
+		yearName.value = null
+
+		// Mock des boutons avec data-original-text
+		const mockMonthBtn = {
+			textContent: 'janvier 2023',
+			innerHTML: 'Bouton personnalisé',
+			setAttribute: vi.fn(),
+			hasAttribute: vi.fn().mockReturnValue(false),
+			getAttribute: vi.fn().mockReturnValue('janvier 2023'),
+		}
+
+		const mockYearBtn = {
+			textContent: '2023',
+			innerHTML: 'Bouton année personnalisé',
+			setAttribute: vi.fn(),
+			hasAttribute: vi.fn().mockReturnValue(false),
+			getAttribute: vi.fn().mockReturnValue('2023'),
+			closest: vi.fn().mockReturnValue({
+				querySelector: vi.fn().mockReturnValue(mockMonthBtn),
+			}),
+		}
+
+		// Mock querySelectorAll pour retourner nos boutons mockés
+		vi.spyOn(document, 'querySelectorAll').mockImplementation((selector) => {
+			if (selector === '.v-date-picker-controls__month-btn') {
+				return [mockMonthBtn] as unknown as NodeListOf<Element>
+			}
+			if (selector === '.v-date-picker-controls__mode-btn') {
+				return [mockYearBtn] as unknown as NodeListOf<Element>
+			}
+			return [] as unknown as NodeListOf<Element>
+		})
+
+		const { customizeMonthButton } = useMonthButtonCustomization(
+			isPickerVisibleGetter,
+			monthName,
+			yearName,
+		)
+
+		await customizeMonthButton()
+		await nextTick()
+
+		// Vérifier que les boutons sont restaurés à leur état original
+		expect(mockMonthBtn.getAttribute).toHaveBeenCalledWith('data-original-text')
+		expect(mockMonthBtn.innerHTML).toBe('janvier 2023')
+		expect(mockYearBtn.getAttribute).toHaveBeenCalledWith('data-original-text')
+		expect(mockYearBtn.innerHTML).toBe('2023')
+	})
 })

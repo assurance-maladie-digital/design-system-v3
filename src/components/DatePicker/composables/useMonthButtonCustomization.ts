@@ -72,7 +72,7 @@ export function useMonthButtonCustomization(
 	 * Récupère et modifie les boutons du mois et de l'année avec une icône SVG chevron-down
 	 */
 	const customizeMonthButton = () => {
-		if (isPickerVisibleGetter() || monthName?.value) {
+		if (isPickerVisibleGetter()) {
 			nextTick(() => {
 				// Personnalisation des boutons du mois pour tous les DatePickers
 				const monthBtns = document.querySelectorAll('.v-date-picker-controls__month-btn')
@@ -85,6 +85,12 @@ export function useMonthButtonCustomization(
 
 					// Appliquer la personnalisation à tous les boutons du mois
 					monthBtns.forEach((monthBtn) => {
+						// Stocker le texte original avant la personnalisation si ce n'est pas déjà fait
+						if (!monthBtn.hasAttribute('data-original-text')) {
+							const originalText = monthBtn.textContent?.trim() || ''
+							monthBtn.setAttribute('data-original-text', originalText)
+						}
+
 						// Extraire le mois et l'année pour ce bouton spécifique
 						const btnText = monthBtn.textContent?.trim() || ''
 						const btnParts = btnText.split(' ')
@@ -99,7 +105,7 @@ export function useMonthButtonCustomization(
 								<span class="v-btn__overlay"></span>
 								<span class="v-btn__underlay"></span>
 								<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
-									<span style="color: var(--v-theme-primary);">${monthText.charAt(0).toUpperCase() + monthText.slice(1)}</span> 
+									<span style="color: var(--v-theme-primary);">${monthText.charAt(0).toUpperCase() + monthText.slice(1)}</span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
 								</div>
 							</button>
@@ -112,6 +118,12 @@ export function useMonthButtonCustomization(
 					// Personnalisation des boutons d'année pour tous les DatePickers
 					const yearBtns = document.querySelectorAll('.v-date-picker-controls__mode-btn')
 					yearBtns.forEach((yearBtn) => {
+						// Stocker le texte original avant la personnalisation si ce n'est pas déjà fait
+						if (!yearBtn.hasAttribute('data-original-text')) {
+							const originalText = yearBtn.textContent?.trim() || ''
+							yearBtn.setAttribute('data-original-text', originalText)
+						}
+
 						// Trouver le parent CalendarMode-controls pour ce bouton d'année
 						const parentControl = yearBtn.closest('.v-date-picker-controls')
 						if (!parentControl) return
@@ -146,7 +158,7 @@ export function useMonthButtonCustomization(
 								<span class="v-btn__overlay"></span>
 								<span class="v-btn__underlay"></span>
 								<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
-									<span style="color: var(--v-theme-primary);">${displayedYear}</span> 
+									<span style="color: var(--v-theme-primary);">${displayedYear}</span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
 								</div>
 							</button>
@@ -156,6 +168,34 @@ export function useMonthButtonCustomization(
 						yearBtn.innerHTML = yearButtonHTML
 					})
 				}
+			})
+		}
+		else {
+			// Si les refs sont null et le picker n'est pas visible, restaurer les boutons à leur état original
+			nextTick(() => {
+				// Restaurer les boutons du mois
+				const monthBtns = document.querySelectorAll('.v-date-picker-controls__month-btn')
+				monthBtns.forEach((monthBtn) => {
+					// Restaurer le contenu original du bouton
+					const originalText = monthBtn.getAttribute('data-original-text') || monthBtn.textContent?.trim() || ''
+					if (originalText) {
+						monthBtn.innerHTML = originalText
+						// Stocker le texte original pour une restauration future
+						monthBtn.setAttribute('data-original-text', originalText)
+					}
+				})
+
+				// Restaurer les boutons d'année
+				const yearBtns = document.querySelectorAll('.v-date-picker-controls__mode-btn')
+				yearBtns.forEach((yearBtn) => {
+					// Restaurer le contenu original du bouton
+					const originalText = yearBtn.getAttribute('data-original-text') || yearBtn.textContent?.trim() || ''
+					if (originalText) {
+						yearBtn.innerHTML = originalText
+						// Stocker le texte original pour une restauration future
+						yearBtn.setAttribute('data-original-text', originalText)
+					}
+				})
 			})
 		}
 	}
