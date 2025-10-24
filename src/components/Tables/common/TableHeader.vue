@@ -22,19 +22,27 @@
 	})
 
 	// Derive alignment from header definition and headerProps.class (Vuetify-like)
-	const alignClass = computed((): string => {
-		const a = header.value?.align
-		if (a === 'center') return 'justify-center'
-		if (a === 'end') return 'justify-end'
+	function getAlignmentClass(align?: string, rawClass?: string | string[]): string {
+		if (align === 'center') return 'justify-center'
+		if (align === 'end') return 'justify-end'
 
-		const cls = props.headerPropsRaw?.class
-		if (cls !== undefined) {
-			const classes = Array.isArray(cls) ? cls : String(cls).split(/\s+/)
+		if (rawClass) {
+			const classes = Array.isArray(rawClass)
+				? rawClass
+				: String(rawClass).split(/\s+/)
+
 			if (classes.includes('text-center')) return 'justify-center'
-			if (classes.includes('text-end') || classes.includes('text-right')) return 'justify-end'
+			if (classes.some(c => ['text-end', 'text-right'].includes(c))) {
+				return 'justify-end'
+			}
 		}
+
 		return ''
-	})
+	}
+
+	const alignClass = computed(() =>
+		getAlignmentClass(header.value?.align, props.headerPropsRaw?.class),
+	)
 
 	// Extract inline style passed via headerProps.style
 	const headerStyle = computed<Record<string, string | number> | undefined>(() => props.headerPropsRaw?.style)
