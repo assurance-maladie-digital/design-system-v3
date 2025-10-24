@@ -31,10 +31,12 @@ export function useDatePickerViewMode(
 		if (newValue && !selectedDateGetter()) {
 			// Mode birthDate et aucune date sélectionnée : commencer par year
 			currentViewMode.value = 'year'
-		} else if (newValue && selectedDateGetter()) {
+		}
+		else if (newValue && selectedDateGetter()) {
 			// Mode birthDate avec date sélectionnée : commencer par month
 			currentViewMode.value = 'month'
-		} else {
+		}
+		else {
 			// Mode normal
 			currentViewMode.value = 'month'
 		}
@@ -46,7 +48,8 @@ export function useDatePickerViewMode(
 			if (!newValue) {
 				// Aucune date sélectionnée en mode birthDate : commencer par year
 				currentViewMode.value = 'year'
-			} else {
+			}
+			else {
 				// Date sélectionnée en mode birthDate : commencer par month
 				currentViewMode.value = 'month'
 			}
@@ -86,11 +89,13 @@ export function useDatePickerViewMode(
 			if (!selectedDateGetter()) {
 				// Aucune date sélectionnée : commencer par year
 				currentViewMode.value = 'year'
-			} else {
+			}
+			else {
 				// Date sélectionnée : commencer par month (calendrier) pour permettre la modification
 				currentViewMode.value = 'month'
 			}
-		} else {
+		}
+		else {
 			// Mode normal
 			currentViewMode.value = 'month'
 		}
