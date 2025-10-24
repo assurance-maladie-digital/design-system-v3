@@ -57,6 +57,10 @@ const meta = {
 		'noTableInfos': { description: 'Masques les informations et les filtres au-dessus du tableau' },
 		'paginationSelectLabel': { description: 'Label du select de pagination' },
 		'paginationSelectPlaceholder': { description: 'Placeholder du select de pagination' },
+		'sortSelectDefaultValue': {
+			description: 'valeur par défaut sélectionnée dans le select dédié aux tris',
+			control: 'text',
+		},
 		'sortSelectItems': { description: 'Items du select dédié aux tris' },
 		'sortSelectLabel': { description: 'Label du select de tri' },
 		'sortSelectPlaceholder': { description: 'Placeholder du select de tri' },

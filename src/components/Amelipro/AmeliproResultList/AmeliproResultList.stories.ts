@@ -32,6 +32,10 @@ const meta = {
 		'paginationSelectPlaceholder': { description: 'Placeholder du select de pagination' },
 		'result': { description: 'Slot générique permettant de donner le même aspect à tout les items de votre liste' },
 		'sortSelect': { description: 'Affiche le select de tri' },
+		'sortSelectDefaultValue': {
+			description: 'valeur par défaut sélectionnée dans le select dédié aux tris',
+			control: 'text',
+		},
 		'sortSelectItems': { description: 'Items du select dédié aux tris' },
 		'sortSelectLabel': { description: 'Label du select de tri' },
 		'sortSelectPlaceholder': { description: 'Placeholder du select de tri' },
