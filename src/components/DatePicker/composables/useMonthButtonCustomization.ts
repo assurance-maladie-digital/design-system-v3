@@ -1,4 +1,4 @@
-import { ref, nextTick, type Ref } from 'vue'
+import { ref, nextTick, type Ref, watch } from 'vue'
 
 /**
  * Composable pour personnaliser les boutons du mois et de l'année dans les composants CalendarMode
@@ -198,6 +198,21 @@ export function useMonthButtonCustomization(
 				})
 			})
 		}
+	}
+
+	/**
+	 * Configure des watchers pour réagir aux changements des refs monthName et yearName
+	 */
+	if (monthName) {
+		watch(monthName, () => {
+			customizeMonthButton()
+		})
+	}
+
+	if (yearName) {
+		watch(yearName, () => {
+			customizeMonthButton()
+		})
 	}
 
 	/**
