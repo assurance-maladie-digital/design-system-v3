@@ -307,6 +307,7 @@
 			updateModel(null)
 			emit('clear')
 			emit('date-selected', null)
+			alert(selectedDates.value)
 		})
 
 		// Close the date picker if it's open
