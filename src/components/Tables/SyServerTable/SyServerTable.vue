@@ -80,7 +80,7 @@
 	})
 
 	// Use the table headers composable
-	const { headers, displayHeaders, getEnhancedHeader } = useTableHeaders({
+	const { headers, displayHeaders, getEnhancedHeader, getHeaderForColumn } = useTableHeaders({
 		headersProp: toRef(props, 'headers'),
 		storedHeaders: storedOptions.headers,
 		filterInputConfig: props.filterInputConfig,
@@ -286,7 +286,12 @@
 							:key="column.key"
 						>
 							<th
-								class="checkbox-column"
+								:class="{ 'checkbox-column': column.key === 'data-table-select' }"
+								:style="{
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+								}"
 							>
 								<template v-if="column.key === 'data-table-select' && props.showSelect">
 									<SyCheckbox
@@ -310,6 +315,7 @@
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
+										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
 										:resizable-columns="props.resizableColumns"
 									/>
 								</template>
@@ -325,7 +331,13 @@
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key"
 						>
-							<th>
+							<th
+								:style="{
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+								}"
+							>
 								<!-- Check if the column is filterable based on the headers prop -->
 								<SyTableFilter
 									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
