@@ -7,6 +7,7 @@
 		mdiCheckCircle,
 	} from '@mdi/js'
 	import { ref, computed, watch, nextTick } from 'vue'
+	import { VBtn, VIcon } from 'vuetify/components'
 	import { config } from './config'
 	import { locales } from './locales'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
@@ -262,7 +263,7 @@
 					class="mr-2"
 				/>
 				<!-- Utiliser un vrai élément button plutôt qu'une icône avec role="button" -->
-				<v-button
+				<VBtn
 					type="button"
 					class="password-toggle-button"
 					:aria-label="btnLabel"
@@ -278,7 +279,7 @@
 						color="rgb(0 0 0 / 70%)"
 						:aria-hidden="true"
 					/>
-				</v-button>
+				</VBtn>
 			</div>
 			<div
 				:id="`${passwordFieldId}-status`"
