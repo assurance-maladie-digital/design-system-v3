@@ -74,7 +74,7 @@
 		storedOptions: storedOptions.options,
 	})
 
-	useTableAccessibility({
+	const { setupAccessibility } = useTableAccessibility({
 		tableId: uniqueTableId.value,
 	})
 
@@ -118,6 +118,7 @@
 	const {
 		statusRegionId,
 		statusMessage,
+		setupAria,
 	} = useTableAria({
 		table,
 		items: filteredItems,
@@ -125,6 +126,9 @@
 		options,
 		uniqueTableId: uniqueTableId.value,
 	})
+
+	// Initialize generic accessibility adjustments (tabbable elements, etc.)
+	setupAccessibility()
 
 	// Timeout management for cleanup
 	const timeouts = ref<ReturnType<typeof setTimeout>[]>([])
@@ -161,6 +165,7 @@
 	// Apply accessibility attributes when component is mounted
 	onMounted(() => {
 		accessibilityRowCheckboxes()
+		setupAria()
 	})
 
 	// Clean up timeouts on unmount to prevent unhandled errors
