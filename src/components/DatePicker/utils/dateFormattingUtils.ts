@@ -50,12 +50,12 @@ export const formatDateInput = (
 	} = options
 
 	// Handle completely empty input
-	if (!input || input.trim() === '') {
-		return {
-			formatted: '',
-			cursorPos: 0,
-		}
-	}
+	// if (!input || input.trim() === '') {
+	// 	return {
+	// 		formatted: '',
+	// 		cursorPos: 0,
+	// 	}
+	// }
 
 	// Créer une carte de correspondance entre les positions avant et après formatage
 	const positionMap: number[] = []
