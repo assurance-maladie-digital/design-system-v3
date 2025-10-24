@@ -194,9 +194,8 @@
 <template>
 	<div
 		ref="wrapper"
-		class="v-data-table-header__content d-flex align-center h-100"
+		class="v-data-table-header__content d-flex align-center h-100 w-100"
 		:class="alignClass"
-		:style="{ width: '100%' }"
 	>
 		<div
 			class="col-title"
