@@ -61,6 +61,10 @@
 			type: String,
 			default: 'Nb lignes/page',
 		},
+		sortSelectDefaultValue: {
+			type: [Number, String] as PropType<number | string>,
+			default: undefined,
+		},
 		sortSelectItems: {
 			type: Array as PropType<SelectItem[]>,
 			default: () => [],
@@ -97,7 +101,7 @@
 	} = usePagination(props.items, props.itemsToDisplayDesktop, props.itemsToDisplayMobile)
 
 	const paginationSelectModel = ref(itemToDisplay.value)
-	const sortSelectModel = ref()
+	const sortSelectModel = ref(props.sortSelectDefaultValue)
 
 	onMounted(() => {
 		if (props.defaultItemOpened !== null) {

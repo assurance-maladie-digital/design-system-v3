@@ -57,6 +57,10 @@ const meta = {
 		'noTableInfos': { description: 'Masques les informations et les filtres au-dessus du tableau' },
 		'paginationSelectLabel': { description: 'Label du select de pagination' },
 		'paginationSelectPlaceholder': { description: 'Placeholder du select de pagination' },
+		'sortSelectDefaultValue': {
+			description: 'valeur par défaut sélectionnée dans le select dédié aux tris',
+			control: 'text',
+		},
 		'sortSelectItems': { description: 'Items du select dédié aux tris' },
 		'sortSelectLabel': { description: 'Label du select de tri' },
 		'sortSelectPlaceholder': { description: 'Placeholder du select de tri' },
@@ -561,6 +565,7 @@ export const PaginationEtTri: Story = {
 		uniqueId: 'table-pagination-tri',
 		itemsToDisplayDesktop: 2,
 		itemsToDisplayMobile: 1,
+		sortSelectDefaultValue: 'name-desc',
 		sortSelectItems: [
 			{ title: 'Nom croissant', value: 'name-asc' },
 			{ title: 'Nom décroissant', value: 'name-desc' },
@@ -582,6 +587,7 @@ export const PaginationEtTri: Story = {
         unique-id="table-pagination-tri"
         :items-to-display-desktop="2"
         :items-to-display-mobile="1"
+		sort-select-default-value="name-desc"
         :sort-select-items="[
             { title: 'Nom croissant', value: 'name-asc' },
             { title: 'Nom décroissant', value: 'name-desc' }
