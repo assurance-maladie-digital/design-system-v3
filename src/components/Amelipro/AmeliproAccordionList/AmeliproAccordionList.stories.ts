@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproAccordionList from './AmeliproAccordionList.vue'
 import type { IDataListItem } from '../types'
 import { computed, ref } from 'vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	argTypes: {
@@ -158,8 +159,9 @@ export const Default: Story = {
 	name: 'Par défaut',
 	args: {
 		items,
-		title: 'Exemple de liste de résultats',
-		uniqueId: 'amelipro-accordion-list-unique-id',
+		'title': 'Exemple de liste de résultats',
+		'uniqueId': 'amelipro-accordion-list-unique-id',
+		'onOpen-close': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -289,6 +291,7 @@ export const Default: Story = {
 		template: `
 	<AmeliproAccordionList
 		v-bind="args"
+		@open-close="args['onOpen-close']"
 	>
 		<template #headingContent="item">
 			<p class="mb-0">
