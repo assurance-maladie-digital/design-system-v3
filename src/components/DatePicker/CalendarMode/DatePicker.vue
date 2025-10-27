@@ -598,34 +598,34 @@
 	}
 
 	// Fonction pour mettre à jour le mois
-	const onUpdateMonth = (month: string) => {
-		// Éviter les mises à jour inutiles si le mois n'a pas changé
-		if (currentMonth.value === month) return
-		currentMonth.value = month
-		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
-		handleMonthUpdate()
-		nextTick(() => {
-			if (isDatePickerVisible.value) {
-				customizeMonthButton()
-				markHolidayDays()
-			}
-		})
-	}
+	// const onUpdateMonth = (month: string) => {
+	// 	// Éviter les mises à jour inutiles si le mois n'a pas changé
+	// 	if (currentMonth.value === month) return
+	// 	currentMonth.value = month
+	// 	currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
+	// 	handleMonthUpdate()
+	// 	nextTick(() => {
+	// 		if (isDatePickerVisible.value) {
+	// 			customizeMonthButton()
+	// 			markHolidayDays()
+	// 		}
+	// 	})
+	// }
 
 	// Fonction pour mettre à jour l'année
-	const onUpdateYear = (year: string) => {
-		currentYear.value = year
-		currentYearName.value = year
-		markHolidayDays()
+	// const onUpdateYear = (year: string) => {
+	// 	currentYear.value = year
+	// 	currentYearName.value = year
+	// 	markHolidayDays()
 
-		handleYearUpdate()
-		nextTick(() => {
-			if (isDatePickerVisible.value) {
-				customizeMonthButton()
-				markHolidayDays()
-			}
-		})
-	}
+	// 	handleYearUpdate()
+	// 	nextTick(() => {
+	// 		if (isDatePickerVisible.value) {
+	// 			customizeMonthButton()
+	// 			markHolidayDays()
+	// 		}
+	// 	})
+	// }
 
 	// Propriété calculée pour récupérer les jours fériés de l'année courante
 	const holidays = computed(() => {
@@ -698,6 +698,8 @@
 
 	watch(isDatePickerVisible, async (isVisible) => {
 		if (isVisible) {
+			// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
+			resetViewMode()
 			// Marquer les jours fériés lorsque le calendrier devient visible
 			markHolidayDays()
 		}
@@ -1018,8 +1020,8 @@
 					:min="minDate"
 					:display-holiday-days="props.displayHolidayDays"
 					@update:view-mode="handleViewModeUpdate"
-					@update:month="onUpdateMonth"
-					@update:year="onUpdateYear"
+					@update:month="handleMonthUpdate"
+					@update:year="handleYearUpdate"
 					@click:date="updateSelectedDates"
 					@update:model-value="updateDisplayFormattedDate"
 					@focus="markHolidayDays"
