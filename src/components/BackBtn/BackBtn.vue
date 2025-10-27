@@ -32,7 +32,7 @@
 		:theme="buttonTheme"
 		:color="buttonColor"
 		:class="['sy-back-btn', 'text-none', buttonClasses]"
-    :style="backgroundColor ? buttonColor : buttonBgColor"
+		:style="backgroundColor ? buttonColor : buttonBgColor"
 	>
 		<slot name="icon">
 			<VIcon
