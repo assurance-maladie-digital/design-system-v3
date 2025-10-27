@@ -2,27 +2,13 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import { nextTick } from 'vue'
 import SyCheckbox from '../SyCheckbox.vue'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 
 describe('SyCheckbox', () => {
-	// Configuration de Vuetify pour les tests
-	const vuetify = createVuetify({
-		components,
-		directives,
-	})
-
-	const global = {
-		plugins: [vuetify],
-	}
-
 	it('should render correctly', () => {
 		const wrapper = mount(SyCheckbox, {
 			props: {
 				label: 'Test checkbox',
 			},
-			global,
 		})
 
 		expect(wrapper.find('.v-checkbox').exists()).toBe(true)
@@ -35,7 +21,6 @@ describe('SyCheckbox', () => {
 				'modelValue': false,
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 			},
-			global,
 		})
 
 		await wrapper.find('input[type="checkbox"]').setValue(true)
@@ -51,7 +36,6 @@ describe('SyCheckbox', () => {
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
 			},
-			global,
 		})
 
 		// Vérifier que l'état indéterminé est actif
@@ -70,7 +54,6 @@ describe('SyCheckbox', () => {
 				modelValue: false,
 				controlsIds: ['child-1', 'child-2'],
 			},
-			global,
 		})
 
 		// État initial: non coché
@@ -125,7 +108,6 @@ describe('SyCheckbox', () => {
 				'required': true,
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 			},
-			global,
 		})
 
 		// Simuler un événement blur pour déclencher la validation
@@ -155,7 +137,6 @@ describe('SyCheckbox', () => {
 				'isValidateOnBlur': false, // Valider immédiatement
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 			},
-			global,
 		})
 
 		// Vérifier l'état initial
@@ -186,7 +167,6 @@ describe('SyCheckbox', () => {
 				'readonly': true,
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 			},
-			global,
 		})
 
 		// Cliquer sur une case à cocher en lecture seule ne devrait pas changer sa valeur

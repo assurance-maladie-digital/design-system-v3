@@ -6,9 +6,17 @@
 	import type { IndexedObject } from '../types'
 
 	const props = defineProps({
+		defaultSlide: {
+			type: Number,
+			default: 0,
+		},
 		duration: {
 			type: Number,
 			default: 0.3,
+		},
+		hideDisabledBtn: {
+			type: Boolean,
+			default: false,
 		},
 		infiniteRotation: {
 			type: Boolean,
@@ -37,7 +45,7 @@
 	})
 
 	const ameliproCarouselItems = ref<AmeliproCarouselListItem[]>()
-	const currentElement = ref(0)
+	const currentElement = ref(props.defaultSlide)
 
 	const carouselTrackStyles = computed<IndexedObject>(() => {
 		const styles: IndexedObject = {
@@ -120,6 +128,7 @@
 		class="carousel"
 	>
 		<AmeliproIconBtn
+			v-show="infiniteRotation || currentElement !== 0 || (currentElement === 0 && !hideDisabledBtn)"
 			:aria-controls="`${uniqueId}-items`"
 			:btn-title="labelPreviousBtn"
 			class="btn-previous"
@@ -136,6 +145,7 @@
 		/>
 
 		<AmeliproIconBtn
+			v-show="infiniteRotation || currentElement !== items.length - 1 || (currentElement === items.length - 1 && !hideDisabledBtn)"
 			:aria-controls="`${uniqueId}-items`"
 			:btn-title="labelNextBtn"
 			class="btn-next"

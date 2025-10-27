@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproHeader from '../AmeliproHeader.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproHeader', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproHeader, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				ameliproHeaderInfos: {
 					serviceMenuInfos: {

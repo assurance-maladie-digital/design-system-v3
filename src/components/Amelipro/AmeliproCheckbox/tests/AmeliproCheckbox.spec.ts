@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproCheckbox from '../AmeliproCheckbox.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproCheckbox', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproCheckbox, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				checkbox: {
 					label: 'Exemple de checkbox',

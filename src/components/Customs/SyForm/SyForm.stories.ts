@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import SyForm from './SyForm.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
@@ -33,9 +33,17 @@ export const Basic: Story = {
 		setup() {
 			const name = ref('')
 			const email = ref('')
+			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
 
-			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
+			// Règles de validation selon le design system
+			const emailRules = [
+				{ type: 'email', options: { message: 'Format d\'email invalide' } },
+				{ type: 'required', options: { message: 'L\'email est obligatoire' } },
+			]
+
+			const submitForm = async () => {
+				const isValid = await form.value?.validate()
+				if (isValid) {
 					alert('Formulaire valide !')
 				}
 				else {
@@ -43,13 +51,13 @@ export const Basic: Story = {
 				}
 			}
 
-			return { name, email, onSubmit, args }
+			return { name, email, emailRules, form, submitForm, args }
 		},
 		template: `
-      <SyForm v-bind="args" @submit="onSubmit">
+      <SyForm ref="form" v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="name" label="Nom" required />
-          <SyTextField v-model="email" label="Email" required :rules="[v => /.+@.+/.test(v) || 'E-mail invalide']" />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
           <v-btn type="submit" color="primary">Soumettre</v-btn>
         </div>
       </SyForm>
@@ -64,13 +72,13 @@ export const Basic: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyForm @submit="onSubmit">
-    <div class="d-flex flex-column gap-4">
-      <SyTextField v-model="name" label="Nom" required />
-      <SyTextField v-model="email" label="Email" required :rules="[v => /.+@.+/.test(v) || 'E-mail invalide']" />
-      <v-btn type="submit" color="primary">Soumettre</v-btn>
-    </div>
-  </SyForm>
+      <SyForm ref="form" v-bind="args" @submit="submitForm">
+        <div class="d-flex flex-column gap-4">
+          <SyTextField v-model="name" label="Nom" required />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
+          <v-btn type="submit" color="primary">Soumettre</v-btn>
+        </div>
+      </SyForm>
 </template>
 `,
 			},
@@ -78,12 +86,15 @@ export const Basic: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { ref } from 'vue'
-import SyForm from '@cnamts/synapse'
-import SyTextField from '@cnamts/synapse'
 
 const name = ref('')
 const email = ref('')
+
+// Règles de validation selon le design system
+const emailRules = [
+	{ type: 'email', options: { message: "Format d'email invalide" } },
+	{ type: 'required', options: { message: "L'email est obligatoire" } },
+]
 
 const onSubmit = (event: { isValid: boolean }) => {
   if (event.isValid) {
@@ -107,45 +118,56 @@ export const CustomValidation: Story = {
 			const username = ref('')
 			const password = ref('')
 			const confirmPassword = ref('')
+			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
 
-			const validatePasswordMatch = () => {
-				return password.value === confirmPassword.value || 'Les mots de passe ne correspondent pas'
-			}
+			// Règles de validation
+			const passwordRules = computed(() => [
+				{ type: 'minLength', options: { length: 8, message: 'Minimum 8 caractères' } },
+				{ type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
+			])
 
-			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
+			const confirmPasswordRules = computed(() => [
+				{ type: 'custom', options: {
+					validate: value => value === password.value || 'Les mots de passe ne correspondent pas',
+					message: 'Les mots de passe ne correspondent pas',
+				} },
+				{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
+			])
+
+			const submitForm = async () => {
+				const isValid = await form.value?.validate()
+				if (isValid) {
 					alert('Inscription réussie !')
 				}
-			}
-
-			// Utilisez un type pour form.value avec une propriété validate
-			interface FormRef {
-				validate: () => Promise<boolean>
-			}
-
-			const form = ref<FormRef | null>(null)
-			const validateManually = () => {
-				if (form.value && form.value.validate) {
-					form.value.validate().then((isValid: boolean) => {
-						alert(isValid ? 'Formulaire valide !' : 'Formulaire invalide !')
-					})
+				else {
+					alert('Formulaire invalide, veuillez corriger les erreurs.')
 				}
 			}
 
-			return { username, password, confirmPassword, validatePasswordMatch, onSubmit, form, validateManually, args }
+			const validateManually = async () => {
+				const isValid = await form.value?.validate()
+				if (isValid) {
+					alert('Formulaire valide !')
+				}
+				else {
+					alert('Formulaire invalide !')
+				}
+			}
+
+			return { username, password, confirmPassword, passwordRules, confirmPasswordRules, form, submitForm, validateManually, args }
 		},
 		template: `
       <div>
-        <SyForm ref="form" v-bind="args" @submit="onSubmit">
+        <SyForm ref="form" v-bind="args" @submit="submitForm">
           <div class="d-flex flex-column gap-4">
             <SyTextField v-model="username" label="Nom d'utilisateur" required />
-            <SyTextField v-model="password" label="Mot de passe" type="password" required :rules="[v => v.length >= 8 || 'Minimum 8 caractères']" />
+            <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" />
             <SyTextField 
               v-model="confirmPassword" 
               label="Confirmer le mot de passe" 
               type="password" 
               required 
-              :rules="[validatePasswordMatch]" 
+              :custom-rules="confirmPasswordRules" 
             />
             <div class="d-flex gap-3">
               <v-btn type="submit" color="primary">S'inscrire</v-btn>
@@ -166,13 +188,12 @@ export const CustomValidation: Story = {
     <SyForm ref="form" @submit="onSubmit">
       <div class="d-flex flex-column gap-4">
         <SyTextField v-model="username" label="Nom d'utilisateur" required />
-        <SyTextField v-model="password" label="Mot de passe" type="password" required :rules="[v => v.length >= 8 || 'Minimum 8 caractères']" />
+        <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" />
         <SyTextField 
           v-model="confirmPassword" 
           label="Confirmer le mot de passe" 
           type="password" 
-          required 
-          :rules="[validatePasswordMatch]" 
+          :custom-rules="confirmPasswordRules" 
         />
         <div class="d-flex gap-3">
           <v-btn type="submit" color="primary">S'inscrire</v-btn>
@@ -188,15 +209,26 @@ export const CustomValidation: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { ref } from 'vue'
-import SyForm from '@cnamts/synapse'
-import SyTextField from '@cnamts/synapse'
+import { ref, computed } from 'vue'
 
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const form = ref(null)
 
+const passwordRules = computed(() => [
+	{ type: 'minLength', options: { length: 8, message: 'Minimum 8 caractères' } },
+	{ type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
+])
+
+const confirmPasswordRules = computed(() => [
+	{ type: 'custom', options: {
+		validate: value => value === password.value || 'Les mots de passe ne correspondent pas',
+		message: 'Les mots de passe ne correspondent pas',
+	} },
+	{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
+])
+	
 const validatePasswordMatch = () => {
   return password.value === confirmPassword.value || 'Les mots de passe ne correspondent pas'
 }
@@ -227,8 +259,20 @@ export const MixedFields: Story = {
 				name: '',
 				email: '',
 				country: '',
-				subscribe: false,
 			})
+			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
+
+			// Règles de validation
+			const emailCustomRules = [
+				{
+					type: 'email',
+					options: {
+						message: 'L\'email n\'est pas valide',
+						successMessage: 'L\'email est valide',
+					},
+				},
+				{ type: 'required', options: { message: 'L\'email est obligatoire' } },
+			]
 
 			const countries = [
 				{ text: 'France', value: 'fr' },
@@ -237,21 +281,24 @@ export const MixedFields: Story = {
 				{ text: 'Italie', value: 'it' },
 			]
 
-			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
+			const submitForm = async () => {
+				const isValid = await form.value?.validate()
+				if (isValid) {
 					alert(`Formulaire valide ! Données: ${JSON.stringify(formData.value)}`)
+				}
+				else {
+					alert('Formulaire invalide, veuillez corriger les erreurs.')
 				}
 			}
 
-			return { formData, countries, onSubmit, args }
+			return { formData, countries, form, submitForm, emailCustomRules, args }
 		},
 		template: `
-      <SyForm v-bind="args" @submit="onSubmit">
+      <SyForm ref="form" v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="formData.name" label="Nom complet" required />
-          <SyTextField v-model="formData.email" label="Email" required :rules="[v => /.+@.+/.test(v) || 'E-mail invalide']" />
+          <SyTextField v-model="formData.email" label="Email" :custom-rules="emailCustomRules" />
           <SySelect v-model="formData.country" :items="countries" label="Pays" required />
-          <SyCheckbox v-model="formData.subscribe" label="S'abonner à la newsletter" />
           <v-btn type="submit" color="primary">Enregistrer</v-btn>
         </div>
       </SyForm>
@@ -263,111 +310,52 @@ export const MixedFields: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyForm @submit="onSubmit">
-    <div class="d-flex flex-column gap-4">
-      <SyTextField v-model="formData.name" label="Nom complet" required />
-      <SyTextField v-model="formData.email" label="Email" required :rules="[v => /.+@.+/.test(v) || 'E-mail invalide']" />
-      <SySelect v-model="formData.country" :items="countries" label="Pays" required />
-      <SyCheckbox v-model="formData.subscribe" label="S'abonner à la newsletter" />
-      <v-btn type="submit" color="primary">Enregistrer</v-btn>
-    </div>
-  </SyForm>
-</template>
-`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import SyForm from '@cnamts/synapse'
-import SyTextField from '@cnamts/synapse'
-import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
-import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-
-const formData = ref({
-  name: '',
-  email: '',
-  country: '',
-  subscribe: false,
-})
-
-const countries = [
-  { text: 'France', value: 'fr' },
-  { text: 'Allemagne', value: 'de' },
-  { text: 'Espagne', value: 'es' },
-  { text: 'Italie', value: 'it' },
-]
-
-const onSubmit = (event: { isValid: boolean }) => {
-  if (event.isValid) {
-    alert('Formulaire valide ! Données: ' + JSON.stringify(formData.value))
-  }
-}
-</script>
-`,
-			},
-		],
-	},
-}
-
-export const WithoutAutoValidation: Story = {
-	render: args => ({
-		components: { SyForm, SyTextField, VBtn },
-		setup() {
-			const name = ref('')
-			const email = ref('')
-
-			const onSubmit = () => {
-				alert(`Soumission du formulaire sans validation automatique. Vous devez gérer la validation manuellement.`)
-			}
-
-			return { name, email, onSubmit, args }
-		},
-		template: `
-      <SyForm v-bind="args" @submit="onSubmit">
+      <SyForm ref="form" v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
-          <SyTextField v-model="name" label="Nom" required />
-          <SyTextField v-model="email" label="Email" required :rules="[v => /.+@.+/.test(v) || 'E-mail invalide']" />
-          <v-btn type="submit" color="primary">Soumettre</v-btn>
+          <SyTextField v-model="formData.name" label="Nom complet" required />
+          <SyTextField v-model="formData.email" label="Email" :customRules="emailCustomRules" />
+          <SySelect v-model="formData.country" :items="countries" label="Pays" required />
+          <v-btn type="submit" color="primary">Enregistrer</v-btn>
         </div>
       </SyForm>
-    `,
-	}),
-	args: {
-		validateOnSubmit: false,
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyForm :validate-on-submit="false" @submit="onSubmit">
-    <div class="d-flex flex-column gap-4">
-      <SyTextField v-model="name" label="Nom" required />
-      <SyTextField v-model="email" label="Email" required :rules="[v => /.+@.+/.test(v) || 'E-mail invalide']" />
-      <v-btn type="submit" color="primary">Soumettre</v-btn>
-    </div>
-  </SyForm>
 </template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import SyForm from '@cnamts/synapse'
-import SyTextField from '@cnamts/synapse'
+		<script setup lang="ts">
 
-const name = ref('')
-const email = ref('')
+			const formData = ref({
+			name: '',
+			email: '',
+			country: '',
+			})
 
-const onSubmit = () => {
-  alert('Soumission du formulaire sans validation automatique. Vous devez gérer la validation manuellement.')
-}
-</script>
+			const countries = [
+			{ text: 'France', value: 'fr' },
+			{ text: 'Allemagne', value: 'de' },
+			{ text: 'Espagne', value: 'es' },
+			{ text: 'Italie', value: 'it' },
+			]
+
+			const emailCustomRules = [
+				{
+					type: 'email',
+					options: {
+						message: "L'email n'est pas valide:",
+						successMessage: "L'email est valide:",
+					},
+				},
+				{ type: 'required', options: { message: "L'email est obligatoire" } },
+			]
+
+			const onSubmit = (event: { isValid: boolean }) => {
+			if (event.isValid) {
+				alert('Formulaire valide ! Données: ' + JSON.stringify(formData.value))
+			}
+			}
+		</script>
 `,
 			},
 		],

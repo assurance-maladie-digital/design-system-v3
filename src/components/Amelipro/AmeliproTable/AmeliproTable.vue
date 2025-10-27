@@ -45,6 +45,10 @@
 			type: String,
 			default: 'Nb lignes/page',
 		},
+		sortSelectDefaultValue: {
+			type: [Number, String] as PropType<number | string>,
+			default: undefined,
+		},
 		sortSelectItems: {
 			type: Array as PropType<SelectItem[]>,
 			default: () => [],
@@ -96,7 +100,7 @@
 	} = usePagination(props.dataList, props.itemsToDisplayDesktop, props.itemsToDisplayMobile)
 
 	const paginationSelectModel = ref(itemToDisplay.value)
-	const sortSelectModel = ref()
+	const sortSelectModel = ref(props.sortSelectDefaultValue)
 
 	watch(() => props.dataList, () => {
 		updatePagination(props.dataList, itemToDisplay.value)

@@ -5,3 +5,8 @@
 		line-height: 16px !important;
 	}
 }
+
+.v-checkbox .v-selection-control,
+.v-radio .v-selection-control {
+	min-height: 40px;
+}

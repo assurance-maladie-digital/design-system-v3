@@ -1,15 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
 import Usages from '../Usages.vue'
 
 describe('Usages.vue', () => {
 	it('renders the component with default props', () => {
-		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(Usages)
 
 		// Vérifier que le composant est rendu
 		expect(wrapper.exists()).toBe(true)
@@ -33,9 +28,6 @@ describe('Usages.vue', () => {
 		const items2 = ['Item A', 'Item B']
 
 		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items1,
 				items2,
@@ -61,9 +53,6 @@ describe('Usages.vue', () => {
 		const items1 = ['Item 1', 'Item 2']
 
 		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items1,
 			},
@@ -82,9 +71,6 @@ describe('Usages.vue', () => {
 		const items2 = ['Item A', 'Item B', 'Item C']
 
 		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items2,
 			},
@@ -100,11 +86,7 @@ describe('Usages.vue', () => {
 	})
 
 	it('uses the correct icons', () => {
-		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(Usages)
 
 		const icons = wrapper.findAll('.v-icon')
 
@@ -119,11 +101,7 @@ describe('Usages.vue', () => {
 	})
 
 	it('applies the correct styling to columns', () => {
-		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(Usages)
 
 		// Vérifier les classes CSS pour la première colonne
 		const checkColumn = wrapper.find('.check')
@@ -140,9 +118,6 @@ describe('Usages.vue', () => {
 
 	it('handles empty arrays for both item lists', () => {
 		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items1: [],
 				items2: [],
@@ -160,9 +135,6 @@ describe('Usages.vue', () => {
 
 	it('renders with custom props from CustomizableOptions', () => {
 		const wrapper = mount(Usages, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				color: 'primary',
 				disabled: true,

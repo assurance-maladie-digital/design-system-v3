@@ -46,6 +46,10 @@ const meta = {
 		'noResultListInfos': { description: 'Masques les informations et les filtres au-dessus de la liste de résultats' },
 		'paginationSelectLabel': { description: 'Label du select de pagination' },
 		'paginationSelectPlaceholder': { description: 'Placeholder du select de pagination' },
+		'sortSelectDefaultValue': {
+			description: 'valeur par défaut sélectionnée dans le select dédié aux tris',
+			control: 'text',
+		},
 		'sortSelectItems': { description: 'Items du select dédié aux tris' },
 		'sortSelectLabel': { description: 'Label du select de tri' },
 		'sortSelectPlaceholder': { description: 'Placeholder du select de tri' },
@@ -411,6 +415,7 @@ export const PaginationEtTri: Story = {
 		title: 'Avec pagination et tri',
 		itemsToDisplayDesktop: 4,
 		itemsToDisplayMobile: 2,
+		sortSelectDefaultValue: 'desc',
 		sortSelectItems: [
 			{ title: 'Ordre croissant', value: 'asc' },
 			{ title: 'Ordre décroissant', value: 'desc' },
@@ -430,6 +435,7 @@ export const PaginationEtTri: Story = {
     title="Avec pagination et tri"
     :items-to-display-desktop="4"
     :items-to-display-mobile="2"
+	sort-select-default-value="name-desc"
     :sort-select-items="[
       { title: 'Ordre croissant', value: 'asc' },
       { title: 'Ordre décroissant', value: 'desc' }

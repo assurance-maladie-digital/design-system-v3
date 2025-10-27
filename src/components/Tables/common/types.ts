@@ -47,6 +47,10 @@ export type DataTableHeaders = {
 	align?: 'start' | 'end' | 'center'
 	order?: number
 	hidden?: boolean
+	width?: string | number
+	maxWidth?: string | number
+	minWidth?: string | number
+	headerProps?: Record<string, unknown>
 }
 
 // Type to handle both Vuetify internal headers and our custom headers
@@ -66,6 +70,9 @@ export type TableColumnHeader = {
 	width?: string | number
 	align?: string
 	children?: unknown[]
+	maxWidth?: string | number
+	minWidth?: string | number
+	headerProps?: Record<string, unknown>
 	[key: string]: unknown // Allow for any additional properties from Vuetify
 }
 

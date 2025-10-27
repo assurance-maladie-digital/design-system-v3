@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, onMounted, onUnmounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, nextTick, onMounted, onUnmounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -79,7 +79,7 @@
 	})
 
 	// Use the table headers composable
-	const { headers, displayHeaders, getEnhancedHeader } = useTableHeaders({
+	const { headers, displayHeaders, getEnhancedHeader, getHeaderForColumn } = useTableHeaders({
 		headersProp: toRef(props, 'headers'),
 		storedHeaders: storedOptions.headers,
 		filterInputConfig: props.filterInputConfig,
@@ -127,6 +127,9 @@
 		uniqueTableId: uniqueTableId.value,
 	})
 
+	// Initialize generic accessibility adjustments (tabbable elements, etc.)
+	setupAccessibility()
+
 	// Timeout management for cleanup
 	const timeouts = ref<ReturnType<typeof setTimeout>[]>([])
 
@@ -173,15 +176,13 @@
 		timeouts.value = []
 	})
 
-	setupAccessibility()
-
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(storedOptions.columnWidths || {})
 
 	// Provide column widths and update function to child components
 	provide('columnWidths', reactiveColumnWidths)
 	provide('updateColumnWidth', (key: string, width: number | string) => {
-		// Update both the local reactive reference and call the storage utility
+		// Update both the local reactive reference and call the storage utility (via deep watch below)
 		reactiveColumnWidths.value[key] = width
 	})
 
@@ -249,7 +250,12 @@
 							:key="column.key"
 						>
 							<th
-								class="checkbox-column"
+								:class="{ 'checkbox-column': column.key === 'data-table-select' }"
+								:style="{
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+								}"
 							>
 								<template v-if="column.key === 'data-table-select' && props.showSelect">
 									<SyCheckbox
@@ -273,6 +279,7 @@
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
+										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
 										:resizable-columns="props.resizableColumns"
 									/>
 								</template>
@@ -288,7 +295,13 @@
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key"
 						>
-							<th>
+							<th
+								:style="{
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+								}"
+							>
 								<SyTableFilter
 									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
 									:filterable="true"
@@ -334,6 +347,11 @@
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
+							:style="{
+								...(header.maxWidth ? { maxWidth: header.maxWidth as any } : {}),
+								...(header.minWidth ? { minWidth: header.minWidth as any } : {}),
+								...(header.width ? { width: header.width as any } : {}),
+							}"
 						>
 							<span class="font-weight-bold">{{ header.title }}</span>
 						</th>
@@ -345,6 +363,11 @@
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
+							:style="{
+								...(header.maxWidth ? { maxWidth: header.maxWidth as any } : {}),
+								...(header.minWidth ? { minWidth: header.minWidth as any } : {}),
+								...(header.width ? { width: header.width as any } : {}),
+							}"
 						>
 							<SyTableFilter
 								v-if="header.filterable"

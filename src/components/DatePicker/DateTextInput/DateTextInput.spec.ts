@@ -1,6 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
 import DateTextInput from './DateTextInput.vue'
 import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 
@@ -9,9 +8,6 @@ describe('DateTextInput.vue', () => {
 
 	beforeEach(() => {
 		wrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',
@@ -54,9 +50,6 @@ describe('DateTextInput.vue', () => {
 
 	it('formats date according to dateFormatReturn', async () => {
 		const wrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',
@@ -73,9 +66,6 @@ describe('DateTextInput.vue', () => {
 
 	it('validates custom rules', async () => {
 		const wrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',
@@ -111,9 +101,6 @@ describe('DateTextInput.vue', () => {
 						isWarning: true,
 					},
 				}],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -160,9 +147,6 @@ describe('DateTextInput.vue', () => {
 
 	it('validates modelValue with different dateFormatReturn format', async () => {
 		const wrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '2025-1-1',
 				format: 'DD/MM/YYYY',
@@ -213,9 +197,6 @@ describe('DateTextInput.vue', () => {
 
 	it('supports different date formats', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'YYYY-MM-DD',
@@ -255,9 +236,6 @@ describe('DateTextInput.vue', () => {
 
 	it('handles custom date format return', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',
@@ -296,9 +274,6 @@ describe('DateTextInput.vue', () => {
 
 	it('handles 2 digits year correctly', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YY',
@@ -325,9 +300,6 @@ describe('DateTextInput.vue', () => {
 
 	it('handles ISO-8601 date format correctly', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'YYYY-MM-DD',
@@ -430,9 +402,6 @@ describe('DateTextInput.vue', () => {
 
 	it('initializes with model value correctly', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '01/01/2025',
 				dateFormat: 'DD/MM/YYYY',
@@ -446,9 +415,6 @@ describe('DateTextInput.vue', () => {
 
 	it('handles different date separators correctly', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD.MM.YYYY',
@@ -523,9 +489,6 @@ describe('DateTextInput.vue', () => {
 					},
 				}],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Force la validation
@@ -549,9 +512,6 @@ describe('DateTextInput.vue', () => {
 
 	it('handles multiple validation rules correctly', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',
@@ -589,9 +549,6 @@ describe('DateTextInput.vue', () => {
 	// Tests spécifiques pour la gestion du curseur
 	it('positionne correctement le curseur après une frappe de caractère', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				format: 'DD/MM/YYYY',
 				required: false,
@@ -621,9 +578,6 @@ describe('DateTextInput.vue', () => {
 
 	it('saute les séparateurs lors de la saisie de date', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				format: 'DD/MM/YYYY',
 				required: false,
@@ -651,9 +605,6 @@ describe('DateTextInput.vue', () => {
 	// Tests d'intégration pour des flux utilisateur complexes
 	it('gère correctement un cycle complet de saisie, validation et correction', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',
@@ -702,9 +653,6 @@ describe('DateTextInput.vue', () => {
 
 	it('gère correctement plusieurs cycles de validation', async () => {
 		const customWrapper = mount(DateTextInput, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				format: 'DD/MM/YYYY',

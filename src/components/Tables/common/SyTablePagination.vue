@@ -147,7 +147,7 @@
 				class="rows-per-page-select"
 				:aria-label="locales.pagination.itemsPerPageText"
 				:label="''"
-				style="width: 80px;"
+				style="width: 90px;"
 				:clearable="false"
 			/>
 		</div>

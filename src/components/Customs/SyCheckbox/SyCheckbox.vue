@@ -46,7 +46,7 @@
 			disabled: false,
 			readonly: false,
 			required: false,
-			hideDetails: false,
+			hideDetails: 'auto',
 			density: 'default',
 			errorMessages: null,
 			warningMessages: null,

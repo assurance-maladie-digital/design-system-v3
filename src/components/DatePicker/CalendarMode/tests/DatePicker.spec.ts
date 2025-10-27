@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
 
@@ -9,9 +8,6 @@ describe('CalendarMode.vue', () => {
 
 	beforeEach(() => {
 		wrapper = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				required: true,
@@ -20,22 +16,14 @@ describe('CalendarMode.vue', () => {
 	})
 
 	it('emits update:modelValue event on date selection', async () => {
-		const wrapper = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(DatePicker)
 		const input = wrapper.find('input')
 		await input.setValue('01/01/2023')
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 	})
 
 	it('renders the component', () => {
-		const wrapper = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(DatePicker)
 		expect(wrapper.exists()).toBe(true)
 	})
 
@@ -75,11 +63,7 @@ describe('CalendarMode.vue', () => {
 		const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener')
 
 		// Monte le composant
-		const wrapper = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(DatePicker)
 
 		// Démonte le composant
 		wrapper.unmount()
@@ -127,9 +111,6 @@ describe('CalendarMode.vue', () => {
 
 	it('returns true when there are no validation errors', async () => {
 		const wrapper = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 			},
@@ -146,9 +127,6 @@ describe('CalendarMode.vue', () => {
 
 	it('returns false when there are validation errors', async () => {
 		const wrapper = mount(DatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 			},
@@ -206,9 +184,7 @@ describe('CalendarMode.vue', () => {
 	})
 
 	it('toggles date picker visibility correctly', async () => {
-		const wrapper = mount(DatePicker, {
-			global: { plugins: [vuetify] },
-		})
+		const wrapper = mount(DatePicker)
 
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 
@@ -223,7 +199,6 @@ describe('CalendarMode.vue', () => {
 
 	it('validates required field correctly', async () => {
 		const wrapper = mount(DatePicker, {
-			global: { plugins: [vuetify] },
 			props: {
 				required: true,
 			},
@@ -238,7 +213,6 @@ describe('CalendarMode.vue', () => {
 		const today = new Date()
 		const formattedDate = `${today.getDate().toString().padStart(2, '0')}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`
 		const wrapper = mount(DatePicker, {
-			global: { plugins: [vuetify] },
 			props: {
 				modelValue: formattedDate,
 				format: 'DD/MM/YYYY',
@@ -251,7 +225,6 @@ describe('CalendarMode.vue', () => {
 
 	it('supports date ranges when displayRange is true', async () => {
 		const wrapper = mount(DatePicker, {
-			global: { plugins: [vuetify] },
 			props: {
 				displayRange: true,
 			},
@@ -264,7 +237,6 @@ describe('CalendarMode.vue', () => {
 
 	it('properly displays error messages from validation', async () => {
 		const wrapper = mount(DatePicker, {
-			global: { plugins: [vuetify] },
 			props: {
 				required: true,
 			},
@@ -281,7 +253,6 @@ describe('CalendarMode.vue', () => {
 
 	it('handles birth date mode properly', async () => {
 		const wrapper = mount(DatePicker, {
-			global: { plugins: [vuetify] },
 			props: {
 				isBirthDate: true,
 			},
@@ -296,7 +267,6 @@ describe('CalendarMode.vue', () => {
 
 	it('takes into account disabled and readonly limitations', async () => {
 		const wrapper = mount(DatePicker, {
-			global: { plugins: [vuetify] },
 			props: {
 				disabled: true,
 			},

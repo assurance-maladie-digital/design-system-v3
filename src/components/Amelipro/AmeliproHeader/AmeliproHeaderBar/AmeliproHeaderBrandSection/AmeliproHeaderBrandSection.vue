@@ -17,7 +17,7 @@
 		},
 		homeLink: {
 			type: [String, Boolean, Object] as PropType<RouteLocationRaw>,
-			default: '/',
+			default: undefined,
 		},
 		mobileVersion: {
 			type: Boolean,
@@ -43,6 +43,8 @@
 
 	const { xs } = useDisplay()
 	const slots = useSlots()
+	const emit = defineEmits(['click-logo'])
+	const clickLogoEvent = (): void => emit('click-logo')
 
 	const hideSignature = computed((): boolean => Boolean(slots.default))
 	const ameliproLogo = computed<LogoInfo | undefined>(() => {
@@ -57,7 +59,12 @@
 		if (props.homeHref) {
 			return 'a'
 		}
-		return 'RouterLink'
+
+		if (props.homeLink) {
+			return 'RouterLink'
+		}
+
+		return 'button'
 	})
 
 	const linkTitle = computed<string>(() => {
@@ -114,6 +121,7 @@
 			:href="homeHref"
 			:title="linkTitle"
 			:to="homeHref=== undefined ? homeLink : undefined"
+			@click="clickLogoEvent"
 		>
 			<AmeliproLogoAm
 				:hide-signature="hideSignature"

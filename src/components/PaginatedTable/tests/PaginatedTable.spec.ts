@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-
-import { vuetify } from '@tests/unit/setup'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions } from '@/components/PaginatedTable/types'
 
@@ -54,9 +52,6 @@ describe('PaginatedTable', () => {
 				items: fakeItems,
 				headers: headers,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.text()).toContain('John Doe')
@@ -67,9 +62,6 @@ describe('PaginatedTable', () => {
 			propsData: {
 				options: {} as DataOptions,
 				items: fakeItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -98,9 +90,6 @@ describe('PaginatedTable', () => {
 					},
 				],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.text()).toContain('John Doe')
@@ -120,9 +109,6 @@ describe('PaginatedTable', () => {
 				options: {
 					sortBy: [{ key: 'name', order: 'asc' }],
 				},
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 		const setItemMock = vi.spyOn(LocalStorageUtility.prototype, 'setItem')
@@ -172,9 +158,6 @@ describe('PaginatedTable', () => {
 				serverItemsLength: 0,
 				suffix: 'test 5',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.emitted('update:options')).toBeTruthy()
@@ -195,9 +178,6 @@ describe('PaginatedTable', () => {
 				serverItemsLength: 0,
 				suffix: 'test 6',
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -239,9 +219,6 @@ describe('PaginatedTable', () => {
 				},
 				serverItemsLength: 0,
 				suffix: 'test 7',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

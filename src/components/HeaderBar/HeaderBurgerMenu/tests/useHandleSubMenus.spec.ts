@@ -1,5 +1,4 @@
 /* eslint-disable vue/one-component-per-file */
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { computed, defineComponent, inject, readonly, ref, type DeepReadonly, type Ref } from 'vue'
@@ -56,10 +55,6 @@ describe('useHandleSubMenus', () => {
 					<TestChildrenComponent />
 				</TestParentComponent>
 			`,
-		}, {
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.find('.parent-open').exists()).toBe(false)
@@ -96,10 +91,6 @@ describe('useHandleSubMenus', () => {
 					<TestChildrenComponent />
 				</TestParentComponent>
 			`,
-		}, {
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.find('.parent-open').exists()).toBe(false)
@@ -132,10 +123,6 @@ describe('useHandleSubMenus', () => {
 					<TestChildrenComponent />
 				</TestParentComponent>
 			`,
-		}, {
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const parentBtn = wrapper.find('.parent-menu-btn')
