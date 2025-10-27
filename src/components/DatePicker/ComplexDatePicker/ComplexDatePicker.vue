@@ -49,12 +49,12 @@
 		}
 	}
 
-	const unifyAfterCalendarUpdate = async () => {
-		if (!isDatePickerVisible.value) return
-		await nextTick()
-		customizeMonthButton()
-		markHolidayDays()
-	}
+	// const unifyAfterCalendarUpdate = async () => {
+	// 	if (!isDatePickerVisible.value) return
+	// 	await nextTick()
+	// 	customizeMonthButton()
+	// 	markHolidayDays()
+	// }
 
 	/**
 	 * Calendar current month / year
@@ -64,37 +64,36 @@
 	const currentMonthName = ref<string | null>(null)
 	const currentYearName = ref<string | null>(null)
 
-	const onUpdateMonth = (month: string) => {
-		if (currentMonth.value === month) return
-		currentMonth.value = month
-		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
-		handleMonthUpdate()
-		unifyAfterCalendarUpdate()
-	}
+	// const onUpdateMonth = (month: string) => {
+	// 	if (currentMonth.value === month) return
+	// 	currentMonth.value = month
+	// 	currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
+	// 	handleMonthUpdate()
+	// 	unifyAfterCalendarUpdate()
+	// }
 
-	const onUpdateYear = (year: string) => {
-		const oldYear = currentYear.value
-		currentYear.value = year
-		currentYearName.value = year
+	// const onUpdateYear = (year: string) => {
+	// 	const oldYear = currentYear.value
+	// 	currentYear.value = year
+	// 	currentYearName.value = year
 
-		const curMonth = parseInt(currentMonth.value ?? '0', 10)
-		const newYear = parseInt(year, 10)
-		const prevYear = parseInt(oldYear ?? '0', 10)
+	// 	const curMonth = parseInt(currentMonth.value ?? '0', 10)
+	// 	const newYear = parseInt(year, 10)
+	// 	const prevYear = parseInt(oldYear ?? '0', 10)
 
-		// Bridges Dec -> Jan and Jan -> Dec when navigating years
-		if (newYear > prevYear && curMonth === 11) {
-			currentMonth.value = '0'
-			currentMonthName.value = dayjs().month(0).format('MMMM')
-		}
-		else if (newYear < prevYear && curMonth === 0) {
-			currentMonth.value = '11'
-			currentMonthName.value = dayjs().month(11).format('MMMM')
-		}
+	// 	// Bridges Dec -> Jan and Jan -> Dec when navigating years
+	// 	if (newYear > prevYear && curMonth === 11) {
+	// 		currentMonth.value = '0'
+	// 		currentMonthName.value = dayjs().month(0).format('MMMM')
+	// 	}
+	// 	else if (newYear < prevYear && curMonth === 0) {
+	// 		currentMonth.value = '11'
+	// 		currentMonthName.value = dayjs().month(11).format('MMMM')
+	// 	}
 
-		handleYearUpdate()
-		handleMonthUpdate()
-		unifyAfterCalendarUpdate()
-	}
+	// 	handleYearUpdate()
+	// 	unifyAfterCalendarUpdate()
+	// }
 
 	/**
 	 * Props / Emits
@@ -636,7 +635,10 @@
 	 * View mode handling
 	 */
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode }
-		= useDatePickerViewMode(() => props.isBirthDate || props.birthDate)
+		= useDatePickerViewMode(
+			() => props.isBirthDate || props.birthDate,
+			() => selectedDates.value,
+		)
 
 	/**
 	 * Manual input validation on blur
@@ -736,6 +738,8 @@
 		isDatePickerVisible,
 		(visible) => {
 			if (visible) {
+				// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
+				resetViewMode()
 				nextTick(() => {
 					customizeMonthButton()
 					markHolidayDays()
@@ -1017,8 +1021,8 @@
 					:density="props.density"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
-					@update:month="onUpdateMonth"
-					@update:year="onUpdateYear"
+					@update:month="handleMonthUpdate"
+					@update:year="handleYearUpdate"
 					@click:date="updateSelectedDates"
 					@focus="props.displayHolidayDays ? markHolidayDays : undefined"
 					@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
