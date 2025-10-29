@@ -1,0 +1,92 @@
+import {Meta, Story} from '@storybook/addon-docs/blocks';
+import * as ComponentStories from './SignalerUneAnomalie.stories.ts';
+import '../styles/shared.css';
+
+<Meta of={ComponentStories}/>
+
+<div className="header">
+    <h1>Signaler une anomalie</h1>
+</div>
+
+## Introduction
+
+Les anomalies sont un moyen essentiel d'améliorer le Design System de la CNAM.
+Lorsque vous constatez une anomalie, vous pouvez la signaler ici, l'équipe du Studio Design l'examinera et prendra les mesures appropriées.
+Ce guide vous explique comment rédiger correctement une anomalie.
+
+## Créer une anomalie
+
+<table border="1">
+    <thead>
+    <tr style={{backgroundColor: 'rgb(12 65 154 / 10%)'}}>
+        <th>Types de demande</th>
+        <th>Niveau d'importance</th>
+        <th style={{width: '40%'}}>Description</th>
+        <th>Priorisation dans le backlog</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Anomalie graphique</td>
+        <td>Majeure</td>
+        <td>L'anomalie graphique rend inutilisable le composant concerné.<br/>Le correctif de l'anomalie doit être effectif au plus vite.<br/>Le projet est bloqué et ne peut pas mettre en production sans ce correctif.</td>
+        <td>Prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_major.md"} target={"_blank"}>Signaler un bug graphique</a></td>
+    </tr>
+    <tr>
+        <td>Anomalie graphique</td>
+        <td>Mineure</td>
+        <td>Une différence existe entre le composant concerné dans sa globalité ou une fonctionnalité spécifique et sa représentation dans le fichier Synapse présent dans l'outil de maquettage Figma.<br/>L'anomalie n'est pas contraignante à l'usage fonctionnel du composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_minor.md"} target={"_blank"}>Signaler un bug graphique</a></td>
+    </tr>
+    <tr>
+        <td>Anomalie fonctionnelle</td>
+        <td>Majeure</td>
+        <td>L'anomalie fonctionnelle rend inutilisable le composant concerné et aucune solution de contournement ne peut être réalisée directement dans le projet.<br/>Le correctif de l'anomalie doit être effectif au plus vite.<br/>Le projet est bloqué et ne peut pas mettre en production sans ce correctif.</td>
+        <td>Prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_functional_major.md"} target={"_blank"}>Signaler un bug fonctionnel</a></td>
+    </tr>
+    <tr>
+        <td>Anomalie fonctionnelle</td>
+        <td>Mineure</td>
+        <td>Le composant concerné ou une fonctionnalité spécifique associée contient un bug de fonctionnement qui perturbe la qualité de son utilisation.<br/>L'anomalie n'est pas contraignante à l'usage principal du composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_functional_minor.md"} target={"_blank"}>Signaler un bug fonctionnel</a></td>
+    </tr>
+    <tr>
+        <td>Anomalie d'accessibilité</td>
+        <td>Majeure</td>
+        <td>Le composant concerné ne respecte pas l'accessibilité numérique (RGAA) et pénalise le travail d'audit du projet.<br/>Un correctif de l'anomalie doit être effectif au plus vite.</td>
+        <td>Prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility_major.md"} target={"_blank"}>Signaler un problème d'accessibilité</a></td>
+    </tr>
+    <tr>
+        <td>Anomalie d'accessibilité</td>
+        <td>Mineure</td>
+        <td>Le composant concerné ne respecte pas l'accessibilité numérique RGAA.<br/>Aucun travail d'audit n'est en cours actuellement sur le projet.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility_minor.md"} target={"_blank"}>Signaler un problème d'accessibilité</a></td>
+    </tr>
+    <tr>
+        <td>Anomalie documentaire</td>
+        <td>Défaut</td>
+        <td>La documentation technique d'un composant contient une anomalie.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=documentation.md"} target={"_blank"}>Signaler un problème de documentation</a></td>
+    </tr>
+    </tbody>
+</table>
+
+## Bonnes pratiques
+
+<Story of={ComponentStories.Info}/>
+
+1. **Soyez précis** : Donnez autant de détails pertinents que possible
+2. **Un problème par issue** : Ne mélangez pas plusieurs problèmes dans une seule issue
+3. **Utilisez les labels** : Ajoutez les labels appropriés pour faciliter le tri et la priorisation
+4. **Vérifiez les doublons** : Avant de créer une nouvelle issue, vérifiez si elle n'existe pas déjà en cherchant dans
+les [rapports existants](https://github.com/assurance-maladie-digital/design-system-v3/issues)
+5. **Soyez constructif** : Restez professionnel et focalisé sur la résolution du problème
+6. **Vérifiez la version du package utilisé** : Le bug est-il toujours présent dans la dernière version du package concerné ?

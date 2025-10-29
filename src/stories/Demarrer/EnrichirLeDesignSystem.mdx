@@ -1,0 +1,79 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
+
+<Meta title="Démarrer/Enrichir le Design System"/>
+
+<div className="header">
+    <h1>Enrichir le Design System</h1>
+</div>
+
+## Introduction
+
+Le Design System de l'Assurance Maladie est un projet vivant qui évolue constamment pour répondre aux besoins des utilisateurs et aux avancées technologiques.<br/>
+Votre contribution est essentielle pour garantir que le Design System reste pertinent, accessible et efficace.<br/>
+Toute demande ne sera pas nécessairement intégrée, mais chaque suggestion est examinée avec attention par l'équipe du Studio Design.
+
+<a id="exigences" />
+## Exigences requises pour acceptation d'un nouveau composant ou d'une nouvelle fonctionnalité
+
+1. Être **conforme aux exigences de la charte graphique** de la CNAM (tokens associés).
+2. Avoir un **intérêt d'usage pour plusieurs produits** de l'Assurance Maladie (une justification métier peut être demandée).
+3. Avoir un **intérêt d'usage ou de pertinence** par rapport aux **composants de la bibliothèque Vuetify**.
+4. Avoir un **intérêt d'usage ou de pertinence** par rapport aux **composants existant du Design System**.
+5. Doit permettre la **responsivité**.
+6. Doit permettre le **respect du Référentiel général d'amélioration de l'accessibilité** (RGAA).
+7. Doit permettre aux produits utilisateurs du composant de respecter des **bonnes pratiques d’éco-conception**.
+8. Doit permettre la **maintenabilité du composant**.
+9. Ne doit pas engendrer de **conflit** ou **régression** avec l'existant.
+10. Doit se conformer aux **exigences techniques** du Design System et à son bon fonctionnement sur le Starter Kit (VueJS 3, version des plugins...).
+
+## Créer une nouvelle demande
+
+<table border="1">
+    <thead>
+    <tr style={{backgroundColor: 'rgb(12 65 154 / 10%)'}}>
+        <th>Types de demande</th>
+        <th>Niveau d'importance</th>
+        <th style={{width: '40%'}}>Description</th>
+        <th>Priorisation dans le backlog</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Ajout d'une optimisation</td>
+        <td>Défaut</td>
+        <td>L'optimisation est proposée en vue d'améliorer la qualité générale du design system.<br/>Elle concerne soit un composant, une fonctionnalité spécifique associée, une page de documentation, une bonne pratique...<br/>L'optimisation n'est pas indispensable au bon fonctionnement du projet. Si c'est le cas, merci de compléter l'anomalie fonctionnelle de niveau majeure.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=optimisation.md"} target={"_blank"}>Proposer une optimisation</a></td>
+    </tr>
+    <tr>
+        <td>Ajout d'une fonctionnalité</td>
+        <td>Majeure</td>
+        <td>La fonctionnalité est essentielle aux besoins des utilisateurs et doit être impérativement présente dans l'API du composant.<br/>Cette demande doit être justifiée par un besoin du métier et soumise à l'accord du chef de projet du projet associé.<br/>Pour être recevable, les <a href={"#exigences"} target="_self">critères d'acceptabilité</a> de la nouvelle fonctionnalité sont respectés.<br/>Aucune exigence d'urgence ne peut être soumise dans le cas d'une demande de nouvelle fonctionnalité ou d'un ajout de composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=feature_major.md"} target={"_blank"}>Proposer une nouvelle fonctionnalité</a></td>
+    </tr>
+    <tr>
+        <td>Ajout d'une fonctionnalité</td>
+        <td>Mineure</td>
+        <td>La fonctionnalité améliore l'expérience utilisateur mais elle n'est pas essentielle dans l'usage premier du composant.<br/>Pour être recevable, les <a href={"#exigences"} target="_self">critères d'acceptabilité</a> de la nouvelle fonctionnalité sont respectés.<br/>Aucune exigence d'urgence ne peut être soumise dans le cas d'une demande de nouvelle fonctionnalité ou d'un ajout de composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=feature_minor.md"} target={"_blank"}>Proposer une nouvelle fonctionnalité</a></td>
+    </tr>
+    <tr>
+        <td>Ajout d'un composant</td>
+        <td>Majeure</td>
+        <td>Le Studio Design conçoit et fabrique entièrement le composant et la documentation associée.<br/>Il met à disposition sa maquette à destination des designers sur l'outil de maquettage Figma.<br/>Pour être recevable, les <a href={"#exigences"} target="_self">critères d'acceptabilité</a> du nouveau composant sont respectés.<br/>Aucune exigence d'urgence ne peut être soumise dans le cas d'une demande de nouvelle fonctionnalité ou d'un ajout de composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=component_major.md"} target={"_blank"}>Proposer un nouveau composant</a></td>
+    </tr>
+    <tr>
+        <td>Ajout d'un composant</td>
+        <td>Mineure</td>
+        <td>Le composant est fabriqué en VueJS et sur Figma par un projet puis intégré par le Studio Design dans le design system.<br/>Le Studio Design se charge de fabriquer la documentation associée.<br/>Pour être recevable, les <a href={"#exigences"} target="_self">critères d'acceptabilité</a> du nouveau composant sont respectés.<br/>Aucune exigence d'urgence ne peut être soumise dans le cas d'une demande de nouvelle fonctionnalité ou d'un ajout de composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=component_minor.md"} target={"_blank"}>Proposer un nouveau composant</a></td>
+    </tr>
+    </tbody>
+</table>

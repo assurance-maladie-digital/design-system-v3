@@ -1,7 +1,7 @@
 import SyAlert from '../../components/SyAlert/SyAlert.vue'
 
 export default {
-	title: 'Démarrer/Créer une issue',
+	title: 'Démarrer/Signaler une anomalie',
 	component: SyAlert,
 }
 export const Info = {
@@ -14,8 +14,8 @@ export const Info = {
 			template: `
               <SyAlert type="info" variant="tonal" :closable="false">
                 <template #default>Lorsque vous créez une reproduction minimale, supprimez tous les éléments,
-                  propriétés, variables, données et autres qui ne sont pas nécessaires pour reproduire le bug. Cela
-                  facilitera le traitement du rapport et le temps qu’il faudra pour identifier puis résoudre le bug.
+                  propriétés, variables, données et autres qui ne sont pas nécessaires pour reproduire l'anomalie. Cela
+                  facilitera le traitement du rapport et le temps qu’il faudra pour identifier puis résoudre l'anomalie.
                 </template>
               </SyAlert>
             `,
