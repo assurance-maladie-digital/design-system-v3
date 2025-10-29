@@ -1,22 +1,29 @@
 ---
-name: Demande de fonctionnalité
-about: Proposez une nouvelle fonctionnalité pour notre Design System
+name: Demande de fonctionnalité mineure
+about: Proposez une nouvelle fonctionnalité mineure pour notre Design System
+title: Fonctionnalité mineure
 labels:
   - type: feature
+  - severity: minor
 ---
 
-## Type d'issue
+## Type d'ajout
 
-✨ Feature Request
+✨ Ajout d'une fonctionnalité mineure
 
-### Priorisation
+### Impact
 
-<!-- Choisissez une priorité -->
-🟢 Peu prioritaire : Améliorations mineures
+🟡 Non bloquant
 
-🟡 Normal : Nouvelles fonctionnalités importantes
+## Projet et portail
 
-🔴 Prioritaire : Fonctionnalités essentielles
+<!-- Nom du projet impacté par le bug. -->
+
+<!-- Nom du portail ou de la ligne de fabrication. -->
+
+## Contacts
+
+<!-- Nom(s) et rôle(s) du ou des personnes à contacter. -->
 
 ## Description de la fonctionnalité
 
@@ -32,7 +39,7 @@ labels:
 
 ## Alternatives considérées
 
-<!-- Y a-t-il des alternatives à cette fonctionnalité que vous avez considérées ? -->
+<!-- Y a-t-il des alternatives à cette fonctionnalité que vous avez considéré ? -->
 
 ## Contexte additionnel
 

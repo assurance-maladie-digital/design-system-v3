@@ -15,31 +15,122 @@ design system.
 Lorsque vous constatez un bug, vous pouvez créer un rapport de bug pour notifier l’équipe de celui-ci.
 Ce guide vous explique comment créer une issue efficace.
 
-## Étapes pour créer une issue
+## Créer une issue
 
-### 1. Choisissez le type d'issue approprié :
+<table border="1">
+    <thead>
+    <tr style={{backgroundColor: 'rgb(12 65 154 / 10%)'}}>
+        <th>Types de demande</th>
+        <th>Niveau d'importance</th>
+        <th style={{width: '40%'}}>Description</th>
+        <th>Priorisation dans le backlog</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>🔴 Anomalie graphique</td>
+        <td>Majeure</td>
+        <td>L'anomalie graphique rend inutilisable le composant concerné.<br/>Le correctif de l'anomalie doit être effectif au plus vite.<br/>Le projet est bloqué et ne peut pas mettre en production sans ce correctif.</td>
+        <td>Prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_major.md"} target={"_blank"}>Signaler un bug graphique</a></td>
+    </tr>
+    <tr>
+        <td>🟡 Anomalie graphique</td>
+        <td>Mineure</td>
+        <td>Une différence existe entre le composant concerné dans sa globalité ou une fonctionnalité spécifique et sa représentation dans le fichier Synapse présent dans l'outil de maquettage Figma.<br/>L'anomalie n'est pas contraignante à l'usage fonctionnel du composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_minor.md"} target={"_blank"}>Signaler un bug graphique</a></td>
+    </tr>
+    <tr>
+        <td>🔴 Anomalie fonctionnelle</td>
+        <td>Majeure</td>
+        <td>L'anomalie fonctionnelle rend inutilisable le composant concerné et aucune solution de contournement ne peut être réalisée directement dans le projet.<br/>Le correctif de l'anomalie doit être effectif au plus vite.<br/>Le projet est bloqué et ne peut pas mettre en production sans ce correctif.</td>
+        <td>Prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_functional_major.md"} target={"_blank"}>Signaler un bug fonctionnel</a></td>
+    </tr>
+    <tr>
+        <td>🟡 Anomalie fonctionnelle</td>
+        <td>Mineure</td>
+        <td>Le composant concerné ou une fonctionnalité spécifique associée contient un bug de fonctionnement qui perturbe la qualité de son utilisation.<br/>L'anomalie n'est pas contraignante à l'usage principal du composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_functional_minor.md"} target={"_blank"}>Signaler un bug fonctionnel</a></td>
+    </tr>
+    <tr>
+        <td>🔴 Anomalie d'accessibilité</td>
+        <td>Majeure</td>
+        <td>Le composant concerné ne respecte pas l'accessibilité numérique (RGAA) et pénalise le travail d'audit du projet.<br/>Un correctif de l'anomalie doit être effectif au plus vite.</td>
+        <td>Prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility_major.md"} target={"_blank"}>Signaler un problème d'accessibilité</a></td>
+    </tr>
+    <tr>
+        <td>🟡 Anomalie d'accessibilité</td>
+        <td>Mineure</td>
+        <td>Le composant concerné ne respecte pas l'accessibilité numérique RGAA.<br/>Aucun travail d'audit n'est en cours actuellement sur le projet.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility_minor.md"} target={"_blank"}>Signaler un problème d'accessibilité</a></td>
+    </tr>
+    <tr>
+        <td>🟡 Anomalie documentaire</td>
+        <td>Défaut</td>
+        <td>La documentation technique d'un composant contient une anomalie.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=documentation.md"} target={"_blank"}>Signaler un problème de documentation</a></td>
+    </tr>
+    <tr>
+        <td>🟡 Optimisation</td>
+        <td>Défaut</td>
+        <td>L'optimisation est proposée en vue d'améliorer la qualité générale du design system.<br/>Elle concerne soit un composant, une fonctionnalité spécifique associée, une page de documentation, une bonne pratique...<br/>L'optimisation n'est pas indispensable au bon fonctionnement du projet. Si c'est le cas, merci de compléter l'anomalie fonctionnelle de niveau majeure.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=optimisation.md"} target={"_blank"}>Proposer une optimisation</a></td>
+    </tr>
+    <tr>
+        <td>🔴 Ajout d'une fonctionnalité</td>
+        <td>Majeure</td>
+        <td>La fonctionnalité est essentielle aux besoins des utilisateurs et doit être impérativement présente dans l'API du composant.<br/>Cette demande doit être justifiée par un besoin du métier et soumise à l'accord du chef de projet du projet associé.<br/>Pour être recevable, les <a href={"/?path=/docs/démarrer-créer-une-issue--creeruneissue#exigences-requises-pour-acceptation-dun-nouveau-composant-ou-dune-nouvelle-fonctionnalité"}>critères d'acceptabilité</a> de la nouvelle fonctionnalité sont respectés.<br/>Aucune exigence d'urgence ne peut être soumise dans le cas d'une demande de nouvelle fonctionnalité ou d'un ajout de composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=feature_major.md"} target={"_blank"}>Proposer une nouvelle fonctionnalité</a></td>
+    </tr>
+    <tr>
+        <td>🟡 Ajout d'une fonctionnalité</td>
+        <td>Mineure</td>
+        <td>La fonctionnalité améliore l'expérience utilisateur mais elle n'est pas essentielle dans l'usage premier du composant.<br/>Pour être recevable, les <a href={"/?path=/docs/démarrer-créer-une-issue--creeruneissue#exigences-requises-pour-acceptation-dun-nouveau-composant-ou-dune-nouvelle-fonctionnalité"}>critères d'acceptabilité</a> de la nouvelle fonctionnalité sont respectés.<br/>Aucune exigence d'urgence ne peut être soumise dans le cas d'une demande de nouvelle fonctionnalité ou d'un ajout de composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=feature_minor.md"} target={"_blank"}>Proposer une nouvelle fonctionnalité</a></td>
+    </tr>
+    <tr>
+        <td>🔴 Ajout d'un composant</td>
+        <td>Majeure</td>
+        <td>Le Studio Design conçoit et fabrique entièrement le composant et la documentation associée.<br/>Il met à disposition sa maquette à destination des designers sur l'outil de maquettage Figma.<br/>Pour être recevable, les <a href={"/?path=/docs/démarrer-créer-une-issue--creeruneissue#exigences-requises-pour-acceptation-dun-nouveau-composant-ou-dune-nouvelle-fonctionnalité"}>critères d'acceptabilité</a> du nouveau composant sont respectés.<br/>Aucune exigence d'urgence ne peut être soumise dans le cas d'une demande de nouvelle fonctionnalité ou d'un ajout de composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=component_major.md"} target={"_blank"}>Proposer un nouveau composant</a></td>
+    </tr>
+    <tr>
+        <td>🟡 Ajout d'un composant</td>
+        <td>Mineure</td>
+        <td>Le composant est fabriqué en VueJS et sur Figma par un projet puis intégré par le Studio Design dans le design system.<br/>Le Studio Design se charge de fabriquer la documentation associée.<br/>Pour être recevable, les <a href={"/?path=/docs/démarrer-créer-une-issue--creeruneissue#exigences-requises-pour-acceptation-dun-nouveau-composant-ou-dune-nouvelle-fonctionnalité"}>critères d'acceptabilité</a> du nouveau composant sont respectés.<br/>Aucune exigence d'urgence ne peut être soumise dans le cas d'une demande de nouvelle fonctionnalité ou d'un ajout de composant.</td>
+        <td>Non prioritaire</td>
+        <td><a href={"https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=component_minor.md"} target={"_blank"}>Proposer un nouveau composant</a></td>
+    </tr>
+    </tbody>
+</table>
 
-- 🐛 Bug
-Report - [Créer un rapport de bug](https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_report.md)
-- ✨ Feature
-Request - [Proposer une nouvelle fonctionnalité](https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=feature_request.md)
-- 📝
-Documentation - [Améliorer la documentation](https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=documentation.md)
-- ♿
-Accessibilité - [Signaler un problème d'accessibilité](https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility.md)
+## Exigences requises pour acceptation d'un nouveau composant ou d'une nouvelle fonctionnalité
 
-### 2. Priorisation :
-
-🟢 Peu prioritaire : Améliorations mineures, bugs non bloquants
-
-🟡 Prioritaire : Bugs impactant l'expérience utilisateur, nouvelles fonctionnalités importantes
-
-🔴 Très prioritaire : Bugs critiques, problèmes de sécurité, fonctionnalités essentielles
-
-
-<Story of={ComponentStories.Info}/>
+1. Être **conforme aux exigences de la charte graphique** de la Cnam (tokens associés).
+2. Avoir un **intérêt d'usage pour plusieurs produits** de l'Assurance Maladie (une justification métier peut être demandée).
+3. Avoir un **intérêt d'usage ou de pertinence** par rapport aux **composants de la bibliothèque Vuetify**.
+4. Avoir un **intérêt d'usage ou de pertinence** par rapport aux **composants existant du Design System**.
+5. Doit permettre la **responsivité**.
+6. Doit permettre le **respect du Référentiel général d'amélioration de l'accessibilité** (RGAA).
+7. Doit permettre aux produits utilisateurs du composant de respecter des **bonnes pratiques d’éco-conception**.
+8. Doit permettre la **maintenabilité du composant**.
+9. Ne doit pas engendrer de **conflit** ou **régression** avec l'existant.
+10. Doit se conformer aux **exigences techniques** du Design System et à son bon fonctionnement sur le Starter Kit (VueJS 3, version des plugins...).
 
 ## Bonnes pratiques
+
+<Story of={ComponentStories.Info}/>
 
 1. **Soyez précis** : Donnez autant de détails pertinents que possible
 2. **Un problème par issue** : Ne mélangez pas plusieurs problèmes dans une seule issue
@@ -47,21 +138,12 @@ Accessibilité - [Signaler un problème d'accessibilité](https://github.com/ass
 4. **Vérifiez les doublons** : Avant de créer une nouvelle issue, vérifiez si elle n'existe pas déjà en cherchant dans
 les [rapports existants](https://github.com/assurance-maladie-digital/design-system-v3/issues)
 5. **Soyez constructif** : Restez professionnel et focalisé sur la résolution du problème
-6. **Vérifiez la version du package utilisé** : Le bug est il toujours présent dans la dernière version du package
-concerné?
-
-## Labels couramment utilisés
-
-- `bug` : Pour les problèmes qui doivent être corrigés
-- `enhancement` : Pour les nouvelles fonctionnalités ou améliorations
-- `documentation` : Pour les mises à jour de la documentation
-- `help wanted` : Pour les issues qui nécessitent de l'aide supplémentaire
-- `good first issue` : Pour les issues adaptées aux nouveaux contributeurs
+6. **Vérifiez la version du package utilisé** : Le bug est-il toujours présent dans la dernière version du package concerné ?
 
 ## Suivi
 
 Après avoir créé une issue :
 
-1. Restez à l'écoute des commentaires et questions
-2. Mettez à jour l'issue avec toute nouvelle information pertinente
-3. Fermez l'issue une fois résolue en référençant le commit ou la PR qui l'a résolue
+1. **Restez à l'écoute** des commentaires et questions
+2. **Mettez à jour l'issue** avec toute nouvelle information pertinente
+3. **Fermez l'issue** une fois résolue en référençant le commit ou la PR qui l'a résolue

@@ -1,20 +1,19 @@
 ---
-name: Problème d'accessibilité
-about: Signalez un problème d'accessibilité ou proposez une amélioration
+name: Problème d'accessibilité mineur
+about: Signalez un problème d'accessibilité mineur ou proposez une amélioration
+title: Anomalie d'accessibilité mineure
 labels:
   - type: accessibility
+  - severity: minor
 ---
 
 ## Type d'issue
 
-♿ Accessibilité
+♿ Anomalie d'accessibilité mineure
 
 ### Impact
 
-<!-- Quel est l'impact sur votre projet ? -->
-
-Bloquant : <!-- Oui, Non (est-ce que le problème empêche le développement ou la mise en production ?) -->
-
+🟡 Non bloquant
 
 ## Description du problème
 

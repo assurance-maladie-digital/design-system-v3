@@ -1,14 +1,19 @@
 ---
 name: Documentation
 about: Proposez des améliorations ou signalez des erreurs dans la documentation
+title: Anomalie documentaire
 labels:
   - type: documentation
+  - severity: default
 ---
 
 ## Type d'issue
 
 📝 Documentation
 
+### Impact
+
+🟡 Non bloquant
 
 ## Page(s) concernée(s)
 
