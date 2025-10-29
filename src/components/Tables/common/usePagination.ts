@@ -61,20 +61,20 @@ export function usePagination({
 
 			options.value = newOptions
 
-      // Force a refresh of the table and then release the flag
-      nextTick(() => {
-        const tableValue = table.value as { $forceUpdate?: () => void }
-        if (tableValue && typeof tableValue.$forceUpdate === 'function') {
-          tableValue.$forceUpdate()
-        }
+			// Force a refresh of the table and then release the flag
+			nextTick(() => {
+				const tableValue = table.value as { $forceUpdate?: () => void }
+				if (tableValue && typeof tableValue.$forceUpdate === 'function') {
+					tableValue.$forceUpdate()
+				}
 
-        // Release the flag after DOM/application settles
-        nextTick(() => {
-          isUpdatingItemsPerPage.value = false
-        })
-      })
-    })
-  }
+				// Release the flag after DOM/application settles
+				nextTick(() => {
+					isUpdatingItemsPerPage.value = false
+				})
+			})
+		})
+	}
 
 	return {
 		page,
