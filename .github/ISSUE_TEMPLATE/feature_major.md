@@ -44,3 +44,16 @@ labels:
 ## Contexte additionnel
 
 <!-- Ajoutez tout autre contexte, captures d'écran ou exemples concernant la fonctionnalité demandée. -->
+
+## Critères d'acceptation
+
+- [ ] Être **conforme aux exigences de la charte graphique** de la Cnam (tokens associés).
+- [ ] Avoir un **intérêt d'usage pour plusieurs produits** de l'Assurance Maladie (une justification métier peut être demandée).
+- [ ] Avoir un **intérêt d'usage ou de pertinence** par rapport aux **composants de la bibliothèque Vuetify**.
+- [ ] Avoir un **intérêt d'usage ou de pertinence** par rapport aux **composants existant du Design System**.
+- [ ] Doit permettre la **responsivité**.
+- [ ] Doit permettre le **respect du Référentiel général d'amélioration de l'accessibilité** (RGAA).
+- [ ] Doit permettre aux produits utilisateurs du composant de respecter des **bonnes pratiques d’éco-conception**.
+- [ ] Doit permettre la **maintenabilité du composant**.
+- [ ] Ne doit pas engendrer de **conflit** ou **régression** avec l'existant.
+- [ ] Doit se conformer aux **exigences techniques** du Design System et à son bon fonctionnement sur le Starter Kit (VueJS 3, version des plugins...).
