@@ -99,11 +99,23 @@
 
 	// Use the pagination composable
 	const itemsLength = computed(() => filteredItems.value.length)
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, isUpdatingItemsPerPage } = usePagination({
 		options,
 		itemsLength,
 		table,
 	})
+
+	// Guarded handler to avoid overwriting itemsPerPage with stale values emitted by VDataTable
+	function onUpdateOptions(newOptions: Partial<DataOptions>) {
+		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
+			const rest = { ...newOptions }
+			// Remove stale itemsPerPage coming from VDataTable during the update cycle
+			delete (rest as Record<string, unknown>).itemsPerPage
+			updateOptions(rest)
+			return
+		}
+		updateOptions(newOptions)
+	}
 
 	// Use the table checkbox composable
 	const { toggleAllRows, getItemValue } = useTableCheckbox({
@@ -231,7 +243,7 @@
 			:item-value="getItemValue"
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
-			@update:options="updateOptions"
+			@update:options="onUpdateOptions"
 		>
 			<template #top>
 				<caption

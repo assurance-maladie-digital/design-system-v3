@@ -91,11 +91,22 @@
 
 	// Use the pagination composable with displayedItemsLength (stable during refetch)
 	const itemsLength = computed(() => displayedItemsLength.value)
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, isUpdatingItemsPerPage } = usePagination({
 		options,
 		itemsLength,
 		table,
 	})
+
+	// Guarded handler to avoid overwriting itemsPerPage with stale values emitted by VDataTableServer
+	function onUpdateOptions(newOptions: Partial<DataOptions>) {
+		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
+			const rest = { ...newOptions }
+			delete (rest as Record<string, unknown>).itemsPerPage
+			updateOptions(rest)
+			return
+		}
+		updateOptions(newOptions)
+	}
 
 	// Create a computed property for items to ensure reactivity
 	// Bind to displayedItems so it is always an array
@@ -267,7 +278,7 @@
 			:item-value="getItemValue"
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
-			@update:options="updateOptions"
+			@update:options="onUpdateOptions"
 		>
 			<template #top>
 				<caption

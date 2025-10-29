@@ -1,4 +1,4 @@
-import { computed, nextTick, type Ref } from 'vue'
+import { computed, nextTick, ref, type Ref } from 'vue'
 import type { DataOptions } from './types'
 
 /**
@@ -18,6 +18,8 @@ export function usePagination({
 	itemsLength: Ref<number>
 	table: Ref<unknown>
 }) {
+	// Flag to indicate an ongoing items-per-page update cycle
+	const isUpdatingItemsPerPage = ref(false)
 	// Current page with getter/setter
 	const page = computed({
 		get: () => options.value.page || 1,
@@ -48,30 +50,37 @@ export function usePagination({
    * Update items per page from pagination component
    */
 	function updateItemsPerPage(newItemsPerPage: number) {
-		// Create a completely new options object to force reactivity
-		const newOptions = {
-			...options.value,
-			itemsPerPage: newItemsPerPage,
-			page: 1, // Reset to first page when changing items per page
-		}
-
-		// Update options with the new object
-		options.value = newOptions
-
-		// Force a refresh of the table
+		isUpdatingItemsPerPage.value = true
+		// Apply on nextTick to let any immediate stale @update:options settle, then win with our authoritative values
 		nextTick(() => {
-			// Try to force update if the table has that method
-			const tableValue = table.value as { $forceUpdate?: () => void }
-			if (tableValue && typeof tableValue.$forceUpdate === 'function') {
-				tableValue.$forceUpdate()
+			const newOptions = {
+				...options.value,
+				itemsPerPage: newItemsPerPage,
+				page: 1, // Reset to first page when changing items per page
 			}
-		})
-	}
+
+			options.value = newOptions
+
+      // Force a refresh of the table and then release the flag
+      nextTick(() => {
+        const tableValue = table.value as { $forceUpdate?: () => void }
+        if (tableValue && typeof tableValue.$forceUpdate === 'function') {
+          tableValue.$forceUpdate()
+        }
+
+        // Release the flag after DOM/application settles
+        nextTick(() => {
+          isUpdatingItemsPerPage.value = false
+        })
+      })
+    })
+  }
 
 	return {
 		page,
 		pageCount,
 		itemsPerPageValue,
 		updateItemsPerPage,
+		isUpdatingItemsPerPage,
 	}
 }
