@@ -6,17 +6,14 @@ import type { DataOptions } from './types'
  *
  * @param options - Reactive reference to table options
  * @param itemsLength - Total number of items (for client-side) or serverItemsLength (for server-side)
- * @param table - Reference to the table component
  * @returns Pagination utilities and computed properties
  */
 export function usePagination({
 	options,
 	itemsLength,
-	table,
 }: {
 	options: Ref<Partial<DataOptions>>
 	itemsLength: Ref<number>
-	table: Ref<unknown>
 }) {
 	// Flag to indicate an ongoing items-per-page update cycle
 	const isUpdatingItemsPerPage = ref(false)
@@ -49,31 +46,16 @@ export function usePagination({
 	/**
    * Update items per page from pagination component
    */
-	function updateItemsPerPage(newItemsPerPage: number) {
+	async function updateItemsPerPage(newItemsPerPage: number) {
 		isUpdatingItemsPerPage.value = true
-		// Apply on nextTick to let any immediate stale @update:options settle, then win with our authoritative values
-		nextTick(() => {
-			const newOptions = {
-				...options.value,
-				itemsPerPage: newItemsPerPage,
-				page: 1, // Reset to first page when changing items per page
-			}
-
-			options.value = newOptions
-
-			// Force a refresh of the table and then release the flag
-			nextTick(() => {
-				const tableValue = table.value as { $forceUpdate?: () => void }
-				if (tableValue && typeof tableValue.$forceUpdate === 'function') {
-					tableValue.$forceUpdate()
-				}
-
-				// Release the flag after DOM/application settles
-				nextTick(() => {
-					isUpdatingItemsPerPage.value = false
-				})
-			})
-		})
+		await nextTick()
+		options.value = {
+			...options.value,
+			itemsPerPage: newItemsPerPage,
+			page: 1,
+		}
+		await nextTick()
+		isUpdatingItemsPerPage.value = false
 	}
 
 	return {
