@@ -71,8 +71,8 @@
 		}
 		autoClamp?: boolean
 		isValidateOnBlur?: boolean
-    hint?: string
-    persistentHint?: boolean
+		hint?: string
+		persistentHint?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
@@ -110,8 +110,8 @@
 		period: () => ({ min: '', max: '' }),
 		autoClamp: false,
 		isValidateOnBlur: true,
-    hint: undefined,
-    persistentHint: false,
+		hint: undefined,
+		persistentHint: false,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -910,8 +910,8 @@
 				:auto-clamp="props.autoClamp"
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
-        :hint="props.hint"
-        :persistent-hint="props.persistentHint"
+				:hint="props.hint"
+				:persistent-hint="props.persistentHint"
 				@update:model-value="handleDateTextInputUpdate"
 				@date-selected="handleDateTextInputSelection"
 				@blur="handleInputBlur"
@@ -953,8 +953,8 @@
 				:label="props.label"
 				:placeholder="props.placeholder"
 				:is-validate-on-blur="props.isValidateOnBlur"
-        :hint="props.hint"
-        :persistent-hint="props.persistentHint"
+				:hint="props.hint"
+				:persistent-hint="props.persistentHint"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -1004,8 +1004,8 @@
 						:is-clearable="!props.readonly"
 						:auto-clamp="props.autoClamp"
 						:title="props.title || undefined"
-            :hint="props.hint"
-            :persistent-hint="props.persistentHint"
+						:hint="props.hint"
+						:persistent-hint="props.persistentHint"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
