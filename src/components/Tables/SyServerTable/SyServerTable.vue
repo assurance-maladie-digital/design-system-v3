@@ -97,14 +97,17 @@
 		table,
 	})
 
-	// Guarded handler to avoid overwriting itemsPerPage with stale values emitted by VDataTableServer
+	// Defines a function to handle updating the data table options
 	function onUpdateOptions(newOptions: Partial<DataOptions>) {
 		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
+			// Creates a copy of the received options
 			const rest = { ...newOptions }
 			delete (rest as Record<string, unknown>).itemsPerPage
+			// Updates the other options without modifying itemsPerPage
 			updateOptions(rest)
 			return
 		}
+		// In all other cases, simply updates the options with the new values
 		updateOptions(newOptions)
 	}
 
