@@ -102,7 +102,6 @@
 	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, isUpdatingItemsPerPage } = usePagination({
 		options,
 		itemsLength,
-		table,
 	})
 
 	// Defines a function to handle updating the data table options
