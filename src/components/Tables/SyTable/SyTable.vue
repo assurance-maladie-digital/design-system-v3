@@ -99,11 +99,24 @@
 
 	// Use the pagination composable
 	const itemsLength = computed(() => filteredItems.value.length)
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, isUpdatingItemsPerPage } = usePagination({
 		options,
 		itemsLength,
-		table,
 	})
+
+	// Defines a function to handle updating the data table options
+	function onUpdateOptions(newOptions: Partial<DataOptions>) {
+		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
+			// Creates a copy of the received options
+			const rest = { ...newOptions }
+			delete (rest as Record<string, unknown>).itemsPerPage
+			// Updates the other options without modifying itemsPerPage
+			updateOptions(rest)
+			return
+		}
+		// In all other cases, simply updates the options with the new values
+		updateOptions(newOptions)
+	}
 
 	// Use the table checkbox composable
 	const { toggleAllRows, getItemValue } = useTableCheckbox({
@@ -231,7 +244,7 @@
 			:item-value="getItemValue"
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
-			@update:options="updateOptions"
+			@update:options="onUpdateOptions"
 		>
 			<template #top>
 				<caption
