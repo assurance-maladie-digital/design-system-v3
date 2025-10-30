@@ -139,6 +139,8 @@
 			autoClamp?: boolean
 			isValidateOnBlur?: boolean
 			density?: 'default' | 'comfortable' | 'compact'
+      hint?: string
+      persistentHint?: boolean
 		}>(),
 		{
 			modelValue: undefined,
@@ -175,6 +177,8 @@
 			label: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 			isValidateOnBlur: true,
 			density: 'default',
+      hint: undefined,
+      persistentHint: false,
 		},
 	)
 
@@ -939,6 +943,8 @@
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
 				:title="props.title || undefined"
+        :hint="props.hint"
+        :persistent-hint="props.persistentHint"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
@@ -988,6 +994,8 @@
 						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
 						:density="props.density"
+            :hint="props.hint"
+            :persistent-hint="props.persistentHint"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
@@ -1019,6 +1027,8 @@
 					:is-validate-on-blur="props.isValidateOnBlur"
 					:error-messages="errorMessages"
 					:density="props.density"
+          :hint="props.hint"
+          :persistent-hint="props.persistentHint"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="handleMonthUpdate"
