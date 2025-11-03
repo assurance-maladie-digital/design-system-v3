@@ -1,3 +1,68 @@
+## v1.0.11 (27-10-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- BackBtn: fix color and letter-spacing <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1327">#1327</a></td>
+      <td>- AmeliproUpload <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1250">#1250</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: fix select options size <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1324">#1324</a></td>
+      <td>- Add TU (config) for Amelipro components <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1021">#1021</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>-  SyTable/SyServerTable : add header custom styles<a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1318">#1318</a></td>
+      <td>- Optimise Vuetify config for TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1288">#1288</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- HeaderNavigationBar: fix active state on nav <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1306">#1306</a></td>
+      <td>- AmeliproFooter: add ConfigurationLabel prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1304">#1304</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyCheckBox: fix display with several checkboxes <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1302">#1302</a></td>
+      <td>- AmeliproCarousel: add defaultSlide and hideDisabledBtn props <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1305">#1305</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- HeaderBar: fix stories in documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1300">#1300</a></td>
+      <td>- AmeliproAutocompleteField: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/993">#993</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NotificationBar: fix api documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1292">#1292</a></td>
+      <td>- AmeliproHeader: add events on logo + fix homeLink prop default value <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1307">#1307</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: fix input edition + add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1291">#1291</a></td>
+      <td>- AmeliproHeader: add events on logo + fix homeLink prop default value <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1307">#1307</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: fix documentation exemples <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1287">#1287</a></td>
+      <td>- AmeliproBtn: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1065">#1065</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Fix required utils rule <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1265">#1265</a></td>
+      <td>- AmeliproCallback: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1066">#1066</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Improve SyForm documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1276">#1276</a></td>
+      <td>- AmeliproCard: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1067">#1067</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FilterSideBar: show selected values instead of keys <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1269">#1269</a></td>
+      <td>- AmeliproAccordionList / AmeliproAccordionResultList / AmeliproResultList / AmeliproTable: add sortSelectDefaultValue prop  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1319">#1319</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix autocomplete attribute <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1269">#1269</a></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.10 (13-10-2025)
 
 <table>
@@ -91,10 +156,6 @@
     </tr>
     <tr style="vertical-align: top;">
       <td>- SyServerTable : fix double emit <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1186">#1186</a></td>
-     <td></td>
-    </tr>
-    <tr style="vertical-align: top;">
-      <td>- SyForm : add component <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1176">#1176</a></td>
      <td></td>
     </tr>
     <tr style="vertical-align: top;">

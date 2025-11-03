@@ -48,8 +48,9 @@
 		return styles
 	})
 
-	const emit = defineEmits(['back-btn-click', 'click:patient-change'])
+	const emit = defineEmits(['back-btn-click', 'click-logo', 'click:patient-change'])
 	const backBtnEvent = (): void => emit('back-btn-click')
+	const clickLogoEvent = (): void => emit('click-logo')
 	const emitPatientChangeEvent = (): void => emit('click:patient-change')
 </script>
 
@@ -114,6 +115,7 @@
 						:unique-id="uniqueId ? `${uniqueId}-header` : undefined"
 						v-bind="$attrs"
 						@back-btn-click="backBtnEvent"
+						@click-logo="clickLogoEvent"
 					>
 						<template
 							v-if="$slots.userMenuComplementaryInfo"

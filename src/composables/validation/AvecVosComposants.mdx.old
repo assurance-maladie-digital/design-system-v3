@@ -1,6 +1,6 @@
 import { Meta, Source } from '@storybook/blocks';
 
-<Meta title="Composables/ValidationSystem/Avec Vos Composants" />
+<Meta title="Guide Du Dev/SyForm/Avec Vos Composants" />
 
 <div className="header">
   <h1>Etendre le système à vos propres composants</h1>
