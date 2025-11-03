@@ -153,6 +153,15 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
+		selectionKey: {
+			description: 'Clé utilisée pour identifier chaque ligne lors de la sélection. Par défaut, utilise "id" si présent, sinon l\'objet complet.',
+			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined (fallback: id | objet complet)' },
+			},
+		},
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
