@@ -658,3 +658,66 @@ describe('SyTable', () => {
 		wrapper.unmount()
 	})
 })
+
+describe('SyTable selectionKey', () => {
+	it('uses custom selectionKey when provided', () => {
+		const items = [
+			{ id: 1, uuid: 'a-1', name: 'A' },
+			{ id: 2, uuid: 'a-2', name: 'B' },
+		]
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items,
+				showSelect: true,
+				selectionKey: 'uuid',
+				suffix: '',
+			},
+		})
+
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		const itemValue = dataTable.props('itemValue') as (item: unknown) => unknown
+
+		expect(itemValue(items[0] as unknown as Record<string, unknown>)).toBe('a-1')
+		expect(itemValue(items[1] as unknown as Record<string, unknown>)).toBe('a-2')
+	})
+
+	it('falls back to id when selectionKey is missing on item', () => {
+		const items = [
+			{ id: 10, name: 'No UUID' },
+		]
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items,
+				showSelect: true,
+				selectionKey: 'uuid',
+				suffix: '',
+			},
+		})
+
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		const itemValue = dataTable.props('itemValue') as (item: unknown) => unknown
+
+		expect(itemValue(items[0] as unknown as Record<string, unknown>)).toBe(10)
+	})
+
+	it('falls back to full object when neither selectionKey nor id are present', () => {
+		const item = { name: 'No keys' }
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: [item],
+				showSelect: true,
+				selectionKey: 'uuid',
+				suffix: '',
+			},
+		})
+
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		const itemValue = dataTable.props('itemValue') as (item: unknown) => unknown
+
+		const result = itemValue(item as unknown as Record<string, unknown>)
+		expect(result).toBe(item) // same object reference
+	})
+})
