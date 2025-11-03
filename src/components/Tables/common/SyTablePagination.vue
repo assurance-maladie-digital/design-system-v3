@@ -68,6 +68,15 @@
 	}
 
 	/**
+	 * Handle change from the SySelect component directly
+	 * Ensure we emit a number for items-per-page, then reset to page 1
+	 */
+	function handleItemsPerPageChange(value: unknown) {
+		const numeric = typeof value === 'string' ? Number.parseInt(value, 10) : (value as number)
+		emit('update:items-per-page', numeric)
+	}
+
+	/**
 	 * Local items per page with two-way binding
 	 */
 	// Use a ref instead of a computed property for better compatibility with v-model
@@ -76,14 +85,6 @@
 	// Watch for changes from parent
 	watch(() => props.itemsPerPage, (newValue) => {
 		localItemsPerPage.value = newValue
-	})
-
-	// Watch for local changes and emit events
-	watch(localItemsPerPage, (newValue) => {
-		// First reset to page 1 when changing items per page
-		emit('update:page', 1)
-		// Then update the items per page
-		emit('update:items-per-page', newValue)
 	})
 
 	// Remove aria-describedby attribute after component is mounted
@@ -147,8 +148,9 @@
 				class="rows-per-page-select"
 				:aria-label="locales.pagination.itemsPerPageText"
 				:label="''"
-				style="width: 80px;"
+				style="width: 90px;"
 				:clearable="false"
+				@update:model-value="handleItemsPerPageChange"
 			/>
 		</div>
 	</div>
