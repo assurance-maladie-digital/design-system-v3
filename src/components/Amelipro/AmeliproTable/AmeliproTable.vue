@@ -2,6 +2,7 @@
 	import type { AmeliproTableCell, AmeliproTableHeader } from './types'
 	import type { IDataListItem, IndexedObject } from '../types'
 	import { type PropType, computed, onMounted, onUpdated, ref, watch } from 'vue'
+	import AmeliproIconBtn from '../AmeliproIconBtn/AmeliproIconBtn.vue'
 	import AmeliproPagination from '../AmeliproPagination/AmeliproPagination.vue'
 	import AmeliproSelect from '../AmeliproSelect/AmeliproSelect.vue'
 	import type { SelectItem } from '../AmeliproSelect/types'
@@ -133,6 +134,16 @@
 
 	const currentDataList = computed<IDataListItem[]>(() => currentPageItems(props.dataList))
 
+	const hasHeaderSorting = computed<boolean>(() => {
+		const hasSorting = ref(false)
+		props.headers.forEach((header: AmeliproTableHeader) => {
+			if (header.sort) {
+				hasSorting.value = true
+			}
+		})
+		return hasSorting.value
+	})
+
 	const tableWidthStyles = computed<IndexedObject>(() => {
 		const tableStyle: IndexedObject = {
 			maxWidth: props.tableMaxWidth,
@@ -146,7 +157,7 @@
 		return tableStyle
 	})
 
-	const emit = defineEmits(['click', 'change:sort-select', 'change:pagination-select'])
+	const emit = defineEmits(['click', 'change:sort-select', 'change:pagination-select', 'asc-sort', 'desc-sort'])
 	const emitClickEvent = (newCurrentPage: number): void => {
 		emit('click')
 		if (newCurrentPage !== null && newCurrentPage !== undefined) {
@@ -156,6 +167,16 @@
 
 	const emitSortSelectChange = (): void => {
 		emit('change:sort-select', sortSelectModel.value)
+	}
+
+	const emitHeaderSortEvent = (order: string, header: string): void => {
+		if (order.toLowerCase() === 'ascendant') {
+			emit('asc-sort', header)
+		}
+
+		if (order.toLowerCase() === 'descendant') {
+			emit('desc-sort', header)
+		}
 	}
 
 	const emitPaginationSelectChange = (): void => {
@@ -223,7 +244,7 @@
 			</div>
 		</div>
 		<div
-			v-if="mdAndUp"
+			v-if="mdAndUp || hasHeaderSorting"
 			:id="`${uniqueId}-desktop`"
 			class="amelipro-table__wrapper--desktop"
 			style="overflow-x: auto;"
@@ -254,8 +275,42 @@
 							<p
 								:aria-describedby="header.descriptionId"
 								class="mb-0"
+								:class="{ 'd-flex' : header.sort }"
 							>
 								{{ header.title }}
+
+								<AmeliproIconBtn
+									v-if="header.sort?.ascendant"
+									class="ml-2 sort-btn"
+									:btn-label="header.sort?.ascendant.label"
+									:btn-title="header.sort?.ascendant.label"
+									:disabled="header.sort.ascendant.disabled"
+									icon="triangleUp"
+									icon-bg-color="transparent"
+									:icon-color="header.sort.ascendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
+									icon-hover-bg-color="transparent"
+									:icon-hover-color="header.sort.ascendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
+									:unique-id="`${uniqueId}-table-header-cell-${index}-asc-sort-btn`"
+									size="9px"
+									@click="emitHeaderSortEvent('ascendant', header.name)"
+								/>
+
+								<AmeliproIconBtn
+									v-if="header.sort?.descendant"
+									class="sort-btn"
+									:class="{ 'ml-2': !header.sort.ascendant }"
+									:btn-label="header.sort.descendant.label"
+									:btn-title="header.sort.descendant.label"
+									:disabled="header.sort.descendant.disabled"
+									icon="triangleDown"
+									icon-bg-color="transparent"
+									:icon-color="header.sort.descendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
+									icon-hover-bg-color="transparent"
+									:icon-hover-color="header.sort.descendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
+									:unique-id="`${uniqueId}-table-header-cell-${index}-desc-sort-btn`"
+									size="9px"
+									@click="emitHeaderSortEvent('descendant', header.name)"
+								/>
 							</p>
 						</th>
 					</tr>
@@ -292,7 +347,7 @@
 		</div>
 
 		<div
-			v-if="!mdAndUp"
+			v-if="!mdAndUp && !hasHeaderSorting"
 			:id="`${uniqueId}-mobile`"
 			class="amelipro-table__wrapper--mobile"
 		>
@@ -423,5 +478,15 @@ tr:last-child td {
 	border: 1px solid apTokens.$ap-grey-darken1;
 	border-radius: apTokens.$btn-radius;
 	padding: 0.5rem 0.75rem;
+}
+
+.sort-btn {
+	margin-top: -4px;
+	width: 24px !important;
+	height: 24px !important;
+
+	& :deep(.amelipro-custom-icon) {
+		vertical-align: unset !important;
+	}
 }
 </style>
