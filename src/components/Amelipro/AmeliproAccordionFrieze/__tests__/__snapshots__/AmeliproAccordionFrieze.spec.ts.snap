@@ -146,15 +146,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 1
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-1-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-1-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -186,15 +219,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 2
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-2-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-2-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -241,15 +307,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 3
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-3-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-3-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -281,15 +380,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 4
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-4-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-4-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -321,15 +453,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 5
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-5-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-5-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -361,15 +526,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 6
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-6-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-6-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -401,15 +599,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 7
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-7-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-7-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -441,15 +672,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 8
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-8-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-8-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -496,15 +760,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 9
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-9-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-9-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -536,15 +833,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 10
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-10-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-10-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -576,15 +906,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 11
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-11-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-11-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -616,15 +979,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 12
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-12-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-12-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -656,15 +1052,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 13
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-13-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-13-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
@@ -696,15 +1125,48 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                 justify-center
               ">
                 sous-titre 14
-                <ameliproicon
-                  class="ml-1"
-                  icon="triangleDown"
-                  icon-bg-color="transparent"
-                  icon-color="ap-blue darken-1"
-                  size="10px"
+                <span
+                  class="
+                    amelipro-icon
+                    ml-1
+                  "
+                  id="amelipro-accordion-frieze-unique-id-btn-14-icon"
                   style="margin-top: -14px;"
-                  unique-id="amelipro-accordion-frieze-unique-id-btn-14-icon"
-                ></ameliproicon>
+                >
+                  <span
+                    aria-hidden="true"
+                    class="
+                      amelipro-custom-icon
+                      custom-color
+                    "
+                    focusable="false"
+                    role="img"
+                    style="
+                      color: #0C419A;
+                      height: 10px;
+                      width: 10px;
+                    "
+                  >
+                    <span>
+                      <svg
+                        aria-hidden="true"
+                        style="enable-background:new 0 0 42 42;"
+                        version="1.1"
+                        viewBox="0 0 42 42"
+                        x="0px"
+                        xml:space="preserve"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        y="0px"
+                      >
+                        <polygon
+                          class="shape-color"
+                          points="21,39.2 42,2.8 0,2.8 "
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
               </span>
             </button>
           </div>
