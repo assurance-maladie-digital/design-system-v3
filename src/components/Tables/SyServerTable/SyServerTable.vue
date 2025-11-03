@@ -204,6 +204,7 @@
 		updateModelValue: (value) => {
 			model.value = value
 		},
+		selectionKey: toRef(props, 'selectionKey'),
 	})
 
 	// Use the ARIA accessibility composable
