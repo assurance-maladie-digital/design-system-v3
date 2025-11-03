@@ -44,7 +44,7 @@ exports[`AmeliproHeader > render correctly 1`] = `
           "
           id="amelipro-header-id-brand-section-container"
         >
-          <routerlink
+          <button
             aria-label="Retour à l’accueil"
             class="
               align-center
@@ -54,7 +54,6 @@ exports[`AmeliproHeader > render correctly 1`] = `
             "
             id="amelipro-header-id-brand-section-logo-link"
             title="Retour à l’accueil"
-            to="/"
           >
             <svg
               aria-label="Sécurité sociale, L’Assurance Maladie : Agir ensemble, protéger chacun"
@@ -163,7 +162,7 @@ exports[`AmeliproHeader > render correctly 1`] = `
               id="amelipro-header-id-brand-section-logo-amelipro"
               src="/src/assets/amelipro/img/amelipro.svg"
             />
-          </routerlink>
+          </button>
         </div>
         <div class="
           h-100

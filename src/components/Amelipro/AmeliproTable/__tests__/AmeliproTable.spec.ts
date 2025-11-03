@@ -14,6 +14,16 @@ describe('AmeliproTable', () => {
 						name: 'name',
 						title: 'Nom',
 						width: '25%',
+						sort: {
+							ascendant: {
+								label: 'tri asc',
+								disabled: false,
+							},
+							descendant: {
+								label: 'tri desc',
+								disabled: true,
+							},
+						},
 					},
 					{
 						align: 'left',

@@ -92,7 +92,7 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                 "
                 id="my-page-layout-id-header-brand-section-container"
               >
-                <routerlink
+                <button
                   aria-label="Retour à l’accueil"
                   class="
                     align-center
@@ -102,7 +102,6 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                   "
                   id="my-page-layout-id-header-brand-section-logo-link"
                   title="Retour à l’accueil"
-                  to="/"
                 >
                   <svg
                     aria-label="Sécurité sociale, L’Assurance Maladie : Agir ensemble, protéger chacun"
@@ -211,7 +210,7 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                     id="my-page-layout-id-header-brand-section-logo-amelipro"
                     src="/src/assets/amelipro/img/amelipro.svg"
                   />
-                </routerlink>
+                </button>
               </div>
               <div class="
                 h-100

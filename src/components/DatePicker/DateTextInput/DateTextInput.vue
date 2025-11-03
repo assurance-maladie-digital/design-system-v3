@@ -50,6 +50,8 @@
 		autoClamp?: boolean
 		isValidateOnBlur?: boolean
 		density?: 'default' | 'comfortable' | 'compact'
+		hint?: string
+		persistentHint?: boolean
 		externalErrorMessages?: string[]
 	}>(), {
 		modelValue: null,
@@ -75,6 +77,8 @@
 		autoClamp: true,
 		isValidateOnBlur: true,
 		density: 'default',
+		hint: undefined,
+		persistentHint: false,
 		externalErrorMessages: () => [],
 	})
 
@@ -1025,6 +1029,8 @@
 		:is-validate-on-blur="props.isValidateOnBlur"
 		:density="props.density"
 		:title="props.title || undefined"
+		:hint="props.hint"
+		:persistent-hint="props.persistentHint"
 		@focus="onFocus"
 		@blur="onBlur"
 		@keydown="handleKeydown"

@@ -86,13 +86,13 @@ vi.mock('../composables/useTodayButton', () => ({
 }))
 
 vi.mock('../composables/useDatePickerViewMode', () => ({
-	useDatePickerViewMode: () => ({
+	useDatePickerViewMode: vi.fn(() => ({
 		currentViewMode: 'month',
 		handleViewModeUpdate: vi.fn(),
 		handleYearUpdate: vi.fn(),
 		handleMonthUpdate: vi.fn(),
 		resetViewMode: vi.fn(),
-	}),
+	})),
 }))
 
 // Créer un mock pour rangeBoundaryDates qui peut être observé par les watchers
