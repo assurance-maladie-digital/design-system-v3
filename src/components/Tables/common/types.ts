@@ -90,6 +90,7 @@ export type SyTableProps = {
 	enableColumnControls?: boolean
 	headers?: DataTableHeaders[]
 	showSelect?: boolean
+	selectionKey?: string
 	multiSort?: boolean
 	mustSort?: boolean
 	itemsPerPageOptions?: number[]
@@ -109,6 +110,7 @@ export type SyServerTableProps = {
 	enableColumnControls?: boolean
 	headers?: DataTableHeaders[]
 	showSelect?: boolean
+	selectionKey?: string
 	multiSort?: boolean
 	mustSort?: boolean
 	itemsPerPageOptions?: number[]
