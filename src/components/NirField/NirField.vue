@@ -563,6 +563,9 @@
 				:persistent-placeholder="props.persistentPlaceholder"
 				:hint="props.hint || locales.numberHint"
 				class="number-field"
+				:class="{
+					'sy-hide-detail': props.hideDetails,
+				}"
 				:display-asterisk="false"
 				:aria-describedby="numberFieldErrorId + ' ' + numberFieldWarningId + ' ' + numberFieldSuccessId"
 				:show-success-messages="false"
@@ -623,7 +626,7 @@
 					:active="hasNumberErrors"
 					:messages="numberValidation.errors.value"
 				/>
-			</div>
+			</div>	
 			<div
 				:id="keyFieldErrorId"
 				class="sy-key-errors"
@@ -750,6 +753,9 @@
 	:deep(.v-messages) {
 		opacity: 1;
 	}
+}
+.sy-hide-detail{
+	padding-top:22px;
 }
 
 .sy-number-errors,
