@@ -192,7 +192,7 @@
 	const showClear = computed(() => {
 		if (!props.isClearable) return false
 		if (props.readonly || props.disabled) return false
-		return model.value !== undefined && model.value !== null && String(model.value) !== ''
+		return model.value !== undefined && model.value !== null && String(model.value) !== '' && String(model.value) !== '__/__/____'
 	})
 
 	const clearField = () => {
