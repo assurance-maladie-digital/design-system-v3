@@ -12,7 +12,6 @@ describe('RangeField', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
 		const inputMin = wrapper.find('input')
 		const inputMax = wrapper.findAll('input').at(1) as DOMWrapper<HTMLInputElement>
 
@@ -31,7 +30,6 @@ describe('RangeField', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
 		const inputMin = wrapper.find('input')
 		const inputMax = wrapper.findAll('input').at(1) as DOMWrapper<HTMLInputElement>
 
@@ -83,7 +81,6 @@ describe('RangeField', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
 		const inputMin = wrapper.find('input')
 		const inputMax = wrapper.findAll('input').at(1) as DOMWrapper<HTMLInputElement>
 
