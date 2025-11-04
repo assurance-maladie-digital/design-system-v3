@@ -37,6 +37,7 @@
 		clearable?: boolean
 		counter?: boolean | number | string
 		hint?: string
+		numberHint?: string
 		persistentHint?: boolean
 		persistentPlaceholder?: boolean
 		disableErrorHandling?: boolean
@@ -72,6 +73,7 @@
 		clearable: false,
 		counter: false,
 		hint: undefined,
+		numberHint: undefined,
 		persistentHint: false,
 		persistentPlaceholder: false,
 		disableErrorHandling: false,
@@ -561,7 +563,8 @@
 				:clearable="props.clearable"
 				:counter="props.counter"
 				:persistent-placeholder="props.persistentPlaceholder"
-				:hint="props.hint || locales.numberHint"
+				:hint="props.numberHint || locales.numberHint"
+				:persistent-hint="props.persistentHint"
 				class="number-field"
 				:display-asterisk="false"
 				:aria-describedby="numberFieldErrorId + ' ' + numberFieldWarningId + ' ' + numberFieldSuccessId"
