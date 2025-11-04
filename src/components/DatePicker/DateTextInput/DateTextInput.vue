@@ -1028,7 +1028,7 @@
 		:aria-label="ariaLabel || props.placeholder"
 		:is-validate-on-blur="props.isValidateOnBlur"
 		:density="props.density"
-		:title="props.title || undefined"
+    :title="props.title || props.placeholder || undefined"
 		:hint="props.hint"
 		:persistent-hint="props.persistentHint"
 		@focus="onFocus"

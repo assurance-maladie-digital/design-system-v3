@@ -942,7 +942,7 @@
 				:external-error-messages="errorMessages"
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
-				:title="props.title || undefined"
+        :title="props.title || props.placeholder || undefined"
 				:hint="props.hint"
 				:persistent-hint="props.persistentHint"
 				@focus="emit('focus')"
