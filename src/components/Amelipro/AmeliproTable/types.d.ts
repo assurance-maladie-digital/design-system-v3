@@ -23,8 +23,8 @@ export interface ISortBtn {
 }
 
 export interface IHeaderSort {
-	ascendant?: IsortBtn
-	descendant?: IsortBtn
+	ascendant?: ISortBtn
+	descendant?: ISortBtn
 }
 
 export interface AmeliproCurrentPage {
