@@ -322,7 +322,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
                         data-no-activator=""
                       >
                         <span
-                          class="d-sr-only"
+                          class="
+                            amelipro-btn__label
+                            d-sr-only
+                          "
                           id="amelipro-header-id-user-menu-open-btn-btn-label"
                         >
                           infos utilisateur
@@ -423,7 +426,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
                     data-no-activator=""
                   >
                     <span
-                      class="d-sr-only"
+                      class="
+                        amelipro-btn__label
+                        d-sr-only
+                      "
                       id="structures-open-btn-btn-label"
                     >
                       Sélection de structure
@@ -523,7 +529,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
                         data-no-activator=""
                       >
                         <span
-                          class="d-sr-only"
+                          class="
+                            amelipro-btn__label
+                            d-sr-only
+                          "
                           id="service-menu-service-menu-btn-btn-label"
                         >
                           Bouquet de services
@@ -734,7 +743,10 @@ exports[`AmeliproHeader > render correctly 1`] = `
               data-no-activator=""
             >
               <span
-                class="d-sr-only"
+                class="
+                  amelipro-btn__label
+                  d-sr-only
+                "
                 id="amelipro-header-id-back-btn-btn-label"
               >
                 Retour

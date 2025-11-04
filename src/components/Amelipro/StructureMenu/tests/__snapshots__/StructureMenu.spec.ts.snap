@@ -71,7 +71,10 @@ exports[`StructureMenu > render correctly 1`] = `
           data-no-activator=""
         >
           <span
-            class="d-sr-only"
+            class="
+              amelipro-btn__label
+              d-sr-only
+            "
             id="my-structure-menu-id-structure-menu-close-btn-btn-label"
           >
             Fermer la fenêtre modale
@@ -1189,7 +1192,10 @@ exports[`StructureMenu > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="my-structure-menu-id-default-structure-switch-description-btn-btn-label"
                 >
                   plus d’informations
