@@ -79,17 +79,11 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
               >
                 <!---->
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__background
-                  "
+                  class="v-progress-linear__background"
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__buffer
-                  "
+                  class="v-progress-linear__buffer"
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -103,12 +97,10 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
-                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
-                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -128,7 +120,7 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
                   v-field-label
                   v-label
                 "
-                for="input-v-1"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
@@ -136,7 +128,7 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
               <!---->
               <input
                 class="v-field__input"
-                id="input-v-1"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -312,17 +304,11 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
               >
                 <!---->
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__background
-                  "
+                  class="v-progress-linear__background"
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__buffer
-                  "
+                  class="v-progress-linear__buffer"
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -336,12 +322,10 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
-                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
-                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -361,7 +345,7 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-v-1"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
@@ -370,7 +354,7 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
               <input
                 class="v-field__input"
                 disabled=""
-                id="input-v-1"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -517,17 +501,11 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
               >
                 <!---->
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__background
-                  "
+                  class="v-progress-linear__background"
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__buffer
-                  "
+                  class="v-progress-linear__buffer"
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -541,12 +519,10 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
-                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
-                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -566,7 +542,7 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-v-1"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
@@ -574,7 +550,7 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
               <!---->
               <input
                 class="v-field__input"
-                id="input-v-1"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -747,17 +723,11 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
               >
                 <!---->
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__background
-                  "
+                  class="v-progress-linear__background"
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__buffer
-                  "
+                  class="v-progress-linear__buffer"
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -771,12 +741,10 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
-                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
-                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -796,7 +764,7 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-v-1"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
@@ -804,7 +772,7 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
               <!---->
               <input
                 class="v-field__input"
-                id="input-v-1"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -969,17 +937,11 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
               >
                 <!---->
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__background
-                  "
+                  class="v-progress-linear__background"
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__buffer
-                  "
+                  class="v-progress-linear__buffer"
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -993,12 +955,10 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
-                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
-                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -1018,7 +978,7 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-v-1"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
@@ -1026,7 +986,7 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
               <!---->
               <input
                 class="v-field__input"
-                id="input-v-1"
+                id="input-v-0"
                 size="1"
                 type="text"
               />
@@ -1200,17 +1160,11 @@ exports[`TableToolbar > should render 1`] = `
               >
                 <!---->
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__background
-                  "
+                  class="v-progress-linear__background"
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__buffer
-                  "
+                  class="v-progress-linear__buffer"
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -1224,12 +1178,10 @@ exports[`TableToolbar > should render 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
-                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
-                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -1249,7 +1201,7 @@ exports[`TableToolbar > should render 1`] = `
                   v-field-label
                   v-label
                 "
-                for="input-v-1"
+                for="input-v-0"
               >
                 <!---->
                 Rechercher
@@ -1257,7 +1209,7 @@ exports[`TableToolbar > should render 1`] = `
               <!---->
               <input
                 class="v-field__input"
-                id="input-v-1"
+                id="input-v-0"
                 size="1"
                 type="text"
               />

@@ -626,7 +626,7 @@
 					:active="hasNumberErrors"
 					:messages="numberValidation.errors.value"
 				/>
-			</div>	
+			</div>
 			<div
 				:id="keyFieldErrorId"
 				class="sy-key-errors"
@@ -754,8 +754,9 @@
 		opacity: 1;
 	}
 }
-.sy-hide-detail{
-	padding-top:22px;
+
+.sy-hide-detail {
+	padding-top: 22px;
 }
 
 .sy-number-errors,
