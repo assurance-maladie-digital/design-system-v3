@@ -86,7 +86,6 @@ exports[`AmeliproHeaderBar > Snapshots > renders the component with only require
         "
       >
         <amelipro-header-brand-section-stub
-          homelink="/"
           mobileversion="false"
           themeamelipro="true"
         ></amelipro-header-brand-section-stub>

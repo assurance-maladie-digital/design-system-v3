@@ -180,9 +180,7 @@ describe('AmeliproHeaderBar', () => {
 			})
 
 			it('prop homeLink sets prop homeLink', async () => {
-				// TODO: pourquoi on a "/" au lieu de "undefined" ?
-				// expect(vueWrapper.findComponent(AmeliproHeaderBrandSection).props('homeLink')).toBeUndefined();
-				expect(vueWrapper.findComponent(AmeliproHeaderBrandSection).props('homeLink')).toBe('/')
+				expect(vueWrapper.findComponent(AmeliproHeaderBrandSection).props('homeLink')).toBeUndefined()
 
 				const { homeLink } = modifiedPropValues()
 				await vueWrapper.setProps({ homeLink })
