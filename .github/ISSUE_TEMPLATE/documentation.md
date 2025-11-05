@@ -7,9 +7,9 @@ labels:
   - severity: default
 ---
 
-## Type d'issue
+## Type d'anomalie
 
-📝 Documentation
+📝 Anomalie documentaire
 
 ### Impact
 

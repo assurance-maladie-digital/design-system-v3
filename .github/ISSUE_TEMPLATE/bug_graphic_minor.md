@@ -7,7 +7,7 @@ labels:
   - severity: minor
 ---
 
-## Type d'issue
+## Type d'anomalie
 
 🐛 Anomalie graphique mineure
 

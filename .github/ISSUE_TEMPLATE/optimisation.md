@@ -4,10 +4,10 @@ about: Proposez des améliorations aux composants, templates ou fonctionnalités
 title: Optimisation de composants, templates ou fonctionnalités
 labels:
   - type: optimization
-  - severity: default
+  - severity: minor
 ---
 
-## Type d'issue
+## Type d'ajout
 
 📝 Optimisation
 

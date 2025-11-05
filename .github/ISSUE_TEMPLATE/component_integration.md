@@ -1,19 +1,19 @@
 ---
-name: Demande de composant majeure
-about: Proposez un nouveau composant majeur pour notre Design System
-title: Composant majeur
+name: Intégration d'un composant existant
+about: Proposez un composant existant à notre Design System
+title: Intégration d'un composant
 labels:
   - type: component
-  - severity: major
+  - severity: minor
 ---
 
 ## Type d'ajout
 
-✨ Ajout d'un composant majeur
+✨ Intégration d'un composant existant
 
 ### Impact
 
-🔴 Bloquant
+🟡 Non bloquant
 
 ## Projet et portail
 

@@ -7,7 +7,7 @@ labels:
   - severity: major
 ---
 
-## Type d'issue
+## Type d'anomalie
 
 🐛 Anomalie graphique majeure
 

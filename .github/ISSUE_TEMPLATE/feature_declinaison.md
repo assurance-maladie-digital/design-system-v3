@@ -1,19 +1,19 @@
 ---
-name: Demande de fonctionnalité majeure
-about: Proposez une nouvelle fonctionnalité majeure pour notre Design System
-title: Fonctionnalité majeure
+name: Demande de déclinaison d'une fonctionnalité
+about: Proposez une déclinaison de fonctionnalité pour notre Design System
+title: Déclinaison d'une fonctionnalité
 labels:
   - type: feature
-  - severity: major
+  - severity: minor
 ---
 
 ## Type d'ajout
 
-✨ Ajout d'une fonctionnalité majeure
+✨ Déclinaison d'une fonctionnalité
 
 ### Impact
 
-🔴 Bloquant
+🟡 Non bloquant
 
 ## Projet et portail
 

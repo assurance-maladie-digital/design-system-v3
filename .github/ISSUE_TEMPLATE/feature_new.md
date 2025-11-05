@@ -1,15 +1,15 @@
 ---
-name: Demande de composant mineure
-about: Proposez un nouveau composant mineur pour notre Design System
-title: Composant mineur
+name: Demande d'une nouvelle fonctionnalité
+about: Proposez une nouvelle fonctionnalité pour notre Design System
+title: Nouvelle fonctionnalité
 labels:
-  - type: component
+  - type: feature
   - severity: minor
 ---
 
 ## Type d'ajout
 
-✨ Ajout d'un composant mineur
+✨ Ajout d'une fonctionnalité
 
 ### Impact
 
@@ -25,25 +25,25 @@ labels:
 
 <!-- Nom(s) et rôle(s) du ou des personnes à contacter. -->
 
-## Description du composant
+## Description de la fonctionnalité
 
-<!-- Décrivez clairement le composant que vous souhaitez voir ajouté. -->
+<!-- Décrivez clairement la fonctionnalité que vous souhaitez voir ajoutée. -->
 
 ## Cas d'utilisation
 
-<!-- Expliquez les cas d'utilisation concrets où ce composant serait utile. -->
+<!-- Expliquez les cas d'utilisation concrets où cette fonctionnalité serait utile. -->
 
 ## Solution proposée
 
-<!-- Si vous avez une idée de la façon dont ce composant pourrait être implémenté, décrivez-la ici. -->
+<!-- Si vous avez une idée de la façon dont cette fonctionnalité pourrait être implémentée, décrivez-la ici. -->
 
 ## Alternatives considérées
 
-<!-- Y a-t-il des alternatives à ce composant que vous avez considéré ? -->
+<!-- Y a-t-il des alternatives à cette fonctionnalité que vous avez considéré ? -->
 
 ## Contexte additionnel
 
-<!-- Ajoutez tout autre contexte, captures d'écran ou exemples concernant le composant demandé. -->
+<!-- Ajoutez tout autre contexte, captures d'écran ou exemples concernant la fonctionnalité demandée. -->
 
 ## Critères d'acceptation
 
