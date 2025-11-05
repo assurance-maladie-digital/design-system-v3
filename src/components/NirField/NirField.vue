@@ -563,7 +563,7 @@
 				:persistent-placeholder="props.persistentPlaceholder"
 				:hint="props.hint || locales.numberHint"
 				class="number-field"
-        :class="{
+				:class="{
 					'sy-hide-detail': props.hideDetails,
 				}"
 				:display-asterisk="false"
@@ -756,7 +756,7 @@
 }
 
 .sy-hide-detail {
-  padding-top: 22px;
+	padding-top: 22px;
 }
 
 .sy-number-errors,
