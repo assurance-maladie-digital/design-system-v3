@@ -1,9 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UserInformationSummary > render correctly 1`] = `
+exports[`UserInformationSummary > Snapshots > renders the component with all properties filled in 1`] = `
 <div
   class="user-information-summary"
-  id="user-information-summary-id-container"
+  id="modified-unique-id-container"
 >
   <p
     class="
@@ -12,9 +12,9 @@ exports[`UserInformationSummary > render correctly 1`] = `
       text-body-2
       user-information-summary__name
     "
-    id="user-information-summary-id-user-name"
+    id="modified-unique-id-user-name"
   >
-    nom utilisateur
+    Modified user name
   </p>
   <p
     class="
@@ -22,9 +22,9 @@ exports[`UserInformationSummary > render correctly 1`] = `
       text-body-2
       user-information-summary__denomination
     "
-    id="user-information-summary-id-denomination"
+    id="modified-unique-id-denomination"
   >
-    dénomination
+    Modified denomination
   </p>
   <p
     class="
@@ -32,29 +32,20 @@ exports[`UserInformationSummary > render correctly 1`] = `
       text-body-2
       user-information-summary__specialty
     "
-    id="user-information-summary-id-specialty"
+    id="modified-unique-id-specialty"
   >
-    catégorie spécialité
+    Modified specialty
   </p>
-  <p
-    class="
-      mb-0
-      text-body-2
-      user-information-summary__profil
-    "
-    id="user-information-summary-id-profil"
-  >
-    profil
-  </p>
+  <!-- v-if -->
   <p
     class="
       mb-0
       text-body-2
       user-information-summary__office
     "
-    id="user-information-summary-id-office"
+    id="modified-unique-id-office"
   >
-    nom cabinet
+    Modified office
   </p>
   <p
     class="
@@ -62,9 +53,9 @@ exports[`UserInformationSummary > render correctly 1`] = `
       text-body-2
       user-information-summary__address-1
     "
-    id="user-information-summary-id-address-line-1"
+    id="modified-unique-id-address-line-1"
   >
-    adresse ligne 1
+    modified-address-line-1
   </p>
   <p
     class="
@@ -72,9 +63,11 @@ exports[`UserInformationSummary > render correctly 1`] = `
       text-body-2
       user-information-summary__address-2
     "
-    id="user-information-summary-id-address-line-2"
+    id="modified-unique-id-address-line-2"
   >
-    adresse ligne 2
+    modified-address-line-2
   </p>
 </div>
 `;
+
+exports[`UserInformationSummary > Snapshots > renders the component with only required properties filled in 1`] = `<!-- v-if -->`;
