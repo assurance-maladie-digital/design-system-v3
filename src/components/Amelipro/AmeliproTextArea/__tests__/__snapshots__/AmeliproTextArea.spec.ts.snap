@@ -26,18 +26,21 @@ exports[`AmeliproTextArea > render correctly 1`] = `
       <!-- v-if -->
     </label>
   </div>
-  <div class="
-    amelipro-textarea-input
-    v-input
-    v-input--density-default
-    v-input--horizontal
-    v-locale--is-ltr
-    v-text-field
-    v-textarea
-    v-textarea--auto-grow
-    v-textarea--no-resize
-    v-theme--light
-  ">
+  <div
+    class="
+      amelipro-textarea-input
+      v-input
+      v-input--density-default
+      v-input--horizontal
+      v-locale--is-ltr
+      v-text-field
+      v-textarea
+      v-textarea--auto-grow
+      v-textarea--no-resize
+      v-theme--light
+    "
+    style="--v-textarea-scroll-bar-width: 0px;"
+  >
     <!---->
     <div class="v-input__control">
       <div class="
