@@ -563,6 +563,9 @@
 				:persistent-placeholder="props.persistentPlaceholder"
 				:hint="props.hint || locales.numberHint"
 				class="number-field"
+        :class="{
+					'sy-hide-detail': props.hideDetails,
+				}"
 				:display-asterisk="false"
 				:aria-describedby="numberFieldErrorId + ' ' + numberFieldWarningId + ' ' + numberFieldSuccessId"
 				:show-success-messages="false"
@@ -750,6 +753,10 @@
 	:deep(.v-messages) {
 		opacity: 1;
 	}
+}
+
+.sy-hide-detail {
+  padding-top: 22px;
 }
 
 .sy-number-errors,
