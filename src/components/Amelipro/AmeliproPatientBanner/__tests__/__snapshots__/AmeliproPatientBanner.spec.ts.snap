@@ -1,0 +1,285 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproPatientBanner > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-patient-banner
+    bg-ap-white
+    d-flex
+    justify-center
+    px-8
+    py-4
+    w-100
+  "
+  id="modified-unique-id-container"
+  style="position: relative;"
+>
+  <div
+    class="amelipro-patient-banner__content"
+    id="modified-unique-id-wrapper"
+    style="width: 100%;"
+  >
+    <div class="
+      align-center
+      d-flex
+      justify-space-between
+    ">
+      <div
+        class="
+          align-center
+          amelipro-patient-banner__patient-infos
+          d-inline-flex
+          flex-wrap
+        "
+        id="modified-unique-id-patient-infos"
+      >
+        <p
+          class="
+            amelipro-patient-banner__patient-info__name
+            mb-4
+            mb-md-0
+          "
+          id="modified-unique-id-identity"
+        >
+          <span class="
+            d-block
+            d-sm-inline
+            font-weight-bold
+            text-h3
+          ">
+            Modified name
+          </span>
+          né(e)
+          <span>
+            Modified birth name
+          </span>
+          le Modified birthdate
+        </p>
+        <!-- v-if -->
+      </div>
+      <p
+        class="
+          amelipro-patient-banner__patient-info__doctor
+          font-weight-bold
+          mb-0
+          text-ap-blue-darken-1
+        "
+        id="modified-unique-id-patient-doctor-infos"
+      >
+        Modified doctor infos
+      </p>
+    </div>
+    <hr class="patient-banner__separator" />
+    <div
+      class="
+        align-center
+        d-flex
+        patient-banner-main
+      "
+      id="modified-unique-id-main-content"
+    >
+      <div class="
+        d-flex
+        flex-column
+        flex-sm-row
+      ">
+        <div class="mr-16">
+          <p
+            class="
+              font-weight-regular
+              mb-4
+              text-h5
+            "
+            id="modified-unique-id-patient-status"
+          >
+            Statut :
+            <span class="font-weight-bold">
+              Modified status
+            </span>
+          </p>
+          <p
+            class="
+              font-weight-regular
+              mb-4
+              mb-md-0
+            "
+            id="modified-unique-id-patient-number"
+          >
+            NIR :
+            <span class="font-weight-bold">
+              Modified XXXXXXXXX
+            </span>
+          </p>
+        </div>
+        <div class="mr-3">
+          <p
+            class="
+              font-weight-bold
+              mb-4
+            "
+            id="modified-unique-id-patient-system"
+          >
+            Modified system
+          </p>
+          <p
+            class="
+              font-weight-bold
+              mb-4
+              mb-md-0
+            "
+            id="modified-unique-id-patient-organism"
+          >
+            Modified organism
+          </p>
+        </div>
+      </div>
+      <!-- v-if -->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AmeliproPatientBanner > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-patient-banner
+    bg-ap-white
+    d-flex
+    justify-center
+    px-8
+    py-4
+    w-100
+  "
+  style="position: relative;"
+>
+  <div
+    class="amelipro-patient-banner__content"
+    style="width: 100%;"
+  >
+    <div class="
+      align-center
+      d-flex
+      justify-space-between
+    ">
+      <div class="
+        align-center
+        amelipro-patient-banner__patient-infos
+        d-inline-flex
+        flex-wrap
+      ">
+        <p class="
+          amelipro-patient-banner__patient-info__name
+          mb-4
+          mb-md-0
+        ">
+          <span class="
+            d-block
+            d-sm-inline
+            font-weight-bold
+            text-h3
+          "></span>
+          né(e)
+          <!-- v-if -->
+          le
+        </p>
+        <amelipro-btn-stub
+          badge="false"
+          badgebgcolor="ap-pink"
+          badgecolor="ap-white"
+          bordered="false"
+          class="
+            amelipro-patient-banner__patient-change__btn
+            mb-4
+            mb-md-0
+            mx-4
+            text-none
+          "
+          color="ap-blue-darken-1"
+          disabled="false"
+          hovercolor="ap-blue-darken-2"
+          hoverunderline="true"
+          iconbgcolor="transparent"
+          iconbordered="false"
+          iconleft="false"
+          infoblock="false"
+          minheight="2.5rem"
+          size="60px"
+          text="true"
+          textcolor="ap-white"
+          type="button"
+          underline="false"
+        ></amelipro-btn-stub>
+      </div>
+      <p class="
+        amelipro-patient-banner__patient-info__doctor
+        font-weight-bold
+        mb-0
+        text-ap-blue-darken-1
+      "></p>
+    </div>
+    <hr class="patient-banner__separator" />
+    <div class="
+      align-center
+      d-flex
+      justify-space-between
+      patient-banner-main
+    ">
+      <div class="
+        d-flex
+        flex-column
+        flex-sm-row
+      ">
+        <div class="mr-16">
+          <p class="
+            font-weight-regular
+            mb-4
+            text-h5
+          ">
+            Statut :
+            <span class="font-weight-bold"></span>
+          </p>
+          <p class="
+            font-weight-regular
+            mb-4
+            mb-md-0
+          ">
+            NIR :
+            <span class="font-weight-bold"></span>
+          </p>
+        </div>
+        <div class="mr-3">
+          <p class="
+            font-weight-bold
+            mb-4
+          "></p>
+          <p class="
+            font-weight-bold
+            mb-4
+            mb-md-0
+          "></p>
+        </div>
+      </div>
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="true"
+        color="ap-white"
+        disabled="false"
+        hovercolor="ap-blue-lighten-3"
+        hoverunderline="false"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="false"
+        textcolor="ap-blue-darken-1"
+        type="button"
+        underline="false"
+      ></amelipro-btn-stub>
+    </div>
+  </div>
+</div>
+`;
