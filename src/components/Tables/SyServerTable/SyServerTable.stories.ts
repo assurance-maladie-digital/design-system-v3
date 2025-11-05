@@ -4920,7 +4920,7 @@ export const ExpandableRows: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { SyServerTable, mdiChevronDown, mdiChevronUp },
+			components: { SyServerTable },
 			setup() {
 				const totalUsers = ref(0)
 				const users = ref<User[]>([])
