@@ -1,0 +1,71 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproTooltips > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="amelipro-tooltip"
+  id="modified-unique-id-container"
+>
+  <v-tooltip-stub
+    activatorprops="[object Object]"
+    attach="false"
+    closeonback="false"
+    closeoncontentclick="false"
+    contained="false"
+    contentclass="tooltip-modified-unique-id-js bg-ap-blue"
+    disabled="false"
+    eager="true"
+    id="modified-unique-id"
+    interactive="false"
+    location="end"
+    locationstrategy="connected"
+    maxwidth="300px"
+    minwidth="0"
+    modelvalue="false"
+    noclickanimation="false"
+    offset="10"
+    openonclick="false"
+    openonhover="true"
+    origin="auto"
+    right=""
+    scrim="false"
+    scrollstrategy="reposition"
+    sticktotarget="false"
+    zindex="2000"
+  ></v-tooltip-stub>
+</div>
+`;
+
+exports[`AmeliproTooltips > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="amelipro-tooltip"
+  id="required-unique-id-container"
+>
+  <v-tooltip-stub
+    activatorprops="[object Object]"
+    attach="false"
+    closeonback="false"
+    closeoncontentclick="false"
+    contained="false"
+    contentclass="tooltip-required-unique-id-js bg-ap-white"
+    disabled="false"
+    eager="true"
+    id="required-unique-id"
+    interactive="false"
+    location="end"
+    locationstrategy="connected"
+    maxwidth="300px"
+    minwidth="0"
+    modelvalue="false"
+    noclickanimation="false"
+    offset="10"
+    openonclick="false"
+    openonhover="true"
+    origin="auto"
+    right=""
+    scrim="false"
+    scrollstrategy="reposition"
+    sticktotarget="false"
+    zindex="2000"
+  ></v-tooltip-stub>
+</div>
+`;
