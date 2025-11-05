@@ -34,7 +34,7 @@ export const Optimisation = {
 				return {}
 			},
 			template: `
-              <v-expansion-panels class="mt-4">
+              <v-expansion-panels class="mt-6">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
                     <p class="text-h5 text-primary">Ajout d'une optimisation</p>
