@@ -28,40 +28,40 @@ export function useMonthButtonCustomization(
 		switch (lowerMonth) {
 			case 'january':
 			case 'janvier':
-				return 'Janv.'
+				return 'janv.'
 			case 'february':
 			case 'février':
-				return 'Févr.'
+				return 'févr.'
 			case 'march':
 			case 'mars':
-				return 'Mars'
+				return 'mars'
 			case 'april':
 			case 'avril':
-				return 'Avr.'
+				return 'avr.'
 			case 'may':
 			case 'mai':
-				return 'Mai'
+				return 'mai'
 			case 'june':
 			case 'juin':
-				return 'Juin'
+				return 'juin'
 			case 'july':
 			case 'juillet':
-				return 'Juil.'
+				return 'juil.'
 			case 'august':
 			case 'août':
-				return 'Août'
+				return 'août'
 			case 'september':
 			case 'septembre':
-				return 'Sept.'
+				return 'sept.'
 			case 'october':
 			case 'octobre':
-				return 'Oct.'
+				return 'oct.'
 			case 'november':
 			case 'novembre':
-				return 'Nov.'
+				return 'nov.'
 			case 'december':
 			case 'décembre':
-				return 'Déc.'
+				return 'déc.'
 			default:
 				// Si le mois n'est pas reconnu, retourner le mois avec la première lettre en majuscule
 				return monthName.charAt(0).toUpperCase() + monthName.slice(1)
