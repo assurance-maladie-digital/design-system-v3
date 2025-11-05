@@ -1229,8 +1229,4 @@
 	padding: 13px;
 }
 
-:deep(.v-date-picker-month__day--selected) {
-	background-color: red !important;
-}
-
 </style>
