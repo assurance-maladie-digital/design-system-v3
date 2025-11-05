@@ -1177,7 +1177,6 @@
 
 :deep(.v-field--focused) {
 	opacity: 1 !important;
-
 	--v-medium-emphasis-opacity: 1;
 }
 
@@ -1228,4 +1227,9 @@
 :deep(.v-btn--variant-text .v-btn__overlay) {
 	padding: 13px;
 }
+
+:deep(.v-date-picker-month__day--selected) {
+		background-color: red !important;
+}
+
 </style>
