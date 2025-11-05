@@ -606,6 +606,9 @@
 				:has-success="hasKeySuccess"
 				:aria-invalid="ariaInvalidKey"
 				class="key-field"
+				:class="{
+					'sy-hide-detail': props.hideDetails,
+				}"
 				:display-asterisk="false"
 				:aria-describedby="keyFieldErrorId + ' ' + keyFieldWarningId + ' ' + keyFieldSuccessId"
 				:show-success-messages="false"
@@ -756,7 +759,7 @@
 }
 
 .sy-hide-detail {
-	padding-top: 22px;
+	padding-bottom: 6px;
 }
 
 .sy-number-errors,
