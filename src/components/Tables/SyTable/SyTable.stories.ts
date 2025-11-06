@@ -84,6 +84,13 @@ const meta = {
 			},
 			required: true,
 		},
+		showExpand: {
+			description: 'Affiche une colonne permettant d\'étendre les lignes pour afficher du contenu supplémentaire',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+			},
+		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
 			control: { type: 'boolean' },
@@ -3182,6 +3189,7 @@ export const ExpandableRows: Story = {
 			itemsPerPage: 4,
 		},
 		'caption': '',
+		'showExpand': true,
 		'suffix': 'expandable-table',
 		'density': 'default',
 		'striped': false,
@@ -3197,7 +3205,6 @@ export const ExpandableRows: Story = {
               <SyTable
                   v-model:options="args.options"
                   v-bind="args"
-                  show-expand
                   caption="Tableau complexe"
                   suffix="expand-table"
               >

@@ -106,6 +106,13 @@ const meta = {
 			description: 'Texte de la légende du tableau',
 			control: { type: 'text' },
 		},
+		showExpand: {
+			description: 'Affiche une colonne permettant d\'étendre les lignes pour afficher du contenu supplémentaire',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+			},
+		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
 			control: { type: 'boolean' },
@@ -4913,6 +4920,7 @@ export const ExpandableRows: Story = {
 		],
 		'caption': '',
 		'serverItemsLength': 15,
+		'showExpand': true,
 		'suffix': 'server-expandable',
 		'density': 'default',
 		'striped': false,
@@ -5003,7 +5011,6 @@ export const ExpandableRows: Story = {
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
 					v-bind="args"
-                    show-expand
                     caption="Tableau complexe"
                     suffix="server-expandable"
 					@update:options="fetchData"
