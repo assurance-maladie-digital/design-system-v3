@@ -130,8 +130,10 @@
 		}
 	})
 
+	const emit = defineEmits(['click', 'change:sort-select', 'change:pagination-select', 'open-close'])
 	const openClose = (id: number): void => {
 		openId.value = openId.value === String(id) ? null : String(id)
+		emit('open-close', id, openId.value)
 	}
 
 	const hideSelectLabel = (): void => {
@@ -141,7 +143,6 @@
 		}
 	}
 
-	const emit = defineEmits(['click', 'change:sort-select', 'change:pagination-select'])
 	const emitClickEvent = (newCurrentPage: number): void => {
 		emit('click')
 		if (newCurrentPage !== null && newCurrentPage !== undefined) {

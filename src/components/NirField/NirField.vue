@@ -563,6 +563,9 @@
 				:persistent-placeholder="props.persistentPlaceholder"
 				:hint="props.hint || locales.numberHint"
 				class="number-field"
+				:class="{
+					'sy-hide-detail': props.hideDetails,
+				}"
 				:display-asterisk="false"
 				:aria-describedby="numberFieldErrorId + ' ' + numberFieldWarningId + ' ' + numberFieldSuccessId"
 				:show-success-messages="false"
@@ -603,6 +606,9 @@
 				:has-success="hasKeySuccess"
 				:aria-invalid="ariaInvalidKey"
 				class="key-field"
+				:class="{
+					'sy-hide-detail': props.hideDetails,
+				}"
 				:display-asterisk="false"
 				:aria-describedby="keyFieldErrorId + ' ' + keyFieldWarningId + ' ' + keyFieldSuccessId"
 				:show-success-messages="false"
@@ -750,6 +756,10 @@
 	:deep(.v-messages) {
 		opacity: 1;
 	}
+}
+
+.sy-hide-detail {
+	padding-bottom: 6px;
 }
 
 .sy-number-errors,

@@ -71,6 +71,8 @@
 		}
 		autoClamp?: boolean
 		isValidateOnBlur?: boolean
+		hint?: string
+		persistentHint?: boolean
 	}>(), {
 		modelValue: undefined,
 		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
@@ -108,6 +110,8 @@
 		period: () => ({ min: '', max: '' }),
 		autoClamp: false,
 		isValidateOnBlur: true,
+		hint: undefined,
+		persistentHint: false,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -597,9 +601,8 @@
 		}
 	}
 
-	// Fonction pour mettre à jour le mois
+	// Fonction pour mettre à jour le mois quand on navigue via les flèches
 	const onUpdateMonth = (month: string) => {
-		// Éviter les mises à jour inutiles si le mois n'a pas changé
 		if (currentMonth.value === month) return
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
@@ -612,14 +615,12 @@
 		})
 	}
 
-	// Fonction pour mettre à jour l'année
+	// Fonction pour mettre à jour l'année quand on navigue via les flèches
 	const onUpdateYear = (year: string) => {
 		currentYear.value = year
 		currentYearName.value = year
-		markHolidayDays()
 
 		handleYearUpdate()
-		handleMonthUpdate()
 		nextTick(() => {
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
@@ -685,6 +686,8 @@
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
 		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
 		() => props.isBirthDate || props.birthDate,
+		// Fonction qui retourne l'état de la date sélectionnée
+		() => selectedDates.value,
 	)
 
 	const handleInputBlur = () => {
@@ -697,6 +700,8 @@
 
 	watch(isDatePickerVisible, async (isVisible) => {
 		if (isVisible) {
+			// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
+			resetViewMode()
 			// Marquer les jours fériés lorsque le calendrier devient visible
 			markHolidayDays()
 		}
@@ -804,6 +809,17 @@
 		}
 	}, { immediate: true })
 
+	// Reset month/year names when clearing the date
+	watch(selectedDates, (newValue) => {
+		if (!newValue) {
+			const today = new Date()
+			currentMonth.value = today.getMonth().toString()
+			currentMonthName.value = dayjs(today).format('MMMM')
+			currentYear.value = today.getFullYear().toString()
+			currentYearName.value = today.getFullYear().toString()
+		}
+	})
+
 	const toggleDatePicker = () => {
 		if (props.disabled || props.readonly) return
 
@@ -892,7 +908,7 @@
 				:no-icon="props.noIcon"
 				:is-outlined="props.isOutlined"
 				:readonly="props.readonly"
-				:title="props.title || undefined"
+				:title="props.title || props.placeholder || undefined"
 				:width="props.width"
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
@@ -903,6 +919,8 @@
 				:auto-clamp="props.autoClamp"
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
+				:hint="props.hint"
+				:persistent-hint="props.persistentHint"
 				@update:model-value="handleDateTextInputUpdate"
 				@date-selected="handleDateTextInputSelection"
 				@blur="handleInputBlur"
@@ -938,12 +956,14 @@
 				:show-week-number="props.showWeekNumber"
 				:is-birth-date="props.isBirthDate || props.birthDate"
 				:text-field-activator="props.textFieldActivator"
-				:title="props.title || undefined"
+				:title="props.title || props.placeholder || undefined"
 				:period="period"
 				:auto-clamp="props.autoClamp"
 				:label="props.label"
 				:placeholder="props.placeholder"
 				:is-validate-on-blur="props.isValidateOnBlur"
+				:hint="props.hint"
+				:persistent-hint="props.persistentHint"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -992,7 +1012,9 @@
 						:display-asterisk="props.displayAsterisk"
 						:is-clearable="!props.readonly"
 						:auto-clamp="props.autoClamp"
-						:title="props.title || undefined"
+						:title="props.title || props.placeholder || undefined"
+						:hint="props.hint"
+						:persistent-hint="props.persistentHint"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
@@ -1206,4 +1228,5 @@
 :deep(.v-btn--variant-text .v-btn__overlay) {
 	padding: 13px;
 }
+
 </style>

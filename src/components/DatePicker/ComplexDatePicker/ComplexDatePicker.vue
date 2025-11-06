@@ -49,12 +49,12 @@
 		}
 	}
 
-	const unifyAfterCalendarUpdate = async () => {
-		if (!isDatePickerVisible.value) return
-		await nextTick()
-		customizeMonthButton()
-		markHolidayDays()
-	}
+	// const unifyAfterCalendarUpdate = async () => {
+	// 	if (!isDatePickerVisible.value) return
+	// 	await nextTick()
+	// 	customizeMonthButton()
+	// 	markHolidayDays()
+	// }
 
 	/**
 	 * Calendar current month / year
@@ -64,14 +64,21 @@
 	const currentMonthName = ref<string | null>(null)
 	const currentYearName = ref<string | null>(null)
 
+	// Fonction pour mettre à jour le mois quand on navigue via les flèches
 	const onUpdateMonth = (month: string) => {
 		if (currentMonth.value === month) return
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
 		handleMonthUpdate()
-		unifyAfterCalendarUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
 	}
 
+	// Fonction pour mettre à jour l'année quand on navigue via les flèches
 	const onUpdateYear = (year: string) => {
 		const oldYear = currentYear.value
 		currentYear.value = year
@@ -92,8 +99,12 @@
 		}
 
 		handleYearUpdate()
-		handleMonthUpdate()
-		unifyAfterCalendarUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
 	}
 
 	/**
@@ -140,6 +151,8 @@
 			autoClamp?: boolean
 			isValidateOnBlur?: boolean
 			density?: 'default' | 'comfortable' | 'compact'
+			hint?: string
+			persistentHint?: boolean
 		}>(),
 		{
 			modelValue: undefined,
@@ -176,6 +189,8 @@
 			label: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 			isValidateOnBlur: true,
 			density: 'default',
+			hint: undefined,
+			persistentHint: false,
 		},
 	)
 
@@ -410,6 +425,12 @@
 		else {
 			updateModel(null)
 			textInputValue.value = ''
+			// Reset month/year names when clearing the date
+			const today = new Date()
+			currentMonth.value = today.getMonth().toString()
+			currentMonthName.value = dayjs(today).format('MMMM')
+			currentYear.value = today.getFullYear().toString()
+			currentYearName.value = today.getFullYear().toString()
 		}
 	})
 
@@ -636,7 +657,10 @@
 	 * View mode handling
 	 */
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode }
-		= useDatePickerViewMode(() => props.isBirthDate || props.birthDate)
+		= useDatePickerViewMode(
+			() => props.isBirthDate || props.birthDate,
+			() => selectedDates.value,
+		)
 
 	/**
 	 * Manual input validation on blur
@@ -736,6 +760,8 @@
 		isDatePickerVisible,
 		(visible) => {
 			if (visible) {
+				// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
+				resetViewMode()
 				nextTick(() => {
 					customizeMonthButton()
 					markHolidayDays()
@@ -934,7 +960,9 @@
 				:external-error-messages="errorMessages"
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
-				:title="props.title || undefined"
+				:title="props.title || props.placeholder || undefined"
+				:hint="props.hint"
+				:persistent-hint="props.persistentHint"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
@@ -964,7 +992,7 @@
 						:required="props.required"
 						:disabled="props.disabled"
 						:readonly="props.readonly"
-						:title="props.title || undefined"
+						:title="props.title || props.placeholder || undefined"
 						:is-outlined="props.isOutlined"
 						:display-icon="props.displayIcon"
 						:display-append-icon="props.displayAppendIcon"
@@ -984,6 +1012,8 @@
 						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
 						:density="props.density"
+						:hint="props.hint"
+						:persistent-hint="props.persistentHint"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
@@ -1015,6 +1045,8 @@
 					:is-validate-on-blur="props.isValidateOnBlur"
 					:error-messages="errorMessages"
 					:density="props.density"
+					:hint="props.hint"
+					:persistent-hint="props.persistentHint"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"
