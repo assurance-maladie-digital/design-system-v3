@@ -43,8 +43,9 @@ export const Optimisation = {
                     <table>
                       <thead>
                       <tr style="background-color: rgb(12 65 154 / 10%)">
-                      <th style="width: 60%">Description</th>
-                      <th>Action</th>
+                          <th style="width: 60%">Description</th>
+                          <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
@@ -85,14 +86,15 @@ export const AjoutFonctionnalite = {
                     <table>
                       <thead>
                       <tr style="background-color: rgb(12 65 154 / 10%)">
-                      <th style="width: 60%">Description</th>
-                      <th>Action</th>
+                          <th style="width: 60%">Description</th>
+                          <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
                             <td style="padding: 5px">Le Studio Design conçoit et fabrique entièrement une nouvelle fonctionnalité dans l'API du composant. Si le besoin concerne l'enrichissement d'une fonctionnalité déjà existante, merci d'utiliser le parcours "déclinaison d'une fonctionnalité".
                               Cette demande doit être justifiée par un besoin du métier et soumise à l'accord du chef de projet du projet associée.<br/>
-                              Pour être recevable, les <a style="text-decoration: none; color: rgb(2, 156, 253);" href="#" target="_self">critères d'acceptabilité</a> de la nouvelle fonctionnalité sont respectés.</td>
+                              Pour être recevable, les <a style="text-decoration: none; color: rgb(2, 156, 253);" href="#exigences" target="_self">critères d'acceptabilité</a> de la nouvelle fonctionnalité sont respectés.</td>
                             <td style="text-align: center;">
                               <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=feature_new.md" target="_blank">
                                 Proposer une nouvelle fonctionnalité
@@ -127,13 +129,14 @@ export const DeclinaisonFonctionnalite = {
                     <table>
                       <thead>
                       <tr style="background-color: rgb(12 65 154 / 10%)">
-                      <th style="width: 60%">Description</th>
-                      <th>Action</th>
+                          <th style="width: 60%">Description</th>
+                          <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
                             <td style="padding: 5px">Le Studio Design améliore une fonctionnalité existante d'un composant.<br/>
-                              Pour être recevable, les <a style="text-decoration: none; color: rgb(2, 156, 253);" href="#" target="_self">critères d'acceptabilité</a> de la nouvelle fonctionnalité sont respectés.</td>
+                              Pour être recevable, les <a style="text-decoration: none; color: rgb(2, 156, 253);" href="#exigences" target="_self">critères d'acceptabilité</a> de la nouvelle fonctionnalité sont respectés.</td>
                             <td style="text-align: center;">
                               <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=feature_declinaison.md" target="_blank">
                                 Proposer une déclinaison de fonctionnalité
@@ -168,13 +171,14 @@ export const CreationComposant = {
                     <table>
                       <thead>
                       <tr style="background-color: rgb(12 65 154 / 10%)">
-                      <th style="width: 60%">Description</th>
-                      <th>Action</th>
+                          <th style="width: 60%">Description</th>
+                          <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
                             <td style="padding: 5px">Le Studio Design conçoit et fabrique entièrement le composant et la documentation associée. Il met à disposition sa maquette à destination des designers sur l'outil de maquettage Figma.<br/>
-                              Pour être recevable, les <a style="text-decoration: none; color: rgb(2, 156, 253);" href="#" target="_self">critères d'acceptabilité</a> du nouveau composant sont respectés.</td>
+                              Pour être recevable, les <a style="text-decoration: none; color: rgb(2, 156, 253);" href="#exigences" target="_self">critères d'acceptabilité</a> du nouveau composant sont respectés.</td>
                             <td style="text-align: center;">
                               <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=component_new.md" target="_blank">
                                 Proposer la création d'un composant
@@ -209,13 +213,14 @@ export const IntegrationComposant = {
                     <table>
                       <thead>
                       <tr style="background-color: rgb(12 65 154 / 10%)">
-                      <th style="width: 60%">Description</th>
-                      <th>Action</th>
+                          <th style="width: 60%">Description</th>
+                          <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
                             <td style="padding: 5px">Le composant est fabriqué en VueJS 3 et sur Figma par un projet puis intégré par le Studio Design dans le design system.<br/>Le Studio Design se charge de fabriquer la documentation associée.<br/>
-                              Pour être recevable, les <a style="text-decoration: none; color: rgb(2, 156, 253);" href="#" target="_self">critères d'acceptabilité</a> du nouveau composant sont respectés.</td>
+                              Pour être recevable, les <a style="text-decoration: none; color: rgb(2, 156, 253);" href="#exigences" target="_self">critères d'acceptabilité</a> du nouveau composant sont respectés.</td>
                             <td style="text-align: center;">
                               <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=component_integration.md" target="_blank">
                                 Proposer l'intégration d'un composant
