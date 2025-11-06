@@ -123,8 +123,8 @@
 	}
 
 	const fieldWidth = computed(() => props.width || '100%')
-	const nirFieldWidth = computed(() => props.clearable ? '0 0 calc(70% - 8px)' : '0 0 calc(72% - 8px)')
-	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(29% - 8px)' : '0 0 calc(25% - 8px)')
+	const nirFieldWidth = computed(() => props.clearable ? '0 0 calc(68% - 8px)' : '0 0 calc(68% - 8px)')
+	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(32% - 8px)' : '0 0 calc(32% - 8px)')
 
 	const fieldId = useId()
 	const numberFieldErrorId = `nir-number-error-${fieldId}`
@@ -543,7 +543,8 @@
 				v-maska="numberMask"
 				:label="numberLabelWithAsterisk"
 				:variant-style="props.variant"
-				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'info' : undefined"
+				:append-inner-icon="numberValue && hasNumberSuccess ? 'success' : undefined"
+				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'success' : undefined"
 				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
 				:append-tooltip="nirTooltip && nirTooltipPosition === 'append' ? nirTooltip : undefined"
@@ -586,6 +587,7 @@
 				v-maska="keyMask"
 				:label="keyLabelWithAsterisk"
 				:variant-style="props.variant"
+				:append-inner-icon="keyValue && hasKeySuccess ? 'success' : undefined"
 				:prepend-icon="keyTooltip && keyTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="keyTooltip && keyTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
@@ -708,6 +710,7 @@
 	gap: 0 16px;
 	align-items: flex-start;
 	box-sizing: border-box;
+	
 }
 
 .nir-field--fieldset legend {
@@ -718,11 +721,11 @@
 
 /* Styles pour le mode standard (div) */
 .nir-field:not(.nir-field--fieldset) .number-field-container {
-	flex: 0 0 calc(75% - 8px);
+	flex: 0 0 calc(68% - 8px);
 }
 
 .nir-field:not(.nir-field--fieldset) .key-field-container {
-	flex: 0 0 calc(25% - 8px);
+	flex: 0 0 calc(32% - 8px);
 }
 
 /* Styles pour le mode fieldset */
