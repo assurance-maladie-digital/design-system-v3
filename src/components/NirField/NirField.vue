@@ -36,7 +36,8 @@
 		variant?: 'filled' | 'outlined' | 'plain' | 'underlined' | 'solo'
 		clearable?: boolean
 		counter?: boolean | number | string
-		hint?: string
+		numberHint?: string
+		keyHint?: string
 		persistentHint?: boolean
 		persistentPlaceholder?: boolean
 		disableErrorHandling?: boolean
@@ -71,7 +72,8 @@
 		variant: 'outlined',
 		clearable: false,
 		counter: false,
-		hint: undefined,
+		numberHint: undefined,
+		keyHint: undefined,
 		persistentHint: false,
 		persistentPlaceholder: false,
 		disableErrorHandling: false,
@@ -560,9 +562,9 @@
 				:readonly="props.readonly"
 				:clearable="props.clearable"
 				:counter="props.counter"
+				:hint="props.numberHint || locales.numberHint"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
-				:hint="props.hint || locales.numberHint"
 				class="number-field"
 				:class="{
 					'sy-hide-detail': props.hideDetails,
@@ -589,7 +591,6 @@
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
 				:append-tooltip="keyTooltip && keyTooltipPosition === 'append' ? keyTooltip : undefined"
 				:error="keyValidation.errors.value.length > 0"
-				:hint="props.hint || locales.keyHint"
 				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
@@ -599,6 +600,7 @@
 				:readonly="props.readonly"
 				:clearable="props.clearable"
 				:counter="props.counter"
+				:hint="props.keyHint || locales.keyHint"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
 				:aria-required="ariaRequired"
