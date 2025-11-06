@@ -560,7 +560,7 @@
 				:readonly="props.readonly"
 				:clearable="props.clearable"
 				:counter="props.counter"
-        :persistent-hint="props.persistentHint"
+				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
 				:hint="props.hint || locales.numberHint"
 				class="number-field"
