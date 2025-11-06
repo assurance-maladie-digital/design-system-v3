@@ -295,8 +295,17 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
-		hint: {
-			description: 'Texte d\'aide affiché sous le champ.',
+		keyHint: {
+			description: 'Texte d\'aide affiché sous le champ clé.',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		numberHint: {
+			description: 'Texte d\'aide affiché sous le champ numero de sécurité sociale.',
 			control: 'text',
 			table: {
 				type: {

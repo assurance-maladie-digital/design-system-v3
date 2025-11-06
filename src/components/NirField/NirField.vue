@@ -36,7 +36,7 @@
 		variant?: 'filled' | 'outlined' | 'plain' | 'underlined' | 'solo'
 		clearable?: boolean
 		counter?: boolean | number | string
-		hint?: string
+		keyHint?: string
 		numberHint?: string
 		persistentHint?: boolean
 		persistentPlaceholder?: boolean
@@ -72,7 +72,7 @@
 		variant: 'outlined',
 		clearable: false,
 		counter: false,
-		hint: undefined,
+		keyHint: undefined,
 		numberHint: undefined,
 		persistentHint: false,
 		persistentPlaceholder: false,
@@ -588,7 +588,7 @@
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
 				:append-tooltip="keyTooltip && keyTooltipPosition === 'append' ? keyTooltip : undefined"
 				:error="keyValidation.errors.value.length > 0"
-				:hint="props.hint || locales.keyHint"
+				:hint="props.keyHint || locales.keyHint"
 				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
