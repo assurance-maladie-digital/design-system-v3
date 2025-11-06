@@ -274,7 +274,7 @@
 	const hasWarning = computed(() => validation.hasWarning.value || props.hasWarning)
 	const hasSuccess = computed(() => (validation.hasSuccess.value && !hasError.value && !hasWarning.value) || props.hasSuccess)
 
-	const errors = computed(() => validation.errors.value)
+	const errors = computed(() => [...validation.errors.value, ...(props.errorMessages || [])])
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
 

@@ -6,6 +6,10 @@
 		src?: string | null
 		locales: typeof defaultLocales
 	}>()
+
+	defineEmits<{
+		(e: 'imageError'): void
+	}>()
 </script>
 
 <template>
@@ -25,11 +29,12 @@
 			width="311"
 			:alt="locales.captchaImgAlt"
 			:src="src as string"
+			@error="$emit('imageError')"
 		>
 	</div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 :deep(.v-skeleton-loader__image) {
 	height: 100%;
 }

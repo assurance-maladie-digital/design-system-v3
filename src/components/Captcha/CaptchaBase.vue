@@ -98,6 +98,9 @@
 				audioElement.value.addEventListener('ended', () => {
 					isPlaying.value = false
 				})
+				audioElement.value.addEventListener('error', () => {
+					onCreateCaptchaError(new Error('Audio failed to load'))
+				})
 
 				emitCreateSuccessEvent()
 				state.value = 'resolved'
