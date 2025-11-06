@@ -66,6 +66,7 @@ export const AnomalieGraphiqueMajeure = {
                       <th style="width: 40%">Description</th>
                       <th>Priorisation dans le backlog</th>
                       <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
@@ -110,6 +111,7 @@ export const AnomalieGraphiqueMineure = {
                       <th style="width: 40%">Description</th>
                       <th>Priorisation dans le backlog</th>
                       <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
@@ -152,6 +154,7 @@ export const AnomalieFonctionnelleMajeure = {
                       <th style="width: 40%">Description</th>
                       <th>Priorisation dans le backlog</th>
                       <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
@@ -196,6 +199,7 @@ export const AnomalieFonctionnelleMineure = {
                       <th style="width: 40%">Description</th>
                       <th>Priorisation dans le backlog</th>
                       <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
@@ -238,6 +242,7 @@ export const AnomalieAccessibilite = {
                       <th style="width: 40%">Description</th>
                       <th>Priorisation dans le backlog</th>
                       <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
@@ -280,10 +285,11 @@ export const AnomalieDocumentaire = {
                       <th style="width: 40%">Description</th>
                       <th>Priorisation dans le backlog</th>
                       <th>Action</th>
+                      </tr>
                       </thead>
                       <tbody>
                           <tr>
-                            <td style="padding: 5px">La documentation technique d'un composant (ou toute autre sources d’information, ex: Figma…) contient une anomalie.</td>
+                            <td style="padding: 5px">La documentation technique d'un composant (ou toute autre sources d'information, ex: Figma…) contient une anomalie.</td>
                             <td style="text-align: center;"><b>Non prioritaire</b></td>
                             <td style="text-align: center;">
                               <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=documentation.md" target="_blank">
