@@ -73,7 +73,7 @@ export const AnomalieGraphique = {
                             <td style="padding: 10px">L'anomalie graphique rend inutilisable le composant concerné.<br/>
                               Le projet est bloqué et ne peut pas mettre en production sans ce correctif.<br/>
                               Si l'anomalie rencontrée ne répond pas à ces critères merci d'utiliser le formulaire dédiée à l'anomalie mineure.</td>
-                            <td style="text-align: center;"><b>Prioritaire</b></td>
+                            <td style="text-align: center;"><b>Majeure</b></td>
                             <td style="text-align: center;">
                               <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_major.md" target="_blank">
                                 Créer un ticket
@@ -87,7 +87,7 @@ export const AnomalieGraphique = {
                           </tr>
                           <tr>
                             <td style="padding: 10px">Une différence existe entre le composant concerné dans sa globalité ou une fonctionnalité spécifique et sa représentation dans le fichier Synapse présent dans l'outil de maquettage Figma.</td>
-                            <td style="text-align: center;"><b>Non prioritaire</b></td>
+                            <td style="text-align: center;"><b>Mineure</b></td>
                             <td style="text-align: center;">
                               <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_minor.md" target="_blank">
                                 Créer un ticket
@@ -134,7 +134,7 @@ export const AnomalieFonctionnelle = {
                           Si l'anomalie rencontrée ne répond pas à ces critères merci d'utiliser le formulaire dédiée à
                           l'anomalie mineure.
                         </td>
-                        <td style="text-align: center;"><b>Prioritaire</b></td>
+                        <td style="text-align: center;"><b>Majeure</b></td>
                         <td style="text-align: center;">
                           <v-btn style="text-decoration: none; color: rgb(2, 156, 253);"
                                  href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_functional_major.md"
@@ -153,7 +153,7 @@ export const AnomalieFonctionnelle = {
                         <td style="padding: 10px">Le composant concerné ou une fonctionnalité spécifique associée
                           contient un bug de fonctionnement qui perturbe la qualité de son utilisation.
                         </td>
-                        <td style="text-align: center;"><b>Non prioritaire</b></td>
+                        <td style="text-align: center;"><b>Mineure</b></td>
                         <td style="text-align: center;">
                           <v-btn style="text-decoration: none; color: rgb(2, 156, 253);"
                                  href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_functional_minor.md"
@@ -199,7 +199,7 @@ export const AnomalieAccessibilite = {
                       <tbody>
                           <tr>
                             <td style="padding: 10px">Le composant concerné ne respecte pas l'accessibilité numérique (RGAA) avec les critères paramétrable au niveau du design system.<br/>Dans le doute, vous pouvez consulter les rapports d'audit disponibles pour chaque composant dans la documentation en ligne présents sur les pages "Accessibilité".</td>
-                            <td style="text-align: center;"><b>Prioritaire</b></td>
+                            <td style="text-align: center;"><b>Majeure</b></td>
                             <td style="text-align: center;">
                               <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility.md" target="_blank">
                                 Créer un ticket
@@ -242,7 +242,7 @@ export const AnomalieDocumentaire = {
                       <tbody>
                           <tr>
                             <td style="padding: 10px">La documentation technique d'un composant (ou toute autre sources d'information, ex: Figma…) contient une anomalie.</td>
-                            <td style="text-align: center;"><b>Non prioritaire</b></td>
+                            <td style="text-align: center;"><b>Mineure</b></td>
                             <td style="text-align: center;">
                               <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=documentation.md" target="_blank">
                                 Créer un ticket
