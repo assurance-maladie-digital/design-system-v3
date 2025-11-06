@@ -3205,6 +3205,7 @@ export const ExpandableRows: Story = {
               <SyTable
                   v-model:options="args.options"
                   v-bind="args"
+                  show-expand
                   caption="Tableau complexe"
                   suffix="expand-table"
               >

@@ -5011,6 +5011,7 @@ export const ExpandableRows: Story = {
 					:server-items-length="totalUsers"
 					:loading="state === StateEnum.PENDING"
 					v-bind="args"
+                    show-expand
                     caption="Tableau complexe"
                     suffix="server-expandable"
 					@update:options="fetchData"
