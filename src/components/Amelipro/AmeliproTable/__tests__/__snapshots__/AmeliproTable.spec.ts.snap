@@ -236,16 +236,16 @@ exports[`AmeliproTable > render correctly 1`] = `
   <div
     class="amelipro-table__wrapper--desktop"
     id="amelipro-table-id-desktop"
-    style="
-      overflow-x: auto;
-      max-width: 100%;
-      width: 100%;
-    "
+    style="overflow-x: auto;"
   >
     <table
       aria-label="Titre du tableau"
       class="amelipro-table__table--desktop"
       id="amelipro-table-id-table"
+      style="
+        max-width: 100%;
+        width: 100%;
+      "
     >
       <thead>
         <tr id="amelipro-table-id-table-header">

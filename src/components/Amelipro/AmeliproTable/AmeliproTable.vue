@@ -248,7 +248,6 @@
 			:id="`${uniqueId}-desktop`"
 			class="amelipro-table__wrapper--desktop"
 			style="overflow-x: auto;"
-			:style="tableWidthStyles"
 		>
 			<table
 				:id="`${uniqueId}-table`"
@@ -257,6 +256,7 @@
 				:class="{
 					'vertical-border': verticalBorder
 				}"
+				:style="tableWidthStyles"
 			>
 				<thead>
 					<tr :id="`${uniqueId}-table-header`">
