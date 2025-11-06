@@ -8,16 +8,9 @@ export default {
 	component: Captcha,
 	parameters: {
 		layout: 'centered',
-		controls: { exclude: ['onUpdate:modelValue', 'onUpdate:type', 'onValidation:click', 'onValidation:success', 'onValidation:error'] },
+		controls: { exclude: ['onUpdate:modelValue', 'onUpdate:type', 'onImageError', 'onAudioError', 'onCreationError'] },
 	},
 	argTypes: {
-		'service': {
-			description: 'Fonction de validation du captcha. Doit retourner une Promise.',
-			control: false,
-			table: {
-				type: { summary: '(value: string, type: "image" | "audio") => Promise<any>' },
-			},
-		},
 		'urlCreate': {
 			description: 'URL de création du captcha (retourne un JSON avec les URLs de l\'image et de l\'audio)',
 			control: false,
@@ -54,11 +47,18 @@ export default {
 				defaultValue: { summary: '"image"' },
 			},
 		},
+		'errorMessage': {
+			description: 'Message d\'erreur personnalisé à afficher sous le champ de captcha.',
+			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
 		'tagTitle': {
 			description: 'Le tag du titre de la section.',
 		},
 		'helpDesk': {
-			description: 'Le numéro d\'aide.',
+			description: 'Le numéro de téléphone du support pour garantir l\'accessibilité du parcours aux personnes en situation de handicap.',
 		},
 		'locales': {
 			description: 'Les locales à utiliser pour le composant. Voir le fichier locales.ts pour l\'exemple des clés disponibles.',
@@ -82,25 +82,25 @@ export default {
 				type: { summary: 'image | audio' },
 			},
 		},
-		'validation:click': {
-			description: 'Événement émis lors du clic sur le bouton de validation.',
+		'imageError': {
+			description: 'Événement émis lorsqu\'il y a une erreur lors du chargement de l\'image du captcha.',
 			control: false,
 			table: {
 				type: { summary: 'void' },
 			},
 		},
-		'validation:success': {
-			description: 'Événement émis lorsque la validation du captcha réussit.',
+		'audioError': {
+			description: 'Événement émis lorsqu\'il y a une erreur lors du chargement de l\'audio du captcha.',
 			control: false,
 			table: {
-				type: { summary: '(response: any) => void' },
+				type: { summary: 'void' },
 			},
 		},
-		'validation:error': {
-			description: 'Événement émis lorsque la validation du captcha échoue.',
+		'creationError': {
+			description: 'Événement émis lorsqu\'il y a une erreur lors de la création du captcha.',
 			control: false,
 			table: {
-				type: { summary: '(error: Error) => void' },
+				type: { summary: 'void' },
 			},
 		},
 	},
@@ -113,9 +113,9 @@ export const Default: Story = {
 	args: {
 		'onUpdate:modelValue': fn(),
 		'onUpdate:type': fn(),
-		'onValidation:click': fn(),
-		'onValidation:success': fn(),
-		'onValidation:error': fn(),
+		'onImageError': fn(),
+		'onAudioError': fn(),
+		'onCreationError': fn(),
 	},
 	render: (args) => {
 		return {
@@ -186,9 +186,9 @@ export const Choice: Story = {
 	args: {
 		'onUpdate:modelValue': fn(),
 		'onUpdate:type': fn(),
-		'onValidation:click': fn(),
-		'onValidation:success': fn(),
-		'onValidation:error': fn(),
+		'onImageError': fn(),
+		'onAudioError': fn(),
+		'onCreationError': fn(),
 		'type': 'choice',
 	},
 	render: (args) => {

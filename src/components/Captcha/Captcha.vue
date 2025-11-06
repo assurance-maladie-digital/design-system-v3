@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause, mdiVolumeHigh } from '@mdi/js'
-	import { type AxiosError, type AxiosResponse } from 'axios'
 	import { ref, watch } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
@@ -15,14 +14,15 @@
 		urlCreate: string
 		urlGetImage: string
 		urlGetAudio: string
-		service: (id: string | null, value: string | null) => Promise<AxiosResponse>
 		modelValue?: string | undefined
+		errorMessage?: string
 		type?: CaptchaType
 		tagTitle?: string
 		helpDesk?: string | false
 		locales?: typeof defaultLocales
 	}>(), {
 		modelValue: undefined,
+		errorMessage: undefined,
 		type: 'image',
 		helpDesk: '3648',
 		tagTitle: 'h3',
@@ -32,15 +32,14 @@
 	const emit = defineEmits<{
 		(e: 'update:modelValue', modelValue: string | null): void
 		(e: 'update:type', type: CaptchaType): void
-		(e: 'validation:click', payload: { captchaId: string | null, captchaValue: string | null }): void
-		(e: 'validation:success', response: AxiosResponse): void
-		(e: 'validation:error', error: unknown): void
+		(e: 'imageError'): void
+		(e: 'audioError'): void
+		(e: 'creationError'): void
 	}>()
 	const text = ref<string | null>(null)
 	const type = ref<CaptchaType>(props.type)
 	const id = ref<string | null>(null)
 	const state = ref<StateType>('idle')
-	const errorMessage = ref<string | null>(null)
 	const captchaValid = ref<boolean>(false)
 
 	watch(() => props.modelValue, (val) => {
@@ -57,30 +56,8 @@
 		}
 	})
 
-	async function submitForm() {
-		emitValidateEvent()
-
-		if (!props.service) return
-
-		errorMessage.value = null
-		state.value = 'pending'
-
-		try {
-			const res = await props.service(id.value, text.value)
-			state.value = 'resolved'
-			captchaValid.value = true
-			emit('validation:success', res)
-		}
-		catch (error) {
-			state.value = 'rejected'
-			errorMessage.value = (error as AxiosError<{ message: string }>).response?.data?.message ?? 'Erreur inconnue'
-			emit('validation:error', error)
-		}
-	}
-
 	function createCaptchaInit() {
 		text.value = null
-		errorMessage.value = null
 	}
 
 	function createCaptchaSuccess(captchaId: string | null) {
@@ -95,12 +72,15 @@
 		emit('update:type', type.value)
 	}
 
-	function emitValidateEvent() {
-		emit('validation:click', {
-			captchaId: id.value,
-			captchaValue: text.value,
-		})
+	function emitErrorEvent(err: Error) {
+		if (err.message === 'Audio failed to load') {
+			emit('audioError')
+		}
+		else {
+			emit('creationError')
+		}
 	}
+
 </script>
 
 <template>
@@ -119,6 +99,7 @@
 			@update:model-value="emitChangeTypeEvent"
 			@create-captcha:init="createCaptchaInit"
 			@create-captcha:success="createCaptchaSuccess"
+			@create-captcha:error="emitErrorEvent"
 		>
 			<!-- Image captcha -->
 			<template
@@ -137,6 +118,7 @@
 					:state="createCaptchaState"
 					:locales
 					class="mt-4"
+					@image-error="emit('imageError')"
 				/>
 
 				<CaptchaAlert
@@ -153,11 +135,10 @@
 					:locales
 					:label="locales.image.textfieldLabel"
 					:state="createCaptchaState"
-					:errors="errorMessage ? [errorMessage] : []"
+					:errors="props.errorMessage ? [props.errorMessage] : []"
 					:loading="state === 'pending'"
 					:success="captchaValid"
 					@update:model-value="emitChangeValueEvent"
-					@submit="submitForm"
 				/>
 
 				<div class="captcha-config pt-4 d-flex flex-column ga-2 align-start">
@@ -238,10 +219,9 @@
 					:label="locales.audio.textfieldLabel"
 					:state="createCaptchaState"
 					:loading="state === 'pending'"
-					:errors="errorMessage ? [errorMessage] : []"
+					:errors="props.errorMessage ? [props.errorMessage] : []"
 					:success="captchaValid"
 					@update:model-value="emitChangeValueEvent"
-					@submit="submitForm"
 				/>
 				<div class="captcha-config pt-4 d-flex flex-column ga-2 align-start">
 					<p class="label-options text-textSubdued">
@@ -305,10 +285,6 @@
 .label-options {
 	font-size: 0.875rem;
 	font-weight: 400;
-}
-
-.captcha-config {
-	border-top: 1px solid tokens.$colors-border-subdued;
 }
 
 .captcha-audio :deep(.v-btn__content) span {
