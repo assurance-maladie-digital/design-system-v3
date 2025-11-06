@@ -1,19 +1,19 @@
 ---
-name: Rapport de bug
-about: Créez un rapport de bug pour nous aider à améliorer notre Design System
+name: Rapport de bug graphique majeur
+about: Créez un rapport de bug graphique majeur pour nous aider à améliorer notre Design System
+title: Anomalie graphique majeure
 labels:
   - type: bug
+  - severity: major
 ---
 
-## Type d'issue
+## Type d'anomalie
 
-🐛 Bug
+🐛 Anomalie graphique majeure
 
 ### Impact
 
-<!-- Quel est l'impact sur votre projet ? -->
-
-Bloquant : <!-- Oui, Non (est-ce que le problème empêche le développement ou la mise en production ?) -->
+🔴 Bloquant
 
 ## Description
 
