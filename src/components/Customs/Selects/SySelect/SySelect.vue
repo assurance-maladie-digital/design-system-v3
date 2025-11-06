@@ -3,7 +3,7 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
-	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
+	import { mdiInformation, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import { ref, watch, onMounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
@@ -839,7 +839,7 @@
 					</button>
 					<SyIcon
 						class="arrow"
-						:icon="mdiMenuDown"
+						:icon="mdiChevronDown"
 						:decorative="true"
 					/>
 				</template>
