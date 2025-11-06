@@ -710,7 +710,6 @@
 	gap: 0 16px;
 	align-items: flex-start;
 	box-sizing: border-box;
-	
 }
 
 .nir-field--fieldset legend {
