@@ -3209,7 +3209,7 @@ export const ExpandableRows: Story = {
                   caption="Tableau complexe"
                   suffix="expand-table"
               >
-                  <template #item.data-table-expand="{ internalItem, isExpanded, toggleExpand }">
+                  <template #item.data-table-expand="{ internalItem, isExpanded, toggleExpand, mdiChevronUp, mdiChevronDown }">
                     <v-btn
                         :append-icon="isExpanded(internalItem) ? mdiChevronUp : mdiChevronDown"
                         :text="isExpanded(internalItem) ? 'Fermer' : \`Plus d'info\`"
