@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import StructureList from '../StructureList.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('StructureList', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(StructureList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'mon label',
 				name: 'my-name',

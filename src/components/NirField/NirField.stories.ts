@@ -295,8 +295,17 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
-		hint: {
-			description: 'Texte d\'aide affiché sous le champ.',
+		numberHint: {
+			description: 'Texte d\'aide spécifique affiché sous le champ numéro.',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		keyHint: {
+			description: 'Texte d\'aide spécifique affiché sous le champ clé.',
 			control: 'text',
 			table: {
 				type: {
@@ -1148,6 +1157,7 @@ Cette story montre l'utilisation du NirField dans un formulaire avec validation.
 		v-model="value"
 		label="NirField"
 		required
+		:displayKey="false"
 		showSuccessMessages
 		ref="nirField"
 	/>
@@ -1210,6 +1220,7 @@ const onSubmit = async () => {
 					label="NirField"
 					required
 					showSuccessMessages
+                    :displayKey="false"
 					ref="nirField"
 				/>
 				<v-btn

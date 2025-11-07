@@ -16,6 +16,7 @@ const meta: Meta<typeof NotificationBar> = {
 	title: 'Composants/Feedback/NotificationBar',
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: ['currentNotification', 'isNotificationVisible', 'hasActionSlot', 'isMobileVersion', 'hasLongContent', 'color', 'icon', 'contentStyle', 'smallCloseBtn', 'isVertical'] },
 	},
 	component: NotificationBar,
 	argTypes: {

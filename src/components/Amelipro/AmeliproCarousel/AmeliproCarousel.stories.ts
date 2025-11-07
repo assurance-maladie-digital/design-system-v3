@@ -6,7 +6,9 @@ import AmeliproCarousel from './AmeliproCarousel.vue'
 const meta = {
 	argTypes: {
 		'`${uniqueId}-slot-item-${index}`': { description: 'Slots générés automatiquement pour chaque slide, l’id est celui du carrousel et index est la position de la slide' },
+		'defaultSlide': { description: 'Numéro de la slide à afficher au chargement du composant' },
 		'duration': { description: 'Durée de transition entre les slides du carrousel en secondes' },
+		'hideDisabledBtn': { description: 'Permet de masquer les boutons précédents et suivant quand ils sont désactivés' },
 		'infiniteRotation': { description: 'Booléen permettant de faire boucler les slides du carrousel' },
 		'item': { description: 'Slots générés automatiquement pour chaque slide, afin de donner le même aspect à tous les items' },
 		'items': {

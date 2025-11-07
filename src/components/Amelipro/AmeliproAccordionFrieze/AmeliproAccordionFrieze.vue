@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { type PropType, computed, onMounted, ref, watch } from 'vue'
+	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import AmeliproIconBtn from '../AmeliproIconBtn/AmeliproIconBtn.vue'
 	import { useDisplay } from 'vuetify'
 	import type { IAmeliproAccordionFriezeItem } from './types'

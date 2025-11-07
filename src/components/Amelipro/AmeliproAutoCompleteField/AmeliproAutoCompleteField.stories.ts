@@ -596,7 +596,7 @@ export const Validation: Story = {
 		uniqueId: 'amelipro-auto-complete-field-validation',
 		rules: [
 			v => !!v || 'Ce champ est obligatoire',
-			v => (v ? v.startsWith('B') : true) || 'La valeur doit commencer par "B"',
+			v => (v ? typeof v === 'string' && v.startsWith('B') : true) || 'La valeur doit commencer par "B"',
 		],
 	},
 	parameters: {

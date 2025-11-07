@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproErrorTemplate from '../AmeliproErrorTemplate.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproErrorTemplate', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproErrorTemplate, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				btnHref: '#modified-btn-href',
 				customBtnText: 'Modified custom btn text',

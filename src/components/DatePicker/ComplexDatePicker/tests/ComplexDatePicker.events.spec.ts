@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
 import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 
@@ -9,9 +8,6 @@ describe('ComplexDatePicker.vue - Events', () => {
 
 	beforeEach(() => {
 		wrapper = mount(ComplexDatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'DD/MM/YYYY',
@@ -114,9 +110,6 @@ describe('ComplexDatePicker.vue - Events', () => {
 
 	it('accepte une plage de dates en entrée', async () => {
 		const wrapperWithRange = mount(ComplexDatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: ['01/01/2023', '05/01/2023'],
 				format: 'DD/MM/YYYY',
@@ -140,9 +133,6 @@ describe('ComplexDatePicker.vue - Events', () => {
 		}
 
 		const wrapperWithRules = mount(ComplexDatePicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				format: 'DD/MM/YYYY',

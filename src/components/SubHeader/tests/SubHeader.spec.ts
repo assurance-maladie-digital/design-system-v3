@@ -1,9 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-
 import SubHeader from '../SubHeader.vue'
-
 import type { DataList } from '@/components/DataList/types'
 import type { DataListGroupItems } from '@/components/DataListGroup/types'
 
@@ -49,9 +46,6 @@ const dataListGroupItems: DataListGroupItems = [
 describe('SubHeader', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(SubHeader, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				hideBackBtn: false,
 				backBtnText: 'Retour',
@@ -67,9 +61,6 @@ describe('SubHeader', () => {
 
 	it('renders loading state correctly', async () => {
 		const wrapper = mount(SubHeader, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				hideBackBtn: false,
 				titleText: 'Test',
@@ -84,9 +75,6 @@ describe('SubHeader', () => {
 
 	it('get subTitleText is defined', async () => {
 		const wrapper = mount(SubHeader, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				hideBackBtn: false,
 				titleText: 'Test',
@@ -101,9 +89,6 @@ describe('SubHeader', () => {
 
 	it('emits itemAction event when called', async () => {
 		const wrapper = mount(SubHeader, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				hideBackBtn: false,
 				titleText: 'Test',
@@ -121,9 +106,6 @@ describe('SubHeader', () => {
 
 	it('emits back event when called in slot', async () => {
 		const wrapper = mount(SubHeader, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				hideBackBtn: false,
 				titleText: 'Test',

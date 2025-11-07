@@ -20,14 +20,61 @@ export function useTableHeaders({
 }) {
 	// Process headers to ensure they have title property
 	const normalizedHeaders = computed(() => {
-		const headers = storedHeaders ?? headersProp?.value
-		if (!Array.isArray(headers)) {
+		const incoming = headersProp?.value
+		const stored = Array.isArray(storedHeaders) ? storedHeaders : undefined
+
+		// Si aucun header, rien à faire
+		if (!Array.isArray(incoming) && !Array.isArray(stored)) {
 			return undefined
 		}
-		return headers.map(header => ({
-			...header,
-			title: header.title ?? header.text,
-		}))
+
+		// Fusion logique entre storedHeaders et incoming
+		let headers: DataTableHeaders[] = []
+
+		if (stored && incoming) {
+			// Fusionne les headers existants avec les nouveaux
+			const merged = stored.map((storedHeader) => {
+				const match = incoming.find(
+					h =>
+						(h.key && h.key === storedHeader.key)
+						|| (h.value && h.value === storedHeader.value),
+				)
+				return {
+					...storedHeader,
+					...(match || {}), // les nouveaux props écrasent les anciens
+				}
+			})
+
+			// Ajoute les headers qui n'existent pas encore dans le stockage
+			const extras = incoming.filter(
+				h =>
+					!merged.some(
+						x =>
+							(x.key && x.key === h.key)
+							|| (x.value && x.value === h.value),
+					),
+			)
+
+			headers = [...merged, ...extras]
+		}
+		else {
+			headers = (stored ?? incoming) as DataTableHeaders[]
+		}
+
+		// Normalisation finale
+		return headers.map((header) => {
+			const mapped = {
+				...header,
+				title: header.title ?? header.text,
+			} as TableColumnHeader
+
+			// Si maxWidth est défini sans width → applique-le à width
+			if (mapped.maxWidth != null && mapped.width == null) {
+				mapped.width = mapped.maxWidth
+			}
+
+			return mapped as unknown as DataTableHeaders
+		})
 	})
 
 	// Get filterable headers
@@ -73,6 +120,25 @@ export function useTableHeaders({
 	}
 
 	/**
+	 * Get original header from a rendered column (match by key or value)
+	 */
+	function getHeaderForColumn(column: TableColumnHeader): TableColumnHeader | undefined {
+		if (!normalizedHeaders.value) return undefined
+		const key = column.key as string | undefined
+		if (key) {
+			const byKey = normalizedHeaders.value.find(h => h.key === key)
+			if (byKey) return byKey
+		}
+		// Fallback: try matching by value when key is not present or didn’t match
+		const val = column.value as string | undefined
+		if (val) {
+			const byValue = normalizedHeaders.value.find(h => h.value === val)
+			if (byValue) return byValue
+		}
+		return undefined
+	}
+
+	/**
 	 * The headers filtered by visibility and sorted by order
 	 */
 	const displayHeaders = computed(() => {
@@ -87,5 +153,6 @@ export function useTableHeaders({
 		filterableHeaders,
 		getEnhancedHeader,
 		getHeaderByKey,
+		getHeaderForColumn,
 	}
 }

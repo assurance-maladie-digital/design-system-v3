@@ -1,0 +1,283 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproCheckboxGroup > Snapshots > renders the component with all properties filled in 1`] = `
+<div id="modified-unique-id-container">
+  <div class="
+    align-md-start
+    amelipro-checkbox-group
+    d-flex
+    flex-column
+    flex-md-row
+    pills
+  ">
+    <div class="
+      align-center
+      amelipro-checkbox-group__label-wrapper
+      d-flex
+      mr-2
+    ">
+      <p
+        class="
+          amelipro-checkbox-group__label
+          d-inline-flex
+          margin-label
+          mb-0
+          mb-md-4
+        "
+        id="modified-unique-id"
+      >
+        Modified group label
+        <span
+          aria-hidden="true"
+          class="d-inline-flex"
+        >
+          &nbsp;*
+        </span>
+        <span class="d-sr-only">
+          &nbsp;Champ obligatoire
+        </span>
+      </p>
+    </div>
+    <div
+      aria-disabled="true"
+      aria-labelledby="modified-unique-id"
+      aria-required="true"
+      class="
+        amelipro-checkbox-group__wrapper
+        mt-2
+      "
+      role="group"
+    >
+      <ul
+        class="
+          amelipro-checkbox-group__list
+          d-flex
+          flex-wrap
+          list-style-none
+        "
+        id="modified-unique-id-list"
+      >
+        <li
+          class="
+            amelipro-checkbox-group__item
+            mb-2
+          "
+          id="modified-unique-id-item-0"
+        >
+          <div class="
+            align-center
+            amelipro-checkbox-group__item__wrapper
+            d-flex
+          ">
+            <div
+              aria-checked="false"
+              aria-describedby="Modified item description 1"
+              aria-disabled="true"
+              class="
+                align-center
+                amelipro-checkbox-group__item-input
+                d-inline-flex
+                flex-row
+                mr-0
+                mr-2
+                mr-md-2
+                text-body-1
+              "
+              id="modified-unique-id-input-0"
+              role="checkbox"
+              tabindex="-1"
+            >
+              <span
+                class="
+                  checkbox-label
+                  text-ap-grey-darken-1
+                "
+                id="modified-unique-id-label-text-0"
+              >
+                Modified item label 1
+              </span>
+            </div>
+          </div>
+          <!-- v-if -->
+        </li>
+        <li
+          class="
+            amelipro-checkbox-group__item
+            mb-2
+          "
+          id="modified-unique-id-item-1"
+        >
+          <div class="
+            align-center
+            amelipro-checkbox-group__item__wrapper
+            d-flex
+          ">
+            <div
+              aria-checked="true"
+              aria-describedby="Modified item description 2"
+              aria-disabled="true"
+              class="
+                align-center
+                amelipro-checkbox-group__item-input
+                d-inline-flex
+                flex-row
+                mr-0
+                mr-2
+                mr-md-2
+                text-body-1
+              "
+              id="modified-unique-id-input-1"
+              role="checkbox"
+              tabindex="-1"
+            >
+              <span
+                class="
+                  checkbox-label
+                  text-ap-grey-darken-1
+                "
+                id="modified-unique-id-label-text-1"
+              >
+                Modified item label 2
+              </span>
+            </div>
+          </div>
+          <!-- v-if -->
+        </li>
+        <li
+          class="
+            amelipro-checkbox-group__item
+            mb-2
+          "
+          id="modified-unique-id-item-2"
+        >
+          <div class="
+            align-center
+            amelipro-checkbox-group__item__wrapper
+            d-flex
+          ">
+            <div
+              aria-checked="true"
+              aria-describedby="Modified item description 3"
+              aria-disabled="true"
+              class="
+                align-center
+                amelipro-checkbox-group__item-input
+                d-inline-flex
+                flex-row
+                mr-0
+                mr-2
+                mr-md-2
+                text-body-1
+              "
+              id="modified-unique-id-input-2"
+              role="checkbox"
+              tabindex="-1"
+            >
+              <span
+                class="
+                  checkbox-label
+                  text-ap-grey-darken-1
+                "
+                id="modified-unique-id-label-text-2"
+              >
+                Modified item label 3
+              </span>
+            </div>
+          </div>
+          <!-- v-if -->
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`AmeliproCheckboxGroup > Snapshots > renders the component with only required properties filled in 1`] = `
+<div id="required-unique-id-container">
+  <div class="
+    amelipro-checkbox-group
+    classic
+    d-flex
+    flex-column
+  ">
+    <div class="
+      align-center
+      amelipro-checkbox-group__label-wrapper
+      d-flex
+      mr-2
+    ">
+      <p
+        class="
+          amelipro-checkbox-group__label
+          d-inline-flex
+          mb-1
+        "
+        id="required-unique-id"
+      >
+        required-group-label
+        <!-- v-if -->
+        <!-- v-if -->
+      </p>
+    </div>
+    <div
+      aria-labelledby="required-unique-id"
+      aria-required="false"
+      class="amelipro-checkbox-group__wrapper"
+      role="group"
+    >
+      <ul
+        class="
+          amelipro-checkbox-group__list
+          d-flex
+          flex-column
+          flex-wrap
+          list-style-none
+        "
+        id="required-unique-id-list"
+      >
+        <li
+          class="
+            amelipro-checkbox-group__item
+            mb-4
+          "
+          id="required-unique-id-item-0"
+        >
+          <div class="
+            align-center
+            amelipro-checkbox-group__item__wrapper
+            d-flex
+          ">
+            <div
+              aria-checked="true"
+              class="
+                align-center
+                amelipro-checkbox-group__item-input
+                d-inline-flex
+                flex-row
+                mr-2
+                text-body-1
+              "
+              id="required-unique-id-input-0"
+              role="checkbox"
+              tabindex="0"
+            >
+              <span
+                class="
+                  checkbox-label
+                  text-ap-grey-darken-1
+                "
+                id="required-unique-id-label-text-0"
+              >
+                Required item label
+              </span>
+            </div>
+          </div>
+          <!-- v-if -->
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- v-if -->
+</div>
+`;

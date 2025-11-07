@@ -1,183 +1,247 @@
 import { Meta, Source } from '@storybook/addon-docs/blocks';
 import '../styles/shared.css';
 
-<Meta title="Guide Du Dev/Guide de Validation des Formulaires"/>
+<Meta title="Guide Du Dev/Guide des Formulaires - SyForm & Validation Automatique"/>
 
 
 <div className="header">
-  <h1>Guide de Validation des Formulaires</h1>
-  <p>Ce guide pratique explique comment utiliser le système de validation des formulaires du Design System dans vos applications.</p>
+  <h1>Guide des Formulaires</h1>
+  <h2>SyForm & Validation Automatique</h2>
+  <p>Ce guide pratique vous montre comment créer des formulaires modernes avec SyForm et la validation automatique. <strong>C'est l'approche recommandée</strong> pour la plupart des cas d'usage.</p>
+  
+  <div className="guide-links">
+    <p>📖 <strong>Guides complémentaires :</strong></p>
+    <ul>
+      <li><a href="?path=/docs/guide-du-dev-guide-technique-système-de-validation-règles--docs">Guide Technique - Système de Validation & Règles</a> (validation manuelle, règles personnalisées)</li>
+    </ul>
+  </div>
 </div>
 
-## Les bases de la validation
+## Pourquoi SyForm ?
 
-Le système de validation offre un mécanisme complet et intuitif pour valider les entrées utilisateur avec trois niveaux de retour :
+SyForm est la solution moderne du design system pour créer des formulaires avec validation automatique. Il simplifie drastiquement le développement en gérant automatiquement :
+
+- ✅ **Validation automatique** à la soumission
+- ✅ **Gestion centralisée** de tous les champs
+- ✅ **Auto-enregistrement** des composants de validation
+- ✅ **Compatibilité** avec tous les composants du design system
+- ✅ **Moins de code** à écrire et maintenir
+
+> **Note** : Pour la validation croisée, vous devez toujours utiliser `computed()` pour rendre les règles réactives, même avec SyForm.
+
+## Les 3 niveaux de validation
+
+Le système supporte trois types de retours pour une expérience utilisateur riche :
 
 - **Erreurs** 🔴 : Empêchent la soumission du formulaire
-- **Avertissements** 🟠 : Informent l'utilisateur sans bloquer la soumission
-- **Succès** 🟢 : Confirment la validité de l'entrée
+- **Avertissements** 🟠 : Informent l'utilisateur sans bloquer la soumission  
+- **Succès** 🟢 : Confirment la validité de l'entrée et encouragent l'utilisateur
 
-## Mise en place simple
+## Votre premier formulaire avec SyForm
 
-Voici comment mettre en place une validation basique sur un champ :
+Commençons par un exemple simple d'un formulaire complet avec validation automatique :
 
 <Source dark code={`
 <template>
-  <SyTextField
-    v-model="email"
-    label="Email"
-    :custom-rules="emailRules"
-  />
+  <SyForm ref="form" @submit="handleSubmit" :validate-on-submit="true">
+    <div class="d-flex flex-column gap-4">
+      <SyTextField 
+        v-model="email" 
+        label="Email" 
+        :custom-rules="emailRules" 
+      />
+      <SyTextField 
+        v-model="name" 
+        label="Nom complet" 
+        required 
+      />
+      <VBtn type="submit" color="primary">Envoyer</VBtn>
+    </div>
+  </SyForm>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { SyTextField } from '@cnamts/synapse';
 
 const email = ref('');
+const name = ref('');
+const form = ref();
 
 const emailRules = [
-  { 
-    type: 'required',
-    options: { message: "L'email est obligatoire" }
-  },
-  { 
-    type: 'email',
-    options: { message: "L'email n'est pas valide" }
-  }
-];
-</script>
-`}/>
-
-## Validation complète avec les 3 niveaux
-
-Utilisez les différents types de règles pour une expérience utilisateur riche :
-
-<Source dark code={`
-<script setup>
-	import { ref } from 'vue'
-	import PasswordField from '@/components/PasswordField/PasswordField.vue'
-
-	const password = ref('')
-
-	// Règles d'erreur (bloquantes)
-	const passwordRules = [
-		{
-			type: 'required',
-			options: { 
-        message: 'Le mot de passe est obligatoire',
-      },
-		},
-		{
-			type: 'minLength',
-			options: { 
-        length: 8, 
-        message: 'Le mot de passe doit contenir au moins 8 caractères',
-      // si pas de successMessage, le message par defaut est affiché
-        successMessage: 'Le mot de passe est sécurisé',
-         },
-		},
-	]
-
-	// Règles d'avertissement (non-bloquantes)
-	const passwordWarningRules = [
-		{
-			type: 'custom',
-			options: {
-				validate: (value) => {
-					const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
-					if (!hasSpecialChar) {
-						return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux'
-					}
-					return true
-				},
-				fieldIdentifier: 'password',
-			},
-		},
-	]
-
-  </script>
-
-<template>
-	<PasswordField
-		v-model="password"
-		label="Mot de passe"
-		:custom-warning-rules="passwordWarningRules"
-		:custom-rules="passwordRules"
-	/>
-</template>
-
-`}/>
-
-## Validation à la soumission avec validateOnSubmit
-
-La méthode `validateOnSubmit` est essentielle pour valider l'ensemble du formulaire lors de sa soumission :
-
-<Source dark code={`
-<template>
-  <form @submit.prevent="handleSubmit">
-    <SyTextField
-      ref="emailField"
-      v-model="email"
-      label="Email"
-      :custom-rules="emailRules"
-    />
-    
-    <PasswordField
-      ref="passwordField"
-      v-model="password"
-      label="Mot de passe"
-      type="password"
-      :custom-rules="passwordRules"
-    />
-    
-    <VBtn type="submit">Se connecter</VBtn>
-    
-    <p v-if="formError" class="error-message">{{ formError }}</p>
-  </form>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-import { SyTextField, PasswordField } from '@cnamts/synapse';
-
-const email = ref('');
-const password = ref('');
-const formError = ref('');
-
-const emailField = ref();
-const passwordField = ref();
-
-const emailRules = [
-  { type: 'required', options: { message: "L'email est obligatoire" } },
-  { type: 'email', options: { message: "L'email n'est pas valide" } }
-];
-
-const passwordRules = [
-  { type: 'required', options: { message: 'Le mot de passe est obligatoire' } }
+  { type: 'email', options: { message: "L'email n'est pas valide" } },
+  { type: 'required', options: { message: "L'email est obligatoire" } }
 ];
 
 const handleSubmit = async () => {
-  formError.value = '';
-  
-  // Validation de tous les champs
-  const isEmailValid = await emailField.value.validateOnSubmit();
-  const isPasswordValid = await passwordField.value.validateOnSubmit();
-  
-  if (isEmailValid && isPasswordValid) {
-    // Soumettre le formulaire
-    console.log('Formulaire soumis avec succès !');
-    // loginUser(email.value, password.value);
-  } else {
-    formError.value = 'Veuillez corriger les erreurs dans le formulaire';
-  }
+  // Cette fonction n'est appelée QUE si le formulaire est valide !
+  console.log('Formulaire valide, envoi en cours...');
+  console.log({ email: email.value, name: name.value });
 };
 </script>
 `}/>
 
+### 🎯 Points clés de cet exemple
+
+- **`SyForm`** : Conteneur qui gère automatiquement la validation
+- **`validate-on-submit="true"`** : Valide tous les champs à la soumission
+- **`@submit`** : Ne se déclenche QUE si le formulaire est valide
+- **`required`** : Validation simple directement sur le composant
+- **`:custom-rules`** : Règles de validation personnalisées
+
+> **⚠️ Important — Ordre des règles :** placez toujours `required` en dernier dans la liste de vos règles !
+> Les règles sont évaluées dans l'ordre de leur déclaration, et la validation s'arrête dès qu'une erreur est rencontrée.
+> Si `required` est positionné en premier et que l'utilisateur saisit une valeur (même invalide), la validation s'arrêtera immédiatement.
+> En revanche, en le plaçant en dernier, si une autre règle échoue avant, l'utilisateur obtiendra le message d'erreur le plus pertinent.
+
+## Validation complète avec les 3 niveaux
+
+Voici un exemple complet utilisant erreurs, avertissements et succès dans un formulaire SyForm :
+
+<Source dark code={`
+<template>
+  <SyForm ref="form" @submit="handleSubmit">
+    <div class="d-flex flex-column gap-4">
+      <SyTextField
+        v-model="password"
+        label="Mot de passe"
+        type="password"
+        :custom-rules="passwordRules"
+        :custom-warning-rules="passwordWarningRules"
+        :custom-success-rules="passwordSuccessRules"
+      />
+      <VBtn type="submit" color="primary">Créer le compte</VBtn>
+    </div>
+  </SyForm>
+</template>
+
+<script setup>
+
+const password = ref('');
+const form = ref();
+
+// Règles d'erreur (bloquantes)
+const passwordRules = [
+  { type: 'minLength', options: { length: 8, message: 'Minimum 8 caractères' } },
+  { type: 'required', options: { message: 'Le mot de passe est obligatoire' } }
+];
+
+// Règles d'avertissement (non-bloquantes)
+const passwordWarningRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value) => {
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+        if (!hasSpecialChar) {
+          return 'Ajoutez des caractères spéciaux pour plus de sécurité';
+        }
+        return true;
+      }
+    }
+  }
+];
+
+// Règles de succès (encouragement)
+const passwordSuccessRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value) => {
+        const hasUpper = /[A-Z]/.test(value);
+        const hasLower = /[a-z]/.test(value);
+        const hasNumber = /\d/.test(value);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+        
+        if (hasUpper && hasLower && hasNumber && hasSpecial && value.length >= 12) {
+          return 'Excellent ! Mot de passe très sécurisé 🔒';
+        }
+        return true;
+      }
+    }
+  }
+];
+
+const handleSubmit = () => {
+  console.log('Compte créé avec succès !');
+};
+</script>
+`}/>
+
+### 🎨 Résultat visuel
+
+Dans cet exemple, l'utilisateur verra :
+- **Erreur rouge** si le mot de passe est vide ou < 8 caractères
+- **Avertissement orange** si pas de caractères spéciaux (mais formulaire soumissible)
+- **Succès vert** si le mot de passe est très sécurisé (12+ caractères avec tous les types)
+
 ## Validation croisée entre champs
 
-Parfois, la validation d'un champ dépend de la valeur d'un autre champ. Voici comment gérer ce cas :
+Pour des validations qui dépendent de plusieurs champs (ex: confirmation de mot de passe), utilisez des **règles réactives** avec `computed()` :
+
+<Source dark code={`
+<template>
+  <SyForm ref="form" @submit="handleSubmit">
+    <div class="d-flex flex-column gap-4">
+      <SyTextField 
+        v-model="username" 
+        label="Nom d'utilisateur" 
+        required 
+      />
+      <SyTextField 
+        v-model="password" 
+        label="Mot de passe" 
+        type="password" 
+        :custom-rules="passwordRules" 
+      />
+      <SyTextField 
+        v-model="confirmPassword" 
+        label="Confirmer le mot de passe" 
+        type="password" 
+        :custom-rules="confirmPasswordRules" 
+      />
+      <VBtn type="submit" color="primary">S'inscrire</VBtn>
+    </div>
+  </SyForm>
+</template>
+
+<script setup>
+
+const username = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const form = ref();
+
+// Règles réactives pour la validation croisée
+const passwordRules = computed(() => [
+  { type: 'minLength', options: { length: 8, message: 'Minimum 8 caractères' } },
+  { type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
+]);
+
+const confirmPasswordRules = computed(() => [
+  { 
+    type: 'custom', 
+    options: {
+      validate: value => value === password.value || 'Les mots de passe ne correspondent pas',
+      message: 'Les mots de passe ne correspondent pas',
+    } 
+  },
+  { type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
+]);
+
+const handleSubmit = async () => {
+  // SyForm gère automatiquement la validation !
+  console.log('Inscription réussie !', { username: username.value });
+};
+</script>
+`}/>
+
+### 🔑 Points clés de la validation croisée
+
+- **`computed()` obligatoire** : Les règles se recalculent automatiquement quand `password.value` change
+- **Réactivité manuelle** : Vous devez explicitement rendre les règles réactives avec `computed()`
+- **SyForm** : Gère la validation centralisée mais pas la réactivité des règles
+- **Avantage vs approche manuelle** : Plus besoin de `watch()` pour revalider les champs
+
+## Formulaires complexes avec SyForm
 
 <Source dark code={`
 <template>
@@ -203,8 +267,6 @@ Parfois, la validation d'un champ dépend de la valeur d'un autre champ. Voici c
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import { PasswordField } from '@cnamts/synapse';
 
 const password = ref('');
 const confirmPassword = ref('');
@@ -253,11 +315,575 @@ const handleSubmit = async () => {
 </script>
 `}/>
 
+## Utilisation du composant SyForm
+
+Le composant `SyForm` simplifie grandement la gestion des formulaires en centralisant la validation et en gérant automatiquement la soumission :
+
+<Source dark code={`
+<template>
+  <SyForm ref="form" @submit="handleSubmit" :validate-on-submit="true">
+    <div class="d-flex flex-column gap-4">
+      <SyTextField 
+        v-model="username" 
+        label="Nom d'utilisateur" 
+        required 
+      />
+      <SyTextField 
+        v-model="password" 
+        label="Mot de passe" 
+        type="password" 
+        :custom-rules="passwordRules" 
+      />
+      <SyTextField 
+        v-model="confirmPassword" 
+        label="Confirmer le mot de passe" 
+        type="password" 
+        :custom-rules="confirmPasswordRules" 
+      />
+      <VBtn type="submit" color="primary">S'inscrire</VBtn>
+    </div>
+  </SyForm>
+</template>
+
+<script setup>
+
+const username = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const form = ref();
+
+// Règles réactives pour la validation croisée
+const passwordRules = computed(() => [
+  { type: 'minLength', options: { length: 8, message: 'Minimum 8 caractères' } },
+  { type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
+]);
+
+const confirmPasswordRules = computed(() => [
+  { 
+    type: 'custom', 
+    options: {
+      validate: value => value === password.value || 'Les mots de passe ne correspondent pas',
+      message: 'Les mots de passe ne correspondent pas',
+    } 
+  },
+  { type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
+]);
+
+const handleSubmit = async () => {
+  // SyForm gère automatiquement la validation avec validate-on-submit="true"
+  // Cette fonction n'est appelée que si le formulaire est valide
+  console.log('Formulaire valide, inscription en cours...');
+  
+  // Appel API d'inscription
+  try {
+    await registerUser({
+      username: username.value,
+      password: password.value
+    });
+    console.log('Inscription réussie !');
+  } catch (error) {
+    console.error('Erreur lors de l\\'inscription:', error);
+  }
+};
+
+// Validation manuelle si nécessaire
+const validateManually = async () => {
+  const isValid = await form.value?.validate();
+  if (isValid) {
+    console.log('Formulaire valide !');
+  } else {
+    console.log('Formulaire invalide !');
+  }
+};
+</script>
+`}/>
+
+### Avantages du SyForm
+
+- **Validation automatique** : Avec `validate-on-submit="true"`, tous les champs sont validés automatiquement
+- **Gestion centralisée** : Un seul composant gère l'ensemble du formulaire
+- **Événement @submit** : Ne se déclenche que si le formulaire est valide
+- **Méthode validate()** : Permet la validation manuelle via `form.value.validate()`
+- **Compatibilité** : Fonctionne avec tous les composants du design system
+
+### Formulaire mixte avec SyForm
+
+`SyForm` peut gérer différents types de composants dans un même formulaire :
+
+<Source dark code={`
+<template>
+  <SyForm ref="form" @submit="handleSubmit">
+    <div class="d-flex flex-column gap-4">
+      <SyTextField 
+        v-model="formData.name" 
+        label="Nom complet" 
+        required 
+      />
+      <SyTextField 
+        v-model="formData.email" 
+        label="Email" 
+        :custom-rules="emailRules" 
+      />
+      <SySelect 
+        v-model="formData.country" 
+        :items="countries" 
+        label="Pays" 
+        required 
+      />
+      <DatePicker 
+        v-model="formData.birthDate" 
+        label="Date de naissance" 
+        :custom-rules="birthDateRules" 
+      />
+      <VBtn type="submit" color="primary">Enregistrer</VBtn>
+    </div>
+  </SyForm>
+</template>
+
+<script setup>
+
+const form = ref();
+const formData = ref({
+  name: '',
+  email: '',
+  country: '',
+  birthDate: null
+});
+
+const countries = [
+  { text: 'France', value: 'fr' },
+  { text: 'Allemagne', value: 'de' },
+  { text: 'Espagne', value: 'es' },
+  { text: 'Italie', value: 'it' },
+];
+
+const emailRules = [
+  { type: 'email', options: { message: "L'email n'est pas valide" } },
+  { type: 'required', options: { message: "L'email est obligatoire" } },
+];
+
+const birthDateRules = [
+  { type: 'notAfterToday', options: { message: 'La date de naissance ne peut pas être dans le futur' } },
+  { type: 'required', options: { message: 'La date de naissance est obligatoire' } },
+];
+
+const handleSubmit = async () => {
+  console.log('Données du formulaire:', formData.value);
+  // Traitement des données...
+};
+</script>
+`}/>
+
+## Créer un composant compatible avec SyForm
+
+Pour créer vos propres composants qui s'intègrent automatiquement avec SyForm, utilisez le composable `useValidatable` :
+
+### Composant personnalisé basique
+
+<Source dark code={`
+<template>
+  <div class="custom-input">
+    <label>{{ label }}</label>
+    <input 
+      v-model="inputValue" 
+      :class="{ 'error': hasError }"
+      @blur="validate"
+    />
+    <div v-if="hasError" class="error-messages">
+      <p v-for="error in errors" :key="error">{{ error }}</p>
+    </div>
+  </div>
+</template>
+
+<script setup lang='ts'>
+import { useValidation } from '@cnamts/synapse'
+import { computed, ref } from 'vue';
+
+const props = defineProps({
+  modelValue: String,
+  label: String,
+  customRules: { type: Array, default: () => [] },
+  required: Boolean
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+// Gestion de la valeur
+const inputValue = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value)
+});
+
+// Validation
+const { validateField, hasError, errors, clearValidation } = useValidation({
+  fieldIdentifier: props.label
+});
+
+// Construire les règles
+const rules = computed(() => {
+  const allRules = [...props.customRules];
+  if (props.required) {
+    allRules.push({ type: 'required', options: { message: \`\${props.label} est obligatoire\` } });
+  }
+  return allRules;
+});
+
+// Méthode de validation pour SyForm
+const validateOnSubmit = () => {
+  const result = validateField(inputValue.value, rules.value);
+  return !result.hasError;
+};
+
+// S'enregistrer auprès de SyForm
+useValidatable(validateOnSubmit);
+
+// Validation en temps réel
+const validate = () => {
+  validateField(inputValue.value, rules.value);
+};
+
+// Exposer la méthode pour validation manuelle
+defineExpose({
+  validateOnSubmit,
+  clearValidation
+});
+</script>
+`}/>
+
+### 🔑 Points clés pour l'intégration SyForm
+
+- **`useValidatable(validateOnSubmit)`** : Enregistre automatiquement le composant auprès de SyForm
+- **`validateOnSubmit()`** : Méthode obligatoire qui retourne `true` si valide, `false` sinon
+- **`defineExpose()`** : Expose les méthodes pour la validation manuelle si nécessaire
+- **Auto-enregistrement** : Le composant s'enregistre automatiquement au `onMounted` et se désenregistre au `onBeforeUnmount`
+
+### Composant avancé avec validation personnalisée
+
+<Source dark code={`
+<template>
+  <div class="rating-input">
+    <label>{{ label }}</label>
+    <div class="stars">
+      <button 
+        v-for="star in 5" 
+        :key="star"
+        @click="setRating(star)"
+        :class="{ active: star <= currentRating }"
+      >
+        ⭐
+      </button>
+    </div>
+    <div v-if="hasError" class="error-messages">
+      <p v-for="error in errors" :key="error">{{ error }}</p>
+    </div>
+    <div v-if="hasSuccess" class="success-messages">
+      <p v-for="success in successes" :key="success">{{ success }}</p>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import { useValidation } from '@/composables/validation/useValidation';
+import { useValidatable } from '@/composables/validation/useValidatable';
+
+const props = defineProps({
+  modelValue: Number,
+  label: String,
+  minRating: { type: Number, default: 1 },
+  required: { type: Boolean, default: false }
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+const currentRating = computed({
+  get: () => props.modelValue || 0,
+  set: (value) => emit('update:modelValue', value)
+});
+
+// Validation avec règles personnalisées
+const { validateField, hasError, hasSuccess, errors, successes } = useValidation({
+  fieldIdentifier: props.label,
+  showSuccessMessages: true
+});
+
+const setRating = (rating) => {
+  currentRating.value = rating;
+  validate();
+};
+
+// Règles de validation personnalisées
+const rules = computed(() => {
+  const allRules = [];
+  
+  if (props.required) {
+    allRules.push({
+      type: 'custom',
+      options: {
+        validate: (value) => value > 0 || \`\${props.label} est obligatoire\`,
+        successMessage: 'Merci pour votre évaluation !'
+      }
+    });
+  }
+  
+  if (props.minRating > 1) {
+    allRules.push({
+      type: 'custom',
+      options: {
+        validate: (value) => value >= props.minRating || \`Minimum \${props.minRating} étoiles requis\`
+      }
+    });
+  }
+  
+  return allRules;
+});
+
+const validate = () => {
+  validateField(currentRating.value, rules.value);
+};
+
+// Méthode pour SyForm
+const validateOnSubmit = () => {
+  const result = validateField(currentRating.value, rules.value);
+  return !result.hasError;
+};
+
+// Enregistrement automatique avec SyForm
+useValidatable(validateOnSubmit);
+
+defineExpose({
+  validateOnSubmit,
+  validate
+});
+</script>
+`}/>
+
+### Utilisation dans SyForm
+
+Une fois votre composant créé, il fonctionne automatiquement avec SyForm :
+
+<Source dark code={`
+<template>
+  <SyForm @submit="handleSubmit">
+    <CustomInput 
+      v-model="name" 
+      label="Nom" 
+      required 
+      :custom-rules="nameRules" 
+    />
+    <RatingInput 
+      v-model="satisfaction" 
+      label="Satisfaction" 
+      :min-rating="3" 
+      required 
+    />
+    <VBtn type="submit">Envoyer</VBtn>
+  </SyForm>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useValidation } from '@/composables/validation/useValidation'
+import { useValidatable } from '@/composables/validation/useValidatable'
+
+const name = ref('');
+const satisfaction = ref(0);
+
+const nameRules = [
+  { type: 'minLength', options: { length: 2, message: 'Minimum 2 caractères' } }
+];
+
+const handleSubmit = () => {
+  // Appelé seulement si tous les composants sont valides !
+  console.log('Formulaire valide:', { name: name.value, satisfaction: satisfaction.value });
+};
+</script>
+`}/>
+
+## Validation sans SyForm (approche manuelle)
+
+Dans certains cas, vous ne pouvez pas utiliser SyForm (intégration avec des composants tiers, formulaires complexes, etc.). Voici comment gérer la validation manuellement :
+
+### Validation avec validateOnSubmit()
+
+<Source dark code={`
+<template>
+  <form @submit.prevent="handleSubmit">
+    <SyTextField
+      ref="emailField"
+      v-model="email"
+      label="Email"
+      :custom-rules="emailRules"
+    />
+    
+    <SyTextField
+      ref="passwordField"
+      v-model="password"
+      label="Mot de passe"
+      type="password"
+      :custom-rules="passwordRules"
+    />
+    
+    <VBtn type="submit" :disabled="isSubmitting">
+      {{ isSubmitting ? 'Connexion...' : 'Se connecter' }}
+    </VBtn>
+    
+    <p v-if="formError" class="error-message">{{ formError }}</p>
+  </form>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useValidation } from '@/composables/validation/useValidation'
+import { useValidatable } from '@/composables/validation/useValidatable'
+
+const email = ref('');
+const password = ref('');
+const isSubmitting = ref(false);
+const formError = ref('');
+
+// Références aux composants pour accéder à validateOnSubmit()
+const emailField = ref();
+const passwordField = ref();
+
+const emailRules = [
+  { type: 'email', options: { message: "L'email n'est pas valide" } },
+  { type: 'required', options: { message: "L'email est obligatoire" } }
+];
+
+const passwordRules = [
+  { type: 'required', options: { message: 'Le mot de passe est obligatoire' } }
+];
+
+const handleSubmit = async () => {
+  formError.value = '';
+  isSubmitting.value = true;
+  
+  try {
+    // Validation manuelle de tous les champs
+    const isEmailValid = await emailField.value?.validateOnSubmit();
+    const isPasswordValid = await passwordField.value?.validateOnSubmit();
+    
+    if (isEmailValid && isPasswordValid) {
+      // Tous les champs sont valides, on peut soumettre
+      console.log('Formulaire valide, connexion en cours...');
+      
+      // Appel API de connexion
+      await loginUser(email.value, password.value);
+      console.log('Connexion réussie !');
+    } else {
+      formError.value = 'Veuillez corriger les erreurs dans le formulaire';
+    }
+  } catch (error) {
+    formError.value = 'Erreur lors de la connexion';
+    console.error('Erreur:', error);
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+</script>
+`}/>
+
+### 🔑 Points clés de l'approche manuelle
+
+- **`ref` sur chaque champ** : Nécessaire pour accéder à `validateOnSubmit()`
+- **Validation explicite** : Vous devez appeler `validateOnSubmit()` sur chaque champ
+- **Gestion des erreurs** : Vérifiez le retour de chaque validation
+- **État de soumission** : Gérez manuellement l'état `isSubmitting`
+
+### Validation croisée manuelle
+
+Pour la validation croisée sans SyForm, utilisez des `ref` et `watch` :
+
+<Source dark code={`
+<template>
+  <form @submit.prevent="handleSubmit">
+    <SyTextField
+      ref="passwordField"
+      v-model="password"
+      label="Mot de passe"
+      type="password"
+      :custom-rules="passwordRules"
+    />
+    
+    <SyTextField
+      ref="confirmPasswordField"
+      v-model="confirmPassword"
+      label="Confirmer le mot de passe"
+      type="password"
+      :custom-rules="confirmPasswordRules"
+    />
+    
+    <VBtn type="submit">S'inscrire</VBtn>
+  </form>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useValidation } from '@/composables/validation/useValidation'
+import { useValidatable } from '@/composables/validation/useValidatable'
+
+const password = ref('');
+const confirmPassword = ref('');
+
+const passwordField = ref();
+const confirmPasswordField = ref();
+
+const passwordRules = [
+  { type: 'minLength', options: { length: 8, message: 'Minimum 8 caractères' } },
+  { type: 'required', options: { message: 'Le mot de passe est obligatoire' } }
+];
+
+const confirmPasswordRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value) => {
+        if (value !== password.value) {
+          return 'Les mots de passe ne correspondent pas';
+        }
+        return true;
+      }
+    }
+  },
+  { type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } }
+];
+
+// Revalider la confirmation quand le mot de passe change
+watch(password, () => {
+  if (confirmPassword.value && confirmPasswordField.value) {
+    // Forcer la revalidation du champ de confirmation
+    confirmPasswordField.value.validateOnSubmit();
+  }
+});
+
+const handleSubmit = async () => {
+  const isPasswordValid = await passwordField.value?.validateOnSubmit();
+  const isConfirmValid = await confirmPasswordField.value?.validateOnSubmit();
+  
+  if (isPasswordValid && isConfirmValid) {
+    console.log('Inscription réussie !');
+  }
+};
+</script>
+`}/>
+
+### ⚠️ Limitations de l'approche manuelle
+
+- **Plus de code** : Gestion explicite de chaque champ
+- **Risque d'oubli** : Facile d'oublier de valider un champ
+- **Maintenance** : Plus complexe à maintenir
+- **Réactivité** : Nécessite des `watch()` pour la validation croisée
+
+> **💡 Recommandation** : Utilisez SyForm quand c'est possible, l'approche manuelle seulement pour les cas spécifiques.
+
 ## Composants avec validation intégrée
 
 Plusieurs composants du Design System intègrent déjà la validation :
 
+- **SyForm** : Conteneur de formulaire avec validation automatique
 - **SyTextField** : Pour les champs texte
+- **SySelect** : Pour les listes déroulantes
 - **NirField** : Pour les numéros de sécurité sociale
 - **DatePicker** : Pour les dates
 - **PeriodField** : Pour les périodes (deux dates liées)
@@ -279,9 +905,13 @@ Plusieurs composants du Design System intègrent déjà la validation :
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { NirField, SyButton } from '
-import '../styles/shared.css';@cnamts/synapse';
+import { NirField, SyButton } from '@cnamts/synapse';
+import { ref, computed, watch } from 'vue';
+import { useValidation } from '@/composables/validation/useValidation';
+import { useValidatable } from '@/composables/validation/useValidatable';
+import { ref, computed } from 'vue';
+import { useValidation } from '@/composables/validation/useValidation';
+import { useValidatable } from '@/composables/validation/useValidatable';
 
 const nirValue = ref('');
 const nirFieldRef = ref();
@@ -333,13 +963,15 @@ const customRule = {
 
 ## Bonnes pratiques
 
-1. **Validation progressive** : Validez pendant la saisie pour une rétroaction immédiate
-2. **Messages clairs** : Utilisez des messages d'erreur explicites et constructifs
-3. **Validation côté client ET serveur** : Ne vous fiez jamais uniquement à la validation côté client
-4. **Utilisez validateOnSubmit** : Assurez-vous que tous les champs sont validés à la soumission
-5. **Hiérarchisez les erreurs** : Affichez d'abord les erreurs les plus importantes
-6. **Utilisez les avertissements** pour les recommandations non-bloquantes
-7. **Célébrez la réussite** avec des messages de succès pour renforcer les bonnes pratiques
+1. **Utilisez SyForm** : Privilégiez le composant `SyForm` pour une gestion centralisée et automatique de la validation
+2. **Règles réactives** : Utilisez `computed()` pour les règles qui dépendent d'autres valeurs (validation croisée)
+3. **Validation progressive** : Validez pendant la saisie pour une rétroaction immédiate
+4. **Messages clairs** : Utilisez des messages d'erreur explicites et constructifs
+5. **Validation côté client ET serveur** : Ne vous fiez jamais uniquement à la validation côté client
+6. **Utilisez validateOnSubmit** : Assurez-vous que tous les champs sont validés à la soumission
+7. **Ordre des règles crucial** : Mettez toujours `required` **en dernier** ! L'ordre détermine quel message s'affiche en premier
+8. **Utilisez les avertissements** pour les recommandations non-bloquantes
+9. **Célébrez la réussite** avec des messages de succès pour renforcer les bonnes pratiques
 
 ## Conclusion
 

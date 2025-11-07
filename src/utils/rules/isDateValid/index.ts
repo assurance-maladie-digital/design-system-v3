@@ -19,7 +19,7 @@ export function isDateValidFn(
 			return true
 		}
 
-		const validationResult = checkIfDateValid(value)
+		const validationResult = typeof value === 'string' && checkIfDateValid(value)
 		const errorMessage
 			= typeof validationResult === 'string'
 				? ruleMessage(errorMessages, validationResult)

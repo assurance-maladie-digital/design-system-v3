@@ -1,14 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 import TableToolbar from '../TableToolbar.vue'
 
 describe('TableToolbar', () => {
 	it('should render', () => {
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				nbFiltered: 1,
 				nbTotal: 2,
@@ -22,9 +18,6 @@ describe('TableToolbar', () => {
 
 	it('renders correctly when all the item are displayed', () => {
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				nbFiltered: 5,
 				nbTotal: 5,
@@ -37,9 +30,6 @@ describe('TableToolbar', () => {
 
 	it('renders correctly when loading', () => {
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				loading: true,
 				nbFiltered: 0,
@@ -56,9 +46,6 @@ describe('TableToolbar', () => {
 		window.happyDOM.setInnerWidth(600)
 
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				nbFiltered: 0,
 				nbTotal: 1,
@@ -72,9 +59,6 @@ describe('TableToolbar', () => {
 
 	it('renders correctly with content slot', () => {
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				nbFiltered: 0,
 				nbTotal: 1,
@@ -89,9 +73,6 @@ describe('TableToolbar', () => {
 
 	it('renders correctly with no items', () => {
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				nbFiltered: 0,
 				nbTotal: 0,
@@ -104,9 +85,6 @@ describe('TableToolbar', () => {
 
 	it('renders correctly with no nbFilters', () => {
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				nbFiltered: undefined,
 				nbTotal: 50,
@@ -118,9 +96,6 @@ describe('TableToolbar', () => {
 
 	it('render correctly with the button add', () => {
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				nbFiltered: 0,
 				nbTotal: 1,
@@ -133,9 +108,6 @@ describe('TableToolbar', () => {
 
 	it('emit an update:search event when the search input is updated', async () => {
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				nbFiltered: 0,
 				nbTotal: 1,
@@ -149,9 +121,6 @@ describe('TableToolbar', () => {
 
 	it('emit an add event when the add button is clicked', async () => {
 		const wrapper = mount(TableToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				nbFiltered: 0,
 				nbTotal: 1,

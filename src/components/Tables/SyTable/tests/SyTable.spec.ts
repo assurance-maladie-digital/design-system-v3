@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeAll } from 'vitest'
 import { mount } from '@vue/test-utils'
-
-import { vuetify } from '@tests/unit/setup'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
@@ -85,9 +83,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				headers: headers,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.find('.sy-table').exists()).toBe(true)
@@ -117,9 +112,6 @@ describe('SyTable', () => {
 					},
 				],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.text()).toContain('John Doe')
@@ -138,9 +130,6 @@ describe('SyTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -175,9 +164,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				headers: headers,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Simulate a sort event from VDataTable
@@ -198,9 +184,6 @@ describe('SyTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -231,7 +214,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SyTableFilter: true,
 				},
@@ -258,9 +240,6 @@ describe('SyTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -300,9 +279,6 @@ describe('SyTable', () => {
 				],
 				items: fakeItems,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.vm.$nextTick()
@@ -329,9 +305,6 @@ describe('SyTable', () => {
 					},
 				],
 				items: fakeItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -368,9 +341,6 @@ describe('SyTable', () => {
 				],
 				items: fakeItems,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.vm.$nextTick()
@@ -385,9 +355,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				showSelect: true,
 				suffix: '',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -404,9 +371,6 @@ describe('SyTable', () => {
 				showSelect: false,
 				suffix: '',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Check that the VDataTable has showSelect prop set to false
@@ -421,9 +385,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				showSelect: true,
 				suffix: '',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -447,9 +408,6 @@ describe('SyTable', () => {
 				modelValue: selectedItems,
 				suffix: '',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Check that the VDataTable has the correct model value
@@ -468,9 +426,6 @@ describe('SyTable', () => {
 				'onUpdate:modelValue': (val: unknown[]) => {
 					wrapper.setProps({ modelValue: val })
 				},
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -504,7 +459,6 @@ describe('SyTable', () => {
 				enableColumnControls: true,
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					OrganizeColumns: mockOrganizeColumns,
 				},
@@ -607,9 +561,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				enableColumnControls: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -651,9 +602,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				enableColumnControls: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -694,9 +642,6 @@ describe('SyTable', () => {
 				items: fakeItems,
 				enableColumnControls: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		const btnMenuColumns = wrapper.find('[title="Gestion des colonnes"]')
@@ -711,5 +656,68 @@ describe('SyTable', () => {
 		expect(columns.length).toBe(2)
 
 		wrapper.unmount()
+	})
+})
+
+describe('SyTable selectionKey', () => {
+	it('uses custom selectionKey when provided', () => {
+		const items = [
+			{ id: 1, uuid: 'a-1', name: 'A' },
+			{ id: 2, uuid: 'a-2', name: 'B' },
+		]
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items,
+				showSelect: true,
+				selectionKey: 'uuid',
+				suffix: '',
+			},
+		})
+
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		const itemValue = dataTable.props('itemValue') as (item: unknown) => unknown
+
+		expect(itemValue(items[0] as unknown as Record<string, unknown>)).toBe('a-1')
+		expect(itemValue(items[1] as unknown as Record<string, unknown>)).toBe('a-2')
+	})
+
+	it('falls back to id when selectionKey is missing on item', () => {
+		const items = [
+			{ id: 10, name: 'No UUID' },
+		]
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items,
+				showSelect: true,
+				selectionKey: 'uuid',
+				suffix: '',
+			},
+		})
+
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		const itemValue = dataTable.props('itemValue') as (item: unknown) => unknown
+
+		expect(itemValue(items[0] as unknown as Record<string, unknown>)).toBe(10)
+	})
+
+	it('falls back to full object when neither selectionKey nor id are present', () => {
+		const item = { name: 'No keys' }
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: [item],
+				showSelect: true,
+				selectionKey: 'uuid',
+				suffix: '',
+			},
+		})
+
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		const itemValue = dataTable.props('itemValue') as (item: unknown) => unknown
+
+		const result = itemValue(item as unknown as Record<string, unknown>)
+		expect(result).toBe(item) // same object reference
 	})
 })

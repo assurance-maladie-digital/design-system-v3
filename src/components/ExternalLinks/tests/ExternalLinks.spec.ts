@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { shallowMount, mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 import { locales } from '../locales'
 
 import ExternalLinks from '../ExternalLinks.vue'
@@ -29,9 +28,6 @@ describe('ExternalLinks', () => {
 				nudgeBottom: '0px',
 				fixed: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
@@ -56,9 +52,6 @@ describe('ExternalLinks', () => {
 					},
 				],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const button = wrapper.find('button')
@@ -73,9 +66,6 @@ describe('ExternalLinks', () => {
 			props: {
 				position: 'top left',
 				items: [],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -105,9 +95,6 @@ describe('ExternalLinks', () => {
 				],
 				fixed: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const button = wrapper.find('button')
@@ -122,9 +109,6 @@ describe('ExternalLinks', () => {
 			props: {
 				position: 'bottom right',
 				items: [],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 		const button = wrapper.find('button')

@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproDentalChart from '../AmeliproDentalChart.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproDentalChart', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproDentalChart, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [
 					[

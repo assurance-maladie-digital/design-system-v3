@@ -126,11 +126,17 @@ exports[`AmeliproTable > render correctly 1`] = `
                   >
                     <!---->
                     <div
-                      class="v-progress-linear__background"
+                      class="
+                        bg-ap-blue-darken-1
+                        v-progress-linear__background
+                      "
                       style="opacity: NaN;"
                     ></div>
                     <div
-                      class="v-progress-linear__buffer"
+                      class="
+                        bg-ap-blue-darken-1
+                        v-progress-linear__buffer
+                      "
                       style="
                         opacity: NaN;
                         width: 0%;
@@ -144,10 +150,12 @@ exports[`AmeliproTable > render correctly 1`] = `
                     >
                       <div class="v-progress-linear__indeterminate">
                         <div class="
+                          bg-ap-blue-darken-1
                           long
                           v-progress-linear__indeterminate
                         "></div>
                         <div class="
+                          bg-ap-blue-darken-1
                           short
                           v-progress-linear__indeterminate
                         "></div>
@@ -177,10 +185,13 @@ exports[`AmeliproTable > render correctly 1`] = `
                       </span>
                     </div>
                     <input
+                      aria-controls="menu-v-0"
+                      aria-expanded="false"
                       aria-label="Open"
                       aria-required="false"
                       id="amelipro-table-id-pagination-select"
                       inputmode="none"
+                      role="combobox"
                       size="1"
                       title="Open"
                       type="text"
@@ -252,8 +263,175 @@ exports[`AmeliproTable > render correctly 1`] = `
               text-align: left;
             "
           >
-            <p class="mb-0">
+            <p class="
+              d-flex
+              mb-0
+            ">
               Nom
+              <button
+                class="
+                  btn--icon
+                  elevation-0
+                  ml-2
+                  rounded-0
+                  sort-btn
+                  v-btn
+                  v-btn--density-default
+                  v-btn--elevated
+                  v-btn--icon
+                  v-btn--size-default
+                  v-btn--variant-elevated
+                  v-theme--light
+                "
+                id="amelipro-table-id-table-header-cell-0-asc-sort-btn"
+                plain=""
+                style="
+                  height: auto;
+                  width: auto;
+                "
+                title="tri asc"
+                type="button"
+              >
+                <span class="v-btn__overlay"></span>
+                <span class="v-btn__underlay"></span>
+                <!---->
+                <span
+                  class="v-btn__content"
+                  data-no-activator=""
+                >
+                  <span
+                    class="d-sr-only"
+                    id="amelipro-table-id-table-header-cell-0-asc-sort-btn-btn-label"
+                  >
+                    tri asc
+                  </span>
+                  <span
+                    class="
+                      amelipro-icon
+                      icon-custom
+                    "
+                    id="amelipro-table-id-table-header-cell-0-asc-sort-btn-icon"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="
+                        amelipro-custom-icon
+                        custom-color
+                      "
+                      focusable="false"
+                      role="img"
+                      style="
+                        color: #1A1B1B;
+                        height: 9px;
+                        width: 9px;
+                      "
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          style="enable-background:new 0 0 42 42;"
+                          version="1.1"
+                          viewBox="0 0 42 42"
+                          x="0px"
+                          xml:space="preserve"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          y="0px"
+                        >
+                          <polygon
+                            class="shape-color"
+                            points="21,2.8 0,39.2 42,39.2 "
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <!---->
+                <!---->
+              </button>
+              <button
+                class="
+                  btn--icon
+                  elevation-0
+                  rounded-0
+                  sort-btn
+                  v-btn
+                  v-btn--density-default
+                  v-btn--disabled
+                  v-btn--icon
+                  v-btn--size-default
+                  v-btn--variant-elevated
+                  v-theme--light
+                "
+                disabled=""
+                id="amelipro-table-id-table-header-cell-0-desc-sort-btn"
+                plain=""
+                style="
+                  height: auto;
+                  width: auto;
+                "
+                title="tri desc"
+                type="button"
+              >
+                <span class="v-btn__overlay"></span>
+                <span class="v-btn__underlay"></span>
+                <!---->
+                <span
+                  class="v-btn__content"
+                  data-no-activator=""
+                >
+                  <span
+                    class="d-sr-only"
+                    id="amelipro-table-id-table-header-cell-0-desc-sort-btn-btn-label"
+                  >
+                    tri desc
+                  </span>
+                  <span
+                    class="
+                      amelipro-icon
+                      icon-custom
+                    "
+                    id="amelipro-table-id-table-header-cell-0-desc-sort-btn-icon"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="
+                        amelipro-custom-icon
+                        custom-color
+                      "
+                      focusable="false"
+                      role="img"
+                      style="
+                        color: #DDDEDE;
+                        height: 9px;
+                        width: 9px;
+                      "
+                    >
+                      <span>
+                        <svg
+                          aria-hidden="true"
+                          style="enable-background:new 0 0 42 42;"
+                          version="1.1"
+                          viewBox="0 0 42 42"
+                          x="0px"
+                          xml:space="preserve"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          y="0px"
+                        >
+                          <polygon
+                            class="shape-color"
+                            points="21,39.2 42,2.8 0,2.8 "
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <!---->
+                <!---->
+              </button>
             </p>
           </th>
           <th
@@ -272,6 +450,8 @@ exports[`AmeliproTable > render correctly 1`] = `
           >
             <p class="mb-0">
               Prénom
+              <!-- v-if -->
+              <!-- v-if -->
             </p>
           </th>
           <th
@@ -290,6 +470,8 @@ exports[`AmeliproTable > render correctly 1`] = `
           >
             <p class="mb-0">
               E-mail
+              <!-- v-if -->
+              <!-- v-if -->
             </p>
           </th>
         </tr>

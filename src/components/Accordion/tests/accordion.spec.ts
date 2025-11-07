@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import Accordion from '../Accordion.vue'
 import { config } from '../config'
@@ -28,9 +27,6 @@ describe('Accordion', () => {
 				items: defaultItems,
 				headingLevel: 2,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
@@ -41,9 +37,6 @@ describe('Accordion', () => {
 			propsData: {
 				items: defaultItems,
 				headingLevel: 2,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -58,9 +51,6 @@ describe('Accordion', () => {
 				items: defaultItems,
 				headingLevel,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const heading = wrapper.find(`h${headingLevel}`)
@@ -72,9 +62,6 @@ describe('Accordion', () => {
 			propsData: {
 				items: defaultItems,
 				headingLevel: 2,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -99,9 +86,6 @@ describe('Accordion', () => {
 				items: [defaultItems[0]],
 				headingLevel: 2,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const button = wrapper.find('.sy-accordion-button')
@@ -116,9 +100,6 @@ describe('Accordion', () => {
 			propsData: {
 				items: [defaultItems[2]],
 				headingLevel: 2,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -136,9 +117,6 @@ describe('Accordion', () => {
 			propsData: {
 				items: defaultItems,
 				headingLevel: 2,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -163,9 +141,6 @@ describe('Accordion', () => {
 				items: defaultItems,
 				headingLevel: 2,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const button = wrapper.find('.sy-accordion-button')
@@ -183,9 +158,6 @@ describe('Accordion', () => {
 			propsData: {
 				items: defaultItems,
 				headingLevel: 2,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -218,9 +190,6 @@ describe('Accordion', () => {
 				headingLevel: 2,
 				groupId: 'test-group',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Ouvrir le premier accordéon pour qu'il ait le focus
@@ -244,9 +213,6 @@ describe('Accordion', () => {
 				items: defaultItems,
 				headingLevel: 2,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const titleElement = wrapper.find('.sy-accordion-title')
@@ -261,9 +227,6 @@ describe('Accordion', () => {
 			propsData: {
 				items: defaultItems,
 				headingLevel: 2,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -296,9 +259,6 @@ describe('Accordion', () => {
 					},
 				],
 				headingLevel: 2,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -344,9 +304,6 @@ describe('Accordion', () => {
 				headingLevel: 2,
 				...customOptions,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Vérifier que le style contient les variables CSS avec les bonnes valeurs
@@ -382,9 +339,6 @@ describe('Accordion', () => {
 				items: defaultItems,
 				headingLevel: 2,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Vérifier que le style contient les variables CSS avec les valeurs par défaut
@@ -412,9 +366,6 @@ describe('Accordion', () => {
 				items: defaultItems,
 				headingLevel: 2,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const buttons = wrapper.findAll('.sy-accordion-button')
@@ -438,9 +389,6 @@ describe('Accordion', () => {
 			propsData: {
 				items: defaultItems,
 				headingLevel: 2,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -471,9 +419,6 @@ describe('Accordion', () => {
 			propsData: {
 				items: defaultItems,
 				headingLevel: 2,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

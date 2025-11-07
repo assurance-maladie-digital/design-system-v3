@@ -1,17 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 
 import PeriodFilter from '../PeriodFilter.vue'
 import PeriodField from '@/components/PeriodField/PeriodField.vue'
 import type { FilterType } from '../../types'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('PeriodFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof PeriodFilter>>
@@ -21,7 +13,6 @@ describe('PeriodFilter.vue', () => {
 	beforeEach(() => {
 		wrapper = mount(PeriodFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					PeriodField: {
 						template: '<div class="period-field-stub" data-testid="period-field" :label="label" :clearable="clearable" :density="density" :hideDetails="hideDetails" :hideMessages="hideMessages" :disableErrorHandling="disableErrorHandling" :variant="variant" :format="format"></div>',
@@ -121,7 +112,6 @@ describe('PeriodFilter.vue', () => {
 		const headerWithoutKey = { title: 'Test Period' }
 		const newWrapper = mount(PeriodFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					PeriodField: {
 						template: '<div class="period-field-stub" data-testid="period-field"></div>',
@@ -159,7 +149,6 @@ describe('PeriodFilter.vue', () => {
 		const emptyHeader = {}
 		const newWrapper = mount(PeriodFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					PeriodField: {
 						template: '<div class="period-field-stub" data-testid="period-field"></div>',
