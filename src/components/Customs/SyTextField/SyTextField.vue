@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	// Prevent display-asterisk from being passed to the DOM
+// Prevent display-asterisk from being passed to the DOM
 	defineOptions({
 		inheritAttrs: false,
 	})
@@ -8,7 +8,7 @@
 		mdiCheck,
 		mdiInformationOutline,
 		mdiClose,
-		mdiInformation,
+		mdiAlertCircle,
 		mdiCalendar,
 	} from '@mdi/js'
 	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
@@ -166,7 +166,7 @@
 		info: mdiInformationOutline,
 		success: mdiCheck,
 		warning: mdiAlertOutline,
-		error: mdiInformation,
+		error: mdiAlertCircle,
 		close: mdiClose,
 		calendar: mdiCalendar,
 	}
@@ -804,6 +804,10 @@
 	:deep(.v-input__prepend > .v-icon),
 	:deep(.v-input__append > .v-icon) {
 		opacity: 1 !important;
+	}
+
+	:deep(.v-icon__svg) {
+		fill: tokens.$colors-text-success !important;
 	}
 
 	:deep(.v-field) {

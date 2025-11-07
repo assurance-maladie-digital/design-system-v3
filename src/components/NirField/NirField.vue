@@ -123,8 +123,8 @@
 	}
 
 	const fieldWidth = computed(() => props.width || '100%')
-	const nirFieldWidth = computed(() => props.clearable ? '0 0 calc(70% - 8px)' : '0 0 calc(72% - 8px)')
-	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(29% - 8px)' : '0 0 calc(25% - 8px)')
+	const nirFieldWidth = computed(() => props.clearable ? '0 0 calc(68% - 8px)' : '0 0 calc(68% - 8px)')
+	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(32% - 8px)' : '0 0 calc(32% - 8px)')
 
 	const fieldId = useId()
 	const numberFieldErrorId = `nir-number-error-${fieldId}`
@@ -718,11 +718,11 @@
 
 /* Styles pour le mode standard (div) */
 .nir-field:not(.nir-field--fieldset) .number-field-container {
-	flex: 0 0 calc(75% - 8px);
+	flex: 0 0 calc(68% - 8px);
 }
 
 .nir-field:not(.nir-field--fieldset) .key-field-container {
-	flex: 0 0 calc(25% - 8px);
+	flex: 0 0 calc(32% - 8px);
 }
 
 /* Styles pour le mode fieldset */
@@ -779,5 +779,4 @@
 .sy-key-success {
 	color: tokens.$colors-text-success;
 }
-
 </style>
