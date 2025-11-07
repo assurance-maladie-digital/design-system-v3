@@ -349,6 +349,18 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
+		customLocale: {
+			description: 'Objet permettant de surcharger les messages du composant. Clés supportées : `errorRequiredNumber`, `erreurInvalidNumber`, `errorRequiredKey`, `errorInvalidKey`, `successNumberValid`, `successKeyValid`.',
+			control: 'object',
+			table: {
+				type: {
+					summary: 'Record<string, string>',
+				},
+				defaultValue: {
+					summary: '{}',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof NirField>
 
@@ -1314,4 +1326,68 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
       </div>
     `,
 	}),
+}
+
+export const WithCustomLocale: Story = {
+	args: {
+		...Default.args,
+		required: true,
+		showSuccessMessages: true,
+		customLocale: {
+			errorRequiredNumber: 'Veuillez renseigner votre numéro de sécurité sociale (13 caractères).',
+			erreurInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',
+			errorRequiredKey: 'La clé (2 chiffres) est requise.',
+			errorInvalidKey: 'La clé ne correspond pas au NIR saisi.',
+			successNumberValid: 'Numéro reconnu ✅',
+			successKeyValid: 'Clé correspondante ✅',
+		},
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Surcharger les messages avec customLocale
+
+Utilisez la prop \`customLocale\` pour remplacer les messages par défaut sans toucher au composant.
+
+Clés supportées :
+- \`errorRequiredNumber\`
+- \`erreurInvalidNumber\`
+- \`errorRequiredKey\`
+- \`errorInvalidKey\`
+- \`successNumberValid\`
+- \`successKeyValid\`
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <NirField
+    v-model="value"
+    required
+    show-success-messages
+    :custom-locale="{
+      errorRequiredNumber: 'Veuillez renseigner votre numéro de sécurité sociale (13 caractères).',
+      erreurInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',
+      errorRequiredKey: 'La clé (2 chiffres) est requise.',
+      errorInvalidKey: 'La clé ne correspond pas au NIR saisi.',
+      successNumberValid: 'Numéro reconnu ✅',
+      successKeyValid: 'Clé correspondante ✅'
+    }"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { NirField } from '@cnamts/synapse'
+import { ref } from 'vue'
+
+const value = ref('')
+</script>`,
+			},
+		],
+	},
 }
