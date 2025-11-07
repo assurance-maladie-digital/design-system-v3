@@ -1,5 +1,6 @@
 <script setup lang="ts">
-	import { mdiCached, mdiImageOutline, mdiPause, mdiVolumeHigh } from '@mdi/js'
+	import { mdiCached, mdiImageOutline, mdiPause } from '@mdi/js'
+	import volumeUp from './icons/volumeUp.vue'
 	import { ref, watch } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
@@ -156,9 +157,14 @@
 
 					<CaptchaBtn
 						data-test-id="captcha-image-change"
-						:prepend-icon="mdiVolumeHigh"
 						@click="chooseAudio"
 					>
+						<volume-up
+							fill="#0C419A"
+							aria-hidden="true"
+							height="16"
+							width="16"
+						/>
 						{{ locales.image.change }}
 					</CaptchaBtn>
 
@@ -199,7 +205,12 @@
 					</span>
 
 					<span v-else>
-						<VIcon>{{ mdiVolumeHigh }}</VIcon>
+						<volume-up
+							fill="#fff"
+							aria-hidden="true"
+							height="16"
+							width="16"
+						/>
 						{{ locales.play }}
 					</span>
 				</VBtn>
@@ -268,9 +279,14 @@
 						{{ locales.choiceCaptcha.image }}
 					</CaptchaBtn>
 					<CaptchaBtn
-						:prepend-icon="mdiVolumeHigh"
 						@click="chooseAudio"
 					>
+						<volume-up
+							fill="#0C419A"
+							aria-hidden="true"
+							height="16"
+							width="16"
+						/>
 						{{ locales.choiceCaptcha.audio }}
 					</CaptchaBtn>
 				</div>
