@@ -200,34 +200,10 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               />
               <!---->
             </div>
-            <transition-stub
-              appear="false"
-              css="true"
-              name="expand-x-transition"
-              persisted="false"
-            >
-              <div
-                class="v-field__clearable"
-                style="display: none;"
-              >
-                <i
-                  aria-hidden="false"
-                  aria-label="Clear Caractères de l’audio"
-                  class="
-                    M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
-                    mdi
-                    notranslate
-                    v-icon
-                    v-icon--clickable
-                    v-icon--size-default
-                    v-theme--light
-                  "
-                  role="button"
-                  tabindex="-1"
-                ></i>
-              </div>
-            </transition-stub>
+            <!---->
             <div class="v-field__append-inner">
+              <!-- Keyboard-focusable clear button -->
+              <!-- v-if -->
               <!-- v-if -->
               <!-- v-if -->
               <!---->
@@ -627,34 +603,10 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               />
               <!---->
             </div>
-            <transition-stub
-              appear="false"
-              css="true"
-              name="expand-x-transition"
-              persisted="false"
-            >
-              <div
-                class="v-field__clearable"
-                style="display: none;"
-              >
-                <i
-                  aria-hidden="false"
-                  aria-label="Clear Caractères de l’image"
-                  class="
-                    M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
-                    mdi
-                    notranslate
-                    v-icon
-                    v-icon--clickable
-                    v-icon--size-default
-                    v-theme--light
-                  "
-                  role="button"
-                  tabindex="-1"
-                ></i>
-              </div>
-            </transition-stub>
+            <!---->
             <div class="v-field__append-inner">
+              <!-- Keyboard-focusable clear button -->
+              <!-- v-if -->
               <!-- v-if -->
               <!-- v-if -->
               <!---->
