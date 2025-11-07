@@ -66,10 +66,14 @@ describe('AmeliproDisclosure', () => {
 	})
 
 	describe('Setting props should update props or attributes of inner components', () => {
-		describe.todo('AmeliproBtn')
+		describe.skip('AmeliproBtn', () => {
+			// TODO: add tests for AmeliproBtn inner component
+		})
 	})
 
 	describe('Slots', () => {
-		describe.todo('#default')
+		describe.skip('#default', () => {
+			// TODO: add tests for default slot
+		})
 	})
 })
