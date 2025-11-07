@@ -806,6 +806,10 @@
 		opacity: 1 !important;
 	}
 
+	:deep(.v-icon__svg) {
+		fill: tokens.$colors-text-success !important;
+	}
+
 	:deep(.v-field) {
 		color: tokens.$colors-border-success !important;
 

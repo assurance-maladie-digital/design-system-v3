@@ -543,7 +543,6 @@
 				v-maska="numberMask"
 				:label="numberLabelWithAsterisk"
 				:variant-style="props.variant"
-				:append-inner-icon="numberValue && hasNumberSuccess ? 'success' : undefined"
 				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'success' : undefined"
 				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
@@ -587,7 +586,6 @@
 				v-maska="keyMask"
 				:label="keyLabelWithAsterisk"
 				:variant-style="props.variant"
-				:append-inner-icon="keyValue && hasKeySuccess ? 'success' : undefined"
 				:prepend-icon="keyTooltip && keyTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="keyTooltip && keyTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
@@ -781,5 +779,4 @@
 .sy-key-success {
 	color: tokens.$colors-text-success;
 }
-
 </style>
