@@ -543,7 +543,7 @@
 				v-maska="numberMask"
 				:label="numberLabelWithAsterisk"
 				:variant-style="props.variant"
-				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'success' : undefined"
+				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
 				:append-tooltip="nirTooltip && nirTooltipPosition === 'append' ? nirTooltip : undefined"
