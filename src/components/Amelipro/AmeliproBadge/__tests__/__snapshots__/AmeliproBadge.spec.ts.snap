@@ -1,19 +1,34 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproBadge > render correctly 1`] = `
+exports[`AmeliproBadge > Snapshots > renders the component with all properties filled in 1`] = `
+<span
+  class="
+    amelipro-badge
+    round-custom
+  "
+  id="modified-unique-id"
+  style="background-color: #FFFFFF;"
+>
+  <span
+    class="amelipro-badge__content"
+    style="color: #0C419A;"
+  >
+    modified badge content
+  </span>
+</span>
+`;
+
+exports[`AmeliproBadge > Snapshots > renders the component with only required properties filled in 1`] = `
 <p
   class="
     amelipro-badge
     round-classic
   "
-  id="my-badge-id"
   style="background-color: #00749C;"
 >
   <span
     class="amelipro-badge__content"
     style="color: #FFFFFF;"
-  >
-    contenu du badge
-  </span>
+  ></span>
 </p>
 `;
