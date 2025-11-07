@@ -8,18 +8,11 @@
 <template>
 	<NirField
 		v-model="value"
-		key-label="Clé"
-		:display-key="true"
-		required
-    :custom-locale="{ erreurInvalidNumber:  'toto est invalide.' }"
-	/>
-
-	<NirField
-		v-model="value"
 		number-label="Matricule"
 		key-label="Clé"
 		:display-key="true"
 		:custom-rules-precedence="true"
+    :custom-locale="{ erreurInvalidNumber:  'Le matricule est invalide.', erreurInvalidKey: 'La clé est invalide.' }"
 		:custom-number-rules="[
 			{ type: 'required', options: { message: 'Le champ matricule est requis.', successMessage: 'Le matricule est valide.' } },
 		]"
@@ -36,6 +29,7 @@
 		key-label="Clé"
 		:display-key="false"
 		:custom-rules-precedence="true"
+    :custom-locale="{ erreurInvalidNumber:  'Le matricule est invalide.', erreurInvalidKey: 'La clé est invalide.' }"
 		:custom-number-rules="[{ type: 'required', options: { message: 'Le champ matricule est requis.', successMessage: 'Le matricule est valide.' } }]"
 	/>
 </template>

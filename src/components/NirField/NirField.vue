@@ -201,7 +201,7 @@
 			rules.push({
 				type: 'required',
 				options: {
-					message: locales.errorRequiredNumber,
+					message: props.customLocale.errorRequiredNumber || locales.errorRequiredNumber,
 					fieldIdentifier: props.numberLabel,
 				},
 			})
@@ -229,7 +229,7 @@
 					return result === true ? true : props.customLocale.erreurInvalidNumber || locales.erreurInvalidNumber
 				},
 				message: props.customLocale.erreurInvalidNumber || locales.erreurInvalidNumber,
-				successMessage: locales.successNumberValid,
+				successMessage: props.customLocale.successNumberValid || locales.successNumberValid,
 				fieldIdentifier: props.numberLabel,
 			},
 		})
@@ -252,7 +252,7 @@
 			rules.push({
 				type: 'required',
 				options: {
-					message: locales.errorRequiredKey,
+					message: props.customLocale.errorRequiredKey || locales.errorRequiredKey,
 					fieldIdentifier: props.keyLabel,
 				},
 			})
@@ -276,8 +276,8 @@
 				type: 'custom',
 				options: {
 					validate: validateKey,
-					message: locales.errorInvalidKey,
-					successMessage: locales.successKeyValid,
+					message: props.customLocale.errorInvalidKey || locales.errorInvalidKey,
+					successMessage: props.customLocale.successKeyValid || locales.successKeyValid,
 					fieldIdentifier: props.keyLabel,
 				},
 			})
