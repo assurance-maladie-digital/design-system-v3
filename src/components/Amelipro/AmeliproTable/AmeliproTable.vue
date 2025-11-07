@@ -246,104 +246,107 @@
 		<div
 			v-if="mdAndUp || hasHeaderSorting"
 			:id="`${uniqueId}-desktop`"
-			class="amelipro-table__wrapper--desktop"
 			style="overflow-x: auto;"
 		>
-			<table
-				:id="`${uniqueId}-table`"
-				:aria-label="title"
-				class="amelipro-table__table--desktop"
-				:class="{
-					'vertical-border': verticalBorder
-				}"
+			<div
+				class="amelipro-table__wrapper--desktop"
 				:style="tableWidthStyles"
 			>
-				<thead>
-					<tr :id="`${uniqueId}-table-header`">
-						<th
-							v-for="(header, index) in headers"
-							:id="`${uniqueId}-table-header-cell-${index}`"
-							:key="index"
-							class="bg-ap-grey-lighten-4 font-weight-semibold"
-							:class="header.headerClasses"
-							scope="col"
-							:style="`min-width: ${header.minWidth};
-							width: ${header.width};
-							max-width: ${header.maxWidth};
-							text-align: ${header.align};`"
-						>
-							<p
-								:aria-describedby="header.descriptionId"
-								class="mb-0"
-								:class="{ 'd-flex' : header.sort }"
+				<table
+					:id="`${uniqueId}-table`"
+					:aria-label="title"
+					class="amelipro-table__table--desktop"
+					:class="{
+						'vertical-border': verticalBorder
+					}"
+				>
+					<thead>
+						<tr :id="`${uniqueId}-table-header`">
+							<th
+								v-for="(header, index) in headers"
+								:id="`${uniqueId}-table-header-cell-${index}`"
+								:key="index"
+								class="bg-ap-grey-lighten-4 font-weight-semibold"
+								:class="header.headerClasses"
+								scope="col"
+								:style="`min-width: ${header.minWidth};
+								width: ${header.width};
+								max-width: ${header.maxWidth};
+								text-align: ${header.align};`"
 							>
-								{{ header.title }}
+								<p
+									:aria-describedby="header.descriptionId"
+									class="mb-0"
+									:class="{ 'd-flex' : header.sort }"
+								>
+									{{ header.title }}
 
-								<AmeliproIconBtn
-									v-if="header.sort?.ascendant"
-									class="ml-2 sort-btn"
-									:btn-label="header.sort?.ascendant.label"
-									:btn-title="header.sort?.ascendant.label"
-									:disabled="header.sort.ascendant.disabled"
-									icon="triangleUp"
-									icon-bg-color="transparent"
-									:icon-color="header.sort.ascendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
-									icon-hover-bg-color="transparent"
-									:icon-hover-color="header.sort.ascendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
-									:unique-id="`${uniqueId}-table-header-cell-${index}-asc-sort-btn`"
-									size="9px"
-									@click="emitHeaderSortEvent('ascendant', header.name)"
-								/>
+									<AmeliproIconBtn
+										v-if="header.sort?.ascendant"
+										class="ml-2 sort-btn"
+										:btn-label="header.sort?.ascendant.label"
+										:btn-title="header.sort?.ascendant.label"
+										:disabled="header.sort.ascendant.disabled"
+										icon="triangleUp"
+										icon-bg-color="transparent"
+										:icon-color="header.sort.ascendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
+										icon-hover-bg-color="transparent"
+										:icon-hover-color="header.sort.ascendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
+										:unique-id="`${uniqueId}-table-header-cell-${index}-asc-sort-btn`"
+										size="9px"
+										@click="emitHeaderSortEvent('ascendant', header.name)"
+									/>
 
-								<AmeliproIconBtn
-									v-if="header.sort?.descendant"
-									class="sort-btn"
-									:class="{ 'ml-2': !header.sort.ascendant }"
-									:btn-label="header.sort.descendant.label"
-									:btn-title="header.sort.descendant.label"
-									:disabled="header.sort.descendant.disabled"
-									icon="triangleDown"
-									icon-bg-color="transparent"
-									:icon-color="header.sort.descendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
-									icon-hover-bg-color="transparent"
-									:icon-hover-color="header.sort.descendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
-									:unique-id="`${uniqueId}-table-header-cell-${index}-desc-sort-btn`"
-									size="9px"
-									@click="emitHeaderSortEvent('descendant', header.name)"
-								/>
-							</p>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr
-						v-for="(row, rowIndex) in currentDataList"
-						:id="`${uniqueId}-table-row-${rowIndex}`"
-						:key="rowIndex"
-					>
-						<td
-							v-for="(cell, cellIndex) in datas(row)"
-							:id="`${uniqueId}-table-row-${rowIndex}-cell-${cellIndex}`"
-							:key="cellIndex"
-							:class="cell.value !== undefined ? cell.columnClasses : undefined"
-							:style="cell !== undefined ? `text-align: ${cell.columnAlign};` : undefined"
+									<AmeliproIconBtn
+										v-if="header.sort?.descendant"
+										class="sort-btn"
+										:class="{ 'ml-2': !header.sort.ascendant }"
+										:btn-label="header.sort.descendant.label"
+										:btn-title="header.sort.descendant.label"
+										:disabled="header.sort.descendant.disabled"
+										icon="triangleDown"
+										icon-bg-color="transparent"
+										:icon-color="header.sort.descendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
+										icon-hover-bg-color="transparent"
+										:icon-hover-color="header.sort.descendant.disabled ? 'ap-grey-lighten-2' :'ap-grey-darken-1'"
+										:unique-id="`${uniqueId}-table-header-cell-${index}-desc-sort-btn`"
+										size="9px"
+										@click="emitHeaderSortEvent('descendant', header.name)"
+									/>
+								</p>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							v-for="(row, rowIndex) in currentDataList"
+							:id="`${uniqueId}-table-row-${rowIndex}`"
+							:key="rowIndex"
 						>
-							<p
-								v-if="cell.value !== undefined"
-								class="mb-0"
+							<td
+								v-for="(cell, cellIndex) in datas(row)"
+								:id="`${uniqueId}-table-row-${rowIndex}-cell-${cellIndex}`"
+								:key="cellIndex"
+								:class="cell.value !== undefined ? cell.columnClasses : undefined"
+								:style="cell !== undefined ? `text-align: ${cell.columnAlign};` : undefined"
 							>
-								{{ cell.value }}
-							</p>
+								<p
+									v-if="cell.value !== undefined"
+									class="mb-0"
+								>
+									{{ cell.value }}
+								</p>
 
-							<slot
-								v-else
-								:name="`item-${headers[cellIndex].name}`"
-								v-bind="row"
-							/>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+								<slot
+									v-else
+									:name="`item-${headers[cellIndex].name}`"
+									v-bind="row"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 
 		<div
@@ -448,6 +451,16 @@ td {
 
 	& table tr:last-child th {
 		border-bottom-left-radius: 8px;
+	}
+}
+
+.amelipro-table__wrapper--desktop {
+	& th:first-child {
+		border-top-left-radius: 8px;
+	}
+
+	& th:last-child {
+		border-top-right-radius: 8px;
 	}
 }
 
