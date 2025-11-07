@@ -43,6 +43,7 @@
 		disableErrorHandling?: boolean
 		nirType?: 'simple' | 'complexe'
 		withoutFieldset?: boolean
+		customLocale?: Record<string, string>
 	}>(), {
 		modelValue: undefined,
 		label: 'Identifiant d\'assuré',
@@ -79,6 +80,7 @@
 		disableErrorHandling: false,
 		nirType: 'simple',
 		withoutFieldset: false,
+		customLocale: () => ({}),
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -221,12 +223,12 @@
 					if (!value) return true
 					// Ne valider que si tous les caractères sont saisis
 					if (value.length < 13) {
-						return locales.erreurInvalidNumber
+						return props.customLocale.erreurInvalidNumber || locales.erreurInvalidNumber
 					}
 					const result = checkNIR(value, props.nirType)
-					return result === true ? true : locales.erreurInvalidNumber
+					return result === true ? true : props.customLocale.erreurInvalidNumber || locales.erreurInvalidNumber
 				},
-				message: locales.erreurInvalidNumber,
+				message: props.customLocale.erreurInvalidNumber || locales.erreurInvalidNumber,
 				successMessage: locales.successNumberValid,
 				fieldIdentifier: props.numberLabel,
 			},
