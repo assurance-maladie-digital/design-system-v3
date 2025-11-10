@@ -82,9 +82,9 @@ testHelper.setExpectedPropOptions(expectedPropOptions)
 	.setRequiredPropValues(requiredPropValues)
 	.setModifiedPropValues(modifiedPropValues)
 
-let vueWrapper: VueWrapper<InstanceType<typeof AmeliproErrorTemplate>>
-
 describe('AmeliproErrorTemplate', () => {
+	let vueWrapper: VueWrapper<InstanceType<typeof AmeliproErrorTemplate>>
+
 	describe('Snapshots', () => {
 		testHelper.snapshots()
 	})

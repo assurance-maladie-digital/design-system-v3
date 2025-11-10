@@ -79,6 +79,7 @@ testHelper.setExpectedPropOptions(expectedPropOptions)
 	.setModifiedPropValues(modifiedPropValues)
 
 describe('AmeliproFilePreview', () => {
+	let vueWrapper: VueWrapper<InstanceType<typeof AmeliproFilePreview>>
 	displayWrapper.vm.setMdAndUp(true)
 
 	describe('Snapshots', () => {
@@ -90,9 +91,8 @@ describe('AmeliproFilePreview', () => {
 	})
 
 	describe('setting props should update props and attributes of inner components', () => {
-		let wrapper: VueWrapper<InstanceType<typeof AmeliproFilePreview>>
 		beforeEach(() => {
-			wrapper = shallowMount(AmeliproFilePreview, {
+			vueWrapper = shallowMount(AmeliproFilePreview, {
 				props: requiredPropValues(),
 				global: {
 					stubs: {
@@ -105,31 +105,29 @@ describe('AmeliproFilePreview', () => {
 
 		describe('AmeliproCard', () => {
 			it('prop cardTitle sets prop cardTitle', async () => {
-				expect(wrapper.findComponent(AmeliproCard).props('cardTitle')).toBe(requiredPropValues().cardTitle)
+				expect(vueWrapper.findComponent(AmeliproCard).props('cardTitle')).toBe(requiredPropValues().cardTitle)
 
 				const { cardTitle } = modifiedPropValues()
-				await wrapper.setProps({ cardTitle })
-				expect(wrapper.findComponent(AmeliproCard).props('cardTitle')).toBe(modifiedPropValues().cardTitle)
+				await vueWrapper.setProps({ cardTitle })
+				expect(vueWrapper.findComponent(AmeliproCard).props('cardTitle')).toBe(modifiedPropValues().cardTitle)
 			})
 		})
 
 		describe('AmeliproAccordion', () => {
 			it('prop cardTitle sets prop accordionTitle', async () => {
-				await wrapper.setProps({ foldable: true })
-				expect(wrapper.findComponent(AmeliproAccordion).props('accordionTitle')).toBe(requiredPropValues().cardTitle)
+				await vueWrapper.setProps({ foldable: true })
+				expect(vueWrapper.findComponent(AmeliproAccordion).props('accordionTitle')).toBe(requiredPropValues().cardTitle)
 
 				const { cardTitle } = modifiedPropValues()
-				await wrapper.setProps({ cardTitle })
-				expect(wrapper.findComponent(AmeliproAccordion).props('accordionTitle')).toBe(modifiedPropValues().cardTitle)
+				await vueWrapper.setProps({ cardTitle })
+				expect(vueWrapper.findComponent(AmeliproAccordion).props('accordionTitle')).toBe(modifiedPropValues().cardTitle)
 			})
 		})
 	})
 
 	describe('setting props should update attributes of inner tags', () => {
-		let wrapper: VueWrapper<InstanceType<typeof AmeliproFilePreview>>
-
 		beforeEach(() => {
-			wrapper = mount(AmeliproFilePreview, {
+			vueWrapper = mount(AmeliproFilePreview, {
 				props: requiredPropValues(),
 				stubs: {
 					AmeliproCard,
@@ -140,42 +138,42 @@ describe('AmeliproFilePreview', () => {
 
 		describe('header link', () => {
 			it('prop fileName sets attribute download', async () => {
-				expect(wrapper.find('.amelipro-file-preview__header__link').attributes('download')).toBe('Required file name')
+				expect(vueWrapper.find('.amelipro-file-preview__header__link').attributes('download')).toBe('Required file name')
 
-				await wrapper.setProps({ fileName: 'The new file name' })
-				expect(wrapper.find('.amelipro-file-preview__header__link').attributes('download')).toBe('The new file name')
+				await vueWrapper.setProps({ fileName: 'The new file name' })
+				expect(vueWrapper.find('.amelipro-file-preview__header__link').attributes('download')).toBe('The new file name')
 			})
 
 			it('prop fileSrc sets attribute href', async () => {
-				expect(wrapper.find('.amelipro-file-preview__header__link').attributes('href')).toBe('required-file-src')
+				expect(vueWrapper.find('.amelipro-file-preview__header__link').attributes('href')).toBe('required-file-src')
 
-				await wrapper.setProps({ fileSrc: 'new-file-src' })
-				expect(wrapper.find('.amelipro-file-preview__header__link').attributes('href')).toBe('new-file-src')
+				await vueWrapper.setProps({ fileSrc: 'new-file-src' })
+				expect(vueWrapper.find('.amelipro-file-preview__header__link').attributes('href')).toBe('new-file-src')
 			})
 
 			it('prop linkTitle sets attribute title', async () => {
-				expect(wrapper.find('.amelipro-file-preview__header__link').attributes('title')).toBe('Télécharger le fichier au Format PDF')
+				expect(vueWrapper.find('.amelipro-file-preview__header__link').attributes('title')).toBe('Télécharger le fichier au Format PDF')
 
 				const { linkTitle } = modifiedPropValues()
-				await wrapper.setProps({ linkTitle })
-				expect(wrapper.find('.amelipro-file-preview__header__link').attributes('title')).toBe('The link title')
+				await vueWrapper.setProps({ linkTitle })
+				expect(vueWrapper.find('.amelipro-file-preview__header__link').attributes('title')).toBe('The link title')
 			})
 		})
 
 		describe('iframe', () => {
 			it('prop fileSrc sets attribute src', async () => {
-				expect(wrapper.find('.amelipro-file-preview__iframe').attributes('src')).toBe('required-file-src')
+				expect(vueWrapper.find('.amelipro-file-preview__iframe').attributes('src')).toBe('required-file-src')
 
-				await wrapper.setProps({ fileSrc: 'new-file-src' })
-				expect(wrapper.find('.amelipro-file-preview__iframe').attributes('src')).toBe('new-file-src')
+				await vueWrapper.setProps({ fileSrc: 'new-file-src' })
+				expect(vueWrapper.find('.amelipro-file-preview__iframe').attributes('src')).toBe('new-file-src')
 			})
 
 			it('prop iframeTitle sets attribute title', async () => {
-				expect(wrapper.find('.amelipro-file-preview__iframe').attributes('title')).toBe('Aperçu du fichier PDF')
+				expect(vueWrapper.find('.amelipro-file-preview__iframe').attributes('title')).toBe('Aperçu du fichier PDF')
 
 				const { iframeTitle } = modifiedPropValues()
-				await wrapper.setProps({ iframeTitle })
-				expect(wrapper.find('.amelipro-file-preview__iframe').attributes('title')).toBe('The iframe title')
+				await vueWrapper.setProps({ iframeTitle })
+				expect(vueWrapper.find('.amelipro-file-preview__iframe').attributes('title')).toBe('The iframe title')
 			})
 		})
 
@@ -188,34 +186,32 @@ describe('AmeliproFilePreview', () => {
 			})
 
 			it('prop fileName sets attribute download', async () => {
-				expect(wrapper.find('.download-file-link').attributes('download')).toBe('Required file name')
+				expect(vueWrapper.find('.download-file-link').attributes('download')).toBe('Required file name')
 
-				await wrapper.setProps({ fileName: 'The new file name' })
-				expect(wrapper.find('.download-file-link').attributes('download')).toBe('The new file name')
+				await vueWrapper.setProps({ fileName: 'The new file name' })
+				expect(vueWrapper.find('.download-file-link').attributes('download')).toBe('The new file name')
 			})
 
 			it('prop fileSrc sets attribute href', async () => {
-				expect(wrapper.find('.download-file-link').attributes('href')).toBe('required-file-src')
+				expect(vueWrapper.find('.download-file-link').attributes('href')).toBe('required-file-src')
 
-				await wrapper.setProps({ fileSrc: 'new-file-src' })
-				expect(wrapper.find('.download-file-link').attributes('href')).toBe('new-file-src')
+				await vueWrapper.setProps({ fileSrc: 'new-file-src' })
+				expect(vueWrapper.find('.download-file-link').attributes('href')).toBe('new-file-src')
 			})
 
 			it('prop linkTitle sets attribute title', async () => {
-				expect(wrapper.find('.download-file-link').attributes('title')).toBe('Télécharger le fichier au Format PDF')
+				expect(vueWrapper.find('.download-file-link').attributes('title')).toBe('Télécharger le fichier au Format PDF')
 
 				const { linkTitle } = modifiedPropValues()
-				await wrapper.setProps({ linkTitle })
-				expect(wrapper.find('.download-file-link').attributes('title')).toBe('The link title')
+				await vueWrapper.setProps({ linkTitle })
+				expect(vueWrapper.find('.download-file-link').attributes('title')).toBe('The link title')
 			})
 		})
 	})
 
 	describe('visibility of some elements depends on screen size', () => {
-		let wrapper: VueWrapper<InstanceType<typeof AmeliproFilePreview>>
-
 		beforeEach(() => {
-			wrapper = mount(AmeliproFilePreview, {
+			vueWrapper = mount(AmeliproFilePreview, {
 				props: modifiedPropValues(),
 				stubs: {
 					AmeliproCard,
@@ -226,32 +222,32 @@ describe('AmeliproFilePreview', () => {
 
 		it('header right visibility', async () => {
 			displayWrapper.vm.setMdAndUp(true)
-			await wrapper.vm.$nextTick()
-			expect(wrapper.find('.amelipro-file-preview__header-right').exists()).toBe(true)
+			await vueWrapper.vm.$nextTick()
+			expect(vueWrapper.find('.amelipro-file-preview__header-right').exists()).toBe(true)
 
 			displayWrapper.vm.setMdAndUp(false)
-			await wrapper.vm.$nextTick()
-			expect(wrapper.find('.amelipro-file-preview__header-right').exists()).toBe(false)
+			await vueWrapper.vm.$nextTick()
+			expect(vueWrapper.find('.amelipro-file-preview__header-right').exists()).toBe(false)
 		})
 
 		it('iframe visibility', async () => {
 			displayWrapper.vm.setMdAndUp(true)
-			await wrapper.vm.$nextTick()
-			expect(wrapper.find('.amelipro-file-preview__iframe').exists()).toBe(true)
+			await vueWrapper.vm.$nextTick()
+			expect(vueWrapper.find('.amelipro-file-preview__iframe').exists()).toBe(true)
 
 			displayWrapper.vm.setMdAndUp(false)
-			await wrapper.vm.$nextTick()
-			expect(wrapper.find('.amelipro-file-preview__iframe').exists()).toBe(false)
+			await vueWrapper.vm.$nextTick()
+			expect(vueWrapper.find('.amelipro-file-preview__iframe').exists()).toBe(false)
 		})
 
 		it('download file link visibility', async () => {
 			displayWrapper.vm.setMdAndUp(true)
-			await wrapper.vm.$nextTick()
-			expect(wrapper.find('.download-file-link').exists()).toBe(false)
+			await vueWrapper.vm.$nextTick()
+			expect(vueWrapper.find('.download-file-link').exists()).toBe(false)
 
 			displayWrapper.vm.setMdAndUp(false)
-			await wrapper.vm.$nextTick()
-			expect(wrapper.find('.download-file-link').exists()).toBe(true)
+			await vueWrapper.vm.$nextTick()
+			expect(vueWrapper.find('.download-file-link').exists()).toBe(true)
 		})
 	})
 })
