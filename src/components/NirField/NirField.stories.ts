@@ -354,7 +354,7 @@ const meta: Meta<typeof NirField> = {
 			control: 'object',
 			table: {
 				type: {
-					summary: 'Record<string, string>',
+					summary: 'Partial<typeof locales>',
 				},
 				defaultValue: {
 					summary: '{}',

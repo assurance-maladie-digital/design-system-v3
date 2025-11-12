@@ -43,7 +43,7 @@
 		disableErrorHandling?: boolean
 		nirType?: 'simple' | 'complexe'
 		withoutFieldset?: boolean
-		customLocale?: Record<string, string>
+		customLocale?: Partial<typeof locales>
 	}>(), {
 		modelValue: undefined,
 		label: 'Identifiant d\'assuré',
@@ -80,7 +80,7 @@
 		disableErrorHandling: false,
 		nirType: 'simple',
 		withoutFieldset: false,
-		customLocale: () => ({}),
+		customLocale: () => ({} as Partial<typeof locales>),
 	})
 
 	const emit = defineEmits(['update:modelValue'])
