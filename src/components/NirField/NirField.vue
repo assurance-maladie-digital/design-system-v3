@@ -230,10 +230,10 @@
 					if (!value) return true
 					// Ne valider que si tous les caractères sont saisis
 					if (value.length < 13) {
-						return props.customLocale.errorInvalidNumber
+						return props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
 					}
 					const result = checkNIR(value, props.nirType)
-					return result === true ? true : props.customLocale.errorInvalidNumber
+					return result ? true : props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
 				},
 				message: props.customLocale.errorInvalidNumber,
 				successMessage: props.customLocale.successNumberValid,
