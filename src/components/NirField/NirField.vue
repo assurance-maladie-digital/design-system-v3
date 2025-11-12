@@ -43,6 +43,7 @@
 		disableErrorHandling?: boolean
 		nirType?: 'simple' | 'complexe'
 		withoutFieldset?: boolean
+		customLocale?: Partial<Record<keyof typeof locales, string>>
 	}>(), {
 		modelValue: undefined,
 		label: 'Identifiant d\'assuré',
@@ -79,6 +80,14 @@
 		disableErrorHandling: false,
 		nirType: 'simple',
 		withoutFieldset: false,
+		customLocale: () => ({
+			errorRequiredNumber: locales.errorRequiredNumber,
+			errorInvalidNumber: locales.errorInvalidNumber,
+			errorRequiredKey: locales.errorRequiredKey,
+			errorInvalidKey: locales.errorInvalidKey,
+			successNumberValid: locales.successNumberValid,
+			successKeyValid: locales.successKeyValid,
+		} as Partial<Record<keyof typeof locales, string>>),
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -199,7 +208,7 @@
 			rules.push({
 				type: 'required',
 				options: {
-					message: locales.errorRequiredNumber,
+					message: props.customLocale.errorRequiredNumber,
 					fieldIdentifier: props.numberLabel,
 				},
 			})
@@ -221,13 +230,13 @@
 					if (!value) return true
 					// Ne valider que si tous les caractères sont saisis
 					if (value.length < 13) {
-						return locales.erreurInvalidNumber
+						return props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
 					}
 					const result = checkNIR(value, props.nirType)
-					return result === true ? true : locales.erreurInvalidNumber
+					return result ? true : props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
 				},
-				message: locales.erreurInvalidNumber,
-				successMessage: locales.successNumberValid,
+				message: props.customLocale.errorInvalidNumber,
+				successMessage: props.customLocale.successNumberValid,
 				fieldIdentifier: props.numberLabel,
 			},
 		})
@@ -250,7 +259,7 @@
 			rules.push({
 				type: 'required',
 				options: {
-					message: locales.errorRequiredKey,
+					message: props.customLocale.errorRequiredKey,
 					fieldIdentifier: props.keyLabel,
 				},
 			})
@@ -274,8 +283,8 @@
 				type: 'custom',
 				options: {
 					validate: validateKey,
-					message: locales.errorInvalidKey,
-					successMessage: locales.successKeyValid,
+					message: props.customLocale.errorInvalidKey,
+					successMessage: props.customLocale.successKeyValid,
 					fieldIdentifier: props.keyLabel,
 				},
 			})
