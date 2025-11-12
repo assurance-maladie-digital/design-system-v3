@@ -361,3 +361,108 @@ export const MixedFields: Story = {
 		],
 	},
 }
+
+export const Reset: Story = {
+	render: args => ({
+		components: { SyForm, SyTextField, VBtn },
+		setup() {
+			const name = ref('')
+			const email = ref('')
+			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
+
+			// Règles de validation selon le design system
+			const emailRules = [
+				{ type: 'email', options: { message: 'Format d\'email invalide' } },
+				{ type: 'required', options: { message: 'L\'email est obligatoire' } },
+			]
+
+			const submitForm = async () => {
+				const isValid = await form.value?.validate()
+				if (isValid) {
+					alert('Formulaire valide !')
+				}
+				else {
+					alert('Formulaire invalide, veuillez corriger les erreurs.')
+				}
+			}
+
+			const resetForm = () => {
+				form.value?.reset()
+			}
+
+			const onFormReset = () => {
+				name.value = ''
+				email.value = ''
+			}
+
+			return { name, email, emailRules, form, submitForm, resetForm, onFormReset, args }
+		},
+		template: `
+      <SyForm ref="form" v-bind="args" @submit="submitForm" @reset="onFormReset">
+        <div class="d-flex flex-column gap-4">
+          <SyTextField v-model="name" label="Nom" required />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
+          <v-btn color="primary" @click="resetForm">Reset</v-btn>
+          <v-btn type="submit" color="primary">Soumettre</v-btn>
+        </div>
+      </SyForm>
+    `,
+	}),
+	args: {
+		validateOnSubmit: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+      <SyForm ref="form" v-bind="args" @submit="submitForm" @reset="onFormReset">
+        <div class="d-flex flex-column gap-4">
+          <SyTextField v-model="name" label="Nom" required />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
+          <v-btn color="primary" @click="resetForm">Reset</v-btn>
+          <v-btn type="submit" color="primary">Soumettre</v-btn>
+        </div>
+      </SyForm>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+const name = ref('')
+const email = ref('')
+
+// Règles de validation selon le design system
+const emailRules = [
+	{ type: 'email', options: { message: "Format d'email invalide" } },
+	{ type: 'required', options: { message: "L'email est obligatoire" } },
+]
+
+const onSubmit = (event: { isValid: boolean }) => {
+  if (event.isValid) {
+    alert('Formulaire valide !')
+  }
+  else {
+    alert('Formulaire invalide, veuillez corriger les erreurs.')
+  }
+}
+
+const resetForm = () => {
+  form.value?.reset()
+}
+
+
+const onFormReset = () => {
+  name.value = ''
+  email.value = ''
+}
+</script>
+`,
+			},
+		],
+	},
+}
