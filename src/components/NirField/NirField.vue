@@ -80,7 +80,14 @@
 		disableErrorHandling: false,
 		nirType: 'simple',
 		withoutFieldset: false,
-		customLocale: () => ({} as Partial<typeof locales>),
+		customLocale: () => ({
+			errorRequiredNumber: locales.errorRequiredNumber,
+			errorInvalidNumber: locales.errorInvalidNumber,
+			errorRequiredKey: locales.errorRequiredKey,
+			errorInvalidKey: locales.errorInvalidKey,
+			successNumberValid: locales.successNumberValid,
+			successKeyValid: locales.successKeyValid,
+		} as Partial<typeof locales>),
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -223,12 +230,12 @@
 					if (!value) return true
 					// Ne valider que si tous les caractères sont saisis
 					if (value.length < 13) {
-						return props.customLocale.erreurInvalidNumber || locales.erreurInvalidNumber
+						return props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
 					}
 					const result = checkNIR(value, props.nirType)
-					return result === true ? true : props.customLocale.erreurInvalidNumber || locales.erreurInvalidNumber
+					return result === true ? true : props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
 				},
-				message: props.customLocale.erreurInvalidNumber || locales.erreurInvalidNumber,
+				message: props.customLocale.errorInvalidNumber || locales.errorInvalidNumber,
 				successMessage: props.customLocale.successNumberValid || locales.successNumberValid,
 				fieldIdentifier: props.numberLabel,
 			},

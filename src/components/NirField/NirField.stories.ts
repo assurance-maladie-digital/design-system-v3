@@ -2,6 +2,7 @@ import type { StoryObj, Meta } from '@storybook/vue3'
 import { ref } from 'vue'
 import { VBtn } from 'vuetify/components'
 import NirField from './NirField.vue'
+import { locales } from './locales'
 
 const meta: Meta<typeof NirField> = {
 	title: 'Composants/Formulaires/NirField',
@@ -357,7 +358,12 @@ const meta: Meta<typeof NirField> = {
 					summary: 'Partial<typeof locales>',
 				},
 				defaultValue: {
-					summary: '{}',
+					errorRequiredNumber: locales.errorRequiredNumber,
+					errorInvalidNumber: locales.errorInvalidNumber,
+					errorRequiredKey: locales.errorRequiredKey,
+					errorInvalidKey: locales.errorInvalidKey,
+					successNumberValid: locales.successNumberValid,
+					successKeyValid: locales.successKeyValid,
 				},
 			},
 		},
@@ -1335,7 +1341,7 @@ export const WithCustomLocale: Story = {
 		showSuccessMessages: true,
 		customLocale: {
 			errorRequiredNumber: 'Veuillez renseigner votre numéro de sécurité sociale (13 caractères).',
-			erreurInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',
+			errorInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',
 			errorRequiredKey: 'La clé (2 chiffres) est requise.',
 			errorInvalidKey: 'La clé ne correspond pas au NIR saisi.',
 			successNumberValid: 'Numéro reconnu ✅',
@@ -1370,7 +1376,7 @@ Clés supportées :
     show-success-messages
     :custom-locale="{
       errorRequiredNumber: 'Veuillez renseigner votre numéro de sécurité sociale (13 caractères).',
-      erreurInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',
+      errorInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',
       errorRequiredKey: 'La clé (2 chiffres) est requise.',
       errorInvalidKey: 'La clé ne correspond pas au NIR saisi.',
       successNumberValid: 'Numéro reconnu ✅',
