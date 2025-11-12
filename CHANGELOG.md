@@ -1,3 +1,56 @@
+## v1.0.12 (12-11-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- NirField: improve display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1442">#1442</a></td>
+      <td>- AmeliproDisclosure: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1212">#1212</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: fix hint and persistent-hint props <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1443">#1443</a>, <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1440">#1440</a></td>
+      <td>- AmeliproTable: fix style <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1445">#1445</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve issues and features pages <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1368">#1368</a></td>
+      <td>- AmeliproTable: add sorting option + fix bug <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1375">#1375</a>, <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1394">#1394</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: add padding when hideDetails props is true <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1423">#1423</a></td>
+      <td>- AmeliproDialog: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1211">#1211</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix month name on navigation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1415">#1415</a></td>
+      <td>- AmeliproChips: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1210">#1210</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve accessibility <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1399">#1399</a></td>
+      <td>- AmeliproCheckboxGroup: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1209">#1209</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: add hint + persistent-hint props <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1320">#1320</a></td>
+      <td>- AmeliproCheckbox: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1208">#1208</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve birth date mode <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1372">#1372</a></td>
+      <td>- AmeliproAccordion / AmeliproAccordionResult / AmeliproAccordionList / AmeliproAccordionResultList : add open-close event <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1337">#1337</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable / SyServerTable : improve id selection for checkbox <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1374">#1374</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable / SyServerTable : fix items per page option on page change <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1371">#1371</a></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.11 (27-10-2025)
 
 <table>
