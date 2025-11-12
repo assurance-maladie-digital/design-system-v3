@@ -2,7 +2,6 @@ import type { StoryObj, Meta } from '@storybook/vue3'
 import { ref } from 'vue'
 import { VBtn } from 'vuetify/components'
 import NirField from './NirField.vue'
-import { locales } from './locales'
 
 const meta: Meta<typeof NirField> = {
 	title: 'Composants/Formulaires/NirField',
@@ -351,20 +350,13 @@ const meta: Meta<typeof NirField> = {
 			},
 		},
 		customLocale: {
-			description: 'Objet permettant de surcharger les messages du composant. Clés supportées : `errorRequiredNumber`, `erreurInvalidNumber`, `errorRequiredKey`, `errorInvalidKey`, `successNumberValid`, `successKeyValid`.',
+			description: 'Objet permettant de surcharger les messages du composant. Clés supportées : `errorRequiredNumber`, `errorInvalidNumber`, `errorRequiredKey`, `errorInvalidKey`, `successNumberValid`, `successKeyValid`.',
 			control: 'object',
 			table: {
 				type: {
 					summary: 'Partial<typeof locales>',
 				},
-				defaultValue: {
-					errorRequiredNumber: locales.errorRequiredNumber,
-					errorInvalidNumber: locales.errorInvalidNumber,
-					errorRequiredKey: locales.errorRequiredKey,
-					errorInvalidKey: locales.errorInvalidKey,
-					successNumberValid: locales.successNumberValid,
-					successKeyValid: locales.successKeyValid,
-				},
+				defaultValue: { summary: '{}' },
 			},
 		},
 	},
