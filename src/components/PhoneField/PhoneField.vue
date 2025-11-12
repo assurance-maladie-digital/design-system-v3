@@ -424,18 +424,19 @@
 				</template>
 			</SyTextField>
 		</div>
- <div v-if="showHelpTextBelow"
-    class="help-text-below px-4"
-    :style="{
-      marginTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '-0.5rem',
-      paddingTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '0',
-      position: 'relative',
-      top: hasError || hasWarning || hasSuccess ? '0' : '-8px'
-    }"
-    :class="{ 'text-disabled': disabled }"
-  >
-    {{ helpText }}
-  </div>
+		<div
+			v-if="showHelpTextBelow"
+			class="help-text-below px-4"
+			:style="{
+				marginTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '-0.5rem',
+				paddingTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '0',
+				position: 'relative',
+				top: hasError || hasWarning || hasSuccess ? '0' : '-8px'
+			}"
+			:class="{ 'text-disabled': disabled }"
+		>
+			{{ helpText }}
+		</div>
 	</component>
 </template>
 
