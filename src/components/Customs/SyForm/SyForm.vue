@@ -49,12 +49,12 @@
 	}
 
 	const reset = () => {
-    // Reset field values and validations for Vuetify form
-    form.value?.reset()
-    form.value?.resetValidation()
-    // Notify consumers so they can clear external models (e.g., v-model refs)
-    emit('reset')
-}
+		// Reset field values and validations for Vuetify form
+		form.value?.reset()
+		form.value?.resetValidation()
+		// Notify consumers so they can clear external models (e.g., v-model refs)
+		emit('reset')
+	}
 
 	// Gestion de la soumission du formulaire
 	const handleSubmit = async () => {
