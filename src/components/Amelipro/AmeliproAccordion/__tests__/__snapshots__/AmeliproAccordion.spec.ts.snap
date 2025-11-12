@@ -1,5 +1,35 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AmeliproAccordion > Snapshots > renders the component with all properties filled in 1`] = `
+<amelipro-accordion-template-stub
+  accordiontitle="Modified accordion title"
+  bordercolor="modified-border-color"
+  bordered="false"
+  cardcolor="modified-card-color"
+  headerrightwidth="modified-header-right-width"
+  hideseparator="true"
+  isopen="true"
+  titlelevel="3"
+  titleuppercase="true"
+  uniqueid="modified-unique-id"
+></amelipro-accordion-template-stub>
+`;
+
+exports[`AmeliproAccordion > Snapshots > renders the component with only required properties filled in 1`] = `
+<amelipro-accordion-template-stub
+  accordiontitle="Required accordion title"
+  bordercolor="ap-grey-lighten-2"
+  bordered="true"
+  cardcolor="ap-white"
+  headerrightwidth="50%"
+  hideseparator="false"
+  isopen="false"
+  titlelevel="2"
+  titleuppercase="false"
+  uniqueid="required-unique-id"
+></amelipro-accordion-template-stub>
+`;
+
 exports[`AmeliproAccordion > render correctly 1`] = `
 <div
   class="
