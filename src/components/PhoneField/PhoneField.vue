@@ -428,10 +428,7 @@
 			v-if="showHelpTextBelow"
 			class="help-text-below px-4"
 			:style="{
-				marginTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '-0.5rem',
-				paddingTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '0',
-				position: 'relative',
-				top: hasError || hasWarning || hasSuccess ? '0' : '-8px'
+				marginTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '-1rem',
 			}"
 			:class="{ 'text-disabled': disabled }"
 		>
