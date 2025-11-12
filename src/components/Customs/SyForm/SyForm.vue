@@ -8,6 +8,7 @@
 
 	const emit = defineEmits<{
 		(e: 'submit', value: { isValid: boolean }): void
+		(e: 'reset'): void
 	}>()
 
 	// Reference vers le formulaire Vuetify
@@ -48,8 +49,12 @@
 	}
 
 	const reset = () => {
-		form.value?.reset()
-	}
+    // Reset field values and validations for Vuetify form
+    form.value?.reset()
+    form.value?.resetValidation()
+    // Notify consumers so they can clear external models (e.g., v-model refs)
+    emit('reset')
+}
 
 	// Gestion de la soumission du formulaire
 	const handleSubmit = async () => {
