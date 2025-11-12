@@ -750,9 +750,9 @@ export const LargeurPersonnalisee: Story = {
 		headers,
 		title: 'Tableau largeur personnalisée',
 		uniqueId: 'table-largeur',
-		tableMinWidth: '600px',
+		tableMinWidth: '1200px',
 		tableMaxWidth: '900px',
-		tableWidth: '80%',
+		tableWidth: '100%',
 	},
 	parameters: {
 		sourceCode: [
@@ -764,9 +764,9 @@ export const LargeurPersonnalisee: Story = {
         :headers="headers"
         title="Tableau largeur personnalisée"
         unique-id="table-largeur"
-        table-min-width="600px"
+        table-min-width="1200px"
         table-max-width="900px"
-        table-width="80%"
+        table-width="100%"
     />
 </template>
                 `,

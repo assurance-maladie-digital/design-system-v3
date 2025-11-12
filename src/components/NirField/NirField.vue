@@ -36,7 +36,8 @@
 		variant?: 'filled' | 'outlined' | 'plain' | 'underlined' | 'solo'
 		clearable?: boolean
 		counter?: boolean | number | string
-		hint?: string
+		numberHint?: string
+		keyHint?: string
 		persistentHint?: boolean
 		persistentPlaceholder?: boolean
 		disableErrorHandling?: boolean
@@ -71,7 +72,8 @@
 		variant: 'outlined',
 		clearable: false,
 		counter: false,
-		hint: undefined,
+		numberHint: undefined,
+		keyHint: undefined,
 		persistentHint: false,
 		persistentPlaceholder: false,
 		disableErrorHandling: false,
@@ -121,8 +123,8 @@
 	}
 
 	const fieldWidth = computed(() => props.width || '100%')
-	const nirFieldWidth = computed(() => props.clearable ? '0 0 calc(70% - 8px)' : '0 0 calc(72% - 8px)')
-	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(29% - 8px)' : '0 0 calc(25% - 8px)')
+	const nirFieldWidth = computed(() => props.clearable ? '0 0 calc(68% - 8px)' : '0 0 calc(68% - 8px)')
+	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(32% - 8px)' : '0 0 calc(32% - 8px)')
 
 	const fieldId = useId()
 	const numberFieldErrorId = `nir-number-error-${fieldId}`
@@ -560,8 +562,9 @@
 				:readonly="props.readonly"
 				:clearable="props.clearable"
 				:counter="props.counter"
+				:hint="props.numberHint || locales.numberHint"
+				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
-				:hint="props.hint || locales.numberHint"
 				class="number-field"
 				:class="{
 					'sy-hide-detail': props.hideDetails,
@@ -588,7 +591,6 @@
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
 				:append-tooltip="keyTooltip && keyTooltipPosition === 'append' ? keyTooltip : undefined"
 				:error="keyValidation.errors.value.length > 0"
-				:hint="props.hint || locales.keyHint"
 				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
@@ -598,6 +600,7 @@
 				:readonly="props.readonly"
 				:clearable="props.clearable"
 				:counter="props.counter"
+				:hint="props.keyHint || locales.keyHint"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
 				:aria-required="ariaRequired"
@@ -715,11 +718,11 @@
 
 /* Styles pour le mode standard (div) */
 .nir-field:not(.nir-field--fieldset) .number-field-container {
-	flex: 0 0 calc(75% - 8px);
+	flex: 0 0 calc(68% - 8px);
 }
 
 .nir-field:not(.nir-field--fieldset) .key-field-container {
-	flex: 0 0 calc(25% - 8px);
+	flex: 0 0 calc(32% - 8px);
 }
 
 /* Styles pour le mode fieldset */
@@ -776,5 +779,4 @@
 .sy-key-success {
 	color: tokens.$colors-text-success;
 }
-
 </style>

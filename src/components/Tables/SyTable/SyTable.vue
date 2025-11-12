@@ -245,6 +245,7 @@
 			:item-value="getItemValue"
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
+			:show-expand="props.showExpand"
 			@update:options="onUpdateOptions"
 		>
 			<template #top>
