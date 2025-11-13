@@ -55,6 +55,8 @@
 	const phoneNumber = ref(props.modelValue || '')
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const dialCode = ref<string | Record<string, any>>(props.dialCodeModel || '')
+	// Force re-render of SySelect when needed (e.g., after reset)
+	const dialSelectKey = ref(0)
 	const counter = ref(10)
 	const phoneMask = ref('## ## ## ## ##')
 	const onBlur = ref(false)
@@ -312,8 +314,28 @@
 		return !validation.hasError.value
 	}
 
+	// Reset hook used by SyForm.reset() via useValidatable
+	const reset = () => {
+		// Reset interaction state and validation FIRST to avoid triggering watchers with errors
+		onBlur.value = false
+		validation.clearValidation()
+
+		// Clear content
+		phoneNumber.value = ''
+		emit('update:modelValue', '')
+
+		// Clear dial code and restore defaults
+		dialCode.value = ''
+		emit('update:selectedDialCode', '')
+		counter.value = 10
+		phoneMask.value = '## ## ## ## ##'
+
+		// Force SySelect to be recreated to ensure internal classes are reset
+		dialSelectKey.value++
+	}
+
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, validation.clearValidation, reset)
 
 	defineExpose({
 		computedValue,
@@ -342,14 +364,15 @@
 		<div class="phone-field-container">
 			<SySelect
 				v-if="withCountryCode"
+				:key="dialSelectKey"
 				v-model="dialCode"
 				:items="dialCodeOptions"
 				:label="locales.indicatifLabel"
 				:outlined="outlinedIndicatif"
 				:required="countryCodeRequired"
 				:aria-required="countryCodeRequired"
-				:error="hasError"
-				:error-messages="errors[1]"
+				:error="!!errors[1]"
+				:error-messages="errors[1] ? [errors[1]] : []"
 				:display-asterisk="displayAsterisk"
 				:disable-error-handling="shouldDisableErrorHandling"
 				:return-object="true"
