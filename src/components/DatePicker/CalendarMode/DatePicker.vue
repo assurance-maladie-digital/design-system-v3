@@ -592,7 +592,7 @@
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation)
 
 	const openDatePicker = () => {
 		if (props.disabled || props.readonly) return
@@ -601,35 +601,33 @@
 		}
 	}
 
-	// Fonction pour mettre à jour le mois
-	// const onUpdateMonth = (month: string) => {
-	// 	// Éviter les mises à jour inutiles si le mois n'a pas changé
-	// 	if (currentMonth.value === month) return
-	// 	currentMonth.value = month
-	// 	currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
-	// 	handleMonthUpdate()
-	// 	nextTick(() => {
-	// 		if (isDatePickerVisible.value) {
-	// 			customizeMonthButton()
-	// 			markHolidayDays()
-	// 		}
-	// 	})
-	// }
+	// Fonction pour mettre à jour le mois quand on navigue via les flèches
+	const onUpdateMonth = (month: string) => {
+		if (currentMonth.value === month) return
+		currentMonth.value = month
+		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
+		handleMonthUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
 
-	// Fonction pour mettre à jour l'année
-	// const onUpdateYear = (year: string) => {
-	// 	currentYear.value = year
-	// 	currentYearName.value = year
-	// 	markHolidayDays()
+	// Fonction pour mettre à jour l'année quand on navigue via les flèches
+	const onUpdateYear = (year: string) => {
+		currentYear.value = year
+		currentYearName.value = year
 
-	// 	handleYearUpdate()
-	// 	nextTick(() => {
-	// 		if (isDatePickerVisible.value) {
-	// 			customizeMonthButton()
-	// 			markHolidayDays()
-	// 		}
-	// 	})
-	// }
+		handleYearUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
 
 	// Propriété calculée pour récupérer les jours fériés de l'année courante
 	const holidays = computed(() => {
@@ -811,6 +809,17 @@
 		}
 	}, { immediate: true })
 
+	// Reset month/year names when clearing the date
+	watch(selectedDates, (newValue) => {
+		if (!newValue) {
+			const today = new Date()
+			currentMonth.value = today.getMonth().toString()
+			currentMonthName.value = dayjs(today).format('MMMM')
+			currentYear.value = today.getFullYear().toString()
+			currentYearName.value = today.getFullYear().toString()
+		}
+	})
+
 	const toggleDatePicker = () => {
 		if (props.disabled || props.readonly) return
 
@@ -899,7 +908,7 @@
 				:no-icon="props.noIcon"
 				:is-outlined="props.isOutlined"
 				:readonly="props.readonly"
-				:title="props.title || undefined"
+				:title="props.title || props.placeholder || undefined"
 				:width="props.width"
 				:disable-error-handling="props.disableErrorHandling"
 				:show-success-messages="props.showSuccessMessages"
@@ -947,7 +956,7 @@
 				:show-week-number="props.showWeekNumber"
 				:is-birth-date="props.isBirthDate || props.birthDate"
 				:text-field-activator="props.textFieldActivator"
-				:title="props.title || undefined"
+				:title="props.title || props.placeholder || undefined"
 				:period="period"
 				:auto-clamp="props.autoClamp"
 				:label="props.label"
@@ -1003,7 +1012,7 @@
 						:display-asterisk="props.displayAsterisk"
 						:is-clearable="!props.readonly"
 						:auto-clamp="props.autoClamp"
-						:title="props.title || undefined"
+						:title="props.title || props.placeholder || undefined"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
 						@click="openDatePickerOnClick"
@@ -1030,8 +1039,8 @@
 					:min="minDate"
 					:display-holiday-days="props.displayHolidayDays"
 					@update:view-mode="handleViewModeUpdate"
-					@update:month="handleMonthUpdate"
-					@update:year="handleYearUpdate"
+					@update:month="onUpdateMonth"
+					@update:year="onUpdateYear"
 					@click:date="updateSelectedDates"
 					@update:model-value="updateDisplayFormattedDate"
 					@focus="markHolidayDays"
@@ -1219,4 +1228,5 @@
 :deep(.v-btn--variant-text .v-btn__overlay) {
 	padding: 13px;
 }
+
 </style>

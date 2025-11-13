@@ -64,36 +64,48 @@
 	const currentMonthName = ref<string | null>(null)
 	const currentYearName = ref<string | null>(null)
 
-	// const onUpdateMonth = (month: string) => {
-	// 	if (currentMonth.value === month) return
-	// 	currentMonth.value = month
-	// 	currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
-	// 	handleMonthUpdate()
-	// 	unifyAfterCalendarUpdate()
-	// }
+	// Fonction pour mettre à jour le mois quand on navigue via les flèches
+	const onUpdateMonth = (month: string) => {
+		if (currentMonth.value === month) return
+		currentMonth.value = month
+		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
+		handleMonthUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
 
-	// const onUpdateYear = (year: string) => {
-	// 	const oldYear = currentYear.value
-	// 	currentYear.value = year
-	// 	currentYearName.value = year
+	// Fonction pour mettre à jour l'année quand on navigue via les flèches
+	const onUpdateYear = (year: string) => {
+		const oldYear = currentYear.value
+		currentYear.value = year
+		currentYearName.value = year
 
-	// 	const curMonth = parseInt(currentMonth.value ?? '0', 10)
-	// 	const newYear = parseInt(year, 10)
-	// 	const prevYear = parseInt(oldYear ?? '0', 10)
+		const curMonth = parseInt(currentMonth.value ?? '0', 10)
+		const newYear = parseInt(year, 10)
+		const prevYear = parseInt(oldYear ?? '0', 10)
 
-	// 	// Bridges Dec -> Jan and Jan -> Dec when navigating years
-	// 	if (newYear > prevYear && curMonth === 11) {
-	// 		currentMonth.value = '0'
-	// 		currentMonthName.value = dayjs().month(0).format('MMMM')
-	// 	}
-	// 	else if (newYear < prevYear && curMonth === 0) {
-	// 		currentMonth.value = '11'
-	// 		currentMonthName.value = dayjs().month(11).format('MMMM')
-	// 	}
+		// Bridges Dec -> Jan and Jan -> Dec when navigating years
+		if (newYear > prevYear && curMonth === 11) {
+			currentMonth.value = '0'
+			currentMonthName.value = dayjs().month(0).format('MMMM')
+		}
+		else if (newYear < prevYear && curMonth === 0) {
+			currentMonth.value = '11'
+			currentMonthName.value = dayjs().month(11).format('MMMM')
+		}
 
-	// 	handleYearUpdate()
-	// 	unifyAfterCalendarUpdate()
-	// }
+		handleYearUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
 
 	/**
 	 * Props / Emits
@@ -413,6 +425,12 @@
 		else {
 			updateModel(null)
 			textInputValue.value = ''
+			// Reset month/year names when clearing the date
+			const today = new Date()
+			currentMonth.value = today.getMonth().toString()
+			currentMonthName.value = dayjs(today).format('MMMM')
+			currentYear.value = today.getFullYear().toString()
+			currentYearName.value = today.getFullYear().toString()
 		}
 	})
 
@@ -879,7 +897,7 @@
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation)
 
 	defineExpose({
 		validateOnSubmit,
@@ -942,7 +960,7 @@
 				:external-error-messages="errorMessages"
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
-				:title="props.title || undefined"
+				:title="props.title || props.placeholder || undefined"
 				:hint="props.hint"
 				:persistent-hint="props.persistentHint"
 				@focus="emit('focus')"
@@ -974,7 +992,7 @@
 						:required="props.required"
 						:disabled="props.disabled"
 						:readonly="props.readonly"
-						:title="props.title || undefined"
+						:title="props.title || props.placeholder || undefined"
 						:is-outlined="props.isOutlined"
 						:display-icon="props.displayIcon"
 						:display-append-icon="props.displayAppendIcon"
@@ -1031,8 +1049,8 @@
 					:persistent-hint="props.persistentHint"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
-					@update:month="handleMonthUpdate"
-					@update:year="handleYearUpdate"
+					@update:month="onUpdateMonth"
+					@update:year="onUpdateYear"
 					@click:date="updateSelectedDates"
 					@focus="props.displayHolidayDays ? markHolidayDays : undefined"
 					@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"

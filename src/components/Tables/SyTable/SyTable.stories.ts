@@ -5,6 +5,7 @@ import SyTable from './SyTable.vue'
 import type { DataOptions, FilterType } from '../common/types'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
+import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable',
@@ -82,6 +83,13 @@ const meta = {
 				type: { summary: 'string' },
 			},
 			required: true,
+		},
+		showExpand: {
+			description: 'Affiche une colonne permettant d\'étendre les lignes pour afficher du contenu supplémentaire',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+			},
 		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
@@ -3018,6 +3026,217 @@ export const ColumnControls: Story = {
 					v-bind="args"
 				/>
 			`,
+		}
+	},
+}
+
+export const ExpandableRows: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						show-expand
+						caption="Tableau complexe"
+						suffix="expand-table"
+					>
+                      <template #item.data-table-expand="{ internalItem, isExpanded, toggleExpand }">
+                          <v-btn
+                            :append-icon="isExpanded(internalItem) ? mdiChevronUp : mdiChevronDown"
+                            :text="isExpanded(internalItem) ? 'Fermer' : \`Plus d'info\`"
+                            class="text-none"
+                            color="medium-emphasis"
+                            size="small"
+                            variant="text"
+                            width="105"
+                            border
+                            slim
+                            @click="toggleExpand(internalItem)"
+                          />
+                      </template>
+                
+                      <template #expanded-row="{ columns, item }">
+                        <tr>
+                          <td
+                            :colspan="columns.length"
+                            class="py-2"
+                          >
+                            <strong>Informations complémentaires :</strong>
+                             <p>Plus de détails pour {{ item.firstname }} {{ item.lastname }}.</p>
+                          </td>
+                        </tr>
+                      </template>
+                    </SyTable>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
+					
+					const options = ref({
+						itemsPerPage: 4,
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+                            title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		'items': [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		'options': {
+			itemsPerPage: 4,
+		},
+		'caption': '',
+		'showExpand': true,
+		'suffix': 'expandable-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args, mdiChevronDown, mdiChevronUp }
+			},
+			template: `
+              <SyTable
+                  v-model:options="args.options"
+                  v-bind="args"
+                  show-expand
+                  caption="Tableau complexe"
+                  suffix="expand-table"
+              >
+                  <template #item.data-table-expand="{ internalItem, isExpanded, toggleExpand }">
+                    <v-btn
+                        :append-icon="isExpanded(internalItem) ? mdiChevronUp : mdiChevronDown"
+                        :text="isExpanded(internalItem) ? 'Fermer' : \`Plus d'info\`"
+                        class="text-none"
+                        color="medium-emphasis"
+                        size="small"
+                        variant="text"
+                        width="105"
+                        border
+                        slim
+                        @click="toggleExpand(internalItem)"
+                    />
+                  </template>
+
+                  <template #expanded-row="{ columns, item }">
+                    <tr>
+                      <td
+                          :colspan="columns.length"
+                          class="py-2"
+                      >
+                        <strong>Informations complémentaires :</strong>
+                        <p>Plus de détails pour {{ item.firstname }} {{ item.lastname }}.</p>
+                      </td>
+                    </tr>
+                  </template>
+              </SyTable>
+            `,
 		}
 	},
 }

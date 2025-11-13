@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	// Prevent display-asterisk from being passed to the DOM
+// Prevent display-asterisk from being passed to the DOM
 	defineOptions({
 		inheritAttrs: false,
 	})
@@ -8,7 +8,7 @@
 		mdiCheck,
 		mdiInformationOutline,
 		mdiClose,
-		mdiInformation,
+		mdiAlertCircle,
 		mdiCalendar,
 	} from '@mdi/js'
 	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
@@ -166,7 +166,7 @@
 		info: mdiInformationOutline,
 		success: mdiCheck,
 		warning: mdiAlertOutline,
-		error: mdiInformation,
+		error: mdiAlertCircle,
 		close: mdiClose,
 		calendar: mdiCalendar,
 	}
@@ -188,6 +188,16 @@
 	})
 
 	const isBlurred = ref(false)
+
+	const showClear = computed(() => {
+		if (!props.isClearable) return false
+		if (props.readonly || props.disabled) return false
+		return model.value !== undefined && model.value !== null && String(model.value) !== '' && String(model.value) !== '__/__/____'
+	})
+
+	const clearField = () => {
+		model.value = ''
+	}
 
 	// Initialisation du composable de validation
 	const validation = useValidation({
@@ -351,7 +361,7 @@
 	const syTextFieldRef = ref<ComponentPublicInstance | null>(null)
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, validation.clearValidation)
 
 	onMounted(() => {
 		nextTick(() => {
@@ -549,8 +559,6 @@
 		:base-color="props.baseColor"
 		:bg-color="props.bgColor"
 		:center-affix="props.centerAffix"
-		:clear-icon="ICONS.close"
-		:clearable="props.isClearable"
 		:color="props.color"
 		:counter-value="props.counterValue"
 		:density="props.density"
@@ -695,6 +703,16 @@
 		<!-- Append inner -->
 		<template #append-inner>
 			<slot name="append-inner">
+				<!-- Keyboard-focusable clear button -->
+				<VBtn
+					v-if="showClear"
+					class="v-btn v-btn--density-compact mr-1"
+					:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
+					:title="props.label ? `Vider ${props.label}` : 'Vider'"
+					:icon="mdiClose"
+					variant="text"
+					@click="clearField"
+				/>
 				<SyIcon
 					v-if="validationIcon && !props.appendInnerIcon"
 					:icon="validationIcon"
@@ -786,6 +804,10 @@
 	:deep(.v-input__prepend > .v-icon),
 	:deep(.v-input__append > .v-icon) {
 		opacity: 1 !important;
+	}
+
+	:deep(.v-icon__svg) {
+		fill: tokens.$colors-text-success !important;
 	}
 
 	:deep(.v-field) {
