@@ -243,6 +243,13 @@
 
 	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling || props.readonly)
 
+	// When disabling error handling, immediately clear any existing validation state
+	watch(shouldDisableErrorHandling, (disabled) => {
+		if (disabled) {
+			validation.clearValidation()
+		}
+	})
+
 	const validation = useValidation({
 		customRules: validationRules.value,
 		showSuccessMessages: true,
@@ -250,9 +257,9 @@
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
-	const hasError = computed(() => validation.hasError.value)
-	const hasWarning = computed(() => validation.hasWarning.value)
-	const hasSuccess = computed(() => validation.hasSuccess.value)
+	const hasError = computed(() => !shouldDisableErrorHandling.value && validation.hasError.value)
+	const hasWarning = computed(() => !shouldDisableErrorHandling.value && validation.hasWarning.value)
+	const hasSuccess = computed(() => !shouldDisableErrorHandling.value && validation.hasSuccess.value)
 
 	const iconColor = computed(() => {
 		if (shouldDisableErrorHandling.value) return '#222324'
@@ -262,9 +269,9 @@
 		return '#222324'
 	})
 
-	const errors = computed(() => validation.errors.value)
-	const warnings = computed(() => validation.warnings.value)
-	const successes = computed(() => validation.successes.value)
+	const errors = computed(() => shouldDisableErrorHandling.value ? [] : validation.errors.value)
+	const warnings = computed(() => shouldDisableErrorHandling.value ? [] : validation.warnings.value)
+	const successes = computed(() => shouldDisableErrorHandling.value ? [] : validation.successes.value)
 
 	const showHelpTextBelow = computed(() => {
 		// Display help text below by default if it exists
