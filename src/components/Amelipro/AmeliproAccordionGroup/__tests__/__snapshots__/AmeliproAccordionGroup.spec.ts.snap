@@ -1,513 +1,62 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproAccordionGroup > render correctly 1`] = `
+exports[`AmeliproAccordionGroup > Snapshots > renders the component with all properties filled in 1`] = `
 <div
   class="accordion-group"
-  id="amelipro-accordion-group-unique-id"
+  id="modified-unique-id"
 >
-  <div
-    class="
-      amelipro-accordion
-      mb-4
-      w-100
-    "
-    id="test-1-container"
-    style="
-      background-color: #FFFFFF;
-      border: 1px solid #DDDEDE;
-    "
-  >
-    <div
-      class="
-        align-center
-        amelipro-accordion__header
-        d-flex
-        flex-column
-        flex-sm-row
-        w-100
-      "
-      id="test-1-header"
-    >
-      <div
-        class="btn-wrapper"
-        style="margin-right: 10px;"
-      >
-        <p
-          aria-level="2"
-          class="
-            font-weight-semibold
-            mb-0
-            text-h3
-          "
-          id="test-1title"
-          role="heading"
-        >
-          <button
-            aria-controls="test-1"
-            aria-expanded="false"
-            class="
-              accordion-btn
-              align-center
-              d-inline-flex
-              font-weight-semibold
-              text-ap-grey-darken-1
-              text-left
-            "
-            id="test-1-header-btn-open-close"
-            type="button"
-          >
-            <span
-              class="
-                accordion-icon
-                amelipro-icon
-                mr-2
-              "
-              id="test-1-icon"
-            >
-              <span
-                aria-hidden="true"
-                class="
-                  amelipro-custom-icon
-                  custom-color
-                "
-                focusable="false"
-                role="img"
-                style="
-                  color: #0C419A;
-                  height: 11px;
-                  width: 11px;
-                "
-              >
-                <span>
-                  <svg
-                    aria-hidden="true"
-                    style="enable-background:new 0 0 42 42;"
-                    version="1.1"
-                    viewBox="0 0 42 42"
-                    x="0px"
-                    xml:space="preserve"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    y="0px"
-                  >
-                    <polygon
-                      class="shape-color"
-                      points="21,39.2 42,2.8 0,2.8 "
-                    />
-                  </svg>
-                </span>
-              </span>
-            </span>
-            Exemple 1
-          </button>
-        </p>
-      </div>
-      <div
-        class="right-slot"
-        style="
-          width: calc(50% - 10px);
-          margin-left: 10px;
-        "
-      ></div>
-    </div>
-    <div
-      aria-labelledby="test-1title"
-      class="amelipro-accordion__wrapper"
-      id="test-1"
-      role="region"
-      style="display: none;"
-    >
-      <div
-        class="
-          amelipro-accordion__content
-          text-ap-grey-darken-1
-          w-100
-        "
-        style="
-          border-top-width: 1px;
-          border-top-style: solid;
-          border-top-color: #DDDEDE;
-        "
-      ></div>
-    </div>
-  </div>
-  <div
-    class="
-      amelipro-accordion
-      mb-4
-      w-100
-    "
-    id="test-2-container"
-    style="
-      background-color: #FFFFFF;
-      border: 1px solid #DDDEDE;
-    "
-  >
-    <div
-      class="
-        align-center
-        amelipro-accordion__header
-        d-flex
-        flex-column
-        flex-sm-row
-        w-100
-      "
-      id="test-2-header"
-    >
-      <div
-        class="btn-wrapper"
-        style="margin-right: 10px;"
-      >
-        <p
-          aria-level="2"
-          class="
-            font-weight-semibold
-            mb-0
-            text-h3
-          "
-          id="test-2title"
-          role="heading"
-        >
-          <button
-            aria-controls="test-2"
-            aria-expanded="false"
-            class="
-              accordion-btn
-              align-center
-              d-inline-flex
-              font-weight-semibold
-              text-ap-grey-darken-1
-              text-left
-            "
-            id="test-2-header-btn-open-close"
-            type="button"
-          >
-            <span
-              class="
-                accordion-icon
-                amelipro-icon
-                mr-2
-              "
-              id="test-2-icon"
-            >
-              <span
-                aria-hidden="true"
-                class="
-                  amelipro-custom-icon
-                  custom-color
-                "
-                focusable="false"
-                role="img"
-                style="
-                  color: #0C419A;
-                  height: 11px;
-                  width: 11px;
-                "
-              >
-                <span>
-                  <svg
-                    aria-hidden="true"
-                    style="enable-background:new 0 0 42 42;"
-                    version="1.1"
-                    viewBox="0 0 42 42"
-                    x="0px"
-                    xml:space="preserve"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    y="0px"
-                  >
-                    <polygon
-                      class="shape-color"
-                      points="21,39.2 42,2.8 0,2.8 "
-                    />
-                  </svg>
-                </span>
-              </span>
-            </span>
-            Exemple 2
-          </button>
-        </p>
-      </div>
-      <div
-        class="right-slot"
-        style="
-          width: calc(50% - 10px);
-          margin-left: 10px;
-        "
-      ></div>
-    </div>
-    <div
-      aria-labelledby="test-2title"
-      class="amelipro-accordion__wrapper"
-      id="test-2"
-      role="region"
-      style="display: none;"
-    >
-      <div
-        class="
-          amelipro-accordion__content
-          text-ap-grey-darken-1
-          w-100
-        "
-        style="
-          border-top-width: 1px;
-          border-top-style: solid;
-          border-top-color: #DDDEDE;
-        "
-      ></div>
-    </div>
-  </div>
-  <div
-    class="
-      amelipro-accordion
-      mb-4
-      w-100
-    "
-    id="test-3-container"
-    style="
-      background-color: #FFFFFF;
-      border: 1px solid #DDDEDE;
-    "
-  >
-    <div
-      class="
-        align-center
-        amelipro-accordion__header
-        d-flex
-        flex-column
-        flex-sm-row
-        w-100
-      "
-      id="test-3-header"
-    >
-      <div
-        class="btn-wrapper"
-        style="margin-right: 10px;"
-      >
-        <p
-          aria-level="2"
-          class="
-            font-weight-semibold
-            mb-0
-            text-h3
-          "
-          id="test-3title"
-          role="heading"
-        >
-          <button
-            aria-controls="test-3"
-            aria-expanded="false"
-            class="
-              accordion-btn
-              align-center
-              d-inline-flex
-              font-weight-semibold
-              text-ap-grey-darken-1
-              text-left
-            "
-            id="test-3-header-btn-open-close"
-            type="button"
-          >
-            <span
-              class="
-                accordion-icon
-                amelipro-icon
-                mr-2
-              "
-              id="test-3-icon"
-            >
-              <span
-                aria-hidden="true"
-                class="
-                  amelipro-custom-icon
-                  custom-color
-                "
-                focusable="false"
-                role="img"
-                style="
-                  color: #0C419A;
-                  height: 11px;
-                  width: 11px;
-                "
-              >
-                <span>
-                  <svg
-                    aria-hidden="true"
-                    style="enable-background:new 0 0 42 42;"
-                    version="1.1"
-                    viewBox="0 0 42 42"
-                    x="0px"
-                    xml:space="preserve"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    y="0px"
-                  >
-                    <polygon
-                      class="shape-color"
-                      points="21,39.2 42,2.8 0,2.8 "
-                    />
-                  </svg>
-                </span>
-              </span>
-            </span>
-            Exemple 3
-          </button>
-        </p>
-      </div>
-      <div
-        class="right-slot"
-        style="
-          width: calc(50% - 10px);
-          margin-left: 10px;
-        "
-      ></div>
-    </div>
-    <div
-      aria-labelledby="test-3title"
-      class="amelipro-accordion__wrapper"
-      id="test-3"
-      role="region"
-      style="display: none;"
-    >
-      <div
-        class="
-          amelipro-accordion__content
-          text-ap-grey-darken-1
-          w-100
-        "
-        style="
-          border-top-width: 1px;
-          border-top-style: solid;
-          border-top-color: #DDDEDE;
-        "
-      ></div>
-    </div>
-  </div>
-  <div
-    class="
-      amelipro-accordion
-      mb-4
-      w-100
-    "
-    id="test-4-container"
-    style="
-      background-color: #FFFFFF;
-      border: 1px solid #DDDEDE;
-    "
-  >
-    <div
-      class="
-        align-center
-        amelipro-accordion__header
-        d-flex
-        flex-column
-        flex-sm-row
-        w-100
-      "
-      id="test-4-header"
-    >
-      <div
-        class="btn-wrapper"
-        style="margin-right: 10px;"
-      >
-        <p
-          aria-level="2"
-          class="
-            font-weight-semibold
-            mb-0
-            text-h3
-          "
-          id="test-4title"
-          role="heading"
-        >
-          <button
-            aria-controls="test-4"
-            aria-expanded="false"
-            class="
-              accordion-btn
-              align-center
-              d-inline-flex
-              font-weight-semibold
-              text-ap-grey-darken-1
-              text-left
-            "
-            id="test-4-header-btn-open-close"
-            type="button"
-          >
-            <span
-              class="
-                accordion-icon
-                amelipro-icon
-                mr-2
-              "
-              id="test-4-icon"
-            >
-              <span
-                aria-hidden="true"
-                class="
-                  amelipro-custom-icon
-                  custom-color
-                "
-                focusable="false"
-                role="img"
-                style="
-                  color: #0C419A;
-                  height: 11px;
-                  width: 11px;
-                "
-              >
-                <span>
-                  <svg
-                    aria-hidden="true"
-                    style="enable-background:new 0 0 42 42;"
-                    version="1.1"
-                    viewBox="0 0 42 42"
-                    x="0px"
-                    xml:space="preserve"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    y="0px"
-                  >
-                    <polygon
-                      class="shape-color"
-                      points="21,39.2 42,2.8 0,2.8 "
-                    />
-                  </svg>
-                </span>
-              </span>
-            </span>
-            Exemple 4
-          </button>
-        </p>
-      </div>
-      <div
-        class="right-slot"
-        style="
-          width: calc(50% - 10px);
-          margin-left: 10px;
-        "
-      ></div>
-    </div>
-    <div
-      aria-labelledby="test-4title"
-      class="amelipro-accordion__wrapper"
-      id="test-4"
-      role="region"
-      style="display: none;"
-    >
-      <div
-        class="
-          amelipro-accordion__content
-          text-ap-grey-darken-1
-          w-100
-        "
-        style="
-          border-top-width: 1px;
-          border-top-style: solid;
-          border-top-color: #DDDEDE;
-        "
-      ></div>
-    </div>
-  </div>
+  <amelipro-accordion-template-stub
+    accordiontitle="Modified accordion 1"
+    bordercolor="ap-red-lighten-2"
+    bordered="false"
+    cardcolor="ap-red"
+    headerrightwidth="100px"
+    hideseparator="true"
+    isopen="false"
+    titlelevel="3"
+    titleuppercase="true"
+    uniqueid="modified-accordion-1-id"
+  ></amelipro-accordion-template-stub>
+  <amelipro-accordion-template-stub
+    accordiontitle="Modified accordion 2"
+    bordercolor="ap-red-lighten-2"
+    bordered="false"
+    cardcolor="ap-red"
+    headerrightwidth="100px"
+    hideseparator="true"
+    isopen="false"
+    titlelevel="3"
+    titleuppercase="true"
+    uniqueid="modified-accordion-2-id"
+  ></amelipro-accordion-template-stub>
+</div>
+`;
+
+exports[`AmeliproAccordionGroup > Snapshots > renders the component with only required properties filled in 1`] = `
+<div class="accordion-group">
+  <amelipro-accordion-template-stub
+    accordiontitle="Accordion 1"
+    bordercolor="ap-grey-lighten-2"
+    bordered="true"
+    cardcolor="ap-white"
+    headerrightwidth="50%"
+    hideseparator="false"
+    isopen="false"
+    titlelevel="2"
+    titleuppercase="false"
+    uniqueid="accordion-1-id"
+  ></amelipro-accordion-template-stub>
+  <amelipro-accordion-template-stub
+    accordiontitle="Accordion 2"
+    bordercolor="ap-grey-lighten-2"
+    bordered="true"
+    cardcolor="ap-white"
+    headerrightwidth="50%"
+    hideseparator="false"
+    isopen="false"
+    titlelevel="2"
+    titleuppercase="false"
+    uniqueid="accordion-2-id"
+  ></amelipro-accordion-template-stub>
 </div>
 `;
