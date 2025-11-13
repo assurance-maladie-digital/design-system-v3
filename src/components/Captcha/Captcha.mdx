@@ -1,4 +1,4 @@
-import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import {Controls, Canvas, Meta, Source, Story} from '@storybook/blocks';
 import * as CaptchaStories from './Captcha.stories';
 
 <Meta of={CaptchaStories} />
@@ -34,6 +34,10 @@ import * as CaptchaStories from './Captcha.stories';
 		</template>
 		`
 	}}
+/>
+
+<Story
+  of={CaptchaStories.WarningDocProps}
 />
 
 ## API

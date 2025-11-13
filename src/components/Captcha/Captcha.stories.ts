@@ -2,6 +2,7 @@ import Captcha from './Captcha.vue'
 import type { StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
 import { ref, watch } from 'vue'
+import SyAlert from '../SyAlert/SyAlert.vue'
 
 export default {
 	title: 'Composants/Formulaires/Captcha',
@@ -254,4 +255,22 @@ import { VCard } from 'vuetify/components'
 			},
 		],
 	},
+}
+
+export const WarningDocProps: Story = {
+	render: (args) => {
+		return {
+			components: { SyAlert },
+			setup() {
+				return { args }
+			},
+			template: `
+				<SyAlert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false" class="mb-8">
+					<template #default>A cause de limitations techniques, le captcha ne peut pas être rafraichie dans la documentation.
+					</template>
+				</SyAlert>
+			`,
+		}
+	},
+	tags: ['!dev'],
 }
