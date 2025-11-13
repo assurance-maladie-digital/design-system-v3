@@ -897,7 +897,7 @@
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation)
 
 	defineExpose({
 		validateOnSubmit,

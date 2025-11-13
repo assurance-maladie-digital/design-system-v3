@@ -361,7 +361,7 @@
 	const syTextFieldRef = ref<ComponentPublicInstance | null>(null)
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, validation.clearValidation)
 
 	onMounted(() => {
 		nextTick(() => {

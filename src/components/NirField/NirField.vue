@@ -515,7 +515,23 @@
 	})
 
 	// Rendre le composant auto-validable dans un SyForm
-	useValidatable(validateOnSubmit)
+	useValidatable(
+		validateOnSubmit,
+		() => {
+			try {
+				numberValidation.clearValidation()
+			}
+			catch {
+				void 0
+			}
+			try {
+				keyValidation.clearValidation()
+			}
+			catch {
+				void 0
+			}
+		},
+	)
 
 	defineExpose({
 		validateOnSubmit,
