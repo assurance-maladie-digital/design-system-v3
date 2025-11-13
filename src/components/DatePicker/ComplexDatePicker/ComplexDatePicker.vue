@@ -1053,6 +1053,7 @@
 						:title="props.title || props.placeholder || undefined"
 						:is-outlined="props.isOutlined"
 						:display-icon="props.displayIcon"
+						@update:model-value="handleDateTextInputUpdate"
 						:display-append-icon="props.displayAppendIcon"
 						:display-prepend-icon="props.displayPrependIcon"
 						:no-icon="props.noIcon"
