@@ -33,7 +33,7 @@ export const Basic: Story = {
 		setup() {
 			const name = ref('')
 			const email = ref('')
-			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
+			const form = ref<{ validate: () => Promise<boolean>, reset: () => void, clearValidation: () => void } | null>(null)
 
 			// Règles de validation selon le design system
 			const emailRules = [
@@ -118,7 +118,7 @@ export const CustomValidation: Story = {
 			const username = ref('')
 			const password = ref('')
 			const confirmPassword = ref('')
-			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
+			const form = ref<{ validate: () => Promise<boolean>, reset: () => void, clearValidation: () => void } | null>(null)
 
 			// Règles de validation
 			const passwordRules = computed(() => [
@@ -368,7 +368,7 @@ export const Reset: Story = {
 		setup() {
 			const name = ref('')
 			const email = ref('')
-			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
+			const form = ref<{ validate: () => Promise<boolean>, reset: () => void, clearValidation: () => void } | null>(null)
 
 			// Règles de validation selon le design system
 			const emailRules = [

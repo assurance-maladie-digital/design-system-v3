@@ -14,7 +14,7 @@
 	// Reference vers le formulaire Vuetify
 	const form = ref<InstanceType<typeof import('vuetify/components').VForm> | null>(null)
 
-	const { validateAll } = useFormValidation()
+	const { validateAll, clearAll, resetAll } = useFormValidation()
 
 	// Methode de validation globale qui combine Vuetify et nos composants personnalises
 	const validate = async () => {
@@ -52,8 +52,18 @@
 		// Reset field values and validations for Vuetify form
 		form.value?.reset()
 		form.value?.resetValidation()
+		// Reset custom components values (if they registered a reset hook)
+		resetAll()
 		// Notify consumers so they can clear external models (e.g., v-model refs)
 		emit('reset')
+	}
+
+	// Clear only validation states (keep current values)
+	const clearValidation = () => {
+		// Clear Vuetify internal validation state
+		form.value?.resetValidation()
+		// Clear custom components validation states registered in the form
+		clearAll()
 	}
 
 	// Gestion de la soumission du formulaire
@@ -70,6 +80,7 @@
 	defineExpose({
 		validate,
 		reset,
+		clearValidation,
 		form,
 	})
 </script>

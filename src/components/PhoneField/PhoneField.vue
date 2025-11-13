@@ -312,8 +312,25 @@
 		return !validation.hasError.value
 	}
 
+	// Fonction de réinitialisation du champ (contenu + validation)
+	const resetField = () => {
+		// Empêcher la revalidation immédiate post-reset
+		onBlur.value = false
+		phoneNumber.value = ''
+		// Réinitialiser l'indicatif si géré en interne
+		try {
+			dialCode.value = ''
+		}
+		catch {
+			void 0
+		}
+		validation.clearValidation()
+		// Propager la valeur vidée vers l'extérieur
+		emit('update:modelValue', '')
+	}
+
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, validation.clearValidation, resetField)
 
 	defineExpose({
 		computedValue,
