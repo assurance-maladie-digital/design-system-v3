@@ -56,8 +56,8 @@ export const Basic: Story = {
 		template: `
       <SyForm ref="form" v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
-          <SyTextField v-model="name" label="Nom" required />
-          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
+          <SyTextField v-model="name" label="Nom" required class="mb-2" />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
           <div class="d-flex gap-3">
             <v-btn type="submit" color="primary">Soumettre</v-btn>
           </div>
@@ -76,8 +76,8 @@ export const Basic: Story = {
 <template>
       <SyForm ref="form" v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
-          <SyTextField v-model="name" label="Nom" required />
-          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
+          <SyTextField v-model="name" label="Nom" required class="mb-2" />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
           <div class="d-flex gap-3">
             <v-btn type="submit" color="primary">Soumettre</v-btn>
           </div>
@@ -164,14 +164,15 @@ export const CustomValidation: Story = {
       <div>
         <SyForm ref="form" v-bind="args" @submit="submitForm">
           <div class="d-flex flex-column gap-4">
-            <SyTextField v-model="username" label="Nom d'utilisateur" required />
-            <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" />
+            <SyTextField v-model="username" label="Nom d'utilisateur" required class="mb-2" />
+            <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" class="mb-2" />
             <SyTextField 
               v-model="confirmPassword" 
               label="Confirmer le mot de passe" 
               type="password" 
               required 
-              :custom-rules="confirmPasswordRules" 
+              :custom-rules="confirmPasswordRules"
+              class="mb-2"
             />
             <div class="d-flex gap-3">
               <v-btn type="submit" color="primary" class="mr-2">S'inscrire</v-btn>
@@ -191,13 +192,14 @@ export const CustomValidation: Story = {
   <div>
     <SyForm ref="form" @submit="onSubmit">
       <div class="d-flex flex-column gap-4">
-        <SyTextField v-model="username" label="Nom d'utilisateur" required />
-        <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" />
+        <SyTextField v-model="username" label="Nom d'utilisateur" required class="mb-2" />
+        <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" class="mb-2" />
         <SyTextField 
           v-model="confirmPassword" 
           label="Confirmer le mot de passe" 
           type="password" 
           :custom-rules="confirmPasswordRules" 
+          class="mb-2"
         />
         <div class="d-flex gap-3">
           <v-btn type="submit" color="primary" class="mr-2">S'inscrire</v-btn>
@@ -300,9 +302,9 @@ export const MixedFields: Story = {
 		template: `
       <SyForm ref="form" v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
-          <SyTextField v-model="formData.name" label="Nom complet" required />
-          <SyTextField v-model="formData.email" label="Email" :custom-rules="emailCustomRules" />
-          <SySelect v-model="formData.country" :items="countries" label="Pays" required />
+          <SyTextField v-model="formData.name" label="Nom complet" required class="mb-2" />
+          <SyTextField v-model="formData.email" label="Email" :custom-rules="emailCustomRules" class="mb-2" />
+          <SySelect v-model="formData.country" :items="countries" label="Pays" required class="mb-2" />
           <div class="d-flex gap-3">
             <v-btn type="submit" color="primary">Enregistrer</v-btn>
           </div>
@@ -318,9 +320,9 @@ export const MixedFields: Story = {
 <template>
       <SyForm ref="form" v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
-          <SyTextField v-model="formData.name" label="Nom complet" required />
-          <SyTextField v-model="formData.email" label="Email" :customRules="emailCustomRules" />
-          <SySelect v-model="formData.country" :items="countries" label="Pays" required />
+          <SyTextField v-model="formData.name" label="Nom complet" required class="mb-2" />
+          <SyTextField v-model="formData.email" label="Email" :customRules="emailCustomRules" class="mb-2" />
+          <SySelect v-model="formData.country" :items="countries" label="Pays" required class="mb-2" />
           <div class="d-flex gap-3">
             <v-btn type="submit" color="primary">Enregistrer</v-btn>
           </div>
@@ -404,8 +406,8 @@ export const Reset: Story = {
 		template: `
       <SyForm ref="form" v-bind="args" @submit="submitForm" @reset="onFormReset">
         <div class="d-flex flex-column gap-4">
-          <SyTextField v-model="name" label="Nom" required />
-          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
+          <SyTextField v-model="name" label="Nom" required class="mb-2" />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
           <div class="d-flex gap-3">
               <v-btn color="secondary" class="mr-2" @click="clearAll">Reset</v-btn>
               <v-btn type="submit" color="primary">Soumettre</v-btn>
@@ -425,8 +427,8 @@ export const Reset: Story = {
 <template>
       <SyForm ref="form" v-bind="args" @submit="submitForm" @reset="onFormReset">
         <div class="d-flex flex-column gap-4">
-          <SyTextField v-model="name" label="Nom" required />
-          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
+          <SyTextField v-model="name" label="Nom" required class="mb-2" />
+          <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
           <div class="d-flex gap-3">
               <v-btn color="secondary" class="mr-2" @click="clearAll">Reset</v-btn>
               <v-btn type="submit" color="primary">Soumettre</v-btn>
