@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause } from '@mdi/js'
 	import volumeUp from './icons/volumeUp.vue'
-	import { ref, watch } from 'vue'
+	import { computed, ref, watch } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
 	import CaptchaBtn from './CaptchaBtn.vue'
@@ -81,6 +81,10 @@
 			emit('creationError')
 		}
 	}
+
+	const phoneHelpDesk = computed(() => {
+		return `<a href="tel:${props.helpDesk}">${props.helpDesk}</a>`
+	})
 
 </script>
 
@@ -171,9 +175,8 @@
 					<p
 						v-if="props.helpDesk"
 						class="captcha-helpdesk text-textSubdued mb-2"
-					>
-						{{ locales?.helpDesk(props.helpDesk) }}
-					</p>
+						v-html="locales?.helpDesk(phoneHelpDesk)"
+					/>
 				</div>
 			</template>
 
@@ -256,9 +259,8 @@
 					<p
 						v-if="props.helpDesk"
 						class="captcha-helpdesk text-textSubdued mb-2"
-					>
-						{{ locales?.helpDesk(props.helpDesk) }}
-					</p>
+						v-html="locales?.helpDesk(phoneHelpDesk)"
+					/>
 				</div>
 			</template>
 
