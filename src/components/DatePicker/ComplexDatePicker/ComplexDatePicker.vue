@@ -1063,7 +1063,6 @@
 						:show-success-messages="props.showSuccessMessages"
 						:bg-color="props.bgColor"
 						:display-range="props.displayRange"
-						@update:model-value="handleDateTextInputUpdate"
 						:display-persistent-placeholder="true"
 						:is-validate-on-blur="props.isValidateOnBlur"
 						:external-error-messages="errorMessages"
