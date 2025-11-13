@@ -7,7 +7,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
 	const nir = ref()
-	const date = ref('')
+	const date = ref()
 	const textField = ref()
 	const form = ref()
 
