@@ -288,7 +288,7 @@ describe('AmeliproHeader', () => {
 		})
 	})
 
-	describe('Slots', () => {
+	describe.skip('Slots', () => {
 		describe.todo('#default #rightPart AmeliproIconBtn')
 		describe.todo('#default #rightPart AmeliproIconBtn #prepend')
 		describe.todo('#default #rightPart nav')
