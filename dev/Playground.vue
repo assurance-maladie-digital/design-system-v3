@@ -29,7 +29,6 @@
 			v-model="nir"
 			:display-key="false"
 			required
-			hide-details
 		/>
 		<br>
 		<DatePicker
