@@ -122,7 +122,7 @@ describe('AmeliproDropdownMenu', () => {
 			})
 		})
 
-		describe.todo('dropdown menu item')
+		// describe.todo('dropdown menu item')
 	})
 
 	describe('Setting props should update props or attributes of inner components', () => {
@@ -150,7 +150,7 @@ describe('AmeliproDropdownMenu', () => {
 			})
 		})
 
-		describe.todo('AmeliproDropdownMenuBtn')
+		// describe.todo('AmeliproDropdownMenuBtn')
 	})
 
 	// Apparemment, Vitest ne modifie pas document.activeElement (contrairement à Jest)
