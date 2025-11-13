@@ -325,7 +325,9 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
         mb-2
         text-textSubdued
       ">
-        Si vous êtes en incapacité de résoudre le captcha, contactez le support au 3648.
+        Si vous êtes en incapacité de résoudre le captcha, contactez le support au
+        <a href="tel:3648">3648</a>
+        .
       </p>
     </div>
   </div>
@@ -704,7 +706,9 @@ exports[`Captcha > renders correctly in image mode 1`] = `
         mb-2
         text-textSubdued
       ">
-        Si vous êtes en incapacité de résoudre le captcha, contactez le support au 3648.
+        Si vous êtes en incapacité de résoudre le captcha, contactez le support au
+        <a href="tel:3648">3648</a>
+        .
       </p>
     </div>
   </div>
