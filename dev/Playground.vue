@@ -5,12 +5,10 @@
 	import NirField from '@/components/NirField/NirField.vue'
 	import DatePicker from '@/components/DatePicker/ComplexDatePicker/ComplexDatePicker.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import PhoneField from '@/components/PhoneField/PhoneField.vue'
 
 	const nir = ref()
 	const date = ref('')
 	const textField = ref()
-	const phoneField = ref()
 	const form = ref()
 
 	const submitForm = () => {
@@ -46,14 +44,6 @@
 			v-model="textField"
 			label="SyTextField"
 			required
-		/>
-		<br>
-		<PhoneField
-			v-model="phoneField"
-			required
-			with-country-code
-			country-code-required
-			is-validated-on-blur
 		/>
 		<br>
 		<VBtn @click="clearAll">
