@@ -426,7 +426,10 @@
 		</div>
 		<div
 			v-if="showHelpTextBelow"
-			class="help-text-below px-4 mt-1"
+			class="help-text-below px-4"
+			:style="{
+				marginTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '-1rem',
+			}"
 			:class="{ 'text-disabled': disabled }"
 		>
 			{{ helpText }}
