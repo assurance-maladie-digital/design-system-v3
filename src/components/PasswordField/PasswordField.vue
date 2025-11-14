@@ -259,8 +259,8 @@
 <template>
 	<SyTextField
 		v-bind="Object.fromEntries(Object.entries(options).filter(([key]) => key !== 'btn' && key !== 'icon' && key !== 'variant'))"
-		:key="fieldKey"
 		:id="passwordFieldId"
+		:key="fieldKey"
 		v-model="password"
 		:variant-style="props.variantStyle"
 		:color="props.color"
