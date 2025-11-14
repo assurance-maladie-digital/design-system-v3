@@ -246,6 +246,8 @@
 
 	const textInputValue = ref('')
 	const displayFormattedDate = ref('')
+	// Force re-render of DateTextInput/SyTextField when needed (e.g., after reset)
+	const fieldKey = ref(0)
 	const isManualInputActive = ref(false)
 	const isFormatting = ref(false)
 	const isUpdatingFromInternal = ref(false)
@@ -896,8 +898,30 @@
 		return textInputValid && errors.value.length === 0
 	}
 
+	// Reset hook utilisé par SyForm.reset() via useValidatable
+	const reset = () => {
+		// 1) Nettoyer l'état de validation et d'interaction
+		clearValidation()
+		isDatePickerVisible.value = false
+		hasInteracted.value = false
+		isManualInputActive.value = false
+
+		// 2) Réinitialiser la valeur et la sélection SANS déclencher
+		// de validation "required" interactive
+		withInternalUpdate(() => {
+			selectedDates.value = null
+			textInputValue.value = ''
+			displayFormattedDate.value = ''
+			// Synchroniser le modèle externe
+			emit('update:modelValue', null)
+		})
+
+		// 3) Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify
+		fieldKey.value++
+	}
+
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation)
+	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	defineExpose({
 		validateOnSubmit,
@@ -923,6 +947,7 @@
 		// Expose for consumers
 		handleDateSelected,
 		resetViewMode,
+		reset,
 	})
 </script>
 
@@ -937,6 +962,7 @@
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
+				:key="fieldKey"
 				v-model="textInputValue"
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:date-format-return="props.dateFormatReturn"
@@ -984,6 +1010,7 @@
 					<DateTextInput
 						v-bind="menuProps"
 						ref="dateCalendarTextInputRef"
+						:key="fieldKey"
 						v-model="textInputValue"
 						:label="labelWithAsterisk || ''"
 						:placeholder="props.placeholder"
