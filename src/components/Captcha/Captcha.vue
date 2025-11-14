@@ -317,4 +317,9 @@
 	font-size: 0.875rem;
 }
 
+.captcha-helpdesk :deep(a) {
+	color: rgb(var(--v-theme-primary));
+	font-weight: 700;
+}
+
 </style>
