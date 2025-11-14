@@ -266,7 +266,7 @@ export const WarningDocProps: Story = {
 			},
 			template: `
 				<SyAlert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false" class="mb-8">
-					<template #default>A cause de limitations techniques, le captcha ne peut pas être rafraichie dans la documentation.
+					<template #default>En raison de limitations techniques sur la documentation, le captcha ne peut pas être rafraîchi sur les exemples.
 					</template>
 				</SyAlert>
 			`,
