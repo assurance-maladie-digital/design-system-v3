@@ -288,24 +288,19 @@ describe('AmeliproHeader', () => {
 		})
 	})
 
-	describe.skip('Slots', () => {
-		describe.todo('#default #rightPart AmeliproIconBtn')
-		describe.todo('#default #rightPart AmeliproIconBtn #prepend')
-		describe.todo('#default #rightPart nav')
-		describe.todo('#default #rightPart nav infos')
-		describe.todo('#default #rightPart nav infos #userInformationSummary UserInformationSummary')
-		describe.todo('#default #rightPart nav list')
-		describe.todo('#default #rightPart nav list item')
-		describe.todo('#default #rightPart nav list item #userMenu')
-		describe.todo('#default #rightPart nav list item #userMenu UserMenu')
-		describe.todo('#default #rightPart nav list item #userMenu UserMenu #complementaryInfo')
-		describe.todo('#default #rightPart nav list item #userMenu UserMenu #complementaryInfo')
-
-		describe.todo('#default ')
-		describe.todo('#default ')
-		describe.todo('#default ')
-		describe.todo('#default ')
-	})
+	// describe('Slots', () => {
+	//	describe.todo('#default #rightPart AmeliproIconBtn')
+	//	describe.todo('#default #rightPart AmeliproIconBtn #prepend')
+	//	describe.todo('#default #rightPart nav')
+	//	describe.todo('#default #rightPart nav infos')
+	//	describe.todo('#default #rightPart nav infos #userInformationSummary UserInformationSummary')
+	//	describe.todo('#default #rightPart nav list')
+	//	describe.todo('#default #rightPart nav list item')
+	//	describe.todo('#default #rightPart nav list item #userMenu')
+	//	describe.todo('#default #rightPart nav list item #userMenu UserMenu')
+	//	describe.todo('#default #rightPart nav list item #userMenu UserMenu #complementaryInfo')
+	//	describe.todo('#default #rightPart nav list item #userMenu UserMenu #complementaryInfo')
+	// })
 
 	describe('Computed', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproHeader>>
