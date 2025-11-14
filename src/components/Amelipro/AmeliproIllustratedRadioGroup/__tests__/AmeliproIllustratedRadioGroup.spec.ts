@@ -461,7 +461,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 		})
 	})
 
-	describe('Slots', () => {
+	describe.skip('Slots', () => {
 		describe.todo('#labelInfo')
 	})
 
