@@ -777,11 +777,11 @@ describe('AmeliproFooter', () => {
 		})
 	})
 
-	describe('Slots', () => {
-		describe.todo('AmeliproBtn site map #default')
-		describe.todo('AmeliproBtn configuration #default')
-		describe.todo('AmeliproBtn legal notice #default')
-		describe.todo('AmeliproBtn CGU #default')
-		describe.todo('AmeliproBtn a11y link #default')
-	})
+	// describe('Slots', () => {
+	//	describe.todo('AmeliproBtn site map #default')
+	//	describe.todo('AmeliproBtn configuration #default')
+	//	describe.todo('AmeliproBtn legal notice #default')
+	//	describe.todo('AmeliproBtn CGU #default')
+	//	describe.todo('AmeliproBtn a11y link #default')
+	// })
 })
