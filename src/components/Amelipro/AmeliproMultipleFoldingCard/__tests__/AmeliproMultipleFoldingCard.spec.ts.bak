@@ -9,11 +9,26 @@ import { type PropType } from 'vue'
 import TestHelper from '@tests/helpers/TestHelper'
 
 const getTabs = (): AmeliproMultipleFoldingCardItem[] => [
-	{ id: 'modified-item-id-1', title: 'Modified item title 1' },
-	{ id: 'modified-item-id-2', title: 'Modified item title 2' },
-	{ id: 'modified-item-id-3', title: 'Modified item title 3' },
-	{ id: 'modified-item-id-4', title: 'Modified item title 4' },
-	{ id: 'modified-item-id-5', title: 'Modified item title 5' },
+	{
+		id: 'the-item-id-1',
+		title: 'The item title 1',
+	},
+	{
+		id: 'the-item-id-2',
+		title: 'The item title 2',
+	},
+	{
+		id: 'the-item-id-3',
+		title: 'The item title 3',
+	},
+	{
+		id: 'the-item-id-4',
+		title: 'The item title 4',
+	},
+	{
+		id: 'the-item-id-5',
+		title: 'The item title 5',
+	},
 ]
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproMultipleFoldingCard> = {
@@ -203,26 +218,26 @@ describe('AmeliproMultipleFoldingCard', () => {
 			expect(wrapper.emitted('tab-clicked')).toBeUndefined()
 			if (btns[0]) {
 				expect(btns[0].attributes('class')).toBe('d-inline-flex align-center amelipro-card--multi-folding__btn classic-btn')
-				expect(btns[0].attributes('id')).toBe('modified-item-id-1-title')
-				expect(btns[0].attributes('aria-controls')).toBe('modified-item-id-1')
+				expect(btns[0].attributes('id')).toBe('the-item-id-1-title')
+				expect(btns[0].attributes('aria-controls')).toBe('the-item-id-1')
 				expect(btns[0].attributes('aria-expanded')).toBe('false')
 			}
 			if (btns[1]) {
 				expect(btns[1].attributes('class')).toBe('d-inline-flex align-center amelipro-card--multi-folding__btn classic-btn')
-				expect(btns[1].attributes('id')).toBe('modified-item-id-2-title')
-				expect(btns[1].attributes('aria-controls')).toBe('modified-item-id-2')
+				expect(btns[1].attributes('id')).toBe('the-item-id-2-title')
+				expect(btns[1].attributes('aria-controls')).toBe('the-item-id-2')
 				expect(btns[1].attributes('aria-expanded')).toBe('false')
 			}
 
 			await btns[0]?.trigger('click')
-			expect(wrapper.emitted('tab-clicked')).toStrictEqual([['modified-item-id-1']])
+			expect(wrapper.emitted('tab-clicked')).toStrictEqual([['the-item-id-1']])
 			if (btns[0]) {
 				expect(btns[0].attributes('class')).toBe('d-inline-flex align-center amelipro-card--multi-folding__btn classic-btn active-btn')
 				expect(btns[0].attributes('aria-expanded')).toBe('true')
 			}
 
 			await btns[1]?.trigger('click')
-			expect(wrapper.emitted('tab-clicked')).toStrictEqual([['modified-item-id-1'], ['modified-item-id-2']])
+			expect(wrapper.emitted('tab-clicked')).toStrictEqual([['the-item-id-1'], ['the-item-id-2']])
 			if (btns[0]) {
 				expect(btns[0].attributes('class')).toBe('d-inline-flex align-center amelipro-card--multi-folding__btn classic-btn checked-btn')
 				expect(btns[0].attributes('aria-expanded')).toBe('false')
@@ -233,7 +248,7 @@ describe('AmeliproMultipleFoldingCard', () => {
 			}
 
 			await btns[0]?.trigger('click')
-			expect(wrapper.emitted('tab-clicked')).toStrictEqual([['modified-item-id-1'], ['modified-item-id-2'], ['modified-item-id-1']])
+			expect(wrapper.emitted('tab-clicked')).toStrictEqual([['the-item-id-1'], ['the-item-id-2'], ['the-item-id-1']])
 			if (btns[0]) {
 				expect(btns[0].attributes('class')).toBe('d-inline-flex align-center amelipro-card--multi-folding__btn classic-btn active-btn')
 				expect(btns[0].attributes('aria-expanded')).toBe('true')

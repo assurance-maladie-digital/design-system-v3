@@ -94,7 +94,7 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
           mr-2
         ">
           <button
-            aria-controls="the-item-id-1"
+            aria-controls="modified-item-id-1"
             aria-expanded="false"
             class="
               align-center
@@ -102,13 +102,13 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
               classic-btn
               d-inline-flex
             "
-            id="the-item-id-1-title"
+            id="modified-item-id-1-title"
             type="button"
           >
             <!-- v-if -->
             <!-- v-if -->
             <!-- v-if -->
-            The item title 1
+            Modified item title 1
             <!-- v-if -->
             <!-- v-if -->
           </button>
@@ -118,7 +118,7 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
           mr-2
         ">
           <button
-            aria-controls="the-item-id-2"
+            aria-controls="modified-item-id-2"
             aria-expanded="false"
             class="
               align-center
@@ -126,13 +126,13 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
               classic-btn
               d-inline-flex
             "
-            id="the-item-id-2-title"
+            id="modified-item-id-2-title"
             type="button"
           >
             <!-- v-if -->
             <!-- v-if -->
             <!-- v-if -->
-            The item title 2
+            Modified item title 2
             <!-- v-if -->
             <!-- v-if -->
           </button>
@@ -142,7 +142,7 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
           mr-2
         ">
           <button
-            aria-controls="the-item-id-3"
+            aria-controls="modified-item-id-3"
             aria-expanded="true"
             class="
               active-btn
@@ -151,7 +151,7 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
               classic-btn
               d-inline-flex
             "
-            id="the-item-id-3-title"
+            id="modified-item-id-3-title"
             type="button"
           >
             <!-- v-if -->
@@ -168,11 +168,11 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
               large="false"
               medium="true"
               small="false"
-              uniqueid="the-item-id-3-icon"
+              uniqueid="modified-item-id-3-icon"
               widthauto="false"
               xlarge="false"
             ></amelipro-icon-stub>
-            The item title 3
+            Modified item title 3
             <span class="d-sr-only">
               Actif
             </span>
@@ -184,7 +184,7 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
           mr-2
         ">
           <button
-            aria-controls="the-item-id-4"
+            aria-controls="modified-item-id-4"
             aria-expanded="false"
             class="
               align-center
@@ -192,13 +192,13 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
               classic-btn
               d-inline-flex
             "
-            id="the-item-id-4-title"
+            id="modified-item-id-4-title"
             type="button"
           >
             <!-- v-if -->
             <!-- v-if -->
             <!-- v-if -->
-            The item title 4
+            Modified item title 4
             <!-- v-if -->
             <!-- v-if -->
           </button>
@@ -208,7 +208,7 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
           mr-2
         ">
           <button
-            aria-controls="the-item-id-5"
+            aria-controls="modified-item-id-5"
             aria-expanded="false"
             class="
               align-center
@@ -216,13 +216,13 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
               classic-btn
               d-inline-flex
             "
-            id="the-item-id-5-title"
+            id="modified-item-id-5-title"
             type="button"
           >
             <!-- v-if -->
             <!-- v-if -->
             <!-- v-if -->
-            The item title 5
+            Modified item title 5
             <!-- v-if -->
             <!-- v-if -->
           </button>
@@ -232,59 +232,59 @@ exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with al
   </div>
   <div id="modified-unique-id-tab-0">
     <div
-      aria-labelledby="the-item-id-1-title"
+      aria-labelledby="modified-item-id-1-title"
       class="
         amelipro-card--multi-folding-content
         text-ap-grey-darken-1
       "
-      id="the-item-id-1"
+      id="modified-item-id-1"
       role="region"
       style="display: none;"
     ></div>
   </div>
   <div id="modified-unique-id-tab-1">
     <div
-      aria-labelledby="the-item-id-2-title"
+      aria-labelledby="modified-item-id-2-title"
       class="
         amelipro-card--multi-folding-content
         text-ap-grey-darken-1
       "
-      id="the-item-id-2"
+      id="modified-item-id-2"
       role="region"
       style="display: none;"
     ></div>
   </div>
   <div id="modified-unique-id-tab-2">
     <div
-      aria-labelledby="the-item-id-3-title"
+      aria-labelledby="modified-item-id-3-title"
       class="
         amelipro-card--multi-folding-content
         text-ap-grey-darken-1
       "
-      id="the-item-id-3"
+      id="modified-item-id-3"
       role="region"
     ></div>
   </div>
   <div id="modified-unique-id-tab-3">
     <div
-      aria-labelledby="the-item-id-4-title"
+      aria-labelledby="modified-item-id-4-title"
       class="
         amelipro-card--multi-folding-content
         text-ap-grey-darken-1
       "
-      id="the-item-id-4"
+      id="modified-item-id-4"
       role="region"
       style="display: none;"
     ></div>
   </div>
   <div id="modified-unique-id-tab-4">
     <div
-      aria-labelledby="the-item-id-5-title"
+      aria-labelledby="modified-item-id-5-title"
       class="
         amelipro-card--multi-folding-content
         text-ap-grey-darken-1
       "
-      id="the-item-id-5"
+      id="modified-item-id-5"
       role="region"
       style="display: none;"
     ></div>
