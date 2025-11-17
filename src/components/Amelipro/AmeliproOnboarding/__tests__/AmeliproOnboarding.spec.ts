@@ -6,6 +6,7 @@ import type { ComponentProps } from 'vue-component-type-helpers'
 import type { ExpectedPropOptions } from '@tests/types'
 import type { IOnboarding } from '../types'
 import TestHelper from '@tests/helpers/TestHelper'
+import { defineComponent, h } from 'vue'
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproOnboarding> = {
 	attach: {
@@ -135,14 +136,39 @@ describe('AmeliproOnboarding', () => {
 	describe('Setting props should update attributes of inner tags', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproOnboarding>>
 
+		const AmeliproDialogStub = defineComponent({
+			name: 'AmeliproDialog',
+			props: {
+				uniqueId: { type: String, required: true },
+			},
+			setup(props, { slots }) {
+				return () =>
+					h('amelipro-dialog-stub', { uniqueId: props.uniqueId }, [
+						slots.header ? slots.header() : null,
+						slots.default ? slots.default() : null,
+					])
+			},
+		})
+
 		beforeEach(() => {
 			vueWrapper = shallowMount(AmeliproOnboarding, {
 				props: requiredPropValues(),
-				global: { mocks: { AmeliproDialog: '<div class="amelipro-dialog"><slot /></div>' } },
+				global: { stubs: { AmeliproDialog: AmeliproDialogStub } },
 			})
 		})
 
-		describe('Default slot content', () => {
+		describe('Header', () => {
+			it('prop title sets header content', async () => {
+				expect(vueWrapper.find(`#${testHelper.default('uniqueId')}-title`).text()).toBe(testHelper.default('title'))
+
+				const { title } = modifiedPropValues()
+				await vueWrapper.setProps({ title })
+				expect(vueWrapper.find(`#${testHelper.default('uniqueId')}-title`).text()).toBe(title)
+			})
+		})
+
+		describe('Main content', () => {
+			// Attention faute de frappe dans le composant : d au lieu de b dans "ondoarding__content"
 			it('prop uniqueId sets attribute id', async () => {
 				expect(vueWrapper.find('.amelipro-ondoarding__content').attributes('id')).toBe(`${testHelper.default('uniqueId')}-main-content`)
 
@@ -152,43 +178,33 @@ describe('AmeliproOnboarding', () => {
 			})
 		})
 
-		it.skip('prop title sets header content', async () => {
-			vueWrapper = shallowMount(AmeliproOnboarding, { props: requiredPropValues() })
-			expect(vueWrapper.find(`#${testHelper.default('uniqueId')}-title`).text()).toBe(testHelper.default('title'))
+		describe('Left part', () => {
+			it('prop uniqueId sets attribute id', async () => {
+				expect(vueWrapper.find('.amelipro-ondoarding__content--left').attributes('id')).toBe(`${testHelper.default('uniqueId')}-left-part`)
 
-			const { title } = modifiedPropValues()
-			await vueWrapper.setProps({ title })
-			expect(vueWrapper.find(`#${testHelper.default('uniqueId')}-title`).text()).toBe(title)
+				const { uniqueId } = modifiedPropValues()
+				await vueWrapper.setProps({ uniqueId })
+				expect(vueWrapper.find('.amelipro-ondoarding__content--left').attributes('id')).toBe(`${testHelper.modified('uniqueId')}-left-part`)
+			})
+
+			it('prop imgWidth sets attribute style', async () => {
+				expect(vueWrapper.find('.amelipro-ondoarding__content--left').attributes('style')).toContain(`width: ${testHelper.default('imgWidth')};`)
+
+				const { imgWidth } = modifiedPropValues()
+				await vueWrapper.setProps({ imgWidth })
+				expect(vueWrapper.find('.amelipro-ondoarding__content--left').attributes('style')).toContain(`width: ${testHelper.modified('imgWidth')};`)
+			})
 		})
 
-		it.skip('prop steps sets step content', async () => {
-			vueWrapper = shallowMount(AmeliproOnboarding, { props: requiredPropValues() })
-			expect(vueWrapper.findAll('.amelipro-onboarding__step-dot').length).toBe(2)
+		// TODO: left part img
 
-			const { steps } = modifiedPropValues()
-			await vueWrapper.setProps({ steps })
-			expect(vueWrapper.findAll('.amelipro-onboarding__step-dot').length).toBe(2)
-		})
+		// TODO: right part
 
-		it.skip('prop finalBtnLabel sets final button label', async () => {
-			vueWrapper = shallowMount(AmeliproOnboarding, { props: { ...requiredPropValues(), modelValue: true } })
-			// Aller à la dernière étape
-			await vueWrapper.setData({ currentStepIndex: 1 })
-			expect(vueWrapper.find('.amelipro-onboarding__content__btn--final').text()).toBe(testHelper.default('finalBtnLabel'))
+		// TODO: right part dot wrapper
 
-			const { finalBtnLabel } = modifiedPropValues()
-			await vueWrapper.setProps({ finalBtnLabel })
-			expect(vueWrapper.find('.amelipro-onboarding__content__btn--final').text()).toBe(testHelper.modified('finalBtnLabel'))
-		})
+		// TODO: right part dot
 
-		it.skip('prop skipBtnLabel sets skip button label', async () => {
-			vueWrapper = shallowMount(AmeliproOnboarding, { props: requiredPropValues() })
-			expect(vueWrapper.find('.amelipro-onboarding__content__btn--skip').text()).toBe(testHelper.default('skipBtnLabel'))
-
-			const { skipBtnLabel } = modifiedPropValues()
-			await vueWrapper.setProps({ skipBtnLabel })
-			expect(vueWrapper.find('.amelipro-onboarding__content__btn--skip').text()).toBe(testHelper.modified('skipBtnLabel'))
-		})
+		// TODO: nombreux cas à rajouter (content title, content text, buttons labels, img height, etc.)
 	})
 
 	describe.skip('Events', () => {
