@@ -49,11 +49,11 @@
 	}
 
 	const reset = () => {
+		// Reset custom components values
+		resetAll()
 		// Reset field values and validations for Vuetify form
 		form.value?.reset()
 		form.value?.resetValidation()
-		// Reset custom components values (if they registered a reset hook)
-		resetAll()
 		// Notify consumers so they can clear external models (e.g., v-model refs)
 		emit('reset')
 	}
