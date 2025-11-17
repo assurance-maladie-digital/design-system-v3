@@ -461,9 +461,9 @@ describe('AmeliproIllustratedRadioGroup', () => {
 		})
 	})
 
-	describe.skip('Slots', () => {
-		describe.todo('#labelInfo')
-	})
+	// describe.skip('Slots', () => {
+	//	describe.todo('#labelInfo')
+	// })
 
 	describe('Events', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproIllustratedRadioGroup>>
