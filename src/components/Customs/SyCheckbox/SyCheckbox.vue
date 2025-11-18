@@ -365,7 +365,7 @@
 }
 
 :deep(.v-label) {
-  margin-left: 8px;
+	margin-left: 8px;
 }
 
 :deep(.v-selection-control--disabled .v-selection-control__input) {
