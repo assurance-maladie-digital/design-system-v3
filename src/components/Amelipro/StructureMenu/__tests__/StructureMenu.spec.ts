@@ -159,7 +159,7 @@ describe('StructureMenu', () => {
 		testHelper.properties()
 	})
 
-	describe.todo('Events')
+	// describe.todo('Events')
 
-	describe.todo('Slots')
+	// describe.todo('Slots')
 })
