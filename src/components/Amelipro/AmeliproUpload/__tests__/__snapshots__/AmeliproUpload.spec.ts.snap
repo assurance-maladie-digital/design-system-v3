@@ -1,0 +1,168 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproUpload > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-upload
+    d-flex
+    dashed-style
+    flex-column
+    invalid
+  "
+  id="modified-unique-id-container"
+>
+  <div class="
+    align-center
+    d-flex
+    justify-space-between
+    w-100
+  ">
+    <v-file-input-stub
+      accept="modified-type-1,modified-type-2"
+      active="false"
+      aria-describedby="modified-unique-id-error modified-unique-id-warning"
+      aria-invalid="true"
+      aria-required="true"
+      chips="false"
+      clearable="false"
+      clearicon="$clear"
+      counter="false"
+      countersizestring="$vuetify.fileInput.counterSize"
+      counterstring="$vuetify.fileInput.counter"
+      density="compact"
+      details="false"
+      direction="horizontal"
+      dirty="false"
+      disabled="true"
+      error="true"
+      errormessages=""
+      flat="false"
+      focused="false"
+      glow="false"
+      hidedetails="true"
+      hideinput="false"
+      hidespinbuttons="false"
+      iconcolor="false"
+      id="modified-unique-id"
+      loading="false"
+      maxerrors="1"
+      messages=""
+      modelvalue=""
+      multiple="true"
+      persistentclear="false"
+      persistenthint="false"
+      prependicon=""
+      reverse="false"
+      rules=""
+      showsize="false"
+      singleline="false"
+      tile="false"
+      truncatelength="22"
+      variant="filled"
+    ></v-file-input-stub>
+  </div>
+  <div class="
+    d-flex
+    error-wrapper
+  ">
+    <amelipro-message-stub
+      alignstart="false"
+      borderleftmessage="false"
+      class="my-2"
+      dark="false"
+      dismissible="false"
+      noicon="false"
+      text="true"
+      type="error"
+      uniqueid="modified-unique-id-error"
+      value="true"
+      width="100%"
+    ></amelipro-message-stub>
+  </div>
+  <div class="
+    d-flex
+    warning-wrapper
+  ">
+    <amelipro-message-stub
+      alignstart="false"
+      borderleftmessage="false"
+      class="my-2"
+      dark="false"
+      dismissible="false"
+      noicon="false"
+      text="true"
+      type="warning"
+      uniqueid="modified-unique-id-warning"
+      value="true"
+      width="100%"
+    ></amelipro-message-stub>
+  </div>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`AmeliproUpload > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-upload
+    d-flex
+    dashed-style
+    flex-column
+    valid
+  "
+  id="required-unique-id-container"
+>
+  <div class="
+    align-center
+    d-flex
+    justify-space-between
+    w-100
+  ">
+    <v-file-input-stub
+      accept="required-type"
+      active="false"
+      aria-invalid="false"
+      aria-required="false"
+      chips="false"
+      clearable="false"
+      clearicon="$clear"
+      counter="false"
+      countersizestring="$vuetify.fileInput.counterSize"
+      counterstring="$vuetify.fileInput.counter"
+      density="compact"
+      details="false"
+      direction="horizontal"
+      dirty="false"
+      disabled="false"
+      error="false"
+      errormessages=""
+      flat="false"
+      focused="false"
+      glow="false"
+      hidedetails="true"
+      hideinput="false"
+      hidespinbuttons="false"
+      iconcolor="false"
+      id="required-unique-id"
+      loading="false"
+      maxerrors="1"
+      messages=""
+      modelvalue=""
+      multiple="true"
+      persistentclear="false"
+      persistenthint="false"
+      prependicon=""
+      reverse="false"
+      rules=""
+      showsize="false"
+      singleline="false"
+      tile="false"
+      truncatelength="22"
+      variant="filled"
+    ></v-file-input-stub>
+  </div>
+  <!-- v-if -->
+  <!-- v-if -->
+  <!-- v-if -->
+</div>
+`;
