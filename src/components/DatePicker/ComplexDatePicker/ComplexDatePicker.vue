@@ -1072,7 +1072,7 @@
 						:density="props.density"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
-            @update:model-value="handleDateTextInputUpdate"
+						@update:model-value="handleDateTextInputUpdate"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
