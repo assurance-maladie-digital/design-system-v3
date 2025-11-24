@@ -10,9 +10,10 @@
         {{  dateSaisine }}
 		<DatePicker
 			v-model="dateSaisine"
-			label="Date de saisine"
-			use-combined-mode
-			date-format-return="YYYY-MM-DD"
+			placeholder="Sélectionner une période"
+        format="DD/MM/YYYY"
+        display-range
+        use-combined-mode
 		/>
 		<div style="margin-top: 20px; font-family: monospace;">
 			Valeur: {{ dateSaisine || 'Non définie' }}
