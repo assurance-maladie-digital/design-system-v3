@@ -449,6 +449,9 @@
 
 	// Handle manual typing sync → model/selection
 	watch(textInputValue, (newValue) => {
+		// En mode plage, on laisse DateTextInput + handleDateTextInputUpdate
+		// piloter la mise à jour du modèle et de selectedDates
+		if (props.displayRange) return
 		if (isUpdatingFromInternal.value) return
 		const date = parseDate(newValue, props.format)
 		if (date) {
@@ -728,18 +731,60 @@
 	 * Gère les mises à jour de DateTextInput avec contrôle
 	 */
 	const handleDateTextInputUpdate = (value: DateValue) => {
-		// Ne pas mettre à jour si la valeur vient du modèle (pour éviter la boucle)
-		if (value === props.modelValue) {
-			return
+		// Ne pas traiter les mises à jour internes pour éviter les boucles
+		if (isUpdatingFromInternal.value) return
+
+		try {
+			isUpdatingFromInternal.value = true
+
+			// 1) Propager la valeur brute vers le v-model externe
+			updateModel(value)
+
+			// 2) Mettre à jour selectedDates / displayFormattedDate pour refléter la saisie manuelle
+			if (!value) {
+				selectedDates.value = null
+				displayFormattedDate.value = ''
+				return
+			}
+
+			if (Array.isArray(value) && props.displayRange) {
+				const [startStr, endStr] = value
+				const rf = returnFormat.value
+				const startDate = startStr ? parseDate(startStr, rf) || parseDate(startStr, props.format) : null
+				const endDate = endStr ? parseDate(endStr, rf) || parseDate(endStr, props.format) : null
+
+				if (startDate && endDate) {
+					selectedDates.value = [startDate, endDate]
+					displayFormattedDate.value
+						= `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
+				}
+				else if (startDate) {
+					// Première date saisie uniquement
+					selectedDates.value = [startDate]
+					displayFormattedDate.value = formatDate(startDate, props.format)
+				}
+				else {
+					selectedDates.value = null
+					displayFormattedDate.value = ''
+				}
+			}
+			else if (typeof value === 'string') {
+				const rf = returnFormat.value
+				const date = parseDate(value, rf) || parseDate(value, props.format)
+				if (date) {
+					selectedDates.value = date
+					displayFormattedDate.value = formatDate(date, props.format)
+				}
+				else {
+					selectedDates.value = null
+					displayFormattedDate.value = ''
+				}
+			}
 		}
-		// Convertir DateValue en string pour textInputValue
-		if (Array.isArray(value)) {
-			// Pour les plages de dates, utiliser la première date
-			textInputValue.value = value[0] || ''
-		}
-		else {
-			// Pour les dates simples ou null
-			textInputValue.value = value || ''
+		finally {
+			setTimeout(() => {
+				isUpdatingFromInternal.value = false
+			}, 0)
 		}
 	}
 
