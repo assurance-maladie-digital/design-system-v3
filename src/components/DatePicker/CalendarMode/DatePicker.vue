@@ -592,7 +592,7 @@
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation)
 
 	const openDatePicker = () => {
 		if (props.disabled || props.readonly) return
