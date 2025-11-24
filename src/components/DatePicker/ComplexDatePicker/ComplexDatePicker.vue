@@ -401,7 +401,10 @@
 			if (typeof newValue === 'string') {
 				if (props.dateFormatReturn) {
 					const date = parseDate(newValue, returnFormat.value)
-					if (date) textInputValue.value = formatDate(date, props.format)
+					if (date) {
+						const formattedForDisplay = formatDate(date, props.format)
+						textInputValue.value = formattedForDisplay
+					}
 				}
 				else {
 					textInputValue.value = newValue
@@ -417,10 +420,18 @@
 			updateModel(formattedDate.value)
 			withInternalUpdate(() => {
 				if (Array.isArray(newValue)) {
-					if (newValue.length > 0) textInputValue.value = formatDate(newValue[0], props.format)
+					if (newValue.length > 0) {
+						const newFormattedValue = formatDate(newValue[0], props.format)
+						if (textInputValue.value !== newFormattedValue) {
+							textInputValue.value = newFormattedValue
+						}
+					}
 				}
 				else {
-					textInputValue.value = formatDate(newValue, props.format)
+					const newFormattedValue = formatDate(newValue, props.format)
+					if (textInputValue.value !== newFormattedValue) {
+						textInputValue.value = newFormattedValue
+					}
 				}
 			})
 		}
@@ -714,6 +725,25 @@
 	})
 
 	/**
+	 * Gère les mises à jour de DateTextInput avec contrôle
+	 */
+	const handleDateTextInputUpdate = (value: DateValue) => {
+		// Ne pas mettre à jour si la valeur vient du modèle (pour éviter la boucle)
+		if (value === props.modelValue) {
+			return
+		}
+		// Convertir DateValue en string pour textInputValue
+		if (Array.isArray(value)) {
+			// Pour les plages de dates, utiliser la première date
+			textInputValue.value = value[0] || ''
+		}
+		else {
+			// Pour les dates simples ou null
+			textInputValue.value = value || ''
+		}
+	}
+
+	/**
 	 * Sync from external v-model
 	 */
 	const syncFromModelValue = (newValue: DateInput | undefined) => {
@@ -730,7 +760,8 @@
 			const firstDate = Array.isArray(selectedDates.value)
 				? selectedDates.value[0]
 				: selectedDates.value
-			textInputValue.value = formatDate(firstDate, props.format)
+			const formattedForInput = formatDate(firstDate, props.format)
+			textInputValue.value = formattedForInput
 			displayFormattedDate.value = displayFormattedDateComputed.value || ''
 		}
 		validateDates()
@@ -1011,7 +1042,7 @@
 						v-bind="menuProps"
 						ref="dateCalendarTextInputRef"
 						:key="fieldKey"
-						v-model="textInputValue"
+						:model-value="textInputValue"
 						:label="labelWithAsterisk || ''"
 						:placeholder="props.placeholder"
 						:format="props.format"
@@ -1041,6 +1072,7 @@
 						:density="props.density"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
+						@update:model-value="handleDateTextInputUpdate"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
