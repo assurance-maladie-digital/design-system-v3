@@ -15,6 +15,7 @@ exports[`FilterInline > renders correctly with an active filter 1`] = `
     class="
       bg-secondary
       ma-2
+      sy-filter-btn
       sy-filter-name
       v-btn
       v-btn--density-default
@@ -78,7 +79,8 @@ exports[`FilterInline > renders correctly with an active filter 1`] = `
     <!---->
     <!---->
   </button>
-  <!---->
+  <!-- teleport start -->
+  <!-- teleport end -->
 </div>
 `;
 
@@ -97,6 +99,7 @@ exports[`FilterInline > renders correctly with multiple active filters 1`] = `
     class="
       bg-secondary
       ma-2
+      sy-filter-btn
       sy-filter-name
       v-btn
       v-btn--density-default
@@ -160,14 +163,16 @@ exports[`FilterInline > renders correctly with multiple active filters 1`] = `
     <!---->
     <!---->
   </button>
-  <!---->
+  <!-- teleport start -->
+  <!-- teleport end -->
   <button
-    aria-controls="v-menu-v-2"
+    aria-controls="v-menu-v-5"
     aria-expanded="false"
     aria-haspopup="menu"
     class="
       bg-secondary
       ma-2
+      sy-filter-btn
       sy-filter-profession
       v-btn
       v-btn--density-default
@@ -231,7 +236,8 @@ exports[`FilterInline > renders correctly with multiple active filters 1`] = `
     <!---->
     <!---->
   </button>
-  <!---->
+  <!-- teleport start -->
+  <!-- teleport end -->
 </div>
 `;
 
