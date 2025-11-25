@@ -690,6 +690,47 @@
 	 * =====================
 	 */
 	watch(inputValue, async (nv, ov) => {
+		if (props.disabled) {
+			if (
+				(!nv || nv.trim() === '' || nv.match(/^[_/\-.\s]+$/))
+				&& !!ov
+				&& props.modelValue
+			) {
+				isFormatting.value = true
+				const mv = props.modelValue
+				if (isRange.value && Array.isArray(mv)) {
+					const arr = mv as string[]
+					if (arr.length === 2) {
+						const [sa, ea] = arr
+						const sd = parseDate(sa, returnFormat.value)
+						const ed = parseDate(ea, returnFormat.value)
+						if (sd && ed) {
+							initializeWithDates(sd, ed)
+							selectedDates.value = [sd, ed]
+							inputValue.value = formatRangeForDisplay(sd, ed)
+							runRules(inputValue.value)
+						}
+					}
+				}
+				else {
+					const s = typeof mv === 'string' ? mv : ''
+					const d = dayjs(s, displayFormat.value, true).isValid()
+						? dayjs(s, displayFormat.value).toDate()
+						: null
+					if (d) {
+						inputValue.value = dayjs(d).format(displayFormat.value)
+						runRules(inputValue.value)
+					}
+					else {
+						inputValue.value = s
+						runRules(s)
+					}
+				}
+				isFormatting.value = false
+			}
+			return
+		}
+
 		// Prevent infinite loops but allow formatting
 		if (isFormatting.value || nv === ov || isHandlingBackspace.value || isBootstrapping.value) return
 		try {
@@ -952,6 +993,11 @@
 		clearValidation()
 		isFocused.value = false
 		hasInteracted.value = false
+
+		if (props.disabled) {
+			fieldKey.value++
+			return
+		}
 
 		// 2) Réinitialiser la valeur sans déclencher de validation interactive
 		isFormatting.value = true
