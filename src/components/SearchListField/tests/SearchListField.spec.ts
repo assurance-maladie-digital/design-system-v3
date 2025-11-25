@@ -16,6 +16,7 @@ describe('SearchListField.vue', () => {
 				plugins: [vuetify],
 			},
 			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -38,6 +39,7 @@ describe('SearchListField.vue', () => {
 				plugins: [vuetify],
 			},
 			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -63,6 +65,7 @@ describe('SearchListField.vue', () => {
 				plugins: [vuetify],
 			},
 			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
