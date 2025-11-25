@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, onMounted, onUpdated, ref, watch } from 'vue'
+	import { onMounted, onUpdated, type PropType, ref, watch } from 'vue'
 	import AmeliproAccordionTemplate from '../AmeliproAccordion/AmeliproAccordionTemplate/AmeliproAccordionTemplate.vue'
 	import AmeliproPagination from '../AmeliproPagination/AmeliproPagination.vue'
 	import AmeliproSelect from '../AmeliproSelect/AmeliproSelect.vue'
@@ -236,7 +236,7 @@
 						:card-color="groupColor"
 						:header-right-width="String(accordion.headerRightWidth)"
 						:hide-separator="hideSeparator"
-						:is-open="`accordion-result-${accordion.id}` === openId"
+						:is-open="accordion.id === openId"
 						:title-level="titleLevel"
 						:title-uppercase="titleUppercase"
 						:unique-id="`accordion-result-${accordion.id}`"
